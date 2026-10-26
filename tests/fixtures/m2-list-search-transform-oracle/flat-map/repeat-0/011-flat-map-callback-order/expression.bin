@@ -1,0 +1,1 @@
+List(2,1).flatMap((x) -> List(trace(x), x+10))

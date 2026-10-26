@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Cannot find matching element in collection.
+Collection: List(2, 4)
+
+1 | List(2,4).find((x) -> x == 3)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

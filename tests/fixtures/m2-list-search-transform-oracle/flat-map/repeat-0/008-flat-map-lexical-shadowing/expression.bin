@@ -1,0 +1,1 @@
+let (n=99) List(1,2).flatMap((n) -> List(3,4).map((k) -> n*k))

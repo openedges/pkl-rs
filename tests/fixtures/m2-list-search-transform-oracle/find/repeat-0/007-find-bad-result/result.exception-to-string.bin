@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Boolean`, but got type `String`.
+Value: "bad"
+
+1 | List(1).find((x) -> "bad")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

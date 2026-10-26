@@ -1,0 +1,1 @@
+List(1).flatMap((x) -> List(new Dynamic { value = throw("unforced") }))[0] is Dynamic

@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+argument first
+
+1 | List(1).flatMap(throw("argument first"), true)
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

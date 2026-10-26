@@ -255,6 +255,9 @@ pub enum Instruction {
     CollectionTransformProject {
         next: usize,
     },
+    CollectionFlatMapNext {
+        end: usize,
+    },
     AppendStrictElement,
     EndCollectionTransform,
     StringEncode,
@@ -913,7 +916,7 @@ pub struct Program {
     pub(crate) string_repeat_block: usize,
     pub(crate) collection_join_blocks: [usize; 2],
     collection_every_blocks: [usize; 5],
-    collection_transform_blocks: [usize; 11],
+    collection_transform_blocks: [usize; 14],
     collection_projection_blocks: [usize; 10],
     conversion_blocks: BTreeMap<(Arc<str>, Arc<str>), (usize, usize)>,
     conversion_delegate_block: usize,
@@ -4649,6 +4652,7 @@ impl Vm {
             Instruction::CollectionTransformProject { next } => {
                 self.collection_transform_project(next)?
             }
+            Instruction::CollectionFlatMapNext { end } => self.collection_flat_map_next(end)?,
             Instruction::AppendStrictElement => self.append_strict_element()?,
             Instruction::EndCollectionTransform => self.end_collection_transform()?,
             Instruction::StringEncode => self.encode_string()?,

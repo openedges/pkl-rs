@@ -1,5 +1,17 @@
 # M2 language evidence
 
+## Stage84 List search and transforms
+
+The [Stage84 checkpoint](stage84-list-search-transform-checkpoint.json) records
+`List.find`, `List.filter`, and `List.flatMap`, all five required Rust checks,
+1,126 passing workspace tests, the separate formerly ignored Regex regression,
+and 44 queries compared twice on each of native, N-API, and Chromium. Both fresh
+M1 experiments match 6,078 Java results per target. The archive retains raw
+failures and successful successors, source maps, artifact identities, and explicit
+build profiles. See the [language guide](../../docs/m2-language.md) for comparison
+boundaries. The full 4,416-case replay is still running; its previous aggregate
+and the remaining M2 requirements are unchanged.
+
 ## Stage79–83 focused implementation checkpoint
 
 The [focused checkpoint](stage79-83-focused-checkpoint.json) records shared

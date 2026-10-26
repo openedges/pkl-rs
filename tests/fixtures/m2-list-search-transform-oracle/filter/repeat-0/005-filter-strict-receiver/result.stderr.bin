@@ -1,0 +1,6 @@
+–– Pkl Error ––
+receiver first
+
+1 | List(1,throw("receiver first")).filter((x) -> true)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

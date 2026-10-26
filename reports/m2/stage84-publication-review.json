@@ -1,0 +1,93 @@
+{
+  "approved": true,
+  "archive": {
+    "bytes": 50151327,
+    "path": "reports/m2/stage84-list-search-transform-evidence.tar.gz",
+    "sha256": "64e5c580e38d40761876610a9f810c15540039c8b578eb16266496c15bc87f7b"
+  },
+  "archive_readback": {
+    "all_regular_paths_order_payload_sha256_and_modes_match": true,
+    "embedded_manifest_exact_selection_bytes": true,
+    "gzip_crc_size_and_EOF_verified": true,
+    "logical_payload_bytes": 144579605,
+    "members": 10890,
+    "order_basis": "Publisher sorted Path component order; manifest JSON independently sorts string keys.",
+    "producer_and_public_archive_exact_bytes": true,
+    "selected_payloads": 10889
+  },
+  "checkpoint": {
+    "bytes": 5508,
+    "path": "reports/m2/stage84-list-search-transform-checkpoint.json",
+    "sha256": "490350417de7963ce331c0f57c5eba36cd6e5fb30a60089ef94c79d472e991b1"
+  },
+  "compatibility_baseline": "Pkl 0.32.0",
+  "complete": true,
+  "excluded": {
+    "all_live_stage84_full_replay_paths": true,
+    "protected_partial": true,
+    "released_regenerable_test_payloads": true,
+    "stage85": true
+  },
+  "finished_epoch": 1792975241.38417,
+  "focused_history": {
+    "corrected_three_functions_passed": true,
+    "distinct_functions": 34,
+    "initial_exit101_and_three_failed_Logger_functions_preserved": true,
+    "separate_ignored_regex_pass": 1
+  },
+  "full_api_complete": false,
+  "full_m2_complete": false,
+  "kind": "stage84-independent-publication-review-v1",
+  "limits": [
+    "The ongoing full-4416 acquisition is outside this checkpoint;4188 is the previous official result.",
+    "Recorded local macOS arm64 development evidence does not establish full language/API/release-platform/performance completion.",
+    "Java-only type/exception/cause channels remain explicitly outside the selected platform comparator.",
+    "No new builds, guests or compatibility evaluations were executed by this publication review."
+  ],
+  "m1": {
+    "per_target_raw_matches_each_run": 6078,
+    "strict_and_contract_actual0_stable_idle": true
+  },
+  "performance_targets_met": false,
+  "producer_report": {
+    "bytes": 372,
+    "path": "target/m2/stage84-checkpoint-publication-01/report.json",
+    "sha256": "ef843e47ead69b50c14d44e8f040e8f2c70e94b6ae0e471666a94b8278fa8509"
+  },
+  "producer_selection": {
+    "bytes": 2771907,
+    "path": "target/m2/stage84-checkpoint-publication-01/selection.json",
+    "sha256": "ef61d77270858befc5d80a86b13d7bce850e76b6031f47921ca13b5532ace955"
+  },
+  "required_checks_and_fmt_manifest": "actual0/source-stable where recorded",
+  "review_inputs_stable": true,
+  "selected_platforms": {
+    "artifact_provenance": "Recorded workspace opt1 native and M1 release bindings explicitly reused; no new fresh build claimed.",
+    "logger_events_per_target": 22,
+    "observations_total": 264,
+    "queries": 44,
+    "raw_matches_per_target": 88,
+    "repetitions": 2,
+    "uncompared_java_channels": [
+      "result.java-type",
+      "result.error-class",
+      "result.exception-to-string",
+      "result.cause-class",
+      "result.cause-message",
+      "result.cause-to-string"
+    ]
+  },
+  "source_stable": true,
+  "started_epoch": 1792975240.3651788,
+  "workspace": {
+    "doctest_invocations": 2,
+    "explicit_opt1_debug0_strip_symbols_checks_on_profile": true,
+    "failed": 0,
+    "ignored": 2,
+    "integration_targets": 202,
+    "nested_child_passes_separate": 13,
+    "passed": 1126,
+    "source_paths": 187649,
+    "unit_targets": 3
+  }
+}

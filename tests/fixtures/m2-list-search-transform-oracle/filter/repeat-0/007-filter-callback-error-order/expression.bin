@@ -1,0 +1,1 @@
+List(1,2,3).filter((x) -> if (trace(x) == 2) throw("second callback") else true)

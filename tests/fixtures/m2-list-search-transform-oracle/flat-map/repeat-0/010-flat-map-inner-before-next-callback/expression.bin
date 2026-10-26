@@ -1,0 +1,1 @@
+List(1,2).flatMap((x) -> if (trace(x) == 1) List(throw("inner first")) else throw("later callback"))

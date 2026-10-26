@@ -1,0 +1,162 @@
+{
+  "archive": {
+    "bytes": 50151327,
+    "full_payload_readback": true,
+    "members": 10890,
+    "path": "reports/m2/stage84-list-search-transform-evidence.tar.gz",
+    "sha256": "64e5c580e38d40761876610a9f810c15540039c8b578eb16266496c15bc87f7b"
+  },
+  "canonical_integrated": true,
+  "compatibility_baseline": "Pkl 0.32.0",
+  "complete": true,
+  "features": [
+    "List.find",
+    "List.filter",
+    "List.flatMap"
+  ],
+  "focused_regressions": {
+    "correction": "Enable host_logger in the test; successor all44 queries match including ordered logs.",
+    "distinct_test_functions": 34,
+    "initial_combined_command_exit": 101,
+    "initial_failure": "The new oracle test disabled host_logger; runtime values/errors already matched.",
+    "java_queries": 44,
+    "repetitions": 2,
+    "unchanged_originals": 6
+  },
+  "format_and_manifest": {
+    "fmt-check": {
+      "bytes": 138,
+      "path": "target/m2/stage84-logger-focused-prep-01/fmt-check.json",
+      "sha256": "23d2faedbcb8d190f49c50602b8279b2b23683b4012fb4ef5d38d70244962718"
+    },
+    "manifest-check": {
+      "bytes": 130,
+      "path": "target/m2/stage84-logger-focused-prep-01/manifest-check.json",
+      "sha256": "93bfdf2e27a682aaa683c5bafa2eeaa5762250fa249624c7f8e6312514783b4b"
+    }
+  },
+  "full_api_complete": false,
+  "full_m2_complete": false,
+  "full_ready_replay": {
+    "inventory_cases": 4527,
+    "official_previous_matches": 4188,
+    "ready_cases": 4416,
+    "status": "running; excluded from this checkpoint",
+    "unready_cases": 111
+  },
+  "git_base_at_acquisition": "100d0112ff24fa43cacf79b3f38184aa3d9672fb",
+  "kind": "stage84-list-search-transform-development-checkpoint-v1",
+  "m1": {
+    "contract": {
+      "architecture_contract_status": "pass",
+      "compatibility_status": "pass",
+      "per_target_raw_matches": {
+        "browser": 6078,
+        "node": 6078,
+        "rust": 6078
+      },
+      "process": {
+        "bytes": 5429,
+        "path": "target/m2/stage84-m1-validation-01/contract/process.json",
+        "sha256": "f5af7f0e1814022f5dfc8bee67ccbd2b3ff386eb756665c826faafd766cf398c"
+      }
+    },
+    "strict": {
+      "architecture_contract_status": "pass",
+      "compatibility_status": "pass",
+      "per_target_raw_matches": {
+        "browser": 6078,
+        "node": 6078,
+        "rust": 6078
+      },
+      "process": {
+        "bytes": 6569,
+        "path": "target/m2/stage84-m1-validation-01/strict/process.json",
+        "sha256": "795ba490757534e4aa9d4b1ea4960f021fc26d523bfd585c77ba24697d7dbbdb"
+      }
+    }
+  },
+  "performance_targets_met": false,
+  "required_checks": {
+    "clippy": {
+      "bytes": 2200,
+      "path": "target/m2/stage84-clippy-01/report.json",
+      "sha256": "1b95dce6f5a6150413b73bcab6430dbdc5d75505f3e304d73738f3f2104670af"
+    },
+    "wasm": {
+      "bytes": 2193,
+      "path": "target/m2/stage84-wasm-01/report.json",
+      "sha256": "2454e3480901fde0ce4987062f455446da4a929b6a250887492f270ea4b05d08"
+    },
+    "xtask": {
+      "bytes": 2119,
+      "path": "target/m2/stage84-xtask-01/report.json",
+      "sha256": "9989e6c18f3e538f205a3036553a8145d40e716fc23b4ce5763a921607dcbf37"
+    }
+  },
+  "scope": "Recorded local macOS arm64 development evidence. Workspace opt1/strip and release bindings are explicit profiles. Full language/API/release-platform/speed/memory requirements remain open.",
+  "selected_platforms": {
+    "artifact_provenance": "Reuse of recorded current workspace native and M1 release bindings; no fresh build claimed.",
+    "independent_review": {
+      "bytes": 2523,
+      "path": "target/m2/stage84-platform-actual-review-01/report.json",
+      "sha256": "31be23c523f180103d53d41bf66d467d9c2658410dac570db709bd0a0fccc479"
+    },
+    "observations_per_target": 88,
+    "ordered_logger_events_per_target": 22,
+    "queries": 44,
+    "raw_matches": {
+      "chromium": 88,
+      "napi": 88,
+      "native": 88
+    },
+    "repetitions": 2,
+    "report": {
+      "bytes": 1606132,
+      "path": "target/m2/stage84-platform-capture-01/report.json",
+      "sha256": "2c2106d7d6cdd947d34333ee3a4ada0a7c5221c19abcade14e08ff56cef44c98"
+    },
+    "uncompared_java_channels": [
+      "result.java-type",
+      "result.error-class",
+      "result.exception-to-string",
+      "result.cause-class",
+      "result.cause-message",
+      "result.cause-to-string"
+    ]
+  },
+  "separate_ignored_regex_regression": {
+    "default_ignore_annotation_still_present": true,
+    "passed": 1
+  },
+  "workspace": {
+    "doctest_invocations": 2,
+    "env_overrides": {
+      "CARGO_BUILD_JOBS": "1",
+      "CARGO_INCREMENTAL": "0",
+      "CARGO_PROFILE_DEV_DEBUG": "0",
+      "CARGO_PROFILE_DEV_DEBUG_ASSERTIONS": "true",
+      "CARGO_PROFILE_DEV_OPT_LEVEL": "1",
+      "CARGO_PROFILE_DEV_OVERFLOW_CHECKS": "true",
+      "CARGO_PROFILE_DEV_STRIP": "symbols",
+      "CARGO_PROFILE_TEST_DEBUG": "0",
+      "CARGO_PROFILE_TEST_DEBUG_ASSERTIONS": "true",
+      "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+      "CARGO_PROFILE_TEST_OVERFLOW_CHECKS": "true",
+      "CARGO_PROFILE_TEST_STRIP": "symbols",
+      "CARGO_TARGET_DIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target"
+    },
+    "failed": 0,
+    "ignored": 2,
+    "integration_targets": 202,
+    "nested_child_passes_separate": 13,
+    "passed": 1126,
+    "report": {
+      "bytes": 3168,
+      "path": "target/m2/stage84-workspace-01/report.json",
+      "sha256": "9f09bd30183743d0ac775a72e114e4e318574030c240eb916b4186d7b6105ccf"
+    },
+    "source_paths": 187649,
+    "unit_targets": 3
+  }
+}

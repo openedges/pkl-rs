@@ -1,0 +1,1 @@
+(List(new Dynamic { x = throw("unforced") }).find((x) -> true)) is Dynamic

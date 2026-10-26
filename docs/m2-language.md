@@ -1,5 +1,37 @@
 # M2 language verification
 
+## Stage84 List search and transforms
+
+The shared resumable collection engine now implements `List.find`, `List.filter`,
+and `List.flatMap`. Search short-circuits on the first match; filtering preserves
+the original elements and order. Flattening accepts List/Set results and drains
+each rooted inner collection before invoking the next callback. Predicate and
+result-type errors follow the pinned Java behavior.
+
+The full workspace command passed 1,126 tests, with zero failures and two ignored
+tests across 202 integration targets, three unit targets, and two doctest
+invocations. Thirteen nested child observations are counted separately. An
+explicit run of the formerly unsupported Regex regression also passed; its stale
+ignore annotation remains a follow-up cleanup. Formatting, reference verification,
+workspace/all-target Clippy, and the Wasm compilation check passed. The workspace
+run used opt1, no debug information, symbol stripping, and enabled assertions and
+overflow checks; it is not a performance measurement.
+
+Six unchanged originals pass their complete Java output comparisons. The new
+44-query cohort matches twice on native, N-API, and Chromium, including full
+UTF-8/UTF-16 output/error strings, status, and ordered Logger fields. Each target
+has 88 matching observations and 22 logger events. Java-only type, exception,
+and cause channels remain outside this adapter's comparison surface. Separate
+fresh M1 strict and architecture-contract experiments each match all 6,078 Java
+results per target. Platform artifacts retain their original workspace/M1 build
+provenance; reuse is not reported as a new compilation.
+
+The [checkpoint](../reports/m2/stage84-list-search-transform-checkpoint.json)
+preserves the initial test-logger configuration failure and successful successor.
+The current 4,416-case replay remains in progress, so the official aggregate below
+is unchanged. All nine M2 workstreams and full API, release-platform, speed, and
+memory requirements remain open.
+
 ## Stage79–83 focused implementation checkpoint
 
 The shared runtime now preserves Reference constraint owners, the nearest authored

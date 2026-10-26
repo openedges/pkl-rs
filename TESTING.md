@@ -1034,6 +1034,20 @@ conditions. The `classes/constraints14.pkl` internal error, all other
 nonpasses, and 111 unready cases remain in the release gate. No complete API,
 cross-platform release, or performance result follows from these local checks.
 
+### Stage84 local verification boundary
+
+The complete workspace command passed 1,126 tests with zero failures and two
+ignored tests; 13 nested child observations and one explicit formerly ignored
+Regex regression are separate. Its opt1/debug0/strip profile enables assertions
+and overflow checks. All five required Rust commands passed on the frozen local
+source set. Native, N-API, and Chromium each match 88 observations of the new
+44-query List cohort, including ordered Logger fields. Both fresh M1 experiments
+match all 6,078 Java results per target. The
+[checkpoint](reports/m2/stage84-list-search-transform-checkpoint.json) retains
+the exact profiles, reused artifact provenance, raw failures, and comparison
+boundaries. The still-running full replay and complete M2/API/performance gates
+are separate from these results.
+
 ## Performance and Memory
 
 The [initial Java benchmark contract](docs/benchmarks.md) implements cold CLI, persistent evaluator, and fresh evaluator measurements for six fixtures. Use a quiet host with the pinned optimizing runtime:

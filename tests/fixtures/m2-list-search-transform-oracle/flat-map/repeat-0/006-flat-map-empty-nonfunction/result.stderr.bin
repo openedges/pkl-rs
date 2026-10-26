@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got type `Int`.
+Value: 42
+
+3152 | external function flatMap<Result>(transform: (Element) -> Collection<Result>): List<Result>
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.flatMap (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3152)
+
+1 | List().flatMap(42)
+    ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

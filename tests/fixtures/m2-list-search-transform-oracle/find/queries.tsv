@@ -1,0 +1,14 @@
+string	find-empty-no-match	List().find((x) -> true)
+string	find-no-match	List(2,4).find((x) -> x == 3)
+string	find-ordered-first	List(3,1,2).find((x) -> trace(x) < 3)
+string	find-short-circuit	List(1,2).find((x) -> if (x == 1) true else throw("later callback"))
+string	find-null-element	List(null,1).find((x) -> x == null)
+string	find-lazy-element	(List(new Dynamic { x = throw("unforced") }).find((x) -> true)) is Dynamic
+string	find-strict-receiver	List(1,throw("receiver first")).find((x) -> true)
+string	find-bad-result	List(1).find((x) -> "bad")
+string	find-empty-nonfunction	List().find(42)
+string	find-empty-wrong-arity	List().find((a,b) -> true)
+string	find-lexical-capture	let (limit=2) List(1,2,3).find((x) -> x >= limit)
+string	find-captured-this	box.findItem
+string	find-argument-before-arity	List(1).find(throw("argument first"), true)
+string	find-retry-bad-result	List(1).find((x) -> "bad")

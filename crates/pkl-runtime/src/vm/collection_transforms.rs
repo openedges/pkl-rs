@@ -11,6 +11,9 @@ pub enum Transform {
     NonNullIndexed,
     Keys,
     Values,
+    Find,
+    Filter,
+    FlatMap,
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -41,6 +44,9 @@ impl Transform {
             Self::NonNullIndexed => "mapNonNullIndexed",
             Self::Keys => "mapKeys",
             Self::Values => "mapValues",
+            Self::Find => "find",
+            Self::Filter => "filter",
+            Self::FlatMap => "flatMap",
         }
     }
 
@@ -52,7 +58,7 @@ impl Transform {
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
-) -> [usize; 11] {
+) -> [usize; 14] {
     use Transform::*;
     let source = crate::stdlib_sources::base();
     let methods = [
@@ -67,21 +73,34 @@ pub(super) fn blocks(
         ("Map", Map),
         ("Map", Keys),
         ("Map", Values),
+        ("List", Find),
+        ("List", Filter),
+        ("List", FlatMap),
     ];
     methods.map(|(class, operation)| {
         let class_start = source
             .text
             .find(&format!("external class {class}<"))
             .expect("pinned class");
+        let predicate = matches!(operation, Find | Filter);
+        let delimiter = if predicate { '(' } else { '<' };
         let start = class_start
             + source.text[class_start..]
-                .find(&format!("external function {}<", operation.name()))
+                .find(&format!(
+                    "external function {}{delimiter}",
+                    operation.name()
+                ))
                 .expect("pinned transform");
+        let parameter_name = if predicate {
+            "predicate: "
+        } else {
+            "transform: "
+        };
         let parameter = start
             + source.text[start..]
-                .find("transform: ")
-                .expect("transform parameter")
-            + "transform: ".len();
+                .find(parameter_name)
+                .expect("callback parameter")
+            + parameter_name.len();
         // The function type includes the argument tuple and the result type;
         // delimit it at the method parameter's closing delimiter, not the tuple.
         let arrow = parameter
@@ -120,13 +139,27 @@ pub(super) fn blocks(
             },
             Instruction::CollectionTransformProject { next: 3 },
         ];
-        match class {
-            "List" => code.push(Instruction::AppendStrictElement),
-            "Set" => code.extend([Instruction::PrepareSetElement, Instruction::AddSetElement]),
-            "Map" => code.extend([Instruction::PrepareMapEntry, Instruction::AddMapEntry]),
-            _ => unreachable!(),
+        match operation {
+            // A successful find leaves the original element on the stack and
+            // releases its cursor. A false predicate jumps back to instruction 3.
+            Find => code.push(Instruction::Return),
+            FlatMap => code.extend([
+                Instruction::CollectionFlatMapNext { end: 3 },
+                Instruction::AppendStrictElement,
+                Instruction::Jump(6),
+            ]),
+            _ => {
+                match class {
+                    "List" => code.push(Instruction::AppendStrictElement),
+                    "Set" => {
+                        code.extend([Instruction::PrepareSetElement, Instruction::AddSetElement])
+                    }
+                    "Map" => code.extend([Instruction::PrepareMapEntry, Instruction::AddMapEntry]),
+                    _ => unreachable!(),
+                }
+                code.push(Instruction::Jump(3));
+            }
         }
-        code.push(Instruction::Jump(3));
         let end = code.len();
         code[3] = Instruction::CollectionTransformNext { end };
         code.extend([Instruction::EndCollectionTransform, Instruction::Return]);
@@ -237,6 +270,13 @@ pub(super) struct TransformRun {
     next: usize,
     current: Option<(Value, Value)>,
     lazy: Option<LazyEvery>,
+    inner: Option<FlatMapRun>,
+}
+
+struct FlatMapRun {
+    source: ObjectId,
+    members: Vec<CollectionMember>,
+    next: usize,
 }
 
 struct LazyEvery {
@@ -249,6 +289,9 @@ impl TransformRun {
     pub(super) fn roots(&self, roots: &mut Vec<Value>) {
         roots.push(Value::Object(self.source));
         roots.extend(self.callback.iter().cloned());
+        if let Some(inner) = &self.inner {
+            roots.push(Value::Object(inner.source));
+        }
         if let Some(lazy) = &self.lazy {
             roots.extend(lazy.members.iter().map(|m| m.descriptor.key.clone()));
             roots.extend(lazy.seen.iter().map(|m| m.key.clone()));
@@ -314,6 +357,9 @@ impl Vm {
             (0 | 4, "mapNonNullIndexed") => 3,
             (8, "mapKeys") => 1,
             (8, "mapValues") => 2,
+            (0, "find") => 11,
+            (0, "filter") => 12,
+            (0, "flatMap") => 13,
             _ => return false,
         };
         let id = self.heap.allocate(Object {
@@ -364,19 +410,25 @@ impl Vm {
             members.reverse();
         }
         // A strict result must not capture the method's source/callback scope.
-        let builder = self.heap.allocate(Object {
-            collection_kind: match operation {
-                Operation::Every => unreachable!("every has no result builder"),
-                Operation::Callback(_) => self.heap.get(source)?.collection_kind,
-                Operation::Projection(Projection::ToSet | Projection::KeysHash) => {
-                    CollectionKind::Set
-                }
-                Operation::Projection(_) => CollectionKind::List,
-            },
-            ..Object::default()
-        });
+        let builder = if matches!(operation, Operation::Callback(Transform::Find)) {
+            None
+        } else {
+            Some(self.heap.allocate(Object {
+                collection_kind: match operation {
+                    Operation::Every => unreachable!("every has no result builder"),
+                    Operation::Callback(_) => self.heap.get(source)?.collection_kind,
+                    Operation::Projection(Projection::ToSet | Projection::KeysHash) => {
+                        CollectionKind::Set
+                    }
+                    Operation::Projection(_) => CollectionKind::List,
+                },
+                ..Object::default()
+            }))
+        };
         let frame = self.frames.last_mut().expect("transform frame");
-        frame.builders.push(builder);
+        if let Some(builder) = builder {
+            frame.builders.push(builder);
+        }
         frame.collection_transform = Some(Box::new(TransformRun {
             operation,
             source,
@@ -385,6 +437,7 @@ impl Vm {
             next: 0,
             current: None,
             lazy: None,
+            inner: None,
         }));
         Ok(())
     }
@@ -465,23 +518,69 @@ impl Vm {
 
     pub(super) fn collection_transform_project(&mut self, next: usize) -> Result<(), RuntimeError> {
         let value = self.pop()?;
-        let run = self
-            .frames
-            .last_mut()
-            .and_then(|frame| frame.collection_transform.as_mut())
-            .ok_or_else(|| invalid("transform result"))?;
-        let (key, input) = run
-            .current
-            .take()
-            .ok_or_else(|| invalid("transform input"))?;
-        let Operation::Callback(operation) = run.operation else {
-            return Err(invalid("projection cannot receive callback result"));
+        let (operation, source, key, input) = {
+            let run = self
+                .frames
+                .last_mut()
+                .and_then(|frame| frame.collection_transform.as_mut())
+                .ok_or_else(|| invalid("transform result"))?;
+            let (key, input) = run
+                .current
+                .take()
+                .ok_or_else(|| invalid("transform input"))?;
+            let Operation::Callback(operation) = run.operation else {
+                return Err(invalid("projection cannot receive callback result"));
+            };
+            (operation, run.source, key, input)
         };
         match operation {
+            Transform::Find | Transform::Filter => {
+                // ApplyVmFunction1Node.executeBoolean checks the callback's
+                // actual result; there is no authored return type-node span.
+                let Value::Bool(accepted) = value else {
+                    return Err(type_error(
+                        &TypeCheck::Boolean,
+                        &value,
+                        &self.program.module_name,
+                        &self.heap,
+                    )?);
+                };
+                if accepted {
+                    if matches!(operation, Transform::Find) {
+                        self.frames.last_mut().unwrap().collection_transform = None;
+                    }
+                    self.stack.push(input);
+                } else {
+                    self.jump(next)?;
+                }
+            }
+            Transform::FlatMap => {
+                if !self.is_list(&value) && !self.is_set(&value) {
+                    return Err(type_error(
+                        &TypeCheck::CollectionBase { arguments: vec![] },
+                        &value,
+                        &self.program.module_name,
+                        &self.heap,
+                    )?);
+                }
+                let source = value.as_object()?;
+                let members = collections::ordered_members(&self.heap, source)?;
+                self.frames
+                    .last_mut()
+                    .unwrap()
+                    .collection_transform
+                    .as_mut()
+                    .unwrap()
+                    .inner = Some(FlatMapRun {
+                    source,
+                    members,
+                    next: 0,
+                });
+            }
             Transform::NonNull | Transform::NonNullIndexed if value.is_null() => self.jump(next)?,
             Transform::Keys => self.stack.extend([value, input]),
             Transform::Values => self.stack.extend([key, value]),
-            Transform::Map if self.heap.get(run.source)?.collection_kind == CollectionKind::Map => {
+            Transform::Map if self.heap.get(source)?.collection_kind == CollectionKind::Map => {
                 let pair = value
                     .as_object()
                     .ok()
@@ -499,6 +598,29 @@ impl Vm {
             }
             _ => self.stack.push(value),
         }
+        Ok(())
+    }
+
+    /// Drain a strict callback result in ordinary VM steps. The inner source
+    /// remains rooted across yields, and is exhausted before the next callback.
+    pub(super) fn collection_flat_map_next(&mut self, end: usize) -> Result<(), RuntimeError> {
+        let run = self
+            .frames
+            .last_mut()
+            .and_then(|frame| frame.collection_transform.as_mut())
+            .ok_or_else(|| invalid("flatMap cursor"))?;
+        let inner = run
+            .inner
+            .as_mut()
+            .ok_or_else(|| invalid("flatMap result"))?;
+        let Some(member) = inner.members.get(inner.next).cloned() else {
+            run.inner = None;
+            return self.jump(end);
+        };
+        let value = collections::cached_render_value(&self.heap, inner.source, &member)?
+            .ok_or_else(|| invalid("uncached strict flatMap element"))?;
+        inner.next += 1;
+        self.stack.push(value);
         Ok(())
     }
 
@@ -529,6 +651,23 @@ impl Vm {
             .collection_transform
             .take()
             .ok_or_else(|| invalid("missing transform cursor"))?;
+        if matches!(run.operation, Operation::Callback(Transform::Find)) {
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                PklString::join(
+                    &[
+                        "Cannot find matching element in collection.\nCollection: ".into(),
+                        crate::diagnostic_values::render_string(
+                            &Value::Object(run.source),
+                            &self.heap,
+                            &self.program.module_name,
+                            80,
+                        )?,
+                    ],
+                    "",
+                ),
+            ));
+        }
         let builder = frame
             .builders
             .pop()
@@ -775,6 +914,7 @@ impl Vm {
             next: 0,
             current: None,
             lazy,
+            inner: None,
         }));
         Ok(())
     }

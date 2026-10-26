@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Collection`, but got type `Listing`.
+Value: new Listing { ? }
+
+1 | List(1).flatMap((x) -> new Listing { x })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

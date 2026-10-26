@@ -1,0 +1,6 @@
+box = new Dynamic {
+  limit = 2
+  findItem = List(1,2,3).find((x) -> x >= this.limit)
+  filtered = List(1,2,3).filter((x) -> x >= this.limit)
+  flattened = List(1,2).flatMap((x) -> List(x + this.limit))
+}

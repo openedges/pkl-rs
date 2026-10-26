@@ -1,0 +1,14 @@
+string	filter-empty	List().filter((x) -> throw("not called"))
+string	filter-ordered-values	List(3,1,2,1).filter((x) -> trace(x) < 3)
+string	filter-none	List(1,2).filter((x) -> false)
+string	filter-null-kept	List(null,1).filter((x) -> x == null)
+string	filter-lazy-element	List(new Dynamic { x = throw("unforced") }).filter((x) -> true)[0] is Dynamic
+string	filter-strict-receiver	List(1,throw("receiver first")).filter((x) -> true)
+string	filter-bad-result	List(1).filter((x) -> null)
+string	filter-callback-error-order	List(1,2,3).filter((x) -> if (trace(x) == 2) throw("second callback") else true)
+string	filter-empty-nonfunction	List().filter(42)
+string	filter-empty-wrong-arity	List().filter((a,b) -> true)
+string	filter-lexical-capture	let (limit=2) List(1,2,3).filter((x) -> x >= limit)
+string	filter-captured-this	box.filtered
+string	filter-result-list	List(1,2).filter((x) -> true) is List
+string	filter-retry-bad-result	List(1).filter((x) -> null)

@@ -1,0 +1,236 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "claim": "Six unchanged Java CLI outputs, not six fresh Rust passes. Empty stderr retained.",
+  "copies": [
+    {
+      "bytes": 1475,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/predicateMembersDynamicListing/module.pkl",
+      "sha256": "0fe687d0a6a4fdab65ec05785b7a84c9c6a00a58cc8ebf7a6b8bab2c880cd725",
+      "source": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/generators/predicateMembersDynamicListing.pkl"
+    },
+    {
+      "bytes": 1750,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/predicateMembersDynamicListing/stdout.bin",
+      "sha256": "20ab9853e5ce1ab47909fea3986ab435286ec0aaa37aae4c42bd6e758b368b34",
+      "source": "target/m2/stage67-full-regression-01/cases/e6df2f9981fa6e58c4cd9481/java/stdout.bin"
+    },
+    {
+      "bytes": 0,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/predicateMembersDynamicListing/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage67-full-regression-01/cases/e6df2f9981fa6e58c4cd9481/java/stderr.bin"
+    },
+    {
+      "bytes": 3254,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/predicateMembersDynamicListing/process.json",
+      "sha256": "01cbb5fb27d935618ca27c794855284edd6347dbae720b8c79e4df3ca083de60",
+      "source": "target/m2/stage67-full-regression-01/cases/e6df2f9981fa6e58c4cd9481/java/process.json"
+    },
+    {
+      "bytes": 1550,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/predicateMembersDynamicMapping/module.pkl",
+      "sha256": "bc16fc1affb3aed92b368b741c4e763621d5f32a6b720fe69a676e4483f54eff",
+      "source": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/generators/predicateMembersDynamicMapping.pkl"
+    },
+    {
+      "bytes": 2018,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/predicateMembersDynamicMapping/stdout.bin",
+      "sha256": "e315b2cdd77d63596c3affaea4b4794911ab9a067a63cbed623a0b852aaa6bd2",
+      "source": "target/m2/stage67-full-regression-01/cases/5f82d6a15d896776b5d72de1/java/stdout.bin"
+    },
+    {
+      "bytes": 0,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/predicateMembersDynamicMapping/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage67-full-regression-01/cases/5f82d6a15d896776b5d72de1/java/stderr.bin"
+    },
+    {
+      "bytes": 3254,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/predicateMembersDynamicMapping/process.json",
+      "sha256": "21190cfee2a719b19dc3963d6f34f0c5a3cbf1a0d774e7f7e742cbc40bdd7eae",
+      "source": "target/m2/stage67-full-regression-01/cases/5f82d6a15d896776b5d72de1/java/process.json"
+    },
+    {
+      "bytes": 1817,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/predicateMembersListing/module.pkl",
+      "sha256": "91a971c7983a6ec628503d84cc8a231be0f1dd3be7433974d4e6db41dcf27905",
+      "source": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/generators/predicateMembersListing.pkl"
+    },
+    {
+      "bytes": 2185,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/predicateMembersListing/stdout.bin",
+      "sha256": "dfeb3f057fdc9bc6ea78988fd7a1e5cdc0770d8ded1a1a05fc9ec67caee406c9",
+      "source": "target/m2/stage67-full-regression-01/cases/ba6b203e311dceb8286b917e/java/stdout.bin"
+    },
+    {
+      "bytes": 0,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/predicateMembersListing/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage67-full-regression-01/cases/ba6b203e311dceb8286b917e/java/stderr.bin"
+    },
+    {
+      "bytes": 3240,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/predicateMembersListing/process.json",
+      "sha256": "ecd45fd3e8746efb7e38f5e0780c6b085db925c00abf9a97189be2fa1bb145bf",
+      "source": "target/m2/stage67-full-regression-01/cases/ba6b203e311dceb8286b917e/java/process.json"
+    },
+    {
+      "bytes": 1551,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/predicateMembersMapping/module.pkl",
+      "sha256": "491897d9dca50b23b8bceafae1c292e5863606ac8a9d96028b3881016f255153",
+      "source": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/generators/predicateMembersMapping.pkl"
+    },
+    {
+      "bytes": 2018,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/predicateMembersMapping/stdout.bin",
+      "sha256": "e315b2cdd77d63596c3affaea4b4794911ab9a067a63cbed623a0b852aaa6bd2",
+      "source": "target/m2/stage67-full-regression-01/cases/d68b624cf07f0bf35fd14cfa/java/stdout.bin"
+    },
+    {
+      "bytes": 0,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/predicateMembersMapping/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage67-full-regression-01/cases/d68b624cf07f0bf35fd14cfa/java/stderr.bin"
+    },
+    {
+      "bytes": 3240,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/predicateMembersMapping/process.json",
+      "sha256": "6b6a8873c073871c3a6777d8fb7f46df7e36c720f02849c5d8629b609b1187c6",
+      "source": "target/m2/stage67-full-regression-01/cases/d68b624cf07f0bf35fd14cfa/java/process.json"
+    },
+    {
+      "bytes": 737,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/forGeneratorLexicalScope/module.pkl",
+      "sha256": "c50d860c3efd671d1a09f6efe3b38898f85754d0f29d30fe5e02cd4e203917e3",
+      "source": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/generators/forGeneratorLexicalScope.pkl"
+    },
+    {
+      "bytes": 377,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/forGeneratorLexicalScope/stdout.bin",
+      "sha256": "8514aa552b34a3923ab9407c33f8caa8f64622721433e662c18046fd3bceae67",
+      "source": "target/m2/stage67-full-regression-01/cases/f7634df03ea51cbc60f3740b/java/stdout.bin"
+    },
+    {
+      "bytes": 0,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/forGeneratorLexicalScope/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage67-full-regression-01/cases/f7634df03ea51cbc60f3740b/java/stderr.bin"
+    },
+    {
+      "bytes": 3242,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/forGeneratorLexicalScope/process.json",
+      "sha256": "fbd45937d7ca11bf4ce896ef74d44df2be0b940f622e1d58024a1941173c3f44",
+      "source": "target/m2/stage67-full-regression-01/cases/f7634df03ea51cbc60f3740b/java/process.json"
+    },
+    {
+      "bytes": 277,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/lambda4/module.pkl",
+      "sha256": "5f3496348fc93de5a7bbbfd4341a5a38cf4cdf4ff887a8ac35a8720708526d77",
+      "source": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/lambdas/lambda4.pkl"
+    },
+    {
+      "bytes": 185,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/lambda4/stdout.bin",
+      "sha256": "f396c07f1d1ea316e12d04984817d93474feb8b3489e1e1113f3d7456c35d276",
+      "source": "target/m2/stage67-full-regression-01/cases/93cb530c04b7f0795a785c47/java/stdout.bin"
+    },
+    {
+      "bytes": 0,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/lambda4/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage67-full-regression-01/cases/93cb530c04b7f0795a785c47/java/stderr.bin"
+    },
+    {
+      "bytes": 3202,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/lambda4/process.json",
+      "sha256": "42729d345bd1f7db0f5a1493e3693c941d27bbba39d0645bbdbdc6e8a902096a",
+      "source": "target/m2/stage67-full-regression-01/cases/93cb530c04b7f0795a785c47/java/process.json"
+    },
+    {
+      "bytes": 121,
+      "destination": "tests/fixtures/m2-list-search-transform-originals/snippetTest.pkl",
+      "sha256": "54e9850766ccbab3997cf121d3cd54d9da2a0e99c19bb8441acf8ad437f00074",
+      "source": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/snippetTest.pkl"
+    }
+  ],
+  "originals": [
+    {
+      "java_exit": 0,
+      "java_process_sha256": "01cbb5fb27d935618ca27c794855284edd6347dbae720b8c79e4df3ca083de60",
+      "name": "predicateMembersDynamicListing",
+      "original_case": "e6df2f9981fa6e58c4cd9481",
+      "original_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/generators/predicateMembersDynamicListing.pkl",
+      "rust_current_unexecuted": true,
+      "source": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/generators/predicateMembersDynamicListing.pkl",
+      "source_sha256": "0fe687d0a6a4fdab65ec05785b7a84c9c6a00a58cc8ebf7a6b8bab2c880cd725",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "20ab9853e5ce1ab47909fea3986ab435286ec0aaa37aae4c42bd6e758b368b34",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/generators/predicateMembersDynamicListing.pkl"
+    },
+    {
+      "java_exit": 0,
+      "java_process_sha256": "21190cfee2a719b19dc3963d6f34f0c5a3cbf1a0d774e7f7e742cbc40bdd7eae",
+      "name": "predicateMembersDynamicMapping",
+      "original_case": "5f82d6a15d896776b5d72de1",
+      "original_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/generators/predicateMembersDynamicMapping.pkl",
+      "rust_current_unexecuted": true,
+      "source": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/generators/predicateMembersDynamicMapping.pkl",
+      "source_sha256": "bc16fc1affb3aed92b368b741c4e763621d5f32a6b720fe69a676e4483f54eff",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e315b2cdd77d63596c3affaea4b4794911ab9a067a63cbed623a0b852aaa6bd2",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/generators/predicateMembersDynamicMapping.pkl"
+    },
+    {
+      "java_exit": 0,
+      "java_process_sha256": "ecd45fd3e8746efb7e38f5e0780c6b085db925c00abf9a97189be2fa1bb145bf",
+      "name": "predicateMembersListing",
+      "original_case": "ba6b203e311dceb8286b917e",
+      "original_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/generators/predicateMembersListing.pkl",
+      "rust_current_unexecuted": true,
+      "source": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/generators/predicateMembersListing.pkl",
+      "source_sha256": "91a971c7983a6ec628503d84cc8a231be0f1dd3be7433974d4e6db41dcf27905",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "dfeb3f057fdc9bc6ea78988fd7a1e5cdc0770d8ded1a1a05fc9ec67caee406c9",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/generators/predicateMembersListing.pkl"
+    },
+    {
+      "java_exit": 0,
+      "java_process_sha256": "6b6a8873c073871c3a6777d8fb7f46df7e36c720f02849c5d8629b609b1187c6",
+      "name": "predicateMembersMapping",
+      "original_case": "d68b624cf07f0bf35fd14cfa",
+      "original_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/generators/predicateMembersMapping.pkl",
+      "rust_current_unexecuted": true,
+      "source": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/generators/predicateMembersMapping.pkl",
+      "source_sha256": "491897d9dca50b23b8bceafae1c292e5863606ac8a9d96028b3881016f255153",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e315b2cdd77d63596c3affaea4b4794911ab9a067a63cbed623a0b852aaa6bd2",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/generators/predicateMembersMapping.pkl"
+    },
+    {
+      "java_exit": 0,
+      "java_process_sha256": "fbd45937d7ca11bf4ce896ef74d44df2be0b940f622e1d58024a1941173c3f44",
+      "name": "forGeneratorLexicalScope",
+      "original_case": "f7634df03ea51cbc60f3740b",
+      "original_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/generators/forGeneratorLexicalScope.pkl",
+      "rust_current_unexecuted": true,
+      "source": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/generators/forGeneratorLexicalScope.pkl",
+      "source_sha256": "c50d860c3efd671d1a09f6efe3b38898f85754d0f29d30fe5e02cd4e203917e3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "8514aa552b34a3923ab9407c33f8caa8f64622721433e662c18046fd3bceae67",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/generators/forGeneratorLexicalScope.pkl"
+    },
+    {
+      "java_exit": 0,
+      "java_process_sha256": "42729d345bd1f7db0f5a1493e3693c941d27bbba39d0645bbdbdc6e8a902096a",
+      "name": "lambda4",
+      "original_case": "93cb530c04b7f0795a785c47",
+      "original_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/lambdas/lambda4.pkl",
+      "rust_current_unexecuted": true,
+      "source": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/lambdas/lambda4.pkl",
+      "source_sha256": "5f3496348fc93de5a7bbbfd4341a5a38cf4cdf4ff887a8ac35a8720708526d77",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "f396c07f1d1ea316e12d04984817d93474feb8b3489e1e1113f3d7456c35d276",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/lambdas/lambda4.pkl"
+    }
+  ]
+}

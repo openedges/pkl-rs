@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got type `Int`.
+Value: 42
+
+3148 | external function filter(predicate: (Element) -> Boolean): List<Element>
+                                           ^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.filter (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3148)
+
+1 | List().filter(42)
+    ^^^^^^^^^^^^^^^^^
+at  (repl:text)

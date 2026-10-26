@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Expected value of type `Collection`, but got type `Map`.
+Value: Map("a", 1)
+
+1 | List(1).flatMap((x) -> Map("a",1))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

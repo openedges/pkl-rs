@@ -2882,6 +2882,32 @@ Clippy와 Wasm 빌드 검사가 종료 0이다.
 2,363개를 실제 커밋과 대조한다. 전체 컴파일 입력의 완전한 포괄이나 추가 호환
 통과를 주장하지 않는다.
 
+#### Stage84 — List 검색·필터·평탄화와 전체 Rust 검사
+
+공통 collection VM에 `List.find`, `List.filter`, `List.flatMap`을 구현했다.
+첫 일치에서 탐색을 끝내고, 원래 원소·순서를 보존하며, 평탄화한 내부
+컬렉션을 모두 순회한 뒤 다음 callback을 실행한다. 중단·재개·GC 경로도
+공유하며 Java의 predicate/result 타입 오류를 원시 문자열로 대조했다.
+
+필수 Rust 다섯 명령이 통과했다. 전체 workspace는 202개 integration·3개
+unit target과 2개 doctest 호출에서 **1,126개 통과·실패 0개·기존 제외 2개**다.
+중첩 child 13회는 별도로 기록한다. 제외된 Regex 회귀를 명시적으로 실행한
+결과도 통과했으며, 오래된 ignore 설정 해제는 다음 소스 갱신에 반영한다.
+전체 검사는 opt1/debug0/strip과 assertions·overflow checks 활성화 조건의
+로컬 결과이며 성능 측정이 아니다.
+
+원본 6개와 Java 44개 질의를 검증했다. native·N-API·Chromium에서 각각
+두 반복 88개 관찰과 Logger 22건이 일치했다. 기존 전체 검사·M1이 실제로
+만든 산출물의 출처를 연결해 재사용했으며 새 컴파일로 표시하지 않는다.
+별도 M1 strict·구조 계약 실행도 각 대상의 6,078개 원시 결과가 모두 일치했다.
+최초 host_logger 테스트 설정 오류와 후속 성공은 함께 보존한다.
+
+[체크포인트](reports/m2/stage84-list-search-transform-checkpoint.json)를 게시한다.
+전체 4,416개 재실행은 계속 진행 중이므로 공식 4,188/4,416과 미준비 111개는
+갱신하지 않는다. M2 아홉 영역과 전체 API·릴리스 플랫폼·성능 조건도 유지한다.
+다음 `List.distinct`·`Listing.isDistinct` 후보는 별도 격리 작업이며 현재
+canonical 완료 범위에 포함하지 않는다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.
