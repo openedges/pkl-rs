@@ -1,0 +1,1 @@
+((new Mapping { ["x"] = 0.0 }).containsValue(-0.0)).toString()

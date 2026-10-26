@@ -1,0 +1,10 @@
+–– Pkl Error ––
+later-selector
+
+1 | ((new Listing { 1; 2; 3 }).distinctBy((x) -> if(x==3) throw("later-selector") else 0).length).toString()
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | ((new Listing { 1; 2; 3 }).distinctBy((x) -> if(x==3) throw("later-selector") else 0).length).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

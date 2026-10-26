@@ -1,0 +1,75 @@
+{
+  "actual_m1_primitive_matches_per_target": 6078,
+  "actual_platform_observations_per_target": 278,
+  "approved_for_publication": true,
+  "archive_member_hash_size_mode_order_exact": true,
+  "canonical_integrated_paths": 3398,
+  "complete": true,
+  "current_selected_bytes_exact": true,
+  "documentation": {
+    "PLAN.md": {
+      "bytes": 445048,
+      "sha256": "5307fa5d6006d728c115c4550e0a37f7610df238ce20a2962a77b2f4526590a6"
+    },
+    "TESTING.md": {
+      "bytes": 74909,
+      "sha256": "d7d004e2cad07a713d4247e870fe79d1ac3bef2a889c550c1ef57ad607e139b7"
+    },
+    "docs/m2-language.md": {
+      "bytes": 84105,
+      "sha256": "3acb3006bd53987aa8c6cf5bdccbe17aa2ae498429400d890d640db1302c6d76"
+    },
+    "reports/m2/README.md": {
+      "bytes": 363420,
+      "sha256": "8c8323f93f98b0e573e12ce06bfc458ec4888a025042b08b0427299eb8f332f9"
+    }
+  },
+  "finished_epoch": 1792997562.911156,
+  "full_m2_complete": false,
+  "gzip_crc_and_eof_verified": true,
+  "inputs": {
+    "checkpoint-draft.json": {
+      "bytes": 14181,
+      "mode": 420,
+      "sha256": "05b901c1a5fcb54aac73f7edcc67f0c08580950314562af96c4a5118015d0020"
+    },
+    "report.json": {
+      "bytes": 895,
+      "mode": 420,
+      "sha256": "a81d2c76886c34defe310d211ab6e859cc6af7d8bdc24695eb0b48e8dd1b4fc9"
+    },
+    "selection.json": {
+      "bytes": 16304803,
+      "mode": 420,
+      "sha256": "20a2a38a9af545dbb4afbfa2896a9c97f54c3097d7a7d718deaf397ae6bf3ff1"
+    },
+    "stage90-lazy-collections-evidence.tar.gz": {
+      "bytes": 31549689,
+      "mode": 420,
+      "sha256": "3cbc88380100d5f0a07a32b225398f5dcefdc13b1d938448aac0ac9910907987"
+    }
+  },
+  "kind": "stage90-independent-publication-review-v1",
+  "known_failures_preserved": true,
+  "limitations": [
+    "Selected development evidence, not a full 4,416 replay on these sources.",
+    "Original eight CLI modules were compared separately; selected platform SourceProbe does not cover complete CLI Host/process/generated-file behavior.",
+    "Java type/error-class/exception/cause channels are not part of the selected Rust platform comparator."
+  ],
+  "logical_payload_bytes": 179647392,
+  "members_including_manifest": 36241,
+  "parent": "0d75496bac5a1bfa3fd742d61a9e38c1c0853af1",
+  "payloads": 36240,
+  "producer_directory": "target/m2/stage90-checkpoint-publication-01",
+  "public_copy_and_git_publication": "pending",
+  "reviewer": {
+    "bytes": 8095,
+    "mode": 420,
+    "path": "target/m2/stage90-publication-review-prep-01/verify.py",
+    "sha256": "43603cfdef75f1dfd817a555dc638b989cc165110d38cae69e8f5ebfbf8dd83c"
+  },
+  "started_epoch": 1792997546.1945899,
+  "uncompressed_bytes": 261068800,
+  "uncompressed_sha256": "8cb4ec756930623ade7062626d954eb05ef4522cca9606a83177a208a5040443",
+  "unique_current_source_files_checked": 36240
+}

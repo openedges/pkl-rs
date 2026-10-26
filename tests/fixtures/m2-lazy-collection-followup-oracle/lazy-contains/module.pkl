@@ -1,0 +1,9 @@
+module stage90followup.lazyContains
+hidden query = new Dynamic { x = trace("query") }
+hidden stored = new Dynamic { x = trace("stored") }
+hidden same = new Dynamic { bad = throw("identity-unforced") }
+hidden key = new Dynamic { x = trace("key") }
+hidden queryMap = new Dynamic { x = trace("query-map") }
+hidden storedMap = new Dynamic { x = trace("stored-map") }
+class Field { name: String }
+hidden typed: Mapping<String, Field> = new { ["a"] { name = "a" } }

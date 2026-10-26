@@ -1,0 +1,1 @@
+((new Listing { 1; throw("tail") }).contains(2)).toString()

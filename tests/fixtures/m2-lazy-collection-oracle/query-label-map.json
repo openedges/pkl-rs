@@ -1,0 +1,412 @@
+{
+  "kind": "explicit-bijective-helper-transport-labels",
+  "rows": [
+    {
+      "authored_id": "empty-first",
+      "expression_sha256": "d3f56bbe50019a5e642479b74992d515f1cc201a29bbb4b2052ba6317eb9cb1d",
+      "index": 0,
+      "program": "endpoint-boundaries",
+      "wire_id": "empty-first"
+    },
+    {
+      "authored_id": "empty-firstOrNull",
+      "expression_sha256": "493bf8d116866f6dd518fbdc8845a4a1525d147521aad8b68be628be2ec20d3a",
+      "index": 1,
+      "program": "endpoint-boundaries",
+      "wire_id": "empty-firstornull"
+    },
+    {
+      "authored_id": "empty-last",
+      "expression_sha256": "fbc22eafea0063fb115f5913d09c7b1b736974d1db666d388ba6bdbe2f129a7c",
+      "index": 2,
+      "program": "endpoint-boundaries",
+      "wire_id": "empty-last"
+    },
+    {
+      "authored_id": "empty-lastOrNull",
+      "expression_sha256": "4c52b50b6488db0d90279fe59f0b92da37c0c1568581c82e08919b8b9b10e775",
+      "index": 3,
+      "program": "endpoint-boundaries",
+      "wire_id": "empty-lastornull"
+    },
+    {
+      "authored_id": "empty-single",
+      "expression_sha256": "3ff8603677473c826ef23f04dddb398bb42a7cd3697c69b238f1b9c462063ebe",
+      "index": 4,
+      "program": "endpoint-boundaries",
+      "wire_id": "empty-single"
+    },
+    {
+      "authored_id": "empty-singleOrNull",
+      "expression_sha256": "e1d5c7ce4c45d06870f91a6e6cb24dc345b907044f3a7560448642908259871f",
+      "index": 5,
+      "program": "endpoint-boundaries",
+      "wire_id": "empty-singleornull"
+    },
+    {
+      "authored_id": "one-first",
+      "expression_sha256": "67f33d9e8bfa79aa1c7fa922de595a44f3d8c7158ee91f54a19de30b5affceb4",
+      "index": 6,
+      "program": "endpoint-boundaries",
+      "wire_id": "one-first"
+    },
+    {
+      "authored_id": "one-firstOrNull",
+      "expression_sha256": "2fed7b9b191e6e90f9dd7b9d341d4b69a9cb011e294d7e089a86d0121cc9391c",
+      "index": 7,
+      "program": "endpoint-boundaries",
+      "wire_id": "one-firstornull"
+    },
+    {
+      "authored_id": "one-last",
+      "expression_sha256": "ec9804fc536667737a9a4846754823a8d6fe09c384bf1db65f194102691abdda",
+      "index": 8,
+      "program": "endpoint-boundaries",
+      "wire_id": "one-last"
+    },
+    {
+      "authored_id": "one-lastOrNull",
+      "expression_sha256": "8cdd295548f9cfe770e253a0aaac109ce9a8d120c6ad0530f45017c446f6390d",
+      "index": 9,
+      "program": "endpoint-boundaries",
+      "wire_id": "one-lastornull"
+    },
+    {
+      "authored_id": "one-single",
+      "expression_sha256": "4a54a74d5d276d47e27d00d6eb72840711bac50d68e9c772f1c8d49b2144e7b2",
+      "index": 10,
+      "program": "endpoint-boundaries",
+      "wire_id": "one-single"
+    },
+    {
+      "authored_id": "one-singleOrNull",
+      "expression_sha256": "6738c7b264127be1aedaebb881a410a14416ce5c38345865aa0310e10de94ced",
+      "index": 11,
+      "program": "endpoint-boundaries",
+      "wire_id": "one-singleornull"
+    },
+    {
+      "authored_id": "two-first",
+      "expression_sha256": "e01cd6985c7764d932c0f82087a21f6b047cae33d02bd194a7c1b3b751192fd9",
+      "index": 12,
+      "program": "endpoint-boundaries",
+      "wire_id": "two-first"
+    },
+    {
+      "authored_id": "two-firstOrNull",
+      "expression_sha256": "4b664c68fb0e6417865a7e6746399fa7bb8907973032f9770dde26f3d8f8cf74",
+      "index": 13,
+      "program": "endpoint-boundaries",
+      "wire_id": "two-firstornull"
+    },
+    {
+      "authored_id": "two-last",
+      "expression_sha256": "d85985bc6971affdbbe8c6d784a933220f7918dcc31ec7e0d2a6fdb992058aa0",
+      "index": 14,
+      "program": "endpoint-boundaries",
+      "wire_id": "two-last"
+    },
+    {
+      "authored_id": "two-lastOrNull",
+      "expression_sha256": "f53b18091c28b31f69444677e8614633863d4d723bd5a5e1f92ca04f292c602d",
+      "index": 15,
+      "program": "endpoint-boundaries",
+      "wire_id": "two-lastornull"
+    },
+    {
+      "authored_id": "two-single",
+      "expression_sha256": "bc471cbb1582a5d9014150fbb57409caa4f667d0b26616854021d3a513860081",
+      "index": 16,
+      "program": "endpoint-boundaries",
+      "wire_id": "two-single"
+    },
+    {
+      "authored_id": "two-singleOrNull",
+      "expression_sha256": "96dc708e02fddf0d5b627b909c4deaba94e81506a71815c0a99c685a44c647fc",
+      "index": 17,
+      "program": "endpoint-boundaries",
+      "wire_id": "two-singleornull"
+    },
+    {
+      "authored_id": "first-only",
+      "expression_sha256": "03bb241c2a96db3db1c4306d82458cc4b4c1c6b1d2240fc7c4cf44086061a2b2",
+      "index": 0,
+      "program": "endpoint-lazy-default",
+      "wire_id": "first-only"
+    },
+    {
+      "authored_id": "first-again",
+      "expression_sha256": "03bb241c2a96db3db1c4306d82458cc4b4c1c6b1d2240fc7c4cf44086061a2b2",
+      "index": 1,
+      "program": "endpoint-lazy-default",
+      "wire_id": "first-again"
+    },
+    {
+      "authored_id": "last-only",
+      "expression_sha256": "980b9001b20e39283ae9f836192032d246eb19125180f20290fdb5d73fed2e07",
+      "index": 2,
+      "program": "endpoint-lazy-default",
+      "wire_id": "last-only"
+    },
+    {
+      "authored_id": "many-single-error",
+      "expression_sha256": "8107ac03d380372158c9387417c7822f6847026f4923d824f057fa9b0f15c8f7",
+      "index": 3,
+      "program": "endpoint-lazy-default",
+      "wire_id": "many-single-error"
+    },
+    {
+      "authored_id": "many-single-null",
+      "expression_sha256": "11ca4ece13a71b77ee23b187fdb8aec444c74544cd001eda80b855fc984f7087",
+      "index": 4,
+      "program": "endpoint-lazy-default",
+      "wire_id": "many-single-null"
+    },
+    {
+      "authored_id": "function-default",
+      "expression_sha256": "896c4166166c582e20b32047fe8634d6af4c36d9dac0671a17daa0f3eb7ecce6",
+      "index": 5,
+      "program": "endpoint-lazy-default",
+      "wire_id": "function-default"
+    },
+    {
+      "authored_id": "empty-default",
+      "expression_sha256": "68489126b1e7fe33d601622ffee3e758fac0f0f61e2c3b3099e080f0e1c3bb60",
+      "index": 6,
+      "program": "endpoint-lazy-default",
+      "wire_id": "empty-default"
+    },
+    {
+      "authored_id": "amended-selection",
+      "expression_sha256": "92ffe3e2bdbf2fb8c632cb50ea1b9ad4df74b37615520b3e3148eff62542d0cb",
+      "index": 7,
+      "program": "endpoint-lazy-default",
+      "wire_id": "amended-selection"
+    },
+    {
+      "authored_id": "nested-lazy",
+      "expression_sha256": "a169307c356cafbf0e799ed949b7c85de79a80dec82cbbf8bfbd65d4acb410eb",
+      "index": 8,
+      "program": "endpoint-lazy-default",
+      "wire_id": "nested-lazy"
+    },
+    {
+      "authored_id": "typed-amend-last",
+      "expression_sha256": "604c088dfa0b0e11a25dca8213b8f4b833ce4fdab0c07ff24f8283ad703191bc",
+      "index": 9,
+      "program": "endpoint-lazy-default",
+      "wire_id": "typed-amend-last"
+    },
+    {
+      "authored_id": "typed-first-safe",
+      "expression_sha256": "d391d778c18227de7d81eefde9ed6909723ca0e906d82d09eae78de3bce14245",
+      "index": 10,
+      "program": "endpoint-lazy-default",
+      "wire_id": "typed-first-safe"
+    },
+    {
+      "authored_id": "typed-last-error",
+      "expression_sha256": "d0015a39b656fe7773da2610a8a41832e2d8bf05d22afe7be67cc7286e3caf8d",
+      "index": 11,
+      "program": "endpoint-lazy-default",
+      "wire_id": "typed-last-error"
+    },
+    {
+      "authored_id": "property-called",
+      "expression_sha256": "e060fb5f39fd83718b7414a4ccc19938cd31cda402eeaf60b9c9a8e1cc35bab3",
+      "index": 12,
+      "program": "endpoint-lazy-default",
+      "wire_id": "property-called"
+    },
+    {
+      "authored_id": "selected-throw-nullable",
+      "expression_sha256": "c66176108ec8d8588b1037d4186e1e61c0d06567d83ae9397a99178b8277f33f",
+      "index": 13,
+      "program": "endpoint-lazy-default",
+      "wire_id": "selected-throw-nullable"
+    },
+    {
+      "authored_id": "amended-order",
+      "expression_sha256": "504cea84bb10236ac3970fe156abd21f38480a131c41bc1b86a7056377c8e439",
+      "index": 0,
+      "program": "mapping-fold",
+      "wire_id": "amended-order"
+    },
+    {
+      "authored_id": "amended-order-again",
+      "expression_sha256": "504cea84bb10236ac3970fe156abd21f38480a131c41bc1b86a7056377c8e439",
+      "index": 1,
+      "program": "mapping-fold",
+      "wire_id": "amended-order-again"
+    },
+    {
+      "authored_id": "all-values-before-callback",
+      "expression_sha256": "5ce53b10eef2ff5f6fdac60384d4264647938e1ab176cabad159d389bf0b20f4",
+      "index": 2,
+      "program": "mapping-fold",
+      "wire_id": "all-values-before-callback"
+    },
+    {
+      "authored_id": "all-values-before-callback-retry",
+      "expression_sha256": "4b283db4e5bc3b7b93fd1eb556f1e30c8fd8f542bd48fb5f0d3d68c5adb0ad2c",
+      "index": 3,
+      "program": "mapping-fold",
+      "wire_id": "all-values-before-callback-retry"
+    },
+    {
+      "authored_id": "callback-failure",
+      "expression_sha256": "0656996dea7b88651414c33ebd9622d21e935edaeb924f52b2d055fbc3fb4e9a",
+      "index": 4,
+      "program": "mapping-fold",
+      "wire_id": "callback-failure"
+    },
+    {
+      "authored_id": "nested-not-deep",
+      "expression_sha256": "d1b56c3ee674180aaacae7ba3b0ce924228e97685fdf9ddfcb789d0843b85194",
+      "index": 5,
+      "program": "mapping-fold",
+      "wire_id": "nested-not-deep"
+    },
+    {
+      "authored_id": "empty-identity",
+      "expression_sha256": "8da2c00a51d7f1154d6fb2bb9f3e478d9a6344c9689cae884bbf7c9ee73d027e",
+      "index": 6,
+      "program": "mapping-fold",
+      "wire_id": "empty-identity"
+    },
+    {
+      "authored_id": "empty-bad-type",
+      "expression_sha256": "30085ae4c5db5eeb66f5165604468a3bf02d30b05f31814bc2621f5f501e8eed",
+      "index": 7,
+      "program": "mapping-fold",
+      "wire_id": "empty-bad-type"
+    },
+    {
+      "authored_id": "empty-bad-arity",
+      "expression_sha256": "460e71f2ed3cf3547fd4e4c0d3140db40861c8db29f53ba152f5328edf74d670",
+      "index": 8,
+      "program": "mapping-fold",
+      "wire_id": "empty-bad-arity"
+    },
+    {
+      "authored_id": "nonempty-bad-arity",
+      "expression_sha256": "0e6bc1985b7a33ee908d13f88f1f90358d43deb9c174d7d4fe033040c9a82869",
+      "index": 9,
+      "program": "mapping-fold",
+      "wire_id": "nonempty-bad-arity"
+    },
+    {
+      "authored_id": "initial-argument-error",
+      "expression_sha256": "8ef2f2ae79e5f12616e75f3df888c07b5122c5a1e0af8d6144a757ceebce7829",
+      "index": 10,
+      "program": "mapping-fold",
+      "wire_id": "initial-argument-error"
+    },
+    {
+      "authored_id": "lexical-result-type",
+      "expression_sha256": "1ae3542e2b80a91817101236bca28c3e6cb2f100a8f30a9f71b03f12196d0209",
+      "index": 11,
+      "program": "mapping-fold",
+      "wire_id": "lexical-result-type"
+    },
+    {
+      "authored_id": "default-amend",
+      "expression_sha256": "51d62c016c66072db72ce258f4820c35d95a1352be9cf94f5c018b2eb29dcc12",
+      "index": 12,
+      "program": "mapping-fold",
+      "wire_id": "default-amend"
+    },
+    {
+      "authored_id": "typed-amend",
+      "expression_sha256": "7a548d09fa2fa75aff283cfdcbc6487934f47c0b190f03fbc4bc6d039a4297fd",
+      "index": 13,
+      "program": "mapping-fold",
+      "wire_id": "typed-amend"
+    },
+    {
+      "authored_id": "typed-value-before-callback",
+      "expression_sha256": "092d097e62d72492e14b33b17389b2a78b8da0835ac63237e3539a34b42c61a8",
+      "index": 14,
+      "program": "mapping-fold",
+      "wire_id": "typed-value-before-callback"
+    },
+    {
+      "authored_id": "method-as-property",
+      "expression_sha256": "7bb3214552b84343396950e876e1bc7b49e4aba3f19bfb62f59ed05e7049f34c",
+      "index": 15,
+      "program": "mapping-fold",
+      "wire_id": "method-as-property"
+    },
+    {
+      "authored_id": "method-arity",
+      "expression_sha256": "d2b8d250ddbaab67ca728e1d1ddbedd470717c1971a5ec5d42a765b03a70b1a9",
+      "index": 16,
+      "program": "mapping-fold",
+      "wire_id": "method-arity"
+    },
+    {
+      "authored_id": "non-string-hash-error",
+      "expression_sha256": "5e45b52234afa41221c1202b702621680e0ade0f81f36ef626cd5099c30cfec8",
+      "index": 0,
+      "program": "mapping-key-hash",
+      "wire_id": "non-string-hash-error"
+    },
+    {
+      "authored_id": "non-string-hash-order",
+      "expression_sha256": "8401867dbf4bd91c486dc0a7893dd39684980a25a9097427739c994fe3cbc360",
+      "index": 1,
+      "program": "mapping-key-hash",
+      "wire_id": "non-string-hash-order"
+    },
+    {
+      "authored_id": "non-string-hash-retry",
+      "expression_sha256": "8401867dbf4bd91c486dc0a7893dd39684980a25a9097427739c994fe3cbc360",
+      "index": 2,
+      "program": "mapping-key-hash",
+      "wire_id": "non-string-hash-retry"
+    },
+    {
+      "authored_id": "prime-parent-properties",
+      "expression_sha256": "60ebe063c887a0d9939df8e25bbefbba6dbea9237d9217c95ecbe74f2919dfe0",
+      "index": 0,
+      "program": "endpoint-wrapper-cache",
+      "wire_id": "prime-parent-properties"
+    },
+    {
+      "authored_id": "warm-wrapper-properties",
+      "expression_sha256": "0d4c8bdc4f275bdf4003c157514dd8ec4796089b80919d595f0899ac73b45020",
+      "index": 1,
+      "program": "endpoint-wrapper-cache",
+      "wire_id": "warm-wrapper-properties"
+    },
+    {
+      "authored_id": "warm-wrapper-element",
+      "expression_sha256": "f201ed60022c57b05cc0e85da3c52dd1425d4b0fc7fd38b63071ad93529ae91f",
+      "index": 2,
+      "program": "endpoint-wrapper-cache",
+      "wire_id": "warm-wrapper-element"
+    },
+    {
+      "authored_id": "cold-wrapper-property",
+      "expression_sha256": "6cd5a84d4ffdf1a83dd09e93d0acfbac977ecf61515e9486373b555b5ff02665",
+      "index": 3,
+      "program": "endpoint-wrapper-cache",
+      "wire_id": "cold-wrapper-property"
+    },
+    {
+      "authored_id": "implicit-constraint",
+      "expression_sha256": "210e4341b707b9a41393cd8a7a239e933ecd2f67a08c01c014a56e53ac1ebf34",
+      "index": 4,
+      "program": "endpoint-wrapper-cache",
+      "wire_id": "implicit-constraint"
+    },
+    {
+      "authored_id": "nonempty-amendment-stops-steal",
+      "expression_sha256": "857346d90e6d3b763765900c56ba423c2bab77701bda9c236b8f218e2fba5275",
+      "index": 5,
+      "program": "endpoint-wrapper-cache",
+      "wire_id": "nonempty-amendment-stops-steal"
+    }
+  ],
+  "scope": "Only helper TSV row labels, output folder names and helper protocol labels use wire_id. Original IDs and expressions remain in the sealed source plan; source/URI/query order/profile/result bytes are unchanged."
+}

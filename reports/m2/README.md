@@ -17,6 +17,32 @@ The 111 unready cases, 1,791 overlapping full-gate obligations, and all nine M2
 workstreams remain open. Full API, platform-release, speed, and memory targets
 are not established by these counts.
 
+## Stage90 lazy collection checkpoint
+
+The integrated collection changes add Listing endpoints, indexed folds,
+membership/predicate visitors, distinctness selectors and joins, plus Mapping
+folds and visitors. Required local Rust checks pass with **1,247 workspace tests
+passed, zero failed, and one existing ignored probe**. Independent review
+accounts for 13 nested summaries separately and verifies the source/producer
+bindings of 225 test executables, 25 built examples, and two doctest groups.
+
+The isolated candidate matches 139 Java queries twice and eight unchanged
+historical modules twice. Query comparisons preserve represented UTF-8/UTF-16,
+status and ordered Logger fields; module captures compare complete stdout,
+stderr and exit status. Java type/exception/cause metadata, generated files and
+full product CLI behavior remain separate obligations. Original failed attempts
+and subsequent corrections are preserved.
+
+The integrated source matches 278/278 observations on each of Native, N-API
+and Chromium, with 14 independent evaluator programs and two repetitions.
+One M1 acquisition matches 6,078 primitive results per target and passes its
+separate architecture contract. The [checkpoint](stage90-lazy-collections-checkpoint.json)
+retains the actual source/producer bindings, raw observations and failed attempts.
+
+These observations do not replace the Stage86 whole-corpus aggregate or close
+the historical inventory's missing execution contracts. All nine M2 workstreams
+remain open.
+
 ## Stage87–89 integrated language checkpoint
 
 The [checkpoint](stage87-89-language-checkpoint.json) records missing-key

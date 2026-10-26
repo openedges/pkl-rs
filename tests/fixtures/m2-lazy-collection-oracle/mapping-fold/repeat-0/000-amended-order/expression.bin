@@ -1,0 +1,1 @@
+(amended.fold("", (acc, key, value) -> acc + trace("\(key)=\(value);"))).toString()

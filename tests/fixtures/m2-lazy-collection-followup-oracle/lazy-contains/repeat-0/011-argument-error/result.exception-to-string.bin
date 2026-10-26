@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+query
+
+1 | ((new Mapping { ["x"] = throw("value") }).containsValue(throw("query"))).toString()
+                                                            ^^^^^^^^^^^^^^
+at  (repl:text)

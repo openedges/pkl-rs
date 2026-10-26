@@ -1,0 +1,6 @@
+string	prime-parent-properties	List(raw.first, raw.firstOrNull, raw.last, raw.lastOrNull, raw.single, raw.singleOrNull).toString()
+string	warm-wrapper-properties	List(checked.first, checked.firstOrNull, checked.last, checked.lastOrNull, checked.single, checked.singleOrNull).toString()
+string	warm-wrapper-element	checked[0].toString()
+string	cold-wrapper-property	cold.first.toString()
+string	implicit-constraint	constrained.length.toString()
+string	nonempty-amendment-stops-steal	((raw) { [0] = "changed" }).first.toString()

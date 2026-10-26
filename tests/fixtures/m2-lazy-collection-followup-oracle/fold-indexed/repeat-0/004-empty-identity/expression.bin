@@ -1,0 +1,1 @@
+((new Listing {}).foldIndexed(seed, (i,a,v) -> v) == seed).toString()

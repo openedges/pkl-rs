@@ -1,0 +1,10 @@
+–– Pkl Error ––
+key-hash
+
+6 | hidden key = new Dynamic { text = trace("key"); failure = throw("key-hash") }
+                                                              ^^^^^^^^^^^^^^^^^
+at stage90followup.lazyAny#key.failure (file:///stage90-followup/lazy-any.pkl)
+
+1 | (keyMap.any((k, v) -> true)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

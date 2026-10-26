@@ -1,0 +1,10 @@
+–– Pkl Error ––
+listing-tail
+
+2 | hidden ls = new Listing { trace(1); throw("listing-tail") }
+                                        ^^^^^^^^^^^^^^^^^^^^^
+at stage90followup.lazyAny#ls[#2] (file:///stage90-followup/lazy-any.pkl)
+
+1 | (ls.any((x) -> false)).toString()
+     ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

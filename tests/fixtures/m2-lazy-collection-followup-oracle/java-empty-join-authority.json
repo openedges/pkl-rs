@@ -1,0 +1,344 @@
+{
+  "candidate_compatibility_passes_claimed": 0,
+  "complete": true,
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-01",
+  "disk_guards": {
+    "additional_disk_cap_bytes": 5242880,
+    "conservative_estimate_bytes": 1048576,
+    "events": [
+      {
+        "allocated": 61440,
+        "epoch": 1792993740.561557,
+        "free": 1031180288,
+        "label": "before-source-copies"
+      },
+      {
+        "allocated": 311296,
+        "epoch": 1792993740.577539,
+        "free": 1030918144,
+        "label": "after-source-copies"
+      },
+      {
+        "allocated": 311296,
+        "epoch": 1792993740.5827148,
+        "free": 1030914048,
+        "label": "before-jvm:java-identity"
+      },
+      {
+        "allocated": 319488,
+        "epoch": 1792993740.858221,
+        "free": 1030868992,
+        "label": "after-jvm:java-identity"
+      },
+      {
+        "allocated": 319488,
+        "epoch": 1792993740.9722738,
+        "free": 1030868992,
+        "label": "before-jdk-source-copies"
+      },
+      {
+        "allocated": 393216,
+        "epoch": 1792993741.00464,
+        "free": 1030795264,
+        "label": "after-jdk-source-copies"
+      },
+      {
+        "allocated": 409600,
+        "epoch": 1792993741.133518,
+        "free": 1030742016,
+        "label": "before-jvm:process"
+      },
+      {
+        "allocated": 495616,
+        "epoch": 1792993742.5122602,
+        "free": 1030311936,
+        "label": "after-jvm:process"
+      },
+      {
+        "allocated": 499712,
+        "epoch": 1792993742.53188,
+        "free": 1030307840,
+        "label": "before-jvm:process"
+      },
+      {
+        "allocated": 532480,
+        "epoch": 1792993743.362122,
+        "free": 1030266880,
+        "label": "after-jvm:process"
+      },
+      {
+        "allocated": 532480,
+        "epoch": 1792993743.49156,
+        "free": 1030266880,
+        "label": "final-bookends"
+      }
+    ],
+    "initial_free_bytes": 844103680,
+    "minimum_free_bytes": 822083584,
+    "minimum_free_seen": 1030266880,
+    "peak_allocated_bytes": 532480
+  },
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-01/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-01/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-01/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-01/tmp",
+    "TZ": "UTC"
+  },
+  "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "input_after": {
+    "PLAN.md": "6f7f6cc3a1188f9d35ce625f45c1cae32a45ce882d52f36a593a26e3800afb1d",
+    "initial-admission.json": "05436d74df9b5e388244e6c5b6d38f1e4bb6fba137b069f1d7aed99f1c6e8329",
+    "launch.py": "5464108940d3c7a377e2c7d9c322cd02844e3a6abd8d2fbd85c7e8b41984c743",
+    "modules/empty-join.pkl": "9958eed852e3089e1a99fef7a5a12694fe8d8c55d05ea54cc30f9a21def11a5d",
+    "preparation.json": "b8e577e1e15863dc24b43e53d73ffaf6f5b88f26120bbb14b25369556d0e0e22",
+    "prepare.py": "c528ea5788fdeccc4a2923ca53a5024bb7cca9ad31a16184fa8343ed9ae4dc9b",
+    "programs.json": "beac95adf5dc9e1650de96d1a0d6171789f81377fa4a532127c4c8d626aad59f",
+    "proposal.json": "dfb3e740d5af11719b2b467b9375f0b2b33e2d0325869cee85e772f9326d91de",
+    "query-label-map.json": "aeef8c515e4f197a16ed09a7bc2ee156bc55eef1ca071c3f48f12d72ec2e8fe3",
+    "query-source-plan.json": "11b60236d1842007067f44d9c80afc60d5d03d7e226c3466d7fa6e2169937a38",
+    "run.py": "2df6c16f4c095d4a34ce6bf20878b0491cd80b359a26e380d60b016b47a28723"
+  },
+  "input_before": {
+    "PLAN.md": "6f7f6cc3a1188f9d35ce625f45c1cae32a45ce882d52f36a593a26e3800afb1d",
+    "initial-admission.json": "05436d74df9b5e388244e6c5b6d38f1e4bb6fba137b069f1d7aed99f1c6e8329",
+    "launch.py": "5464108940d3c7a377e2c7d9c322cd02844e3a6abd8d2fbd85c7e8b41984c743",
+    "modules/empty-join.pkl": "9958eed852e3089e1a99fef7a5a12694fe8d8c55d05ea54cc30f9a21def11a5d",
+    "preparation.json": "b8e577e1e15863dc24b43e53d73ffaf6f5b88f26120bbb14b25369556d0e0e22",
+    "prepare.py": "c528ea5788fdeccc4a2923ca53a5024bb7cca9ad31a16184fa8343ed9ae4dc9b",
+    "programs.json": "beac95adf5dc9e1650de96d1a0d6171789f81377fa4a532127c4c8d626aad59f",
+    "proposal.json": "dfb3e740d5af11719b2b467b9375f0b2b33e2d0325869cee85e772f9326d91de",
+    "query-label-map.json": "aeef8c515e4f197a16ed09a7bc2ee156bc55eef1ca071c3f48f12d72ec2e8fe3",
+    "query-source-plan.json": "11b60236d1842007067f44d9c80afc60d5d03d7e226c3466d7fa6e2169937a38",
+    "run.py": "2df6c16f4c095d4a34ce6bf20878b0491cd80b359a26e380d60b016b47a28723"
+  },
+  "jar": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059"
+  },
+  "jar_after_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+  "jdk": {
+    "executable": "/usr/bin/java",
+    "executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+    "modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+    "preflight_properties": {
+      "file.encoding": "UTF-8",
+      "file.separator": "/",
+      "ftp.nonProxyHosts": "local|*.local|169.254/16|*.169.254/16",
+      "http.nonProxyHosts": "local|*.local|169.254/16|*.169.254/16",
+      "java.class.path": "",
+      "java.class.version": "65.0",
+      "java.home": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home",
+      "java.io.tmpdir": "/var/folders/_q/s969zhkx6qd8p32v2nd87ygh0000gp/T/",
+      "java.library.path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-01/home/Library/Java/Extensions",
+      "java.runtime.name": "OpenJDK Runtime Environment",
+      "java.runtime.version": "21.0.12.1+1-LTS",
+      "java.specification.name": "Java Platform API Specification",
+      "java.specification.vendor": "Oracle Corporation",
+      "java.specification.version": "21",
+      "java.vendor": "Eclipse Adoptium",
+      "java.vendor.url": "https://adoptium.net/",
+      "java.vendor.url.bug": "https://github.com/adoptium/adoptium-support/issues",
+      "java.vendor.version": "Temurin-21.0.12.1+1",
+      "java.version": "21.0.12.1",
+      "java.version.date": "2026-08-18",
+      "java.vm.compressedOopsMode": "Non-zero disjoint base",
+      "java.vm.info": "mixed mode, sharing",
+      "java.vm.name": "OpenJDK 64-Bit Server VM",
+      "java.vm.specification.name": "Java Virtual Machine Specification",
+      "java.vm.specification.vendor": "Oracle Corporation",
+      "java.vm.specification.version": "21",
+      "java.vm.vendor": "Eclipse Adoptium",
+      "java.vm.version": "21.0.12.1+1-LTS",
+      "jdk.debug": "release",
+      "line.separator": "\\n ",
+      "native.encoding": "US-ASCII",
+      "os.arch": "aarch64",
+      "os.name": "Mac OS X",
+      "os.version": "27.0",
+      "path.separator": ":",
+      "socksNonProxyHosts": "local|*.local|169.254/16|*.169.254/16",
+      "stderr.encoding": "US-ASCII",
+      "stdout.encoding": "US-ASCII",
+      "sun.arch.data.model": "64",
+      "sun.boot.library.path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib",
+      "sun.cpu.endian": "little",
+      "sun.io.unicode.encoding": "UnicodeBig",
+      "sun.java.launcher": "SUN_STANDARD",
+      "sun.jnu.encoding": "UTF-8",
+      "sun.management.compiler": "HotSpot 64-Bit Tiered Compilers",
+      "user.country": "KR",
+      "user.dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-01",
+      "user.home": "/Users/cody.ij.hwang",
+      "user.language": "ko",
+      "user.name": "cody.ij.hwang"
+    },
+    "release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+  },
+  "jdk_source_members": {
+    "java.base/java/lang/StackTraceElement.java": {
+      "bytes": 23674,
+      "sha256": "d2dacaac372efd8f7a4ccedc2044f410a68c408969ed7010b2c0377d97c99292"
+    },
+    "java.base/java/lang/Throwable.java": {
+      "bytes": 47780,
+      "sha256": "958a64a11f867f430ed58edcbc44fdc9cae32489437d43c8525ee1c2f3ab0e1c"
+    }
+  },
+  "kind": "stage90-empty-join-Java-only-authority",
+  "oracle_lock_sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+  "programs": 1,
+  "references_lock_sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+  "repetitions": 2,
+  "rows": 1,
+  "schema": 1,
+  "sessions": [
+    {
+      "argv": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-01/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-01/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-01/CollectionEveryOracle.java",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-01/programs/empty-join/repeat-0",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-01/programs/empty-join",
+        "file:///stage90-followup/empty-join.pkl"
+      ],
+      "exit_code": 0,
+      "finished_epoch": 1792993742.51389,
+      "pid": 8251,
+      "program": "empty-join",
+      "repeat": 0,
+      "row_directories": 1,
+      "started_epoch": 1792993741.113612,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "d12cd6578236e37d7d3064c21882e08d270c33e5aad041a82594430c22e7fb6e"
+    },
+    {
+      "argv": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-01/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-01/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-01/CollectionEveryOracle.java",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-01/programs/empty-join/repeat-1",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-01/programs/empty-join",
+        "file:///stage90-followup/empty-join.pkl"
+      ],
+      "exit_code": 0,
+      "finished_epoch": 1792993743.362775,
+      "pid": 8255,
+      "program": "empty-join",
+      "repeat": 1,
+      "row_directories": 1,
+      "started_epoch": 1792993742.516004,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "d12cd6578236e37d7d3064c21882e08d270c33e5aad041a82594430c22e7fb6e"
+    }
+  ],
+  "source_after": {
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmListing.java": "536776d5a43835f14d850d8836caf8b2221e3fcec1062f0ebf386f6471f82373",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmObject.java": "5f74b5d18f72377b0ba8405f3dd34a9144acc419e068be5178ee8c2bc98b2fde",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/ListingNodes.java": "9637baf7e4b3eb143cc1cdc21ff7726752dedca0033c768e2c7a1d0f3e1ed4f3",
+    "external/pkl/stdlib/base.pkl": "fddb53666b6e37bc5b70e2d7a2864730c1eab2a4edd90b5c2defefcfdd0b57fb",
+    "oracle.lock.json": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+    "target/m2/stage69-super-entry-default-oracle-06/CollectionEveryOracle.java": "00d3bd8022e4a65532d4208976acb92687a04951fef36b713bacc70fa240e25f"
+  },
+  "source_before": {
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmListing.java": "536776d5a43835f14d850d8836caf8b2221e3fcec1062f0ebf386f6471f82373",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmObject.java": "5f74b5d18f72377b0ba8405f3dd34a9144acc419e068be5178ee8c2bc98b2fde",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/ListingNodes.java": "9637baf7e4b3eb143cc1cdc21ff7726752dedca0033c768e2c7a1d0f3e1ed4f3",
+    "external/pkl/stdlib/base.pkl": "fddb53666b6e37bc5b70e2d7a2864730c1eab2a4edd90b5c2defefcfdd0b57fb",
+    "oracle.lock.json": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+    "target/m2/stage69-super-entry-default-oracle-06/CollectionEveryOracle.java": "00d3bd8022e4a65532d4208976acb92687a04951fef36b713bacc70fa240e25f"
+  },
+  "source_stable": true,
+  "tools_after": {
+    "executable": {
+      "bytes": 217296,
+      "path": "/usr/bin/java",
+      "sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552"
+    },
+    "jdk_java": {
+      "bytes": 70432,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+      "sha256": "9be1d0a740ff6502df1a762145e62860f5de4b7e17658d9cb9498da3acf9d16c"
+    },
+    "modules": {
+      "bytes": 140714013,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/modules",
+      "sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf"
+    },
+    "release": {
+      "bytes": 1628,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/release",
+      "sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+    },
+    "src_zip": {
+      "bytes": 54198945,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/src.zip",
+      "sha256": "173282dd3f4c4004548e6a09e6687acff25120967b1a8375a5df4c677d7f4e4e"
+    }
+  },
+  "tools_before": {
+    "executable": {
+      "bytes": 217296,
+      "path": "/usr/bin/java",
+      "sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552"
+    },
+    "jdk_java": {
+      "bytes": 70432,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+      "sha256": "9be1d0a740ff6502df1a762145e62860f5de4b7e17658d9cb9498da3acf9d16c"
+    },
+    "modules": {
+      "bytes": 140714013,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/modules",
+      "sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf"
+    },
+    "release": {
+      "bytes": 1628,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/release",
+      "sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+    },
+    "src_zip": {
+      "bytes": 54198945,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/src.zip",
+      "sha256": "173282dd3f4c4004548e6a09e6687acff25120967b1a8375a5df4c677d7f4e4e"
+    }
+  },
+  "tools_stable": true,
+  "uris": [
+    "file:///stage90-followup/empty-join.pkl"
+  ]
+}

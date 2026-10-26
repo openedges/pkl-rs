@@ -1,0 +1,13 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `fold` in object of type `Mapping`.
+
+1 | ((new Mapping {}).fold).toString()
+     ^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Available properties:
+default
+isEmpty
+isNotEmpty
+keys
+length

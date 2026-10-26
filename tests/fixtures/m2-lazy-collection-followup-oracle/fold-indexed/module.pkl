@@ -1,0 +1,7 @@
+module stage90followup.foldIndexed
+hidden baseValues = new Listing { trace(1); trace(2) }
+hidden values = (baseValues) { trace(3) }
+hidden badValues = new Listing { trace(4); throw("value-before-callback") }
+hidden nested = new Listing { new Dynamic { bad = throw("nested") } }
+hidden seed = new Dynamic { bad = throw("seed") }
+hidden defaulted = new Listing { default { x = 5 }; new {}; new {} }

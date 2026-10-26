@@ -1,0 +1,1 @@
+(mp.any((k, v) -> trace(v == 1))).toString()

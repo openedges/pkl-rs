@@ -1,0 +1,13 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `storedMap`.
+
+1 | ((new Mapping { [key] = storedMap }).containsValue(queryMap)).toString()
+                            ^^^^^^^^^
+at repl:text[#1] (repl:text)
+
+Did you mean any of the following?
+stored
+
+1 | ((new Mapping { [key] = storedMap }).containsValue(queryMap)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -3024,6 +3024,38 @@ CLI 프로세스·생성 파일 검증을 대신하지 않는다.
 M2 아홉 영역은 열린 상태다. 다음 컬렉션 후보는 별도로 통합·검증하며, 이
 체크포인트에 Stage90 결과나 전체 API·릴리스 플랫폼·성능 달성을 합산하지 않는다.
 
+#### Stage90 — 지연 컬렉션 연산과 원본 모듈 검증
+
+두 독립 검토 후보를 정본 3,398개 소스·테스트·Java fixture 경로에 통합했다.
+Listing의 캐시된 첫·마지막 요소 조회, indexed fold, any·contains·distinct와
+selector 계열·join·lastIndex, Mapping의 fold·any·containsValue를 연결했다.
+Java의 선택 요소 평가, shallow force와 callback 순서, query 쪽 동등성 검사,
+삽입 시점 해시와 빈 컬렉션 조기 반환을 유지하며 Host 중단·재시도·취소·GC를
+공유 continuation에서 처리한다.
+
+Rust 1.98.1·macOS arm64에서 필수 Rust 검사 다섯 개를 완료했다. 전체 workspace는
+**1,247개 통과·실패 0개·기존 수동 probe 1개 ignored**이며 중첩 자식 요약
+13개는 별도 집계한다. 전후 소스 194,914개와 실제 compiler·dep-info·extern·
+산출물 대응을 독립 검토했다. 실행 파일 225개, 예제 25개, doctest 묶음 2개를
+확인했으며 완료된 테스트 실행 파일만 기록된 식별자를 보존하고 정리했다.
+
+최종 격리 후보에서는 Java 질의 139개를 두 번씩 전체 표현 가능한 UTF-8/UTF-16,
+상태·순서 있는 Logger 필드로 비교했다. 원본 historical 모듈 8개도 두 번씩
+stdout·stderr·종료 상태가 일치했고 첫 후보의 원본 실패 세 개를 해결했다.
+이 결과로 생성 파일·제품 CLI 전체나 아직 연결되지 않은 inventory 행을
+자동 완료 처리하지 않는다. 앞선 컴파일 실패와 검증 도구의 승인 필드·투영·
+중첩 출력 해석 오류 및 수정 계보는 별도로 보존한다.
+
+정본 Native·N-API·Chromium은 각각 독립 evaluator 프로그램 14개에서 질의
+139개를 두 번씩 실행한 **278/278개 관찰**이 일치했다. M1 한 번의 실행에서도
+대상별 primitive 6,078개 원시 비교와 별도의 구조 계약이 통과했다.
+[체크포인트](reports/m2/stage90-lazy-collections-checkpoint.json)에 실제 소스·빌드
+연결, 원시 결과, 독립 검토와 실패 이력을 함께 게시한다. 전체 코퍼스의 최신
+확정 집계는 Stage86의 4,214/4,416이고 미준비 111개·전체 gate 의무와 아홉
+영역을 유지한다.
+다음에는 원본 언어 사례에 필요한 PropertiesRenderer를 구현하고, 실제 검증한
+historical 입력의 생성 파일·실행 계약을 전체 inventory와 runner에 연결한다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

@@ -1,0 +1,1 @@
+((new Listing { 1; throw("tail") }).any((x) -> 0)).toString()

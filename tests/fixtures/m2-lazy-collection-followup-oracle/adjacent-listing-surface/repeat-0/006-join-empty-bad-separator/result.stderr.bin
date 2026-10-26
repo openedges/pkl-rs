@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `String`, but got type `Int`.
+Value: 0
+
+2237 | external function join(separator: String): String
+                                         ^^^^^^
+at pkl.base#Listing.join (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2237)
+
+1 | ((new Listing {}).join(0)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

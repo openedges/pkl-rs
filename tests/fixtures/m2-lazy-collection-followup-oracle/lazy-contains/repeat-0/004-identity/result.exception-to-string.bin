@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `same`.
+
+1 | ((new Listing { same }).contains(same)).toString()
+                    ^^^^
+at repl:text[#1] (repl:text)
+
+1 | ((new Listing { same }).contains(same)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

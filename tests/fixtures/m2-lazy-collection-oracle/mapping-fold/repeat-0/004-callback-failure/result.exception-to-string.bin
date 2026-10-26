@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+first callback
+
+1 | (callbackFailure.fold(0, (acc, key, value) -> throw("first callback"))).toString()
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | (callbackFailure.fold(0, (acc, key, value) -> throw("first callback"))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

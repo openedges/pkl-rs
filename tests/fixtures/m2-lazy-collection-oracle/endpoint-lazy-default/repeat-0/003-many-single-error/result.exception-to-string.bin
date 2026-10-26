@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected a single-element Listing.
+
+1 | (values.single).toString()
+     ^^^^^^^^^^^^^
+at  (repl:text)

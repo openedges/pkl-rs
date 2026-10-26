@@ -1,0 +1,1 @@
+(defaulted.foldIndexed(0, (i,a,v) -> a+v.x+i)).toString()

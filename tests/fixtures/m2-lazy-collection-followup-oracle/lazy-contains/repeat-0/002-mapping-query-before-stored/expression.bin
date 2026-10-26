@@ -1,0 +1,1 @@
+((new Mapping { [key] = storedMap }).containsValue(queryMap)).toString()

@@ -1,0 +1,1 @@
+(bad.fold(0, (acc, key, value) -> trace(acc + value))).toString()

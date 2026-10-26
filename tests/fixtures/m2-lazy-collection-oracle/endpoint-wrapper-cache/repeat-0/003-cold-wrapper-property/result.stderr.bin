@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `String`, but got type `Int`.
+Value: 2
+
+4 | hidden cold: Listing<String> = new { 2 }
+                         ^^^^^^
+at stage90.endpointWrapperCache#cold (file:///stage90/endpoint-wrapper-cache.pkl)
+
+4 | hidden cold: Listing<String> = new { 2 }
+                                         ^
+at stage90.endpointWrapperCache#cold[#1] (file:///stage90/endpoint-wrapper-cache.pkl)
+
+1 | cold.first.toString()
+    ^^^^^^^^^^
+at  (repl:text)

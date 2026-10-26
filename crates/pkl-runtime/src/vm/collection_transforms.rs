@@ -811,17 +811,21 @@ impl Vm {
     }
 }
 
+fn listing_endpoint(name: &str) -> bool {
+    matches!(
+        name,
+        "first" | "firstOrNull" | "last" | "lastOrNull" | "single" | "singleOrNull"
+    )
+}
+
 pub(super) fn endpoint_blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
 ) -> BTreeMap<(Arc<str>, Arc<str>), usize> {
     let source = crate::stdlib_sources::base();
     let mut result = BTreeMap::new();
-    for class_name in ["List", "Set"] {
-        let class = source
-            .text
-            .find(&format!("external class {class_name}<"))
-            .unwrap();
+    for class_name in ["List", "Set", "Listing"] {
+        let class = source.text.find(&format!("class {class_name}<")).unwrap();
         for name in [
             "first",
             "firstOrNull",
@@ -864,6 +868,39 @@ impl Vm {
         single: bool,
     ) -> Result<(), RuntimeError> {
         let id = receiver.as_object()?;
+        if self.heap.get(id)?.collection_kind == CollectionKind::Listing {
+            let length = self.heap.get(id)?.length;
+            if (single && length != 1) || length == 0 {
+                if nullable {
+                    self.stack.push(Value::Null);
+                    return Ok(());
+                }
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    if single {
+                        "Expected a single-element Listing."
+                    } else {
+                        "Expected a non-empty Listing."
+                    },
+                ));
+            }
+            // ListingNodes reads exactly one numeric member. Do not convert to
+            // a strict List, render the receiver, or force other element values.
+            let index = if last { length - 1 } else { 0 };
+            let mut owner = Some(id);
+            while let Some(current) = owner {
+                let object = self.heap.get(current)?;
+                if let Some(member) = object.collection_members.iter().rev().find(|member| {
+                    member.kind != CollectionMemberKind::Property
+                        && matches!(&member.key, Value::Int(value) if value.get() == index as i64)
+                }) {
+                    let name = member.name.clone();
+                    return self.force_key(id, id, name, false, true, false, true);
+                }
+                owner = object.parent;
+            }
+            return Err(invalid("Listing endpoint missing numeric member"));
+        }
         let members = collections::ordered_members(&self.heap, id)?;
         if single && members.len() != 1 {
             if nullable {
@@ -1367,12 +1404,12 @@ enum DistinctStage {
 // Listing's HashSet remembers each entry's insertion-time hash. The integer
 // index has no Pkl callbacks and is never iterated to choose comparison order.
 #[derive(Default)]
-struct ListingDistinctIndex {
+pub(super) struct InsertionHashIndex {
     known: std::collections::HashMap<i32, Vec<usize>>,
     unknown: Vec<usize>,
 }
-impl ListingDistinctIndex {
-    fn candidates(&self, hash: Option<i32>, values: &[Value]) -> Vec<Value> {
+impl InsertionHashIndex {
+    pub(super) fn candidates(&self, hash: Option<i32>, values: &[Value]) -> Vec<Value> {
         let Some(hash) = hash else {
             // Unknown JVM identity hashes retain the conservative full search.
             return values.to_vec();
@@ -1401,7 +1438,7 @@ impl ListingDistinctIndex {
         result
     }
 
-    fn insert(&mut self, hash: Option<i32>, index: usize) {
+    pub(super) fn insert(&mut self, hash: Option<i32>, index: usize) {
         match hash {
             Some(hash) => self.known.entry(hash).or_default().push(index),
             None => self.unknown.push(index),
@@ -1417,7 +1454,7 @@ struct ListingDistinctLookup {
 struct DistinctRun {
     values: Vec<Value>,
     economic: crate::economic_map::EconomicMapIndex,
-    listing_index: ListingDistinctIndex,
+    listing_index: InsertionHashIndex,
     listing_lookup: Option<ListingDistinctLookup>,
     stage: DistinctStage,
     shallow: bool,
@@ -1439,19 +1476,24 @@ impl Default for DistinctRun {
 impl Vm {
     // These are ordinary cached properties. In particular, implicit reads in a
     // Listing constraint must take the same path as an explicit `.isDistinct`.
-    pub(super) fn distinct_property(
+    pub(super) fn collection_cached_property(
         &self,
         receiver: ObjectId,
         name: &str,
     ) -> Result<Option<Member>, RuntimeError> {
-        let index = match (self.heap.get(receiver)?.collection_kind, name) {
-            (CollectionKind::List, "distinct") => 10,
-            (CollectionKind::Listing, "isDistinct") => 11,
+        let code = match (self.heap.get(receiver)?.collection_kind, name) {
+            (CollectionKind::List, "distinct") => self.program.collection_projection_blocks[10],
+            (CollectionKind::Listing, "isDistinct") => {
+                self.program.collection_projection_blocks[11]
+            }
+            (CollectionKind::Listing, name) if listing_endpoint(name) || name == "distinct" => {
+                self.program.primitive_methods[&("Listing".into(), name.into())]
+            }
             _ => return Ok(None),
         };
         Ok(Some(Member {
             name: name.into(),
-            code: self.program.collection_projection_blocks[index],
+            code,
             flags: crate::syntax::ModifierKind::External.flag(),
             entry: false,
             local: false,
@@ -1465,12 +1507,12 @@ impl Vm {
 
     // VmListingOrMapping.getCachedValue steals an Identifier-valued property
     // only through empty-member wrappers, without applying the element type.
-    pub(super) fn steal_distinct_property(
+    pub(super) fn steal_collection_property(
         &mut self,
         receiver: ObjectId,
         name: &str,
     ) -> Result<bool, RuntimeError> {
-        if name != "isDistinct"
+        if (!matches!(name, "isDistinct" | "distinct") && !listing_endpoint(name))
             || self.heap.get(receiver)?.collection_kind != CollectionKind::Listing
         {
             return Ok(false);

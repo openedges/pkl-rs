@@ -1,0 +1,6 @@
+–– Pkl Error ––
+initial
+
+1 | ((new Mapping { ["x"] = throw("value") }).fold(throw("initial"), throw("operator"))).toString()
+                                                   ^^^^^^^^^^^^^^^^
+at  (repl:text)

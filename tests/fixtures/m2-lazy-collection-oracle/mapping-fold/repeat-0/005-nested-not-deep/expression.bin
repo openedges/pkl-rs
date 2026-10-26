@@ -1,0 +1,1 @@
+(nested.fold(0, (acc, key, value) -> acc + 1)).toString()

@@ -1,0 +1,13 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `stored`.
+
+1 | ((new Listing { stored }).contains(query)).toString()
+                    ^^^^^^
+at repl:text[#1] (repl:text)
+
+Did you mean any of the following?
+storedMap
+
+1 | ((new Listing { stored }).contains(query)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected a non-empty Listing.
+
+1 | ((new Listing {  }).first).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

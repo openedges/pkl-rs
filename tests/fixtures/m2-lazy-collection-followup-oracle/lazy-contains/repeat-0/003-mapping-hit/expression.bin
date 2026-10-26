@@ -1,0 +1,1 @@
+((new Mapping { ["a"] = 1; ["b"] = throw("tail") }).containsValue(1)).toString()

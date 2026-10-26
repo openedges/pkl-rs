@@ -1,0 +1,10 @@
+module stage90followup.containsReach
+hidden query = new Dynamic { x = trace("query") }
+hidden stored = new Dynamic { x = trace("stored") }
+hidden same = new Dynamic { bad = throw("identity-unforced") }
+hidden key = new Dynamic { x = trace("key") }
+hidden queryMap = new Dynamic { x = trace("query-map") }
+hidden storedMap = new Dynamic { x = trace("stored-map") }
+hidden lsStored = new Listing { module.stored }
+hidden mpStored = new Mapping { [module.key] = module.storedMap }
+hidden sameListing = new Listing { module.same }

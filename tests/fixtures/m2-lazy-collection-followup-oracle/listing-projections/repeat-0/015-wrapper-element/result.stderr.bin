@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `String`, but got type `Int`.
+Value: 1
+
+7 | hidden checked: Listing<String> = parentValues
+                            ^^^^^^
+at stage90followup.listingProjections#checked (file:///stage90-followup/listing-projections.pkl)
+
+6 | hidden parentValues = new Listing { 1 }
+                                        ^
+at stage90followup.listingProjections#parentValues[#1] (file:///stage90-followup/listing-projections.pkl)

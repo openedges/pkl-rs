@@ -21,6 +21,16 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+The [Stage90 collection checkpoint](reports/m2/stage90-lazy-collections-checkpoint.json)
+completes all five required Rust checks locally on macOS arm64 with Rust 1.98.1.
+The workspace records 1,247 passing tests, zero failures, and one existing
+ignored probe; 13 nested child summaries are excluded from that total. Native,
+N-API and Chromium each match 278 repeated query observations. A single M1
+acquisition matches 6,078 primitive results per target and passes its separate
+architecture contract. The [language evidence](docs/m2-language.md) distinguishes
+these scoped results from the latest completed whole-corpus replay and the
+remaining release requirements.
+
 The [Stage86 checkpoint](reports/m2/stage86-contains-hash-power-checkpoint.json) records
 all five required Rust checks, including a complete 1,149-pass workspace run
 with one ignored test and zero failures. Native, N-API, and Chromium each
@@ -28,7 +38,9 @@ matched 104 repeated observations from 35 new queries and 17 distinctness
 regressions. One M1 acquisition matched 6,078 results per target and passed
 its separate architecture contract. A prior capture used the wrong power
 assertion setting and remains failed; its successor uses the exact Java
-settings. Full-corpus replay completion and verification remain pending.
+settings. The subsequent [full-corpus replay](reports/m2/stage86-full-replay-checkpoint.json)
+completed with 4,214 matches among 4,416 ready cases. Its remaining failures and
+111 unready cases are preserved; this aggregate does not cover later sources.
 
 The [Stage85 checkpoint](reports/m2/stage85-distinct-checkpoint.json) records the
 five required Rust checks, including a completed 1,136-pass workspace run with

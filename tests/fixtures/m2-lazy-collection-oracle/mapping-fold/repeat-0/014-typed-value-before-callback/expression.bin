@@ -1,0 +1,1 @@
+(wrong.fold(0, (acc, key, value) -> throw("callback"))).toString()

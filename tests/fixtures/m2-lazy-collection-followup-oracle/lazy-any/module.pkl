@@ -1,0 +1,7 @@
+module stage90followup.lazyAny
+hidden ls = new Listing { trace(1); throw("listing-tail") }
+hidden mp = new Mapping { ["a"] = trace(1); ["b"] = throw("mapping-tail") }
+hidden parentValues = new Mapping { ["a"] = trace(1); ["b"] = trace(2) }
+hidden amendedValues = (parentValues) { ["a"] = trace(10); ["c"] = trace(3) }
+hidden key = new Dynamic { text = trace("key"); failure = throw("key-hash") }
+hidden keyMap = new Mapping { [key] = throw("value-after-key") }

@@ -1,0 +1,1 @@
+(typedAmended.fold(List(), (acc, key, value) -> acc.add(value.tag))).toString()

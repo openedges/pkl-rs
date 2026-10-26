@@ -1,0 +1,5 @@
+module stage90.endpointWrapperCache
+hidden raw = new Listing { trace(1) }
+hidden checked: Listing<String> = raw
+hidden cold: Listing<String> = new { 2 }
+hidden constrained: Listing<Int>(first == 1) = new { 1; throw("unselected constraint element") }

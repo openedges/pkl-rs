@@ -33,12 +33,12 @@ mod tests;
 pub(super) fn join_blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
-) -> [usize; 2] {
+) -> [usize; 3] {
     let source = crate::stdlib_sources::base();
-    ["List", "Set"].map(|class| {
+    ["List", "Set", "Listing"].map(|class| {
         let class_start = source
             .text
-            .find(&format!("external class {class}<"))
+            .find(&format!("class {class}<"))
             .expect("pinned collection class");
         let declaration = "external function join(separator: String): String";
         let start = class_start
@@ -65,6 +65,8 @@ pub(super) fn join_blocks(
 }
 
 pub(super) struct JoinRun {
+    source: ObjectId,
+    shallow: bool,
     values: Vec<Value>,
     separator: PklString,
     next: usize,
@@ -73,6 +75,7 @@ pub(super) struct JoinRun {
 }
 impl JoinRun {
     pub(super) fn roots(&self, roots: &mut Vec<Value>) {
+        roots.push(Value::Object(self.source));
         roots.extend(self.values.iter().cloned());
     }
 }
@@ -157,7 +160,14 @@ impl Vm {
     }
 
     pub(super) fn collection_join_method(&mut self, receiver: Value) {
-        let block = self.program.collection_join_blocks[usize::from(self.is_set(&receiver))];
+        let index = if self.is_list(&receiver) {
+            0
+        } else if self.is_set(&receiver) {
+            1
+        } else {
+            2
+        };
+        let block = self.program.collection_join_blocks[index];
         let id = self.heap.allocate(Object {
             function: Some(Function {
                 block,
@@ -180,23 +190,39 @@ impl Vm {
             .and_then(|f| f.environment.this_value.clone())
             .ok_or_else(|| invalid("collection join without receiver"))?
             .as_object()?;
-        let values = ordered_members(&self.heap, receiver)?
-            .iter()
-            .map(|member| {
-                cached_render_value(&self.heap, receiver, member)?
-                    .ok_or_else(|| invalid("uncached strict collection element"))
-            })
-            .collect::<Result<Vec<_>, _>>()?;
+        let shallow = self.heap.get(receiver)?.collection_kind == CollectionKind::Listing;
+        // ListingNodes.join returns before force/iteration for an empty receiver.
+        // The separator's String check has already run in the synthetic block.
+        if shallow && self.heap.get(receiver)?.length == 0 {
+            self.stack.push(Value::String("".into()));
+            return Ok(());
+        }
+        let values = if shallow {
+            Vec::new()
+        } else {
+            ordered_members(&self.heap, receiver)?
+                .iter()
+                .map(|member| {
+                    cached_render_value(&self.heap, receiver, member)?
+                        .ok_or_else(|| invalid("uncached strict collection element"))
+                })
+                .collect::<Result<Vec<_>, _>>()?
+        };
         self.frames
             .last_mut()
             .expect("active join frame")
             .collection_join = Some(JoinRun {
+            source: receiver,
+            shallow,
             values,
             separator,
             next: 0,
             awaiting: false,
             output: crate::pkl_string::PklStringBuilder::default(),
         });
+        if shallow {
+            self.force_shallow_frame(Value::Object(receiver))?;
+        }
         Ok(())
     }
 
@@ -206,6 +232,17 @@ impl Vm {
             .collection_join
             .take()
             .expect("active join");
+        if run.shallow {
+            self.pop()?;
+            run.shallow = false;
+            run.values = ordered_members(&self.heap, run.source)?
+                .iter()
+                .map(|member| {
+                    cached_render_value(&self.heap, run.source, member)?
+                        .ok_or_else(|| invalid("uncached shallow Listing join element"))
+                })
+                .collect::<Result<Vec<_>, _>>()?;
+        }
         if run.awaiting {
             let Value::String(text) = self.pop()? else {
                 return Err(invalid("non-string collection element rendering"));
@@ -1119,7 +1156,8 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
         }
         if object.collection_kind == CollectionKind::Dynamic
             || object.is_module
-            || !matches!(name, "length" | "isEmpty" | "isNotEmpty")
+            || !(matches!(name, "length" | "isEmpty" | "isNotEmpty")
+                || (name == "lastIndex" && object.collection_kind == CollectionKind::Listing))
         {
             return Ok(false);
         }
@@ -1174,6 +1212,7 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
         };
         let value = match name {
             "length" => Value::Int((length as i64).into()),
+            "lastIndex" => Value::Int((length as i64 - 1).into()),
             "isEmpty" => Value::Bool(length == 0),
             "isNotEmpty" => Value::Bool(length != 0),
             _ => return Ok(false),

@@ -1,0 +1,10 @@
+–– Pkl Error ––
+later-value
+
+4 | hidden badValues = new Listing { trace(3); trace(3); throw("later-value") }
+                                                         ^^^^^^^^^^^^^^^^^^^^
+at stage90followup.listingProjections#badValues[#3] (file:///stage90-followup/listing-projections.pkl)
+
+1 | (badValues.isDistinctBy((x) -> trace(x))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

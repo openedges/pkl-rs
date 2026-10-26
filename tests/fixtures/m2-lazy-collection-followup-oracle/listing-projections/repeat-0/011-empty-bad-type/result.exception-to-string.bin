@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Function1`, but got type `Int`.
+Value: 0
+
+2198 | external function distinctBy(selector: (Element) -> Any): Listing<Element>
+                                              ^^^^^^^^^^^^^^^^
+at pkl.base#Listing.distinctBy (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2198)
+
+1 | ((new Listing {}).distinctBy(0)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

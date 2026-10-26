@@ -1,0 +1,15 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "bad value"
+
+13 | hidden wrong: Mapping<String, Int> = new { ["a"] = 1; ["b"] = "bad value" }
+                                   ^^^
+at stage90.mappingFold#wrong (file:///stage90/mapping-fold.pkl)
+
+13 | hidden wrong: Mapping<String, Int> = new { ["a"] = 1; ["b"] = "bad value" }
+                                                                   ^^^^^^^^^^^
+at stage90.mappingFold#wrong["b"] (file:///stage90/mapping-fold.pkl)
+
+1 | (wrong.fold(0, (acc, key, value) -> throw("callback"))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

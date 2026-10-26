@@ -1,0 +1,1 @@
+((new Mapping {}).fold(seed, (acc, key, value) -> throw("unused")) == seed).toString()

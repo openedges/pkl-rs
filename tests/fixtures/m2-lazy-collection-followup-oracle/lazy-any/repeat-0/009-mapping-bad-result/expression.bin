@@ -1,0 +1,1 @@
+((new Mapping { ["x"] = 1; ["y"] = throw("tail") }).any((k,v) -> 0)).toString()

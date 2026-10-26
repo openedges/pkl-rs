@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function3`, but got type `Int`.
+Value: 0
+
+2232 | operator: (Int, Result, Element) -> Result,
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Listing.foldIndexed (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2232)
+
+1 | ((new Listing {}).foldIndexed(0, 0)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

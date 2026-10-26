@@ -1,0 +1,13 @@
+module stage90.mappingFold
+hidden parent = new Mapping { default = (k) -> throw("unused default"); ["a"] = trace(1); ["b"] = trace(2) }
+hidden amended = (parent) { ["a"] = trace(10); ["c"] = trace(3) }
+hidden badValue = new Mapping { ["a"] = trace(4); ["b"] = throw("value before callback") }
+hidden callbackFailure = new Mapping { ["a"] = trace(5); ["b"] = trace(6) }
+hidden nested = new Mapping { ["a"] = new Dynamic { bad = throw("nested remains lazy") } }
+hidden seed = new Dynamic { bad = throw("empty accumulator remains lazy") }
+hidden defaulted = new Mapping { default { x = 11 }; ["a"] { y = 1 } }
+hidden moreDefaulted = (defaulted) { ["b"] { y = 2 } }
+class Field { name: String; tag: String = "t-\(name)" }
+hidden typed: Mapping<String, Field> = new { ["a"] { name = "a" } }
+hidden typedAmended = (typed) { ["b"] { name = "b" } }
+hidden wrong: Mapping<String, Int> = new { ["a"] = 1; ["b"] = "bad value" }

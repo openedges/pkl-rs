@@ -1,0 +1,1 @@
+((new Listing { 1; 2; 3 }).distinctBy((x) -> if(x==3) throw("later-selector") else 0).length).toString()

@@ -1,0 +1,1 @@
+((new Listing { 1 }).distinctBy((x) -> new Dynamic { bad = throw("projected-hash") }).length).toString()

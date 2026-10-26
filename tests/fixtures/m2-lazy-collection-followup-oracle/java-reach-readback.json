@@ -1,0 +1,134 @@
+{
+  "UTF8_UTF16_pairs": 110,
+  "all_raw_repeats_equal": true,
+  "authority_report": {
+    "bytes": 21915,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-contains-reach-oracle-01/report.json",
+    "sha256": "f921cc831747d4b75b878f3a45b56d705214c34fb7cd5d7b83944cf70808b7e5"
+  },
+  "complete": true,
+  "fresh_query_jvms": 2,
+  "jdk_identity_invocations": 1,
+  "kind": "stage90-contains-reach3-raw-Java-readback-v1",
+  "limits": [
+    "Host lifecycle proposals remain unexecuted; no suspension/reentry or Rust compatibility is inferred.",
+    "No Rust compatibility pass is inferred; oracle/API errors, if present, remain explicit.",
+    "String units include unpaired surrogates; replacement UTF8 bytes are not substituted for the retained Java UTF16 authority."
+  ],
+  "logger_events": 10,
+  "minimum_free_seen": 1257160704,
+  "observations": 6,
+  "observations_unique": [
+    {
+      "expression": "lsStored.contains(query).toString()",
+      "id": "listing-query-before-stored",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 2,
+      "ordered_logger": [
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "\"query\" = \"query\"",
+          "module-uri": "file:///stage90-followup/contains-reach.pkl",
+          "position": "2:40-2:46"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "\"stored\" = \"stored\"",
+          "module-uri": "file:///stage90-followup/contains-reach.pkl",
+          "position": "3:41-3:48"
+        }
+      ],
+      "program": "contains-reach",
+      "raw_directory": "target/m2/stage90-contains-reach-oracle-01/programs/contains-reach/repeat-0/000-listing-query-before-stored",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "00660061006c00730065",
+      "stdout_utf8": "false",
+      "wire_id": "listing-query-before-stored"
+    },
+    {
+      "expression": "mpStored.containsValue(queryMap).toString()",
+      "id": "mapping-query-before-stored",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 3,
+      "ordered_logger": [
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "\"key\" = \"key\"",
+          "module-uri": "file:///stage90-followup/contains-reach.pkl",
+          "position": "5:38-5:42"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "\"query-map\" = \"query-map\"",
+          "module-uri": "file:///stage90-followup/contains-reach.pkl",
+          "position": "6:43-6:53"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "\"stored-map\" = \"stored-map\"",
+          "module-uri": "file:///stage90-followup/contains-reach.pkl",
+          "position": "7:44-7:55"
+        }
+      ],
+      "program": "contains-reach",
+      "raw_directory": "target/m2/stage90-contains-reach-oracle-01/programs/contains-reach/repeat-0/001-mapping-query-before-stored",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "00660061006c00730065",
+      "stdout_utf8": "false",
+      "wire_id": "mapping-query-before-stored"
+    },
+    {
+      "expression": "sameListing.contains(same).toString()",
+      "id": "identity",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "contains-reach",
+      "raw_directory": "target/m2/stage90-contains-reach-oracle-01/programs/contains-reach/repeat-0/002-identity",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "0074007200750065",
+      "stdout_utf8": "true",
+      "wire_id": "identity"
+    }
+  ],
+  "oracle_or_API_error_ids": [],
+  "original_java60_authority": {
+    "bytes": 58032,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-readback-02/report.json",
+    "sha256": "0262e82711108ad5ae4019cd4dd71a967b3240bf3fe5ed94fff0915710251ce0"
+  },
+  "outer": {
+    "bytes": 4710,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-contains-reach-oracle-launch-01/process.json",
+    "sha256": "555b56b0ae096c28e38ac6a1c0056094cbe06f7f5a61cb4c29c221500d8b5fbf"
+  },
+  "peak_owned_allocation": 1208320,
+  "programs": 1,
+  "queries": 3,
+  "raw_row_files": 232,
+  "reach_scope_note": "Fresh module-defined receivers exercise the three intended equality/identity boundaries. The original60 lexical errors remain separate and unchanged. String mode/purpose are explicitly recorded acquisition metadata; source/query/URI/ID/expected-null stay exact.",
+  "repetitions": 2,
+  "source_plan": {
+    "bytes": 1313,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-collection-candidate-02/supplement-plan.json",
+    "sha256": "2e3876733d67f0d5d63421429b86a12a48001940f5bde6d9ee16fff74b529053"
+  },
+  "source_stable": true,
+  "status_counts": {
+    "success": 6
+  },
+  "tools_stable": true,
+  "transport_label_map": {
+    "bytes": 975,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-contains-reach-oracle-prep-01/query-label-map.json",
+    "sha256": "7d1ae9e4b041b4e6bc4abe24c30ea8a7acad97f5bee6cc92fb11f6c434618e22"
+  }
+}

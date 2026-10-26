@@ -1,0 +1,3 @@
+module stage90followup.adjacentListing
+hidden values = new Listing { trace(1); trace(2) }
+hidden objectValues = new Listing { new Dynamic { x = trace("nested") }; trace(3) }

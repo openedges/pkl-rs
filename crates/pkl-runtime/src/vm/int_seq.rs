@@ -1,12 +1,16 @@
-//! Arithmetic sequence transforms and List/Listing folds share resumable cursors.
+//! Arithmetic sequence transforms and collection folds share resumable cursors.
 use super::*;
-use crate::{heap::CollectionKind, int_seq::IntSeq};
+use crate::{
+    heap::{CollectionKind, CollectionMemberKind},
+    int_seq::IntSeq,
+};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Operation {
     Step,
     Map,
     Fold,
+    FoldIndexed,
     ToList,
     ToListing,
     ToString,
@@ -102,8 +106,20 @@ pub(super) fn blocks(
             "external function fold<Result>(initial: Result, operator: (Result, Element) -> Result): Result",
             Operation::Fold,
         ),
+        (
+            "Listing",
+            "foldIndexed",
+            "external function foldIndexed<Result>(\n    initial: Result,\n    operator: (Int, Result, Element) -> Result,\n  ): Result",
+            Operation::FoldIndexed,
+        ),
+        (
+            "Mapping",
+            "fold",
+            "external function fold<Result>(initial: Result, operator: (Result, Key, Value) -> Result): Result",
+            Operation::Fold,
+        ),
     ] {
-        let class = if matches!(class_name, "List" | "Listing") {
+        let class = if matches!(class_name, "List" | "Listing" | "Mapping") {
             source.text.find(&format!("class {class_name}<")).unwrap()
         } else {
             class
@@ -129,20 +145,33 @@ pub(super) fn blocks(
                 Some(Span::new(parameter + 4, parameter + 4 + "isNonZero".len())),
             ]);
         }
-        if matches!(operation, Operation::Map | Operation::Fold) {
-            if operation == Operation::Fold {
+        if matches!(
+            operation,
+            Operation::Map | Operation::Fold | Operation::FoldIndexed
+        ) {
+            if matches!(operation, Operation::Fold | Operation::FoldIndexed) {
                 code.push(Instruction::LoadLocal(1));
                 spans.push(None);
             }
             let function_type = if operation == Operation::Map {
                 "(Int) -> Result"
+            } else if operation == Operation::FoldIndexed {
+                "(Int, Result, Element) -> Result"
+            } else if class_name == "Mapping" {
+                "(Result, Key, Value) -> Result"
             } else if matches!(class_name, "List" | "Listing") {
                 "(Result, Element) -> Result"
             } else {
                 "(Result, Int) -> Result"
             };
             let parameter = start + signature.find(function_type).unwrap();
-            let arity = if operation == Operation::Map { 1 } else { 2 };
+            let arity = if operation == Operation::Map {
+                1
+            } else if class_name == "Mapping" || operation == Operation::FoldIndexed {
+                3
+            } else {
+                2
+            };
             let length = function_type.len();
             code.extend([
                 Instruction::LoadLocal(0),
@@ -156,14 +185,27 @@ pub(super) fn blocks(
         }
         if matches!(
             operation,
-            Operation::Map | Operation::Fold | Operation::ToList | Operation::ToListing
+            Operation::Map
+                | Operation::Fold
+                | Operation::FoldIndexed
+                | Operation::ToList
+                | Operation::ToListing
         ) {
             code.push(Instruction::BeginIntSeq(operation));
             let next = code.len();
             code.push(Instruction::IntSeqNext { end: 0 });
-            if matches!(operation, Operation::Map | Operation::Fold) {
+            if matches!(
+                operation,
+                Operation::Map | Operation::Fold | Operation::FoldIndexed
+            ) {
                 code.push(Instruction::Call {
-                    arity: if operation == Operation::Map { 1 } else { 2 },
+                    arity: if operation == Operation::Map {
+                        1
+                    } else if class_name == "Mapping" || operation == Operation::FoldIndexed {
+                        3
+                    } else {
+                        2
+                    },
                     method: false,
                 });
             }
@@ -191,8 +233,27 @@ pub(super) fn blocks(
     result
 }
 
+#[derive(Default)]
+struct VisitedKeys {
+    values: Vec<Value>,
+    index: collection_transforms::InsertionHashIndex,
+}
+
+struct MappingCursor {
+    source: ObjectId,
+    members: Vec<collections::RenderMember>,
+    next: usize,
+    // Identifier properties and entry keys occupy separate Java namespaces.
+    properties: VisitedKeys,
+    entries: VisitedKeys,
+    // Some(None) is an already computed, unknown JVM identity hash. Preserve
+    // the lookup hash while structural equality can suspend or reenter.
+    lookup_hash: Option<Option<i32>>,
+}
+
 enum Cursor {
     IntSeq(crate::int_seq::Cursor),
+    Mapping(Box<MappingCursor>),
     List {
         source: ObjectId,
         members: Vec<crate::heap::CollectionMember>,
@@ -209,8 +270,15 @@ pub(super) struct Run {
 impl Run {
     pub(super) fn roots(&self, roots: &mut Vec<Value>) {
         roots.extend(self.callback.iter().chain(&self.accumulator).cloned());
-        if let Cursor::List { source, .. } = &self.cursor {
-            roots.push(Value::Object(*source));
+        match &self.cursor {
+            Cursor::List { source, .. } => roots.push(Value::Object(*source)),
+            Cursor::Mapping(cursor) => {
+                roots.push(Value::Object(cursor.source));
+                roots.extend(cursor.members.iter().map(|m| m.descriptor.key.clone()));
+                roots.extend(cursor.properties.values.iter().cloned());
+                roots.extend(cursor.entries.values.iter().cloned());
+            }
+            Cursor::IntSeq(_) => {}
         }
     }
 }
@@ -279,12 +347,15 @@ impl Vm {
         Ok(())
     }
     pub(super) fn begin_int_seq(&mut self, operation: Operation) -> Result<(), RuntimeError> {
-        let callback = if matches!(operation, Operation::Map | Operation::Fold) {
+        let callback = if matches!(
+            operation,
+            Operation::Map | Operation::Fold | Operation::FoldIndexed
+        ) {
             Some(self.pop()?)
         } else {
             None
         };
-        let accumulator = if operation == Operation::Fold {
+        let accumulator = if matches!(operation, Operation::Fold | Operation::FoldIndexed) {
             Some(self.pop()?)
         } else {
             None
@@ -297,7 +368,7 @@ impl Vm {
         let cursor = match receiver {
             Value::IntSeq(sequence) => Cursor::IntSeq(sequence.cursor(false)),
             Value::Object(source)
-                if operation == Operation::Fold
+                if matches!(operation, Operation::Fold | Operation::FoldIndexed)
                     && matches!(
                         self.heap.get(source)?.collection_kind,
                         CollectionKind::List | CollectionKind::Listing
@@ -309,9 +380,23 @@ impl Vm {
                     next: 0,
                 }
             }
+            Value::Object(source)
+                if matches!(operation, Operation::Fold | Operation::FoldIndexed)
+                    && self.heap.get(source)?.collection_kind == CollectionKind::Mapping =>
+            {
+                Cursor::Mapping(Box::new(MappingCursor {
+                    source,
+                    members: collections::render_members(&self.heap, source)?,
+                    next: 0,
+                    properties: VisitedKeys::default(),
+                    entries: VisitedKeys::default(),
+                    lookup_hash: None,
+                }))
+            }
             _ => return Err(invalid("sequence loop receiver")),
         };
         let shallow_source = match &cursor {
+            Cursor::Mapping(cursor) => Some(cursor.source),
             Cursor::List { source, .. }
                 if self.heap.get(*source)?.collection_kind == CollectionKind::Listing =>
             {
@@ -327,7 +412,7 @@ impl Vm {
             accumulator,
             shallow: shallow_source.is_some(),
         }));
-        if operation != Operation::Fold {
+        if !matches!(operation, Operation::Fold | Operation::FoldIndexed) {
             let builder = self.heap.allocate(Object {
                 collection_kind: if operation == Operation::ToListing {
                     CollectionKind::Listing
@@ -339,7 +424,7 @@ impl Vm {
             frame.builders.push(builder);
         }
         if let Some(source) = shallow_source {
-            // Java validates Function2 first, then forces all receiver member
+            // Java validates the callback first, then forces all receiver member
             // values before calling it. Nested member objects remain lazy.
             self.force_shallow_frame(Value::Object(source))?;
         }
@@ -361,12 +446,21 @@ impl Vm {
                 .unwrap()
                 .shallow = false;
         }
+        if self
+            .frames
+            .last()
+            .and_then(|f| f.int_seq_run.as_ref())
+            .is_some_and(|run| matches!(&run.cursor, Cursor::Mapping(_)))
+        {
+            return self.mapping_fold_next(end);
+        }
         let run = self
             .frames
             .last_mut()
             .and_then(|frame| frame.int_seq_run.as_mut())
             .ok_or_else(|| invalid("IntSeq cursor"))?;
         let value = match &mut run.cursor {
+            Cursor::Mapping(_) => unreachable!("Mapping fold uses its member cursor"),
             Cursor::IntSeq(cursor) => cursor.next().map(|(_, value)| Value::Int(value.into())),
             Cursor::List {
                 source,
@@ -391,12 +485,108 @@ impl Vm {
         if let Some(callback) = &run.callback {
             self.stack.push(callback.clone());
         }
+        if run.operation == Operation::FoldIndexed {
+            let Cursor::List { next, .. } = &run.cursor else {
+                return Err(invalid("indexed fold cursor"));
+            };
+            self.stack.push(Value::Int((*next as i64 - 1).into()));
+        }
         if let Some(accumulator) = &run.accumulator {
             self.stack.push(accumulator.clone());
         }
         self.stack.push(value);
         Ok(())
     }
+    fn mapping_fold_next(&mut self, end: usize) -> Result<(), RuntimeError> {
+        let run = self
+            .frames
+            .last()
+            .and_then(|f| f.int_seq_run.as_ref())
+            .ok_or_else(|| invalid("Mapping fold cursor"))?;
+        let Cursor::Mapping(cursor) = &run.cursor else {
+            return Err(invalid("Mapping fold receiver"));
+        };
+        let Some(item) = cursor.members.get(cursor.next).cloned() else {
+            return self.jump(end);
+        };
+        let source = cursor.source;
+        let key = item.descriptor.key.clone();
+        let property = item.descriptor.kind == CollectionMemberKind::Property;
+        let hash = if let Some(hash) = cursor.lookup_hash {
+            hash
+        } else {
+            if self.prepare_keys(vec![key.clone()])? {
+                return Ok(());
+            }
+            let hash = self.java_hash(&key)?;
+            let run = self
+                .frames
+                .last_mut()
+                .unwrap()
+                .int_seq_run
+                .as_mut()
+                .unwrap();
+            let Cursor::Mapping(cursor) = &mut run.cursor else {
+                unreachable!()
+            };
+            cursor.lookup_hash = Some(hash);
+            hash
+        };
+        let run = self.frames.last().unwrap().int_seq_run.as_ref().unwrap();
+        let Cursor::Mapping(cursor) = &run.cursor else {
+            unreachable!()
+        };
+        let seen = if property {
+            &cursor.properties
+        } else {
+            &cursor.entries
+        };
+        let candidates = seen.index.candidates(hash, &seen.values);
+        if self.search_key(&key, candidates.clone())? {
+            return Ok(());
+        }
+        let duplicate = candidates
+            .iter()
+            .any(|old| equality::same_key(&self.heap, &key, old));
+        let run = self
+            .frames
+            .last_mut()
+            .unwrap()
+            .int_seq_run
+            .as_mut()
+            .unwrap();
+        let Cursor::Mapping(cursor) = &mut run.cursor else {
+            unreachable!()
+        };
+        let seen = if property {
+            &mut cursor.properties
+        } else {
+            &mut cursor.entries
+        };
+        if !duplicate {
+            seen.index.insert(hash, seen.values.len());
+            seen.values.push(key.clone());
+        }
+        cursor.next += 1;
+        cursor.lookup_hash = None;
+        // Java visits keys before filtering hidden/external properties. Do not
+        // pre-deduplicate descriptors or skip an object's key hashing effects.
+        if duplicate || item.skip {
+            self.frames.last_mut().unwrap().pc -= 1;
+            return Ok(());
+        }
+        let value = collections::cached_render_value(&self.heap, source, &item.descriptor)?
+            .ok_or_else(|| invalid("uncached shallow Mapping fold value"))?;
+        let run = self.frames.last().unwrap().int_seq_run.as_ref().unwrap();
+        self.stack
+            .push(run.callback.clone().expect("Mapping fold callback"));
+        self.stack
+            .push(run.accumulator.clone().expect("Mapping fold accumulator"));
+        self.stack.push(key);
+        self.stack.push(value);
+        Ok(())
+    }
+
     pub(super) fn int_seq_accept(&mut self) -> Result<(), RuntimeError> {
         let value = self.pop()?;
         let run = self
@@ -404,7 +594,7 @@ impl Vm {
             .last_mut()
             .and_then(|frame| frame.int_seq_run.as_mut())
             .ok_or_else(|| invalid("IntSeq result"))?;
-        if run.operation == Operation::Fold {
+        if matches!(run.operation, Operation::Fold | Operation::FoldIndexed) {
             run.accumulator = Some(value);
         } else {
             self.stack.push(value);

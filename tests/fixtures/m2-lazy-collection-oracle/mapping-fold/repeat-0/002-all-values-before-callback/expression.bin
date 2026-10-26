@@ -1,0 +1,1 @@
+(badValue.fold(0, (acc, key, value) -> throw("callback must not begin"))).toString()

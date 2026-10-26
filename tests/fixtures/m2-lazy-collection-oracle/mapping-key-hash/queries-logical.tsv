@@ -1,0 +1,3 @@
+string	non-string-hash-error	(bad.fold(0, (acc, key, value) -> trace(acc + value))).toString()
+string	non-string-hash-order	(values.fold(0, (acc, key, value) -> trace(acc + value))).toString()
+string	non-string-hash-retry	(values.fold(0, (acc, key, value) -> trace(acc + value))).toString()

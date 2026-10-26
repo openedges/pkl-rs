@@ -1,0 +1,1 @@
+((new Listing { throw("selected") }).singleOrNull).toString()

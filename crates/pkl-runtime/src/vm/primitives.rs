@@ -285,6 +285,7 @@ pub(super) fn blocks(
     result.extend(duration::blocks(blocks, metadata));
     result.extend(bytes::blocks(blocks, metadata));
     result.extend(int_seq::blocks(blocks, metadata));
+    result.extend(lazy_collections::blocks(blocks, metadata));
     result.extend(regex::blocks(blocks, metadata));
     result.extend(collection_transforms::endpoint_blocks(blocks, metadata));
     result.extend(any::blocks(blocks, metadata));
@@ -658,14 +659,19 @@ impl Vm {
             {
                 "Listing"
             }
+            Value::Object(id)
+                if self.heap.get(*id)?.collection_kind == crate::heap::CollectionKind::Mapping =>
+            {
+                "Mapping"
+            }
             _ => return Ok(false),
         };
         if method
-            && matches!(class, "List" | "Set")
-            && matches!(
+            && matches!(class, "List" | "Set" | "Listing")
+            && (matches!(
                 name,
                 "first" | "firstOrNull" | "last" | "lastOrNull" | "single" | "singleOrNull"
-            )
+            ) || (class == "Listing" && name == "distinct"))
         {
             let mut error = RuntimeError::new(
                 ErrorKind::MissingMember,
@@ -683,7 +689,7 @@ impl Vm {
                 })
                 .copied()
                 .unwrap_or(0) as isize;
-            if class == "Set" {
+            if class != "List" {
                 let (properties, methods) = crate::diagnostic_names::collection_members(class);
                 error.hint =
                     crate::diagnostic::member_suggestions(name, arity, &properties, &methods);
@@ -748,14 +754,14 @@ impl Vm {
                 return Ok(false);
             };
             let arity = match name {
-                "isBetween" | "fold" | "splitLimit" | "replaceAll" | "replaceFirst"
-                | "replaceLast" | "replaceAllMapped" | "replaceFirstMapped"
+                "isBetween" | "fold" | "foldIndexed" | "splitLimit" | "replaceAll"
+                | "replaceFirst" | "replaceLast" | "replaceAllMapped" | "replaceFirstMapped"
                 | "replaceLastMapped" | "substring" | "substringOrNull" => 2,
                 "step" | "map" | "findMatchesIn" | "matchEntire" | "split" => 1,
                 "contains" | "matches" | "startsWith" | "endsWith" | "indexOf"
                 | "indexOfOrNull" | "lastIndexOf" | "lastIndexOfOrNull" | "dropLast" | "xor"
                 | "implies" | "toDataSize" | "toDuration" | "toUnit" | "getOrNull"
-                | "decodeToString" => 1,
+                | "decodeToString" | "any" | "containsValue" | "distinctBy" | "isDistinctBy" => 1,
                 _ => 0,
             };
             let id = self.heap.allocate(Object {

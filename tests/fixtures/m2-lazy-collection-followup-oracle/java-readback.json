@@ -1,0 +1,1161 @@
+{
+  "UTF8_UTF16_pairs": 1550,
+  "all_raw_repeats_equal": true,
+  "authority_report": {
+    "bytes": 38021,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/report.json",
+    "sha256": "85c768fe2749137f7be9c4fada726b87183a508292cb19a5b1b8cb8cbb14844e"
+  },
+  "complete": true,
+  "fresh_query_jvms": 10,
+  "jdk_identity_invocations": 1,
+  "kind": "stage90-lazy-followup60-raw-Java-readback-v1",
+  "limits": [
+    "Host lifecycle proposals remain unexecuted; no suspension/reentry or Rust compatibility is inferred.",
+    "No Rust compatibility pass is inferred; oracle/API errors, if present, remain explicit.",
+    "String units include unpaired surrogates; replacement UTF8 bytes are not substituted for the retained Java UTF16 authority."
+  ],
+  "logger_events": 70,
+  "minimum_free_seen": 1354100736,
+  "observations": 120,
+  "observations_unique": [
+    {
+      "expression": "((new Listing {}).any((x) -> true)).toString()",
+      "id": "listing-empty",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "lazy-any",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-any/repeat-0/000-listing-empty",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "00660061006c00730065",
+      "stdout_utf8": "false",
+      "wire_id": "listing-empty"
+    },
+    {
+      "expression": "(ls.any((x) -> trace(x == 1))).toString()",
+      "id": "listing-hit",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 2,
+      "ordered_logger": [
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "1 = 1",
+          "module-uri": "file:///stage90-followup/lazy-any.pkl",
+          "position": "2:33-2:33"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "x == 1 = true",
+          "module-uri": "repl:text",
+          "position": "1:22-1:27"
+        }
+      ],
+      "program": "lazy-any",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-any/repeat-0/001-listing-hit",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "0074007200750065",
+      "stdout_utf8": "true",
+      "wire_id": "listing-hit"
+    },
+    {
+      "expression": "(ls.any((x) -> trace(x == 1))).toString()",
+      "id": "listing-hit-retry",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 1,
+      "ordered_logger": [
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "x == 1 = true",
+          "module-uri": "repl:text",
+          "position": "1:22-1:27"
+        }
+      ],
+      "program": "lazy-any",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-any/repeat-0/002-listing-hit-retry",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "0074007200750065",
+      "stdout_utf8": "true",
+      "wire_id": "listing-hit-retry"
+    },
+    {
+      "expression": "(ls.any((x) -> false)).toString()",
+      "id": "listing-miss-error",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "lazy-any",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-any/repeat-0/003-listing-miss-error",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nlisting-tail\n\n2 | hidden ls = new Listing { trace(1); throw(\"listing-tail\") }\n                                        ^^^^^^^^^^^^^^^^^^^^^\nat stage90followup.lazyAny#ls[#2] (file:///stage90-followup/lazy-any.pkl)\n\n1 | (ls.any((x) -> false)).toString()\n     ^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "listing-miss-error"
+    },
+    {
+      "expression": "(mp.any((k, v) -> trace(v == 1))).toString()",
+      "id": "mapping-hit",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 2,
+      "ordered_logger": [
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "1 = 1",
+          "module-uri": "file:///stage90-followup/lazy-any.pkl",
+          "position": "3:41-3:41"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "v == 1 = true",
+          "module-uri": "repl:text",
+          "position": "1:25-1:30"
+        }
+      ],
+      "program": "lazy-any",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-any/repeat-0/004-mapping-hit",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "0074007200750065",
+      "stdout_utf8": "true",
+      "wire_id": "mapping-hit"
+    },
+    {
+      "expression": "(amendedValues.any((k, v) -> trace(k) == \"b\")).toString()",
+      "id": "mapping-order",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 4,
+      "ordered_logger": [
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "10 = 10",
+          "module-uri": "file:///stage90-followup/lazy-any.pkl",
+          "position": "5:55-5:56"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "k = \"a\"",
+          "module-uri": "repl:text",
+          "position": "1:36-1:36"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "2 = 2",
+          "module-uri": "file:///stage90-followup/lazy-any.pkl",
+          "position": "4:69-4:69"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "k = \"b\"",
+          "module-uri": "repl:text",
+          "position": "1:36-1:36"
+        }
+      ],
+      "program": "lazy-any",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-any/repeat-0/005-mapping-order",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "0074007200750065",
+      "stdout_utf8": "true",
+      "wire_id": "mapping-order"
+    },
+    {
+      "expression": "(amendedValues.any((k, v) -> trace(k) == \"b\")).toString()",
+      "id": "mapping-order-retry",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 2,
+      "ordered_logger": [
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "k = \"a\"",
+          "module-uri": "repl:text",
+          "position": "1:36-1:36"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "k = \"b\"",
+          "module-uri": "repl:text",
+          "position": "1:36-1:36"
+        }
+      ],
+      "program": "lazy-any",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-any/repeat-0/006-mapping-order-retry",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "0074007200750065",
+      "stdout_utf8": "true",
+      "wire_id": "mapping-order-retry"
+    },
+    {
+      "expression": "(keyMap.any((k, v) -> true)).toString()",
+      "id": "mapping-key-error",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 1,
+      "ordered_logger": [
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "\"key\" = \"key\"",
+          "module-uri": "file:///stage90-followup/lazy-any.pkl",
+          "position": "6:41-6:45"
+        }
+      ],
+      "program": "lazy-any",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-any/repeat-0/007-mapping-key-error",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nkey-hash\n\n6 | hidden key = new Dynamic { text = trace(\"key\"); failure = throw(\"key-hash\") }\n                                                              ^^^^^^^^^^^^^^^^^\nat stage90followup.lazyAny#key.failure (file:///stage90-followup/lazy-any.pkl)\n\n1 | (keyMap.any((k, v) -> true)).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "mapping-key-error"
+    },
+    {
+      "expression": "((new Listing { 1; throw(\"tail\") }).any((x) -> 0)).toString()",
+      "id": "listing-bad-result",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "lazy-any",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-any/repeat-0/008-listing-bad-result",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nExpected value of type `Boolean`, but got type `Int`.\nValue: 0\n\n1 | ((new Listing { 1; throw(\"tail\") }).any((x) -> 0)).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "listing-bad-result"
+    },
+    {
+      "expression": "((new Mapping { [\"x\"] = 1; [\"y\"] = throw(\"tail\") }).any((k,v) -> 0)).toString()",
+      "id": "mapping-bad-result",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "lazy-any",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-any/repeat-0/009-mapping-bad-result",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nExpected value of type `Boolean`, but got type `Int`.\nValue: 0\n\n1 | ((new Mapping { [\"x\"] = 1; [\"y\"] = throw(\"tail\") }).any((k,v) -> 0)).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "mapping-bad-result"
+    },
+    {
+      "expression": "((new Listing {}).any(0)).toString()",
+      "id": "empty-bad-type",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "lazy-any",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-any/repeat-0/010-empty-bad-type",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nExpected value of type `Function1`, but got type `Int`.\nValue: 0\n\n2210 | external function any(predicate: (Element) -> Boolean): Boolean\n                                        ^^^^^^^^^^^^^^^^^^^^\nat pkl.base#Listing.any (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2210)\n\n1 | ((new Listing {}).any(0)).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "empty-bad-type"
+    },
+    {
+      "expression": "((new Mapping {}).any((v) -> true)).toString()",
+      "id": "empty-bad-arity",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "lazy-any",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-any/repeat-0/011-empty-bad-arity",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nExpected value of type `Function2`, but got type `Function1`.\nValue: new Function1 {}\n\n2303 | external function any(predicate: (Key, Value) -> Boolean): Boolean\n                                        ^^^^^^^^^^^^^^^^^^^^^^^\nat pkl.base#Mapping.any (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2303)\n\n1 | ((new Mapping {}).any((v) -> true)).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "empty-bad-arity"
+    },
+    {
+      "expression": "((new Listing { throw(\"value\") }).any(throw(\"argument\"))).toString()",
+      "id": "argument-error",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "lazy-any",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-any/repeat-0/012-argument-error",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nargument\n\n1 | ((new Listing { throw(\"value\") }).any(throw(\"argument\"))).toString()\n                                          ^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "argument-error"
+    },
+    {
+      "expression": "((new Listing { 1 }).any).toString()",
+      "id": "property-access",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "lazy-any",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-any/repeat-0/013-property-access",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nCannot find property `any` in object of type `Listing`.\n\n1 | ((new Listing { 1 }).any).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n\nAvailable properties:\ndefault\ndistinct\nfirst\nfirstOrNull\nisDistinct\nisEmpty\nisNotEmpty\nlast\nlastIndex\nlastOrNull\nlength\nsingle\nsingleOrNull\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "property-access"
+    },
+    {
+      "expression": "((new Listing { 1; throw(\"tail\") }).contains(1)).toString()",
+      "id": "listing-hit",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "lazy-contains",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-contains/repeat-0/000-listing-hit",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "0074007200750065",
+      "stdout_utf8": "true",
+      "wire_id": "listing-hit"
+    },
+    {
+      "expression": "((new Listing { stored }).contains(query)).toString()",
+      "id": "listing-query-before-stored",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "lazy-contains",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-contains/repeat-0/001-listing-query-before-stored",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nCannot find property `stored`.\n\n1 | ((new Listing { stored }).contains(query)).toString()\n                    ^^^^^^\nat repl:text[#1] (repl:text)\n\nDid you mean any of the following?\nstoredMap\n\n1 | ((new Listing { stored }).contains(query)).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "listing-query-before-stored"
+    },
+    {
+      "expression": "((new Mapping { [key] = storedMap }).containsValue(queryMap)).toString()",
+      "id": "mapping-query-before-stored",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 1,
+      "ordered_logger": [
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "\"key\" = \"key\"",
+          "module-uri": "file:///stage90-followup/lazy-contains.pkl",
+          "position": "5:38-5:42"
+        }
+      ],
+      "program": "lazy-contains",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-contains/repeat-0/002-mapping-query-before-stored",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nCannot find property `storedMap`.\n\n1 | ((new Mapping { [key] = storedMap }).containsValue(queryMap)).toString()\n                            ^^^^^^^^^\nat repl:text[#1] (repl:text)\n\nDid you mean any of the following?\nstored\n\n1 | ((new Mapping { [key] = storedMap }).containsValue(queryMap)).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "mapping-query-before-stored"
+    },
+    {
+      "expression": "((new Mapping { [\"a\"] = 1; [\"b\"] = throw(\"tail\") }).containsValue(1)).toString()",
+      "id": "mapping-hit",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "lazy-contains",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-contains/repeat-0/003-mapping-hit",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "0074007200750065",
+      "stdout_utf8": "true",
+      "wire_id": "mapping-hit"
+    },
+    {
+      "expression": "((new Listing { same }).contains(same)).toString()",
+      "id": "identity",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "lazy-contains",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-contains/repeat-0/004-identity",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nCannot find property `same`.\n\n1 | ((new Listing { same }).contains(same)).toString()\n                    ^^^^\nat repl:text[#1] (repl:text)\n\n1 | ((new Listing { same }).contains(same)).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "identity"
+    },
+    {
+      "expression": "((new Mapping {}).containsValue(same)).toString()",
+      "id": "empty-query-lazy",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "lazy-contains",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-contains/repeat-0/005-empty-query-lazy",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "00660061006c00730065",
+      "stdout_utf8": "false",
+      "wire_id": "empty-query-lazy"
+    },
+    {
+      "expression": "((new Listing { 1 }).contains(1.0)).toString()",
+      "id": "int-float",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "lazy-contains",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-contains/repeat-0/006-int-float",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "00660061006c00730065",
+      "stdout_utf8": "false",
+      "wire_id": "int-float"
+    },
+    {
+      "expression": "((new Mapping { [\"x\"] = 0.0 }).containsValue(-0.0)).toString()",
+      "id": "signed-zero",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "lazy-contains",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-contains/repeat-0/007-signed-zero",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "00660061006c00730065",
+      "stdout_utf8": "false",
+      "wire_id": "signed-zero"
+    },
+    {
+      "expression": "((new Listing { NaN }).contains(NaN)).toString()",
+      "id": "nan",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "lazy-contains",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-contains/repeat-0/008-nan",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "0074007200750065",
+      "stdout_utf8": "true",
+      "wire_id": "nan"
+    },
+    {
+      "expression": "(((typed) { [\"c\"] { name = \"c\" } }).containsValue(new Field { name = \"c\" })).toString()",
+      "id": "typed-amended",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "lazy-contains",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-contains/repeat-0/009-typed-amended",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "0074007200750065",
+      "stdout_utf8": "true",
+      "wire_id": "typed-amended"
+    },
+    {
+      "expression": "((new Listing { 1; throw(\"tail\") }).contains(2)).toString()",
+      "id": "listing-miss-error",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "lazy-contains",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-contains/repeat-0/010-listing-miss-error",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\ntail\n\n1 | ((new Listing { 1; throw(\"tail\") }).contains(2)).toString()\n                       ^^^^^^^^^^^^^\nat repl:text[#2] (repl:text)\n\n1 | ((new Listing { 1; throw(\"tail\") }).contains(2)).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "listing-miss-error"
+    },
+    {
+      "expression": "((new Mapping { [\"x\"] = throw(\"value\") }).containsValue(throw(\"query\"))).toString()",
+      "id": "argument-error",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "lazy-contains",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/lazy-contains/repeat-0/011-argument-error",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nquery\n\n1 | ((new Mapping { [\"x\"] = throw(\"value\") }).containsValue(throw(\"query\"))).toString()\n                                                            ^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "argument-error"
+    },
+    {
+      "expression": "(values.foldIndexed(List(), (i, acc, v) -> acc.add(trace(\"\\(i):\\(v)\")))).toString()",
+      "id": "index-order",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 6,
+      "ordered_logger": [
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "3 = 3",
+          "module-uri": "file:///stage90-followup/fold-indexed.pkl",
+          "position": "3:38-3:38"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "1 = 1",
+          "module-uri": "file:///stage90-followup/fold-indexed.pkl",
+          "position": "2:41-2:41"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "2 = 2",
+          "module-uri": "file:///stage90-followup/fold-indexed.pkl",
+          "position": "2:51-2:51"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "\"\\(i):\\(v)\" = \"0:1\"",
+          "module-uri": "repl:text",
+          "position": "1:58-1:68"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "\"\\(i):\\(v)\" = \"1:2\"",
+          "module-uri": "repl:text",
+          "position": "1:58-1:68"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "\"\\(i):\\(v)\" = \"2:3\"",
+          "module-uri": "repl:text",
+          "position": "1:58-1:68"
+        }
+      ],
+      "program": "fold-indexed",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/fold-indexed/repeat-0/000-index-order",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "004c006900730074002800220030003a00310022002c002000220031003a00320022002c002000220032003a003300220029",
+      "stdout_utf8": "List(\"0:1\", \"1:2\", \"2:3\")",
+      "wire_id": "index-order"
+    },
+    {
+      "expression": "(values.foldIndexed(List(), (i, acc, v) -> acc.add(trace(\"\\(i):\\(v)\")))).toString()",
+      "id": "index-order-retry",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 3,
+      "ordered_logger": [
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "\"\\(i):\\(v)\" = \"0:1\"",
+          "module-uri": "repl:text",
+          "position": "1:58-1:68"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "\"\\(i):\\(v)\" = \"1:2\"",
+          "module-uri": "repl:text",
+          "position": "1:58-1:68"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "\"\\(i):\\(v)\" = \"2:3\"",
+          "module-uri": "repl:text",
+          "position": "1:58-1:68"
+        }
+      ],
+      "program": "fold-indexed",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/fold-indexed/repeat-0/001-index-order-retry",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "004c006900730074002800220030003a00310022002c002000220031003a00320022002c002000220032003a003300220029",
+      "stdout_utf8": "List(\"0:1\", \"1:2\", \"2:3\")",
+      "wire_id": "index-order-retry"
+    },
+    {
+      "expression": "(badValues.foldIndexed(0, (i,a,v) -> trace(a+v))).toString()",
+      "id": "value-first-error",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 1,
+      "ordered_logger": [
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "4 = 4",
+          "module-uri": "file:///stage90-followup/fold-indexed.pkl",
+          "position": "4:40-4:40"
+        }
+      ],
+      "program": "fold-indexed",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/fold-indexed/repeat-0/002-value-first-error",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nvalue-before-callback\n\n4 | hidden badValues = new Listing { trace(4); throw(\"value-before-callback\") }\n                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat stage90followup.foldIndexed#badValues[#2] (file:///stage90-followup/fold-indexed.pkl)\n\n1 | (badValues.foldIndexed(0, (i,a,v) -> trace(a+v))).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "value-first-error"
+    },
+    {
+      "expression": "(nested.foldIndexed(0, (i,a,v) -> a+1)).toString()",
+      "id": "nested-lazy",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "fold-indexed",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/fold-indexed/repeat-0/003-nested-lazy",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "0031",
+      "stdout_utf8": "1",
+      "wire_id": "nested-lazy"
+    },
+    {
+      "expression": "((new Listing {}).foldIndexed(seed, (i,a,v) -> v) == seed).toString()",
+      "id": "empty-identity",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "fold-indexed",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/fold-indexed/repeat-0/004-empty-identity",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "0074007200750065",
+      "stdout_utf8": "true",
+      "wire_id": "empty-identity"
+    },
+    {
+      "expression": "((new Listing {}).foldIndexed(0, (a,v) -> a)).toString()",
+      "id": "empty-bad-arity",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "fold-indexed",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/fold-indexed/repeat-0/005-empty-bad-arity",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nExpected value of type `Function3`, but got type `Function2`.\nValue: new Function2 {}\n\n2232 | operator: (Int, Result, Element) -> Result,\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat pkl.base#Listing.foldIndexed (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2232)\n\n1 | ((new Listing {}).foldIndexed(0, (a,v) -> a)).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "empty-bad-arity"
+    },
+    {
+      "expression": "((new Listing {}).foldIndexed(0, 0)).toString()",
+      "id": "empty-bad-type",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "fold-indexed",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/fold-indexed/repeat-0/006-empty-bad-type",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nExpected value of type `Function3`, but got type `Int`.\nValue: 0\n\n2232 | operator: (Int, Result, Element) -> Result,\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat pkl.base#Listing.foldIndexed (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2232)\n\n1 | ((new Listing {}).foldIndexed(0, 0)).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "empty-bad-type"
+    },
+    {
+      "expression": "(badValues.foldIndexed(throw(\"initial\"), (i,a,v) -> a)).toString()",
+      "id": "initial-error",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "fold-indexed",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/fold-indexed/repeat-0/007-initial-error",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\ninitial\n\n1 | (badValues.foldIndexed(throw(\"initial\"), (i,a,v) -> a)).toString()\n                           ^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "initial-error"
+    },
+    {
+      "expression": "(defaulted.foldIndexed(0, (i,a,v) -> a+v.x+i)).toString()",
+      "id": "default-values",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "fold-indexed",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/fold-indexed/repeat-0/008-default-values",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "00310031",
+      "stdout_utf8": "11",
+      "wire_id": "default-values"
+    },
+    {
+      "expression": "(values.foldIndexed(0, (i,a,v) -> if(i==1) throw(\"callback\") else a+v)).toString()",
+      "id": "callback-error",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "fold-indexed",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/fold-indexed/repeat-0/009-callback-error",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\ncallback\n\n1 | (values.foldIndexed(0, (i,a,v) -> if(i==1) throw(\"callback\") else a+v)).toString()\n                                               ^^^^^^^^^^^^^^^^^\nat repl:text.<function#1> (repl:text)\n\n1 | (values.foldIndexed(0, (i,a,v) -> if(i==1) throw(\"callback\") else a+v)).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "callback-error"
+    },
+    {
+      "expression": "(values.distinct.toList()).toString()",
+      "id": "distinct-order",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 3,
+      "ordered_logger": [
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "1 = 1",
+          "module-uri": "file:///stage90-followup/listing-projections.pkl",
+          "position": "2:37-2:37"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "1 = 1",
+          "module-uri": "file:///stage90-followup/listing-projections.pkl",
+          "position": "2:47-2:47"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "2 = 2",
+          "module-uri": "file:///stage90-followup/listing-projections.pkl",
+          "position": "2:57-2:57"
+        }
+      ],
+      "program": "listing-projections",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/listing-projections/repeat-0/000-distinct-order",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "004c00690073007400280031002c002000320029",
+      "stdout_utf8": "List(1, 2)",
+      "wire_id": "distinct-order"
+    },
+    {
+      "expression": "(values.distinct.toList()).toString()",
+      "id": "distinct-cached",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "listing-projections",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/listing-projections/repeat-0/001-distinct-cached",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "004c00690073007400280031002c002000320029",
+      "stdout_utf8": "List(1, 2)",
+      "wire_id": "distinct-cached"
+    },
+    {
+      "expression": "(values.distinct.getClass().simpleName).toString()",
+      "id": "distinct-result-type",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "listing-projections",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/listing-projections/repeat-0/002-distinct-result-type",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "004c0069007300740069006e0067",
+      "stdout_utf8": "Listing",
+      "wire_id": "distinct-result-type"
+    },
+    {
+      "expression": "(values.distinctBy((x) -> trace(x)).toList()).toString()",
+      "id": "distinct-by-order",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 3,
+      "ordered_logger": [
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "x = 1",
+          "module-uri": "repl:text",
+          "position": "1:33-1:33"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "x = 1",
+          "module-uri": "repl:text",
+          "position": "1:33-1:33"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "x = 2",
+          "module-uri": "repl:text",
+          "position": "1:33-1:33"
+        }
+      ],
+      "program": "listing-projections",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/listing-projections/repeat-0/003-distinct-by-order",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "004c00690073007400280031002c002000320029",
+      "stdout_utf8": "List(1, 2)",
+      "wire_id": "distinct-by-order"
+    },
+    {
+      "expression": "((new Listing { 1; 2; 3 }).isDistinctBy((x) -> if(x==3) throw(\"later-selector\") else 0)).toString()",
+      "id": "selector-early-stop",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "listing-projections",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/listing-projections/repeat-0/004-selector-early-stop",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "00660061006c00730065",
+      "stdout_utf8": "false",
+      "wire_id": "selector-early-stop"
+    },
+    {
+      "expression": "((new Listing { 1; 2; 3 }).distinctBy((x) -> if(x==3) throw(\"later-selector\") else 0).length).toString()",
+      "id": "selector-full-traversal",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "listing-projections",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/listing-projections/repeat-0/005-selector-full-traversal",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nlater-selector\n\n1 | ((new Listing { 1; 2; 3 }).distinctBy((x) -> if(x==3) throw(\"later-selector\") else 0).length).toString()\n                                                          ^^^^^^^^^^^^^^^^^^^^^^^\nat repl:text.<function#1> (repl:text)\n\n1 | ((new Listing { 1; 2; 3 }).distinctBy((x) -> if(x==3) throw(\"later-selector\") else 0).length).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "selector-full-traversal"
+    },
+    {
+      "expression": "(badValues.isDistinctBy((x) -> trace(x))).toString()",
+      "id": "all-values-before-selector",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 2,
+      "ordered_logger": [
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "3 = 3",
+          "module-uri": "file:///stage90-followup/listing-projections.pkl",
+          "position": "4:40-4:40"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "3 = 3",
+          "module-uri": "file:///stage90-followup/listing-projections.pkl",
+          "position": "4:50-4:50"
+        }
+      ],
+      "program": "listing-projections",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/listing-projections/repeat-0/006-all-values-before-selector",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nlater-value\n\n4 | hidden badValues = new Listing { trace(3); trace(3); throw(\"later-value\") }\n                                                         ^^^^^^^^^^^^^^^^^^^^\nat stage90followup.listingProjections#badValues[#3] (file:///stage90-followup/listing-projections.pkl)\n\n1 | (badValues.isDistinctBy((x) -> trace(x))).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "all-values-before-selector"
+    },
+    {
+      "expression": "(nested.distinctBy((x) -> 0).length).toString()",
+      "id": "nested-preserved",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "listing-projections",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/listing-projections/repeat-0/007-nested-preserved",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "0031",
+      "stdout_utf8": "1",
+      "wire_id": "nested-preserved"
+    },
+    {
+      "expression": "((new Listing { 1 }).distinctBy((x) -> new Dynamic { bad = throw(\"projected-hash\") }).length).toString()",
+      "id": "projected-hash-error",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "listing-projections",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/listing-projections/repeat-0/008-projected-hash-error",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nprojected-hash\n\n1 | ((new Listing { 1 }).distinctBy((x) -> new Dynamic { bad = throw(\"projected-hash\") }).length).toString()\n                                                               ^^^^^^^^^^^^^^^^^^^^^^^\nat repl:text.<function#1>.bad (repl:text)\n\n1 | ((new Listing { 1 }).distinctBy((x) -> new Dynamic { bad = throw(\"projected-hash\") }).length).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "projected-hash-error"
+    },
+    {
+      "expression": "(defaulted.distinctBy((x) -> x.x).first.y).toString()",
+      "id": "defaults-preserved",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "listing-projections",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/listing-projections/repeat-0/009-defaults-preserved",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "0031",
+      "stdout_utf8": "1",
+      "wire_id": "defaults-preserved"
+    },
+    {
+      "expression": "(defaulted.distinctBy((x) -> x.x).getOrDefault(99)).toString()",
+      "id": "result-default",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "listing-projections",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/listing-projections/repeat-0/010-result-default",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "006e00650077002000440079006e0061006d006900630020007b007d",
+      "stdout_utf8": "new Dynamic {}",
+      "wire_id": "result-default"
+    },
+    {
+      "expression": "((new Listing {}).distinctBy(0)).toString()",
+      "id": "empty-bad-type",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "listing-projections",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/listing-projections/repeat-0/011-empty-bad-type",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nExpected value of type `Function1`, but got type `Int`.\nValue: 0\n\n2198 | external function distinctBy(selector: (Element) -> Any): Listing<Element>\n                                              ^^^^^^^^^^^^^^^^\nat pkl.base#Listing.distinctBy (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2198)\n\n1 | ((new Listing {}).distinctBy(0)).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "empty-bad-type"
+    },
+    {
+      "expression": "((new Listing {}).isDistinctBy((a,b) -> a)).toString()",
+      "id": "empty-bad-arity",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "listing-projections",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/listing-projections/repeat-0/012-empty-bad-arity",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nExpected value of type `Function1`, but got type `Function2`.\nValue: new Function2 {}\n\n2128 | external function isDistinctBy(selector: (Element) -> Any): Boolean\n                                                ^^^^^^^^^^^^^^^^\nat pkl.base#Listing.isDistinctBy (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2128)\n\n1 | ((new Listing {}).isDistinctBy((a,b) -> a)).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "empty-bad-arity"
+    },
+    {
+      "expression": "(parentValues.distinct.toList()).toString()",
+      "id": "prime-parent",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "listing-projections",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/listing-projections/repeat-0/013-prime-parent",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "004c006900730074002800310029",
+      "stdout_utf8": "List(1)",
+      "wire_id": "prime-parent"
+    },
+    {
+      "expression": "(checked.distinct.toList()).toString()",
+      "id": "warm-wrapper-property",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "listing-projections",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/listing-projections/repeat-0/014-warm-wrapper-property",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "004c006900730074002800310029",
+      "stdout_utf8": "List(1)",
+      "wire_id": "warm-wrapper-property"
+    },
+    {
+      "expression": "(checked[0]).toString()",
+      "id": "wrapper-element",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "listing-projections",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/listing-projections/repeat-0/015-wrapper-element",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nExpected value of type `String`, but got type `Int`.\nValue: 1\n\n7 | hidden checked: Listing<String> = parentValues\n                            ^^^^^^\nat stage90followup.listingProjections#checked (file:///stage90-followup/listing-projections.pkl)\n\n6 | hidden parentValues = new Listing { 1 }\n                                        ^\nat stage90followup.listingProjections#parentValues[#1] (file:///stage90-followup/listing-projections.pkl)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "wrapper-element"
+    },
+    {
+      "expression": "((new Listing {}).lastIndex).toString()",
+      "id": "last-index-empty",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "adjacent-listing-surface",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/adjacent-listing-surface/repeat-0/000-last-index-empty",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "002d0031",
+      "stdout_utf8": "-1",
+      "wire_id": "last-index-empty"
+    },
+    {
+      "expression": "((new Listing { throw(\"unforced\") }).lastIndex).toString()",
+      "id": "last-index-lazy",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "adjacent-listing-surface",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/adjacent-listing-surface/repeat-0/001-last-index-lazy",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "0030",
+      "stdout_utf8": "0",
+      "wire_id": "last-index-lazy"
+    },
+    {
+      "expression": "((new Listing { 1 }).lastIndex()).toString()",
+      "id": "last-index-called",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "adjacent-listing-surface",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/adjacent-listing-surface/repeat-0/002-last-index-called",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nCannot find method `lastIndex` in class `Listing`.\n\n1 | ((new Listing { 1 }).lastIndex()).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n\nDid you mean any of the following?\nlastIndex\nlast\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "last-index-called"
+    },
+    {
+      "expression": "(values.join(\"/\")).toString()",
+      "id": "join-values",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 2,
+      "ordered_logger": [
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "1 = 1",
+          "module-uri": "file:///stage90-followup/adjacent-listing-surface.pkl",
+          "position": "2:37-2:37"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "2 = 2",
+          "module-uri": "file:///stage90-followup/adjacent-listing-surface.pkl",
+          "position": "2:47-2:47"
+        }
+      ],
+      "program": "adjacent-listing-surface",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/adjacent-listing-surface/repeat-0/003-join-values",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "0031002f0032",
+      "stdout_utf8": "1/2",
+      "wire_id": "join-values"
+    },
+    {
+      "expression": "(objectValues.join(\"|\")).toString()",
+      "id": "join-objects",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 2,
+      "ordered_logger": [
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "3 = 3",
+          "module-uri": "file:///stage90-followup/adjacent-listing-surface.pkl",
+          "position": "3:80-3:80"
+        },
+        {
+          "level": "trace",
+          "member": "null",
+          "message": "\"nested\" = \"nested\"",
+          "module-uri": "file:///stage90-followup/adjacent-listing-surface.pkl",
+          "position": "3:61-3:68"
+        }
+      ],
+      "program": "adjacent-listing-surface",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/adjacent-listing-surface/repeat-0/004-join-objects",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "006e00650077002000440079006e0061006d006900630020007b002000780020003d00200022006e0065007300740065006400220020007d007c0033",
+      "stdout_utf8": "new Dynamic { x = \"nested\" }|3",
+      "wire_id": "join-objects"
+    },
+    {
+      "expression": "((new Listing {}).join(\"/\")).toString()",
+      "id": "join-empty",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "adjacent-listing-surface",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/adjacent-listing-surface/repeat-0/005-join-empty",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "join-empty"
+    },
+    {
+      "expression": "((new Listing {}).join(0)).toString()",
+      "id": "join-empty-bad-separator",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "adjacent-listing-surface",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/adjacent-listing-surface/repeat-0/006-join-empty-bad-separator",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nExpected value of type `String`, but got type `Int`.\nValue: 0\n\n2237 | external function join(separator: String): String\n                                         ^^^^^^\nat pkl.base#Listing.join (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2237)\n\n1 | ((new Listing {}).join(0)).toString()\n     ^^^^^^^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "join-empty-bad-separator"
+    },
+    {
+      "expression": "(values.join(throw(\"separator\"))).toString()",
+      "id": "join-separator-error",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "adjacent-listing-surface",
+      "raw_directory": "target/m2/stage90-lazy-followup-oracle-02/programs/adjacent-listing-surface/repeat-0/007-join-separator-error",
+      "status": "error",
+      "stderr_utf8": "\u2013\u2013 Pkl Error \u2013\u2013\nseparator\n\n1 | (values.join(throw(\"separator\"))).toString()\n                 ^^^^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "join-separator-error"
+    }
+  ],
+  "oracle_or_API_error_ids": [],
+  "outer": {
+    "bytes": 6255,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-launch-02/process.json",
+    "sha256": "4f7e1edf6b5f74abbd2d981bc9c629927f6a276eef9d0f4d23866acc28294f11"
+  },
+  "peak_owned_allocation": 8540160,
+  "preparation_note": "Initial followup planner failed before writing a runner because its source-loop seam count was overstrict; no Java JVM started before corrected freshprep02. All authored lowercase IDs remain unchanged and are scoped by program.",
+  "preserved_preparation_failure": {
+    "bytes": 735,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-prep-02/lineage.json",
+    "sha256": "b698db0aaff3d6f13a7dba11ca7ff7cb98fa9331300bb00a40df15d8ddf60a07"
+  },
+  "prior_java58_authority": {
+    "bytes": 53012,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-collection-oracle-readback-03/report.json",
+    "sha256": "85b657efa721d90483c8bc07795eb7a42ed7d65b3d4539e622f625457967968c"
+  },
+  "programs": 5,
+  "queries": 60,
+  "raw_row_files": 3340,
+  "repetitions": 2,
+  "source_plan": {
+    "bytes": 18952,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-collection-followup-01/queries.json",
+    "sha256": "d0f423360606ed465ccf3302812d15a4a3bdb561f4da8171607b1eebe704bb3d"
+  },
+  "source_stable": true,
+  "status_counts": {
+    "error": 54,
+    "success": 66
+  },
+  "tools_stable": true,
+  "transport_label_map": {
+    "bytes": 14539,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-prep-02/query-label-map.json",
+    "sha256": "7a24ebf48a8829903dc7b31f13f813df390468951bdafe5d1545af2f6dd5d0c3"
+  }
+}

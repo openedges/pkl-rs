@@ -24,6 +24,42 @@ obligations. Passing an execution does not close a missing requirement mapping.
 All nine M2 workstreams, complete APIs, release platforms, and performance and
 memory targets remain open. See the [full replay checkpoint](../reports/m2/stage86-full-replay-checkpoint.json).
 
+## Stage90 lazy collection checkpoint
+
+The shared evaluator now implements cached Listing endpoint properties,
+Mapping folds, indexed Listing folds, and lazy Listing/Mapping membership and
+predicate visitors. Listing distinctness selectors, joins, and `lastIndex`
+preserve the pinned Java force order, insertion-time hashes, equality direction,
+and early returns. Continuations retain roots across Host reads, cancellation,
+retry, and garbage collection.
+
+The two independently reviewed candidates are integrated into 3,398 source,
+test, and Java-fixture paths. All required local Rust checks passed on macOS
+arm64 with Rust 1.98.1: the full workspace records **1,247 passes, zero failures,
+and the existing ignored `frontend_probe`**. Thirteen nested child summaries
+are accounted for separately. Source bookends cover 194,914 paths; independent
+readback checked the actual compiler, dependency, and artifact identities.
+
+The final isolated candidate matches 139 Java queries twice, including complete
+represented result/error UTF-8 and UTF-16 channels and ordered Logger fields.
+Eight unchanged historical modules also match stdout, stderr, and exit status
+twice. These module observations do not establish generated-file or full CLI
+compatibility, and do not automatically promote the historical inventory rows.
+Earlier compiler, transport, and evidence-reader failures remain preserved.
+
+The integrated source matches **278/278 observations on each of Native, N-API,
+and Chromium**: all 139 queries run twice across 14 independent evaluator
+programs. Raw result/error strings, status, ordered Logger fields and process
+protocols are compared. Java type/exception/cause metadata remains recorded
+outside the represented portable API. One M1 acquisition also matches all
+6,078 primitive results per target and passes the separate architecture contract.
+The [checkpoint](../reports/m2/stage90-lazy-collections-checkpoint.json) records
+the exact source/build identities, failed attempts and local verification.
+
+The latest completed whole-corpus aggregate remains the Stage86 result above;
+all nine M2 workstreams and full API, release-platform, speed, and memory targets
+remain open.
+
 ## Stage87–89 integrated language checkpoint
 
 The [integrated checkpoint](../reports/m2/stage87-89-language-checkpoint.json)

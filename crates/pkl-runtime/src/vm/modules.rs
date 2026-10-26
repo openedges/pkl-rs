@@ -1131,6 +1131,7 @@ impl Vm {
             collection_transform: None,
             string_transform: None,
             int_seq_run: None,
+            lazy_collection_run: None,
             conversion_run: None,
             collection_addition: None,
             function_owner: None,

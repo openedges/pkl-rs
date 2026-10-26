@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "authority": {
+    "target/m2/stage90-lazy-collection-oracle-03/report.json": "da4960162972f61663cb2ff78b7ce8811f1d677d8b974017e47c34ea206a6fbb",
+    "target/m2/stage90-lazy-collection-oracle-readback-03/report.json": "85b657efa721d90483c8bc07795eb7a42ed7d65b3d4539e622f625457967968c",
+    "target/m2/stage90-lazy-collection-oracle-prep-03/query-label-map.json": "eaf27c3e70858bf141f745aa986127ca72cc679e7133c5a4562d2621019dad78"
+  },
+  "logical_plan": {
+    "path": "target/m2/stage90-lazy-collection-draft-01/queries.json",
+    "bytes": 21263,
+    "sha256": "a01879157739956426bf96a2bccaa693f326a97697f07ee32b6d464a8037fab9"
+  },
+  "queries": 58,
+  "programs": 5,
+  "java_repetitions": 2,
+  "fixture_repeat": 0,
+  "repeat_bytes_verified": true,
+  "label_rule": "queries.tsv uses exact Java wire labels; queries-logical.tsv preserves authored labels; expressions, order, source and URI unchanged",
+  "compared_fields": [
+    "result.status",
+    "result.stdout UTF8/UTF16BE",
+    "result.stderr UTF8/UTF16BE",
+    "logs.count",
+    "ordered Logger level/message/module-uri/member/position UTF8/UTF16BE"
+  ],
+  "uncompared_fixture_fields": [
+    "result.java-type",
+    "result.error-class",
+    "result.exception-to-string",
+    "result.cause-class",
+    "result.cause-message",
+    "result.cause-to-string"
+  ],
+  "actual_JVM_process_receipts": "target/m2/stage90-lazy-collection-oracle-03/programs/<program>/repeat-{0,1}/process-process.json; authority/report bound actual argv/runtime/input identities",
+  "Rust_executions": 0
+}

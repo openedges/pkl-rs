@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find method `first` in class `Listing`.
+
+1 | (values.first()).toString()
+     ^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+first
+firstOrNull

@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+value before callback
+
+4 | hidden badValue = new Mapping { ["a"] = trace(4); ["b"] = throw("value before callback") }
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage90.mappingFold#badValue["b"] (file:///stage90/mapping-fold.pkl)
+
+1 | (badValue.fold(0, (acc, key, value) -> 0)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

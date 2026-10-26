@@ -1,0 +1,8 @@
+string	last-index-empty	((new Listing {}).lastIndex).toString()
+string	last-index-lazy	((new Listing { throw("unforced") }).lastIndex).toString()
+string	last-index-called	((new Listing { 1 }).lastIndex()).toString()
+string	join-values	(values.join("/")).toString()
+string	join-objects	(objectValues.join("|")).toString()
+string	join-empty	((new Listing {}).join("/")).toString()
+string	join-empty-bad-separator	((new Listing {}).join(0)).toString()
+string	join-separator-error	(values.join(throw("separator"))).toString()

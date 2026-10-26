@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+initial
+
+1 | (badValues.foldIndexed(throw("initial"), (i,a,v) -> a)).toString()
+                           ^^^^^^^^^^^^^^^^
+at  (repl:text)

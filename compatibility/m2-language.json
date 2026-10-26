@@ -164142,7 +164142,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/primitives.rs",
-            "sha256": "e113c5d9bf2695232f7d561be5bcfc41a2b93f26ca058f738fc8a5e32067ac9c",
+            "sha256": "0acd5b1443b8782918a68e41caa820d9365450129792ecb93dcc5040dd953321",
             "symbol": "primitive_member"
           },
           {
@@ -164312,12 +164312,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "binary"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "binary_error"
           },
           {
@@ -164332,7 +164332,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/primitives.rs",
-            "sha256": "e113c5d9bf2695232f7d561be5bcfc41a2b93f26ca058f738fc8a5e32067ac9c",
+            "sha256": "0acd5b1443b8782918a68e41caa820d9365450129792ecb93dcc5040dd953321",
             "symbol": "primitive"
           }
         ],
@@ -166119,12 +166119,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "validate_class_override"
           },
           {
@@ -166134,7 +166134,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "force_key"
           },
           {
@@ -166144,7 +166144,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "9ea54630a52c750d295bfcf01faa1828bc2aeef793b666bd6d41b24d7eef3f20",
+            "sha256": "2d0ede84403d0218c873317f944b0683fc0674352b2f1d3302553e0fcd32419d",
             "symbol": "begin_type_node"
           },
           {
@@ -166169,12 +166169,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/forcing.rs",
-            "sha256": "17b3268e3c61c7f64673d12cd48affe19c207be54354dfc8202ce9eb79e99266",
+            "sha256": "31a680ad6d02682025fe324b63f5008b137fae5b5e9f11700ff9f8180ca1982d",
             "symbol": "ForceRun"
           },
           {
             "path": "crates/pkl-runtime/src/vm/forcing.rs",
-            "sha256": "17b3268e3c61c7f64673d12cd48affe19c207be54354dfc8202ce9eb79e99266",
+            "sha256": "31a680ad6d02682025fe324b63f5008b137fae5b5e9f11700ff9f8180ca1982d",
             "symbol": "step_deep_force"
           },
           {
@@ -167739,12 +167739,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/forcing.rs",
-            "sha256": "17b3268e3c61c7f64673d12cd48affe19c207be54354dfc8202ce9eb79e99266",
+            "sha256": "31a680ad6d02682025fe324b63f5008b137fae5b5e9f11700ff9f8180ca1982d",
             "symbol": "ForceRun"
           },
           {
             "path": "crates/pkl-runtime/src/vm/forcing.rs",
-            "sha256": "17b3268e3c61c7f64673d12cd48affe19c207be54354dfc8202ce9eb79e99266",
+            "sha256": "31a680ad6d02682025fe324b63f5008b137fae5b5e9f11700ff9f8180ca1982d",
             "symbol": "step_deep_force"
           },
           {
@@ -167764,7 +167764,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "read_ambiguous_property"
           }
         ],
@@ -168734,12 +168734,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "inherited_member"
           },
           {
@@ -168764,12 +168764,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/collections.rs",
-            "sha256": "2036e259e18597aa5c7cff64e645c3e7b1ef6f764132373a7456a262472616cf",
+            "sha256": "baca622a66babfd73f5dd6f7da74e1bbb9ed722e0aab035f7f5bb84f17c6e2a0",
             "symbol": "amendment_class_parent"
           },
           {
             "path": "crates/pkl-runtime/src/vm/collections.rs",
-            "sha256": "2036e259e18597aa5c7cff64e645c3e7b1ef6f764132373a7456a262472616cf",
+            "sha256": "baca622a66babfd73f5dd6f7da74e1bbb9ed722e0aab035f7f5bb84f17c6e2a0",
             "symbol": "end_collection"
           },
           {
@@ -168784,12 +168784,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "GetSuperMember"
           },
           {
             "path": "crates/pkl-runtime/src/vm/collections.rs",
-            "sha256": "2036e259e18597aa5c7cff64e645c3e7b1ef6f764132373a7456a262472616cf",
+            "sha256": "baca622a66babfd73f5dd6f7da74e1bbb9ed722e0aab035f7f5bb84f17c6e2a0",
             "symbol": "SuperSubscript"
           }
         ],
@@ -169008,17 +169008,17 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "initialize_member_types"
           },
           {
@@ -169418,17 +169418,17 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "initialize_member_types"
           },
           {
@@ -169458,7 +169458,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "publish_const_receiver"
           }
         ],
@@ -169765,12 +169765,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "compile_type_at"
           },
           {
@@ -169780,7 +169780,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "invoke_function"
           },
           {
@@ -170635,42 +170635,42 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/collections.rs",
-            "sha256": "2036e259e18597aa5c7cff64e645c3e7b1ef6f764132373a7456a262472616cf",
+            "sha256": "baca622a66babfd73f5dd6f7da74e1bbb9ed722e0aab035f7f5bb84f17c6e2a0",
             "symbol": "prepare_map_association"
           },
           {
             "path": "crates/pkl-runtime/src/vm/collections.rs",
-            "sha256": "2036e259e18597aa5c7cff64e645c3e7b1ef6f764132373a7456a262472616cf",
+            "sha256": "baca622a66babfd73f5dd6f7da74e1bbb9ed722e0aab035f7f5bb84f17c6e2a0",
             "symbol": "insert_map_entry_ordered"
           },
           {
             "path": "crates/pkl-runtime/src/vm/collection_transforms.rs",
-            "sha256": "a37193223d45e0d6a1d92daa7cd1d0aa1c04f1f76ccdb4f4cab6ff178655d90c",
+            "sha256": "25b95ae6ebb90d04c979b340fcf882ca7b43a6094331c0474f0e73bf33f3897d",
             "symbol": "collection_endpoint"
           },
           {
             "path": "crates/pkl-runtime/src/vm/collections.rs",
-            "sha256": "2036e259e18597aa5c7cff64e645c3e7b1ef6f764132373a7456a262472616cf",
+            "sha256": "baca622a66babfd73f5dd6f7da74e1bbb9ed722e0aab035f7f5bb84f17c6e2a0",
             "symbol": "amendment_class_parent"
           },
           {
             "path": "crates/pkl-runtime/src/vm/collections.rs",
-            "sha256": "2036e259e18597aa5c7cff64e645c3e7b1ef6f764132373a7456a262472616cf",
+            "sha256": "baca622a66babfd73f5dd6f7da74e1bbb9ed722e0aab035f7f5bb84f17c6e2a0",
             "symbol": "end_collection"
           },
           {
             "path": "crates/pkl-runtime/src/vm/int_seq.rs",
-            "sha256": "e3fe5c3209f6506ae8d8405253f1b2b3e5f3c1035be0cc4f5a9570a5da60f96d",
+            "sha256": "fd505abe940dbedb0303fbb3faaaf017c38f689594ebaf58191df6d6b4b6fb4a",
             "symbol": "begin_int_seq"
           },
           {
             "path": "crates/pkl-runtime/src/vm/int_seq.rs",
-            "sha256": "e3fe5c3209f6506ae8d8405253f1b2b3e5f3c1035be0cc4f5a9570a5da60f96d",
+            "sha256": "fd505abe940dbedb0303fbb3faaaf017c38f689594ebaf58191df6d6b4b6fb4a",
             "symbol": "int_seq_next"
           },
           {
             "path": "crates/pkl-runtime/src/vm/forcing.rs",
-            "sha256": "17b3268e3c61c7f64673d12cd48affe19c207be54354dfc8202ce9eb79e99266",
+            "sha256": "31a680ad6d02682025fe324b63f5008b137fae5b5e9f11700ff9f8180ca1982d",
             "symbol": "force_shallow_frame"
           },
           {
@@ -170680,17 +170680,17 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/collections.rs",
-            "sha256": "2036e259e18597aa5c7cff64e645c3e7b1ef6f764132373a7456a262472616cf",
+            "sha256": "baca622a66babfd73f5dd6f7da74e1bbb9ed722e0aab035f7f5bb84f17c6e2a0",
             "symbol": "EntryDefault"
           },
           {
             "path": "crates/pkl-runtime/src/vm/collection_transforms.rs",
-            "sha256": "a37193223d45e0d6a1d92daa7cd1d0aa1c04f1f76ccdb4f4cab6ff178655d90c",
+            "sha256": "25b95ae6ebb90d04c979b340fcf882ca7b43a6094331c0474f0e73bf33f3897d",
             "symbol": "Projection"
           },
           {
             "path": "crates/pkl-runtime/src/vm/collections.rs",
-            "sha256": "2036e259e18597aa5c7cff64e645c3e7b1ef6f764132373a7456a262472616cf",
+            "sha256": "baca622a66babfd73f5dd6f7da74e1bbb9ed722e0aab035f7f5bb84f17c6e2a0",
             "symbol": "SuperSubscript"
           }
         ],
@@ -172350,27 +172350,27 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "9ea54630a52c750d295bfcf01faa1828bc2aeef793b666bd6d41b24d7eef3f20",
+            "sha256": "2d0ede84403d0218c873317f944b0683fc0674352b2f1d3302553e0fcd32419d",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "active_constraints"
           },
           {
@@ -172385,7 +172385,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "9ea54630a52c750d295bfcf01faa1828bc2aeef793b666bd6d41b24d7eef3f20",
+            "sha256": "2d0ede84403d0218c873317f944b0683fc0674352b2f1d3302553e0fcd32419d",
             "symbol": "begin_type_node"
           },
           {
@@ -172420,7 +172420,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "PrepareTypeArguments"
           },
           {
@@ -174143,37 +174143,37 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "BeginTypeAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "active_constraints"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "9ea54630a52c750d295bfcf01faa1828bc2aeef793b666bd6d41b24d7eef3f20",
+            "sha256": "2d0ede84403d0218c873317f944b0683fc0674352b2f1d3302553e0fcd32419d",
             "symbol": "step_type"
           },
           {
@@ -174188,7 +174188,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "9ea54630a52c750d295bfcf01faa1828bc2aeef793b666bd6d41b24d7eef3f20",
+            "sha256": "2d0ede84403d0218c873317f944b0683fc0674352b2f1d3302553e0fcd32419d",
             "symbol": "begin_type_node"
           },
           {
@@ -174958,17 +174958,17 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "9ea54630a52c750d295bfcf01faa1828bc2aeef793b666bd6d41b24d7eef3f20",
+            "sha256": "2d0ede84403d0218c873317f944b0683fc0674352b2f1d3302553e0fcd32419d",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "9ea54630a52c750d295bfcf01faa1828bc2aeef793b666bd6d41b24d7eef3f20",
+            "sha256": "2d0ede84403d0218c873317f944b0683fc0674352b2f1d3302553e0fcd32419d",
             "symbol": "launch_constraint"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "invoke_function"
           },
           {
@@ -174978,7 +174978,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "9ea54630a52c750d295bfcf01faa1828bc2aeef793b666bd6d41b24d7eef3f20",
+            "sha256": "2d0ede84403d0218c873317f944b0683fc0674352b2f1d3302553e0fcd32419d",
             "symbol": "begin_type_node"
           },
           {
@@ -175695,27 +175695,27 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "9ea54630a52c750d295bfcf01faa1828bc2aeef793b666bd6d41b24d7eef3f20",
+            "sha256": "2d0ede84403d0218c873317f944b0683fc0674352b2f1d3302553e0fcd32419d",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "initialize_type_resolution"
           },
           {
@@ -175740,7 +175740,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "PrepareTypeArguments"
           },
           {
@@ -176834,7 +176834,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "9ea54630a52c750d295bfcf01faa1828bc2aeef793b666bd6d41b24d7eef3f20",
+            "sha256": "2d0ede84403d0218c873317f944b0683fc0674352b2f1d3302553e0fcd32419d",
             "symbol": "step_type"
           },
           {
@@ -177256,7 +177256,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "initialize_member_types"
           },
           {
@@ -177266,7 +177266,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "9ea54630a52c750d295bfcf01faa1828bc2aeef793b666bd6d41b24d7eef3f20",
+            "sha256": "2d0ede84403d0218c873317f944b0683fc0674352b2f1d3302553e0fcd32419d",
             "symbol": "step_type"
           },
           {
@@ -177466,7 +177466,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "compile_type_at"
           },
           {
@@ -177481,12 +177481,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "CheckModuleOutput"
           },
           {
             "path": "crates/pkl-runtime/src/vm/modules.rs",
-            "sha256": "08d6aae4851677096ce3be05efc0c9ad2f6016cb2bda74dab0c6b51fbf63bc07",
+            "sha256": "3bcd1ca16d5d9e71aef0a86ee863f119eb8388f29694e3d8a5a96fcc32a06e50",
             "symbol": "begin_import"
           },
           {
@@ -177521,7 +177521,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "ResolveClassType"
           }
         ],
@@ -177683,7 +177683,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "executable_value_span"
           },
           {
@@ -177693,12 +177693,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/forcing.rs",
-            "sha256": "17b3268e3c61c7f64673d12cd48affe19c207be54354dfc8202ce9eb79e99266",
+            "sha256": "31a680ad6d02682025fe324b63f5008b137fae5b5e9f11700ff9f8180ca1982d",
             "symbol": "ForceRun"
           },
           {
             "path": "crates/pkl-runtime/src/vm/forcing.rs",
-            "sha256": "17b3268e3c61c7f64673d12cd48affe19c207be54354dfc8202ce9eb79e99266",
+            "sha256": "31a680ad6d02682025fe324b63f5008b137fae5b5e9f11700ff9f8180ca1982d",
             "symbol": "step_deep_force"
           },
           {
@@ -187649,17 +187649,17 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "initialize_member_types"
           }
         ],
@@ -188097,7 +188097,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "439093d20ff74fca101f7b911d79dec3baca4741a61c889800177ad528d5ff94",
+            "sha256": "56f6fba0edd3ebcbb4b936845f6c300d2c3698306a9e1e4809fb4ac733833cdb",
             "symbol": "compile_type_at"
           }
         ],
@@ -189382,7 +189382,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "9ea54630a52c750d295bfcf01faa1828bc2aeef793b666bd6d41b24d7eef3f20",
+            "sha256": "2d0ede84403d0218c873317f944b0683fc0674352b2f1d3302553e0fcd32419d",
             "symbol": "step_type"
           }
         ],

@@ -1,0 +1,1 @@
+((new Listing { throw("value") }).any(throw("argument"))).toString()

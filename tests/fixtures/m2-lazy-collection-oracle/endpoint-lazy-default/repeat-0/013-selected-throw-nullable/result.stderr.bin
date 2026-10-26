@@ -1,0 +1,10 @@
+–– Pkl Error ––
+selected
+
+1 | ((new Listing { throw("selected") }).singleOrNull).toString()
+                    ^^^^^^^^^^^^^^^^^
+at repl:text[#1] (repl:text)
+
+1 | ((new Listing { throw("selected") }).singleOrNull).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

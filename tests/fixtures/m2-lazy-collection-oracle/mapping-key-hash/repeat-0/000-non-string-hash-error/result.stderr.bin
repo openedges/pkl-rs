@@ -1,0 +1,10 @@
+–– Pkl Error ––
+key hash
+
+2 | hidden badKey = new Dynamic { n = throw("key hash") }
+                                      ^^^^^^^^^^^^^^^^^
+at stage90.mappingKeyHash#badKey.n (file:///stage90/mapping-key-hash.pkl)
+
+1 | (bad.fold(0, (acc, key, value) -> trace(acc + value))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,1 @@
+(callbackFailure.fold(0, (acc, key, value) -> throw("first callback"))).toString()

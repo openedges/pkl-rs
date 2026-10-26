@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Function3`, but got type `Function2`.
+Value: new Function2 {}
+
+2291 | external function fold<Result>(initial: Result, operator: (Result, Key, Value) -> Result): Result
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Mapping.fold (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2291)
+
+1 | (new Mapping {}.fold(0, (acc, value) -> acc)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

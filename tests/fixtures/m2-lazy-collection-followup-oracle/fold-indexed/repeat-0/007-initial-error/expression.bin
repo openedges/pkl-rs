@@ -1,0 +1,1 @@
+(badValues.foldIndexed(throw("initial"), (i,a,v) -> a)).toString()

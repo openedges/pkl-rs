@@ -1,0 +1,3 @@
+string	listing-query-before-stored	lsStored.contains(query).toString()
+string	mapping-query-before-stored	mpStored.containsValue(queryMap).toString()
+string	identity	sameListing.contains(same).toString()

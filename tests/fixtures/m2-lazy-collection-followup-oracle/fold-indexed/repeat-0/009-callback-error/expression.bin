@@ -1,0 +1,1 @@
+(values.foldIndexed(0, (i,a,v) -> if(i==1) throw("callback") else a+v)).toString()

@@ -1,0 +1,10 @@
+–– Pkl Error ––
+projected-hash
+
+1 | ((new Listing { 1 }).distinctBy((x) -> new Dynamic { bad = throw("projected-hash") }).length).toString()
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+at repl:text.<function#1>.bad (repl:text)
+
+1 | ((new Listing { 1 }).distinctBy((x) -> new Dynamic { bad = throw("projected-hash") }).length).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,10 @@
+–– Pkl Error ––
+callback
+
+1 | (values.foldIndexed(0, (i,a,v) -> if(i==1) throw("callback") else a+v)).toString()
+                                               ^^^^^^^^^^^^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | (values.foldIndexed(0, (i,a,v) -> if(i==1) throw("callback") else a+v)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

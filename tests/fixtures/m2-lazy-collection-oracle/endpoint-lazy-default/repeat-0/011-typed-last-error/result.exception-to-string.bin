@@ -1,0 +1,15 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "bad element"
+
+10 | hidden wrong: Listing<Int> = new { 1; "bad element" }
+                           ^^^
+at stage90.endpointLazyDefault#wrong (file:///stage90/endpoint-lazy-default.pkl)
+
+10 | hidden wrong: Listing<Int> = new { 1; "bad element" }
+                                           ^^^^^^^^^^^^^
+at stage90.endpointLazyDefault#wrong[#2] (file:///stage90/endpoint-lazy-default.pkl)
+
+1 | (wrong.lastOrNull).toString()
+     ^^^^^^^^^^^^^^^^
+at  (repl:text)

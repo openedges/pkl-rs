@@ -1,0 +1,754 @@
+{
+  "candidate_compatibility_passes_claimed": 0,
+  "complete": true,
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02",
+  "disk_guards": {
+    "additional_disk_cap_bytes": 52428800,
+    "conservative_estimate_bytes": 16777216,
+    "events": [
+      {
+        "allocated": 147456,
+        "epoch": 1792992458.343612,
+        "free": 1364910080,
+        "label": "before-source-copies"
+      },
+      {
+        "allocated": 585728,
+        "epoch": 1792992458.3704782,
+        "free": 1364443136,
+        "label": "after-source-copies"
+      },
+      {
+        "allocated": 585728,
+        "epoch": 1792992458.376319,
+        "free": 1364439040,
+        "label": "before-jvm:java-identity"
+      },
+      {
+        "allocated": 593920,
+        "epoch": 1792992458.6562061,
+        "free": 1364398080,
+        "label": "after-jvm:java-identity"
+      },
+      {
+        "allocated": 593920,
+        "epoch": 1792992458.772558,
+        "free": 1364398080,
+        "label": "before-jdk-source-copies"
+      },
+      {
+        "allocated": 667648,
+        "epoch": 1792992458.807866,
+        "free": 1364324352,
+        "label": "after-jdk-source-copies"
+      },
+      {
+        "allocated": 688128,
+        "epoch": 1792992458.929601,
+        "free": 1364303872,
+        "label": "before-jvm:process"
+      },
+      {
+        "allocated": 1830912,
+        "epoch": 1792992460.311263,
+        "free": 1362886656,
+        "label": "after-jvm:process"
+      },
+      {
+        "allocated": 1835008,
+        "epoch": 1792992460.326524,
+        "free": 1362882560,
+        "label": "before-jvm:process"
+      },
+      {
+        "allocated": 2924544,
+        "epoch": 1792992461.5023339,
+        "free": 1361457152,
+        "label": "after-jvm:process"
+      },
+      {
+        "allocated": 2932736,
+        "epoch": 1792992461.7572238,
+        "free": 1361448960,
+        "label": "before-jvm:process"
+      },
+      {
+        "allocated": 3457024,
+        "epoch": 1792992462.9500449,
+        "free": 1360683008,
+        "label": "after-jvm:process"
+      },
+      {
+        "allocated": 3457024,
+        "epoch": 1792992462.990964,
+        "free": 1360683008,
+        "label": "before-jvm:process"
+      },
+      {
+        "allocated": 3981312,
+        "epoch": 1792992464.190203,
+        "free": 1360019456,
+        "label": "after-jvm:process"
+      },
+      {
+        "allocated": 3993600,
+        "epoch": 1792992464.3550332,
+        "free": 1360007168,
+        "label": "before-jvm:process"
+      },
+      {
+        "allocated": 4820992,
+        "epoch": 1792992465.585672,
+        "free": 1358999552,
+        "label": "after-jvm:process"
+      },
+      {
+        "allocated": 4820992,
+        "epoch": 1792992465.6261802,
+        "free": 1358999552,
+        "label": "before-jvm:process"
+      },
+      {
+        "allocated": 5648384,
+        "epoch": 1792992466.88814,
+        "free": 1358548992,
+        "label": "after-jvm:process"
+      },
+      {
+        "allocated": 5660672,
+        "epoch": 1792992467.0566158,
+        "free": 1358417920,
+        "label": "before-jvm:process"
+      },
+      {
+        "allocated": 6619136,
+        "epoch": 1792992468.339314,
+        "free": 1356566528,
+        "label": "after-jvm:process"
+      },
+      {
+        "allocated": 6619136,
+        "epoch": 1792992468.3829,
+        "free": 1356566528,
+        "label": "before-jvm:process"
+      },
+      {
+        "allocated": 7577600,
+        "epoch": 1792992469.703969,
+        "free": 1355337728,
+        "label": "after-jvm:process"
+      },
+      {
+        "allocated": 7585792,
+        "epoch": 1792992469.910057,
+        "free": 1355329536,
+        "label": "before-jvm:process"
+      },
+      {
+        "allocated": 8060928,
+        "epoch": 1792992470.891094,
+        "free": 1354719232,
+        "label": "after-jvm:process"
+      },
+      {
+        "allocated": 8065024,
+        "epoch": 1792992470.9380422,
+        "free": 1354711040,
+        "label": "before-jvm:process"
+      },
+      {
+        "allocated": 8540160,
+        "epoch": 1792992471.943871,
+        "free": 1354100736,
+        "label": "after-jvm:process"
+      },
+      {
+        "allocated": 8540160,
+        "epoch": 1792992472.1902258,
+        "free": 1354100736,
+        "label": "final-bookends"
+      }
+    ],
+    "initial_free_bytes": 1073741824,
+    "minimum_free_bytes": 822083584,
+    "minimum_free_seen": 1354100736,
+    "peak_allocated_bytes": 8540160
+  },
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/tmp",
+    "TZ": "UTC"
+  },
+  "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "input_after": {
+    "PLAN.md": "08b92c69935b35337a892c12e3baf03670bd9d280cc58954134fb479e4ebe05b",
+    "authored-report.json": "41addb4d720ab59556630ccb1cdd35e0cac8803d26b523abf587ecd3d38cede9",
+    "initial-admission.json": "fa39029c6935a1ad451b2b4be57781c989374ae61adfb6065ea8054a336b41db",
+    "inspection-inputs.json": "05f413c6c1662aebd706a937cc1f63448d7c84918e09edb1e2093e01ba4a5ae2",
+    "inventory.json": "fe8886a62a1ad7b758b0cfb90e15655b1142b62cf248148e36ffaafbfcea5f84",
+    "launch.py": "c764aa39a6201cd5de84761b16c4bdd696b6a73679c0776739ecb29c1d9cffac",
+    "lineage.json": "b698db0aaff3d6f13a7dba11ca7ff7cb98fa9331300bb00a40df15d8ddf60a07",
+    "modules/adjacent-listing-surface.pkl": "aa25f93de916973e11606e6d83da9c5bed55ace354837a57cd842bae77765860",
+    "modules/fold-indexed.pkl": "8e94457ec85c8b7667e9dee2d74a5b9b162ca7521dc4e7e17fbdf1bb4066a251",
+    "modules/lazy-any.pkl": "db5e02fa8f15255bc245a4e2e28ec2d7054fc33cdca218ee3ee51d24fe7eabf3",
+    "modules/lazy-contains.pkl": "12835bae5f372f3bf58ef0e6a2350f30b420d2aa4f4af936cbade298baaae8ff",
+    "modules/listing-projections.pkl": "729abc227a7c67f703ffcc7ded1f32e63c6c939b136c8fe6dfcca6e53c34d03c",
+    "preparation.json": "8baa098b3023097861a7eba8667cb2832fc96fca230b5829cf3a5faa7c85b732",
+    "prepare.py": "6b4e23e67cd25f5fbc0b6e56d9c9369f3762f334475c374cd4f73a6d1d99f0e4",
+    "programs.json": "6b4967ef2d8e8d780816056df168db3b06d34e17964ceee58f8388fc65bd3e33",
+    "proposal.json": "4cebfcfa0b0355f1e1e89ea5b297e1ba64954167b2e50bce09ce70575ab5d1a8",
+    "query-label-map.json": "7a24ebf48a8829903dc7b31f13f813df390468951bdafe5d1545af2f6dd5d0c3",
+    "query-source-plan.json": "d0f423360606ed465ccf3302812d15a4a3bdb561f4da8171607b1eebe704bb3d",
+    "run.py": "fcdfecd51385af36f5df8d8bf566f1f5f055fb1a8776480dd43b9a6f23b9c917"
+  },
+  "input_before": {
+    "PLAN.md": "08b92c69935b35337a892c12e3baf03670bd9d280cc58954134fb479e4ebe05b",
+    "authored-report.json": "41addb4d720ab59556630ccb1cdd35e0cac8803d26b523abf587ecd3d38cede9",
+    "initial-admission.json": "fa39029c6935a1ad451b2b4be57781c989374ae61adfb6065ea8054a336b41db",
+    "inspection-inputs.json": "05f413c6c1662aebd706a937cc1f63448d7c84918e09edb1e2093e01ba4a5ae2",
+    "inventory.json": "fe8886a62a1ad7b758b0cfb90e15655b1142b62cf248148e36ffaafbfcea5f84",
+    "launch.py": "c764aa39a6201cd5de84761b16c4bdd696b6a73679c0776739ecb29c1d9cffac",
+    "lineage.json": "b698db0aaff3d6f13a7dba11ca7ff7cb98fa9331300bb00a40df15d8ddf60a07",
+    "modules/adjacent-listing-surface.pkl": "aa25f93de916973e11606e6d83da9c5bed55ace354837a57cd842bae77765860",
+    "modules/fold-indexed.pkl": "8e94457ec85c8b7667e9dee2d74a5b9b162ca7521dc4e7e17fbdf1bb4066a251",
+    "modules/lazy-any.pkl": "db5e02fa8f15255bc245a4e2e28ec2d7054fc33cdca218ee3ee51d24fe7eabf3",
+    "modules/lazy-contains.pkl": "12835bae5f372f3bf58ef0e6a2350f30b420d2aa4f4af936cbade298baaae8ff",
+    "modules/listing-projections.pkl": "729abc227a7c67f703ffcc7ded1f32e63c6c939b136c8fe6dfcca6e53c34d03c",
+    "preparation.json": "8baa098b3023097861a7eba8667cb2832fc96fca230b5829cf3a5faa7c85b732",
+    "prepare.py": "6b4e23e67cd25f5fbc0b6e56d9c9369f3762f334475c374cd4f73a6d1d99f0e4",
+    "programs.json": "6b4967ef2d8e8d780816056df168db3b06d34e17964ceee58f8388fc65bd3e33",
+    "proposal.json": "4cebfcfa0b0355f1e1e89ea5b297e1ba64954167b2e50bce09ce70575ab5d1a8",
+    "query-label-map.json": "7a24ebf48a8829903dc7b31f13f813df390468951bdafe5d1545af2f6dd5d0c3",
+    "query-source-plan.json": "d0f423360606ed465ccf3302812d15a4a3bdb561f4da8171607b1eebe704bb3d",
+    "run.py": "fcdfecd51385af36f5df8d8bf566f1f5f055fb1a8776480dd43b9a6f23b9c917"
+  },
+  "jar": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059"
+  },
+  "jar_after_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+  "jdk": {
+    "executable": "/usr/bin/java",
+    "executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+    "modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+    "preflight_properties": {
+      "file.encoding": "UTF-8",
+      "file.separator": "/",
+      "ftp.nonProxyHosts": "local|*.local|169.254/16|*.169.254/16",
+      "http.nonProxyHosts": "local|*.local|169.254/16|*.169.254/16",
+      "java.class.path": "",
+      "java.class.version": "65.0",
+      "java.home": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home",
+      "java.io.tmpdir": "/var/folders/_q/s969zhkx6qd8p32v2nd87ygh0000gp/T/",
+      "java.library.path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/home/Library/Java/Extensions",
+      "java.runtime.name": "OpenJDK Runtime Environment",
+      "java.runtime.version": "21.0.12.1+1-LTS",
+      "java.specification.name": "Java Platform API Specification",
+      "java.specification.vendor": "Oracle Corporation",
+      "java.specification.version": "21",
+      "java.vendor": "Eclipse Adoptium",
+      "java.vendor.url": "https://adoptium.net/",
+      "java.vendor.url.bug": "https://github.com/adoptium/adoptium-support/issues",
+      "java.vendor.version": "Temurin-21.0.12.1+1",
+      "java.version": "21.0.12.1",
+      "java.version.date": "2026-08-18",
+      "java.vm.compressedOopsMode": "Non-zero disjoint base",
+      "java.vm.info": "mixed mode, sharing",
+      "java.vm.name": "OpenJDK 64-Bit Server VM",
+      "java.vm.specification.name": "Java Virtual Machine Specification",
+      "java.vm.specification.vendor": "Oracle Corporation",
+      "java.vm.specification.version": "21",
+      "java.vm.vendor": "Eclipse Adoptium",
+      "java.vm.version": "21.0.12.1+1-LTS",
+      "jdk.debug": "release",
+      "line.separator": "\\n ",
+      "native.encoding": "US-ASCII",
+      "os.arch": "aarch64",
+      "os.name": "Mac OS X",
+      "os.version": "27.0",
+      "path.separator": ":",
+      "socksNonProxyHosts": "local|*.local|169.254/16|*.169.254/16",
+      "stderr.encoding": "US-ASCII",
+      "stdout.encoding": "US-ASCII",
+      "sun.arch.data.model": "64",
+      "sun.boot.library.path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib",
+      "sun.cpu.endian": "little",
+      "sun.io.unicode.encoding": "UnicodeBig",
+      "sun.java.launcher": "SUN_STANDARD",
+      "sun.jnu.encoding": "UTF-8",
+      "sun.management.compiler": "HotSpot 64-Bit Tiered Compilers",
+      "user.country": "KR",
+      "user.dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02",
+      "user.home": "/Users/cody.ij.hwang",
+      "user.language": "ko",
+      "user.name": "cody.ij.hwang"
+    },
+    "release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+  },
+  "jdk_source_members": {
+    "java.base/java/lang/StackTraceElement.java": {
+      "bytes": 23674,
+      "sha256": "d2dacaac372efd8f7a4ccedc2044f410a68c408969ed7010b2c0377d97c99292"
+    },
+    "java.base/java/lang/Throwable.java": {
+      "bytes": 47780,
+      "sha256": "958a64a11f867f430ed58edcbc44fdc9cae32489437d43c8525ee1c2f3ab0e1c"
+    }
+  },
+  "kind": "stage90-lazy-followup-Java-only-authority",
+  "oracle_lock_sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+  "programs": 5,
+  "references_lock_sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+  "repetitions": 2,
+  "rows": 60,
+  "schema": 1,
+  "sessions": [
+    {
+      "argv": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/CollectionEveryOracle.java",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/programs/lazy-any/repeat-0",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/programs/lazy-any",
+        "file:///stage90-followup/lazy-any.pkl"
+      ],
+      "exit_code": 0,
+      "finished_epoch": 1792992460.311936,
+      "pid": 98398,
+      "program": "lazy-any",
+      "repeat": 0,
+      "row_directories": 14,
+      "started_epoch": 1792992458.9214358,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "f8062236c98f2fb5b0909f4fc4b5453572e69d52faa281b5f9b52f9cd90989d5"
+    },
+    {
+      "argv": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/CollectionEveryOracle.java",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/programs/lazy-any/repeat-1",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/programs/lazy-any",
+        "file:///stage90-followup/lazy-any.pkl"
+      ],
+      "exit_code": 0,
+      "finished_epoch": 1792992461.503891,
+      "pid": 98408,
+      "program": "lazy-any",
+      "repeat": 1,
+      "row_directories": 14,
+      "started_epoch": 1792992460.3129642,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "f8062236c98f2fb5b0909f4fc4b5453572e69d52faa281b5f9b52f9cd90989d5"
+    },
+    {
+      "argv": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/CollectionEveryOracle.java",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/programs/lazy-contains/repeat-0",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/programs/lazy-contains",
+        "file:///stage90-followup/lazy-contains.pkl"
+      ],
+      "exit_code": 0,
+      "finished_epoch": 1792992462.951093,
+      "pid": 98430,
+      "program": "lazy-contains",
+      "repeat": 0,
+      "row_directories": 12,
+      "started_epoch": 1792992461.7392,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "8059795d0b5eedafc139b15848fb692f05ac20f2e008a94c57eeeba4d9d8630f"
+    },
+    {
+      "argv": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/CollectionEveryOracle.java",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/programs/lazy-contains/repeat-1",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/programs/lazy-contains",
+        "file:///stage90-followup/lazy-contains.pkl"
+      ],
+      "exit_code": 0,
+      "finished_epoch": 1792992464.190975,
+      "pid": 98431,
+      "program": "lazy-contains",
+      "repeat": 1,
+      "row_directories": 12,
+      "started_epoch": 1792992462.952545,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "8059795d0b5eedafc139b15848fb692f05ac20f2e008a94c57eeeba4d9d8630f"
+    },
+    {
+      "argv": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/CollectionEveryOracle.java",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/programs/fold-indexed/repeat-0",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/programs/fold-indexed",
+        "file:///stage90-followup/fold-indexed.pkl"
+      ],
+      "exit_code": 0,
+      "finished_epoch": 1792992465.587063,
+      "pid": 98440,
+      "program": "fold-indexed",
+      "repeat": 0,
+      "row_directories": 10,
+      "started_epoch": 1792992464.329757,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "06ca79f38afe555d0f66c71a767d8e4829e13bedfa7a816591595f7e6ed9a29d"
+    },
+    {
+      "argv": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/CollectionEveryOracle.java",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/programs/fold-indexed/repeat-1",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/programs/fold-indexed",
+        "file:///stage90-followup/fold-indexed.pkl"
+      ],
+      "exit_code": 0,
+      "finished_epoch": 1792992466.8888042,
+      "pid": 98442,
+      "program": "fold-indexed",
+      "repeat": 1,
+      "row_directories": 10,
+      "started_epoch": 1792992465.5886679,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "06ca79f38afe555d0f66c71a767d8e4829e13bedfa7a816591595f7e6ed9a29d"
+    },
+    {
+      "argv": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/CollectionEveryOracle.java",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/programs/listing-projections/repeat-0",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/programs/listing-projections",
+        "file:///stage90-followup/listing-projections.pkl"
+      ],
+      "exit_code": 0,
+      "finished_epoch": 1792992468.340607,
+      "pid": 98449,
+      "program": "listing-projections",
+      "repeat": 0,
+      "row_directories": 16,
+      "started_epoch": 1792992467.021675,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "99dee64829f24452b252ab87271d534420fd7fb3b87a55d200a4324b580d15f3"
+    },
+    {
+      "argv": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/CollectionEveryOracle.java",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/programs/listing-projections/repeat-1",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/programs/listing-projections",
+        "file:///stage90-followup/listing-projections.pkl"
+      ],
+      "exit_code": 0,
+      "finished_epoch": 1792992469.7049448,
+      "pid": 98452,
+      "program": "listing-projections",
+      "repeat": 1,
+      "row_directories": 16,
+      "started_epoch": 1792992468.342365,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "99dee64829f24452b252ab87271d534420fd7fb3b87a55d200a4324b580d15f3"
+    },
+    {
+      "argv": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/CollectionEveryOracle.java",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/programs/adjacent-listing-surface/repeat-0",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/programs/adjacent-listing-surface",
+        "file:///stage90-followup/adjacent-listing-surface.pkl"
+      ],
+      "exit_code": 0,
+      "finished_epoch": 1792992470.8917801,
+      "pid": 98467,
+      "program": "adjacent-listing-surface",
+      "repeat": 0,
+      "row_directories": 8,
+      "started_epoch": 1792992469.866496,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "af0c8968d24ff6ae32fc3b1d3e4f591613ccc388dfc25ee42533eba9cd0bf8f7"
+    },
+    {
+      "argv": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/CollectionEveryOracle.java",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/programs/adjacent-listing-surface/repeat-1",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-02/programs/adjacent-listing-surface",
+        "file:///stage90-followup/adjacent-listing-surface.pkl"
+      ],
+      "exit_code": 0,
+      "finished_epoch": 1792992471.944727,
+      "pid": 98472,
+      "program": "adjacent-listing-surface",
+      "repeat": 1,
+      "row_directories": 8,
+      "started_epoch": 1792992470.893167,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "af0c8968d24ff6ae32fc3b1d3e4f591613ccc388dfc25ee42533eba9cd0bf8f7"
+    }
+  ],
+  "source_after": {
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/lambda/ApplyVmFunction1Node.java": "dc9da445251cba3191a4e95a52fd437e357b85c2edca97cce8ae93d496afdadd",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/lambda/ApplyVmFunction2Node.java": "387475db18970fdd37bfba70048d08f6dbf6af34e01086f697f28e358485b259",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/lambda/ApplyVmFunction3Node.java": "1ede8d1098cc9d93c9f9038a6116b88d1c2a5a738aedb96c36d393288f286bf7",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmListingOrMapping.java": "a0d0c4b5a842068adbb942f4f1675cb19e48fe23230641730c53b9db3a06d12b",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmObject.java": "5f74b5d18f72377b0ba8405f3dd34a9144acc419e068be5178ee8c2bc98b2fde",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmObjectBuilder.java": "4c631219c8631e479383d280ca511dda02f2065b2d097bcc3e4a6b053930f437",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/ListingNodes.java": "9637baf7e4b3eb143cc1cdc21ff7726752dedca0033c768e2c7a1d0f3e1ed4f3",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/MappingNodes.java": "dd73517765ebb4f48b4d353c7fa4fb6eb0c5230248da957b4a5a240b3a849f3e",
+    "external/pkl/stdlib/base.pkl": "fddb53666b6e37bc5b70e2d7a2864730c1eab2a4edd90b5c2defefcfdd0b57fb",
+    "oracle.lock.json": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+    "target/m2/stage69-super-entry-default-oracle-06/CollectionEveryOracle.java": "00d3bd8022e4a65532d4208976acb92687a04951fef36b713bacc70fa240e25f",
+    "target/m2/stage90-lazy-collection-followup-01/inspection-inputs.json": "05f413c6c1662aebd706a937cc1f63448d7c84918e09edb1e2093e01ba4a5ae2",
+    "target/m2/stage90-lazy-collection-followup-01/inventory.json": "fe8886a62a1ad7b758b0cfb90e15655b1142b62cf248148e36ffaafbfcea5f84",
+    "target/m2/stage90-lazy-collection-followup-01/programs/adjacent-listing-surface/module.pkl": "aa25f93de916973e11606e6d83da9c5bed55ace354837a57cd842bae77765860",
+    "target/m2/stage90-lazy-collection-followup-01/programs/adjacent-listing-surface/queries.tsv": "9be5e125a83f9ae7773ea0168b72f7eb72c81597047d83dfc0cf7f3f79fd8aa6",
+    "target/m2/stage90-lazy-collection-followup-01/programs/fold-indexed/module.pkl": "8e94457ec85c8b7667e9dee2d74a5b9b162ca7521dc4e7e17fbdf1bb4066a251",
+    "target/m2/stage90-lazy-collection-followup-01/programs/fold-indexed/queries.tsv": "b4542b3b9f6fa2730a1404bf0629d775b599d4087e6e6be48898328561752638",
+    "target/m2/stage90-lazy-collection-followup-01/programs/lazy-any/module.pkl": "db5e02fa8f15255bc245a4e2e28ec2d7054fc33cdca218ee3ee51d24fe7eabf3",
+    "target/m2/stage90-lazy-collection-followup-01/programs/lazy-any/queries.tsv": "495f250ccf09cece2d5c51721b09142633c417962cf97dc033a90f7fb5b74f02",
+    "target/m2/stage90-lazy-collection-followup-01/programs/lazy-contains/module.pkl": "12835bae5f372f3bf58ef0e6a2350f30b420d2aa4f4af936cbade298baaae8ff",
+    "target/m2/stage90-lazy-collection-followup-01/programs/lazy-contains/queries.tsv": "725d3f2fd345f0a690a03a54ab81dd771f2e67c29bd648d8b39314ae0a59c2c3",
+    "target/m2/stage90-lazy-collection-followup-01/programs/listing-projections/module.pkl": "729abc227a7c67f703ffcc7ded1f32e63c6c939b136c8fe6dfcca6e53c34d03c",
+    "target/m2/stage90-lazy-collection-followup-01/programs/listing-projections/queries.tsv": "a621b569ef08216e80281591b86800f727923f70a14f3bfd4000b91ac048d9ee",
+    "target/m2/stage90-lazy-collection-followup-01/queries.json": "d0f423360606ed465ccf3302812d15a4a3bdb561f4da8171607b1eebe704bb3d",
+    "target/m2/stage90-lazy-collection-followup-01/report.json": "41addb4d720ab59556630ccb1cdd35e0cac8803d26b523abf587ecd3d38cede9"
+  },
+  "source_before": {
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/lambda/ApplyVmFunction1Node.java": "dc9da445251cba3191a4e95a52fd437e357b85c2edca97cce8ae93d496afdadd",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/lambda/ApplyVmFunction2Node.java": "387475db18970fdd37bfba70048d08f6dbf6af34e01086f697f28e358485b259",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/lambda/ApplyVmFunction3Node.java": "1ede8d1098cc9d93c9f9038a6116b88d1c2a5a738aedb96c36d393288f286bf7",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmListingOrMapping.java": "a0d0c4b5a842068adbb942f4f1675cb19e48fe23230641730c53b9db3a06d12b",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmObject.java": "5f74b5d18f72377b0ba8405f3dd34a9144acc419e068be5178ee8c2bc98b2fde",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmObjectBuilder.java": "4c631219c8631e479383d280ca511dda02f2065b2d097bcc3e4a6b053930f437",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/ListingNodes.java": "9637baf7e4b3eb143cc1cdc21ff7726752dedca0033c768e2c7a1d0f3e1ed4f3",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/MappingNodes.java": "dd73517765ebb4f48b4d353c7fa4fb6eb0c5230248da957b4a5a240b3a849f3e",
+    "external/pkl/stdlib/base.pkl": "fddb53666b6e37bc5b70e2d7a2864730c1eab2a4edd90b5c2defefcfdd0b57fb",
+    "oracle.lock.json": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+    "target/m2/stage69-super-entry-default-oracle-06/CollectionEveryOracle.java": "00d3bd8022e4a65532d4208976acb92687a04951fef36b713bacc70fa240e25f",
+    "target/m2/stage90-lazy-collection-followup-01/inspection-inputs.json": "05f413c6c1662aebd706a937cc1f63448d7c84918e09edb1e2093e01ba4a5ae2",
+    "target/m2/stage90-lazy-collection-followup-01/inventory.json": "fe8886a62a1ad7b758b0cfb90e15655b1142b62cf248148e36ffaafbfcea5f84",
+    "target/m2/stage90-lazy-collection-followup-01/programs/adjacent-listing-surface/module.pkl": "aa25f93de916973e11606e6d83da9c5bed55ace354837a57cd842bae77765860",
+    "target/m2/stage90-lazy-collection-followup-01/programs/adjacent-listing-surface/queries.tsv": "9be5e125a83f9ae7773ea0168b72f7eb72c81597047d83dfc0cf7f3f79fd8aa6",
+    "target/m2/stage90-lazy-collection-followup-01/programs/fold-indexed/module.pkl": "8e94457ec85c8b7667e9dee2d74a5b9b162ca7521dc4e7e17fbdf1bb4066a251",
+    "target/m2/stage90-lazy-collection-followup-01/programs/fold-indexed/queries.tsv": "b4542b3b9f6fa2730a1404bf0629d775b599d4087e6e6be48898328561752638",
+    "target/m2/stage90-lazy-collection-followup-01/programs/lazy-any/module.pkl": "db5e02fa8f15255bc245a4e2e28ec2d7054fc33cdca218ee3ee51d24fe7eabf3",
+    "target/m2/stage90-lazy-collection-followup-01/programs/lazy-any/queries.tsv": "495f250ccf09cece2d5c51721b09142633c417962cf97dc033a90f7fb5b74f02",
+    "target/m2/stage90-lazy-collection-followup-01/programs/lazy-contains/module.pkl": "12835bae5f372f3bf58ef0e6a2350f30b420d2aa4f4af936cbade298baaae8ff",
+    "target/m2/stage90-lazy-collection-followup-01/programs/lazy-contains/queries.tsv": "725d3f2fd345f0a690a03a54ab81dd771f2e67c29bd648d8b39314ae0a59c2c3",
+    "target/m2/stage90-lazy-collection-followup-01/programs/listing-projections/module.pkl": "729abc227a7c67f703ffcc7ded1f32e63c6c939b136c8fe6dfcca6e53c34d03c",
+    "target/m2/stage90-lazy-collection-followup-01/programs/listing-projections/queries.tsv": "a621b569ef08216e80281591b86800f727923f70a14f3bfd4000b91ac048d9ee",
+    "target/m2/stage90-lazy-collection-followup-01/queries.json": "d0f423360606ed465ccf3302812d15a4a3bdb561f4da8171607b1eebe704bb3d",
+    "target/m2/stage90-lazy-collection-followup-01/report.json": "41addb4d720ab59556630ccb1cdd35e0cac8803d26b523abf587ecd3d38cede9"
+  },
+  "source_stable": true,
+  "tools_after": {
+    "executable": {
+      "bytes": 217296,
+      "path": "/usr/bin/java",
+      "sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552"
+    },
+    "jdk_java": {
+      "bytes": 70432,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+      "sha256": "9be1d0a740ff6502df1a762145e62860f5de4b7e17658d9cb9498da3acf9d16c"
+    },
+    "modules": {
+      "bytes": 140714013,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/modules",
+      "sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf"
+    },
+    "release": {
+      "bytes": 1628,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/release",
+      "sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+    },
+    "src_zip": {
+      "bytes": 54198945,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/src.zip",
+      "sha256": "173282dd3f4c4004548e6a09e6687acff25120967b1a8375a5df4c677d7f4e4e"
+    }
+  },
+  "tools_before": {
+    "executable": {
+      "bytes": 217296,
+      "path": "/usr/bin/java",
+      "sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552"
+    },
+    "jdk_java": {
+      "bytes": 70432,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+      "sha256": "9be1d0a740ff6502df1a762145e62860f5de4b7e17658d9cb9498da3acf9d16c"
+    },
+    "modules": {
+      "bytes": 140714013,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/modules",
+      "sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf"
+    },
+    "release": {
+      "bytes": 1628,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/release",
+      "sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+    },
+    "src_zip": {
+      "bytes": 54198945,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/src.zip",
+      "sha256": "173282dd3f4c4004548e6a09e6687acff25120967b1a8375a5df4c677d7f4e4e"
+    }
+  },
+  "tools_stable": true,
+  "uris": [
+    "file:///stage90-followup/lazy-any.pkl",
+    "file:///stage90-followup/lazy-contains.pkl",
+    "file:///stage90-followup/fold-indexed.pkl",
+    "file:///stage90-followup/listing-projections.pkl",
+    "file:///stage90-followup/adjacent-listing-surface.pkl"
+  ]
+}

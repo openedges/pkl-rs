@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+value-before-callback
+
+4 | hidden badValues = new Listing { trace(4); throw("value-before-callback") }
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage90followup.foldIndexed#badValues[#2] (file:///stage90-followup/fold-indexed.pkl)
+
+1 | (badValues.foldIndexed(0, (i,a,v) -> trace(a+v))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

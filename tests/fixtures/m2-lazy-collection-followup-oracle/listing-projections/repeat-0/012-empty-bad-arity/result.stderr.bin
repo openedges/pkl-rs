@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got type `Function2`.
+Value: new Function2 {}
+
+2128 | external function isDistinctBy(selector: (Element) -> Any): Boolean
+                                                ^^^^^^^^^^^^^^^^
+at pkl.base#Listing.isDistinctBy (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2128)
+
+1 | ((new Listing {}).isDistinctBy((a,b) -> a)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

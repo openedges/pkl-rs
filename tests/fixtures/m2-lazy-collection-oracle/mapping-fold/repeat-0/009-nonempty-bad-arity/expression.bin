@@ -1,0 +1,1 @@
+((new Mapping { ["x"] = throw("value") }).fold(0, (acc, value) -> acc)).toString()

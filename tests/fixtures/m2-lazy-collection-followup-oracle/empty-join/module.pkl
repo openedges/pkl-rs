@@ -1,0 +1,2 @@
+module stage90followup.emptyJoin
+hidden empty = new Listing { default = throw("empty-default") }

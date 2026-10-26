@@ -1,0 +1,1 @@
+((new Mapping { ["x"] = throw("value") }).fold(throw("initial"), throw("operator"))).toString()

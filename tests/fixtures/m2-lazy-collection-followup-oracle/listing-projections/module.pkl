@@ -1,0 +1,7 @@
+module stage90followup.listingProjections
+hidden values = new Listing { trace(1); trace(1); trace(2) }
+hidden nested = new Listing { new Dynamic { bad = throw("nested-first") }; new Dynamic { bad = throw("nested-second") } }
+hidden badValues = new Listing { trace(3); trace(3); throw("later-value") }
+hidden defaulted = new Listing { default { x = 7 }; new { y = 1 }; new { y = 2 } }
+hidden parentValues = new Listing { 1 }
+hidden checked: Listing<String> = parentValues

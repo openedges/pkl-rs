@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+tail
+
+1 | ((new Listing { 1; throw("tail") }).contains(2)).toString()
+                       ^^^^^^^^^^^^^
+at repl:text[#2] (repl:text)
+
+1 | ((new Listing { 1; throw("tail") }).contains(2)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

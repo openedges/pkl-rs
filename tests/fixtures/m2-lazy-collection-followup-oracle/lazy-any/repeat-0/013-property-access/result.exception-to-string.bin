@@ -1,0 +1,21 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `any` in object of type `Listing`.
+
+1 | ((new Listing { 1 }).any).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Available properties:
+default
+distinct
+first
+firstOrNull
+isDistinct
+isEmpty
+isNotEmpty
+last
+lastIndex
+lastOrNull
+length
+single
+singleOrNull

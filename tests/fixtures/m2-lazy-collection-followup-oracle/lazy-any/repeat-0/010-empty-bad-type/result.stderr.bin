@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got type `Int`.
+Value: 0
+
+2210 | external function any(predicate: (Element) -> Boolean): Boolean
+                                        ^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Listing.any (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2210)
+
+1 | ((new Listing {}).any(0)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,69 @@
+{
+  "UTF8_UTF16_pairs": 20,
+  "all_raw_repeats_equal": true,
+  "authority_report": {
+    "bytes": 15655,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-01/report.json",
+    "sha256": "21611a3ea9863f4d845db14bd9ced243e1f259c4dd402c1f3936eb447b49301b"
+  },
+  "complete": true,
+  "fresh_query_jvms": 2,
+  "jdk_identity_invocations": 1,
+  "kind": "stage90-empty-join1-raw-Java-readback-v1",
+  "limits": [
+    "Host lifecycle proposals remain unexecuted; no suspension/reentry or Rust compatibility is inferred.",
+    "No Rust compatibility pass is inferred; oracle/API errors, if present, remain explicit.",
+    "String units include unpaired surrogates; replacement UTF8 bytes are not substituted for the retained Java UTF16 authority."
+  ],
+  "logger_events": 0,
+  "minimum_free_seen": 1030266880,
+  "observations": 2,
+  "observations_unique": [
+    {
+      "expression": "empty.join(\",\").toString()",
+      "id": "empty-default",
+      "intent_reach": "Raw Java observation retained; earlier property/arity/parser/type/argument errors do not prove later method behavior.",
+      "logs": 0,
+      "ordered_logger": [],
+      "program": "empty-join",
+      "raw_directory": "target/m2/stage90-empty-join-oracle-01/programs/empty-join/repeat-0/000-empty-default",
+      "status": "success",
+      "stderr_utf8": "",
+      "stdout_code_units_hex": "",
+      "stdout_utf8": "",
+      "wire_id": "empty-default"
+    }
+  ],
+  "oracle_or_API_error_ids": [],
+  "original_java60_authority": {
+    "bytes": 58032,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-lazy-followup-oracle-readback-02/report.json",
+    "sha256": "0262e82711108ad5ae4019cd4dd71a967b3240bf3fe5ed94fff0915710251ce0"
+  },
+  "outer": {
+    "bytes": 4608,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-launch-01/process.json",
+    "sha256": "a6b86371b73d4e4c4dad1b51635aaf0d0bbb7504f19b3c709937346175036640"
+  },
+  "peak_owned_allocation": 532480,
+  "programs": 1,
+  "queries": 1,
+  "raw_row_files": 44,
+  "reach_scope_note": "Fresh single empty Listing.join default-laziness observation. Explicit separate805MiB initial/784MiB floor/5MiB owned cap; original Java60/Properties123 resources and observations unchanged. Later canonical Rust changes are not Java query inputs.",
+  "repetitions": 2,
+  "source_plan": {
+    "bytes": 887,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-prep-01/query-source-plan.json",
+    "sha256": "11b60236d1842007067f44d9c80afc60d5d03d7e226c3466d7fa6e2169937a38"
+  },
+  "source_stable": true,
+  "status_counts": {
+    "success": 2
+  },
+  "tools_stable": true,
+  "transport_label_map": {
+    "bytes": 283,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage90-empty-join-oracle-prep-01/query-label-map.json",
+    "sha256": "aeef8c515e4f197a16ed09a7bc2ee156bc55eef1ca071c3f48f12d72ec2e8fe3"
+  }
+}

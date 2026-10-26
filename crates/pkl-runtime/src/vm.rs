@@ -25,6 +25,7 @@ mod data_size;
 pub(crate) mod deprecation;
 mod duration;
 mod int_seq;
+mod lazy_collections;
 mod regex;
 mod string_transforms;
 pub use code_storage::CodeStorage;
@@ -241,6 +242,15 @@ pub enum Instruction {
     EndConversion,
     ConvertObject(collection_conversions::Operation),
     ReadConversionProperty,
+    BeginLazyCollection(lazy_collections::Operation),
+    LazyCollectionNext {
+        end: usize,
+    },
+    LazyCollectionAccept {
+        next: usize,
+        end: usize,
+    },
+    EndLazyCollection,
     BeginCollectionEvery,
     CollectionEveryAccept {
         next: usize,
@@ -921,7 +931,7 @@ pub struct Program {
     pub(crate) reference_render_block: usize,
     pub(crate) typed_string_block: usize,
     pub(crate) string_repeat_block: usize,
-    pub(crate) collection_join_blocks: [usize; 2],
+    pub(crate) collection_join_blocks: [usize; 3],
     collection_every_blocks: [usize; 5],
     collection_transform_blocks: [usize; 14],
     collection_projection_blocks: [usize; 13],
@@ -1193,6 +1203,7 @@ struct Frame {
     collection_transform: Option<Box<collection_transforms::TransformRun>>,
     string_transform: Option<Box<string_transforms::Run>>,
     int_seq_run: Option<Box<int_seq::Run>>,
+    lazy_collection_run: Option<Box<lazy_collections::Run>>,
     conversion_run: Option<Box<collection_conversions::Run>>,
     collection_addition: Option<Box<collection_addition::Run>>,
     function_owner: Option<ObjectId>,
@@ -1470,6 +1481,7 @@ impl Vm {
             collection_transform: None,
             string_transform: None,
             int_seq_run: None,
+            lazy_collection_run: None,
             conversion_run: None,
             collection_addition: None,
             function_owner: None,
@@ -1925,6 +1937,9 @@ impl Vm {
                 roots.extend(frame.function_owner.map(Value::Function));
                 roots.extend(frame.amendment_arguments.iter().flatten().cloned());
                 if let Some(run) = &frame.collection_join {
+                    run.roots(&mut roots);
+                }
+                if let Some(run) = &frame.lazy_collection_run {
                     run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.int_seq_run {
@@ -2668,7 +2683,7 @@ impl Vm {
             && !local
             && !method
             && !entry
-            && self.steal_distinct_property(receiver, &name)?
+            && self.steal_collection_property(receiver, &name)?
         {
             return Ok(());
         }
@@ -2728,7 +2743,8 @@ impl Vm {
                     None => {
                         if !method
                             && !entry
-                            && let Some(member) = self.distinct_property(receiver, &name)?
+                            && let Some(member) =
+                                self.collection_cached_property(receiver, &name)?
                         {
                             owner = receiver;
                             break member;
@@ -3018,6 +3034,7 @@ impl Vm {
             collection_transform: None,
             string_transform: None,
             int_seq_run: None,
+            lazy_collection_run: None,
             conversion_run: None,
             collection_addition: None,
             function_owner: None,
@@ -4081,6 +4098,7 @@ impl Vm {
             collection_transform: None,
             string_transform: None,
             int_seq_run: None,
+            lazy_collection_run: None,
             conversion_run: None,
             collection_addition: None,
             function_owner: Some(id),
@@ -4660,6 +4678,12 @@ impl Vm {
             Instruction::EndConversion => self.end_conversion()?,
             Instruction::ConvertObject(operation) => self.convert_object(operation)?,
             Instruction::ReadConversionProperty => self.read_conversion_property()?,
+            Instruction::BeginLazyCollection(operation) => self.begin_lazy_collection(operation)?,
+            Instruction::LazyCollectionNext { end } => self.lazy_collection_next(end)?,
+            Instruction::LazyCollectionAccept { next, end } => {
+                self.lazy_collection_accept(next, end)?
+            }
+            Instruction::EndLazyCollection => self.end_lazy_collection()?,
             Instruction::BeginCollectionEvery => self.begin_collection_every()?,
             Instruction::CollectionEveryAccept { next } => self.collection_every_accept(next)?,
             Instruction::EndCollectionEvery => self.end_collection_every()?,
@@ -4877,7 +4901,9 @@ impl Vm {
                 }
                 if method
                     && name.as_ref() == "join"
-                    && (self.is_list(&receiver) || self.is_set(&receiver))
+                    && (self.is_list(&receiver)
+                        || self.is_set(&receiver)
+                        || matches!(&receiver, Value::Object(id) if self.heap.get(*id)?.collection_kind == crate::heap::CollectionKind::Listing))
                 {
                     self.collection_join_method(receiver);
                     return Ok(());

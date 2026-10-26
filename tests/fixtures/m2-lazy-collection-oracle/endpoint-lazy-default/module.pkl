@@ -1,0 +1,10 @@
+module stage90.endpointLazyDefault
+hidden values = new Listing { default { x = 10 }; new { y = trace("first") }; throw("unselected middle"); new { y = trace("last") } }
+hidden functionDefault = new Listing { default = (i) -> new Dynamic { x = trace(i + 20) }; new { y = 1 }; throw("unselected function default") }
+hidden emptyDefault = new Listing { default = (i) -> throw("empty default must not run") }
+hidden amended = (values) { [0] = new Dynamic { x = 30 }; new { x = 40 } }
+hidden nested = new Listing { new Dynamic { bad = throw("nested remains lazy") } }
+class Field { name: String; tag: String = "t-\(name)" }
+hidden fields: Listing<Field> = new { new { name = "a" } }
+hidden amendedFields = (fields) { new { name = "b" } }
+hidden wrong: Listing<Int> = new { 1; "bad element" }

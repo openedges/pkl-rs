@@ -1,0 +1,5 @@
+module stage90.mappingKeyHash
+hidden badKey = new Dynamic { n = throw("key hash") }
+hidden bad = new Mapping { [badKey] = trace(1); ["ok"] = trace(2) }
+hidden key = new Dynamic { n = trace("key") }
+hidden values = new Mapping { [key] = trace(3); ["ok"] = trace(4) }
