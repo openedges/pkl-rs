@@ -1,0 +1,88 @@
+{
+  "approved": true,
+  "archive": {
+    "bytes": 7255378,
+    "path": "target/m2/stage86-full-replay-publication-01/stage86-full-replay-evidence.tar.gz",
+    "sha256": "75ce368daf5328fa7d84d88ce963985f6556d533b2fb2296a94c5c7ccc2b2371"
+  },
+  "archive_regular_members": 14266,
+  "checkpoint_draft_sha256": "d4770f709035f771c90c708533c2c0bf9a065c2a3ea1ca8e34c733ec522430be",
+  "complete": true,
+  "excluded_generated_artifacts_rehashed": 6,
+  "excluded_generated_payloads_archived": false,
+  "full_gzip_tar_eof_manifest_order_payload_mode_readback": true,
+  "full_m2_complete_claimed": false,
+  "historical_stage84_capacity_stop_retained": true,
+  "improvements": 26,
+  "java_authority_links_preserved": true,
+  "kind": "stage86-full-replay-publication-independent-review-v1",
+  "limitations": [
+    "Generated binary payloads are identity-linked locally and excluded from this archive; standalone binary restoration is not promised.",
+    "This full ready-case result leaves 111 unready cases and 1791 strict gate items."
+  ],
+  "logical_payload_bytes": 44124094,
+  "prior_pass_regressions": 0,
+  "protected_partial_or_stage87_90_payloads_selected": false,
+  "raw_case_files": 14133,
+  "raw_jvm_files": 8,
+  "root_document_identities_checked": [
+    {
+      "bytes": 439965,
+      "path": "PLAN.md",
+      "sha256": "b72be655f28a458b3c9e0e05279b7a3d45f29c4dcbdb29d00b9ad61e490f7cf0"
+    },
+    {
+      "bytes": 79299,
+      "path": "docs/m2-language.md",
+      "sha256": "f23ecae6ee4286eccdd454d85f43c8f2b0ec7d2e3d499363dfebfb4ee284d504"
+    },
+    {
+      "bytes": 360148,
+      "path": "reports/m2/README.md",
+      "sha256": "785417b9280d11b9dafe60fc170605bb51ad5b1c9c8e939f19dd2eafc0fbf4ea"
+    }
+  ],
+  "selected_current_source_files_rehashed": 14265,
+  "selected_payloads": 14265,
+  "selection_sha256": "0fddb212163e353c2f2e245c606f1be8d6f96278d4ecbe8fc27dd389fef5ef36",
+  "status_counts": {
+    "candidate-unsupported": 139,
+    "mismatch": 61,
+    "oracle-error": 2,
+    "pass": 4214
+  },
+  "strict_gate_failure_items": 1791,
+  "terminal_receipts": [
+    {
+      "gate": "audit",
+      "path": "target/m2/stage86-full-replay-launch-02/audit-process/process.json",
+      "sha256": "93f8cf00eeb00659f7dfb1781b4c1f9116b6e90f0374b412c18e65609b38d41a"
+    },
+    {
+      "gate": "integrity_regression",
+      "path": "target/m2/stage86-full-replay-02/regression-audit/report.json",
+      "sha256": "31e3facf90d84bc34ebd937f7a44ad124adb9b7f0d46777e5a7976a382175e2a"
+    },
+    {
+      "gate": "replay",
+      "path": "target/m2/stage86-full-replay-launch-02/replay-process/process.json",
+      "sha256": "3b5f6bdb27df3e2f6a270b31369f1461a467a479425267ca0e41835ab472f894"
+    },
+    {
+      "gate": "replay_monitor",
+      "path": "target/m2/stage86-full-replay-launch-02/replay-space-monitor/report.json",
+      "sha256": "30ed9e73bf57e941e03fc123d3bf9d0130cd54e8d924187528c23ce8ffe1ba16"
+    },
+    {
+      "gate": "verify",
+      "path": "target/m2/stage86-full-replay-launch-02/verify-process/process.json",
+      "sha256": "eb250279c1a61e1474063e503234e0ba60e195c139fa9482f27c4b2e1d876cf8"
+    },
+    {
+      "gate": "verify_monitor",
+      "path": "target/m2/stage86-full-replay-launch-02/verify-space-monitor/report.json",
+      "sha256": "cab58bb58ce0a5499274568d88b975baef31d4fbfe8ad90e854cc533fd21300a"
+    }
+  ],
+  "unready_cases": 111
+}

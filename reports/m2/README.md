@@ -1,5 +1,22 @@
 # M2 language evidence
 
+## Stage86 complete ready-corpus replay
+
+The [full replay checkpoint](stage86-full-replay-checkpoint.json) records all
+4,416 ready cases and the completed separate integrity and regression audits.
+The result is **4,214 matches, 61 mismatches, 139 unsupported cases, and 2 Java
+oracle errors**, with no Rust internal error. Original modules match 694/888;
+expression strings match 3,519/3,527 and the JVM classpath case matches.
+There are 26 new matches and no prior-pass regressions against Stage76–78.
+
+This recorded local run reuses sealed Stage67 Java authority and the exact
+Stage86 candidate artifacts. It starts no new Java process and does not count
+as a new workspace, browser, or Node test run. Raw observations, source/build
+identities, failed attempts, and verification results remain distinguishable.
+The 111 unready cases, 1,791 overlapping full-gate obligations, and all nine M2
+workstreams remain open. Full API, platform-release, speed, and memory targets
+are not established by these counts.
+
 ## Stage86 List membership and constraint observations
 
 The [Stage86 checkpoint](stage86-contains-hash-power-checkpoint.json) records shared
@@ -18,9 +35,9 @@ from the Java helpers and a separately recorded native adapter linked to the
 unchanged core. Candidate and tooling failures are also preserved. The actual
 readback report discloses its author's adapter work.
 
-The full 4,416-case successor replay is pending completion and verification.
-The official aggregate remains 4,188/4,416; M2, complete APIs, release platforms,
-and performance requirements remain open. See [the verification scope](../../docs/m2-language.md).
+The completed successor replay establishes the 4,214/4,416 aggregate above;
+M2, complete APIs, release platforms, and performance requirements remain open.
+See [the verification scope](../../docs/m2-language.md).
 
 ## Stage85 distinct collections and reentrant hashing
 

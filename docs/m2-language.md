@@ -1,5 +1,29 @@
 # M2 language verification
 
+## Stage86 completed full ready-corpus replay
+
+The complete 4,416-case replay, separate raw-evidence verification, and
+prior-pass regression audit finished successfully on the recorded local macOS
+arm64 host. The current aggregate is **4,214 raw matches, 61 mismatches,
+139 unsupported results, and 2 Java oracle errors**. There are no Rust internal
+errors in this run. Original modules match 694/888, expression strings
+3,519/3,527, and the JVM classpath case matches. Compared with the completed
+Stage76–78 replay, 26 cases now match and no previously passing case regressed.
+
+The replay reused sealed Stage67 Java outputs and the recorded, unchanged
+Stage86 candidate artifacts; it started no fresh Java process. Source and
+artifact identities, complete raw channels, original case order, and execution
+contracts were verified. Earlier failed or interrupted acquisition attempts
+remain separate evidence. This checkpoint adds full-corpus observations; it
+does not claim another Rust workspace or platform test run.
+
+The inventory remains 4,527 cases: 4,416 ready, 71 unimplemented, and 40 unmapped.
+The strict full gate still has 1,791 overlapping unmet conditions: 475
+implementation obligations, 475 test-mapping obligations, and 841 required-case
+obligations. Passing an execution does not close a missing requirement mapping.
+All nine M2 workstreams, complete APIs, release platforms, and performance and
+memory targets remain open. See the [full replay checkpoint](../reports/m2/stage86-full-replay-checkpoint.json).
+
 ## Stage86 List membership, insertion hashes, and constraint observations
 
 The shared runtime now implements `List.contains` with stored-element-first
@@ -32,8 +56,8 @@ tested core. The successful successor is a new acquisition. Earlier candidate,
 preflight, and source-dispatch failures also remain recorded.
 
 See the [Stage86 checkpoint](../reports/m2/stage86-contains-hash-power-checkpoint.json).
-A full 4,416-case replay has started; completion, separate verification, and
-regression audit remain pending. The official aggregate stays 4,188/4,416.
+The subsequent full replay and separate verification now establish the
+4,214/4,416 aggregate recorded above.
 The 111 unready cases, all nine M2 workstreams, full API/release-platform scope,
 collision-tree behavior, and speed/memory targets remain open.
 
