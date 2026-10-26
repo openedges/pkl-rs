@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+fifth hash
+
+1 | List(0,1,2,3,new Dynamic { value=throw("fifth hash") }).distinct.length
+                                     ^^^^^^^^^^^^^^^^^^^
+at repl:text.value (repl:text)
+
+1 | List(0,1,2,3,new Dynamic { value=throw("fifth hash") }).distinct.length
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

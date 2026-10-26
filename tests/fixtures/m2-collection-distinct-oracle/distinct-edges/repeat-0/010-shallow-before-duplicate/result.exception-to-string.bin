@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+shallow tail
+
+1 | (new Listing {1;1;throw("shallow tail")}).isDistinct
+                      ^^^^^^^^^^^^^^^^^^^^^
+at repl:text[#3] (repl:text)
+
+1 | (new Listing {1;1;throw("shallow tail")}).isDistinct
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

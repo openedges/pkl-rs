@@ -1,0 +1,1 @@
+(new Listing {new Dynamic {n=throw("deep head")};trace("shallow tail")}).isDistinct

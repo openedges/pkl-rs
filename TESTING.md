@@ -21,6 +21,15 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+The [Stage85 checkpoint](reports/m2/stage85-distinct-checkpoint.json) records the
+five required Rust checks, including a completed 1,136-pass workspace run with
+one ignored test and zero failures. The earlier capacity-stopped attempt remains
+separate. Selected `distinct` regressions compare four unchanged originals and
+17 Java queries, with repeated native, N-API, and Chromium captures. One fresh M1
+acquisition supplies distinct strict-byte and architecture-contract judgments;
+it is not reported as two executions. These results do not close the full M2,
+product API, release-platform, or speed/memory requirements.
+
 ```sh
 cargo xtask verify
 cargo fmt --all -- --check

@@ -1,0 +1,1 @@
+List(0,1,2,3,new Dynamic { value=throw("fifth hash") }).distinct.length

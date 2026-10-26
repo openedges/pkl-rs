@@ -26,6 +26,8 @@ pub enum Projection {
     KeysHash,
     KeysOrder,
     Values,
+    Distinct,
+    IsDistinct,
 }
 
 #[derive(Clone, Copy)]
@@ -181,7 +183,7 @@ pub(super) fn blocks(
 pub(super) fn projection_blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
-) -> [usize; 10] {
+) -> [usize; 12] {
     let source = crate::stdlib_sources::base();
     [
         ("List", "toList", None),
@@ -194,15 +196,17 @@ pub(super) fn projection_blocks(
         ("List", "add", Some(Projection::Add)),
         ("List", "reverse", Some(Projection::Reverse)),
         ("Set", "reverse", Some(Projection::Reverse)),
+        ("List", "distinct", Some(Projection::Distinct)),
+        ("Listing", "isDistinct", Some(Projection::IsDistinct)),
     ]
     .map(|(class, name, operation)| {
         let class_start = source
             .text
-            .find(&format!("external class {class}<"))
+            .find(&format!("class {class}<"))
             .expect("collection class");
         let signature = if name == "add" {
             "external function add<Other>(element: Other):".to_owned()
-        } else if class == "Map" {
+        } else if class == "Map" || matches!(name, "distinct" | "isDistinct") {
             format!("external {name}:")
         } else {
             format!("external function {name}():")
@@ -223,6 +227,19 @@ pub(super) fn projection_blocks(
                 Instruction::CollectionTransformNext { end: 8 },
                 Instruction::AppendStrictElement,
                 Instruction::Jump(5),
+            ],
+            Some(Projection::Distinct) => vec![
+                Instruction::BeginCollectionProjection(Projection::Distinct),
+                Instruction::CollectionTransformNext { end: 5 },
+                Instruction::CollectionDistinctStep { next: 1, end: 5 },
+                Instruction::AppendStrictElement,
+                Instruction::Jump(1),
+            ],
+            Some(Projection::IsDistinct) => vec![
+                Instruction::BeginCollectionProjection(Projection::IsDistinct),
+                Instruction::CollectionTransformNext { end: 4 },
+                Instruction::CollectionDistinctStep { next: 1, end: 4 },
+                Instruction::Jump(1),
             ],
             Some(operation) => {
                 let mut code = vec![
@@ -271,6 +288,7 @@ pub(super) struct TransformRun {
     current: Option<(Value, Value)>,
     lazy: Option<LazyEvery>,
     inner: Option<FlatMapRun>,
+    distinct: Option<DistinctRun>,
 }
 
 struct FlatMapRun {
@@ -288,6 +306,9 @@ struct LazyEvery {
 impl TransformRun {
     pub(super) fn roots(&self, roots: &mut Vec<Value>) {
         roots.push(Value::Object(self.source));
+        if let Some(distinct) = &self.distinct {
+            roots.extend(distinct.values.iter().cloned());
+        }
         roots.extend(self.callback.iter().cloned());
         if let Some(inner) = &self.inner {
             roots.push(Value::Object(inner.source));
@@ -410,7 +431,10 @@ impl Vm {
             members.reverse();
         }
         // A strict result must not capture the method's source/callback scope.
-        let builder = if matches!(operation, Operation::Callback(Transform::Find)) {
+        let builder = if matches!(
+            operation,
+            Operation::Callback(Transform::Find) | Operation::Projection(Projection::IsDistinct)
+        ) {
             None
         } else {
             Some(self.heap.allocate(Object {
@@ -438,7 +462,25 @@ impl Vm {
             current: None,
             lazy: None,
             inner: None,
+            distinct: match operation {
+                Operation::Projection(Projection::Distinct | Projection::IsDistinct) => {
+                    Some(DistinctRun::default())
+                }
+                _ => None,
+            },
         }));
+        if matches!(operation, Operation::Projection(Projection::IsDistinct)) {
+            // VmObject.forceAndIterateMemberValues forces all direct values first.
+            frame
+                .collection_transform
+                .as_mut()
+                .unwrap()
+                .distinct
+                .as_mut()
+                .unwrap()
+                .shallow = true;
+            self.force_shallow_frame(Value::Object(source))?;
+        }
         Ok(())
     }
 
@@ -462,6 +504,25 @@ impl Vm {
     }
 
     pub(super) fn collection_transform_next(&mut self, end: usize) -> Result<(), RuntimeError> {
+        if self
+            .frames
+            .last()
+            .and_then(|f| f.collection_transform.as_ref())
+            .and_then(|r| r.distinct.as_ref())
+            .is_some_and(|r| r.shallow)
+        {
+            self.pop()?;
+            self.frames
+                .last_mut()
+                .unwrap()
+                .collection_transform
+                .as_mut()
+                .unwrap()
+                .distinct
+                .as_mut()
+                .unwrap()
+                .shallow = false;
+        }
         if self
             .frames
             .last()
@@ -667,6 +728,10 @@ impl Vm {
                     "",
                 ),
             ));
+        }
+        if matches!(run.operation, Operation::Projection(Projection::IsDistinct)) {
+            self.stack.push(Value::Bool(run.distinct.unwrap().result));
+            return Ok(());
         }
         let builder = frame
             .builders
@@ -915,6 +980,7 @@ impl Vm {
             current: None,
             lazy,
             inner: None,
+            distinct: None,
         }));
         Ok(())
     }
@@ -1229,5 +1295,292 @@ mod reversal_tests {
         );
         vm.close();
         assert_eq!(vm.heap_stats().slots, 0);
+    }
+}
+
+// List uses the pinned Graal EconomicSet; Listing uses JDK HashSet after a
+// complete shallow force. Both compare query.equals(stored), not Pkl numeric ==.
+#[derive(Clone, Copy, Default)]
+enum DistinctStage {
+    #[default]
+    Lookup,
+    Grow,
+    Append,
+    Link,
+    Rehash {
+        slot: usize,
+        append_after: bool,
+    },
+    Complete,
+}
+struct DistinctRun {
+    values: Vec<Value>,
+    economic: crate::economic_map::EconomicMapIndex,
+    stage: DistinctStage,
+    shallow: bool,
+    result: bool,
+}
+impl Default for DistinctRun {
+    fn default() -> Self {
+        Self {
+            values: Vec::new(),
+            economic: Default::default(),
+            stage: DistinctStage::Lookup,
+            shallow: false,
+            result: true,
+        }
+    }
+}
+impl Vm {
+    // These are ordinary cached properties. In particular, implicit reads in a
+    // Listing constraint must take the same path as an explicit `.isDistinct`.
+    pub(super) fn distinct_property(
+        &self,
+        receiver: ObjectId,
+        name: &str,
+    ) -> Result<Option<Member>, RuntimeError> {
+        let index = match (self.heap.get(receiver)?.collection_kind, name) {
+            (CollectionKind::List, "distinct") => 10,
+            (CollectionKind::Listing, "isDistinct") => 11,
+            _ => return Ok(None),
+        };
+        Ok(Some(Member {
+            name: name.into(),
+            code: self.program.collection_projection_blocks[index],
+            flags: crate::syntax::ModifierKind::External.flag(),
+            entry: false,
+            local: false,
+            method: false,
+            ty: None,
+            type_span: None,
+            constant: false,
+            fixed: false,
+        }))
+    }
+
+    // VmListingOrMapping.getCachedValue steals an Identifier-valued property
+    // only through empty-member wrappers, without applying the element type.
+    pub(super) fn steal_distinct_property(
+        &mut self,
+        receiver: ObjectId,
+        name: &str,
+    ) -> Result<bool, RuntimeError> {
+        if name != "isDistinct"
+            || self.heap.get(receiver)?.collection_kind != CollectionKind::Listing
+        {
+            return Ok(false);
+        }
+        let key = CacheKey {
+            name: name.into(),
+            owner: None,
+            method: false,
+            entry: false,
+        };
+        let mut chain = Vec::new();
+        let mut current = receiver;
+        loop {
+            let object = self.heap.get(current)?;
+            if !object.members.is_empty() || !object.collection_members.is_empty() {
+                return Ok(false);
+            }
+            let Some(parent) = object.parent else {
+                return Ok(false);
+            };
+            chain.push(current);
+            if let Some(value) = self.cached_slot(parent, &key)? {
+                // Tasks run in reverse insertion order, hence deepest first.
+                for id in chain {
+                    self.complete_cache(id, key.clone(), value.clone())?;
+                }
+                self.stack.push(value);
+                return Ok(true);
+            }
+            current = parent;
+        }
+    }
+
+    fn distinct_run_mut(&mut self) -> &mut DistinctRun {
+        self.frames
+            .last_mut()
+            .unwrap()
+            .collection_transform
+            .as_mut()
+            .unwrap()
+            .distinct
+            .as_mut()
+            .unwrap()
+    }
+    fn distinct_run(&self) -> &DistinctRun {
+        self.frames
+            .last()
+            .unwrap()
+            .collection_transform
+            .as_ref()
+            .unwrap()
+            .distinct
+            .as_ref()
+            .unwrap()
+    }
+    fn retry_distinct_step(&mut self) {
+        self.frames.last_mut().unwrap().pc -= 1;
+    }
+    pub(super) fn collection_distinct_step(
+        &mut self,
+        next: usize,
+        end: usize,
+    ) -> Result<(), RuntimeError> {
+        let value = self
+            .stack
+            .last()
+            .cloned()
+            .ok_or_else(|| invalid("distinct input"))?;
+        let listing = matches!(
+            self.frames
+                .last()
+                .unwrap()
+                .collection_transform
+                .as_ref()
+                .unwrap()
+                .operation,
+            Operation::Projection(Projection::IsDistinct)
+        );
+        match self.distinct_run().stage {
+            DistinctStage::Lookup => {
+                // EconomicMapImpl.findLinear does not request a hash. Keep
+                // both preparation and lookup inside the actual hashed path;
+                // the fifth distinct insertion starts hashing only after append.
+                let hashed = listing || self.distinct_run().economic.has_hash();
+                let hash = if hashed {
+                    if self.prepare_keys(vec![value.clone()])? {
+                        return Ok(());
+                    }
+                    self.java_hash(&value)?
+                } else {
+                    None
+                };
+                let candidates = if listing {
+                    // HashMap tests the full spread hash before equals. For a
+                    // fixed full hash, ordinary bucket chains retain insertion order.
+                    // Collision-tree order remains an explicit draft audit item.
+                    self.distinct_run()
+                        .values
+                        .iter()
+                        .filter_map(|old| match self.java_hash(old) {
+                            Ok(other) if !hash.zip(other).is_some_and(|(a, b)| a != b) => {
+                                Some(Ok(old.clone()))
+                            }
+                            Ok(_) => None,
+                            Err(error) => Some(Err(error)),
+                        })
+                        .collect::<Result<Vec<_>, RuntimeError>>()?
+                } else {
+                    self.distinct_run()
+                        .economic
+                        .candidates(if hashed {
+                            Some(hash.unwrap_or(0))
+                        } else {
+                            None
+                        })
+                        .into_iter()
+                        .map(|i| self.distinct_run().values[i].clone())
+                        .collect()
+                };
+                if self.search_key(&value, candidates.clone())? {
+                    return Ok(());
+                }
+                if candidates
+                    .iter()
+                    .any(|old| equality::same_key(&self.heap, &value, old))
+                {
+                    self.pop()?;
+                    if listing {
+                        self.distinct_run_mut().result = false;
+                        self.jump(end)?;
+                    } else {
+                        self.jump(next)?;
+                    }
+                    return Ok(());
+                }
+                if listing {
+                    self.distinct_run_mut().values.push(value);
+                    self.pop()?;
+                    return Ok(());
+                }
+                self.distinct_run_mut().stage = DistinctStage::Grow;
+            }
+            DistinctStage::Grow => {
+                let run = self.distinct_run_mut();
+                if run.economic.grow_before_append() {
+                    run.economic.start_rehash();
+                    run.stage = DistinctStage::Rehash {
+                        slot: 0,
+                        append_after: true,
+                    };
+                } else {
+                    run.stage = DistinctStage::Append;
+                }
+            }
+            DistinctStage::Append => {
+                let run = self.distinct_run_mut();
+                run.economic.push();
+                run.values.push(value);
+                if run.economic.has_hash() {
+                    run.stage = DistinctStage::Link;
+                } else if run.values.len() > 4 {
+                    run.economic.start_rehash();
+                    run.stage = DistinctStage::Rehash {
+                        slot: 0,
+                        append_after: false,
+                    };
+                } else {
+                    run.stage = DistinctStage::Complete;
+                }
+            }
+            DistinctStage::Link => {
+                if self.prepare_keys(vec![value.clone()])? {
+                    return Ok(());
+                }
+                let hash = self.java_hash(&value)?.unwrap_or(0);
+                let run = self.distinct_run_mut();
+                if run
+                    .economic
+                    .put_hash(run.values.len() - 1, hash, run.economic.should_rehash())
+                {
+                    run.economic.start_rehash();
+                    run.stage = DistinctStage::Rehash {
+                        slot: 0,
+                        append_after: false,
+                    };
+                } else {
+                    run.stage = DistinctStage::Complete;
+                }
+            }
+            DistinctStage::Rehash { slot, append_after } => {
+                if let Some(old) = self.distinct_run().values.get(slot).cloned() {
+                    if self.prepare_keys(vec![old.clone()])? {
+                        return Ok(());
+                    }
+                    let hash = self.java_hash(&old)?.unwrap_or(0);
+                    let run = self.distinct_run_mut();
+                    run.economic.put_hash(slot, hash, false);
+                    run.stage = DistinctStage::Rehash {
+                        slot: slot + 1,
+                        append_after,
+                    };
+                } else {
+                    self.distinct_run_mut().stage = if append_after {
+                        DistinctStage::Append
+                    } else {
+                        DistinctStage::Complete
+                    };
+                }
+            }
+            DistinctStage::Complete => {
+                self.distinct_run_mut().stage = DistinctStage::Lookup;
+                return Ok(());
+            }
+        }
+        self.retry_distinct_step();
+        Ok(())
     }
 }

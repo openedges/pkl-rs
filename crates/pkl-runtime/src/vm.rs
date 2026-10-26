@@ -260,6 +260,10 @@ pub enum Instruction {
     },
     AppendStrictElement,
     EndCollectionTransform,
+    CollectionDistinctStep {
+        next: usize,
+        end: usize,
+    },
     StringEncode,
     Primitive(primitives::Operation),
     MakePair,
@@ -917,7 +921,7 @@ pub struct Program {
     pub(crate) collection_join_blocks: [usize; 2],
     collection_every_blocks: [usize; 5],
     collection_transform_blocks: [usize; 14],
-    collection_projection_blocks: [usize; 10],
+    collection_projection_blocks: [usize; 12],
     conversion_blocks: BTreeMap<(Arc<str>, Arc<str>), (usize, usize)>,
     conversion_delegate_block: usize,
     object_default_block: usize,
@@ -2657,6 +2661,14 @@ impl Vm {
             self.stack.push(value);
             return Ok(());
         }
+        if memoize
+            && !local
+            && !method
+            && !entry
+            && self.steal_distinct_property(receiver, &name)?
+        {
+            return Ok(());
+        }
         let mut owner = initial_owner;
         let mut visited = BTreeSet::new();
         let member = if let Some(member) = resolved_member {
@@ -2711,6 +2723,13 @@ impl Vm {
                         return Ok(());
                     }
                     None => {
+                        if !method
+                            && !entry
+                            && let Some(member) = self.distinct_property(receiver, &name)?
+                        {
+                            owner = receiver;
+                            break member;
+                        }
                         if method && self.conversion_method(Value::Object(receiver), &name)? {
                             return Ok(());
                         }
@@ -4655,6 +4674,9 @@ impl Vm {
             Instruction::CollectionFlatMapNext { end } => self.collection_flat_map_next(end)?,
             Instruction::AppendStrictElement => self.append_strict_element()?,
             Instruction::EndCollectionTransform => self.end_collection_transform()?,
+            Instruction::CollectionDistinctStep { next, end } => {
+                self.collection_distinct_step(next, end)?
+            }
             Instruction::StringEncode => self.encode_string()?,
             Instruction::Primitive(operation) => self.primitive(operation)?,
             Instruction::CheckObjectParameters { target } => {

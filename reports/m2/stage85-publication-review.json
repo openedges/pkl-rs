@@ -1,0 +1,121 @@
+{
+  "approved": true,
+  "archive": {
+    "bytes": 25704830,
+    "mode": 420,
+    "path": "reports/m2/stage85-distinct-evidence.tar.gz",
+    "sha256": "bfca33174103d040be27f5575f4e7ae6b4b34833be619c5a144bc99a43e23d9f"
+  },
+  "candidate_compatibility_passes_claimed": 0,
+  "checkpoint": {
+    "bytes": 11907,
+    "mode": 420,
+    "path": "reports/m2/stage85-distinct-checkpoint.json",
+    "sha256": "0f7ce0c302b72461dcd3c36322a4d9481b88666c74bb841a241e53764cbea58d"
+  },
+  "checkpoint_refs": {
+    "all_current_bytes_hashes_match": true,
+    "count": 25,
+    "public_vs_draft_changed_only": [
+      "git_binding",
+      "publication_ready"
+    ],
+    "unbundled_failed_binary_archive_explicit": true
+  },
+  "complete": true,
+  "current_canonical_selected": {
+    "all_bytes_hashes_modes_match": true,
+    "paths": 426
+  },
+  "docs": {
+    "files": {
+      "PLAN.md": {
+        "bytes": 435902,
+        "mode": 420,
+        "path": "PLAN.md",
+        "sha256": "1a5a8df6d4b6384e29518c912edefcf844b7b409ea7a9f73a5fff3366efba03f"
+      },
+      "TESTING.md": {
+        "bytes": 73452,
+        "mode": 420,
+        "path": "TESTING.md",
+        "sha256": "c4059460fd35b5573b70ecde1aebea7fce399a5da9e3a5f1c5ef9450cd399dea"
+      },
+      "docs/architecture.md": {
+        "bytes": 95826,
+        "mode": 420,
+        "path": "docs/architecture.md",
+        "sha256": "5f37d8ce7170c2ccddde5bc4c34b7ab46b26e226f9bb14f37d9b52709009f756"
+      },
+      "docs/m2-language.md": {
+        "bytes": 75511,
+        "mode": 420,
+        "path": "docs/m2-language.md",
+        "sha256": "1bbdee0391a549435197dbaff3f95aee2280c802ded44022efdd5063ff1f35c3"
+      },
+      "reports/m2/README.md": {
+        "bytes": 357906,
+        "mode": 420,
+        "path": "reports/m2/README.md",
+        "sha256": "6518c73aaf68a51b10a01282fc80ca602c2b1f3378372291ee69fd7e4d0d7316"
+      }
+    },
+    "latest_official_full_replay_still_4188_of_4416": true,
+    "stage85_counts_and_limits_match_terminal_evidence": true
+  },
+  "earlier_failed_review_attempt": {
+    "bytes": 603,
+    "mode": 420,
+    "path": "target/m2/stage85-publication-review-attempt-01/report.json",
+    "sha256": "1db7a4820a4789654ed458d6eae688300b87115b093889cb974d2742365a19e1"
+  },
+  "full_readback": {
+    "all_payload_bytes_sha256_mode_size_match": true,
+    "archive_producer_public_bytes_identical": true,
+    "decompressed_tar_bytes": 66201600,
+    "gzip_full_stream_crc_and_eof_verified": true,
+    "manifest_first_exact_selection_bytes": true,
+    "member_order_exact_selection_order": true,
+    "payload_members": 3842,
+    "regular_members": 3843,
+    "selected_logical_bytes": 59034877
+  },
+  "git_base_head": "cfa2cf9ee91d7669fbb2173f4a5f2c118de04754",
+  "kind": "stage85-independent-publication-full-member-review-v1",
+  "limits": [
+    "Selected implementation checkpoint only; full M2, API, release-platform, and performance gates remain open.",
+    "The explicitly identified failed candidate binary archive is local and outside the public archive.",
+    "No hosted CI result is claimed."
+  ],
+  "producer_archive": {
+    "bytes": 25704830,
+    "mode": 420,
+    "path": "target/m2/stage85-checkpoint-publication-01/stage85-distinct-evidence.tar.gz",
+    "sha256": "bfca33174103d040be27f5575f4e7ae6b4b34833be619c5a144bc99a43e23d9f"
+  },
+  "producer_checkpoint": {
+    "bytes": 11594,
+    "mode": 420,
+    "path": "target/m2/stage85-checkpoint-publication-01/checkpoint-draft.json",
+    "sha256": "f4b4f38fd9e16ac8bcf85bcb2fecf3053c3b3611e7dfd08a080a8ecb6c8e6e9c"
+  },
+  "producer_report": {
+    "bytes": 696,
+    "mode": 420,
+    "path": "target/m2/stage85-checkpoint-publication-01/report.json",
+    "sha256": "a68f14aeef987a86ceaed240fc4a91790acafcf19a2003adf03ecc2b88468e9d"
+  },
+  "public_copy": {
+    "bytes": 510,
+    "mode": 420,
+    "path": "target/m2/stage85-checkpoint-publication-01/public-copy.json",
+    "sha256": "e7c8e09d75c9660592826da2d67a3ca96d3f587fb53718f789de89f5e97df92e"
+  },
+  "selection": {
+    "bytes": 950789,
+    "mode": 420,
+    "path": "target/m2/stage85-checkpoint-publication-01/selection.json",
+    "sha256": "9769a1191960d8a3f8efce77b0133b27c20ff994131cb372c29a6c8bb256e7f1"
+  },
+  "source_stable": true
+}

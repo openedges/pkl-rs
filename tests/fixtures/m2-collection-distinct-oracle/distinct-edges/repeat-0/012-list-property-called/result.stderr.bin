@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Cannot find method `distinct` in class `List`.
+
+1 | List(1).distinct(throw("argument"))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+distinct.apply(...)
+distinctBy(selector)
+isDistinct
+isDistinctBy(selector)

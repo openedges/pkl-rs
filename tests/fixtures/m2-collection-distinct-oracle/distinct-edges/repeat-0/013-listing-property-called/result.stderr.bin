@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Cannot find method `isDistinct` in class `Listing`.
+
+1 | (new Listing {1}).isDistinct(throw("argument"))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+isDistinct.apply(...)
+isDistinctBy(selector)
+distinct

@@ -1,5 +1,21 @@
 # M2 language evidence
 
+## Stage85 distinct collections and reentrant hashing
+
+The [Stage85 checkpoint](stage85-distinct-checkpoint.json) records
+`List.distinct`, `Listing.isDistinct`, and completed-cache structural keys during
+untyped reentrant hashing. All five required Rust checks pass. The full workspace
+has 1,136 passing tests, one ignored test, and zero failures; nested child runs
+are counted separately. Its earlier capacity interruption and the isolated
+candidate's initial reentrant failure remain historical evidence.
+
+The 17-query Java cohort matches twice on each of native, N-API, and Chromium,
+including public UTF-8/UTF-16 results, status, and ordered Logger fields. One fresh
+M1 acquisition matches 6,078 Java results per target and passes its separate
+architecture judgment. The [language guide](../../docs/m2-language.md) describes
+the comparison limits. The official full-corpus aggregate remains 4,188/4,416;
+full M2, API, release-platform, and performance requirements remain open.
+
 ## Stage84 List search and transforms
 
 The [Stage84 checkpoint](stage84-list-search-transform-checkpoint.json) records
@@ -9,8 +25,9 @@ and 44 queries compared twice on each of native, N-API, and Chromium. Both fresh
 M1 experiments match 6,078 Java results per target. The archive retains raw
 failures and successful successors, source maps, artifact identities, and explicit
 build profiles. See the [language guide](../../docs/m2-language.md) for comparison
-boundaries. The full 4,416-case replay is still running; its previous aggregate
-and the remaining M2 requirements are unchanged.
+boundaries. The full 4,416-case replay subsequently stopped at the sampled
+disk-space floor. Its 3,972-case progress prefix is incomplete and does not
+replace the previous aggregate. The remaining M2 requirements are unchanged.
 
 ## Stage79–83 focused implementation checkpoint
 

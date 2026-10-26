@@ -1,0 +1,8 @@
+// Unexecuted Java-first investigation: hash while this Listing is already forcing.
+// A nested isDistinct may observe a cache prefix; do not invent expected bytes.
+local recursive = new Listing {
+  1
+  local check = (new Listing { recursive; new Listing { 1; -30 } }).isDistinct
+  check
+}
+result = (new Listing { recursive }).isDistinct

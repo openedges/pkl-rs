@@ -1,0 +1,321 @@
+{
+  "archive": {
+    "bytes": 25704830,
+    "full_payload_and_mode_readback": true,
+    "gzip_eof_verified": true,
+    "mode": 420,
+    "path": "reports/m2/stage85-distinct-evidence.tar.gz",
+    "producer": {
+      "bytes": 25704830,
+      "mode": 420,
+      "path": "target/m2/stage85-checkpoint-publication-01/stage85-distinct-evidence.tar.gz",
+      "sha256": "bfca33174103d040be27f5575f4e7ae6b4b34833be619c5a144bc99a43e23d9f"
+    },
+    "regular_members": 3843,
+    "sha256": "bfca33174103d040be27f5575f4e7ae6b4b34833be619c5a144bc99a43e23d9f"
+  },
+  "canonical_integrated": true,
+  "canonical_selected": {
+    "independent_review": {
+      "bytes": 2696,
+      "mode": 420,
+      "path": "target/m2/stage85-canonical-review-01/report.json",
+      "sha256": "609bd233529a4f46a661291de0474d1ddc116f0989d82ef0434617c6ee676169"
+    },
+    "java_rows_x_repeats": 34,
+    "java_shared_raw_files_compared": 224,
+    "named_functions_total": 39,
+    "new_named_functions": 9,
+    "ordered_logger_events": 2,
+    "raw_differences": [],
+    "regression_named_functions": 30
+  },
+  "compatibility_baseline": "Pkl 0.32.0",
+  "complete": true,
+  "evidence_selection": {
+    "bytes": 950789,
+    "mode": 420,
+    "path": "target/m2/stage85-checkpoint-publication-01/selection.json",
+    "sha256": "9769a1191960d8a3f8efce77b0133b27c20ff994131cb372c29a6c8bb256e7f1"
+  },
+  "features": [
+    "List.distinct",
+    "Listing.isDistinct"
+  ],
+  "full_api_complete": false,
+  "full_m2_complete": false,
+  "full_ready_replay": {
+    "inventory_cases": 4527,
+    "latest_completed_official_matches": 4188,
+    "ready_cases": 4416,
+    "stage84_attempt": "Capacity-stopped; 3972 decoded prefix records are not a final aggregate or compatibility pass.",
+    "stage84_final_report_present": false,
+    "stage84_separate_verify_executed": false,
+    "stage84_stop_review": {
+      "bytes": 3980,
+      "mode": 420,
+      "path": "target/m2/stage84-full-replay-stop-review-01/report.json",
+      "sha256": "80c9ed3b256f482cf9a402a096b3bf16509b2cf46904bacc1ad424a0b5a60728"
+    },
+    "unready_cases": 111
+  },
+  "git_binding": {
+    "base_head": "cfa2cf9ee91d7669fbb2173f4a5f2c118de04754",
+    "scope": "Canonical source/test/fixture identities are recorded in the archived selection and source maps. The publication commit records the implementation and fixtures; acquisition preceded that commit. This is not a claim that the compiler ran from a clean committed tree."
+  },
+  "independent_m1_platform_review": {
+    "report": {
+      "bytes": 3713,
+      "mode": 420,
+      "path": "target/m2/stage85-platform-actual-review-01/report.json",
+      "sha256": "329258f2795288dec4039214c4df5827461f97e13b03c394377984bca608ba38"
+    },
+    "status": "passed"
+  },
+  "isolated_candidate": {
+    "initial": {
+      "Java_rows": {
+        "exact_unique": 16,
+        "failed_unique": 1,
+        "repeats": 2
+      },
+      "cargo_exit": 101,
+      "failure": "reentrant hashing internal-failure: unforced equality member",
+      "report": {
+        "bytes": 2433,
+        "sha256": "6d225e0c9055243e3a6a6e6035246a56b5f176b02b4d87bf5b76d60cb3876620"
+      },
+      "test_functions": {
+        "fail": 1,
+        "pass": 8
+      }
+    },
+    "initial_diagnosis_correction": "The source-only claim that unconditional java_hash necessarily forced all later values was withdrawn: that path reads cached values. The later focused01 reentrant internal failure remains actual failed evidence.",
+    "repair": "Internal structural-key snapshot follows completed-cache traversal for untyped Dynamic/Listing/Mapping during recursive force; typed/module and strict paths unchanged. Expected Java bytes unchanged.",
+    "repaired": {
+      "Java_queries": 17,
+      "Java_repeats": 2,
+      "cargo_exit": 0,
+      "lifecycle_functions": 3,
+      "logger_events_per_repeat": 1,
+      "original_modules": 4,
+      "original_repeats": 2,
+      "raw_comparisons": 224,
+      "report": {
+        "bytes": 2432,
+        "sha256": "1882b781d17a28e76c07c8818f01965679f7bf46bb1810a7ff74ba2507c22b6e"
+      },
+      "targets": 3,
+      "test_functions": 9
+    },
+    "report": {
+      "bytes": 3606,
+      "mode": 420,
+      "path": "target/m2/stage85-distinct-candidate-01/report.json",
+      "sha256": "09dfa2558fe766bb342595069d5a4139cabd93d9415284be0943b476738fe7d4"
+    }
+  },
+  "java_authority": {
+    "independent_raw_readback": {
+      "bytes": 9063,
+      "mode": 420,
+      "path": "target/m2/stage85-distinct-oracle-readback-01/report.json",
+      "sha256": "35614a402988041f1c26b489dc19f865d6f75e873880f63b8a4cfd8b24d553c7"
+    },
+    "jvm_acquisitions": 4,
+    "logger_events_per_repeat": 1,
+    "programs": 2,
+    "queries": 17,
+    "repetitions": 2,
+    "report": {
+      "bytes": 27601,
+      "mode": 420,
+      "path": "target/m2/stage85-distinct-oracle-01/report.json",
+      "sha256": "ab5ea3e12dc3fb8d1e5125dbe56243e605b8ed1b71d499a0223f3b9290642f5d"
+    },
+    "row_files": 768,
+    "unique_ordinary_errors": 5,
+    "unique_successes": 12
+  },
+  "kind": "stage85-distinct-development-checkpoint-v1",
+  "limits": [
+    "Recorded local development evidence; not full language/API/release-platform or performance completion.",
+    "Workspace uses opt1/debug0/symbol stripping with assertions and overflow checks enabled; it is an explicit profile, not performance evidence.",
+    "Broad source/fixture maps are not complete compiler/runtime dependency closure.",
+    "Java-only exception/cause/type channels are retained but outside the shared Rust SourceProbe/platform comparison.",
+    "Reentrant cached-prefix cohort is bounded; no universal JVM collision-tree or cycle proof.",
+    "Generated compiler/binding/test binary payloads are local artifact dependencies or regenerable caches, not bundled evidence payloads."
+  ],
+  "m1_single_contract_acquisition": {
+    "acquisitions": 1,
+    "architecture_contract_status": "pass",
+    "argv_includes_verify_contract": true,
+    "compatibility_status": "pass",
+    "experiment_report": {
+      "bytes": 3397669,
+      "mode": 420,
+      "path": "target/m2/stage85-m1-validation-01/contract/experiment/report.json",
+      "sha256": "6fbb695eebc211cd7663dda4e00c260be0d24c9af5e9fbd3ab98ed34ed6f1451"
+    },
+    "raw_matches_per_target": {
+      "browser": 6078,
+      "node": 6078,
+      "rust": 6078
+    },
+    "report": {
+      "bytes": 6633,
+      "mode": 420,
+      "path": "target/m2/stage85-m1-validation-01/contract/process.json",
+      "sha256": "ea6f2e0b996b8f982164b43165a5fbe967e5344cdf82263741bea5298bf1c4f9"
+    },
+    "status": "passed"
+  },
+  "pending_terminal_gates": [],
+  "performance_targets_met": false,
+  "platform_artifact_binding": {
+    "report": {
+      "bytes": 11375,
+      "mode": 420,
+      "path": "target/m2/stage85-platform-artifact-binding-01/report.json",
+      "sha256": "f59be3d9b4a5b60e1cd71cb1f5b31f6d26bcc1e4425739f732c5c4b2638b84af"
+    },
+    "status": "passed"
+  },
+  "publication_ready": true,
+  "ready_for_independent_publication_review": true,
+  "required_checks": {
+    "clippy": {
+      "bytes": 2200,
+      "mode": 420,
+      "path": "target/m2/stage85-clippy-01/report.json",
+      "sha256": "606a8b566df556341060ccea1cda57b9f11b87712bb4689b3221a68e5aa8bf1e"
+    },
+    "fmt": {
+      "bytes": 296,
+      "mode": 420,
+      "path": "target/m2/stage85-canonical-prep-01/fmt.json",
+      "sha256": "93ab793929cc27dbe08e78f49be1012f3c4c0c2098d3170694af58376a2323a8"
+    },
+    "manifest-check": {
+      "bytes": 275,
+      "mode": 420,
+      "path": "target/m2/stage85-canonical-prep-01/manifest-check.json",
+      "sha256": "d71f516a47ceeccb7f51f58ec685c7f52d3943e02be95498c38b14a641ca77e6"
+    },
+    "manifest-refresh": {
+      "bytes": 262,
+      "mode": 420,
+      "path": "target/m2/stage85-canonical-prep-01/manifest-refresh.json",
+      "sha256": "dc47574560c46d0f74c689766e5cf767598051eddb18e835f4004b0e4dd140d1"
+    },
+    "wasm": {
+      "bytes": 2194,
+      "mode": 420,
+      "path": "target/m2/stage85-wasm-01/report.json",
+      "sha256": "3bc1bb1645a9a01378f75c9883f3349b4fc2bd590f3d6290b9dd390884058bec"
+    },
+    "xtask": {
+      "bytes": 653,
+      "mode": 420,
+      "path": "target/m2/stage85-xtask-01/report.json",
+      "sha256": "04f2482e9767a256ea74d7657f28e29bf8152b54abb0551363ab3c69d0422778"
+    }
+  },
+  "selected_platforms": {
+    "artifact_provenance": "Reuse of exact source/profile-bound workspace native and single M1 release bindings; cache reuse is not new compilation.",
+    "comparison": {
+      "bytes": 3513,
+      "mode": 420,
+      "path": "target/m2/stage85-platform-capture-01/comparison.json",
+      "sha256": "79de12705711c4129edcab090068f0267917815e864b362616bca10378324393"
+    },
+    "observations_per_target": 34,
+    "ordered_logger_events_per_target": 2,
+    "queries": 17,
+    "raw_matches": {
+      "chromium": 34,
+      "napi": 34,
+      "native": 34
+    },
+    "repetitions": 2,
+    "report": {
+      "bytes": 31330,
+      "mode": 420,
+      "path": "target/m2/stage85-platform-capture-01/report.json",
+      "sha256": "3477c060cee321a5387af253673216ad12bf5f2ef2771b2f2dbf48c358a40678"
+    },
+    "status": "passed",
+    "uncompared_java_channels": [
+      "result.java-type",
+      "result.error-class",
+      "result.exception-to-string",
+      "result.cause-class",
+      "result.cause-message",
+      "result.cause-to-string"
+    ]
+  },
+  "unbundled_failed_producer_archive": {
+    "bytes": 16119790,
+    "mode": 420,
+    "path": "target/m2/stage85-distinct-candidate-01/repair-01/failed-focused01-artifacts.tar.gz",
+    "sha256": "ab8a0042e9b0ac2aaa1d342b88527e18552cf3c7441bed12cf4675e8947d8c67"
+  },
+  "workspace": {
+    "doctest_groups": 2,
+    "env_overrides": {
+      "CARGO_BUILD_JOBS": "1",
+      "CARGO_INCREMENTAL": "0",
+      "CARGO_PROFILE_DEV_DEBUG": "0",
+      "CARGO_PROFILE_DEV_DEBUG_ASSERTIONS": "true",
+      "CARGO_PROFILE_DEV_OPT_LEVEL": "1",
+      "CARGO_PROFILE_DEV_OVERFLOW_CHECKS": "true",
+      "CARGO_PROFILE_DEV_STRIP": "symbols",
+      "CARGO_PROFILE_TEST_DEBUG": "0",
+      "CARGO_PROFILE_TEST_DEBUG_ASSERTIONS": "true",
+      "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+      "CARGO_PROFILE_TEST_OVERFLOW_CHECKS": "true",
+      "CARGO_PROFILE_TEST_STRIP": "symbols",
+      "CARGO_TARGET_DIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target"
+    },
+    "failed": 0,
+    "ignored": 1,
+    "independent_review": {
+      "bytes": 45372,
+      "mode": 420,
+      "path": "target/m2/stage85-workspace-success-review-01/report.json",
+      "sha256": "70cd3e0773edda08d7db4aa623518bd9d16bfaef1cfd181c9cdcd00f5597861c"
+    },
+    "nested_child_summaries_excluded": 13,
+    "passed": 1136,
+    "producer_history": "Workspace01 produced the current artifacts before its capacity interruption. Workspace02 reuses those exact artifacts and completes the full command; Cargo Fresh is not a new compiler invocation.",
+    "report": {
+      "bytes": 3160,
+      "mode": 420,
+      "path": "target/m2/stage85-workspace-02/report.json",
+      "sha256": "25e8aae9a35af7408676fd4664a9807cd4af528b3bbf7e3772ffb753e8215042"
+    },
+    "source_digest": "6a211183865cc5ae5978fbebb8b2f4347624fca62031c4a03d32d4e5d5c88805",
+    "source_paths": 188072,
+    "test_binaries": 208
+  },
+  "workspace_interrupted_attempt": {
+    "capacity_stop": "Observed free space crossed the declared floor or growth cap.",
+    "exit": -15,
+    "full_workspace_pass": false,
+    "independent_review": {
+      "bytes": 6861,
+      "mode": 420,
+      "path": "target/m2/stage85-workspace-independent-review-01/report.json",
+      "sha256": "001fef0122abbcb0479da5b504797ab2c87b9653351d4d27a82748d79c3a6f8c"
+    },
+    "observed_failed": 0,
+    "observed_ignored": 1,
+    "observed_passed": 474,
+    "report": {
+      "bytes": 3226,
+      "mode": 420,
+      "path": "target/m2/stage85-workspace-01/report.json",
+      "sha256": "74a87d2895d1f54266e5c1ba21f546070fb5f14cb87272106370c44f97451e97"
+    }
+  }
+}

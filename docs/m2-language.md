@@ -1,5 +1,39 @@
 # M2 language verification
 
+## Stage85 distinct collections and reentrant hashing
+
+The shared runtime now implements `List.distinct` and `Listing.isDistinct`.
+List deduplication preserves first occurrence order and the pinned EconomicSet
+comparison/hash transition. Listing checks first force direct members and retain
+the Java cache reuse behavior through empty generic wrappers. Structural-key
+construction for reentrant untyped Dynamic, Listing, and Mapping values reads
+their completed cache prefix; typed, module, and strict collection paths retain
+their existing rules.
+
+All five required Rust checks passed locally. The completed workspace command
+reports **1,136 passed, 1 ignored, and 0 failed** across 208 test binaries and two
+doctest groups; 13 nested child summaries are excluded. The stale Regex test
+exclusion is removed. The run uses opt1, no debug information, symbol stripping,
+and enabled assertions and overflow checks. Its first attempt stopped at a disk
+growth limit; the successful successor reuses the compiled artifacts and runs
+the entire command again. Both attempts remain recorded.
+
+Four unchanged originals pass their recorded Java byte comparisons. The new
+17-query cohort matches twice on native, N-API, and Chromium: 34 observations
+and two ordered Logger events per target. Full public output/error UTF-8 and
+UTF-16 channels and status are compared; Java-only type, exception, and cause
+channels remain outside the adapter comparison. One fresh M1 acquisition also
+matches all 6,078 Java results per target and separately passes its architecture
+contract. It is one acquisition with two judgments, not two independent runs.
+
+The [checkpoint](../reports/m2/stage85-distinct-checkpoint.json) preserves the
+initial candidate's reentrant internal error and its successful correction.
+These selected results do not update the latest completed 4,188/4,416 aggregate.
+All nine M2 workstreams, 111 unready cases, full API and release-platform
+requirements, and speed/memory targets remain open. General collision and
+recursive-hash behavior and Listing candidate-search performance need further
+work; no complete compatibility or performance claim is made.
+
 ## Stage84 List search and transforms
 
 The shared resumable collection engine now implements `List.find`, `List.filter`,
@@ -28,9 +62,11 @@ provenance; reuse is not reported as a new compilation.
 
 The [checkpoint](../reports/m2/stage84-list-search-transform-checkpoint.json)
 preserves the initial test-logger configuration failure and successful successor.
-The current 4,416-case replay remains in progress, so the official aggregate below
-is unchanged. All nine M2 workstreams and full API, release-platform, speed, and
-memory requirements remain open.
+The Stage84 full 4,416-case replay stopped at the sampled disk-space floor.
+Its incomplete 3,972-case progress prefix is retained as failure evidence;
+no Stage84 full-replay or separate-verifier result is claimed. The official
+aggregate below is unchanged. All nine M2 workstreams and full API,
+release-platform, speed, and memory requirements remain open.
 
 ## Stage79–83 focused implementation checkpoint
 

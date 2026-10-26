@@ -1498,7 +1498,23 @@ impl Vm {
                         members.push((false, Atom::Null, atom(&self.heap, &value)?));
                     }
                 } else {
-                    for member in self.equality_members(id)? {
+                    // Reentrant force can return with only a cache prefix ready.
+                    // VmDynamic/VmListing/VmMapping hash that current cache;
+                    // constructing our internal key must not demand later values
+                    // which Java's hash traversal never reads.
+                    let descriptors = if self.class_identity(id)?.is_none()
+                        && !self.heap.get(id)?.is_module
+                        && matches!(
+                            self.heap.get(id)?.collection_kind,
+                            CollectionKind::Dynamic
+                                | CollectionKind::Listing
+                                | CollectionKind::Mapping
+                        ) {
+                        self.comparison_members(id)?
+                    } else {
+                        self.equality_members(id)?
+                    };
+                    for member in descriptors {
                         let value = self.cached_equality_member(id, &member)?;
                         members.push((
                             member.kind == CollectionMemberKind::Property,

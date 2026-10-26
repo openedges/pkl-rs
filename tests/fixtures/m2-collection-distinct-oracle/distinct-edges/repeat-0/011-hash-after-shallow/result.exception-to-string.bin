@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+deep head
+
+1 | (new Listing {new Dynamic {n=throw("deep head")};trace("shallow tail")}).isDistinct
+                                 ^^^^^^^^^^^^^^^^^^
+at repl:text[#1].n (repl:text)
+
+1 | (new Listing {new Dynamic {n=throw("deep head")};trace("shallow tail")}).isDistinct
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -803,7 +803,6 @@ at  (repl:text)
 }
 
 #[test]
-#[ignore = "Regex constructor is unimplemented; the original Java mismatch remains in the strict 86-row matrix"]
 fn inherited_method_on_regex_retains_original_java_requirement() {
     compare(&[(
         r####"scalar-regex"####,

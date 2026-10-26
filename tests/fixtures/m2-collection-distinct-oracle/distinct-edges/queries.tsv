@@ -1,0 +1,16 @@
+string	empty-list	List().distinct
+string	ordered-first-occurrence	List(3,1,3,2,1).distinct
+string	boxed-numbers	List(1,1.0,1,1.0).distinct
+string	signed-zero	List(-0.0,0.0,-0.0).distinct
+string	nan	List(0.0/0.0,0.0/0.0).distinct.length
+string	one-lazy-object	List(new Dynamic { value=throw("hash only") }).distinct.length
+string	fifth-object-hash	List(0,1,2,3,new Dynamic { value=throw("fifth hash") }).distinct.length
+string	equal-objects	List(new Dynamic {n=1},new Dynamic {n=1},new Dynamic {n=2}).distinct
+string	listing-empty	(new Listing {}).isDistinct
+string	listing-duplicates	(new Listing {1;2;1}).isDistinct
+string	shallow-before-duplicate	(new Listing {1;1;throw("shallow tail")}).isDistinct
+string	hash-after-shallow	(new Listing {new Dynamic {n=throw("deep head")};trace("shallow tail")}).isDistinct
+string	list-property-called	List(1).distinct(throw("argument"))
+string	listing-property-called	(new Listing {1}).isDistinct(throw("argument"))
+string	collision-bucket-tree	(new Listing {0;4294967297;8589934594;12884901891;17179869188;21474836485;25769803782;30064771079;34359738376;38654705673;42949672970;47244640267;51539607564;55834574861;60129542158;64424509455;0}).isDistinct
+string	collision-object-tree	(new Listing {new Dynamic { n=0 };new Dynamic { n=4294967297 };new Dynamic { n=8589934594 };new Dynamic { n=12884901891 };new Dynamic { n=17179869188 };new Dynamic { n=21474836485 };new Dynamic { n=25769803782 };new Dynamic { n=30064771079 };new Dynamic { n=34359738376 };new Dynamic { n=38654705673 };new Dynamic { n=42949672970 };new Dynamic { n=47244640267 };new Dynamic { n=51539607564 };new Dynamic { n=55834574861 };new Dynamic { n=60129542158 };new Dynamic { n=64424509455 };new Dynamic {n=0}}).isDistinct
