@@ -1,0 +1,21 @@
+–– Pkl Error ––
+Type constraint `Regex("\(num)234").toString().length == this` violated.
+Value: 10
+
+    Regex("\(num)234").toString().length == this
+    │     │  │         │          │      │  │
+    │     │  1         │          13     │  10
+    │     "1234"       │                 false
+    Regex("1234")      "Regex(\"1234\")"
+
+11 | interpolatedRegex: Int(Regex("\(num)234").toString().length == this) = 10
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at power-direct#interpolatedRegex (file:///stage86/power-direct.pkl)
+
+11 | interpolatedRegex: Int(Regex("\(num)234").toString().length == this) = 10
+                                                                            ^^
+at power-direct#interpolatedRegex (file:///stage86/power-direct.pkl)
+
+1 | interpolatedRegex
+    ^^^^^^^^^^^^^^^^^
+at  (repl:text)

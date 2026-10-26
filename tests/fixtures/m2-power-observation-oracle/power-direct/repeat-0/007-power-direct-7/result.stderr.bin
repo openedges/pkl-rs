@@ -1,0 +1,20 @@
+–– Pkl Error ––
+Type constraint `Bytes(128).length == this` violated.
+Value: 10
+
+    Bytes(128).length == this
+    │          │      │  │
+    │          1      │  10
+    Bytes(128)        false
+
+9 | nonconstantBytes: Int(Bytes(128).length == this) = 10
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+at power-direct#nonconstantBytes (file:///stage86/power-direct.pkl)
+
+9 | nonconstantBytes: Int(Bytes(128).length == this) = 10
+                                                       ^^
+at power-direct#nonconstantBytes (file:///stage86/power-direct.pkl)
+
+1 | nonconstantBytes
+    ^^^^^^^^^^^^^^^^
+at  (repl:text)

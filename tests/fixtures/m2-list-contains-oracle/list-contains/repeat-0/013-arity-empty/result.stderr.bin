@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3140 | external function contains(element: Any): Boolean
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.contains (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3140)
+
+1 | List().contains()
+    ^^^^^^^^^^^^^^^^^
+at  (repl:text)

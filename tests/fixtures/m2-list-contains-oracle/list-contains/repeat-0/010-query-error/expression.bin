@@ -1,0 +1,1 @@
+List(new Dynamic {n=1}).contains(new Dynamic {n=throw("query")})

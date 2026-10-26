@@ -1,5 +1,42 @@
 # M2 language verification
 
+## Stage86 List membership, insertion hashes, and constraint observations
+
+The shared runtime now implements `List.contains` with stored-element-first
+boxed equality, no hashing, and first-match termination. Listing distinctness
+indexes insertion-time hashes and retains the query hash across suspended or
+reentrant comparisons. Constraint observations distinguish resolved builtin
+constructors, parser literals, folded constants, and interpolation fragments.
+The original `typeConstraints9` and `typeConstraints9a` diagnostics now match
+Java in full, including their power-assertion diagrams.
+
+All five required Rust checks passed locally. The complete workspace recorded
+1,149 passes, one ignored test, and zero failures; 13 nested child summaries
+were excluded from the count. The profile used opt1/debug0/symbol stripping
+with assertions and overflow checks enabled. These are correctness checks,
+not performance measurements.
+
+Actual native, N-API, and Chromium captures each matched 104 observations:
+35 new Java queries and 17 prior distinctness queries, each repeated twice.
+Complete public UTF-8/UTF-16, status, ordered Logger, and session protocol
+channels were checked. Each target produced 54 successful values, 50 expected
+ordinary errors, and six Logger events. Java-only exception metadata remains
+outside the adapter comparison. One M1 acquisition matched all 6,078 results
+per target and passed its separate architecture-contract judgment.
+
+The first platform capture matched only 76/104 observations per target because
+the capture adapters disabled power assertions for the 15-query power cohort.
+That failed capture remains intact. A target-only adapter now passes the exact
+Java-authorized setting for each program; its recorded build links the unchanged
+tested core. The successful successor is a new acquisition. Earlier candidate,
+preflight, and source-dispatch failures also remain recorded.
+
+See the [Stage86 checkpoint](../reports/m2/stage86-contains-hash-power-checkpoint.json).
+A full 4,416-case replay has started; completion, separate verification, and
+regression audit remain pending. The official aggregate stays 4,188/4,416.
+The 111 unready cases, all nine M2 workstreams, full API/release-platform scope,
+collision-tree behavior, and speed/memory targets remain open.
+
 ## Stage85 distinct collections and reentrant hashing
 
 The shared runtime now implements `List.distinct` and `Listing.isDistinct`.

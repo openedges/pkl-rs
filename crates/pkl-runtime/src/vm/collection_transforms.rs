@@ -28,6 +28,7 @@ pub enum Projection {
     Values,
     Distinct,
     IsDistinct,
+    Contains,
 }
 
 #[derive(Clone, Copy)]
@@ -183,7 +184,7 @@ pub(super) fn blocks(
 pub(super) fn projection_blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
-) -> [usize; 12] {
+) -> [usize; 13] {
     let source = crate::stdlib_sources::base();
     [
         ("List", "toList", None),
@@ -198,6 +199,7 @@ pub(super) fn projection_blocks(
         ("Set", "reverse", Some(Projection::Reverse)),
         ("List", "distinct", Some(Projection::Distinct)),
         ("Listing", "isDistinct", Some(Projection::IsDistinct)),
+        ("List", "contains", Some(Projection::Contains)),
     ]
     .map(|(class, name, operation)| {
         let class_start = source
@@ -206,6 +208,8 @@ pub(super) fn projection_blocks(
             .expect("collection class");
         let signature = if name == "add" {
             "external function add<Other>(element: Other):".to_owned()
+        } else if name == "contains" {
+            "external function contains(element: Any):".to_owned()
         } else if class == "Map" || matches!(name, "distinct" | "isDistinct") {
             format!("external {name}:")
         } else {
@@ -227,6 +231,12 @@ pub(super) fn projection_blocks(
                 Instruction::CollectionTransformNext { end: 8 },
                 Instruction::AppendStrictElement,
                 Instruction::Jump(5),
+            ],
+            Some(Projection::Contains) => vec![
+                Instruction::BeginCollectionProjection(Projection::Contains),
+                Instruction::CollectionTransformNext { end: 4 },
+                Instruction::CollectionContainsStep { matched: 5 },
+                Instruction::Jump(1),
             ],
             Some(Projection::Distinct) => vec![
                 Instruction::BeginCollectionProjection(Projection::Distinct),
@@ -342,12 +352,13 @@ impl Vm {
             (true, "add") if self.is_list(&receiver) => 7,
             (true, "reverse") if self.is_list(&receiver) => 8,
             (true, "reverse") if self.is_set(&receiver) => 9,
+            (true, "contains") if self.is_list(&receiver) => 12,
             _ => return Ok(false),
         };
         let id = self.heap.allocate(Object {
             function: Some(Function {
                 block: self.program.collection_projection_blocks[index],
-                arity: usize::from(index == 7),
+                arity: usize::from(matches!(index, 7 | 12)),
                 method: true,
                 captured_this: Some(receiver),
             }),
@@ -433,7 +444,8 @@ impl Vm {
         // A strict result must not capture the method's source/callback scope.
         let builder = if matches!(
             operation,
-            Operation::Callback(Transform::Find) | Operation::Projection(Projection::IsDistinct)
+            Operation::Callback(Transform::Find)
+                | Operation::Projection(Projection::IsDistinct | Projection::Contains)
         ) {
             None
         } else {
@@ -574,6 +586,41 @@ impl Vm {
         }
         self.stack.push(value);
         run.next += 1;
+        Ok(())
+    }
+
+    pub(super) fn collection_contains_step(&mut self, matched: usize) -> Result<(), RuntimeError> {
+        let element = self
+            .stack
+            .last()
+            .cloned()
+            .ok_or_else(|| invalid("contains element"))?;
+        let query = self
+            .frames
+            .last()
+            .and_then(|f| f.environment.locals.first())
+            .cloned()
+            .ok_or_else(|| invalid("contains argument"))?;
+        // Pinned Paguro UnmodList.contains calls Objects.equals(element, query).
+        // No key hashes are requested; boxed equality preserves numeric kinds.
+        // The element stays on the value stack while equality suspends/retries,
+        // and the query stays in the ordinary method environment.
+        if self.search_key(&element, vec![query.clone()])? {
+            self.frames
+                .last_mut()
+                .unwrap()
+                .equality_run
+                .as_mut()
+                .unwrap()
+                .hide_callsite = false;
+            return Ok(());
+        }
+        self.pop()?;
+        if equality::same_key(&self.heap, &element, &query) {
+            self.frames.last_mut().unwrap().collection_transform = None;
+            self.stack.push(Value::Bool(true));
+            self.jump(matched)?;
+        }
         Ok(())
     }
 
@@ -728,6 +775,10 @@ impl Vm {
                     "",
                 ),
             ));
+        }
+        if matches!(run.operation, Operation::Projection(Projection::Contains)) {
+            self.stack.push(Value::Bool(false));
+            return Ok(());
         }
         if matches!(run.operation, Operation::Projection(Projection::IsDistinct)) {
             self.stack.push(Value::Bool(run.distinct.unwrap().result));
@@ -1313,9 +1364,61 @@ enum DistinctStage {
     },
     Complete,
 }
+// Listing's HashSet remembers each entry's insertion-time hash. The integer
+// index has no Pkl callbacks and is never iterated to choose comparison order.
+#[derive(Default)]
+struct ListingDistinctIndex {
+    known: std::collections::HashMap<i32, Vec<usize>>,
+    unknown: Vec<usize>,
+}
+impl ListingDistinctIndex {
+    fn candidates(&self, hash: Option<i32>, values: &[Value]) -> Vec<Value> {
+        let Some(hash) = hash else {
+            // Unknown JVM identity hashes retain the conservative full search.
+            return values.to_vec();
+        };
+        let known = self.known.get(&hash).map(Vec::as_slice).unwrap_or(&[]);
+        let mut result = Vec::with_capacity(known.len() + self.unknown.len());
+        let (mut left, mut right) = (0, 0);
+        loop {
+            let index = match (known.get(left), self.unknown.get(right)) {
+                (Some(&a), Some(&b)) if a < b => {
+                    left += 1;
+                    a
+                }
+                (Some(_), Some(&b)) | (None, Some(&b)) => {
+                    right += 1;
+                    b
+                }
+                (Some(&a), None) => {
+                    left += 1;
+                    a
+                }
+                (None, None) => break,
+            };
+            result.push(values[index].clone());
+        }
+        result
+    }
+
+    fn insert(&mut self, hash: Option<i32>, index: usize) {
+        match hash {
+            Some(hash) => self.known.entry(hash).or_default().push(index),
+            None => self.unknown.push(index),
+        }
+    }
+}
+#[derive(Clone, Copy)]
+struct ListingDistinctLookup {
+    // Capture once before equality. A suspended comparison can reenter hashing
+    // and change an object's cache, but HashMap.putVal keeps its hash argument.
+    hash: Option<i32>,
+}
 struct DistinctRun {
     values: Vec<Value>,
     economic: crate::economic_map::EconomicMapIndex,
+    listing_index: ListingDistinctIndex,
+    listing_lookup: Option<ListingDistinctLookup>,
     stage: DistinctStage,
     shallow: bool,
     result: bool,
@@ -1325,6 +1428,8 @@ impl Default for DistinctRun {
         Self {
             values: Vec::new(),
             economic: Default::default(),
+            listing_index: Default::default(),
+            listing_lookup: None,
             stage: DistinctStage::Lookup,
             shallow: false,
             result: true,
@@ -1450,29 +1555,31 @@ impl Vm {
                 // both preparation and lookup inside the actual hashed path;
                 // the fifth distinct insertion starts hashing only after append.
                 let hashed = listing || self.distinct_run().economic.has_hash();
-                let hash = if hashed {
-                    if self.prepare_keys(vec![value.clone()])? {
-                        return Ok(());
+                let hash = match (listing, self.distinct_run().listing_lookup) {
+                    (true, Some(lookup)) => lookup.hash,
+                    _ => {
+                        let hash = if hashed {
+                            if self.prepare_keys(vec![value.clone()])? {
+                                return Ok(());
+                            }
+                            self.java_hash(&value)?
+                        } else {
+                            None
+                        };
+                        if listing {
+                            self.distinct_run_mut().listing_lookup =
+                                Some(ListingDistinctLookup { hash });
+                        }
+                        hash
                     }
-                    self.java_hash(&value)?
-                } else {
-                    None
                 };
                 let candidates = if listing {
-                    // HashMap tests the full spread hash before equals. For a
-                    // fixed full hash, ordinary bucket chains retain insertion order.
-                    // Collision-tree order remains an explicit draft audit item.
-                    self.distinct_run()
-                        .values
-                        .iter()
-                        .filter_map(|old| match self.java_hash(old) {
-                            Ok(other) if !hash.zip(other).is_some_and(|(a, b)| a != b) => {
-                                Some(Ok(old.clone()))
-                            }
-                            Ok(_) => None,
-                            Err(error) => Some(Err(error)),
-                        })
-                        .collect::<Result<Vec<_>, RuntimeError>>()?
+                    // JDK's spread function is bijective, so equal full spread
+                    // hashes are exactly equal raw hashes. Same-hash and unknown
+                    // entries remain in insertion order; collision-tree ordering
+                    // retains the existing bounded audit scope.
+                    let run = self.distinct_run();
+                    run.listing_index.candidates(hash, &run.values)
                 } else {
                     self.distinct_run()
                         .economic
@@ -1494,7 +1601,9 @@ impl Vm {
                 {
                     self.pop()?;
                     if listing {
-                        self.distinct_run_mut().result = false;
+                        let run = self.distinct_run_mut();
+                        run.listing_lookup = None;
+                        run.result = false;
                         self.jump(end)?;
                     } else {
                         self.jump(next)?;
@@ -1502,7 +1611,10 @@ impl Vm {
                     return Ok(());
                 }
                 if listing {
-                    self.distinct_run_mut().values.push(value);
+                    let run = self.distinct_run_mut();
+                    run.listing_index.insert(hash, run.values.len());
+                    run.values.push(value);
+                    run.listing_lookup = None;
                     self.pop()?;
                     return Ok(());
                 }

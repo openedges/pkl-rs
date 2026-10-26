@@ -1,0 +1,21 @@
+–– Pkl Error ––
+Type constraint `Regex("1234").toString().length == this` violated.
+Value: 10
+
+    Regex("1234").toString().length == this
+                  │          │      │  │
+                  │          13     │  10
+                  │                 false
+                  "Regex(\"1234\")"
+
+10 | literalRegex: Int(Regex("1234").toString().length == this) = 10
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at power-direct#literalRegex (file:///stage86/power-direct.pkl)
+
+10 | literalRegex: Int(Regex("1234").toString().length == this) = 10
+                                                                  ^^
+at power-direct#literalRegex (file:///stage86/power-direct.pkl)
+
+1 | literalRegex
+    ^^^^^^^^^^^^
+at  (repl:text)

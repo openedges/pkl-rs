@@ -1,0 +1,13 @@
+num = 1
+literalPair: Int(Pair(1, 2).first == this) = 10
+dynamicPair: Int(Pair(num, 2).first == this) = 10
+parenthesizedPair: Int(Pair((1), 2).first == this) = 10
+negativePair: Int(Pair(-1, 2).first == this) = 10
+nestedList: Int(List(List(1)).length == this) = 10
+dynamicList: Int(List(num).length == this) = 10
+literalBytes: Int(Bytes(1, 2).length == this) = 10
+nonconstantBytes: Int(Bytes(128).length == this) = 10
+literalRegex: Int(Regex("1234").toString().length == this) = 10
+interpolatedRegex: Int(Regex("\(num)234").toString().length == this) = 10
+interpolatedOnly: String(this == "\(num)") = "wrong"
+positive: Int(Pair(1, 2).first == this) = 1

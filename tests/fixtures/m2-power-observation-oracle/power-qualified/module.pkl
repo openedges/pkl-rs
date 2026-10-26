@@ -1,0 +1,2 @@
+import "pkl:base" as base
+value: Int(base.Pair(1, 2).first == this) = 10

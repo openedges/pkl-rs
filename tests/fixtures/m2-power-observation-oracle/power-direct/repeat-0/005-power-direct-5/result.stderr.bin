@@ -1,0 +1,20 @@
+–– Pkl Error ––
+Type constraint `List(num).length == this` violated.
+Value: 10
+
+    List(num).length == this
+    │    │    │      │  │
+    │    1    1      │  10
+    List(1)          false
+
+7 | dynamicList: Int(List(num).length == this) = 10
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+at power-direct#dynamicList (file:///stage86/power-direct.pkl)
+
+7 | dynamicList: Int(List(num).length == this) = 10
+                                                 ^^
+at power-direct#dynamicList (file:///stage86/power-direct.pkl)
+
+1 | dynamicList
+    ^^^^^^^^^^^
+at  (repl:text)

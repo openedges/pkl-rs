@@ -1,0 +1,1 @@
+List(new Dynamic {n=1},new Dynamic {n=throw("tail")}).contains(new Dynamic {n=1})

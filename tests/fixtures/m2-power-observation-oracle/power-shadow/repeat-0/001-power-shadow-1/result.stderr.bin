@@ -1,0 +1,20 @@
+–– Pkl Error ––
+Type constraint `List(1) == this` violated.
+Value: 10
+
+    List(1) == this
+    │       │  │
+    2       │  10
+            false
+
+4 | list: Int(List(1) == this) = 10
+              ^^^^^^^^^^^^^^^
+at power-shadow#list (file:///stage86/power-shadow.pkl)
+
+4 | list: Int(List(1) == this) = 10
+                                 ^^
+at power-shadow#list (file:///stage86/power-shadow.pkl)
+
+1 | list
+    ^^^^
+at  (repl:text)

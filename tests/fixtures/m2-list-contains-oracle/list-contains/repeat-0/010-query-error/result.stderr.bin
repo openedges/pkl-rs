@@ -1,0 +1,10 @@
+–– Pkl Error ––
+query
+
+1 | List(new Dynamic {n=1}).contains(new Dynamic {n=throw("query")})
+                                                    ^^^^^^^^^^^^^^
+at repl:text.n (repl:text)
+
+1 | List(new Dynamic {n=1}).contains(new Dynamic {n=throw("query")})
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,20 @@
+–– Pkl Error ––
+Type constraint `Bytes(1, 2).length == this` violated.
+Value: 10
+
+    Bytes(1, 2).length == this
+                │      │  │
+                2      │  10
+                       false
+
+8 | literalBytes: Int(Bytes(1, 2).length == this) = 10
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at power-direct#literalBytes (file:///stage86/power-direct.pkl)
+
+8 | literalBytes: Int(Bytes(1, 2).length == this) = 10
+                                                    ^^
+at power-direct#literalBytes (file:///stage86/power-direct.pkl)
+
+1 | literalBytes
+    ^^^^^^^^^^^^
+at  (repl:text)

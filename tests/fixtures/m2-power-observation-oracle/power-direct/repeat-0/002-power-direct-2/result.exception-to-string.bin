@@ -1,0 +1,20 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Type constraint `Pair((1), 2).first == this` violated.
+Value: 10
+
+    Pair((1), 2).first == this
+    │            │     │  │
+    Pair(1, 2)   1     │  10
+                       false
+
+4 | parenthesizedPair: Int(Pair((1), 2).first == this) = 10
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at power-direct#parenthesizedPair (file:///stage86/power-direct.pkl)
+
+4 | parenthesizedPair: Int(Pair((1), 2).first == this) = 10
+                                                         ^^
+at power-direct#parenthesizedPair (file:///stage86/power-direct.pkl)
+
+1 | parenthesizedPair
+    ^^^^^^^^^^^^^^^^^
+at  (repl:text)

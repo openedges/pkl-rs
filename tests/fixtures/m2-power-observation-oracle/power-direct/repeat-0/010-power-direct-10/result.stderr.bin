@@ -1,0 +1,21 @@
+–– Pkl Error ––
+Type constraint `this == "\(num)"` violated.
+Value: "wrong"
+
+    this == "\(num)"
+    │    │     │
+    │    │     1
+    │    false
+    "wrong"
+
+12 | interpolatedOnly: String(this == "\(num)") = "wrong"
+                              ^^^^^^^^^^^^^^^^
+at power-direct#interpolatedOnly (file:///stage86/power-direct.pkl)
+
+12 | interpolatedOnly: String(this == "\(num)") = "wrong"
+                                                  ^^^^^^^
+at power-direct#interpolatedOnly (file:///stage86/power-direct.pkl)
+
+1 | interpolatedOnly
+    ^^^^^^^^^^^^^^^^
+at  (repl:text)

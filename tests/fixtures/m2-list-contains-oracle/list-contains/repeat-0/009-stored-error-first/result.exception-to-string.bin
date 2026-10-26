@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+stored
+
+1 | List(new Dynamic {n=throw("stored")}).contains(new Dynamic {n=throw("query")})
+                        ^^^^^^^^^^^^^^^
+at repl:text.n (repl:text)
+
+1 | List(new Dynamic {n=throw("stored")}).contains(new Dynamic {n=throw("query")})
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

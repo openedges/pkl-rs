@@ -1,0 +1,12 @@
+// Java-first input only. No execution or expected result has been recorded.
+local recursive = new Listing {
+  0
+  local check = (new Listing {
+    recursive
+    new Dynamic { value = recursive[2] }
+    recursive
+  }).isDistinct
+  check
+  7
+}
+result = List((new Listing { recursive }).isDistinct, recursive[1])

@@ -1,0 +1,11 @@
+// Java-first partial query control; no expected result is supplied.
+local recursive = new Listing {
+  0
+  local check = (new Listing {
+    new Listing { 0; 0; 0 }
+    recursive
+  }).isDistinct
+  check
+  7
+}
+result = List((new Listing { recursive }).isDistinct, recursive[1])

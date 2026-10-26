@@ -261,7 +261,14 @@ fn expression_anchors(
                 then_branch.as_ref(),
                 else_branch.as_ref(),
             ]),
-            ExprKind::InterpolatedString(parts) => children.extend(parts),
+            ExprKind::InterpolatedString(parts) => {
+                // Synthetic StringChars share the full literal span in our AST.
+                // Visiting them would replace the literal's visible anchor with
+                // None; retain only actual interpolation expressions as children.
+                children.extend(parts.iter().filter(|part| {
+                    !matches!(part.kind, ExprKind::String(_)) || part.span != expression.span
+                }));
+            }
             ExprKind::Object {
                 parent, members, ..
             } => {

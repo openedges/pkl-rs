@@ -1,0 +1,20 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Type constraint `Pair(num, 2).first == this` violated.
+Value: 10
+
+    Pair(num, 2).first == this
+    │    │       │     │  │
+    │    1       1     │  10
+    Pair(1, 2)         false
+
+3 | dynamicPair: Int(Pair(num, 2).first == this) = 10
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at power-direct#dynamicPair (file:///stage86/power-direct.pkl)
+
+3 | dynamicPair: Int(Pair(num, 2).first == this) = 10
+                                                   ^^
+at power-direct#dynamicPair (file:///stage86/power-direct.pkl)
+
+1 | dynamicPair
+    ^^^^^^^^^^^
+at  (repl:text)

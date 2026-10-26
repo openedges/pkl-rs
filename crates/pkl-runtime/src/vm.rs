@@ -264,6 +264,9 @@ pub enum Instruction {
         next: usize,
         end: usize,
     },
+    CollectionContainsStep {
+        matched: usize,
+    },
     StringEncode,
     Primitive(primitives::Operation),
     MakePair,
@@ -921,7 +924,7 @@ pub struct Program {
     pub(crate) collection_join_blocks: [usize; 2],
     collection_every_blocks: [usize; 5],
     collection_transform_blocks: [usize; 14],
-    collection_projection_blocks: [usize; 12],
+    collection_projection_blocks: [usize; 13],
     conversion_blocks: BTreeMap<(Arc<str>, Arc<str>), (usize, usize)>,
     conversion_delegate_block: usize,
     object_default_block: usize,
@@ -4676,6 +4679,9 @@ impl Vm {
             Instruction::EndCollectionTransform => self.end_collection_transform()?,
             Instruction::CollectionDistinctStep { next, end } => {
                 self.collection_distinct_step(next, end)?
+            }
+            Instruction::CollectionContainsStep { matched } => {
+                self.collection_contains_step(matched)?
             }
             Instruction::StringEncode => self.encode_string()?,
             Instruction::Primitive(operation) => self.primitive(operation)?,

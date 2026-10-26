@@ -1,0 +1,118 @@
+{
+  "approved": true,
+  "archive": {
+    "bytes": 27733995,
+    "mode": 420,
+    "path": "reports/m2/stage86-contains-hash-power-evidence.tar.gz",
+    "sha256": "35f5729077f3dd1ead18054d35f528f72720ec0c57e81bd418024d22555e340a"
+  },
+  "canonical_selected": {
+    "all_current_bytes_hashes_modes_match": true,
+    "paths": 838
+  },
+  "checkpoint": {
+    "bytes": 8444,
+    "mode": 420,
+    "path": "reports/m2/stage86-contains-hash-power-checkpoint.json",
+    "sha256": "ed789ac8ee4b2ff7297b4360b30d7cdace3b5e26da4390200fb23dec7e1cd9a9"
+  },
+  "checkpoint_refs": {
+    "all_current_bytes_hashes_match": true,
+    "count": 23,
+    "public_vs_draft_changed_only": [
+      "git_binding",
+      "publication_ready"
+    ]
+  },
+  "complete": true,
+  "docs_current_identities": {
+    "PLAN.md": {
+      "bytes": 438444,
+      "mode": 420,
+      "path": "PLAN.md",
+      "sha256": "31f79d689268f29ab5748704605e522f3214b48f2603a8040f7dad75644b1b2c"
+    },
+    "TESTING.md": {
+      "bytes": 74061,
+      "mode": 420,
+      "path": "TESTING.md",
+      "sha256": "e92faf43c237653031ae94f95c8408da5224185c1444b69f67eb6a3805fb9e8e"
+    },
+    "docs/architecture.md": {
+      "bytes": 97074,
+      "mode": 420,
+      "path": "docs/architecture.md",
+      "sha256": "9e8adff91cd90753e266db056e3ef40d47baf9d9d18c0ad1e679c09167f6b001"
+    },
+    "docs/m2-language.md": {
+      "bytes": 77814,
+      "mode": 420,
+      "path": "docs/m2-language.md",
+      "sha256": "71d43126ffa59c337fa15df869e14e12b2d5251d1f245b3ef97dcba28e9f689f"
+    },
+    "reports/m2/README.md": {
+      "bytes": 359181,
+      "mode": 420,
+      "path": "reports/m2/README.md",
+      "sha256": "7977273bb723867483b6417f8a36ebda2d3b6866c646355db17272ef0a4f9bcf"
+    }
+  },
+  "full_readback": {
+    "all_payload_bytes_sha256_mode_size_match": true,
+    "archive_producer_public_bytes_identical": true,
+    "decompressed_tar_bytes": 129167360,
+    "gzip_full_stream_crc_and_eof_verified": true,
+    "manifest_first_exact_selection_bytes": true,
+    "member_order_exact_selection_order": true,
+    "payload_members": 14567,
+    "regular_members": 14568,
+    "selected_logical_bytes": 102236806
+  },
+  "historical_false_power_raw_matches_per_target": 76,
+  "kind": "stage86-publication-full-member-actual-readback-v1",
+  "latest_completed_official_full_replay": "4188/4416; no new aggregate claimed",
+  "limits": [
+    "Selected development checkpoint only; full M2/API/platform release/performance gates remain open.",
+    "Current full replay output is excluded; failed false-power acquisition remains archived.",
+    "Generated binary payloads are not required archive members; exact local identities and dependency disclosures remain in producer records."
+  ],
+  "m1_actual_acquisitions": 1,
+  "m1_strict_and_contract_passed_per_target": 6078,
+  "producer_archive": {
+    "bytes": 27733995,
+    "mode": 420,
+    "path": "target/m2/stage86-checkpoint-publication-01/stage86-contains-hash-power-evidence.tar.gz",
+    "sha256": "35f5729077f3dd1ead18054d35f528f72720ec0c57e81bd418024d22555e340a"
+  },
+  "producer_checkpoint": {
+    "bytes": 7966,
+    "mode": 420,
+    "path": "target/m2/stage86-checkpoint-publication-01/checkpoint-draft.json",
+    "sha256": "89ba0aa31dd12b2af2b91ff51458053d23f34a4c01087f04d1a380d51b7bb5c5"
+  },
+  "producer_report": {
+    "bytes": 708,
+    "mode": 420,
+    "path": "target/m2/stage86-checkpoint-publication-01/report.json",
+    "sha256": "7927939e8aec17705ed3595f0181a207a619a09665d7a6527ea8307b1a24a7b8"
+  },
+  "review_role": "Full archive/descriptor evidence readback. Reviewer authored the target-only profile overlay/native adapter, so no independent semantic implementation review is claimed.",
+  "scope": {
+    "candidate_selected_tests": 72,
+    "distinct_regression_queries": 17,
+    "observations_per_target": 104,
+    "primary_queries": 35,
+    "repetitions": 2,
+    "unique_queries": 52,
+    "workspace_failed": 0,
+    "workspace_ignored": 1,
+    "workspace_passed": 1149
+  },
+  "selection": {
+    "bytes": 3607316,
+    "mode": 420,
+    "path": "target/m2/stage86-checkpoint-publication-01/selection.json",
+    "sha256": "77ff3ca8a2e7ea39f6bf2952ab3ffad291cbce330c6f9381a410224f4d2bb250"
+  },
+  "source_stable": true
+}

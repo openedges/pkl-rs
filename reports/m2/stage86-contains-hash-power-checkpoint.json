@@ -1,0 +1,239 @@
+{
+  "archive": {
+    "full_payload_mode_readback": true,
+    "gzip_eof_verified": true,
+    "intended_public_path": "reports/m2/stage86-contains-hash-power-evidence.tar.gz",
+    "members": 14568,
+    "producer": {
+      "bytes": 27733995,
+      "mode": 420,
+      "path": "target/m2/stage86-checkpoint-publication-01/stage86-contains-hash-power-evidence.tar.gz",
+      "sha256": "35f5729077f3dd1ead18054d35f528f72720ec0c57e81bd418024d22555e340a"
+    }
+  },
+  "candidate": {
+    "bytes": 3397,
+    "mode": 420,
+    "path": "target/m2/stage86-contains-hash-candidate-01/final-01/report.json",
+    "sha256": "3c020ca3fffbe1cf7df02d3ea4cb84fd1a176116e1deb60a9209f54f2cc19ca0"
+  },
+  "candidate_independent_review": {
+    "bytes": 5310,
+    "mode": 420,
+    "path": "target/m2/stage86-candidate-independent-review-01/report.json",
+    "sha256": "d48f46faf8d1b7a11ea881314520babc8fccab816c0e8dd1f00108c2e0c1218a"
+  },
+  "canonical_integration": {
+    "bytes": 1185,
+    "mode": 420,
+    "path": "target/m2/stage86-integration-01/report.json",
+    "sha256": "63ea152f574ab6005dbd2b5d1572c6fcfe3a615488e92898dc78c04e4d8213f3"
+  },
+  "compatibility_baseline": "Pkl 0.32.0",
+  "complete": true,
+  "evidence_selection": {
+    "bytes": 3607316,
+    "mode": 420,
+    "path": "target/m2/stage86-checkpoint-publication-01/selection.json",
+    "sha256": "77ff3ca8a2e7ea39f6bf2952ab3ffad291cbce330c6f9381a410224f4d2bb250"
+  },
+  "failed_m1_preflight01": {
+    "guest_or_compiler_spawned": false,
+    "report": {
+      "bytes": 1830,
+      "mode": 420,
+      "path": "target/m2/stage86-m1-validation-01/contract/failure-completion-01.json",
+      "sha256": "e9049426a6f148a1e4eba5f77bc44dfcad101904e857d7c1580282b512acbb33"
+    }
+  },
+  "failed_platform_capture01": {
+    "comparison": {
+      "bytes": 33814,
+      "mode": 420,
+      "path": "target/m2/stage86-platform-capture-01/comparison.json",
+      "sha256": "8cf0e8f30a6ea6946f28faedaadc4a38d11c7be6e76af3d4667a7cb80f6025a0"
+    },
+    "raw_matches_per_target": 76,
+    "reason": "The existing native/JS helpers used powerAssertions=false for 28 power-error observations.",
+    "report": {
+      "bytes": 216004,
+      "mode": 420,
+      "path": "target/m2/stage86-platform-capture-01/report.json",
+      "sha256": "360a0c534002930e8e3cbd88c911078131ac2dfe251fe25e940e8c21966e41ba"
+    }
+  },
+  "full_api_complete": false,
+  "full_m2_complete": false,
+  "full_ready_replay": {
+    "latest_completed_official_matches": 4188,
+    "new_aggregate_claimed": false,
+    "ready_cases": 4416,
+    "stage86_sources_phase": "recorded separately; active full replay result excluded"
+  },
+  "git_binding": {
+    "base_commit": "a67df6774e39ceaf5c33a9de6ce5402bc422153f",
+    "canonical_payloads": 838,
+    "copy_plan": {
+      "bytes": 362150,
+      "path": "target/m2/stage86-contains-hash-candidate-01/final-01/copy-plan.json",
+      "sha256": "e90aca3c98857d21b810feb06f05b118e54893a167edbf11c70149dc2c022c88"
+    },
+    "scope": "The recorded builds used the modified worktree. Exact implementation/test/fixture bytes are bound by the integration copy plan and source maps; this is not a clean committed-build claim."
+  },
+  "java_authority": {
+    "contains_hash": {
+      "queries": 19,
+      "repetitions": 2,
+      "report": {
+        "bytes": 35772,
+        "mode": 420,
+        "path": "target/m2/stage86-contains-hash-oracle-01/report.json",
+        "sha256": "7f1600f7410247eca7af02e4f28c0630a10beb8aef670c65f279fc8aec3b3365"
+      }
+    },
+    "distinct_regression": {
+      "queries": 17,
+      "repetitions": 2,
+      "report": {
+        "bytes": 27601,
+        "mode": 420,
+        "path": "target/m2/stage85-distinct-oracle-01/report.json",
+        "sha256": "ab5ea3e12dc3fb8d1e5125dbe56243e605b8ed1b71d499a0223f3b9290642f5d"
+      }
+    },
+    "identity": {
+      "queries": 1,
+      "repetitions": 2,
+      "report": {
+        "bytes": 24017,
+        "mode": 420,
+        "path": "target/m2/stage86-contains-identity-oracle-01/report.json",
+        "sha256": "90666cb0f5679f8f7177e59fabfc2d71665c5ec899371d96766b155dfa97415a"
+      }
+    },
+    "power": {
+      "queries": 15,
+      "repetitions": 2,
+      "report": {
+        "bytes": 33057,
+        "mode": 420,
+        "path": "target/m2/stage86-power-observation-oracle-01/report.json",
+        "sha256": "e2f6dc6451410078a5210bce13216cf81ed1cfb4110256f4aa2a9fabf2419f2d"
+      }
+    }
+  },
+  "kind": "stage86-contains-hash-power-development-checkpoint-v1",
+  "limits": [
+    "Recorded selected development evidence, not full language/API/release-platform or performance completion.",
+    "Java exception/cause channels are retained as authority, but platform SourceProbe only claims its represented raw channels.",
+    "Generated binaries, compiler cache, reference checkout copies, and active full replay are excluded.",
+    "Broad workspace source bookends are not a complete compiler/runtime dependency closure."
+  ],
+  "m1_single_contract_acquisition": {
+    "acquisitions": 1,
+    "experiment": {
+      "bytes": 3397669,
+      "mode": 420,
+      "path": "target/m2/stage86-m1-validation-02/contract/experiment/report.json",
+      "sha256": "5494454da9bd3ba390bf6525d43a40a7ef1140155feef6a60e3944d839318cf5"
+    },
+    "raw_matches_per_target": {
+      "browser": 6078,
+      "node": 6078,
+      "rust": 6078
+    },
+    "report": {
+      "bytes": 9271,
+      "mode": 420,
+      "path": "target/m2/stage86-m1-validation-02/contract/process.json",
+      "sha256": "3828b6e2263b3bff0ea32419613981f0d16e1e41adcfe5b632f5275c963c1d29"
+    },
+    "status": "passed"
+  },
+  "pending_terminal_gates": [],
+  "performance_targets_met": false,
+  "platform_actual_readback": {
+    "report": {
+      "bytes": 7790,
+      "mode": 420,
+      "path": "target/m2/stage86-platform-actual-review-01/report.json",
+      "sha256": "3f109ebe27b928ad6111e858568c46d314a8e89a2a55ecb0efab610e1e3919f4"
+    },
+    "scope": "Actual raw/readback review; no independent semantic implementation claim.",
+    "status": "passed"
+  },
+  "platform_artifact_binding": {
+    "report": {
+      "bytes": 12769,
+      "mode": 420,
+      "path": "target/m2/stage86-platform-artifact-binding-02/report.json",
+      "sha256": "a4585700286c855457836a2215299f1d88e77e55bb9033bbe0944ca520e5e670"
+    },
+    "status": "passed"
+  },
+  "profiled_native_adapter": {
+    "report": {
+      "bytes": 163910,
+      "mode": 420,
+      "path": "target/m2/stage86-platform-native-adapter-01/report.json",
+      "sha256": "425cf74901f812f7fea119a97970f105c395fca927fe294658409c8df7560efa"
+    },
+    "unchanged_core_bound_by": {
+      "bytes": 12769,
+      "mode": 420,
+      "path": "target/m2/stage86-platform-artifact-binding-02/report.json",
+      "sha256": "a4585700286c855457836a2215299f1d88e77e55bb9033bbe0944ca520e5e670"
+    }
+  },
+  "publication_ready": true,
+  "quickchecks": {
+    "bytes": 15190,
+    "mode": 420,
+    "path": "target/m2/stage86-quickchecks-summary-01/report.json",
+    "sha256": "7938282b9d631a4ee412a509d78faf93f6ee87e2438b7fb98e402ac6318420e1"
+  },
+  "ready_for_independent_publication_review": true,
+  "scope": {
+    "candidate_selected_tests": 72,
+    "distinct_regression_queries": 17,
+    "observations_per_target": 104,
+    "primary_queries": 35,
+    "repetitions": 2,
+    "unique_queries": 52,
+    "workspace_failed": 0,
+    "workspace_ignored": 1,
+    "workspace_passed": 1149
+  },
+  "selected_platforms": {
+    "comparison": {
+      "bytes": 17214,
+      "mode": 420,
+      "path": "target/m2/stage86-platform-capture-02/comparison.json",
+      "sha256": "cd01195499d1b55d9e26b78d568a01588c2022aa1d4b8b3a434e07cd71ec24bd"
+    },
+    "distinct_regression_observations": 34,
+    "observations_per_target": 104,
+    "primary_observations": 70,
+    "queries": 52,
+    "repetitions": 2,
+    "report": {
+      "bytes": 213369,
+      "mode": 420,
+      "path": "target/m2/stage86-platform-capture-02/report.json",
+      "sha256": "164cb3c2c9f9de18a8b6c5dc0ee8c054ebfe8a56b6b8729dca9f18614e84e924"
+    },
+    "status": "passed"
+  },
+  "workspace": {
+    "bytes": 3160,
+    "mode": 420,
+    "path": "target/m2/stage86-workspace-01/report.json",
+    "sha256": "2d28a5509d81d407274710fd0d1783cce26f3dd5b33e37d57ecfcf9e146f8fd5"
+  },
+  "workspace_independent_review": {
+    "bytes": 7059,
+    "mode": 420,
+    "path": "target/m2/stage86-workspace-independent-review-01/report.json",
+    "sha256": "3c68ede9e82db0a8951bf0dbe404299200ae19d676623ec6da7640e99059a4b0"
+  }
+}

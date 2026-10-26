@@ -1,0 +1,4 @@
+function Pair(a, b) = a + b
+function List(a) = a + 1
+pair: Int(Pair(1, 2) == this) = 10
+list: Int(List(1) == this) = 10

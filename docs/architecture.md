@@ -392,6 +392,15 @@ expression spans with operator and member positions, hides literals and
 repeated observations, and preserves multiline and UTF-16 layout. Parser
 grouping nodes retain both outer source syntax and inner execution spans.
 
+Observation filtering resolves constructor names before classifying literals,
+so authored shadows and qualified calls remain observable. The compiler
+distinguishes parser literals from collection constructors that Java folds into
+constant nodes. Synthetic string fragments do not create another observation
+at the enclosing string's span. A string containing only one interpolation
+follows the pinned parser's literal classification while its inner expression
+remains observable. These rules affect complete constraint diagrams, including
+their value placement and whitespace.
+
 These mechanisms remain subject to the selected differential and lifecycle
 checks. Complete structural and function types, imported
 aliases, and the full language corpus remain M2 requirements.
@@ -590,6 +599,16 @@ objects require the same class prototype. Strict List comparisons stop at the
 first unequal element. Nested values use boxed equality: integers and floats
 remain distinct, NaNs compare equal, and signed zeros differ. Scalar operators
 retain their separate numeric rules and direct execution path.
+
+`List.contains` compares each stored element with the query in that operand
+order, requests no hashes, and stops at the first match. Pending comparison
+operands remain rooted through ordinary VM frames and the value stack.
+`Listing.isDistinct` retains insertion-time hashes in an index and captures the
+query hash before a comparison can suspend or reenter. Known-hash candidates
+and entries without a known hash are merged in insertion order. This avoids
+rescanning every stored value for distinct known hashes; unknown hashes and
+collisions still use conservative searches. Complete Java collision-tree
+ordering and execution-time or memory parity remain unverified.
 
 Deep forcing visits child declarations before ancestors and recursively visits
 each value before the next member. Structural key lookup preserves query-first

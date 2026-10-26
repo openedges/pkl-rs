@@ -1,0 +1,21 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Type constraint `base.Pair(1, 2).first == this` violated.
+Value: 10
+
+    base.Pair(1, 2).first == this
+    │    │          │     │  │
+    │    │          1     │  10
+    │    Pair(1, 2)       false
+    new ModuleClass {}
+
+2 | value: Int(base.Pair(1, 2).first == this) = 10
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at power-qualified#value (file:///stage86/power-qualified.pkl)
+
+2 | value: Int(base.Pair(1, 2).first == this) = 10
+                                                ^^
+at power-qualified#value (file:///stage86/power-qualified.pkl)
+
+1 | value
+    ^^^^^
+at  (repl:text)

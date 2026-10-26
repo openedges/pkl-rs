@@ -1,0 +1,1 @@
+local shared = new Dynamic { n=throw("identity must not force") }

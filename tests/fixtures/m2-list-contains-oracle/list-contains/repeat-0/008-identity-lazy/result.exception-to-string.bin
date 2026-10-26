@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `shared`.
+
+1 | List(shared).contains(shared)
+         ^^^^^^
+at  (repl:text)

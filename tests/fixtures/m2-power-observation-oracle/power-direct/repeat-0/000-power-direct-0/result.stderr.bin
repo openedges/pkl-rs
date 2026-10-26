@@ -1,0 +1,20 @@
+–– Pkl Error ––
+Type constraint `Pair(1, 2).first == this` violated.
+Value: 10
+
+    Pair(1, 2).first == this
+               │     │  │
+               1     │  10
+                     false
+
+2 | literalPair: Int(Pair(1, 2).first == this) = 10
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+at power-direct#literalPair (file:///stage86/power-direct.pkl)
+
+2 | literalPair: Int(Pair(1, 2).first == this) = 10
+                                                 ^^
+at power-direct#literalPair (file:///stage86/power-direct.pkl)
+
+1 | literalPair
+    ^^^^^^^^^^^
+at  (repl:text)

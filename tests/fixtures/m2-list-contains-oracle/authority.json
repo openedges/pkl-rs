@@ -1,0 +1,14 @@
+{
+  "capture_reports": {
+    "target/m2/stage86-contains-hash-oracle-01/report.json": {
+      "bytes": 35772,
+      "sha256": "7f1600f7410247eca7af02e4f28c0630a10beb8aef670c65f279fc8aec3b3365"
+    },
+    "target/m2/stage86-contains-identity-oracle-01/report.json": {
+      "bytes": 24017,
+      "sha256": "90666cb0f5679f8f7177e59fabfc2d71665c5ec899371d96766b155dfa97415a"
+    }
+  },
+  "raw_channels": "Allrepeat0 raw row fields copied exactly. Both Java repetitions and JVM receipts remain immutable at authority paths. Rust compares public status/stdout/stderr UTF8/UTF16 and ordered Logger fields; Java exception class/cause are retained, not equated with Rust API.",
+  "original_lookup_error_preserved": true
+}

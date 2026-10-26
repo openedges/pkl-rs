@@ -94,6 +94,88 @@ struct PropertyCompilation<'a> {
 }
 
 impl Compiler<'_> {
+    // PowerAssertions.isLiteral distinguishes parser literals on direct base
+    // calls from AstBuilder's ConstantNode-folded collection constructors.
+    // Resolve the method namespace first so authored shadows stay observable.
+    fn power_literal_constructor(&self, expression: &Expr) -> bool {
+        let ExprKind::Call { callee, arguments } = &expression.kind else {
+            return false;
+        };
+        let ExprKind::Name(name) = &callee.kind else {
+            return false;
+        };
+        if self.resolved.names.get(&callee.span) != Some(&Binding::ImplicitMethod) {
+            return false;
+        }
+        match name.as_str() {
+            "List" | "Set" | "Map" | "Bytes" => self.power_constant_node(expression),
+            "IntSeq" | "Pair" | "Regex" | "Null" => arguments
+                .iter()
+                .all(|argument| self.power_parser_literal(argument)),
+            _ => false,
+        }
+    }
+
+    fn power_parser_literal(&self, expression: &Expr) -> bool {
+        let literal = match &expression.kind {
+            ExprKind::Int(_)
+            | ExprKind::Float(_)
+            | ExprKind::Bool(_)
+            | ExprKind::Null
+            | ExprKind::String(_) => true,
+            // Pinned StringLiteralExpr.hasInterpolation checks children.size()>1.
+            // A sole interpolation is therefore classified as a parser literal
+            // by PowerAssertions, while its inner expression remains visible.
+            ExprKind::InterpolatedString(parts) => parts.len() == 1,
+            _ => false,
+        };
+        literal
+            // Java retains unary minus in its parser despite AstBuilder folding.
+            && !self.resolved.module.folded_integer_spans.contains_key(&expression.span)
+    }
+
+    fn power_constant_node(&self, expression: &Expr) -> bool {
+        let mut pending = vec![expression];
+        while let Some(expression) = pending.pop() {
+            match &expression.kind {
+                ExprKind::Int(_)
+                | ExprKind::Float(_)
+                | ExprKind::Bool(_)
+                | ExprKind::Null
+                | ExprKind::String(_) => {}
+                ExprKind::Parenthesized(inner) => pending.push(inner),
+                ExprKind::Unary {
+                    op: UnaryOp::Negate,
+                    operand,
+                } if matches!(operand.kind, ExprKind::Float(_)) => {}
+                ExprKind::Member(receiver, name)
+                    if (crate::duration::DurationUnit::parse(name).is_some()
+                        || crate::data_size::DataSizeUnit::parse(name).is_some())
+                        && matches!(
+                            &receiver.unparenthesized().kind,
+                            ExprKind::Int(_) | ExprKind::Float(_)
+                        ) => {}
+                ExprKind::Call { callee, arguments }
+                    if self.resolved.names.get(&callee.span) == Some(&Binding::ImplicitMethod) =>
+                {
+                    let ExprKind::Name(name) = &callee.kind else {
+                        return false;
+                    };
+                    match name.as_str() {
+                        "List" | "Set" | "Map" => pending.extend(arguments),
+                        "Bytes" if arguments.iter().all(|argument| {
+                            matches!(argument.kind, ExprKind::Int(value) if (0..=127).contains(&value))
+                                && !self.resolved.module.folded_integer_spans.contains_key(&argument.span)
+                        }) => {},
+                        _ => return false,
+                    }
+                }
+                _ => return false,
+            }
+        }
+        true
+    }
+
     fn register_property_parents(
         &mut self,
         member: &crate::syntax::Member,
@@ -178,7 +260,11 @@ impl Compiler<'_> {
                         for index in pending_spans.drain(start..) {
                             output.spans[index] = Some(expression.span);
                         }
-                        if self.instrument && !matches!(expression.kind, ExprKind::Parenthesized(_))
+                        if self.instrument
+                            && !matches!(expression.kind, ExprKind::Parenthesized(_))
+                            && !self.power_literal_constructor(expression)
+                            && !(matches!(expression.kind, ExprKind::InterpolatedString(_))
+                                && self.power_parser_literal(expression))
                         {
                             output.push_at(Instruction::Observe(expression.span), expression.span);
                         }
@@ -1419,7 +1505,17 @@ impl Compiler<'_> {
                                 .unwrap_or(expression.span)
                         }),
                     ));
-                    work.push(Work::Visit(part));
+                    if matches!(part.kind, ExprKind::String(_)) && part.span == expression.span {
+                        // These are synthetic StringChars, not another execution
+                        // of the enclosing string literal. They share its span
+                        // in our AST but must not increment its observation count.
+                        work.push(Work::Emit(
+                            Instruction::Constant(literal_value(part).expect("string chars")),
+                            Some(part.span),
+                        ));
+                    } else {
+                        work.push(Work::Visit(part));
+                    }
                 }
             }
             ExprKind::Call { callee, arguments } => {

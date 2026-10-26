@@ -21,6 +21,15 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+The [Stage86 checkpoint](reports/m2/stage86-contains-hash-power-checkpoint.json) records
+all five required Rust checks, including a complete 1,149-pass workspace run
+with one ignored test and zero failures. Native, N-API, and Chromium each
+matched 104 repeated observations from 35 new queries and 17 distinctness
+regressions. One M1 acquisition matched 6,078 results per target and passed
+its separate architecture contract. A prior capture used the wrong power
+assertion setting and remains failed; its successor uses the exact Java
+settings. Full-corpus replay completion and verification remain pending.
+
 The [Stage85 checkpoint](reports/m2/stage85-distinct-checkpoint.json) records the
 five required Rust checks, including a completed 1,136-pass workspace run with
 one ignored test and zero failures. The earlier capacity-stopped attempt remains

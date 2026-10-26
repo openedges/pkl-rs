@@ -1,5 +1,27 @@
 # M2 language evidence
 
+## Stage86 List membership and constraint observations
+
+The [Stage86 checkpoint](stage86-contains-hash-power-checkpoint.json) records shared
+`List.contains`, Listing insertion-hash indexing, and literal/interpolation
+observation fixes. All five required Rust checks passed; the complete workspace
+recorded 1,149 passes, one ignored test, and zero failures.
+
+Native, N-API, and Chromium each matched 104 observations from 35 new and 17
+regression queries, with two repetitions. Raw public result, UTF-16, Logger,
+and protocol channels are retained. A single M1 acquisition matched 6,078
+results per target and passed the distinct architecture contract.
+
+The earlier 76/104 platform result remains a failed acquisition. Its adapters
+disabled power assertions; the successor uses explicit per-program settings
+from the Java helpers and a separately recorded native adapter linked to the
+unchanged core. Candidate and tooling failures are also preserved. The actual
+readback report discloses its author's adapter work.
+
+The full 4,416-case successor replay is pending completion and verification.
+The official aggregate remains 4,188/4,416; M2, complete APIs, release platforms,
+and performance requirements remain open. See [the verification scope](../../docs/m2-language.md).
+
 ## Stage85 distinct collections and reentrant hashing
 
 The [Stage85 checkpoint](stage85-distinct-checkpoint.json) records

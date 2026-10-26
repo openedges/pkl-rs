@@ -1,0 +1,1 @@
+List(new Dynamic {n=trace("stored")}).contains(new Dynamic {n=trace("query")})

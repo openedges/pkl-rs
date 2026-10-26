@@ -1,0 +1,9 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `contains` in object of type `List`.
+
+1 | List(1).contains
+    ^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+count(predicate)
