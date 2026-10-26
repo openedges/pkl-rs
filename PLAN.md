@@ -19,7 +19,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: YamlRenderer 통합·정본 선택 검증 완료; 실행 가능 4,424개·최신 전체 코퍼스 4,214/4,416·전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: Stage94 전체 ready 합성 4,268/4,424 일치·이전 사례 46개 개선·기존 통과 퇴행 0; 엄격한 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
@@ -2932,7 +2932,7 @@ checks 활성화 조건을 기록하며 성능 측정으로 해석하지 않는�
 범위 밖이며, 실제 컴파일과 캐시 재사용의 출처를 구분한다.
 
 [체크포인트](reports/m2/stage85-distinct-checkpoint.json)에 구현과 검증을 모은다.
-최신 완료 집계 4,188/4,416, 미준비 111개와 M2 아홉 영역의 미완료 조건은
+해당 checkpoint 당시 완료 집계 4,188/4,416, 미준비 111개와 M2 아홉 영역의 미완료 조건은
 유지한다. 다음에는 원본 타입 제약에서 확인한 `List.contains` 누락과 Listing
 후보 탐색 비용·삽입 해시 보존을 Java 관찰부터 검증한다. 해당 초안은 현재
 구현·통과 범위에 포함하지 않으며 전체 언어·API·플랫폼·성능 목표도 유지한다.
@@ -3120,7 +3120,7 @@ M1 strict·구조 계약: **native·N-API·Chromium 각각 6,078개 strict 비�
 [증거](reports/m2/stage93-yaml-renderer-evidence.tar.gz),
 [게시 검토](reports/m2/stage93-yaml-renderer-publication-review.json)로 고정한다.
 
-현재 inventory는 ready4,424·미구현71·미연결32를 유지한다. 최신 완료된 전체
+현재 inventory는 ready4,424·미구현71·미연결32를 유지한다. Stage93 당시 완료된 전체
 코퍼스 결과는 이전 Stage86 소스의 4,214/4,416이며 이번 선택 결과를 더하지 않는다.
 YAML Parser10질의·원본8개와 indent-width의 Java oracle-internal1질의는 미해결로
 보존한다. 전체 M2·제품 API·플랫폼 릴리스·성능 gate는 계속 열려 있다.
@@ -3164,9 +3164,43 @@ native 근거의 16개 원시 비교도 새 정본 adapter로 읽기 전용 재�
 `stage92-canonical-checks-01`, `stage92-canonical-mixed-01`,
 `stage92-canonical-offline-cli-check-01`에 보존한다. 소스 snapshot을 포함하는 새
 혼합 취득은 owned 256MiB·live floor 512MiB 조건으로 따로 기록했고 이전
-30MiB 취득 조건을 소급 변경하지 않았다. 최신 전체 코퍼스 집계는 여전히
+30MiB 취득 조건을 소급 변경하지 않았다. Stage92 당시 완료된 전체 코퍼스 집계는
 Stage86 **4,214/4,416**이며 8개를 그 이전 소스 집계에 더하지 않는다.
 다음 YAML 후보와 전체 M2·제품·릴리스·성능 gate는 별도로 남는다.
+
+### Stage 94 — 전체 ready 코퍼스 합성과 이전 통과 회귀 검증
+
+Stage93 구현 `a1b94fa`에서 실행 가능한 **4,424개 전체**를 네 canonical
+보고서로 합성했다. 실제 결과는 **4,268개 원시 일치·불일치 52개·미지원
+102개·Java oracle 오류 2개·Rust 내부 오류 0개**다. 스칼라 3,519/3,527,
+원본 모듈 740/888, historical 8/8, JVM 1/1이며 네 offline 무결성 검사와
+별도 독립 합성 검토가 통과했다.
+
+Stage86과 같은 입력 계약·ID 4,416개에서는 **46개 개선·기존 통과 퇴행
+0개**다. 미지원 37개와 불일치 9개가 일치로 바뀌었고 기존 통과 4,214개를
+유지했다. 새 historical 8개는 이전 선택의 개선 수에 더하지 않는다.
+전체 inventory 4,527개에서 미구현 71개·미연결 32개는 그대로 남는다.
+합집합에서 다시 계산한 엄격한 완료 조건은 **1,790개가 미충족**이며 서로
+겹치는 의무 수다. 사례 일치율 약 96.5%를 M2 전체 완료율로 해석하지 않는다.
+
+최초 전체 취득은 디스크 여유 한도로 child `-15` 종료했다. 완료된 스칼라
+원시 결과를 새 평가 없이 복구하고, 나머지 adapter는 새 출력에서 실행했다.
+최초 실패와 XML 부분 기록, 원래 argv·classpath·바이트를 보존한다.
+historical launcher는 준비 중 경합으로 실제 로드된 소스 바이트를 확정할
+수 없다는 한계를 별도 기록하며, child 명령·소스·artifact·원시 결과의 독립
+검증과 구분한다. caller-supplied 표시도 실제 Stage93 producer 근거와 별도로
+유지한다. 단일 중단 없는 취득이나 정본 `--verify-full` 명령의 통과로
+표시하지 않는다.
+
+[checkpoint](reports/m2/stage94-full-ready-composition-checkpoint.json),
+[독립 공개 검토](reports/m2/stage94-full-ready-composition-publication-review.json)와
+[증거 1](reports/m2/stage94-full-ready-composition-evidence-01.tar.gz)·
+[증거 2](reports/m2/stage94-full-ready-composition-evidence-02.tar.gz)·
+[증거 3](reports/m2/stage94-full-ready-composition-evidence-03.tar.gz)을 함께
+보관한다. 이번 단계는 검증 기록 갱신이며 Rust workspace·Node·브라우저
+검사를 새로 실행했다고 주장하지 않는다. 다음 작업은 Plist 및 남은 API
+동작의 Java 차등 검증, 요구사항별 증거 연결과 알려진 실패 해소다.
+M2 아홉 작업 영역, 전체 API·릴리스 플랫폼·속도·메모리 조건은 계속 열린다.
 
 ## M3 — 표준 라이브러리와 출력
 

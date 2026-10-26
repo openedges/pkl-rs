@@ -1,0 +1,220 @@
+{
+  "complete": true,
+  "full_API_complete": false,
+  "full_m2_complete": false,
+  "independent_archive_review": {
+    "all_report_inventory_payloads_included": true,
+    "archive_reads_sequential": true,
+    "auxiliary_metadata_payloads": 1,
+    "binaries_and_private_evidence_retained": true,
+    "canonical_inventory_payloads_verified": {
+      "historical": 4873,
+      "jvm": 9610,
+      "module": 13674,
+      "scalar": 33015
+    },
+    "complete": true,
+    "controls": {
+      "filesystem_payloads_opened_by_controls": 0,
+      "negative_path_controls_passed": 7,
+      "positive_inventory_binary_controls_passed": 4
+    },
+    "document_review": {
+      "bytes": 2328,
+      "mode": 420,
+      "path": "target/m2/stage94-publication-independent-review-01/document-review.json",
+      "sha256": "cd076f650f5342e5aadba1b7c992e820c9149eb36dc9636081bfd10e040d9c9e"
+    },
+    "exact_disjoint_three_part_global_union": true,
+    "finished_epoch": 1793030009.513012,
+    "global_selected_payloads": 96134,
+    "global_selection": {
+      "bytes": 43849275,
+      "mode": 420,
+      "path": "target/m2/stage94-checkpoint-publication-01/selection.json",
+      "sha256": "c4ce87bfb6065cfee78e6ec1c30495ac948d60770010b121372e98d8918b5268"
+    },
+    "global_source_before_after_equal": true,
+    "kind": "Stage94-actual-independent-sequential-companion-readback",
+    "limits": [
+      "Independent review establishes the selected archives and source identities; no new guest, compiler, platform or compatibility run.",
+      "Raw physical paths, original failed acquisition, caller-supplied labels and historical launcher-source qualification remain unchanged.",
+      "Public copies have not been read back by this invocation."
+    ],
+    "no_Stage95_96_semantic_payloads": true,
+    "parts": [
+      {
+        "archive": {
+          "bytes": 33385145,
+          "mode": 420,
+          "path": "target/m2/stage94-checkpoint-publication-01/part-01/stage94-full-ready-composition-evidence.tar.gz",
+          "sha256": "e9d9296473f5822716ad7531575b4edc6f6aebe3eb7edccff72123f767b61c88"
+        },
+        "gzip_crc_trailer_EOF_checked": true,
+        "index": 1,
+        "logical_payload_bytes": 152372067,
+        "manifest": {
+          "bytes": 30486640,
+          "mode": 420,
+          "path": "target/m2/stage94-checkpoint-publication-01/part-01/selection.json",
+          "sha256": "043d050f52f6010c9eb63ee733f2505017710fb7e0d20b621d4f4371546308df"
+        },
+        "members_including_manifest": 67342,
+        "raw_bytes_hashes_modes_order_exact": true,
+        "regular_payloads": 67341,
+        "sources_after_part_equal": true
+      },
+      {
+        "archive": {
+          "bytes": 16644371,
+          "mode": 420,
+          "path": "target/m2/stage94-checkpoint-publication-01/part-02/stage94-full-ready-composition-evidence.tar.gz",
+          "sha256": "7e3cfbeefb541a6322ce190f1068c453eb48d842423661dbdfd6fab4ee538e61"
+        },
+        "gzip_crc_trailer_EOF_checked": true,
+        "index": 2,
+        "logical_payload_bytes": 112861499,
+        "manifest": {
+          "bytes": 6307229,
+          "mode": 420,
+          "path": "target/m2/stage94-checkpoint-publication-01/part-02/selection.json",
+          "sha256": "543d33f47ce0b185a6b7a11779d37644cc648d108bfef4f0bf09d73fb28792fe"
+        },
+        "members_including_manifest": 13692,
+        "raw_bytes_hashes_modes_order_exact": true,
+        "regular_payloads": 13691,
+        "sources_after_part_equal": true
+      },
+      {
+        "archive": {
+          "bytes": 73122353,
+          "mode": 420,
+          "path": "target/m2/stage94-checkpoint-publication-01/part-03/stage94-full-ready-composition-evidence.tar.gz",
+          "sha256": "0ccd3972ffe34830643c1ce90a52fdbbe1afc9a0ede843d54c4604b8b4f5443f"
+        },
+        "gzip_crc_trailer_EOF_checked": true,
+        "index": 3,
+        "logical_payload_bytes": 294203795,
+        "manifest": {
+          "bytes": 7062840,
+          "mode": 420,
+          "path": "target/m2/stage94-checkpoint-publication-01/part-03/selection.json",
+          "sha256": "bd6df155532e9a91d5feef72c6b0a869064cd532dbcfca033a2829b5aa718a4c"
+        },
+        "members_including_manifest": 15104,
+        "raw_bytes_hashes_modes_order_exact": true,
+        "regular_payloads": 15103,
+        "sources_after_part_equal": true
+      }
+    ],
+    "payload_extraction_or_staging": false,
+    "private_diagnostic_exclusion_ledger": {
+      "bytes": 91568,
+      "mode": 420,
+      "path": "target/m2/stage94-checkpoint-publication-prep-01/privacy-exclusions-02.json",
+      "sha256": "6af2f4340a043e22f1a189511f9d6eec041ecb509c2dfe0c17930eadf451ae9a"
+    },
+    "private_diagnostics_excluded": 108,
+    "producer": {
+      "bytes": 6142,
+      "mode": 420,
+      "path": "target/m2/stage94-checkpoint-publication-01/report.json",
+      "sha256": "1c30be6e863f9c4af0f7bcfa761016a2b8a9c9ee14fd6be3baf4b05597bcf6ae"
+    },
+    "public_or_canonical_or_Git_writes": 0,
+    "reader": {
+      "bytes": 12880,
+      "mode": 420,
+      "path": "target/m2/stage94-publication-independent-review-01/reader.py",
+      "sha256": "71fca14fb12d232cc6052719ff42cc64de3adb9b09effd9700fe05999291f2c4"
+    },
+    "schema_version": 1,
+    "started_epoch": 1793029904.9799948,
+    "success": true
+  },
+  "independent_archive_review_identity": {
+    "bytes": 4917,
+    "mode": 420,
+    "path": "target/m2/stage94-archive-independent-readback-01/report.json",
+    "sha256": "79eaf27321c7569c74c98a31eed343740aa979fc6e7dfec7d817a3069ef78c70"
+  },
+  "kind": "Stage94-independent-archive-review-and-root-public-copy",
+  "performance_targets_met": false,
+  "root_copy_is_not_independent_public_metadata_review": true,
+  "root_public_archive_copy": {
+    "archives": [
+      {
+        "bytes_modes_hashes_equal": true,
+        "independent_inode": true,
+        "index": 1,
+        "public": {
+          "bytes": 33385145,
+          "mode": 420,
+          "path": "reports/m2/stage94-full-ready-composition-evidence-01.tar.gz",
+          "sha256": "e9d9296473f5822716ad7531575b4edc6f6aebe3eb7edccff72123f767b61c88"
+        },
+        "public_inode": 227290034,
+        "source": {
+          "bytes": 33385145,
+          "mode": 420,
+          "path": "target/m2/stage94-checkpoint-publication-01/part-01/stage94-full-ready-composition-evidence.tar.gz",
+          "sha256": "e9d9296473f5822716ad7531575b4edc6f6aebe3eb7edccff72123f767b61c88"
+        },
+        "source_inode": 227289440
+      },
+      {
+        "bytes_modes_hashes_equal": true,
+        "independent_inode": true,
+        "index": 2,
+        "public": {
+          "bytes": 16644371,
+          "mode": 420,
+          "path": "reports/m2/stage94-full-ready-composition-evidence-02.tar.gz",
+          "sha256": "7e3cfbeefb541a6322ce190f1068c453eb48d842423661dbdfd6fab4ee538e61"
+        },
+        "public_inode": 227290035,
+        "source": {
+          "bytes": 16644371,
+          "mode": 420,
+          "path": "target/m2/stage94-checkpoint-publication-01/part-02/stage94-full-ready-composition-evidence.tar.gz",
+          "sha256": "7e3cfbeefb541a6322ce190f1068c453eb48d842423661dbdfd6fab4ee538e61"
+        },
+        "source_inode": 227289491
+      },
+      {
+        "bytes_modes_hashes_equal": true,
+        "independent_inode": true,
+        "index": 3,
+        "public": {
+          "bytes": 73122353,
+          "mode": 420,
+          "path": "reports/m2/stage94-full-ready-composition-evidence-03.tar.gz",
+          "sha256": "0ccd3972ffe34830643c1ce90a52fdbbe1afc9a0ede843d54c4604b8b4f5443f"
+        },
+        "public_inode": 227290036,
+        "source": {
+          "bytes": 73122353,
+          "mode": 420,
+          "path": "target/m2/stage94-checkpoint-publication-01/part-03/stage94-full-ready-composition-evidence.tar.gz",
+          "sha256": "0ccd3972ffe34830643c1ce90a52fdbbe1afc9a0ede843d54c4604b8b4f5443f"
+        },
+        "source_inode": 227289526
+      }
+    ],
+    "backend": {
+      "bytes": 2631,
+      "mode": 420,
+      "path": "target/m2/stage94-adapter-phases-prep-02/jvm/clone_backend.py",
+      "sha256": "079566f0a284d08cef5e944644c47df409ca7ea00231d521a29451a4f79cd321"
+    },
+    "complete": true,
+    "exclusive_physical_space_saving_claimed": false,
+    "finished_epoch": 1793030147.451651,
+    "method": "Strict APFS clonefile(CLONE_NOOWNERCOPY) plus copystat; no fallback or hardlink. Raw byte hashes and modes checked after copy.",
+    "no_source_archive_mutation": true,
+    "success": true
+  },
+  "schema_version": 1,
+  "scope": "Three archives independently streamed before public copy; root verified copied archive hashes/modes. A separate reviewer checks the public metadata before Git staging.",
+  "success": true
+}

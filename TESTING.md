@@ -21,6 +21,25 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+Stage94 adds an evidence-only full ready-corpus composition on the unchanged
+Stage93 runtime: **4,268/4,424 raw matches, 52 mismatches, 102 unsupported cases
+and two Java oracle errors**. All four canonical offline integrity checks and
+an independent full-union comparison pass. The same 4,416 prior input contracts
+show 46 improvements and no prior-pass regressions; eight newly admitted
+historical cases match separately. The strict whole-union predicate remains
+failed with 1,790 overlapping unmet conditions and 103 unready inventory cases.
+
+This composes recovered scalar observations from an interrupted acquisition
+with fresh original-module, historical and JVM captures. Original failures,
+raw bytes, source/artifact identities, caller-supplied labels and the historical
+launcher-source qualification are preserved. It is not a literal single-directory
+`--verify-full` execution or a new engine/workspace/platform test run. The JVM
+fixture mirror was released only after exact contract checks; its failed first
+release and successful post-release offline verification remain recorded.
+See the [Stage94 checkpoint](reports/m2/stage94-full-ready-composition-checkpoint.json)
+and [evidence index](reports/m2/README.md). Stage93 implementation checks below
+retain their original provenance.
+
 Stage93 integrates the reviewed shared YamlRenderer implementation. Local
 Rust 1.98.1 formatting, manifest refresh/freshness, repository verification,
 workspace/all-target Clippy (`-D warnings`) and runtime `wasm32-unknown-unknown`

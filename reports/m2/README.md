@@ -1,5 +1,51 @@
 # M2 language evidence
 
+## Stage94 complete ready-corpus composition
+
+Stage94 combines four canonical integrity-checked reports covering all
+**4,424 currently ready cases** on the Stage93 implementation (`a1b94fa`). The
+aggregate is **4,268 raw matches, 52 mismatches, 102 unsupported cases and two
+Java oracle errors**, with no Rust internal error. All four offline integrity
+checks and an independent composition review pass.
+
+| Adapter | Cases | Raw matches |
+| --- | ---: | ---: |
+| Scalar expressions | 3,527 | 3,519 |
+| Upstream original modules | 888 | 740 |
+| Historical collections | 8 | 8 |
+| JVM classpath | 1 | 1 |
+
+Against Stage86's same 4,416 case IDs and input contracts, **46 cases improve
+and no previously passing case regresses**. The improvements are 37 previously
+unsupported modules and nine previously mismatching modules. All 4,214 prior passes
+remain passing. The eight new historical observations are counted separately.
+The pinned Java oracle metadata is unchanged.
+
+The first acquisition stopped at its free-space guard with child exit `-15`.
+Its completed scalar observations were recovered with original raw bytes,
+arguments and classpaths intact; the other three adapters have separate fresh
+captures. The interrupted attempt and partial XML evidence remain preserved.
+The historical launcher's exact loaded source bytes remain unproven because
+of a preparation race; its explicit qualification accompanies the independently
+verified child command, source, artifact and raw outcomes. Caller-supplied
+artifact labels stay unchanged, with actual Stage93 producer evidence recorded
+separately. This is an explicit composition, not one uninterrupted acquisition
+or a single-directory canonical `--verify-full` run.
+
+The whole-union strict predicate still reports **1,790 overlapping unmet
+conditions**. The inventory remains 4,527 cases, including 71 unimplemented and
+32 unmapped cases outside this replay. These counts do not establish M2,
+complete APIs, release platforms, speed or memory parity. No new Rust workspace
+or browser/Node run is attributed to this evidence-only checkpoint.
+
+The [checkpoint](stage94-full-ready-composition-checkpoint.json) and
+[publication review](stage94-full-ready-composition-publication-review.json)
+identify all three required companion archives:
+[interrupted acquisition and recovered scalars](stage94-full-ready-composition-evidence-01.tar.gz),
+[fresh original modules](stage94-full-ready-composition-evidence-02.tar.gz), and
+[JVM, historical and supporting evidence](stage94-full-ready-composition-evidence-03.tar.gz).
+Earlier sections retain their checkpoint-specific sources and results.
+
 ## Stage93 YamlRenderer integration
 
 YamlRenderer document/value rendering is integrated in the shared engine. It
@@ -26,8 +72,9 @@ Independent source and execution readbacks passed. Public evidence paths are [ch
 failed preparations and raw Java ordinary/oracle errors remain evidence. The
 full Java authority has 332 queries; ten Parser queries and one oracle-internal
 query are outside the selected 321, and eight Parser originals remain open.
-Current readiness remains 4,424/71/32. The completed Stage86 whole-corpus result
-remains 4,214/4,416; no newer full-corpus, complete API or performance claim follows.
+At Stage93, readiness was 4,424/71/32 and the completed Stage86 whole-corpus
+result was 4,214/4,416. Stage93 selected evidence did not update that aggregate
+or establish complete APIs or performance parity.
 
 ## Stage86 complete ready-corpus replay
 
@@ -73,7 +120,7 @@ Receipts remain under `target/m2/stage92-canonical-integration-01`,
 `stage92-canonical-offline-cli-check-01`; the checkpoint records their identities. Actual file
 and unexpected-write sets are empty: no nonempty generated-file capability,
 global sandbox, full CLI/API/UTF-16/Logger or new JVM/platform result is claimed.
-The latest complete whole-corpus aggregate remains Stage86 **4,214/4,416**;
+At Stage92, the completed whole-corpus aggregate was Stage86 **4,214/4,416**;
 these eight admissions are not added to that older-source aggregate. Full M2,
 release and performance gates remain open.
 
@@ -226,7 +273,7 @@ class-display cohort matches on all tested public channels over two repeats.
 
 Full workspace tests, current platform execution, and the full ready-corpus
 replay remain pending. Earlier failed attempts are preserved separately; the
-Stage76–78 aggregate below is still the latest completed full replay. This is
+Stage76–78 aggregate below was the latest completed full replay at this checkpoint. This is
 a focused development checkpoint, not M2 completion or performance evidence.
 
 The [source binding](stage79-83-focused-source-binding.json) connects all 2,363
