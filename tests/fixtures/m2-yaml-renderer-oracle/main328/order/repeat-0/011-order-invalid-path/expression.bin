@@ -1,0 +1,1 @@
+new YamlRenderer {converters {["x["]=(x)->x}}.renderValue(1)

@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Expected value of type `"compat"|"1.1"|"1.2"`, but got `"wrong"`.
+
+581 | mode: "compat" | "1.1" | "1.2" = "compat"
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#YamlRenderer.mode (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L581)
+
+1 | new YamlRenderer {mode="wrong"}.renderValue(1)
+                           ^^^^^^^
+at repl:text.mode (repl:text)
+
+1 | new YamlRenderer {mode="wrong"}.renderValue(1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

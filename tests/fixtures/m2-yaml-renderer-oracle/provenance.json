@@ -1,0 +1,2852 @@
+{
+  "kind": "pinned-java-yaml-oracle-fixtures",
+  "complete": true,
+  "cohorts": [
+    {
+      "name": "main328",
+      "readback": {
+        "path": "target/m2/stage93-yaml-oracle-readback-01/report.json",
+        "bytes": 278380,
+        "mode": 420,
+        "sha256": "fa607c9fa16e0253bcca30be507790b8899abfe1b82771f543c657d3278d22a1"
+      },
+      "source_plan": {
+        "path": "target/m2/stage93-yaml-oracle-prep-02/query-source-plan.json",
+        "bytes": 96597,
+        "mode": 420,
+        "sha256": "cb8ad7d1ed9103bd5d4e41c23e12e627cdd42c2c08f84b6a919e6eb10f87cf3b"
+      },
+      "queries": 328,
+      "limits": "Java type/error class/exception/cause remain stored raw but are not exposed by Rust SourceProbe. Process/JDK/JAR identities and repeat-1 full raw are retained in the referenced original acquisition, not recopied."
+    },
+    {
+      "name": "reach4",
+      "readback": {
+        "path": "target/m2/stage93-yaml-reach-oracle-readback-01/report.json",
+        "bytes": 6359,
+        "mode": 420,
+        "sha256": "19aee3fa5b6a2c20f1e8086e25a4cb5a9b8bc95d38040a0f564a4fc0282cf88f"
+      },
+      "source_plan": {
+        "path": "target/m2/stage93-yaml-reach-oracle-prep-02/query-source-plan.json",
+        "bytes": 2132,
+        "mode": 420,
+        "sha256": "794c91fa2baa09aef7fba32949cc9f664607378d28a87d16ee048d28b047b75d"
+      },
+      "queries": 4,
+      "limits": "Java type/error class/exception/cause remain stored raw but are not exposed by Rust SourceProbe. Process/JDK/JAR identities and repeat-1 full raw are retained in the referenced original acquisition, not recopied."
+    }
+  ],
+  "programs": [
+    {
+      "cohort": "main328",
+      "id": "scalars",
+      "uri": "file:///stage93/scalars.pkl",
+      "rows": [
+        {
+          "id": "scalars-string-value",
+          "wire_id": "scalars-string-value",
+          "directory": "000-scalars-string-value",
+          "expression": "r.renderValue(\"pigeon\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-string-document",
+          "wire_id": "scalars-string-document",
+          "directory": "001-scalars-string-document",
+          "expression": "r.renderDocument(\"pigeon\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-empty-string-value",
+          "wire_id": "scalars-empty-string-value",
+          "directory": "002-scalars-empty-string-value",
+          "expression": "r.renderValue(\"\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-empty-string-document",
+          "wire_id": "scalars-empty-string-document",
+          "directory": "003-scalars-empty-string-document",
+          "expression": "r.renderDocument(\"\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-null-value",
+          "wire_id": "scalars-null-value",
+          "directory": "004-scalars-null-value",
+          "expression": "r.renderValue(null)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-null-document",
+          "wire_id": "scalars-null-document",
+          "directory": "005-scalars-null-document",
+          "expression": "r.renderDocument(null)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-true-value",
+          "wire_id": "scalars-true-value",
+          "directory": "006-scalars-true-value",
+          "expression": "r.renderValue(true)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-true-document",
+          "wire_id": "scalars-true-document",
+          "directory": "007-scalars-true-document",
+          "expression": "r.renderDocument(true)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-false-value",
+          "wire_id": "scalars-false-value",
+          "directory": "008-scalars-false-value",
+          "expression": "r.renderValue(false)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-false-document",
+          "wire_id": "scalars-false-document",
+          "directory": "009-scalars-false-document",
+          "expression": "r.renderDocument(false)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-int-min-value",
+          "wire_id": "scalars-int-min-value",
+          "directory": "010-scalars-int-min-value",
+          "expression": "r.renderValue(-9223372036854775808)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-int-min-document",
+          "wire_id": "scalars-int-min-document",
+          "directory": "011-scalars-int-min-document",
+          "expression": "r.renderDocument(-9223372036854775808)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-int-max-value",
+          "wire_id": "scalars-int-max-value",
+          "directory": "012-scalars-int-max-value",
+          "expression": "r.renderValue(9223372036854775807)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-int-max-document",
+          "wire_id": "scalars-int-max-document",
+          "directory": "013-scalars-int-max-document",
+          "expression": "r.renderDocument(9223372036854775807)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-float-value",
+          "wire_id": "scalars-float-value",
+          "directory": "014-scalars-float-value",
+          "expression": "r.renderValue(1.23)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-float-document",
+          "wire_id": "scalars-float-document",
+          "directory": "015-scalars-float-document",
+          "expression": "r.renderDocument(1.23)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-negative-zero-value",
+          "wire_id": "scalars-negative-zero-value",
+          "directory": "016-scalars-negative-zero-value",
+          "expression": "r.renderValue(-0.0)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-negative-zero-document",
+          "wire_id": "scalars-negative-zero-document",
+          "directory": "017-scalars-negative-zero-document",
+          "expression": "r.renderDocument(-0.0)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-nan-value",
+          "wire_id": "scalars-nan-value",
+          "directory": "018-scalars-nan-value",
+          "expression": "r.renderValue((0.0/0.0))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-nan-document",
+          "wire_id": "scalars-nan-document",
+          "directory": "019-scalars-nan-document",
+          "expression": "r.renderDocument((0.0/0.0))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-positive-infinity-value",
+          "wire_id": "scalars-positive-infinity-value",
+          "directory": "020-scalars-positive-infinity-value",
+          "expression": "r.renderValue((1.0/0.0))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-positive-infinity-document",
+          "wire_id": "scalars-positive-infinity-document",
+          "directory": "021-scalars-positive-infinity-document",
+          "expression": "r.renderDocument((1.0/0.0))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-negative-infinity-value",
+          "wire_id": "scalars-negative-infinity-value",
+          "directory": "022-scalars-negative-infinity-value",
+          "expression": "r.renderValue((-1.0/0.0))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-negative-infinity-document",
+          "wire_id": "scalars-negative-infinity-document",
+          "directory": "023-scalars-negative-infinity-document",
+          "expression": "r.renderDocument((-1.0/0.0))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-small-exponent-value",
+          "wire_id": "scalars-small-exponent-value",
+          "directory": "024-scalars-small-exponent-value",
+          "expression": "r.renderValue(1e-8)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-small-exponent-document",
+          "wire_id": "scalars-small-exponent-document",
+          "directory": "025-scalars-small-exponent-document",
+          "expression": "r.renderDocument(1e-8)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-large-exponent-value",
+          "wire_id": "scalars-large-exponent-value",
+          "directory": "026-scalars-large-exponent-value",
+          "expression": "r.renderValue(1e20)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-large-exponent-document",
+          "wire_id": "scalars-large-exponent-document",
+          "directory": "027-scalars-large-exponent-document",
+          "expression": "r.renderDocument(1e20)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-bytes-empty-value",
+          "wire_id": "scalars-bytes-empty-value",
+          "directory": "028-scalars-bytes-empty-value",
+          "expression": "r.renderValue(Bytes())",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-bytes-empty-document",
+          "wire_id": "scalars-bytes-empty-document",
+          "directory": "029-scalars-bytes-empty-document",
+          "expression": "r.renderDocument(Bytes())",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-bytes-value",
+          "wire_id": "scalars-bytes-value",
+          "directory": "030-scalars-bytes-value",
+          "expression": "r.renderValue(Bytes(0,1,127,255))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-bytes-document",
+          "wire_id": "scalars-bytes-document",
+          "directory": "031-scalars-bytes-document",
+          "expression": "r.renderDocument(Bytes(0,1,127,255))",
+          "status": "success",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage93-yaml-oracle-01/programs/scalars"
+    },
+    {
+      "cohort": "main328",
+      "id": "style",
+      "uri": "file:///stage93/style.pkl",
+      "rows": [
+        {
+          "id": "style-plain",
+          "wire_id": "style-plain",
+          "directory": "000-style-plain",
+          "expression": "r.renderValue(\"hello\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-space",
+          "wire_id": "style-space",
+          "directory": "001-style-space",
+          "expression": "r.renderValue(\" \")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-leading-space",
+          "wire_id": "style-leading-space",
+          "directory": "002-style-leading-space",
+          "expression": "r.renderValue(\" a\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-trailing-space",
+          "wire_id": "style-trailing-space",
+          "directory": "003-style-trailing-space",
+          "expression": "r.renderValue(\"a \")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-single-quote",
+          "wire_id": "style-single-quote",
+          "directory": "004-style-single-quote",
+          "expression": "r.renderValue(\"a'b\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-leading-quote",
+          "wire_id": "style-leading-quote",
+          "directory": "005-style-leading-quote",
+          "expression": "r.renderValue(\"'a\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-double-quote",
+          "wire_id": "style-double-quote",
+          "directory": "006-style-double-quote",
+          "expression": "r.renderValue(\"a\\\"b\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-backslash",
+          "wire_id": "style-backslash",
+          "directory": "007-style-backslash",
+          "expression": "r.renderValue(\"a\\\\b\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-colon-tail",
+          "wire_id": "style-colon-tail",
+          "directory": "008-style-colon-tail",
+          "expression": "r.renderValue(\"a:\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-colon-space",
+          "wire_id": "style-colon-space",
+          "directory": "009-style-colon-space",
+          "expression": "r.renderValue(\"a: b\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-colon-plain",
+          "wire_id": "style-colon-plain",
+          "directory": "010-style-colon-plain",
+          "expression": "r.renderValue(\"a:b\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-hash-space",
+          "wire_id": "style-hash-space",
+          "directory": "011-style-hash-space",
+          "expression": "r.renderValue(\"a #b\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-hash-plain",
+          "wire_id": "style-hash-plain",
+          "directory": "012-style-hash-plain",
+          "expression": "r.renderValue(\"a#b\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-leading-indicators",
+          "wire_id": "style-leading-indicators",
+          "directory": "013-style-leading-indicators",
+          "expression": "r.renderValue(\"!tag\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-dash",
+          "wire_id": "style-dash",
+          "directory": "014-style-dash",
+          "expression": "r.renderValue(\"-\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-dash-space",
+          "wire_id": "style-dash-space",
+          "directory": "015-style-dash-space",
+          "expression": "r.renderValue(\"- a\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-dash-plain",
+          "wire_id": "style-dash-plain",
+          "directory": "016-style-dash-plain",
+          "expression": "r.renderValue(\"-a\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-braces",
+          "wire_id": "style-braces",
+          "directory": "017-style-braces",
+          "expression": "r.renderValue(\"a[b]{c},d\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-lf",
+          "wire_id": "style-lf",
+          "directory": "018-style-lf",
+          "expression": "r.renderValue(\"\\n\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-two-lf",
+          "wire_id": "style-two-lf",
+          "directory": "019-style-two-lf",
+          "expression": "r.renderValue(\"\\n\\n\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-multiline-strip",
+          "wire_id": "style-multiline-strip",
+          "directory": "020-style-multiline-strip",
+          "expression": "r.renderValue(\"a\\nb\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-multiline-clip",
+          "wire_id": "style-multiline-clip",
+          "directory": "021-style-multiline-clip",
+          "expression": "r.renderValue(\"a\\nb\\n\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-multiline-keep",
+          "wire_id": "style-multiline-keep",
+          "directory": "022-style-multiline-keep",
+          "expression": "r.renderValue(\"a\\nb\\n\\n\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-multiline-leading-space",
+          "wire_id": "style-multiline-leading-space",
+          "directory": "023-style-multiline-leading-space",
+          "expression": "r.renderValue(\" a\\nb\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-multiline-empty-lines",
+          "wire_id": "style-multiline-empty-lines",
+          "directory": "024-style-multiline-empty-lines",
+          "expression": "r.renderValue(\"\\na\\n\\nb\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-multiline-trailing-space",
+          "wire_id": "style-multiline-trailing-space",
+          "directory": "025-style-multiline-trailing-space",
+          "expression": "r.renderValue(\"a\\nb \")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-control-preempts-block",
+          "wire_id": "style-control-preempts-block",
+          "directory": "026-style-control-preempts-block",
+          "expression": "r.renderValue(\"a\\t\\nb\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-crlf",
+          "wire_id": "style-crlf",
+          "directory": "027-style-crlf",
+          "expression": "r.renderValue(\"a\\r\\nb\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-nul-controls",
+          "wire_id": "style-nul-controls",
+          "directory": "028-style-nul-controls",
+          "expression": "r.renderValue(\"\\u{0}\\u{1}\\u{7}\\u{8}\\t\\u{b}\\u{c}\\r\\u{1b}\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-unicode",
+          "wire_id": "style-unicode",
+          "directory": "029-style-unicode",
+          "expression": "r.renderValue(\"A😀日本語\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-unicode-breaks",
+          "wire_id": "style-unicode-breaks",
+          "directory": "030-style-unicode-breaks",
+          "expression": "r.renderValue(\"\\u{85}\\u{a0}\\u{2028}\\u{2029}\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-unicode-breaks-escaped",
+          "wire_id": "style-unicode-breaks-escaped",
+          "directory": "031-style-unicode-breaks-escaped",
+          "expression": "r.renderValue(\"\\t\\u{85}\\u{a0}\\u{2028}\\u{2029}\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-del-c1",
+          "wire_id": "style-del-c1",
+          "directory": "032-style-del-c1",
+          "expression": "r.renderValue(\"\\u{7f}\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-unpaired-high",
+          "wire_id": "style-unpaired-high",
+          "directory": "033-style-unpaired-high",
+          "expression": "r.renderValue(\"\\u{d800}\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-unpaired-low",
+          "wire_id": "style-unpaired-low",
+          "directory": "034-style-unpaired-low",
+          "expression": "r.renderValue(\"\\u{dc00}\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-unpaired-escaped",
+          "wire_id": "style-unpaired-escaped",
+          "directory": "035-style-unpaired-escaped",
+          "expression": "r.renderValue(\"\\t\\u{d800}\\u{dc00}\\u{d800}\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-directive-value",
+          "wire_id": "style-directive-value",
+          "directory": "036-style-directive-value",
+          "expression": "r.renderValue(new RenderDirective { text = \"raw: [x]\"; bytes = throw(\"unused\") })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-directive-document",
+          "wire_id": "style-directive-document",
+          "directory": "037-style-directive-document",
+          "expression": "r.renderDocument(new RenderDirective { text = \"raw\\n\\n\" })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "style-directive-empty",
+          "wire_id": "style-directive-empty",
+          "directory": "038-style-directive-empty",
+          "expression": "r.renderDocument(new RenderDirective { text = \"\" })",
+          "status": "success",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage93-yaml-oracle-01/programs/style"
+    },
+    {
+      "cohort": "main328",
+      "id": "mode-compat",
+      "uri": "file:///stage93/mode-compat.pkl",
+      "rows": [
+        {
+          "id": "mode-compat-00",
+          "wire_id": "mode-compat-00",
+          "directory": "000-mode-compat-00",
+          "expression": "r.renderValue(\"yes\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-01",
+          "wire_id": "mode-compat-01",
+          "directory": "001-mode-compat-01",
+          "expression": "r.renderValue(\"YeS\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-02",
+          "wire_id": "mode-compat-02",
+          "directory": "002-mode-compat-02",
+          "expression": "r.renderValue(\"on\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-03",
+          "wire_id": "mode-compat-03",
+          "directory": "003-mode-compat-03",
+          "expression": "r.renderValue(\"off\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-04",
+          "wire_id": "mode-compat-04",
+          "directory": "004-mode-compat-04",
+          "expression": "r.renderValue(\"NULL\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-05",
+          "wire_id": "mode-compat-05",
+          "directory": "005-mode-compat-05",
+          "expression": "r.renderValue(\"NuLl\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-06",
+          "wire_id": "mode-compat-06",
+          "directory": "006-mode-compat-06",
+          "expression": "r.renderValue(\"true\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-07",
+          "wire_id": "mode-compat-07",
+          "directory": "007-mode-compat-07",
+          "expression": "r.renderValue(\"TrUe\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-08",
+          "wire_id": "mode-compat-08",
+          "directory": "008-mode-compat-08",
+          "expression": "r.renderValue(\".nan\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-09",
+          "wire_id": "mode-compat-09",
+          "directory": "009-mode-compat-09",
+          "expression": "r.renderValue(\".NaN\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-10",
+          "wire_id": "mode-compat-10",
+          "directory": "010-mode-compat-10",
+          "expression": "r.renderValue(\".nAn\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-11",
+          "wire_id": "mode-compat-11",
+          "directory": "011-mode-compat-11",
+          "expression": "r.renderValue(\"0b1001\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-12",
+          "wire_id": "mode-compat-12",
+          "directory": "012-mode-compat-12",
+          "expression": "r.renderValue(\"-0b1001\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-13",
+          "wire_id": "mode-compat-13",
+          "directory": "013-mode-compat-13",
+          "expression": "r.renderValue(\"0o123\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-14",
+          "wire_id": "mode-compat-14",
+          "directory": "014-mode-compat-14",
+          "expression": "r.renderValue(\"-0o123\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-15",
+          "wire_id": "mode-compat-15",
+          "directory": "015-mode-compat-15",
+          "expression": "r.renderValue(\"o123\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-16",
+          "wire_id": "mode-compat-16",
+          "directory": "016-mode-compat-16",
+          "expression": "r.renderValue(\"0x1a\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-17",
+          "wire_id": "mode-compat-17",
+          "directory": "017-mode-compat-17",
+          "expression": "r.renderValue(\"-0x1a\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-18",
+          "wire_id": "mode-compat-18",
+          "directory": "018-mode-compat-18",
+          "expression": "r.renderValue(\"0123\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-19",
+          "wire_id": "mode-compat-19",
+          "directory": "019-mode-compat-19",
+          "expression": "r.renderValue(\"1_2_3\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-20",
+          "wire_id": "mode-compat-20",
+          "directory": "020-mode-compat-20",
+          "expression": "r.renderValue(\"123e2\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-21",
+          "wire_id": "mode-compat-21",
+          "directory": "021-mode-compat-21",
+          "expression": "r.renderValue(\"123.0e2\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-22",
+          "wire_id": "mode-compat-22",
+          "directory": "022-mode-compat-22",
+          "expression": "r.renderValue(\"123.0e+2\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-23",
+          "wire_id": "mode-compat-23",
+          "directory": "023-mode-compat-23",
+          "expression": "r.renderValue(\"59:30:1.234\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-24",
+          "wire_id": "mode-compat-24",
+          "directory": "024-mode-compat-24",
+          "expression": "r.renderValue(\"1:60\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-25",
+          "wire_id": "mode-compat-25",
+          "directory": "025-mode-compat-25",
+          "expression": "r.renderValue(\".\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-26",
+          "wire_id": "mode-compat-26",
+          "directory": "026-mode-compat-26",
+          "expression": "r.renderValue(\".___\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-27",
+          "wire_id": "mode-compat-27",
+          "directory": "027-mode-compat-27",
+          "expression": "r.renderValue(\"+\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-28",
+          "wire_id": "mode-compat-28",
+          "directory": "028-mode-compat-28",
+          "expression": "r.renderValue(\"-\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-compat-29",
+          "wire_id": "mode-compat-29",
+          "directory": "029-mode-compat-29",
+          "expression": "r.renderValue(\"2001-01-23\")",
+          "status": "success",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage93-yaml-oracle-01/programs/mode-compat"
+    },
+    {
+      "cohort": "main328",
+      "id": "mode-yaml11",
+      "uri": "file:///stage93/mode-yaml11.pkl",
+      "rows": [
+        {
+          "id": "mode-yaml11-00",
+          "wire_id": "mode-yaml11-00",
+          "directory": "000-mode-yaml11-00",
+          "expression": "r.renderValue(\"yes\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-01",
+          "wire_id": "mode-yaml11-01",
+          "directory": "001-mode-yaml11-01",
+          "expression": "r.renderValue(\"YeS\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-02",
+          "wire_id": "mode-yaml11-02",
+          "directory": "002-mode-yaml11-02",
+          "expression": "r.renderValue(\"on\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-03",
+          "wire_id": "mode-yaml11-03",
+          "directory": "003-mode-yaml11-03",
+          "expression": "r.renderValue(\"off\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-04",
+          "wire_id": "mode-yaml11-04",
+          "directory": "004-mode-yaml11-04",
+          "expression": "r.renderValue(\"NULL\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-05",
+          "wire_id": "mode-yaml11-05",
+          "directory": "005-mode-yaml11-05",
+          "expression": "r.renderValue(\"NuLl\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-06",
+          "wire_id": "mode-yaml11-06",
+          "directory": "006-mode-yaml11-06",
+          "expression": "r.renderValue(\"true\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-07",
+          "wire_id": "mode-yaml11-07",
+          "directory": "007-mode-yaml11-07",
+          "expression": "r.renderValue(\"TrUe\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-08",
+          "wire_id": "mode-yaml11-08",
+          "directory": "008-mode-yaml11-08",
+          "expression": "r.renderValue(\".nan\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-09",
+          "wire_id": "mode-yaml11-09",
+          "directory": "009-mode-yaml11-09",
+          "expression": "r.renderValue(\".NaN\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-10",
+          "wire_id": "mode-yaml11-10",
+          "directory": "010-mode-yaml11-10",
+          "expression": "r.renderValue(\".nAn\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-11",
+          "wire_id": "mode-yaml11-11",
+          "directory": "011-mode-yaml11-11",
+          "expression": "r.renderValue(\"0b1001\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-12",
+          "wire_id": "mode-yaml11-12",
+          "directory": "012-mode-yaml11-12",
+          "expression": "r.renderValue(\"-0b1001\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-13",
+          "wire_id": "mode-yaml11-13",
+          "directory": "013-mode-yaml11-13",
+          "expression": "r.renderValue(\"0o123\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-14",
+          "wire_id": "mode-yaml11-14",
+          "directory": "014-mode-yaml11-14",
+          "expression": "r.renderValue(\"-0o123\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-15",
+          "wire_id": "mode-yaml11-15",
+          "directory": "015-mode-yaml11-15",
+          "expression": "r.renderValue(\"o123\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-16",
+          "wire_id": "mode-yaml11-16",
+          "directory": "016-mode-yaml11-16",
+          "expression": "r.renderValue(\"0x1a\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-17",
+          "wire_id": "mode-yaml11-17",
+          "directory": "017-mode-yaml11-17",
+          "expression": "r.renderValue(\"-0x1a\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-18",
+          "wire_id": "mode-yaml11-18",
+          "directory": "018-mode-yaml11-18",
+          "expression": "r.renderValue(\"0123\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-19",
+          "wire_id": "mode-yaml11-19",
+          "directory": "019-mode-yaml11-19",
+          "expression": "r.renderValue(\"1_2_3\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-20",
+          "wire_id": "mode-yaml11-20",
+          "directory": "020-mode-yaml11-20",
+          "expression": "r.renderValue(\"123e2\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-21",
+          "wire_id": "mode-yaml11-21",
+          "directory": "021-mode-yaml11-21",
+          "expression": "r.renderValue(\"123.0e2\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-22",
+          "wire_id": "mode-yaml11-22",
+          "directory": "022-mode-yaml11-22",
+          "expression": "r.renderValue(\"123.0e+2\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-23",
+          "wire_id": "mode-yaml11-23",
+          "directory": "023-mode-yaml11-23",
+          "expression": "r.renderValue(\"59:30:1.234\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-24",
+          "wire_id": "mode-yaml11-24",
+          "directory": "024-mode-yaml11-24",
+          "expression": "r.renderValue(\"1:60\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-25",
+          "wire_id": "mode-yaml11-25",
+          "directory": "025-mode-yaml11-25",
+          "expression": "r.renderValue(\".\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-26",
+          "wire_id": "mode-yaml11-26",
+          "directory": "026-mode-yaml11-26",
+          "expression": "r.renderValue(\".___\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-27",
+          "wire_id": "mode-yaml11-27",
+          "directory": "027-mode-yaml11-27",
+          "expression": "r.renderValue(\"+\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-28",
+          "wire_id": "mode-yaml11-28",
+          "directory": "028-mode-yaml11-28",
+          "expression": "r.renderValue(\"-\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml11-29",
+          "wire_id": "mode-yaml11-29",
+          "directory": "029-mode-yaml11-29",
+          "expression": "r.renderValue(\"2001-01-23\")",
+          "status": "success",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage93-yaml-oracle-01/programs/mode-yaml11"
+    },
+    {
+      "cohort": "main328",
+      "id": "mode-yaml12",
+      "uri": "file:///stage93/mode-yaml12.pkl",
+      "rows": [
+        {
+          "id": "mode-yaml12-00",
+          "wire_id": "mode-yaml12-00",
+          "directory": "000-mode-yaml12-00",
+          "expression": "r.renderValue(\"yes\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-01",
+          "wire_id": "mode-yaml12-01",
+          "directory": "001-mode-yaml12-01",
+          "expression": "r.renderValue(\"YeS\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-02",
+          "wire_id": "mode-yaml12-02",
+          "directory": "002-mode-yaml12-02",
+          "expression": "r.renderValue(\"on\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-03",
+          "wire_id": "mode-yaml12-03",
+          "directory": "003-mode-yaml12-03",
+          "expression": "r.renderValue(\"off\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-04",
+          "wire_id": "mode-yaml12-04",
+          "directory": "004-mode-yaml12-04",
+          "expression": "r.renderValue(\"NULL\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-05",
+          "wire_id": "mode-yaml12-05",
+          "directory": "005-mode-yaml12-05",
+          "expression": "r.renderValue(\"NuLl\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-06",
+          "wire_id": "mode-yaml12-06",
+          "directory": "006-mode-yaml12-06",
+          "expression": "r.renderValue(\"true\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-07",
+          "wire_id": "mode-yaml12-07",
+          "directory": "007-mode-yaml12-07",
+          "expression": "r.renderValue(\"TrUe\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-08",
+          "wire_id": "mode-yaml12-08",
+          "directory": "008-mode-yaml12-08",
+          "expression": "r.renderValue(\".nan\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-09",
+          "wire_id": "mode-yaml12-09",
+          "directory": "009-mode-yaml12-09",
+          "expression": "r.renderValue(\".NaN\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-10",
+          "wire_id": "mode-yaml12-10",
+          "directory": "010-mode-yaml12-10",
+          "expression": "r.renderValue(\".nAn\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-11",
+          "wire_id": "mode-yaml12-11",
+          "directory": "011-mode-yaml12-11",
+          "expression": "r.renderValue(\"0b1001\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-12",
+          "wire_id": "mode-yaml12-12",
+          "directory": "012-mode-yaml12-12",
+          "expression": "r.renderValue(\"-0b1001\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-13",
+          "wire_id": "mode-yaml12-13",
+          "directory": "013-mode-yaml12-13",
+          "expression": "r.renderValue(\"0o123\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-14",
+          "wire_id": "mode-yaml12-14",
+          "directory": "014-mode-yaml12-14",
+          "expression": "r.renderValue(\"-0o123\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-15",
+          "wire_id": "mode-yaml12-15",
+          "directory": "015-mode-yaml12-15",
+          "expression": "r.renderValue(\"o123\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-16",
+          "wire_id": "mode-yaml12-16",
+          "directory": "016-mode-yaml12-16",
+          "expression": "r.renderValue(\"0x1a\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-17",
+          "wire_id": "mode-yaml12-17",
+          "directory": "017-mode-yaml12-17",
+          "expression": "r.renderValue(\"-0x1a\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-18",
+          "wire_id": "mode-yaml12-18",
+          "directory": "018-mode-yaml12-18",
+          "expression": "r.renderValue(\"0123\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-19",
+          "wire_id": "mode-yaml12-19",
+          "directory": "019-mode-yaml12-19",
+          "expression": "r.renderValue(\"1_2_3\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-20",
+          "wire_id": "mode-yaml12-20",
+          "directory": "020-mode-yaml12-20",
+          "expression": "r.renderValue(\"123e2\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-21",
+          "wire_id": "mode-yaml12-21",
+          "directory": "021-mode-yaml12-21",
+          "expression": "r.renderValue(\"123.0e2\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-22",
+          "wire_id": "mode-yaml12-22",
+          "directory": "022-mode-yaml12-22",
+          "expression": "r.renderValue(\"123.0e+2\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-23",
+          "wire_id": "mode-yaml12-23",
+          "directory": "023-mode-yaml12-23",
+          "expression": "r.renderValue(\"59:30:1.234\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-24",
+          "wire_id": "mode-yaml12-24",
+          "directory": "024-mode-yaml12-24",
+          "expression": "r.renderValue(\"1:60\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-25",
+          "wire_id": "mode-yaml12-25",
+          "directory": "025-mode-yaml12-25",
+          "expression": "r.renderValue(\".\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-26",
+          "wire_id": "mode-yaml12-26",
+          "directory": "026-mode-yaml12-26",
+          "expression": "r.renderValue(\".___\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-27",
+          "wire_id": "mode-yaml12-27",
+          "directory": "027-mode-yaml12-27",
+          "expression": "r.renderValue(\"+\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-28",
+          "wire_id": "mode-yaml12-28",
+          "directory": "028-mode-yaml12-28",
+          "expression": "r.renderValue(\"-\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "mode-yaml12-29",
+          "wire_id": "mode-yaml12-29",
+          "directory": "029-mode-yaml12-29",
+          "expression": "r.renderValue(\"2001-01-23\")",
+          "status": "success",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage93-yaml-oracle-01/programs/mode-yaml12"
+    },
+    {
+      "cohort": "main328",
+      "id": "containers",
+      "uri": "file:///stage93/containers.pkl",
+      "rows": [
+        {
+          "id": "containers-empty-list",
+          "wire_id": "containers-empty-list",
+          "directory": "000-containers-empty-list",
+          "expression": "r.renderDocument(List())",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "containers-empty-set",
+          "wire_id": "containers-empty-set",
+          "directory": "001-containers-empty-set",
+          "expression": "r.renderDocument(Set())",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "containers-empty-map",
+          "wire_id": "containers-empty-map",
+          "directory": "002-containers-empty-map",
+          "expression": "r.renderDocument(Map())",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "containers-empty-listing",
+          "wire_id": "containers-empty-listing",
+          "directory": "003-containers-empty-listing",
+          "expression": "r.renderDocument(new Listing {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "containers-empty-mapping",
+          "wire_id": "containers-empty-mapping",
+          "directory": "004-containers-empty-mapping",
+          "expression": "r.renderDocument(new Mapping {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "containers-empty-dynamic",
+          "wire_id": "containers-empty-dynamic",
+          "directory": "005-containers-empty-dynamic",
+          "expression": "r.renderDocument(new Dynamic {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "containers-empty-typed",
+          "wire_id": "containers-empty-typed",
+          "directory": "006-containers-empty-typed",
+          "expression": "r.renderDocument(new Empty {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "containers-nested-sequences",
+          "wire_id": "containers-nested-sequences",
+          "directory": "007-containers-nested-sequences",
+          "expression": "r.renderDocument(List(List(1,2),Set(3,4),new Listing { 5;6 }))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "containers-mapping-in-sequence",
+          "wire_id": "containers-mapping-in-sequence",
+          "directory": "008-containers-mapping-in-sequence",
+          "expression": "r.renderDocument(List(new Dynamic { a=1;b=List(2,3) },Map(\"c\",4)))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "containers-sequence-in-mapping",
+          "wire_id": "containers-sequence-in-mapping",
+          "directory": "009-containers-sequence-in-mapping",
+          "expression": "r.renderDocument(Map(\"a\",List(1,List(2)),\"b\",new Listing { new Mapping { [\"c\"]=3 } }))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "containers-null-members",
+          "wire_id": "containers-null-members",
+          "directory": "010-containers-null-members",
+          "expression": "r.renderDocument(new Dynamic { a=null;b=1;n=List(null);m=Map(\"k\",null) })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "containers-mixed-dynamic",
+          "wire_id": "containers-mixed-dynamic",
+          "directory": "011-containers-mixed-dynamic",
+          "expression": "r.renderDocument(new Dynamic { a=1;2 })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "containers-mixed-entry",
+          "wire_id": "containers-mixed-entry",
+          "directory": "012-containers-mixed-entry",
+          "expression": "r.renderDocument(new Dynamic { [\"a\"]=1;2 })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "containers-typed",
+          "wire_id": "containers-typed",
+          "directory": "013-containers-typed",
+          "expression": "r.renderDocument(new Person { name=\"pigeon\" })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "containers-element-dynamic",
+          "wire_id": "containers-element-dynamic",
+          "directory": "014-containers-element-dynamic",
+          "expression": "r.renderDocument(new Dynamic {1;new Dynamic {x=2}})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "containers-empty-value",
+          "wire_id": "containers-empty-value",
+          "directory": "015-containers-empty-value",
+          "expression": "r.renderValue(List())",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "containers-omit-false",
+          "wire_id": "containers-omit-false",
+          "directory": "016-containers-omit-false",
+          "expression": "new YamlRenderer { omitNullProperties=false }.renderDocument(new Dynamic { a=null;m=Map(\"k\",null);n=List(null) })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "containers-omit-converted",
+          "wire_id": "containers-omit-converted",
+          "directory": "017-containers-omit-converted",
+          "expression": "new YamlRenderer { converters { [Int]=(_)->null } }.renderDocument(new Dynamic { a=1;m=Map(\"k\",2);n=List(3) })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "containers-indent-four",
+          "wire_id": "containers-indent-four",
+          "directory": "018-containers-indent-four",
+          "expression": "new YamlRenderer { indentWidth=4 }.renderDocument(module.nested)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "containers-indent-five",
+          "wire_id": "containers-indent-five",
+          "directory": "019-containers-indent-five",
+          "expression": "new YamlRenderer { indentWidth=5 }.renderDocument(module.nested)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "containers-indent-ten-block",
+          "wire_id": "containers-indent-ten-block",
+          "directory": "020-containers-indent-ten-block",
+          "expression": "new YamlRenderer { indentWidth=10 }.renderDocument(Map(\"x\",\" a\\nb\"))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "containers-class-hidden",
+          "wire_id": "containers-class-hidden",
+          "directory": "021-containers-class-hidden",
+          "expression": "r.renderDocument(new Hidden {})",
+          "status": "success",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage93-yaml-oracle-01/programs/containers"
+    },
+    {
+      "cohort": "main328",
+      "id": "keys",
+      "uri": "file:///stage93/keys.pkl",
+      "rows": [
+        {
+          "id": "keys-int-map",
+          "wire_id": "keys-int-map",
+          "directory": "000-keys-int-map",
+          "expression": "r.renderDocument(Map(1,\"value\"))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-int-mapping",
+          "wire_id": "keys-int-mapping",
+          "directory": "001-keys-int-mapping",
+          "expression": "r.renderDocument(new Mapping { [1]=\"value\" })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-float-map",
+          "wire_id": "keys-float-map",
+          "directory": "002-keys-float-map",
+          "expression": "r.renderDocument(Map(1.5,\"value\"))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-float-mapping",
+          "wire_id": "keys-float-mapping",
+          "directory": "003-keys-float-mapping",
+          "expression": "r.renderDocument(new Mapping { [1.5]=\"value\" })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-bool-map",
+          "wire_id": "keys-bool-map",
+          "directory": "004-keys-bool-map",
+          "expression": "r.renderDocument(Map(true,\"value\"))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-bool-mapping",
+          "wire_id": "keys-bool-mapping",
+          "directory": "005-keys-bool-mapping",
+          "expression": "r.renderDocument(new Mapping { [true]=\"value\" })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-null-map",
+          "wire_id": "keys-null-map",
+          "directory": "006-keys-null-map",
+          "expression": "r.renderDocument(Map(null,\"value\"))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-null-mapping",
+          "wire_id": "keys-null-mapping",
+          "directory": "007-keys-null-mapping",
+          "expression": "r.renderDocument(new Mapping { [null]=\"value\" })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-nan-map",
+          "wire_id": "keys-nan-map",
+          "directory": "008-keys-nan-map",
+          "expression": "r.renderDocument(Map((0.0/0.0),\"value\"))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-nan-mapping",
+          "wire_id": "keys-nan-mapping",
+          "directory": "009-keys-nan-mapping",
+          "expression": "r.renderDocument(new Mapping { [(0.0/0.0)]=\"value\" })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-bytes-map",
+          "wire_id": "keys-bytes-map",
+          "directory": "010-keys-bytes-map",
+          "expression": "r.renderDocument(Map(Bytes(1),\"value\"))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "keys-bytes-mapping",
+          "wire_id": "keys-bytes-mapping",
+          "directory": "011-keys-bytes-mapping",
+          "expression": "r.renderDocument(new Mapping { [Bytes(1)]=\"value\" })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "keys-list-map",
+          "wire_id": "keys-list-map",
+          "directory": "012-keys-list-map",
+          "expression": "r.renderDocument(Map(List(1),\"value\"))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "keys-list-mapping",
+          "wire_id": "keys-list-mapping",
+          "directory": "013-keys-list-mapping",
+          "expression": "r.renderDocument(new Mapping { [List(1)]=\"value\" })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "keys-object-map",
+          "wire_id": "keys-object-map",
+          "directory": "014-keys-object-map",
+          "expression": "r.renderDocument(Map(new Dynamic {x=1},\"value\"))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "keys-object-mapping",
+          "wire_id": "keys-object-mapping",
+          "directory": "015-keys-object-mapping",
+          "expression": "r.renderDocument(new Mapping { [new Dynamic {x=1}]=\"value\" })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "keys-directive-map",
+          "wire_id": "keys-directive-map",
+          "directory": "016-keys-directive-map",
+          "expression": "r.renderDocument(Map(new RenderDirective {text=\"custom\"},\"value\"))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-directive-mapping",
+          "wire_id": "keys-directive-mapping",
+          "directory": "017-keys-directive-mapping",
+          "expression": "r.renderDocument(new Mapping { [new RenderDirective {text=\"custom\"}]=\"value\" })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-bracket",
+          "wire_id": "keys-bracket",
+          "directory": "018-keys-bracket",
+          "expression": "r.renderDocument(Map(\"a[b\",1))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-comma",
+          "wire_id": "keys-comma",
+          "directory": "019-keys-comma",
+          "expression": "r.renderDocument(Map(\"a,b\",1))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-lf",
+          "wire_id": "keys-lf",
+          "directory": "020-keys-lf",
+          "expression": "r.renderDocument(Map(\"a\\nb\",1))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-leading-space",
+          "wire_id": "keys-leading-space",
+          "directory": "021-keys-leading-space",
+          "expression": "r.renderDocument(Map(\" a\",1))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-quote",
+          "wire_id": "keys-quote",
+          "directory": "022-keys-quote",
+          "expression": "r.renderDocument(Map(\"a'b\",1))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-key1024",
+          "wire_id": "keys-key1024",
+          "directory": "023-keys-key1024",
+          "expression": "r.renderDocument(Map(\"a\".repeat(1024),1))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-key1025",
+          "wire_id": "keys-key1025",
+          "directory": "024-keys-key1025",
+          "expression": "r.renderDocument(Map(\"a\".repeat(1025),1))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-emoji512",
+          "wire_id": "keys-emoji512",
+          "directory": "025-keys-emoji512",
+          "expression": "r.renderDocument(Map(\"😀\".repeat(512),1))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-emoji513",
+          "wire_id": "keys-emoji513",
+          "directory": "026-keys-emoji513",
+          "expression": "r.renderDocument(Map(\"😀\".repeat(513),1))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-quoted-threshold",
+          "wire_id": "keys-quoted-threshold",
+          "directory": "027-keys-quoted-threshold",
+          "expression": "r.renderDocument(Map(\" \"+\"a\".repeat(1022),1))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "keys-raw-directive-key",
+          "wire_id": "keys-raw-directive-key",
+          "directory": "028-keys-raw-directive-key",
+          "expression": "r.renderDocument(Map(new RenderDirective {text=\"? raw\\n\"},1))",
+          "status": "success",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage93-yaml-oracle-01/programs/keys"
+    },
+    {
+      "cohort": "main328",
+      "id": "unsupported",
+      "uri": "file:///stage93/unsupported.pkl",
+      "rows": [
+        {
+          "id": "unsupported-duration-value",
+          "wire_id": "unsupported-duration-value",
+          "directory": "000-unsupported-duration-value",
+          "expression": "r.renderValue(1.s)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "unsupported-duration-member",
+          "wire_id": "unsupported-duration-member",
+          "directory": "001-unsupported-duration-member",
+          "expression": "r.renderDocument(new Dynamic { bad=1.s })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "unsupported-datasize-value",
+          "wire_id": "unsupported-datasize-value",
+          "directory": "002-unsupported-datasize-value",
+          "expression": "r.renderValue(1.mb)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "unsupported-datasize-member",
+          "wire_id": "unsupported-datasize-member",
+          "directory": "003-unsupported-datasize-member",
+          "expression": "r.renderDocument(new Dynamic { bad=1.mb })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "unsupported-pair-value",
+          "wire_id": "unsupported-pair-value",
+          "directory": "004-unsupported-pair-value",
+          "expression": "r.renderValue(Pair(1,2))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "unsupported-pair-member",
+          "wire_id": "unsupported-pair-member",
+          "directory": "005-unsupported-pair-member",
+          "expression": "r.renderDocument(new Dynamic { bad=Pair(1,2) })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "unsupported-regex-value",
+          "wire_id": "unsupported-regex-value",
+          "directory": "006-unsupported-regex-value",
+          "expression": "r.renderValue(Regex(\"x\"))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "unsupported-regex-member",
+          "wire_id": "unsupported-regex-member",
+          "directory": "007-unsupported-regex-member",
+          "expression": "r.renderDocument(new Dynamic { bad=Regex(\"x\") })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "unsupported-intseq-value",
+          "wire_id": "unsupported-intseq-value",
+          "directory": "008-unsupported-intseq-value",
+          "expression": "r.renderValue(IntSeq(1,2))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "unsupported-intseq-member",
+          "wire_id": "unsupported-intseq-member",
+          "directory": "009-unsupported-intseq-member",
+          "expression": "r.renderDocument(new Dynamic { bad=IntSeq(1,2) })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "unsupported-class-value",
+          "wire_id": "unsupported-class-value",
+          "directory": "010-unsupported-class-value",
+          "expression": "r.renderValue(Person)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "unsupported-class-member",
+          "wire_id": "unsupported-class-member",
+          "directory": "011-unsupported-class-member",
+          "expression": "r.renderDocument(new Dynamic { bad=Person })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "unsupported-alias-value",
+          "wire_id": "unsupported-alias-value",
+          "directory": "012-unsupported-alias-value",
+          "expression": "r.renderValue(Email)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "unsupported-alias-member",
+          "wire_id": "unsupported-alias-member",
+          "directory": "013-unsupported-alias-member",
+          "expression": "r.renderDocument(new Dynamic { bad=Email })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "unsupported-function-value",
+          "wire_id": "unsupported-function-value",
+          "directory": "014-unsupported-function-value",
+          "expression": "r.renderValue((x)->x)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "unsupported-function-member",
+          "wire_id": "unsupported-function-member",
+          "directory": "015-unsupported-function-member",
+          "expression": "r.renderDocument(new Dynamic { bad=(x)->x })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "unsupported-reference-value",
+          "wire_id": "unsupported-reference-value",
+          "directory": "016-unsupported-reference-value",
+          "expression": "r.renderValue(referenceValue)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "unsupported-reference-member",
+          "wire_id": "unsupported-reference-member",
+          "directory": "017-unsupported-reference-member",
+          "expression": "r.renderDocument(new Dynamic { bad=referenceValue })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "unsupported-undefined",
+          "wire_id": "unsupported-undefined",
+          "directory": "018-unsupported-undefined",
+          "expression": "r.renderDocument(new Person {})",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "unsupported-converted-root-error",
+          "wire_id": "unsupported-converted-root-error",
+          "directory": "019-unsupported-converted-root-error",
+          "expression": "new YamlRenderer {converters {[String]=(_)->1.s}}.renderDocument(\"before\")",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "unsupported-converted-value-error",
+          "wire_id": "unsupported-converted-value-error",
+          "directory": "020-unsupported-converted-value-error",
+          "expression": "new YamlRenderer {converters {[String]=(_)->1.s}}.renderValue(\"before\")",
+          "status": "error",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage93-yaml-oracle-01/programs/unsupported"
+    },
+    {
+      "cohort": "main328",
+      "id": "converters",
+      "uri": "file:///stage93/converters.pkl",
+      "rows": [
+        {
+          "id": "converters-path-over-type",
+          "wire_id": "converters-path-over-type",
+          "directory": "000-converters-path-over-type",
+          "expression": "new YamlRenderer { converters { [Int]=(_)->\"type\";[\"x\"]=(_)->\"path\" } }.renderDocument(new Dynamic {x=1})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-first-path",
+          "wire_id": "converters-first-path",
+          "directory": "001-converters-first-path",
+          "expression": "new YamlRenderer { converters { [\"*\"]=(_)->\"first\";[\"x\"]=(_)->\"second\" } }.renderDocument(new Dynamic {x=1})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-class-child",
+          "wire_id": "converters-class-child",
+          "directory": "002-converters-class-child",
+          "expression": "module.classes.renderValue(new Child {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-class-parent",
+          "wire_id": "converters-class-parent",
+          "directory": "003-converters-class-parent",
+          "expression": "module.classes.renderValue(new Parent {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-once",
+          "wire_id": "converters-once",
+          "directory": "004-converters-once",
+          "expression": "new YamlRenderer { converters { [Int]=(x)->x+1 } }.renderDocument(List(1,2))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-root-path",
+          "wire_id": "converters-root-path",
+          "directory": "005-converters-root-path",
+          "expression": "new YamlRenderer { converters { [\"^\"]=(_)->List(1,2) } }.renderDocument(\"x\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-entry-key-path",
+          "wire_id": "converters-entry-key-path",
+          "directory": "006-converters-entry-key-path",
+          "expression": "new YamlRenderer { converters { [String]=(v)->trace(v+\"!\");[\"m[k!]\"]=(_)->\"hit\" } }.renderDocument(new Dynamic {m=Map(\"k\",1)})",
+          "status": "success",
+          "logs": 1
+        },
+        {
+          "id": "converters-property-entry-separate",
+          "wire_id": "converters-property-entry-separate",
+          "directory": "007-converters-property-entry-separate",
+          "expression": "new YamlRenderer {converters {[\"x\"]=(_)->\"prop\";[\"[x]\"]=(_)->\"entry\"}}.renderDocument(new Dynamic {x=1;[\"x\"]=2})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-wildcard-elements",
+          "wire_id": "converters-wildcard-elements",
+          "directory": "008-converters-wildcard-elements",
+          "expression": "new YamlRenderer {converters {[\"a[*]\"]=(x)->x+1}}.renderDocument(new Dynamic {a=List(1,2)})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-dynamic-listing-no-rewrap",
+          "wire_id": "converters-dynamic-listing-no-rewrap",
+          "directory": "009-converters-dynamic-listing-no-rewrap",
+          "expression": "new YamlRenderer {converters {[Listing]=(_)->\"listing\"}}.renderDocument(new Dynamic {x=new Dynamic {1;2}})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-fix-duration",
+          "wire_id": "converters-fix-duration",
+          "directory": "010-converters-fix-duration",
+          "expression": "new YamlRenderer {converters {[Duration]=(x)->x.toString()}}.renderValue(1.s)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-null-key-still-converted",
+          "wire_id": "converters-null-key-still-converted",
+          "directory": "011-converters-null-key-still-converted",
+          "expression": "new YamlRenderer {converters {[String]=(x)->trace(x)}}.renderDocument(Map(\"k\",null))",
+          "status": "success",
+          "logs": 1
+        },
+        {
+          "id": "converters-path-after-null",
+          "wire_id": "converters-path-after-null",
+          "directory": "012-converters-path-after-null",
+          "expression": "new YamlRenderer {converters {[\"object.x\"]=(_)->\"hit\";[\"m[k]\"]=(_)->\"entry\"}}.renderDocument(new Dynamic {object{none=null;x=1};m=Map(\"none\",null,\"k\",2)})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-key-throw-first",
+          "wire_id": "converters-key-throw-first",
+          "directory": "013-converters-key-throw-first",
+          "expression": "new YamlRenderer {converters {[String]=(_)->throw(\"key\")}}.renderDocument(Map(\"k\",null))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "converters-value-before-key-validation",
+          "wire_id": "converters-value-before-key-validation",
+          "directory": "014-converters-value-before-key-validation",
+          "expression": "new YamlRenderer {converters {[Int]=(_)->throw(\"value\")}}.renderDocument(Map(List(1),2))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "converters-empty-path-key-type",
+          "wire_id": "converters-empty-path-key-type",
+          "directory": "015-converters-empty-path-key-type",
+          "expression": "new YamlRenderer {converters {[\"^\"]=(_)->Map(\"k\",1);[String]=(x)->trace(x)}}.renderDocument(null)",
+          "status": "success",
+          "logs": 1
+        },
+        {
+          "id": "converters-directives",
+          "wire_id": "converters-directives",
+          "directory": "016-converters-directives",
+          "expression": "new YamlRenderer {converters {[Int]=(x)->new RenderDirective {text=\" [\"+x.toString()+\"]\"}}}.renderDocument(Map(\"x\",1))",
+          "status": "success",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage93-yaml-oracle-01/programs/converters"
+    },
+    {
+      "cohort": "main328",
+      "id": "stream",
+      "uri": "file:///stage93/stream.pkl",
+      "rows": [
+        {
+          "id": "stream-scalars",
+          "wire_id": "stream-scalars",
+          "directory": "000-stream-scalars",
+          "expression": "s.renderDocument(List(\"a\",1,true,null))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "stream-empty-list",
+          "wire_id": "stream-empty-list",
+          "directory": "001-stream-empty-list",
+          "expression": "s.renderDocument(List())",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "stream-empty-listing",
+          "wire_id": "stream-empty-listing",
+          "directory": "002-stream-empty-listing",
+          "expression": "s.renderDocument(new Listing {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "stream-set",
+          "wire_id": "stream-set",
+          "directory": "003-stream-set",
+          "expression": "s.renderDocument(Set(1,2))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "stream-mapping",
+          "wire_id": "stream-mapping",
+          "directory": "004-stream-mapping",
+          "expression": "s.renderDocument(new Mapping {[\"x\"]=1})",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "stream-dynamic-elements",
+          "wire_id": "stream-dynamic-elements",
+          "directory": "005-stream-dynamic-elements",
+          "expression": "s.renderDocument(new Dynamic {1;2})",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "stream-scalar-error",
+          "wire_id": "stream-scalar-error",
+          "directory": "006-stream-scalar-error",
+          "expression": "s.renderDocument(1)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "stream-value-ignores-stream",
+          "wire_id": "stream-value-ignores-stream",
+          "directory": "007-stream-value-ignores-stream",
+          "expression": "s.renderValue(List(1,2))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "stream-multiline-last",
+          "wire_id": "stream-multiline-last",
+          "directory": "008-stream-multiline-last",
+          "expression": "s.renderDocument(List(Map(\"x\",\"a\"),Map(\"x\",\"b\\nc\")))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "stream-multiline-before-next",
+          "wire_id": "stream-multiline-before-next",
+          "directory": "009-stream-multiline-before-next",
+          "expression": "s.renderDocument(List(Map(\"x\",\"b\\nc\"),Map(\"x\",\"a\")))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "stream-empty-documents",
+          "wire_id": "stream-empty-documents",
+          "directory": "010-stream-empty-documents",
+          "expression": "s.renderDocument(List(List(),Map(),new Dynamic {},\"\"))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "stream-directive-separator",
+          "wire_id": "stream-directive-separator",
+          "directory": "011-stream-directive-separator",
+          "expression": "s.renderDocument(List(new RenderDirective{text=\"raw\\n\"},new RenderDirective{text=\"next\"}))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "stream-element-type-converter",
+          "wire_id": "stream-element-type-converter",
+          "directory": "012-stream-element-type-converter",
+          "expression": "new YamlRenderer {isStream=true;converters {[Int]=(_)->trace(\"converted\")}}.renderDocument(List(1,2))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "stream-nested-converter",
+          "wire_id": "stream-nested-converter",
+          "directory": "013-stream-nested-converter",
+          "expression": "new YamlRenderer {isStream=true;converters {[Int]=(x)->trace(x+1)}}.renderDocument(List(Map(\"x\",1)))",
+          "status": "success",
+          "logs": 1
+        },
+        {
+          "id": "stream-root-converter",
+          "wire_id": "stream-root-converter",
+          "directory": "014-stream-root-converter",
+          "expression": "new YamlRenderer {isStream=true;converters {[\"^\"]=(_)->List(1,2)}}.renderDocument(1)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "stream-listing-force-all",
+          "wire_id": "stream-listing-force-all",
+          "directory": "015-stream-listing-force-all",
+          "expression": "new YamlRenderer {isStream=true;converters {[Int]=(x)->trace(\"converter\")}}.renderDocument(new Listing {trace(1);throw(\"later\")})",
+          "status": "error",
+          "logs": 1
+        },
+        {
+          "id": "stream-listing-stream-retry",
+          "wire_id": "stream-listing-stream-retry",
+          "directory": "016-stream-listing-stream-retry",
+          "expression": "module.s.renderDocument(module.cached)",
+          "status": "success",
+          "logs": 2
+        },
+        {
+          "id": "stream-listing-stream-again",
+          "wire_id": "stream-listing-stream-again",
+          "directory": "017-stream-listing-stream-again",
+          "expression": "module.s.renderDocument(module.cached)",
+          "status": "success",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage93-yaml-oracle-01/programs/stream"
+    },
+    {
+      "cohort": "main328",
+      "id": "order",
+      "uri": "file:///stage93/order.pkl",
+      "rows": [
+        {
+          "id": "order-all-options",
+          "wire_id": "order-all-options",
+          "directory": "000-order-all-options",
+          "expression": "options.renderValue(trace(\"argument\"))",
+          "status": "success",
+          "logs": 7
+        },
+        {
+          "id": "order-cached-options",
+          "wire_id": "order-cached-options",
+          "directory": "001-order-cached-options",
+          "expression": "options.renderValue(\"again\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "order-argument",
+          "wire_id": "order-argument",
+          "directory": "002-order-argument",
+          "expression": "options.renderValue(throw(\"argument\"))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-mode",
+          "wire_id": "order-mode",
+          "directory": "003-order-mode",
+          "expression": "new YamlRenderer {mode=throw(\"mode\");indentWidth=throw(\"indent\")}.renderValue(1)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-indent",
+          "wire_id": "order-indent",
+          "directory": "004-order-indent",
+          "expression": "new YamlRenderer {indentWidth=throw(\"indent\");omitNullProperties=throw(\"omit\")}.renderValue(1)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-omit",
+          "wire_id": "order-omit",
+          "directory": "005-order-omit",
+          "expression": "new YamlRenderer {omitNullProperties=throw(\"omit\");isStream=throw(\"stream\")}.renderValue(1)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-stream-option",
+          "wire_id": "order-stream-option",
+          "directory": "006-order-stream-option",
+          "expression": "new YamlRenderer {isStream=throw(\"stream\");converters=throw(\"converters\")}.renderValue(1)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-converter-getter",
+          "wire_id": "order-converter-getter",
+          "directory": "007-order-converter-getter",
+          "expression": "new YamlRenderer {converters=throw(\"converters\");convertPropertyTransformers=throw(\"transformers\")}.renderValue(1)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-getters-before-force",
+          "wire_id": "order-getters-before-force",
+          "directory": "008-order-getters-before-force",
+          "expression": "new YamlRenderer {converters {[Int]=throw(\"converter-entry\")};convertPropertyTransformers=throw(\"transformer-getter\")}.renderValue(1)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-unused-converter",
+          "wire_id": "order-unused-converter",
+          "directory": "009-order-unused-converter",
+          "expression": "new YamlRenderer {converters {[Duration]=throw(\"unused\")}}.renderValue(1)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-unused-transformer",
+          "wire_id": "order-unused-transformer",
+          "directory": "010-order-unused-transformer",
+          "expression": "new YamlRenderer {convertPropertyTransformers {[ConvertProperty]=throw(\"unused\")}}.renderValue(1)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-invalid-path",
+          "wire_id": "order-invalid-path",
+          "directory": "011-order-invalid-path",
+          "expression": "new YamlRenderer {converters {[\"x[\"]=(x)->x}}.renderValue(1)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-invalid-mode",
+          "wire_id": "order-invalid-mode",
+          "directory": "012-order-invalid-mode",
+          "expression": "new YamlRenderer {mode=\"wrong\"}.renderValue(1)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-indent-one",
+          "wire_id": "order-indent-one",
+          "directory": "013-order-indent-one",
+          "expression": "new YamlRenderer {indentWidth=1}.renderValue(1)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-indent-zero",
+          "wire_id": "order-indent-zero",
+          "directory": "014-order-indent-zero",
+          "expression": "new YamlRenderer {indentWidth=0}.renderDocument(List())",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-indent-type",
+          "wire_id": "order-indent-type",
+          "directory": "015-order-indent-type",
+          "expression": "new YamlRenderer {indentWidth=\"2\"}.renderValue(1)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-omit-type",
+          "wire_id": "order-omit-type",
+          "directory": "016-order-omit-type",
+          "expression": "new YamlRenderer {omitNullProperties=1}.renderValue(1)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-stream-type",
+          "wire_id": "order-stream-type",
+          "directory": "017-order-stream-type",
+          "expression": "new YamlRenderer {isStream=1}.renderValue(1)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-method-reference",
+          "wire_id": "order-method-reference",
+          "directory": "018-order-method-reference",
+          "expression": "new YamlRenderer {}.renderValue",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-method-arity",
+          "wire_id": "order-method-arity",
+          "directory": "019-order-method-arity",
+          "expression": "new YamlRenderer {}.renderDocument()",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-extension-unused",
+          "wire_id": "order-extension-unused",
+          "directory": "020-order-extension-unused",
+          "expression": "new YamlRenderer {extension=throw(\"unused\")}.renderValue(\"x\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "order-extension",
+          "wire_id": "order-extension",
+          "directory": "021-order-extension",
+          "expression": "new YamlRenderer {}.extension",
+          "status": "success",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage93-yaml-oracle-01/programs/order"
+    },
+    {
+      "cohort": "main328",
+      "id": "indent-wrap-safe",
+      "uri": "file:///stage93/indent-wrap-safe.pkl",
+      "rows": [
+        {
+          "id": "indent-wrap-safe-wrap-two",
+          "wire_id": "indent-wrap-safe-wrap-two",
+          "directory": "000-indent-wrap-safe-wrap-two",
+          "expression": "new YamlRenderer {indentWidth=4294967298}.renderValue(List(1))",
+          "status": "success",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage93-yaml-oracle-01/programs/indent-wrap-safe"
+    },
+    {
+      "cohort": "main328",
+      "id": "indent-wrap-zero",
+      "uri": "file:///stage93/indent-wrap-zero.pkl",
+      "rows": [
+        {
+          "id": "indent-wrap-zero-wrap-zero",
+          "wire_id": "indent-wrap-zero-wrap-zero",
+          "directory": "000-indent-wrap-zero-wrap-zero",
+          "expression": "new YamlRenderer {indentWidth=4294967296}.renderValue(1)",
+          "status": "oracle-error",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage93-yaml-oracle-01/programs/indent-wrap-zero"
+    },
+    {
+      "cohort": "main328",
+      "id": "lazy",
+      "uri": "file:///stage93/lazy.pkl",
+      "rows": [
+        {
+          "id": "lazy-shallow-first",
+          "wire_id": "lazy-shallow-first",
+          "directory": "000-lazy-shallow-first",
+          "expression": "new YamlRenderer {converters {[Int]=(x)->trace(\"converter\")}}.renderDocument(new Dynamic {first=trace(1);later=throw(\"later\")})",
+          "status": "error",
+          "logs": 1
+        },
+        {
+          "id": "lazy-outer-before-inner",
+          "wire_id": "lazy-outer-before-inner",
+          "directory": "001-lazy-outer-before-inner",
+          "expression": "r.renderDocument(new Dynamic {nested=new Dynamic {bad=throw(\"inner\")};later=throw(\"outer\")})",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "lazy-typed-before-converter",
+          "wire_id": "lazy-typed-before-converter",
+          "directory": "002-lazy-typed-before-converter",
+          "expression": "new YamlRenderer {converters {[Int]=(x)->trace(\"converter\")}}.renderDocument(new Bad {})",
+          "status": "error",
+          "logs": 1
+        },
+        {
+          "id": "lazy-listing",
+          "wire_id": "lazy-listing",
+          "directory": "003-lazy-listing",
+          "expression": "r.renderDocument(new Listing {trace(1);throw(\"later\")})",
+          "status": "error",
+          "logs": 1
+        },
+        {
+          "id": "lazy-mixed-before-kind",
+          "wire_id": "lazy-mixed-before-kind",
+          "directory": "004-lazy-mixed-before-kind",
+          "expression": "r.renderDocument(new Dynamic {1;x=throw(\"before mixed\")})",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "lazy-retry",
+          "wire_id": "lazy-retry",
+          "directory": "005-lazy-retry",
+          "expression": "r.renderDocument(module.cached)",
+          "status": "success",
+          "logs": 1
+        },
+        {
+          "id": "lazy-retry-again",
+          "wire_id": "lazy-retry-again",
+          "directory": "006-lazy-retry-again",
+          "expression": "r.renderDocument(module.cached)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "lazy-retry-error",
+          "wire_id": "lazy-retry-error",
+          "directory": "007-lazy-retry-error",
+          "expression": "r.renderDocument(module.badCached)",
+          "status": "error",
+          "logs": 1
+        },
+        {
+          "id": "lazy-retry-error-again",
+          "wire_id": "lazy-retry-error-again",
+          "directory": "008-lazy-retry-error-again",
+          "expression": "r.renderDocument(module.badCached)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "lazy-converter-before-force",
+          "wire_id": "lazy-converter-before-force",
+          "directory": "009-lazy-converter-before-force",
+          "expression": "new YamlRenderer {converters {[Dynamic]=(_)->\"rescued\"}}.renderDocument(new Dynamic {x=throw(\"not forced\")})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "lazy-key-hash",
+          "wire_id": "lazy-key-hash",
+          "directory": "010-lazy-key-hash",
+          "expression": "r.renderDocument(new Mapping {[new Dynamic {x=trace(1)}]=trace(2)})",
+          "status": "error",
+          "logs": 2
+        },
+        {
+          "id": "lazy-key-hash-error",
+          "wire_id": "lazy-key-hash-error",
+          "directory": "011-lazy-key-hash-error",
+          "expression": "r.renderDocument(new Mapping {[new Dynamic {x=throw(\"key-hash\")}]=trace(2)})",
+          "status": "error",
+          "logs": 1
+        },
+        {
+          "id": "lazy-hidden",
+          "wire_id": "lazy-hidden",
+          "directory": "012-lazy-hidden",
+          "expression": "r.renderDocument(new Dynamic {hidden bad=throw(\"hidden\");x=1})",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "lazy-null-converter",
+          "wire_id": "lazy-null-converter",
+          "directory": "013-lazy-null-converter",
+          "expression": "new YamlRenderer {converters {[Null]=(_)->trace(\"not-null\")}}.renderDocument(new Dynamic {x=null})",
+          "status": "success",
+          "logs": 1
+        }
+      ],
+      "raw_source": "target/m2/stage93-yaml-oracle-01/programs/lazy"
+    },
+    {
+      "cohort": "main328",
+      "id": "annotations",
+      "uri": "file:///stage93/annotations.pkl",
+      "rows": [
+        {
+          "id": "annotations-rename",
+          "wire_id": "annotations-rename",
+          "directory": "000-annotations-rename",
+          "expression": "r.renderDocument(new Holder {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "annotations-untyped-override",
+          "wire_id": "annotations-untyped-override",
+          "directory": "001-annotations-untyped-override",
+          "expression": "r.renderDocument(new Child {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "annotations-typed-redeclaration",
+          "wire_id": "annotations-typed-redeclaration",
+          "directory": "002-annotations-typed-redeclaration",
+          "expression": "r.renderDocument(new TypedChild {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "annotations-noncommutative",
+          "wire_id": "annotations-noncommutative",
+          "directory": "003-annotations-noncommutative",
+          "expression": "r.renderDocument(new DoubleHolder {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "annotations-transformer",
+          "wire_id": "annotations-transformer",
+          "directory": "004-annotations-transformer",
+          "expression": "module.transformed.renderDocument(new Holder {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "annotations-specific-transformer",
+          "wire_id": "annotations-specific-transformer",
+          "directory": "005-annotations-specific-transformer",
+          "expression": "module.specific.renderDocument(new SpecialHolder {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "annotations-yaml-property",
+          "wire_id": "annotations-yaml-property",
+          "directory": "006-annotations-yaml-property",
+          "expression": "r.renderDocument(new YamlNamed {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "annotations-yaml-property-other",
+          "wire_id": "annotations-yaml-property-other",
+          "directory": "007-annotations-yaml-property-other",
+          "expression": "new JsonRenderer {}.renderValue(new YamlNamed {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "annotations-renamed-path",
+          "wire_id": "annotations-renamed-path",
+          "directory": "008-annotations-renamed-path",
+          "expression": "new YamlRenderer {converters {[\"value\"]=(x)->\"old-path\";[\"value-renamed\"]=(x)->\"new-path\"}}.renderDocument(new Holder {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "annotations-nested-render",
+          "wire_id": "annotations-nested-render",
+          "directory": "009-annotations-nested-render",
+          "expression": "r.renderDocument(new Tagged {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "annotations-to-dynamic",
+          "wire_id": "annotations-to-dynamic",
+          "directory": "010-annotations-to-dynamic",
+          "expression": "r.renderDocument(new Holder {}.toDynamic())",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "annotations-module-property",
+          "wire_id": "annotations-module-property",
+          "directory": "011-annotations-module-property",
+          "expression": "r.renderDocument(module.annotated)",
+          "status": "success",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage93-yaml-oracle-01/programs/annotations"
+    },
+    {
+      "cohort": "main328",
+      "id": "parser-related",
+      "uri": "file:///stage93/parser-related.pkl",
+      "rows": [
+        {
+          "id": "parser-related-parse-scalar",
+          "wire_id": "parser-related-parse-scalar",
+          "directory": "000-parser-related-parse-scalar",
+          "expression": "p.parse(\"yes\").toString()",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "parser-related-parse-map",
+          "wire_id": "parser-related-parse-map",
+          "directory": "001-parser-related-parse-map",
+          "expression": "p.parse(\"x: 1\").toString()",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "parser-related-parse-mapping",
+          "wire_id": "parser-related-parse-mapping",
+          "directory": "002-parser-related-parse-mapping",
+          "expression": "new yaml.Parser {useMapping=true}.parse(\"x: 1\").toString()",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "parser-related-parse-empty",
+          "wire_id": "parser-related-parse-empty",
+          "directory": "003-parser-related-parse-empty",
+          "expression": "p.parse(\"\").toString()",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "parser-related-parse-all-empty",
+          "wire_id": "parser-related-parse-all-empty",
+          "directory": "004-parser-related-parse-all-empty",
+          "expression": "p.parseAll(\"\").toString()",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "parser-related-parse-all",
+          "wire_id": "parser-related-parse-all",
+          "directory": "005-parser-related-parse-all",
+          "expression": "p.parseAll(\"---\\n1\\n---\\n2\").toString()",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "parser-related-single-multi-error",
+          "wire_id": "parser-related-single-multi-error",
+          "directory": "006-parser-related-single-multi-error",
+          "expression": "p.parse(\"---\\n1\\n---\\n2\").toString()",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "parser-related-aliases",
+          "wire_id": "parser-related-aliases",
+          "directory": "007-parser-related-aliases",
+          "expression": "new yaml.Parser {maxCollectionAliases=1}.parse(\"a: &a [1]\\nb: *a\\nc: *a\").toString()",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "parser-related-resource-uri",
+          "wire_id": "parser-related-resource-uri",
+          "directory": "008-parser-related-resource-uri",
+          "expression": "p.parse(new Resource {uri=\"mem:bad.yaml\";text=\"[\";bytes=Bytes()}).toString()",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "parser-related-parser-converter",
+          "wire_id": "parser-related-parser-converter",
+          "directory": "009-parser-related-parser-converter",
+          "expression": "new yaml.Parser {converters {[Int]=(x)->trace(x+1)}}.parse(\"x: 1\").toString()",
+          "status": "success",
+          "logs": 1
+        }
+      ],
+      "raw_source": "target/m2/stage93-yaml-oracle-01/programs/parser-related"
+    },
+    {
+      "cohort": "reach4",
+      "id": "reach",
+      "uri": "file:///stage93/reach.pkl",
+      "rows": [
+        {
+          "id": "class-member",
+          "wire_id": "class-member",
+          "directory": "000-class-member",
+          "expression": "r.renderDocument(classMember)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "alias-member",
+          "wire_id": "alias-member",
+          "directory": "001-alias-member",
+          "expression": "r.renderDocument(aliasMember)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "reference-member",
+          "wire_id": "reference-member",
+          "directory": "002-reference-member",
+          "expression": "r.renderDocument(referenceMember)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "legal-hidden",
+          "wire_id": "legal-hidden",
+          "directory": "003-legal-hidden",
+          "expression": "r.renderDocument(new Hidden {})",
+          "status": "success",
+          "logs": 1
+        }
+      ],
+      "raw_source": "target/m2/stage93-yaml-reach-oracle-01/programs/reach"
+    }
+  ],
+  "query_count": 332,
+  "rust_expected_origin": "Only unchanged actual Java raw bytes; no Rust-derived expected values.",
+  "comparison_fields": [
+    "status",
+    "stdout UTF8",
+    "stdout UTF16BE",
+    "stderr UTF8",
+    "stderr UTF16BE",
+    "ordered Logger level/message/module-uri/member/position UTF8 and UTF16BE"
+  ],
+  "profile": {
+    "power_assertions": false,
+    "host_logger": true,
+    "color": false,
+    "external_properties": {},
+    "environment_variables": {}
+  },
+  "scope": "328 original queries including four intent misses plus four separate reached controls. All332 raw rows stored. Renderer321 ordinary/success cases will be asserted; wrap0 oraclebug1 and separate Parser10 remain open and uncounted, never replacement successful cases."
+}

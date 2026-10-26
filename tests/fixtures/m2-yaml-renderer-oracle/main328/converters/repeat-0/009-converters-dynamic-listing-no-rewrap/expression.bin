@@ -1,0 +1,1 @@
+new YamlRenderer {converters {[Listing]=(_)->"listing"}}.renderDocument(new Dynamic {x=new Dynamic {1;2}})

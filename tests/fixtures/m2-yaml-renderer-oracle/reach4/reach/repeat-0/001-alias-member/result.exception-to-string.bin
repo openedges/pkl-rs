@@ -1,0 +1,13 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot render value of type `TypeAlias` as YAML.
+Value: stage93.reach#Email
+
+11 | hidden aliasMember = new Dynamic { bad = module.Email }
+                                        ^^^^^^^^^^^^^^^^^^
+at pkl.base#YamlRenderer.renderDocument (file:///stage93/reach.pkl)
+
+Consider adding a converter to `output.converters`.
+
+1 | r.renderDocument(aliasMember)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,17 @@
+module stage93.reach
+import "pkl:ref"
+class Person { value: String }
+typealias Email = String
+class Domain extends ref.Domain {
+  function renderReference(reference: ref.Reference<Domain, Any>): String = "ref"
+}
+local domain = new Domain {}
+hidden referenceValue = ref.Reference(domain, Int, null)
+hidden classMember = new Dynamic { bad = module.Person }
+hidden aliasMember = new Dynamic { bad = module.Email }
+hidden referenceMember = new Dynamic { bad = module.referenceValue }
+class Hidden {
+  hidden bad: String = throw("hidden")
+  x: Int = trace(1)
+}
+hidden r = new YamlRenderer {}

@@ -1,0 +1,15 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "2"
+
+584 | indentWidth: Int(this > 1) = 2
+                   ^^^
+at pkl.base#YamlRenderer.indentWidth (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L584)
+
+1 | new YamlRenderer {indentWidth="2"}.renderValue(1)
+                                  ^^^
+at repl:text.indentWidth (repl:text)
+
+1 | new YamlRenderer {indentWidth="2"}.renderValue(1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -315,7 +315,11 @@ pub(in crate::vm) fn builtin_members(
             members.push(d.method(
                 name,
                 method,
-                if id == output::PROPERTIES_RENDERER {
+                if id == output::YAML_RENDERER {
+                    Instruction::RenderYaml {
+                        document: method == "renderDocument",
+                    }
+                } else if id == output::PROPERTIES_RENDERER {
                     Instruction::RenderProperties {
                         document: method == "renderDocument",
                     }

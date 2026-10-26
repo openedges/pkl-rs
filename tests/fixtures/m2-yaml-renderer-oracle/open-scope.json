@@ -1,0 +1,17 @@
+{
+  "renderer_comparison_queries": 321,
+  "all_stored_queries": 332,
+  "unresolved": [
+    {
+      "program": "indent-wrap-zero",
+      "queries": 1,
+      "reason": "PinnedJavaoraclebug must stayfailed/unresolved, no manufacturedRustexpected."
+    },
+    {
+      "program": "parser-related",
+      "queries": 10,
+      "reason": "Separate requiredParser API implementation remainsopen; import/Property doesnotproveParser."
+    }
+  ],
+  "no_Rust_execution_yet": true
+}

@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot render value of type `Function1` as YAML.
+Value: new Function1 {}
+
+1 | r.renderValue((x)->x)
+    ^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Consider adding a converter to `output.converters`.

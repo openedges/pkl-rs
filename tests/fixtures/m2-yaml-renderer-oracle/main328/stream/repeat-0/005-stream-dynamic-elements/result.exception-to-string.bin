@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+The top-level value of a YAML stream must have type `Listing`, `List`, or `Set`, but got type `Dynamic`.
+Value: new Dynamic { ?; ? }
+
+1 | s.renderDocument(new Dynamic {1;2})
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

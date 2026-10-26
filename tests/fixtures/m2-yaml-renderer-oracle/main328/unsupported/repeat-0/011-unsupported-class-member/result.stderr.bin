@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find property `Person`.
+
+1 | r.renderDocument(new Dynamic { bad=Person })
+                                       ^^^^^^
+at repl:text.bad (repl:text)
+
+1 | r.renderDocument(new Dynamic { bad=Person })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

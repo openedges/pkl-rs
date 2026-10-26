@@ -1,0 +1,20 @@
+module stage93.annotations
+import "pkl:yaml"
+open class Rename extends ConvertProperty {
+ suffix:String="-renamed"
+ render=(p,renderer)->Pair(p.first+suffix,"["+p.second+"]")
+}
+class Special extends Rename
+class Holder {@Rename {} value:String="v"}
+open class Parent {@Rename {suffix="-base"} value:String="base"}
+class Child extends Parent {@Rename {suffix="-child"} value="child"}
+class TypedChild extends Parent {@Rename {suffix="-typed"} value:String="typed"}
+class DoubleHolder {@Rename {suffix="-one"} @Rename {suffix="-two";render=(p,r)->Pair(p.first+suffix,"<"+p.second+">")} value:String="v"}
+class YamlNamed {@yaml.Property {name="NEW"} value:String="v"}
+class SpecialHolder {@Special {} value:String="v"}
+class RawTag extends ConvertProperty {render=(p,r)->Pair(p.first,new RenderDirective {text=" !tag "+r.renderValue(p.second)})}
+class Tagged {@RawTag {} value:String="v"}
+hidden r=new YamlRenderer {}
+hidden transformed=new YamlRenderer {convertPropertyTransformers {[module.Rename] {render=(p,r)->Pair("OVERRIDE","override:"+p.second)}}}
+hidden specific=new YamlRenderer {convertPropertyTransformers {[module.Rename] {render=(p,r)->Pair("PARENT",p.second)};[module.Special] {render=(p,r)->Pair("CHILD",p.second)}}}
+hidden annotated=new Holder {}

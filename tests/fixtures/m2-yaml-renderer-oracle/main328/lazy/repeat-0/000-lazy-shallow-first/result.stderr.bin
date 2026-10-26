@@ -1,0 +1,10 @@
+–– Pkl Error ––
+later
+
+1 | new YamlRenderer {converters {[Int]=(x)->trace("converter")}}.renderDocument(new Dynamic {first=trace(1);later=throw("later")})
+                                                                                                                   ^^^^^^^^^^^^^^
+at repl:text.later (repl:text)
+
+1 | new YamlRenderer {converters {[Int]=(x)->trace("converter")}}.renderDocument(new Dynamic {first=trace(1);later=throw("later")})
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

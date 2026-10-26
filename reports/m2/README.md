@@ -1,5 +1,34 @@
 # M2 language evidence
 
+## Stage93 YamlRenderer integration
+
+YamlRenderer document/value rendering is integrated in the shared engine. It
+covers version-dependent scalar quoting, Unicode and numeric output, indentation,
+streams, null omission, converters, annotations and lazy/Host evaluation order.
+The isolated candidate passes 110 tests across 14 targets and compares 321
+renderer queries twice, alongside 129 Properties regressions. Twenty-three
+unchanged originals match 46 API byte-vector observations and a separate 46
+native CLI-argv stdout/stderr/exit observations. Empty observed file maps do not
+establish a nonempty-file writer or complete product CLI support.
+
+Canonical formatting, manifest refresh/freshness, repository verification,
+Clippy and Wasm compilation pass. The recorded canonical results are:
+
+| Evidence | Actual result |
+| --- | --- |
+| Complete canonical workspace target coverage | 1,319 passed, zero failed, one existing ignored; 233 test executables, 25 examples, two doctest libraries in 36 invocations; 13 nested child summaries separate |
+| M1 strict comparison and architecture contract | 6,078 strict comparisons and the separate architecture contract pass on each target |
+| Native/N-API/Chromium, 900 observations each | 900 raw matches each: 642 successes, 258 ordinary errors, 8,040 shared fields and 84 ordered Logger events |
+
+Independent source and execution readbacks passed. Public evidence paths are [checkpoint](stage93-yaml-renderer-checkpoint.json),
+[evidence archive](stage93-yaml-renderer-evidence.tar.gz) and
+[publication review](stage93-yaml-renderer-publication-review.json). Earlier
+failed preparations and raw Java ordinary/oracle errors remain evidence. The
+full Java authority has 332 queries; ten Parser queries and one oracle-internal
+query are outside the selected 321, and eight Parser originals remain open.
+Current readiness remains 4,424/71/32. The completed Stage86 whole-corpus result
+remains 4,214/4,416; no newer full-corpus, complete API or performance claim follows.
+
 ## Stage86 complete ready-corpus replay
 
 The [full replay checkpoint](stage86-full-replay-checkpoint.json) records all

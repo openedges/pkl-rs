@@ -60,6 +60,7 @@ mod type_equivalence_tests;
 mod type_resolution;
 mod typecheck;
 mod uri_resolution;
+mod yaml;
 use typecheck::{TypeDestination, TypeRun};
 
 #[derive(Clone, Debug)]
@@ -89,6 +90,9 @@ pub enum Instruction {
         document: bool,
     },
     RenderProperties {
+        document: bool,
+    },
+    RenderYaml {
         document: bool,
     },
     CheckAnnotationClass,
@@ -4325,6 +4329,9 @@ impl Vm {
             }
             Instruction::RenderJson { document } => {
                 self.begin_render(document, rendering::Format::Json)?
+            }
+            Instruction::RenderYaml { document } => {
+                self.begin_render(document, rendering::Format::Yaml)?;
             }
             Instruction::RenderProperties { document } => {
                 self.begin_render(document, rendering::Format::Properties)?

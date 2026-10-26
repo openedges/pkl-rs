@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+before mixed
+
+1 | r.renderDocument(new Dynamic {1;x=throw("before mixed")})
+                                      ^^^^^^^^^^^^^^^^^^^^^
+at repl:text.x (repl:text)
+
+1 | r.renderDocument(new Dynamic {1;x=throw("before mixed")})
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

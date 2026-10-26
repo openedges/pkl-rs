@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot render value of type `Class` as YAML.
+Value: stage93.unsupported#Person
+
+1 | r.renderValue(Person)
+    ^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Consider adding a converter to `output.converters`.

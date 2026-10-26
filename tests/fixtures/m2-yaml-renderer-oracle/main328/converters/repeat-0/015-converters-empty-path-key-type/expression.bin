@@ -1,0 +1,1 @@
+new YamlRenderer {converters {["^"]=(_)->Map("k",1);[String]=(x)->trace(x)}}.renderDocument(null)

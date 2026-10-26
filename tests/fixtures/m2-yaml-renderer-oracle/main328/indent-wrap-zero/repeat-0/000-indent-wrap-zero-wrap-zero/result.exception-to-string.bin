@@ -1,0 +1,60 @@
+org.pkl.core.PklBugException: An unexpected error has occurred. Would you mind filing a bug report?
+Cmd+Double-click the link below to open an issue.
+Please copy and paste the entire error output into the issue's description.
+
+https://github.com/apple/pkl/issues/new
+
+java.lang.StringIndexOutOfBoundsException%3A%20Range%20%5B1%2C%200%29%20out%20of%20bounds%20for%20length%200
+
+–– Pkl Error ––
+Range [1, 0) out of bounds for length 0
+
+599 | external function renderValue(value: Any): String
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#YamlRenderer.renderValue (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L599)
+
+1 | new YamlRenderer {indentWidth=4294967296}.renderValue(1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Pkl 0.32.0 (macOS 27.0, Java 21.0.12.1)
+
+java.lang.StringIndexOutOfBoundsException: Range [1, 0) out of bounds for length 0
+	at java.base/jdk.internal.util.Preconditions$1.apply(Preconditions.java:55)
+	at java.base/jdk.internal.util.Preconditions$1.apply(Preconditions.java:52)
+	at java.base/jdk.internal.util.Preconditions$4.apply(Preconditions.java:213)
+	at java.base/jdk.internal.util.Preconditions$4.apply(Preconditions.java:210)
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:98)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckFromToIndex(Preconditions.java:112)
+	at java.base/jdk.internal.util.Preconditions.checkFromToIndex(Preconditions.java:349)
+	at java.base/java.lang.String.checkBoundsBeginEnd(String.java:4855)
+	at java.base/java.lang.String.substring(String.java:2823)
+	at java.base/java.lang.String.substring(String.java:2796)
+	at org.pkl.core.stdlib.base.YamlRendererNodes$YamlRenderer.<init>(YamlRendererNodes.java:97)
+	at org.pkl.core.stdlib.base.YamlRendererNodes.createRenderer(YamlRendererNodes.java:75)
+	at org.pkl.core.stdlib.base.YamlRendererNodes$renderValue.eval(YamlRendererNodes.java:62)
+	at org.pkl.core.stdlib.base.YamlRendererNodesFactory$renderValueNodeGen.executeAndSpecialize(YamlRendererNodesFactory.java:174)
+	at org.pkl.core.stdlib.base.YamlRendererNodesFactory$renderValueNodeGen.executeGeneric(YamlRendererNodesFactory.java:165)
+	at org.pkl.core.ast.member.FunctionNode.executeImpl(FunctionNode.java:116)
+	at org.pkl.core.ast.PklRootNode.execute(PklRootNode.java:46)
+	at com.oracle.truffle.api.impl.DefaultCallTarget.call(DefaultCallTarget.java:118)
+	at com.oracle.truffle.api.impl.DefaultDirectCallNode.call(DefaultDirectCallNode.java:59)
+	at org.pkl.core.ast.expression.member.InvokeMethodVirtualNode.evalCached(InvokeMethodVirtualNode.java:137)
+	at org.pkl.core.ast.expression.member.InvokeMethodVirtualNodeGen.executeAndSpecialize(InvokeMethodVirtualNodeGen.java:268)
+	at org.pkl.core.ast.expression.member.InvokeMethodVirtualNodeGen.executeGeneric(InvokeMethodVirtualNodeGen.java:189)
+	at org.pkl.core.ast.SimpleRootNode.executeImpl(SimpleRootNode.java:53)
+	at org.pkl.core.ast.PklRootNode.execute(PklRootNode.java:46)
+	at com.oracle.truffle.api.impl.DefaultCallTarget.call(DefaultCallTarget.java:118)
+	at com.oracle.truffle.api.impl.DefaultIndirectCallNode.call(DefaultIndirectCallNode.java:53)
+	at org.pkl.core.runtime.VmUtils.evaluateExpression(VmUtils.java:969)
+	at org.pkl.core.EvaluatorImpl.lambda$evaluateExpressionString$0(EvaluatorImpl.java:267)
+	at org.pkl.core.EvaluatorImpl.lambda$doEvaluate$0(EvaluatorImpl.java:470)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:388)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at CollectionEveryOracle.main(CollectionEveryOracle.java:102)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at jdk.compiler/com.sun.tools.javac.launcher.Main.execute(Main.java:484)
+	at jdk.compiler/com.sun.tools.javac.launcher.Main.run(Main.java:208)
+	at jdk.compiler/com.sun.tools.javac.launcher.Main.main(Main.java:135)

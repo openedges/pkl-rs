@@ -1,0 +1,8 @@
+module stage93.unsupported
+import "pkl:ref"
+class Person { value: String }
+typealias Email=String
+class Domain extends ref.Domain {function renderReference(reference: ref.Reference<Domain, Any>): String = "ref"}
+local domain=new Domain {}
+hidden referenceValue=ref.Reference(domain,Int,null)
+hidden r=new YamlRenderer {}

@@ -1,0 +1,8 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Error parsing YAML document: The number of aliases for collection nodes exceeds the allowed maximum of 1.
+
+1 | new yaml.Parser {maxCollectionAliases=1}.parse("a: &a [1]\nb: *a\nc: *a").toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+To increase the allowed maximum, set `YamlRenderer.maxCollectionAliases`.

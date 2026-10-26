@@ -1,0 +1,5 @@
+module stage93.lazy
+hidden r=new YamlRenderer {}
+class Bad {first:Int=trace(1);later:Int=throw("later")}
+hidden cached=new Dynamic {x=trace(1)}
+hidden badCached=new Dynamic {x=trace(1);y=throw("retry")}

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Converter path `x[` has invalid syntax.
+
+1 | new YamlRenderer {converters {["x["]=(x)->x}}.renderValue(1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

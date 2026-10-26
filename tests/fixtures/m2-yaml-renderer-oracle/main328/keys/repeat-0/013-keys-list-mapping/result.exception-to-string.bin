@@ -1,0 +1,8 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot render object with non-scalar key as YAML.
+Object: new Mapping { [List(1)] = "value" }
+Key   : List(1)
+
+1 | r.renderDocument(new Mapping { [List(1)]="value" })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

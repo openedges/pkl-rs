@@ -1,0 +1,10 @@
+–– Pkl Error ––
+later
+
+1 | new YamlRenderer {isStream=true;converters {[Int]=(x)->trace("converter")}}.renderDocument(new Listing {trace(1);throw("later")})
+                                                                                                                     ^^^^^^^^^^^^^^
+at repl:text[#2] (repl:text)
+
+1 | new YamlRenderer {isStream=true;converters {[Int]=(x)->trace("converter")}}.renderDocument(new Listing {trace(1);throw("later")})
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

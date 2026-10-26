@@ -1,0 +1,1 @@
+new YamlRenderer {converters {["object.x"]=(_)->"hit";["m[k]"]=(_)->"entry"}}.renderDocument(new Dynamic {object{none=null;x=1};m=Map("none",null,"k",2)})

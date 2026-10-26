@@ -1,0 +1,13 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot render value of type `Regex` as YAML.
+Value: Regex("x")
+
+1 | r.renderDocument(new Dynamic { bad=Regex("x") })
+                                   ^^^^^^^^^^^^^^
+at pkl.base#YamlRenderer.renderDocument (repl:text)
+
+Consider adding a converter to `output.converters`.
+
+1 | r.renderDocument(new Dynamic { bad=Regex("x") })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+converters
+
+1 | new YamlRenderer {converters=throw("converters");convertPropertyTransformers=throw("transformers")}.renderValue(1)
+                                 ^^^^^^^^^^^^^^^^^^^
+at repl:text.converters (repl:text)
+
+1 | new YamlRenderer {converters=throw("converters");convertPropertyTransformers=throw("transformers")}.renderValue(1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

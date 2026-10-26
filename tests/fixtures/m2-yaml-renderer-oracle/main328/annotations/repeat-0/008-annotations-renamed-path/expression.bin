@@ -1,0 +1,1 @@
+new YamlRenderer {converters {["value"]=(x)->"old-path";["value-renamed"]=(x)->"new-path"}}.renderDocument(new Holder {})

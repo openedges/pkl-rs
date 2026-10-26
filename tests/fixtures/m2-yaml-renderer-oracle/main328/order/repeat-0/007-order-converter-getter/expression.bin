@@ -1,0 +1,1 @@
+new YamlRenderer {converters=throw("converters");convertPropertyTransformers=throw("transformers")}.renderValue(1)

@@ -1,0 +1,3 @@
+module stage93.parserRelated
+import "pkl:yaml"
+hidden p=new yaml.Parser {}

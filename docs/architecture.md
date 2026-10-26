@@ -1275,6 +1275,26 @@ and roots during Host suspension remain shared across targets. These operations
 support the pinned PropertiesRenderer originals; their selected comparisons do
 not establish complete renderer, product CLI or generated-file compatibility.
 
+### YAML rendering
+
+YamlRenderer shares the existing frame-owned renderer continuation with JSON,
+PCF and Properties. A UTF-16 emitter handles plain, quoted and multiline strings,
+Unicode escapes, scalar numbers, indentation and stream document separators.
+The `compat`, `1.1` and `1.2` modes affect ambiguous string quoting. Document and
+value rendering retain their distinct root and stream behavior; options include
+`indentWidth`, `omitNullProperties` and `isStream`.
+
+Converter lookup, `pkl:yaml` property annotations and render directives run
+through ordinary VM calls. Pending options, values, keys, converter paths and
+stream state stay rooted across lazy forcing, key hashing, callbacks and Host
+suspension. Error order, cancellation and retry follow that shared continuation;
+platform adapters do not contain separate YAML evaluators or a Java fallback.
+
+The Java-backed native, N-API and Chromium comparisons cover renderer behavior only. YAML parsing
+remains separate work, including ten query controls and eight original modules.
+One Java internal error for an oversized `indentWidth` remains an unresolved comparison. This shared
+renderer does not establish full CLI file writing or performance compatibility.
+
 ### Strict transforms and quantity identity
 
 Collection transforms retain their source, callback, iteration cursor and

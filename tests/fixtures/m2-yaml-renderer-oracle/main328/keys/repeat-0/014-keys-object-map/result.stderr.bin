@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Cannot render map with non-scalar key as YAML.
+Map: Map(new Dynamic { x = 1 }, "value")
+Key: new Dynamic { x = 1 }
+
+1 | r.renderDocument(Map(new Dynamic {x=1},"value"))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -21,6 +21,30 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+Stage93 integrates the reviewed shared YamlRenderer implementation. Local
+Rust 1.98.1 formatting, manifest refresh/freshness, repository verification,
+workspace/all-target Clippy (`-D warnings`) and runtime `wasm32-unknown-unknown`
+compilation pass. Manifest refresh preserves case/count/requirement states while
+updating source links; it is recorded as an authorized transition rather than
+an unchanged source bookend.
+
+Actual Cargo metadata declares **233 test executables, 25 compile-only examples
+and two doctest libraries**. The complete target union was executed in 36 bounded
+invocations under opt1/debug0/strip-symbols, enabled debug assertions and overflow
+checks, one build job and no incremental compilation. Canonical result:
+**1,319 passed, zero failed and one existing ignored test; 13 nested child summaries are retained separately**. Outer harness results, ignored tests and nested children are counted separately.
+Source, producer and dep-info readback preceded release of consumed test executables. This is not one literal workspace
+command or a performance experiment.
+
+M1 strict/contract result: **6,078 strict comparisons and the separate architecture contract pass on each of Native, N-API and Chromium**. The selected portable cohort
+has 321 comparable YAML and 129 Properties queries, repeated twice: **900 observations per Native/N-API/Chromium target**, all raw-equal: 642 successes
+and 258 ordinary errors, with 8,040 shared fields and 84 Logger events per target. Raw status, UTF-8/UTF-16 and ordered Logger fields
+are compared without normalization; Java exception metadata and nonempty file
+output remain outside this adapter. Evidence and the separate publication review are linked from the
+[Stage93 checkpoint](reports/m2/stage93-yaml-renderer-checkpoint.json).
+The Parser10/8-original obligations and one oracle-internal query remain open;
+current readiness of 4,424/71/32 and the earlier Stage86 full replay are separate.
+
 The [Stage92 historical-admission checkpoint](reports/m2/stage92-historical-admission-checkpoint.json)
 changes tooling, registry and fixtures only.
 It preserves all 4,527 case IDs and 475 requirement records while connecting

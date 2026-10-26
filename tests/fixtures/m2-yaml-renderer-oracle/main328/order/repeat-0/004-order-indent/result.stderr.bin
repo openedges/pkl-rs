@@ -1,0 +1,10 @@
+–– Pkl Error ––
+indent
+
+1 | new YamlRenderer {indentWidth=throw("indent");omitNullProperties=throw("omit")}.renderValue(1)
+                                  ^^^^^^^^^^^^^^^
+at repl:text.indentWidth (repl:text)
+
+1 | new YamlRenderer {indentWidth=throw("indent");omitNullProperties=throw("omit")}.renderValue(1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

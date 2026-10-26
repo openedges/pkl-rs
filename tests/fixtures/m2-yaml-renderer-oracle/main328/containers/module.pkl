@@ -1,0 +1,6 @@
+module stage93.containers
+class Empty
+class Person { name: String; age: Int=30 }
+class Hidden { hidden bad: String=throw("hidden"); value: Int=1 }
+hidden r = new YamlRenderer {}
+hidden nested = new Dynamic { a=List(new Dynamic { x=" a\nb" },List(1,2)); b=Map("k",List()) }

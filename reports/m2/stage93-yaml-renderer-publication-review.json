@@ -1,0 +1,300 @@
+{
+  "Git_parent_existing_preimages_checked": 7,
+  "actual_M1": {
+    "architecture_contract": "pass",
+    "bindgen_distinct_input_output_JS": true,
+    "single_acquisition": true,
+    "strict_matches_each": 6078
+  },
+  "actual_fresh_metadata_completion": {
+    "bytes": 3507,
+    "mode": 420,
+    "path": "target/m2/stage93-checkpoint-publication-completion-01/report.json",
+    "sha256": "1323bafc90e5ddf99ed6e4325e5957f2b36019e403d493b73110db6c980c7c27"
+  },
+  "actual_inner_producer": {
+    "bytes": 6632,
+    "mode": 420,
+    "path": "target/m2/stage93-checkpoint-publication-01/report.json",
+    "sha256": "e3a7ed2bb1e8f8944fa3a6756fbe2a2e8d707c29f556f2466e10c0aa3b1d13cc"
+  },
+  "actual_readback_run": {
+    "bytes": 890,
+    "mode": 420,
+    "path": "target/m2/stage93-checkpoint-publication-independent-review-01/run-01/process.json",
+    "sha256": "cf0eaaec078073850aa328f6691bab7ef05be3d50a6e3b61953389c78755ba9c"
+  },
+  "actual_review_authorities": {
+    "M1": {
+      "bytes": 25535,
+      "mode": 420,
+      "path": "target/m2/stage93-m1-independent-review-01/report.json",
+      "sha256": "79a1ddfdebd772817d184c77a76c6714da97062056043aed48c3a4d8cab0e453"
+    },
+    "candidate": {
+      "bytes": 7272,
+      "mode": 420,
+      "path": "target/m2/stage93-candidate-independent-review-01/report.json",
+      "sha256": "69f52b026bd6513789189b465090d5ff44d0b4edd493b7b0629a9d9e23277514"
+    },
+    "selected": {
+      "bytes": 22143,
+      "mode": 420,
+      "path": "target/m2/stage93-platform-actual-review-01/report.json",
+      "sha256": "2ee9e40f193cc24c5bdb6075cf6aa66a7c4beebf9c90550d4af53bc00c3fece6"
+    },
+    "workspace": {
+      "bytes": 98741,
+      "mode": 420,
+      "path": "target/m2/stage93-workspace-independent-review-01/report.json",
+      "sha256": "5319777e13eab7b7489945ad6d42735cce4401bcc5d9955dceb61ad1c2c30ba9"
+    }
+  },
+  "actual_selected_platform": {
+    "each_target": {
+      "logger_events": 84,
+      "ordinary_error": 258,
+      "raw_fields": 8040,
+      "rows": 900,
+      "success": 642
+    },
+    "queries": 450,
+    "repetitions": 2,
+    "targets": [
+      "native",
+      "napi",
+      "chromium"
+    ]
+  },
+  "actual_workspace": {
+    "compile_only_examples": 25,
+    "doctest_groups": 2,
+    "failed": 0,
+    "ignored": 1,
+    "invocations": 36,
+    "literal_single_workspace_command": false,
+    "nested_child_summaries_separate": 13,
+    "passed": 1319,
+    "test_executables": 233
+  },
+  "approved_for_publication": true,
+  "archive": {
+    "bytes": 47619030,
+    "mode": 420,
+    "path": "target/m2/stage93-checkpoint-publication-01/stage93-yaml-renderer-evidence.tar.gz",
+    "sha256": "c72e057b9ca46ed450aaeab7fbd347d4194da25f87e91f65cda34fe546127e2a"
+  },
+  "archive_readback": {
+    "bytes": 6468,
+    "mode": 420,
+    "path": "target/m2/stage93-checkpoint-publication-independent-review-01/archive-readback.json",
+    "sha256": "612ea75858b2a40624e81b2b1ec577919e1229e028be1c4373fc63e2d451407b"
+  },
+  "canonical": {
+    "approved_payloads": 7843,
+    "current_nonexternal_canonical_payloads": 22999,
+    "current_source_projection": 23024,
+    "direct_external_payloads_excluded": 25,
+    "documents": 5,
+    "inventory_readiness": {
+      "ready": 4424,
+      "unimplemented": 71,
+      "unmapped": 32
+    },
+    "manifest": {
+      "bytes": 6774094,
+      "mode": 420,
+      "path": "compatibility/m2-language.json",
+      "sha256": "eb286878bb3e07b2f22c7df6221898ce3e42f11ce023edef0ced938af792283e"
+    },
+    "total_integrated_destinations": 23004
+  },
+  "checkpoint_draft": {
+    "bytes": 56849,
+    "mode": 420,
+    "path": "target/m2/stage93-checkpoint-descriptor-01/checkpoint-draft.json",
+    "sha256": "9e0e1ee86cfba36db077a5a66467cfca4be95b73d4e6aa2fb5c5668f2ca9227c"
+  },
+  "complete": true,
+  "descriptor_review_pending": false,
+  "documentation_scope": "Five final documents match their selected archived bytes. Standard English docs and Korean PLAN describe finite YamlRenderer validation, separate strict M1/architecture verdicts, 36 partitioned invocations, prior Properties129 authority, unresolved Parser/oracle cases, and unchanged Stage86 aggregate.",
+  "final_documents": {
+    "PLAN.md": {
+      "bytes": 454200,
+      "mode": 420,
+      "path": "PLAN.md",
+      "sha256": "19e3e08a6468ad6f6f5a91d54b1a6854a429e3246170ceee9f6ed3f236192f3f"
+    },
+    "TESTING.md": {
+      "bytes": 79861,
+      "mode": 420,
+      "path": "TESTING.md",
+      "sha256": "0dd7220ef178f08d265f59fc156318b785b16aaef61246b9c4534dab30a73eac"
+    },
+    "docs/architecture.md": {
+      "bytes": 99447,
+      "mode": 420,
+      "path": "docs/architecture.md",
+      "sha256": "2203ecf81660e03a5fdd705725da6d8a7614aa6ed7aa05fc37470c1a272b5a4b"
+    },
+    "docs/m2-language.md": {
+      "bytes": 91800,
+      "mode": 420,
+      "path": "docs/m2-language.md",
+      "sha256": "df055a880fec72656491c75dca9d008bc9ceb4308fa3cccd169212f1019973f6"
+    },
+    "reports/m2/README.md": {
+      "bytes": 369374,
+      "mode": 420,
+      "path": "reports/m2/README.md",
+      "sha256": "12b87673e0084f37aa9566d783bf06e66d000922334c078c5bb47b0553c094ae"
+    }
+  },
+  "finished_epoch": 1793012451.339249,
+  "full_stream": {
+    "all_local_selected_sources_rehashed": 91072,
+    "archive_extracted": false,
+    "decompressed_tar_bytes": 498391040,
+    "file_modes_counts": {
+      "420": 91072
+    },
+    "manifest_exact": true,
+    "member_order_exact": true,
+    "members_including_manifest": 91073,
+    "no_appended_data": true,
+    "payload_logical_bytes": 302981838,
+    "regular_payloads": 91072,
+    "single_gzip_member_CRC_EOF": true,
+    "trailing_zero_padding_bytes": 8704
+  },
+  "kind": "stage93-publication-full-stream-independent-review",
+  "limits": [
+    "This readback validates finite publication bytes/source/provenance and reuses the separately recorded actual independent reviews; it is not a new independent semantic implementation review.",
+    "Generated compiler/native/Node/Wasm payloads are omitted; identity/producer/dep-info/raw records remain. Archive alone is not a runnable distribution or promise of binary restoration.",
+    "Prior Properties129 authority depends on the exact committed Stage91 archive. Direct reference checkout payloads are pinned external dependencies.",
+    "Parser10 queries and8 original modules plus1 oracle-internal zero-indent case remain unselected/open. Latest official full ready-corpus replay remains Stage86 4214/4416; no new aggregate/fullM2/API/performance result.",
+    "Original publisher outer failed after inner readback. Original child terminal exit is unknown; later metadata completion and this independent stream are separate evidence, not an inferred original exit0."
+  ],
+  "manifest_case_order_and_requirement_statuses_preserved": true,
+  "original_outer_failure": {
+    "bytes": 2028,
+    "mode": 420,
+    "path": "target/m2/stage93-checkpoint-publication-completion-01/original-outer-failure.json",
+    "sha256": "604184a2a088951330a4e75779ec6bc6bf371d000f7f6c67a3a200b1e2c97fb9"
+  },
+  "outer_failure_preserved": {
+    "archive_regenerated": false,
+    "fresh_completion_is_separate_sidecar": true,
+    "original_child_exit": null,
+    "original_outer_exit": 1
+  },
+  "permitted_public_descriptor_transform": "Root may change publication_ready to true; add exact public archive identity, producer-draft identity, this review identity and five final document identities; replace Git binding with truthful source-parent/compiled-uncommitted-source binding and containing-commit/non-force-push intent or separately observed results. Preserve all archived sources/raw, outcome/scope/limits/failure fields, the 11 exact embedded post-archive sidecars and original outer1/child-null distinction. No future publication commit or push is claimed by this review.",
+  "post_archive_embedded_sidecars_checked": [
+    {
+      "bytes": 6632,
+      "mode": 420,
+      "path": "target/m2/stage93-checkpoint-publication-01/report.json",
+      "sha256": "e3a7ed2bb1e8f8944fa3a6756fbe2a2e8d707c29f556f2466e10c0aa3b1d13cc"
+    },
+    {
+      "bytes": 2053,
+      "mode": 420,
+      "path": "target/m2/stage93-checkpoint-publication-launch-01/intent.json",
+      "sha256": "cc212a6564228b67520d17fda56c261c05426f3e4b7d4d0478625c8157e243f7"
+    },
+    {
+      "bytes": 72,
+      "mode": 420,
+      "path": "target/m2/stage93-checkpoint-publication-launch-01/child-start.json",
+      "sha256": "3b58c69e3813168df7dd5aa276d314b22a631219d7ec8bd39a6eb4c32e8ce585"
+    },
+    {
+      "bytes": 174,
+      "mode": 420,
+      "path": "target/m2/stage93-checkpoint-publication-launch-01/stdout.bin",
+      "sha256": "9b66b333271eece96bfadf7c3d791a652264cac339744d91b6176f06a9a1b647"
+    },
+    {
+      "bytes": 0,
+      "mode": 420,
+      "path": "target/m2/stage93-checkpoint-publication-launch-01/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 10065,
+      "mode": 420,
+      "path": "target/m2/stage93-checkpoint-publication-launch-01/space.jsonl",
+      "sha256": "d23c0aa5de22691f156a36046210eca94f3112df051b2b6c5a7cfed7a8a6bfce"
+    },
+    {
+      "bytes": 2028,
+      "mode": 420,
+      "path": "target/m2/stage93-checkpoint-publication-completion-01/original-outer-failure.json",
+      "sha256": "604184a2a088951330a4e75779ec6bc6bf371d000f7f6c67a3a200b1e2c97fb9"
+    },
+    {
+      "bytes": 5175,
+      "mode": 420,
+      "path": "target/m2/stage93-checkpoint-publication-completion-01/complete.py",
+      "sha256": "edeed1439cd9170546485c2359bc4c92f71b6be2167c575142d13ca18e1a3918"
+    },
+    {
+      "bytes": 3507,
+      "mode": 420,
+      "path": "target/m2/stage93-checkpoint-publication-completion-01/report.json",
+      "sha256": "1323bafc90e5ddf99ed6e4325e5957f2b36019e403d493b73110db6c980c7c27"
+    },
+    {
+      "bytes": 185,
+      "mode": 420,
+      "path": "target/m2/stage93-checkpoint-publication-completion-01/stdout.bin",
+      "sha256": "2af0684af9f2a94a8216a913975a4d47cb4fb31c0a91fb604af589a255220559"
+    },
+    {
+      "bytes": 0,
+      "mode": 420,
+      "path": "target/m2/stage93-checkpoint-publication-completion-01/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "post_archive_sidecars_are_not_archive_members": true,
+  "prior_Properties_bundle_authorities": 6110,
+  "prior_Stage91_bridge": {
+    "bytes": 1573225,
+    "mode": 420,
+    "path": "target/m2/stage93-checkpoint-publication-01/prior-Stage91-bridge.json",
+    "sha256": "8e8fdb8b8f25fe9bdb0c62e8db3bbbdbb526e718d1a8d5b2b0533837efa1858f"
+  },
+  "prior_Stage91_exact_committed_archive": {
+    "bytes": 43276200,
+    "commit": "c5f266fa5005ac50477a23b12f335df8eb3ec632",
+    "git_oid": "f1645d82c47eb6c3e3540bbba2c99c63c9cdd996",
+    "path": "reports/m2/stage91-properties-renderer-evidence.tar.gz",
+    "sha256": "681fe1b3859a25e599850d06b82e6837173d6a27cc207f39401ae9fafe43efbc"
+  },
+  "prior_Stage91_members_read": 6118,
+  "publication_GO_pending_descriptor": false,
+  "required_failure_and_open_scope_history_preserved": true,
+  "review_actions": {
+    "Git_mutations": 0,
+    "archive_extractions": 0,
+    "canonical_writes": 0,
+    "guest_or_compiler_runs": 0,
+    "protected_partial_touched": false,
+    "public_writes": 0
+  },
+  "schema_version": 1,
+  "selection": {
+    "bytes": 44484508,
+    "mode": 420,
+    "path": "target/m2/stage93-checkpoint-publication-01/selection.json",
+    "sha256": "a9f745fa214ccadf6dba9a1ae059341d6915e9c52177ea078a2b30b790b273fa"
+  },
+  "selection_report": {
+    "bytes": 9156,
+    "mode": 420,
+    "path": "target/m2/stage93-checkpoint-publication-01/selection-report.json",
+    "sha256": "b96e64ed6e3aff26c2a0c2438e0433bc3fa468eef36045b07748443dda19eaf0"
+  },
+  "verdict": "GO for finite Stage93 shared YamlRenderer development checkpoint publication"
+}

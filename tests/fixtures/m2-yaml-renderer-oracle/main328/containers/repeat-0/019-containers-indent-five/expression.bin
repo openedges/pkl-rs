@@ -1,0 +1,1 @@
+new YamlRenderer { indentWidth=5 }.renderDocument(module.nested)

@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+key
+
+1 | new YamlRenderer {converters {[String]=(_)->throw("key")}}.renderDocument(Map("k",null))
+                                                ^^^^^^^^^^^^
+at repl:text.converters[#1].<function#1> (repl:text)
+
+1 | new YamlRenderer {converters {[String]=(_)->throw("key")}}.renderDocument(Map("k",null))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

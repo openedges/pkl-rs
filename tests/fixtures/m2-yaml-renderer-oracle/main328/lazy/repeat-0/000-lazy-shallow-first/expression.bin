@@ -1,0 +1,1 @@
+new YamlRenderer {converters {[Int]=(x)->trace("converter")}}.renderDocument(new Dynamic {first=trace(1);later=throw("later")})

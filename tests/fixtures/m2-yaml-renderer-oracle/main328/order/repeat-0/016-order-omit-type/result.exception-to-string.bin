@@ -1,0 +1,15 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Boolean`, but got type `Int`.
+Value: 1
+
+587 | omitNullProperties: Boolean = true
+                          ^^^^^^^
+at pkl.base#YamlRenderer.omitNullProperties (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L587)
+
+1 | new YamlRenderer {omitNullProperties=1}.renderValue(1)
+                                         ^
+at repl:text.omitNullProperties (repl:text)
+
+1 | new YamlRenderer {omitNullProperties=1}.renderValue(1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

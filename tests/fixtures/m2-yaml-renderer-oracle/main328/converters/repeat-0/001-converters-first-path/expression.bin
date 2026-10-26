@@ -1,0 +1,1 @@
+new YamlRenderer { converters { ["*"]=(_)->"first";["x"]=(_)->"second" } }.renderDocument(new Dynamic {x=1})

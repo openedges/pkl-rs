@@ -1,0 +1,1 @@
+new YamlRenderer {converters {["a[*]"]=(x)->x+1}}.renderDocument(new Dynamic {a=List(1,2)})

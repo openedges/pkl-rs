@@ -19,7 +19,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: PropertiesRenderer·historical 8개 실행 계약 통합; 최신 전체 코퍼스 4,214/4,416·전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: YamlRenderer 통합·정본 선택 검증 완료; 실행 가능 4,424개·최신 전체 코퍼스 4,214/4,416·전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
@@ -3090,6 +3090,40 @@ YAML·Plist 미지원 검사는 유지하고 Properties는 전용 Java 원시 fi
 혼합 schema 6 검증 결함을 수정하고 독립 재검토를 통과한 뒤 아래 Stage92에서
 정본 통합·실제 혼합 실행을 완료했다. 다음 YAML 구현의 Java 관찰에서도 일반 오류·내부 oracle 오류와
 의도한 동작에 도달하지 못한 질의를 구분해 보존한다.
+
+### Stage93 — 공유 YamlRenderer 통합과 정본 선택 검증
+
+공유 런타임에 YamlRenderer의 `renderDocument`·`renderValue`를 통합했다.
+`compat`·`1.1`·`1.2` 모드의 문자열 인용, 들여쓰기·문서 stream·null 속성 생략,
+숫자와 Unicode 출력, converter·`pkl:yaml` annotation을 처리한다. 기존 renderer
+continuation을 사용해 lazy 강제 평가·첫 오류 순서와 Host 중단·GC·취소·재시도를
+유지한다. YAML Parser는 별도 미완료 범위다.
+
+고정 Java 332개 질의를 각각 두 번 취득했다. 이 중 비교 가능한 renderer
+321개를 격리 후보에서 두 번씩 원시 status·UTF-8·UTF-16·Logger로 대조했다.
+후보의 14개 대상·110개 검사가 통과했으며, Properties 회귀 129개도 유지했다.
+변경하지 않은 renderer 원본 23개는 별도 API byte-vector 46회와 native CLI-argv
+stdout·stderr·종료 상태 46회가 각각 일치했다. 실제 생성 파일 집합은 모두 비어
+있으며, 이 probe의 비어 있지 않은 파일 출력이나 전체 제품 CLI 지원을 뜻하지 않는다.
+
+독립 GO 이후 7,843개 승인 경로를 정본에 통합했다. 포맷, manifest 갱신·freshness,
+repository verification, workspace/all-target Clippy, runtime Wasm 컴파일은 실제
+통과했다. manifest 갱신은 승인된 링크 hash 전이이며 source-stable 결과와 구분한다.
+실제 Cargo metadata는 test executable 233개·컴파일 전용 example 25개·doctest
+library 2개를 도출했다. 같은 opt1·debug0·strip·assertion·overflow 조건의 36개
+코호트의 최종 결과: **1,319개 통과·0개 실패·기존 1개 ignored. 233개 test executable·25개 example·2개 doctest library의 전체 범위를 실행했고, 중첩 child 13개 summary는 별도로 보존했다**.
+
+M1 strict·구조 계약: **native·N-API·Chromium 각각 6,078개 strict 비교와 별도 구조 계약 통과**.
+선택 플랫폼은 YAML321+Properties129 질의를 두 번씩, 환경별 900개 관찰로
+실행했다. **환경별 900개 모두 원시 일치(성공 642개·일반 오류 258개), 공유 필드 8,040개·Logger 84개가 일치했고 독립 검토를 통과했다**.
+공개 자료와 별도 게시 검토 기록의 경로는 [체크포인트](reports/m2/stage93-yaml-renderer-checkpoint.json),
+[증거](reports/m2/stage93-yaml-renderer-evidence.tar.gz),
+[게시 검토](reports/m2/stage93-yaml-renderer-publication-review.json)로 고정한다.
+
+현재 inventory는 ready4,424·미구현71·미연결32를 유지한다. 최신 완료된 전체
+코퍼스 결과는 이전 Stage86 소스의 4,214/4,416이며 이번 선택 결과를 더하지 않는다.
+YAML Parser10질의·원본8개와 indent-width의 Java oracle-internal1질의는 미해결로
+보존한다. 전체 M2·제품 API·플랫폼 릴리스·성능 gate는 계속 열려 있다.
 
 ### Stage92 — historical 원본 8개 실행 계약의 정본 연결
 

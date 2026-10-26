@@ -1,5 +1,42 @@
 # M2 language verification
 
+## Stage93 YamlRenderer integration
+
+The shared runtime now renders YAML documents and values, including streams,
+indentation, null-property omission, and the `compat`, `1.1` and `1.2` quoting
+modes. It preserves converter and annotation handling, lazy evaluation and
+error order, scalar formatting, and lossless UTF-16 escaping. Host suspension,
+GC, cancellation and retries use the existing renderer continuation.
+
+Pinned Java authority contains 332 queries repeated twice. The isolated candidate
+matches all **321 comparable renderer queries twice**, including ordinary errors
+and represented UTF-8/UTF-16/status/ordered Logger fields; 129 Properties queries
+remain regression coverage. Its 14 targets pass 110 named tests. Twenty-three
+unchanged renderer originals also match twice through API byte vectors and,
+separately, twice through native CLI-argv stdout/stderr/exit captures. All observed
+file maps are empty; nonempty generated-file and full product CLI behavior are
+not established by that probe.
+
+The reviewed 7,843-path implementation is integrated. Formatting, manifest
+refresh/freshness, repository verification, workspace/all-target Clippy and
+runtime Wasm compilation pass. The manifest refresh is an authorized source
+transition, with case and requirement states unchanged. Canonical workspace
+result: **1,319 passed, zero failed and one existing ignored test across 233 test executables, 25 compile-only examples and two doctest libraries in 36 invocations; 13 nested child summaries remain separate**. M1 strict and architecture contract:
+**6,078 strict comparisons and the separate architecture contract pass on each target**. Selected Native/N-API/Chromium comparison:
+**900 raw matches per target** from 450 queries repeated twice: 642 successes,
+258 ordinary errors, 8,040 shared fields and 84 ordered Logger events per target.
+Independent source and raw-evidence reviews passed.
+
+Public evidence and its separate archive review are linked through the
+[checkpoint](../reports/m2/stage93-yaml-renderer-checkpoint.json),
+[evidence archive](../reports/m2/stage93-yaml-renderer-evidence.tar.gz) and
+[publication review](../reports/m2/stage93-yaml-renderer-publication-review.json).
+YAML Parser's ten queries and eight originals, and one Java oracle-internal
+indent-width query, remain open. The inventory stays **4,424 ready, 71
+unimplemented, 32 unmapped**. The latest completed whole-corpus result is still
+Stage86's **4,214/4,416**, on earlier sources; these selected results do not update
+that aggregate or close the nine M2 workstreams and release/performance gates.
+
 ## Stage86 completed full ready-corpus replay
 
 The complete 4,416-case replay, separate raw-evidence verification, and

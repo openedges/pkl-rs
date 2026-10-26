@@ -1,0 +1,1 @@
+new yaml.Parser {maxCollectionAliases=1}.parse("a: &a [1]\nb: *a\nc: *a").toString()

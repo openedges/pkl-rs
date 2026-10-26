@@ -1,0 +1,1 @@
+new yaml.Parser {converters {[Int]=(x)->trace(x+1)}}.parse("x: 1").toString()

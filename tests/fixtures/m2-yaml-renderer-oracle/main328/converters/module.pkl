@@ -1,0 +1,4 @@
+module stage93.converters
+open class Parent {value:Int=1}
+class Child extends Parent
+hidden classes=new YamlRenderer {converters {[module.Parent]=(_)->"parent";[module.Child]=(_)->"child"}}

@@ -1,0 +1,1 @@
+new YamlRenderer {indentWidth=throw("indent");omitNullProperties=throw("omit")}.renderValue(1)

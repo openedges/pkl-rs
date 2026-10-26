@@ -1,0 +1,1 @@
+new YamlRenderer {converters {["x"]=(_)->"prop";["[x]"]=(_)->"entry"}}.renderDocument(new Dynamic {x=1;["x"]=2})

@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+retry
+
+5 | hidden badCached=new Dynamic {x=trace(1);y=throw("retry")}
+                                               ^^^^^^^^^^^^^^
+at stage93.lazy#badCached.y (file:///stage93/lazy.pkl)
+
+1 | r.renderDocument(module.badCached)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

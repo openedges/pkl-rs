@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Cannot render object with non-scalar key as YAML.
+Object: new Mapping { [new Dynamic { x = 1 }] = "value" }
+Key   : new Dynamic { x = 1 }
+
+1 | r.renderDocument(new Mapping { [new Dynamic {x=1}]="value" })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

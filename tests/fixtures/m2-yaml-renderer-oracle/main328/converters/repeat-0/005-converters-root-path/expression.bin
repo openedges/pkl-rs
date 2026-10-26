@@ -1,0 +1,1 @@
+new YamlRenderer { converters { ["^"]=(_)->List(1,2) } }.renderDocument("x")

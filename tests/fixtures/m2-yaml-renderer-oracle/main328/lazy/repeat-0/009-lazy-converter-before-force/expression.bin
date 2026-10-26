@@ -1,0 +1,1 @@
+new YamlRenderer {converters {[Dynamic]=(_)->"rescued"}}.renderDocument(new Dynamic {x=throw("not forced")})

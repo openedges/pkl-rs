@@ -1,0 +1,1 @@
+new YamlRenderer {converters {[Duration]=(x)->x.toString()}}.renderValue(1.s)

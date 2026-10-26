@@ -1,0 +1,1 @@
+new YamlRenderer {omitNullProperties=throw("omit");isStream=throw("stream")}.renderValue(1)

@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Cannot render map with non-scalar key as YAML.
+Map: Map(List(1), "value")
+Key: List(1)
+
+1 | r.renderDocument(Map(List(1),"value"))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

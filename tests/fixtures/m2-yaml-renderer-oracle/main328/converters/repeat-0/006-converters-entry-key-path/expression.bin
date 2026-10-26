@@ -1,0 +1,1 @@
+new YamlRenderer { converters { [String]=(v)->trace(v+"!");["m[k!]"]=(_)->"hit" } }.renderDocument(new Dynamic {m=Map("k",1)})

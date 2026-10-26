@@ -1,0 +1,9 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot render value of type `Duration` as YAML.
+Value: 1.s
+
+1 | new YamlRenderer {converters {[String]=(_)->1.s}}.renderValue("before")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Consider adding a converter to `output.converters`.

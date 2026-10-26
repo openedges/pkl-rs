@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+stream
+
+1 | new YamlRenderer {isStream=throw("stream");converters=throw("converters")}.renderValue(1)
+                               ^^^^^^^^^^^^^^^
+at repl:text.isStream (repl:text)
+
+1 | new YamlRenderer {isStream=throw("stream");converters=throw("converters")}.renderValue(1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

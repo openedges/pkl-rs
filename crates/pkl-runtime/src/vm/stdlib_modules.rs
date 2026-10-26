@@ -13,6 +13,7 @@ impl Vm {
             "pkl:test" => crate::stdlib_sources::test(),
             "pkl:ref" => crate::stdlib_sources::reference(),
             "pkl:json" => crate::stdlib_sources::json(),
+            "pkl:yaml" => crate::stdlib_sources::yaml(),
             "pkl:math" => crate::stdlib_sources::math(),
             _ if uri.starts_with("pkl:") => {
                 if crate::modules::stdlib_kind(uri) != Some(crate::modules::StdlibKind::Missing) {
@@ -132,7 +133,8 @@ fn append_members(
     // Pure Pkl declarations keep their actual bodies, annotations, class identity
     // and source owners. The JSON parser's external binding remains explicit.
     header.members.retain(|member| {
-        (uri == "pkl:json" && matches!(member.name.as_str(), "Property" | "Value"))
+        (matches!(uri, "pkl:json" | "pkl:yaml")
+            && matches!(member.name.as_str(), "Property" | "Value"))
             || (uri == "pkl:base"
                 && matches!(
                     member.name.as_str(),
@@ -180,7 +182,7 @@ fn append_members(
             base_binding(declaration)
         } else if uri == "pkl:math" {
             math_binding(declaration)
-        } else if uri == "pkl:json" {
+        } else if matches!(uri, "pkl:json" | "pkl:yaml") {
             unsupported_binding(uri, declaration)
         } else if uri == "pkl:ref" {
             match declaration.name.as_str() {

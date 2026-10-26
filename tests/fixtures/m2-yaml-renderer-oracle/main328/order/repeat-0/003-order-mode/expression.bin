@@ -1,0 +1,1 @@
+new YamlRenderer {mode=throw("mode");indentWidth=throw("indent")}.renderValue(1)

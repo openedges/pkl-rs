@@ -8,6 +8,7 @@ pub(super) enum Format {
     Pcf,
     Json,
     Properties,
+    Yaml,
 }
 impl Format {
     fn name(self) -> &'static str {
@@ -15,6 +16,7 @@ impl Format {
             Self::Pcf => "Pcf",
             Self::Json => "JSON",
             Self::Properties => "Properties",
+            Self::Yaml => "YAML",
         }
     }
 }
@@ -33,6 +35,7 @@ struct Members {
     emitted: bool,
     strict: bool,
     array: bool,
+    stream: bool,
 }
 struct MemberRun {
     members: Members,
@@ -53,6 +56,7 @@ struct PropertyRun {
     step: usize,
 }
 enum Task {
+    YamlKey(Value),
     PropertiesKey {
         path: Vec<PathPart>,
         next: usize,
@@ -77,6 +81,7 @@ enum Task {
         standalone: bool,
         root: bool,
         path: Vec<PathPart>,
+        stream: bool,
     },
     Member(MemberRun),
     Property(PropertyRun),
@@ -90,6 +95,7 @@ enum Task {
         emitted: bool,
         strict: bool,
         array: bool,
+        stream: bool,
     },
 }
 enum Await {
@@ -128,6 +134,8 @@ pub(super) struct RenderRun {
     omit_null: bool,
     restrict_charset: bool,
     properties_document: bool,
+    yaml: Option<super::yaml::Emitter>,
+    yaml_stream: bool,
     custom: bool,
     started: bool,
     converters: Converters,
@@ -147,6 +155,7 @@ impl RenderRun {
         }
         for task in &self.tasks {
             match task {
+                Task::YamlKey(key) => roots.push(key.clone()),
                 Task::PropertiesKey { path, .. } => path_roots(path, roots),
                 Task::PropertiesDirective { receiver, path } => {
                     roots.push(Value::Object(*receiver));
@@ -209,7 +218,23 @@ impl RenderRun {
         text.finish()
     }
     fn append(&mut self, text: &str) {
-        self.output.push_str(text);
+        if let Some(yaml) = &mut self.yaml {
+            yaml.text(text);
+        } else {
+            self.output.push_str(text);
+        }
+    }
+    fn append_value(&mut self, text: &PklString) {
+        if let Some(yaml) = &mut self.yaml {
+            yaml.raw(text);
+        } else {
+            self.output.push_value(text);
+        }
+    }
+    fn output_empty(&self) -> bool {
+        self.yaml
+            .as_ref()
+            .map_or_else(|| self.output.is_empty(), super::yaml::Emitter::is_empty)
     }
     fn json_newline(&mut self, depth: usize) {
         if !self.indent.is_empty() {
@@ -415,6 +440,8 @@ impl Vm {
             omit_null: false,
             restrict_charset: false,
             properties_document: false,
+            yaml: None,
+            yaml_stream: false,
             custom: false,
             started: false,
             converters: Converters::default(),
@@ -431,7 +458,11 @@ impl Vm {
         let result = self.advance_pcf(&mut run);
         match result {
             Ok(true) => {
-                self.stack.push(Value::String(run.output.finish()));
+                let text = match run.yaml {
+                    Some(yaml) => yaml.finish(),
+                    None => run.output.finish(),
+                };
+                self.stack.push(Value::String(text));
             }
             Ok(false) | Err(_) => self.frames[index].pcf_render = Some(run),
         }
@@ -445,13 +476,9 @@ impl Vm {
                         return Err(invalid("Properties key string"));
                     };
                     if verbatim {
-                        run.output.push_value(&text);
+                        run.append_value(&text);
                     } else {
-                        run.output.push_value(&properties_string(
-                            &text,
-                            true,
-                            run.restrict_charset,
-                        ));
+                        run.append_value(&properties_string(&text, true, run.restrict_charset));
                     }
                 }
                 Await::Option(index) => {
@@ -499,7 +526,7 @@ impl Vm {
                     let Value::String(text) = self.pop()? else {
                         return Err(invalid("checked render directive text"));
                     };
-                    run.output.push_value(&text);
+                    run.append_value(&text);
                     if run.format == Format::Properties && run.properties_document {
                         run.append("\n");
                     }
@@ -532,6 +559,15 @@ impl Vm {
                 "converters",
                 "convertPropertyTransformers",
             ]
+        } else if run.format == Format::Yaml {
+            &[
+                "mode",
+                "indentWidth",
+                "omitNullProperties",
+                "isStream",
+                "converters",
+                "convertPropertyTransformers",
+            ]
         } else if run.format == Format::Json {
             &[
                 "indent",
@@ -547,6 +583,18 @@ impl Vm {
                 "convertPropertyTransformers",
             ]
         };
+        // Java constructs the narrowed indent before evaluating converter getters.
+        if run.format == Format::Yaml && run.option == 4 {
+            let Value::Int(width) = &run.options[1] else {
+                return Err(invalid("YAML indent"));
+            };
+            if (width.get() as i32) < 0 {
+                return Err(RuntimeError::new(
+                    ErrorKind::Unsupported,
+                    "Pinned Java YAML negative narrowed indent raises an oracle-internal error; this boundary remains unresolved.",
+                ));
+            }
+        }
         if run.option < names.len() {
             let index = run.option;
             run.option += 1;
@@ -570,7 +618,38 @@ impl Vm {
         }
         if !run.started {
             run.started = true;
-            if run.format == Format::Properties {
+            if run.format == Format::Yaml {
+                let (
+                    Value::String(mode),
+                    Value::Int(width),
+                    Value::Bool(omit),
+                    Value::Bool(stream),
+                ) = (
+                    &run.options[0],
+                    &run.options[1],
+                    &run.options[2],
+                    &run.options[3],
+                )
+                else {
+                    return Err(invalid("YAML options"));
+                };
+                let width = width.get() as i32;
+                if width == 0 {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Unsupported,
+                        "Pinned Java YAML zero narrowed indent raises an oracle-internal error; this boundary remains unresolved.",
+                    ));
+                }
+                let mode = match mode.as_str() {
+                    Some("compat") => super::yaml::Mode::Compat,
+                    Some("1.1") => super::yaml::Mode::Yaml11,
+                    Some("1.2") => super::yaml::Mode::Yaml12,
+                    _ => return Err(invalid("checked YAML mode")),
+                };
+                run.yaml = Some(super::yaml::Emitter::new(mode, width as usize));
+                run.omit_null = *omit;
+                run.yaml_stream = *stream;
+            } else if run.format == Format::Properties {
                 let (Value::Bool(omit), Value::Bool(restrict)) = (&run.options[0], &run.options[1])
                 else {
                     return Err(invalid("Properties renderer options"));
@@ -611,15 +690,30 @@ impl Vm {
             return Ok(false);
         }
         let Some(task) = run.tasks.pop() else {
-            if run.document
+            if run.document && run.format == Format::Yaml {
+                run.yaml.as_mut().unwrap().newline();
+            } else if run.document
                 && run.format != Format::Properties
-                && (run.format == Format::Json || !run.output.is_empty())
+                && (run.format == Format::Json || !run.output_empty())
             {
                 run.append("\n");
             }
             return Ok(true);
         };
         match task {
+            Task::YamlKey(key) => {
+                if let Value::Object(id) = key {
+                    run.await_ = Some(Await::Directive {
+                        receiver: id,
+                        path: Vec::new(),
+                    });
+                    self.force(id, id, "text".into(), false, true, false)?;
+                } else if let Value::String(text) = key {
+                    run.yaml.as_mut().unwrap().string(&text, true);
+                } else {
+                    run.append_value(&yaml_scalar(&key)?);
+                }
+            }
             Task::PropertiesKey {
                 path,
                 mut next,
@@ -643,8 +737,7 @@ impl Vm {
                 match part {
                     PathPart::Root => {}
                     PathPart::Property(name) => {
-                        run.output
-                            .push_value(&properties_string(&name, true, run.restrict_charset))
+                        run.append_value(&properties_string(&name, true, run.restrict_charset))
                     }
                     PathPart::Entry(value) => {
                         if let Value::Object(id) = value
@@ -666,7 +759,7 @@ impl Vm {
             Task::RestoreSource(source) => {
                 run.source = source;
             }
-            Task::Text(text) => run.output.push_value(&text),
+            Task::Text(text) => run.append_value(&text),
             Task::Visit {
                 value,
                 depth,
@@ -695,6 +788,48 @@ impl Vm {
                         run.document_original = Some(run.root.clone());
                     }
                     run.root = value.clone();
+                    if run.format == Format::Yaml && run.document && run.yaml_stream {
+                        let id = match value {
+                            Value::Object(id)
+                                if matches!(
+                                    self.heap.get(id)?.collection_kind,
+                                    CollectionKind::Listing
+                                        | CollectionKind::List
+                                        | CollectionKind::Set
+                                ) =>
+                            {
+                                id
+                            }
+                            _ => {
+                                let ty = crate::diagnostic_values::type_name(
+                                    &value,
+                                    &self.heap,
+                                    &self.program.module_name,
+                                )?;
+                                let text = crate::diagnostic_values::render(
+                                    &value,
+                                    &self.heap,
+                                    &self.program.module_name,
+                                    80,
+                                )?;
+                                return Err(RuntimeError::new(ErrorKind::Type, PklString::from(format!("The top-level value of a YAML stream must have type `Listing`, `List`, or `Set`, but got type `{ty}`.\nValue: ")).concat(&text)));
+                            }
+                        };
+                        run.active.insert(id);
+                        run.tasks.push(Task::OpenObject {
+                            receiver: id,
+                            depth,
+                            standalone,
+                            root,
+                            path,
+                            stream: true,
+                        });
+                        if self.heap.get(id)?.collection_kind == CollectionKind::Listing {
+                            run.await_ = Some(Await::Shallow);
+                            self.force_shallow_frame(Value::Object(id))?;
+                        }
+                        return Ok(false);
+                    }
                     if run.format == Format::Properties {
                         let valid = self.properties_document_value(&value)?;
                         let directive =
@@ -760,6 +895,28 @@ impl Vm {
                         _ => return self.pcf_unrenderable(run, &value),
                     }
                 }
+                if run.format == Format::Yaml {
+                    match &value {
+                        Value::Null
+                        | Value::NullWithDefault(_)
+                        | Value::Bool(_)
+                        | Value::Int(_)
+                        | Value::Float(_) => {
+                            run.yaml.as_mut().unwrap().scalar(&yaml_scalar(&value)?);
+                            return Ok(false);
+                        }
+                        Value::String(text) => {
+                            run.yaml.as_mut().unwrap().string_value(text);
+                            return Ok(false);
+                        }
+                        Value::Bytes(bytes) => {
+                            run.yaml.as_mut().unwrap().bytes(bytes);
+                            return Ok(false);
+                        }
+                        Value::Object(_) => (),
+                        _ => return self.pcf_unrenderable(run, &value),
+                    }
+                }
                 match value {
                     Value::Null | Value::NullWithDefault(_) => run.append("null"),
                     Value::Bool(value) => run.append(if value { "true" } else { "false" }),
@@ -800,7 +957,7 @@ impl Vm {
                             return self.pcf_unrenderable(run, &Value::Regex(value));
                         }
                         run.append("Regex(");
-                        run.output.push_value(&super::pcf_format::string(
+                        run.append_value(&super::pcf_format::string(
                             value.pattern(),
                             &run.indentation(depth),
                             run.custom,
@@ -813,7 +970,7 @@ impl Vm {
                         }
                         run.append(&value.to_string());
                     }
-                    Value::String(value) => run.output.push_value(&if run.format == Format::Json {
+                    Value::String(value) => run.append_value(&if run.format == Format::Json {
                         json_string(&value)
                     } else {
                         super::pcf_format::string(
@@ -884,7 +1041,9 @@ impl Vm {
                             if run.format == Format::Properties && array {
                                 return self.pcf_unrenderable(run, &Value::Object(id));
                             }
-                            if run.format != Format::Properties {
+                            if run.format == Format::Yaml {
+                                run.yaml.as_mut().unwrap().start(array);
+                            } else if run.format != Format::Properties {
                                 run.append(if run.format == Format::Json {
                                     if array { "[" } else { "{" }
                                 } else {
@@ -916,6 +1075,7 @@ impl Vm {
                                 emitted: false,
                                 strict: true,
                                 array,
+                                stream: false,
                                 path,
                             }));
                         } else {
@@ -925,6 +1085,7 @@ impl Vm {
                                 standalone,
                                 root,
                                 path,
+                                stream: false,
                             });
                             run.await_ = Some(Await::Shallow);
                             self.force_shallow_frame(Value::Object(id))?;
@@ -939,19 +1100,37 @@ impl Vm {
                 standalone,
                 root,
                 path,
+                stream,
             } => {
                 if run.format == Format::Properties
                     && self.heap.get(receiver)?.collection_kind == CollectionKind::Listing
                 {
                     return self.pcf_unrenderable(run, &Value::Object(receiver));
                 }
-                let members = collections::render_members(&self.heap, receiver)?;
-                let array = self.heap.get(receiver)?.collection_kind == CollectionKind::Listing
-                    || members
-                        .iter()
-                        .any(|m| !m.skip && m.descriptor.kind == CollectionMemberKind::Element);
+                let kind = self.heap.get(receiver)?.collection_kind;
+                let members =
+                    if stream && matches!(kind, CollectionKind::List | CollectionKind::Set) {
+                        collections::ordered_members(&self.heap, receiver)?
+                            .into_iter()
+                            .map(|descriptor| collections::RenderMember {
+                                descriptor,
+                                skip: false,
+                                code: None,
+                            })
+                            .collect()
+                    } else {
+                        collections::render_members(&self.heap, receiver)?
+                    };
+                let array = matches!(
+                    kind,
+                    CollectionKind::Listing | CollectionKind::List | CollectionKind::Set
+                ) || members
+                    .iter()
+                    .any(|m| !m.skip && m.descriptor.kind == CollectionMemberKind::Element);
                 let doc = run.format == Format::Pcf && run.document && root;
-                if !doc && run.format != Format::Properties {
+                if run.format == Format::Yaml && !stream {
+                    run.yaml.as_mut().unwrap().start(array);
+                } else if !doc && run.format != Format::Properties && !stream {
                     if run.format == Format::Pcf && standalone {
                         run.append("new ");
                     }
@@ -972,8 +1151,12 @@ impl Vm {
                     depth: depth + usize::from(!doc),
                     document_root: doc,
                     emitted: false,
-                    strict: false,
+                    strict: matches!(
+                        self.heap.get(receiver)?.collection_kind,
+                        CollectionKind::List | CollectionKind::Set | CollectionKind::Map
+                    ),
                     array,
+                    stream,
                     path,
                 }));
             }
@@ -984,25 +1167,28 @@ impl Vm {
                         depth: m.depth,
                         document_root: m.document_root,
                         emitted: m.emitted
-                            || (run.format == Format::Json
+                            || (matches!(run.format, Format::Json | Format::Yaml)
                                 && m.strict
                                 && !m.array
                                 && !m.members.is_empty()),
                         strict: m.strict,
                         array: m.array,
+                        stream: m.stream,
                     });
                     return Ok(false);
                 }
                 let item = m.members[m.next].clone();
                 let descriptor = &item.descriptor;
-                if !(run.format == Format::Properties && m.strict) && !m.prepared {
+                if !(matches!(run.format, Format::Properties | Format::Yaml) && m.strict)
+                    && !m.prepared
+                {
                     m.prepared = true;
                     let key = descriptor.key.clone();
                     run.tasks.push(Task::Members(m));
                     self.prepare_render_key(key);
                     return Ok(false);
                 }
-                if !(run.format == Format::Properties && m.strict) {
+                if !(matches!(run.format, Format::Properties | Format::Yaml) && m.strict) {
                     m.hash = self.java_hash(&descriptor.key)?;
                     while m.compare < m.seen.len() {
                         let (seen, hash) = &m.seen[m.compare];
@@ -1029,7 +1215,7 @@ impl Vm {
                     run.tasks.push(Task::Members(m));
                     return Ok(false);
                 }
-                if matches!(run.format, Format::Json | Format::Properties)
+                if matches!(run.format, Format::Json | Format::Properties | Format::Yaml)
                     && m.array
                     && descriptor.kind != CollectionMemberKind::Element
                 {
@@ -1044,6 +1230,16 @@ impl Vm {
                 }
                 let value = collections::cached_render_value(&self.heap, m.receiver, descriptor)?
                     .ok_or_else(|| invalid("shallow-forced member is uncached"))?;
+                if m.stream {
+                    if m.emitted {
+                        run.yaml.as_mut().unwrap().separator();
+                    }
+                    m.emitted = true;
+                    let path = m.path.clone();
+                    run.tasks.push(Task::Members(m));
+                    run.value(value, 0, false, false, false, path);
+                    return Ok(false);
+                }
                 let descriptor = descriptor.clone();
                 let key = descriptor.key.clone();
                 let previous_source = run.source.clone();
@@ -1155,7 +1351,31 @@ impl Vm {
                     return Ok(false);
                 }
                 let depth = m.depth;
-                if run.format == Format::Properties {
+                if run.format == Format::Yaml {
+                    let element = descriptor.kind == CollectionMemberKind::Element;
+                    if descriptor.kind == CollectionMemberKind::Entry
+                        && !self.yaml_scalar_key(&key)?
+                    {
+                        return self.yaml_non_scalar_key(m.receiver, &key);
+                    }
+                    run.yaml.as_mut().unwrap().member(element, !m.emitted);
+                    m.emitted = true;
+                    run.tasks.push(Task::Members(m));
+                    run.tasks.push(Task::RestoreSource(previous_source));
+                    run.value(value, depth, false, false, false, path);
+                    if !element {
+                        run.tasks.push(Task::Text(":".into()));
+                        let key = if descriptor.kind == CollectionMemberKind::Property {
+                            Value::String(output_name.unwrap_or_else(|| match descriptor.key {
+                                Value::String(name) => name,
+                                _ => unreachable!("property string key"),
+                            }))
+                        } else {
+                            key
+                        };
+                        run.tasks.push(Task::YamlKey(key));
+                    }
+                } else if run.format == Format::Properties {
                     run.tasks.push(Task::Members(m));
                     run.tasks.push(Task::RestoreSource(previous_source));
                     // Root Dynamic elements are converted, then deliberately ignored.
@@ -1242,9 +1462,9 @@ impl Vm {
                 } else {
                     match descriptor.kind {
                         CollectionMemberKind::Property => {
-                            if !run.output.is_empty() {
+                            if !run.output_empty() {
                                 run.append("\n");
-                                run.output.push_value(&run.indentation(depth));
+                                run.append_value(&run.indentation(depth));
                             }
                             let name = output_name.unwrap_or_else(|| {
                                 if let Value::String(name) = &descriptor.key {
@@ -1257,10 +1477,10 @@ impl Vm {
                                 .as_str()
                                 .is_some_and(crate::parser::is_regular_identifier)
                             {
-                                run.output.push_value(&name);
+                                run.append_value(&name);
                             } else {
                                 run.append("`");
-                                run.output.push_value(&name);
+                                run.append_value(&name);
                                 run.append("`");
                             }
                             run.append(if self.pcf_object_like(&value)? {
@@ -1275,7 +1495,7 @@ impl Vm {
                         }
                         CollectionMemberKind::Element => {
                             run.append("\n");
-                            run.output.push_value(&run.indentation(depth));
+                            run.append_value(&run.indentation(depth));
                             m.emitted = true;
                             run.tasks.push(Task::Members(m));
                             run.tasks.push(Task::RestoreSource(previous_source));
@@ -1283,7 +1503,7 @@ impl Vm {
                         }
                         CollectionMemberKind::Entry => {
                             run.append("\n");
-                            run.output.push_value(&run.indentation(depth));
+                            run.append_value(&run.indentation(depth));
                             run.append("[");
                             let separator = if self.pcf_object_like(&value)? {
                                 "] "
@@ -1370,8 +1590,13 @@ impl Vm {
                 emitted,
                 strict,
                 array,
+                stream,
             } => {
-                if run.format == Format::Properties {
+                if run.format == Format::Yaml {
+                    if !stream {
+                        run.yaml.as_mut().unwrap().close(!emitted);
+                    }
+                } else if run.format == Format::Properties {
                     // Flattened output has no container delimiters.
                 } else if run.format == Format::Json {
                     if emitted {
@@ -1383,7 +1608,7 @@ impl Vm {
                 } else if !document_root {
                     if emitted {
                         run.append("\n");
-                        run.output.push_value(&run.indentation(depth - 1));
+                        run.append_value(&run.indentation(depth - 1));
                     }
                     run.append("}");
                 }
@@ -1391,6 +1616,35 @@ impl Vm {
             }
         }
         Ok(false)
+    }
+    fn yaml_scalar_key(&self, key: &Value) -> Result<bool, RuntimeError> {
+        Ok(match key {
+            Value::Null
+            | Value::NullWithDefault(_)
+            | Value::String(_)
+            | Value::Bool(_)
+            | Value::Int(_)
+            | Value::Float(_) => true,
+            Value::Object(id) => self.is_render_directive(*id)?,
+            _ => false,
+        })
+    }
+    fn yaml_non_scalar_key(&self, receiver: ObjectId, key: &Value) -> Result<bool, RuntimeError> {
+        let map = self.heap.get(receiver)?.collection_kind == CollectionKind::Map;
+        let render = |value: &Value| {
+            crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 80)
+        };
+        Err(RuntimeError::new(
+            ErrorKind::Type,
+            PklString::from(if map {
+                "Cannot render map with non-scalar key as YAML.\nMap: "
+            } else {
+                "Cannot render object with non-scalar key as YAML.\nObject: "
+            })
+            .concat(&render(&Value::Object(receiver))?)
+            .concat(&if map { "\nKey: " } else { "\nKey   : " }.into())
+            .concat(&render(key)?),
+        ))
     }
     fn pcf_property_annotations(
         &self,
@@ -1577,4 +1831,14 @@ fn properties_string(value: &PklString, key: bool, restrict: bool) -> PklString 
         }
     }
     PklString::from_utf16(out)
+}
+
+fn yaml_scalar(value: &Value) -> Result<PklString, RuntimeError> {
+    Ok(match value {
+        Value::Null | Value::NullWithDefault(_) => "null".into(),
+        Value::Float(value) if value.is_nan() => ".NaN".into(),
+        Value::Float(value) if **value == f64::INFINITY => ".Inf".into(),
+        Value::Float(value) if **value == f64::NEG_INFINITY => "-.Inf".into(),
+        _ => scalar_string(value)?,
+    })
 }

@@ -1,0 +1,1 @@
+new yaml.Parser {useMapping=true}.parse("x: 1").toString()

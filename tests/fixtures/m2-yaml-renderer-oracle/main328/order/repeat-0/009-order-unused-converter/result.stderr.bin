@@ -1,0 +1,10 @@
+–– Pkl Error ––
+unused
+
+1 | new YamlRenderer {converters {[Duration]=throw("unused")}}.renderValue(1)
+                                             ^^^^^^^^^^^^^^^
+at repl:text.converters[#1] (repl:text)
+
+1 | new YamlRenderer {converters {[Duration]=throw("unused")}}.renderValue(1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

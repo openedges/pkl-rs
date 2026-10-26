@@ -1,0 +1,1 @@
+r.renderDocument(new Mapping { [new Dynamic {x=1}]="value" })

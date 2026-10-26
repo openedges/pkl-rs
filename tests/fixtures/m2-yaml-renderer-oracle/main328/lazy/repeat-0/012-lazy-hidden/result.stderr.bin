@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Modifier `hidden` is not applicable to object members.
+
+1 | r.renderDocument(new Dynamic {hidden bad=throw("hidden");x=1})
+                                  ^^^^^^
+at repl:text (repl:text)

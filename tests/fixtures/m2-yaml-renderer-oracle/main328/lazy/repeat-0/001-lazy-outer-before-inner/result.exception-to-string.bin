@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+outer
+
+1 | r.renderDocument(new Dynamic {nested=new Dynamic {bad=throw("inner")};later=throw("outer")})
+                                                                                ^^^^^^^^^^^^^^
+at repl:text.later (repl:text)
+
+1 | r.renderDocument(new Dynamic {nested=new Dynamic {bad=throw("inner")};later=throw("outer")})
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

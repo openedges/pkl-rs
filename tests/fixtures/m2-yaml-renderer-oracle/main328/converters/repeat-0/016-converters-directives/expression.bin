@@ -1,0 +1,1 @@
+new YamlRenderer {converters {[Int]=(x)->new RenderDirective {text=" ["+x.toString()+"]"}}}.renderDocument(Map("x",1))

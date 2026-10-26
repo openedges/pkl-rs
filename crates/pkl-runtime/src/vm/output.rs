@@ -760,8 +760,14 @@ impl Vm {
     }
     pub(super) fn output_renderer(&mut self) -> Result<(), RuntimeError> {
         let format = self.pop()?;
-        if format.is_null() || format == Value::string("pcf") || format == Value::string("json") {
-            let renderer = if format == Value::string("json") {
+        if format.is_null()
+            || format == Value::string("pcf")
+            || format == Value::string("json")
+            || format == Value::string("yaml")
+        {
+            let renderer = if format == Value::string("yaml") {
+                YAML_RENDERER
+            } else if format == Value::string("json") {
                 JSON_RENDERER
             } else {
                 PCF_RENDERER

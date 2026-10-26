@@ -1,0 +1,12 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Tried to read property `value` but its value is undefined.
+
+3 | class Person { value: String }
+                   ^^^^^
+at stage93.unsupported#Person.value (file:///stage93/unsupported.pkl)
+
+The above error occurred when rendering path `value`.
+
+1 | r.renderDocument(new Person {})
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

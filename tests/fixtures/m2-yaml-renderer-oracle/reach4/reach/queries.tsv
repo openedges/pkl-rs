@@ -1,0 +1,4 @@
+string	class-member	r.renderDocument(classMember)
+string	alias-member	r.renderDocument(aliasMember)
+string	reference-member	r.renderDocument(referenceMember)
+string	legal-hidden	r.renderDocument(new Hidden {})

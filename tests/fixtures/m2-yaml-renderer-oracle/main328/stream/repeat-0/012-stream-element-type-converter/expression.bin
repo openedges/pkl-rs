@@ -1,0 +1,1 @@
+new YamlRenderer {isStream=true;converters {[Int]=(_)->trace("converted")}}.renderDocument(List(1,2))

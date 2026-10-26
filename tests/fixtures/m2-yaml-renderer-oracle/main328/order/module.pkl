@@ -1,0 +1,9 @@
+module stage93.order
+hidden options=new YamlRenderer {
+ mode=trace("compat")
+ indentWidth=trace(2)
+ omitNullProperties=trace(true)
+ isStream=trace(false)
+ converters=if(trace("converters")=="converters") new Mapping {} else new Mapping {}
+ convertPropertyTransformers=if(trace("transformers")=="transformers") new Mapping {} else new Mapping {}
+}

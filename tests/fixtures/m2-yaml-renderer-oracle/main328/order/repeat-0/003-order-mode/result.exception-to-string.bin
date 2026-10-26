@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+mode
+
+1 | new YamlRenderer {mode=throw("mode");indentWidth=throw("indent")}.renderValue(1)
+                           ^^^^^^^^^^^^^
+at repl:text.mode (repl:text)
+
+1 | new YamlRenderer {mode=throw("mode");indentWidth=throw("indent")}.renderValue(1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

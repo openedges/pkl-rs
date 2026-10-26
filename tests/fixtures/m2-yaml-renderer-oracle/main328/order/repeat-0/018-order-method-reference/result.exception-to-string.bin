@@ -1,0 +1,9 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `renderValue` in object of type `YamlRenderer`.
+
+1 | new YamlRenderer {}.renderValue
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+renderDocument(value)

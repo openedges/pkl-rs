@@ -1,0 +1,1 @@
+new YamlRenderer {isStream=throw("stream");converters=throw("converters")}.renderValue(1)

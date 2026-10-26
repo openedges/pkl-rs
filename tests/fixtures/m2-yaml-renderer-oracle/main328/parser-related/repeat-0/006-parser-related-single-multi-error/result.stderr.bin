@@ -1,0 +1,16 @@
+–– Pkl Error ––
+Error parsing YAML document.
+
+1 | p.parse("---\n1\n---\n2").toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+expected a single document in the stream
+ in input_string, line 2, column 1:
+    1
+    ^
+but found another document
+ in input_string, line 3, column 1:
+    ---
+    ^
+

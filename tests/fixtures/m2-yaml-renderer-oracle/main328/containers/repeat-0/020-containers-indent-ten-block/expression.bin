@@ -1,0 +1,1 @@
+new YamlRenderer { indentWidth=10 }.renderDocument(Map("x"," a\nb"))

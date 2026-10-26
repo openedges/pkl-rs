@@ -1,0 +1,13 @@
+–– Pkl Error ––
+Cannot render value of type `Duration` as YAML.
+Value: 1.s
+
+1 | r.renderDocument(new Dynamic { bad=1.s })
+                                   ^^^^^^^
+at pkl.base#YamlRenderer.renderDocument (repl:text)
+
+Consider adding a converter to `output.converters`.
+
+1 | r.renderDocument(new Dynamic { bad=1.s })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,13 @@
+–– Pkl Error ––
+Cannot render value of type `pkl.ref#Reference` as YAML.
+Value: Reference(new Domain {}, Int, null)
+
+12 | hidden referenceMember = new Dynamic { bad = module.referenceValue }
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#YamlRenderer.renderDocument (file:///stage93/reach.pkl)
+
+Consider adding a converter to `output.converters`.
+
+1 | r.renderDocument(referenceMember)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

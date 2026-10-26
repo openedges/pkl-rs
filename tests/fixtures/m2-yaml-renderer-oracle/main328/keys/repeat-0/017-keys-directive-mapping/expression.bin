@@ -1,0 +1,1 @@
+r.renderDocument(new Mapping { [new RenderDirective {text="custom"}]="value" })

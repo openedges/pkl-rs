@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+The top-level value of a YAML stream must have type `Listing`, `List`, or `Set`, but got type `Int`.
+Value: 1
+
+1 | s.renderDocument(1)
+    ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

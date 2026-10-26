@@ -1,0 +1,16 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Error parsing YAML document.
+
+1 | p.parse(new Resource {uri="mem:bad.yaml";text="[";bytes=Bytes()}).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+while parsing a flow node
+ in mem:bad.yaml, line 1, column 2:
+    [
+     ^
+expected the node content, but found '<stream end>'
+ in mem:bad.yaml, line 1, column 2:
+    [
+     ^
+

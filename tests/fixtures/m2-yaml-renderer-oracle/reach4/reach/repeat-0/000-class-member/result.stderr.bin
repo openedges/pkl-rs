@@ -1,0 +1,13 @@
+–– Pkl Error ––
+Cannot render value of type `Class` as YAML.
+Value: stage93.reach#Person
+
+10 | hidden classMember = new Dynamic { bad = module.Person }
+                                        ^^^^^^^^^^^^^^^^^^^
+at pkl.base#YamlRenderer.renderDocument (file:///stage93/reach.pkl)
+
+Consider adding a converter to `output.converters`.
+
+1 | r.renderDocument(classMember)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
