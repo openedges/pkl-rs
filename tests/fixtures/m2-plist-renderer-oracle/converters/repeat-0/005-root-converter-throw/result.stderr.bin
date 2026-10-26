@@ -1,0 +1,14 @@
+–– Pkl Error ––
+converter
+
+7 | function q005(): String = (new PListRenderer { converters { [Int] = (_) -> throw("converter") } }).renderDocument(1)
+                                                                               ^^^^^^^^^^^^^^^^^^
+at stage95.converters#q005.converters[#1].<function#1> (file:///stage95-plist/converters.pkl)
+
+7 | function q005(): String = (new PListRenderer { converters { [Int] = (_) -> throw("converter") } }).renderDocument(1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.converters#q005 (file:///stage95-plist/converters.pkl)
+
+1 | q005()
+    ^^^^^^
+at  (repl:text)

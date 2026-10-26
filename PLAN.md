@@ -19,7 +19,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: Stage94 전체 ready 합성 4,268/4,424 일치·이전 사례 46개 개선·기존 통과 퇴행 0; 엄격한 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: Stage95 PListRenderer 정본 1,341통과·0실패·1ignored; Stage94 전체 4,268/4,424는 별도 이전 소스 결과; 엄격한 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
@@ -3201,6 +3201,44 @@ historical launcher는 준비 중 경합으로 실제 로드된 소스 바이트
 검사를 새로 실행했다고 주장하지 않는다. 다음 작업은 Plist 및 남은 API
 동작의 Java 차등 검증, 요구사항별 증거 연결과 알려진 실패 해소다.
 M2 아홉 작업 영역, 전체 API·릴리스 플랫폼·속도·메모리 조건은 계속 열린다.
+
+### Stage95 — 공유 PListRenderer 정본 통합과 검증
+
+공유 renderer에 `PListRenderer.renderDocument`·`renderValue`를 연결했다.
+문서 header/footer, XML 태그·escape, UTF-16 보존, 숫자·Bytes 출력,
+들여쓰기·null 생략과 converter·annotation을 처리한다. 옵션·lazy member·key의
+강제 평가 및 첫 오류 순서는 기존 continuation을 따르며 Host 중단·GC·취소·재시도
+동안 필요한 값을 보존한다. Java fallback이나 별도 플랫폼 평가기는 없다.
+
+Java 97질의×2의 실제 관찰은 성공102·일반오류90·내부오류2다. 비교 가능한
+96질의 중 renderer에 도달한80개와 구문 오류로 먼저 종료한16개를 구분한다.
+재귀 converter의 내부오류1질의는 미해결이며 성공으로 세지 않는다. 이전
+격리 후보의 16대상·131검사 통과는 정본 검증과 별도 이력이다.
+
+승인한 2,289경로를 통합하고 manifest의 source-link hash만 갱신했다.
+사례·개수·요구 상태는 그대로다. 포맷·xtask·freshness·Clippy·Wasm이 통과했고,
+한 번의 `cargo test --workspace --locked` 실행 결과는 **1,341통과·0실패·기존1ignored**다.
+236test executable·25컴파일 전용example·2doctest library를 모두 포함한다.
+외부238summary와 중첩13summary를 분리한다. 중첩12개는 직접 파싱됐고,
+나머지1개는 진단 출력과 섞인 원시 바이트·위치를 별도로 확인했다.
+Rust1.98.1·opt1/debug0/strip·assertion/overflow-on·jobs1·incremental0으로
+workspace와 xtask를 실행했으며 Clippy/Wasm은 opt0/debug0였다.
+
+원본9개 native CLI-argv 비교는 **9/9 원시 일치**(성공8·일반오류1)다.
+기존 Java의 argv·URI·환경을 유지했고 stdout·stderr·종료 상태 및 빈 파일/쓰기
+집합을 확인했다. 이전 API byte-vector18관찰이나 비어 있지 않은 파일 writer·
+전체 제품 CLI 지원과 혼동하지 않는다.
+
+M1 strict·별도 구조 계약: native·N-API·Chromium 각각 strict 6,078개 원시 비교와 별도 구조 계약이 통과했다.
+선택 플랫폼: Plist96+Properties129의 225질의×2, 환경별450관찰을 실행했다.
+각 환경에서 450/450개가 원시 일치했다(성공234·일반오류216, 공유필드4,000개·순서 있는 Logger40개).
+converter 세션은 Java 원래12개 중 선택11개만 비교했다. 제외한 내부오류
+관찰은 보존하며 원래 전체 process protocol이 일치했다고 주장하지 않는다.
+공개 [체크포인트](reports/m2/stage95-plist-renderer-checkpoint.json)가 증거 part를
+열거하며 [게시 검토](reports/m2/stage95-plist-renderer-publication-review.json)를 연결한다.
+
+Stage94의 전체 코퍼스 **4,268/4,424**는 이전 소스 결과로 그대로 유지한다.
+ready4,424·미구현71·미연결32 및 전체 M2·API·릴리스·성능 gate는 열려 있다.
 
 ## M3 — 표준 라이브러리와 출력
 

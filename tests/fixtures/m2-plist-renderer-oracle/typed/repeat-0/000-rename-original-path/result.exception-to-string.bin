@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Unexpected token `.`. Expected `{`.
+
+27 | function q000(): String = (new PListRenderer { converters { ["^value"] = (_) -> "converted-original" } }).renderValue(new module.Renamed {})
+                                                                                                                                     ^
+at typed (file:///stage95-plist/typed.pkl)

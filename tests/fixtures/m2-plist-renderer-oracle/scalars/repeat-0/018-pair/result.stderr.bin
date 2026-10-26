@@ -1,0 +1,13 @@
+–– Pkl Error ––
+Cannot render value of type `Pair` as XML property list.
+Value: Pair(1, 2)
+
+20 | function q018(): String = (new PListRenderer {}).renderValue(Pair(1, 2))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.scalars#q018 (file:///stage95-plist/scalars.pkl)
+
+Consider adding a converter to `output.converters`.
+
+1 | q018()
+    ^^^^^^
+at  (repl:text)

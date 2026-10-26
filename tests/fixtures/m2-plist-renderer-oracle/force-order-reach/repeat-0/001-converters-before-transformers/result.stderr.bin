@@ -1,0 +1,14 @@
+–– Pkl Error ––
+converters
+
+4 | function q001(): String = (new PListRenderer { converters = throw("converters"); convertPropertyTransformers = throw("transformers") }).renderValue(1)
+                                                                ^^^^^^^^^^^^^^^^^^^
+at stage95.force_order#q001.converters (file:///stage95-plist/force-order-reach.pkl)
+
+4 | function q001(): String = (new PListRenderer { converters = throw("converters"); convertPropertyTransformers = throw("transformers") }).renderValue(1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.force_order#q001 (file:///stage95-plist/force-order-reach.pkl)
+
+1 | q001()
+    ^^^^^^
+at  (repl:text)

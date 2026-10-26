@@ -1,0 +1,13 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot render value of type `Null` as XML property list.
+Value: null
+
+4 | function q002(): String = (new PListRenderer { converters { [Int] = (_) -> null } }).renderValue(List(1))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.converters#q002 (file:///stage95-plist/converters.pkl)
+
+Consider adding a converter to `output.converters`.
+
+1 | q002()
+    ^^^^^^
+at  (repl:text)

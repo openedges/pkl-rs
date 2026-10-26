@@ -1,5 +1,46 @@
 # M2 language verification
 
+## Stage95 PListRenderer integration
+
+The shared runtime implements `PListRenderer.renderDocument` and `renderValue`:
+XML property-list tags and document framing, indentation, UTF-16 escaping,
+numeric and Bytes output, null omission, converters and annotations. Lazy
+forcing, first-error order and Host/GC lifecycle behavior use the shared renderer
+continuation.
+
+Java authority contains 97 queries repeated twice: 102 successes, 90 ordinary
+errors and two internal-error observations. The 96 comparable queries retain
+80 reached renderer controls and 16 syntax-preempted errors. One recursive
+converter query remains unresolved; it is not a passing Rust expectation.
+The earlier isolated result of 131 passes across 16 targets remains separate.
+
+Canonical formatting, manifest refresh/freshness, xtask, Clippy and Wasm checks
+pass. One literal workspace test command covers 236 test executables, 25
+compile-only examples and two doctest libraries: **1,341 passed, zero failed,
+one existing ignored test**. Thirteen nested summaries are separate from the
+238 outer summaries: 12 parse directly and one retains its interleaved diagnostic
+line and exact raw-byte location. Rust 1.98.1 uses opt1/debug0/strip-symbols,
+assertions and overflow checks, one job and no incremental compilation for
+workspace tests/xtask; Clippy and Wasm use opt0/debug0.
+
+The nine original native CLI-argv captures match raw stdout, stderr and exit
+status **9/9**, including one expected ordinary error. Original Java arguments,
+URIs and environments are retained. Empty file/write sets do not establish
+nonempty generated-file or complete CLI support; the prior 18 API byte-vector
+observations remain a different boundary.
+
+M1 strict comparison and the separate architecture contract: 6,078 strict comparisons and the separate architecture contract pass on each target.
+Selected Native/N-API/Chromium results: 450/450 raw matches on each of Native, N-API and Chromium: 234 successes, 216 ordinary errors, 4,000 shared fields and 40 ordered Logger events per target.
+The selected comparison covers 225 queries (96 Plist + 129 Properties), repeated
+twice: 450 observations per target. The converter session compares 11 selected rows against a Java session containing
+12; the unresolved row is retained but excluded. This does not establish full
+original converter-process protocol parity.
+
+The [checkpoint](../reports/m2/stage95-plist-renderer-checkpoint.json) lists the
+evidence parts and [publication review](../reports/m2/stage95-plist-renderer-publication-review.json).
+Stage94's earlier-source **4,268/4,424** whole-corpus result is unchanged. Full M2,
+API, release-platform and performance gates remain open.
+
 ## Stage94 complete ready-corpus composition
 
 Stage94 combines four canonical integrity-checked reports covering all

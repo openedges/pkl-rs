@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Cannot render value of type `IntSeq` as XML property list.
+Value: IntSeq(1, 3)
+
+19 | function q017(): String = (new PListRenderer {}).renderValue(IntSeq(1, 3))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.scalars#q017 (file:///stage95-plist/scalars.pkl)
+
+1 | q017()
+    ^^^^^^
+at  (repl:text)

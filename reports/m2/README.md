@@ -1,5 +1,44 @@
 # M2 language evidence
 
+## Stage95 PListRenderer checkpoint
+
+Shared PListRenderer document/value output is integrated with indentation,
+XML/UTF-16 escaping, scalar and Bytes tags, null omission, converters,
+annotations and the existing lazy/Host renderer continuation.
+
+| Evidence | Recorded result |
+| --- | --- |
+| Canonical checks | Formatting, manifest refresh/freshness, xtask, Clippy and Wasm pass |
+| One canonical workspace invocation | 1,341 passed, zero failed, one existing ignored; 236 test executables, 25 compile-only examples and two doctest libraries |
+| Nine native original CLI-argv cases | 9/9 raw matches: eight successes and one ordinary error; empty file/write maps |
+| M1 strict and separate architecture contract | 6,078 strict comparisons and the separate architecture contract pass on each target. |
+| Selected Native/N-API/Chromium | 450/450 raw matches on each of Native, N-API and Chromium: 234 successes, 216 ordinary errors, 4,000 shared fields and 40 ordered Logger events per target. |
+
+Workspace/xtask use Rust 1.98.1, opt1/debug0/strip-symbols, assertions and overflow
+checks, jobs1 and incremental0; Clippy/Wasm use opt0/debug0. The 238 outer test
+summaries exclude 13 nested children: 12 parse directly and one is preserved
+with its interleaved diagnostic and raw-byte location. The prior isolated
+131 passes across 16 targets and 18 original API byte vectors are not added to
+the canonical totals.
+
+Java authority has 97 queries and 194 observations (102 successes, 90 ordinary
+errors, two internal errors). One recursive-converter query remains unresolved.
+The 96 comparable queries preserve 80 reached renderer controls and 16
+syntax-preempted errors. The selected platform comparison includes 129 Properties queries:
+225 queries repeated twice, or 450 observations per target. Shared status,
+UTF-8/UTF-16 and ordered Logger are the selected comparison channels; Java
+exception metadata and nonempty-file writing remain outside that adapter.
+
+The converter session compares 11 selected rows against a Java session containing
+12; the unresolved row is retained but excluded. This does not establish full
+original converter-process protocol parity.
+
+The [checkpoint](stage95-plist-renderer-checkpoint.json) lists all evidence
+parts and the separate [publication review](stage95-plist-renderer-publication-review.json).
+Earlier failed attempts remain evidence. Stage94's earlier-source whole-corpus
+**4,268/4,424** result is unchanged; full M2, APIs, release platforms and
+performance/memory targets remain open.
+
 ## Stage94 complete ready-corpus composition
 
 Stage94 combines four canonical integrity-checked reports covering all

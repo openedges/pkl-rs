@@ -1,0 +1,99 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "raw_expected_fixture_repeat": 0,
+  "repeat1_authority_retained_in_original_capture": true,
+  "original_queries": 80,
+  "root_only": 1,
+  "reach_controls": 16,
+  "all_unique": 97,
+  "comparable": 96,
+  "meaningful_renderer_reached": 80,
+  "preempted_originals": 16,
+  "excluded": [
+    {
+      "program": "converters",
+      "id": "root-to-list",
+      "status": "oracle-error",
+      "reason": "Recursive Int converter: both Java JVM observations StackOverflow/PklBugException; four stack trace fields differ. No invented Rust expected behavior."
+    }
+  ],
+  "groups": [
+    {
+      "program": "scalars",
+      "queries": 21,
+      "expected_comparisons": 21,
+      "authority_capture": "target/m2/stage95-plist-oracle-01",
+      "scope": "reached deterministic renderer queries except separately excluded recursive oracle error"
+    },
+    {
+      "program": "documents",
+      "queries": 12,
+      "expected_comparisons": 12,
+      "authority_capture": "target/m2/stage95-plist-oracle-01",
+      "scope": "reached deterministic renderer queries except separately excluded recursive oracle error"
+    },
+    {
+      "program": "utf16-indent",
+      "queries": 9,
+      "expected_comparisons": 9,
+      "authority_capture": "target/m2/stage95-plist-oracle-01",
+      "scope": "reached deterministic renderer queries except separately excluded recursive oracle error"
+    },
+    {
+      "program": "collections-nulls",
+      "queries": 10,
+      "expected_comparisons": 10,
+      "authority_capture": "target/m2/stage95-plist-oracle-01",
+      "scope": "reached deterministic renderer queries except separately excluded recursive oracle error"
+    },
+    {
+      "program": "converters",
+      "queries": 12,
+      "expected_comparisons": 11,
+      "authority_capture": "target/m2/stage95-plist-oracle-01",
+      "scope": "reached deterministic renderer queries except separately excluded recursive oracle error"
+    },
+    {
+      "program": "force-order",
+      "queries": 7,
+      "expected_comparisons": 7,
+      "authority_capture": "target/m2/stage95-plist-oracle-02",
+      "scope": "syntax-preempted original errors"
+    },
+    {
+      "program": "typed",
+      "queries": 9,
+      "expected_comparisons": 9,
+      "authority_capture": "target/m2/stage95-plist-oracle-02",
+      "scope": "syntax-preempted original errors"
+    },
+    {
+      "program": "root-only",
+      "queries": 1,
+      "expected_comparisons": 1,
+      "authority_capture": "target/m2/stage95-plist-oracle-02",
+      "scope": "reached deterministic renderer queries except separately excluded recursive oracle error"
+    },
+    {
+      "program": "force-order-reach",
+      "queries": 7,
+      "expected_comparisons": 7,
+      "authority_capture": "target/m2/stage95-plist-oracle-03",
+      "scope": "reached deterministic renderer queries except separately excluded recursive oracle error"
+    },
+    {
+      "program": "typed-reach",
+      "queries": 9,
+      "expected_comparisons": 9,
+      "authority_capture": "target/m2/stage95-plist-oracle-03",
+      "scope": "reached deterministic renderer queries except separately excluded recursive oracle error"
+    }
+  ],
+  "readbacks": [
+    "target/m2/stage95-plist-oracle-readback-02/report.json",
+    "target/m2/stage95-plist-oracle-readback-03/report.json"
+  ],
+  "compared_fields": "result.status, stdout/stderr UTF8 and UTF16, ordered Logger; Java exception/class/cause/type are retained but not implemented by SourceProbe",
+  "raw_repeat_fixture_copies": 1,
+  "original_repeat1_readback_is_separate": true
+}

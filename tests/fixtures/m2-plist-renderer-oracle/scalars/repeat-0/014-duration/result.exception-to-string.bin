@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot render value of type `Duration` as XML property list.
+Value: 1.min
+
+16 | function q014(): String = (new PListRenderer {}).renderValue(1.min)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.scalars#q014 (file:///stage95-plist/scalars.pkl)
+
+1 | q014()
+    ^^^^^^
+at  (repl:text)

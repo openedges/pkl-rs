@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Cannot render value of type `Duration` as XML property list.
+Value: 1.min
+
+34 | function q007(): String = (new PListRenderer { converters { [Dynamic] = (v) -> v } }).renderDocument(module.badRoot)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.typed#q007 (file:///stage95-plist/typed-reach.pkl)
+
+1 | q007()
+    ^^^^^^
+at  (repl:text)

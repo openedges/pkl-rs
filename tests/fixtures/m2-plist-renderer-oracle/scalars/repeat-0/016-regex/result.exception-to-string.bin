@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot render value of type `Regex` as XML property list.
+Value: Regex("x")
+
+18 | function q016(): String = (new PListRenderer {}).renderValue(Regex("x"))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.scalars#q016 (file:///stage95-plist/scalars.pkl)
+
+1 | q016()
+    ^^^^^^
+at  (repl:text)

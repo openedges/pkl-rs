@@ -1,0 +1,9 @@
+module stage95.force_order
+class Hidden { hidden x: String = throw("hidden"); y: Int = 1 }
+function q000(): String = (new PListRenderer { indent = throw("indent"); converters = throw("converters") }).renderValue(1)
+function q001(): String = (new PListRenderer { converters = throw("converters"); convertPropertyTransformers = throw("transformers") }).renderValue(1)
+function q002(): String = (new PListRenderer { converters { [Int] = throw("converter-entry") }; convertPropertyTransformers { [ConvertProperty] = throw("transformer-entry") } }).renderValue(1)
+function q003(): String = (new PListRenderer {}).renderValue(new Dynamic { a = 1.min; b = throw("later-force") })
+function q004(): String = (new PListRenderer {}).renderValue(new Hidden {})
+function q005(): String = (new PListRenderer {}).renderValue(new RenderDirective { text = throw("directive") })
+function q006(): String = (new PListRenderer { converters { [Int] = (_) -> read("prop:stage95.missing") } }).renderValue(1)

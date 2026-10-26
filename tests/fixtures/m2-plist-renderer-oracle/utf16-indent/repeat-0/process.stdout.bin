@@ -1,0 +1,20 @@
+session-open mode=string rows=9
+call-enter=string-0-escape-value
+call-exit=string-0-escape-value status=success
+call-enter=string-1-escape-key
+call-exit=string-1-escape-key status=success
+call-enter=string-2-controls
+call-exit=string-2-controls status=success
+call-enter=string-3-supplementary
+call-exit=string-3-supplementary status=success
+call-enter=string-4-lone-high
+call-exit=string-4-lone-high status=success
+call-enter=string-5-lone-low
+call-exit=string-5-lone-low status=success
+call-enter=string-6-indent-empty
+call-exit=string-6-indent-empty status=success
+call-enter=string-7-indent-tab
+call-exit=string-7-indent-tab status=success
+call-enter=string-8-indent-newline
+call-exit=string-8-indent-newline status=success
+session-closed mode=string rows=9 public-calls=9 success=9 errors=0

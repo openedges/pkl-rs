@@ -1,0 +1,13 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot render value of type `TypeAlias` as XML property list.
+Value: stage95.typed#Email
+
+32 | function q005(): String = (new PListRenderer {}).renderValue(module.Email)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.typed#q005 (file:///stage95-plist/typed-reach.pkl)
+
+Consider adding a converter to `output.converters`.
+
+1 | q005()
+    ^^^^^^
+at  (repl:text)

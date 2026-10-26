@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Modifier `hidden` is not applicable to object members.
+
+6 | function q004(): String = (new PListRenderer {}).renderValue(new Dynamic { hidden x = throw("hidden"); y = 1 })
+                                                                               ^^^^^^
+at stage95.force_order#q004 (file:///stage95-plist/force-order.pkl)

@@ -1,0 +1,13 @@
+–– Pkl Error ––
+Cannot render value of type `Function1` as XML property list.
+Value: new Function1 {}
+
+22 | function q020(): String = (new PListRenderer {}).renderValue((x) -> x)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.scalars#q020 (file:///stage95-plist/scalars.pkl)
+
+Consider adding a converter to `output.converters`.
+
+1 | q020()
+    ^^^^^^
+at  (repl:text)

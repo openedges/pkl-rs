@@ -1,0 +1,26 @@
+session-open mode=string rows=12
+call-enter=string-0-null-to-string
+call-exit=string-0-null-to-string status=success
+call-enter=string-1-int-to-null
+call-exit=string-1-int-to-null status=success
+call-enter=string-2-element-to-null
+call-exit=string-2-element-to-null status=error
+call-enter=string-3-root-to-list
+call-exit=string-3-root-to-list status=oracle-error
+call-enter=string-4-root-to-scalar
+call-exit=string-4-root-to-scalar status=error
+call-enter=string-5-root-converter-throw
+call-exit=string-5-root-converter-throw status=error
+call-enter=string-6-path-over-type
+call-exit=string-6-path-over-type status=success
+call-enter=string-7-first-path
+call-exit=string-7-first-path status=success
+call-enter=string-8-key-converter-null-value
+call-exit=string-8-key-converter-null-value status=error
+call-enter=string-9-converted-key-path
+call-exit=string-9-converted-key-path status=success
+call-enter=string-10-directive-value
+call-exit=string-10-directive-value status=success
+call-enter=string-11-directive-key
+call-exit=string-11-directive-key status=success
+session-closed mode=string rows=12 public-calls=12 success=7 errors=5

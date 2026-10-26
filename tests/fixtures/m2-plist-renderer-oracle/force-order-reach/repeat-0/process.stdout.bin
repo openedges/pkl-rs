@@ -1,0 +1,16 @@
+session-open mode=string rows=7
+call-enter=string-0-indent-before-converters
+call-exit=string-0-indent-before-converters status=error
+call-enter=string-1-converters-before-transformers
+call-exit=string-1-converters-before-transformers status=error
+call-enter=string-2-converter-map-before-transformer-map
+call-exit=string-2-converter-map-before-transformer-map status=error
+call-enter=string-3-later-force-before-earlier-render
+call-exit=string-3-later-force-before-earlier-render status=error
+call-enter=string-4-hidden-not-rendered
+call-exit=string-4-hidden-not-rendered status=success
+call-enter=string-5-directive-text-error
+call-exit=string-5-directive-text-error status=error
+call-enter=string-6-converter-host-missing
+call-exit=string-6-converter-host-missing status=error
+session-closed mode=string rows=7 public-calls=7 success=1 errors=6

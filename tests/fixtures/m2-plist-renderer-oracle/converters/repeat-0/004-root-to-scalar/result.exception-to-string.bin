@@ -1,0 +1,13 @@
+org.pkl.core.PklException: –– Pkl Error ––
+The top-level value of an XML property list must have type `Typed`, `Dynamic`, `Listing`, `Mapping`, `List`, `Set`, or `Map`, but got type `String`.
+Value: "x"
+
+6 | function q004(): String = (new PListRenderer { converters { [Dynamic] = (_) -> "x" } }).renderDocument(new Dynamic {})
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.converters#q004 (file:///stage95-plist/converters.pkl)
+
+This value was converted during rendering. Previous: new Dynamic {}. After: "x".
+
+1 | q004()
+    ^^^^^^
+at  (repl:text)

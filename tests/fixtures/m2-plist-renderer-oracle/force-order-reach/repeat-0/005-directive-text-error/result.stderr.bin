@@ -1,0 +1,14 @@
+–– Pkl Error ––
+directive
+
+8 | function q005(): String = (new PListRenderer {}).renderValue(new RenderDirective { text = throw("directive") })
+                                                                                              ^^^^^^^^^^^^^^^^^^
+at stage95.force_order#q005.text (file:///stage95-plist/force-order-reach.pkl)
+
+8 | function q005(): String = (new PListRenderer {}).renderValue(new RenderDirective { text = throw("directive") })
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.force_order#q005 (file:///stage95-plist/force-order-reach.pkl)
+
+1 | q005()
+    ^^^^^^
+at  (repl:text)

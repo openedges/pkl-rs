@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Cannot render object with both elements and properties/entries as XML property list.
+Object: new Dynamic { a = 2; 1 }
+
+9 | function q007(): String = (new PListRenderer {}).renderValue(new Dynamic { 1; a = 2 })
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.collections_nulls#q007 (file:///stage95-plist/collections-nulls.pkl)
+
+1 | q007()
+    ^^^^^^
+at  (repl:text)

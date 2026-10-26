@@ -1,0 +1,11 @@
+module stage95.collections_nulls
+function q000(): String = (new PListRenderer {}).renderValue(new Dynamic { a = null; b = 1 })
+function q001(): String = (new PListRenderer {}).renderValue(Map("a", null, "b", 1))
+function q002(): String = (new PListRenderer {}).renderValue(List(null))
+function q003(): String = (new PListRenderer {}).renderValue(new Mapping { ["a"] = null })
+function q004(): String = (new PListRenderer {}).renderValue(Map(1, null))
+function q005(): String = (new PListRenderer {}).renderValue(Map(1, "x"))
+function q006(): String = (new PListRenderer {}).renderValue(new Mapping { [1] = "x" })
+function q007(): String = (new PListRenderer {}).renderValue(new Dynamic { 1; a = 2 })
+function q008(): String = (new PListRenderer {}).renderValue(new Dynamic { 1; 2 })
+function q009(): String = (new PListRenderer {}).renderValue(List(Map(), List(), new Dynamic {}))

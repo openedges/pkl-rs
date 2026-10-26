@@ -1,0 +1,22 @@
+session-open mode=string rows=10
+call-enter=string-0-null-property
+call-exit=string-0-null-property status=success
+call-enter=string-1-null-entry
+call-exit=string-1-null-entry status=success
+call-enter=string-2-null-element
+call-exit=string-2-null-element status=error
+call-enter=string-3-all-null
+call-exit=string-3-all-null status=success
+call-enter=string-4-nonstring-null
+call-exit=string-4-nonstring-null status=success
+call-enter=string-5-nonstring-key
+call-exit=string-5-nonstring-key status=error
+call-enter=string-6-mapping-key
+call-exit=string-6-mapping-key status=error
+call-enter=string-7-mixed-dynamic
+call-exit=string-7-mixed-dynamic status=error
+call-enter=string-8-element-dynamic
+call-exit=string-8-element-dynamic status=success
+call-enter=string-9-nested-empty
+call-exit=string-9-nested-empty status=success
+session-closed mode=string rows=10 public-calls=10 success=6 errors=4

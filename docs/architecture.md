@@ -1295,6 +1295,30 @@ remains separate work, including ten query controls and eight original modules.
 One Java internal error for an oversized `indentWidth` remains an unresolved comparison. This shared
 renderer does not establish full CLI file writing or performance compatibility.
 
+### XML property-list rendering
+
+PListRenderer uses the same frame-owned renderer continuation as PCF, JSON,
+Properties and YAML. It evaluates indentation and converter mappings in the
+pinned Java order, then applies converters and annotation transforms while
+preserving member paths, lazy forcing and first-error selection. Deferred keys,
+values and paths remain rooted through Host suspension, GC, cancellation and
+retry; platform adapters do not provide separate Plist evaluators.
+
+A small UTF-16 emitter supplies XML property-list tags, document framing,
+five-character escaping, Java-compatible number spelling and base64 Bytes.
+Document and value rendering retain distinct root rules. Null properties and
+entries are omitted, while collection ordering and empty-container formatting
+follow the Java observations. Render directives preserve their separate key
+and value treatment. UTF-16 units are not silently repaired to make XML valid.
+
+Canonical workspace and nine native original CLI-argv checks pass within their
+recorded scope. M1/platform closeout: M1 matches 6,078 strict comparisons and passes its separate architecture contract on each target; the selected comparison matches 450 observations on each of Native, N-API and Chromium.
+One recursive-converter Java internal error remains an unresolved comparison;
+16 syntax-preempted controls remain distinct from the 80 reached renderer
+controls. Nonempty file writing, complete product APIs and performance parity
+are not established by these renderer checks. Evidence parts are linked through
+the [Stage95 checkpoint](../reports/m2/stage95-plist-renderer-checkpoint.json).
+
 ### Strict transforms and quantity identity
 
 Collection transforms retain their source, callback, iteration cursor and

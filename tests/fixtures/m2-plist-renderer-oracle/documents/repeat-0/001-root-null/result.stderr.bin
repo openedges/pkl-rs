@@ -1,0 +1,11 @@
+–– Pkl Error ––
+The top-level value of an XML property list must have type `Typed`, `Dynamic`, `Listing`, `Mapping`, `List`, `Set`, or `Map`, but got type `Null`.
+Value: null
+
+3 | function q001(): String = (new PListRenderer {}).renderDocument(null)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.documents#q001 (file:///stage95-plist/documents.pkl)
+
+1 | q001()
+    ^^^^^^
+at  (repl:text)

@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Cannot render map with non-string key as XML property list.
+Map: Map(1, "x")
+Key: 1
+
+7 | function q005(): String = (new PListRenderer {}).renderValue(Map(1, "x"))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.collections_nulls#q005 (file:///stage95-plist/collections-nulls.pkl)
+
+1 | q005()
+    ^^^^^^
+at  (repl:text)

@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Cannot render value of type `DataSize` as XML property list.
+Value: 1.mb
+
+17 | function q015(): String = (new PListRenderer {}).renderValue(1.mb)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.scalars#q015 (file:///stage95-plist/scalars.pkl)
+
+1 | q015()
+    ^^^^^^
+at  (repl:text)

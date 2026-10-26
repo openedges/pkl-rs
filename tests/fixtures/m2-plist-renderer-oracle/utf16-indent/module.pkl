@@ -1,0 +1,10 @@
+module stage95.utf16_indent
+function q000(): String = (new PListRenderer {}).renderValue("\"'<> &")
+function q001(): String = (new PListRenderer {}).renderValue(Map("\"'<> &", "v"))
+function q002(): String = (new PListRenderer {}).renderValue("\u{0}\t\r\n\u{1f}")
+function q003(): String = (new PListRenderer {}).renderValue("\u{1f600}")
+function q004(): String = (new PListRenderer {}).renderValue("\u{d800}")
+function q005(): String = (new PListRenderer {}).renderValue("\u{dc00}")
+function q006(): String = (new PListRenderer { indent = "" }).renderValue(List(List(1)))
+function q007(): String = (new PListRenderer { indent = "\t" }).renderValue(List(Map("a", 1)))
+function q008(): String = (new PListRenderer { indent = "x\r\n" }).renderValue(List(1))

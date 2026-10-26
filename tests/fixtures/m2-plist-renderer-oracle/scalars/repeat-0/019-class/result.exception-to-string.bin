@@ -1,0 +1,13 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot render value of type `Class` as XML property list.
+Value: String
+
+21 | function q019(): String = (new PListRenderer {}).renderValue(String)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.scalars#q019 (file:///stage95-plist/scalars.pkl)
+
+Consider adding a converter to `output.converters`.
+
+1 | q019()
+    ^^^^^^
+at  (repl:text)

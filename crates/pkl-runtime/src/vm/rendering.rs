@@ -8,6 +8,7 @@ pub(super) enum Format {
     Pcf,
     Json,
     Properties,
+    Plist,
     Yaml,
 }
 impl Format {
@@ -16,6 +17,7 @@ impl Format {
             Self::Pcf => "Pcf",
             Self::Json => "JSON",
             Self::Properties => "Properties",
+            Self::Plist => "XML property list",
             Self::Yaml => "YAML",
         }
     }
@@ -56,6 +58,10 @@ struct PropertyRun {
     step: usize,
 }
 enum Task {
+    PlistKey {
+        key: Value,
+        depth: usize,
+    },
     YamlKey(Value),
     PropertiesKey {
         path: Vec<PathPart>,
@@ -99,6 +105,10 @@ enum Task {
     },
 }
 enum Await {
+    PlistKey {
+        receiver: ObjectId,
+        depth: usize,
+    },
     PropertiesKey {
         verbatim: bool,
     },
@@ -153,9 +163,12 @@ impl RenderRun {
             roots.push(Value::Object(*receiver));
             path_roots(path, roots);
         }
+        if let Some(Await::PlistKey { receiver, .. }) = &self.await_ {
+            roots.push(Value::Object(*receiver));
+        }
         for task in &self.tasks {
             match task {
-                Task::YamlKey(key) => roots.push(key.clone()),
+                Task::YamlKey(key) | Task::PlistKey { key, .. } => roots.push(key.clone()),
                 Task::PropertiesKey { path, .. } => path_roots(path, roots),
                 Task::PropertiesDirective { receiver, path } => {
                     roots.push(Value::Object(*receiver));
@@ -241,6 +254,13 @@ impl RenderRun {
             self.append("\n");
             self.output.push_value(&self.indentation(depth));
         }
+    }
+    fn plist_key(&mut self, text: &PklString, depth: usize) {
+        self.append_value(&self.indentation(depth));
+        self.append("<key>");
+        self.append_value(&super::plist::escape(text));
+        self.append("</key>\n");
+        self.append_value(&self.indentation(depth));
     }
     fn properties_value(&mut self, value: PklString, path: Vec<PathPart>) {
         if self.properties_document {
@@ -341,6 +361,9 @@ impl Vm {
                     let mut path = path.clone();
                     path.push(PathPart::Property(force.name.as_ref().into()));
                     path
+                }
+                Some(Await::PlistKey { receiver, .. }) if *receiver == force.receiver => {
+                    vec![PathPart::Property(force.name.as_ref().into())]
                 }
                 Some(Await::Shallow) => {
                     let Some(Task::OpenObject { receiver, path, .. }) = run.tasks.last() else {
@@ -471,6 +494,12 @@ impl Vm {
     fn advance_pcf(&mut self, run: &mut RenderRun) -> Result<bool, RuntimeError> {
         if let Some(await_) = run.await_.take() {
             match await_ {
+                Await::PlistKey { depth, .. } => {
+                    let Value::String(text) = self.pop()? else {
+                        return Err(invalid("checked Plist directive key text"));
+                    };
+                    run.plist_key(&text, depth);
+                }
                 Await::PropertiesKey { verbatim } => {
                     let Value::String(text) = self.pop()? else {
                         return Err(invalid("Properties key string"));
@@ -568,6 +597,8 @@ impl Vm {
                 "converters",
                 "convertPropertyTransformers",
             ]
+        } else if run.format == Format::Plist {
+            &["indent", "converters", "convertPropertyTransformers"]
         } else if run.format == Format::Json {
             &[
                 "indent",
@@ -649,6 +680,13 @@ impl Vm {
                 run.yaml = Some(super::yaml::Emitter::new(mode, width as usize));
                 run.omit_null = *omit;
                 run.yaml_stream = *stream;
+            } else if run.format == Format::Plist {
+                let Value::String(indent) = &run.options[0] else {
+                    return Err(invalid("Plist indent type"));
+                };
+                run.indent = indent.clone();
+                // Pinned PListRenderer always omits null properties and entries.
+                run.omit_null = true;
             } else if run.format == Format::Properties {
                 let (Value::Bool(omit), Value::Bool(restrict)) = (&run.options[0], &run.options[1])
                 else {
@@ -690,7 +728,9 @@ impl Vm {
             return Ok(false);
         }
         let Some(task) = run.tasks.pop() else {
-            if run.document && run.format == Format::Yaml {
+            if run.document && run.format == Format::Plist {
+                run.append("\n</plist>\n");
+            } else if run.document && run.format == Format::Yaml {
                 run.yaml.as_mut().unwrap().newline();
             } else if run.document
                 && run.format != Format::Properties
@@ -701,6 +741,14 @@ impl Vm {
             return Ok(true);
         };
         match task {
+            Task::PlistKey { key, depth } => match key {
+                Value::String(text) => run.plist_key(&text, depth),
+                Value::Object(receiver) => {
+                    run.await_ = Some(Await::PlistKey { receiver, depth });
+                    self.force(receiver, receiver, "text".into(), false, true, false)?;
+                }
+                _ => return Err(invalid("checked Plist key")),
+            },
             Task::YamlKey(key) => {
                 if let Value::Object(id) = key {
                     run.await_ = Some(Await::Directive {
@@ -830,6 +878,27 @@ impl Vm {
                         }
                         return Ok(false);
                     }
+                    if run.format == Format::Plist && run.document {
+                        // VmFunction is an ObjectLike in the pinned Java root gate,
+                        // but subsequently fails its ordinary unsupported-type visit.
+                        let valid = matches!(&value, Value::Function(_))
+                            || matches!(&value, Value::Object(id) if self.heap.get(*id)?.pair.is_none() && self.heap.get(*id)?.reference.is_none());
+                        if !valid {
+                            let ty = crate::diagnostic_values::type_name(
+                                &value,
+                                &self.heap,
+                                &self.program.module_name,
+                            )?;
+                            let text = crate::diagnostic_values::render(
+                                &value,
+                                &self.heap,
+                                &self.program.module_name,
+                                80,
+                            )?;
+                            return Err(RuntimeError::new(ErrorKind::Type, PklString::from(format!("The top-level value of an XML property list must have type `Typed`, `Dynamic`, `Listing`, `Mapping`, `List`, `Set`, or `Map`, but got type `{ty}`.\nValue: ")).concat(&text)));
+                        }
+                        run.append(super::plist::DOCUMENT_HEADER);
+                    }
                     if run.format == Format::Properties {
                         let valid = self.properties_document_value(&value)?;
                         let directive =
@@ -893,6 +962,15 @@ impl Vm {
                         }
                         Value::Object(_) => {}
                         _ => return self.pcf_unrenderable(run, &value),
+                    }
+                }
+                if run.format == Format::Plist {
+                    if let Some(text) = super::plist::scalar(&value) {
+                        run.append_value(&text);
+                        return Ok(false);
+                    }
+                    if !matches!(value, Value::Object(_)) {
+                        return self.pcf_unrenderable(run, &value);
                     }
                 }
                 if run.format == Format::Yaml {
@@ -1043,7 +1121,7 @@ impl Vm {
                             }
                             if run.format == Format::Yaml {
                                 run.yaml.as_mut().unwrap().start(array);
-                            } else if run.format != Format::Properties {
+                            } else if !matches!(run.format, Format::Properties | Format::Plist) {
                                 run.append(if run.format == Format::Json {
                                     if array { "[" } else { "{" }
                                 } else {
@@ -1070,7 +1148,11 @@ impl Vm {
                                 compare: 0,
                                 prepared: false,
                                 hash: None,
-                                depth: depth + usize::from(run.format == Format::Json),
+                                depth: depth
+                                    + usize::from(matches!(
+                                        run.format,
+                                        Format::Json | Format::Plist
+                                    )),
                                 document_root: false,
                                 emitted: false,
                                 strict: true,
@@ -1130,7 +1212,10 @@ impl Vm {
                 let doc = run.format == Format::Pcf && run.document && root;
                 if run.format == Format::Yaml && !stream {
                     run.yaml.as_mut().unwrap().start(array);
-                } else if !doc && run.format != Format::Properties && !stream {
+                } else if !doc
+                    && !matches!(run.format, Format::Properties | Format::Plist)
+                    && !stream
+                {
                     if run.format == Format::Pcf && standalone {
                         run.append("new ");
                     }
@@ -1167,7 +1252,7 @@ impl Vm {
                         depth: m.depth,
                         document_root: m.document_root,
                         emitted: m.emitted
-                            || (matches!(run.format, Format::Json | Format::Yaml)
+                            || (matches!(run.format, Format::Json | Format::Yaml | Format::Plist)
                                 && m.strict
                                 && !m.array
                                 && !m.members.is_empty()),
@@ -1179,7 +1264,10 @@ impl Vm {
                 }
                 let item = m.members[m.next].clone();
                 let descriptor = &item.descriptor;
-                if !(matches!(run.format, Format::Properties | Format::Yaml) && m.strict)
+                if !(matches!(
+                    run.format,
+                    Format::Properties | Format::Yaml | Format::Plist
+                ) && m.strict)
                     && !m.prepared
                 {
                     m.prepared = true;
@@ -1188,7 +1276,11 @@ impl Vm {
                     self.prepare_render_key(key);
                     return Ok(false);
                 }
-                if !(matches!(run.format, Format::Properties | Format::Yaml) && m.strict) {
+                if !(matches!(
+                    run.format,
+                    Format::Properties | Format::Yaml | Format::Plist
+                ) && m.strict)
+                {
                     m.hash = self.java_hash(&descriptor.key)?;
                     while m.compare < m.seen.len() {
                         let (seen, hash) = &m.seen[m.compare];
@@ -1215,8 +1307,10 @@ impl Vm {
                     run.tasks.push(Task::Members(m));
                     return Ok(false);
                 }
-                if matches!(run.format, Format::Json | Format::Properties | Format::Yaml)
-                    && m.array
+                if matches!(
+                    run.format,
+                    Format::Json | Format::Properties | Format::Yaml | Format::Plist
+                ) && m.array
                     && descriptor.kind != CollectionMemberKind::Element
                 {
                     let rendered = crate::diagnostic_values::render(
@@ -1351,7 +1445,36 @@ impl Vm {
                     return Ok(false);
                 }
                 let depth = m.depth;
-                if run.format == Format::Yaml {
+                if run.format == Format::Plist {
+                    let element = descriptor.kind == CollectionMemberKind::Element;
+                    if descriptor.kind == CollectionMemberKind::Entry
+                        && !matches!(&key, Value::String(_))
+                        && !matches!(&key, Value::Object(id) if self.is_render_directive(*id)?)
+                    {
+                        return self.plist_non_string_key(m.receiver, &key);
+                    }
+                    if !m.emitted {
+                        run.append(if element { "<array>\n" } else { "<dict>\n" });
+                    }
+                    m.emitted = true;
+                    run.tasks.push(Task::Members(m));
+                    run.tasks.push(Task::RestoreSource(previous_source));
+                    run.tasks.push(Task::Text("\n".into()));
+                    run.value(value, depth, false, false, false, path);
+                    if element {
+                        run.append_value(&run.indentation(depth));
+                    } else {
+                        let key = if descriptor.kind == CollectionMemberKind::Property {
+                            Value::String(output_name.unwrap_or_else(|| match descriptor.key {
+                                Value::String(name) => name,
+                                _ => unreachable!("property string key"),
+                            }))
+                        } else {
+                            key
+                        };
+                        run.tasks.push(Task::PlistKey { key, depth });
+                    }
+                } else if run.format == Format::Yaml {
                     let element = descriptor.kind == CollectionMemberKind::Element;
                     if descriptor.kind == CollectionMemberKind::Entry
                         && !self.yaml_scalar_key(&key)?
@@ -1596,6 +1719,16 @@ impl Vm {
                     if !stream {
                         run.yaml.as_mut().unwrap().close(!emitted);
                     }
+                } else if run.format == Format::Plist {
+                    // Java always appends the parent indent, including an empty
+                    // nested container whose element/key prefix is already present.
+                    run.append_value(&run.indentation(depth - 1));
+                    run.append(match (array, emitted) {
+                        (true, false) => "<array/>",
+                        (true, true) => "</array>",
+                        (false, false) => "<dict/>",
+                        (false, true) => "</dict>",
+                    });
                 } else if run.format == Format::Properties {
                     // Flattened output has no container delimiters.
                 } else if run.format == Format::Json {
@@ -1736,13 +1869,39 @@ impl Vm {
             ))
             .concat(&rendered),
         );
-        error.set_template_hint("Consider adding a converter to `output.converters`.");
-        error.frames.extend(run.source.clone());
+        // PList primitive visitors use cannotRenderType directly. Object,
+        // Null, Class, TypeAlias and Function errors retain the shared hint.
+        if !(run.format == Format::Plist
+            && matches!(
+                value,
+                Value::Duration(_) | Value::DataSize(_) | Value::Regex(_) | Value::IntSeq(_)
+            ))
+        {
+            error.set_template_hint("Consider adding a converter to `output.converters`.");
+            error.frames.extend(run.source.clone());
+        }
         Err(error)
     }
     fn is_render_directive(&self, id: ObjectId) -> Result<bool, RuntimeError> {
         Ok(collections::typed_class(&self.heap, id)?
             .is_some_and(|class| class.id == output::RENDER_DIRECTIVE))
+    }
+    fn plist_non_string_key(&self, receiver: ObjectId, key: &Value) -> Result<bool, RuntimeError> {
+        let map = self.heap.get(receiver)?.collection_kind == CollectionKind::Map;
+        let render = |value: &Value| {
+            crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 80)
+        };
+        Err(RuntimeError::new(
+            ErrorKind::Type,
+            PklString::from(if map {
+                "Cannot render map with non-string key as XML property list.\nMap: "
+            } else {
+                "Cannot render object with non-string key as XML property list.\nObject: "
+            })
+            .concat(&render(&Value::Object(receiver))?)
+            .concat(&if map { "\nKey: " } else { "\nKey   : " }.into())
+            .concat(&render(key)?),
+        ))
     }
     fn json_non_string_key(&self, receiver: ObjectId, key: &Value) -> Result<bool, RuntimeError> {
         let map = self.heap.get(receiver)?.collection_kind == CollectionKind::Map;

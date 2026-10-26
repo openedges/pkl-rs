@@ -1,0 +1,187 @@
+{
+  "Stage86": {
+    "Rust_exit": 2,
+    "scope": "Completed earlier Stage86 source only; no Stage94 live result inferred.",
+    "status": "candidate-unsupported"
+  },
+  "contract": {
+    "assertion_count": null,
+    "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+    "channels": [
+      "stdout",
+      "stderr",
+      "exit_code",
+      "files"
+    ],
+    "command": [
+      "eval",
+      "--no-cache",
+      "--no-project",
+      "--settings",
+      "pkl:settings",
+      "--property",
+      "name1=value1",
+      "--property",
+      "name2=value2",
+      "--property",
+      "/foo/bar=foobar",
+      "--env-var",
+      "NAME1=value1",
+      "--env-var",
+      "NAME2=value2",
+      "--env-var",
+      "/foo/bar=foobar",
+      "--env-var",
+      "foo bar=foo bar",
+      "--env-var",
+      "file:///foo/bar=file:///foo/bar",
+      "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pListRenderer3.plist.pkl"
+    ],
+    "cwd": ".",
+    "environment": {
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "NO_COLOR": "1",
+      "TERM": "dumb",
+      "TZ": "UTC"
+    },
+    "execution": {
+      "reason": null,
+      "status": "ready"
+    },
+    "expected_exit": [
+      0
+    ],
+    "expected_outcome": "success",
+    "host_requirements": [
+      "filesystem",
+      "source-tree-resource-set"
+    ],
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pListRenderer3.plist.pkl",
+    "resource_set": "pkl",
+    "resources": [
+      {
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/api/pListRenderer3.plist",
+        "sha256": "f0a2b96ae3f4b15aea6d75c86afff9088044d0e492c9305654421dd029bd7622"
+      }
+    ],
+    "source": {
+      "path": "pkl-core/src/test/files/LanguageSnippetTests/input/api/pListRenderer3.plist.pkl",
+      "repository": "pkl",
+      "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "sha256": "325c46a74473be03a7294ec8200fd49d07fa8677b34ac8e805cb53beb5637750"
+    },
+    "suite": "language-snippet",
+    "target": [
+      "native",
+      "wasm",
+      "napi"
+    ],
+    "upstream_goldens": [
+      {
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/api/pListRenderer3.plist",
+        "sha256": "f0a2b96ae3f4b15aea6d75c86afff9088044d0e492c9305654421dd029bd7622",
+        "use": "provenance-only-normalized-by-upstream"
+      }
+    ],
+    "upstream_outcome": "success"
+  },
+  "existing_Java": {
+    "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace",
+    "environment": {
+      "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/.state/ca9514a2ca5065545249c85c/home",
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "NO_COLOR": "1",
+      "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/.state/ca9514a2ca5065545249c85c/tmp",
+      "TERM": "dumb",
+      "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/.state/ca9514a2ca5065545249c85c/tmp",
+      "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/.state/ca9514a2ca5065545249c85c/tmp",
+      "TZ": "UTC"
+    },
+    "exit_code": 0,
+    "generated_files": {},
+    "process_command": [
+      "/usr/bin/java",
+      "-Xms64m",
+      "-Xmx512m",
+      "-Dfile.encoding=UTF-8",
+      "-Dstdout.encoding=UTF-8",
+      "-Dstderr.encoding=UTF-8",
+      "-Duser.language=en",
+      "-Duser.country=US",
+      "-Duser.timezone=UTC",
+      "-Djava.awt.headless=true",
+      "-Duser.name=oracle",
+      "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/.state/ca9514a2ca5065545249c85c/home",
+      "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/.state/ca9514a2ca5065545249c85c/tmp",
+      "-cp",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+      "org.pkl.cli.Main",
+      "eval",
+      "--no-cache",
+      "--no-project",
+      "--settings",
+      "pkl:settings",
+      "--property",
+      "name1=value1",
+      "--property",
+      "name2=value2",
+      "--property",
+      "/foo/bar=foobar",
+      "--env-var",
+      "NAME1=value1",
+      "--env-var",
+      "NAME2=value2",
+      "--env-var",
+      "/foo/bar=foobar",
+      "--env-var",
+      "foo bar=foo bar",
+      "--env-var",
+      "file:///foo/bar=file:///foo/bar",
+      "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pListRenderer3.plist.pkl"
+    ],
+    "records": {
+      "process.json": {
+        "bytes": 3220,
+        "mode": 420,
+        "path": "target/m2/stage67-full-regression-01/cases/ca9514a2ca5065545249c85c/java/process.json",
+        "sha256": "384d9e125b3ee4914f8a62d369f20658e6132dcc805c2bc0e97d29063c8cfb93"
+      },
+      "result.json": {
+        "bytes": 294,
+        "mode": 420,
+        "path": "target/m2/stage67-full-regression-01/cases/ca9514a2ca5065545249c85c/java/result.json",
+        "sha256": "e897a912a9c43f62782c862ae6cf5f19ceee20d62a4b9f6c5029144900c098c3"
+      },
+      "stderr.bin": {
+        "bytes": 0,
+        "mode": 420,
+        "path": "target/m2/stage67-full-regression-01/cases/ca9514a2ca5065545249c85c/java/stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout.bin": {
+        "bytes": 947,
+        "mode": 420,
+        "path": "target/m2/stage67-full-regression-01/cases/ca9514a2ca5065545249c85c/java/stdout.bin",
+        "sha256": "f0a2b96ae3f4b15aea6d75c86afff9088044d0e492c9305654421dd029bd7622"
+      }
+    },
+    "repetitions_recorded": 1,
+    "scope": "Exact previous Stage67 CLI observation; no fresh API/UTF16/Logger or two-repeat claim.",
+    "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pListRenderer3.plist.pkl",
+    "unexpected_workspace_writes": {}
+  },
+  "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pListRenderer3.plist.pkl",
+  "input": {
+    "bytes": 1123,
+    "mode": 420,
+    "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pListRenderer3.plist.pkl",
+    "sha256": "325c46a74473be03a7294ec8200fd49d07fa8677b34ac8e805cb53beb5637750"
+  },
+  "inventory_execution": {
+    "reason": null,
+    "state": "ready"
+  },
+  "unchanged_contract_sha256": "4fd391aad660d7b63535032cc951a4529330f5d90b643d3521ed40efb2893f9a"
+}

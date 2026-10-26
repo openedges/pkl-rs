@@ -456,8 +456,8 @@ fn ordinary_lazy_defaults_survive_undefined_member_failures() {
 }
 
 #[test]
-fn unimplemented_renderer_algorithms_remain_explicit_at_invocation() {
-    // Implemented Properties/YAML bytes are covered by their Java oracle tests.
+fn implemented_renderer_invocations_keep_language_validation() {
+    // Full document-error bytes and scalar output come from the Plist Java oracle.
     let mut probe = metadata_probe(&[
         "yaml.extension",
         "plist.renderDocument(1)",
@@ -465,10 +465,9 @@ fn unimplemented_renderer_algorithms_remain_explicit_at_invocation() {
         "yaml.extension",
     ]);
     value(&mut probe, 0, "yaml");
-    for index in 1..3 {
-        let event = evaluate(&mut probe, index);
-        assert_eq!(event.kind, "error");
-        assert_eq!(event.disposition, Some("unsupported"));
-    }
+    let event = evaluate(&mut probe, 1);
+    assert_eq!(event.kind, "error");
+    assert_eq!(event.disposition, Some("language-error"));
+    value(&mut probe, 2, "<integer>1</integer>");
     value(&mut probe, 3, "yaml");
 }

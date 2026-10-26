@@ -324,7 +324,9 @@ pub(in crate::vm) fn builtin_members(
                         document: method == "renderDocument",
                     }
                 } else {
-                    Instruction::Unsupported(format!("{name}.{method} is not implemented.").into())
+                    Instruction::RenderPlist {
+                        document: method == "renderDocument",
+                    }
                 },
             ));
         }

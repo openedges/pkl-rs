@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+The top-level value of an XML property list must have type `Typed`, `Dynamic`, `Listing`, `Mapping`, `List`, `Set`, or `Map`, but got type `Bytes`.
+Value: Bytes(1)
+
+4 | function q002(): String = (new PListRenderer {}).renderDocument(Bytes(1))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.documents#q002 (file:///stage95-plist/documents.pkl)
+
+1 | q002()
+    ^^^^^^
+at  (repl:text)

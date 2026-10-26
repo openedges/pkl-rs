@@ -47,6 +47,7 @@ mod object_lookups;
 mod output;
 mod pair;
 mod pcf_format;
+mod plist;
 mod primitives;
 #[cfg(test)]
 mod receiver_tests;
@@ -90,6 +91,9 @@ pub enum Instruction {
         document: bool,
     },
     RenderProperties {
+        document: bool,
+    },
+    RenderPlist {
         document: bool,
     },
     RenderYaml {
@@ -4329,6 +4333,9 @@ impl Vm {
             }
             Instruction::RenderJson { document } => {
                 self.begin_render(document, rendering::Format::Json)?
+            }
+            Instruction::RenderPlist { document } => {
+                self.begin_render(document, rendering::Format::Plist)?;
             }
             Instruction::RenderYaml { document } => {
                 self.begin_render(document, rendering::Format::Yaml)?;

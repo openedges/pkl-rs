@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Cannot render object with non-string key as XML property list.
+Object: new Mapping { [1] = "x" }
+Key   : 1
+
+8 | function q006(): String = (new PListRenderer {}).renderValue(new Mapping { [1] = "x" })
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.collections_nulls#q006 (file:///stage95-plist/collections-nulls.pkl)
+
+1 | q006()
+    ^^^^^^
+at  (repl:text)

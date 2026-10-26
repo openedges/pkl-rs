@@ -1,0 +1,17 @@
+–– Pkl Error ––
+Cannot render value of type `Function1` as XML property list.
+Value: new Function1 {}
+
+2 | m = new Mixin {}
+    ^^^^^^^^^^^^^^^^
+at pkl.base#PListRenderer.renderDocument (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pListRenderer7.pkl, line 2)
+
+Consider adding a converter to `output.converters`.
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)
+
+135 | if (renderer is BytesRenderer) renderer.renderDocument(value) else text.encodeToBytes("UTF-8")
+                                                                         ^^^^
+at pkl.base#Module.output.bytes (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L135)

@@ -1,0 +1,2 @@
+module stage95.root_only
+function rootOnly(): String = (new PListRenderer { converters { ["^"] = (x) -> List(x) } }).renderDocument(1)

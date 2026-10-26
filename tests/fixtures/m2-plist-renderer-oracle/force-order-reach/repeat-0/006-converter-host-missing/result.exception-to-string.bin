@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find resource `prop:stage95.missing`.
+
+9 | function q006(): String = (new PListRenderer { converters { [Int] = (_) -> read("prop:stage95.missing") } }).renderValue(1)
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.force_order#q006.converters[#1].<function#1> (file:///stage95-plist/force-order-reach.pkl)
+
+9 | function q006(): String = (new PListRenderer { converters { [Int] = (_) -> read("prop:stage95.missing") } }).renderValue(1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.force_order#q006 (file:///stage95-plist/force-order-reach.pkl)
+
+1 | q006()
+    ^^^^^^
+at  (repl:text)

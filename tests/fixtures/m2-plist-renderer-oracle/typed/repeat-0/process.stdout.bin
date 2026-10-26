@@ -1,0 +1,20 @@
+session-open mode=string rows=9
+call-enter=string-0-rename-original-path
+call-exit=string-0-rename-original-path status=error
+call-enter=string-1-annotations-transformer-order
+call-exit=string-1-annotations-transformer-order status=error
+call-enter=string-2-annotation-null
+call-exit=string-2-annotation-null status=error
+call-enter=string-3-annotation-directive
+call-exit=string-3-annotation-directive status=error
+call-enter=string-4-subtype-specificity
+call-exit=string-4-subtype-specificity status=error
+call-enter=string-5-typealias-error
+call-exit=string-5-typealias-error status=error
+call-enter=string-6-reference-error
+call-exit=string-6-reference-error status=error
+call-enter=string-7-identity-unchanged-error
+call-exit=string-7-identity-unchanged-error status=error
+call-enter=string-8-identity-changed-error
+call-exit=string-8-identity-changed-error status=error
+session-closed mode=string rows=9 public-calls=9 success=0 errors=9

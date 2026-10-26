@@ -21,6 +21,45 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+### Stage95 PListRenderer
+
+Canonical Rust 1.98.1 formatting, manifest refresh/freshness, xtask verification,
+workspace/all-target Clippy (`-D warnings`) and runtime Wasm compilation pass.
+Manifest refresh changes source-link hashes while preserving cases, counts and
+requirement states; it is an authorized transition, not an unchanged bookend.
+
+A single `cargo +1.98.1 test --workspace --locked -vv --message-format=json-render-diagnostics` invocation passes **1,341 tests with
+zero failures and one existing ignored probe**. All 236 test executables,
+25 compile-only examples and two doctest libraries are covered. The 238 outer
+summaries exclude 13 nested child summaries: 12 parse directly; one is qualified
+by its exact raw bytes interleaved with a lifecycle diagnostic. The recorded
+profile is opt1/debug0/strip-symbols, assertions/overflow enabled, jobs1 and
+incremental0; xtask shares that profile, while Clippy/Wasm use opt0/debug0.
+The 25,309-path source dictionary and 208,667-path broad bookends remain stable
+through compilation and test execution. Actual compiler, artifact and dep-info
+records bind the canonical runtime.
+
+The nine native original CLI-argv captures match all raw comparison channels
+9/9, including one ordinary error. Empty observed file/write maps do not verify
+a nonempty-file writer. The previous isolated 131 passes and 18 original API
+byte-vector observations retain their own provenance. Java97 authority includes
+one unresolved recursive-converter query; 96 comparable queries comprise
+80 renderer-reached controls and 16 preserved syntax-preempted errors.
+
+M1 strict/contract: 6,078 strict comparisons and the separate architecture contract pass on each target.
+Selected platform result: 450/450 raw matches on each of Native, N-API and Chromium: 234 successes, 216 ordinary errors, 4,000 shared fields and 40 ordered Logger events per target.
+The selected comparison covers 225 queries repeated twice on each target, not a new
+whole-corpus replay. The converter session compares 11 selected rows against a Java session containing
+12; the unresolved row is retained but excluded. This does not establish full
+original converter-process protocol parity.
+
+See the [Stage95 checkpoint](reports/m2/stage95-plist-renderer-checkpoint.json)
+and [publication review](reports/m2/stage95-plist-renderer-publication-review.json);
+evidence part identities are listed by the checkpoint. Stage94's historical
+4,268/4,424 aggregate and the open full-M2/API/release/performance gates remain unchanged.
+
+### Earlier checkpoint results
+
 Stage94 adds an evidence-only full ready-corpus composition on the unchanged
 Stage93 runtime: **4,268/4,424 raw matches, 52 mismatches, 102 unsupported cases
 and two Java oracle errors**. All four canonical offline integrity checks and

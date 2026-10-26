@@ -1,0 +1,13 @@
+–– Pkl Error ––
+Cannot render value of type `Null` as XML property list.
+Value: null
+
+15 | function q013(): String = (new PListRenderer {}).renderValue(null)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.scalars#q013 (file:///stage95-plist/scalars.pkl)
+
+Consider adding a converter to `output.converters`.
+
+1 | q013()
+    ^^^^^^
+at  (repl:text)

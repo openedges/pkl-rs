@@ -1,0 +1,13 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot render value of type `pkl.ref#Reference` as XML property list.
+Value: Reference(new Domain {}, Int, null)
+
+33 | function q006(): String = (new PListRenderer {}).renderValue(module.referenceValue)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage95.typed#q006 (file:///stage95-plist/typed-reach.pkl)
+
+Consider adding a converter to `output.converters`.
+
+1 | q006()
+    ^^^^^^
+at  (repl:text)

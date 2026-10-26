@@ -1,0 +1,44 @@
+session-open mode=string rows=21
+call-enter=string-0-string
+call-exit=string-0-string status=success
+call-enter=string-1-boolean-true
+call-exit=string-1-boolean-true status=success
+call-enter=string-2-boolean-false
+call-exit=string-2-boolean-false status=success
+call-enter=string-3-int-min
+call-exit=string-3-int-min status=success
+call-enter=string-4-int-max
+call-exit=string-4-int-max status=success
+call-enter=string-5-float-zero
+call-exit=string-5-float-zero status=success
+call-enter=string-6-float-negative-zero
+call-exit=string-6-float-negative-zero status=success
+call-enter=string-7-float-exponent
+call-exit=string-7-float-exponent status=success
+call-enter=string-8-float-nan
+call-exit=string-8-float-nan status=success
+call-enter=string-9-float-positive-infinity
+call-exit=string-9-float-positive-infinity status=success
+call-enter=string-10-float-negative-infinity
+call-exit=string-10-float-negative-infinity status=success
+call-enter=string-11-bytes-empty
+call-exit=string-11-bytes-empty status=success
+call-enter=string-12-bytes
+call-exit=string-12-bytes status=success
+call-enter=string-13-null
+call-exit=string-13-null status=error
+call-enter=string-14-duration
+call-exit=string-14-duration status=error
+call-enter=string-15-datasize
+call-exit=string-15-datasize status=error
+call-enter=string-16-regex
+call-exit=string-16-regex status=error
+call-enter=string-17-intseq
+call-exit=string-17-intseq status=error
+call-enter=string-18-pair
+call-exit=string-18-pair status=error
+call-enter=string-19-class
+call-exit=string-19-class status=error
+call-enter=string-20-function
+call-exit=string-20-function status=error
+session-closed mode=string rows=21 public-calls=21 success=13 errors=8

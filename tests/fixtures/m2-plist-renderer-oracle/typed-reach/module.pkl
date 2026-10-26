@@ -1,0 +1,35 @@
+module stage95.typed
+import "pkl:ref"
+typealias Email = String
+class Domain extends ref.Domain {
+  function renderReference(reference: ref.Reference<Domain, Any>): String = "ref"
+}
+local domain = new Domain {}
+hidden referenceValue = ref.Reference(domain, Int, null)
+class Rename extends ConvertProperty {
+  render = (p, renderer) -> Pair(p.first + "-renamed", p.second)
+}
+class Renamed { @Rename {} value: String = "v" }
+class Mark extends ConvertProperty {
+  marker: String
+  render = (p, renderer) -> Pair(p.first, trace(marker) + p.second)
+}
+class Multi { @Mark { marker = "A" } @Mark { marker = "B" } value: String = "v" }
+class Drop extends ConvertProperty { render = (p, renderer) -> Pair(p.first, null) }
+class Dropped { @Drop {} value: String = "v" }
+class Raw extends ConvertProperty {
+  render = (p, renderer) -> Pair(p.first, new RenderDirective { text = "<raw>&" })
+}
+class Directed { @Raw {} value: String = "v" }
+open class Parent { value: String = "parent" }
+class Child extends Parent { value = "child" }
+hidden badRoot = new Dynamic { x = 1.min }
+function q000(): String = (new PListRenderer { converters { ["^value"] = (_) -> "converted-original" } }).renderValue(new Renamed {})
+function q001(): String = (new PListRenderer { convertPropertyTransformers { [module.Mark] { render = (p, renderer) -> Pair(p.first, trace(marker) + ":" + p.second) } } }).renderValue(new Multi {})
+function q002(): String = (new PListRenderer {}).renderValue(new Dropped {})
+function q003(): String = (new PListRenderer {}).renderValue(new Directed {})
+function q004(): String = (new PListRenderer { converters { [module.Parent] = (_) -> "parent-converted"; [module.Child] = (_) -> "child-converted" } }).renderValue(new Child {})
+function q005(): String = (new PListRenderer {}).renderValue(module.Email)
+function q006(): String = (new PListRenderer {}).renderValue(module.referenceValue)
+function q007(): String = (new PListRenderer { converters { [Dynamic] = (v) -> v } }).renderDocument(module.badRoot)
+function q008(): String = (new PListRenderer { converters { [Dynamic] = (_) -> new Dynamic { x = 1.min } } }).renderDocument(module.badRoot)

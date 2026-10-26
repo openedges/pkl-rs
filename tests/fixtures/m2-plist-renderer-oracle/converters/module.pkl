@@ -1,0 +1,13 @@
+module stage95.converters
+function q000(): String = (new PListRenderer { converters { [Null] = (_) -> "n" } }).renderValue(new Dynamic { a = null })
+function q001(): String = (new PListRenderer { converters { [Int] = (_) -> null } }).renderValue(Map("a", 1))
+function q002(): String = (new PListRenderer { converters { [Int] = (_) -> null } }).renderValue(List(1))
+function q003(): String = (new PListRenderer { converters { [Int] = (x) -> List(x) } }).renderDocument(1)
+function q004(): String = (new PListRenderer { converters { [Dynamic] = (_) -> "x" } }).renderDocument(new Dynamic {})
+function q005(): String = (new PListRenderer { converters { [Int] = (_) -> throw("converter") } }).renderDocument(1)
+function q006(): String = (new PListRenderer { converters { [Int] = (_) -> 2; ["^a"] = (_) -> 3 } }).renderValue(new Dynamic { a = 1 })
+function q007(): String = (new PListRenderer { converters { ["a"] = (_) -> 2; ["^a"] = (_) -> 3 } }).renderValue(new Dynamic { a = 1 })
+function q008(): String = (new PListRenderer { converters { [Int] = (_) -> throw("key") } }).renderValue(Map(1, null))
+function q009(): String = (new PListRenderer { converters { [Int] = (_) -> "k"; ["[k]"] = (_) -> "v" } }).renderValue(Map(1, "x"))
+function q010(): String = (new PListRenderer {}).renderValue(new RenderDirective { text = "<x>&" })
+function q011(): String = (new PListRenderer {}).renderValue(Map(new RenderDirective { text = "<x>&" }, 1))

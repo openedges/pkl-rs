@@ -1,0 +1,26 @@
+session-open mode=string rows=12
+call-enter=string-0-root-string
+call-exit=string-0-root-string status=error
+call-enter=string-1-root-null
+call-exit=string-1-root-null status=error
+call-enter=string-2-root-bytes
+call-exit=string-2-root-bytes status=error
+call-enter=string-3-root-list
+call-exit=string-3-root-list status=success
+call-enter=string-4-root-set
+call-exit=string-4-root-set status=success
+call-enter=string-5-root-map
+call-exit=string-5-root-map status=success
+call-enter=string-6-root-empty-list
+call-exit=string-6-root-empty-list status=success
+call-enter=string-7-root-empty-map
+call-exit=string-7-root-empty-map status=success
+call-enter=string-8-root-listing
+call-exit=string-8-root-listing status=success
+call-enter=string-9-root-mapping
+call-exit=string-9-root-mapping status=success
+call-enter=string-10-root-dynamic
+call-exit=string-10-root-dynamic status=success
+call-enter=string-11-root-directive
+call-exit=string-11-root-directive status=success
+session-closed mode=string rows=12 public-calls=12 success=9 errors=3

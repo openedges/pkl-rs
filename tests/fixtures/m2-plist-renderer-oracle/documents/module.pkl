@@ -1,0 +1,13 @@
+module stage95.documents
+function q000(): String = (new PListRenderer {}).renderDocument("x")
+function q001(): String = (new PListRenderer {}).renderDocument(null)
+function q002(): String = (new PListRenderer {}).renderDocument(Bytes(1))
+function q003(): String = (new PListRenderer {}).renderDocument(List(1, true))
+function q004(): String = (new PListRenderer {}).renderDocument(Set(1, true))
+function q005(): String = (new PListRenderer {}).renderDocument(Map("a", 1))
+function q006(): String = (new PListRenderer {}).renderDocument(List())
+function q007(): String = (new PListRenderer {}).renderDocument(Map())
+function q008(): String = (new PListRenderer {}).renderDocument(new Listing { 1; 2 })
+function q009(): String = (new PListRenderer {}).renderDocument(new Mapping { ["a"] = 1 })
+function q010(): String = (new PListRenderer {}).renderDocument(new Dynamic { a = 1 })
+function q011(): String = (new PListRenderer {}).renderDocument(new RenderDirective { text = "<raw/>" })
