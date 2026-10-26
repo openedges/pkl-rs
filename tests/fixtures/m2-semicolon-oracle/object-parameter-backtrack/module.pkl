@@ -1,0 +1,2 @@
+hidden f = new Dynamic { x;, y -> result = x + y }
+result = f.apply(1, 2).result

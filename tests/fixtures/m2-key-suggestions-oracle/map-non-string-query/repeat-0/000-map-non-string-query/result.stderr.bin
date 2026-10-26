@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find key `42`.
+
+2 | result = x[42]
+             ^^^^^
+at map-non-string-query#result (file:///stage87/map-non-string-query.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

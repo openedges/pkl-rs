@@ -1,0 +1,2 @@
+local unused = new { bar = super.bar() }
+result = 1

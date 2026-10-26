@@ -1,0 +1,2 @@
+hidden x = Map("xfoo", 1, "foyo", 2, "fooz", 3, "other", 4)
+result = x["foo"]

@@ -1,0 +1,8 @@
+hidden k = new Dynamic {
+  n = throw("key-hash")
+}
+hidden x = new Mapping {
+  [k] = 1
+  ["fooz"] = 2
+}
+result = x["foo"]

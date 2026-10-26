@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Cannot find key `"foo"`.
+
+3 | res1 = x["foo"]
+           ^^^^^^^^
+at cannotFindMapKey#res1 (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/cannotFindMapKey.pkl, line 3)
+
+Did you mean any of the following?
+"fooz"
+"foyo"
+"xfoo"
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)
+
+135 | if (renderer is BytesRenderer) renderer.renderDocument(value) else text.encodeToBytes("UTF-8")
+                                                                         ^^^^
+at pkl.base#Module.output.bytes (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L135)

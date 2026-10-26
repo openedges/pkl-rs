@@ -1,0 +1,6 @@
+–– Pkl Error ––
+second-argument
+
+1 | ("abc".substring(-1, throw("second-argument"))).toString()
+                         ^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

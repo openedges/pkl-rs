@@ -76,7 +76,7 @@ enum Work<'a> {
         Option<Span>,
     ),
     CollectionBody(&'a Expr),
-    ObjectEnd(Vec<crate::syntax::Member>, Option<Span>, usize, bool),
+    ObjectEnd(Vec<crate::syntax::Member>, Option<Span>, usize, bool, bool),
     PropertyBegin(&'a crate::syntax::Member),
     PropertyEnd(Box<PropertyCompilation<'a>>),
 }
@@ -779,6 +779,8 @@ impl Compiler<'_> {
                                 }
                                 output.spans[begin] = parent_span;
                             }
+                            let previous_super_method_allowed =
+                                std::mem::replace(&mut self.super_method_allowed, false);
                             self.type_scopes.push(properties.clone());
                             output.push(Instruction::BeginCollection {
                                 kind,
@@ -790,6 +792,7 @@ impl Compiler<'_> {
                                 parent_span,
                                 begin,
                                 !parameters.is_empty() && !members.is_empty(),
+                                previous_super_method_allowed,
                             ));
                             work.extend(members.iter().rev().map(|member| match member {
                                 crate::syntax::ObjectMember::Property(member) => {
@@ -802,7 +805,13 @@ impl Compiler<'_> {
                             output.spans[begin] = parent_span;
                         }
                     }
-                    Work::ObjectEnd(properties, parent, begin, has_parameters) => {
+                    Work::ObjectEnd(
+                        properties,
+                        parent,
+                        begin,
+                        has_parameters,
+                        previous_super_method_allowed,
+                    ) => {
                         let parameter_check = has_parameters.then_some(output.len());
                         if has_parameters {
                             output.push(Instruction::CheckObjectParameters {
@@ -815,6 +824,7 @@ impl Compiler<'_> {
                         output.push(Instruction::EndCollection);
                         self.initialize_member_types(&properties, false, output)?;
                         self.type_scopes.pop();
+                        self.super_method_allowed = previous_super_method_allowed;
                         if matches!(output[begin], Instruction::BeginFunctionAmendment { .. }) {
                             let end = output.len();
                             if let Instruction::BeginFunctionAmendment { end: target, .. } =
@@ -1359,7 +1369,7 @@ impl Compiler<'_> {
             ExprKind::Trace(value) => {
                 work.push(Work::Emit(
                     Instruction::Trace {
-                        operand_span: value.unparenthesized().span,
+                        operand_span: self.executable_value_span(value),
                     },
                     None,
                 ));
@@ -1519,6 +1529,25 @@ impl Compiler<'_> {
                 }
             }
             ExprKind::Call { callee, arguments } => {
+                if !self.super_method_allowed
+                    && matches!(
+                        &callee.kind,
+                        ExprKind::Member(receiver, _)
+                            if matches!(receiver.unparenthesized().kind, ExprKind::Super)
+                    )
+                {
+                    let mut error = RuntimeError::new(
+                        ErrorKind::Type,
+                        "Cannot invoke a supermethod from here.",
+                    )
+                    .at(expression.span);
+                    error.frames.push(RuntimeFrame {
+                        span: expression.span,
+                        member: self.member.clone(),
+                        source: None,
+                    });
+                    return Err(error);
+                }
                 if let ExprKind::Name(name) = &callee.kind
                     && self.resolved.names.get(&callee.span) == Some(&Binding::ImplicitMethod)
                 {

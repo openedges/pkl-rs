@@ -783,6 +783,31 @@ impl Vm {
         }))
     }
 
+    /// Construct the diagnostic only after the shared hash/equality continuation
+    /// has visited all candidate keys. Member values are never forced here.
+    pub(super) fn key_suggestions_error(
+        &self,
+        key: &Value,
+        candidates: Vec<PklString>,
+    ) -> RuntimeError {
+        let rendered =
+            crate::diagnostic_values::render(key, &self.heap, &self.program.module_name, 80)
+                .unwrap_or_else(|_| display_value(key));
+        let mut error = RuntimeError::new(
+            ErrorKind::MissingMember,
+            PklString::join(&["Cannot find key `".into(), rendered, "`.".into()], ""),
+        );
+        if let Value::String(query) = key {
+            let suggestions = crate::diagnostic::key_suggestions(query, candidates);
+            if !suggestions.is_empty() {
+                let mut lines = vec![PklString::from("Did you mean any of the following?")];
+                lines.extend(suggestions.into_iter().map(|key| key.quoted()));
+                error.hint = Some(PklString::join(&lines, "\n"));
+            }
+        }
+        error
+    }
+
     fn insert_map_entry(
         &mut self,
         id: ObjectId,
@@ -1859,25 +1884,9 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                         self.stack.extend([Value::Object(receiver), key]);
                         return Ok(());
                     }
-                    let value = self.map_value(receiver, &key)?.ok_or_else(|| {
-                        RuntimeError::new(
-                            ErrorKind::MissingMember,
-                            PklString::join(
-                                &[
-                                    "Cannot find key `".into(),
-                                    crate::diagnostic_values::render(
-                                        &key,
-                                        &self.heap,
-                                        &self.program.module_name,
-                                        80,
-                                    )
-                                    .unwrap_or_else(|_| display_value(&key)),
-                                    "`.".into(),
-                                ],
-                                "",
-                            ),
-                        )
-                    })?;
+                    let Some(value) = self.map_value(receiver, &key)? else {
+                        return self.fail_missing_key(receiver, key);
+                    };
                     self.stack.push(value);
                     return Ok(());
                 }
@@ -2015,25 +2024,9 @@ crate::diagnostic_values::render(
                     }
                     self.frames.last_mut().expect("super entry frame").pc = end;
                 }
-                let member = member.ok_or_else(|| {
-                    RuntimeError::new(
-                        ErrorKind::MissingMember,
-                        PklString::join(
-                            &[
-                                "Cannot find key `".into(),
-                                crate::diagnostic_values::render(
-                                    &key,
-                                    &self.heap,
-                                    &self.program.module_name,
-                                    80,
-                                )
-                                .unwrap_or_else(|_| display_value(&key)),
-                                "`.".into(),
-                            ],
-                            "",
-                        ),
-                    )
-                })?;
+                let Some(member) = member else {
+                    return self.fail_missing_key(receiver, key);
+                };
                 self.force_key(receiver, owner, member.name, false, !is_super, false, true)?;
             }
             Instruction::EntryKey => {
@@ -2877,6 +2870,20 @@ impl Compiler<'_> {
     }
 
     pub(super) fn collection_body(
+        &mut self,
+        members: &[crate::syntax::ObjectMember],
+        parameters: &[crate::syntax::Parameter],
+        kind: CollectionKind,
+        has_parent: bool,
+        output: &mut Code,
+    ) -> Result<(), RuntimeError> {
+        let previous = std::mem::replace(&mut self.super_method_allowed, false);
+        let result = self.collection_body_scoped(members, parameters, kind, has_parent, output);
+        self.super_method_allowed = previous;
+        result
+    }
+
+    fn collection_body_scoped(
         &mut self,
         members: &[crate::syntax::ObjectMember],
         parameters: &[crate::syntax::Parameter],

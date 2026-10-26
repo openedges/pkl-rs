@@ -1,0 +1,2 @@
+hidden value = new Dynamic { function pick(start, end) = List(start, end) }
+result = value; .; pick(; 0;,; 1;)

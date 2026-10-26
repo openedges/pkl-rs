@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Invalid token at position. Expected a class, typealias, method, or property.
+
+1 | result = "ab".substring; (0, 1)
+                             ^
+at qualified-call-blocked (file:///stage88/qualified-call-blocked.pkl)

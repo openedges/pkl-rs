@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Unexpected token `}`. Expected `->`.
+
+1 | foo = new { bar = (super.bar)() }
+                                    ^
+at main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/workspace/parenthesized-call-boundary/main.pkl, line 1)

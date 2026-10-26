@@ -1,0 +1,129 @@
+{
+  "all_selected_current_source_payloads_match": true,
+  "approved_for_root_public_copy_and_metadata_finalization": true,
+  "archive": {
+    "bytes": 29594683,
+    "mode": 420,
+    "path": "target/m2/stage87-89-checkpoint-publication-01/stage87-89-integrated-evidence.tar.gz",
+    "sha256": "9a14d45f6388281a315038c4f42258f93a5f8cf377e8a93f23ac61a65409acb7"
+  },
+  "canonical_destinations_and_retained_sources_verified": 2628,
+  "cleanup_counts": {
+    "completed_platform_copies": [
+      "removed_count",
+      7
+    ],
+    "earlier_private_cache": [
+      "removed_count",
+      66
+    ],
+    "historical_public_archive_sparse": [
+      "paths",
+      18
+    ],
+    "private_cache": [
+      "removed_count",
+      216
+    ],
+    "private_cache_actual_latest": [
+      "removed_count",
+      150
+    ],
+    "release_cache": [
+      "removed_count",
+      211
+    ],
+    "workspace_test_cache": [
+      "removed_count",
+      221
+    ]
+  },
+  "complete": true,
+  "decompressed_gzip_bytes": 190658560,
+  "descriptor_file_references_verified": 43,
+  "documentation_identities": {
+    "PLAN.md": {
+      "bytes": 442610,
+      "mode": 420,
+      "path": "PLAN.md",
+      "sha256": "d8f5ad2da93af14be43b62891903bd8fd1182eb76d84e027b06fda63a2577586"
+    },
+    "docs/m2-language.md": {
+      "bytes": 81919,
+      "mode": 420,
+      "path": "docs/m2-language.md",
+      "sha256": "2b7ce8f1caab2fe757fa2128f35913db7c8340e00e65941997efd95cab0612d7"
+    },
+    "reports/m2/README.md": {
+      "bytes": 361916,
+      "mode": 420,
+      "path": "reports/m2/README.md",
+      "sha256": "4c671fe5dbecc3eb6461884f497f8742bb3d408caaa4357bc49742cfd4e6060a"
+    }
+  },
+  "full_member_sha256_mode_order_manifest_and_gzip_eof_verified": true,
+  "git_or_canonical_mutations_by_this_review": 0,
+  "kind": "stage87-89-independent-producer-publication-readback",
+  "limits": [
+    "Full current-source M2/API/performance and new whole4416 replay are not claimed; official aggregate remains completed Stage86 4214/4416.",
+    "This is an independent archive/evidence-boundary audit, not an independent semantic review of authored Stage88/adapter work.",
+    "Actual public copies and finalized metadata are a subsequent root readback step; this report does not assert they already exist.",
+    "Removed generated payloads are regenerable and not promised exactly restorable; immutable raw/source/producer records remain selected."
+  ],
+  "logical_payload_bytes": 132220028,
+  "members_including_manifest": 28387,
+  "platform": {
+    "api_observations_total": 882,
+    "api_queries": 147,
+    "observations_per_target": 294,
+    "repetitions": 2,
+    "separate_stage89_output_byte_observations_per_target": 28,
+    "single_m1_strict_and_contract_matches_per_target": 6078,
+    "stage89_host_required_unexecuted": 5
+  },
+  "preserved_capture01": {
+    "completed_prefix_observations": 126,
+    "full_scope_passed": false,
+    "root_actual_exit": 1
+  },
+  "producer_draft": {
+    "bytes": 12316,
+    "mode": 420,
+    "path": "target/m2/stage87-89-checkpoint-publication-01/checkpoint-draft.json",
+    "sha256": "62028d2bcf9d575587130a8f022a58f648c47a94295059629db4215e9c1dd87e"
+  },
+  "producer_report": {
+    "bytes": 703,
+    "mode": 420,
+    "path": "target/m2/stage87-89-checkpoint-publication-01/report.json",
+    "sha256": "ee830c3abc4f05e8e514f45fbd10af30d565298ef9e5b4f3adc8b20113f38f6d"
+  },
+  "public_files_written_by_this_review": 0,
+  "public_metadata_transition_allowed": {
+    "additions": [
+      "Exact public archive identity while preserving producer archive identity",
+      "Exact producer draft identity",
+      "This review identity",
+      "Final three documentation identities",
+      "Optional exact prior completed Stage86 descriptor identity"
+    ],
+    "git_binding": "Replace pending string with source_parent d327e4522703e36946a61828ebff43c7055ebe71, truthful compiled prepublication uncommitted integration/source-map provenance, intended origin/main, commit located through containing Git file and separately recorded actual push; no self-hash or claim that current HEAD was compiled.",
+    "invariants": "Every draft source/test/result/scope/limits/history field remains byte-structurally unchanged; any added file reference must match actual bytes. No actual commit/push or new whole-corpus outcome may be invented.",
+    "publication_ready": "false may become true only after this approval."
+  },
+  "read_only": true,
+  "regular_payloads": 28386,
+  "selection": {
+    "bytes": 12327477,
+    "mode": 420,
+    "path": "target/m2/stage87-89-checkpoint-publication-01/selection.json",
+    "sha256": "4772d39eb8ac80c050799e6c08ef57196e37444c7a9f818ebbe99a9e428e5f89"
+  },
+  "workspace": {
+    "failed": 0,
+    "ignored": 1,
+    "nested_child_summaries_separate": 13,
+    "outer_passed": 1228,
+    "test_executables": 221
+  }
+}

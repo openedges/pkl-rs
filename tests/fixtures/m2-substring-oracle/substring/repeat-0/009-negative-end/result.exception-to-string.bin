@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Character index `-1` is out of range `0`..`3`.
+String: "abc"
+
+1 | ("abc".substring(0, -1)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

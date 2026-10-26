@@ -1,0 +1,5 @@
+hidden x = new Mapping {
+  ["fooz"] = throw("value forced")
+  ["foyo"] = throw("value forced")
+}
+result = x["foo"]

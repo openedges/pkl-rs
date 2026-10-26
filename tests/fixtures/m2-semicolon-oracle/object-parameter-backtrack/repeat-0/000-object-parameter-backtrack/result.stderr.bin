@@ -1,0 +1,22 @@
+–– Pkl Error ––
+Cannot find method `apply` in class `Dynamic`.
+
+2 | result = f.apply(1, 2).result
+             ^^^^^^^^^^^^^
+at object-parameter-backtrack#result (file:///stage88/object-parameter-backtrack.pkl)
+
+Available methods in class `Dynamic`:
+getClass
+getProperty
+getPropertyOrNull
+hasProperty
+ifNonNull
+length
+toList
+toMap
+toString
+toTyped
+
+1 | result.toString()
+    ^^^^^^
+at  (repl:text)

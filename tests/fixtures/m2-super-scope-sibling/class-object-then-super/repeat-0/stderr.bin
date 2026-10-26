@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Cannot tell which parent to amend.
+
+3 | function f() = List(new { x = 1 }, super.f())[1]
+                        ^^^
+at main#B.f (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-01/workspace/class-object-then-super/main.pkl, line 3)
+
+Please specify a parent explicitly, for example `new Person { ... }` instead of `new { ... }`.

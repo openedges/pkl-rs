@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Unexpected token `-`. Expected `)`.
+
+2 | result = (n; -1)
+                 ^
+at parenthesis-backtrack (file:///stage88/parenthesis-backtrack.pkl)

@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got `null`.
+
+1444 | external function substringOrNull(start: Int, exclusiveEnd: Int): String?
+                                                                   ^^^
+at pkl.base#String.substringOrNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1444)
+
+1 | ("abc".substringOrNull(0, null)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

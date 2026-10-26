@@ -168,8 +168,34 @@ pub(crate) fn same_key(heap: &Heap, left: &Value, right: &Value) -> bool {
     }
     matches!((atom(heap, left), atom(heap, right)), (Ok(a), Ok(b)) if a == b)
 }
+/// Parent-first member iteration for a failed String-key lookup. The visited
+/// set observes key hashing and boxed equality before String filtering.
+#[derive(Clone)]
+struct KeySuggestions {
+    receiver: ObjectId,
+    query: Value,
+    members: Arc<[collections::RenderMember]>,
+    position: usize,
+    seen: Vec<(CollectionMember, Option<i32>)>,
+    candidates: Vec<PklString>,
+    map: bool,
+    hash: Option<i32>,
+}
+#[derive(Clone, Copy)]
+enum SuggestionLookup {
+    Visited,
+    Cached,
+    Map,
+}
+
 #[derive(Clone)]
 enum Task {
+    SuggestionVisit(Box<KeySuggestions>),
+    SuggestionHashed(Box<KeySuggestions>),
+    SuggestionCache(Box<KeySuggestions>),
+    SuggestionLookup(Box<KeySuggestions>, SuggestionLookup, Vec<Value>, usize),
+    SuggestionMatched(Box<KeySuggestions>, SuggestionLookup, Value),
+    SuggestionCollect(Box<KeySuggestions>),
     CountKey(ObjectId, Vec<Value>, usize, Vec<(Value, Option<i32>)>),
     CountReady(ObjectId, Vec<Value>, usize, Vec<(Value, Option<i32>)>),
     CountKeys(
@@ -423,6 +449,58 @@ impl Vm {
             .as_mut()
             .expect("cache lookup")
             .hide_callsite = false;
+        Ok(())
+    }
+
+    /// A missing non-String key has no suggestion traversal. String misses use
+    /// the same scheduler as key hashing, so errors, reads and logs can suspend.
+    pub(super) fn fail_missing_key(
+        &mut self,
+        receiver: ObjectId,
+        query: Value,
+    ) -> Result<(), RuntimeError> {
+        if !matches!(&query, Value::String(_)) {
+            return Err(self.key_suggestions_error(&query, Vec::new()));
+        }
+        let map = self.heap.get(receiver)?.collection_kind == CollectionKind::Map;
+        let members = if map {
+            collections::ordered_members(&self.heap, receiver)?
+                .into_iter()
+                .map(|descriptor| collections::RenderMember {
+                    descriptor,
+                    skip: false,
+                    code: None,
+                })
+                .collect::<Vec<_>>()
+        } else {
+            // Do not deduplicate with ordered_members: Java hashes each raw
+            // declaration before its visited-set and visibility checks.
+            collections::render_members(&self.heap, receiver)?
+        };
+        let mut roots = vec![Value::Object(receiver), query.clone()];
+        roots.extend(members.iter().map(|item| item.descriptor.key.clone()));
+        self.schedule_tasks(
+            vec![Task::SuggestionVisit(Box::new(KeySuggestions {
+                receiver,
+                query,
+                members: members.into(),
+                position: 0,
+                seen: Vec::new(),
+                candidates: Vec::new(),
+                map,
+                hash: None,
+            }))],
+            roots,
+        );
+        // VmExceptionBuilder's key hashing is outside the failing subscript's
+        // guest frame. The final lookup diagnostic restores that frame below.
+        self.frames
+            .last_mut()
+            .expect("lookup frame")
+            .equality_run
+            .as_mut()
+            .expect("suggestion traversal")
+            .hide_callsite = true;
         Ok(())
     }
 
@@ -766,6 +844,171 @@ impl Vm {
             return Ok(());
         };
         match task {
+            Task::SuggestionVisit(state) => {
+                if let Some(item) = state.members.get(state.position) {
+                    let key = item.descriptor.key.clone();
+                    run.tasks.push(Task::SuggestionHashed(state));
+                    run.tasks.push(Task::Prepare(key));
+                } else {
+                    self.frames[frame_index].callsite_hidden = false;
+                    return Err(self.key_suggestions_error(&state.query, state.candidates));
+                }
+            }
+            Task::SuggestionHashed(mut state) => {
+                let item = &state.members[state.position];
+                state.hash = self.java_hash(&item.descriptor.key)?;
+                let candidates = if state.map {
+                    // VmMap.iterator.next calls map.get(key) before its consumer.
+                    let object = self.heap.get(state.receiver)?;
+                    object
+                        .map_index()
+                        .candidates(state.hash)
+                        .into_iter()
+                        .map(|index| object.collection_members[index].key.clone())
+                        .collect::<Vec<_>>()
+                } else {
+                    state
+                        .seen
+                        .iter()
+                        .filter(|(other, hash)| {
+                            (other.kind == CollectionMemberKind::Property)
+                                == (item.descriptor.kind == CollectionMemberKind::Property)
+                                && !hash
+                                    .zip(state.hash)
+                                    .is_some_and(|(left, right)| left != right)
+                        })
+                        .map(|(other, _)| other.key.clone())
+                        .collect::<Vec<_>>()
+                };
+                run.roots.extend(candidates.iter().cloned());
+                let lookup = if state.map {
+                    SuggestionLookup::Map
+                } else {
+                    SuggestionLookup::Visited
+                };
+                run.tasks
+                    .push(Task::SuggestionLookup(state, lookup, candidates, 0));
+            }
+            Task::SuggestionLookup(mut state, lookup, candidates, index) => {
+                let item = state.members[state.position].clone();
+                let key = item.descriptor.key.clone();
+                if let Some(other) = candidates.get(index).cloned() {
+                    if same_key(&self.heap, &key, &other) {
+                        if matches!(lookup, SuggestionLookup::Visited) {
+                            state.position += 1;
+                            run.tasks.push(Task::SuggestionVisit(state));
+                        } else {
+                            run.tasks.push(Task::SuggestionCollect(state));
+                        }
+                    } else if matches!((&key, &other), (Value::Object(_), Value::Object(_))) {
+                        let depth = run.tasks.len();
+                        run.on_false.push((
+                            depth,
+                            Task::SuggestionLookup(state.clone(), lookup, candidates, index + 1),
+                        ));
+                        run.tasks
+                            .push(Task::SuggestionMatched(state, lookup, other.clone()));
+                        // HashSet.add and cache/map lookup call query.equals(stored).
+                        run.tasks.push(Task::Compare(key, other, false));
+                    } else {
+                        run.tasks.push(Task::SuggestionLookup(
+                            state,
+                            lookup,
+                            candidates,
+                            index + 1,
+                        ));
+                    }
+                } else {
+                    match lookup {
+                        SuggestionLookup::Visited => {
+                            state.seen.push((item.descriptor.clone(), state.hash));
+                            if item.skip {
+                                state.position += 1;
+                                run.tasks.push(Task::SuggestionVisit(state));
+                            } else {
+                                // iterateMemberValues reads cached values before the
+                                // consumer filters keys, but never forces a value.
+                                let hashed = self.heap.get(state.receiver)?.cache_index.has_hash();
+                                run.tasks.push(Task::SuggestionCache(state));
+                                if hashed {
+                                    run.tasks.push(Task::Prepare(key));
+                                }
+                            }
+                        }
+                        SuggestionLookup::Cached => run.tasks.push(Task::SuggestionCollect(state)),
+                        SuggestionLookup::Map => {
+                            return Err(invalid("Map iterator lost its stored key"));
+                        }
+                    }
+                }
+            }
+            Task::SuggestionMatched(mut state, lookup, other) => {
+                run.on_false
+                    .pop()
+                    .ok_or_else(|| invalid("missing suggestion comparison branch"))?;
+                if let (Value::Object(query), Value::Object(stored)) =
+                    (&state.members[state.position].descriptor.key, other)
+                {
+                    self.heap.key_equalities.insert((*query, stored));
+                }
+                if matches!(lookup, SuggestionLookup::Visited) {
+                    state.position += 1;
+                    run.tasks.push(Task::SuggestionVisit(state));
+                } else {
+                    run.tasks.push(Task::SuggestionCollect(state));
+                }
+            }
+            Task::SuggestionCache(state) => {
+                let descriptor = &state.members[state.position].descriptor;
+                let entry = descriptor.kind != CollectionMemberKind::Property;
+                let object = self.heap.get(state.receiver)?;
+                let indices = if object.cache_index.has_hash() {
+                    let key = CacheKey {
+                        owner: None,
+                        name: descriptor.name.clone(),
+                        method: false,
+                        entry,
+                    };
+                    object
+                        .cache_index
+                        .candidates(Some(self.cache_key_hash(state.receiver, &key)?))
+                } else {
+                    (0..object.cache_slots.len()).collect()
+                };
+                let mut candidates = Vec::new();
+                for index in indices {
+                    let slot = &object.cache_slots[index];
+                    if slot.key.owner.is_some() || slot.key.method || slot.key.entry != entry {
+                        continue;
+                    }
+                    if entry {
+                        if let Some(key) =
+                            collections::cache_entry_key(&self.heap, state.receiver, &slot.key)?
+                        {
+                            candidates.push(key);
+                        }
+                    } else {
+                        candidates.push(Value::string(slot.key.name.clone()));
+                    }
+                }
+                run.roots.extend(candidates.iter().cloned());
+                run.tasks.push(Task::SuggestionLookup(
+                    state,
+                    SuggestionLookup::Cached,
+                    candidates,
+                    0,
+                ));
+            }
+            Task::SuggestionCollect(mut state) => {
+                let descriptor = &state.members[state.position].descriptor;
+                if descriptor.kind != CollectionMemberKind::Property
+                    && let Value::String(key) = &descriptor.key
+                {
+                    state.candidates.push(key.clone());
+                }
+                state.position += 1;
+                run.tasks.push(Task::SuggestionVisit(state));
+            }
             Task::CountKey(id, keys, position, seen) => {
                 if let Some(key) = keys.get(position).cloned() {
                     run.tasks.push(Task::CountReady(id, keys, position, seen));

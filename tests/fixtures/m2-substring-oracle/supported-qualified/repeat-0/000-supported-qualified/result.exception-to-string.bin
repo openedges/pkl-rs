@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Method needs a `local` modifier because it is defined in an object, not a class.
+
+1 | hidden value = new Dynamic { function pick(start, end) = List(start, end) }
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+at supported-qualified#value (file:///stage88-supplement/supported-qualified.pkl)

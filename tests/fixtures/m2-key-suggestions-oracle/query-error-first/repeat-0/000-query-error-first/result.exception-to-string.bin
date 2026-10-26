@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+query failed
+
+2 | result = x[throw("query failed")]
+               ^^^^^^^^^^^^^^^^^^^^^
+at query-error-first#result (file:///stage87/query-error-first.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

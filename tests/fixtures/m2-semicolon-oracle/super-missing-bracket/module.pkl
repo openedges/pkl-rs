@@ -1,0 +1,2 @@
+hidden child = new Mapping { ["x"] = super; bad }
+result = child["x"]

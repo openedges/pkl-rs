@@ -477,6 +477,26 @@ pub(crate) fn java_whitespace(ch: char) -> bool {
         | '\u{2029}' | '\u{205f}' | '\u{3000}')
 }
 
+/// Key candidates in definition order, with Java's stable similarity ranking.
+pub(crate) fn key_suggestions(
+    name: &PklString,
+    candidates: impl IntoIterator<Item = PklString>,
+) -> Vec<PklString> {
+    let name = name.encode_utf16().collect::<Vec<_>>();
+    let mut ranked = candidates
+        .into_iter()
+        .filter_map(|candidate| {
+            let units = candidate.encode_utf16().collect::<Vec<_>>();
+            let similarity = string_similarity_units(&units, &name);
+            (similarity >= 0.77).then_some((candidate, similarity))
+        })
+        .collect::<Vec<_>>();
+    // Java's Candidate comparison uses only the score. Its stable sort keeps
+    // iteration order for ties, including inherited object entry keys.
+    ranked.sort_by(|left, right| right.1.total_cmp(&left.1));
+    ranked.into_iter().map(|(candidate, _)| candidate).collect()
+}
+
 /// Property candidates in lookup order, with stable similarity ranking.
 /// Method signatures require additional declaration metadata.
 pub(crate) fn property_suggestions(
@@ -594,15 +614,19 @@ pub(crate) fn ordered_member_suggestions<'a>(
 // Jaro-Winkler using UTF-16 units and the pinned StringSimilarity's integer
 // transposition count and uncapped prefix rule.
 fn string_similarity(first: &str, second: &str) -> f64 {
+    let first = first.encode_utf16().collect::<Vec<_>>();
+    let second = second.encode_utf16().collect::<Vec<_>>();
+    string_similarity_units(&first, &second)
+}
+
+fn string_similarity_units(first: &[u16], second: &[u16]) -> f64 {
     if first == second {
         return 1.0;
     }
-    let first = first.encode_utf16().collect::<Vec<_>>();
-    let second = second.encode_utf16().collect::<Vec<_>>();
     let (long, short) = if first.len() > second.len() {
-        (&first, &second)
+        (first, second)
     } else {
-        (&second, &first)
+        (second, first)
     };
     let range = (long.len() / 2).saturating_sub(1);
     let mut matched = vec![false; long.len()];
@@ -637,7 +661,7 @@ fn string_similarity(first: &str, second: &str) -> f64 {
     if jaro > 0.7 {
         let prefix = first
             .iter()
-            .zip(&second)
+            .zip(second.iter())
             .take_while(|(a, b)| a == b)
             .count();
         jaro + 0.1_f64.min(1.0 / long.len() as f64) * prefix as f64 * (1.0 - jaro)

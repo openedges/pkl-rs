@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Unexpected token `)`. Expected `)`.
+
+1 | result = ("😀"; +; )
+                       ^
+at utf16-error-span (file:///stage88/utf16-error-span.pkl)

@@ -1,0 +1,68 @@
+{
+  "argv": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/object-super-property/0/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/object-super-property/0/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "org.pkl.cli.Main",
+    "eval",
+    "--no-cache",
+    "--no-project",
+    "--settings",
+    "pkl:settings",
+    "object-super-property/main.pkl"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/workspace",
+  "deleted_files": [],
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/object-super-property/0/home",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/object-super-property/0/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/object-super-property/0/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/object-super-property/0/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 0,
+  "files": {},
+  "finished_epoch": 1792986694.016321,
+  "pid": 37391,
+  "program": "object-super-property",
+  "purpose": "Super property has no scope check; retain its own lookup/error behavior.",
+  "repeat": 0,
+  "source_files": {
+    "main.pkl": {
+      "bytes": 30,
+      "path": "target/m2/stage89-super-scope-oracle-prep-01/inputs/object-super-property/main.pkl",
+      "sha256": "b2363a69259734ec9f59ac1a4ee2e2589a1adfe51e22ff91410ab15f684e7b9b"
+    }
+  },
+  "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/workspace/object-super-property/main.pkl",
+  "started_epoch": 1792986693.095776,
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/cases/object-super-property/repeat-0/stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 17,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/cases/object-super-property/repeat-0/stdout.bin",
+    "sha256": "ca5c483f0cf86b0f535a7670e9e89a69ee23e0bf941d6d45cb21b0d3267f5cdb"
+  },
+  "timed_out_or_guard_failure": null
+}

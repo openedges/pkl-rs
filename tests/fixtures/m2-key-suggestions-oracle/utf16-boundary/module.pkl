@@ -1,0 +1,2 @@
+hidden x = Map("f😀o", 1, "f😁o", 2)
+result = x["f😃o"]

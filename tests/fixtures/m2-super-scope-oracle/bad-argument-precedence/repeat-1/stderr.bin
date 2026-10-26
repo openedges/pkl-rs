@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot invoke a supermethod from here.
+
+1 | foo = new { bar = super.bar(1 / 0) }
+                      ^^^^^^^^^^^^^^^^
+at main#foo.bar (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/workspace/bad-argument-precedence/main.pkl, line 1)

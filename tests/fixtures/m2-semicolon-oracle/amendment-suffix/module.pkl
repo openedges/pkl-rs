@@ -1,0 +1,2 @@
+hidden base = new Dynamic { x = 1 }
+result = (base); { x = 2 }

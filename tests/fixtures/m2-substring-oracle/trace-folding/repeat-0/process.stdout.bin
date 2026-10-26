@@ -1,0 +1,18 @@
+session-open mode=string rows=8
+call-enter=string-0-negative-int
+call-exit=string-0-negative-int status=success
+call-enter=string-1-spaced-negative-int
+call-exit=string-1-spaced-negative-int status=success
+call-enter=string-2-semicolon-negative-int
+call-exit=string-2-semicolon-negative-int status=success
+call-enter=string-3-negative-float
+call-exit=string-3-negative-float status=success
+call-enter=string-4-grouped-negative-int
+call-exit=string-4-grouped-negative-int status=success
+call-enter=string-5-grouped-operand-int
+call-exit=string-5-grouped-operand-int status=success
+call-enter=string-6-grouped-operand-float
+call-exit=string-6-grouped-operand-float status=success
+call-enter=string-7-dynamic-negative
+call-exit=string-7-dynamic-negative status=success
+session-closed mode=string rows=8 public-calls=8 success=8 errors=0

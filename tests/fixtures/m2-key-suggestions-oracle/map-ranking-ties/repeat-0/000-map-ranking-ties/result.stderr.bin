@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Cannot find key `"foo"`.
+
+2 | result = x["foo"]
+             ^^^^^^^^
+at map-ranking-ties#result (file:///stage87/map-ranking-ties.pkl)
+
+Did you mean any of the following?
+"fooz"
+"foyo"
+"xfoo"
+
+1 | result
+    ^^^^^^
+at  (repl:text)

@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+second-before-type
+
+1 | ("abc".substring("bad", throw("second-before-type"))).toString()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

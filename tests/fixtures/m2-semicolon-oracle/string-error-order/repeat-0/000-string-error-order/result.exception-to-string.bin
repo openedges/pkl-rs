@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Unexpected token `,`. Expected `)`.
+
+1 | result = (1;;, "\q")
+                 ^
+at string-error-order (file:///stage88/string-error-order.pkl)

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Invalid token at position. Expected a class, typealias, method, or property.
+
+1 | result = List(1); [0]
+                      ^
+at subscript-blocked-semicolon (file:///stage88/subscript-blocked-semicolon.pkl)

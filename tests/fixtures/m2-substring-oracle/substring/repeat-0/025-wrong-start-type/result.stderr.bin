@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "x"
+
+1425 | external function substring(start: Int, exclusiveEnd: Int): String
+                                          ^^^
+at pkl.base#String.substring (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1425)
+
+1 | ("abc".substring("x", 1)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

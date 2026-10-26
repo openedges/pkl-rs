@@ -1,0 +1,2 @@
+hidden x = Map("fooz", 1)
+result = x[throw("query failed")]

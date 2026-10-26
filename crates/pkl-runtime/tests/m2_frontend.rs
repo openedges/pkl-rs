@@ -413,8 +413,10 @@ fn numeric_validation_waits_for_syntax_and_unary_postfix_precedence() {
         ExprKind::Int(i64::MIN)
     );
     let error = parse_module("value = (1\rnext = 2").unwrap_err();
-    assert_eq!(error.span, Span::new(10, 10));
-    assert_eq!(error.highlight_length_utf16, Some(1));
+    // The pinned Java bare-CR supplement points at the complete `next` token;
+    // only LF contributes to ParserImpl's inter-token newline count.
+    assert_eq!(error.span, Span::new(11, 15));
+    assert_eq!(error.highlight_length_utf16, None);
 }
 
 #[test]

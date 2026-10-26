@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot find property `substring` in object of type `String`.
+
+1 | (("abc".substring).apply(0, 1)).toString()
+      ^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+substringOrNull(start, exclusiveEnd)

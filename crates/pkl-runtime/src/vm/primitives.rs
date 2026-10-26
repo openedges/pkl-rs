@@ -31,6 +31,9 @@ pub enum Operation {
     StartsWith,
     EndsWith,
     DropLast,
+    Substring {
+        nullable: bool,
+    },
     BooleanXor,
     BooleanImplies,
 }
@@ -125,6 +128,20 @@ pub(super) fn blocks(
             "external function dropLast(n: Int): String",
             Operation::DropLast,
             1,
+        ),
+        (
+            "String",
+            "substring",
+            "external function substring(start: Int, exclusiveEnd: Int): String",
+            Operation::Substring { nullable: false },
+            2,
+        ),
+        (
+            "String",
+            "substringOrNull",
+            "external function substringOrNull(start: Int, exclusiveEnd: Int): String?",
+            Operation::Substring { nullable: true },
+            2,
         ),
         (
             "String",
@@ -229,6 +246,16 @@ pub(super) fn blocks(
                     name: "Regex".into(),
                 }));
                 spans.push(Some(Span::new(offset, offset + 5)));
+            } else if matches!(operation, Operation::Substring { .. }) {
+                let parameter = if argument == 0 {
+                    "start: Int"
+                } else {
+                    "exclusiveEnd: Int"
+                };
+                let offset =
+                    start + signature.find(parameter).unwrap() + parameter.find("Int").unwrap();
+                code.push(Instruction::CheckType(TypeCheck::Int));
+                spans.push(Some(Span::new(offset, offset + 3)));
             } else if matches!(operation, Operation::DropLast) {
                 let offset = start + signature.find("Int").unwrap();
                 code.push(Instruction::CheckType(TypeCheck::Int));
@@ -723,7 +750,7 @@ impl Vm {
             let arity = match name {
                 "isBetween" | "fold" | "splitLimit" | "replaceAll" | "replaceFirst"
                 | "replaceLast" | "replaceAllMapped" | "replaceFirstMapped"
-                | "replaceLastMapped" => 2,
+                | "replaceLastMapped" | "substring" | "substringOrNull" => 2,
                 "step" | "map" | "findMatchesIn" | "matchEntire" | "split" => 1,
                 "contains" | "matches" | "startsWith" | "endsWith" | "indexOf"
                 | "indexOfOrNull" | "lastIndexOf" | "lastIndexOfOrNull" | "dropLast" | "xor"
@@ -872,6 +899,38 @@ impl Vm {
                 self.stack.push(Value::String(
                     text.drop_last_code_points(count.get() as u64),
                 ));
+            }
+            Operation::Substring { nullable } => {
+                let Value::String(text) = receiver else {
+                    return Err(invalid("String.substring receiver"));
+                };
+                let Value::Int(exclusive_end) = self.pop()? else {
+                    return Err(invalid("checked String.substring end"));
+                };
+                let Value::Int(start) = self.pop()? else {
+                    return Err(invalid("checked String.substring start"));
+                };
+                let value = match text.substring_code_points(start.get(), exclusive_end.get()) {
+                    Ok(value) => Value::String(value),
+                    Err(_) if nullable => Value::Null,
+                    Err((index, minimum)) => {
+                        let mut message = crate::pkl_string::PklStringBuilder::default();
+                        message.push_str(&format!(
+                            "Character index `{}` is out of range `{}`..`{}`.\nString: ",
+                            strings::diagnostic_integer(index),
+                            strings::diagnostic_integer(minimum),
+                            strings::diagnostic_integer(text.code_point_len() as i64),
+                        ));
+                        message.push_value(&crate::diagnostic_values::render_string(
+                            &Value::String(text),
+                            &self.heap,
+                            &self.program.module_name,
+                            80,
+                        )?);
+                        return Err(RuntimeError::new(ErrorKind::Type, message.finish()));
+                    }
+                };
+                self.stack.push(value);
             }
             Operation::CheckStringPattern => {
                 let pattern = self

@@ -1,0 +1,68 @@
+{
+  "argv": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/class-lambda-allowed/1/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/class-lambda-allowed/1/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "org.pkl.cli.Main",
+    "eval",
+    "--no-cache",
+    "--no-project",
+    "--settings",
+    "pkl:settings",
+    "class-lambda-allowed/main.pkl"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/workspace",
+  "deleted_files": [],
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/class-lambda-allowed/1/home",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/class-lambda-allowed/1/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/class-lambda-allowed/1/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/class-lambda-allowed/1/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 0,
+  "files": {},
+  "finished_epoch": 1792986691.148581,
+  "pid": 37370,
+  "program": "class-lambda-allowed",
+  "purpose": "LambdaScope is skipped before class member scope check.",
+  "repeat": 1,
+  "source_files": {
+    "main.pkl": {
+      "bytes": 121,
+      "path": "target/m2/stage89-super-scope-oracle-prep-01/inputs/class-lambda-allowed/main.pkl",
+      "sha256": "6600a4fee9465c3436c19679b7bef32051a813bd776297b1959d46c6f35eaec2"
+    }
+  },
+  "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/workspace/class-lambda-allowed/main.pkl",
+  "started_epoch": 1792986689.9935281,
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/cases/class-lambda-allowed/repeat-1/stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 11,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/cases/class-lambda-allowed/repeat-1/stdout.bin",
+    "sha256": "68833fe50c22a93765392cd3e53b25e8a0c7b74e4730e85425e21da46bd69d5c"
+  },
+  "timed_out_or_guard_failure": null
+}

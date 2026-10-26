@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+key-hash
+
+2 | n = throw("key-hash")
+        ^^^^^^^^^^^^^^^^^
+at non-string-lazy-key-throw#k.n (file:///stage87/non-string-lazy-key-throw.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

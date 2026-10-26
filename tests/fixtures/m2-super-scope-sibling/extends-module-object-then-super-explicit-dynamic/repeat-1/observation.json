@@ -1,0 +1,73 @@
+{
+  "argv": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-02/private-state/extends-module-object-then-super-explicit-dynamic/1/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-02/private-state/extends-module-object-then-super-explicit-dynamic/1/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "org.pkl.cli.Main",
+    "eval",
+    "--no-cache",
+    "--no-project",
+    "--settings",
+    "pkl:settings",
+    "extends-module-object-then-super-explicit-dynamic/main.pkl"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-02/workspace",
+  "deleted_files": [],
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-02/private-state/extends-module-object-then-super-explicit-dynamic/1/home",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-02/private-state/extends-module-object-then-super-explicit-dynamic/1/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-02/private-state/extends-module-object-then-super-explicit-dynamic/1/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-02/private-state/extends-module-object-then-super-explicit-dynamic/1/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 0,
+  "files": {},
+  "finished_epoch": 1792987666.113099,
+  "pid": 47190,
+  "program": "extends-module-object-then-super-explicit-dynamic",
+  "purpose": "Distinct extends-module member path restores permission after nested object. Explicit Dynamic parent removes the observed earlier implicit-parent error.",
+  "repeat": 1,
+  "source_files": {
+    "base.pkl": {
+      "bytes": 34,
+      "path": "target/m2/stage89-super-scope-supplement-oracle-prep-02/inputs/extends-module-object-then-super-explicit-dynamic/base.pkl",
+      "sha256": "0623dd7fa2f081d2e8c24a96161afe7fd62233a36517332ca5168b7c8557f19d"
+    },
+    "main.pkl": {
+      "bytes": 70,
+      "path": "target/m2/stage89-super-scope-supplement-oracle-prep-02/inputs/extends-module-object-then-super-explicit-dynamic/main.pkl",
+      "sha256": "6fa21c95cccdc38945f9c77aaf4f27155b8aab5caa9d136de9416799d3e8c54e"
+    }
+  },
+  "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-02/workspace/extends-module-object-then-super-explicit-dynamic/main.pkl",
+  "started_epoch": 1792987665.018871,
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-02/cases/extends-module-object-then-super-explicit-dynamic/repeat-1/stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 11,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-02/cases/extends-module-object-then-super-explicit-dynamic/repeat-1/stdout.bin",
+    "sha256": "68833fe50c22a93765392cd3e53b25e8a0c7b74e4730e85425e21da46bd69d5c"
+  },
+  "timed_out_or_guard_failure": null
+}

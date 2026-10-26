@@ -24,6 +24,49 @@ obligations. Passing an execution does not close a missing requirement mapping.
 All nine M2 workstreams, complete APIs, release platforms, and performance and
 memory targets remain open. See the [full replay checkpoint](../reports/m2/stage86-full-replay-checkpoint.json).
 
+## Stage87–89 integrated language checkpoint
+
+The [integrated checkpoint](../reports/m2/stage87-89-language-checkpoint.json)
+adds Map/Mapping missing-key suggestions, semicolon/comment continuation,
+`String.substring` and `substringOrNull`, signed-literal trace spans, and scope
+checks for `super` method calls. Suggestions preserve Java's UTF-16 similarity,
+key-hashing observations, and stable ordering. Substring operations preserve
+unpaired UTF-16 units and Java's validation order. Nested object construction
+restores the enclosing `super` scope, and invalid calls fail before evaluating
+their arguments.
+
+All required local Rust checks passed on macOS arm64 with Rust 1.98.1. The full
+workspace recorded 1,228 passing tests, zero failures, and the existing ignored
+`frontend_probe`; 13 nested child summaries are excluded from that total.
+Independent readback verified 221 test executables, two doctest groups, source
+bookends, and actual compiler/dependency identities. Compiler checks and
+workspace tests retain their recorded optimization profiles; these are not
+performance measurements.
+
+Native, N-API, and Chromium each match **294/294 observations** from 147 queries
+repeated twice: 12 Stage87 queries, 83 Stage88 queries, and 52 retained regressions.
+Comparisons include complete represented result/error UTF-8 and UTF-16 channels,
+status, ordered Logger fields, and process protocols. Java exception/class/cause
+channels remain reference authority outside the represented portable API.
+Separately, 14 standalone Stage89 modules match twice on each target through the
+module-output byte-vector API. Five sibling-module cases remain unexecuted
+through that adapter; actual CLI processes and generated files are separate
+verification obligations.
+
+One M1 acquisition matches all 6,078 Java primitive results per target and passes
+the separate architecture contract. The first combined capture failed because
+its native driver did not service an external-property read. The successor
+records `prop:` requests and missing responses, matching the Java helpers' empty
+external-property map. Only the native transport adapter was rebuilt; the
+recorded core, portable bindings, and M1 acquisition were reused. The failed
+capture and its matching prefix remain preserved.
+
+This checkpoint does not replace the completed Stage86 whole-corpus aggregate
+above. All 4,527 inventory cases, 111 unready cases, 1,791 overlapping full-gate
+obligations, and nine unfinished M2 workstreams remain accounted for. Stage90
+candidate results, full APIs, release platforms, and performance targets are
+outside this checkpoint.
+
 ## Stage86 List membership, insertion hashes, and constraint observations
 
 The shared runtime now implements `List.contains` with stored-element-first

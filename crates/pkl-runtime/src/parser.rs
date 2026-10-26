@@ -142,10 +142,6 @@ struct Lexer<'a> {
 }
 
 impl Lexer<'_> {
-    fn next(&mut self) -> Result<Token, Diagnostic> {
-        self.next_token(false)
-    }
-
     fn next_token(&mut self, string_start_only: bool) -> Result<Token, Diagnostic> {
         self.next_with_comments(string_start_only, false)
     }
@@ -502,10 +498,17 @@ enum ExpressionFlow {
     Done,
 }
 
+#[derive(Clone, Copy, Default)]
+struct TokenGap {
+    semicolon: bool,
+    newlines: usize,
+}
+
 #[derive(Clone)]
 struct Parser<'a> {
     lexer: Lexer<'a>,
     token: Token,
+    gap: TokenGap,
     depth: usize,
     previous_end: usize,
     expectation: Option<String>,
@@ -518,16 +521,49 @@ struct Parser<'a> {
 }
 
 impl<'a> Parser<'a> {
+    fn read_token(
+        lexer: &mut Lexer<'a>,
+        string_start_only: bool,
+        comments: bool,
+    ) -> Result<(Token, TokenGap), Diagnostic> {
+        let mut gap = TokenGap::default();
+        loop {
+            let start = lexer.cursor;
+            // Surface comments here so only whitespace before each token
+            // contributes newlines. LF inside a block comment is not an
+            // inter-token newline in the pinned Java lexer; CR alone is not
+            // counted either. The string scanner retains its raw token path.
+            let token = lexer.next_with_comments(string_start_only, true)?;
+            let newlines = lexer.source[start..token.span.start]
+                .bytes()
+                .filter(|&byte| byte == b'\n')
+                .count();
+            if comments {
+                // forceNextComment skips semicolons but reports only the
+                // final lexer's whitespace, unlike normal forceNext.
+                gap.newlines = newlines;
+            } else {
+                gap.newlines += newlines;
+            }
+            match token.kind {
+                Kind::Symbol(';') => gap.semicolon = true,
+                Kind::LineComment | Kind::BlockComment if !comments => {}
+                _ => return Ok((token, gap)),
+            }
+        }
+    }
+
     fn new(source: &'a str) -> Result<Self, Diagnostic> {
         let mut lexer = Lexer {
             source,
             cursor: 0,
             string_errors: Default::default(),
         };
-        let token = lexer.next()?;
+        let (token, gap) = Self::read_token(&mut lexer, false, false)?;
         Ok(Self {
             lexer,
             token,
+            gap,
             depth: 0,
             previous_end: 0,
             expectation: None,
@@ -550,10 +586,11 @@ impl<'a> Parser<'a> {
             cursor: span.start,
             string_errors,
         };
-        let token = lexer.next()?;
+        let (token, gap) = Self::read_token(&mut lexer, false, false)?;
         Ok(Self {
             lexer,
             token,
+            gap,
             depth: 0,
             previous_end: span.start,
             expectation: None,
@@ -567,8 +604,9 @@ impl<'a> Parser<'a> {
     }
 
     fn advance(&mut self) -> Result<Token, Diagnostic> {
-        let next = self.lexer.next()?;
+        let (next, gap) = Self::read_token(&mut self.lexer, false, false)?;
         self.previous_end = self.token.span.end;
+        self.gap = gap;
         Ok(std::mem::replace(&mut self.token, next))
     }
 
@@ -581,7 +619,7 @@ impl<'a> Parser<'a> {
     }
 
     fn same_line(&self) -> bool {
-        !self.lexer.source[self.previous_end..self.token.span.start].contains(['\n', '\r'])
+        !self.gap.semicolon && self.gap.newlines == 0
     }
 
     fn is_name(&self, expected: &str) -> bool {
@@ -622,10 +660,7 @@ impl<'a> Parser<'a> {
             None if eof => "Unexpected end of file.".to_owned(),
             None => format!("Unexpected token `{token}`."),
         };
-        let synthetic = eof
-            || (expected.is_some()
-                && self.lexer.source[self.previous_end..self.token.span.start]
-                    .contains(['\n', '\r']));
+        let synthetic = eof || (expected.is_some() && self.gap.newlines > 0);
         let mut diagnostic = Diagnostic::language(
             DiagnosticOrigin::Parser,
             DiagnosticKind::Syntax,
@@ -701,24 +736,8 @@ impl<'a> Parser<'a> {
 
     fn advance_comment(&mut self) -> Result<usize, Diagnostic> {
         self.previous_end = self.token.span.end;
-        let mut gap_start = self.previous_end;
-        loop {
-            self.token = self.lexer.next_with_comments(false, true)?;
-            if !self.is_symbol(';') {
-                break;
-            }
-            // Pinned forceNextComment ignores semicolons and reports only the
-            // final lexer's inter-token newlines, unlike normal forceNext.
-            gap_start = self.token.span.end;
-        }
-        let gap = &self.lexer.source[gap_start..self.token.span.start];
-        Ok(gap
-            .bytes()
-            .enumerate()
-            .filter(|(i, b)| {
-                *b == b'\n' || *b == b'\r' && gap.as_bytes().get(i + 1) != Some(&b'\n')
-            })
-            .count())
+        (self.token, self.gap) = Self::read_token(&mut self.lexer, false, true)?;
+        Ok(self.gap.newlines)
     }
 
     fn dangling_doc_comment(&self) -> Diagnostic {
@@ -733,7 +752,7 @@ impl<'a> Parser<'a> {
     fn advance_constant(&mut self) -> Result<Token, Diagnostic> {
         let previous = self.token.clone();
         self.previous_end = previous.span.end;
-        let mut token = self.lexer.next_token(true)?;
+        let (mut token, gap) = Self::read_token(&mut self.lexer, true, false)?;
         if let Kind::StringStart(first) = token.kind {
             token.kind = self
                 .lexer
@@ -741,6 +760,7 @@ impl<'a> Parser<'a> {
             token.span.end = self.lexer.cursor;
         }
         self.token = token;
+        self.gap = gap;
         Ok(previous)
     }
 
@@ -908,9 +928,6 @@ impl<'a> Parser<'a> {
                 ));
             }
             members.push(self.member(context, initial.take())?);
-            if self.is_symbol(';') {
-                self.advance()?;
-            }
         }
         Ok(members)
     }
@@ -1693,7 +1710,9 @@ impl<'a> Parser<'a> {
                 machine.current = Some(left);
                 return Ok(ExpressionFlow::Continue);
             }
-            if self.is_symbol('[') && self.same_line() {
+            // `super[...]` is an atom in the pinned grammar, so its required
+            // bracket does not use the postfix continuation restriction.
+            if self.is_symbol('[') && (matches!(left.kind, ExprKind::Super) || self.same_line()) {
                 self.advance()?;
                 machine.frames.push((
                     machine.minimum,
@@ -1994,9 +2013,6 @@ impl<'a> Parser<'a> {
                     }
                 };
                 build.members.push(member);
-                if self.is_symbol(';') {
-                    self.advance()?;
-                }
                 machine.object_build = Some(build);
                 return Ok(ExpressionFlow::Continue);
             }
@@ -2097,9 +2113,6 @@ impl<'a> Parser<'a> {
                         else_members: Vec::new(),
                         span: Span::new(start, self.previous_end),
                     });
-                    if self.is_symbol(';') {
-                        self.advance()?;
-                    }
                     machine.object_build = Some(build);
                 }
                 return Ok(ExpressionFlow::Continue);
@@ -2119,9 +2132,6 @@ impl<'a> Parser<'a> {
                     else_members: Self::take_object_members(&mut left),
                     span: Span::new(start, self.previous_end),
                 });
-                if self.is_symbol(';') {
-                    self.advance()?;
-                }
                 machine.object_build = Some(build);
                 return Ok(ExpressionFlow::Continue);
             }
@@ -2145,9 +2155,6 @@ impl<'a> Parser<'a> {
                     members: Self::take_object_members(&mut left),
                     span: Span::new(start, self.previous_end),
                 });
-                if self.is_symbol(';') {
-                    self.advance()?;
-                }
                 machine.object_build = Some(build);
                 return Ok(ExpressionFlow::Continue);
             }
@@ -2263,7 +2270,9 @@ impl<'a> Parser<'a> {
                     | "open"
             ),
             Kind::Name(_) | Kind::QuotedName(_) => matches!(
-                self.lexer.clone().next()?.kind,
+                Self::read_token(&mut self.lexer.clone(), false, false)?
+                    .0
+                    .kind,
                 Kind::Symbol('=' | ':' | '{')
             ),
             _ => false,
@@ -2604,7 +2613,7 @@ impl<'a> Parser<'a> {
             Kind::Name(name) if name == "super" => {
                 self.advance()?;
                 if !self.is_symbol('.') && !self.is_symbol('[') {
-                    return Err(self.unexpected(Some(".")));
+                    return Err(self.unexpected(Some("[")));
                 }
                 ExprKind::Super
             }
@@ -2718,9 +2727,6 @@ pub(crate) fn parse_module_for_evaluation(source: &str) -> Result<Module, Diagno
         while parser.is_name("import") {
             members.push(parser.import()?);
             initial = None;
-            if parser.is_symbol(';') {
-                parser.advance()?;
-            }
         }
     }
     members.extend(parser.member_list(MemberContext::Module, initial)?);

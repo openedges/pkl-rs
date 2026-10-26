@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find key `"foo"`.
+
+5 | result = x["foo"]
+             ^^^^^^^^
+at mapping-lazy-values#result (file:///stage87/mapping-lazy-values.pkl)
+
+Did you mean any of the following?
+"fooz"
+"foyo"
+
+1 | result
+    ^^^^^^
+at  (repl:text)

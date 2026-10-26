@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Cannot find key `"fo_o"`.
+
+2 | result = x["fo_o"]
+             ^^^^^^^^^
+at quoted-controls#result (file:///stage87/quoted-controls.pkl)
+
+Did you mean any of the following?
+"fo\"o"
+"fo\\o"
+"fo\no"
+
+1 | result
+    ^^^^^^
+at  (repl:text)

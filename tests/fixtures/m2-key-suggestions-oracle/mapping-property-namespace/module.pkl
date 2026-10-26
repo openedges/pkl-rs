@@ -1,0 +1,6 @@
+hidden x = new Mapping {
+  local foo = 1
+  ["fooz"] = 2
+  ["other"] = 3
+}
+result = x["foo"]

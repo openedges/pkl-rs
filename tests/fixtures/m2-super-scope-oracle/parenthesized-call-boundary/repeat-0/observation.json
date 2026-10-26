@@ -1,0 +1,68 @@
+{
+  "argv": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/parenthesized-call-boundary/0/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/parenthesized-call-boundary/0/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "org.pkl.cli.Main",
+    "eval",
+    "--no-cache",
+    "--no-project",
+    "--settings",
+    "pkl:settings",
+    "parenthesized-call-boundary/main.pkl"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/workspace",
+  "deleted_files": [],
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/parenthesized-call-boundary/0/home",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/parenthesized-call-boundary/0/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/parenthesized-call-boundary/0/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/parenthesized-call-boundary/0/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 1,
+  "files": {},
+  "finished_epoch": 1792986702.43051,
+  "pid": 37475,
+  "program": "parenthesized-call-boundary",
+  "purpose": "Determine whether grouped member call is SuperAccessExpr and should be forbidden; current draft guards direct call only.",
+  "repeat": 0,
+  "source_files": {
+    "main.pkl": {
+      "bytes": 34,
+      "path": "target/m2/stage89-super-scope-oracle-prep-01/inputs/parenthesized-call-boundary/main.pkl",
+      "sha256": "6e11a2d9d59dd601402e7515a2b4dc667b3983ce1fce9488e2b9c7fc7d8d6cb6"
+    }
+  },
+  "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/workspace/parenthesized-call-boundary/main.pkl",
+  "started_epoch": 1792986701.4225888,
+  "stderr": {
+    "bytes": 295,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/cases/parenthesized-call-boundary/repeat-0/stderr.bin",
+    "sha256": "0df8cea97cf35692d8b49b3b93feab81eb60c8ebe927c1922a8f3c5ab54903ab"
+  },
+  "stdout": {
+    "bytes": 0,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/cases/parenthesized-call-boundary/repeat-0/stdout.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "timed_out_or_guard_failure": null
+}

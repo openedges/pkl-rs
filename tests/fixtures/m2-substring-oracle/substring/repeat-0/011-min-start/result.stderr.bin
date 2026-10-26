@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Character index `-9,223,372,036,854,775,808` is out of range `0`..`3`.
+String: "abc"
+
+1 | ("abc".substring(-9223372036854775808, 0)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -6508,6 +6508,7 @@ fn compile_unit_body_at(
         identity,
         options,
         member: PklString::default(),
+        super_method_allowed: false,
         module_annotation: false,
         let_members: Vec::new(),
         type_scopes: Vec::new(),
@@ -6756,6 +6757,8 @@ struct Compiler<'a> {
     identity: Option<crate::modules::ModuleIdentity>,
     options: CompileOptions,
     member: PklString,
+    /// Whether the current member has a class or non-amend module scope.
+    super_method_allowed: bool,
     module_annotation: bool,
     let_members: Vec<PklString>,
     type_scopes: Vec<Vec<crate::syntax::Member>>,
@@ -7017,7 +7020,10 @@ impl Compiler<'_> {
         object_method: bool,
     ) -> Result<Member, RuntimeError> {
         let previous = std::mem::replace(&mut self.constructor_parameters_bound, false);
+        let previous_super_method_allowed =
+            std::mem::replace(&mut self.super_method_allowed, !object_method);
         let result = self.object_member_body(member, object_method);
+        self.super_method_allowed = previous_super_method_allowed;
         self.constructor_parameters_bound = previous;
         result
     }

@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find key `"foo"`.
+
+2 | result = x["foo"]
+             ^^^^^^^^
+at map-no-candidate#result (file:///stage87/map-no-candidate.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

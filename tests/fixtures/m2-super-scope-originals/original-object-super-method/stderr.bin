@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot invoke a supermethod from here.
+
+2 | bar = super.bar()
+          ^^^^^^^^^^^
+at supercalls#foo.bar (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/supercalls.pkl, line 2)

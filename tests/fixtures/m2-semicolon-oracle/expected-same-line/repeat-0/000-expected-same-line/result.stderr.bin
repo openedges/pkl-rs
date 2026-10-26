@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Unexpected token `,`. Expected `)`.
+
+1 | result = (1;;, 2)
+                 ^
+at expected-same-line (file:///stage88/expected-same-line.pkl)

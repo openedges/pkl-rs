@@ -1,0 +1,8 @@
+string	negative-int	(trace(-1)).toString()
+string	spaced-negative-int	(trace(- 1)).toString()
+string	semicolon-negative-int	(trace(-; 1)).toString()
+string	negative-float	(trace(-1.25)).toString()
+string	grouped-negative-int	(trace((-1))).toString()
+string	grouped-operand-int	(trace(-(1))).toString()
+string	grouped-operand-float	(trace(-(1.25))).toString()
+string	dynamic-negative	(let (n = 1) trace(-n)).toString()

@@ -1,0 +1,68 @@
+{
+  "argv": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/nested-object-forbidden/0/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/nested-object-forbidden/0/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "org.pkl.cli.Main",
+    "eval",
+    "--no-cache",
+    "--no-project",
+    "--settings",
+    "pkl:settings",
+    "nested-object-forbidden/main.pkl"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/workspace",
+  "deleted_files": [],
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/nested-object-forbidden/0/home",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/nested-object-forbidden/0/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/nested-object-forbidden/0/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/nested-object-forbidden/0/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 1,
+  "files": {},
+  "finished_epoch": 1792986688.1998038,
+  "pid": 37348,
+  "program": "nested-object-forbidden",
+  "purpose": "ObjectScope interrupts class/module member permission.",
+  "repeat": 0,
+  "source_files": {
+    "main.pkl": {
+      "bytes": 32,
+      "path": "target/m2/stage89-super-scope-oracle-prep-01/inputs/nested-object-forbidden/main.pkl",
+      "sha256": "068503c98d07284ba093bee3debb6ca4bbbde635eed1772f993b332afc774fe1"
+    }
+  },
+  "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/workspace/nested-object-forbidden/main.pkl",
+  "started_epoch": 1792986687.372669,
+  "stderr": {
+    "bytes": 295,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/cases/nested-object-forbidden/repeat-0/stderr.bin",
+    "sha256": "a68a7e27ae37e966046c2289b4690396d44ce6d8a343d65d58e6d5a83ebe7521"
+  },
+  "stdout": {
+    "bytes": 0,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/cases/nested-object-forbidden/repeat-0/stdout.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "timed_out_or_guard_failure": null
+}

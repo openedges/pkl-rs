@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Unexpected token `)`.
+
+1 | result = 9223372036854775808; +; )
+                                     ^
+at integer-error-order (file:///stage88/integer-error-order.pkl)

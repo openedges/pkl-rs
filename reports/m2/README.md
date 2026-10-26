@@ -17,6 +17,35 @@ The 111 unready cases, 1,791 overlapping full-gate obligations, and all nine M2
 workstreams remain open. Full API, platform-release, speed, and memory targets
 are not established by these counts.
 
+## Stage87–89 integrated language checkpoint
+
+The [checkpoint](stage87-89-language-checkpoint.json) records missing-key
+suggestions, semicolon/comment continuation, substring operations, signed-literal
+trace spans, and `super` method scope checks. All required local Rust checks
+passed: the full workspace has 1,228 passes, zero failures, and one existing
+ignored probe. Nested child test summaries are counted separately.
+
+Native, N-API, and Chromium each match 294 observations from 147 queries repeated
+twice, including full represented UTF-8/UTF-16 results, errors, ordered Logger
+fields, and protocols. Each target also matches 28 standalone module-output
+byte-vector observations. Five sibling-module cases remain outside that portable
+adapter, and these observations do not establish full CLI process/file behavior.
+A single M1 acquisition matches 6,078 Java results per target and passes its
+separate architecture contract.
+
+The first combined platform capture failed on an unserviced external-property
+read. Its successor uses the same empty external-property profile as the pinned
+Java helpers, with request/completion traces. Only the native driver was rebuilt;
+core and portable artifacts and the M1 evidence were reused. Failed attempts,
+raw authority, source maps, producer records, and independent readbacks are
+retained. Generated binaries and build caches are excluded from the evidence
+archive; release receipts retain their recorded identities.
+
+These are local macOS arm64 results. The completed whole-corpus aggregate remains
+the Stage86 result above; no new whole-corpus pass count is claimed. M2's nine
+workstreams, full APIs, release platforms, speed, and memory targets remain open.
+See [the verification scope](../../docs/m2-language.md).
+
 ## Stage86 List membership and constraint observations
 
 The [Stage86 checkpoint](stage86-contains-hash-power-checkpoint.json) records shared

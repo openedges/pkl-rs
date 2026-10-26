@@ -1,0 +1,68 @@
+{
+  "argv": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-01/private-state/class-object-then-super/1/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-01/private-state/class-object-then-super/1/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "org.pkl.cli.Main",
+    "eval",
+    "--no-cache",
+    "--no-project",
+    "--settings",
+    "pkl:settings",
+    "class-object-then-super/main.pkl"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-01/workspace",
+  "deleted_files": [],
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-01/private-state/class-object-then-super/1/home",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-01/private-state/class-object-then-super/1/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-01/private-state/class-object-then-super/1/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-01/private-state/class-object-then-super/1/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 1,
+  "files": {},
+  "finished_epoch": 1792987518.8751822,
+  "pid": 45791,
+  "program": "class-object-then-super",
+  "purpose": "Optimized nested all-property ObjectBody finishes before allowed direct super call in same class member.",
+  "repeat": 1,
+  "source_files": {
+    "main.pkl": {
+      "bytes": 131,
+      "path": "target/m2/stage89-super-scope-supplement-oracle-prep-01/inputs/class-object-then-super/main.pkl",
+      "sha256": "0b07cd1869d8afde0209be2f3e47e4aec4d2e26a24cd2b4c30e168575b32bcc7"
+    }
+  },
+  "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-01/workspace/class-object-then-super/main.pkl",
+  "started_epoch": 1792987517.793188,
+  "stderr": {
+    "bytes": 405,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-01/cases/class-object-then-super/repeat-1/stderr.bin",
+    "sha256": "3c699611d19d799539fae3ea840ad56301959ba4c09032df0d8a88104cc05f77"
+  },
+  "stdout": {
+    "bytes": 0,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-supplement-oracle-01/cases/class-object-then-super/repeat-1/stdout.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "timed_out_or_guard_failure": null
+}

@@ -1,0 +1,13 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find key `"foo"`.
+
+2 | result = x["foo"]
+             ^^^^^^^^
+at map-non-string-candidate#result (file:///stage87/map-non-string-candidate.pkl)
+
+Did you mean any of the following?
+"fooz"
+
+1 | result
+    ^^^^^^
+at  (repl:text)

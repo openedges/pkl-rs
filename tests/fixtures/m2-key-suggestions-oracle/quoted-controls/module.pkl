@@ -1,0 +1,2 @@
+hidden x = Map("fo\"o", 1, "fo\\o", 2, "fo\no", 3)
+result = x["fo_o"]

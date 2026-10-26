@@ -1,0 +1,2 @@
+hidden x = Map("unrelated", 1)
+result = x["foo"]

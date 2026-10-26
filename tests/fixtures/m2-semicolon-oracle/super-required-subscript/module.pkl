@@ -1,0 +1,4 @@
+hidden base = new Mapping { ["x"] = 1 }
+hidden child = (base) { ["x"] = super;
+[; "x";] + 1 }
+result = child["x"]

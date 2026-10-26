@@ -1,0 +1,379 @@
+{
+  "archive": {
+    "full_payload_mode_readback": true,
+    "gzip_eof_verified": true,
+    "intended_public_path": "reports/m2/stage87-89-language-evidence.tar.gz",
+    "members_including_manifest": 28387,
+    "producer": {
+      "bytes": 29594683,
+      "mode": 420,
+      "path": "target/m2/stage87-89-checkpoint-publication-01/stage87-89-integrated-evidence.tar.gz",
+      "sha256": "9a14d45f6388281a315038c4f42258f93a5f8cf377e8a93f23ac61a65409acb7"
+    },
+    "public": {
+      "bytes": 29594683,
+      "mode": 420,
+      "path": "reports/m2/stage87-89-language-evidence.tar.gz",
+      "sha256": "9a14d45f6388281a315038c4f42258f93a5f8cf377e8a93f23ac61a65409acb7"
+    }
+  },
+  "candidates": {
+    "87": {
+      "final": {
+        "bytes": 13546,
+        "mode": 420,
+        "path": "target/m2/stage87-key-suggestions-candidate-01/final-01/report.json",
+        "sha256": "78ae6811c0702355a3060212419de637c2b48e7727e09eee550fd5b438098ecb"
+      },
+      "review": {
+        "bytes": 7835,
+        "mode": 420,
+        "path": "target/m2/stage87-candidate-independent-review-01/report.json",
+        "sha256": "4e9913c83f2a0ec8817cc06894e71c4950c75be1d2384435beed9e20cd3a4e4b"
+      }
+    },
+    "88": {
+      "final": {
+        "bytes": 23039,
+        "mode": 420,
+        "path": "target/m2/stage88-semicolon-candidate-01/final-01/report.json",
+        "sha256": "e3ce483c63308af487d6459d26a3ab22e7fad6d3afab39d5355967968e362cc7"
+      },
+      "review": {
+        "bytes": 2454,
+        "mode": 420,
+        "path": "target/m2/stage88-final-independent-review-02/report.json",
+        "sha256": "3ce2f30ae0a8d5b2b642e008c4ebc908737b6769614590b184b87995e3602f97"
+      }
+    },
+    "89": {
+      "final": {
+        "bytes": 8590,
+        "mode": 420,
+        "path": "target/m2/stage89-super-scope-candidate-01/final-02/report.json",
+        "sha256": "2b924691fa958b5c5311efb9d1a1a80e20903b7e15bc8c5780490c140362a28c"
+      },
+      "review": {
+        "bytes": 10732,
+        "mode": 420,
+        "path": "target/m2/stage89-candidate-independent-review-01/report.json",
+        "sha256": "3b994a7cb259c41ed27de43e60e62362fed1c870c2d90137f59b6416c0760c5f"
+      }
+    }
+  },
+  "canonical_integration": {
+    "bytes": 595,
+    "mode": 420,
+    "path": "target/m2/stage87-89-integration-01/report.json",
+    "sha256": "63e19129469bbe5bba64b4974cb8ff96596499fd9f475756ad30e8b30e7a4f21"
+  },
+  "canonical_plan": {
+    "bytes": 1283736,
+    "mode": 420,
+    "path": "target/m2/stage87-89-integration-01/plan.json",
+    "sha256": "a2800815ccc1caf349b62885d4a5fda3bd6c5c6e5c7fbabb42dec59d2478879d"
+  },
+  "compatibility_baseline": "Pkl 0.32.0",
+  "complete": true,
+  "composition": {
+    "bytes": 43281,
+    "mode": 420,
+    "path": "target/m2/stage87-89-composition-prep-03/report.json",
+    "sha256": "fc5db0ab70f66ce0b1f40760e3ed3d201f5b44726e2eccf4fd800582f08bd2d0"
+  },
+  "documentation": {
+    "PLAN.md": {
+      "bytes": 442610,
+      "mode": 420,
+      "path": "PLAN.md",
+      "sha256": "d8f5ad2da93af14be43b62891903bd8fd1182eb76d84e027b06fda63a2577586"
+    },
+    "docs/m2-language.md": {
+      "bytes": 81919,
+      "mode": 420,
+      "path": "docs/m2-language.md",
+      "sha256": "2b7ce8f1caab2fe757fa2128f35913db7c8340e00e65941997efd95cab0612d7"
+    },
+    "reports/m2/README.md": {
+      "bytes": 361916,
+      "mode": 420,
+      "path": "reports/m2/README.md",
+      "sha256": "4c671fe5dbecc3eb6461884f497f8742bb3d408caaa4357bc49742cfd4e6060a"
+    }
+  },
+  "evidence_selection": {
+    "bytes": 12327477,
+    "mode": 420,
+    "path": "target/m2/stage87-89-checkpoint-publication-01/selection.json",
+    "sha256": "4772d39eb8ac80c050799e6c08ef57196e37444c7a9f818ebbe99a9e428e5f89"
+  },
+  "failed_capture01": {
+    "classification": {
+      "bytes": 6001,
+      "mode": 420,
+      "path": "target/m2/stage87-89-platform-failure-review-01/report.json",
+      "sha256": "09851e0c3737e4ff5956aab0ba3d851d3ac9231ee9d65cd17747efa0e83b4d4a"
+    },
+    "reason": "Native adapter lacked the configured-missing prop: Host read response; partial prefix only.",
+    "report": {
+      "bytes": 95999,
+      "mode": 420,
+      "path": "target/m2/stage87-89-platform-capture-01/report.json",
+      "sha256": "1c2a1526db9b0deacd3a3f1442fb86794ef51bb6917bd9be96c6fab17890124d"
+    }
+  },
+  "finite_storage_receipts": {
+    "completed_platform_copies": {
+      "bytes": 1302,
+      "mode": 420,
+      "path": "target/m2/stage79-86-experiment-copy-release-01/report.json",
+      "sha256": "1ce7224d895e1956f8b900484409d5dddc18a3f4803aca5600b46b4bf90734f8"
+    },
+    "earlier_private_cache": {
+      "bytes": 1316,
+      "mode": 420,
+      "path": "target/m2/stage85-86-private-cache-release-01/report.json",
+      "sha256": "f696bd5494673728d2193ed09010d21a87a55dfd2a491a83337709f722867a47"
+    },
+    "historical_public_archive_sparse": {
+      "bytes": 992,
+      "mode": 420,
+      "path": "target/m2/stage87-89-historical-archive-sparse-01/report.json",
+      "sha256": "8f8452c5a844c8e5eac2acc9f700bce4fb67a6e77c9d235a055efbb0dd5aeb78"
+    },
+    "private_cache": {
+      "bytes": 1784,
+      "mode": 420,
+      "path": "target/m2/stage87-89-private-cache-release-01/handoff.json",
+      "sha256": "c9e99a6f67e691c3a2e8d398c7feb55b711a607cc797828a2ae784cef675da5f"
+    },
+    "private_cache_actual_latest": {
+      "bytes": 1322,
+      "mode": 420,
+      "path": "target/m2/stage87-89-private-cache-release-01/report.json",
+      "sha256": "b3e7ba59227cbf623409bd490bc51ceba64b254e818fab9d730a1dd260c1479d"
+    },
+    "release_cache": {
+      "bytes": 1400,
+      "mode": 420,
+      "path": "target/m2/stage87-89-release-cache-release-01/report.json",
+      "sha256": "5bc556e5a0e175ad81738bd5f8eb2436a05af6b915116d42790ef903a05c8f27"
+    },
+    "workspace_test_cache": {
+      "bytes": 1361,
+      "mode": 420,
+      "path": "target/m2/stage87-89-workspace-test-cache-release-01/report.json",
+      "sha256": "ac6b9f725f528c1c9f7b229a2bb85422c32e97960754c29253196f1d7c3e5bc5"
+    }
+  },
+  "full_api_complete": false,
+  "full_m2_complete": false,
+  "git_binding": {
+    "actual_commit_and_push": "Recorded after this public-copy step in the local Git closeout receipt; no completed push is claimed by this metadata.",
+    "compiled_source_state": "Canonical integration was compiled and verified in the modified worktree before publication. Exact source maps, integration payloads and producer records bind the tested code; this does not claim the parent HEAD contains those changes.",
+    "intended_remote_target": "origin/main",
+    "publication_commit": "Locate the commit containing this descriptor through Git history; its own ID is not embedded.",
+    "source_parent": "d327e4522703e36946a61828ebff43c7055ebe71"
+  },
+  "independent_publication_review": {
+    "bytes": 4833,
+    "mode": 420,
+    "path": "reports/m2/stage87-89-language-publication-review.json",
+    "sha256": "1c3a2ec854494a1b3ff9fa87692f85916b2626d3d2f2c07cc17131f3b12212ed"
+  },
+  "intended_public_checkpoint": "reports/m2/stage87-89-language-checkpoint.json",
+  "intended_publication_review": "reports/m2/stage87-89-language-publication-review.json",
+  "java_authority": {
+    "stage87_api": {
+      "bytes": 119737,
+      "mode": 420,
+      "path": "target/m2/stage87-key-suggestions-api-oracle-01/report.json",
+      "sha256": "d388ea990268869d8bebaf17cf93d695b13c5ac4138e7d9c1eccb6155f42cec5"
+    },
+    "stage87_cli": {
+      "bytes": 70496,
+      "mode": 420,
+      "path": "target/m2/stage87-key-suggestions-oracle-01/report.json",
+      "sha256": "836ad1c047498391c476f4925bc300d2582c9847cb4942051e2f2a585789dfdb"
+    },
+    "stage87_key_hash": {
+      "bytes": 48791,
+      "mode": 420,
+      "path": "target/m2/stage87-key-hash-supplement-01/report.json",
+      "sha256": "43db8cc3506693bc53ba7f20bd5b437bf8eb306cb2b21a943f6846fad3da5631"
+    },
+    "stage88_qualified": {
+      "bytes": 18043,
+      "mode": 420,
+      "path": "target/m2/stage88-qualified-control-oracle-01/report.json",
+      "sha256": "be36478a65fb029c4834e2bd2db3778cecbb12b32189c6b1b30e483348e2deb1"
+    },
+    "stage88_semicolon": {
+      "bytes": 183443,
+      "mode": 420,
+      "path": "target/m2/stage88-semicolon-oracle-01/report.json",
+      "sha256": "532b31fc189c5eeb6e9520fd654e6db0d43615bb1ca711aa0627f5153618392d"
+    },
+    "stage88_substring": {
+      "bytes": 25503,
+      "mode": 420,
+      "path": "target/m2/stage88-substring-oracle-01/report.json",
+      "sha256": "ce489855860f29e29e5d3eb922cc6b30212089526cd65f17decd16c827112130"
+    },
+    "stage88_trace": {
+      "bytes": 17176,
+      "mode": 420,
+      "path": "target/m2/stage88-trace-oracle-02/report.json",
+      "sha256": "6b25bfaf9efb429899b0278982f2a9512af2fcff7f0f48bb1ffe042b49a548f5"
+    },
+    "stage89_cli": {
+      "bytes": 110837,
+      "mode": 420,
+      "path": "target/m2/stage89-super-scope-oracle-01/report.json",
+      "sha256": "d2f4df5ff6d52d39b454cda855f1103da1757d391c15e3a1ef7fb2f018d3e4dc"
+    },
+    "stage89_corrected_sibling": {
+      "bytes": 52071,
+      "mode": 420,
+      "path": "target/m2/stage89-super-scope-supplement-oracle-02/report.json",
+      "sha256": "c56676593151214b81f51eef3b1567c7a876cd3713a2500c77d3128726df0e2d"
+    },
+    "stage89_sibling": {
+      "bytes": 59843,
+      "mode": 420,
+      "path": "target/m2/stage89-super-scope-supplement-oracle-01/report.json",
+      "sha256": "9cd1a04484e08b43ebea0da9fbb27f059a13d692fd2535bbfb3d45a8f4110172"
+    }
+  },
+  "kind": "stage87-89-integrated-development-checkpoint-v1",
+  "latest_completed_official_replay": {
+    "language_areas_open": 9,
+    "new_aggregate_claimed": false,
+    "passes": 4214,
+    "selected": 4416,
+    "strict_gate_failure_count": 1791,
+    "unready_cases": 111
+  },
+  "limits": [
+    "Selected development checkpoint only; full 4,416 replay on these sources is excluded.",
+    "Stage89 standalone transport compares stdout/stderr/exit only; it does not claim full CLI process, generated-file, import, or Host parity.",
+    "Generated binaries, compiler caches, private workspaces, reference checkout payloads, and protected partial files are excluded; producer identity records remain.",
+    "Source maps and actual dep-info are recorded, not a complete arbitrary runtime dependency closure."
+  ],
+  "m1_single_contract_acquisition": {
+    "experiment": {
+      "bytes": 3397669,
+      "mode": 420,
+      "path": "target/m2/stage87-89-m1-validation-01/contract/experiment/report.json",
+      "sha256": "e7ee49957a2bd238178a531e177760f682947291949b69265feb13395b0f214e"
+    },
+    "process": {
+      "bytes": 19570,
+      "mode": 420,
+      "path": "target/m2/stage87-89-m1-validation-01/contract/process.json",
+      "sha256": "c5974b1e8322a05ac05dcd6b4f09d1dbd8a91d7a66f24b4a50c8a0c62b94063f"
+    },
+    "raw_matches_per_target": 6078,
+    "strict_and_contract_pass": true
+  },
+  "pending_terminal_gates": [],
+  "performance_targets_met": false,
+  "platform_actual_readback": {
+    "report": {
+      "bytes": 14610,
+      "mode": 420,
+      "path": "target/m2/stage87-89-platform-actual-review-01/report.json",
+      "sha256": "5720f63477ae9e928e6777b7848d7005ff5a91df0130a8ec23aa3c155a2433b4"
+    },
+    "status": "passed"
+  },
+  "platform_artifact_binding": {
+    "bytes": 16090,
+    "mode": 420,
+    "path": "target/m2/stage87-89-platform-artifact-binding-02/report.json",
+    "sha256": "b751cdb1b04f6117439e9628f0e954729ea61827e6ebf1b4db022507c4c0a801"
+  },
+  "prior_completed_full_replay": {
+    "bytes": 242402,
+    "mode": 420,
+    "path": "reports/m2/stage86-full-replay-checkpoint.json",
+    "sha256": "1f80d01fc674f832c0226a3e363348d42d4502f868b8c052c32849f7a896cdbb"
+  },
+  "producer_checkpoint_draft": {
+    "bytes": 12316,
+    "mode": 420,
+    "path": "target/m2/stage87-89-checkpoint-publication-01/checkpoint-draft.json",
+    "sha256": "62028d2bcf9d575587130a8f022a58f648c47a94295059629db4215e9c1dd87e"
+  },
+  "publication_ready": true,
+  "quickchecks": {
+    "bytes": 13190,
+    "mode": 420,
+    "path": "target/m2/stage87-89-quickchecks-summary-01/report.json",
+    "sha256": "934c6bf1a6b38d417c8c954dc2508db351b5692ebc4216620962f0aa68701315"
+  },
+  "ready_for_independent_publication_review": true,
+  "repaired_host_adapter": {
+    "bytes": 7257,
+    "mode": 420,
+    "path": "target/m2/stage87-89-native-empty-properties-adapter-01/report.json",
+    "sha256": "7a185832a5e58c80a22f5ac59e96377432ab961be3e87d9f5a0c392aaadb321c"
+  },
+  "scope": {
+    "integrated_payloads": 2628,
+    "observations_per_target": 294,
+    "selected_platform_queries": 147,
+    "selected_platform_repetitions": 2,
+    "separate_stage89_output_byte_vectors_per_target": 28,
+    "workspace_failed": 0,
+    "workspace_ignored": 1,
+    "workspace_passed": 1228
+  },
+  "selected_platform_capture02": {
+    "comparison": {
+      "bytes": 114220,
+      "mode": 420,
+      "path": "target/m2/stage87-89-platform-capture-02/comparison.json",
+      "sha256": "7915e590d577a63945760f033c2974162b95b54ffd8b3cb89018ee71dd5591ab"
+    },
+    "report": {
+      "bytes": 345238,
+      "mode": 420,
+      "path": "target/m2/stage87-89-platform-capture-02/report.json",
+      "sha256": "00ccf8beca6cfc96d3be5572df938f8660cb8c3dd735b243d552dbc4b762bddb"
+    },
+    "stage89_output_bytes": {
+      "native": {
+        "bytes": 53860,
+        "mode": 420,
+        "path": "target/m2/stage87-89-platform-capture-02/stage89-native/report.json",
+        "sha256": "6cbf26a2556dcc8765f78d4e4844ab933c74524386795025722477177bd1b234"
+      },
+      "portable": {
+        "bytes": 67504,
+        "mode": 420,
+        "path": "target/m2/stage87-89-platform-capture-02/stage89-portable/report.json",
+        "sha256": "c844e1294b1170f0d22c5a0440033694a84b607ddcce24dc9ada7fcd840fef56"
+      }
+    },
+    "status": "passed"
+  },
+  "selected_source_freeze": {
+    "bytes": 1696062,
+    "mode": 420,
+    "path": "target/m2/stage87-89-platform-source-freeze-01/source-freeze.json",
+    "sha256": "ac263a1ec79ca5d9eda11e48042a5c2f5bda50911dd527a546758e8ff696c61b"
+  },
+  "workspace": {
+    "bytes": 3159,
+    "mode": 420,
+    "path": "target/m2/stage87-89-workspace-01/report.json",
+    "sha256": "fdec40d713b1f99161d498d81ba1c43d4c5e5513ec269a2e812e196c07f066ba"
+  },
+  "workspace_independent_readback": {
+    "bytes": 10027,
+    "mode": 420,
+    "path": "target/m2/stage87-89-workspace-independent-review-01/report.json",
+    "sha256": "63ad0a5c65b36754a80872d09747e0113c68e1fe5cbc44f9192e601ea47bb14f"
+  }
+}

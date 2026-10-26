@@ -1,0 +1,2 @@
+extends "base.pkl"
+result = List(new Dynamic { x = 1 }, super.f())[1]

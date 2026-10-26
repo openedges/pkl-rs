@@ -1,0 +1,5 @@
+open class A { function f() = 1 }
+class B extends A {
+  function f() = List(new Dynamic { x = 1 }, super.f())[1]
+}
+result = (new B {}).f()

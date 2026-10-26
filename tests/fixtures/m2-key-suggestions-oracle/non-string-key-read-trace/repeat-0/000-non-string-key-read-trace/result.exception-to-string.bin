@@ -1,0 +1,13 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find key `"foo"`.
+
+8 | result = x["foo"]
+             ^^^^^^^^
+at non-string-key-read-trace#result (file:///stage87/non-string-key-read-trace.pkl)
+
+Did you mean any of the following?
+"fooz"
+
+1 | result
+    ^^^^^^
+at  (repl:text)

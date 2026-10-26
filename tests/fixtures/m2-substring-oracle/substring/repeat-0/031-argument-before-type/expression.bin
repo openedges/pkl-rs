@@ -1,0 +1,1 @@
+("abc".substring("bad", throw("second-before-type"))).toString()

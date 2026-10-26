@@ -1,0 +1,13 @@
+–– Pkl Error ––
+Cannot find key `"foo"`.
+
+6 | result = x["foo"]
+             ^^^^^^^^
+at mapping-property-namespace#result (file:///stage87/mapping-property-namespace.pkl)
+
+Did you mean any of the following?
+"fooz"
+
+1 | result
+    ^^^^^^
+at  (repl:text)

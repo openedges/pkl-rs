@@ -98,6 +98,53 @@ impl PklString {
         }
     }
 
+    /// Pinned StringNodes uses code-point offsets, counting an unpaired
+    /// surrogate as one point. The error holds the index and its lower bound.
+    pub(crate) fn substring_code_points(
+        &self,
+        start: i64,
+        exclusive_end: i64,
+    ) -> Result<Self, (i64, i64)> {
+        fn advance(
+            units: &mut std::iter::Peekable<impl Iterator<Item = u16>>,
+            mut points: i64,
+        ) -> Option<usize> {
+            let mut count = 0;
+            while points > 0 {
+                let first = units.next()?;
+                count += 1;
+                if (0xd800..=0xdbff).contains(&first)
+                    && units
+                        .peek()
+                        .is_some_and(|next| (0xdc00..=0xdfff).contains(next))
+                {
+                    units.next();
+                    count += 1;
+                }
+                points -= 1;
+            }
+            (points == 0).then_some(count)
+        }
+
+        let mut units = self.encode_utf16().peekable();
+        advance(&mut units, start).ok_or((start, 0))?;
+        let selected = units.clone();
+        // Java evaluates the subtraction as a wrapping long. Validate both
+        // offsets before allocating the resulting string.
+        let count =
+            advance(&mut units, exclusive_end.wrapping_sub(start)).ok_or((exclusive_end, start))?;
+        if start == 0 && units.peek().is_none() {
+            return Ok(self.clone());
+        }
+        if count == 0 {
+            return Ok(Self(
+                Repr::Utf8("".into()),
+                crate::value_identity::Token::empty_string(),
+            ));
+        }
+        Ok(Self::from_utf16(selected.take(count).collect::<Vec<_>>()))
+    }
+
     /// Java String.substring preserves the receiver for the full interval and
     /// returns the canonical empty literal for an empty proper substring.
     pub(crate) fn drop_last_code_points(&self, mut count: u64) -> Self {

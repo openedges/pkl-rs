@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Cannot find key `"f😃o"`.
+
+2 | result = x["f😃o"]
+             ^^^^^^^^^
+at utf16-boundary#result (file:///stage87/utf16-boundary.pkl)
+
+Did you mean any of the following?
+"f😀o"
+"f😁o"
+
+1 | result
+    ^^^^^^
+at  (repl:text)

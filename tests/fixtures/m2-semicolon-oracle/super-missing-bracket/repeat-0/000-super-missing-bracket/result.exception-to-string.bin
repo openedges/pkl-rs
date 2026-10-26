@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Unexpected token `bad`. Expected `[`.
+
+1 | hidden child = new Mapping { ["x"] = super; bad }
+                                                ^^^
+at super-missing-bracket (file:///stage88/super-missing-bracket.pkl)

@@ -1,0 +1,1 @@
+foo = new { bar = super.bar(1 / 0) }

@@ -1,0 +1,68 @@
+{
+  "argv": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/unused-body-timing/1/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/unused-body-timing/1/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "org.pkl.cli.Main",
+    "eval",
+    "--no-cache",
+    "--no-project",
+    "--settings",
+    "pkl:settings",
+    "unused-body-timing/main.pkl"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/workspace",
+  "deleted_files": [],
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/unused-body-timing/1/home",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/unused-body-timing/1/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/unused-body-timing/1/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/private-state/unused-body-timing/1/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 1,
+  "files": {},
+  "finished_epoch": 1792986701.306328,
+  "pid": 37467,
+  "program": "unused-body-timing",
+  "purpose": "Determine AstBuilder/VM timing for unused invalid object member.",
+  "repeat": 1,
+  "source_files": {
+    "main.pkl": {
+      "bytes": 52,
+      "path": "target/m2/stage89-super-scope-oracle-prep-01/inputs/unused-body-timing/main.pkl",
+      "sha256": "807123a92a485e0aeed3f15038a1594658b929e4e59a9ceb09501f7d7db6a62c"
+    }
+  },
+  "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/workspace/unused-body-timing/main.pkl",
+  "started_epoch": 1792986700.3263738,
+  "stderr": {
+    "bytes": 311,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/cases/unused-body-timing/repeat-1/stderr.bin",
+    "sha256": "3ca9062eb05c240e1c1779958bed06e6bffb03f6a9f0c11d61fc55d8c055e320"
+  },
+  "stdout": {
+    "bytes": 0,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/cases/unused-body-timing/repeat-1/stdout.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "timed_out_or_guard_failure": null
+}

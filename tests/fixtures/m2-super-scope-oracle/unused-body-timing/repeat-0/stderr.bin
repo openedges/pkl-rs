@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot invoke a supermethod from here.
+
+1 | local unused = new { bar = super.bar() }
+                               ^^^^^^^^^^^
+at main#unused.bar (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage89-super-scope-oracle-01/workspace/unused-body-timing/main.pkl, line 1)
