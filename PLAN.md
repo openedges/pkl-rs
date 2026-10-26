@@ -19,7 +19,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: 실제 모듈 출력·PCF와 원본 비교 확장; 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: PropertiesRenderer·historical 8개 실행 계약 통합; 최신 전체 코퍼스 4,214/4,416·전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
@@ -143,7 +143,7 @@ M1의 공통 VM을 확장합니다. VM·heap·호출 의미론은 `gpt-6-astra /
 
 핵심 언어 기능을 폭넓게 구현했지만, 전체 호환성 마감에는 상당한 작업이 남아 있습니다. 아래 9개 작업 영역은 모두 일부 종료 조건이 남은 `진행 중` 상태입니다. Stage 번호는 완료한 전체 작업의 비율이 아니라 누적 구현·검증 단계를 나타냅니다. 선택 코퍼스의 높은 성공률도 M2 전체 완료율이 아닙니다.
 
-전체 목록의 요구사항 475개와 검토된 mapping 30개에는 서로 겹치는 의미론·선언·후보 기록이 있습니다. Stage 52의 원본 어댑터 연결 후 ready 4,416개·미구현 71개·미연결 40개 accounting row 역시 독립적인 기능 수나 남은 작업량을 뜻하지 않습니다. 기존 ready 3,664개에서 추가된 752개는 실행 연결이며 새 통과 결과가 아닙니다. ready는 어댑터로 실행 가능하다는 뜻이며 통과 판정은 별도입니다. 현재 목록에는 검토된 기능별 작업량 가중치가 없으므로 신뢰할 수 있는 전체 완료 백분율은 산정하지 않습니다. 진행 보고는 구현한 범위, 실제 실행·일치 수, 미구현·미실행 범위와 엄격한 완료 gate를 함께 제시합니다.
+전체 목록의 요구사항 475개와 검토된 mapping 30개에는 서로 겹치는 의미론·선언·후보 기록이 있습니다. Stage 52의 원본 어댑터 연결 후 ready 4,416개·미구현 71개·미연결 40개 accounting row 역시 독립적인 기능 수나 남은 작업량을 뜻하지 않습니다. 기존 ready 3,664개에서 추가된 752개는 실행 연결이며 새 통과 결과가 아닙니다. Stage92에서 원래 case ID를 유지한 historical 8개를 추가 연결한 현재 상태는 ready 4,424개·미구현 71개·미연결 32개입니다. ready는 어댑터로 실행 가능하다는 뜻이며 통과 판정은 별도입니다. 현재 목록에는 검토된 기능별 작업량 가중치가 없으므로 신뢰할 수 있는 전체 완료 백분율은 산정하지 않습니다. 진행 보고는 구현한 범위, 실제 실행·일치 수, 미구현·미실행 범위와 엄격한 완료 gate를 함께 제시합니다.
 
 남은 큰 범위는 annotation·module 초기화와 상속 규칙, 지연·재귀 타입 및 제약, collection·Reference 메타데이터의 나머지 의미론, 전체 오류 메시지·논리적 스택과 원본 upstream 코퍼스 연결입니다. 원본 언어 사례가 요구하는 표준 라이브러리·출력·로딩 기능은 M3·M4와의 의존성으로 유지합니다. 이 조건을 충족하기 전에는 검증만 남은 마감 단계로 보고하지 않습니다.
 
@@ -3087,9 +3087,52 @@ YAML·Plist 미지원 검사는 유지하고 Properties는 전용 Java 원시 fi
 정확한 소스·실행·실패 계보와 완료된 생성 파일 정리 기록을 게시한다.
 전체 코퍼스 확정 집계는 여전히 Stage86의
 4,214/4,416이며 전체 M2 완료율로 환산하지 않는다. Historical 입력 8개 연결은
-혼합 schema 6 검증 결함을 수정하고 독립 재검토를 통과했으나 아직 정본에
-통합하지 않았다. 다음 YAML 구현의 Java 관찰에서도 일반 오류·내부 oracle 오류와
+혼합 schema 6 검증 결함을 수정하고 독립 재검토를 통과한 뒤 아래 Stage92에서
+정본 통합·실제 혼합 실행을 완료했다. 다음 YAML 구현의 Java 관찰에서도 일반 오류·내부 oracle 오류와
 의도한 동작에 도달하지 못한 질의를 구분해 보존한다.
+
+### Stage92 — historical 원본 8개 실행 계약의 정본 연결
+
+[체크포인트](reports/m2/stage92-historical-admission-checkpoint.json)에 정본 연결과
+원시 비교·실패 계보를 함께 게시한다.
+
+독립 검토한 도구·registry·fixture·생성 manifest 19개 경로만 정본에 통합했다.
+rev1 고정 입력 8개와 의존 모듈·LICENSE·NOTICE의 원시 바이트를 보존하며,
+전체 4,527개 case ID·순서와 요구사항 475개는 그대로다. 준비 상태만 8개를
+연결해 **ready 4,424개·미구현 71개·미연결 32개**가 됐다. 나머지 historical
+후보 32개와 별도 selected regression 3개의 원래 명령·상태는 바꾸지 않는다.
+ready는 실행 adapter 연결이며 기능 완료나 요구사항 충족을 뜻하지 않는다.
+
+새 profile은 Pkl 0.32.0의 `eval --no-cache --no-project --settings pkl:settings`를
+명시한다. stdout·stderr·종료 상태·생성 파일 경로/바이트와 managed workspace의
+예상 밖 쓰기를 기록한다. 이전의 다른 CLI 옵션이나 rev1 통과 기록을 대신 쓰지
+않는다. schema6와 원래 upstream module profile을 혼합할 때 검증이 실패하던
+final01과 독립 재현을 보존하고, 기존 corpus/profile/hash/baseline 검증을 상속한
+final02만 통합했다.
+
+정본을 직접 import한 Python 회귀 **76개·`-O` 76개**, manifest freshness,
+원래 module registry 검사와 `cargo xtask verify`가 통과했다. 실제 정본
+`execute`·`check_report`에 historical 8개와 unchanged upstream Boolean 1개를
+두 번씩 연결해 **18/18개 원시 비교**가 일치했다. engine·oracle·결과를 바꾸지
+않는 target-only case 선택 wrapper의 범위를 명시한다. 정본 CLI의 offline
+subset 검증도 통과하며 엄격한 전체 gate 실패는 그대로다.
+
+실행 파일은 실제 Stage91 workspace의 compiler·Cargo event·dep-info·runtime·
+extern 연결과 현재 바이트를 확인해 재사용했다. caller-supplied 표시는 그대로
+두고 별도 provenance로 연결하며 취득용 native evaluator/probe를 새로 빌드하지
+않았다. 별도 `cargo xtask verify`는 xtask 검증기를 컴파일했다. 이전 Stage90
+native 근거의 16개 원시 비교도 새 정본 adapter로 읽기 전용 재검증했으며
+이전 producer를 Stage91로 소급 변경하지 않는다.
+
+생성 파일과 예상 밖 쓰기의 실제 집합은 비어 있다. 비어 있지 않은 파일 기능,
+전역 파일시스템 sandbox, 전체 CLI/API·UTF-16·Logger, 새 JVM·플랫폼 검증은
+이 결과에 포함하지 않는다. 실행 기록은 `target/m2/stage92-canonical-integration-01`,
+`stage92-canonical-checks-01`, `stage92-canonical-mixed-01`,
+`stage92-canonical-offline-cli-check-01`에 보존한다. 소스 snapshot을 포함하는 새
+혼합 취득은 owned 256MiB·live floor 512MiB 조건으로 따로 기록했고 이전
+30MiB 취득 조건을 소급 변경하지 않았다. 최신 전체 코퍼스 집계는 여전히
+Stage86 **4,214/4,416**이며 8개를 그 이전 소스 집계에 더하지 않는다.
+다음 YAML 후보와 전체 M2·제품·릴리스·성능 gate는 별도로 남는다.
 
 ## M3 — 표준 라이브러리와 출력
 

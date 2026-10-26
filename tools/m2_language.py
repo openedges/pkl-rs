@@ -13,6 +13,7 @@ import sys
 
 import m2_manifest as contract
 import m2_module_eval
+import m2_historical
 import m2_jvm_classpath
 import m2_source_inputs
 import m2_workspace
@@ -192,7 +193,7 @@ def acquire_cases(selected, output, metadata, frozen, workers=1):
 
 
 def selected_cases(manifest, adapters=None):
-    known = ('language-api-string', m2_module_eval.ADAPTER, m2_jvm_classpath.ADAPTER)
+    known = ('language-api-string', m2_module_eval.ADAPTER, m2_jvm_classpath.ADAPTER, m2_historical.ADAPTER)
     if adapters is not None and (not adapters or len(set(adapters)) != len(adapters)
                                  or not set(adapters) <= set(known)):
         raise ValueError('invalid or duplicate selected adapters')
@@ -201,7 +202,7 @@ def selected_cases(manifest, adapters=None):
 
 def execute(output: Path, candidate: Path | None, workers=1, *, adapters=None,
             module_candidate=None, module_workspace=None, classpath_candidate=None, classpath_workspace=None,
-            module_workspace_profile=m2_workspace.DEFAULT_PROFILE):
+            module_workspace_profile=m2_workspace.DEFAULT_PROFILE, historical_workspace=None):
     validate_workers(workers)
     manifest = contract.current_manifest()
     selected = selected_cases(manifest, adapters)
@@ -210,17 +211,21 @@ def execute(output: Path, candidate: Path | None, workers=1, *, adapters=None,
     scalars = [row for row in selected if row['adapter'] == 'language-api-string']
     modules = [row for row in selected if row['adapter'] == m2_module_eval.ADAPTER]
     classpath = [row for row in selected if row['adapter'] == m2_jvm_classpath.ADAPTER]
+    historical = [row for row in selected if row['adapter'] == m2_historical.ADAPTER]
     if module_workspace_profile not in m2_workspace.PROFILES:
         raise ValueError('unknown module workspace profile')
     if not modules and module_workspace_profile != m2_workspace.DEFAULT_PROFILE:
         raise ValueError('module workspace profile supplied for an unselected adapter')
-    if (candidate is not None and not scalars) or ((module_candidate is not None or module_workspace is not None) and not modules):
+    if ((candidate is not None and not scalars) or (module_candidate is not None and not (modules or historical))
+            or (module_workspace is not None and not modules)):
         raise ValueError('candidate/workspace supplied for an unselected adapter')
     if (classpath_candidate is not None or classpath_workspace is not None) and not classpath:
         raise ValueError('classpath candidate/workspace supplied for an unselected adapter')
+    if historical_workspace is not None and not historical:
+        raise ValueError('historical workspace supplied for unselected adapter')
     metadata = oracle.ensure_oracle(ROOT, fetch=False)
     output.mkdir(parents=True, exist_ok=False)
-    selection = dict(adapters=list(adapters) if adapters else ['language-api-string', m2_module_eval.ADAPTER, m2_jvm_classpath.ADAPTER],
+    selection = dict(adapters=list(adapters) if adapters else ['language-api-string', m2_module_eval.ADAPTER, m2_jvm_classpath.ADAPTER, m2_historical.ADAPTER],
                      case_ids=[row['id'] for row in selected])
     (output / 'selection.json').write_bytes(contract.encoded(selection))
     initial = {path: oracle.sha256(ROOT / path) for path in source_paths()}
@@ -235,7 +240,7 @@ def execute(output: Path, candidate: Path | None, workers=1, *, adapters=None,
     artifacts = output / 'artifacts'
     artifacts.mkdir()
     requested = [('language_probe', candidate)] if scalars else []
-    if modules:
+    if modules or historical:
         requested.append(('module_eval_probe', module_candidate))
     if classpath:
         requested.append(('jvm_snippet_probe', classpath_candidate))
@@ -302,6 +307,10 @@ def execute(output: Path, candidate: Path | None, workers=1, *, adapters=None,
             row = m2_module_eval.acquire_case(ROOT, workspace, case, metadata, artifacts / 'module_eval_probe', output)
             results.append(row)
             print(f"{row['id']}: {row['status']}", flush=True)
+    historical_context = None
+    if historical:
+        rows, historical_context = m2_historical.acquire(ROOT, output, historical, metadata, artifacts / 'module_eval_probe', historical_workspace)
+        results += rows
     classpath_context = None
     if classpath:
         if len(classpath) != 1 or classpath[0]['id'] != m2_jvm_classpath.CASE_ID:
@@ -323,14 +332,14 @@ def execute(output: Path, candidate: Path | None, workers=1, *, adapters=None,
     results = [by_id[row['id']] for row in selected]
     relation_manifest = dict(manifest, cases=scalars)
     relations = check_relations(relation_manifest, output)
-    report = dict(schema_version=5 if modules else 4 if classpath else 3, scope=manifest['comparison_boundary'],
+    report = dict(schema_version=6 if historical else 5 if modules else 4 if classpath else 3, scope=manifest['comparison_boundary'],
                   module_scope=manifest.get('module_comparison_boundary'),
                   inventory_counts=manifest['counts'], selected_count=len(selected),
                   selection=selection,
                   execution=dict(workers=workers), oracle=metadata,
                   candidate=bindings.get('language_probe'), module_candidate=bindings.get('module_eval_probe'),
                   classpath_candidate=bindings.get('jvm_snippet_probe'), classpath_eval=classpath_context,
-                  module_eval=module_context,
+                  module_eval=module_context, historical_eval=historical_context,
                   javac=dict(path=str(Path(metadata['java']).with_name('javac')),
                              sha256=oracle.sha256(Path(metadata['java']).with_name('javac'))) if scalars else None,
                   source_sha256=initial,
@@ -436,16 +445,21 @@ def check_report(directory: Path):
         raise ValueError('empty executable adapter selection')
     has_modules = any(row['adapter'] == m2_module_eval.ADAPTER for row in selected.values())
     has_classpath = any(row['adapter'] == m2_jvm_classpath.ADAPTER for row in selected.values())
+    has_historical = any(row['adapter'] == m2_historical.ADAPTER for row in selected.values())
+    if has_historical and report.get('schema_version') != 6:
+        raise ValueError('historical adapter requires explicit schema6 context')
+    if not has_historical and report.get('historical_eval') is not None:
+        raise ValueError('unselected historical context')
     if not has_modules and (report.get('module_eval') is not None
                             or (directory / 'module-workspace-profile.json').exists()
                             or report.get('schema_version') == 5):
         raise ValueError('unselected module workspace context or profile')
-    if has_modules and (type(report.get('schema_version')) is not int or report['schema_version'] not in (3, 4, 5)):
+    if has_modules and (type(report.get('schema_version')) is not int or report['schema_version'] not in (3, 4, 5, 6)):
         raise ValueError('module-eval requires the current report schema')
     if (has_modules and 'tools/m2_workspace.py' in report['source_sha256']
-            and report.get('schema_version') != 5):
+            and report.get('schema_version') not in (5, 6)):
         raise ValueError('captured workspace-profile tooling requires report schema 5')
-    if has_classpath and report.get('schema_version') not in (4, 5):
+    if has_classpath and report.get('schema_version') not in (4, 5, 6):
         raise ValueError('JVM-classpath requires the bound child report schema')
     if report.get('schema_version', 2) >= 3:
         selection = report.get('selection')
@@ -456,7 +470,7 @@ def check_report(directory: Path):
     for name, key, adapter in [('language_probe', 'candidate', 'language-api-string'),
                                 ('module_eval_probe', 'module_candidate', m2_module_eval.ADAPTER),
                                 ('jvm_snippet_probe', 'classpath_candidate', m2_jvm_classpath.ADAPTER)]:
-        needed = any(row['adapter'] == adapter for row in selected.values())
+        needed = any(row['adapter'] == adapter or (name == 'module_eval_probe' and row['adapter'] == m2_historical.ADAPTER) for row in selected.values())
         candidate = report.get(key)
         if not needed:
             if candidate is not None:
@@ -491,13 +505,15 @@ def check_report(directory: Path):
                 or oracle.sha256(directory / 'module-inputs.json') != context['input_validation_sha256']):
             raise ValueError('module-eval staged input provenance differs')
         corpus_path = directory / 'sources/compatibility/corpus.json'
-        if (report['schema_version'] == 5
+        # Schema6 adds historical context and inherits the original schema5 module-profile safeguards.
+        profiled_module_schema = report['schema_version'] in (5, 6)
+        if (profiled_module_schema
                 and oracle.sha256(corpus_path) != manifest.get('sources', {}).get('compatibility/corpus.json')):
             raise ValueError('module-eval corpus differs from the authoritative manifest pin')
         corpus = json.loads(corpus_path.read_bytes())
         baseline = json.loads((directory / 'module-workspace.json').read_bytes())
         m2_module_eval.validate_resource_set(baseline, corpus['sources'])
-        if report['schema_version'] == 5:
+        if profiled_module_schema:
             profile = m2_workspace.profile_record(context.get('workspace_profile'), corpus,
                 [case for case in selected.values() if case['adapter'] == m2_module_eval.ADAPTER])
             profile_path = directory / 'module-workspace-profile.json'
@@ -506,7 +522,7 @@ def check_report(directory: Path):
                 raise ValueError('module-eval workspace profile provenance differs')
             m2_workspace.validate_baseline(baseline, corpus, profile)
         elif any(name in context for name in ('workspace_profile', 'workspace_profile_sha256')):
-            raise ValueError('workspace profile requires report schema 5')
+            raise ValueError('workspace profile requires report schema 5 or 6')
         declared = {resource['path']: resource['sha256'] for source in corpus['sources'] for resource in source['resources']}
         for case in selected.values():
             if case['adapter'] == m2_module_eval.ADAPTER:
@@ -528,6 +544,11 @@ def check_report(directory: Path):
         raise ValueError('selected execution order differs from manifest')
     for row in report['results']:
         case = selected[row['id']]
+        if case['adapter'] == m2_historical.ADAPTER:
+            context = report['historical_eval']
+            baseline = m2_historical.verify_context(ROOT, directory, context)
+            m2_historical.verify_case(ROOT, directory, context, case, row, report['oracle'], directory/'artifacts/module_eval_probe', baseline)
+            continue
         if case['adapter'] == m2_jvm_classpath.ADAPTER:
             if row != classpath_result(case, directory / 'jvm-classpath', child):
                 raise ValueError('JVM-classpath original result/profile binding changed')
@@ -674,8 +695,9 @@ def main():
     action.add_argument('--verify-development', type=Path, help='development-only gate allowing explicitly recorded cycle/remainder failures; does not establish compatibility')
     parser.add_argument('--record-only', action='store_true', help='with --output, acquire and validate evidence without requiring compatibility success')
     parser.add_argument('--candidate', type=Path, help='override the default recorded release build; caller-supplied artifact has no verified source binding')
-    parser.add_argument('--adapter', action='append', choices=['language-api-string', m2_module_eval.ADAPTER, m2_jvm_classpath.ADAPTER],
+    parser.add_argument('--adapter', action='append', choices=['language-api-string', m2_module_eval.ADAPTER, m2_jvm_classpath.ADAPTER, m2_historical.ADAPTER],
                         help='explicit focused acquisition; omitted adapters remain required in the full gate')
+    parser.add_argument('--historical-workspace', type=Path, help='fresh minimal historical8 physical workspace; distinct from original upstream profiles')
     parser.add_argument('--module-candidate', type=Path, help='override module-eval build; source binding remains unverified')
     parser.add_argument('--module-workspace', type=Path, help='exclusive managed physical workspace shared by Java and module candidate')
     parser.add_argument('--module-workspace-profile', choices=m2_workspace.PROFILES,
@@ -689,9 +711,11 @@ def main():
         parser.error('--record-only requires --output')
     if args.workers != 1 and not args.output:
         parser.error('--workers requires --output')
-    if (args.adapter or args.module_candidate or args.module_workspace or args.module_workspace_profile or args.classpath_candidate or args.classpath_workspace) and not args.output:
+    if (args.adapter or args.module_candidate or args.module_workspace or args.module_workspace_profile or args.classpath_candidate or args.classpath_workspace or args.historical_workspace) and not args.output:
         parser.error('adapter/module acquisition settings require --output')
     extra = {}
+    if args.historical_workspace is not None:
+        extra['historical_workspace'] = args.historical_workspace
     if args.adapter is not None:
         extra['adapters'] = args.adapter
     if args.module_candidate is not None:

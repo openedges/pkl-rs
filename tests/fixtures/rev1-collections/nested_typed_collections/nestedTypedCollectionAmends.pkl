@@ -1,0 +1,17 @@
+class Field { name: String }
+fields: Listing<Listing<Field>> = new { new { new { name = "a" } } }
+byKey: Mapping<String, Listing<Field>> = new { ["k"] { new { name = "a" } } }
+maps: Listing<Mapping<String, Field>> = new { new { ["k"] { name = "a" } } }
+local amended = (fields) { new { new { name = "c" } } }
+local amendedByKey = (byKey) { ["n"] { new { name = "c" } } }
+local amendedMaps = (maps) { new { ["n"] { name = "c" } } }
+amendedElementKind = amended[1][0].getClass().simpleName
+amendedKinds = amended.toList().map((l) -> l.toList().map((f) -> f.getClass().simpleName))
+amendedInnerKind = amended[1].getClass().simpleName
+amendedRendered = amended
+amendedByKeyKinds = amendedByKey["n"].toList().map((f) -> f.getClass().simpleName)
+amendedByKeyRendered = amendedByKey
+amendedMapsEntryKind = amendedMaps[1]["n"].getClass().simpleName
+amendedMapsKinds = amendedMaps.toList().map((m) -> m.toMap().values.map((f) -> f.getClass().simpleName))
+indexAmendKinds = (fields) { [0] { new { name = "z" } } }.toList().map((l) -> l.toList().map((f) -> f.getClass().simpleName))
+amendedIsNested = amended is Listing<Listing<Field>>

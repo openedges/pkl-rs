@@ -1,0 +1,27 @@
+local l = new Listing { default { x = 1 }; new { y = 2 }; new { y = 3 } }
+local byFunction = new Listing { default = (i) -> new Dynamic { x = i * 10 }; new { y = 2 } }
+local amended = (l) { new { y = 4 } }
+local overridden = (l) { default { x = 7 }; new {} }
+
+toList = l.toList().map((e) -> e.x)
+toSet = l.toSet().toList().map((e) -> e.x)
+first = l.first.x
+last = l.last.x
+firstOrNull = l.firstOrNull?.x
+lastOrNull = l.lastOrNull?.x
+getOrNull = l.getOrNull(1)?.x
+fold = l.fold(0, (acc, e) -> acc + e.x)
+foldIndexed = l.foldIndexed(0, (i, acc, e) -> acc + e.x + i)
+every = l.every((e) -> e.x == 1)
+any = l.any((e) -> e.x == 1)
+distinctBy = l.distinctBy((e) -> e.x).length
+distinctFirst = l.distinct[0].x
+contains = l.contains(new Dynamic { x = 1; y = 2 })
+generator = new Listing { for (e in l) { e.x } }
+indexedGenerator = new Dynamic { for (i, e in l) { ["k\(i)"] = e.x } }
+functionDefault = byFunction.toList().map((e) -> e.x)
+functionDefaultAmended = (byFunction) { new { y = 3 } }.toList().map((e) -> e.x)
+amendedToList = amended.toList().map((e) -> "\(e.x)-\(e.y)")
+amendedGenerator = new Listing { for (e in amended) { e.x } }
+overriddenToList = overridden.toList().map((e) -> e.x)
+subscriptStillWorks = amended[2].x

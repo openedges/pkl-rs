@@ -5,15 +5,16 @@ from pathlib import Path
 MANIFEST = 'compatibility/m2-language.json'
 PROFILE = 'compatibility/m2-jvm-classpath.json'
 EXECUTION_PROFILES = 'compatibility/m2-execution-profiles.json'
+HISTORICAL = 'compatibility/m2-historical-collections.json'
 INPUTS = ('references.lock', 'compatibility/inventory.json', 'compatibility/corpus.json',
           'compatibility/rev1-inventory.json', 'compatibility/regressions.json',
           'tests/fixtures/m2/cases.json', 'compatibility/m2-mappings.json',
-          'compatibility/m2-module-eval.json', PROFILE, EXECUTION_PROFILES)
+          'compatibility/m2-module-eval.json', PROFILE, EXECUTION_PROFILES, HISTORICAL)
 
 
 def source_paths(root: Path):
     paths = set(INPUTS) | {MANIFEST, 'tools/m2_source_inputs.py', 'tools/m2_manifest.py',
-        'tools/m2_language.py', 'tools/m2_module_eval.py', 'tools/m2_workspace.py', 'tools/m2_jvm_classpath.py',
+        'tools/m2_language.py', 'tools/m2_module_eval.py', 'tools/m2_historical.py', 'tools/m2_workspace.py', 'tools/m2_jvm_classpath.py',
         'tools/m2_execution_profiles.py', 'tools/compat.py', 'tools/m2_generate.py',
         'tools/benchmark.py',
         'tools/parameterized_object_fixtures.py', 'tools/parameterized_object_compare.py',
@@ -63,6 +64,8 @@ def source_paths(root: Path):
                                ('tests/fixtures/m2-class-metadata-completion', '*'),
                                ('tests/fixtures/m2-parameterized-object-bodies', '*')]:
         paths.update(path.relative_to(root).as_posix() for path in (root / directory).rglob(pattern) if path.is_file())
+    historical = json.loads((root / HISTORICAL).read_bytes())
+    paths.update(resource['path'] for resource in historical['resources'])
     profile = json.loads((root / PROFILE).read_bytes())
     paths.update(profile['reference']['sources'])
     paths.update(profile['classpath_resources'])

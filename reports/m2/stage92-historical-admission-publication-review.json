@@ -1,0 +1,259 @@
+{
+  "actual_outer_launch": {
+    "bytes": 5907,
+    "mode": 420,
+    "path": "target/m2/stage92-checkpoint-publication-launch-01/process.json",
+    "sha256": "9e46b12cd03eff5947973a24166ef5e4218a2f4bed5b8181f34c6fc16c5a1fee"
+  },
+  "actual_producer_report": {
+    "bytes": 1227,
+    "mode": 420,
+    "path": "target/m2/stage92-checkpoint-publication-01/report.json",
+    "sha256": "5ef5c2da8c7ee28a9363185dedd578824e2414187cb2bc5da614fc34cf69a8ae"
+  },
+  "actual_public_raw_channel_and_process_payloads_checked": 144,
+  "actual_scope": "Pkl0.32.0; 76canonical normal+76optimized tests; 18real mixed matches (16historical+2Boolean), explicit finite selector and caller-unbound labels plus separate actual Stage91 producer source proof. Historical original16 remains Stage90 authority. Strict5476 finite gate failed; latestStage86 whole4214/4416 and1791 conditions unchanged. No freshJVM/API/UTF16/Logger/nonempty-files/M1/platform/performance/fullM2 result.",
+  "actual_source_snapshots": 9560,
+  "approved_for_publication": true,
+  "archive": {
+    "bytes": 20418749,
+    "mode": 420,
+    "path": "target/m2/stage92-checkpoint-publication-01/stage92-historical-admission-evidence.tar.gz",
+    "sha256": "5248637985847e7474a60c7098b4689aa84f00a539eb81d93feda8ba6262ea03"
+  },
+  "canonical_payloads": {
+    "existing_parent_Git_preimages_checked": 5,
+    "final_documents": 4,
+    "new_paths_absent_in_parent_Git": 14,
+    "parent": "c5f266fa5005ac50477a23b12f335df8eb3ec632",
+    "total": 19
+  },
+  "checkpoint_draft": {
+    "bytes": 10653,
+    "mode": 420,
+    "path": "target/m2/stage92-checkpoint-publication-01/checkpoint-draft.json",
+    "sha256": "71e1af102d4a5198afa076190aa934b236048b0f6e6509d9f1a26b107bc1c09b"
+  },
+  "complete": true,
+  "declared_pinned_binary_fixture_inputs": 16,
+  "direct_reference_checkout_or_Stage93_or_partial_payloads_selected": 0,
+  "documentation_public_links": {
+    "bytes": 3135,
+    "mode": 420,
+    "path": "target/m2/stage92-checkpoint-publication-independent-review-01/documentation-link-readback.json",
+    "sha256": "71ea1b40a1c587a31957eafda47206cef203fb78e69573d13484f635110ca8d5"
+  },
+  "failure_history_and_corrected_guards_preserved": true,
+  "finished_epoch": 1793008878.2130702,
+  "full_stream": {
+    "all_local_selected_sources_rehashed": 10171,
+    "archive_extracted": false,
+    "decompressed_tar_bytes": 130580480,
+    "file_modes_counts": {
+      "420": 10171
+    },
+    "manifest_exact": true,
+    "member_order_exact": true,
+    "members_including_manifest": 10172,
+    "no_appended_data": true,
+    "payload_logical_bytes": 108196310,
+    "regular_payloads": 10171,
+    "single_gzip_member_CRC_EOF": true,
+    "trailing_zero_padding_bytes": 6144
+  },
+  "gates": {
+    "canonical_Python_freshness_xtask": {
+      "report": {
+        "bytes": 3994,
+        "mode": 420,
+        "path": "target/m2/stage92-canonical-checks-01/report.json",
+        "sha256": "3a124ab5d2a1e19e939ab0881b1107549458b8014ed27c7b01637e29e7834b37"
+      },
+      "status": "passed"
+    },
+    "final_document_links": {
+      "documents": {
+        "bytes": 2102,
+        "mode": 420,
+        "path": "target/m2/stage92-documentation-04/report.json",
+        "sha256": "4fee068ceb31976a4b4efd24727d98e3e4832b2bf5650384532e04f535aebb4c"
+      },
+      "report": {
+        "bytes": 3135,
+        "mode": 420,
+        "path": "target/m2/stage92-checkpoint-publication-independent-review-01/documentation-link-readback.json",
+        "sha256": "71ea1b40a1c587a31957eafda47206cef203fb78e69573d13484f635110ca8d5"
+      },
+      "status": "passed"
+    },
+    "mixed18actual": {
+      "outer": {
+        "bytes": 1284,
+        "mode": 420,
+        "path": "target/m2/stage92-canonical-mixed-01/outer.process.json",
+        "sha256": "b78beded75bb578aa03d80d634acb0beeb7ac35b77a33d4b8fd62682ce964d8d"
+      },
+      "report": {
+        "bytes": 2175,
+        "mode": 420,
+        "path": "target/m2/stage92-canonical-mixed-01/report.json",
+        "sha256": "2f068affaa76a1551405693c42d06be0f8ab16029d5f7a5a73a610382eb362c7"
+      },
+      "status": "passed"
+    },
+    "offline_subset_and_strict_failure": {
+      "report": {
+        "bytes": 3293,
+        "mode": 420,
+        "path": "target/m2/stage92-canonical-offline-cli-check-01/report.json",
+        "sha256": "3bebf8783a7c9efa32141cc916554124cff4fd6ac3c27fea5402cb5abd6ece57"
+      },
+      "status": "passed",
+      "strict_full_compatibility": "failed, preserved"
+    },
+    "retained_native_producer_bridge": {
+      "report": {
+        "bytes": 36483,
+        "mode": 420,
+        "path": "target/m2/stage92-checkpoint-publication-prep-01/prior-Stage91-bridge.json",
+        "sha256": "497e95a2d312f43268987ecebe14b163106a8a4c8d1ef38b0b03c63a95d0d8fa"
+      },
+      "status": "passed"
+    },
+    "stage92-candidate-independent-review-02/report.json": {
+      "report": {
+        "bytes": 8821,
+        "mode": 420,
+        "path": "target/m2/stage92-candidate-independent-review-02/report.json",
+        "sha256": "b73610d0b6f59be841d2e6104253a28cf0dbbc9e00f8eba86e872da6db28085f"
+      },
+      "status": "passed"
+    },
+    "stage92-canonical-integration-independent-review-01/report.json": {
+      "report": {
+        "bytes": 6649,
+        "mode": 420,
+        "path": "target/m2/stage92-canonical-integration-independent-review-01/report.json",
+        "sha256": "6bcc9bfbdec1fa91c46cddec266f2ee7df25671d1eab88137f7df2b8da7f945f"
+      },
+      "status": "passed"
+    },
+    "stage92-documentation-handoff-independent-review-01/report.json": {
+      "report": {
+        "bytes": 4992,
+        "mode": 420,
+        "path": "target/m2/stage92-documentation-handoff-independent-review-01/report.json",
+        "sha256": "b05619bef519f4f12051991f570c06b37fb36741f088cd97b7dec49b927d2b40"
+      },
+      "status": "passed"
+    }
+  },
+  "generated_native_compiler_payloads_selected": 0,
+  "kind": "stage92-publication-full-stream-independent-review",
+  "limits": [
+    "Finite Stage92 development checkpoint; whole M2/API/release-platform/performance gates remain open.",
+    "Prior Stage91/Stage90 committed archives are explicit exact Git-blob dependencies, not repacked or attributed as new Stage92 compilation.",
+    "Pinned binary fixture inputs are preserved as source snapshot data; generated evaluator/compiler/private runtime binaries are excluded with original identities and producer records.",
+    "Publication is not a self-contained evaluator/compiler/JDK distribution and does not guarantee restoration of original generated executables."
+  ],
+  "permitted_public_descriptor_transform": "Root may add truthful public archive/review identities and exact four document rows, derive publication_ready and containing-commit/non-force-push intent or actual recorded identities. Archived source/raw/test outcomes, selection, comparisons, original failures and scope must remain unchanged. This review performs no public copy or Git mutation and claims no Stage92 commit/push.",
+  "prior_Stage91_exact_regular_member_coverage": {
+    "target/debug/deps/java_regex-83c371413dd2bfa4.d": {
+      "bytes": 4561,
+      "mode": 420,
+      "sha256": "143f099a708e413b029f9f38f1f76802e1a3bf5db0232f79843c268fda4f49bb"
+    },
+    "target/debug/deps/pkl_runtime-a05378aa9daac775.d": {
+      "bytes": 16468,
+      "mode": 420,
+      "sha256": "f23d952a27aa1dc5651cb5c97151351d5d36a7d3044614bbd7c2ea543b1f04b1"
+    },
+    "target/debug/examples/jvm_snippet_probe.d": {
+      "bytes": 10993,
+      "mode": 420,
+      "sha256": "47344e52c7581e16a533b84c1a63d074db3431f56946524d4ceca8d34c457c23"
+    },
+    "target/debug/examples/module_eval_probe.d": {
+      "bytes": 11098,
+      "mode": 420,
+      "sha256": "dcae03c82fff4fe8a9377bd245b8f474a94799664586c927a37a0fbb5f0bf68d"
+    },
+    "target/m2/stage91-workspace-composed-independent-review-01/report.json": {
+      "bytes": 6953,
+      "mode": 420,
+      "sha256": "261589f07af13a6a75c933efa2e4455544b91dcf1c0d1988b1a308bac69c9796"
+    },
+    "target/m2/stage91-workspace-partitioned-01/pkl-runtime-compile-examples-02/report.json": {
+      "bytes": 4052,
+      "mode": 420,
+      "sha256": "317f170888d822f652c30e60d265d5b057ea8fd240ace0544f06c42d97ebaf25"
+    },
+    "target/m2/stage91-workspace-partitioned-01/pkl-runtime-compile-examples-02/stderr.bin": {
+      "bytes": 36461,
+      "mode": 420,
+      "sha256": "18fad25939c249f36414f57d09543b8df0c94344ae16c0aabd611b846aada4c2"
+    },
+    "target/m2/stage91-workspace-partitioned-01/pkl-runtime-compile-examples-02/stdout.bin": {
+      "bytes": 24962,
+      "mode": 420,
+      "sha256": "ef02cc2d175baf28fb786f3ce20f1a07d9ede839b0c4b1e6fd324a0726312ed7"
+    },
+    "target/m2/stage91-workspace-partitioned-01/report.json": {
+      "bytes": 264269,
+      "mode": 420,
+      "sha256": "363fec92e7fd81f1dd7ea604aedaf7e2f7945378f931a07cefc7ba1b00022c13"
+    },
+    "target/m2/stage91-workspace-partitioned-01/sources-after.jsonl.gz": {
+      "bytes": 3996337,
+      "mode": 420,
+      "sha256": "048fe70572554150868c1c067bdb9fcd9c721fbbb5ce056285d04be3dc622770"
+    },
+    "target/m2/stage91-workspace-partitioned-independent-review-01/report.json": {
+      "bytes": 1185317,
+      "mode": 420,
+      "sha256": "a1488dd3392f4742ed19f11403f0328ec124d8ed3aae106de933dbc0511ed3e5"
+    }
+  },
+  "prior_committed_Stage90_authorities": [
+    {
+      "bytes": 17511,
+      "commit": "20e884127b5465c893309f5ba31663189b938696",
+      "git_oid": "ea43bb91e831241b0f00a89827d76a7032d9250b",
+      "path": "reports/m2/stage90-lazy-collections-checkpoint.json",
+      "sha256": "80ef924c39f6a20290257d75ba5d02c4aa1020df484817370be5e2ffb105b4ec"
+    },
+    {
+      "bytes": 31549689,
+      "commit": "20e884127b5465c893309f5ba31663189b938696",
+      "git_oid": "09132b7fe813ebe0308620f8fb9a087950414625",
+      "path": "reports/m2/stage90-lazy-collections-evidence.tar.gz",
+      "sha256": "3cbc88380100d5f0a07a32b225398f5dcefdc13b1d938448aac0ac9910907987"
+    }
+  ],
+  "prior_committed_Stage91_archive_Git_blob": {
+    "bytes": 43276200,
+    "commit": "c5f266fa5005ac50477a23b12f335df8eb3ec632",
+    "git_oid": "f1645d82c47eb6c3e3540bbba2c99c63c9cdd996",
+    "path": "reports/m2/stage91-properties-renderer-evidence.tar.gz",
+    "sha256": "681fe1b3859a25e599850d06b82e6837173d6a27cc207f39401ae9fafe43efbc"
+  },
+  "private_file_identity_records_in_new_mixed_capture": 18,
+  "private_runtime_payload_disposition": "Generated native probe and Java private cache dylib payloads are omitted. Actual public stdout/stderr/status/files/write records and private-file hash maps remain. Archive alone cannot pass the unchanged all-evidence offline checker until exact omitted dependencies are supplied; no restoration promise is made.",
+  "retained_native_source_inputs_bound_to_each_new_snapshot": 131,
+  "review_actions": {
+    "Git_mutations": 0,
+    "archive_extractions": 0,
+    "canonical_source_writes": 0,
+    "guest_evaluations_or_compilations": 0,
+    "protected_partial_read_or_touched": false,
+    "public_writes": 0
+  },
+  "schema_version": 1,
+  "selection": {
+    "bytes": 4699529,
+    "mode": 420,
+    "path": "target/m2/stage92-checkpoint-publication-01/selection.json",
+    "sha256": "ae95ad9b459c884ca080497b554eb59926f63bb7436a37dbaa96fdf9f6c42256"
+  },
+  "verdict": "GO for finite Stage92 historical-admission development checkpoint publication"
+}

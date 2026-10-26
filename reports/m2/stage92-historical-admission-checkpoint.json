@@ -1,0 +1,295 @@
+{
+  "actual_checks": {
+    "canonical_Python_normal": 76,
+    "canonical_Python_optimized": 76,
+    "diff_whitespace": true,
+    "inventory_freshness": true,
+    "offline_CLI_subset_exit_codes": [
+      0,
+      0
+    ],
+    "original_module_registry_freshness": true,
+    "repository_xtask_verify": true,
+    "strict_full_M2_exit_code": 1,
+    "xtask_compiler_evidence": {
+      "bytes": 192,
+      "mode": 420,
+      "path": "target/m2/stage92-canonical-checks-01/xtask-verify.stderr.bin",
+      "sha256": "bcb99b7a1ff09e3b5635ddeaf54ee298fc7ca98152a5ec35d8738aa89c262e9a"
+    },
+    "xtask_verifier_fresh_compilation": true
+  },
+  "actual_gates": {
+    "canonical_Python_freshness_xtask": {
+      "report": {
+        "bytes": 3994,
+        "mode": 420,
+        "path": "target/m2/stage92-canonical-checks-01/report.json",
+        "sha256": "3a124ab5d2a1e19e939ab0881b1107549458b8014ed27c7b01637e29e7834b37"
+      },
+      "status": "passed"
+    },
+    "final_document_links": {
+      "documents": {
+        "bytes": 2102,
+        "mode": 420,
+        "path": "target/m2/stage92-documentation-04/report.json",
+        "sha256": "4fee068ceb31976a4b4efd24727d98e3e4832b2bf5650384532e04f535aebb4c"
+      },
+      "report": {
+        "bytes": 3135,
+        "mode": 420,
+        "path": "target/m2/stage92-checkpoint-publication-independent-review-01/documentation-link-readback.json",
+        "sha256": "71ea1b40a1c587a31957eafda47206cef203fb78e69573d13484f635110ca8d5"
+      },
+      "status": "passed"
+    },
+    "mixed18actual": {
+      "outer": {
+        "bytes": 1284,
+        "mode": 420,
+        "path": "target/m2/stage92-canonical-mixed-01/outer.process.json",
+        "sha256": "b78beded75bb578aa03d80d634acb0beeb7ac35b77a33d4b8fd62682ce964d8d"
+      },
+      "report": {
+        "bytes": 2175,
+        "mode": 420,
+        "path": "target/m2/stage92-canonical-mixed-01/report.json",
+        "sha256": "2f068affaa76a1551405693c42d06be0f8ab16029d5f7a5a73a610382eb362c7"
+      },
+      "status": "passed"
+    },
+    "offline_subset_and_strict_failure": {
+      "report": {
+        "bytes": 3293,
+        "mode": 420,
+        "path": "target/m2/stage92-canonical-offline-cli-check-01/report.json",
+        "sha256": "3bebf8783a7c9efa32141cc916554124cff4fd6ac3c27fea5402cb5abd6ece57"
+      },
+      "status": "passed",
+      "strict_full_compatibility": "failed, preserved"
+    },
+    "retained_native_producer_bridge": {
+      "report": {
+        "bytes": 36483,
+        "mode": 420,
+        "path": "target/m2/stage92-checkpoint-publication-prep-01/prior-Stage91-bridge.json",
+        "sha256": "497e95a2d312f43268987ecebe14b163106a8a4c8d1ef38b0b03c63a95d0d8fa"
+      },
+      "status": "passed"
+    },
+    "stage92-candidate-independent-review-02/report.json": {
+      "report": {
+        "bytes": 8821,
+        "mode": 420,
+        "path": "target/m2/stage92-candidate-independent-review-02/report.json",
+        "sha256": "b73610d0b6f59be841d2e6104253a28cf0dbbc9e00f8eba86e872da6db28085f"
+      },
+      "status": "passed"
+    },
+    "stage92-canonical-integration-independent-review-01/report.json": {
+      "report": {
+        "bytes": 6649,
+        "mode": 420,
+        "path": "target/m2/stage92-canonical-integration-independent-review-01/report.json",
+        "sha256": "6bcc9bfbdec1fa91c46cddec266f2ee7df25671d1eab88137f7df2b8da7f945f"
+      },
+      "status": "passed"
+    },
+    "stage92-documentation-handoff-independent-review-01/report.json": {
+      "report": {
+        "bytes": 4992,
+        "mode": 420,
+        "path": "target/m2/stage92-documentation-handoff-independent-review-01/report.json",
+        "sha256": "b05619bef519f4f12051991f570c06b37fb36741f088cd97b7dec49b927d2b40"
+      },
+      "status": "passed"
+    }
+  },
+  "actual_mixed_capture": {
+    "JVM_scope": "No fresh JVM-profile acquisition. Meaningful existing mixed-JVM Python controls remain explicitly synthetic.",
+    "caller_supplied_label": "unbound-caller-supplied retained",
+    "channels": [
+      "stdout raw bytes",
+      "stderr raw bytes",
+      "exit status",
+      "generated file path set and raw bytes",
+      "unexpected managed workspace writes"
+    ],
+    "finite_selection_scope": "Target-only selected_cases list narrows the real canonical execute/check_report/offline CLI; no engine/oracle/result substitution.",
+    "fresh_Java_processes": 18,
+    "generated_public_files": 0,
+    "historical_observations": 16,
+    "native_evaluations": 18,
+    "nonempty_generated_file_capability_claim": false,
+    "observations": 18,
+    "raw_matches": 18,
+    "repetitions": 2,
+    "source": {
+      "bytes": 2175,
+      "mode": 420,
+      "path": "target/m2/stage92-canonical-mixed-01/report.json",
+      "sha256": "2f068affaa76a1551405693c42d06be0f8ab16029d5f7a5a73a610382eb362c7"
+    },
+    "unexpected_managed_writes": 0,
+    "unique_historical_originals": 8,
+    "upstream_observations": 2,
+    "upstream_originals": 1
+  },
+  "archive": {
+    "full_payload_hash_mode_order_readback": true,
+    "gzip_eof_verified": true,
+    "intended_public_path": "reports/m2/stage92-historical-admission-evidence.tar.gz",
+    "members_including_manifest": 10172,
+    "producer": {
+      "bytes": 20418749,
+      "mode": 420,
+      "path": "target/m2/stage92-checkpoint-publication-01/stage92-historical-admission-evidence.tar.gz",
+      "sha256": "5248637985847e7474a60c7098b4689aa84f00a539eb81d93feda8ba6262ea03"
+    },
+    "public": {
+      "bytes": 20418749,
+      "mode": 420,
+      "path": "reports/m2/stage92-historical-admission-evidence.tar.gz",
+      "sha256": "5248637985847e7474a60c7098b4689aa84f00a539eb81d93feda8ba6262ea03"
+    }
+  },
+  "canonical_delta": {
+    "Rust_runtime_changes": 0,
+    "existing_replacements": 5,
+    "new_paths": 14
+  },
+  "canonical_final": {
+    "bytes": 16975,
+    "mode": 420,
+    "path": "target/m2/stage92-canonical-final-03/report.json",
+    "sha256": "d8dae4851261b77b51cea6b2e03826629ea5376880aa176dbfe7cea811e9cafa"
+  },
+  "canonical_payloads": 19,
+  "case_IDs_order_preserved": 4527,
+  "compatibility_baseline": "Pkl 0.32.0",
+  "complete": true,
+  "current_unready_cases": 103,
+  "documentation": [
+    {
+      "bytes": 451304,
+      "mode": 420,
+      "path": "PLAN.md",
+      "sha256": "70fef2b3e6b846e9af2899b35f7bdb7c96d099930103ff1618979fa22da7b008"
+    },
+    {
+      "bytes": 77904,
+      "mode": 420,
+      "path": "TESTING.md",
+      "sha256": "a35672f9d7f37f473729104758a480261fab3512639f651b94af16533bf262e9"
+    },
+    {
+      "bytes": 89205,
+      "mode": 420,
+      "path": "docs/m2-language.md",
+      "sha256": "ca6ce3c23d5be984329451f11b094ca8e4510860463f0228a0c1dcc08be2f254"
+    },
+    {
+      "bytes": 367358,
+      "mode": 420,
+      "path": "reports/m2/README.md",
+      "sha256": "57c1b9b9986630f1ca7135df97434e2bb91eb3d00ac5f11b91df83df808ae2b2"
+    }
+  ],
+  "full_API_complete": false,
+  "full_m2_complete": false,
+  "git_binding": {
+    "closeout": "Root verifies exact staged and committed Git blobs, then performs a non-force push and checks the remote head. No commit or push is claimed by this descriptor before those actions occur.",
+    "method": "The containing publication commit carries the reviewed source and documentation bytes. Local executions used recorded uncommitted source snapshots; execution on the later publication commit is not claimed.",
+    "source_parent": "c5f266fa5005ac50477a23b12f335df8eb3ec632"
+  },
+  "historical_promotions": [
+    "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/collection_default_observation/lazyObservation.pkl",
+    "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/collection_default_observation/listingDefault.pkl",
+    "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/collection_default_observation/mappingDefault.pkl",
+    "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/collection_default_observation/typedListingAmend.pkl",
+    "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/nested_typed_collections/nestedTypedClassProperties.pkl",
+    "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/nested_typed_collections/nestedTypedCollectionAmends.pkl",
+    "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/nested_typed_collections/nestedTypedCollections.pkl",
+    "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/nested_typed_collections/nestedTypedValidation.pkl"
+  ],
+  "independent_publication_review": {
+    "bytes": 11336,
+    "mode": 420,
+    "path": "reports/m2/stage92-historical-admission-publication-review.json",
+    "sha256": "41bd79ab93fe481e0dbc70c43b86f9a47d3f587d3c670c01d5c15989139d4eb6"
+  },
+  "intended_public_paths": {
+    "archive": "reports/m2/stage92-historical-admission-evidence.tar.gz",
+    "checkpoint": "reports/m2/stage92-historical-admission-checkpoint.json",
+    "review": "reports/m2/stage92-historical-admission-publication-review.json"
+  },
+  "inventory": {
+    "cases": 4527,
+    "cases_by_execution": {
+      "ready": 4424,
+      "unimplemented": 71,
+      "unmapped": 32
+    },
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "kind": "stage92-historical-admission-development-checkpoint-v1",
+  "latest_completed_official_full_replay": {
+    "JVM_pass": 1,
+    "expressions": 3527,
+    "expressions_pass": 3519,
+    "originals": 888,
+    "originals_pass": 694,
+    "raw_matches": 4214,
+    "ready_replayed": 4416,
+    "scope": "Older recorded Stage86 sources; readiness and new selected results do not update or extend that aggregate.",
+    "stage": 86,
+    "strict_incomplete_conditions": 1791
+  },
+  "limits": [
+    "All original failed candidate/setup/mixed-profile attempts, old final01/docs03 and corrected final02/final03 provenance remain immutable.",
+    "cargo xtask verify compiled the xtask verifier; compatibility capture rebuilt no native evaluator/probe. No new Rust workspace/M1/platform result is claimed.",
+    "CLI stdout/stderr/exit/files and unexpected managed writes only. Actual public files/write sets are empty; no nonempty file capability, global sandbox, full CLI/API/UTF16/structuredLogger compatibility claim.",
+    "Native executable/JDK/JAR toolchain and prior committed archives remain explicit local/pinned dependencies; no original executable restoration guarantee or self-contained evaluator distribution."
+  ],
+  "original_Stage90_native_authority": {
+    "native_producer": "Original Stage90 source-bound artifact",
+    "new_evaluations": 0,
+    "raw_comparisons": 16,
+    "revalidated_with": "New canonical historical/module verifier, without changing old inputs/raw/provenance"
+  },
+  "performance_targets_met": false,
+  "producer_checkpoint_draft": {
+    "bytes": 10653,
+    "mode": 420,
+    "path": "target/m2/stage92-checkpoint-publication-01/checkpoint-draft.json",
+    "sha256": "71e1af102d4a5198afa076190aa934b236048b0f6e6509d9f1a26b107bc1c09b"
+  },
+  "publication_ready": true,
+  "ready_for_independent_publication_review": true,
+  "remaining_historical_unmapped": 32,
+  "requirements_preserved": 475,
+  "retained_Stage91_producer_bridge": {
+    "bytes": 36483,
+    "mode": 420,
+    "path": "target/m2/stage92-checkpoint-publication-prep-01/prior-Stage91-bridge.json",
+    "sha256": "497e95a2d312f43268987ecebe14b163106a8a4c8d1ef38b0b03c63a95d0d8fa"
+  },
+  "selected_three_original_CLI_contracts_unchanged": true,
+  "source_snapshot_scope": {
+    "explanation": "Every actual4780-path catalog is retained twice, including unchanged pinned input fixture .jar/.zip/.class/old oracle archive bytes; regenerated native/compiler binaries remain excluded.",
+    "payloads": 9560,
+    "pinned_fixture_binary_snapshots": 16
+  },
+  "strict_subset_context": {
+    "full_gate_exit": 1,
+    "incomplete_conditions": 5476,
+    "scope": "Intentionally finite9-case report; distinct from the earlier Stage86 full-ready-corpus1791 overlapping conditions."
+  }
+}

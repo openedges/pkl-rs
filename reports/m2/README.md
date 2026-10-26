@@ -13,9 +13,40 @@ This recorded local run reuses sealed Stage67 Java authority and the exact
 Stage86 candidate artifacts. It starts no new Java process and does not count
 as a new workspace, browser, or Node test run. Raw observations, source/build
 identities, failed attempts, and verification results remain distinguishable.
-The 111 unready cases, 1,791 overlapping full-gate obligations, and all nine M2
+The replay-boundary 111 unready cases, 1,791 overlapping full-gate obligations, and all nine M2
 workstreams remain open. Full API, platform-release, speed, and memory targets
 are not established by these counts.
+
+## Stage92 historical collection admission
+
+The [checkpoint](stage92-historical-admission-checkpoint.json) and canonical
+[registry](../../compatibility/m2-historical-collections.json)
+connects eight pinned historical modules to a separate Pkl 0.32.0 CLI-argv
+contract. All 4,527 case IDs/order and 475 requirement records remain intact;
+the current readiness inventory is **4,424 ready, 71 unimplemented, 32 unmapped**.
+The remaining historical candidates and three selected regression contracts
+retain their original states. Source, dependency, license and notice bytes are
+unchanged from the pinned rev1 input inventory; prior rev1 pass records are not
+compatibility authority.
+
+Canonical Python checks pass 76 tests in normal mode and 76 under `-O`, together
+with inventory freshness and repository verification. A real finite mixed
+canonical-runner acquisition compares eight historical originals and an upstream
+Boolean module twice: **18/18 raw comparisons match**, including 16 historical
+observations. Its case-list wrapper, actual Stage91 native compiler/dep-info/extern
+binding, full CLI stdout/stderr/exit and managed file/write records are separate
+from earlier Stage90-native evidence. The original schema6 mixed-profile defect,
+its successor, and the old 16 comparisons remain preserved; new canonical tools
+also revalidate those old raw comparisons without relabeling their producer.
+
+Receipts remain under `target/m2/stage92-canonical-integration-01`,
+`stage92-canonical-checks-01`, `stage92-canonical-mixed-01` and
+`stage92-canonical-offline-cli-check-01`; the checkpoint records their identities. Actual file
+and unexpected-write sets are empty: no nonempty generated-file capability,
+global sandbox, full CLI/API/UTF-16/Logger or new JVM/platform result is claimed.
+The latest complete whole-corpus aggregate remains Stage86 **4,214/4,416**;
+these eight admissions are not added to that older-source aggregate. Full M2,
+release and performance gates remain open.
 
 ## Stage91 PropertiesRenderer checkpoint
 
@@ -43,10 +74,10 @@ intact; Java exception metadata and nonempty generated-file support are not
 claimed. Generated payload dispositions retain exact hashes and producer/source
 records without promising restoration of the original binaries.
 
-The latest whole-corpus result remains Stage86. Historical admission and YAML
-work are separate from this publication. The 111 unready inventory cases, all
-nine M2 workstreams, full product APIs, release platforms and performance targets
-remain open.
+The latest whole-corpus result remains Stage86. Historical admission is now
+recorded separately in Stage92; YAML remains separate work. The Stage91
+checkpoint retained 111 unready inventory cases. All nine M2 workstreams, full
+product APIs, release platforms and performance targets remain open.
 
 ## Stage90 lazy collection checkpoint
 

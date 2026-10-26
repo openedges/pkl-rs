@@ -1,0 +1,32 @@
+class Field {
+  name: String
+  tag: String = "t-\(name)"
+}
+
+class Holder {
+  fields: Listing<Field>
+}
+
+local fields: Listing<Field> = new { new { name = "a" } }
+local amended = (fields) { new { name = "c" } }
+local holder = new Holder { fields { new { name = "a" } } }
+local nullable: Listing<Field?> = new { new { name = "a" } }
+local function count(l: Listing<Field>) = l.length
+
+more: Listing<Field> = (fields) { new { name = "c" } }
+asList: List<Field> = amended.toList()
+kinds = amended.toList().map((f) -> f.getClass().simpleName)
+tags = amended.toList().map((f) -> f.tag)
+lastKind = amended.last.getClass().simpleName
+generatorKinds = new Listing { for (f in amended) { f.getClass().simpleName } }
+whenKinds = (fields) { when (true) { new { name = "w" } } }.toList().map((f) -> f.getClass().simpleName)
+forKinds = (fields) { for (n in List("x", "y")) { new { name = n } } }.toList().map((f) -> f.getClass().simpleName)
+nestedKinds = (holder) { fields { new { name = "c" } } }.fields.toList().map((f) -> f.getClass().simpleName)
+nullableKinds = (nullable) { new { name = "c" } }.toList().map((f) -> f.getClass().simpleName)
+isListing = amended is Listing<Field>
+isList = amended.toList() is List<Field>
+lastIsField = amended.last is Field
+parameter = count(amended)
+cast = (amended as Listing<Field>).toList().map((f) -> f.name)
+overriddenDefault = (fields) { default { name = "dflt" }; new {} }.toList().map((f) -> "\(f.getClass().simpleName)-\(f.name)")
+explicitClassKept = (fields) { new { name = "c" }; new Field { name = "d" } }.toList().map((f) -> f.name)

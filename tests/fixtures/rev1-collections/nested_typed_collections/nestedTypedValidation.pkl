@@ -1,0 +1,15 @@
+import "pkl:test"
+
+local mapOfMaps: Mapping<String, Mapping<String, String>> = new { ["outer"] { ["inner"] = 1 } }
+local listOfLists: Listing<Listing<String>> = new { new { 1 } }
+local mapOfLists: Mapping<String, Listing<String>> = new { ["k"] { 1 } }
+local mapOfListsExpr: Mapping<String, Listing<String>> = new { ["k"] = new { 1 } }
+local listOfMaps: Listing<Mapping<String, String>> = new { new { ["k"] = 1 } }
+
+mapOfMapsEntry = test.catch(() -> mapOfMaps["outer"]["inner"])
+listOfListsElement = test.catch(() -> listOfLists[0][0])
+mapOfListsElement = test.catch(() -> mapOfLists["k"][0])
+mapOfListsToList = test.catch(() -> mapOfLists["k"].toList())
+mapOfListsExprElement = test.catch(() -> mapOfListsExpr["k"][0])
+listOfMapsEntry = test.catch(() -> listOfMaps[0]["k"])
+lengthsStayLazy = List(mapOfMaps["outer"].length, listOfLists[0].length, mapOfLists["k"].length)

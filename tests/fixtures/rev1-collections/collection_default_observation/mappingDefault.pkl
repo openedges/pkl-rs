@@ -1,0 +1,23 @@
+class Field {
+  name: String
+}
+
+local m = new Mapping { default { x = 1 }; ["a"] { y = 2 }; ["b"] { y = 3 } }
+local tm: Mapping<String, Field> = new { ["a"] { name = "a" } }
+local amended = (m) { ["c"] { y = 4 } }
+local typedAmended = (tm) { ["c"] { name = "c" } }
+
+subscript = amended["c"].x
+getOrNull = amended.getOrNull("c")?.x
+generator = new Listing { for (k, v in amended) { "\(k)=\(v.x)" } }
+valueGenerator = new Listing { for (v in amended) { v.x } }
+fold = amended.fold(0, (acc, k, v) -> acc + v.x)
+every = amended.every((k, v) -> v.x == 1)
+any = amended.any((k, v) -> v.y == 4 && v.x == 1)
+toMap = amended.toMap().values.map((v) -> v.x)
+typedSubscript = typedAmended["c"].getClass().simpleName
+typedGetOrNull = typedAmended.getOrNull("c")?.getClass()?.simpleName
+typedGenerator = new Listing { for (k, v in typedAmended) { v.getClass().simpleName } }
+typedFold = typedAmended.fold(List(), (acc, k, v) -> acc.add(v.getClass().simpleName))
+typedToMap = typedAmended.toMap().values.map((v) -> v.getClass().simpleName)
+typedContainsValue = typedAmended.containsValue(new Field { name = "c" })

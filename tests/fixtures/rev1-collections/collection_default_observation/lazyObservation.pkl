@@ -1,0 +1,14 @@
+local l = new Listing { default { x = 1 }; new { y = 2 }; throw("boom"); new { y = 3 } }
+local m = new Mapping { default { x = 1 }; ["a"] { y = 2 }; ["b"] = throw("boom") }
+
+first = l.first.x
+last = l.last.x
+getOrNull = l.getOrNull(0)?.x
+any = l.any((e) -> e.x == 1)
+every = l.every((e) -> e.x == 2)
+length = l.length
+subscript = l[2].x
+mappingSubscript = m["a"].x
+mappingGetOrNull = m.getOrNull("a")?.x
+mappingAny = m.any((k, v) -> v.x == 1)
+mappingLength = m.length

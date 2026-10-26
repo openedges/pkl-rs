@@ -12,6 +12,7 @@ import sys
 
 import m2_generate
 import m2_module_eval
+import m2_historical
 import m2_execution_profiles
 import m2_jvm_classpath
 import m2_source_inputs
@@ -154,6 +155,7 @@ def build_manifest(root: Path = ROOT) -> dict:
     inventory = load(Path('compatibility/inventory.json'), root)
     corpus = load(Path('compatibility/corpus.json'), root)
     rev1 = load(Path('compatibility/rev1-inventory.json'), root)
+    historical = m2_historical.registry_cases(root)
     selected = load(SELECTION, root)['cases']
     module_cases = m2_module_eval.registry_cases(root, corpus, load(MODULE_ADAPTERS, root))
     profiles = m2_execution_profiles.registry_cases(root, corpus)
@@ -194,9 +196,7 @@ def build_manifest(root: Path = ROOT) -> dict:
     for row in rev1['files']:
         if row['kind'] != 'regression-candidate':
             continue
-        cases.append(dict(id='rev1-candidate:' + row['path'], required=True, adapter=None, requirements=[],
-                          source=dict(repository=rev1['repository'], revision=rev1['revision'], **row),
-                          execution=dict(state='unmapped', reason='Historical candidate awaits semantic selection/import and fresh Java execution; historical passes are not evidence.')))
+        cases.append(m2_historical.manifest_case(row, historical.get('rev1-candidate:' + row['path'])))
     for row in load(Path('compatibility/regressions.json'), root)['cases']:
         cases.append(dict(id='m2:' + row['id'], required=True, adapter=None, input=row['source']['path'],
                           input_sha256=row['source']['sha256'], requirements=[],
@@ -225,6 +225,7 @@ def validate_manifest(manifest: dict, root: Path = ROOT):
     registered = m2_module_eval.registry_cases(root, corpus, load(MODULE_ADAPTERS, root))
     profiles = m2_execution_profiles.registry_cases(root, corpus)
     originals = {row['id']: row for row in corpus['cases']}
+    m2_historical.validate_manifest(root, manifest)
     requirement_ids = {row['id'] for row in manifest['requirements']}
     case_ids = {row['id'] for row in manifest['cases']}
     if not set(registered) <= case_ids:
@@ -233,6 +234,8 @@ def validate_manifest(manifest: dict, root: Path = ROOT):
         if not set(row['tests']['case_ids']) <= case_ids:
             raise ValueError('requirement maps missing case: ' + row['id'])
     for row in manifest['cases']:
+        if row.get('adapter') == m2_historical.ADAPTER and not row['id'].startswith('rev1-candidate:'):
+            raise ValueError('historical adapter on unknown case')
         if row['id'] in profiles:
             if (row.get('adapter') != profiles[row['id']]['adapter']
                     or row.get('execution_profile') != profiles[row['id']]

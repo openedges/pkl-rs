@@ -65,7 +65,7 @@ class RegistryTests(unittest.TestCase):
         selected = m2_language.selected_cases(manifest)
         self.assertEqual(len(selected), manifest['counts']['cases_by_execution']['ready'])
         self.assertEqual(manifest['counts']['cases_by_execution']['unimplemented'], 68 + 3)
-        self.assertEqual(manifest['counts']['cases_by_execution']['unmapped'], 40)
+        self.assertEqual(manifest['counts']['cases_by_execution']['unmapped'], 32)
         # The explicit profile still requires actual successful execution.
         self.assertIn('required case incomplete: ' + identifier,
                       m2_manifest.full_gate_failures(manifest, []))

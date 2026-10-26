@@ -1,0 +1,33 @@
+class Field { name: String }
+
+class Box {
+  rows: Listing<Listing<Field>>
+  index: Mapping<String, Listing<Field>>
+  maps: Listing<Mapping<String, Field>>
+  nested: Mapping<String, Mapping<String, Field>>
+  withDefault: Listing<Listing<Field>> = new { new { new { name = "d" } } }
+}
+
+local inner: Listing<Field> = new { new { name = "i" } }
+
+bodyForm: Box = new {
+  rows { new { new { name = "a" } } }
+  index { ["k"] { new { name = "b" } } }
+  maps { new { ["k"] { name = "c" } } }
+  nested { ["o"] { ["i"] { name = "e" } } }
+}
+assignmentForm = new Box {
+  rows = new { new { new { name = "a" } } }
+  index = new { ["k"] = new { new { name = "b" } } }
+  nested = new { ["o"] { ["i"] = new { name = "e" } } }
+}
+typedValues = new Box {
+  rows { inner; new Listing<Field> { new { name = "t" } } }
+}
+amendedBox = (bodyForm) {
+  rows { new { new { name = "z" } } }
+  nested { ["p"] { ["j"] { name = "y" } } }
+}
+kinds = amendedBox.rows.toList().map((l) -> l.toList().map((f) -> f.getClass().simpleName))
+nestedKinds = amendedBox.nested["p"].toMap().values.map((f) -> f.getClass().simpleName)
+defaultKinds = bodyForm.withDefault[0][0].getClass().simpleName

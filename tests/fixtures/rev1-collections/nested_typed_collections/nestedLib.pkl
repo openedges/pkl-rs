@@ -1,0 +1,4 @@
+module nestedLib
+class Item { id: Int; label: String = "item-\(id)" }
+typealias Grid = Listing<Listing<Item>>
+grid: Grid = new { new { new { id = 1 } } }

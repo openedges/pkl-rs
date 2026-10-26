@@ -17,12 +17,57 @@ contracts were verified. Earlier failed or interrupted acquisition attempts
 remain separate evidence. This checkpoint adds full-corpus observations; it
 does not claim another Rust workspace or platform test run.
 
-The inventory remains 4,527 cases: 4,416 ready, 71 unimplemented, and 40 unmapped.
+At that replay boundary, the inventory contained 4,527 cases: 4,416 ready,
+71 unimplemented, and 40 unmapped. Stage92 admission below updates readiness,
+not the completed replay result.
 The strict full gate still has 1,791 overlapping unmet conditions: 475
 implementation obligations, 475 test-mapping obligations, and 841 required-case
 obligations. Passing an execution does not close a missing requirement mapping.
 All nine M2 workstreams, complete APIs, release platforms, and performance and
 memory targets remain open. See the [full replay checkpoint](../reports/m2/stage86-full-replay-checkpoint.json).
+
+## Stage92 historical collection admission
+
+The [Stage92 historical-admission checkpoint](../reports/m2/stage92-historical-admission-checkpoint.json)
+records eight unchanged historical collection modules with an explicit
+[`historical-collections-module-eval` registry](../compatibility/m2-historical-collections.json).
+Their original case IDs remain in the 4,527-case inventory, in the same order;
+all 475 requirement records remain unchanged. The current execution inventory
+is **4,424 ready, 71 unimplemented and 32 unmapped**. Readiness means an executable
+adapter contract, rather than completion of a language feature or requirement.
+The other 32 historical candidates and the three separately selected regression
+CLI contracts retain their previous states and commands.
+
+The fixtures, dependency module, license and notice retain their pinned rev1
+bytes. The new historical profile explicitly uses Pkl 0.32.0 `eval --no-cache
+--no-project --settings pkl:settings`; it does not replace an older invocation
+with different flags. The adapter records raw stdout, stderr, exit status,
+generated-file paths and bytes, and unexpected managed-workspace writes.
+
+Canonical Python checks pass 76 tests in both normal and optimized modes;
+inventory freshness and repository verification pass. A real finite mixed
+acquisition runs all eight historical modules and one unchanged upstream Boolean
+module twice through canonical `execute` and `check_report`: **18/18 comparisons
+match**, including 16 historical observations. A target-only selection wrapper
+narrows the case list without changing engines, oracle data, profile guards or
+results. Offline CLI subset checks pass, while the strict full gate stays failed.
+The retained native probe is bound to its actual Stage91 workspace compiler,
+dep-info, runtime and extern inputs; caller-supplied labels in the acquisition
+are preserved. No new native evaluator/probe build or JVM-profile acquisition
+is claimed. `cargo xtask verify` compiled the xtask verifier.
+
+The earlier 16 Stage90-native comparisons also pass a read-only check through
+the new canonical adapter, with their original provenance intact. The original
+schema6 mixed-profile verification defect and its corrected successor remain
+separate history. Actual generated-file and unexpected-write sets are empty;
+nonempty-file capability, a global filesystem sandbox, complete CLI behavior,
+and API/UTF-16/structured Logger compatibility are not established here.
+
+Local receipts are under `target/m2/stage92-canonical-integration-01`,
+`stage92-canonical-checks-01`, `stage92-canonical-mixed-01` and
+`stage92-canonical-offline-cli-check-01`. This admission does not change the
+latest completed Stage86 **4,214/4,416** whole-corpus replay or establish full M2,
+release-platform or performance completion.
 
 ## Stage91 PropertiesRenderer checkpoint
 
@@ -52,9 +97,10 @@ match two isolated native CLI-argv probe captures and two API byte-vector runs.
 Java exception metadata, complete product CLI behavior and nonempty generated
 files remain outside those comparisons.
 
-The inventory still has 4,527 cases, with 4,416 ready, 71 unimplemented and 40
-unmapped. The full-corpus aggregate above has not been rerun on Stage91 sources.
-Historical-case admission and YAML work remain separate, unfinished changes;
+At the Stage91 checkpoint the inventory had 4,527 cases, with 4,416 ready,
+71 unimplemented and 40 unmapped. The full-corpus aggregate above was not rerun
+on Stage91 sources. Historical admission is recorded separately in Stage92;
+YAML remains separate work, and
 all nine M2 workstreams and the release and performance requirements stay open.
 
 ## Stage90 lazy collection checkpoint

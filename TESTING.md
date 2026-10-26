@@ -21,6 +21,30 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+The [Stage92 historical-admission checkpoint](reports/m2/stage92-historical-admission-checkpoint.json)
+changes tooling, registry and fixtures only.
+It preserves all 4,527 case IDs and 475 requirement records while connecting
+eight historical originals to an explicit Pkl 0.32.0 CLI-argv adapter. Inventory
+readiness is now 4,424 ready, 71 unimplemented and 32 unmapped; a ready case is
+not an automatic compatibility pass. The other historical candidates and three
+selected regression CLI contracts remain unchanged.
+
+Relevant canonical Python tests pass **76 normal and 76 optimized** checks.
+`tools/m2_manifest.py --check`, `tools/m2_module_eval.py --check` and
+`cargo xtask verify` pass. A finite mixed capture invokes the real canonical
+runner/checker for eight historical originals and one upstream module twice:
+18 comparisons match raw stdout, stderr, exit and managed file/write channels.
+The target-only case selector and the actual Stage91 native producer/.d/extern
+binding are recorded separately; no fresh native evaluator/probe build is
+claimed for capture. `cargo xtask verify` compiled the xtask verifier. Offline CLI
+subset verification passes and full-M2 verification remains failed. The prior
+Stage90-native 16-comparison evidence is revalidated without changing its source
+provenance. Empty actual file/write sets do not establish nonempty generated-file
+support or a global filesystem sandbox. No new JVM-profile, API, release-platform
+or whole-corpus result is claimed. Local evidence is in
+`target/m2/stage92-canonical-{integration,checks,mixed}-01` and
+`target/m2/stage92-canonical-offline-cli-check-01`.
+
 The [Stage91 PropertiesRenderer checkpoint](reports/m2/stage91-properties-renderer-checkpoint.json)
 records passing formatting, repository verification, Clippy and Wasm compilation
 on macOS arm64 with Rust 1.98.1. Complete default workspace test coverage was

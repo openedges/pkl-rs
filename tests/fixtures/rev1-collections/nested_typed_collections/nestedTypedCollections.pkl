@@ -1,0 +1,37 @@
+import "nestedLib.pkl" as lib
+
+class Field { name: String; tag: String = "t-\(name)" }
+typealias Row = Listing<Field>
+typealias Table = Listing<Row>
+
+class Box {
+  rows: Listing<Listing<Field>>
+  index: Mapping<String, Listing<Field>>
+}
+
+nullableInner: Listing<Listing<Field>?> = new { new { new { name = "a" } } }
+constrainedInner: Listing<Listing<Field>(!isEmpty)> = new { new { new { name = "a" } } }
+threeLevels: Listing<Listing<Listing<Field>>> = new { new { new { new { name = "a" } } } }
+mapOfMaps: Mapping<String, Mapping<String, Field>> = new { ["o"] { ["i"] { name = "a" } } }
+mapOfListsExpr: Mapping<String, Listing<Field>> = new { ["k"] = new { new { name = "a" } } }
+aliased: Table = new { new { new { name = "a" } } }
+box: Box = new { rows { new { new { name = "a" } } }; index { ["k"] { new { name = "b" } } } }
+imported: Listing<Listing<lib.Item>> = new { new { new { id = 7 } } }
+importedAlias: lib.Grid = new { new { new { id = 8 } } }
+function make(): Listing<Listing<Field>> = new { new { new { name = "f" } } }
+
+nullableInnerTag = nullableInner[0][0].tag
+constrainedInnerKinds = constrainedInner.toList().map((l) -> l.toList().map((f) -> f.getClass().simpleName))
+threeLevelsTag = threeLevels[0][0][0].tag
+mapOfMapsTag = mapOfMaps["o"]["i"].tag
+mapOfListsExprTag = mapOfListsExpr["k"][0].tag
+aliasedTag = aliased[0][0].tag
+boxTags = box.rows[0][0].tag + box.index["k"][0].tag
+importedLabel = imported[0][0].label
+importedAliasLabel = importedAlias[0][0].label
+functionResultTag = make()[0][0].tag
+threeLevelsAmendedTag = (threeLevels) { new { new { new { name = "z" } } } }[1][0][0].tag
+boxAmendedTags = (box) { rows { new { new { name = "c" } } } }.rows.toList().map((l) -> l.toList().map((f) -> f.tag))
+importedGridAmendedLabels = (lib.grid) { new { new { id = 2 } } }.toList().map((l) -> l.toList().map((i) -> i.label))
+explicitNewTag = new Listing<Listing<Field>> { new { new { name = "n" } } }[0][0].tag
+mapOfMapsAmendedTag = (mapOfMaps) { ["p"] { ["q"] { name = "c" } } }["p"]["q"].tag

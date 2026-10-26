@@ -1,0 +1,850 @@
+{
+  "adapter": "historical-collections-module-eval",
+  "artifact_policy": "Common module_eval_probe binding, with explicit recorded-build or honest caller-supplied provenance. Reused Stage90 artifact source authority is recorded separately; no fresh compilation is inferred.",
+  "baseline": {
+    "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "version": "0.32.0"
+  },
+  "cases": [
+    {
+      "contract": {
+        "channels": [
+          "stdout",
+          "stderr",
+          "exit_code",
+          "files",
+          "workspace_changes"
+        ],
+        "command": [
+          "eval",
+          "--no-cache",
+          "--no-project",
+          "--settings",
+          "pkl:settings",
+          "tests/fixtures/rev1-collections/collection_default_observation/lazyObservation.pkl"
+        ],
+        "contract_origin": "Explicit new pinned Java0.32 historical profile; not the three selected regression CLI contracts and not a rev1 Rust expectation.",
+        "cwd": ".",
+        "environment": {},
+        "execution": {
+          "reason": null,
+          "status": "ready"
+        },
+        "expected_exit": [
+          0
+        ],
+        "id": "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/collection_default_observation/lazyObservation.pkl",
+        "output": null,
+        "resources": [
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/listingDefault.pkl",
+            "sha256": "39599a03f77eefe792760f67899d5e25757a8abfcb2cd25e302d2581f4f0e5fa"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/typedListingAmend.pkl",
+            "sha256": "0e7860abf7ba305bf25a4a4f758c6be96c32c330edb2f780fc7b40c0df1f625c"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/mappingDefault.pkl",
+            "sha256": "1df4fd9e7dce8d14b4b92484361fc8d02566bf9619bc2c6fe9ebacd93747d05e"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/lazyObservation.pkl",
+            "sha256": "45796cbdf9bd4e52dc768d3747d7f8bcdbc587315d9f4abbdfa8494a6bce552c"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollections.pkl",
+            "sha256": "50a42b286b0da6b5638a69c3ed4034db03aa4deac0cbb04cfa547199949e9d75"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollectionAmends.pkl",
+            "sha256": "0e0caddeb632540946a8c96eee03f12694543b0b4f4400e3eb7a582afacb6b84"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedClassProperties.pkl",
+            "sha256": "499801fdfc26d5f5f00492c885a24b17b4ea1186d3916fd9512866c065ac6e72"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedValidation.pkl",
+            "sha256": "8627347ab9c84fcfb0a90e4e23c42f5f5a7806aff2ee9967af9893c3099b31a6"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedLib.pkl",
+            "sha256": "44fd3ee11b1eb761805057b6898deb8d43a41ed83ba9e7342d7ad601a4b5ee9b"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/LICENSE",
+            "sha256": "87f7f506593ec1c2b6a5b34bb449cd37f8ec7f040479f37a6697f6750ecc6296"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/NOTICE",
+            "sha256": "70ad1559eebf49c6ffea8dba7ecb646289506f669dc52fbdcd01f0f13afd27ee"
+          }
+        ],
+        "source": {
+          "path": "tests/fixtures/rev1-collections/collection_default_observation/lazyObservation.pkl",
+          "repository": "pkl-rs",
+          "sha256": "45796cbdf9bd4e52dc768d3747d7f8bcdbc587315d9f4abbdfa8494a6bce552c"
+        },
+        "suite": "historical-collections"
+      },
+      "contract_sha256": "2fac672553ba289ffbe4337aeaad4e5a98945658a42e42b0c20be087476a02f4",
+      "id": "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/collection_default_observation/lazyObservation.pkl",
+      "input": "tests/fixtures/rev1-collections/collection_default_observation/lazyObservation.pkl",
+      "input_sha256": "45796cbdf9bd4e52dc768d3747d7f8bcdbc587315d9f4abbdfa8494a6bce552c"
+    },
+    {
+      "contract": {
+        "channels": [
+          "stdout",
+          "stderr",
+          "exit_code",
+          "files",
+          "workspace_changes"
+        ],
+        "command": [
+          "eval",
+          "--no-cache",
+          "--no-project",
+          "--settings",
+          "pkl:settings",
+          "tests/fixtures/rev1-collections/collection_default_observation/listingDefault.pkl"
+        ],
+        "contract_origin": "Explicit new pinned Java0.32 historical profile; not the three selected regression CLI contracts and not a rev1 Rust expectation.",
+        "cwd": ".",
+        "environment": {},
+        "execution": {
+          "reason": null,
+          "status": "ready"
+        },
+        "expected_exit": [
+          0
+        ],
+        "id": "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/collection_default_observation/listingDefault.pkl",
+        "output": null,
+        "resources": [
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/listingDefault.pkl",
+            "sha256": "39599a03f77eefe792760f67899d5e25757a8abfcb2cd25e302d2581f4f0e5fa"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/typedListingAmend.pkl",
+            "sha256": "0e7860abf7ba305bf25a4a4f758c6be96c32c330edb2f780fc7b40c0df1f625c"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/mappingDefault.pkl",
+            "sha256": "1df4fd9e7dce8d14b4b92484361fc8d02566bf9619bc2c6fe9ebacd93747d05e"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/lazyObservation.pkl",
+            "sha256": "45796cbdf9bd4e52dc768d3747d7f8bcdbc587315d9f4abbdfa8494a6bce552c"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollections.pkl",
+            "sha256": "50a42b286b0da6b5638a69c3ed4034db03aa4deac0cbb04cfa547199949e9d75"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollectionAmends.pkl",
+            "sha256": "0e0caddeb632540946a8c96eee03f12694543b0b4f4400e3eb7a582afacb6b84"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedClassProperties.pkl",
+            "sha256": "499801fdfc26d5f5f00492c885a24b17b4ea1186d3916fd9512866c065ac6e72"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedValidation.pkl",
+            "sha256": "8627347ab9c84fcfb0a90e4e23c42f5f5a7806aff2ee9967af9893c3099b31a6"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedLib.pkl",
+            "sha256": "44fd3ee11b1eb761805057b6898deb8d43a41ed83ba9e7342d7ad601a4b5ee9b"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/LICENSE",
+            "sha256": "87f7f506593ec1c2b6a5b34bb449cd37f8ec7f040479f37a6697f6750ecc6296"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/NOTICE",
+            "sha256": "70ad1559eebf49c6ffea8dba7ecb646289506f669dc52fbdcd01f0f13afd27ee"
+          }
+        ],
+        "source": {
+          "path": "tests/fixtures/rev1-collections/collection_default_observation/listingDefault.pkl",
+          "repository": "pkl-rs",
+          "sha256": "39599a03f77eefe792760f67899d5e25757a8abfcb2cd25e302d2581f4f0e5fa"
+        },
+        "suite": "historical-collections"
+      },
+      "contract_sha256": "8bc316807b4a99048779b3de668a6a8402596cd03577de8f8c098b911cc1ab95",
+      "id": "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/collection_default_observation/listingDefault.pkl",
+      "input": "tests/fixtures/rev1-collections/collection_default_observation/listingDefault.pkl",
+      "input_sha256": "39599a03f77eefe792760f67899d5e25757a8abfcb2cd25e302d2581f4f0e5fa"
+    },
+    {
+      "contract": {
+        "channels": [
+          "stdout",
+          "stderr",
+          "exit_code",
+          "files",
+          "workspace_changes"
+        ],
+        "command": [
+          "eval",
+          "--no-cache",
+          "--no-project",
+          "--settings",
+          "pkl:settings",
+          "tests/fixtures/rev1-collections/collection_default_observation/mappingDefault.pkl"
+        ],
+        "contract_origin": "Explicit new pinned Java0.32 historical profile; not the three selected regression CLI contracts and not a rev1 Rust expectation.",
+        "cwd": ".",
+        "environment": {},
+        "execution": {
+          "reason": null,
+          "status": "ready"
+        },
+        "expected_exit": [
+          0
+        ],
+        "id": "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/collection_default_observation/mappingDefault.pkl",
+        "output": null,
+        "resources": [
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/listingDefault.pkl",
+            "sha256": "39599a03f77eefe792760f67899d5e25757a8abfcb2cd25e302d2581f4f0e5fa"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/typedListingAmend.pkl",
+            "sha256": "0e7860abf7ba305bf25a4a4f758c6be96c32c330edb2f780fc7b40c0df1f625c"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/mappingDefault.pkl",
+            "sha256": "1df4fd9e7dce8d14b4b92484361fc8d02566bf9619bc2c6fe9ebacd93747d05e"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/lazyObservation.pkl",
+            "sha256": "45796cbdf9bd4e52dc768d3747d7f8bcdbc587315d9f4abbdfa8494a6bce552c"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollections.pkl",
+            "sha256": "50a42b286b0da6b5638a69c3ed4034db03aa4deac0cbb04cfa547199949e9d75"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollectionAmends.pkl",
+            "sha256": "0e0caddeb632540946a8c96eee03f12694543b0b4f4400e3eb7a582afacb6b84"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedClassProperties.pkl",
+            "sha256": "499801fdfc26d5f5f00492c885a24b17b4ea1186d3916fd9512866c065ac6e72"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedValidation.pkl",
+            "sha256": "8627347ab9c84fcfb0a90e4e23c42f5f5a7806aff2ee9967af9893c3099b31a6"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedLib.pkl",
+            "sha256": "44fd3ee11b1eb761805057b6898deb8d43a41ed83ba9e7342d7ad601a4b5ee9b"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/LICENSE",
+            "sha256": "87f7f506593ec1c2b6a5b34bb449cd37f8ec7f040479f37a6697f6750ecc6296"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/NOTICE",
+            "sha256": "70ad1559eebf49c6ffea8dba7ecb646289506f669dc52fbdcd01f0f13afd27ee"
+          }
+        ],
+        "source": {
+          "path": "tests/fixtures/rev1-collections/collection_default_observation/mappingDefault.pkl",
+          "repository": "pkl-rs",
+          "sha256": "1df4fd9e7dce8d14b4b92484361fc8d02566bf9619bc2c6fe9ebacd93747d05e"
+        },
+        "suite": "historical-collections"
+      },
+      "contract_sha256": "2933de85ac534809df9229178cfd7bacb0045104df700850b95b3022b13e3aee",
+      "id": "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/collection_default_observation/mappingDefault.pkl",
+      "input": "tests/fixtures/rev1-collections/collection_default_observation/mappingDefault.pkl",
+      "input_sha256": "1df4fd9e7dce8d14b4b92484361fc8d02566bf9619bc2c6fe9ebacd93747d05e"
+    },
+    {
+      "contract": {
+        "channels": [
+          "stdout",
+          "stderr",
+          "exit_code",
+          "files",
+          "workspace_changes"
+        ],
+        "command": [
+          "eval",
+          "--no-cache",
+          "--no-project",
+          "--settings",
+          "pkl:settings",
+          "tests/fixtures/rev1-collections/collection_default_observation/typedListingAmend.pkl"
+        ],
+        "contract_origin": "Explicit new pinned Java0.32 historical profile; not the three selected regression CLI contracts and not a rev1 Rust expectation.",
+        "cwd": ".",
+        "environment": {},
+        "execution": {
+          "reason": null,
+          "status": "ready"
+        },
+        "expected_exit": [
+          0
+        ],
+        "id": "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/collection_default_observation/typedListingAmend.pkl",
+        "output": null,
+        "resources": [
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/listingDefault.pkl",
+            "sha256": "39599a03f77eefe792760f67899d5e25757a8abfcb2cd25e302d2581f4f0e5fa"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/typedListingAmend.pkl",
+            "sha256": "0e7860abf7ba305bf25a4a4f758c6be96c32c330edb2f780fc7b40c0df1f625c"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/mappingDefault.pkl",
+            "sha256": "1df4fd9e7dce8d14b4b92484361fc8d02566bf9619bc2c6fe9ebacd93747d05e"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/lazyObservation.pkl",
+            "sha256": "45796cbdf9bd4e52dc768d3747d7f8bcdbc587315d9f4abbdfa8494a6bce552c"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollections.pkl",
+            "sha256": "50a42b286b0da6b5638a69c3ed4034db03aa4deac0cbb04cfa547199949e9d75"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollectionAmends.pkl",
+            "sha256": "0e0caddeb632540946a8c96eee03f12694543b0b4f4400e3eb7a582afacb6b84"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedClassProperties.pkl",
+            "sha256": "499801fdfc26d5f5f00492c885a24b17b4ea1186d3916fd9512866c065ac6e72"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedValidation.pkl",
+            "sha256": "8627347ab9c84fcfb0a90e4e23c42f5f5a7806aff2ee9967af9893c3099b31a6"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedLib.pkl",
+            "sha256": "44fd3ee11b1eb761805057b6898deb8d43a41ed83ba9e7342d7ad601a4b5ee9b"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/LICENSE",
+            "sha256": "87f7f506593ec1c2b6a5b34bb449cd37f8ec7f040479f37a6697f6750ecc6296"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/NOTICE",
+            "sha256": "70ad1559eebf49c6ffea8dba7ecb646289506f669dc52fbdcd01f0f13afd27ee"
+          }
+        ],
+        "source": {
+          "path": "tests/fixtures/rev1-collections/collection_default_observation/typedListingAmend.pkl",
+          "repository": "pkl-rs",
+          "sha256": "0e7860abf7ba305bf25a4a4f758c6be96c32c330edb2f780fc7b40c0df1f625c"
+        },
+        "suite": "historical-collections"
+      },
+      "contract_sha256": "1ba51820bb3bd3546b28d03a208f16e66dbba05f621d7dfcdaf686fdef467680",
+      "id": "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/collection_default_observation/typedListingAmend.pkl",
+      "input": "tests/fixtures/rev1-collections/collection_default_observation/typedListingAmend.pkl",
+      "input_sha256": "0e7860abf7ba305bf25a4a4f758c6be96c32c330edb2f780fc7b40c0df1f625c"
+    },
+    {
+      "contract": {
+        "channels": [
+          "stdout",
+          "stderr",
+          "exit_code",
+          "files",
+          "workspace_changes"
+        ],
+        "command": [
+          "eval",
+          "--no-cache",
+          "--no-project",
+          "--settings",
+          "pkl:settings",
+          "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedClassProperties.pkl"
+        ],
+        "contract_origin": "Explicit new pinned Java0.32 historical profile; not the three selected regression CLI contracts and not a rev1 Rust expectation.",
+        "cwd": ".",
+        "environment": {},
+        "execution": {
+          "reason": null,
+          "status": "ready"
+        },
+        "expected_exit": [
+          0
+        ],
+        "id": "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/nested_typed_collections/nestedTypedClassProperties.pkl",
+        "output": null,
+        "resources": [
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/listingDefault.pkl",
+            "sha256": "39599a03f77eefe792760f67899d5e25757a8abfcb2cd25e302d2581f4f0e5fa"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/typedListingAmend.pkl",
+            "sha256": "0e7860abf7ba305bf25a4a4f758c6be96c32c330edb2f780fc7b40c0df1f625c"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/mappingDefault.pkl",
+            "sha256": "1df4fd9e7dce8d14b4b92484361fc8d02566bf9619bc2c6fe9ebacd93747d05e"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/lazyObservation.pkl",
+            "sha256": "45796cbdf9bd4e52dc768d3747d7f8bcdbc587315d9f4abbdfa8494a6bce552c"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollections.pkl",
+            "sha256": "50a42b286b0da6b5638a69c3ed4034db03aa4deac0cbb04cfa547199949e9d75"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollectionAmends.pkl",
+            "sha256": "0e0caddeb632540946a8c96eee03f12694543b0b4f4400e3eb7a582afacb6b84"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedClassProperties.pkl",
+            "sha256": "499801fdfc26d5f5f00492c885a24b17b4ea1186d3916fd9512866c065ac6e72"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedValidation.pkl",
+            "sha256": "8627347ab9c84fcfb0a90e4e23c42f5f5a7806aff2ee9967af9893c3099b31a6"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedLib.pkl",
+            "sha256": "44fd3ee11b1eb761805057b6898deb8d43a41ed83ba9e7342d7ad601a4b5ee9b"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/LICENSE",
+            "sha256": "87f7f506593ec1c2b6a5b34bb449cd37f8ec7f040479f37a6697f6750ecc6296"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/NOTICE",
+            "sha256": "70ad1559eebf49c6ffea8dba7ecb646289506f669dc52fbdcd01f0f13afd27ee"
+          }
+        ],
+        "source": {
+          "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedClassProperties.pkl",
+          "repository": "pkl-rs",
+          "sha256": "499801fdfc26d5f5f00492c885a24b17b4ea1186d3916fd9512866c065ac6e72"
+        },
+        "suite": "historical-collections"
+      },
+      "contract_sha256": "8d545935636f452f001ae8f739fad98fba9e1935c1abee9ad4944c8adcd74397",
+      "id": "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/nested_typed_collections/nestedTypedClassProperties.pkl",
+      "input": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedClassProperties.pkl",
+      "input_sha256": "499801fdfc26d5f5f00492c885a24b17b4ea1186d3916fd9512866c065ac6e72"
+    },
+    {
+      "contract": {
+        "channels": [
+          "stdout",
+          "stderr",
+          "exit_code",
+          "files",
+          "workspace_changes"
+        ],
+        "command": [
+          "eval",
+          "--no-cache",
+          "--no-project",
+          "--settings",
+          "pkl:settings",
+          "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollectionAmends.pkl"
+        ],
+        "contract_origin": "Explicit new pinned Java0.32 historical profile; not the three selected regression CLI contracts and not a rev1 Rust expectation.",
+        "cwd": ".",
+        "environment": {},
+        "execution": {
+          "reason": null,
+          "status": "ready"
+        },
+        "expected_exit": [
+          0
+        ],
+        "id": "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/nested_typed_collections/nestedTypedCollectionAmends.pkl",
+        "output": null,
+        "resources": [
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/listingDefault.pkl",
+            "sha256": "39599a03f77eefe792760f67899d5e25757a8abfcb2cd25e302d2581f4f0e5fa"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/typedListingAmend.pkl",
+            "sha256": "0e7860abf7ba305bf25a4a4f758c6be96c32c330edb2f780fc7b40c0df1f625c"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/mappingDefault.pkl",
+            "sha256": "1df4fd9e7dce8d14b4b92484361fc8d02566bf9619bc2c6fe9ebacd93747d05e"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/lazyObservation.pkl",
+            "sha256": "45796cbdf9bd4e52dc768d3747d7f8bcdbc587315d9f4abbdfa8494a6bce552c"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollections.pkl",
+            "sha256": "50a42b286b0da6b5638a69c3ed4034db03aa4deac0cbb04cfa547199949e9d75"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollectionAmends.pkl",
+            "sha256": "0e0caddeb632540946a8c96eee03f12694543b0b4f4400e3eb7a582afacb6b84"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedClassProperties.pkl",
+            "sha256": "499801fdfc26d5f5f00492c885a24b17b4ea1186d3916fd9512866c065ac6e72"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedValidation.pkl",
+            "sha256": "8627347ab9c84fcfb0a90e4e23c42f5f5a7806aff2ee9967af9893c3099b31a6"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedLib.pkl",
+            "sha256": "44fd3ee11b1eb761805057b6898deb8d43a41ed83ba9e7342d7ad601a4b5ee9b"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/LICENSE",
+            "sha256": "87f7f506593ec1c2b6a5b34bb449cd37f8ec7f040479f37a6697f6750ecc6296"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/NOTICE",
+            "sha256": "70ad1559eebf49c6ffea8dba7ecb646289506f669dc52fbdcd01f0f13afd27ee"
+          }
+        ],
+        "source": {
+          "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollectionAmends.pkl",
+          "repository": "pkl-rs",
+          "sha256": "0e0caddeb632540946a8c96eee03f12694543b0b4f4400e3eb7a582afacb6b84"
+        },
+        "suite": "historical-collections"
+      },
+      "contract_sha256": "9345604abd61c271874709e3497b6fd93e987d8911a0e1c21c625fc5c5e29aaf",
+      "id": "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/nested_typed_collections/nestedTypedCollectionAmends.pkl",
+      "input": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollectionAmends.pkl",
+      "input_sha256": "0e0caddeb632540946a8c96eee03f12694543b0b4f4400e3eb7a582afacb6b84"
+    },
+    {
+      "contract": {
+        "channels": [
+          "stdout",
+          "stderr",
+          "exit_code",
+          "files",
+          "workspace_changes"
+        ],
+        "command": [
+          "eval",
+          "--no-cache",
+          "--no-project",
+          "--settings",
+          "pkl:settings",
+          "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollections.pkl"
+        ],
+        "contract_origin": "Explicit new pinned Java0.32 historical profile; not the three selected regression CLI contracts and not a rev1 Rust expectation.",
+        "cwd": ".",
+        "environment": {},
+        "execution": {
+          "reason": null,
+          "status": "ready"
+        },
+        "expected_exit": [
+          0
+        ],
+        "id": "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/nested_typed_collections/nestedTypedCollections.pkl",
+        "output": null,
+        "resources": [
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/listingDefault.pkl",
+            "sha256": "39599a03f77eefe792760f67899d5e25757a8abfcb2cd25e302d2581f4f0e5fa"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/typedListingAmend.pkl",
+            "sha256": "0e7860abf7ba305bf25a4a4f758c6be96c32c330edb2f780fc7b40c0df1f625c"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/mappingDefault.pkl",
+            "sha256": "1df4fd9e7dce8d14b4b92484361fc8d02566bf9619bc2c6fe9ebacd93747d05e"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/lazyObservation.pkl",
+            "sha256": "45796cbdf9bd4e52dc768d3747d7f8bcdbc587315d9f4abbdfa8494a6bce552c"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollections.pkl",
+            "sha256": "50a42b286b0da6b5638a69c3ed4034db03aa4deac0cbb04cfa547199949e9d75"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollectionAmends.pkl",
+            "sha256": "0e0caddeb632540946a8c96eee03f12694543b0b4f4400e3eb7a582afacb6b84"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedClassProperties.pkl",
+            "sha256": "499801fdfc26d5f5f00492c885a24b17b4ea1186d3916fd9512866c065ac6e72"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedValidation.pkl",
+            "sha256": "8627347ab9c84fcfb0a90e4e23c42f5f5a7806aff2ee9967af9893c3099b31a6"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedLib.pkl",
+            "sha256": "44fd3ee11b1eb761805057b6898deb8d43a41ed83ba9e7342d7ad601a4b5ee9b"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/LICENSE",
+            "sha256": "87f7f506593ec1c2b6a5b34bb449cd37f8ec7f040479f37a6697f6750ecc6296"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/NOTICE",
+            "sha256": "70ad1559eebf49c6ffea8dba7ecb646289506f669dc52fbdcd01f0f13afd27ee"
+          }
+        ],
+        "source": {
+          "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollections.pkl",
+          "repository": "pkl-rs",
+          "sha256": "50a42b286b0da6b5638a69c3ed4034db03aa4deac0cbb04cfa547199949e9d75"
+        },
+        "suite": "historical-collections"
+      },
+      "contract_sha256": "4a3fce6c5a087e88787234363de116838382d26da631068694cf0c809be1ee13",
+      "id": "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/nested_typed_collections/nestedTypedCollections.pkl",
+      "input": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollections.pkl",
+      "input_sha256": "50a42b286b0da6b5638a69c3ed4034db03aa4deac0cbb04cfa547199949e9d75"
+    },
+    {
+      "contract": {
+        "channels": [
+          "stdout",
+          "stderr",
+          "exit_code",
+          "files",
+          "workspace_changes"
+        ],
+        "command": [
+          "eval",
+          "--no-cache",
+          "--no-project",
+          "--settings",
+          "pkl:settings",
+          "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedValidation.pkl"
+        ],
+        "contract_origin": "Explicit new pinned Java0.32 historical profile; not the three selected regression CLI contracts and not a rev1 Rust expectation.",
+        "cwd": ".",
+        "environment": {},
+        "execution": {
+          "reason": null,
+          "status": "ready"
+        },
+        "expected_exit": [
+          0
+        ],
+        "id": "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/nested_typed_collections/nestedTypedValidation.pkl",
+        "output": null,
+        "resources": [
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/listingDefault.pkl",
+            "sha256": "39599a03f77eefe792760f67899d5e25757a8abfcb2cd25e302d2581f4f0e5fa"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/typedListingAmend.pkl",
+            "sha256": "0e7860abf7ba305bf25a4a4f758c6be96c32c330edb2f780fc7b40c0df1f625c"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/mappingDefault.pkl",
+            "sha256": "1df4fd9e7dce8d14b4b92484361fc8d02566bf9619bc2c6fe9ebacd93747d05e"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/collection_default_observation/lazyObservation.pkl",
+            "sha256": "45796cbdf9bd4e52dc768d3747d7f8bcdbc587315d9f4abbdfa8494a6bce552c"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollections.pkl",
+            "sha256": "50a42b286b0da6b5638a69c3ed4034db03aa4deac0cbb04cfa547199949e9d75"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollectionAmends.pkl",
+            "sha256": "0e0caddeb632540946a8c96eee03f12694543b0b4f4400e3eb7a582afacb6b84"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedClassProperties.pkl",
+            "sha256": "499801fdfc26d5f5f00492c885a24b17b4ea1186d3916fd9512866c065ac6e72"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedValidation.pkl",
+            "sha256": "8627347ab9c84fcfb0a90e4e23c42f5f5a7806aff2ee9967af9893c3099b31a6"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedLib.pkl",
+            "sha256": "44fd3ee11b1eb761805057b6898deb8d43a41ed83ba9e7342d7ad601a4b5ee9b"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/LICENSE",
+            "sha256": "87f7f506593ec1c2b6a5b34bb449cd37f8ec7f040479f37a6697f6750ecc6296"
+          },
+          {
+            "path": "tests/fixtures/rev1-collections/NOTICE",
+            "sha256": "70ad1559eebf49c6ffea8dba7ecb646289506f669dc52fbdcd01f0f13afd27ee"
+          }
+        ],
+        "source": {
+          "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedValidation.pkl",
+          "repository": "pkl-rs",
+          "sha256": "8627347ab9c84fcfb0a90e4e23c42f5f5a7806aff2ee9967af9893c3099b31a6"
+        },
+        "suite": "historical-collections"
+      },
+      "contract_sha256": "2b3e8332fb41508952c9a58f54e5e249d144eae6a911631faf01a5c1898009c2",
+      "id": "rev1-candidate:crates/pkl-core/src/tests/bytecode_tests/nested_typed_collections/nestedTypedValidation.pkl",
+      "input": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedValidation.pkl",
+      "input_sha256": "8627347ab9c84fcfb0a90e4e23c42f5f5a7806aff2ee9967af9893c3099b31a6"
+    }
+  ],
+  "historical_revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+  "prior_authority": {
+    "rev1": "Pinned source/harness selection context only; historical Rust passes are not expected values.",
+    "stage90": "Same source modules were observed twice under a distinct exploration contract; stdout/stderr/exit only. No generated-files/unexpected-write verification is inferred. Fresh four-channel acquisition required."
+  },
+  "profile": "pkl-0.32-historical-collections-no-cache-no-project-v1",
+  "resources": [
+    {
+      "bytes": 1223,
+      "kind": "file",
+      "original": {
+        "path": "crates/pkl-core/src/tests/bytecode_tests/collection_default_observation/listingDefault.pkl",
+        "repository": "rev1",
+        "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+        "sha256": "39599a03f77eefe792760f67899d5e25757a8abfcb2cd25e302d2581f4f0e5fa"
+      },
+      "path": "tests/fixtures/rev1-collections/collection_default_observation/listingDefault.pkl",
+      "sha256": "39599a03f77eefe792760f67899d5e25757a8abfcb2cd25e302d2581f4f0e5fa"
+    },
+    {
+      "bytes": 1568,
+      "kind": "file",
+      "original": {
+        "path": "crates/pkl-core/src/tests/bytecode_tests/collection_default_observation/typedListingAmend.pkl",
+        "repository": "rev1",
+        "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+        "sha256": "0e7860abf7ba305bf25a4a4f758c6be96c32c330edb2f780fc7b40c0df1f625c"
+      },
+      "path": "tests/fixtures/rev1-collections/collection_default_observation/typedListingAmend.pkl",
+      "sha256": "0e7860abf7ba305bf25a4a4f758c6be96c32c330edb2f780fc7b40c0df1f625c"
+    },
+    {
+      "bytes": 1099,
+      "kind": "file",
+      "original": {
+        "path": "crates/pkl-core/src/tests/bytecode_tests/collection_default_observation/mappingDefault.pkl",
+        "repository": "rev1",
+        "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+        "sha256": "1df4fd9e7dce8d14b4b92484361fc8d02566bf9619bc2c6fe9ebacd93747d05e"
+      },
+      "path": "tests/fixtures/rev1-collections/collection_default_observation/mappingDefault.pkl",
+      "sha256": "1df4fd9e7dce8d14b4b92484361fc8d02566bf9619bc2c6fe9ebacd93747d05e"
+    },
+    {
+      "bytes": 468,
+      "kind": "file",
+      "original": {
+        "path": "crates/pkl-core/src/tests/bytecode_tests/collection_default_observation/lazyObservation.pkl",
+        "repository": "rev1",
+        "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+        "sha256": "45796cbdf9bd4e52dc768d3747d7f8bcdbc587315d9f4abbdfa8494a6bce552c"
+      },
+      "path": "tests/fixtures/rev1-collections/collection_default_observation/lazyObservation.pkl",
+      "sha256": "45796cbdf9bd4e52dc768d3747d7f8bcdbc587315d9f4abbdfa8494a6bce552c"
+    },
+    {
+      "bytes": 2013,
+      "kind": "file",
+      "original": {
+        "path": "crates/pkl-core/src/tests/bytecode_tests/nested_typed_collections/nestedTypedCollections.pkl",
+        "repository": "rev1",
+        "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+        "sha256": "50a42b286b0da6b5638a69c3ed4034db03aa4deac0cbb04cfa547199949e9d75"
+      },
+      "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollections.pkl",
+      "sha256": "50a42b286b0da6b5638a69c3ed4034db03aa4deac0cbb04cfa547199949e9d75"
+    },
+    {
+      "bytes": 1125,
+      "kind": "file",
+      "original": {
+        "path": "crates/pkl-core/src/tests/bytecode_tests/nested_typed_collections/nestedTypedCollectionAmends.pkl",
+        "repository": "rev1",
+        "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+        "sha256": "0e0caddeb632540946a8c96eee03f12694543b0b4f4400e3eb7a582afacb6b84"
+      },
+      "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedCollectionAmends.pkl",
+      "sha256": "0e0caddeb632540946a8c96eee03f12694543b0b4f4400e3eb7a582afacb6b84"
+    },
+    {
+      "bytes": 1151,
+      "kind": "file",
+      "original": {
+        "path": "crates/pkl-core/src/tests/bytecode_tests/nested_typed_collections/nestedTypedClassProperties.pkl",
+        "repository": "rev1",
+        "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+        "sha256": "499801fdfc26d5f5f00492c885a24b17b4ea1186d3916fd9512866c065ac6e72"
+      },
+      "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedClassProperties.pkl",
+      "sha256": "499801fdfc26d5f5f00492c885a24b17b4ea1186d3916fd9512866c065ac6e72"
+    },
+    {
+      "bytes": 871,
+      "kind": "file",
+      "original": {
+        "path": "crates/pkl-core/src/tests/bytecode_tests/nested_typed_collections/nestedTypedValidation.pkl",
+        "repository": "rev1",
+        "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+        "sha256": "8627347ab9c84fcfb0a90e4e23c42f5f5a7806aff2ee9967af9893c3099b31a6"
+      },
+      "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedTypedValidation.pkl",
+      "sha256": "8627347ab9c84fcfb0a90e4e23c42f5f5a7806aff2ee9967af9893c3099b31a6"
+    },
+    {
+      "bytes": 154,
+      "kind": "file",
+      "original": {
+        "path": "crates/pkl-core/src/tests/bytecode_tests/nested_typed_collections/nestedLib.pkl",
+        "repository": "rev1",
+        "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+        "sha256": "44fd3ee11b1eb761805057b6898deb8d43a41ed83ba9e7342d7ad601a4b5ee9b"
+      },
+      "path": "tests/fixtures/rev1-collections/nested_typed_collections/nestedLib.pkl",
+      "sha256": "44fd3ee11b1eb761805057b6898deb8d43a41ed83ba9e7342d7ad601a4b5ee9b"
+    },
+    {
+      "bytes": 10765,
+      "kind": "file",
+      "original": {
+        "path": "LICENSE",
+        "repository": "rev1",
+        "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+        "sha256": "87f7f506593ec1c2b6a5b34bb449cd37f8ec7f040479f37a6697f6750ecc6296"
+      },
+      "path": "tests/fixtures/rev1-collections/LICENSE",
+      "sha256": "87f7f506593ec1c2b6a5b34bb449cd37f8ec7f040479f37a6697f6750ecc6296"
+    },
+    {
+      "bytes": 1318,
+      "kind": "file",
+      "original": {
+        "path": "NOTICE",
+        "repository": "rev1",
+        "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+        "sha256": "70ad1559eebf49c6ffea8dba7ecb646289506f669dc52fbdcd01f0f13afd27ee"
+      },
+      "path": "tests/fixtures/rev1-collections/NOTICE",
+      "sha256": "70ad1559eebf49c6ffea8dba7ecb646289506f669dc52fbdcd01f0f13afd27ee"
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Exactly eight original candidate IDs become executable. Registration is readiness to attempt, never semantic pass or requirement completion. Other32 historical candidates and all three selected CLI contracts remain unchanged.",
+  "snapshot_sha256": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
+  "watchdog_seconds": 60
+}
