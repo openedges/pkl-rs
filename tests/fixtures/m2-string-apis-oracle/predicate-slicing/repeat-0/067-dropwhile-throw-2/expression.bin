@@ -1,0 +1,1 @@
+("ab".dropWhile((ch) -> throw("predicate"))).toString()

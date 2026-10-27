@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot parse string as `Float`.
+String: "NaNf"
+
+1 | ("NaNf".toFloat()).toString()
+     ^^^^^^^^^^^^^^^^
+at  (repl:text)

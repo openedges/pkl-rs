@@ -1,0 +1,1 @@
+("abca".dropLastWhile((ch) -> ch != "b")).toString()

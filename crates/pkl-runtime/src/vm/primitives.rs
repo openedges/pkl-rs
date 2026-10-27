@@ -4,9 +4,12 @@ use super::*;
 mod function_apply;
 #[path = "remaining_apis.rs"]
 mod remaining_apis;
+#[path = "string_api.rs"]
+mod string_api;
 
 #[derive(Clone, Copy, Debug)]
 pub enum Operation {
+    StringApi(string_api::Operation),
     FunctionApplyToList,
     Remaining(remaining_apis::Operation),
     DataSize(data_size::Operation),
@@ -288,6 +291,7 @@ pub(super) fn blocks(
         result.insert((class.into(), name.into()), block);
     }
     result.extend(function_apply::blocks(blocks, metadata));
+    result.extend(string_api::blocks(blocks, metadata));
     result.extend(remaining_apis::blocks(blocks, metadata));
     result.extend(data_size::blocks(blocks, metadata));
     result.extend(duration::blocks(blocks, metadata));
@@ -526,6 +530,9 @@ impl Vm {
                 return Ok(true);
             }
             if let Value::String(text) = receiver {
+                if self.string_extra_property(text, name)? {
+                    return Ok(true);
+                }
                 if matches!(name, "chars" | "codePoints") {
                     if text.is_empty() {
                         let empty = self.empty_strict_collection(crate::heap::CollectionKind::List);
@@ -810,11 +817,18 @@ impl Vm {
                 return Ok(false);
             };
             let arity = match name {
+                "replaceRange" if class == "String" => 3,
+                "padStart" | "padEnd" if class == "String" => 2,
+                "takeWhile" | "takeLastWhile" | "dropWhile" | "dropLastWhile"
+                    if class == "String" =>
+                {
+                    1
+                }
                 "isBetween" | "fold" | "foldIndexed" | "splitLimit" | "replaceAll"
                 | "replaceFirst" | "replaceLast" | "replaceAllMapped" | "replaceFirstMapped"
                 | "replaceLastMapped" | "substring" | "substringOrNull" => 2,
                 "step" | "map" | "findMatchesIn" | "matchEntire" | "split" | "toRadixString"
-                | "applyToList" => 1,
+                | "applyToList" | "take" | "takeLast" | "drop" => 1,
                 "contains" | "matches" | "startsWith" | "endsWith" | "indexOf"
                 | "indexOfOrNull" | "lastIndexOf" | "lastIndexOfOrNull" | "dropLast" | "xor"
                 | "implies" | "toDataSize" | "toDuration" | "toUnit" | "getOrNull"
@@ -867,6 +881,7 @@ impl Vm {
             .and_then(|f| f.environment.this_value.clone())
             .ok_or_else(|| invalid("primitive receiver"))?;
         match operation {
+            Operation::StringApi(operation) => self.string_api_operation(receiver, operation)?,
             Operation::FunctionApplyToList => self.function_apply_to_list(receiver)?,
             Operation::Remaining(operation) => self.remaining_api(receiver, operation)?,
             Operation::DataSize(operation) => self.data_size_operation(receiver, operation)?,

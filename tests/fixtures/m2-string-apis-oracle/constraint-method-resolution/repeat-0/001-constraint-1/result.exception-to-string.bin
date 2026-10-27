@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Type constraint `this == capitalize()` violated.
+Value: "foo"
+
+1 | ("foo" as String(this == capitalize())).toString()
+                     ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

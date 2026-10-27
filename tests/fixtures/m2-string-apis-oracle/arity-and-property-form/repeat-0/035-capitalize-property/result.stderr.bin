@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot find property `capitalize` in object of type `String`.
+
+1 | ("abc".capitalize).toString()
+     ^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+decapitalize()

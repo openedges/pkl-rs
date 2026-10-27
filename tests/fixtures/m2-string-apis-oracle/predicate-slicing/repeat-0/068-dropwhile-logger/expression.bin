@@ -1,0 +1,1 @@
+("a😀b".dropWhile((ch) -> trace(ch) != "b")).toString()

@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot find property `trimStart` in object of type `String`.
+
+1 | ("abc".trimStart).toString()
+     ^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+trim()

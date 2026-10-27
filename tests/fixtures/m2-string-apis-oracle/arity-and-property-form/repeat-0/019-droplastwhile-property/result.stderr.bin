@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Cannot find property `dropLastWhile` in object of type `String`.
+
+1 | ("abc".dropLastWhile).toString()
+     ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+dropLast(n)
+dropWhile(predicate)
+drop(n)

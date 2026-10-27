@@ -1,0 +1,15 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Type constraint `this == capitalize()` violated.
+Value: "bar"
+
+1 | (new Listing<String(this == capitalize())> { "Foo"; "bar" }).toString()
+                        ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+1 | (new Listing<String(this == capitalize())> { "Foo"; "bar" }).toString()
+                                                        ^^^^^
+at repl:text[#2] (repl:text)
+
+1 | (new Listing<String(this == capitalize())> { "Foo"; "bar" }).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

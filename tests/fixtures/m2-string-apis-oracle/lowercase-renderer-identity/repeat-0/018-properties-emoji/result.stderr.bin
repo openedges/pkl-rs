@@ -1,0 +1,13 @@
+–– Pkl Error ––
+The top-level value of a Java properties file must have type `Typed`, `Dynamic`, `Mapping`, or `Map`, but got type `String`.
+Value: "😀"
+
+3 | function propertiesLower(s) = (new PropertiesRenderer { converters { [String] = (v) -> trace(v.toLowerCase()) } }).renderDocument(s)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage98#propertiesLower (file:///stage98/lowercase-renderer-identity.pkl)
+
+This value was converted during rendering. Previous: "😀". After: "😀".
+
+1 | propertiesLower("\u{1F600}")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

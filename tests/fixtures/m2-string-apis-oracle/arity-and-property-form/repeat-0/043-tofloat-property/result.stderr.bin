@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot find property `toFloat` in object of type `String`.
+
+1 | ("abc".toFloat).toString()
+     ^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+toFloatOrNull()

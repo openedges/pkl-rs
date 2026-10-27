@@ -53,6 +53,33 @@ Acquisition tools own process deadlines; the adapter adds no instruction ceiling
 The legacy scalar facade and portable `evaluateLanguage` API remain separate,
 bounded experiments. See the [Stage97 evidence](../reports/m2/stage97-token-expression-checkpoint.json).
 
+### Shared String API operations
+
+The 28 additional String routes use the common VM, lossless UTF-16 values and
+ordinary builtin call/type-check frames. Predicate slicing keeps callback,
+source and current values rooted across suspension, retry and collection.
+Multiargument operations load declaration-order parameters through the VM's
+reverse local-stack offsets. No platform adapter substitutes a Java evaluator.
+
+Lowercasing uses pinned JDK Character data and an extracted word-break table for
+the `Locale.ROOT` final-Sigma rule. Conversion preserves result identity, including
+unchanged surrogate-bearing strings and uppercase no-change inputs. Parsing
+retains Pkl underscore handling, Java numeric grammar, UTF-16 digit behavior and
+hexadecimal overflow sequencing; trim/classification, padding and replacement
+reuse common values, constraints and diagnostics.
+
+The current source dictionary includes the word-break data/provenance and String
+fixtures. Actual Native/N-API/Chromium comparisons match 2,412 comparable
+observations per target after attempting all 2,418 rows. The three glob internal
+protocols remain required unresolved. Runtime opt1, portable release cores, raw
+Rust Wasm and generated bindgen Wasm/JS have distinct identities and producer
+chains; reused artifact hashes are qualified as admission-time observations.
+The process-scoped LLVM loader adjustment changes the local build environment,
+not the shared evaluator or pinned toolchain. The earlier N-API debug-strip warning
+is preserved. See the [Stage98 evidence](../reports/m2/stage98-string-apis-checkpoint.json).
+Selected raw equality and lifecycle checks do not establish whole-API or
+performance completion.
+
 ### Scalar conversion, Set removal and Function.applyToList
 
 `Float.toInt` explicitly rejects non-finite or out-of-range values before Rust's

@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 2 function arguments but got 0.
+
+1596 | external function padStart(width: Int, char: Char)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#String.padStart (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1596)
+
+1 | ("abc".padStart()).toString()
+     ^^^^^^^^^^^^^^^^
+at  (repl:text)

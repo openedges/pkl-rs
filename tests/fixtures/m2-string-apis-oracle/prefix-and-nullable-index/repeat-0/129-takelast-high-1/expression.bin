@@ -1,0 +1,1 @@
+("a\u{D800}b".takeLast(1)).toString()

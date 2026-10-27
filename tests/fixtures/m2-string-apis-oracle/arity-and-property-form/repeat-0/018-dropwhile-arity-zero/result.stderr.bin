@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+1514 | external function dropWhile(predicate: (String) -> Boolean): String
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#String.dropWhile (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1514)
+
+1 | ("abc".dropWhile()).toString()
+     ^^^^^^^^^^^^^^^^^
+at  (repl:text)

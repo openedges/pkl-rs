@@ -1,0 +1,1 @@
+("a\u{DC00}b".takeLast(-1)).toString()

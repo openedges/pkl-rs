@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `trim` in object of type `String`.
+
+1 | ("abc".trim).toString()
+     ^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+trimEnd()
+trimStart()

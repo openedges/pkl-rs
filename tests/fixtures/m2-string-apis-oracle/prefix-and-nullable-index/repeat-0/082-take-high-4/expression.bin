@@ -1,0 +1,1 @@
+("a\u{D800}b".take(4)).toString()

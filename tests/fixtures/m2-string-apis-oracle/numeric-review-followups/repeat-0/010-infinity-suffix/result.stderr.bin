@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Cannot parse string as `Float`.
+String: "InfinityD"
+
+1 | ("InfinityD".toFloat()).toString()
+     ^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

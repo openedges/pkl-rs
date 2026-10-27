@@ -1,0 +1,1 @@
+("x".padStart("bad", throw("second argument"))).toString()

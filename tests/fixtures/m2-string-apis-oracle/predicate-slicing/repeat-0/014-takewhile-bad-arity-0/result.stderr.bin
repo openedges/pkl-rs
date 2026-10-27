@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got type `Function0`.
+Value: new Function0 {}
+
+1496 | external function takeWhile(predicate: (String) -> Boolean): String
+                                              ^^^^^^^^^^^^^^^^^^^
+at pkl.base#String.takeWhile (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1496)
+
+1 | ("".takeWhile(() -> true)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

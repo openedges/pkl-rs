@@ -21,6 +21,62 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+### Stage98 shared String API validation
+
+The final source-bound workspace passes **1,393 tests, zero failures and two
+ignored tests**, covering all 242 test executables, 25 compile-only examples and
+two doctest libraries. Thirteen nested child summaries are separate. The 19 String
+oracle groups and three lifecycle tests are included; the unresolved-glob ignored
+test is not a pass. The full Python suite passes **180 tests** after test-only
+accounting/source-catalog corrections. Its earlier 168-test attempt retains three
+failures and two errors; the earlier narrow 34-test result does not replace it.
+
+The eight local roles are workspace, xtask, formatting, all-target Clippy, Wasm,
+Python, manifest freshness and inventory freshness. Driver05 reuses terminal
+Python02/Clippy03, then executes workspace02/Wasm01/final freshness checks.
+Formatting04 remains earlier-source evidence: only three Python tests differ,
+so its Rust/build/formatter inputs are unchanged. Xtask01 is also earlier-source
+evidence, admitted by its unchanged relevant inputs; the exact two reference
+metadata files outside the selected dictionary are checked against both original
+broad bookends and current bytes. Clippy02's Cargo exit zero with a collector
+failure and absent after-bookend remains failed evidence, separate from Clippy03.
+Workspace uses opt1/debug0/strip-symbols/checks-on/jobs1/incremental0; Clippy and
+Wasm use their recorded opt0/debug0 profiles with Rust 1.98.1.
+
+String authority covers 1,209 contracts twice. Native, N-API and actual Chromium
+each acquire **2,418 rows** and match **2,412 comparable rows**, with 160 ordered
+Logger events. Full result status, UTF-8/UTF-16 output/error bytes and Logger
+order/fields are checked. The three upstream glob internal protocols remain
+required unresolved (**six observations per target**), so comparable success does
+not imply `all_required_pass`. Default/Turkish/power profiles and all 38 program
+sessions per target are retained. Canonical String fixtures use Java repeat0;
+Java repeat1 remains in the separately checked original authority. Java
+class/cause records are preserved but are not fabricated as Rust outputs.
+
+The original native module-output adapter matches all six selected originals:
+`api/string.pkl`, `api/stringUnicode.pkl`, `listings/listing5.pkl` and
+`mappings/typeCheck.pkl` succeed; `errors/power/typeConstraints5.pkl` and
+`typeConstraints6.pkl` reproduce the expected Pkl errors with exit 1. Original
+argv, physical input URI, environment and public file/write maps are unchanged.
+Native private before/after equality is a lifecycle check; Java Host-private
+cache contents are excluded from cross-runtime comparison.
+
+A fresh M1 acquisition passes strict **6,078/6,078 per target** and the separate
+`--verify-contract` architecture gate, including 92 checks each in Node and
+Chromium. Actual normal runtime, native helper, N-API, raw Rust Wasm and generated
+bindgen Wasm/JS retain distinct compiler/source/artifact records. The initial
+portable attempt failed to load the pinned LLVM library during Wasm linking;
+the successful retry adds only a process-local `DYLD_FALLBACK_LIBRARY_PATH`.
+The earlier successful N-API build retains the `rust-objcopy` debug-strip warning.
+For reused units, current hashes are admission-time identities; the failed
+acquisition did not originally record artifact hash bookends.
+
+Earlier failures and all six unresolved glob observations are retained. The
+[checkpoint](reports/m2/stage98-string-apis-checkpoint.json) identifies local raw
+evidence and the `stage98-string-apis-evidence` archive parts. Stage94's whole
+aggregate is unchanged; full ready-corpus, language/API, release-platform and
+performance gates remain incomplete.
+
 ### Stage97 expression adapter and token requirements
 
 The native filesystem probes now evaluate the original complete expression through

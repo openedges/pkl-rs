@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find property `takeLast` in object of type `String`.
+
+1 | ("abc".takeLast).toString()
+     ^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+takeLastWhile(predicate)
+take(n)

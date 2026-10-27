@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 2 function arguments but got 0.
+
+1602 | external function padEnd(width: Int, char: Char)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#String.padEnd (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1602)
+
+1 | ("abc".padEnd()).toString()
+     ^^^^^^^^^^^^^^
+at  (repl:text)

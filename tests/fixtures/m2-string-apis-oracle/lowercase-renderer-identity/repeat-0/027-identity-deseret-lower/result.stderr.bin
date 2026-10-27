@@ -1,0 +1,11 @@
+–– Pkl Error ––
+The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `String`.
+Value: "𐐨"
+
+4 | function pcfIdentity(s) = (new PcfRenderer { converters { [String] = (v) -> trace(v) } }).renderDocument(s)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage98#pcfIdentity (file:///stage98/lowercase-renderer-identity.pkl)
+
+1 | pcfIdentity("\u{10428}")
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

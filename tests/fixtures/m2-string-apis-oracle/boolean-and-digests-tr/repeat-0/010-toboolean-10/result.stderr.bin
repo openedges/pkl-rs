@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Cannot parse string as `Boolean`.
+String: "?"
+
+1 | ("\u{D800}".toBoolean()).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

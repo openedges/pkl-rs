@@ -1,0 +1,1 @@
+(new Mapping<String, String(this == capitalize())> { ["a"] = "Foo"; ["b"] = "bar" }).toString()

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+second argument
+
+1 | ("x".padEnd("bad", throw("second argument"))).toString()
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

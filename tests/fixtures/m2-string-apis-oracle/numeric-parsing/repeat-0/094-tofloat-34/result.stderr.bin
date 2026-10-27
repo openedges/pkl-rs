@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Cannot parse string as `Float`.
+String: " 1.5"
+
+1 | ("\u{00A0}1.5".toFloat()).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

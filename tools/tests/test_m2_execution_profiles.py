@@ -12,6 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import compat
 import m2_execution_profiles as profiles
 import m2_jvm_classpath as jvm
+import m2_historical as historical
 import m2_language as language
 import m2_manifest as manifest
 
@@ -35,13 +36,25 @@ class ProfileMappingTests(unittest.TestCase):
         current = manifest.current_manifest()
         corpus = manifest.load(Path('compatibility/corpus.json'))
         originals = [row for row in corpus['cases'] if row['suite'] == 'language-snippet']
-        actual = [row for row in current['cases'] if 'upstream_case' in row]
+        # Historical admission also stores an upstream_case contract. Keep its
+        # exact eight rows separate from the original 957 upstream snippets.
+        all_original_contracts = [row for row in current['cases'] if 'upstream_case' in row]
+        actual = [row for row in all_original_contracts if row['id'].startswith('pkl:language-snippet:')]
+        history = historical.registry_cases(manifest.ROOT)
+        self.assertEqual(len(history), 8)
+        self.assertEqual([row['id'] for row in all_original_contracts],
+                         [row['id'] for row in originals] + list(history))
+        for row in all_original_contracts[len(originals):]:
+            self.assertEqual(row['upstream_case'], history[row['id']]['contract'])
+            self.assertEqual(row['adapter'], historical.ADAPTER)
+            self.assertEqual(row['execution']['state'], 'ready')
         self.assertEqual([row['id'] for row in actual], [row['id'] for row in originals])
         self.assertEqual(len(actual), 957)
-        self.assertEqual(current['counts']['cases'], 4527)
+        self.assertEqual(current['counts']['cases'], 4527 + 18)
         self.assertEqual(current['counts']['requirements'], 475)
         self.assertEqual(current['counts']['cases_by_execution']['unimplemented'], 68 + 3)
-        self.assertEqual(current['counts']['cases_by_execution']['unmapped'], 40)
+        self.assertEqual(current['counts']['cases_by_execution']['unmapped'], 32)
+        self.assertEqual(current['counts']['cases_by_execution']['ready'], 4442)
         import m2_module_eval
         registered = m2_module_eval.registry_cases(manifest.ROOT, corpus, manifest.load(manifest.MODULE_ADAPTERS))
         for original, case in zip(originals, actual):

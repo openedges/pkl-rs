@@ -14,6 +14,9 @@ INPUTS = ('references.lock', 'compatibility/inventory.json', 'compatibility/corp
 
 def source_paths(root: Path):
     paths = set(INPUTS) | {MANIFEST, 'tools/m2_source_inputs.py', 'tools/m2_manifest.py',
+        'crates/pkl-runtime/src/vm/string_word_break.bin',
+        'crates/pkl-runtime/src/vm/string_word_break.provenance.json',
+        'crates/pkl-runtime/src/vm/string_word_break.README.md',
         'tools/m2_language.py', 'tools/m2_module_eval.py', 'tools/m2_historical.py', 'tools/m2_workspace.py', 'tools/m2_jvm_classpath.py',
         'tools/m2_execution_profiles.py', 'tools/compat.py', 'tools/m2_generate.py',
         'tools/benchmark.py',
@@ -58,6 +61,7 @@ def source_paths(root: Path):
         'docs/m2-jvm-classpath.md', 'crates/pkl-runtime/src/stdlib/modules.txt'}
     for directory, pattern in [('crates', '*.rs'), ('crates', '*.pkl'), ('crates', 'Cargo.toml'),
                                ('tests/fixtures/m2', '*'),
+                               ('tests/fixtures/m2-string-apis-oracle', '*'),
                                ('tests/fixtures/m2-deprecation', '*'),
                                ('tests/fixtures/m2-frame-transformers', '*'),
                                ('tests/fixtures/m2-class-values', '*'),

@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `String`.
+Value: "abc"
+
+7 | function pcfPlain(s) = (new PcfRenderer {}).renderDocument(s)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage98#pcfPlain (file:///stage98/lowercase-renderer-identity.pkl)
+
+1 | pcfPlain("abc")
+    ^^^^^^^^^^^^^^^
+at  (repl:text)

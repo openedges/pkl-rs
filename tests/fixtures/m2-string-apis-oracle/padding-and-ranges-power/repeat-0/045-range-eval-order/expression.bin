@@ -1,0 +1,1 @@
+("abc".replaceRange("bad", 1, throw("replacement"))).toString()

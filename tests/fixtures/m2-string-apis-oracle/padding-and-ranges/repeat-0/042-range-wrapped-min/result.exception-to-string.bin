@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Character index `-9,223,372,036,854,775,808` is out of range `1`..`3`.
+String: "a😀b"
+
+1 | ("a😀b".replaceRange(1, -9223372036854775808, "\u{D800}")).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

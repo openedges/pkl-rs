@@ -1,0 +1,92 @@
+string	takewhile-empty-all	("".takeWhile((ch) -> true)).toString()	000-takewhile-empty-all
+string	takewhile-empty-none	("".takeWhile((ch) -> false)).toString()	001-takewhile-empty-none
+string	takewhile-empty-stop	("".takeWhile((ch) -> ch != "b")).toString()	002-takewhile-empty-stop
+string	takewhile-ascii-all	("abca".takeWhile((ch) -> true)).toString()	003-takewhile-ascii-all
+string	takewhile-ascii-none	("abca".takeWhile((ch) -> false)).toString()	004-takewhile-ascii-none
+string	takewhile-ascii-stop	("abca".takeWhile((ch) -> ch != "b")).toString()	005-takewhile-ascii-stop
+string	takewhile-mixed-all	("a😀b".takeWhile((ch) -> true)).toString()	006-takewhile-mixed-all
+string	takewhile-mixed-none	("a😀b".takeWhile((ch) -> false)).toString()	007-takewhile-mixed-none
+string	takewhile-mixed-stop	("a😀b".takeWhile((ch) -> ch != "b")).toString()	008-takewhile-mixed-stop
+string	takewhile-unpaired-all	("a\u{D800}b".takeWhile((ch) -> true)).toString()	009-takewhile-unpaired-all
+string	takewhile-unpaired-none	("a\u{D800}b".takeWhile((ch) -> false)).toString()	010-takewhile-unpaired-none
+string	takewhile-unpaired-stop	("a\u{D800}b".takeWhile((ch) -> ch != "b")).toString()	011-takewhile-unpaired-stop
+string	takewhile-non-function-0	("".takeWhile(42)).toString()	012-takewhile-non-function-0
+string	takewhile-non-function-2	("ab".takeWhile(42)).toString()	013-takewhile-non-function-2
+string	takewhile-bad-arity-0	("".takeWhile(() -> true)).toString()	014-takewhile-bad-arity-0
+string	takewhile-bad-arity-2	("ab".takeWhile(() -> true)).toString()	015-takewhile-bad-arity-2
+string	takewhile-bad-result-0	("".takeWhile((ch) -> 42)).toString()	016-takewhile-bad-result-0
+string	takewhile-bad-result-2	("ab".takeWhile((ch) -> 42)).toString()	017-takewhile-bad-result-2
+string	takewhile-bad-param-0	("".takeWhile((ch: Int) -> true)).toString()	018-takewhile-bad-param-0
+string	takewhile-bad-param-2	("ab".takeWhile((ch: Int) -> true)).toString()	019-takewhile-bad-param-2
+string	takewhile-throw-0	("".takeWhile((ch) -> throw("predicate"))).toString()	020-takewhile-throw-0
+string	takewhile-throw-2	("ab".takeWhile((ch) -> throw("predicate"))).toString()	021-takewhile-throw-2
+string	takewhile-logger	("a😀b".takeWhile((ch) -> trace(ch) != "b")).toString()	022-takewhile-logger
+string	takelastwhile-empty-all	("".takeLastWhile((ch) -> true)).toString()	023-takelastwhile-empty-all
+string	takelastwhile-empty-none	("".takeLastWhile((ch) -> false)).toString()	024-takelastwhile-empty-none
+string	takelastwhile-empty-stop	("".takeLastWhile((ch) -> ch != "b")).toString()	025-takelastwhile-empty-stop
+string	takelastwhile-ascii-all	("abca".takeLastWhile((ch) -> true)).toString()	026-takelastwhile-ascii-all
+string	takelastwhile-ascii-none	("abca".takeLastWhile((ch) -> false)).toString()	027-takelastwhile-ascii-none
+string	takelastwhile-ascii-stop	("abca".takeLastWhile((ch) -> ch != "b")).toString()	028-takelastwhile-ascii-stop
+string	takelastwhile-mixed-all	("a😀b".takeLastWhile((ch) -> true)).toString()	029-takelastwhile-mixed-all
+string	takelastwhile-mixed-none	("a😀b".takeLastWhile((ch) -> false)).toString()	030-takelastwhile-mixed-none
+string	takelastwhile-mixed-stop	("a😀b".takeLastWhile((ch) -> ch != "b")).toString()	031-takelastwhile-mixed-stop
+string	takelastwhile-unpaired-all	("a\u{D800}b".takeLastWhile((ch) -> true)).toString()	032-takelastwhile-unpaired-all
+string	takelastwhile-unpaired-none	("a\u{D800}b".takeLastWhile((ch) -> false)).toString()	033-takelastwhile-unpaired-none
+string	takelastwhile-unpaired-stop	("a\u{D800}b".takeLastWhile((ch) -> ch != "b")).toString()	034-takelastwhile-unpaired-stop
+string	takelastwhile-non-function-0	("".takeLastWhile(42)).toString()	035-takelastwhile-non-function-0
+string	takelastwhile-non-function-2	("ab".takeLastWhile(42)).toString()	036-takelastwhile-non-function-2
+string	takelastwhile-bad-arity-0	("".takeLastWhile(() -> true)).toString()	037-takelastwhile-bad-arity-0
+string	takelastwhile-bad-arity-2	("ab".takeLastWhile(() -> true)).toString()	038-takelastwhile-bad-arity-2
+string	takelastwhile-bad-result-0	("".takeLastWhile((ch) -> 42)).toString()	039-takelastwhile-bad-result-0
+string	takelastwhile-bad-result-2	("ab".takeLastWhile((ch) -> 42)).toString()	040-takelastwhile-bad-result-2
+string	takelastwhile-bad-param-0	("".takeLastWhile((ch: Int) -> true)).toString()	041-takelastwhile-bad-param-0
+string	takelastwhile-bad-param-2	("ab".takeLastWhile((ch: Int) -> true)).toString()	042-takelastwhile-bad-param-2
+string	takelastwhile-throw-0	("".takeLastWhile((ch) -> throw("predicate"))).toString()	043-takelastwhile-throw-0
+string	takelastwhile-throw-2	("ab".takeLastWhile((ch) -> throw("predicate"))).toString()	044-takelastwhile-throw-2
+string	takelastwhile-logger	("a😀b".takeLastWhile((ch) -> trace(ch) != "b")).toString()	045-takelastwhile-logger
+string	dropwhile-empty-all	("".dropWhile((ch) -> true)).toString()	046-dropwhile-empty-all
+string	dropwhile-empty-none	("".dropWhile((ch) -> false)).toString()	047-dropwhile-empty-none
+string	dropwhile-empty-stop	("".dropWhile((ch) -> ch != "b")).toString()	048-dropwhile-empty-stop
+string	dropwhile-ascii-all	("abca".dropWhile((ch) -> true)).toString()	049-dropwhile-ascii-all
+string	dropwhile-ascii-none	("abca".dropWhile((ch) -> false)).toString()	050-dropwhile-ascii-none
+string	dropwhile-ascii-stop	("abca".dropWhile((ch) -> ch != "b")).toString()	051-dropwhile-ascii-stop
+string	dropwhile-mixed-all	("a😀b".dropWhile((ch) -> true)).toString()	052-dropwhile-mixed-all
+string	dropwhile-mixed-none	("a😀b".dropWhile((ch) -> false)).toString()	053-dropwhile-mixed-none
+string	dropwhile-mixed-stop	("a😀b".dropWhile((ch) -> ch != "b")).toString()	054-dropwhile-mixed-stop
+string	dropwhile-unpaired-all	("a\u{D800}b".dropWhile((ch) -> true)).toString()	055-dropwhile-unpaired-all
+string	dropwhile-unpaired-none	("a\u{D800}b".dropWhile((ch) -> false)).toString()	056-dropwhile-unpaired-none
+string	dropwhile-unpaired-stop	("a\u{D800}b".dropWhile((ch) -> ch != "b")).toString()	057-dropwhile-unpaired-stop
+string	dropwhile-non-function-0	("".dropWhile(42)).toString()	058-dropwhile-non-function-0
+string	dropwhile-non-function-2	("ab".dropWhile(42)).toString()	059-dropwhile-non-function-2
+string	dropwhile-bad-arity-0	("".dropWhile(() -> true)).toString()	060-dropwhile-bad-arity-0
+string	dropwhile-bad-arity-2	("ab".dropWhile(() -> true)).toString()	061-dropwhile-bad-arity-2
+string	dropwhile-bad-result-0	("".dropWhile((ch) -> 42)).toString()	062-dropwhile-bad-result-0
+string	dropwhile-bad-result-2	("ab".dropWhile((ch) -> 42)).toString()	063-dropwhile-bad-result-2
+string	dropwhile-bad-param-0	("".dropWhile((ch: Int) -> true)).toString()	064-dropwhile-bad-param-0
+string	dropwhile-bad-param-2	("ab".dropWhile((ch: Int) -> true)).toString()	065-dropwhile-bad-param-2
+string	dropwhile-throw-0	("".dropWhile((ch) -> throw("predicate"))).toString()	066-dropwhile-throw-0
+string	dropwhile-throw-2	("ab".dropWhile((ch) -> throw("predicate"))).toString()	067-dropwhile-throw-2
+string	dropwhile-logger	("a😀b".dropWhile((ch) -> trace(ch) != "b")).toString()	068-dropwhile-logger
+string	droplastwhile-empty-all	("".dropLastWhile((ch) -> true)).toString()	069-droplastwhile-empty-all
+string	droplastwhile-empty-none	("".dropLastWhile((ch) -> false)).toString()	070-droplastwhile-empty-none
+string	droplastwhile-empty-stop	("".dropLastWhile((ch) -> ch != "b")).toString()	071-droplastwhile-empty-stop
+string	droplastwhile-ascii-all	("abca".dropLastWhile((ch) -> true)).toString()	072-droplastwhile-ascii-all
+string	droplastwhile-ascii-none	("abca".dropLastWhile((ch) -> false)).toString()	073-droplastwhile-ascii-none
+string	droplastwhile-ascii-stop	("abca".dropLastWhile((ch) -> ch != "b")).toString()	074-droplastwhile-ascii-stop
+string	droplastwhile-mixed-all	("a😀b".dropLastWhile((ch) -> true)).toString()	075-droplastwhile-mixed-all
+string	droplastwhile-mixed-none	("a😀b".dropLastWhile((ch) -> false)).toString()	076-droplastwhile-mixed-none
+string	droplastwhile-mixed-stop	("a😀b".dropLastWhile((ch) -> ch != "b")).toString()	077-droplastwhile-mixed-stop
+string	droplastwhile-unpaired-all	("a\u{D800}b".dropLastWhile((ch) -> true)).toString()	078-droplastwhile-unpaired-all
+string	droplastwhile-unpaired-none	("a\u{D800}b".dropLastWhile((ch) -> false)).toString()	079-droplastwhile-unpaired-none
+string	droplastwhile-unpaired-stop	("a\u{D800}b".dropLastWhile((ch) -> ch != "b")).toString()	080-droplastwhile-unpaired-stop
+string	droplastwhile-non-function-0	("".dropLastWhile(42)).toString()	081-droplastwhile-non-function-0
+string	droplastwhile-non-function-2	("ab".dropLastWhile(42)).toString()	082-droplastwhile-non-function-2
+string	droplastwhile-bad-arity-0	("".dropLastWhile(() -> true)).toString()	083-droplastwhile-bad-arity-0
+string	droplastwhile-bad-arity-2	("ab".dropLastWhile(() -> true)).toString()	084-droplastwhile-bad-arity-2
+string	droplastwhile-bad-result-0	("".dropLastWhile((ch) -> 42)).toString()	085-droplastwhile-bad-result-0
+string	droplastwhile-bad-result-2	("ab".dropLastWhile((ch) -> 42)).toString()	086-droplastwhile-bad-result-2
+string	droplastwhile-bad-param-0	("".dropLastWhile((ch: Int) -> true)).toString()	087-droplastwhile-bad-param-0
+string	droplastwhile-bad-param-2	("ab".dropLastWhile((ch: Int) -> true)).toString()	088-droplastwhile-bad-param-2
+string	droplastwhile-throw-0	("".dropLastWhile((ch) -> throw("predicate"))).toString()	089-droplastwhile-throw-0
+string	droplastwhile-throw-2	("ab".dropLastWhile((ch) -> throw("predicate"))).toString()	090-droplastwhile-throw-2
+string	droplastwhile-logger	("a😀b".dropLastWhile((ch) -> trace(ch) != "b")).toString()	091-droplastwhile-logger

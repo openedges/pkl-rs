@@ -1,0 +1,51 @@
+string	isglobpattern-called	("abc".isGlobPattern()).toString()	000-isglobpattern-called
+string	md5-called	("abc".md5()).toString()	001-md5-called
+string	sha1-called	("abc".sha1()).toString()	002-sha1-called
+string	sha256-called	("abc".sha256()).toString()	003-sha256-called
+string	sha256int-called	("abc".sha256Int()).toString()	004-sha256int-called
+string	getornull-property	("abc".getOrNull).toString()	005-getornull-property
+string	getornull-arity-zero	("abc".getOrNull()).toString()	006-getornull-arity-zero
+string	take-property	("abc".take).toString()	007-take-property
+string	take-arity-zero	("abc".take()).toString()	008-take-arity-zero
+string	takewhile-property	("abc".takeWhile).toString()	009-takewhile-property
+string	takewhile-arity-zero	("abc".takeWhile()).toString()	010-takewhile-arity-zero
+string	takelast-property	("abc".takeLast).toString()	011-takelast-property
+string	takelast-arity-zero	("abc".takeLast()).toString()	012-takelast-arity-zero
+string	takelastwhile-property	("abc".takeLastWhile).toString()	013-takelastwhile-property
+string	takelastwhile-arity-zero	("abc".takeLastWhile()).toString()	014-takelastwhile-arity-zero
+string	drop-property	("abc".drop).toString()	015-drop-property
+string	drop-arity-zero	("abc".drop()).toString()	016-drop-arity-zero
+string	dropwhile-property	("abc".dropWhile).toString()	017-dropwhile-property
+string	dropwhile-arity-zero	("abc".dropWhile()).toString()	018-dropwhile-arity-zero
+string	droplastwhile-property	("abc".dropLastWhile).toString()	019-droplastwhile-property
+string	droplastwhile-arity-zero	("abc".dropLastWhile()).toString()	020-droplastwhile-arity-zero
+string	replacerange-property	("abc".replaceRange).toString()	021-replacerange-property
+string	replacerange-arity-zero	("abc".replaceRange()).toString()	022-replacerange-arity-zero
+string	tolowercase-property	("abc".toLowerCase).toString()	023-tolowercase-property
+string	tolowercase-arity-one	("abc".toLowerCase(throw("extra argument"))).toString()	024-tolowercase-arity-one
+string	trim-property	("abc".trim).toString()	025-trim-property
+string	trim-arity-one	("abc".trim(throw("extra argument"))).toString()	026-trim-arity-one
+string	trimstart-property	("abc".trimStart).toString()	027-trimstart-property
+string	trimstart-arity-one	("abc".trimStart(throw("extra argument"))).toString()	028-trimstart-arity-one
+string	trimend-property	("abc".trimEnd).toString()	029-trimend-property
+string	trimend-arity-one	("abc".trimEnd(throw("extra argument"))).toString()	030-trimend-arity-one
+string	padstart-property	("abc".padStart).toString()	031-padstart-property
+string	padstart-arity-zero	("abc".padStart()).toString()	032-padstart-arity-zero
+string	padend-property	("abc".padEnd).toString()	033-padend-property
+string	padend-arity-zero	("abc".padEnd()).toString()	034-padend-arity-zero
+string	capitalize-property	("abc".capitalize).toString()	035-capitalize-property
+string	capitalize-arity-one	("abc".capitalize(throw("extra argument"))).toString()	036-capitalize-arity-one
+string	decapitalize-property	("abc".decapitalize).toString()	037-decapitalize-property
+string	decapitalize-arity-one	("abc".decapitalize(throw("extra argument"))).toString()	038-decapitalize-arity-one
+string	toint-property	("abc".toInt).toString()	039-toint-property
+string	toint-arity-one	("abc".toInt(throw("extra argument"))).toString()	040-toint-arity-one
+string	tointornull-property	("abc".toIntOrNull).toString()	041-tointornull-property
+string	tointornull-arity-one	("abc".toIntOrNull(throw("extra argument"))).toString()	042-tointornull-arity-one
+string	tofloat-property	("abc".toFloat).toString()	043-tofloat-property
+string	tofloat-arity-one	("abc".toFloat(throw("extra argument"))).toString()	044-tofloat-arity-one
+string	tofloatornull-property	("abc".toFloatOrNull).toString()	045-tofloatornull-property
+string	tofloatornull-arity-one	("abc".toFloatOrNull(throw("extra argument"))).toString()	046-tofloatornull-arity-one
+string	toboolean-property	("abc".toBoolean).toString()	047-toboolean-property
+string	toboolean-arity-one	("abc".toBoolean(throw("extra argument"))).toString()	048-toboolean-arity-one
+string	tobooleanornull-property	("abc".toBooleanOrNull).toString()	049-tobooleanornull-property
+string	tobooleanornull-arity-one	("abc".toBooleanOrNull(throw("extra argument"))).toString()	050-tobooleanornull-arity-one

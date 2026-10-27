@@ -1,0 +1,6 @@
+string	constraint-0	("Foo" as String(this == capitalize())).toString()	000-constraint-0
+string	constraint-1	("foo" as String(this == capitalize())).toString()	001-constraint-1
+string	constraint-2	("abc" as String(take(1) == "a")).toString()	002-constraint-2
+string	constraint-3	("abc" as String(take(1) == "b")).toString()	003-constraint-3
+string	constraint-4	(new Listing<String(this == capitalize())> { "Foo"; "bar" }).toString()	004-constraint-4
+string	constraint-5	(new Mapping<String, String(this == capitalize())> { ["a"] = "Foo"; ["b"] = "bar" }).toString()	005-constraint-5

@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot find method `md5` in class `String`.
+
+1 | ("abc".md5()).toString()
+     ^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+md5

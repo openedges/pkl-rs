@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got type `Function0`.
+Value: new Function0 {}
+
+1524 | external function dropLastWhile(predicate: (String) -> Boolean): String
+                                                  ^^^^^^^^^^^^^^^^^^^
+at pkl.base#String.dropLastWhile (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1524)
+
+1 | ("".dropLastWhile(() -> true)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

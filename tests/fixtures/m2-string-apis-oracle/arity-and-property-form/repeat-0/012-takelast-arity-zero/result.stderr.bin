@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+1501 | external function takeLast(n: Int): String
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#String.takeLast (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1501)
+
+1 | ("abc".takeLast()).toString()
+     ^^^^^^^^^^^^^^^^
+at  (repl:text)

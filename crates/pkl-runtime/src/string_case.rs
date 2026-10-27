@@ -7,7 +7,11 @@ pub(crate) fn uppercase(value: &PklString) -> PklString {
     if let Some(text) = value.as_str()
         && text.is_ascii()
     {
-        return text.to_ascii_uppercase().into();
+        return if text.bytes().any(|byte| byte.is_ascii_lowercase()) {
+            text.to_ascii_uppercase().into()
+        } else {
+            value.clone()
+        };
     }
     let mut output = Vec::new();
     for decoded in char::decode_utf16(value.encode_utf16()) {
@@ -21,7 +25,17 @@ pub(crate) fn uppercase(value: &PklString) -> PklString {
             Err(unit) => output.push(unit.unpaired_surrogate()),
         }
     }
-    PklString::from_utf16(output)
+    // Java preserves an unchanged BMP receiver, but its UTF-16 path returns a
+    // fresh String whenever a surrogate is encountered, even without a mapping.
+    if !value
+        .encode_utf16()
+        .any(|unit| (0xd800..=0xdfff).contains(&unit))
+        && output.iter().copied().eq(value.encode_utf16())
+    {
+        value.clone()
+    } else {
+        PklString::from_utf16(output)
+    }
 }
 
 #[cfg(test)]

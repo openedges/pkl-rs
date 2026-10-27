@@ -1,0 +1,1 @@
+("a😀b".dropLastWhile((ch) -> ch != "b")).toString()

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+replacement
+
+1 | ("abc".replaceRange("bad", 1, throw("replacement"))).toString()
+                                  ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

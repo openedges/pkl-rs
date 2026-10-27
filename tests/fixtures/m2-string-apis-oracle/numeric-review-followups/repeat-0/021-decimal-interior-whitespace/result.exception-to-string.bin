@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot parse string as `Float`.
+String: "1 2"
+
+1 | ("1 2".toFloat()).toString()
+     ^^^^^^^^^^^^^^^
+at  (repl:text)

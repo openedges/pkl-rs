@@ -19,7 +19,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: Stage97 표현식 adapter·토큰 3개 요구사항 검증; 스칼라 3,537/3,545, 기존 8개 미통과·퇴행 0; 전체 1,371통과·1ignored; 엄격한 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: Stage98 String28·원본6/6·선택2,412×3 검증; 전체1,393통과·2ignored, glob3계약 필수 미해결; 엄격한 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
@@ -3379,3 +3379,42 @@ wrapper 종료 0은 취득 무결성이고 엄격한 호환성 판정은 여전�
 실패를 연결한다. Stage94의 이전 소스 전체 집계 **4,268/4,424**에 이번 선택 결과를
 더하지 않는다. 다음은 준비한 String API 28개 및 Int·Float·Set 후보의 실제 Rust
 통합·Java 비교·플랫폼 검증이다. M2의 9개 영역과 전체 API·성능·릴리스 조건은 열린다.
+
+### Stage98 — 공통 String API 28개와 실제 플랫폼 선택 검증
+
+String 멤버 28개와 기존 uppercase 반환 identity를 공통 VM에 연결했다. UTF-16,
+고정 JDK 대소문자·word-break, nullable index·slicing·trim·padding·범위 교체·파싱·glob·
+digest와 일반 진단·Host/GC continuation을 공유한다. Java fallback은 추가하지 않았다.
+
+실제 Java 1,209개 query/profile 계약을 두 번 실행한 2,418회 중 성공1,790·일반 오류622·
+내부 오류6을 구분한다. Native·N-API·실제 Chromium은 각2,418회를 모두 취득하고
+비교 가능2,412회를 정확히 일치시켰다. 각 target의19프로그램·38세션·Logger160과
+Turkish/power/경계/identity profile을 보존한다. glob `[]`·`[!`·`[^` 세 계약/6관측은
+필수 미해결이며 all_required_pass=false다. 선택 통과를 전체 String/M2 예외로 쓰지 않는다.
+
+최종 workspace02는242개 test 실행파일·25개 example·2개 doctest library를 포함하여
+1,393통과·0실패·2ignored다. 중첩 child 요약13개는 별도로 유지한다. Python02는180개
+통과이며 이전168개 실행의 failure3·error2를 보존한다. workspace·xtask·fmt·Clippy·
+Wasm·Python·manifest/inventory freshness의8종을 검증했다. fmt04는 Python 테스트
+세 파일만 달라 Rust/build 입력이 같은 범위에서 재사용했다. xtask01도 실제 읽는 입력과
+선택 사전 밖의 참조 메타데이터 두 파일을 원래 raw bookend/현재 값과 대조한 이전 소스
+증거다. 두 검사를 최종 소스에서 다시 실행했다고 기록하지 않는다.
+
+원본 String 관련 모듈6개는 같은 argv/URI/환경·stdout/stderr/exit·공개 파일/쓰기 map에서
+6/6 일치했다(정상4·예상 Pkl 오류2). native private 상태는 전후 불변을 확인했으며 Java의
+Host-private cache와 서로 같다고 주장하지 않는다. 새 M1 취득에서 target별 strict6,078개와
+별도 architecture gate가 통과했고 Node·Chromium 각각92개 시나리오를 확인했다.
+
+최초 compile·padding/lifecycle fixture·fmt·Clippy collector·Python·portable 실패를 보존한다.
+Clippy02의 Cargo0과 after bookend 누락은 완료된 검증이 아니다. 첫 portable 실행의
+Wasm link 실패는 고정 LLVM library를 찾는 process-local DYLD_FALLBACK_LIBRARY_PATH로
+재시도했다. 도구체인/소스는 바꾸지 않았으며 성공한 이전 N-API Cargo의 debug-strip 경고도
+남긴다. 재사용 unit hash는 원래 compiler-time 기록이 아닌 successor admission-time 관측이다.
+
+[Stage98 체크포인트](reports/m2/stage98-string-apis-checkpoint.json)와
+`stage98-string-apis-evidence` parts에 실제 local 출처를 묶는다. 이 문서 후보는 실제 public
+checkpoint가 생기고 독립 증거 검토를 통과한 뒤에만 적용한다. Stage94의 이전 소스
+4,268/4,424 집계는 바꾸지 않는다. 전체 ready4,442 재실행, 미구현71·미연결32, 원래 List
+Java heap 오류와 남은 언어/API/릴리스 플랫폼/성능 gate는 열려 있다. 다음 실행은 해당 원본
+입력의 실제 실패 경계와 미해결 요구사항을 기준으로 이어가며 준비·목록 수를 통과로 세지 않는다.
+

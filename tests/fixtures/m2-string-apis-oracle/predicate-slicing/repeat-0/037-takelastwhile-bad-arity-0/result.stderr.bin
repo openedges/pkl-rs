@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got type `Function0`.
+Value: new Function0 {}
+
+1504 | external function takeLastWhile(predicate: (String) -> Boolean): String
+                                                  ^^^^^^^^^^^^^^^^^^^
+at pkl.base#String.takeLastWhile (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1504)
+
+1 | ("".takeLastWhile(() -> true)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

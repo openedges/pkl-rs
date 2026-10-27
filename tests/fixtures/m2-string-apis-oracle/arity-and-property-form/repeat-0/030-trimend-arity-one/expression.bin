@@ -1,0 +1,1 @@
+("abc".trimEnd(throw("extra argument"))).toString()

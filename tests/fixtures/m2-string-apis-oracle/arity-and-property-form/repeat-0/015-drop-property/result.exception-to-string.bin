@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `drop` in object of type `String`.
+
+1 | ("abc".drop).toString()
+     ^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+dropLast(n)
+dropWhile(predicate)
+dropLastWhile(predicate)

@@ -1,0 +1,60 @@
+An unexpected error has occurred. Would you mind filing a bug report?
+Cmd+Double-click the link below to open an issue.
+Please copy and paste the entire error output into the issue's description.
+
+https://github.com/apple/pkl/issues/new
+
+java.lang.StringIndexOutOfBoundsException%3A%20Index%202%20out%20of%20bounds%20for%20length%202
+
+–– Pkl Error ––
+Index 2 out of bounds for length 2
+
+1330 | external isGlobPattern: Boolean
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#String.isGlobPattern (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1330)
+
+1 | ("[!".isGlobPattern).toString()
+     ^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Pkl 0.32.0 (macOS 27.0, Java 21.0.12.1)
+
+java.lang.StringIndexOutOfBoundsException: Index 2 out of bounds for length 2
+	at java.base/jdk.internal.util.Preconditions$1.apply(Preconditions.java:55)
+	at java.base/jdk.internal.util.Preconditions$1.apply(Preconditions.java:52)
+	at java.base/jdk.internal.util.Preconditions$4.apply(Preconditions.java:213)
+	at java.base/jdk.internal.util.Preconditions$4.apply(Preconditions.java:210)
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:98)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:106)
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:302)
+	at java.base/java.lang.String.checkIndex(String.java:4822)
+	at java.base/java.lang.StringLatin1.charAt(StringLatin1.java:46)
+	at java.base/java.lang.String.charAt(String.java:1544)
+	at org.pkl.core.util.GlobResolver.consumeCharacterClass(GlobResolver.java:114)
+	at org.pkl.core.util.GlobResolver.toRegexString(GlobResolver.java:195)
+	at org.pkl.core.stdlib.base.StringNodes$isGlobPattern.eval(StringNodes.java:175)
+	at org.pkl.core.stdlib.base.StringNodesFactory$isGlobPatternNodeGen.executeGeneric(StringNodesFactory.java:591)
+	at org.pkl.core.ast.member.TypedPropertyNode.executeImpl(TypedPropertyNode.java:47)
+	at org.pkl.core.ast.PklRootNode.execute(PklRootNode.java:46)
+	at com.oracle.truffle.api.impl.DefaultCallTarget.call(DefaultCallTarget.java:118)
+	at com.oracle.truffle.api.impl.DefaultDirectCallNode.call(DefaultDirectCallNode.java:59)
+	at org.pkl.core.ast.expression.member.ReadPropertyNode.evalOther(ReadPropertyNode.java:127)
+	at org.pkl.core.ast.expression.member.ReadPropertyNodeGen.executeAndSpecialize(ReadPropertyNodeGen.java:174)
+	at org.pkl.core.ast.expression.member.ReadPropertyNodeGen.executeGeneric(ReadPropertyNodeGen.java:104)
+	at org.pkl.core.ast.expression.member.InvokeMethodVirtualNodeGen.executeGeneric(InvokeMethodVirtualNodeGen.java:143)
+	at org.pkl.core.ast.SimpleRootNode.executeImpl(SimpleRootNode.java:53)
+	at org.pkl.core.ast.PklRootNode.execute(PklRootNode.java:46)
+	at com.oracle.truffle.api.impl.DefaultCallTarget.call(DefaultCallTarget.java:118)
+	at com.oracle.truffle.api.impl.DefaultIndirectCallNode.call(DefaultIndirectCallNode.java:53)
+	at org.pkl.core.runtime.VmUtils.evaluateExpression(VmUtils.java:969)
+	at org.pkl.core.EvaluatorImpl.lambda$evaluateExpressionString$0(EvaluatorImpl.java:267)
+	at org.pkl.core.EvaluatorImpl.lambda$doEvaluate$0(EvaluatorImpl.java:470)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:388)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at CollectionEveryOracle.main(CollectionEveryOracle.java:102)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at jdk.compiler/com.sun.tools.javac.launcher.Main.execute(Main.java:484)
+	at jdk.compiler/com.sun.tools.javac.launcher.Main.run(Main.java:208)
+	at jdk.compiler/com.sun.tools.javac.launcher.Main.main(Main.java:135)

@@ -1,0 +1,1 @@
+("a😀b".replaceRange(4, 5, "\u{D800}")).toString()

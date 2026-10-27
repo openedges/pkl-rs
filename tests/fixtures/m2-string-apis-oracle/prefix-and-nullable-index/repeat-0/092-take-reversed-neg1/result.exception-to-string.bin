@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected a positive number, but got `-1`.
+
+1 | ("\u{DC00}\u{D800}".take(-1)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

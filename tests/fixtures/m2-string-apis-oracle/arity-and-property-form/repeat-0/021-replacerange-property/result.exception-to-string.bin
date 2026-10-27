@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `replaceRange` in object of type `String`.
+
+1 | ("abc".replaceRange).toString()
+     ^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+replaceLast(pattern, replacement)
+replaceAll(pattern, replacement)
+replaceFirst(pattern, replacement)
+replaceAllMapped(pattern, mapper)
+replaceLastMapped(pattern, mapper)
+replaceFirstMapped(pattern, mapper)

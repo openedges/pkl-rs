@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Type constraint `length == 1` violated.
+Value: "ab"
+
+1244 | typealias Char = String(length == 1)
+                               ^^^^^^^^^^^
+at pkl.base#String.padEnd (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1244)
+
+1 | ("x".padEnd(4, "ab")).toString()
+     ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Type constraint `take(1) == "b"` violated.
+Value: "abc"
+
+1 | ("abc" as String(take(1) == "b")).toString()
+                     ^^^^^^^^^^^^^^
+at  (repl:text)

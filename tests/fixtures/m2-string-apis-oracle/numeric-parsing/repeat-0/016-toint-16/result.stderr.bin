@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Cannot parse string as `Int`.
+String: "𝟏"
+
+1 | ("\u{1D7CF}".toInt()).toString()
+     ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

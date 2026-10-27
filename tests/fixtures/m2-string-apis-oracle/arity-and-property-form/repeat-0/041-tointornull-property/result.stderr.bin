@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Cannot find property `toIntOrNull` in object of type `String`.
+
+1 | ("abc".toIntOrNull).toString()
+     ^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+toInt()
+toFloatOrNull()
+getOrNull(index)
+lastIndexOfOrNull(pattern)

@@ -1,0 +1,56 @@
+string	toboolean-00	("true".toBoolean()).toString()	000-toboolean-00
+string	toboolean-01	("false".toBoolean()).toString()	001-toboolean-01
+string	toboolean-02	("TRUE".toBoolean()).toString()	002-toboolean-02
+string	toboolean-03	("fAlSe".toBoolean()).toString()	003-toboolean-03
+string	toboolean-04	("falſe".toBoolean()).toString()	004-toboolean-04
+string	toboolean-05	(" true".toBoolean()).toString()	005-toboolean-05
+string	toboolean-06	("false ".toBoolean()).toString()	006-toboolean-06
+string	toboolean-07	("1".toBoolean()).toString()	007-toboolean-07
+string	toboolean-08	("".toBoolean()).toString()	008-toboolean-08
+string	toboolean-09	("truK".toBoolean()).toString()	009-toboolean-09
+string	toboolean-10	("\u{D800}".toBoolean()).toString()	010-toboolean-10
+string	toboolean-11	("FALSE\u{0000}".toBoolean()).toString()	011-toboolean-11
+string	tobooleanornull-00	("true".toBooleanOrNull()).toString()	012-tobooleanornull-00
+string	tobooleanornull-01	("false".toBooleanOrNull()).toString()	013-tobooleanornull-01
+string	tobooleanornull-02	("TRUE".toBooleanOrNull()).toString()	014-tobooleanornull-02
+string	tobooleanornull-03	("fAlSe".toBooleanOrNull()).toString()	015-tobooleanornull-03
+string	tobooleanornull-04	("falſe".toBooleanOrNull()).toString()	016-tobooleanornull-04
+string	tobooleanornull-05	(" true".toBooleanOrNull()).toString()	017-tobooleanornull-05
+string	tobooleanornull-06	("false ".toBooleanOrNull()).toString()	018-tobooleanornull-06
+string	tobooleanornull-07	("1".toBooleanOrNull()).toString()	019-tobooleanornull-07
+string	tobooleanornull-08	("".toBooleanOrNull()).toString()	020-tobooleanornull-08
+string	tobooleanornull-09	("truK".toBooleanOrNull()).toString()	021-tobooleanornull-09
+string	tobooleanornull-10	("\u{D800}".toBooleanOrNull()).toString()	022-tobooleanornull-10
+string	tobooleanornull-11	("FALSE\u{0000}".toBooleanOrNull()).toString()	023-tobooleanornull-11
+string	md5-00	("".md5).toString()	024-md5-00
+string	md5-01	("abc".md5).toString()	025-md5-01
+string	md5-02	("The quick brown fox jumps over the lazy dog".md5).toString()	026-md5-02
+string	md5-03	("😀".md5).toString()	027-md5-03
+string	md5-04	("\u{D800}".md5).toString()	028-md5-04
+string	md5-05	("\u{DC00}".md5).toString()	029-md5-05
+string	md5-06	("\u{D800}\u{DC00}".md5).toString()	030-md5-06
+string	md5-07	("\u{0000}\r\n".md5).toString()	031-md5-07
+string	sha1-00	("".sha1).toString()	032-sha1-00
+string	sha1-01	("abc".sha1).toString()	033-sha1-01
+string	sha1-02	("The quick brown fox jumps over the lazy dog".sha1).toString()	034-sha1-02
+string	sha1-03	("😀".sha1).toString()	035-sha1-03
+string	sha1-04	("\u{D800}".sha1).toString()	036-sha1-04
+string	sha1-05	("\u{DC00}".sha1).toString()	037-sha1-05
+string	sha1-06	("\u{D800}\u{DC00}".sha1).toString()	038-sha1-06
+string	sha1-07	("\u{0000}\r\n".sha1).toString()	039-sha1-07
+string	sha256-00	("".sha256).toString()	040-sha256-00
+string	sha256-01	("abc".sha256).toString()	041-sha256-01
+string	sha256-02	("The quick brown fox jumps over the lazy dog".sha256).toString()	042-sha256-02
+string	sha256-03	("😀".sha256).toString()	043-sha256-03
+string	sha256-04	("\u{D800}".sha256).toString()	044-sha256-04
+string	sha256-05	("\u{DC00}".sha256).toString()	045-sha256-05
+string	sha256-06	("\u{D800}\u{DC00}".sha256).toString()	046-sha256-06
+string	sha256-07	("\u{0000}\r\n".sha256).toString()	047-sha256-07
+string	sha256int-00	("".sha256Int).toString()	048-sha256int-00
+string	sha256int-01	("abc".sha256Int).toString()	049-sha256int-01
+string	sha256int-02	("The quick brown fox jumps over the lazy dog".sha256Int).toString()	050-sha256int-02
+string	sha256int-03	("😀".sha256Int).toString()	051-sha256int-03
+string	sha256int-04	("\u{D800}".sha256Int).toString()	052-sha256int-04
+string	sha256int-05	("\u{DC00}".sha256Int).toString()	053-sha256int-05
+string	sha256int-06	("\u{D800}\u{DC00}".sha256Int).toString()	054-sha256int-06
+string	sha256int-07	("\u{0000}\r\n".sha256Int).toString()	055-sha256int-07

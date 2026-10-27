@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Cannot find property `toFloatOrNull` in object of type `String`.
+
+1 | ("abc".toFloatOrNull).toString()
+     ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+toFloat()
+toIntOrNull()
+toBooleanOrNull()

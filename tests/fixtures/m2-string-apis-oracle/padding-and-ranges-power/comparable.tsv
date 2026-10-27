@@ -1,0 +1,46 @@
+string	padstart-empty	("".padStart(0, "x")).toString()	000-padstart-empty
+string	padstart-one	("".padStart(1, "x")).toString()	001-padstart-one
+string	padstart-ascii	("ab".padStart(4, "x")).toString()	002-padstart-ascii
+string	padstart-pair	("😀".padStart(3, "🏀")).toString()	003-padstart-pair
+string	padstart-high	("a".padStart(3, "\u{D800}")).toString()	004-padstart-high
+string	padstart-negative	("abc".padStart(-1, "x")).toString()	005-padstart-negative
+string	padstart-minimum	("abc".padStart(-9223372036854775808, "x")).toString()	006-padstart-minimum
+string	padstart-no-op	("abc".padStart(2, "x")).toString()	007-padstart-no-op
+string	padstart-large-checked	("x".padStart(2147483648, "x")).toString()	008-padstart-large-checked
+string	padstart-max-checked	("x".padStart(9223372036854775807, "x")).toString()	009-padstart-max-checked
+string	padstart-empty-pad-no-op	("x".padStart(0, "")).toString()	010-padstart-empty-pad-no-op
+string	padstart-empty-pad-grow	("x".padStart(4, "")).toString()	011-padstart-empty-pad-grow
+string	padstart-two-pad-no-op	("x".padStart(0, "ab")).toString()	012-padstart-two-pad-no-op
+string	padstart-two-pad-grow	("x".padStart(4, "ab")).toString()	013-padstart-two-pad-grow
+string	padstart-first-type	("x".padStart("bad", 42)).toString()	014-padstart-first-type
+string	padstart-second-eval	("x".padStart("bad", throw("second argument"))).toString()	015-padstart-second-eval
+string	padend-empty	("".padEnd(0, "x")).toString()	016-padend-empty
+string	padend-one	("".padEnd(1, "x")).toString()	017-padend-one
+string	padend-ascii	("ab".padEnd(4, "x")).toString()	018-padend-ascii
+string	padend-pair	("😀".padEnd(3, "🏀")).toString()	019-padend-pair
+string	padend-high	("a".padEnd(3, "\u{D800}")).toString()	020-padend-high
+string	padend-negative	("abc".padEnd(-1, "x")).toString()	021-padend-negative
+string	padend-minimum	("abc".padEnd(-9223372036854775808, "x")).toString()	022-padend-minimum
+string	padend-no-op	("abc".padEnd(2, "x")).toString()	023-padend-no-op
+string	padend-large-checked	("x".padEnd(2147483648, "x")).toString()	024-padend-large-checked
+string	padend-max-checked	("x".padEnd(9223372036854775807, "x")).toString()	025-padend-max-checked
+string	padend-empty-pad-no-op	("x".padEnd(0, "")).toString()	026-padend-empty-pad-no-op
+string	padend-empty-pad-grow	("x".padEnd(4, "")).toString()	027-padend-empty-pad-grow
+string	padend-two-pad-no-op	("x".padEnd(0, "ab")).toString()	028-padend-two-pad-no-op
+string	padend-two-pad-grow	("x".padEnd(4, "ab")).toString()	029-padend-two-pad-grow
+string	padend-first-type	("x".padEnd("bad", 42)).toString()	030-padend-first-type
+string	padend-second-eval	("x".padEnd("bad", throw("second argument"))).toString()	031-padend-second-eval
+string	range-empty	("a😀b".replaceRange(0, 0, "\u{D800}")).toString()	032-range-empty
+string	range-prefix	("a😀b".replaceRange(0, 1, "\u{D800}")).toString()	033-range-prefix
+string	range-middle	("a😀b".replaceRange(1, 2, "\u{D800}")).toString()	034-range-middle
+string	range-all	("a😀b".replaceRange(0, 3, "\u{D800}")).toString()	035-range-all
+string	range-end	("a😀b".replaceRange(3, 3, "\u{D800}")).toString()	036-range-end
+string	range-start-neg	("a😀b".replaceRange(-1, 0, "\u{D800}")).toString()	037-range-start-neg
+string	range-end-neg	("a😀b".replaceRange(0, -1, "\u{D800}")).toString()	038-range-end-neg
+string	range-start-large	("a😀b".replaceRange(4, 5, "\u{D800}")).toString()	039-range-start-large
+string	range-end-large	("a😀b".replaceRange(1, 4, "\u{D800}")).toString()	040-range-end-large
+string	range-reverse	("a😀b".replaceRange(2, 1, "\u{D800}")).toString()	041-range-reverse
+string	range-wrapped-min	("a😀b".replaceRange(1, -9223372036854775808, "\u{D800}")).toString()	042-range-wrapped-min
+string	range-max	("a😀b".replaceRange(0, 9223372036854775807, "\u{D800}")).toString()	043-range-max
+string	range-type-order	("abc".replaceRange("bad", 1.0, 42)).toString()	044-range-type-order
+string	range-eval-order	("abc".replaceRange("bad", 1, throw("replacement"))).toString()	045-range-eval-order

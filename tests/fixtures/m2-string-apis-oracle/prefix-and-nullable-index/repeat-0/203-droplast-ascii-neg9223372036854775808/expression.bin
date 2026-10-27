@@ -1,0 +1,1 @@
+("abc".dropLast(-9223372036854775808)).toString()

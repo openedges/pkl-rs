@@ -1,5 +1,31 @@
 # M2 language evidence
 
+## Stage98 shared String API checkpoint
+
+The [checkpoint](stage98-string-apis-checkpoint.json) records 28 shared String
+routes and uppercase result identity, with exact source/artifact/raw identities
+and `stage98-string-apis-evidence` archive parts. Native, N-API and actual Chromium
+each acquire all **2,418 observations** and match **2,412 comparable observations**
+from 1,209 query/profile contracts repeated twice, including 160 Logger events.
+Three glob contracts retain **six required unresolved observations per target**;
+`all_required_pass` remains false.
+
+The final workspace passes **1,393 tests, zero failures and two ignored tests**;
+Python passes **180 tests**. All eight local check roles pass with scoped reuse
+of unchanged formatter/xtask inputs. A fresh M1 acquisition passes **6,078 strict
+comparisons per target** and the separate architecture contract, with 92 Node and
+Chromium checks each. Original String-related native modules match **6/6**: four
+successes and two expected Pkl errors, including public file/write maps. Native
+private state is unchanged; Java Host-private cache bytes are not compared across
+runtimes.
+
+Earlier compiler/test/collector/Python/platform failures and the N-API debug-strip
+warning are retained. The successful Wasm-link retry uses a process-local pinned
+LLVM library path; reused unit hashes are successor admission-time identities,
+not original compiler-time hash bookends. Stage94's **4,268/4,424** aggregate and
+the remaining full ready-corpus, M2/API/release/performance obligations are
+unchanged. This local selected evidence does not close full String compatibility.
+
 ## Stage97 expression adapter and token checkpoint
 
 The [checkpoint](stage97-token-expression-checkpoint.json) records the native

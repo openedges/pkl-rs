@@ -1,0 +1,7 @@
+module stage98
+function pcfUpper(s) = (new PcfRenderer { converters { [String] = (v) -> trace(v.toUpperCase()) } }).renderDocument(s)
+function propertiesUpper(s) = (new PropertiesRenderer { converters { [String] = (v) -> trace(v.toUpperCase()) } }).renderDocument(s)
+function pcfIdentity(s) = (new PcfRenderer { converters { [String] = (v) -> trace(v) } }).renderDocument(s)
+function jsonUpper(s) = (new JsonRenderer { converters { [String] = (v) -> trace(v.toUpperCase()) } }).renderDocument(s)
+function pcfValueUpper(s) = (new PcfRenderer { converters { [String] = (v) -> trace(v.toUpperCase()) } }).renderValue(s)
+function pcfPlain(s) = (new PcfRenderer {}).renderDocument(s)

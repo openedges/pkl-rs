@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot parse string as `Float`.
+String: "infinity"
+
+1 | ("infinity".toFloat()).toString()
+     ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

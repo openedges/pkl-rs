@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "b"
+
+1 | ("ab".dropLastWhile((ch: Int) -> true)).toString()
+                             ^^^
+at repl:text.<function#1> (repl:text)
+
+1 | ("ab".dropLastWhile((ch: Int) -> true)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

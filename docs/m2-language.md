@@ -1,5 +1,55 @@
 # M2 language verification
 
+## Stage98 shared String API checkpoint
+
+The shared VM adds the 28 previously missing String member routes and corrects
+inherited uppercase result identity. Case conversion, nullable indexing,
+prefix/suffix and predicate slicing, trimming, padding, range replacement,
+numeric/Boolean parsing, glob classification and digests retain UTF-16 values,
+pinned JDK case/word-break rules and ordinary type-check/Host continuations.
+Production evaluation uses no Java fallback.
+
+Pinned Java has **1,209 query/profile contracts repeated twice**: 1,790 values,
+622 ordinary errors and six internal-error observations. Native, N-API and actual
+Chromium each attempt all **2,418 observations** in 19 programs/38 sessions and
+match all **2,412 comparable observations**, including 160 ordered Logger events.
+Default, Turkish, power-assertion, boundary and result-identity profiles remain
+separate. The three glob contracts `[]`, `[!` and `[^` retain six required
+unresolved observations per target; `all_required_pass` remains false. Complete
+status, UTF-8/UTF-16 stdout/stderr and Logger fields are compared; Java exception
+class/cause metadata is retained outside the portable comparison boundary.
+
+One final literal workspace command passes **1,393 tests, zero failures and two
+ignored tests** across 242 test executables, 25 compile-only examples and two
+doctest libraries. The full Python rerun passes **180 tests**. All eight local
+check roles pass with explicit source scope: workspace, xtask, formatting,
+Clippy, Wasm, Python, manifest freshness and inventory freshness. Formatting
+reuses its earlier result because only three Python test files changed; xtask
+reuses its earlier result after checking its unchanged inputs and two separately
+pinned reference metadata files. Neither is relabeled as a fresh final-source run.
+
+The six original String-related native module comparisons now match Java's full
+stdout/stderr/exit and public file/write maps: four successes and two expected
+Pkl errors. Native private state stays unchanged; Java Host-private cache bytes
+are provenance, not cross-runtime comparison channels. One fresh M1 acquisition
+passes **6,078 strict comparisons per target**, with the separate architecture
+contract and **92 Node/Chromium checks each**.
+
+Earlier compiler, padding/lifecycle-fixture, formatting, Clippy collector,
+168-test Python and first platform failures remain preserved. The successful
+portable retry uses a process-local `DYLD_FALLBACK_LIBRARY_PATH` for the pinned
+Rust toolchain's LLVM library; no toolchain or source change is inferred. The
+successful earlier N-API Cargo build retains its failed debug-strip warning.
+Reused unit artifact hashes are captured at successor admission, not retroactively
+claimed as original compiler-time hash bookends.
+
+This is a local selected checkpoint. The original full 4,442-ready union has not
+been rerun here; Stage94's earlier-source **4,268/4,424** aggregate is unchanged.
+The 71 unimplemented and 32 unmapped cases, original List Java heap error,
+remaining language/API and release-platform obligations stay open. No complete
+String/M2 or performance result is claimed. Exact evidence is in the
+[Stage98 checkpoint](../reports/m2/stage98-string-apis-checkpoint.json).
+
 ## Stage97 expression adapter and token requirements
 
 The filesystem expression probes now use the shared module evaluator for complete

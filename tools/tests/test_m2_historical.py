@@ -64,12 +64,25 @@ class HistoricalRegistryTests(unittest.TestCase):
     def test_total_ids_and_other_original_contracts_unchanged(self):
         manifest=m2_manifest.current_manifest()
         originals=json.loads((self.root/'compatibility/regressions.json').read_bytes())['cases']
-        self.assertEqual(len(manifest['cases']),4527)
+        self.assertEqual(len(manifest['cases']),4527 + 18)
+        token_ids={f'token-stage97-{token}-{boundary}'
+            for token in ('true','false','null')
+            for boundary in ('identifier-classes','delimiter-classes','literal-at-EOF',
+                             'comment-newline-success','supplementary-identifier-boundary',
+                             'reserved-bare-declaration')}
+        tokens=[row for row in manifest['cases'] if row['id'].startswith('token-stage97-')]
+        self.assertEqual(len(tokens),18)
+        self.assertEqual({row['id'] for row in tokens},token_ids)
+        for row in tokens:
+            self.assertEqual(row['adapter'],'language-api-string')
+            self.assertEqual(row['execution']['state'],'ready')
+            self.assertTrue(row['required'])
+            self.assertNotIn('upstream_case',row)
         candidates=[x for x in manifest['cases'] if x['id'].startswith('rev1-candidate:')]
         self.assertEqual(len(candidates),40)
         self.assertEqual(sum(x['execution']['state']=='ready' for x in candidates),8)
         self.assertEqual(sum(x['execution']['state']=='unmapped' for x in candidates),32)
-        self.assertEqual(manifest['counts']['cases_by_execution'],{'ready':4424,'unimplemented':71,'unmapped':32})
+        self.assertEqual(manifest['counts']['cases_by_execution'],{'ready':4442,'unimplemented':71,'unmapped':32})
         for original in originals:
             case=next(x for x in manifest['cases'] if x['id']=='m2:'+original['id'])
             self.assertEqual(case['regression_case'],original)
@@ -77,7 +90,7 @@ class HistoricalRegistryTests(unittest.TestCase):
             self.assertIn('--color=never',case['regression_case']['command'])
         selected=m2_language.selected_cases(manifest,[historical.ADAPTER])
         self.assertEqual([x['id'] for x in selected],[x['id'] for x in self.registry['cases']])
-        self.assertEqual(len(m2_language.selected_cases(manifest)),4424)
+        self.assertEqual(len(m2_language.selected_cases(manifest)),4442)
         self.assertTrue(any(selected[0]['id'] in error for error in m2_manifest.full_gate_failures(manifest,[])))
 
     def test_unselected_promotion_and_missing_id_rejected(self):
@@ -144,7 +157,7 @@ class MainRunnerDispatchTests(unittest.TestCase):
                 self.assertEqual(report['schema_version'],6)
                 self.assertEqual(report['selection']['case_ids'],[c['id'] for c in cases])
                 self.assertEqual(report['selected_count'],8)
-                self.assertEqual(report['inventory_counts']['cases'],4527)
+                self.assertEqual(report['inventory_counts']['cases'],4527 + 18)
                 self.assertEqual(report['module_candidate']['source_binding'],'unbound-caller-supplied')
                 self.assertEqual(acquire.call_count,1)
                 self.assertEqual(acquire.call_args.args[2],cases)
@@ -313,7 +326,11 @@ class MixedProfileTests(unittest.TestCase):
     def test_main_runner_emits_and_verifies_mixed_module_and_historical_profiles(self):
         fixture=self.fixture(profile=m2_workspace.DEFAULT_PROFILE)
         with tempfile.TemporaryDirectory() as folder:
-            root=Path(folder);output=root/'target/evidence'
+            # macOS TemporaryDirectory may spell its existing parent through
+            # /var -> /private/var. Use the physical fixture root; production
+            # rejection of symlinks inside managed paths remains unchanged.
+            root=Path(folder).resolve(strict=True);output=root/'target/evidence'
+            compat.no_symlinks(root)
             for name,data in fixture.source_payloads.items():
                 path=root/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(data)
             for name,data in fixture.payloads.items():

@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+predicate
+
+1 | ("ab".dropWhile((ch) -> throw("predicate"))).toString()
+                            ^^^^^^^^^^^^^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | ("ab".dropWhile((ch) -> throw("predicate"))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

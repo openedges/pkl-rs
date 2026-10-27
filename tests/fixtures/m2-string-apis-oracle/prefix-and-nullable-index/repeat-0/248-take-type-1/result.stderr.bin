@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `Float`.
+Value: 1.0
+
+1493 | external function take(n: Int): String
+                                 ^^^
+at pkl.base#String.take (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1493)
+
+1 | ("abc".take(1.0)).toString()
+     ^^^^^^^^^^^^^^^
+at  (repl:text)

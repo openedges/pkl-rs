@@ -1,0 +1,13 @@
+org.pkl.core.PklException: –– Pkl Error ––
+The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `String`.
+Value: "?"
+
+2 | function pcfLower(s) = (new PcfRenderer { converters { [String] = (v) -> trace(v.toLowerCase()) } }).renderDocument(s)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage98#pcfLower (file:///stage98/lowercase-renderer-identity.pkl)
+
+This value was converted during rendering. Previous: "?". After: "?".
+
+1 | pcfLower("\u{DC00}")
+    ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

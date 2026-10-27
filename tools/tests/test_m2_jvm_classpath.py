@@ -56,7 +56,11 @@ def synthetic_report(output, original_root):
     """Synthetic process/artifact evidence, explicitly unrelated to Java results."""
     snapshot = output / 'sources'
     profile = module.load_profile()
-    initial = {module.PROFILE, 'compatibility/corpus.json', module.INPUT,
+    # source_paths reads the historical registry before enumerating its raw
+    # resources. Bootstrap this input alongside the JVM profile, not a mocked
+    # or empty catalog that would silently omit historical source evidence.
+    initial = {module.PROFILE, module.m2_source_inputs.HISTORICAL,
+               'compatibility/corpus.json', module.INPUT,
                *profile['reference']['sources'], *profile['classpath_resources']}
     for name in initial:
         path = snapshot / name
@@ -192,6 +196,12 @@ class OfflineReportTests(unittest.TestCase):
             report = module.verify_report(self.output)
         self.assertEqual(module.contract_failures(self.output, report), [])
         self.assertFalse(Path(report['workspace']).exists())
+        registry_path = module.m2_source_inputs.HISTORICAL
+        self.assertIn(registry_path, report['sources'])
+        registry = compat.read_json(self.output / 'sources' / registry_path)
+        self.assertEqual(len(registry['cases']), 8)
+        for resource in registry['resources']:
+            self.assertEqual(report['sources'][resource['path']], resource['sha256'])
 
     def test_unlisted_directory_symlink_is_rejected_without_following_it(self):
         with tempfile.TemporaryDirectory() as temporary:

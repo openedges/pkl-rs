@@ -1,0 +1,1 @@
+("abca".takeLastWhile((ch) -> true)).toString()

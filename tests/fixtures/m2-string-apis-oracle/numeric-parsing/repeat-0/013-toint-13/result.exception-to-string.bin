@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot parse string as `Int`.
+String: "\t1"
+
+1 | ("\t1".toInt()).toString()
+     ^^^^^^^^^^^^^
+at  (repl:text)

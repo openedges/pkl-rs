@@ -1,0 +1,6 @@
+–– Pkl Error ––
+extra argument
+
+1 | ("abc".toBoolean(throw("extra argument"))).toString()
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

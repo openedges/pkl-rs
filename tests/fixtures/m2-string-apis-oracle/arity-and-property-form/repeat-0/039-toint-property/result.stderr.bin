@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot find property `toInt` in object of type `String`.
+
+1 | ("abc".toInt).toString()
+     ^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+toIntOrNull()

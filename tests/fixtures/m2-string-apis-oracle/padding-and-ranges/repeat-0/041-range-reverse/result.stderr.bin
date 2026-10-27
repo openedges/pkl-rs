@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Character index `1` is out of range `2`..`3`.
+String: "a😀b"
+
+1 | ("a😀b".replaceRange(2, 1, "\u{D800}")).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

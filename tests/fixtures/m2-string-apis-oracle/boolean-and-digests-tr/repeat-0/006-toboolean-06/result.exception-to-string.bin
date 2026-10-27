@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot parse string as `Boolean`.
+String: "false "
+
+1 | ("false ".toBoolean()).toString()
+     ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,23 @@
+[
+  {
+    "program": "glob-syntax",
+    "authored_id": "glob-15",
+    "wire_label": "015-glob-15",
+    "expression": "(\"[]\".isGlobPattern).toString()",
+    "reason": "Pinned Java emitted an internal oracle error; no ordinary language-result authority exists. Rust unsupported protocol is not claimed compatible."
+  },
+  {
+    "program": "glob-syntax",
+    "authored_id": "glob-17",
+    "wire_label": "017-glob-17",
+    "expression": "(\"[!\".isGlobPattern).toString()",
+    "reason": "Pinned Java emitted an internal oracle error; no ordinary language-result authority exists. Rust unsupported protocol is not claimed compatible."
+  },
+  {
+    "program": "glob-syntax",
+    "authored_id": "glob-18",
+    "wire_label": "018-glob-18",
+    "expression": "(\"[^\".isGlobPattern).toString()",
+    "reason": "Pinned Java emitted an internal oracle error; no ordinary language-result authority exists. Rust unsupported protocol is not claimed compatible."
+  }
+]

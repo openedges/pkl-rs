@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Boolean`, but got type `Int`.
+Value: 42
+
+1 | ("ab".dropLastWhile((ch) -> 42)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

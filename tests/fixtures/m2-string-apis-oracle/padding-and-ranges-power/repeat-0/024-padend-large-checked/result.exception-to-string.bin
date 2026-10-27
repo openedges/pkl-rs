@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Int value `2,147,483,648` is too large (only Int32 supported here).
+
+1 | ("x".padEnd(2147483648, "x")).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

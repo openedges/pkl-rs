@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected a positive number, but got `-9,223,372,036,854,775,808`.
+
+1 | ("a\u{DC00}b".dropLast(-9223372036854775808)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

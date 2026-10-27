@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+extra argument
+
+1 | ("abc".toFloat(throw("extra argument"))).toString()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,1 @@
+("ab".takeWhile((ch: Int) -> true)).toString()

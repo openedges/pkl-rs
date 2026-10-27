@@ -1,0 +1,1 @@
+("a😀b".takeLastWhile((ch) -> ch != "b")).toString()

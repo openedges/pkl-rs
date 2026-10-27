@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `String`.
+Value: "ABC"
+
+2 | function pcfUpper(s) = (new PcfRenderer { converters { [String] = (v) -> trace(v.toUpperCase()) } }).renderDocument(s)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage98#pcfUpper (file:///stage98/uppercase-renderer-identity.pkl)
+
+1 | pcfUpper("ABC")
+    ^^^^^^^^^^^^^^^
+at  (repl:text)
