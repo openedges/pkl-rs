@@ -21,6 +21,32 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+### Stage96 scalar, collection and function APIs
+
+All five required Rust checks pass locally with Rust 1.98.1. The literal workspace
+command, with `--no-fail-fast`, passes **1,358 tests, zero failures and one existing
+ignored probe** across all 238 test executables and two doctest libraries;
+25 examples are compiled. Thirteen nested summaries remain separate. The opt1,
+debug0, stripped, assertions/overflow-enabled, jobs1/incremental0 workspace profile
+is unchanged; Clippy and Wasm use opt0/debug0. Actual targeted compilation and
+workspace `Fresh` reuse have distinct source/dep-info/artifact records.
+
+The 103 Java query/profile contracts run twice on each of Native, N-API and
+Chromium: **206 raw matches per target**, including 60 ordinary errors and
+12 ordered Logger events. Status, UTF-8/UTF-16 stdout/stderr and ordered Logger
+fields are compared directly; Java exception class/cause metadata is retained
+without a Rust equality claim. M1 strict comparison passes 6,078 cases per target;
+its architecture contract is checked separately. Targeted 17 tests are included
+in the workspace total, not added to it. Both earlier targeted failures remain
+recorded, along with their fixes.
+
+Original native CLI comparisons remain **2/5 matches**: the three remaining
+failures expose `Float.toFloat`, `Int.toInt` and `Set.any`. The original List Java
+heap error is retained without a Rust pass. Empty file/write maps do not establish
+nonempty generated-file support. The earlier full-corpus aggregate and full M2,
+API, platform-release and performance gates remain open.
+See the [checkpoint](reports/m2/stage96-core-apis-checkpoint.json).
+
 ### Stage95 PListRenderer
 
 Canonical Rust 1.98.1 formatting, manifest refresh/freshness, xtask verification,

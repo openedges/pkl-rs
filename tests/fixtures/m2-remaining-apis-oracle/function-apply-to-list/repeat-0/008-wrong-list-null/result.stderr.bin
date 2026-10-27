@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected value of type `List`, but got `null`.
+
+2312 | external function applyToList(argumentList: List<Any>): Result
+                                                   ^^^^^^^^^
+at pkl.base#Function.applyToList (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2312)
+
+1 | ((a) -> a).applyToList(null).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

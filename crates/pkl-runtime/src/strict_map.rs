@@ -150,6 +150,96 @@ impl Node {
             }
         }
     }
+
+    fn collision_lookup(&self, hash: i32, shift: u32) -> bool {
+        match self {
+            Self::Collision { .. } => true,
+            Self::Bitmap { slots, .. } => match slots.get(&mask(hash, shift)) {
+                Some(Branch::Node(node)) => node.collision_lookup(hash, shift + 5),
+                _ => false,
+            },
+            Self::Empty => false,
+        }
+    }
+
+    // Called only after the VM has repeated both the hash and the equality
+    // lookup for PersistentHashSet.without. Preserve the original trie shape:
+    // direct bitmap removal retains an empty bitmap, while a vanished child
+    // can collapse its parent or pack an ArrayNode at old count <= 8.
+    fn remove_matched(&mut self, hash: i32, shift: u32, removed: usize) -> bool {
+        match self {
+            Self::Empty => false,
+            Self::Collision {
+                hash: stored,
+                indices,
+            } => {
+                let Some(position) = indices.iter().position(|index| *index == removed) else {
+                    return false;
+                };
+                indices.remove(position);
+                // The persistent Paguro overload uses the probe's hash for
+                // the replacement collision node, even if its hash changed.
+                *stored = hash;
+                if indices.is_empty() {
+                    *self = Self::Empty;
+                }
+                true
+            }
+            Self::Bitmap { array, slots } => {
+                let slot = mask(hash, shift);
+                let Some(branch) = slots.get_mut(&slot) else {
+                    return false;
+                };
+                let (found, remove_slot, direct_leaf) = match branch {
+                    Branch::Leaf(index) => (*index == removed, *index == removed, true),
+                    Branch::Node(node) => {
+                        let found = node.remove_matched(hash, shift + 5, removed);
+                        (found, matches!(node.as_ref(), Self::Empty), false)
+                    }
+                };
+                if !found {
+                    return false;
+                }
+                if remove_slot {
+                    let old_count = slots.len();
+                    slots.remove(&slot);
+                    if *array {
+                        if old_count <= 8 {
+                            *array = false;
+                        }
+                    } else if !direct_leaf && slots.is_empty() {
+                        *self = Self::Empty;
+                    }
+                }
+                true
+            }
+        }
+    }
+
+    fn shift_after_removed(&mut self, removed: usize) {
+        match self {
+            Self::Empty => (),
+            Self::Collision { indices, .. } => {
+                for index in indices {
+                    if *index > removed {
+                        *index -= 1;
+                    }
+                }
+            }
+            Self::Bitmap { slots, .. } => {
+                for branch in slots.values_mut() {
+                    match branch {
+                        Branch::Leaf(index) => {
+                            if *index > removed {
+                                *index -= 1;
+                            }
+                        }
+                        Branch::Node(node) => node.shift_after_removed(removed),
+                    }
+                }
+            }
+        }
+    }
 }
 
 #[derive(Clone, Debug, Default)]
@@ -211,6 +301,41 @@ impl MapIndex {
         }
         let mut result = Vec::with_capacity(self.length);
         self.root.ordered(&mut result);
+        result
+    }
+
+    /// HashCollisionNode.find repeats equality on its first matching entry.
+    pub(crate) fn repeats_lookup_equality(&self, hash: Option<i32>) -> bool {
+        hash.is_some_and(|hash| !self.identity_dependent && self.root.collision_lookup(hash, 0))
+    }
+
+    pub(crate) fn without_matched(&self, hash: Option<i32>, removed: usize) -> Self {
+        assert!(removed < self.length, "stored Set slot");
+        let mut result = self.clone();
+        result.length -= 1;
+        // A recursively partial key may have had a known zero hash when it
+        // was inserted, then expose identity-dependent fields on recomputation.
+        // Lookup already uses the conservative candidate policy for None; keep
+        // the resulting index in that same explicit model after removal.
+        if hash.is_none() {
+            result.identity_dependent = true;
+        }
+        // The identity-dependent model has no complete portable hash trie.
+        if !result.identity_dependent {
+            assert!(
+                result
+                    .root
+                    .remove_matched(hash.expect("routed Set hash"), 0, removed),
+                "matched Set key"
+            );
+            result.root.shift_after_removed(removed);
+        }
+        result.insertion_order.retain(|index| *index != removed);
+        for index in &mut result.insertion_order {
+            if *index > removed {
+                *index -= 1;
+            }
+        }
         result
     }
 }

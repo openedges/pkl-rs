@@ -1,0 +1,12 @@
+session-open mode=string rows=5
+call-enter=string-0-hex
+call-exit=string-0-hex status=success
+call-enter=string-1-too-small
+call-exit=string-1-too-small status=error
+call-enter=string-2-too-large
+call-exit=string-2-too-large status=error
+call-enter=string-3-no-narrow-wrap
+call-exit=string-3-no-narrow-wrap status=error
+call-enter=string-4-bad-type
+call-exit=string-4-bad-type status=error
+session-closed mode=string rows=5 public-calls=5 success=1 errors=4

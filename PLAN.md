@@ -19,7 +19,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: Stage95 PListRenderer 정본 1,341통과·0실패·1ignored; Stage94 전체 4,268/4,424는 별도 이전 소스 결과; 엄격한 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: Stage96 API 5개 보완, 전체 1,358통과·0실패·1ignored, 실제 세 target 206개씩 일치; 원본 3개 실패 보존; Stage94 전체 4,268/4,424는 별도 이전 소스 결과; 엄격한 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
@@ -3316,3 +3316,36 @@ cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked
 `cargo xtask verify`는 참조 소스 고정을 확인합니다. 위 명령은 Java 차등 검증이나 제품 성능 측정을 수행하지 않습니다. 현재 Java 기록·재비교·초기 성능 측정 명령과 실행 범위는 [TESTING.md](TESTING.md)에 정리되어 있습니다. Rust 평가기 구현 후 실제 Java/Rust 비교를 연결합니다. 단순 문서 수정에는 링크·내용·형식 확인 등 변경에 맞는 검증을 수행합니다.
 
 단계별 로드맵과 상세 실행 계획은 이 문서에서 함께 관리합니다. 증거가 생길 때 단계 상태와 다음 작업을 갱신하고, 단계의 범위나 완료 기준이 바뀌면 요약 표와 해당 상세 절을 함께 수정합니다. 설계 결정은 아키텍처에, 검증 계약 변경은 TESTING.md에 반영합니다. 기준 버전·필수 기능·성능 목표를 바꾸는 경우에는 INTENT.md까지 함께 갱신하고 목표 변경 이유를 명시합니다. 실패를 없애기 위한 범위 축소는 일반 구현 진척으로 기록하지 않습니다.
+
+### Stage96 — 숫자·컬렉션·함수 API 보완과 실제 플랫폼 검증
+
+`Float.toInt`, `Int.toRadixString`, `List.getOrNull`, `Set.restOrNull`,
+`Function.applyToList`를 공통 런타임에 구현했다. 런타임과 수명주기는
+`gpt-6-astra / high`, Java 기준·플랫폼 실행과 독립 검토는 각각
+`gpt-6.1-sol / high`에 배정했다. Set 삭제의 반복 hash/equality와 캐시 게시를
+같은 continuation으로 처리하며, 함수 호출은 원래 호출 대상·capture·타입 검사를
+재사용한다. 두 차례 실패에서 발견한 continuation 소실과 unknown-hash 패닉을
+수정했고, 원래 실패 기록은 보존했다.
+
+필수 Rust 검사와 manifest 정합성 검사가 통과했다. 단일 전체 workspace 실행은
+**1,358통과·0실패·기존 ignored 1개**이며 테스트 실행 파일 238개, example 25개,
+doctest 라이브러리 2개를 포함한다. 중첩 실행 요약 13개는 별도로 집계했다.
+선택 검사에서 실제 컴파일한 런타임을 전체 검사에서는 Cargo `Fresh`로 재사용했으며,
+새 컴파일과 재사용의 증거를 구분했다.
+
+Java 103개 query/profile 계약을 두 번씩 실행한 206개 관측은 성공 값 146개·일반
+오류 60개·Logger 12개다. Native·N-API·Chromium에서 각각 206개가 원시 바이트로
+일치했고, 단일 M1 취득의 target별 strict 6,078개 및 별도 구조 계약도 통과했다.
+기존 99개 계약과 새 순환 String-key Set 4개를 구분한다.
+
+원본 CLI 계약은 **2/5 일치**다. 함수 원본 두 개는 일치하며, Float·Int·Set 원본은
+각각 다음 미지원 `Float.toFloat`, `Int.toInt`, `Set.any`까지 진행했다. 이 세 실패와
+원래 List의 Java 힙 오류는 통과로 바꾸지 않는다. JVM identity hash 근사도 남아 있다.
+Stage94의 전체 **4,268/4,424**는 이전 소스 결과로 유지하며 전체 M2 gate는 미완료다.
+[체크포인트](reports/m2/stage96-core-apis-checkpoint.json)에 실제 로컬 증거를 연결한다.
+
+다음 작업은 Stage97의 `TRUE`·`FALSE`·`NULL` 요구사항을 실제 native 결과와 연결해
+완료 여부를 판정하고, Stage98의 누락 String API 28개를 구현하는 것이다.
+Int·Float·Set도 원본의 첫 실패에서 멈추지 않고 전체 멤버와 뒤에 가려진 누락을
+조사했다. 나머지 reflection·Host/모듈 로딩·진단·미연결 사례·전체 코퍼스 재실행은
+기존 M2 전체 실행 순서와 종료 조건에 따라 계속 처리한다.

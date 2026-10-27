@@ -1,0 +1,10 @@
+session-open mode=string rows=4
+call-enter=string-0-warm-string-key
+call-exit=string-0-warm-string-key status=success
+call-enter=string-1-rest
+call-exit=string-1-rest status=success
+call-enter=string-2-rest-contains-key
+call-exit=string-2-rest-contains-key status=success
+call-enter=string-3-rest-equality
+call-exit=string-3-rest-equality status=success
+session-closed mode=string rows=4 public-calls=4 success=4 errors=0

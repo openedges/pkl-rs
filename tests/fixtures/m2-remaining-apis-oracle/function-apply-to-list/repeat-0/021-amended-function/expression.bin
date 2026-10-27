@@ -1,0 +1,1 @@
+(((x) -> new Dynamic { value = x }) { extra = 2 }).applyToList(List(3)).extra.toString()

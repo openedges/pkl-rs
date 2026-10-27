@@ -1,0 +1,2 @@
+module stage96
+hidden key = new Dynamic { a = Set(this, 2).restOrNull.length }

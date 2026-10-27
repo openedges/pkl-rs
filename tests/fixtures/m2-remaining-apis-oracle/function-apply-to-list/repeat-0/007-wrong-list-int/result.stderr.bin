@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `List`, but got type `Int`.
+Value: 1
+
+2312 | external function applyToList(argumentList: List<Any>): Result
+                                                   ^^^^^^^^^
+at pkl.base#Function.applyToList (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2312)
+
+1 | ((a) -> a).applyToList(1).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

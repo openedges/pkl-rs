@@ -1,0 +1,1471 @@
+{
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/CollectionEveryOracle.java",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order",
+    "file:///stage96/derived-set-storage-order.pkl"
+  ],
+  "cleanup_events": [],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01",
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 0,
+  "finished_epoch": 1793066351.2833269,
+  "owned_child_reaped": true,
+  "owned_start": "Tue Oct 27 10:59:10 2026",
+  "pgid": 1582,
+  "pid": 1582,
+  "program": "derived-set-storage-order",
+  "repeat": 0,
+  "rows": [
+    {
+      "directory": "target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order",
+      "expression": "keys.restOrNull.toString()",
+      "id": "keys-rest-order",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 26,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/expression.bin",
+          "sha256": "06b5a88d5e43b78c7da4cc207204c81d343d1365a734811c3e4f2c27be9be4c8"
+        },
+        "expression.code-units.bin": {
+          "bytes": 52,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/expression.code-units.bin",
+          "sha256": "9ca3ad12516874f9d621dd55c7d608b8ef622513b7b9f304c9e3de61b33cabc3"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 9,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/result.stdout.bin",
+          "sha256": "f83d833783113ae15d4636d343af33287bbd8245d8b83a0b97c57821d743f28e"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 18,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/000-keys-rest-order/result.stdout.code-units.bin",
+          "sha256": "1e0ad07ae7ab1892b707b90d40868d8c963fe77b86fafab15845f2d484506600"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained",
+      "expression": "keys.restOrNull.contains(1).toString()",
+      "id": "keys-rest-retained",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 38,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/expression.bin",
+          "sha256": "ded34d8b6ce475b691c4d30c060a6792cb6ce7bdf80a5cbbc50257317a139b12"
+        },
+        "expression.code-units.bin": {
+          "bytes": 76,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/expression.code-units.bin",
+          "sha256": "779a702e471e341836226655b084b5eb50124f044b9b3799a7c99325b797f6fd"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 4,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/result.stdout.bin",
+          "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/001-keys-rest-retained/result.stdout.code-units.bin",
+          "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed",
+      "expression": "keys.restOrNull.contains(3).toString()",
+      "id": "keys-rest-removed",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 38,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/expression.bin",
+          "sha256": "f619fa544ca6039c85dbfbec4fc7adc26c4bc5de2aa26f49be40d62be3acb67b"
+        },
+        "expression.code-units.bin": {
+          "bytes": 76,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/expression.code-units.bin",
+          "sha256": "96fdebbef5224d49b094b57e701c8460fc2a0c86193000ddabfe5f96ac603bee"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 5,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/result.stdout.bin",
+          "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 10,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/002-keys-rest-removed/result.stdout.code-units.bin",
+          "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back",
+      "expression": "keys.restOrNull.add(3).toString()",
+      "id": "keys-rest-add-back",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 33,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/expression.bin",
+          "sha256": "d4117d5dd572c096ad6172f39662d707be664d9bc8bf22e86d65409ae0811245"
+        },
+        "expression.code-units.bin": {
+          "bytes": 66,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/expression.code-units.bin",
+          "sha256": "ab25afe7fe27dd2907705ccbefdffc3fc16735d518443f40050366b430e7f983"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/result.stdout.bin",
+          "sha256": "0b00fa12f9d96df291d0a45c6c0b17194144bf01374b8661fba1f825d233b8e5"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 24,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/003-keys-rest-add-back/result.stdout.code-units.bin",
+          "sha256": "9f167fa4ae1ef28a817b500803a40e2b9d81328cc8e30d8e9a8aeed77ed181c8"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice",
+      "expression": "keys.restOrNull.restOrNull.contains(2).toString()",
+      "id": "keys-rest-twice",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 49,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/expression.bin",
+          "sha256": "277fa1560b6a22c7868c93ae344d2d569a0113b01a44dac7aa0637ce419686f3"
+        },
+        "expression.code-units.bin": {
+          "bytes": 98,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/expression.code-units.bin",
+          "sha256": "d7e3aeb80daef12c259627597ff544b33a57369d0ffdfa5756039a2d3e976a8c"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 4,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/result.stdout.bin",
+          "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/004-keys-rest-twice/result.stdout.code-units.bin",
+          "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest",
+      "expression": "mapped.restOrNull.contains(11).toString()",
+      "id": "mapped-set-rest",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 41,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/expression.bin",
+          "sha256": "e4896ff222543b56e617256863a2ba67462c111f66c5887571890ebb6eaed9f4"
+        },
+        "expression.code-units.bin": {
+          "bytes": 82,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/expression.code-units.bin",
+          "sha256": "cf1cc16c1a5fdc90e5fb7bb1c121cac4b45e9349b6dc6af9048b9d2b43411f58"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 4,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/result.stdout.bin",
+          "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/005-mapped-set-rest/result.stdout.code-units.bin",
+          "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest",
+      "expression": "List(3, 1, 2).toSet().restOrNull.contains(1).toString()",
+      "id": "converted-set-rest",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 55,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/expression.bin",
+          "sha256": "d8521050d9e58f98e24338ab6277bb697189f2ac7a9719df4fef80da4b1d4d16"
+        },
+        "expression.code-units.bin": {
+          "bytes": 110,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/expression.code-units.bin",
+          "sha256": "a00ac5996335b82b3f42ddb8f1ace84a3db15c00e870c28c2bc0fe270bc10696"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 4,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/result.stdout.bin",
+          "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/006-converted-set-rest/result.stdout.code-units.bin",
+          "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest",
+      "expression": "joined.restOrNull.contains(1).toString()",
+      "id": "concatenated-set-rest",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 40,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/expression.bin",
+          "sha256": "90c4481609c5669df940ef02a4fe33178d45fd00ca8117ae2a6a181091992e6c"
+        },
+        "expression.code-units.bin": {
+          "bytes": 80,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/expression.code-units.bin",
+          "sha256": "f861d92556e7c027258d44c09580d245abedab22e19728394020629f8d0d8aeb"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 4,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/result.stdout.bin",
+          "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/007-concatenated-set-rest/result.stdout.code-units.bin",
+          "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership",
+      "expression": "packed.contains(10).toString()",
+      "id": "packed-rest-membership",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 30,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/expression.bin",
+          "sha256": "a959516a0516624bf94d92938966cf916ffcd69b8e8f377d426dc053451bdc27"
+        },
+        "expression.code-units.bin": {
+          "bytes": 60,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/expression.code-units.bin",
+          "sha256": "c71f7e3afe19b2c98afdad54f915d9d4084dad39c26a1d8340cc2ca6b2f89fa4"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 4,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/result.stdout.bin",
+          "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/008-packed-rest-membership/result.stdout.code-units.bin",
+          "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add",
+      "expression": "packed.add(0).toString()",
+      "id": "packed-rest-add",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 24,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/expression.bin",
+          "sha256": "dc349184f5e8bddf73e2cbe8aad49ea3abbf11f57866733f43858ecd7375dfd1"
+        },
+        "expression.code-units.bin": {
+          "bytes": 48,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/expression.code-units.bin",
+          "sha256": "0143dbcc3b7796b7aec0f9c27447a8605de50719ad97dcb344b228ca75eabd21"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 118,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/result.stdout.bin",
+          "sha256": "b08a69a663d281608cedb9dc14650734c7b14b77d35b9294567a497c63805cfc"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 236,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/009-packed-rest-add/result.stdout.code-units.bin",
+          "sha256": "b1b224ab96060e32a3579fe4f255b19cd8cd8f1c81142bade0cb21306d1ebc84"
+        }
+      },
+      "status": "success"
+    }
+  ],
+  "started_epoch": 1793066350.452391,
+  "stderr": {
+    "bytes": 0,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/process.stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 1012,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-four-api-oracle-01/programs/derived-set-storage-order/repeat-0/process.stdout.bin",
+    "sha256": "b4f7b43be9b7ce043f43660083d1933c39d2eff1eb0151b01b86d8d5514a2d83"
+  }
+}

@@ -1,0 +1,625 @@
+{
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/CollectionEveryOracle.java",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key",
+    "file:///stage96/recursive-string-set-key.pkl"
+  ],
+  "cleanup_events": [],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01",
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 0,
+  "finished_epoch": 1793067751.1170182,
+  "owned_child_reaped": true,
+  "owned_start": "Tue Oct 27 11:22:29 2026",
+  "pgid": 9376,
+  "pid": 9376,
+  "program": "recursive-string-set-key",
+  "repeat": 0,
+  "rows": [
+    {
+      "directory": "target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key",
+      "expression": "Set(key).first[\"x\"].toString()",
+      "id": "warm-string-key",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 30,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/expression.bin",
+          "sha256": "a4dd5b1fa9ab1420750c7c6f1223227547a5492d7802f59ba889296417240684"
+        },
+        "expression.code-units.bin": {
+          "bytes": 60,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/expression.code-units.bin",
+          "sha256": "9f58c9ce534d75fd09d4116bf289065d544a1324ca87fab4d51facbba98aba75"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 1,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/result.stdout.bin",
+          "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/000-warm-string-key/result.stdout.code-units.bin",
+          "sha256": "fa61e3dec3439589f4784c893bf321d0084f04c572c7af2b68e3f3360a35b486"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest",
+      "expression": "items.restOrNull.toString()",
+      "id": "rest",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 27,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/expression.bin",
+          "sha256": "5c7fdfc93cbbea5b67a3780f2f8ad8fc42c73a94ce40aad2cea43f0e0fca3078"
+        },
+        "expression.code-units.bin": {
+          "bytes": 54,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/expression.code-units.bin",
+          "sha256": "53c8f33a866324ec8fc849c4dcea0c95ca0b30bc42c5f58cd3dcb74d43f6b51a"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/result.stdout.bin",
+          "sha256": "318a4b3623a4abc29cdad5a0e7253b3339eaeb8950cfb7276e795261ff13701b"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/001-rest/result.stdout.code-units.bin",
+          "sha256": "47552b9f24bb679e78e9462407d3d0b40bf15ca0fbe993508b12e1d21d79db58"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key",
+      "expression": "items.restOrNull.contains(key).toString()",
+      "id": "rest-contains-key",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 41,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/expression.bin",
+          "sha256": "310708edbfbad6d20b83bc0b1412d19811a8b17f592ad0ec8a5d8be12ebb9e21"
+        },
+        "expression.code-units.bin": {
+          "bytes": 82,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/expression.code-units.bin",
+          "sha256": "85792e3b654e5174bf002ae147fd56d0275f4d7d4521b3f26f2f96652067bd0d"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 5,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/result.stdout.bin",
+          "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 10,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/002-rest-contains-key/result.stdout.code-units.bin",
+          "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality",
+      "expression": "(items.restOrNull == Set(2)).toString()",
+      "id": "rest-equality",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 39,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/expression.bin",
+          "sha256": "3656da2ddcbe4ae54b720b5d961023b3fdbe04e3cd16af2fc73f82ab2961fad1"
+        },
+        "expression.code-units.bin": {
+          "bytes": 78,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/expression.code-units.bin",
+          "sha256": "c043c3a470e007977b6d4d6e6dc70331bb6b1144c7d11a8859d26a315ac19acf"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 5,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/result.stdout.bin",
+          "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 10,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/003-rest-equality/result.stdout.code-units.bin",
+          "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+        }
+      },
+      "status": "success"
+    }
+  ],
+  "started_epoch": 1793067749.8580139,
+  "stderr": {
+    "bytes": 0,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/process.stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 422,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-recursive-string-set-oracle-01/programs/recursive-string-set-key/repeat-0/process.stdout.bin",
+    "sha256": "510490f38ec1e5409d32a699c973a28bb900e2852e4565fed9a0f2ed1534819c"
+  }
+}

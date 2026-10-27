@@ -1,0 +1,50 @@
+session-open mode=string rows=24
+call-enter=string-0-zero
+call-exit=string-0-zero status=success
+call-enter=string-1-one
+call-exit=string-1-one status=success
+call-enter=string-2-two
+call-exit=string-2-two status=success
+call-enter=string-3-five
+call-exit=string-3-five status=success
+call-enter=string-4-null-value
+call-exit=string-4-null-value status=success
+call-enter=string-5-too-few
+call-exit=string-5-too-few status=error
+call-enter=string-6-too-many
+call-exit=string-6-too-many status=error
+call-enter=string-7-wrong-list-int
+call-exit=string-7-wrong-list-int status=error
+call-enter=string-8-wrong-list-null
+call-exit=string-8-wrong-list-null status=error
+call-enter=string-9-wrong-list-listing
+call-exit=string-9-wrong-list-listing status=error
+call-enter=string-10-typed-parameter
+call-exit=string-10-typed-parameter status=error
+call-enter=string-11-inner-throw
+call-exit=string-11-inner-throw status=error
+call-enter=string-12-captured-local
+call-exit=string-12-captured-local status=success
+call-enter=string-13-nested-function
+call-exit=string-13-nested-function status=success
+call-enter=string-14-captured-this
+call-exit=string-14-captured-this status=success
+call-enter=string-15-lazy-object
+call-exit=string-15-lazy-object status=success
+call-enter=string-16-trace-order
+call-exit=string-16-trace-order status=success
+call-enter=string-17-argument-before-arity
+call-exit=string-17-argument-before-arity status=error
+call-enter=string-18-bad-method-arity-zero
+call-exit=string-18-bad-method-arity-zero status=error
+call-enter=string-19-bad-method-arity-two
+call-exit=string-19-bad-method-arity-two status=error
+call-enter=string-20-method-as-property
+call-exit=string-20-method-as-property status=error
+call-enter=string-21-amended-function
+call-exit=string-21-amended-function status=success
+call-enter=string-22-typed-collection-argument
+call-exit=string-22-typed-collection-argument status=success
+call-enter=string-23-typed-collection-error
+call-exit=string-23-typed-collection-error status=error
+session-closed mode=string rows=24 public-calls=24 success=12 errors=12

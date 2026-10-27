@@ -1,0 +1,1 @@
+let (obj = new Dynamic { answer = 42; unused = throw("unused") }) ((a) -> a).applyToList(List(obj)).answer.toString()

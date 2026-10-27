@@ -1,0 +1,9 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `applyToList` in object of type `Function1`.
+
+1 | ((a) -> a).applyToList.toString()
+    ^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+apply(p1)

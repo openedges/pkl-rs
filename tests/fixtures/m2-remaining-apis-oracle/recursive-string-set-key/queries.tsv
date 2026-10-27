@@ -1,0 +1,4 @@
+string	warm-string-key	Set(key).first["x"].toString()
+string	rest	items.restOrNull.toString()
+string	rest-contains-key	items.restOrNull.contains(key).toString()
+string	rest-equality	(items.restOrNull == Set(2)).toString()

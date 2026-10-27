@@ -40,6 +40,27 @@ Represent lazy members with unevaluated, evaluating, and completed cache states.
 
 Use Pkl standard library sources from the pinned upstream and implement external builtins in Rust. Compare public member inventories with builtin registrations to detect omissions. The compatibility scope includes 0.32 features such as `Reference<Domain, Type>`.
 
+### Scalar conversion, Set removal and Function.applyToList
+
+`Float.toInt` explicitly rejects non-finite or out-of-range values before Rust's
+truncating conversion. `Int.toRadixString` executes the pinned constrained Int
+parameter through the ordinary resumable type-check path, including power
+assertions; unsigned magnitude handles the minimum signed integer. `List.getOrNull`
+checks bounds before narrowing an index and returns the cached Value unchanged.
+
+`Set.restOrNull` shares the equality continuation and repeats both upstream
+contains/removal hash and equality passes. Persistent trie deletion preserves
+collision ordering, packing and visible-vector/backing-table differences. Result
+cache publication appends one value per resumed step so it cannot replace a
+pending equality continuation. A transition to an unknown JVM identity-dependent
+hash uses the existing conservative policy; it is not an exact identity-hash model.
+
+`Function.applyToList` checks the List parameter in a pinned builtin frame and
+invokes the original function target. Existing call frames retain captures,
+arguments, type checks and Host/GC lifecycle behavior across suspension. Public
+native methods are not assumed to be first-class Function properties.
+See the [Stage96 evidence](../reports/m2/stage96-core-apis-checkpoint.json).
+
 ### Reversal and constraint constructor dispatch
 
 String reversal operates on lossless UTF-16 units and repairs reversed surrogate

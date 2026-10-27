@@ -1,8 +1,14 @@
 //! Primitive lookup shares ordinary call frames, argument checks and UTF-16 values.
 use super::*;
+#[path = "function_apply.rs"]
+mod function_apply;
+#[path = "remaining_apis.rs"]
+mod remaining_apis;
 
 #[derive(Clone, Copy, Debug)]
 pub enum Operation {
+    FunctionApplyToList,
+    Remaining(remaining_apis::Operation),
     DataSize(data_size::Operation),
     Duration(duration::Operation),
     Bytes(bytes::Operation),
@@ -281,6 +287,8 @@ pub(super) fn blocks(
         });
         result.insert((class.into(), name.into()), block);
     }
+    result.extend(function_apply::blocks(blocks, metadata));
+    result.extend(remaining_apis::blocks(blocks, metadata));
     result.extend(data_size::blocks(blocks, metadata));
     result.extend(duration::blocks(blocks, metadata));
     result.extend(bytes::blocks(blocks, metadata));
@@ -697,6 +705,7 @@ impl Vm {
             Value::IntSeq(_) => "IntSeq",
             Value::String(_) => "String",
             Value::Regex(_) => "Regex",
+            Value::Function(_) => "Function",
             Value::Object(_) if self.is_list(receiver) => "List",
             Value::Object(_) if self.is_set(receiver) => "Set",
             Value::Object(id)
@@ -716,7 +725,8 @@ impl Vm {
             && (matches!(
                 name,
                 "first" | "firstOrNull" | "last" | "lastOrNull" | "single" | "singleOrNull"
-            ) || (class == "Listing" && name == "distinct"))
+            ) || (class == "Listing" && name == "distinct")
+                || (class == "Set" && name == "restOrNull"))
         {
             let mut error = RuntimeError::new(
                 ErrorKind::MissingMember,
@@ -757,11 +767,12 @@ impl Vm {
             return Err(error);
         }
         if !method
-            && matches!(class, "List" | "Set")
-            && matches!(
-                name,
-                "first" | "firstOrNull" | "last" | "lastOrNull" | "single" | "singleOrNull"
-            )
+            && ((matches!(class, "List" | "Set")
+                && matches!(
+                    name,
+                    "first" | "firstOrNull" | "last" | "lastOrNull" | "single" | "singleOrNull"
+                ))
+                || (class == "Set" && name == "restOrNull"))
         {
             let block = self.program.primitive_methods[&(class.into(), name.into())];
             let id = self.heap.allocate(Object {
@@ -802,7 +813,8 @@ impl Vm {
                 "isBetween" | "fold" | "foldIndexed" | "splitLimit" | "replaceAll"
                 | "replaceFirst" | "replaceLast" | "replaceAllMapped" | "replaceFirstMapped"
                 | "replaceLastMapped" | "substring" | "substringOrNull" => 2,
-                "step" | "map" | "findMatchesIn" | "matchEntire" | "split" => 1,
+                "step" | "map" | "findMatchesIn" | "matchEntire" | "split" | "toRadixString"
+                | "applyToList" => 1,
                 "contains" | "matches" | "startsWith" | "endsWith" | "indexOf"
                 | "indexOfOrNull" | "lastIndexOf" | "lastIndexOfOrNull" | "dropLast" | "xor"
                 | "implies" | "toDataSize" | "toDuration" | "toUnit" | "getOrNull"
@@ -855,6 +867,8 @@ impl Vm {
             .and_then(|f| f.environment.this_value.clone())
             .ok_or_else(|| invalid("primitive receiver"))?;
         match operation {
+            Operation::FunctionApplyToList => self.function_apply_to_list(receiver)?,
+            Operation::Remaining(operation) => self.remaining_api(receiver, operation)?,
             Operation::DataSize(operation) => self.data_size_operation(receiver, operation)?,
             Operation::Duration(operation) => self.duration_operation(receiver, operation)?,
             Operation::Bytes(operation) => self.bytes_operation(receiver, operation)?,

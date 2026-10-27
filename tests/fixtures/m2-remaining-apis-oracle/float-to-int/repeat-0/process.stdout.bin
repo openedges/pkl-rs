@@ -1,0 +1,24 @@
+session-open mode=string rows=11
+call-enter=string-0-finite-positive
+call-exit=string-0-finite-positive status=success
+call-enter=string-1-finite-negative
+call-exit=string-1-finite-negative status=success
+call-enter=string-2-negative-zero
+call-exit=string-2-negative-zero status=success
+call-enter=string-3-nan
+call-exit=string-3-nan status=error
+call-enter=string-4-positive-infinity
+call-exit=string-4-positive-infinity status=error
+call-enter=string-5-negative-infinity
+call-exit=string-5-negative-infinity status=error
+call-enter=string-6-minimum-inclusive
+call-exit=string-6-minimum-inclusive status=success
+call-enter=string-7-maximum-exclusive
+call-exit=string-7-maximum-exclusive status=error
+call-enter=string-8-below-minimum
+call-exit=string-8-below-minimum status=error
+call-enter=string-9-largest-below-maximum
+call-exit=string-9-largest-below-maximum status=success
+call-enter=string-10-bad-arity
+call-exit=string-10-bad-arity status=error
+session-closed mode=string rows=11 public-calls=11 success=5 errors=6

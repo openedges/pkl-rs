@@ -1,0 +1,1 @@
+((a, b) -> a + b).applyToList(List(1, 2)).toString()

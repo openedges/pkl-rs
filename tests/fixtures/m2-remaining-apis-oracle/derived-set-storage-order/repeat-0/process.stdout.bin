@@ -1,0 +1,22 @@
+session-open mode=string rows=10
+call-enter=string-0-keys-rest-order
+call-exit=string-0-keys-rest-order status=success
+call-enter=string-1-keys-rest-retained
+call-exit=string-1-keys-rest-retained status=success
+call-enter=string-2-keys-rest-removed
+call-exit=string-2-keys-rest-removed status=success
+call-enter=string-3-keys-rest-add-back
+call-exit=string-3-keys-rest-add-back status=success
+call-enter=string-4-keys-rest-twice
+call-exit=string-4-keys-rest-twice status=success
+call-enter=string-5-mapped-set-rest
+call-exit=string-5-mapped-set-rest status=success
+call-enter=string-6-converted-set-rest
+call-exit=string-6-converted-set-rest status=success
+call-enter=string-7-concatenated-set-rest
+call-exit=string-7-concatenated-set-rest status=success
+call-enter=string-8-packed-rest-membership
+call-exit=string-8-packed-rest-membership status=success
+call-enter=string-9-packed-rest-add
+call-exit=string-9-packed-rest-add status=success
+session-closed mode=string rows=10 public-calls=10 success=10 errors=0

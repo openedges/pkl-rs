@@ -1,0 +1,1 @@
+((a, b, c, d, e) -> a+b+c+d+e).applyToList(List(1,2,3,4,5)).toString()

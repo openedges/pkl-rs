@@ -1,0 +1,16 @@
+session-open mode=string rows=7
+call-enter=string-0-dynamic-zero-rest
+call-exit=string-0-dynamic-zero-rest status=success
+call-enter=string-1-dynamic-zero-retained
+call-exit=string-1-dynamic-zero-retained status=success
+call-enter=string-2-dynamic-zero-add
+call-exit=string-2-dynamic-zero-add status=success
+call-enter=string-3-list-zero-rest
+call-exit=string-3-list-zero-rest status=success
+call-enter=string-4-list-zero-retained
+call-exit=string-4-list-zero-retained status=success
+call-enter=string-5-listing-zero-rest
+call-exit=string-5-listing-zero-rest status=success
+call-enter=string-6-listing-zero-retained
+call-exit=string-6-listing-zero-retained status=success
+session-closed mode=string rows=7 public-calls=7 success=7 errors=0

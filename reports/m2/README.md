@@ -1,5 +1,26 @@
 # M2 language evidence
 
+## Stage96 scalar, collection and function APIs
+
+The [checkpoint](stage96-core-apis-checkpoint.json) records five shared APIs:
+`Float.toInt`, `Int.toRadixString`, `List.getOrNull`, `Set.restOrNull` and
+`Function.applyToList`. All default Rust checks pass; the complete workspace has
+**1,358 passes, zero failures and one existing ignored probe**. Targeted17 tests
+are included in this count. Actual compilation and Cargo Fresh reuse are distinct.
+
+Native, N-API and Chromium each match **206 observations** from 103 Java
+query/profile contracts repeated twice: 146 values, 60 ordinary errors and
+12 ordered Logger events per target. M1 strict6078 comparisons and the separate
+architecture contract pass on each target. Earlier failed attempts remain recorded.
+
+Original native CLI results remain **2/5 matches**; missing `Float.toFloat`,
+`Int.toInt` and `Set.any` produce three failures. The original List Java heap error
+is retained without a Rust comparison. JVM identity-dependent hash limitations
+and unpaired Java exception metadata remain explicit. Stage94's earlier-source
+**4,268/4,424** full-corpus aggregate and full M2/API/release/performance gates
+remain unchanged. Exact unchanged source restoration requires all three Stage95
+source archive parts plus the Stage96 source delta; the checkpoint lists identities.
+
 ## Stage95 PListRenderer checkpoint
 
 Shared PListRenderer document/value output is integrated with indentation,

@@ -1,0 +1,197 @@
+{
+  "all_parts_required": true,
+  "approved_for_publication": true,
+  "archive_streams_repeated": false,
+  "complete": true,
+  "direct_original_Java_records": 24,
+  "direct_source_projection_paths": 2407,
+  "documentation_scope_review": [
+    "Five final sections accurately describe the five implemented APIs and shared continuation behavior; JVM identity-dependent hash approximation remains explicit.",
+    "Workspace1358/0/1 across238testexecutables+2doctestlibraries;25examples compile-only;13clean nested summaries separately excluded; targeted17 included, not added.",
+    "Actual targeted03 normal producer Fresh=false and workspace/M1 Fresh reuse identities are distinguished.",
+    "Original103query/profile contracts(99original+4separate deterministic successor),206rawmatches/target,146values60ordinaryerrors12Logger and separateM16078/architecture scopes match actual records.",
+    "OriginalCLI2of5matches,three missingmethod failures and unpaired originalListJavaOOM remain explicit. Earlier targeted01/02 failure attempts and previous Stage94 aggregate4268/4424 preserved.",
+    "Source restoration explicitly requires all three exact Stage95 baseline parts plus current Stage96 delta. Stage97/98/99 future candidates are excluded and fullM2/API/release/performance gates remain open.",
+    "English standard project documentation and Korean PLAN follow repository instructions."
+  ],
+  "exact_disjoint_union": true,
+  "executions": {
+    "Java": 0,
+    "Node": 0,
+    "archive_stream_readbacks": 2,
+    "browser": 0,
+    "compiler": 0,
+    "guest": 0
+  },
+  "failure_and_open_scope_lineage_preserved": true,
+  "final_documents": [
+    {
+      "bytes": 462267,
+      "mode": 420,
+      "path": "PLAN.md",
+      "sha256": "6b0e7d35b9b4e06aa011e5f31e49a62bac6fdde057f4529b4ff07a5eb912d8ec"
+    },
+    {
+      "bytes": 85358,
+      "mode": 420,
+      "path": "TESTING.md",
+      "sha256": "398c05095941e371784f8f9f1b31d443c05444b8e4e2cb92588488bf6ecc185f"
+    },
+    {
+      "bytes": 102406,
+      "mode": 420,
+      "path": "docs/architecture.md",
+      "sha256": "a48937e1a26edb96a9cb4df7d493daaab6f6bee66dfc009ac5716d07b2d7aa06"
+    },
+    {
+      "bytes": 99388,
+      "mode": 420,
+      "path": "docs/m2-language.md",
+      "sha256": "a8d8b7a9e3f78719b6627240294db1b51dbfbef2e0c760b1e46c2c505e9d0f15"
+    },
+    {
+      "bytes": 375918,
+      "mode": 420,
+      "path": "reports/m2/README.md",
+      "sha256": "01fef66c0e6064fff911b04f457d79364e74f543f4d0dce1d6978c7300904574"
+    }
+  ],
+  "finished_epoch": 1793070807.060313,
+  "finite_frozen_executed_artifacts_and_source_dep_info_proof_present": true,
+  "frozenStage86_and_Stage73_private8_payload_reads": 0,
+  "global_auxiliary_payloads": 3,
+  "global_regular_selected_payloads": 19165,
+  "global_source_before_after_equal": true,
+  "global_tar_manifests": 2,
+  "global_tar_members": 19170,
+  "handoff": {
+    "bytes": 14404,
+    "mode": 420,
+    "path": "target/m2/stage96-publication-handoff-01/handoff.json",
+    "sha256": "7fd71cdd640240ea9357ed3c5d1ceb27bd948213206ccde5c449805c673c7fd7"
+  },
+  "inherited_source_projection_paths": 25305,
+  "kind": "Stage96 single independent full archive documentation and scope review",
+  "limits": [
+    "Readback only; no guest/compiler/Java/Node/browser evaluation or Git/public writes.",
+    "Final public descriptor/copy metadata requires one short additive identity/scope check after publication; no second archive scan if copied byte identities match.",
+    "Required Stage95 archive identities verified; prior streams are not redundantly re-read. Their earlier independent stream review remains required companion evidence.",
+    "No compiler/toolchain/cache distribution or fully portable absolute-path reconstruction is claimed."
+  ],
+  "partition_estimates": {
+    "bytes": 2572678,
+    "mode": 420,
+    "path": "target/m2/stage96-publication-01/partition-estimates.json",
+    "sha256": "9d00f3e15de75a84b97b3f537929ebed2f63b8a946f564f2fe3badece4d7b91f"
+  },
+  "parts": [
+    {
+      "archive": {
+        "bytes": 38709436,
+        "mode": 420,
+        "path": "target/m2/stage96-publication-01/part-01/stage96-core-apis-evidence.tar.gz",
+        "sha256": "5c86813afd000bc59e1fab59839e1d8cd93a221830399ea3ed87cb07b7b241f0"
+      },
+      "complete_stream_raw_bytes_modes_hashes_order_and_gzip_EOF": true,
+      "index": 1,
+      "intended_public_basename": "stage96-core-apis-evidence-01.tar.gz",
+      "logical_payload_bytes": 178464126,
+      "regular_payloads": 11565
+    },
+    {
+      "archive": {
+        "bytes": 37831053,
+        "mode": 420,
+        "path": "target/m2/stage96-publication-01/part-02/stage96-core-apis-evidence.tar.gz",
+        "sha256": "ca75d6b63495b7a39c89952b61dd9822df5912ace3ff2ff6378b57bf0b005557"
+      },
+      "complete_stream_raw_bytes_modes_hashes_order_and_gzip_EOF": true,
+      "index": 2,
+      "intended_public_basename": "stage96-core-apis-evidence-02.tar.gz",
+      "logical_payload_bytes": 100955794,
+      "regular_payloads": 7603
+    }
+  ],
+  "post_stream_completion_script": {
+    "bytes": 14012,
+    "mode": 420,
+    "path": "target/m2/stage96-publication-independent-review-01/complete_readback.py",
+    "sha256": "04251fa3809b4edeaee763ba9a587e7b93a0f46dce20b1e2eb15ca6759d542c5"
+  },
+  "privacy_exclusions": [
+    {
+      "bytes": 132345,
+      "mode": 420,
+      "path": "target/m2/stage96-originals-cli-idle-preflight-01/ps.stdout.bin",
+      "reason": "Global process/cwd inventory retained locally; unrelated process details excluded from publication without altering raw evidence.",
+      "sha256": "606d8e151cad108b0eec31576797e28dd72467b8b263fde8a8218ac66c5b0073"
+    },
+    {
+      "bytes": 19909,
+      "mode": 420,
+      "path": "target/m2/stage96-originals-cli-idle-preflight-01/lsof.stdout.bin",
+      "reason": "Global process/cwd inventory retained locally; unrelated process details excluded from publication without altering raw evidence.",
+      "sha256": "899abb5e6c6e7114aad273289b902ac568d956f8d8bda292795cd5b02ac1b4e3"
+    }
+  ],
+  "producer": {
+    "bytes": 3037,
+    "mode": 420,
+    "path": "target/m2/stage96-publication-01/report.json",
+    "sha256": "afaff1a612be1e2c95a61331ec2479f207eeab9f67cb1022e0809931618c471a"
+  },
+  "protectedStage65_partial_filesystem_access": 0,
+  "reader_script": {
+    "bytes": 14628,
+    "mode": 420,
+    "path": "target/m2/stage96-publication-independent-review-01/read_archives.py",
+    "sha256": "6a513417e61408971c1be83708778e1933ce71701494f7daf553de4fd9d62d6d"
+  },
+  "required_baseline_archive_parts": [
+    {
+      "bytes": 36728083,
+      "mode": 420,
+      "path": "reports/m2/stage95-plist-renderer-evidence-01.tar.gz",
+      "sha256": "a21c3367f59b16b72ed12c6d40b7255fc1c0d46a3732425391367f3fc0992e69"
+    },
+    {
+      "bytes": 32002980,
+      "mode": 420,
+      "path": "reports/m2/stage95-plist-renderer-evidence-02.tar.gz",
+      "sha256": "5ea3e5d57172c2bcfa995a492d0e90564fcd9bb2a16b182f8f8baee8a312df03"
+    },
+    {
+      "bytes": 4345895,
+      "mode": 420,
+      "path": "reports/m2/stage95-plist-renderer-evidence-03.tar.gz",
+      "sha256": "c8e604e06455041b7e298b0f517c87917ed25cbc86e58562708fded078f517e9"
+    }
+  ],
+  "retained_reader_postcheck_failure": {
+    "bytes": 735,
+    "mode": 420,
+    "path": "target/m2/stage96-publication-independent-review-01/stream-terminal.json",
+    "sha256": "e1f65b2038f6c25588ef2c7902ec4167c18efb9c2f8ac9bb597b69d2c3a07637"
+  },
+  "selection": {
+    "bytes": 10371316,
+    "mode": 420,
+    "path": "target/m2/stage96-publication-01/selection.json",
+    "sha256": "bf55fb1c02b72d7fdd8041904c7cd54c19793b44ed53001824980f704090def4"
+  },
+  "selection_report": {
+    "bytes": 2030,
+    "mode": 420,
+    "path": "target/m2/stage96-publication-01/selection-report.json",
+    "sha256": "d35ca6bd8a08da27c7b97ccb8b21390f0811ebf8a0facd0ea8f028c24b21696d"
+  },
+  "source_dependencies": {
+    "bytes": 6316763,
+    "mode": 420,
+    "path": "target/m2/stage96-publication-01/source-dependencies.json",
+    "sha256": "0d67cf9e57e4d6a1350436f191080aafc5c5f49b231de28fbfa5570946166404"
+  },
+  "standalone_source_archive": false,
+  "started_epoch": 1793070798.432375,
+  "success": true
+}

@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Type constraint `this.isBetween(2, 36)` violated.
+Value: 37
+
+1044 | external function toRadixString(radix: Int(this.isBetween(2, 36))): String
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Int.toRadixString (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1044)
+
+1 | 123.toRadixString(37)
+    ^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

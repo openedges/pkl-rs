@@ -1,0 +1,5 @@
+string	hex	123.toRadixString(16)
+string	too-small	123.toRadixString(1)
+string	too-large	123.toRadixString(37)
+string	no-narrow-wrap	123.toRadixString(4294967312)
+string	bad-type	123.toRadixString(16.0)

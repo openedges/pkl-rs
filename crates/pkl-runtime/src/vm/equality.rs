@@ -188,8 +188,28 @@ enum SuggestionLookup {
     Map,
 }
 
+/// Two separate guest hash/equality operations implement Paguro Set.without:
+/// contains(first), then map.without(first). Neither operation can assume that
+/// the first visible value still has the hash or equality it had at insertion.
+#[derive(Clone)]
+struct SetRestLookup {
+    source: ObjectId,
+    key: Value,
+    removing: bool,
+    hash: Option<i32>,
+    candidates: Vec<usize>,
+    repeat_equality: bool,
+}
+
 #[derive(Clone)]
 enum Task {
+    SetRestHash(ObjectId, Value, bool),
+    SetRestLookup(ObjectId, Value, bool),
+    SetRestCompare(Box<SetRestLookup>, usize),
+    SetRestMatched(Box<SetRestLookup>, usize),
+    SetRestConfirmed(Box<SetRestLookup>),
+    SetRestFinish(ObjectId, Option<(usize, Option<i32>)>),
+    SetRestAppend(ObjectId, Arc<[Value]>, usize),
     SuggestionVisit(Box<KeySuggestions>),
     SuggestionHashed(Box<KeySuggestions>),
     SuggestionCache(Box<KeySuggestions>),
@@ -519,6 +539,13 @@ impl Vm {
         run.hide_callsite = false;
     }
 
+    pub(super) fn begin_set_rest(&mut self, source: ObjectId, first: Value) {
+        self.schedule_tasks(
+            vec![Task::SetRestHash(source, first.clone(), false)],
+            vec![Value::Object(source), first],
+        );
+    }
+
     pub(super) fn begin_equality(&mut self, left: Value, right: Value, negate: bool) {
         self.frames.last_mut().expect("active frame").equality_run = Some(EqualityRun {
             tasks: vec![Task::Compare(left.clone(), right.clone(), true)],
@@ -844,6 +871,103 @@ impl Vm {
             return Ok(());
         };
         match task {
+            Task::SetRestHash(source, key, removing) => {
+                // A second hash must recompute zero/uncached structural hashes
+                // and collection hashes. Do not reuse prepare_keys' per-bytecode
+                // completion set or suppress recursive forcing from the prior lookup.
+                run.forced.clear();
+                run.tasks
+                    .push(Task::SetRestLookup(source, key.clone(), removing));
+                run.tasks.push(Task::Prepare(key));
+            }
+            Task::SetRestLookup(source, key, removing) => {
+                let hash = self.java_hash(&key)?;
+                let index = self.heap.get(source)?.map_index();
+                let candidates = index.candidates(hash);
+                let repeat_equality = !removing && index.repeats_lookup_equality(hash);
+                run.tasks.push(Task::SetRestCompare(
+                    Box::new(SetRestLookup {
+                        source,
+                        key,
+                        removing,
+                        hash,
+                        candidates,
+                        repeat_equality,
+                    }),
+                    0,
+                ));
+            }
+            Task::SetRestCompare(state, position) => {
+                if let Some(slot) = state.candidates.get(position).copied() {
+                    let candidate = self.heap.get(state.source)?.set_entries[slot].clone();
+                    let depth = run.tasks.len();
+                    run.on_false
+                        .push((depth, Task::SetRestCompare(state.clone(), position + 1)));
+                    run.tasks.push(Task::SetRestMatched(state.clone(), slot));
+                    run.forced.clear();
+                    run.tasks
+                        .push(Task::Compare(state.key.clone(), candidate, false));
+                } else {
+                    run.tasks.push(Task::SetRestFinish(state.source, None));
+                }
+            }
+            Task::SetRestMatched(state, slot) => {
+                run.on_false
+                    .pop()
+                    .ok_or_else(|| invalid("Set removal comparison"))?;
+                if state.repeat_equality {
+                    let candidate = self.heap.get(state.source)?.set_entries[slot].clone();
+                    let depth = run.tasks.len();
+                    run.on_false
+                        .push((depth, Task::SetRestFinish(state.source, None)));
+                    run.tasks.push(Task::SetRestConfirmed(state.clone()));
+                    run.forced.clear();
+                    run.tasks
+                        .push(Task::Compare(state.key.clone(), candidate, false));
+                } else if state.removing {
+                    run.tasks
+                        .push(Task::SetRestFinish(state.source, Some((slot, state.hash))));
+                } else {
+                    run.tasks
+                        .push(Task::SetRestHash(state.source, state.key.clone(), true));
+                }
+            }
+            Task::SetRestConfirmed(state) => {
+                run.on_false
+                    .pop()
+                    .ok_or_else(|| invalid("Set collision confirmation"))?;
+                run.tasks
+                    .push(Task::SetRestHash(state.source, state.key.clone(), true));
+            }
+            Task::SetRestFinish(source, removed) => {
+                let (target, values) = self.prepare_set_rest_result(source, removed)?;
+                if values.is_empty() {
+                    self.stack.push(Value::Object(target));
+                } else {
+                    run.roots.push(Value::Object(target));
+                    run.tasks
+                        .push(Task::SetRestAppend(target, values.into(), 0));
+                }
+            }
+            Task::SetRestAppend(target, values, position) => {
+                if let Some(value) = values.get(position).cloned() {
+                    run.tasks
+                        .push(Task::SetRestAppend(target, values, position + 1));
+                    // Element publication uses the shared cache scheduler. Keep
+                    // its continuation installed while appending, and complete
+                    // each cache insertion before appending the next element.
+                    self.frames[frame_index].equality_run = Some(run);
+                    self.stack.push(value);
+                    self.append_strict_element()?;
+                    return Ok(());
+                }
+                let builder = self.frames[frame_index].builders.pop();
+                if builder != Some(target) {
+                    return Err(invalid("Set.restOrNull result builder"));
+                }
+                let result = self.finish_strict_collection(target)?;
+                self.stack.push(Value::Object(result));
+            }
             Task::SuggestionVisit(state) => {
                 if let Some(item) = state.members.get(state.position) {
                     let key = item.descriptor.key.clone();

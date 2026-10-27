@@ -1,0 +1,22 @@
+session-open mode=string rows=10
+call-enter=string-0-hex
+call-exit=string-0-hex status=success
+call-enter=string-1-lowercase
+call-exit=string-1-lowercase status=success
+call-enter=string-2-binary-negative
+call-exit=string-2-binary-negative status=success
+call-enter=string-3-minimum-int
+call-exit=string-3-minimum-int status=success
+call-enter=string-4-zero
+call-exit=string-4-zero status=success
+call-enter=string-5-too-small
+call-exit=string-5-too-small status=error
+call-enter=string-6-too-large
+call-exit=string-6-too-large status=error
+call-enter=string-7-no-narrow-wrap
+call-exit=string-7-no-narrow-wrap status=error
+call-enter=string-8-bad-type
+call-exit=string-8-bad-type status=error
+call-enter=string-9-bad-arity
+call-exit=string-9-bad-arity status=error
+session-closed mode=string rows=10 public-calls=10 success=5 errors=5

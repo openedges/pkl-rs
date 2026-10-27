@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "wrong"
+
+1 | ((a: List<Int>) -> a[0]).applyToList(List(List("wrong"))).toString()
+              ^^^
+at repl:text.<function#1> (repl:text)
+
+1 | ((a: List<Int>) -> a[0]).applyToList(List(List("wrong"))).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

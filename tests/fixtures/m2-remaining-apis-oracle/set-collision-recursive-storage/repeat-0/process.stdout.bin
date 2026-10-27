@@ -1,0 +1,20 @@
+session-open mode=string rows=9
+call-enter=string-0-collision-rest
+call-exit=string-0-collision-rest status=success
+call-enter=string-1-collision-retained
+call-exit=string-1-collision-retained status=success
+call-enter=string-2-collision-removed
+call-exit=string-2-collision-removed status=success
+call-enter=string-3-collision-add-back
+call-exit=string-3-collision-add-back status=success
+call-enter=string-4-collision-equality
+call-exit=string-4-collision-equality status=success
+call-enter=string-5-map-zero-rest
+call-exit=string-5-map-zero-rest status=success
+call-enter=string-6-map-zero-retained
+call-exit=string-6-map-zero-retained status=success
+call-enter=string-7-map-zero-removed
+call-exit=string-7-map-zero-removed status=success
+call-enter=string-8-map-zero-add
+call-exit=string-8-map-zero-add status=success
+session-closed mode=string rows=9 public-calls=9 success=9 errors=0

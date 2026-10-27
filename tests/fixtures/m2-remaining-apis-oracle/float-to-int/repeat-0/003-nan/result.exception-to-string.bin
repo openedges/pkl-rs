@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot convert non-finite Float `NaN` to Int.
+
+1 | NaN.toInt().toString()
+    ^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot convert Float `9.223372036854776E18` to Int because it is too large.
+
+1 | 9223372036854775808.0.toInt().toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

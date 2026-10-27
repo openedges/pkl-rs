@@ -1,0 +1,1 @@
+(() -> 4).applyToList(List(throw("argument failure"))).toString()

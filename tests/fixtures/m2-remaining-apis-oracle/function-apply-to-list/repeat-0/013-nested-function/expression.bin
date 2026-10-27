@@ -1,0 +1,1 @@
+((a) -> (b) -> a+b).applyToList(List(2)).applyToList(List(3)).toString()

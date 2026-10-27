@@ -1,0 +1,10 @@
+–– Pkl Error ––
+body failure
+
+1 | ((a) -> throw("body failure")).applyToList(List(1)).toString()
+            ^^^^^^^^^^^^^^^^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | ((a) -> throw("body failure")).applyToList(List(1)).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

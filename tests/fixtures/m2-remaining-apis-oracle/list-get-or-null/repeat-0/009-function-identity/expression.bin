@@ -1,0 +1,1 @@
+let (f = (x) -> x) (List(f).getOrNull(0) == f).toString()

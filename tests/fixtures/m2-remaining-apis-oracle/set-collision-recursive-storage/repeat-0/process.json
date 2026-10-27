@@ -1,0 +1,1330 @@
+{
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/CollectionEveryOracle.java",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage",
+    "file:///stage96/set-collision-recursive-storage.pkl"
+  ],
+  "cleanup_events": [],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01",
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 0,
+  "finished_epoch": 1793066579.09901,
+  "owned_child_reaped": true,
+  "owned_start": "Tue Oct 27 11:02:58 2026",
+  "pgid": 2918,
+  "pid": 2918,
+  "program": "set-collision-recursive-storage",
+  "repeat": 0,
+  "rows": [
+    {
+      "directory": "target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest",
+      "expression": "collided.restOrNull.toString()",
+      "id": "collision-rest",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 30,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/expression.bin",
+          "sha256": "17563648f9fdd6971d6abdb64407b25a2fd9ef74644ba9cb059e5c6ac5b3ed9a"
+        },
+        "expression.code-units.bin": {
+          "bytes": 60,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/expression.code-units.bin",
+          "sha256": "ddcc2521ac8cacb197ac2f86960da73a67302b05dc3132e9d3eecf8a0819cdf0"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/result.stdout.bin",
+          "sha256": "a967023f46ee401da61bf06a38ff4613bf00472795d46fc3a55cc498dd12a60a"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/000-collision-rest/result.stdout.code-units.bin",
+          "sha256": "bfb350fd815018a49eab035170663302e5236d93ab80ca8965e12c21febf1a29"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained",
+      "expression": "collided.restOrNull.contains(\"BB\").toString()",
+      "id": "collision-retained",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 45,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/expression.bin",
+          "sha256": "2948bc8f30be42a4b52de522981caa9220f46e409939faf461762e64dde121f7"
+        },
+        "expression.code-units.bin": {
+          "bytes": 90,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/expression.code-units.bin",
+          "sha256": "945a092218082a3c891370f06bcf808b917f3139942b2051c010f90f84168f1a"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 4,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/result.stdout.bin",
+          "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/001-collision-retained/result.stdout.code-units.bin",
+          "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed",
+      "expression": "collided.restOrNull.contains(\"Aa\").toString()",
+      "id": "collision-removed",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 45,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/expression.bin",
+          "sha256": "f8284c6d515ba5b98c29fa74f2e2b638f4dd653fcad7776d2728e62de80203d7"
+        },
+        "expression.code-units.bin": {
+          "bytes": 90,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/expression.code-units.bin",
+          "sha256": "bc3e4504e66d0eafd76a30f056557fcff389f5065ae4bb1406f9424dc18ef69e"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 5,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/result.stdout.bin",
+          "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 10,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/002-collision-removed/result.stdout.code-units.bin",
+          "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back",
+      "expression": "collided.restOrNull.add(\"Aa\").toString()",
+      "id": "collision-add-back",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 40,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/expression.bin",
+          "sha256": "6f6de094cac3b07a29309759d0f4f6b5f43df30baea0eedda949263c791c0c1f"
+        },
+        "expression.code-units.bin": {
+          "bytes": 80,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/expression.code-units.bin",
+          "sha256": "8305726e7d48e9e2bddf53d5a8324762da3e910299ba21442b42ef1e5440c048"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 31,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/result.stdout.bin",
+          "sha256": "2117ae2a3daed33af0adc551a5298acca66afee0bc7b03a1715d2fae63e59ab7"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 62,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/003-collision-add-back/result.stdout.code-units.bin",
+          "sha256": "4807ee50e445f3a7098d25a043009346e458218bd4c4dc92e528aa89340ab72b"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality",
+      "expression": "(collided.restOrNull == Set(\"BB\", \"AaAa\", \"BBBB\")).toString()",
+      "id": "collision-equality",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 61,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/expression.bin",
+          "sha256": "6991b42869a655f944c1ff0f4b7fb15316ae51dcf9b359cb82c30e766e268772"
+        },
+        "expression.code-units.bin": {
+          "bytes": 122,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/expression.code-units.bin",
+          "sha256": "a02929ccca0ef1a7d78d6f13352665c47376fdbfc0df32eb2870b943e18f5a9b"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 4,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/result.stdout.bin",
+          "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/004-collision-equality/result.stdout.code-units.bin",
+          "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest",
+      "expression": "keys.restOrNull.toString()",
+      "id": "map-zero-rest",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 26,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/expression.bin",
+          "sha256": "06b5a88d5e43b78c7da4cc207204c81d343d1365a734811c3e4f2c27be9be4c8"
+        },
+        "expression.code-units.bin": {
+          "bytes": 52,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/expression.code-units.bin",
+          "sha256": "9ca3ad12516874f9d621dd55c7d608b8ef622513b7b9f304c9e3de61b33cabc3"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 9,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/result.stdout.bin",
+          "sha256": "987e6c671404a340afea0ecbce221d7db04be7c3b6241eddf16d0b2705b756a4"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 18,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/005-map-zero-rest/result.stdout.code-units.bin",
+          "sha256": "a0104af799b5471bde58a937dc524b1a785595601db6be1cb9d654d7a5057746"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained",
+      "expression": "keys.restOrNull.contains(0).toString()",
+      "id": "map-zero-retained",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 38,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/expression.bin",
+          "sha256": "1e60d53cdc6362ce01d3d896648448ab799cae3fc497a3daf25d3fdf37eb2987"
+        },
+        "expression.code-units.bin": {
+          "bytes": 76,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/expression.code-units.bin",
+          "sha256": "fe6bf7c9c82f2211e5fea90e983540b0ea3ea856a1ddbdd639e528f7f328e642"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 4,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/result.stdout.bin",
+          "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/006-map-zero-retained/result.stdout.code-units.bin",
+          "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed",
+      "expression": "keys.restOrNull.contains(31).toString()",
+      "id": "map-zero-removed",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 39,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/expression.bin",
+          "sha256": "57d3d4cb5f3681a6c1729d6b232d79879340c8eceffcd964f020a49fa54d5b23"
+        },
+        "expression.code-units.bin": {
+          "bytes": 78,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/expression.code-units.bin",
+          "sha256": "c29663d8eb395d915cd8b479f64e9d7a9e03dc279ec0053a603fb23f9421e012"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 5,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/result.stdout.bin",
+          "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 10,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/007-map-zero-removed/result.stdout.code-units.bin",
+          "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add",
+      "expression": "keys.restOrNull.add(31).toString()",
+      "id": "map-zero-add",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 34,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/expression.bin",
+          "sha256": "02f9a51fd3c3c6c90968800bb385ad5721b20c48241718440141c90677b1a8cc"
+        },
+        "expression.code-units.bin": {
+          "bytes": 68,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/expression.code-units.bin",
+          "sha256": "39d3713e64e837b0eea38b7ed8a51e16deaf5b246a3eb7d604831c4a5a955d8b"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 13,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/result.stdout.bin",
+          "sha256": "15f7daff6b6cff8c454c33bf614492fb955f1489e5514e17074ca30d86e57e9f"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 26,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/008-map-zero-add/result.stdout.code-units.bin",
+          "sha256": "0dc5485bef8c6695c6c260037fed37aacb4149ffc30eae51150ba6f21f16122f"
+        }
+      },
+      "status": "success"
+    }
+  ],
+  "started_epoch": 1793066578.237845,
+  "stderr": {
+    "bytes": 0,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/process.stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 890,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage96-supplemental-oracle-01/programs/set-collision-recursive-storage/repeat-0/process.stdout.bin",
+    "sha256": "e06976bad4b4897496bf8c118d2e953f58578d4f260f3ab87064944e30457d43"
+  }
+}

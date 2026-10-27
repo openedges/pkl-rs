@@ -1,0 +1,7 @@
+string	dynamic-zero-rest	Set(dynamicKey, 2).restOrNull.toString()
+string	dynamic-zero-retained	Set(0, dynamicKey).restOrNull.contains(dynamicKey).toString()
+string	dynamic-zero-add	Set(dynamicKey, 2).restOrNull.add(dynamicKey).length.toString()
+string	list-zero-rest	Set(listKey, 2).restOrNull.toString()
+string	list-zero-retained	Set(0, listKey).restOrNull.contains(listKey).toString()
+string	listing-zero-rest	Set(listingKey, 2).restOrNull.toString()
+string	listing-zero-retained	Set(0, listingKey).restOrNull.contains(listingKey).toString()

@@ -1,5 +1,39 @@
 # M2 language verification
 
+## Stage96 scalar, collection and function APIs
+
+The shared runtime adds `Float.toInt`, `Int.toRadixString`, `List.getOrNull`,
+`Set.restOrNull` and `Function.applyToList`. Numeric conversion retains Java's
+range and constraint diagnostics; List access returns the original cached value.
+Set removal repeats the upstream hash/equality passes and retains the persistent
+backing-table behavior of recursively changing keys. Function calls reuse the
+original call target, captures, type checks and suspension lifecycle.
+
+Canonical formatting, xtask, manifest freshness, Clippy and Wasm checks pass.
+One full workspace command passes **1,358 tests, zero failures and one existing
+ignored probe**, covering 238 test executables, 25 compile-only examples and two
+doctest libraries. Thirteen nested child summaries are counted separately.
+The actual targeted runtime compilation is reused by the workspace as Cargo
+`Fresh`; both producer and reuse identities are recorded.
+
+Java authority contains 103 query/profile contracts repeated twice: 146 successful
+values, 60 ordinary errors and 12 ordered Logger events. The original 99 contracts
+remain unchanged; four deterministic recursive-key controls are separate.
+Native, N-API and Chromium each match all **206 observations** as raw bytes.
+One M1 acquisition also passes 6,078 strict comparisons per target and the separate
+architecture contract. Earlier failed targeted attempts remain preserved.
+
+Original CLI comparisons match **2/5**: both function originals. The other three
+now reach missing `Float.toFloat`, `Int.toInt` and `Set.any` members. Their raw
+differences remain failures; the original List Java heap error remains unpaired.
+The JVM identity-dependent hash approximation is still a limitation. Selected
+comparisons do not establish full original-module, language, API or performance
+compatibility. Java exception class/cause metadata is preserved but is outside
+the portable raw-channel comparison. Stage94's earlier-source **4,268/4,424** aggregate is unchanged.
+
+See the [Stage96 checkpoint](../reports/m2/stage96-core-apis-checkpoint.json)
+for exact local source, artifact, raw-result and archive identities.
+
 ## Stage95 PListRenderer integration
 
 The shared runtime implements `PListRenderer.renderDocument` and `renderValue`:

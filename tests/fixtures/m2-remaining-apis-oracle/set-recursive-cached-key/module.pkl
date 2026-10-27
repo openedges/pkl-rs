@@ -1,0 +1,3 @@
+module stage96
+hidden key = new Dynamic { a = items.length }
+hidden items = Set(key, 2)

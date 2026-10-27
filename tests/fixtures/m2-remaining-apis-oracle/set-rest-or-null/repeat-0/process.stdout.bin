@@ -1,0 +1,20 @@
+session-open mode=string rows=9
+call-enter=string-0-empty
+call-exit=string-0-empty status=success
+call-enter=string-1-singleton-empty
+call-exit=string-1-singleton-empty status=success
+call-enter=string-2-insertion-order
+call-exit=string-2-insertion-order status=success
+call-enter=string-3-null-first
+call-exit=string-3-null-first status=success
+call-enter=string-4-null-retained
+call-exit=string-4-null-retained status=success
+call-enter=string-5-hash-collision-membership
+call-exit=string-5-hash-collision-membership status=success
+call-enter=string-6-repeated-rest
+call-exit=string-6-repeated-rest status=success
+call-enter=string-7-function-identity
+call-exit=string-7-function-identity status=success
+call-enter=string-8-property-not-method
+call-exit=string-8-property-not-method status=error
+session-closed mode=string rows=9 public-calls=9 success=8 errors=1

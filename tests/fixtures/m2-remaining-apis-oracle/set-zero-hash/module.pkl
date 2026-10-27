@@ -1,0 +1,4 @@
+module stage96
+hidden dynamicKey = new Dynamic { ["x"] = trace(120) }
+hidden listKey = List(trace(-31))
+hidden listingKey = new Listing { trace(0) }

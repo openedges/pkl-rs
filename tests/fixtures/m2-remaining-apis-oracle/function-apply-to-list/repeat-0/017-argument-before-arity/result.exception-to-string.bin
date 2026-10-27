@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+argument failure
+
+1 | (() -> 4).applyToList(List(throw("argument failure"))).toString()
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

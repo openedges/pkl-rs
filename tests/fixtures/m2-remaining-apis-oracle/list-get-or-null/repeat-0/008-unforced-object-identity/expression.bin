@@ -1,0 +1,1 @@
+let (v = new Dynamic { bad = throw("unforced") }) (List(v).getOrNull(0) == v).toString()

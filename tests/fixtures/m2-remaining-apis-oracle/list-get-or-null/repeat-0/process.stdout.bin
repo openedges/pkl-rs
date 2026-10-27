@@ -1,0 +1,22 @@
+session-open mode=string rows=10
+call-enter=string-0-present
+call-exit=string-0-present status=success
+call-enter=string-1-negative
+call-exit=string-1-negative status=success
+call-enter=string-2-end
+call-exit=string-2-end status=success
+call-enter=string-3-maximum-index
+call-exit=string-3-maximum-index status=success
+call-enter=string-4-empty
+call-exit=string-4-empty status=success
+call-enter=string-5-null-element
+call-exit=string-5-null-element status=success
+call-enter=string-6-bad-type
+call-exit=string-6-bad-type status=error
+call-enter=string-7-bad-arity
+call-exit=string-7-bad-arity status=error
+call-enter=string-8-unforced-object-identity
+call-exit=string-8-unforced-object-identity status=success
+call-enter=string-9-function-identity
+call-exit=string-9-function-identity status=success
+session-closed mode=string rows=10 public-calls=10 success=8 errors=2

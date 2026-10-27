@@ -1,0 +1,1 @@
+let (offset = 7) ((a) -> offset + a).applyToList(List(5)).toString()

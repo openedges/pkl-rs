@@ -1,0 +1,3 @@
+string	recursive-cached-key	Set(key).first.a.toString()
+string	recursive-cached-rest	items.restOrNull.toString()
+string	recursive-cached-membership	items.restOrNull.contains(key).toString()

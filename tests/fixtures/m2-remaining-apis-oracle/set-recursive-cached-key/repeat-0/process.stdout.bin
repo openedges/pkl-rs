@@ -1,0 +1,8 @@
+session-open mode=string rows=3
+call-enter=string-0-recursive-cached-key
+call-exit=string-0-recursive-cached-key status=success
+call-enter=string-1-recursive-cached-rest
+call-exit=string-1-recursive-cached-rest status=success
+call-enter=string-2-recursive-cached-membership
+call-exit=string-2-recursive-cached-membership status=success
+session-closed mode=string rows=3 public-calls=3 success=3 errors=0

@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot convert non-finite Float `-Infinity` to Int.
+
+1 | (-Infinity).toInt().toString()
+    ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
