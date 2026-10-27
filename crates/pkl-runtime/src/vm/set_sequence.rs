@@ -1,0 +1,879 @@
+//! Set sequence operations preserve separate membership and visible-order paths.
+use super::*;
+use crate::heap::CollectionKind;
+#[derive(Clone, Copy, Debug)]
+pub enum Kind {
+    FilterNonNull,
+    FilterIsInstance,
+    GroupBy,
+    Flatten,
+    StartsWith,
+    EndsWith,
+    Split,
+    SplitOrNull,
+    Partition,
+    Take,
+    TakeWhile,
+    TakeLast,
+    TakeLastWhile,
+    Drop,
+    DropWhile,
+    DropLast,
+    DropLastWhile,
+    Repeat,
+    Zip,
+    Intersect,
+    Difference,
+}
+impl Kind {
+    fn name(self) -> &'static str {
+        match self {
+            Self::FilterNonNull => "filterNonNull",
+            Self::FilterIsInstance => "filterIsInstance",
+            Self::GroupBy => "groupBy",
+            Self::Flatten => "flatten",
+            Self::StartsWith => "startsWith",
+            Self::EndsWith => "endsWith",
+            Self::Split => "split",
+            Self::SplitOrNull => "splitOrNull",
+            Self::Partition => "partition",
+            Self::Take => "take",
+            Self::TakeWhile => "takeWhile",
+            Self::TakeLast => "takeLast",
+            Self::TakeLastWhile => "takeLastWhile",
+            Self::Drop => "drop",
+            Self::DropWhile => "dropWhile",
+            Self::DropLast => "dropLast",
+            Self::DropLastWhile => "dropLastWhile",
+            Self::Repeat => "repeat",
+            Self::Zip => "zip",
+            Self::Intersect => "intersect",
+            Self::Difference => "difference",
+        }
+    }
+    fn predicate(self) -> bool {
+        matches!(
+            self,
+            Self::Partition
+                | Self::TakeWhile
+                | Self::TakeLastWhile
+                | Self::DropWhile
+                | Self::DropLastWhile
+        )
+    }
+    fn split(self) -> bool {
+        matches!(self, Self::Split | Self::SplitOrNull)
+    }
+}
+#[derive(Clone, Copy, Debug)]
+pub enum Operation {
+    Start(Kind),
+    Step,
+    AppendVisible,
+    AfterInsert,
+}
+pub(super) fn method_arity(name: &str) -> Option<usize> {
+    Some(match name {
+        "filterNonNull" | "flatten" => 0,
+        "groupBy" | "filterIsInstance" | "startsWith" | "endsWith" | "split" | "splitOrNull"
+        | "partition" | "take" | "takeWhile" | "takeLast" | "takeLastWhile" | "drop"
+        | "dropWhile" | "dropLast" | "dropLastWhile" | "repeat" | "zip" | "intersect"
+        | "difference" => 1,
+        _ => return None,
+    })
+}
+pub(super) fn blocks(
+    blocks: &mut Vec<Vec<Instruction>>,
+    metadata: &mut Vec<BlockMetadata>,
+) -> BTreeMap<(Arc<str>, Arc<str>), usize> {
+    use Kind::*;
+    let source = crate::stdlib_sources::base();
+    let class = source.text.find("external class Set<").unwrap();
+    let mut result = BTreeMap::new();
+    for kind in [
+        FilterNonNull,
+        FilterIsInstance,
+        GroupBy,
+        Flatten,
+        StartsWith,
+        EndsWith,
+        Split,
+        SplitOrNull,
+        Partition,
+        Take,
+        TakeWhile,
+        TakeLast,
+        TakeLastWhile,
+        Drop,
+        DropWhile,
+        DropLast,
+        DropLastWhile,
+        Repeat,
+        Zip,
+        Intersect,
+        Difference,
+    ] {
+        let name = kind.name();
+        let start = class
+            + source.text[class..]
+                .find(&format!("external function {name}"))
+                .unwrap();
+        let end = start + source.text[start..].find('\n').unwrap();
+        let declaration = &source.text[start..end];
+        let mut code = vec![];
+        let mut spans = vec![];
+        if !matches!(kind, FilterNonNull | Flatten) {
+            let (label, ty) = if matches!(kind, FilterIsInstance) {
+                ("clazz: ", TypeCheck::MetaClass("Class".into()))
+            } else if kind.predicate() || matches!(kind, GroupBy) {
+                (
+                    if matches!(kind, GroupBy) {
+                        "selector: "
+                    } else {
+                        "predicate: "
+                    },
+                    TypeCheck::Function {
+                        parameters: Some(vec![TypeCheck::Any]),
+                        result: Box::new(TypeCheck::Any),
+                        syntax: true,
+                    },
+                )
+            } else if matches!(kind, StartsWith | EndsWith | Zip) {
+                ("coll: ", TypeCheck::CollectionBase { arguments: vec![] })
+            } else if matches!(kind, Intersect | Difference) {
+                ("other: ", TypeCheck::Collection(CollectionKind::Set))
+            } else {
+                (if kind.split() { "index: " } else { "n: " }, TypeCheck::Int)
+            };
+            let p = start + declaration.find(label).unwrap() + label.len();
+            let type_end = if kind.predicate() || matches!(kind, GroupBy) {
+                let arrow = p + source.text[p..end].find(" -> ").unwrap();
+                arrow + 4 + source.text[arrow + 4..end].find(')').unwrap()
+            } else if matches!(
+                kind,
+                FilterIsInstance | StartsWith | EndsWith | Zip | Intersect | Difference
+            ) {
+                p + source.text[p..end].find(')').unwrap()
+            } else {
+                p + 3
+            };
+            code.extend([Instruction::LoadLocal(0), Instruction::CheckType(ty)]);
+            spans.extend([None, Some(Span::new(p, type_end))]);
+        }
+        code.push(Instruction::Primitive(primitives::Operation::SetSequence(
+            Operation::Start(kind),
+        )));
+        spans.push(None);
+        let step = code.len();
+        code.extend([
+            Instruction::Primitive(primitives::Operation::SetSequence(Operation::Step)),
+            Instruction::Jump(step),
+            Instruction::Return,
+            Instruction::PrepareSetElement,
+            Instruction::AddSetElement,
+            Instruction::Primitive(primitives::Operation::SetSequence(Operation::AfterInsert)),
+            Instruction::Jump(step),
+            Instruction::PutSetKey,
+            Instruction::Primitive(primitives::Operation::SetSequence(Operation::AppendVisible)),
+            Instruction::Primitive(primitives::Operation::SetSequence(Operation::AfterInsert)),
+            Instruction::Jump(step),
+            Instruction::AppendStrictElement,
+            Instruction::Primitive(primitives::Operation::SetSequence(Operation::AfterInsert)),
+            Instruction::Jump(step),
+        ]);
+        spans.resize(code.len(), None);
+        let block = blocks.len();
+        blocks.push(code);
+        metadata.push(BlockMetadata {
+            source: Some(source.clone()),
+            member: format!("#Set.{name}").into(),
+            declaration: Some(Span::new(start, end)),
+            spans,
+            ..Default::default()
+        });
+        result.insert(("Set".into(), name.into()), block);
+    }
+    result
+}
+#[derive(Clone, Copy)]
+enum Stage {
+    FlattenMap,
+    FlattenForced,
+    FlattenInner,
+    GroupKey,
+    GroupGet,
+    GroupSetContains,
+    GroupMapContains,
+    GroupAssociate,
+    Instance,
+    Scan,
+    Predicate,
+    Emit,
+}
+#[derive(Clone)]
+pub(super) struct Run {
+    kind: Kind,
+    source: ObjectId,
+    values: Vec<Value>,
+    other: Option<ObjectId>,
+    other_values: Vec<Value>,
+    argument: Value,
+    builders: Vec<ObjectId>,
+    cursor: usize,
+    matched: usize,
+    split: usize,
+    selection: Vec<Value>,
+    current: Value,
+    stage: Stage,
+    step: usize,
+    cycle: i32,
+    repeats: i64,
+    group_key: Value,
+    group_value: Value,
+    append_order: bool,
+    inner: Option<ObjectId>,
+    inner_values: Vec<Value>,
+    inner_cursor: usize,
+    int_cursor: Option<crate::int_seq::Cursor>,
+}
+impl Run {
+    pub(super) fn roots(&self, roots: &mut Vec<Value>) {
+        roots.push(Value::Object(self.source));
+        roots.extend(self.other.map(Value::Object));
+        roots.extend(self.builders.iter().copied().map(Value::Object));
+        roots.extend(self.values.iter().cloned());
+        roots.extend(self.other_values.iter().cloned());
+        roots.extend(self.selection.iter().cloned());
+        roots.extend(self.inner.map(Value::Object));
+        roots.extend(self.inner_values.iter().cloned());
+        roots.extend([
+            self.argument.clone(),
+            self.current.clone(),
+            self.group_key.clone(),
+            self.group_value.clone(),
+        ]);
+    }
+}
+fn values(vm: &Vm, id: ObjectId) -> Result<Vec<Value>, RuntimeError> {
+    collections::ordered_members(&vm.heap, id)?
+        .iter()
+        .map(|m| {
+            collections::cached_render_value(&vm.heap, id, m)?
+                .ok_or_else(|| invalid("strict Set sequence value"))
+        })
+        .collect()
+}
+impl Vm {
+    fn finish_set_sequence(&mut self, run: &Run) -> Result<Value, RuntimeError> {
+        let first = Value::Object(self.finish_strict_collection(run.builders[0])?);
+        if run.builders.len() == 2 {
+            let second = Value::Object(self.finish_strict_collection(run.builders[1])?);
+            Ok(self.make_pair(first, second))
+        } else {
+            Ok(first)
+        }
+    }
+    fn set_sequence_return(&mut self, step: usize, value: Value) -> Result<(), RuntimeError> {
+        self.stack.push(value);
+        self.jump(step + 2)
+    }
+    fn set_sequence_insert(
+        &mut self,
+        mut run: Run,
+        value: Value,
+        side: usize,
+        direct: bool,
+    ) -> Result<(), RuntimeError> {
+        let builder = run.builders[side];
+        let step = run.step;
+        let list = matches!(run.kind, Kind::Repeat);
+        run.current = value.clone();
+        self.frames.last_mut().unwrap().set_sequence = Some(Box::new(run));
+        self.frames.last_mut().unwrap().builders.push(builder);
+        self.stack.push(value);
+        self.jump(
+            step + if list {
+                11
+            } else if direct {
+                7
+            } else {
+                3
+            },
+        )
+    }
+    pub(super) fn set_sequence(
+        &mut self,
+        receiver: Value,
+        operation: Operation,
+    ) -> Result<(), RuntimeError> {
+        use Kind::*;
+        if matches!(operation, Operation::AfterInsert) {
+            self.frames
+                .last_mut()
+                .unwrap()
+                .builders
+                .pop()
+                .ok_or_else(|| invalid("Set insertion builder"))?;
+            let run = self
+                .frames
+                .last_mut()
+                .unwrap()
+                .set_sequence
+                .as_mut()
+                .unwrap();
+            if matches!(run.kind, GroupBy) {
+                run.builders.pop();
+                run.stage = Stage::GroupMapContains;
+            }
+            return Ok(());
+        }
+        if matches!(operation, Operation::AppendVisible) {
+            let value = self
+                .frames
+                .last()
+                .unwrap()
+                .set_sequence
+                .as_ref()
+                .unwrap()
+                .current
+                .clone();
+            self.stack.push(value);
+            return self.append_strict_element();
+        }
+        if let Operation::Start(kind) = operation {
+            let argument = if matches!(kind, FilterNonNull | Flatten) {
+                Value::Null
+            } else {
+                self.pop()?
+            };
+            let source = receiver.as_object()?;
+            let mut input = values(self, source)?;
+            let step = self.frames.last().unwrap().pc;
+            let mut other = None;
+            let mut other_values = vec![];
+            if matches!(kind, StartsWith | EndsWith | Zip | Intersect | Difference) {
+                let id = argument.as_object()?;
+                other = Some(id);
+                other_values = values(self, id)?;
+            }
+            if matches!(kind, Intersect) && input.len() > other_values.len() {
+                std::mem::swap(&mut input, &mut other_values);
+                other = Some(source);
+            }
+            if matches!(kind, StartsWith | EndsWith) && input.len() < other_values.len() {
+                return self.set_sequence_return(step, Value::Bool(false));
+            }
+            let mut selection = vec![];
+            let mut stage = Stage::Scan;
+            let mut split = 0;
+            let mut repeats = 0;
+            if matches!(
+                kind,
+                Take | TakeLast | Drop | DropLast | Split | SplitOrNull | Repeat
+            ) {
+                let Value::Int(n) = argument else {
+                    return Err(invalid("checked Set integer"));
+                };
+                let n = n.get();
+                let len = input.len() as i64;
+                if kind.split() {
+                    if n < 0 || n > len {
+                        if matches!(kind, SplitOrNull) {
+                            return self.set_sequence_return(step, Value::Null);
+                        }
+                        return Err(RuntimeError::new(ErrorKind::Arithmetic,PklString::join(&[format!("Element index `{}` is out of range `0`..`{}`.\nCollection: ",strings::diagnostic_integer(n),strings::diagnostic_integer(len)).into(),crate::diagnostic_values::render_string(&receiver,&self.heap,&self.program.module_name,80)?],"")));
+                    }
+                    split = n as usize;
+                    selection = input.clone();
+                    stage = Stage::Emit;
+                } else if matches!(kind, Repeat) {
+                    if n < 0 {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Arithmetic,
+                            format!(
+                                "Expected a positive number, but got `{}`.",
+                                strings::diagnostic_integer(n)
+                            ),
+                        ));
+                    }
+                    repeats = n;
+                } else {
+                    if n == 0 {
+                        let value = if matches!(kind, Drop | DropLast) {
+                            receiver
+                        } else {
+                            Value::Object(self.empty_strict_collection(CollectionKind::Set))
+                        };
+                        return self.set_sequence_return(step, value);
+                    }
+                    if n >= len {
+                        let value = if matches!(kind, Take | TakeLast) {
+                            receiver
+                        } else {
+                            Value::Object(self.empty_strict_collection(CollectionKind::Set))
+                        };
+                        return self.set_sequence_return(step, value);
+                    }
+                    if n < 0 {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Arithmetic,
+                            format!(
+                                "Expected a positive number, but got `{}`.",
+                                strings::diagnostic_integer(n)
+                            ),
+                        ));
+                    }
+                    let n = n as usize;
+                    selection = match kind {
+                        Take => input[..n].to_vec(),
+                        TakeLast => input[input.len() - n..].to_vec(),
+                        Drop => input[n..].to_vec(),
+                        DropLast => input[..input.len() - n].to_vec(),
+                        _ => unreachable!(),
+                    };
+                    stage = Stage::Emit;
+                }
+            }
+            let count = if kind.split() || matches!(kind, Partition) {
+                2
+            } else {
+                1
+            };
+            let builders = (0..count)
+                .map(|_| {
+                    self.heap.allocate(Object {
+                        collection_kind: if matches!(kind, Repeat) {
+                            CollectionKind::List
+                        } else if matches!(kind, GroupBy) {
+                            CollectionKind::Map
+                        } else {
+                            CollectionKind::Set
+                        },
+                        ..Default::default()
+                    })
+                })
+                .collect();
+            self.frames.last_mut().unwrap().set_sequence = Some(Box::new(Run {
+                kind,
+                source,
+                values: input,
+                other,
+                other_values,
+                argument,
+                builders,
+                cursor: 0,
+                matched: 0,
+                split,
+                selection,
+                current: Value::Null,
+                stage,
+                step,
+                cycle: 0,
+                repeats,
+                group_key: Value::Null,
+                group_value: Value::Null,
+                append_order: false,
+                inner: None,
+                inner_values: Vec::new(),
+                inner_cursor: 0,
+                int_cursor: None,
+            }));
+            return Ok(());
+        }
+        let mut run = *self
+            .frames
+            .last_mut()
+            .unwrap()
+            .set_sequence
+            .take()
+            .ok_or_else(|| invalid("Set sequence cursor"))?;
+        if matches!(run.stage, Stage::FlattenMap) {
+            if let Some(key) = run.inner_values.get(run.inner_cursor).cloned() {
+                let source = run.inner.unwrap();
+                self.frames.last_mut().unwrap().set_sequence = Some(Box::new(run));
+                if self.prepare_map_lookup(source, &key)? {
+                    return Ok(());
+                }
+                run = *self.frames.last_mut().unwrap().set_sequence.take().unwrap();
+                let value = self.map_value(source, &key)?.ok_or_else(||RuntimeError::new(ErrorKind::Unsupported,"Map iterator lost its key; pinned Java Map.entry null/internal-error protocol remains unresolved."))?;
+                run.inner_cursor += 1;
+                let entry = Value::Object(self.heap.allocate(Object {
+                    foreign_map_entry: Some(Box::new([key, value])),
+                    ..Default::default()
+                }));
+                return self.set_sequence_insert(run, entry, 0, false);
+            }
+            run.inner = None;
+            run.inner_values.clear();
+            run.stage = Stage::Scan;
+        }
+        if matches!(run.stage, Stage::FlattenForced) {
+            self.pop()?;
+            let source = run.inner.unwrap();
+            let mut seen = Vec::new();
+            for member in collections::render_members(&self.heap, source)? {
+                if seen
+                    .iter()
+                    .any(|key| equality::same_key(&self.heap, key, &member.descriptor.key))
+                {
+                    continue;
+                }
+                seen.push(member.descriptor.key.clone());
+                if member.skip {
+                    continue;
+                }
+                run.inner_values.push(
+                    collections::cached_render_value(&self.heap, source, &member.descriptor)?
+                        .ok_or_else(|| invalid("forced Listing value"))?,
+                );
+            }
+            run.stage = Stage::FlattenInner;
+        }
+        if matches!(run.stage, Stage::FlattenInner) {
+            let value = if let Some(cursor) = &mut run.int_cursor {
+                cursor.next().map(|(_, value)| Value::Int(value.into()))
+            } else {
+                let value = run.inner_values.get(run.inner_cursor).cloned();
+                run.inner_cursor += usize::from(value.is_some());
+                value
+            };
+            if let Some(value) = value {
+                return self.set_sequence_insert(run, value, 0, false);
+            }
+            run.inner = None;
+            run.inner_values.clear();
+            run.int_cursor = None;
+            run.stage = Stage::Scan;
+        }
+        if matches!(run.stage, Stage::GroupKey) {
+            run.group_key = self.pop()?;
+            run.stage = Stage::GroupGet;
+        }
+        if matches!(
+            run.stage,
+            Stage::GroupGet
+                | Stage::GroupMapContains
+                | Stage::GroupAssociate
+                | Stage::GroupSetContains
+        ) {
+            let stage = run.stage;
+            let map = run.builders[0];
+            let key = run.group_key.clone();
+            let input = run.current.clone();
+            let group = run.group_value.clone();
+            self.frames.last_mut().unwrap().set_sequence = Some(Box::new(run));
+            let pending = match stage {
+                Stage::GroupGet | Stage::GroupMapContains => self.prepare_map_lookup(map, &key)?,
+                Stage::GroupAssociate => self.prepare_map_association(map, &key)?,
+                Stage::GroupSetContains => self.prepare_set_lookup(group.as_object()?, &input)?,
+                _ => unreachable!(),
+            };
+            if pending {
+                return Ok(());
+            }
+            run = *self.frames.last_mut().unwrap().set_sequence.take().unwrap();
+            match stage {
+                Stage::GroupGet => {
+                    if let Some(group) = self.map_value(map, &key)? {
+                        run.group_value = group;
+                        run.stage = Stage::GroupSetContains;
+                    } else {
+                        let builder = self.heap.allocate(Object {
+                            collection_kind: CollectionKind::Set,
+                            ..Default::default()
+                        });
+                        run.group_value = Value::Object(builder);
+                        run.builders.push(builder);
+                        return self.set_sequence_insert(run, input, 1, true);
+                    }
+                }
+                Stage::GroupSetContains => {
+                    let group = group.as_object()?;
+                    if self.set_contains(group, &input)? {
+                        run.stage = Stage::GroupMapContains;
+                    } else {
+                        let source = self.heap.get(group)?;
+                        let builder = self.heap.allocate(Object {
+                            collection_kind: CollectionKind::Set,
+                            length: source.length,
+                            members: source.members.clone(),
+                            collection_members: source.collection_members.clone(),
+                            member_values: source.member_values.clone(),
+                            cache: source.cache.clone(),
+                            completed_cache_order: source.completed_cache_order.clone(),
+                            cache_slots: source.cache_slots.clone(),
+                            cache_index: source.cache_index.clone(),
+                            map_index: source.map_index.clone(),
+                            set_entries: source.set_entries.clone(),
+                            ..Default::default()
+                        });
+                        run.group_value = Value::Object(builder);
+                        run.builders.push(builder);
+                        return self.set_sequence_insert(run, input, 1, true);
+                    }
+                }
+                Stage::GroupMapContains => {
+                    run.append_order = self.map_value(map, &key)?.is_none();
+                    run.stage = Stage::GroupAssociate;
+                }
+                Stage::GroupAssociate => {
+                    self.insert_map_entry_ordered(
+                        map,
+                        key,
+                        run.group_value.clone(),
+                        Some(run.append_order),
+                    )?;
+                    run.stage = Stage::Scan;
+                }
+                _ => unreachable!(),
+            }
+            self.frames.last_mut().unwrap().set_sequence = Some(Box::new(run));
+            return Ok(());
+        }
+        if matches!(run.stage, Stage::Instance) {
+            let Value::Bool(accepted) = self.pop()? else {
+                return Err(invalid("instance test result"));
+            };
+            run.stage = Stage::Scan;
+            if accepted {
+                let value = run.current.clone();
+                return self.set_sequence_insert(run, value, 0, false);
+            }
+        }
+        if matches!(run.stage, Stage::Predicate) {
+            let result = self.pop()?;
+            let Value::Bool(accepted) = result else {
+                return Err(type_error(
+                    &TypeCheck::Boolean,
+                    &result,
+                    &self.program.module_name,
+                    &self.heap,
+                )?);
+            };
+            run.stage = Stage::Scan;
+            if matches!(run.kind, Partition) {
+                let value = run.current.clone();
+                return self.set_sequence_insert(run, value, usize::from(!accepted), false);
+            }
+            if matches!(run.kind, TakeWhile) {
+                if accepted {
+                    let value = run.current.clone();
+                    return self.set_sequence_insert(run, value, 0, false);
+                }
+                let value = self.finish_set_sequence(&run)?;
+                return self.set_sequence_return(run.step, value);
+            }
+            if accepted {
+                run.matched += 1;
+            } else {
+                run.selection = match run.kind {
+                    DropWhile => run.values[run.matched..].to_vec(),
+                    TakeLastWhile => run.values[run.values.len() - run.matched..].to_vec(),
+                    DropLastWhile => run.values[..run.values.len() - run.matched].to_vec(),
+                    _ => unreachable!(),
+                };
+                let identity = matches!(run.kind, DropWhile | DropLastWhile) && run.matched == 0;
+                if identity {
+                    return self.set_sequence_return(run.step, Value::Object(run.source));
+                }
+                run.cursor = 0;
+                run.stage = Stage::Emit;
+            }
+        }
+        if matches!(run.stage, Stage::Emit) {
+            if run.cursor == run.selection.len() {
+                let value = self.finish_set_sequence(&run)?;
+                return self.set_sequence_return(run.step, value);
+            }
+            let side = usize::from(run.kind.split() && run.cursor >= run.split);
+            let value = run.selection[run.cursor].clone();
+            run.cursor += 1;
+            return self.set_sequence_insert(run, value, side, true);
+        }
+        if matches!(run.kind, StartsWith | EndsWith) {
+            if run.cursor == run.other_values.len() {
+                return self.set_sequence_return(run.step, Value::Bool(true));
+            }
+            let (left, right) = if matches!(run.kind, EndsWith) {
+                (
+                    run.values[run.values.len() - 1 - run.cursor].clone(),
+                    run.other_values[run.other_values.len() - 1 - run.cursor].clone(),
+                )
+            } else {
+                (
+                    run.values[run.cursor].clone(),
+                    run.other_values[run.cursor].clone(),
+                )
+            };
+            self.frames.last_mut().unwrap().set_sequence = Some(Box::new(run));
+            if self.search_key(&left, vec![right.clone()])? {
+                return Ok(());
+            }
+            run = *self.frames.last_mut().unwrap().set_sequence.take().unwrap();
+            if !equality::same_key(&self.heap, &left, &right) {
+                return self.set_sequence_return(run.step, Value::Bool(false));
+            }
+            run.cursor += 1;
+        } else if matches!(run.kind, Repeat) {
+            if i64::from(run.cycle) >= run.repeats {
+                let value = self.finish_set_sequence(&run)?;
+                return self.set_sequence_return(run.step, value);
+            }
+            if run.cursor == run.values.len() {
+                run.cursor = 0;
+                run.cycle = run.cycle.wrapping_add(1);
+            } else {
+                let value = run.values[run.cursor].clone();
+                run.cursor += 1;
+                return self.set_sequence_insert(run, value, 0, false);
+            }
+        } else if run.cursor == run.values.len()
+            || (matches!(run.kind, Zip) && run.cursor == run.other_values.len())
+        {
+            let value = if matches!(run.kind, TakeWhile | TakeLastWhile) {
+                Value::Object(run.source)
+            } else if matches!(run.kind, DropWhile | DropLastWhile) {
+                Value::Object(self.empty_strict_collection(CollectionKind::Set))
+            } else {
+                self.finish_set_sequence(&run)?
+            };
+            return self.set_sequence_return(run.step, value);
+        } else {
+            let reverse = matches!(run.kind, TakeLastWhile | DropLastWhile);
+            let value = run.values[if reverse {
+                run.values.len() - 1 - run.cursor
+            } else {
+                run.cursor
+            }]
+            .clone();
+            if matches!(run.kind, Intersect | Difference) {
+                let other = run.other.unwrap();
+                self.frames.last_mut().unwrap().set_sequence = Some(Box::new(run));
+                if self.prepare_set_lookup(other, &value)? {
+                    return Ok(());
+                }
+                run = *self.frames.last_mut().unwrap().set_sequence.take().unwrap();
+                let present = self.set_contains(other, &value)?;
+                run.cursor += 1;
+                if present == matches!(run.kind, Intersect) {
+                    return self.set_sequence_insert(run, value, 0, false);
+                }
+            } else if matches!(run.kind, Flatten) {
+                run.cursor += 1;
+                run.inner_cursor = 0;
+                if let Value::IntSeq(sequence) = &value {
+                    run.int_cursor = Some(sequence.cursor(false));
+                    run.stage = Stage::FlattenInner;
+                } else if let Value::Object(id) = value {
+                    match self.heap.get(id)?.collection_kind {
+                        CollectionKind::List | CollectionKind::Set => {
+                            run.inner = Some(id);
+                            run.inner_values = values(self, id)?;
+                            run.stage = Stage::FlattenInner;
+                        }
+                        CollectionKind::Listing => {
+                            run.inner = Some(id);
+                            run.stage = Stage::FlattenForced;
+                            self.frames.last_mut().unwrap().set_sequence = Some(Box::new(run));
+                            return self.force_shallow_frame(Value::Object(id));
+                        }
+                        CollectionKind::Map => {
+                            run.inner = Some(id);
+                            run.inner_values = collections::ordered_members(&self.heap, id)?
+                                .into_iter()
+                                .map(|member| member.key)
+                                .collect();
+                            run.stage = Stage::FlattenMap;
+                        }
+                        _ => {
+                            return Err(flatten_error(
+                                &Value::Object(id),
+                                &self.heap,
+                                &self.program.module_name,
+                            )?);
+                        }
+                    }
+                } else {
+                    return Err(flatten_error(
+                        &value,
+                        &self.heap,
+                        &self.program.module_name,
+                    )?);
+                }
+            } else if matches!(run.kind, GroupBy) {
+                let Value::Function(callback) = run.argument else {
+                    return Err(invalid("checked group selector"));
+                };
+                run.current = value.clone();
+                run.cursor += 1;
+                run.stage = Stage::GroupKey;
+                self.frames.last_mut().unwrap().set_sequence = Some(Box::new(run));
+                return self.invoke_function(callback, vec![value], false);
+            } else if matches!(run.kind, FilterIsInstance) {
+                if matches!(&value, Value::Object(id) if self.heap.get(*id)?.foreign_map_entry.is_some())
+                {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Unsupported,
+                        "Foreign Map.Entry IsInstanceOfNode dispatch has a pinned Java internal-error protocol that remains unresolved.",
+                    ));
+                }
+                let Value::Class(class) = run.argument else {
+                    return Err(invalid("checked filter class"));
+                };
+                let prototype = self.heap.get(self.heap.get_class(class)?.prototype)?;
+                let class = prototype
+                    .class_definition
+                    .as_ref()
+                    .ok_or_else(|| invalid("filter class metadata"))?;
+                let ty = prototype
+                    .builtin_type
+                    .clone()
+                    .unwrap_or_else(|| TypeCheck::Class {
+                        module: class.module.clone(),
+                        id: class.id,
+                        name: class.name.clone(),
+                    });
+                run.current = value.clone();
+                run.cursor += 1;
+                run.stage = Stage::Instance;
+                self.frames.last_mut().unwrap().set_sequence = Some(Box::new(run));
+                return self.begin_type(ty, value, TypeDestination::Test, Vec::new());
+            } else if run.kind.predicate() {
+                let Value::Function(callback) = run.argument else {
+                    return Err(invalid("checked Set predicate"));
+                };
+                run.current = value.clone();
+                run.cursor += 1;
+                run.stage = Stage::Predicate;
+                self.frames.last_mut().unwrap().set_sequence = Some(Box::new(run));
+                return self.invoke_function(callback, vec![value], false);
+            } else if matches!(run.kind, Zip) {
+                let other = run.other_values[run.cursor].clone();
+                run.cursor += 1;
+                let pair = self.make_pair(value, other);
+                return self.set_sequence_insert(run, pair, 0, false);
+            } else if matches!(run.kind, FilterNonNull) {
+                run.cursor += 1;
+                if !value.is_null() {
+                    return self.set_sequence_insert(run, value, 0, false);
+                }
+            }
+        }
+        self.frames.last_mut().unwrap().set_sequence = Some(Box::new(run));
+        Ok(())
+    }
+}
+
+fn flatten_error(value: &Value, heap: &Heap, module: &str) -> Result<RuntimeError, RuntimeError> {
+    Ok(RuntimeError::new(
+        ErrorKind::Type,
+        PklString::join(
+            &[
+                "Cannot flatten a collection containing a non-collection element.\nElement: "
+                    .into(),
+                crate::diagnostic_values::render_string(value, heap, module, 80)?,
+            ],
+            "",
+        ),
+    ))
+}

@@ -19,7 +19,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: Stage98 String28·원본6/6·선택2,412×3 검증; 전체1,393통과·2ignored, glob3계약 필수 미해결; 엄격한 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: Stage99 numeric13·Set52 targeted04 25/0/1·workspace1418/0/3; 기본8역할·플랫폼 일반2430관찰 일치·원본2/3 일치·내부3계약 미해결, 엄격한 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
@@ -3417,4 +3417,58 @@ checkpoint가 생기고 독립 증거 검토를 통과한 뒤에만 적용한다
 4,268/4,424 집계는 바꾸지 않는다. 전체 ready4,442 재실행, 미구현71·미연결32, 원래 List
 Java heap 오류와 남은 언어/API/릴리스 플랫폼/성능 gate는 열려 있다. 다음 실행은 해당 원본
 입력의 실제 실패 경계와 미해결 요구사항을 기준으로 이어가며 준비·목록 수를 통과로 세지 않는다.
+
+
+### Stage99 — numeric13·Set52 선택 검증과 로컬 증거 checkpoint
+
+로컬 검증 증거: [Stage99 checkpoint](reports/m2/stage99-numeric-set-apis-checkpoint.json).
+
+공통 VM에 numeric13·Set52 route를 추가했다. Java1218 계약의 두 반복은 성공1666·
+일반오류764·내부오류6이며 원본 source/URI/순서·power=true39·별도 Set36/8/10을 보존한다.
+freeze04의 실제 targeted04는 **25통과·0실패·1ignored**다. 일반1215계약×2=2430관찰,
+26960 원시 공통 필드와 Logger1238이 모두 일치했다. foreign-entry 내부3계약/6관찰은
+필수 미해결이며 통과에 포함하지 않는다.
+
+실제 workspace01은 **1418통과·0실패·3ignored**, 전체245 test executable 호출,
+25 compile-only example,2 doctest library를 기록한다. nested child 요약13개는 별도다.
+fmt02·xtask02·Clippy02·Wasm01·Python01이 freeze04에서 통과했고 Python은180개다.
+현재 default driver는 동일 source의 실제 Clippy02를 prevalidated로 재사용하고 나머지7역할을
+실행했다. **최종 driver는 manifest-final/inventory를 포함한 전체8역할 통과**이며
+missing/unexecuted가 없고 입력이 안정적이다. 신규7명령과 기취득Clippy1개를 구분한다.
+
+workspace normal runtime의 Cargo Fresh는 실제 targeted04 compilation에서 유래한다.
+원래 rustc/event/.d/113 inputs/artifact/source bookend를 검증했고 module_eval_probe와
+semantics_probe는 workspace에서 새로 빌드했다. 실제 platform schema admission은
+읽기 전용으로 성공했으나 guest 실행은 아니다. 실제 M1은 Rust/Node/Chromium 각각6078개와
+shared engine이 일치하고 strict/architecture 두 gate가 통과했다. 선택 Native/NAPI/Chromium은
+대상별23프로그램·46세션·2436관찰을 모두 취득했다. **일반2430관찰(성공1666·오류764),
+Logger1238이 일치**하며 내부3계약/6관찰은 필수 미해결이다. 플랫폼 reader의31820필드는
+expression/Logger count를 포함하므로 Rust harness26960필드와 구분한다. 각 대상의
+41612 row file/1275234B와 UTF16/UTF8쌍13498개를 검토했다. 전체 window5명령·선택50명령은
+exit0·강제종료/timeout/capacity stop/terminal owned process 없음이다. source가 안정적이고
+comparable_pass=true이지만 **all_required_pass=false**를 유지한다.
+
+현재 native adapter rustc는0으로 종료했지만 stderr686B에 `rust-objcopy`의
+`@rpath/libLLVM.dylib` 누락/SIGABRT 경고가 있다. 실제 artifact를 보존하며 strip flag를
+stripping 완료로 해석하지 않는다. LLVM loader 환경은 M1 process tree에 한정되며 앞선
+adapter 실행에 소급 적용하지 않는다. 과거 Stage98 NAPI 경고와도 구분한다.
+
+원본 Float/Int/Set3 native 재생은 실제 종료했고 **2/3 원시 결과가 일치**한다.
+Float/Int는 통과하지만 Set 원본249행의 `List(1).minWith(comparator)`는 List route
+누락으로 실패한다. native stdout0B/stderr931B/exit1과 Java stdout6984B/stderr0B/exit0의
+불일치를 보존한다. 원래 source/argv/환경/60초 deadline을 유지했고 강제 종료나 timeout은
+없었다. native private-state 전후 불변은 Java/native private-state 비교와 구분한다.
+전체 List 구현 통합 후 같은 원본을 다시 실행해야 하며 선택 Set 성공으로 대체하지 않는다.
+
+최초 compile metadata type 오류2개와 시험0, targeted02의22통과·3실패·1ignored,
+comparator 진단과 foreign-entry key/value load 수정, freeze 전 조기 launch 실패,
+첫 default/Clippy01의101 종료를 보존한다. byte parity 동등변경과 해당 let의 exactJDK
+approx_constant allow를 적용한 뒤 Clippy02가 통과했다. 과거 targeted03을 현재
+freeze04 실행으로 바꾸어 부르지 않는다.
+
+다음은 전체 List 통합, 변경하지 않은 원본 Set 재생과 남은 전체 M2 계약의 구현·검증이다.
+실제 기본/플랫폼 검증과 독립 원시 readback은 종료했지만 전체 M2 완료를 뜻하지 않는다.
+원본 List Java OOM, Stage98 glob 내부오류, 미구현71·미연결32, ready4442 전체 재실행과
+M2 아홉 영역·API·릴리스·성능 gate는 열려 있다. Stage94의 이전 source4268/4424에
+선택 결과를 더하거나 M2 완료율로 환산하지 않는다.
 

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Decimal `-1` is not a valid Unicode code point.
+
+1 | ((-1).toChar()).toString()
+     ^^^^^^^^^^^^^
+at  (repl:text)

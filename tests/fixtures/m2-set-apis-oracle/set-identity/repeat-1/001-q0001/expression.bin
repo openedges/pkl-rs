@@ -1,0 +1,1 @@
+((new PcfRenderer { converters { [Set] = (s) -> s.take(2) } }).renderDocument(Set(1,2))).toString()

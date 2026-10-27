@@ -1,0 +1,38 @@
+[
+  {
+    "program": "set-flatmap",
+    "id": "q0021",
+    "expression": "(Set(Map(1,2)).flatten()).toString()",
+    "status": "oracle-error",
+    "authority": {
+      "path": "target/m2/stage99-set-oracle-01/report.json",
+      "bytes": 15157403,
+      "sha256": "6bee10b0c0f5e2805d7b7a06283e8925821f3bfd4637e257bdf20e62bfae4bd9"
+    },
+    "reason": "Pinned Java oracle internal result; required comparison/foreign-value protocol remains unresolved, never a pass"
+  },
+  {
+    "program": "set-flatten-map-entry",
+    "id": "q0007",
+    "expression": "(Set(Map(1, 2)).flatten().first.toString()).toString()",
+    "status": "oracle-error",
+    "authority": {
+      "path": "target/m2/stage99-set-map-entry-oracle-01/report.json",
+      "bytes": 172263,
+      "sha256": "09b58e1715970c779c1603fa1ca7521ef47d55a1439a2e169f441b6c3cb612cf"
+    },
+    "reason": "Pinned Java oracle internal result; required comparison/foreign-value protocol remains unresolved, never a pass"
+  },
+  {
+    "program": "set-flatten-entry-children",
+    "id": "q0006",
+    "expression": "(let (s = Set(Map(List(1), List(2))).flatten()) s.toList().first == s.first).toString()",
+    "status": "oracle-error",
+    "authority": {
+      "path": "target/m2/stage99-set-entry-children-oracle-01/report.json",
+      "bytes": 214509,
+      "sha256": "4aa5e1a36e8609668e71e040fc7f16af786f925086d835cd98476909e3f151cc"
+    },
+    "reason": "Pinned Java oracle internal result; required comparison/foreign-value protocol remains unresolved, never a pass"
+  }
+]

@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3548 | external function intersect(other: Set): Set<Element>
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Set.intersect (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3548)
+
+1 | (Set(1).intersect()).toString()
+     ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

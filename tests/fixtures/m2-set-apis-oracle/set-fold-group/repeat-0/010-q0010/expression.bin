@@ -1,0 +1,1 @@
+(Set(3,1,2).foldIndexed(0, (i,a,x) -> trace(a + i * 10 + x))).toString()

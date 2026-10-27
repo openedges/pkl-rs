@@ -1,0 +1,1 @@
+(Set().maxWith((a,b) -> throw("unreached"))).toString()

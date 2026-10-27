@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got `null`.
+
+1067 | external function or(n: Int): Int
+                               ^^^
+at pkl.base#Int.or (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1067)
+
+1 | (1.or(null)).toString()
+     ^^^^^^^^^^
+at  (repl:text)

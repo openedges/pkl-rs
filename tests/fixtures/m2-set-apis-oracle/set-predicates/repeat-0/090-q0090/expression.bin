@@ -1,0 +1,1 @@
+(Set().dropLastWhile((x) -> throw("unreached"))).toString()

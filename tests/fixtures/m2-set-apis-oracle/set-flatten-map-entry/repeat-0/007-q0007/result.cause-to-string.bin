@@ -1,0 +1,1 @@
+org.pkl.core.runtime.VmBugException: class java.util.KeyValueHolder cannot be cast to class org.pkl.core.runtime.VmValue (java.util.KeyValueHolder is in module java.base of loader 'bootstrap'; org.pkl.core.runtime.VmValue is in unnamed module of loader 'app')

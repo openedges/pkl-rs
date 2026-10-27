@@ -1,0 +1,39 @@
+org.pkl.core.PklBugException: An unexpected error has occurred. Would you mind filing a bug report?
+Cmd+Double-click the link below to open an issue.
+Please copy and paste the entire error output into the issue's description.
+
+https://github.com/apple/pkl/issues/new
+
+java.lang.ClassCastException%3A%20class%20java.util.KeyValueHolder%20cannot%20be%20cast%20to%20class%20org.pkl.core.runtime.VmValue%20%28java.util.KeyValueHolder%20is%20in%20module%20java.base%20of%20loader%20%27bootstrap%27%3B%20org.pkl.core.runtime.VmValue%20is%20in%20unnamed%20module%20of%20loader%20%27app%27%29
+
+–– Pkl Error ––
+class java.util.KeyValueHolder cannot be cast to class org.pkl.core.runtime.VmValue (java.util.KeyValueHolder is in module java.base of loader 'bootstrap'; org.pkl.core.runtime.VmValue is in unnamed module of loader 'app')
+
+1 | (Set(Map(1, 2)).flatten().first.toString()).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Pkl 0.32.0 (macOS 27.0, Java 21.0.12.1)
+
+java.lang.ClassCastException: class java.util.KeyValueHolder cannot be cast to class org.pkl.core.runtime.VmValue (java.util.KeyValueHolder is in module java.base of loader 'bootstrap'; org.pkl.core.runtime.VmValue is in unnamed module of loader 'app')
+	at org.pkl.core.ast.internal.GetClassNode.getValueClass(GetClassNode.java:80)
+	at org.pkl.core.ast.internal.GetClassNodeGen.executeAndSpecialize(GetClassNodeGen.java:230)
+	at org.pkl.core.ast.internal.GetClassNodeGen.executeWith(GetClassNodeGen.java:100)
+	at org.pkl.core.ast.expression.member.InvokeMethodVirtualNodeGen.executeGeneric(InvokeMethodVirtualNodeGen.java:144)
+	at org.pkl.core.ast.expression.member.InvokeMethodVirtualNodeGen.executeGeneric(InvokeMethodVirtualNodeGen.java:143)
+	at org.pkl.core.ast.SimpleRootNode.executeImpl(SimpleRootNode.java:53)
+	at org.pkl.core.ast.PklRootNode.execute(PklRootNode.java:46)
+	at com.oracle.truffle.api.impl.DefaultCallTarget.call(DefaultCallTarget.java:118)
+	at com.oracle.truffle.api.impl.DefaultIndirectCallNode.call(DefaultIndirectCallNode.java:53)
+	at org.pkl.core.runtime.VmUtils.evaluateExpression(VmUtils.java:969)
+	at org.pkl.core.EvaluatorImpl.lambda$evaluateExpressionString$0(EvaluatorImpl.java:267)
+	at org.pkl.core.EvaluatorImpl.lambda$doEvaluate$0(EvaluatorImpl.java:470)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:388)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at CollectionEveryOracle.main(CollectionEveryOracle.java:102)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at jdk.compiler/com.sun.tools.javac.launcher.Main.execute(Main.java:484)
+	at jdk.compiler/com.sun.tools.javac.launcher.Main.run(Main.java:208)
+	at jdk.compiler/com.sun.tools.javac.launcher.Main.main(Main.java:135)

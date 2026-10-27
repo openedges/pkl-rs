@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got type `Int`.
+Value: 42
+
+3514 | external function maxBy(selector: (Element) -> Int): Element
+                                         ^^^^^^^^^^^^^^^^
+at pkl.base#Set.maxBy (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3514)
+
+1 | (Set().maxBy(42)).toString()
+     ^^^^^^^^^^^^^^^
+at  (repl:text)

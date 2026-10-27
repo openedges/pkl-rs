@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 2 function arguments but got 0.
+
+3486 | external function fold<Result>(initial: Result, operator: (Result, Element) -> Result): Result
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Set.fold (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3486)
+
+1 | (Set(1).fold()).toString()
+     ^^^^^^^^^^^^^
+at  (repl:text)

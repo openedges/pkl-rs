@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `Float`.
+Value: 1.0
+
+1056 | external function shr(n: Int): Int
+                                ^^^
+at pkl.base#Int.shr (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1056)
+
+1 | (1.shr(1.0)).toString()
+     ^^^^^^^^^^
+at  (repl:text)

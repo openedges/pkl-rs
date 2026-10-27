@@ -1,0 +1,1 @@
+(Set(3,1,2).reduce((a,x) -> trace(a * 10 + x))).toString()

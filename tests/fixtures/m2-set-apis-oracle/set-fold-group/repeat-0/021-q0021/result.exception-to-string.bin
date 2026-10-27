@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Function2`, but got type `Function1`.
+Value: new Function1 {}
+
+3494 | external function reduceOrNull<Result>(operator: (Element | Result, Element) -> Result): Result?
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Set.reduceOrNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3494)
+
+1 | (Set(1,2).reduceOrNull((x) -> x)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

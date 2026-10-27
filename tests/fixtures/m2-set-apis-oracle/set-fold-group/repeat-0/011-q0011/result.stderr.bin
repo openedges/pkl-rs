@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function3`, but got type `Int`.
+Value: 42
+
+3490 | operator: (Int, Result, Element) -> Result,
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Set.foldIndexed (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3490)
+
+1 | (Set().foldIndexed(trace(4), 42)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

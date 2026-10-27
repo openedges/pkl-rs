@@ -1,0 +1,5 @@
+module stage99
+hidden zero = new Dynamic { ["x"] = trace(120) }
+hidden colliding1 = new Dynamic { ["Aa"] = trace(1) }
+hidden colliding2 = new Dynamic { ["BB"] = trace(1) }
+hidden listZero = List(trace(-31))

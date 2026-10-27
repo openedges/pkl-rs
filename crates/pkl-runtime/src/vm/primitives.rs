@@ -2,6 +2,8 @@
 use super::*;
 #[path = "function_apply.rs"]
 mod function_apply;
+#[path = "numeric_apis.rs"]
+mod numeric_apis;
 #[path = "remaining_apis.rs"]
 mod remaining_apis;
 #[path = "string_api.rs"]
@@ -9,6 +11,9 @@ mod string_api;
 
 #[derive(Clone, Copy, Debug)]
 pub enum Operation {
+    SetSequence(set_sequence::Operation),
+    SetOrder(set_order::Operation),
+    NumericApi(numeric_apis::Operation),
     StringApi(string_api::Operation),
     FunctionApplyToList,
     Remaining(remaining_apis::Operation),
@@ -292,6 +297,9 @@ pub(super) fn blocks(
     }
     result.extend(function_apply::blocks(blocks, metadata));
     result.extend(string_api::blocks(blocks, metadata));
+    result.extend(numeric_apis::blocks(blocks, metadata));
+    result.extend(set_order::blocks(blocks, metadata));
+    result.extend(set_sequence::blocks(blocks, metadata));
     result.extend(remaining_apis::blocks(blocks, metadata));
     result.extend(data_size::blocks(blocks, metadata));
     result.extend(duration::blocks(blocks, metadata));
@@ -497,6 +505,7 @@ impl Vm {
             }
             let numeric = match receiver {
                 Value::Int(value) => match name {
+                    "inv" => Some(Value::Int((!value.get()).into())),
                     "sign" => Some(Value::Int(value.get().signum().into())),
                     "abs" => Some(Value::Int(
                         value
@@ -733,7 +742,11 @@ impl Vm {
                 name,
                 "first" | "firstOrNull" | "last" | "lastOrNull" | "single" | "singleOrNull"
             ) || (class == "Listing" && name == "distinct")
-                || (class == "Set" && name == "restOrNull"))
+                || (class == "Set"
+                    && matches!(
+                        name,
+                        "rest" | "restOrNull" | "min" | "minOrNull" | "max" | "maxOrNull"
+                    )))
         {
             let mut error = RuntimeError::new(
                 ErrorKind::MissingMember,
@@ -779,7 +792,11 @@ impl Vm {
                     name,
                     "first" | "firstOrNull" | "last" | "lastOrNull" | "single" | "singleOrNull"
                 ))
-                || (class == "Set" && name == "restOrNull"))
+                || (class == "Set"
+                    && matches!(
+                        name,
+                        "rest" | "restOrNull" | "min" | "minOrNull" | "max" | "maxOrNull"
+                    )))
         {
             let block = self.program.primitive_methods[&(class.into(), name.into())];
             let id = self.heap.allocate(Object {
@@ -816,24 +833,34 @@ impl Vm {
             else {
                 return Ok(false);
             };
-            let arity = match name {
-                "replaceRange" if class == "String" => 3,
-                "padStart" | "padEnd" if class == "String" => 2,
-                "takeWhile" | "takeLastWhile" | "dropWhile" | "dropLastWhile"
-                    if class == "String" =>
-                {
-                    1
+            let arity = if class == "Set" && set_sequence::method_arity(name).is_some() {
+                set_sequence::method_arity(name).unwrap()
+            } else if class == "Set" && set_order::method_arity(name).is_some() {
+                set_order::method_arity(name).unwrap()
+            } else {
+                match name {
+                    "toFixed" if matches!(class, "Int" | "Float") => 1,
+                    "shl" | "shr" | "ushr" | "and" | "or" if class == "Int" => 1,
+                    "replaceRange" if class == "String" => 3,
+                    "padStart" | "padEnd" if class == "String" => 2,
+                    "takeWhile" | "takeLastWhile" | "dropWhile" | "dropLastWhile"
+                        if class == "String" =>
+                    {
+                        1
+                    }
+                    "isBetween" | "fold" | "foldIndexed" | "splitLimit" | "replaceAll"
+                    | "replaceFirst" | "replaceLast" | "replaceAllMapped"
+                    | "replaceFirstMapped" | "replaceLastMapped" | "substring"
+                    | "substringOrNull" => 2,
+                    "step" | "map" | "findMatchesIn" | "matchEntire" | "split"
+                    | "toRadixString" | "applyToList" | "take" | "takeLast" | "drop" => 1,
+                    "contains" | "matches" | "startsWith" | "endsWith" | "indexOf"
+                    | "indexOfOrNull" | "lastIndexOf" | "lastIndexOfOrNull" | "dropLast"
+                    | "xor" | "implies" | "toDataSize" | "toDuration" | "toUnit" | "getOrNull"
+                    | "decodeToString" | "any" | "containsValue" | "distinctBy"
+                    | "isDistinctBy" => 1,
+                    _ => 0,
                 }
-                "isBetween" | "fold" | "foldIndexed" | "splitLimit" | "replaceAll"
-                | "replaceFirst" | "replaceLast" | "replaceAllMapped" | "replaceFirstMapped"
-                | "replaceLastMapped" | "substring" | "substringOrNull" => 2,
-                "step" | "map" | "findMatchesIn" | "matchEntire" | "split" | "toRadixString"
-                | "applyToList" | "take" | "takeLast" | "drop" => 1,
-                "contains" | "matches" | "startsWith" | "endsWith" | "indexOf"
-                | "indexOfOrNull" | "lastIndexOf" | "lastIndexOfOrNull" | "dropLast" | "xor"
-                | "implies" | "toDataSize" | "toDuration" | "toUnit" | "getOrNull"
-                | "decodeToString" | "any" | "containsValue" | "distinctBy" | "isDistinctBy" => 1,
-                _ => 0,
             };
             let id = self.heap.allocate(Object {
                 function: Some(Function {
@@ -881,6 +908,9 @@ impl Vm {
             .and_then(|f| f.environment.this_value.clone())
             .ok_or_else(|| invalid("primitive receiver"))?;
         match operation {
+            Operation::SetSequence(operation) => self.set_sequence(receiver, operation)?,
+            Operation::SetOrder(operation) => self.set_order(receiver, operation)?,
+            Operation::NumericApi(operation) => self.numeric_api_operation(receiver, operation)?,
             Operation::StringApi(operation) => self.string_api_operation(receiver, operation)?,
             Operation::FunctionApplyToList => self.function_apply_to_list(receiver)?,
             Operation::Remaining(operation) => self.remaining_api(receiver, operation)?,

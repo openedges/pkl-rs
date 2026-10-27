@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Expected value of type `Collection`, but got type `Listing`.
+Value: new Listing { ? }
+
+1 | (Set(3,1,2).flatMapIndexed((i,x) -> new Listing { x })).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

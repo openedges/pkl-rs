@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Expected a non-empty collection.
+Collection: Set()
+
+1 | (Set().min).toString()
+     ^^^^^^^^^
+at  (repl:text)

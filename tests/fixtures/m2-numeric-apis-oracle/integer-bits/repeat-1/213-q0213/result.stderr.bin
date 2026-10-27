@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+1064 | external function and(n: Int): Int
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Int.and (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1064)
+
+1 | (1.and()).toString()
+     ^^^^^^^
+at  (repl:text)

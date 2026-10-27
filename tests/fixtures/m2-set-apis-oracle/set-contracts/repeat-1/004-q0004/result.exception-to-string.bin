@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3483 | external function dropLast(n: Int): Set<Element>
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Set.dropLast (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3483)
+
+1 | (Set(1).dropLast()).toString()
+     ^^^^^^^^^^^^^^^^^
+at  (repl:text)

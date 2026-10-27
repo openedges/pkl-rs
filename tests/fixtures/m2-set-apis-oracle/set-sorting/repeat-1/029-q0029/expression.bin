@@ -1,0 +1,1 @@
+(Set(1,"x").sortBy((x) -> trace(x % 3))).toString()

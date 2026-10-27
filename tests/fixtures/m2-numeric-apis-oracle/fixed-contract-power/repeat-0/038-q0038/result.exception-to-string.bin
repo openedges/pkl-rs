@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+fraction evaluated
+
+1 | (1.25.toFixed(throw("fraction evaluated"))).toString()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

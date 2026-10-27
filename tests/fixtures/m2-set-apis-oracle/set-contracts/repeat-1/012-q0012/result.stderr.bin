@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3468 | external function find(predicate: (Element) -> Boolean): Element
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Set.find (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3468)
+
+1 | (Set(1).find()).toString()
+     ^^^^^^^^^^^^^
+at  (repl:text)

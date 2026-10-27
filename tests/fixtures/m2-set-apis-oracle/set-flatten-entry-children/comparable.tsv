@@ -1,0 +1,9 @@
+string	q0000	(Set(Map(1, 2)).flatten().join(",")).toString()	000-q0000
+string	q0001	(Set(Map(1, 2, 3, 4)).flatten().join("|")).toString()	001-q0001
+string	q0002	(Set(Map(List(1), List(2))).flatten().join(",")).toString()	002-q0002
+string	q0003	(Set(Map("a", "b")).flatten().join(",")).toString()	003-q0003
+string	q0004	(Set(Map(List(1), List(2))).flatten() == Set(Map(List(1), List(2))).flatten()).toString()	004-q0004
+string	q0005	(Set(Map(List(1), List(2))).flatten() == Set(Map(List(1), List(3))).flatten()).toString()	005-q0005
+string	q0007	(let (s = Set(Map(List(1), List(2))).flatten()) s.contains(s.first)).toString()	007-q0007
+string	q0008	(Set(Map(List(1), List(2))).flatten().groupBy((x) -> 0).values.first.length).toString()	008-q0008
+string	q0009	(Set(Map(List(1), List(2))).flatten().first is Dynamic).toString()	009-q0009

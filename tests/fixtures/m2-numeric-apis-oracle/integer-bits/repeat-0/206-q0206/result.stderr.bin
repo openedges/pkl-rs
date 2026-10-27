@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "x"
+
+1056 | external function shr(n: Int): Int
+                                ^^^
+at pkl.base#Int.shr (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1056)
+
+1 | (1.shr(trace("x"))).toString()
+     ^^^^^^^^^^^^^^^^^
+at  (repl:text)

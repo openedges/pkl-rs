@@ -1129,6 +1129,8 @@ impl Vm {
             pcf_render: None,
             collection_join: None,
             collection_transform: None,
+            set_order: None,
+            set_sequence: None,
             string_transform: None,
             int_seq_run: None,
             lazy_collection_run: None,

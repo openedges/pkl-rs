@@ -119,9 +119,12 @@ pub(super) fn blocks(
         ) {
             code.push(Instruction::ConvertObject(operation));
             if operation == SetAdd {
+                // VmSet.add has already performed contains in ConvertObject.
+                // Persistent put must not repeat that lookup on the cloned Set.
                 code.extend([
-                    Instruction::PrepareSetElement,
-                    Instruction::AddSetElement,
+                    Instruction::PutSetKey,
+                    Instruction::LoadLocal(0),
+                    Instruction::AppendStrictElement,
                     Instruction::EndConversion,
                 ]);
             }

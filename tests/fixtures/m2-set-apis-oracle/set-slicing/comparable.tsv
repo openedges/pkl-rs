@@ -1,0 +1,166 @@
+string	q0000	(Set().take(-9223372036854775808)).toString()	000-q0000
+string	q0001	(Set().take(-1)).toString()	001-q0001
+string	q0002	(Set().take(0)).toString()	002-q0002
+string	q0003	(Set().take(1)).toString()	003-q0003
+string	q0004	(Set().take(2)).toString()	004-q0004
+string	q0005	(Set().take(3)).toString()	005-q0005
+string	q0006	(Set().take(4)).toString()	006-q0006
+string	q0007	(Set().take(9223372036854775807)).toString()	007-q0007
+string	q0008	(Set(3, 1, 2).take(-9223372036854775808)).toString()	008-q0008
+string	q0009	(Set(3, 1, 2).take(-1)).toString()	009-q0009
+string	q0010	(Set(3, 1, 2).take(0)).toString()	010-q0010
+string	q0011	(Set(3, 1, 2).take(1)).toString()	011-q0011
+string	q0012	(Set(3, 1, 2).take(2)).toString()	012-q0012
+string	q0013	(Set(3, 1, 2).take(3)).toString()	013-q0013
+string	q0014	(Set(3, 1, 2).take(4)).toString()	014-q0014
+string	q0015	(Set(3, 1, 2).take(9223372036854775807)).toString()	015-q0015
+string	q0016	(Set(1,2).take("x")).toString()	016-q0016
+string	q0017	(Set(1,2).take(1.0)).toString()	017-q0017
+string	q0018	(Set(1,2).take(null)).toString()	018-q0018
+string	q0019	(Set(1,2).take(trace(-1))).toString()	019-q0019
+string	q0020	(Set().takeLast(-9223372036854775808)).toString()	020-q0020
+string	q0021	(Set().takeLast(-1)).toString()	021-q0021
+string	q0022	(Set().takeLast(0)).toString()	022-q0022
+string	q0023	(Set().takeLast(1)).toString()	023-q0023
+string	q0024	(Set().takeLast(2)).toString()	024-q0024
+string	q0025	(Set().takeLast(3)).toString()	025-q0025
+string	q0026	(Set().takeLast(4)).toString()	026-q0026
+string	q0027	(Set().takeLast(9223372036854775807)).toString()	027-q0027
+string	q0028	(Set(3, 1, 2).takeLast(-9223372036854775808)).toString()	028-q0028
+string	q0029	(Set(3, 1, 2).takeLast(-1)).toString()	029-q0029
+string	q0030	(Set(3, 1, 2).takeLast(0)).toString()	030-q0030
+string	q0031	(Set(3, 1, 2).takeLast(1)).toString()	031-q0031
+string	q0032	(Set(3, 1, 2).takeLast(2)).toString()	032-q0032
+string	q0033	(Set(3, 1, 2).takeLast(3)).toString()	033-q0033
+string	q0034	(Set(3, 1, 2).takeLast(4)).toString()	034-q0034
+string	q0035	(Set(3, 1, 2).takeLast(9223372036854775807)).toString()	035-q0035
+string	q0036	(Set(1,2).takeLast("x")).toString()	036-q0036
+string	q0037	(Set(1,2).takeLast(1.0)).toString()	037-q0037
+string	q0038	(Set(1,2).takeLast(null)).toString()	038-q0038
+string	q0039	(Set(1,2).takeLast(trace(-1))).toString()	039-q0039
+string	q0040	(Set().drop(-9223372036854775808)).toString()	040-q0040
+string	q0041	(Set().drop(-1)).toString()	041-q0041
+string	q0042	(Set().drop(0)).toString()	042-q0042
+string	q0043	(Set().drop(1)).toString()	043-q0043
+string	q0044	(Set().drop(2)).toString()	044-q0044
+string	q0045	(Set().drop(3)).toString()	045-q0045
+string	q0046	(Set().drop(4)).toString()	046-q0046
+string	q0047	(Set().drop(9223372036854775807)).toString()	047-q0047
+string	q0048	(Set(3, 1, 2).drop(-9223372036854775808)).toString()	048-q0048
+string	q0049	(Set(3, 1, 2).drop(-1)).toString()	049-q0049
+string	q0050	(Set(3, 1, 2).drop(0)).toString()	050-q0050
+string	q0051	(Set(3, 1, 2).drop(1)).toString()	051-q0051
+string	q0052	(Set(3, 1, 2).drop(2)).toString()	052-q0052
+string	q0053	(Set(3, 1, 2).drop(3)).toString()	053-q0053
+string	q0054	(Set(3, 1, 2).drop(4)).toString()	054-q0054
+string	q0055	(Set(3, 1, 2).drop(9223372036854775807)).toString()	055-q0055
+string	q0056	(Set(1,2).drop("x")).toString()	056-q0056
+string	q0057	(Set(1,2).drop(1.0)).toString()	057-q0057
+string	q0058	(Set(1,2).drop(null)).toString()	058-q0058
+string	q0059	(Set(1,2).drop(trace(-1))).toString()	059-q0059
+string	q0060	(Set().dropLast(-9223372036854775808)).toString()	060-q0060
+string	q0061	(Set().dropLast(-1)).toString()	061-q0061
+string	q0062	(Set().dropLast(0)).toString()	062-q0062
+string	q0063	(Set().dropLast(1)).toString()	063-q0063
+string	q0064	(Set().dropLast(2)).toString()	064-q0064
+string	q0065	(Set().dropLast(3)).toString()	065-q0065
+string	q0066	(Set().dropLast(4)).toString()	066-q0066
+string	q0067	(Set().dropLast(9223372036854775807)).toString()	067-q0067
+string	q0068	(Set(3, 1, 2).dropLast(-9223372036854775808)).toString()	068-q0068
+string	q0069	(Set(3, 1, 2).dropLast(-1)).toString()	069-q0069
+string	q0070	(Set(3, 1, 2).dropLast(0)).toString()	070-q0070
+string	q0071	(Set(3, 1, 2).dropLast(1)).toString()	071-q0071
+string	q0072	(Set(3, 1, 2).dropLast(2)).toString()	072-q0072
+string	q0073	(Set(3, 1, 2).dropLast(3)).toString()	073-q0073
+string	q0074	(Set(3, 1, 2).dropLast(4)).toString()	074-q0074
+string	q0075	(Set(3, 1, 2).dropLast(9223372036854775807)).toString()	075-q0075
+string	q0076	(Set(1,2).dropLast("x")).toString()	076-q0076
+string	q0077	(Set(1,2).dropLast(1.0)).toString()	077-q0077
+string	q0078	(Set(1,2).dropLast(null)).toString()	078-q0078
+string	q0079	(Set(1,2).dropLast(trace(-1))).toString()	079-q0079
+string	q0080	(Set().split(-9223372036854775808)).toString()	080-q0080
+string	q0081	(Set().split(-1)).toString()	081-q0081
+string	q0082	(Set().split(0)).toString()	082-q0082
+string	q0083	(Set().split(1)).toString()	083-q0083
+string	q0084	(Set().split(2)).toString()	084-q0084
+string	q0085	(Set().split(3)).toString()	085-q0085
+string	q0086	(Set().split(4)).toString()	086-q0086
+string	q0087	(Set().split(9223372036854775807)).toString()	087-q0087
+string	q0088	(Set(3, 1, 2).split(-9223372036854775808)).toString()	088-q0088
+string	q0089	(Set(3, 1, 2).split(-1)).toString()	089-q0089
+string	q0090	(Set(3, 1, 2).split(0)).toString()	090-q0090
+string	q0091	(Set(3, 1, 2).split(1)).toString()	091-q0091
+string	q0092	(Set(3, 1, 2).split(2)).toString()	092-q0092
+string	q0093	(Set(3, 1, 2).split(3)).toString()	093-q0093
+string	q0094	(Set(3, 1, 2).split(4)).toString()	094-q0094
+string	q0095	(Set(3, 1, 2).split(9223372036854775807)).toString()	095-q0095
+string	q0096	(Set(1,2).split("x")).toString()	096-q0096
+string	q0097	(Set(1,2).split(1.0)).toString()	097-q0097
+string	q0098	(Set(1,2).split(null)).toString()	098-q0098
+string	q0099	(Set(1,2).split(trace(-1))).toString()	099-q0099
+string	q0100	(Set().splitOrNull(-9223372036854775808)).toString()	100-q0100
+string	q0101	(Set().splitOrNull(-1)).toString()	101-q0101
+string	q0102	(Set().splitOrNull(0)).toString()	102-q0102
+string	q0103	(Set().splitOrNull(1)).toString()	103-q0103
+string	q0104	(Set().splitOrNull(2)).toString()	104-q0104
+string	q0105	(Set().splitOrNull(3)).toString()	105-q0105
+string	q0106	(Set().splitOrNull(4)).toString()	106-q0106
+string	q0107	(Set().splitOrNull(9223372036854775807)).toString()	107-q0107
+string	q0108	(Set(3, 1, 2).splitOrNull(-9223372036854775808)).toString()	108-q0108
+string	q0109	(Set(3, 1, 2).splitOrNull(-1)).toString()	109-q0109
+string	q0110	(Set(3, 1, 2).splitOrNull(0)).toString()	110-q0110
+string	q0111	(Set(3, 1, 2).splitOrNull(1)).toString()	111-q0111
+string	q0112	(Set(3, 1, 2).splitOrNull(2)).toString()	112-q0112
+string	q0113	(Set(3, 1, 2).splitOrNull(3)).toString()	113-q0113
+string	q0114	(Set(3, 1, 2).splitOrNull(4)).toString()	114-q0114
+string	q0115	(Set(3, 1, 2).splitOrNull(9223372036854775807)).toString()	115-q0115
+string	q0116	(Set(1,2).splitOrNull("x")).toString()	116-q0116
+string	q0117	(Set(1,2).splitOrNull(1.0)).toString()	117-q0117
+string	q0118	(Set(1,2).splitOrNull(null)).toString()	118-q0118
+string	q0119	(Set(1,2).splitOrNull(trace(-1))).toString()	119-q0119
+string	q0120	(Set().rest).toString()	120-q0120
+string	q0121	(Set(1).rest).toString()	121-q0121
+string	q0122	(Set(3,1,2).rest).toString()	122-q0122
+string	q0123	(Set(3,1,2).startsWith(List())).toString()	123-q0123
+string	q0124	(Set(3,1,2).startsWith(Set())).toString()	124-q0124
+string	q0125	(Set(3,1,2).startsWith(List(3))).toString()	125-q0125
+string	q0126	(Set(3,1,2).startsWith(Set(3,1))).toString()	126-q0126
+string	q0127	(Set(3,1,2).startsWith(List(1,2))).toString()	127-q0127
+string	q0128	(Set(3,1,2).startsWith(List(3,1,2))).toString()	128-q0128
+string	q0129	(Set(3,1,2).startsWith(List(3,1,2,4))).toString()	129-q0129
+string	q0130	(Set(3,1,2).startsWith(new Listing {3; 1})).toString()	130-q0130
+string	q0131	(Set(3,1,2).startsWith("x")).toString()	131-q0131
+string	q0132	(Set(NaN).startsWith(List(NaN))).toString()	132-q0132
+string	q0133	(Set(-0.0).startsWith(List(0.0))).toString()	133-q0133
+string	q0134	(Set(1).startsWith(List(1.0))).toString()	134-q0134
+string	q0135	(Set(3,1,2).endsWith(List())).toString()	135-q0135
+string	q0136	(Set(3,1,2).endsWith(Set())).toString()	136-q0136
+string	q0137	(Set(3,1,2).endsWith(List(3))).toString()	137-q0137
+string	q0138	(Set(3,1,2).endsWith(Set(3,1))).toString()	138-q0138
+string	q0139	(Set(3,1,2).endsWith(List(1,2))).toString()	139-q0139
+string	q0140	(Set(3,1,2).endsWith(List(3,1,2))).toString()	140-q0140
+string	q0141	(Set(3,1,2).endsWith(List(3,1,2,4))).toString()	141-q0141
+string	q0142	(Set(3,1,2).endsWith(new Listing {3; 1})).toString()	142-q0142
+string	q0143	(Set(3,1,2).endsWith("x")).toString()	143-q0143
+string	q0144	(Set(NaN).endsWith(List(NaN))).toString()	144-q0144
+string	q0145	(Set(-0.0).endsWith(List(0.0))).toString()	145-q0145
+string	q0146	(Set(1).endsWith(List(1.0))).toString()	146-q0146
+string	q0147	(Set(3,1).repeat(-1)).toString()	147-q0147
+string	q0148	(Set(3,1).repeat(0)).toString()	148-q0148
+string	q0149	(Set(3,1).repeat(1)).toString()	149-q0149
+string	q0150	(Set(3,1).repeat(2)).toString()	150-q0150
+string	q0151	(Set(3,1).repeat(3)).toString()	151-q0151
+string	q0152	(Set(3,1).repeat("x")).toString()	152-q0152
+string	q0153	(Set(3,1).repeat(null)).toString()	153-q0153
+string	q0154	(Set().repeat(3)).toString()	154-q0154
+string	q0155	(Set(3,1,2).zip(List())).toString()	155-q0155
+string	q0156	(Set(3,1,2).zip(Set())).toString()	156-q0156
+string	q0157	(Set(3,1,2).zip(List(9))).toString()	157-q0157
+string	q0158	(Set(3,1,2).zip(List(9,8,7,6))).toString()	158-q0158
+string	q0159	(Set(3,1,2).zip(Set(9,8))).toString()	159-q0159
+string	q0160	(Set(3,1,2).zip("x")).toString()	160-q0160
+string	q0161	(Set(3,1,2).zip(new Listing {1})).toString()	161-q0161
+string	q0162	(Set(3,1,2).partition((x) -> trace(x) > 1)).toString()	162-q0162
+string	q0163	(Set(3,1,2).partition((x) -> true)).toString()	163-q0163
+string	q0164	(Set(3,1,2).partition((x) -> false)).toString()	164-q0164
+string	q0165	(Set(3,1,2).partition((x) -> 1)).toString()	165-q0165

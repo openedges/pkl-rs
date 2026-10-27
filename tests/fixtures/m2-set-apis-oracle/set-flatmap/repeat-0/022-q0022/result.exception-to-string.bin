@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot flatten a collection containing a non-collection element.
+Element: "ab"
+
+1 | (Set("ab").flatten()).toString()
+     ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

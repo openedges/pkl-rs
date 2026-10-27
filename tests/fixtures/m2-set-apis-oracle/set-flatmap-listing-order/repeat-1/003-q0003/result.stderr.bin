@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Modifier `hidden` is not applicable to object members.
+
+1 | (Set(new Listing { hidden x=throw("hidden"); 1; 2 }).flatten()).toString()
+                       ^^^^^^
+at repl:text (repl:text)

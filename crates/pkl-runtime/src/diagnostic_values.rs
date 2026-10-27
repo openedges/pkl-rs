@@ -450,6 +450,12 @@ impl Renderer<'_> {
             ));
         }
         self.tasks.push(RenderTask::Exit(id));
+        if self.heap.get(id)?.foreign_map_entry.is_some() {
+            return Err(RuntimeError::new(
+                ErrorKind::Unsupported,
+                "Foreign Map.Entry rendering has a pinned Java internal-error protocol that remains unresolved.",
+            ));
+        }
         if let Some(pair) = &self.heap.get(id)?.pair {
             self.schedule([
                 RenderTask::Text("Pair(".into()),

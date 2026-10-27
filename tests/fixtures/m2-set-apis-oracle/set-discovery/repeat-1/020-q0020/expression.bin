@@ -1,0 +1,1 @@
+(Set(1,2,3).takeWhile((x)->x<3)).toString()

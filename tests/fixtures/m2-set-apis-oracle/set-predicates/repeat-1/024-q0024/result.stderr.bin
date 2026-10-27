@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got type `Function2`.
+Value: new Function2 {}
+
+3468 | external function find(predicate: (Element) -> Boolean): Element
+                                         ^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Set.find (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3468)
+
+1 | (Set(1, 2).find((x, y) -> true)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -62,6 +62,8 @@ def source_paths(root: Path):
     for directory, pattern in [('crates', '*.rs'), ('crates', '*.pkl'), ('crates', 'Cargo.toml'),
                                ('tests/fixtures/m2', '*'),
                                ('tests/fixtures/m2-string-apis-oracle', '*'),
+                               ('tests/fixtures/m2-numeric-apis-oracle', '*'),
+                               ('tests/fixtures/m2-set-apis-oracle', '*'),
                                ('tests/fixtures/m2-deprecation', '*'),
                                ('tests/fixtures/m2-frame-transformers', '*'),
                                ('tests/fixtures/m2-class-values', '*'),

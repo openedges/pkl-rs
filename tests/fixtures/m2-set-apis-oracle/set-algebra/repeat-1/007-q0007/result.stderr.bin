@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Set`, but got type `List`.
+Value: List(1)
+
+3548 | external function intersect(other: Set): Set<Element>
+                                          ^^^
+at pkl.base#Set.intersect (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3548)
+
+1 | (Set(1,2).intersect(List(1))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

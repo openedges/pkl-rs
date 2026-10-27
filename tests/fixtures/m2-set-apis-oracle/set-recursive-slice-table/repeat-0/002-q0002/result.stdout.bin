@@ -1,0 +1,5 @@
+Set(new Dynamic {
+  ["x"] = 2
+}, 2, new Dynamic {
+  ["x"] = 2
+})

@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 1 function arguments but got 2.
+
+1067 | external function or(n: Int): Int
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Int.or (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1067)
+
+1 | (1.or(1, trace(2))).toString()
+     ^^^^^^^^^^^^^^^^^
+at  (repl:text)

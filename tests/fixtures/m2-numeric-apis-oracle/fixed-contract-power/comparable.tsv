@@ -1,0 +1,39 @@
+string	q0000	(123.toFixed(-9223372036854775808)).toString()	000-q0000
+string	q0001	(123.toFixed(-1)).toString()	001-q0001
+string	q0002	(123.toFixed(0)).toString()	002-q0002
+string	q0003	(123.toFixed(20)).toString()	003-q0003
+string	q0004	(123.toFixed(21)).toString()	004-q0004
+string	q0005	(123.toFixed(4294967296)).toString()	005-q0005
+string	q0006	(123.toFixed(9223372036854775807)).toString()	006-q0006
+string	q0007	(123.toFixed(1.0)).toString()	007-q0007
+string	q0008	(123.toFixed("2")).toString()	008-q0008
+string	q0009	(123.toFixed(null)).toString()	009-q0009
+string	q0010	(123.toFixed()).toString()	010-q0010
+string	q0011	(123.toFixed(1, trace(2))).toString()	011-q0011
+string	q0012	(123.toFixed(trace(-1))).toString()	012-q0012
+string	q0013	(123.toFixed(trace("x"))).toString()	013-q0013
+string	q0014	(1.25.toFixed(-9223372036854775808)).toString()	014-q0014
+string	q0015	(1.25.toFixed(-1)).toString()	015-q0015
+string	q0016	(1.25.toFixed(0)).toString()	016-q0016
+string	q0017	(1.25.toFixed(20)).toString()	017-q0017
+string	q0018	(1.25.toFixed(21)).toString()	018-q0018
+string	q0019	(1.25.toFixed(4294967296)).toString()	019-q0019
+string	q0020	(1.25.toFixed(9223372036854775807)).toString()	020-q0020
+string	q0021	(1.25.toFixed(1.0)).toString()	021-q0021
+string	q0022	(1.25.toFixed("2")).toString()	022-q0022
+string	q0023	(1.25.toFixed(null)).toString()	023-q0023
+string	q0024	(1.25.toFixed()).toString()	024-q0024
+string	q0025	(1.25.toFixed(1, trace(2))).toString()	025-q0025
+string	q0026	(1.25.toFixed(trace(-1))).toString()	026-q0026
+string	q0027	(1.25.toFixed(trace("x"))).toString()	027-q0027
+string	q0028	((NaN).toFixed(-1)).toString()	028-q0028
+string	q0029	((NaN).toFixed(21)).toString()	029-q0029
+string	q0030	((NaN).toFixed("x")).toString()	030-q0030
+string	q0031	((Infinity).toFixed(-1)).toString()	031-q0031
+string	q0032	((Infinity).toFixed(21)).toString()	032-q0032
+string	q0033	((Infinity).toFixed("x")).toString()	033-q0033
+string	q0034	((-Infinity).toFixed(-1)).toString()	034-q0034
+string	q0035	((-Infinity).toFixed(21)).toString()	035-q0035
+string	q0036	((-Infinity).toFixed("x")).toString()	036-q0036
+string	q0037	(123.toFixed(throw("fraction evaluated"))).toString()	037-q0037
+string	q0038	(1.25.toFixed(throw("fraction evaluated"))).toString()	038-q0038

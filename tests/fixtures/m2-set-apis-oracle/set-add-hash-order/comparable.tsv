@@ -1,0 +1,12 @@
+string	q0000	(Set().add(zero)).toString()	000-q0000
+string	q0001	(Set(1).add(zero)).toString()	001-q0001
+string	q0002	(Set(zero, 1).add(zero)).toString()	002-q0002
+string	q0003	(Set(colliding1).add(colliding2)).toString()	003-q0003
+string	q0004	(Set(colliding1,colliding2).add(colliding1)).toString()	004-q0004
+string	q0005	(Set(listZero,1).add(List(-31))).toString()	005-q0005
+string	q0006	(Set(-0.0).add(0.0)).toString()	006-q0006
+string	q0007	(Set(1).add(1.0)).toString()	007-q0007
+string	q0008	(Set("Aa","BB").add("Aa")).toString()	008-q0008
+string	q0009	(Set("Aa","BB").add("AaAa")).toString()	009-q0009
+string	q0010	(Set(zero,1).groupBy((x)->trace(x))).toString()	010-q0010
+string	q0011	(Set(colliding1,colliding2).groupBy((x)->0)).toString()	011-q0011

@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "x"
+
+1053 | external function shl(n: Int): Int
+                                ^^^
+at pkl.base#Int.shl (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1053)
+
+1 | (1.shl("x")).toString()
+     ^^^^^^^^^^
+at  (repl:text)

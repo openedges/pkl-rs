@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Expected value of type `Boolean` or `Int`, but got `null`.
+
+1 | (Set(1,2).minWithOrNull((a,b) -> null)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -89,6 +89,12 @@ pub(super) fn runtime_class(value: &Value, heap: &Heap) -> Result<RuntimeClass, 
         }
         Value::Object(id) => {
             let object = heap.get(*id)?;
+            if object.foreign_map_entry.is_some() {
+                return Err(RuntimeError::new(
+                    ErrorKind::Unsupported,
+                    "Foreign Map.Entry class/method access has a pinned Java internal-error protocol that remains unresolved.",
+                ));
+            }
             if object.pair.is_some() {
                 B::Pair
             } else if object.reference.is_some() {

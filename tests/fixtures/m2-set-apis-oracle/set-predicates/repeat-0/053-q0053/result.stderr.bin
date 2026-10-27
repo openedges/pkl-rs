@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got type `Int`.
+Value: 42
+
+3472 | external function findLastOrNull(predicate: (Element) -> Boolean): Element?
+                                                   ^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Set.findLastOrNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3472)
+
+1 | (Set().findLastOrNull(42)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

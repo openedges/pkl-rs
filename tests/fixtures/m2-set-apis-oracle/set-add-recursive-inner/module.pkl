@@ -1,0 +1,2 @@
+module stage99
+hidden key = new Dynamic { a = Set(this, 2).add(this).length }

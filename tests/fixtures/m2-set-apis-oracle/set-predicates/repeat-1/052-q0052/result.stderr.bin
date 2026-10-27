@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `String`, but got type `Int`.
+Value: 2
+
+1 | (Set(1, 2).findLastOrNull((x: String) -> true)).toString()
+                                  ^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | (Set(1, 2).findLastOrNull((x: String) -> true)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

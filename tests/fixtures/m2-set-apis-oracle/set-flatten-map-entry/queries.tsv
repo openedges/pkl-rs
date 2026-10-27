@@ -1,0 +1,8 @@
+string	q0000	(Set(Map()).flatten()).toString()
+string	q0001	(Set(Map(1, 2)).flatten().length).toString()
+string	q0002	(Set(Map(1, 2)).flatten().isEmpty).toString()
+string	q0003	(Set(Map(1, 2)).flatten().toList().length).toString()
+string	q0004	(Set(Map(1, 2)).flatten().contains(Pair(1, 2))).toString()
+string	q0005	(Set(Map(1, 2)).flatten() == Set(Map(1, 2)).flatten()).toString()
+string	q0006	(Set(Map(1, 2, 3, 4)).flatten().length).toString()
+string	q0007	(Set(Map(1, 2)).flatten().first.toString()).toString()

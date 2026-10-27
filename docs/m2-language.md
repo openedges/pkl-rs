@@ -1,5 +1,75 @@
 # M2 language verification
 
+## Stage99 numeric and Set APIs — selected validation complete
+
+Recorded local evidence: [Stage99 checkpoint](../reports/m2/stage99-numeric-set-apis-checkpoint.json).
+
+The shared VM adds the 13 previously missing numeric routes and 52 Set routes:
+identity/conversion, shifts and bitwise operations, character conversion and
+fixed formatting, plus Set predicates, slicing, folds, extrema, sorting,
+conversions and algebra. Evaluation stays in the common engine without a Java
+fallback. Source coverage is distinct from complete API compatibility.
+
+Pinned Java authority retains **1,218 query/profile contracts repeated twice**:
+1,666 successful values, 764 ordinary Pkl errors and six internal observations.
+The 542 numeric contracts and Set cohorts of 622, 36, 8 and 10 preserve their
+original source, URI, order, both repeats and 39 power-assertion contracts.
+On freeze04, targeted04 passes **25 tests, zero failures and one ignored test**.
+All **1,215 ordinary contracts / 2,430 observations**, **26,960 shared raw fields**
+and **1,238 ordered Logger events** match Java. Three foreign-entry internal
+contracts retain six required unresolved observations; they are not passes.
+
+The terminal workspace passes **1,418 tests, zero failures and three ignored
+tests**, covering all **245 test executables**, 25 compile-only examples and two
+doctest libraries. Thirteen nested child summaries are separate. Formatting02,
+xtask02, Clippy02, Wasm01 and the full Python01 suite pass on freeze04; Python
+runs **180 tests**. The default driver reuses actual Clippy02 and executes the
+other seven roles. **All eight roles pass**, including final manifest and inventory
+checks, with no missing or unexecuted roles and stable inputs.
+
+Workspace Cargo reports the normal runtime as Fresh, reusing the actual
+same-source targeted04 compilation. Its original compiler command, 113 inputs,
+artifacts and source bookends are authenticated. The workspace newly compiles
+`module_eval_probe` and `semantics_probe` against that runtime. Actual platform
+schema admission succeeds by reading those terminal records; it is not a
+platform run. Actual M1 now matches **6,078 cases per Rust/Node/Chromium target**
+and across the shared engine; its separate strict and architecture gates pass.
+Each selected native/N-API/Chromium target completes **23 programs / 46 repeat
+sessions / 2,436 observations**. All **2,430 ordinary observations** match:
+1,666 successes, 764 ordinary errors and 1,238 ordered Logger events per target.
+The platform reader compares 31,820 shared raw fields including expressions
+and Logger counts; this differs from the Rust harness field-count scope.
+Six observations from three required internal contracts remain unresolved on
+each target. The window is complete with stable sources and no acquisition
+errors; **comparable_pass=true, all_required_pass=false**.
+
+The current native adapter compilation exits 0 but records a 686-byte
+`rust-objcopy` warning: stripping aborted because `@rpath/libLLVM.dylib` was
+unavailable. The actual artifact remains bound; requested stripping is not
+claimed complete. M1 uses a scoped LLVM loader path. This current adapter
+warning is separate from the historical Stage98 N-API warning.
+
+The original Float/Int/Set native replay is terminal with **two of three raw
+matches**. Float and Int match Java; Set fails at `List(1).minWith(comparator)`
+on original line 249 because the List route is missing. Its native stdout is
+empty, stderr is 931 bytes and exit is 1, versus Java stdout of 6,984 bytes,
+empty stderr and exit 0. This required mismatch remains open. Replay the
+unchanged original after the full List implementation is integrated; selected
+Set results do not establish compatibility of the complete original module.
+
+The initial metadata-type compile failure, targeted02's **22/3/1** result,
+comparator diagnostic and foreign-entry argument-order corrections, premature
+pre-freeze controller failure, and first default driver's Clippy failure remain
+preserved. The lint correction uses equivalent byte parity and a statement-local
+allowance for the exact pinned JDK decimal-estimate constants; it changes no
+numeric expectation. Earlier targeted03 is separate from current targeted04.
+
+Stage94's earlier-source **4,268/4,424** whole-corpus aggregate is unchanged.
+The inventory remains **4,545 cases: 4,442 ready, 71 unimplemented and 32 unmapped**,
+with 475 requirements. Full ready-corpus replay, the original List Java heap
+error, Stage98 glob protocols, other language/API, release-platform and performance
+obligations remain open. These selected results do not establish complete numeric/Set/M2 compatibility.
+
 ## Stage98 shared String API checkpoint
 
 The shared VM adds the 28 previously missing String member routes and corrects

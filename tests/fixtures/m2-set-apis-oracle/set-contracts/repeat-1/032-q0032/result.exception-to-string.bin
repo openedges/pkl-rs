@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3504 | external function minByOrNull(selector: (Element) -> Int): Element?
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Set.minByOrNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3504)
+
+1 | (Set(1).minByOrNull()).toString()
+     ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

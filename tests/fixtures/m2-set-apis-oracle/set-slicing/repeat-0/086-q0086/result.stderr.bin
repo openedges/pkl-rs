@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Element index `4` is out of range `0`..`0`.
+Collection: Set()
+
+1 | (Set().split(4)).toString()
+     ^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3518 | external function maxWithOrNull(
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Set.maxWithOrNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3518)
+
+1 | (Set(1).maxWithOrNull()).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

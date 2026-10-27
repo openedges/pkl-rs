@@ -1,0 +1,8 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Operator `<` is not defined for operand types `String` and `Int`.
+Left operand : "x"
+Right operand: 1
+
+1 | (Set(1,"x").min).toString()
+     ^^^^^^^^^^^^^^
+at  (repl:text)

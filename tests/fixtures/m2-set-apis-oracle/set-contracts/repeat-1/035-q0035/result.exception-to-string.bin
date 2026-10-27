@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3507 | external function minWithOrNull(
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Set.minWithOrNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3507)
+
+1 | (Set(1).minWithOrNull()).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

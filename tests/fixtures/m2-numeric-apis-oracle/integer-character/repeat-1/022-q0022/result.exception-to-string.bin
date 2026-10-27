@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Decimal `4,295,022,592` is not a valid Unicode code point.
+
+1 | ((4295022592).toChar()).toString()
+     ^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

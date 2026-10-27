@@ -8,6 +8,7 @@ pub enum Operation {
     IntToRadixString,
     ListGetOrNull,
     SetRestOrNull,
+    SetRest,
 }
 
 pub(super) fn blocks(
@@ -37,6 +38,13 @@ pub(super) fn blocks(
             "external function getOrNull(index: Int): Element?",
             Operation::ListGetOrNull,
             Some("index: "),
+        ),
+        (
+            "Set",
+            "rest",
+            "external rest: Set<Element>",
+            Operation::SetRest,
+            None,
         ),
         (
             "Set",
@@ -217,10 +225,27 @@ impl Vm {
                 // Return the stored Value itself, preserving heap identity.
                 self.stack.push(value);
             }
-            Operation::SetRestOrNull => {
+            Operation::SetRestOrNull | Operation::SetRest => {
                 let source = receiver.as_object()?;
                 let members = collections::ordered_members(&self.heap, source)?;
                 if members.is_empty() {
+                    if matches!(operation, Operation::SetRest) {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            PklString::join(
+                                &[
+                                    "Expected a non-empty collection.\nCollection: ".into(),
+                                    crate::diagnostic_values::render_string(
+                                        &receiver,
+                                        &self.heap,
+                                        &self.program.module_name,
+                                        80,
+                                    )?,
+                                ],
+                                "",
+                            ),
+                        ));
+                    }
                     self.stack.push(Value::Null);
                     return Ok(());
                 }

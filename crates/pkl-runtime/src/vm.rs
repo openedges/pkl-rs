@@ -27,6 +27,8 @@ mod duration;
 mod int_seq;
 mod lazy_collections;
 mod regex;
+mod set_order;
+mod set_sequence;
 mod string_transforms;
 pub use code_storage::CodeStorage;
 mod compiler_expressions;
@@ -238,6 +240,8 @@ pub enum Instruction {
         operand_span: Span,
     },
     ToString,
+    /// Internal Java Object.toString conversion used by collection/foreign values.
+    JavaValueString,
     StringRepeat,
     CollectionJoin,
     BeginConversion(collection_conversions::Operation),
@@ -854,7 +858,7 @@ impl TypeCheck {
                 matches!(value, Value::Object(id) if heap.get(*id).is_ok_and(|o|o.pair.is_some()))
             }
             Self::Collection(kind) => {
-                matches!(value, Value::Object(id) if heap.get(*id).is_ok_and(|object| object.collection_kind == *kind && !object.is_module && object.reference.is_none() && !object.ref_module) && collections::typed_class(heap, *id).is_ok_and(|class| class.is_none()))
+                matches!(value, Value::Object(id) if heap.get(*id).is_ok_and(|object| object.collection_kind == *kind && object.foreign_map_entry.is_none() && !object.is_module && object.reference.is_none() && !object.ref_module) && collections::typed_class(heap, *id).is_ok_and(|class| class.is_none()))
             }
             Self::ParameterizedCollection { kind, .. } => {
                 Self::Collection(*kind).accepts(value, heap)
@@ -942,9 +946,9 @@ pub struct Program {
     pub(crate) reference_render_block: usize,
     pub(crate) typed_string_block: usize,
     pub(crate) string_repeat_block: usize,
-    pub(crate) collection_join_blocks: [usize; 3],
+    pub(crate) collection_join_blocks: [usize; 4],
     collection_every_blocks: [usize; 5],
-    collection_transform_blocks: [usize; 15],
+    collection_transform_blocks: [usize; 25],
     collection_projection_blocks: [usize; 13],
     conversion_blocks: BTreeMap<(Arc<str>, Arc<str>), (usize, usize)>,
     conversion_delegate_block: usize,
@@ -1212,6 +1216,8 @@ struct Frame {
     pcf_render: Option<rendering::RenderRun>,
     collection_join: Option<collections::JoinRun>,
     collection_transform: Option<Box<collection_transforms::TransformRun>>,
+    set_order: Option<Box<set_order::Run>>,
+    set_sequence: Option<Box<set_sequence::Run>>,
     string_transform: Option<Box<string_transforms::Run>>,
     int_seq_run: Option<Box<int_seq::Run>>,
     lazy_collection_run: Option<Box<lazy_collections::Run>>,
@@ -1490,6 +1496,8 @@ impl Vm {
             pcf_render: None,
             collection_join: None,
             collection_transform: None,
+            set_order: None,
+            set_sequence: None,
             string_transform: None,
             int_seq_run: None,
             lazy_collection_run: None,
@@ -1963,6 +1971,12 @@ impl Vm {
                     run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.collection_transform {
+                    run.roots(&mut roots);
+                }
+                if let Some(run) = &frame.set_order {
+                    run.roots(&mut roots);
+                }
+                if let Some(run) = &frame.set_sequence {
                     run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.string_transform {
@@ -3043,6 +3057,8 @@ impl Vm {
             pcf_render: None,
             collection_join: None,
             collection_transform: None,
+            set_order: None,
+            set_sequence: None,
             string_transform: None,
             int_seq_run: None,
             lazy_collection_run: None,
@@ -4107,6 +4123,8 @@ impl Vm {
             pcf_render: None,
             collection_join: None,
             collection_transform: None,
+            set_order: None,
+            set_sequence: None,
             string_transform: None,
             int_seq_run: None,
             lazy_collection_run: None,
@@ -4772,6 +4790,10 @@ impl Vm {
                 let first = self.pop()?;
                 let value = self.make_pair(first, second);
                 self.stack.push(value);
+            }
+            Instruction::JavaValueString => {
+                let value = self.pop()?;
+                self.java_value_string(value)?;
             }
             Instruction::ToString => {
                 let value = self.pop()?;

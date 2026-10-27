@@ -1,0 +1,3 @@
+string	q0000	(Set(key).first.a).toString()
+string	q0001	(Set(key,2).add(key)).toString()
+string	q0002	(Set(key,2).add(key).length).toString()

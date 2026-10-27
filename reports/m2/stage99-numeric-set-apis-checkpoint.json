@@ -1,0 +1,554 @@
+{
+  "actual_default_checks": {
+    "qualification": "Eight roles complete on freeze04: fmt02, xtask02, workspace01, Wasm01, Python01, final manifest and inventory executed by default driver02; actual Clippy02 was prevalidated and reused, not rerun. Workspace runtime Fresh reuse binds targeted04 actual compilation. Three ignored tests remain unexecuted.",
+    "report": {
+      "bytes": 735381,
+      "mode": 420,
+      "path": "target/m2/stage99-default-validation-02/report.json",
+      "sha256": "dc7111c54e0b80e2a78cf3f5585f5087bc91001ca5e82612ba7d7bd6d114cd92"
+    }
+  },
+  "actual_m1": {
+    "Node_architecture_scenarios": 92,
+    "browser_architecture_scenarios": 92,
+    "known_gaps": [],
+    "one_acquisition": true,
+    "oracle_passed": {
+      "browser": 6078,
+      "node": 6078,
+      "rust": 6078
+    },
+    "shared_engine_passed": 6078,
+    "strict_and_architecture_separate": true,
+    "total": 6078
+  },
+  "actual_python": {
+    "failed": 0,
+    "report": {
+      "bytes": 3192,
+      "mode": 420,
+      "path": "target/m2/stage99-python-01/report.json",
+      "sha256": "8274421ea99be3f79dd81043de52f0b286fcf3189ea4edb470003d24b0773b74"
+    },
+    "tests": 180
+  },
+  "actual_targeted": {
+    "ordered_logger_events": 1238,
+    "ordinary_contracts": 1215,
+    "ordinary_observations": 2430,
+    "raw_fields": 26960,
+    "report": {
+      "bytes": 9611,
+      "mode": 420,
+      "path": "target/m2/stage99-targeted-04/report.json",
+      "sha256": "fdaf24f46efb9c9f5fa7cf9169ad1b3a7d07d03238cbaf6359a706c3c84b1c1f"
+    },
+    "required_unresolved_contracts": 3,
+    "required_unresolved_observations": 6,
+    "tests": {
+      "failed": 0,
+      "ignored": 1,
+      "passed": 25
+    }
+  },
+  "actual_workspace": {
+    "coverage": {
+      "actual_tests": 245,
+      "compile_only_examples": 25,
+      "complete": true,
+      "doctest_libraries": 2,
+      "expected_tests": 245,
+      "invoked_tests": 245
+    },
+    "nested_reruns": 13,
+    "profiles": {
+      "CARGO_BUILD_JOBS": "1",
+      "CARGO_INCREMENTAL": "0",
+      "CARGO_PROFILE_DEV_DEBUG": "0",
+      "CARGO_PROFILE_DEV_DEBUG_ASSERTIONS": "true",
+      "CARGO_PROFILE_DEV_OPT_LEVEL": "1",
+      "CARGO_PROFILE_DEV_OVERFLOW_CHECKS": "true",
+      "CARGO_PROFILE_DEV_STRIP": "symbols",
+      "CARGO_PROFILE_TEST_DEBUG": "0",
+      "CARGO_PROFILE_TEST_DEBUG_ASSERTIONS": "true",
+      "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+      "CARGO_PROFILE_TEST_OVERFLOW_CHECKS": "true",
+      "CARGO_PROFILE_TEST_STRIP": "symbols",
+      "CARGO_TARGET_DIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target"
+    },
+    "report": {
+      "bytes": 7005,
+      "mode": 420,
+      "path": "target/m2/stage99-workspace-01/report.json",
+      "sha256": "028ed3d017ea116ec6bf96f0576ce01e85ae520257d386c4e2a0e5e2dcb6c7dd"
+    },
+    "tests": {
+      "failed": 0,
+      "ignored": 3,
+      "passed": 1418
+    }
+  },
+  "archives": [
+    {
+      "archive": {
+        "bytes": 40276468,
+        "mode": 420,
+        "path": "reports/m2/stage99-numeric-set-apis-evidence-01.tar.gz",
+        "sha256": "8c5fd74548ba965c53272a63754a2b6be4fa83fec68c33dc69ae9cc8fb973456"
+      },
+      "index": 1,
+      "manifest": {
+        "bytes": 382520,
+        "sha256": "3bfecabaf94976d919e363bd7ef08b15dd6a8b9c738292eec125a1eba14cfc23"
+      },
+      "members_including_manifest": 970
+    },
+    {
+      "archive": {
+        "bytes": 35315539,
+        "mode": 420,
+        "path": "reports/m2/stage99-numeric-set-apis-evidence-02.tar.gz",
+        "sha256": "46d6dfaf71675d20dfdc5df82c2f1d15837e337575148b349c543d0281d0102a"
+      },
+      "index": 2,
+      "manifest": {
+        "bytes": 11883679,
+        "sha256": "e49243f701d054b95d6dc4a056b376f1d2071399342fa707f8ef0e160e222c9a"
+      },
+      "members_including_manifest": 24994
+    },
+    {
+      "archive": {
+        "bytes": 34839423,
+        "mode": 420,
+        "path": "reports/m2/stage99-numeric-set-apis-evidence-03.tar.gz",
+        "sha256": "0bbfba13243118806942d5e41aa798b572e4fa9285bc83d3332dedf0d93196fc"
+      },
+      "index": 3,
+      "manifest": {
+        "bytes": 14384550,
+        "sha256": "7bda0ecdec1bdccef8abd7b21175534ef87c870756376176d90b87ba6161c5b6"
+      },
+      "members_including_manifest": 27719
+    },
+    {
+      "archive": {
+        "bytes": 13607893,
+        "mode": 420,
+        "path": "reports/m2/stage99-numeric-set-apis-evidence-04.tar.gz",
+        "sha256": "c16340e68dd467722f83f27b1fc17ea18c02d375b72734b817b69a2bd649d803"
+      },
+      "index": 4,
+      "manifest": {
+        "bytes": 50289910,
+        "sha256": "c9c0a99d98d2b1aaba16efdc90aefbc3ae074b1c4d89f73a3acdc2aa2c188690"
+      },
+      "members_including_manifest": 98448
+    },
+    {
+      "archive": {
+        "bytes": 21166827,
+        "mode": 420,
+        "path": "reports/m2/stage99-numeric-set-apis-evidence-05.tar.gz",
+        "sha256": "62e54b562649bca0a4d91fc271f6842c6312c7dc4edee538c557ba7cf467dea2"
+      },
+      "index": 5,
+      "manifest": {
+        "bytes": 31944175,
+        "sha256": "10839a5aa89e3ec694e317ba66abec74705887f6677866eb0e0c63595034c308"
+      },
+      "members_including_manifest": 68756
+    },
+    {
+      "archive": {
+        "bytes": 27207972,
+        "mode": 420,
+        "path": "reports/m2/stage99-numeric-set-apis-evidence-06.tar.gz",
+        "sha256": "8bc5b533fb134bff82f7e3be002c549ba1c2678bb00c93d4c587c7af8436ec8b"
+      },
+      "index": 6,
+      "manifest": {
+        "bytes": 24981922,
+        "sha256": "ead8609d1262c8984e28ef8ce14a227dfe568a241f395c23bc3d8620c9d1673d"
+      },
+      "members_including_manifest": 53966
+    },
+    {
+      "archive": {
+        "bytes": 40807716,
+        "mode": 420,
+        "path": "reports/m2/stage99-numeric-set-apis-evidence-07.tar.gz",
+        "sha256": "2b48c6cfcc58210c9c388147b28be43d1c2e882d0f8a920b0e1d41392a71f774"
+      },
+      "index": 7,
+      "manifest": {
+        "bytes": 157216,
+        "sha256": "edb7865af0a6ae1057084691fc76765211b740a408d20eeef5f0d729655bd0f9"
+      },
+      "members_including_manifest": 355
+    },
+    {
+      "archive": {
+        "bytes": 35741939,
+        "mode": 420,
+        "path": "reports/m2/stage99-numeric-set-apis-evidence-08.tar.gz",
+        "sha256": "a2896c1527c71eea7654e3f3aaf277ca6059b0853ff3bcf42fce3f5ac99a15fb"
+      },
+      "index": 8,
+      "manifest": {
+        "bytes": 10501,
+        "sha256": "de81d5d52e0136cb9d612d221e306bc9cb59dd0a12b0a510e0147a3c743665c9"
+      },
+      "members_including_manifest": 25
+    },
+    {
+      "archive": {
+        "bytes": 23681565,
+        "mode": 420,
+        "path": "reports/m2/stage99-numeric-set-apis-evidence-09.tar.gz",
+        "sha256": "2bc914467a5171311256b9e54bae521bc389fe618120e97e1e8556357e8bef9c"
+      },
+      "index": 9,
+      "manifest": {
+        "bytes": 32734841,
+        "sha256": "bde90c67d2af94a6d9d0ec04ea476ba0f56872ab5a5df294a6d80e12274888a4"
+      },
+      "members_including_manifest": 70265
+    },
+    {
+      "archive": {
+        "bytes": 4577268,
+        "mode": 420,
+        "path": "reports/m2/stage99-numeric-set-apis-evidence-10.tar.gz",
+        "sha256": "eb53d97965954f0d1c0726b236449d40ada98c4e1b56bc8a69cef17e0708d070"
+      },
+      "index": 10,
+      "manifest": {
+        "bytes": 26559967,
+        "sha256": "840b2271992d0b29daf9b8729bd119f415efaf428923e049bf0ce2f748f05b9e"
+      },
+      "members_including_manifest": 55710
+    }
+  ],
+  "cargo_version": "cargo 1.98.1 (797e8a9bc 2026-08-05)\n",
+  "compatibility_baseline": "0.32.0",
+  "complete": true,
+  "documents": [
+    {
+      "bytes": 109513,
+      "mode": 420,
+      "path": "docs/m2-language.md",
+      "sha256": "ee82e6bb1a6f28f8b90fdb6b7a56ce87f17f5bdf70cc44b81898db66276f878f"
+    },
+    {
+      "bytes": 96062,
+      "mode": 420,
+      "path": "TESTING.md",
+      "sha256": "255f9d037d692f9e50be94b5756ab7341a8612676fa7c927c06340860e80a0b7"
+    },
+    {
+      "bytes": 107675,
+      "mode": 420,
+      "path": "docs/architecture.md",
+      "sha256": "9cc9bdf5c5e19a224096df9ce414586829d401b24b8173223aeef356a757ff93"
+    },
+    {
+      "bytes": 472590,
+      "mode": 420,
+      "path": "PLAN.md",
+      "sha256": "b40998170f6f08e00519b4dc21653886ccccc2be7e98fb81e51d3ce522248374"
+    },
+    {
+      "bytes": 381665,
+      "mode": 420,
+      "path": "reports/m2/README.md",
+      "sha256": "f72b883b1ed8f10613c1ac13dcc1d5348de1ca6138b7860210c93bae8a53ed42"
+    }
+  ],
+  "evidence": {
+    "default_independent_review": {
+      "bytes": 15277,
+      "mode": 420,
+      "path": "target/m2/stage99-default-independent-review-01/report.json",
+      "sha256": "35632fac5cb6c1aca868a91d576be9e677aaadfa3075180b4f4490f57a5161b6"
+    },
+    "default_validation": {
+      "bytes": 735381,
+      "mode": 420,
+      "path": "target/m2/stage99-default-validation-02/report.json",
+      "sha256": "dc7111c54e0b80e2a78cf3f5585f5087bc91001ca5e82612ba7d7bd6d114cd92"
+    },
+    "documents_application": {
+      "bytes": 4463,
+      "mode": 420,
+      "path": "target/m2/stage99-documentation-update-01/report.json",
+      "sha256": "17523c09ecf0c74e1df4c5e1978326cfc723e3aece89b612a4480a4e7246b66b"
+    },
+    "documents_independent_review": {
+      "bytes": 1917,
+      "mode": 420,
+      "path": "target/m2/stage99-documentation-application-independent-review-01/report.json",
+      "sha256": "386db3c9a0964a2385638aac37dc9f7313cef85d3b8073d7dfbcfc1b5c2f3786"
+    },
+    "integration": {
+      "bytes": 11753,
+      "mode": 420,
+      "path": "target/m2/stage99-canonical-integration-04/report.json",
+      "sha256": "b6e9dfdf727d67f788f510dda43757974fbad2cc33fe484a1d9faea4310f746d"
+    },
+    "m1_acquisition": {
+      "bytes": 3399548,
+      "mode": 420,
+      "path": "target/m2/stage99-platform-window-01/m1/experiment/report.json",
+      "sha256": "eea48f9cfeb01ab3be43edf74f07cc099d1670ed7109d19d0a1367e1fbd58ddb"
+    },
+    "m1_independent_review": {
+      "bytes": 164360,
+      "mode": 420,
+      "path": "target/m2/stage99-m1-binding-independent-review-01/report.json",
+      "sha256": "9ee083fc3e75f7283fc34b893e3a2c89aa1f99b430c55ea394f516c90bd41665"
+    },
+    "m1_strict_and_architecture_gates": {
+      "bytes": 2134,
+      "mode": 420,
+      "path": "target/m2/stage99-platform-window-01/m1-gates.json",
+      "sha256": "c863d9bf7ef5defde277fcaec7ab6d7a293738d1304213be65f5a7b1497ee6ba"
+    },
+    "native_adapter_strip_warning": {
+      "bytes": 686,
+      "mode": 420,
+      "path": "target/m2/stage99-platform-window-01/native-adapters/native.stderr.bin",
+      "sha256": "09f421c7d7476a41a6a3e02eefa41e554f580f52e4d2a740b90193498ac76797"
+    },
+    "normal_runtime_producer": {
+      "bytes": 35502,
+      "mode": 420,
+      "path": "target/m2/stage99-workspace-01/runtime-producer/normal-runtime-proof.json",
+      "sha256": "b010aa1a32718b77e1f447f9c02dd59d39d5ef03bf66a8a10b1a34e74aec52c6"
+    },
+    "original_independent_review": {
+      "bytes": 10511,
+      "mode": 420,
+      "path": "target/m2/stage99-original3-independent-review-01/report.json",
+      "sha256": "9934fb2c99758c2c3023bd69886edcf43e58137862720037ef569e06aa98a4fe"
+    },
+    "original_three": {
+      "bytes": 23992,
+      "mode": 420,
+      "path": "target/m2/stage99-original-numeric-set3-capture-01/report.json",
+      "sha256": "7b99397824d39d5afd9d873d789884215da92e3daa6dcb83fc2cb71ba5bc9b48"
+    },
+    "platform_binding": {
+      "bytes": 39300,
+      "mode": 420,
+      "path": "target/m2/stage99-platform-window-01/binding/report.json",
+      "sha256": "25cb43724df73f71a54545d4a6d42a9fbba2a5d9925ccc94c1871e9a476c594f"
+    },
+    "platform_window": {
+      "bytes": 66425,
+      "mode": 420,
+      "path": "target/m2/stage99-platform-window-01/report.json",
+      "sha256": "5b5a5ecc5caa1eba5002feb28bb21b2789c214e116cf8cb57d73f5d6837ac1f4"
+    },
+    "python": {
+      "bytes": 3192,
+      "mode": 420,
+      "path": "target/m2/stage99-python-01/report.json",
+      "sha256": "8274421ea99be3f79dd81043de52f0b286fcf3189ea4edb470003d24b0773b74"
+    },
+    "selected_comparison": {
+      "bytes": 2578124,
+      "mode": 420,
+      "path": "target/m2/stage99-platform-window-01/selected/comparison.json",
+      "sha256": "3c6ebdfccde1df8b6448d508349a7164e60a7d569f6d443e4f1470bbfe506f8d"
+    },
+    "selected_independent_review": {
+      "bytes": 37306,
+      "mode": 420,
+      "path": "target/m2/stage99-selected-independent-review-01/report.json",
+      "sha256": "af546bf8086360d3ba84a72f105c08ca535c56f46380b4ec84bc8fce803cdb66"
+    },
+    "source_freeze": {
+      "bytes": 27747650,
+      "mode": 420,
+      "path": "target/m2/stage99-canonical-freeze-04/sources.json",
+      "sha256": "f18d945dc46f60a6048682dc6d3c6aa18f20c887a544939cda701022d5b97b6e"
+    },
+    "targeted": {
+      "bytes": 9611,
+      "mode": 420,
+      "path": "target/m2/stage99-targeted-04/report.json",
+      "sha256": "fdaf24f46efb9c9f5fa7cf9169ad1b3a7d07d03238cbaf6359a706c3c84b1c1f"
+    },
+    "workspace": {
+      "bytes": 7005,
+      "mode": 420,
+      "path": "target/m2/stage99-workspace-01/report.json",
+      "sha256": "028ed3d017ea116ec6bf96f0576ce01e85ae520257d386c4e2a0e5e2dcb6c7dd"
+    },
+    "workspace_independent_review": {
+      "bytes": 4486,
+      "mode": 420,
+      "path": "target/m2/stage99-workspace-independent-review-01/report.json",
+      "sha256": "0f97b7dfeac162260a0a4c1f83c2c297698da78aeb2b9b0ab829971140d3d59b"
+    }
+  },
+  "full_API_complete": false,
+  "full_m2_complete": false,
+  "git_binding": {
+    "checkpoint_commit": "The commit containing this descriptor; exact frozen hashes bind implementation sources. Subsequent Git readback records actual commit and non-force push.",
+    "source_parent": "a669edc91848548219ca86f3e6c326c8d208c457"
+  },
+  "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "hosted_CI_result_claimed": false,
+  "implementation": {
+    "Java_production_fallback": false,
+    "new_Set_routes": 52,
+    "new_numeric_routes": 13,
+    "shared_native_wasm_napi_engine": true
+  },
+  "independent_publication_review": {
+    "bytes": 149151,
+    "mode": 420,
+    "path": "reports/m2/stage99-numeric-set-apis-publication-review.json",
+    "sha256": "a1dcc3cd2b3f1c0835f7c70b8f457c25336d06a01aa671436a2786c9715b1153"
+  },
+  "inventory": {
+    "cases": 4545,
+    "cases_by_execution": {
+      "ready": 4442,
+      "unimplemented": 71,
+      "unmapped": 32
+    },
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "kind": "Stage99 shared numeric and Set APIs and actual portable comparisons",
+  "known_limits": [
+    "Three required Set foreign-entry internal contracts/six observations per selected target remain unresolved; all_required_pass is false. Earlier Stage98 glob contracts remain separate required gaps.",
+    "Original Float and Int match; original Set fails at List(1).minWith(comparator), line249. Native exit1/empty stdout/931B stderr differs from Java exit0/6984B stdout/empty stderr. Full List integration and unchanged original replay remain required.",
+    "Earlier numeric metadata compile, targeted comparator/foreign-entry, prelaunch and Clippy failures remain preserved with original outcomes. Later passing checks do not overwrite those records.",
+    "Current native adapter compilation exited0 but rust-objcopy stripping aborted because @rpath/libLLVM.dylib was unavailable. M1 used a process-scoped LLVM loader path. Requested native adapter stripping is not claimed complete; no binary-size or performance parity claim.",
+    "Some producer alias/rmeta hashes are admission-time observations, not original compiler-time bookends. Exact original runtime/compiler inputs and retained artifacts are separately bound.",
+    "Native original private state was unchanged before/after; Java/native private state equality was not compared. Empty observed file maps do not prove complete generated-file support.",
+    "Java exception class/cause metadata remains provenance outside the portable raw-channel equality claim.",
+    "Three ignored workspace tests remain unexecuted. Source coverage and passing bounded selected contracts do not establish complete numeric/Set compatibility.",
+    "Stage94 is the latest completed whole-corpus composition; recent selected results do not update that historical aggregate. Original List Java heap failure and full4442 ready replay remain open.",
+    "All nine broad M2 workstreams and full language, product API, release-platform, speed and memory requirements remain open."
+  ],
+  "latest_completed_whole_corpus": {
+    "checkpoint": {
+      "bytes": 63897,
+      "mode": 420,
+      "path": "reports/m2/stage94-full-ready-composition-checkpoint.json",
+      "sha256": "c2deb12cc76d661f9b117be2cce8da73e9b5981f455443fdbb658859920bc614"
+    },
+    "selected_count": 4424,
+    "selected_later_improvements_added": false,
+    "source_commit": "a1b94faf305b07a01807562d20650d4d6cdce85c",
+    "status_counts": {
+      "candidate-unsupported": 102,
+      "mismatch": 52,
+      "oracle-error": 2,
+      "pass": 4268
+    },
+    "unchanged_earlier_source_aggregate": true
+  },
+  "local_verification": true,
+  "original_three": {
+    "Java_native_private_state_equality_claimed": false,
+    "Java_recaptured": false,
+    "cases": [
+      {
+        "exit_code": 0,
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/float.pkl",
+        "raw_match": true
+      },
+      {
+        "exit_code": 0,
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/int.pkl",
+        "raw_match": true
+      },
+      {
+        "exit_code": 1,
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/set.pkl",
+        "raw_match": false
+      }
+    ],
+    "compatibility_pass": false,
+    "native_private_state_invariance": true,
+    "raw_channels": [
+      "stdout",
+      "stderr",
+      "exit",
+      "generated files",
+      "public workspace changes"
+    ],
+    "raw_matches": 2
+  },
+  "performance_targets_met": false,
+  "publication_ready": true,
+  "rustc_version": "rustc 1.98.1 (48a229cea 2026-09-01)\nbinary: rustc\ncommit-hash: 48a229ceaefd4985c50990b14116b6d856af0985\ncommit-date: 2026-09-01\nhost: aarch64-apple-darwin\nrelease: 1.98.1\nLLVM version: 22.1.8\n",
+  "schema_version": 1,
+  "selected_platforms": {
+    "chromium": {
+      "all_required_pass": false,
+      "comparable_observations": 2430,
+      "comparable_statuses": {
+        "error": 764,
+        "success": 1666
+      },
+      "contracts": 1218,
+      "observations": 2436,
+      "ordered_logger_events": 1238,
+      "raw_matches": 2430,
+      "repetitions": 2,
+      "required_unresolved_contracts": 3,
+      "required_unresolved_observations": 6,
+      "sessions": 46
+    },
+    "napi": {
+      "all_required_pass": false,
+      "comparable_observations": 2430,
+      "comparable_statuses": {
+        "error": 764,
+        "success": 1666
+      },
+      "contracts": 1218,
+      "observations": 2436,
+      "ordered_logger_events": 1238,
+      "raw_matches": 2430,
+      "repetitions": 2,
+      "required_unresolved_contracts": 3,
+      "required_unresolved_observations": 6,
+      "sessions": 46
+    },
+    "native": {
+      "all_required_pass": false,
+      "comparable_observations": 2430,
+      "comparable_statuses": {
+        "error": 764,
+        "success": 1666
+      },
+      "contracts": 1218,
+      "observations": 2436,
+      "ordered_logger_events": 1238,
+      "raw_matches": 2430,
+      "repetitions": 2,
+      "required_unresolved_contracts": 3,
+      "required_unresolved_observations": 6,
+      "sessions": 46
+    }
+  },
+  "source_restoration": {
+    "all_archive_parts_required": true,
+    "direct_current_sources": 126825,
+    "historical_toolchain_and_external_artifact_identities": "Recorded identities are not claims that every external runtime/tool binary is bundled.",
+    "inherited_source_archives": []
+  }
+}

@@ -1,0 +1,40 @@
+An unexpected error has occurred. Would you mind filing a bug report?
+Cmd+Double-click the link below to open an issue.
+Please copy and paste the entire error output into the issue's description.
+
+https://github.com/apple/pkl/issues/new
+
+com.oracle.truffle.api.dsl.UnsupportedSpecializationException%3A%20Unexpected%20values%20provided%20for%20%28repl%3Atext%3A1%29%20s.toList%28%29.first%20%3D%3D%20s.first%3A%20%5BList%281%29%3DList%282%29%2C%20List%281%29%3DList%282%29%5D%2C%20%5BKeyValueHolder%2CKeyValueHolder%5D
+
+–– Pkl Error ––
+Unexpected values provided for (repl:text:1) s.toList().first == s.first: [List(1)=List(2), List(1)=List(2)], [KeyValueHolder,KeyValueHolder]
+
+1 | (let (s = Set(Map(List(1), List(2))).flatten()) s.toList().first == s.first).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Pkl 0.32.0 (macOS 27.0, Java 21.0.12.1)
+
+com.oracle.truffle.api.dsl.UnsupportedSpecializationException: Unexpected values provided for (repl:text:1) s.toList().first == s.first: [List(1)=List(2), List(1)=List(2)], [KeyValueHolder,KeyValueHolder]
+	at org.pkl.core.ast.expression.binary.EqualNodeGen.executeAndSpecialize(EqualNodeGen.java:534)
+	at org.pkl.core.ast.expression.binary.EqualNodeGen.executeGeneric_generic5(EqualNodeGen.java:260)
+	at org.pkl.core.ast.expression.binary.EqualNodeGen.executeGeneric(EqualNodeGen.java:91)
+	at org.pkl.core.ast.expression.binary.LetExprNode.eval(LetExprNode.java:74)
+	at org.pkl.core.ast.expression.binary.LetExprNodeGen.executeGeneric(LetExprNodeGen.java:31)
+	at org.pkl.core.ast.expression.member.InvokeMethodVirtualNodeGen.executeGeneric(InvokeMethodVirtualNodeGen.java:143)
+	at org.pkl.core.ast.SimpleRootNode.executeImpl(SimpleRootNode.java:53)
+	at org.pkl.core.ast.PklRootNode.execute(PklRootNode.java:46)
+	at com.oracle.truffle.api.impl.DefaultCallTarget.call(DefaultCallTarget.java:118)
+	at com.oracle.truffle.api.impl.DefaultIndirectCallNode.call(DefaultIndirectCallNode.java:53)
+	at org.pkl.core.runtime.VmUtils.evaluateExpression(VmUtils.java:969)
+	at org.pkl.core.EvaluatorImpl.lambda$evaluateExpressionString$0(EvaluatorImpl.java:267)
+	at org.pkl.core.EvaluatorImpl.lambda$doEvaluate$0(EvaluatorImpl.java:470)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:388)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at CollectionEveryOracle.main(CollectionEveryOracle.java:102)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at jdk.compiler/com.sun.tools.javac.launcher.Main.execute(Main.java:484)
+	at jdk.compiler/com.sun.tools.javac.launcher.Main.run(Main.java:208)
+	at jdk.compiler/com.sun.tools.javac.launcher.Main.main(Main.java:135)

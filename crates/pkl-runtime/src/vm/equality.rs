@@ -112,7 +112,8 @@ impl Vm {
         Ok(matches!(
             object.collection_kind,
             CollectionKind::List | CollectionKind::Map | CollectionKind::Set
-        ) || matches!(object.java_hash, None | Some(Some(0))))
+        ) || object.foreign_map_entry.is_some()
+            || matches!(object.java_hash, None | Some(Some(0))))
     }
 
     pub(super) fn java_hash(&self, value: &Value) -> Result<Option<i32>, RuntimeError> {
@@ -1372,6 +1373,20 @@ impl Vm {
                 }
             }
             Task::Compare(left, right, semantic) => {
+                // EqualNode only dispatches same-class objects through VmValue.
+                // Two foreign Map.Entry values therefore reach its unsupported
+                // specialization, even when they are the same Java object.
+                // Boxed collection equality still uses Map.Entry.equals below.
+                if semantic
+                    && let (Value::Object(a), Value::Object(b)) = (&left, &right)
+                    && self.heap.get(*a)?.foreign_map_entry.is_some()
+                    && self.heap.get(*b)?.foreign_map_entry.is_some()
+                {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Unsupported,
+                        "Direct equality of foreign Map.Entry values reaches the pinned Java internal-error protocol, which remains unresolved.",
+                    ));
+                }
                 let equal = match (&left, &right) {
                     (Value::Int(a), Value::Float(b)) if semantic => Some(a.get() as f64 == **b),
                     (Value::Float(a), Value::Int(b)) if semantic => Some(*a == b.get() as f64),
@@ -1380,7 +1395,24 @@ impl Vm {
                     (Value::Object(a), Value::Object(b)) => {
                         let x = self.heap.get(*a)?;
                         let y = self.heap.get(*b)?;
-                        if x.pair.is_some() || y.pair.is_some() {
+                        if x.foreign_map_entry.is_some() || y.foreign_map_entry.is_some() {
+                            match (&x.foreign_map_entry, &y.foreign_map_entry) {
+                                (Some(x), Some(y)) => {
+                                    run.tasks.push(Task::Compare(
+                                        x[1].clone(),
+                                        y[1].clone(),
+                                        false,
+                                    ));
+                                    run.tasks.push(Task::Compare(
+                                        x[0].clone(),
+                                        y[0].clone(),
+                                        false,
+                                    ));
+                                    None
+                                }
+                                _ => Some(false),
+                            }
+                        } else if x.pair.is_some() || y.pair.is_some() {
                             match (&x.pair, &y.pair) {
                                 (Some(x), Some(y)) => {
                                     run.tasks.push(Task::Compare(
@@ -1690,6 +1722,7 @@ impl Vm {
                     run.tasks.push(Task::Build(id));
                     run.tasks.push(Task::HashMembers(id));
                     if self.heap.get(id)?.pair.is_none()
+                        && self.heap.get(id)?.foreign_map_entry.is_none()
                         && !matches!(
                             self.heap.get(id)?.collection_kind,
                             CollectionKind::List | CollectionKind::Map | CollectionKind::Set
@@ -1703,6 +1736,12 @@ impl Vm {
                 // Java completes recursive value forcing before computing member
                 // hashes. Nested Mapping keys can still be lazy at that point.
                 // Hashing then follows cache order (or class property order).
+                if let Some(entry) = &self.heap.get(id)?.foreign_map_entry {
+                    run.tasks
+                        .extend(entry.iter().rev().cloned().map(Task::Prepare));
+                    self.frames[frame_index].equality_run = Some(run);
+                    return Ok(());
+                }
                 if let Some(pair) = &self.heap.get(id)?.pair {
                     run.tasks
                         .extend(pair.iter().rev().cloned().map(Task::Prepare));
@@ -1791,6 +1830,31 @@ impl Vm {
             }
             Task::Build(id) => {
                 let object = self.heap.get(id)?;
+                if let Some(entry) = object.foreign_map_entry.clone() {
+                    let key = StructuralKey {
+                        kind: 8,
+                        class: None,
+                        members: vec![
+                            (false, Atom::Int(0), atom(&self.heap, &entry[0])?),
+                            (false, Atom::Int(1), atom(&self.heap, &entry[1])?),
+                        ],
+                    };
+                    let hash = self
+                        .java_hash(&entry[0])?
+                        .zip(self.java_hash(&entry[1])?)
+                        .map(|(key, value)| key ^ value);
+                    let next = self.heap.next_structural_key;
+                    let value = *self.heap.structural_keys.entry(key).or_insert_with(|| {
+                        self.heap.next_structural_key += 1;
+                        next
+                    });
+                    let object = self.heap.get_mut(id)?;
+                    object.structural_key = Some(value);
+                    object.java_hash = Some(hash);
+                    run.active.remove(&id);
+                    self.frames[frame_index].equality_run = Some(run);
+                    return Ok(());
+                }
                 if let Some(pair) = object.pair.clone() {
                     let key = StructuralKey {
                         kind: 7,

@@ -1,0 +1,1 @@
+(Set(3).reduceOrNull((a,x) -> throw("unreached"))).toString()

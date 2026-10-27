@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3524 | external function sortWith(
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Set.sortWith (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3524)
+
+1 | (Set(1).sortWith()).toString()
+     ^^^^^^^^^^^^^^^^^
+at  (repl:text)

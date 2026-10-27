@@ -33,9 +33,27 @@ mod tests;
 pub(super) fn join_blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
-) -> [usize; 3] {
+) -> [usize; 4] {
     let source = crate::stdlib_sources::base();
-    ["List", "Set", "Listing"].map(|class| {
+    ["List", "Set", "Listing", "ForeignMapEntry"].map(|class| {
+        if class == "ForeignMapEntry" {
+            let block = blocks.len();
+            blocks.push(vec![
+                Instruction::LoadLocal(1),
+                Instruction::JavaValueString,
+                Instruction::Constant(Value::string("=")),
+                Instruction::Add,
+                Instruction::LoadLocal(0),
+                Instruction::JavaValueString,
+                Instruction::Add,
+                Instruction::Return,
+            ]);
+            metadata.push(BlockMetadata {
+                spans: vec![None; 8],
+                ..Default::default()
+            });
+            return block;
+        }
         let class_start = source
             .text
             .find(&format!("class {class}<"))
@@ -266,6 +284,23 @@ impl Vm {
     // Java Object.toString is also used for PropertiesRenderer path components.
     // Preserve the same forcing and reference behavior as collection join.
     pub(super) fn java_value_string(&mut self, value: Value) -> Result<(), RuntimeError> {
+        if let Value::Object(id) = &value
+            && let Some(entry) = self.heap.get(*id)?.foreign_map_entry.clone()
+        {
+            // Map.entry's Java toString concatenates key + "=" + value. This is
+            // distinct from Pkl method dispatch, which hits an upstream internal
+            // error for these foreign objects. Each child can suspend independently.
+            let function = self.heap.allocate(Object {
+                function: Some(Function {
+                    block: self.program.collection_join_blocks[3],
+                    arity: 2,
+                    method: false,
+                    captured_this: None,
+                }),
+                ..Default::default()
+            });
+            return self.invoke_function(function, entry.to_vec(), false);
+        }
         // StringBuilder.append(Object) invokes Java value stringification, not
         // Pkl's virtual Typed.toString. Objects force deeply; strict collections
         // render their cached contents without forcing nested objects.

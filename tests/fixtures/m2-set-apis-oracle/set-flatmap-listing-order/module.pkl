@@ -1,0 +1,2 @@
+module stage99
+hidden listing = new Listing { trace(3); trace(1); trace(2) }

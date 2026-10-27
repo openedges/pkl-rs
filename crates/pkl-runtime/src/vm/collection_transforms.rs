@@ -15,6 +15,12 @@ pub enum Transform {
     Filter,
     FlatMap,
     Count,
+    Any,
+    FilterIndexed,
+    FindOrNull,
+    FindLast,
+    FindLastOrNull,
+    FlatMapIndexed,
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -52,18 +58,27 @@ impl Transform {
             Self::Filter => "filter",
             Self::FlatMap => "flatMap",
             Self::Count => "count",
+            Self::Any => "any",
+            Self::FilterIndexed => "filterIndexed",
+            Self::FindOrNull => "findOrNull",
+            Self::FindLast => "findLast",
+            Self::FindLastOrNull => "findLastOrNull",
+            Self::FlatMapIndexed => "flatMapIndexed",
         }
     }
 
     fn indexed(self) -> bool {
-        matches!(self, Self::Indexed | Self::NonNullIndexed)
+        matches!(
+            self,
+            Self::Indexed | Self::NonNullIndexed | Self::FilterIndexed | Self::FlatMapIndexed
+        )
     }
 }
 
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
-) -> [usize; 15] {
+) -> [usize; 25] {
     use Transform::*;
     let source = crate::stdlib_sources::base();
     let methods = [
@@ -82,13 +97,26 @@ pub(super) fn blocks(
         ("List", Filter),
         ("List", FlatMap),
         ("List", Count),
+        ("Set", Find),
+        ("Set", Filter),
+        ("Set", FlatMap),
+        ("Set", Count),
+        ("Set", Any),
+        ("Set", FilterIndexed),
+        ("Set", FindOrNull),
+        ("Set", FindLast),
+        ("Set", FindLastOrNull),
+        ("Set", FlatMapIndexed),
     ];
     methods.map(|(class, operation)| {
         let class_start = source
             .text
             .find(&format!("external class {class}<"))
             .expect("pinned class");
-        let predicate = matches!(operation, Find | Filter | Count);
+        let predicate = matches!(
+            operation,
+            Find | FindOrNull | FindLast | FindLastOrNull | Filter | FilterIndexed | Count | Any
+        );
         let delimiter = if predicate { '(' } else { '<' };
         let start = class_start
             + source.text[class_start..]
@@ -148,13 +176,17 @@ pub(super) fn blocks(
         match operation {
             // A successful find leaves the original element on the stack and
             // releases its cursor. A false predicate jumps back to instruction 3.
-            Find => code.push(Instruction::Return),
+            Find | FindOrNull | FindLast | FindLastOrNull | Any => code.push(Instruction::Return),
             Count => code.push(Instruction::Jump(3)),
-            FlatMap => code.extend([
-                Instruction::CollectionFlatMapNext { end: 3 },
-                Instruction::AppendStrictElement,
-                Instruction::Jump(6),
-            ]),
+            FlatMap | FlatMapIndexed => {
+                code.push(Instruction::CollectionFlatMapNext { end: 3 });
+                if class == "Set" {
+                    code.extend([Instruction::PrepareSetElement, Instruction::AddSetElement]);
+                } else {
+                    code.push(Instruction::AppendStrictElement);
+                }
+                code.push(Instruction::Jump(6));
+            }
             _ => {
                 match class {
                     "List" => code.push(Instruction::AppendStrictElement),
@@ -398,6 +430,16 @@ impl Vm {
             (0, "filter") => 12,
             (0, "flatMap") => 13,
             (0, "count") => 14,
+            (4, "find") => 11,
+            (4, "filter") => 12,
+            (4, "flatMap") => 13,
+            (4, "count") => 14,
+            (4, "any") => 15,
+            (4, "filterIndexed") => 16,
+            (4, "findOrNull") => 17,
+            (4, "findLast") => 18,
+            (4, "findLastOrNull") => 19,
+            (4, "flatMapIndexed") => 20,
             _ => return false,
         };
         let id = self.heap.allocate(Object {
@@ -444,14 +486,24 @@ impl Vm {
         } else {
             collections::ordered_members(&self.heap, source)?
         };
-        if matches!(operation, Operation::Projection(Projection::Reverse)) {
+        if matches!(
+            operation,
+            Operation::Projection(Projection::Reverse)
+                | Operation::Callback(Transform::FindLast | Transform::FindLastOrNull)
+        ) {
             members.reverse();
         }
         // A strict result must not capture the method's source/callback scope.
         let builder = if matches!(
             operation,
-            Operation::Callback(Transform::Find | Transform::Count)
-                | Operation::Projection(Projection::IsDistinct | Projection::Contains)
+            Operation::Callback(
+                Transform::Find
+                    | Transform::FindOrNull
+                    | Transform::FindLast
+                    | Transform::FindLastOrNull
+                    | Transform::Any
+                    | Transform::Count
+            ) | Operation::Projection(Projection::IsDistinct | Projection::Contains)
         ) {
             None
         } else {
@@ -649,7 +701,14 @@ impl Vm {
             (operation, run.source, key, input)
         };
         match operation {
-            Transform::Find | Transform::Filter | Transform::Count => {
+            Transform::Find
+            | Transform::FindOrNull
+            | Transform::FindLast
+            | Transform::FindLastOrNull
+            | Transform::Any
+            | Transform::Filter
+            | Transform::FilterIndexed
+            | Transform::Count => {
                 // ApplyVmFunction1Node.executeBoolean checks the callback's
                 // actual result; there is no authored return type-node span.
                 let Value::Bool(accepted) = value else {
@@ -671,15 +730,26 @@ impl Vm {
                             .matched += 1;
                     }
                 } else if accepted {
-                    if matches!(operation, Transform::Find) {
+                    if matches!(
+                        operation,
+                        Transform::Find
+                            | Transform::FindOrNull
+                            | Transform::FindLast
+                            | Transform::FindLastOrNull
+                            | Transform::Any
+                    ) {
                         self.frames.last_mut().unwrap().collection_transform = None;
                     }
-                    self.stack.push(input);
+                    self.stack.push(if matches!(operation, Transform::Any) {
+                        Value::Bool(true)
+                    } else {
+                        input
+                    });
                 } else {
                     self.jump(next)?;
                 }
             }
-            Transform::FlatMap => {
+            Transform::FlatMap | Transform::FlatMapIndexed => {
                 if !self.is_list(&value) && !self.is_set(&value) {
                     return Err(type_error(
                         &TypeCheck::CollectionBase { arguments: vec![] },
@@ -776,7 +846,21 @@ impl Vm {
             .collection_transform
             .take()
             .ok_or_else(|| invalid("missing transform cursor"))?;
-        if matches!(run.operation, Operation::Callback(Transform::Find)) {
+        if matches!(
+            run.operation,
+            Operation::Callback(Transform::FindOrNull | Transform::FindLastOrNull)
+        ) {
+            self.stack.push(Value::Null);
+            return Ok(());
+        }
+        if matches!(run.operation, Operation::Callback(Transform::Any)) {
+            self.stack.push(Value::Bool(false));
+            return Ok(());
+        }
+        if matches!(
+            run.operation,
+            Operation::Callback(Transform::Find | Transform::FindLast)
+        ) {
             return Err(RuntimeError::new(
                 ErrorKind::Type,
                 PklString::join(

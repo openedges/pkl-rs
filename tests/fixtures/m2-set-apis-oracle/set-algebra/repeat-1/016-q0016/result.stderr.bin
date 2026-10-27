@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Set`, but got type `List`.
+Value: List(1)
+
+3551 | external function difference(other: Set): Set<Element>
+                                           ^^^
+at pkl.base#Set.difference (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3551)
+
+1 | (Set(1,2).difference(List(1))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

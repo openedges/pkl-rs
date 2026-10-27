@@ -1,5 +1,48 @@
 # M2 language evidence
 
+## Stage99 numeric and Set API checkpoint
+
+Recorded local evidence: [Stage99 checkpoint](stage99-numeric-set-apis-checkpoint.json); archive prefix `stage99-numeric-set-apis-evidence` uses numbered parts of at most 45 MiB.
+
+Stage99 integrates 13 numeric and 52 Set routes. Targeted04 on freeze04 passes
+**25 tests, zero failures and one ignored test**, matching **2,430 ordinary
+observations, 26,960 shared raw fields and 1,238 Logger events**. These are
+1,215 ordinary contracts repeated twice; the full 1,218-contract Java matrix
+also retains three required foreign-entry internal contracts / six observations.
+
+The terminal workspace passes **1,418 tests, zero failures and three ignored
+tests** across 245 test executables, 25 compile-only examples and two doctest
+libraries. Thirteen nested summaries are separate. Formatting02, xtask02,
+Clippy02, Wasm01 and Python01 pass; Python runs **180 tests**. The default driver
+reuses actual same-source Clippy02 and executes seven new commands. **All eight
+roles pass**, including manifest-final and inventory; missing/unexecuted lists
+are empty and inputs remain stable.
+
+The workspace reuses the actual targeted04 normal runtime as Cargo Fresh and
+newly builds the module/semantics probes. Read-only platform schema admission
+succeeds. Actual M1 matches **6,078 cases per Rust/Node/Chromium target** and
+across the shared engine; strict and architecture gates pass. Selected native,
+N-API and Chromium each complete 23 programs / 46 sessions / 2,436 observations.
+All 2,430 ordinary observations and 1,238 Logger events match per target; three
+required internal contracts / six observations remain unresolved. The platform
+reader checks 31,820 shared raw fields including expressions and Logger counts.
+The terminal window has stable sources and no acquisition errors, with
+`comparable_pass=true` and `all_required_pass=false`. Current native-adapter rustc
+exits 0 but retains a 686-byte LLVM-loader strip warning; stripping is not
+claimed complete. This is distinct from the earlier Stage98 N-API warning.
+Original Float/Int/Set native replay is terminal with **two of three raw matches**.
+Float and Int pass; Set fails on `List(1).minWith(comparator)` at original line
+249. Native stdout/stderr/exit are 0 bytes/931 bytes/1 versus Java
+6,984 bytes/0 bytes/0. The required mismatch and unchanged-original replay
+after full List integration remain open. Earlier compile, targeted02 **22/3/1**,
+prelaunch and Clippy01 failures,
+and their exact corrections remain preserved.
+
+Actual default, M1, binding, selected and original replay records have
+independent readbacks. Stage94's **4,268/4,424** aggregate and full ready-corpus/M2/API/release/
+performance obligations are unchanged. Earlier String glob protocols remain
+separate required unresolved cases.
+
 ## Stage98 shared String API checkpoint
 
 The [checkpoint](stage98-string-apis-checkpoint.json) records 28 shared String

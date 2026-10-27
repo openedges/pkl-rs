@@ -1,0 +1,1 @@
+(Set().minWithOrNull((a,b) -> throw("unreached"))).toString()

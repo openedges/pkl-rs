@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Type constraint `this.isBetween(0, 20)` violated.
+Value: -1
+
+    this.isBetween(0, 20)
+    │    │
+    -1   false
+
+1184 | external function toFixed(fractionDigits: Int(this.isBetween(0, 20))): String
+                                                     ^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Float.toFixed (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1184)
+
+1 | ((-Infinity).toFixed(-1)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

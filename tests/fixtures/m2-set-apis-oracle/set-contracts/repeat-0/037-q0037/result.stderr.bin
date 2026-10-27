@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3493 | external function reduce<Result>(operator: (Element | Result, Element) -> Result): Result
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Set.reduce (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3493)
+
+1 | (Set(1).reduce()).toString()
+     ^^^^^^^^^^^^^^^
+at  (repl:text)

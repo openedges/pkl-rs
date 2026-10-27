@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3523 | external function sortBy(selector: (Element) -> Comparable): List<Element>
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Set.sortBy (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3523)
+
+1 | (Set(1).sortBy()).toString()
+     ^^^^^^^^^^^^^^^
+at  (repl:text)

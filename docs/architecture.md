@@ -53,6 +53,48 @@ Acquisition tools own process deadlines; the adapter adds no instruction ceiling
 The legacy scalar facade and portable `evaluateLanguage` API remain separate,
 bounded experiments. See the [Stage97 evidence](../reports/m2/stage97-token-expression-checkpoint.json).
 
+### Shared numeric and Set API operations
+
+Recorded local evidence: [Stage99 checkpoint](../reports/m2/stage99-numeric-set-apis-checkpoint.json).
+
+Stage99's 13 additional numeric and 52 Set routes use common values, builtin
+frames and type-check/Host continuations. Numeric identity/conversion, bitwise
+shifts, UTF-16 character results and fixed formatting use the pinned Java rules.
+Set predicates, slicing, folds, extrema, sorting and algebra retain persistent
+storage, callback order and roots across suspension and collection. No platform
+adapter substitutes another evaluator.
+
+Set comparator result checking accepts Boolean or deprecated Int results.
+Invalid results use Java's two-class mismatch diagnostic (`Boolean` or `Int`),
+separate from declared union-type diagnostics. The null branch omits a value
+line. Foreign Map.Entry storage remains `[key, value]`; stringification loads
+key at reverse-local depth 1, then value at depth 0, preserving `key=value`
+order and both child continuations. Foreign-entry Pkl method/equality internal
+protocols remain explicitly unresolved. The fixed-decimal estimate keeps the
+exact JDK constants with a narrow Clippy allowance; byte parity uses the
+equivalent `!is_multiple_of(2)` expression.
+
+Freeze04 targeted04 matches 2,430 ordinary observations and 1,238 Logger events.
+The complete workspace has 1,418 passes, zero failures and three ignored tests.
+Its Fresh normal runtime originates in actual targeted04 compilation; the two
+module/semantics probes are newly compiled. The source/artifact schema admission
+is read-only and does not establish platform behavior. The terminal default
+driver passes all eight roles, comprising seven new commands and prevalidated
+Clippy02. Original Float/Int modules match Java; the original Set module still
+fails on its List `minWith` call at line 249. This exposes a remaining shared
+List route dependency and requires unchanged-original replay after integration.
+M1 strict and architecture gates now pass with 6,078 matching cases per target
+and across the shared engine. Each selected Native/N-API/Chromium target
+completes 2,436 observations across 46 sessions: 2,430 ordinary observations
+and 1,238 Logger events match, while six required internal observations remain
+unresolved. Portable sessions close with zero retained slots/depth and stable
+retained payloads; actual process ownership is terminal. Current native-adapter
+rustc exits 0 despite a recorded LLVM-loader
+strip warning, so successful stripping is not claimed. M1 uses its explicit
+scoped loader environment. Three required foreign-entry internal
+contracts, earlier glob protocols and whole-language/API/release/performance
+obligations remain open.
+
 ### Shared String API operations
 
 The 28 additional String routes use the common VM, lossless UTF-16 values and

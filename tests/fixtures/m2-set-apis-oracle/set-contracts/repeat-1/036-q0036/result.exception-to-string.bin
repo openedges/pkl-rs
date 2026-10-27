@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3440 | external function partition(predicate: (Element) -> Boolean): Pair<Set<Element>, Set<Element>>
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Set.partition (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3440)
+
+1 | (Set(1).partition()).toString()
+     ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

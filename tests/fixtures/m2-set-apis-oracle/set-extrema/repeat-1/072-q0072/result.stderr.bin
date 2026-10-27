@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Expected a non-empty collection.
+Collection: Set()
+
+1 | (Set().minWith((a,b) -> throw("unreached"))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

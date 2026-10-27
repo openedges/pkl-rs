@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Decimal `1,114,112` is not a valid Unicode code point.
+
+1 | ((1114112).toChar()).toString()
+     ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

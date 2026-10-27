@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+1053 | external function shl(n: Int): Int
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Int.shl (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1053)
+
+1 | (1.shl()).toString()
+     ^^^^^^^
+at  (repl:text)

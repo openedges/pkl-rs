@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Expected a positive number, but got `-1`.
+
+1 | (Set(3, 1, 2).drop(-1)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

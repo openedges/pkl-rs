@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "x"
+
+1070 | external function xor(n: Int): Int
+                                ^^^
+at pkl.base#Int.xor (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1070)
+
+1 | (1.xor("x")).toString()
+     ^^^^^^^^^^
+at  (repl:text)

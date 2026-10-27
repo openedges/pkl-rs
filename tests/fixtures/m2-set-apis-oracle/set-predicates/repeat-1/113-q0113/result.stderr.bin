@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Class`, but got type `Int`.
+Value: 1
+
+3459 | external function filterIsInstance<Type>(clazz: Class<Type>): Set<Type>
+                                                       ^^^^^^^^^^^
+at pkl.base#Set.filterIsInstance (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3459)
+
+1 | (Set(1, 1.5, "x", null, List(1), Set(2)).filterIsInstance(1)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

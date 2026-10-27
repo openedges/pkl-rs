@@ -1,0 +1,3 @@
+module stage99
+hidden key = new Dynamic { ["x"] = trace(items.length) }
+hidden items = Set(key, 2)

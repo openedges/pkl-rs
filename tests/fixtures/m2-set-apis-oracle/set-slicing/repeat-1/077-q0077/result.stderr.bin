@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `Float`.
+Value: 1.0
+
+3483 | external function dropLast(n: Int): Set<Element>
+                                     ^^^
+at pkl.base#Set.dropLast (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3483)
+
+1 | (Set(1,2).dropLast(1.0)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

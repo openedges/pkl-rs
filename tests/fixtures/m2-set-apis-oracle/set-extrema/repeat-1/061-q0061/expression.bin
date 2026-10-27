@@ -1,0 +1,1 @@
+(Set(3).maxBy((x) -> trace(x))).toString()

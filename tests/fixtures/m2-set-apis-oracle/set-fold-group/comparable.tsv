@@ -1,0 +1,28 @@
+string	q0000	(Set().fold(0, (a,x) -> trace(a * 10 + x))).toString()	000-q0000
+string	q0001	(Set(3).fold(0, (a,x) -> trace(a * 10 + x))).toString()	001-q0001
+string	q0002	(Set(3,1,2).fold(0, (a,x) -> trace(a * 10 + x))).toString()	002-q0002
+string	q0003	(Set().fold(trace(4), 42)).toString()	003-q0003
+string	q0004	(Set().foldBack(0, (x,a) -> trace(a * 10 + x))).toString()	004-q0004
+string	q0005	(Set(3).foldBack(0, (x,a) -> trace(a * 10 + x))).toString()	005-q0005
+string	q0006	(Set(3,1,2).foldBack(0, (x,a) -> trace(a * 10 + x))).toString()	006-q0006
+string	q0007	(Set().foldBack(trace(4), 42)).toString()	007-q0007
+string	q0008	(Set().foldIndexed(0, (i,a,x) -> trace(a + i * 10 + x))).toString()	008-q0008
+string	q0009	(Set(3).foldIndexed(0, (i,a,x) -> trace(a + i * 10 + x))).toString()	009-q0009
+string	q0010	(Set(3,1,2).foldIndexed(0, (i,a,x) -> trace(a + i * 10 + x))).toString()	010-q0010
+string	q0011	(Set().foldIndexed(trace(4), 42)).toString()	011-q0011
+string	q0012	(Set().reduce((a,x) -> throw("unreached"))).toString()	012-q0012
+string	q0013	(Set(3).reduce((a,x) -> throw("unreached"))).toString()	013-q0013
+string	q0014	(Set(3,1,2).reduce((a,x) -> trace(a * 10 + x))).toString()	014-q0014
+string	q0015	(Set().reduce(42)).toString()	015-q0015
+string	q0016	(Set(1,2).reduce((x) -> x)).toString()	016-q0016
+string	q0017	(Set().reduceOrNull((a,x) -> throw("unreached"))).toString()	017-q0017
+string	q0018	(Set(3).reduceOrNull((a,x) -> throw("unreached"))).toString()	018-q0018
+string	q0019	(Set(3,1,2).reduceOrNull((a,x) -> trace(a * 10 + x))).toString()	019-q0019
+string	q0020	(Set().reduceOrNull(42)).toString()	020-q0020
+string	q0021	(Set(1,2).reduceOrNull((x) -> x)).toString()	021-q0021
+string	q0022	(Set().groupBy((x) -> throw("unreached"))).toString()	022-q0022
+string	q0023	(Set(3,1,2,4).groupBy((x) -> trace(x % 2))).toString()	023-q0023
+string	q0024	(Set(1,2).groupBy((x) -> null)).toString()	024-q0024
+string	q0025	(Set(1,2).groupBy((x) -> List(-31))).toString()	025-q0025
+string	q0026	(Set(1,2).groupBy((x) -> (y) -> y)).toString()	026-q0026
+string	q0027	(Set().groupBy(42)).toString()	027-q0027

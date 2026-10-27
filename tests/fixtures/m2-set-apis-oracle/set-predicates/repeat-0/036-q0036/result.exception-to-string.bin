@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find matching element in collection.
+Collection: Set()
+
+1 | (Set().findLast((x) -> throw("unreached"))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

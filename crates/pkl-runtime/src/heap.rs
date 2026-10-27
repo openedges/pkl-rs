@@ -225,6 +225,9 @@ pub struct Object {
     /// Inner None marks a hash depending on JVM identity allocation.
     pub java_hash: Option<Option<i32>>,
     pub pair: Option<Box<[Value; 2]>>,
+    /// Opaque Java Map.entry values exposed by VmCollection.flatten.
+    /// Distinct from Pkl Pair; key/value remain traced and structurally comparable.
+    pub foreign_map_entry: Option<Box<[Value; 2]>>,
     pub amendment: Option<crate::vm::amendment::Amendment>,
     /// Argument-check section and function-construction section have distinct
     /// Java source nodes, even when both belong to the same Mixin type use.
@@ -948,6 +951,9 @@ impl Heap {
             }
             if let Some(pair) = &object.pair {
                 pending.extend(pair.iter().filter_map(|value| self.traced_id(value)));
+            }
+            if let Some(entry) = &object.foreign_map_entry {
+                pending.extend(entry.iter().filter_map(|value| self.traced_id(value)));
             }
             pending.extend(
                 object

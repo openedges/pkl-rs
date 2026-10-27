@@ -1,0 +1,17 @@
+string	q0000	(Set(key).first["x"]).toString()	000-q0000
+string	q0001	(items).toString()	001-q0001
+string	q0002	(items.add(key)).toString()	002-q0002
+string	q0003	(items.add(key).length).toString()	003-q0003
+string	q0004	(items.add(key).contains(key)).toString()	004-q0004
+string	q0005	(items.rest.add(key)).toString()	005-q0005
+string	q0006	(items.take(1)).toString()	006-q0006
+string	q0007	(items.take(1).contains(key)).toString()	007-q0007
+string	q0008	(items.take(1) == Set(key)).toString()	008-q0008
+string	q0009	(items.drop(1)).toString()	009-q0009
+string	q0010	(items.drop(1) == Set(2)).toString()	010-q0010
+string	q0011	(items.split(1)).toString()	011-q0011
+string	q0012	(items.filter((x)->true)).toString()	012-q0012
+string	q0013	(items.filter((x)->true).length).toString()	013-q0013
+string	q0014	(items.groupBy((x)->0)).toString()	014-q0014
+string	q0015	(items.intersect(Set(key))).toString()	015-q0015
+string	q0016	(items.difference(Set(key))).toString()	016-q0016

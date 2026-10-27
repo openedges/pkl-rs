@@ -21,6 +21,79 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+### Stage99 numeric/Set validation — actual default and selected results
+
+Recorded local evidence: [Stage99 checkpoint](reports/m2/stage99-numeric-set-apis-checkpoint.json).
+
+Targeted04 on freeze04 records **25 passes, zero failures and one ignored test**.
+The Java-derived fixtures compare **1,215 ordinary contracts repeated twice**:
+**2,430 observations, 26,960 shared raw fields and 1,238 ordered Logger events**.
+Status, UTF-8/UTF-16 result/error bytes and ordered Logger fields are exact;
+Java class/cause metadata remains preserved provenance outside this comparison.
+The full matrix has 1,218 contracts / 2,436 observations, including three required
+foreign-entry internal contracts / six observations that are not ordinary passes.
+The 39 numeric power=true contracts and separate Set followups remain distinct.
+
+One actual `cargo test --workspace --locked --no-fail-fast` invocation passes
+**1,418 tests, zero failures and three ignored tests**. All 245 test executables
+are invoked; 25 examples are compile-only and two libraries run doctests.
+Thirteen nested child summaries are separate from the outer total. Ignored
+frontend-probe, Set foreign-entry and String glob tests remain required in their
+respective execution/protocol scopes. Rust 1.98.1 uses the recorded workspace
+opt1/debug0/strip-symbols/checks-on/jobs1/incremental0 profile.
+
+Formatting02, xtask02, Clippy02, Wasm01 and Python01 pass on freeze04. Python01
+runs **180 tests**; Clippy and Wasm retain their recorded opt0/debug0 profiles.
+The current default driver admits terminal same-source Clippy02 as prevalidated
+and executes seven other roles. **The terminal driver passes all eight roles**,
+including manifest-final and inventory, with no missing or unexecuted roles.
+Its prevalidated Clippy result remains separate from the seven new commands.
+
+Actual workspace normal-runtime evidence authenticates Fresh reuse of targeted04,
+including original rustc/event/.d/input/artifact records and source bookends.
+The workspace newly builds `module_eval_probe` and `semantics_probe`. Platform
+schema admission is successful read-only validation of those actual records;
+it neither rebuilds the core nor establishes guest execution. The actual M1
+acquisition now matches **6,078 cases per Rust/Node/Chromium target** and across
+the shared engine; strict and architecture gates both pass. Selected native,
+N-API and Chromium each complete **23 programs / 46 sessions / 2,436 observations**.
+All **2,430 ordinary observations** match: 1,666 successes, 764 ordinary errors
+and 1,238 ordered Logger events. The platform comparator checks 31,820 shared
+raw fields including expressions and Logger counts, a different count scope
+from the Rust harness. Six required internal observations remain unpassed.
+
+Each target retains 41,612 row files / 1,275,234 bytes, with 13,498 UTF-16/UTF-8
+pairs checked. Forty complete session protocols match; six sessions containing
+required Java internal statuses retain their actual differing protocols.
+Native/Node process streams and Chromium page-returned protocol bytes retain
+distinct origins. All five window commands and 50 selected commands exit 0
+with no timeout, forced teardown, capacity stop or terminal owned processes.
+Sources remain stable; acquisition/comparable success does not change
+`all_required_pass=false`.
+
+Current native-adapter rustc exits 0 with a 686-byte stderr warning that
+`rust-objcopy` stripping aborted on unavailable `@rpath/libLLVM.dylib`. Preserve
+that warning and actual artifact identity; the strip flag does not prove
+stripping completed. The scoped LLVM loader environment belongs to the M1
+process tree and was not applied retroactively to the native adapter.
+
+Original `api/float.pkl`, `api/int.pkl` and `api/set.pkl` retain exact Java
+argv/cwd/physical URI/environment/raw outputs and public file/write maps.
+**Their actual Stage99 native replay matches two of three originals.** Float
+and Int match stdout/stderr/exit exactly. Set fails at original line 249,
+`List(1).minWith(comparator)`: native stdout/stderr/exit are 0 bytes/931 bytes/1,
+versus Java 6,984 bytes/0 bytes/0. Preserve that required mismatch and replay
+the unchanged original after full List integration. The original 60-second
+deadline, source, argv and environment are retained; no timeout, resource stop
+or forced teardown occurred. Native-private before/after invariance remains
+separate from Java/native private-state comparison.
+
+Retain the failed initial compile, targeted02 **22/3/1**, exact diagnostic/load
+corrections, prelaunch FileNotFoundError with no Cargo invocation, and default01 /
+Clippy01 exit101. The parity/local lint correction and later passing Clippy02 do
+not rewrite those outcomes. No expected bytes come from Rust; full M2, current
+whole-corpus, release-platform and performance gates remain open.
+
 ### Stage98 shared String API validation
 
 The final source-bound workspace passes **1,393 tests, zero failures and two

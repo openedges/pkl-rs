@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 0 function arguments but got 1.
+
+3461 | external function flatten(): Set
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Set.flatten (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3461)
+
+1 | (Set(1).flatten(trace(1))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
