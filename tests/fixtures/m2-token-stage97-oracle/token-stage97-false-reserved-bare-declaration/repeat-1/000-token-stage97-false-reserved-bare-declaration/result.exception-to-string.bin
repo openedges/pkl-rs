@@ -1,0 +1,8 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Keyword `false` is not allowed here.
+
+If you must use this name as identifier, enclose it in backticks.
+
+1 | false = 7
+    ^^^^^
+at token-stage97-false-reserved-bare-declaration (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/tests/fixtures/m2/token-stage97-false-reserved-bare-declaration.pkl)

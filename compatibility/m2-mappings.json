@@ -45,7 +45,7 @@
         "Generic Reference referent rejection is restored after parameter substitution, while known complete-frame mismatches in these exploratory cases remain open."
       ],
       "requirement": "semantic:reference",
-      "scope": "The pkl:ref bridge supports selected constructor, normalized referent type, synthetic property/subscript path, domain rendering, equality and key behavior through the shared VM. Linked native cases compare complete Java 0.32.0 process output at their actual fixture URIs. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage74 isolated controls resolve a declared property type in its prototype's lexical environment during Reference metadata access, retaining operands across Host suspension and the original reference output bytes. Canonical full-corpus and platform validation remain separate. Stage76\u201378 extend synthetic Reference metadata for the implemented Regex/String and numeric primitives. Stage78 has separate Java48 value/error and24 Reference metadata controls; these do not establish full reflection or numeric API compatibility.",
+      "scope": "The pkl:ref bridge supports selected constructor, normalized referent type, synthetic property/subscript path, domain rendering, equality and key behavior through the shared VM. Linked native cases compare complete Java 0.32.0 process output at their actual fixture URIs. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage74 isolated controls resolve a declared property type in its prototype's lexical environment during Reference metadata access, retaining operands across Host suspension and the original reference output bytes. Canonical full-corpus and platform validation remain separate. Stage76–78 extend synthetic Reference metadata for the implemented Regex/String and numeric primitives. Stage78 has separate Java48 value/error and24 Reference metadata controls; these do not establish full reflection or numeric API compatibility.",
       "tests": {
         "case_ids": [
           "reference-stage10-constructor-data",
@@ -548,7 +548,7 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
@@ -592,7 +592,7 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties1.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties2.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties3.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e_error.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語_error.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/currentModuleType1.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/currentModuleType2.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/moduleType2.pkl",
@@ -1695,7 +1695,7 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
@@ -8064,6 +8064,141 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/stringUnicode.pkl"
         ],
         "state": "partial"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "is_identifier_start"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "is_identifier_part"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "identifier"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "primary"
+          }
+        ],
+        "state": "implemented"
+      },
+      "remaining": [],
+      "requirement": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:TRUE",
+      "scope": "The fixed lexical token TRUE: exact spelling is reserved, accepts its literal parse node, maximal identifier continuation prevents keyword splitting, quoted spelling bypasses reservation, and case variants are identifiers. No Boolean/Null API, general parser or whole-language family completion is claimed. Six canonical module/string cases cover the finite token decision branches; ordinary rejection cases establish rejection only. Historical custom-URI controls remain separate regression evidence.",
+      "tests": {
+        "case_ids": [
+          "token-stage97-true-identifier-classes",
+          "token-stage97-true-delimiter-classes",
+          "token-stage97-true-literal-at-EOF",
+          "token-stage97-true-comment-newline-success",
+          "token-stage97-true-supplementary-identifier-boundary",
+          "token-stage97-true-reserved-bare-declaration"
+        ],
+        "state": "mapped"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "is_identifier_start"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "is_identifier_part"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "identifier"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "primary"
+          }
+        ],
+        "state": "implemented"
+      },
+      "remaining": [],
+      "requirement": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:FALSE",
+      "scope": "The fixed lexical token FALSE: exact spelling is reserved, accepts its literal parse node, maximal identifier continuation prevents keyword splitting, quoted spelling bypasses reservation, and case variants are identifiers. No Boolean/Null API, general parser or whole-language family completion is claimed. Six canonical module/string cases cover the finite token decision branches; ordinary rejection cases establish rejection only. Historical custom-URI controls remain separate regression evidence.",
+      "tests": {
+        "case_ids": [
+          "token-stage97-false-identifier-classes",
+          "token-stage97-false-delimiter-classes",
+          "token-stage97-false-literal-at-EOF",
+          "token-stage97-false-comment-newline-success",
+          "token-stage97-false-supplementary-identifier-boundary",
+          "token-stage97-false-reserved-bare-declaration"
+        ],
+        "state": "mapped"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "is_identifier_start"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "is_identifier_part"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "identifier"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "primary"
+          }
+        ],
+        "state": "implemented"
+      },
+      "remaining": [],
+      "requirement": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:NULL",
+      "scope": "The fixed lexical token NULL: exact spelling is reserved, accepts its literal parse node, maximal identifier continuation prevents keyword splitting, quoted spelling bypasses reservation, and case variants are identifiers. No Boolean/Null API, general parser or whole-language family completion is claimed. Six canonical module/string cases cover the finite token decision branches; ordinary rejection cases establish rejection only. Historical custom-URI controls remain separate regression evidence.",
+      "tests": {
+        "case_ids": [
+          "token-stage97-null-identifier-classes",
+          "token-stage97-null-delimiter-classes",
+          "token-stage97-null-literal-at-EOF",
+          "token-stage97-null-comment-newline-success",
+          "token-stage97-null-supplementary-identifier-boundary",
+          "token-stage97-null-reserved-bare-declaration"
+        ],
+        "state": "mapped"
       }
     }
   ],

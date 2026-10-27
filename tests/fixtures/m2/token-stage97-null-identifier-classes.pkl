@@ -1,0 +1,12 @@
+local nullTail = 0
+local null0 = 1
+local null_ = 2
+local null$ = 3
+local nullé = 4
+local nulĺ = 5
+local Null = 6
+local NULL = 7
+local nul = 8
+local xnull = 9
+local `null` = 11
+result = List(nullTail, null0, null_, null$, nullé, nulĺ, Null, NULL, nul, xnull, `null`).toString()

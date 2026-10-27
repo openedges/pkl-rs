@@ -1,0 +1,6 @@
+local a =	null
+local b = (null)
+local c = List(null,null)[0]
+local d = null/*comment*/
+local e =null
+result = List(a,b,c,d,e).toString()

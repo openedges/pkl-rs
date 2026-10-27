@@ -1,5 +1,25 @@
 # M2 language evidence
 
+## Stage97 expression adapter and token checkpoint
+
+The [checkpoint](stage97-token-expression-checkpoint.json) records the native
+complete-expression adapter and three finite token requirements. Actual token
+argv comparisons improve from 24/36 to **36/36**; shared token tests match 54
+observations and 324 raw fields. The complete affected scalar replay is
+**3,537/3,545**, retaining seven mismatches and one Java oracle error with no
+old-pass regressions. All 88 metamorphic groups pass. Strict compatibility remains
+false; the successful recorder exit establishes evidence integrity only.
+
+Final default Rust checks pass, including **1,371 workspace passes, zero failures
+and one existing ignored probe**. Seven adapter/Host tests now run in that suite.
+The new native example compilation and unchanged Stage96 runtime reuse retain
+separate provenance. Earlier native/test/controller failures are preserved;
+Python manifest command identity comes from argv, not the recorder's imprecise
+`cargo_spawned` field. No fresh Node/browser or performance evidence is claimed.
+Full M2 remains incomplete, and Stage94's historical whole-corpus aggregate is
+unchanged. Six retained failures now use native unsupported exit 2 rather than 1;
+their stdout/stderr remain identical, but full failing triples are not unchanged.
+
 ## Stage96 scalar, collection and function APIs
 
 The [checkpoint](stage96-core-apis-checkpoint.json) records five shared APIs:

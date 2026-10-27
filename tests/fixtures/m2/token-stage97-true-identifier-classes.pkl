@@ -1,0 +1,12 @@
+local trueTail = 0
+local true0 = 1
+local true_ = 2
+local true$ = 3
+local trueé = 4
+local trué = 5
+local True = 6
+local TRUE = 7
+local tru = 8
+local xtrue = 9
+local `true` = 11
+result = List(trueTail, true0, true_, true$, trueé, trué, True, TRUE, tru, xtrue, `true`).toString()

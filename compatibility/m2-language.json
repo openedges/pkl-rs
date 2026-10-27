@@ -71672,6 +71672,312 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "token-stage97-true-identifier-classes",
+      "input": "tests/fixtures/m2/token-stage97-true-identifier-classes.pkl",
+      "input_sha256": "c7a4690e7d46dfc04390aa1d627dde846d884e687ae63ac617bddaa2d57faaa3",
+      "power_assertions": false,
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:TRUE"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "token-stage97-true-delimiter-classes",
+      "input": "tests/fixtures/m2/token-stage97-true-delimiter-classes.pkl",
+      "input_sha256": "0e80677f61c0cda390e7f4436606c6e7b71999a0072b58819dac2638123683ff",
+      "power_assertions": false,
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:TRUE"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result.toString()",
+      "id": "token-stage97-true-literal-at-EOF",
+      "input": "tests/fixtures/m2/token-stage97-true-literal-at-EOF.pkl",
+      "input_sha256": "fc23e11e02dfe1b6235d903a2959de80cec409dcbb0377f7e67b5f1de632f732",
+      "power_assertions": false,
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:TRUE"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result.toString()",
+      "id": "token-stage97-true-comment-newline-success",
+      "input": "tests/fixtures/m2/token-stage97-true-comment-newline-success.pkl",
+      "input_sha256": "9510acd89fdac8de041e0232eefa514cd934d8cd80f74990216a0f50256824e4",
+      "power_assertions": false,
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:TRUE"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result.toString()",
+      "id": "token-stage97-true-supplementary-identifier-boundary",
+      "input": "tests/fixtures/m2/token-stage97-true-supplementary-identifier-boundary.pkl",
+      "input_sha256": "4b5de91e7912eb6feec22b862262afc4f0e97b8f1ff7f43ab985953c5f429754",
+      "power_assertions": false,
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:TRUE"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result.toString()",
+      "id": "token-stage97-true-reserved-bare-declaration",
+      "input": "tests/fixtures/m2/token-stage97-true-reserved-bare-declaration.pkl",
+      "input_sha256": "294540a96652c324653ad384a99ee4095bf1bf2f28c5482c7b2bab991d2f32c3",
+      "power_assertions": false,
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:TRUE"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "token-stage97-false-identifier-classes",
+      "input": "tests/fixtures/m2/token-stage97-false-identifier-classes.pkl",
+      "input_sha256": "4f56b735e43dccb6884cac2d608746cdb05e2b47faf8e283f2af98364d6b9d64",
+      "power_assertions": false,
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:FALSE"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "token-stage97-false-delimiter-classes",
+      "input": "tests/fixtures/m2/token-stage97-false-delimiter-classes.pkl",
+      "input_sha256": "6b9f68869bdb6e523f482e800353c9d86de478677d5c52ef38e2f2297f00dcee",
+      "power_assertions": false,
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:FALSE"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result.toString()",
+      "id": "token-stage97-false-literal-at-EOF",
+      "input": "tests/fixtures/m2/token-stage97-false-literal-at-EOF.pkl",
+      "input_sha256": "20618e6b0584373850d8c80fb26644341e74c5c519ddd41d3101935ae33d80aa",
+      "power_assertions": false,
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:FALSE"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result.toString()",
+      "id": "token-stage97-false-comment-newline-success",
+      "input": "tests/fixtures/m2/token-stage97-false-comment-newline-success.pkl",
+      "input_sha256": "b4a6845dc5255662c0026150927551891eff028a36441d4199d5df287ff35fe3",
+      "power_assertions": false,
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:FALSE"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result.toString()",
+      "id": "token-stage97-false-supplementary-identifier-boundary",
+      "input": "tests/fixtures/m2/token-stage97-false-supplementary-identifier-boundary.pkl",
+      "input_sha256": "7c95c838065934feeb2b4c15576503bbd2dd2987ad297b410d425f5aac2300aa",
+      "power_assertions": false,
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:FALSE"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result.toString()",
+      "id": "token-stage97-false-reserved-bare-declaration",
+      "input": "tests/fixtures/m2/token-stage97-false-reserved-bare-declaration.pkl",
+      "input_sha256": "b671e95b38b9990cb2d7c3d03dca881b3b14464084081a61cb48e20e0ea0f95d",
+      "power_assertions": false,
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:FALSE"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "token-stage97-null-identifier-classes",
+      "input": "tests/fixtures/m2/token-stage97-null-identifier-classes.pkl",
+      "input_sha256": "3b185f37222362aa8dfd4f18547cebb895912cf879cc0e5ecaa7462354aa112c",
+      "power_assertions": false,
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:NULL"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "token-stage97-null-delimiter-classes",
+      "input": "tests/fixtures/m2/token-stage97-null-delimiter-classes.pkl",
+      "input_sha256": "e28251ff1cf420c6ccf49113434bf6042c63037f596995fa19ff2ea5de8ba2ef",
+      "power_assertions": false,
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:NULL"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result.toString()",
+      "id": "token-stage97-null-literal-at-EOF",
+      "input": "tests/fixtures/m2/token-stage97-null-literal-at-EOF.pkl",
+      "input_sha256": "22cb21c25655889b098534de73eab58df2e67b4ac8c0ed320e3e02bf285a617a",
+      "power_assertions": false,
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:NULL"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result.toString()",
+      "id": "token-stage97-null-comment-newline-success",
+      "input": "tests/fixtures/m2/token-stage97-null-comment-newline-success.pkl",
+      "input_sha256": "0c3f680fbd287b63b2a06824e2fdbafd53893e9e9f585ba3567bae12a041ac54",
+      "power_assertions": false,
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:NULL"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result.toString()",
+      "id": "token-stage97-null-supplementary-identifier-boundary",
+      "input": "tests/fixtures/m2/token-stage97-null-supplementary-identifier-boundary.pkl",
+      "input_sha256": "95481301a6153be9149e4304dc4747d615c3039bfa2a9377b83aeb0e79c1889b",
+      "power_assertions": false,
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:NULL"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result.toString()",
+      "id": "token-stage97-null-reserved-bare-declaration",
+      "input": "tests/fixtures/m2/token-stage97-null-reserved-bare-declaration.pkl",
+      "input_sha256": "14c5b0eca508d15562fc8c0b086da877895b733eedc7b73d0daf335bd7bdb67b",
+      "power_assertions": false,
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:NULL"
+      ]
+    },
+    {
       "adapter": "language-module-eval",
       "execution": {
         "reason": null,
@@ -164395,9 +164701,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 4527,
+    "cases": 4545,
     "cases_by_execution": {
-      "ready": 4424,
+      "ready": 4442,
       "unimplemented": 71,
       "unmapped": 32
     },
@@ -185262,19 +185568,62 @@
       "description": "FALSE",
       "id": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:FALSE",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "is_identifier_start"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "is_identifier_part"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "identifier"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "primary"
+          }
+        ],
+        "state": "implemented"
       },
       "kind": "language_token",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [],
+        "scope": "The fixed lexical token FALSE: exact spelling is reserved, accepts its literal parse node, maximal identifier continuation prevents keyword splitting, quoted spelling bypasses reservation, and case variants are identifiers. No Boolean/Null API, general parser or whole-language family completion is claimed. Six canonical module/string cases cover the finite token decision branches; ordinary rejection cases establish rejection only. Historical custom-URI controls remain separate regression evidence.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 29,
         "path": "pkl-parser/src/main/java/org/pkl/parser/Token.java"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "token-stage97-false-identifier-classes",
+          "token-stage97-false-delimiter-classes",
+          "token-stage97-false-literal-at-EOF",
+          "token-stage97-false-comment-newline-success",
+          "token-stage97-false-supplementary-identifier-boundary",
+          "token-stage97-false-reserved-bare-declaration"
+        ],
+        "state": "mapped"
       }
     },
     {
@@ -185927,19 +186276,62 @@
       "description": "NULL",
       "id": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:NULL",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "is_identifier_start"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "is_identifier_part"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "identifier"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "primary"
+          }
+        ],
+        "state": "implemented"
       },
       "kind": "language_token",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [],
+        "scope": "The fixed lexical token NULL: exact spelling is reserved, accepts its literal parse node, maximal identifier continuation prevents keyword splitting, quoted spelling bypasses reservation, and case variants are identifiers. No Boolean/Null API, general parser or whole-language family completion is claimed. Six canonical module/string cases cover the finite token decision branches; ordinary rejection cases establish rejection only. Historical custom-URI controls remain separate regression evidence.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 44,
         "path": "pkl-parser/src/main/java/org/pkl/parser/Token.java"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "token-stage97-null-identifier-classes",
+          "token-stage97-null-delimiter-classes",
+          "token-stage97-null-literal-at-EOF",
+          "token-stage97-null-comment-newline-success",
+          "token-stage97-null-supplementary-identifier-boundary",
+          "token-stage97-null-reserved-bare-declaration"
+        ],
+        "state": "mapped"
       }
     },
     {
@@ -186901,19 +187293,62 @@
       "description": "TRUE",
       "id": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:TRUE",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "is_identifier_start"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "is_identifier_part"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "identifier"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "primary"
+          }
+        ],
+        "state": "implemented"
       },
       "kind": "language_token",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [],
+        "scope": "The fixed lexical token TRUE: exact spelling is reserved, accepts its literal parse node, maximal identifier continuation prevents keyword splitting, quoted spelling bypasses reservation, and case variants are identifiers. No Boolean/Null API, general parser or whole-language family completion is claimed. Six canonical module/string cases cover the finite token decision branches; ordinary rejection cases establish rejection only. Historical custom-URI controls remain separate regression evidence.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 55,
         "path": "pkl-parser/src/main/java/org/pkl/parser/Token.java"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "token-stage97-true-identifier-classes",
+          "token-stage97-true-delimiter-classes",
+          "token-stage97-true-literal-at-EOF",
+          "token-stage97-true-comment-newline-success",
+          "token-stage97-true-supplementary-identifier-boundary",
+          "token-stage97-true-reserved-bare-declaration"
+        ],
+        "state": "mapped"
       }
     },
     {
@@ -191319,11 +191754,11 @@
     "compatibility/m2-execution-profiles.json": "198850daa534a33f0d1b87f8bc8d38d7717f1e9b792ec70a13053c0affc6f477",
     "compatibility/m2-historical-collections.json": "f2cba632473ea199620804f8620a417226d005c04586c421fd985729faa83c6a",
     "compatibility/m2-jvm-classpath.json": "93a97f62fa55742f4ddaee342c6cf3e1509e76700bfffa9ce478352f9bab9af7",
-    "compatibility/m2-mappings.json": "f0bb77835cfbd02b06ebb162487734e30b2e8b50412cdec9dd39bc40a76538da",
+    "compatibility/m2-mappings.json": "fd7dde65b2b6f74dd1fda2117b012f36482c0ba1a5ff90249358d77cf4291909",
     "compatibility/m2-module-eval.json": "1196b940cdd95daf5e360dabdbcf3f4329ee1c31db754879c32e4b26ea438f9c",
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "2556eb98385b82f3514445789aa5ed38064dd23bf1882926f084b811ffadf03c"
+    "tests/fixtures/m2/cases.json": "de0e7c4e8100c59149ce999ddd4d40941196921efa1c95650bc74939c73bdc13"
   }
 }

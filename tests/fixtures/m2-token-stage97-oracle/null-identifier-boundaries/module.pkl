@@ -1,0 +1,4 @@
+local nullTail = 7
+local nullé = 8
+local `null` = 9
+result = List(nullTail, nullé, `null`, null).toString()

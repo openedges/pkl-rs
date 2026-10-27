@@ -40,6 +40,19 @@ Represent lazy members with unevaluated, evaluating, and completed cache states.
 
 Use Pkl standard library sources from the pinned upstream and implement external builtins in Rust. Compare public member inventories with builtin registrations to detect omissions. The compatibility scope includes 0.32 features such as `Reference<Domain, Type>`.
 
+### Native expression-string probes
+
+`language_probe` and `runtime_probe` use the shared module evaluator with the
+caller's unchanged expression. Native ModuleKey and ResourceReader helpers perform
+file I/O; module initialization, query parsing, `output.text`, automatic `ToString`
+and diagnostics stay in the shared runtime. The adapter uses a noop Logger,
+default frame transformer, empty environment/property maps and the explicit power
+assertion flag. It converts lossless UTF-16 results with the Java UTF-8 writer rule
+only at the process boundary, and closes the evaluator on every terminal path.
+Acquisition tools own process deadlines; the adapter adds no instruction ceiling.
+The legacy scalar facade and portable `evaluateLanguage` API remain separate,
+bounded experiments. See the [Stage97 evidence](../reports/m2/stage97-token-expression-checkpoint.json).
+
 ### Scalar conversion, Set removal and Function.applyToList
 
 `Float.toInt` explicitly rejects non-finite or out-of-range values before Rust's

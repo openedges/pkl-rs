@@ -21,6 +21,37 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+### Stage97 expression adapter and token requirements
+
+The native filesystem probes now evaluate the original complete expression through
+shared `SourceProbe` module evaluation and the existing native Host helpers. The
+legacy scalar facade and portable `evaluateLanguage` bindings retain their bounded
+property-path contract. No shared engine or binding implementation changed.
+
+The final workspace passes **1,371 tests, zero failures and one existing ignored
+probe** across 240 test executables, 25 compile-only examples and two doctest
+libraries. Thirteen nested reruns are separate. Seven adapter/Host tests are now
+included in the default suite; their targeted run is not added to the total.
+Formatting, xtask, all-target Clippy, Wasm compilation and manifest freshness pass.
+The separate unchanged Python tooling suite passed 34 tests before adapter integration.
+
+The shared token suite matches 54 observations and 324 raw fields. Actual native
+process comparisons improve from 24/36 to **36/36**, preserving the failed run.
+The complete affected scalar set matches **3,537/3,545** with the original seven
+mismatches and one Java oracle error; no previously passing case regresses.
+All eight old failing stdout/stderr channels remain identical, while six native
+exits change from 1 to the explicit unsupported code 2; their full triples are not
+claimed unchanged. All 88 metamorphic groups pass. The acquisition command's exit zero means evidence
+integrity; its strict compatibility result remains false. Original Java process
+outcomes and the new 18 API-row-to-native-exit contracts have distinct provenance.
+
+The final source dictionary has 32,535 paths. A new example compilation links the
+unchanged Stage96 runtime with explicit prior producer evidence. Earlier workspace,
+stale Host assertion and controller prelaunch results remain preserved. In the
+quickcheck recorder, `cargo_spawned` is an imprecise generic child-launch label;
+actual argv identifies the Python manifest commands. No new Node/browser run or
+performance result is claimed. See the [checkpoint](reports/m2/stage97-token-expression-checkpoint.json).
+
 ### Stage96 scalar, collection and function APIs
 
 All five required Rust checks pass locally with Rust 1.98.1. The literal workspace

@@ -1,5 +1,33 @@
 # M2 language verification
 
+## Stage97 expression adapter and token requirements
+
+The filesystem expression probes now use the shared module evaluator for complete
+caller expressions, with real native module/resource Host helpers and unchanged
+Java probe settings. Only the finite lexical/literal-node scopes of `TRUE`,
+`FALSE` and `NULL` are closed: 18 new cases and nine historical controls cover
+spelling, reservation, identifier continuation, quoted bypass and literal nodes.
+Boolean/null semantics and the other whole-language requirements remain open.
+
+Shared token tests match 54 observations and 324 raw fields. Actual native argv
+comparisons match **36/36** after preserving the earlier 24/36 result. The full
+3,545-case scalar replay matches **3,537**, retaining seven mismatches and one
+Java oracle error with zero old-pass regressions; 88 metamorphic groups pass.
+The original 3,527 Java process contracts are reused unchanged. New 18-case Java
+API observations retain their own actual helper-process exit and the explicit
+row-status-to-native-exit mapping. Strict compatibility still fails on the eight
+known cases; acquisition integrity succeeds. Their stdout/stderr remain identical;
+six native exits change from 1 to unsupported code 2, so whole-triple equality
+with historical failing native runs is not claimed.
+
+Default Rust checks pass. The workspace has **1,371 passes, zero failures and one
+existing ignored probe**, including the seven adapter/Host tests newly connected
+to the default suite. No new shared engine/binding, Node/browser or performance
+claim is made. Current inventory is 4,545 cases, 4,442 ready, 71 unimplemented and
+32 unmapped; three of 475 requirements have finite implemented/mapped scopes.
+Stage94's earlier-source whole-corpus aggregate is not updated with these results.
+See the [checkpoint](../reports/m2/stage97-token-expression-checkpoint.json).
+
 ## Stage96 scalar, collection and function APIs
 
 The shared runtime adds `Float.toInt`, `Int.toRadixString`, `List.getOrNull`,
@@ -1062,8 +1090,8 @@ Its focused comparisons do not replace the whole-language completion gate.
 
 The [object-body parameter contract](m2-object-parameters.md) records function
 amendment, Mixin defaults, lexical capture, and their Java-first fixtures.
-Arbitrary-expression and Host comparisons are separate from the bounded
-property-path adapter described below.
+These comparisons retain their own profiles. The native filesystem probes now
+accept complete expressions; the legacy portable scalar boundary remains bounded.
 
 The [resource-read development contract](m2-resource-reads.md) records `read` and
 `read?` parsing, default scalar resource policy, nullable absence, declaration
@@ -1157,10 +1185,13 @@ UTF-8 stdout, full uncolored `PklException.getMessage()` stderr, and exit codes 
 compared without normalization. A separate outcome file records whether Java
 returned normally or caught a particular `PklException` class. This distinguishes
 a handled upstream bug report from an uncaught JVM failure without changing
-stdout or stderr. The Rust probe accepts property paths returning scalars,
-selected References and type aliases, or strict Lists, Maps and Sets. Their
-stringification reads completed values without forcing nested objects. Map uses
-the single-line layout and List/Set the multiline layout of the Java value renderer.
+stdout or stderr. The native Rust probe passes the complete original expression
+to the shared module evaluator, which applies the shared `ToString` operation and
+the special `output.text` operation. Native Host helpers supply file loading;
+noop Logger, default frames and empty environment/property maps match this profile.
+Selected collection stringification reads completed values without forcing nested
+objects. Map uses the single-line layout and List/Set the multiline layout of the
+Java value renderer.
 Java may rehash nested Map keys during iteration; those rendering side effects
 are not fully reproduced by the cache-only renderer.
 This boundary does not prove typed API compatibility or general
@@ -1344,7 +1375,8 @@ and Wasm development bindings, including complete diagnostics. It accepts a
 source string, URI, inferred module name, and scalar property path; explicit
 module declarations take precedence over the inferred name.
 An optional fifth Boolean argument enables power assertions, with the same
-disabled default as the native probe and Java API.
+disabled default as the native probe and Java API. The portable scalar facade is
+separate from the native complete-expression adapter introduced in Stage97.
 Returned Reference values also pass through their domain renderer, matching the
 Java expression-string boundary's automatic conversion and its separate error
 stack. This adapter still accepts property paths only. It does not supply Host

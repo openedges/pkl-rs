@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Keyword `null` is not allowed here.
+
+If you must use this name as identifier, enclose it in backticks.
+
+1 | local null𐐀 = 1
+          ^^^^
+at token-stage97-null-supplementary-identifier-boundary (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/tests/fixtures/m2/token-stage97-null-supplementary-identifier-boundary.pkl)

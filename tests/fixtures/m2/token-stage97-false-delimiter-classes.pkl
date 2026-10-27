@@ -1,0 +1,6 @@
+local a =	false
+local b = (false)
+local c = List(false,false)[0]
+local d = false/*comment*/
+local e =false
+result = List(a,b,c,d,e).toString()

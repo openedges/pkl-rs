@@ -1,0 +1,597 @@
+{
+  "actual_affected_scalars": {
+    "Java_authority": "Original3527 process contracts reused unchanged; new18 API rows preserve actual helper exit0 separately from the explicit expected native exit derived from row status. No Java recapture is claimed for the native replay.",
+    "added_contracts": 18,
+    "contracts": 3545,
+    "failure_ids": [
+      {
+        "id": "error-cycle",
+        "status": "oracle-error"
+      },
+      {
+        "id": "error-remainder-zero",
+        "status": "mismatch"
+      },
+      {
+        "id": "trace-stage37-repeat-empty-cast-negative",
+        "status": "mismatch"
+      },
+      {
+        "id": "trace-stage37-repeat-empty-max-count",
+        "status": "mismatch"
+      },
+      {
+        "id": "read-stage38-uri-unpaired-surrogate",
+        "status": "mismatch"
+      },
+      {
+        "id": "read-stage38-edge-http-opaque",
+        "status": "mismatch"
+      },
+      {
+        "id": "read-stage38-edge-http-invalid-host",
+        "status": "mismatch"
+      },
+      {
+        "id": "read-stage38-edge-http-nonnumeric-port",
+        "status": "mismatch"
+      }
+    ],
+    "integrity_valid": true,
+    "metamorphic_groups": 88,
+    "metamorphic_pass": 88,
+    "mismatches": 7,
+    "missing_cases": 0,
+    "native_processes": 3545,
+    "old_pass_regressions": [],
+    "oracle_errors": 1,
+    "original_contracts": 3527,
+    "raw_matches": 3537,
+    "strict_compatibility_passed": false
+  },
+  "actual_default_checks": {
+    "adapter_regressions": {
+      "bytes": 3366,
+      "mode": 420,
+      "path": "target/m2/stage97-adapter-tests-02/report.json",
+      "sha256": "4140017baeffe6a6ed42d72ccf174e37786d2df4958b1242243d630ce566685d"
+    },
+    "clippy": {
+      "bytes": 2853,
+      "mode": 420,
+      "path": "target/m2/stage97-clippy-01/report.json",
+      "sha256": "42040010bc8a5bd1ef428afe2a4c00e033cc4208687f4330f9705ec8b1cf1099"
+    },
+    "fmt": {
+      "bytes": 2782,
+      "mode": 420,
+      "path": "target/m2/stage97-fmt-02/report.json",
+      "sha256": "4e9622e7c2f8747cda6bbbf34257186e28727c63765645f0841217f2bf64ef3f"
+    },
+    "manifest_freshness": {
+      "bytes": 2821,
+      "mode": 420,
+      "path": "target/m2/stage97-manifest-check-01/report.json",
+      "sha256": "c45cdbc50a60e2d4f95fbe4bb5d8922ee97ff39f1a8b978907b2160fda923aa0"
+    },
+    "manifest_refresh": {
+      "bytes": 3573,
+      "mode": 420,
+      "path": "target/m2/stage97-manifest-refresh-03/report.json",
+      "sha256": "3121718043f291d9c029e9f5d4daba77babd5b32ad816ec6c5d495b038e57961"
+    },
+    "wasm": {
+      "bytes": 2848,
+      "mode": 420,
+      "path": "target/m2/stage97-wasm-01/report.json",
+      "sha256": "14ae710225c313b5105a6e9434c6c3cb326b0ea6ed8a9446aeb7afcb89b6d1f5"
+    },
+    "workspace": {
+      "bytes": 6928,
+      "mode": 420,
+      "path": "target/m2/stage97-workspace-03/report.json",
+      "sha256": "d18f1ed751c32be91669253a12db72a9ee3631ab3f3386048139243dd6842f74"
+    },
+    "xtask": {
+      "bytes": 2805,
+      "mode": 420,
+      "path": "target/m2/stage97-xtask-01/report.json",
+      "sha256": "f241f6887a1c8af0133072e37c5627911f4a1abe5b30e44b16dd0c54e3d84d19"
+    }
+  },
+  "actual_python": {
+    "before_adapter_integration": true,
+    "failed": 0,
+    "publication": "Six exact records embedded in the public review; tooling inputs are unchanged in the final source freeze.",
+    "report": {
+      "bytes": 1179,
+      "mode": 420,
+      "path": "target/m2/stage97-python-tests-01/report.json",
+      "sha256": "e607fd9f42d4812fbd8d33a5336bcb82b8ddcecb3b85a7669bd5b0a0a29f8dc7"
+    },
+    "tests": 34
+  },
+  "actual_token_comparisons": {
+    "Java_contracts": 27,
+    "native_observations": 36,
+    "native_raw_matches": 36,
+    "native_statuses": {
+      "ordinary-error": 12,
+      "success": 24
+    },
+    "new_native_contracts": 18,
+    "observations": 54,
+    "raw_fields": 324,
+    "shared_statuses": {
+      "error\n": 24,
+      "success\n": 30
+    },
+    "shared_test_functions": 6
+  },
+  "actual_workspace": {
+    "coverage": {
+      "actual_tests": 240,
+      "compile_only_examples": 25,
+      "complete": true,
+      "doctest_libraries": 2,
+      "expected_tests": 240,
+      "invoked_tests": 240
+    },
+    "nested_reruns": 13,
+    "report": {
+      "bytes": 6928,
+      "mode": 420,
+      "path": "target/m2/stage97-workspace-03/report.json",
+      "sha256": "d18f1ed751c32be91669253a12db72a9ee3631ab3f3386048139243dd6842f74"
+    },
+    "tests": {
+      "failed": 0,
+      "ignored": 1,
+      "passed": 1371
+    }
+  },
+  "archives": [
+    {
+      "archive": {
+        "bytes": 29080919,
+        "mode": 420,
+        "path": "reports/m2/stage97-token-expression-evidence-01.tar.gz",
+        "sha256": "135989ec04338c17902de5dcc3ca7f570dd97d132c3bade9ca5d29e6815255a8"
+      },
+      "index": 1,
+      "manifest": {
+        "bytes": 16760267,
+        "sha256": "e7600f52213d7bfd057a6f27b23b4dd148dbf7d9f18422b678fba5f8933a1011"
+      },
+      "members_including_manifest": 34082
+    },
+    {
+      "archive": {
+        "bytes": 35301715,
+        "mode": 420,
+        "path": "reports/m2/stage97-token-expression-evidence-02.tar.gz",
+        "sha256": "649ab262a869ba7090e3d9e2ae66630c57a7a9423b424902c1eba3a5ea1e3c2d"
+      },
+      "index": 2,
+      "manifest": {
+        "bytes": 6992757,
+        "sha256": "bf475f12bf030da9c5aae8c390220c2db449c639cea77c931274a61f5deb1d89"
+      },
+      "members_including_manifest": 12819
+    },
+    {
+      "archive": {
+        "bytes": 9414991,
+        "mode": 420,
+        "path": "reports/m2/stage97-token-expression-evidence-03.tar.gz",
+        "sha256": "ace19ee271b0d56c951e9a1d1dec67593168d16566fe1408295892b63f06b0fe"
+      },
+      "index": 3,
+      "manifest": {
+        "bytes": 15315901,
+        "sha256": "9cbc322d37d5421d557df7bdf4d1d2dcbcbe736e6d2793f10a808e689da82cc6"
+      },
+      "members_including_manifest": 31773
+    }
+  ],
+  "cargo_version": "cargo 1.98.1 (797e8a9bc 2026-08-05)\n",
+  "closed_requirements": [
+    {
+      "description": "FALSE",
+      "id": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:FALSE",
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "is_identifier_start"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "is_identifier_part"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "identifier"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "primary"
+          }
+        ],
+        "state": "implemented"
+      },
+      "kind": "language_token",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
+      "required": true,
+      "reviewed_mapping": {
+        "remaining": [],
+        "scope": "The fixed lexical token FALSE: exact spelling is reserved, accepts its literal parse node, maximal identifier continuation prevents keyword splitting, quoted spelling bypasses reservation, and case variants are identifiers. No Boolean/Null API, general parser or whole-language family completion is claimed. Six canonical module/string cases cover the finite token decision branches; ordinary rejection cases establish rejection only. Historical custom-URI controls remain separate regression evidence.",
+        "source": "compatibility/m2-mappings.json"
+      },
+      "source": {
+        "line": 29,
+        "path": "pkl-parser/src/main/java/org/pkl/parser/Token.java"
+      },
+      "tests": {
+        "case_ids": [
+          "token-stage97-false-identifier-classes",
+          "token-stage97-false-delimiter-classes",
+          "token-stage97-false-literal-at-EOF",
+          "token-stage97-false-comment-newline-success",
+          "token-stage97-false-supplementary-identifier-boundary",
+          "token-stage97-false-reserved-bare-declaration"
+        ],
+        "state": "mapped"
+      }
+    },
+    {
+      "description": "NULL",
+      "id": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:NULL",
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "is_identifier_start"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "is_identifier_part"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "identifier"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "primary"
+          }
+        ],
+        "state": "implemented"
+      },
+      "kind": "language_token",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
+      "required": true,
+      "reviewed_mapping": {
+        "remaining": [],
+        "scope": "The fixed lexical token NULL: exact spelling is reserved, accepts its literal parse node, maximal identifier continuation prevents keyword splitting, quoted spelling bypasses reservation, and case variants are identifiers. No Boolean/Null API, general parser or whole-language family completion is claimed. Six canonical module/string cases cover the finite token decision branches; ordinary rejection cases establish rejection only. Historical custom-URI controls remain separate regression evidence.",
+        "source": "compatibility/m2-mappings.json"
+      },
+      "source": {
+        "line": 44,
+        "path": "pkl-parser/src/main/java/org/pkl/parser/Token.java"
+      },
+      "tests": {
+        "case_ids": [
+          "token-stage97-null-identifier-classes",
+          "token-stage97-null-delimiter-classes",
+          "token-stage97-null-literal-at-EOF",
+          "token-stage97-null-comment-newline-success",
+          "token-stage97-null-supplementary-identifier-boundary",
+          "token-stage97-null-reserved-bare-declaration"
+        ],
+        "state": "mapped"
+      }
+    },
+    {
+      "description": "TRUE",
+      "id": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:TRUE",
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "is_identifier_start"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "is_identifier_part"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "identifier"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "9a3c2290598c7c5f110d28196b112c3e056c31e51153a508b354fed00053cf26",
+            "symbol": "primary"
+          }
+        ],
+        "state": "implemented"
+      },
+      "kind": "language_token",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
+      "required": true,
+      "reviewed_mapping": {
+        "remaining": [],
+        "scope": "The fixed lexical token TRUE: exact spelling is reserved, accepts its literal parse node, maximal identifier continuation prevents keyword splitting, quoted spelling bypasses reservation, and case variants are identifiers. No Boolean/Null API, general parser or whole-language family completion is claimed. Six canonical module/string cases cover the finite token decision branches; ordinary rejection cases establish rejection only. Historical custom-URI controls remain separate regression evidence.",
+        "source": "compatibility/m2-mappings.json"
+      },
+      "source": {
+        "line": 55,
+        "path": "pkl-parser/src/main/java/org/pkl/parser/Token.java"
+      },
+      "tests": {
+        "case_ids": [
+          "token-stage97-true-identifier-classes",
+          "token-stage97-true-delimiter-classes",
+          "token-stage97-true-literal-at-EOF",
+          "token-stage97-true-comment-newline-success",
+          "token-stage97-true-supplementary-identifier-boundary",
+          "token-stage97-true-reserved-bare-declaration"
+        ],
+        "state": "mapped"
+      }
+    }
+  ],
+  "compatibility_baseline": "0.32.0",
+  "complete": true,
+  "documents": [
+    {
+      "bytes": 465004,
+      "mode": 420,
+      "path": "PLAN.md",
+      "sha256": "2f22b6c02e40dc3c178a389a20f46e4695924b79f65060d469fc51397b83c898"
+    },
+    {
+      "bytes": 87487,
+      "mode": 420,
+      "path": "TESTING.md",
+      "sha256": "acb3ee1377154453e7124dbd53758cad29064eeabe0b537b1d50daf0d3846a3f"
+    },
+    {
+      "bytes": 103275,
+      "mode": 420,
+      "path": "docs/architecture.md",
+      "sha256": "ca73096058d1841a4d7dae0c5698e0353a2347bed5b18d418c5570fb9d26b6c2"
+    },
+    {
+      "bytes": 101605,
+      "mode": 420,
+      "path": "docs/m2-language.md",
+      "sha256": "37f17728dd6bab6df2ddfe8540c9958be5c54c013a671fbdad5a10a8e4351278"
+    },
+    {
+      "bytes": 377233,
+      "mode": 420,
+      "path": "reports/m2/README.md",
+      "sha256": "322bec4fbe8b07b3d7c577b445aa39cff47b8bdfac5b0a7e50c91100482a9144"
+    }
+  ],
+  "evidence": {
+    "actual_example_producer": {
+      "bytes": 31938,
+      "mode": 420,
+      "path": "target/m2/stage97-language-probe-prep-03/producer.json",
+      "sha256": "38e1c20f75f5df41f47ea8d5bcaa7a8b549dae0d8d2ed6a799180d6f84db91e9"
+    },
+    "canonical_independent_review": {
+      "bytes": 12858,
+      "mode": 420,
+      "path": "target/m2/stage97-final-canonical-independent-review-01/report.json",
+      "sha256": "5eeec49e61383001528ed78a66a7cba8876cc7b525e275c65eaa490da100df88"
+    },
+    "canonical_integration": {
+      "bytes": 362381,
+      "mode": 420,
+      "path": "target/m2/stage97-canonical-integration-04/report.json",
+      "sha256": "024b56b773c3fbb66a560349c9697c295cf3a7f3bdc7e2f216a9c8151bb558e5"
+    },
+    "full_scalar_independent_review": {
+      "bytes": 3884,
+      "mode": 420,
+      "path": "target/m2/stage97-full-scalars-terminal-independent-review-01/report.json",
+      "sha256": "196af20b249dc69eaa195637e5c471322c9987e83e5f3005de5751d2d0a54ad8"
+    },
+    "full_scalar_replay": {
+      "bytes": 6102914,
+      "mode": 420,
+      "path": "target/m2/stage97-full-scalars-capture-01/report.json",
+      "sha256": "4e033fe9d7a1e6650a625fe87239bb78d6694029a986abaadcf90dae22273715"
+    },
+    "native_token_observations": {
+      "bytes": 42436,
+      "mode": 420,
+      "path": "target/m2/stage97-language-probe-capture-02/report.json",
+      "sha256": "2586d02399d8e5c2a3cb5b60465cc1e6bd5d2b58b1f712bee770b2786511da0f"
+    },
+    "publication_selection": {
+      "bytes": 39068589,
+      "mode": 420,
+      "path": "target/m2/stage97-publication-01/selection.json",
+      "sha256": "98fd1ff3702509cf3309043ebab4ef9e155e1c13a5059dd0f04263689a07cac0"
+    },
+    "python_tests": {
+      "bytes": 1179,
+      "mode": 420,
+      "path": "target/m2/stage97-python-tests-01/report.json",
+      "sha256": "e607fd9f42d4812fbd8d33a5336bcb82b8ddcecb3b85a7669bd5b0a0a29f8dc7"
+    },
+    "shared_token_observations": {
+      "bytes": 3552,
+      "mode": 420,
+      "path": "target/m2/stage97-targeted-01/report.json",
+      "sha256": "d834929eec20e7cb57cf7f41f1ed1ba543841520889e57e5724d8e38cdaa7522"
+    },
+    "source_freeze": {
+      "bytes": 7280240,
+      "mode": 420,
+      "path": "target/m2/stage97-final-canonical-freeze-03/sources.json",
+      "sha256": "798380c86641739565962ef7e96c63a6747d174ad0500a7bd71960d13845a58e"
+    }
+  },
+  "failed_native_history": {
+    "changed_exit_from_1_to_2": [
+      "trace-stage37-repeat-empty-cast-negative",
+      "trace-stage37-repeat-empty-max-count",
+      "read-stage38-uri-unpaired-surrogate",
+      "read-stage38-edge-http-opaque",
+      "read-stage38-edge-http-invalid-host",
+      "read-stage38-edge-http-nonnumeric-port"
+    ],
+    "full_failing_triples_unchanged": false,
+    "stdout_and_stderr_identical_for_all_eight": true
+  },
+  "fresh_Node_browser_execution": false,
+  "full_API_complete": false,
+  "full_m2_complete": false,
+  "git_binding": {
+    "checkpoint_commit": "The commit containing this descriptor. Source files are bound by exact frozen hashes; Git closeout is a separate subsequent operation.",
+    "source_parent": "9e95246346724de7271059c2ecad741f3028f24b"
+  },
+  "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "hosted_CI_result_claimed": false,
+  "implementation": {
+    "adapter_local_instruction_ceiling": false,
+    "bindings_changed": false,
+    "default_frame_transformer": true,
+    "environment": {},
+    "external_properties": {},
+    "legacy_scalar_facade_changed": false,
+    "native_file_hosts": true,
+    "native_filesystem_probes": [
+      "language_probe",
+      "runtime_probe"
+    ],
+    "newly_default_tested_cases": 13,
+    "noop_logger": true,
+    "original_queries_unchanged": true,
+    "scope": "Six token tests and seven adapter/Host tests are part of the final workspace total; the seven include four existing Host tests with current ModuleKey phase expectations.",
+    "shared_engine_changed": false,
+    "shared_full_expression_module_evaluator": true
+  },
+  "independent_publication_review": {
+    "bytes": 942363,
+    "mode": 420,
+    "path": "reports/m2/stage97-token-expression-publication-review.json",
+    "sha256": "a04f9a96f85a8d23042456880ab2e593f631fe7af03b218ee2ccddccf9f017c8"
+  },
+  "inventory": {
+    "cases": 4545,
+    "cases_by_execution": {
+      "ready": 4442,
+      "unimplemented": 71,
+      "unmapped": 32
+    },
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "kind": "Stage97 token requirements and native expression adapter checkpoint",
+  "known_limits": [
+    "Only the finite TRUE/FALSE/NULL token scopes are closed; all nine broad M2 workstreams retain open conditions.",
+    "Seven scalar mismatches and one Java oracle error remain required failures. Six failed native exits now report unsupported2 instead of ordinary1; complete failing triples are not unchanged.",
+    "Legacy property-path facade, full language, public APIs, Host capabilities, remaining corpus, target releases and speed/memory goals remain incomplete.",
+    "No new shared primitive/binding implementation or actual Node/browser acquisition occurred in this adapter/test-only checkpoint.",
+    "Duplicate-slash/directory/non-UTF8/Windows path boundaries are unverified; the3545 replay uses original fixed absolute regular-file paths.",
+    "Python manifest quickcheck cargo_spawned field is a generic child label; argv preserves actual Python invocation. Readback verifier post-execution source identity and pre-execution edit order are explicitly qualified."
+  ],
+  "latest_completed_whole_corpus": {
+    "historical_unchanged": true,
+    "matches": 4268,
+    "mismatches": 52,
+    "oracle_errors": 2,
+    "ready": 4424,
+    "scope": "Earlier-source whole-corpus aggregate; Stage97 affected scalar results are not added to it.",
+    "source": "a1b94fa",
+    "stage": 94,
+    "total": 4527,
+    "unready": 103,
+    "unsupported": 102
+  },
+  "local_verification": true,
+  "performance_targets_met": false,
+  "preserved_failed_attempts": [
+    {
+      "bytes": 55508,
+      "mode": 420,
+      "path": "target/m2/stage97-language-probe-capture-01/report.json",
+      "sha256": "86c28aeb8d17b3c73217a123f675b68074a32e43db84bd2503e1c432fe5ab4e5"
+    },
+    {
+      "bytes": 3361,
+      "mode": 420,
+      "path": "target/m2/stage97-adapter-tests-01/report.json",
+      "sha256": "13aa4ead52a07f5ccbd801395089f793a2dd474a21220dd77220b759a1a828f7"
+    },
+    {
+      "bytes": 677,
+      "mode": 420,
+      "path": "target/m2/stage97-workspace-01/prelaunch-failure.json",
+      "sha256": "6fbe54e2cc6295cb921ef086ff57bbbf1312bbde3d0ba6ab6a2e5846502b8a5e"
+    }
+  ],
+  "publication_ready": true,
+  "rustc_version": "rustc 1.98.1 (48a229cea 2026-09-01)\nbinary: rustc\ncommit-hash: 48a229ceaefd4985c50990b14116b6d856af0985\ncommit-date: 2026-09-01\nhost: aarch64-apple-darwin\nrelease: 1.98.1\nLLVM version: 22.1.8\n",
+  "schema_version": 1,
+  "source_restoration": {
+    "all_archive_parts_required": true,
+    "all_selected_sources_direct": true,
+    "inherited_source_archives": [],
+    "scope": "Standalone selected-source/evidence bundle. Pinned Rust/JDK/oracle installations remain external runtime prerequisites. Historical source overrides remain in integration preimages; this is not a copy of every upstream checkout file.",
+    "selected_paths": 32535
+  }
+}

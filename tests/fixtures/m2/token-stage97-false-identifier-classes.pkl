@@ -1,0 +1,12 @@
+local falseTail = 0
+local false0 = 1
+local false_ = 2
+local false$ = 3
+local falseé = 4
+local falsé = 5
+local False = 6
+local FALSE = 7
+local fals = 8
+local xfalse = 9
+local `false` = 11
+result = List(falseTail, false0, false_, false$, falseé, falsé, False, FALSE, fals, xfalse, `false`).toString()

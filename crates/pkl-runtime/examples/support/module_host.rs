@@ -246,7 +246,17 @@ mod tests {
         );
         assert_eq!(output.stdout, b"7");
         assert!(output.stderr.is_empty());
-        assert_eq!(phases, ["check-import", "resolve", "source"]);
+        assert_eq!(
+            phases,
+            [
+                "check-import",
+                "select-key",
+                "query-cache-policy",
+                "resolve",
+                "source",
+                "query-fragment-paths"
+            ]
+        );
     }
 
     #[cfg(unix)]
@@ -294,9 +304,14 @@ mod tests {
             phases,
             [
                 "check-import",
+                "select-key",
+                "query-cache-policy",
                 "resolve",
                 "source",
+                "query-fragment-paths",
                 "check-import",
+                "select-key",
+                "query-cache-policy",
                 "resolve"
             ]
         );

@@ -1,0 +1,4 @@
+local trueTail = 7
+local trueé = 8
+local `true` = 9
+result = List(trueTail, trueé, `true`, true).toString()
