@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `other`.
+
+1 | (new PcfRenderer { converters { [String] = (s) -> other.getOrDefault(probe).captured } }).renderDocument(probe)
+                                                      ^^^^^
+at repl:text.converters[#1].<function#1> (repl:text)
+
+1 | (new PcfRenderer { converters { [String] = (s) -> other.getOrDefault(probe).captured } }).renderDocument(probe)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

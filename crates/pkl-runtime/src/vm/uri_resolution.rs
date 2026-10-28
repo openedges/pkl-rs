@@ -51,7 +51,7 @@ impl Resolution {
             // AstBuilder.resolveImport reattaches its authored operand even
             // when IoUtils constructed the original exception without a node.
             error.unavailable_origin = false;
-            error.frames.insert(0, current.origin.clone());
+            error.insert_frame(0, current.origin.clone());
             error.span = Some(current.spec.span);
         }
         error
@@ -316,7 +316,7 @@ impl Vm {
                     let (parsed_authored, _) =
                         crate::host::resources::prepare_module_uri(&current.spec.authored, None)
                             .map_err(|mut error| {
-                                error.frames.insert(0, current.origin.clone());
+                                error.insert_frame(0, current.origin.clone());
                                 error.span = Some(current.spec.span);
                                 error
                             })?;
@@ -357,7 +357,7 @@ impl Vm {
                         },
                     )
                     .map_err(|mut error| {
-                        error.frames.insert(0, current.origin.clone());
+                        error.insert_frame(0, current.origin.clone());
                         error.span = Some(current.spec.span);
                         error
                     })?;

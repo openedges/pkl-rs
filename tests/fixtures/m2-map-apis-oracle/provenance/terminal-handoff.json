@@ -1,0 +1,77 @@
+{
+  "JDK_property_preflight_processes": 2,
+  "all_JVM_launches_terminal": true,
+  "all_evaluation_PIDs_later_absent": true,
+  "authority_reports": [
+    {
+      "bytes": 7214546,
+      "path": "target/m2/stage101-map-oracle-01/report.json",
+      "sha256": "4da0a8dde5cff7ac0229332b3059df5a56f77804a9ad5314bba2c30fc9f1b235"
+    },
+    {
+      "bytes": 220954,
+      "path": "target/m2/stage101-map-builder-followup-oracle-01/report.json",
+      "sha256": "e7c8e27252709f5dda7ab429183ce642627e9ebb220cf1ac959d7151b7e7503e"
+    }
+  ],
+  "canonical_Cargo_Node_browser_Git_mutations_or_executions": false,
+  "compatibility_scope": "Actual pinned reference authority only; no candidate/Rust tests, original Map/Mapping module pass, Mapping5 closure or fullM2/performance claim. Ordinary errors remain192; internal/API-exception/timeouts were not observed in this377-contract cohort.",
+  "complete": true,
+  "contracts": 377,
+  "controllers": [
+    {
+      "argv": [
+        "target/m2/stage101-map-oracle-prep-01/capture.py",
+        "--cohort",
+        "main",
+        "--root-window-authorized"
+      ],
+      "exit_code": 0,
+      "pid": 16748,
+      "record": {
+        "bytes": 470,
+        "path": "target/m2/stage101-map-oracle-01/capture-process.json",
+        "sha256": "d8fe3addbfd4ddb22b05108767cbbb70899426601b11581dd82e400a48818fc5"
+      }
+    },
+    {
+      "argv": [
+        "target/m2/stage101-map-oracle-prep-01/capture.py",
+        "--cohort",
+        "builder-followup",
+        "--root-window-authorized"
+      ],
+      "exit_code": 0,
+      "pid": 17259,
+      "record": {
+        "bytes": 498,
+        "path": "target/m2/stage101-map-builder-followup-oracle-01/capture-process.json",
+        "sha256": "e305960ee8dd905507ed9cc7db5869bba8d98dd4902a6ac8aa626f734669e991"
+      }
+    }
+  ],
+  "evaluation_sessions": 28,
+  "exclusive_Java_window_released": true,
+  "finished_epoch": 1793086527.995378,
+  "followup7_separate": true,
+  "forced_cleanup_events": 0,
+  "kind": "Stage101 immutable Map377 pinned Java authority terminal handoff",
+  "main370_preserved": true,
+  "minimum_free_bytes": 4742320128,
+  "observations": 754,
+  "offline_readback": {
+    "bytes": 17977,
+    "path": "target/m2/stage101-map-oracle-readback-01/report.json",
+    "sha256": "2f739d238c84a6aae509ce1fd45d22bd52ca25f808a179af538247e63d33c907"
+  },
+  "ordered_logger_events": 120,
+  "query_record_occurrences_read_back": 17964,
+  "remaining_owned_processes": [],
+  "source_and_process_identity_bookends_stable": true,
+  "statuses": {
+    "error": 192,
+    "success": 562
+  },
+  "success": true,
+  "unexecuted_or_partial_observations": 0
+}

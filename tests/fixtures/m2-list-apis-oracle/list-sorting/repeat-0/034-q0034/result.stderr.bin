@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Operator `<` is not defined for operand types `String` and `Int`.
+Left operand : "x"
+Right operand: 1
+
+1 | (List(1,"x").sortWith((a,b)->trace(Pair(a,b)).first<b)).toString()
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | (List(1,"x").sortWith((a,b)->trace(Pair(a,b)).first<b)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

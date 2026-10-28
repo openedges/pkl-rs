@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 2 function arguments but got 0.
+
+2291 | external function fold<Result>(initial: Result, operator: (Result, Key, Value) -> Result): Result
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Mapping.fold (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2291)
+
+1 | ((new Mapping { [1] = 2 }).fold()).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

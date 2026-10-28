@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "x"
+
+3234 | exclusiveEnd: Int,
+                     ^^^
+at pkl.base#List.replaceRange (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3234)
+
+1 | (List(1,2).replaceRange(0,"x", List(9))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

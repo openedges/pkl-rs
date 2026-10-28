@@ -1,0 +1,21 @@
+–– Pkl Error ––
+Cannot find method `minOrNull` in class `List`.
+
+1 | (List(1).minOrNull()).toString()
+     ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+minOrNull
+minByOrNull(selector)
+minWithOrNull(comparator)
+findOrNull(predicate)
+maxOrNull
+maxWithOrNull(comparator)
+min
+indexOfOrNull(element)
+maxByOrNull(selector)
+findLastOrNull(predicate)
+findIndexOrNull(predicate)
+splitOrNull(index)
+getOrNull(index)

@@ -1,0 +1,106 @@
+{
+  "JDK_property_preflight_processes": 2,
+  "all_JVM_launches_terminal": true,
+  "all_evaluation_owned_PIDs_later_absent": true,
+  "authority_reports": [
+    {
+      "bytes": 5535912,
+      "path": "target/m2/stage102-mapping-oracle-01/report.json",
+      "sha256": "e6e4f095c3e223ada7dec60cd4d31bee7cd0e1b29970c9d831270ba9f9cced03"
+    },
+    {
+      "bytes": 916734,
+      "path": "target/m2/stage102-mapping-probe-followup-oracle-01/report.json",
+      "sha256": "c75e3cff32d04683e24804a6344cdc93af941f6a3a57fae9dd155692c3c85614"
+    }
+  ],
+  "canonical_Cargo_Node_browser_Git_mutations_or_executions": false,
+  "cohort_peak_owned_bytes": [
+    34390016,
+    5677056
+  ],
+  "compatibility_scope": "Reference authority only. No Rust/candidate tests, original full modules, fullM2/API/release/performance result claimed. All194 ordinary errors retained; zero internal/API-exception/timeout outcomes observed.",
+  "complete": true,
+  "contracts": 325,
+  "controllers": [
+    {
+      "argv": [
+        "target/m2/stage102-mapping-oracle-prep-01/capture.py",
+        "--cohort",
+        "main",
+        "--root-window-authorized"
+      ],
+      "evaluation_sessions": 22,
+      "exit_code": 0,
+      "pid": 35357,
+      "record": {
+        "bytes": 478,
+        "path": "target/m2/stage102-mapping-oracle-01/capture-process.json",
+        "sha256": "d8f8b908c51ccd2b5f6de9c65a872e28eac2f5e102dd4264e890e55315ae3f30"
+      }
+    },
+    {
+      "argv": [
+        "target/m2/stage102-mapping-oracle-prep-01/capture.py",
+        "--cohort",
+        "probe-followup",
+        "--root-window-authorized"
+      ],
+      "evaluation_sessions": 8,
+      "exit_code": 0,
+      "pid": 35683,
+      "record": {
+        "bytes": 502,
+        "path": "target/m2/stage102-mapping-probe-followup-oracle-01/capture-process.json",
+        "sha256": "34dc0b8dc1d1491521fd14313001296f2784251daf8a32f6f19e00189729cb10"
+      }
+    }
+  ],
+  "evaluation_sessions": 30,
+  "exclusive_Java_window_released": true,
+  "finished_epoch": 1793090495.6784818,
+  "forced_cleanup_events": 0,
+  "helper_envelope_diff": {
+    "bytes": 997,
+    "path": "target/m2/stage102-mapping-oracle-prep-01/helper-envelope.patch",
+    "sha256": "bcadac87918c9c076bff701ee60fc2ad261ec5cbbe305aa8716ec8bba8fd6d5a"
+  },
+  "helper_review": {
+    "bytes": 68733,
+    "path": "target/m2/stage102-oracle-envelope-independent-review-02/report.json",
+    "sha256": "f919b42b1df6ccfb9ba5055864ef903a96dc7b265bd1333458414948b763f593"
+  },
+  "helper_scope": "Only Base64 UTF8 expression transport decode before unchanged evaluateExpressionString. Actual emitted expression UTF8/UTF16 matches original281+44 including multiline bytes; source URI/profile/order retained. Public classCollectionEveryOracle uses JDK21 source-file compilation; no persisted class-byte hash is invented. Exact source/class/line identity remains in transport receipt.",
+  "kind": "Stage102 Mapping281 plus separate probe44 pinned Java terminal handoff",
+  "launch_admission": {
+    "bytes": 2794,
+    "path": "target/m2/stage102-mapping-oracle-prep-01/launch-admission-01.json",
+    "sha256": "a93acf9d1bc7f5417b1c17d2c7dbd2dcf728509d331b6c927a800cb0d1a49b3e"
+  },
+  "minimum_free_bytes": 3996790784,
+  "observations": 650,
+  "ordered_logger_events": 64,
+  "original281_unchanged": true,
+  "raw_readback": {
+    "bytes": 19383,
+    "path": "target/m2/stage102-mapping-oracle-readback-01/report.json",
+    "sha256": "9f5086bd4b872f2811a9ea7b92923d02cb535b3172395f6fcb2068cb14ba0346"
+  },
+  "record_occurrences_checked": 15144,
+  "remaining_owned_processes": [],
+  "repeat_differences": [],
+  "root_archive_IO_concurrent": true,
+  "separate44_unchanged": true,
+  "source_tool_materialized_bookends_stable": true,
+  "statuses": {
+    "error": 194,
+    "success": 456
+  },
+  "success": true,
+  "transport_roundtrip": {
+    "bytes": 106103,
+    "path": "target/m2/stage102-mapping-oracle-prep-01/transport-roundtrip.json",
+    "sha256": "3f52850ca3e92f9604257f3b575a0ea5068aa43f57a75451ed13da563aeb9e51"
+  },
+  "unrun_or_partial_observations": 0
+}

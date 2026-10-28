@@ -130,7 +130,19 @@ fn suspended_parent_constraint_keeps_reentry_eager_until_it_finishes() {
     // creates a lazy wrapper and length does not force the invalid element.
     session.start(entries[1], vec![root], 4, None).unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::Int(2.into())));
-    assert_eq!(initialized.added_values(session.collect(&[]), 3), -2);
+    // The parent constraint retains its existing three executable nodes.
+    // Listing<Int> now also owns the checked property executable, its
+    // PropertyType site, and the lazy value TypeChild, even without custom this.
+    // These fixed code identities survive; user objects must still be reclaimed.
+    let parent_constraint_nodes = 3;
+    let lazy_listing_nodes = 3;
+    assert_eq!(
+        initialized.added_values(
+            session.collect(&[]),
+            parent_constraint_nodes + lazy_listing_nodes,
+        ),
+        -2
+    );
     assert_eq!(
         session
             .start(module_entry, vec![stale_root], 10, None)

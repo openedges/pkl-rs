@@ -1,0 +1,19 @@
+{
+  "Java_authority": {
+    "bytes": 916734,
+    "path": "target/m2/stage102-mapping-probe-followup-oracle-01/report.json",
+    "sha256": "c75e3cff32d04683e24804a6344cdc93af941f6a3a57fae9dd155692c3c85614"
+  },
+  "Java_input_transport": "queries.tsv expression column is Base64 UTF8 envelope only; actual API receives original decoded expression",
+  "Rust_execution": "unexecuted",
+  "Rust_query_input": "repeat-specific original expression.bin (UTF8), validated against expression.code-units.bin; never Base64",
+  "cohort": "probe-followup",
+  "evaluator_environment": {},
+  "evaluator_external_properties": {},
+  "power_assertions": false,
+  "program": "probe-shared-mapping-6",
+  "queries": 11,
+  "repetitions": 2,
+  "required": true,
+  "source_uri": "file:///stage102/probe-shared-mapping-6.pkl"
+}

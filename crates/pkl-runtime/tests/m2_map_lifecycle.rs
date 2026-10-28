@@ -85,8 +85,14 @@ fn zero_hash_cached_lookup_returns_to_eager_collection_typecheck() {
     assert_eq!(ready(&mut session, 2), Ok(Value::Bool(true)));
     session.resume(&outer, Ok(Value::Null), 3).unwrap();
     assert_eq!(ready(&mut session, 3), Ok(Value::Null));
-    // User values are reclaimed; the private base and exact executable graph remain.
-    assert_eq!(initialized.added_values(session.collect(&[]), 0), -2);
+    // The eager Mapping<Listing, Int> test retains its member executable and
+    // TypeUse identity. Eager checking creates no lazy value TypeChild or cast
+    // wrapper; user values must still be reclaimed independently of those nodes.
+    let eager_mapping_type_nodes = 2;
+    assert_eq!(
+        initialized.added_values(session.collect(&[]), eager_mapping_type_nodes),
+        -2
+    );
     assert_eq!(
         session
             .start(parent, vec![stale_module], 10, None)

@@ -88,110 +88,120 @@ pub(super) fn blocks(
 ) -> BTreeMap<(Arc<str>, Arc<str>), usize> {
     use Kind::*;
     let source = crate::stdlib_sources::base();
-    let class = source.text.find("external class Set<").unwrap();
     let mut result = BTreeMap::new();
-    for kind in [
-        FilterNonNull,
-        FilterIsInstance,
-        GroupBy,
-        Flatten,
-        StartsWith,
-        EndsWith,
-        Split,
-        SplitOrNull,
-        Partition,
-        Take,
-        TakeWhile,
-        TakeLast,
-        TakeLastWhile,
-        Drop,
-        DropWhile,
-        DropLast,
-        DropLastWhile,
-        Repeat,
-        Zip,
-        Intersect,
-        Difference,
-    ] {
-        let name = kind.name();
-        let start = class
-            + source.text[class..]
-                .find(&format!("external function {name}"))
-                .unwrap();
-        let end = start + source.text[start..].find('\n').unwrap();
-        let declaration = &source.text[start..end];
-        let mut code = vec![];
-        let mut spans = vec![];
-        if !matches!(kind, FilterNonNull | Flatten) {
-            let (label, ty) = if matches!(kind, FilterIsInstance) {
-                ("clazz: ", TypeCheck::MetaClass("Class".into()))
-            } else if kind.predicate() || matches!(kind, GroupBy) {
-                (
-                    if matches!(kind, GroupBy) {
-                        "selector: "
-                    } else {
-                        "predicate: "
-                    },
-                    TypeCheck::Function {
-                        parameters: Some(vec![TypeCheck::Any]),
-                        result: Box::new(TypeCheck::Any),
-                        syntax: true,
-                    },
-                )
-            } else if matches!(kind, StartsWith | EndsWith | Zip) {
-                ("coll: ", TypeCheck::CollectionBase { arguments: vec![] })
-            } else if matches!(kind, Intersect | Difference) {
-                ("other: ", TypeCheck::Collection(CollectionKind::Set))
-            } else {
-                (if kind.split() { "index: " } else { "n: " }, TypeCheck::Int)
-            };
-            let p = start + declaration.find(label).unwrap() + label.len();
-            let type_end = if kind.predicate() || matches!(kind, GroupBy) {
-                let arrow = p + source.text[p..end].find(" -> ").unwrap();
-                arrow + 4 + source.text[arrow + 4..end].find(')').unwrap()
-            } else if matches!(
-                kind,
-                FilterIsInstance | StartsWith | EndsWith | Zip | Intersect | Difference
-            ) {
-                p + source.text[p..end].find(')').unwrap()
-            } else {
-                p + 3
-            };
-            code.extend([Instruction::LoadLocal(0), Instruction::CheckType(ty)]);
-            spans.extend([None, Some(Span::new(p, type_end))]);
+    for class_name in ["Set", "List"] {
+        let class = source
+            .text
+            .find(&format!("external class {class_name}<"))
+            .unwrap();
+        for kind in [
+            FilterNonNull,
+            FilterIsInstance,
+            GroupBy,
+            Flatten,
+            StartsWith,
+            EndsWith,
+            Split,
+            SplitOrNull,
+            Partition,
+            Take,
+            TakeWhile,
+            TakeLast,
+            TakeLastWhile,
+            Drop,
+            DropWhile,
+            DropLast,
+            DropLastWhile,
+            Repeat,
+            Zip,
+            Intersect,
+            Difference,
+        ] {
+            if class_name == "List" && matches!(kind, Intersect | Difference) {
+                continue;
+            }
+            let name = kind.name();
+            let start = class
+                + source.text[class..]
+                    .find(&format!("external function {name}"))
+                    .unwrap();
+            let end = start + source.text[start..].find('\n').unwrap();
+            let declaration = &source.text[start..end];
+            let mut code = vec![];
+            let mut spans = vec![];
+            if !matches!(kind, FilterNonNull | Flatten) {
+                let (label, ty) = if matches!(kind, FilterIsInstance) {
+                    ("clazz: ", TypeCheck::MetaClass("Class".into()))
+                } else if kind.predicate() || matches!(kind, GroupBy) {
+                    (
+                        if matches!(kind, GroupBy) {
+                            "selector: "
+                        } else {
+                            "predicate: "
+                        },
+                        TypeCheck::Function {
+                            parameters: Some(vec![TypeCheck::Any]),
+                            result: Box::new(TypeCheck::Any),
+                            syntax: true,
+                        },
+                    )
+                } else if matches!(kind, StartsWith | EndsWith | Zip) {
+                    ("coll: ", TypeCheck::CollectionBase { arguments: vec![] })
+                } else if matches!(kind, Intersect | Difference) {
+                    ("other: ", TypeCheck::Collection(CollectionKind::Set))
+                } else {
+                    (if kind.split() { "index: " } else { "n: " }, TypeCheck::Int)
+                };
+                let p = start + declaration.find(label).unwrap() + label.len();
+                let type_end = if kind.predicate() || matches!(kind, GroupBy) {
+                    let arrow = p + source.text[p..end].find(" -> ").unwrap();
+                    arrow + 4 + source.text[arrow + 4..end].find(')').unwrap()
+                } else if matches!(
+                    kind,
+                    FilterIsInstance | StartsWith | EndsWith | Zip | Intersect | Difference
+                ) {
+                    p + source.text[p..end].find(')').unwrap()
+                } else {
+                    p + 3
+                };
+                code.extend([Instruction::LoadLocal(0), Instruction::CheckType(ty)]);
+                spans.extend([None, Some(Span::new(p, type_end))]);
+            }
+            code.push(Instruction::Primitive(primitives::Operation::SetSequence(
+                Operation::Start(kind),
+            )));
+            spans.push(None);
+            let step = code.len();
+            code.extend([
+                Instruction::Primitive(primitives::Operation::SetSequence(Operation::Step)),
+                Instruction::Jump(step),
+                Instruction::Return,
+                Instruction::PrepareSetElement,
+                Instruction::AddSetElement,
+                Instruction::Primitive(primitives::Operation::SetSequence(Operation::AfterInsert)),
+                Instruction::Jump(step),
+                Instruction::PutSetKey,
+                Instruction::Primitive(primitives::Operation::SetSequence(
+                    Operation::AppendVisible,
+                )),
+                Instruction::Primitive(primitives::Operation::SetSequence(Operation::AfterInsert)),
+                Instruction::Jump(step),
+                Instruction::AppendStrictElement,
+                Instruction::Primitive(primitives::Operation::SetSequence(Operation::AfterInsert)),
+                Instruction::Jump(step),
+            ]);
+            spans.resize(code.len(), None);
+            let block = blocks.len();
+            blocks.push(code);
+            metadata.push(BlockMetadata {
+                source: Some(source.clone()),
+                member: format!("#{class_name}.{name}").into(),
+                declaration: Some(Span::new(start, end)),
+                spans,
+                ..Default::default()
+            });
+            result.insert((class_name.into(), name.into()), block);
         }
-        code.push(Instruction::Primitive(primitives::Operation::SetSequence(
-            Operation::Start(kind),
-        )));
-        spans.push(None);
-        let step = code.len();
-        code.extend([
-            Instruction::Primitive(primitives::Operation::SetSequence(Operation::Step)),
-            Instruction::Jump(step),
-            Instruction::Return,
-            Instruction::PrepareSetElement,
-            Instruction::AddSetElement,
-            Instruction::Primitive(primitives::Operation::SetSequence(Operation::AfterInsert)),
-            Instruction::Jump(step),
-            Instruction::PutSetKey,
-            Instruction::Primitive(primitives::Operation::SetSequence(Operation::AppendVisible)),
-            Instruction::Primitive(primitives::Operation::SetSequence(Operation::AfterInsert)),
-            Instruction::Jump(step),
-            Instruction::AppendStrictElement,
-            Instruction::Primitive(primitives::Operation::SetSequence(Operation::AfterInsert)),
-            Instruction::Jump(step),
-        ]);
-        spans.resize(code.len(), None);
-        let block = blocks.len();
-        blocks.push(code);
-        metadata.push(BlockMetadata {
-            source: Some(source.clone()),
-            member: format!("#Set.{name}").into(),
-            declaration: Some(Span::new(start, end)),
-            spans,
-            ..Default::default()
-        });
-        result.insert(("Set".into(), name.into()), block);
     }
     result
 }
@@ -214,6 +224,7 @@ enum Stage {
 pub(super) struct Run {
     kind: Kind,
     source: ObjectId,
+    collection_kind: CollectionKind,
     values: Vec<Value>,
     other: Option<ObjectId>,
     other_values: Vec<Value>,
@@ -286,7 +297,7 @@ impl Vm {
     ) -> Result<(), RuntimeError> {
         let builder = run.builders[side];
         let step = run.step;
-        let list = matches!(run.kind, Kind::Repeat);
+        let list = self.heap.get(builder)?.collection_kind == CollectionKind::List;
         run.current = value.clone();
         self.frames.last_mut().unwrap().set_sequence = Some(Box::new(run));
         self.frames.last_mut().unwrap().builders.push(builder);
@@ -347,6 +358,7 @@ impl Vm {
                 self.pop()?
             };
             let source = receiver.as_object()?;
+            let collection_kind = self.heap.get(source)?.collection_kind;
             let mut input = values(self, source)?;
             let step = self.frames.last().unwrap().pc;
             let mut other = None;
@@ -387,6 +399,14 @@ impl Vm {
                     selection = input.clone();
                     stage = Stage::Emit;
                 } else if matches!(kind, Repeat) {
+                    if collection_kind == CollectionKind::List && (n == 0 || n == 1) {
+                        let value = if n == 0 {
+                            Value::Object(self.empty_strict_collection(CollectionKind::List))
+                        } else {
+                            receiver
+                        };
+                        return self.set_sequence_return(step, value);
+                    }
                     if n < 0 {
                         return Err(RuntimeError::new(
                             ErrorKind::Arithmetic,
@@ -402,7 +422,7 @@ impl Vm {
                         let value = if matches!(kind, Drop | DropLast) {
                             receiver
                         } else {
-                            Value::Object(self.empty_strict_collection(CollectionKind::Set))
+                            Value::Object(self.empty_strict_collection(collection_kind))
                         };
                         return self.set_sequence_return(step, value);
                     }
@@ -410,7 +430,7 @@ impl Vm {
                         let value = if matches!(kind, Take | TakeLast) {
                             receiver
                         } else {
-                            Value::Object(self.empty_strict_collection(CollectionKind::Set))
+                            Value::Object(self.empty_strict_collection(collection_kind))
                         };
                         return self.set_sequence_return(step, value);
                     }
@@ -447,7 +467,7 @@ impl Vm {
                         } else if matches!(kind, GroupBy) {
                             CollectionKind::Map
                         } else {
-                            CollectionKind::Set
+                            collection_kind
                         },
                         ..Default::default()
                     })
@@ -456,6 +476,7 @@ impl Vm {
             self.frames.last_mut().unwrap().set_sequence = Some(Box::new(Run {
                 kind,
                 source,
+                collection_kind,
                 values: input,
                 other,
                 other_values,
@@ -574,6 +595,31 @@ impl Vm {
             run = *self.frames.last_mut().unwrap().set_sequence.take().unwrap();
             match stage {
                 Stage::GroupGet => {
+                    if run.collection_kind == CollectionKind::List {
+                        let builder = if let Some(group) = self.map_value(map, &key)? {
+                            let source = self.heap.get(group.as_object()?)?;
+                            self.heap.allocate(Object {
+                                collection_kind: CollectionKind::List,
+                                length: source.length,
+                                members: source.members.clone(),
+                                collection_members: source.collection_members.clone(),
+                                member_values: source.member_values.clone(),
+                                cache: source.cache.clone(),
+                                completed_cache_order: source.completed_cache_order.clone(),
+                                cache_slots: source.cache_slots.clone(),
+                                cache_index: source.cache_index.clone(),
+                                ..Default::default()
+                            })
+                        } else {
+                            self.heap.allocate(Object {
+                                collection_kind: CollectionKind::List,
+                                ..Default::default()
+                            })
+                        };
+                        run.group_value = Value::Object(builder);
+                        run.builders.push(builder);
+                        return self.set_sequence_insert(run, input, 1, false);
+                    }
                     if let Some(group) = self.map_value(map, &key)? {
                         run.group_value = group;
                         run.stage = Stage::GroupSetContains;
@@ -733,7 +779,7 @@ impl Vm {
             let value = if matches!(run.kind, TakeWhile | TakeLastWhile) {
                 Value::Object(run.source)
             } else if matches!(run.kind, DropWhile | DropLastWhile) {
-                Value::Object(self.empty_strict_collection(CollectionKind::Set))
+                Value::Object(self.empty_strict_collection(run.collection_kind))
             } else {
                 self.finish_set_sequence(&run)?
             };

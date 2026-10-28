@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+inner cast
+
+3 | hidden inner: Mapping<Int,Int(throw("inner cast"))> = raw
+                                  ^^^^^^^^^^^^^^^^^^^
+at different-cast-recursion#inner (file:///stage102/different-cast-recursion.pkl)
+
+2 | [2] = 2 }
+          ^
+at different-cast-recursion#raw[2] (file:///stage102/different-cast-recursion.pkl)
+
+1 | inner.getOrNull(2).toString()
+    ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

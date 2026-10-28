@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Expected a single-element collection.
+Collection: List(3, 1, 2)
+
+1 | (List(3,1,2).single).toString()
+     ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

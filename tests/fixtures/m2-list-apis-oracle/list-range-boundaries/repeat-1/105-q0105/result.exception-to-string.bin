@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Collection`, but got type `String`.
+Value: "x"
+
+3235 | replacement: Collection<Other>,
+                    ^^^^^^^^^^^^^^^^^
+at pkl.base#List.replaceRange (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3235)
+
+1 | (List(1).replaceRange(-1,9,"x")).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

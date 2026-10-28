@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3269 | external function findIndexOrNull(predicate: (Element) -> Boolean): Int?
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.findIndexOrNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3269)
+
+1 | (List(1).findIndexOrNull()).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

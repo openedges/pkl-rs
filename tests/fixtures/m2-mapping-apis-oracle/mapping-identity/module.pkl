@@ -1,0 +1,6 @@
+hidden parent = new Mapping { ["key"] = "value" }
+hidden child = (parent) {}
+hidden saved = child.keys
+hidden key = "key"
+hidden value = "value"
+hidden identity = new Mapping { [key] = value }

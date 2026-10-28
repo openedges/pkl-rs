@@ -1,0 +1,13 @@
+org.pkl.core.PklException: –– Pkl Error ––
+The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `String`.
+Value: "same"
+
+1 | (let (capturedKey = values[probe].captured) (new PcfRenderer { converters { [String] = (s) -> capturedKey } }).renderDocument(declared))
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+This value was converted during rendering. Previous: "same". After: "same".
+
+1 | (let (capturedKey = values[probe].captured) (new PcfRenderer { converters { [String] = (s) -> capturedKey } }).renderDocument(declared))
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at repl:text.<let expr> (repl:text)

@@ -1,0 +1,5 @@
+hidden key = new Dynamic { ["x"] = raw.length }
+hidden twin = new Dynamic { ["x"] = 2 }
+hidden raw = new Mapping { [key] = "first"
+ [twin] = "second" }
+hidden typed: Mapping<Dynamic,Int> = raw

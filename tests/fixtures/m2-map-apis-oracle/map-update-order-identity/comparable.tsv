@@ -1,0 +1,14 @@
+string	q0000	(keyed.put(key,4)).toString()	000-q0000
+string	q0001	(keyed.remove(key)).toString()	001-q0001
+string	q0002	(keyed.filter((k,v) -> trace(v) > 1)).toString()	002-q0002
+string	q0003	(keyed.fold("",(a,k,v) -> a + trace(v).toString())).toString()	003-q0003
+string	q0004	(keyed.flatMap((k,v) -> Map(k,trace(v),0,v))).toString()	004-q0004
+string	q0005	(values.filter((k,v) -> k != 31)).toString()	005-q0005
+string	q0006	(values.flatMap((k,v) -> Map(k,v))).toString()	006-q0006
+string	q0007	(new PcfRenderer { converters { [Map] = (m) -> identityMap.remove("missing") } }).renderDocument(identityMap)	007-q0007
+string	q0008	(new PcfRenderer { converters { [Map] = (m) -> identityMap.remove("captured") } }).renderDocument(identityMap)	008-q0008
+string	q0009	(new PcfRenderer { converters { [Map] = (m) -> identityMap.put("captured",captured) } }).renderDocument(identityMap)	009-q0009
+string	q0010	(new PcfRenderer { converters { [Map] = (m) -> identityMap.filter((k,v) -> true) } }).renderDocument(identityMap)	010-q0010
+string	q0011	(new PcfRenderer { converters { [Map] = (m) -> identityMap.flatMap((k,v) -> Map(k,v)) } }).renderDocument(identityMap)	011-q0011
+string	q0012	(new PcfRenderer { converters { [String] = (x) -> identityEntries.entries.first.first } }).renderDocument(entryKey)	012-q0012
+string	q0013	(new PcfRenderer { converters { [String] = (x) -> identityEntries.entries.first.second } }).renderDocument(entryValue)	013-q0013

@@ -1,0 +1,15 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "bad"
+
+3 | hidden typed: Mapping<Int, Int> = raw
+                               ^^^
+at mapping-type-cache#typed (file:///stage102/mapping-type-cache.pkl)
+
+2 | [2] = trace("bad") }
+          ^^^^^^^^^^^^
+at mapping-type-cache#raw[2] (file:///stage102/mapping-type-cache.pkl)
+
+1 | (typed.getOrNull(2)).toString()
+     ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

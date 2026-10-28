@@ -1,0 +1,25 @@
+{
+  "baseline": {
+    "bytes": 6240,
+    "path": "target/m2/stage95-plist-oracle-03/CollectionEveryOracle.java",
+    "sha256": "00d3bd8022e4a65532d4208976acb92687a04951fef36b713bacc70fa240e25f"
+  },
+  "changes": [
+    "Import java.util.Base64; decode expression column UTF8 before existing API call.",
+    "Power=true successor additionally replaces only setPowerAssertionsEnabled(false) with true."
+  ],
+  "complete": true,
+  "expectations_authored": false,
+  "expression_encoding": "Base64 of exact original UTF8 bytes in TSV expression column; decoded Java expression and all raw output/logger/settings remain unchanged.",
+  "false_successor": {
+    "bytes": 6329,
+    "path": "target/m2/stage102-mapping-oracle-prep-01/helper-false/CollectionEveryOracle.java",
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "multiline_queries": 124,
+  "true_successor": {
+    "bytes": 6328,
+    "path": "target/m2/stage102-mapping-oracle-prep-01/CollectionEveryOracle.java",
+    "sha256": "56defcb9f990729eedc3a3b98854c07319859a683cae4a404fedaf821cc2a98f"
+  }
+}

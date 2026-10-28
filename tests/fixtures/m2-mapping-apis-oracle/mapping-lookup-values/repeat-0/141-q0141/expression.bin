@@ -1,0 +1,2 @@
+((new Mapping { default = (k) -> trace(k)
+ [1] = null }).getOrDefault(-0.0)).toString()

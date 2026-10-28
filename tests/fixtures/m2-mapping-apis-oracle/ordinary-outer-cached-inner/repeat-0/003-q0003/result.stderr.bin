@@ -1,0 +1,18 @@
+–– Pkl Error ––
+inner cached cast
+
+3 | hidden typed: Mapping<Int,Int(if (this == 1) typed.getOrNull(2) > 0 else throw("inner cached cast"))> = raw
+                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at ordinary-outer-cached-inner#typed (file:///stage102/ordinary-outer-cached-inner.pkl)
+
+1 | hidden raw = new Mapping { [1] = trace(1)
+                                     ^^^^^^^^
+at ordinary-outer-cached-inner#raw[1] (file:///stage102/ordinary-outer-cached-inner.pkl)
+
+3 | hidden typed: Mapping<Int,Int(if (this == 1) typed.getOrNull(2) > 0 else throw("inner cached cast"))> = raw
+                                                 ^^^^^^^^^^^^^^^^^^
+at ordinary-outer-cached-inner#typed (file:///stage102/ordinary-outer-cached-inner.pkl)
+
+1 | typed.getOrNull(1).toString()
+    ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

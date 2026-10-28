@@ -21,6 +21,66 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+### Stage102 collection APIs — actual local and selected target checks
+
+List 995, Map 377 and Mapping 488 form **1,860 query/profile contracts**, each
+observed twice. On freeze04, targeted05 records **83 passes, zero failures and one
+ignored test**. Its **1,859 ordinary contracts / 3,718 observations** match pinned
+Java: **2,338 successes, 1,380 ordinary errors, 37,368 shared raw fields and 1,506
+ordered Logger events**. One List internal contract retains two required
+unresolved observations; its ignored placeholder is not a pass. The original
+whole-List 512 MiB Java heap failure and earlier Set/glob protocol obligations
+remain open.
+
+The corrected selected **native, N-API and Chromium acquisitions each match all 3,718
+ordinary observations, 44,804 shared raw fields and 1,506 ordered Logger events**
+across 74 programs and 148 repeat sessions. Their two required internal
+observations remain unresolved, so `all_required_pass` is false. This portable
+field count includes eight expression/status/stdout/stderr/Logger-count fields
+per ordinary observation and ten fields per Logger event; the Rust harness uses
+a distinct six-field observation scope. Output/error UTF-8 and UTF-16 bytes and
+Logger order are compared directly. Java exception class/cause metadata remains
+provenance. Each acquisition is complete, source-stable and tracked-input-stable.
+
+The first native acquisition was incomplete because its Host omitted a required
+auxiliary module; it supplies no engine-comparison verdict. The corrected Host
+uses the exact Java-pinned auxiliary source for only the two importing programs,
+with empty registries for the other 72. Actual checks cover nine mocked Node
+Host/transport tests and five native adapter tests. Failed captures and approved
+raw removals retain their original status and exact archive/restoration maps.
+
+All eight default roles have actual local passing evidence. The complete
+`stage102-workspace-deferred-01` run records **1,502 passes, zero failures and four
+ignored tests**, covering **252 test targets, 25 compile-only examples and two
+doctest libraries**. Python runs **180 tests**. Actual formatting and Clippy
+command records have **414 and 712 recorded input identities**, respectively,
+matched to freeze04 bytes/SHA; manifest04 binds the same catalog directly.
+Current xtask, Wasm and inventory checks complete the default roles. These joins
+preserve the recorded scope and do not invent historical modes or broad fixture
+bookends.
+
+The workspace used a separately recorded **1.5 GiB start admission / sticky
+1 GiB floor** alternative to the retained 2 GiB baseline, with unchanged heap,
+profile, workload, timeout and raw cap. Its deferred-evidence controller and
+observer remain separate records. Earlier disk-floor, stale-Fresh, compilation,
+development and lint failures keep their original outcomes. Observed disk changes
+do not establish a cause, peak memory or performance.
+
+One current M1 acquisition matches Java on **6,078 checks per native, Node and
+browser target**. Strict comparison and the architecture contract pass through
+separate readback of that same acquisition, with 92 Node and 92 browser checks.
+This bounded experiment is separate from the selected collection matrix.
+Unchanged original Set and Mapping match; original Map fails at `map.pkl:134`:
+`toTyped(Person)` succeeds, then the existing `Typed.hasProperty` gap prevents a
+match. The replay is integrity-valid and source-stable, with two of three raw
+matches; the remaining original is a required failure.
+
+The [Stage102 checkpoint](reports/m2/stage102-collection-apis-checkpoint.json)
+provides the evidence scope, input/artifact identities and recovery references.
+These local development results do not complete the full language/API,
+release-platform or performance gates.
+
+
 ### Stage99 numeric/Set validation — actual default and selected results
 
 Recorded local evidence: [Stage99 checkpoint](reports/m2/stage99-numeric-set-apis-checkpoint.json).

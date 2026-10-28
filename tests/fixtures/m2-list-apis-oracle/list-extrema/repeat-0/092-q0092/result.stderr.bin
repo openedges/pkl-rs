@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Expected a non-empty collection.
+Collection: List()
+
+1 | (List().maxWith((a,b)->throw("unreached"))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

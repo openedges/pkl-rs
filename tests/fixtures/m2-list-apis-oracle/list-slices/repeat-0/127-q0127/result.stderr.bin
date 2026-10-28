@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Collection`, but got type `Listing`.
+Value: new Listing { ?; ? }
+
+3141 | external function startsWith(coll: Collection<Any>): Boolean
+                                          ^^^^^^^^^^^^^^^
+at pkl.base#List.startsWith (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3141)
+
+1 | (List(3,1,2).startsWith(new Listing {3;1})).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

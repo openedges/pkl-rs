@@ -176,6 +176,19 @@ impl Vm {
     pub(super) fn object_lookup(&mut self, operation: Lookup) -> Result<(), RuntimeError> {
         let receiver = self.conversion_receiver()?;
         let key = self.conversion_argument(0)?;
+        if self.heap.get(receiver)?.collection_kind == CollectionKind::Mapping
+            && matches!(operation, Lookup::EntryOrNull | Lookup::EntryOrDefault)
+        {
+            return self.mapping_lookup(
+                receiver,
+                key,
+                if operation == Lookup::EntryOrNull {
+                    mapping_ops::LookupMode::Null
+                } else {
+                    mapping_ops::LookupMode::Default
+                },
+            );
+        }
         if matches!(
             operation,
             Lookup::HasProperty | Lookup::Property | Lookup::PropertyOrNull
@@ -191,7 +204,7 @@ impl Vm {
                     if slot.key.entry
                         && slot.key.owner.is_none()
                         && !slot.key.method
-                        && collections::cache_entry_key(&self.heap, receiver, &slot.key)?.as_ref()
+                        && collections::cache_slot_entry_key(&self.heap, receiver, slot)?.as_ref()
                             == Some(&key)
                     {
                         self.lookup_result(Value::Bool(true));
@@ -247,7 +260,7 @@ impl Vm {
         if let Some(member) = member {
             let frame = self.frames.last_mut().unwrap();
             frame.pc = self.program.blocks[frame.block].len() - 1;
-            self.force_key(receiver, receiver, member.name, false, true, false, true)?;
+            self.force_key_probe(receiver, receiver, member.name, true, key)?;
         } else if operation == Lookup::EntryOrNull {
             self.lookup_result(Value::Null);
         } else {

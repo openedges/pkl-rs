@@ -1,0 +1,26 @@
+session-open mode=string rows=12
+call-enter=string-0-q0000
+call-exit=string-0-q0000 status=success
+call-enter=string-1-q0001
+call-exit=string-1-q0001 status=error
+call-enter=string-2-q0002
+call-exit=string-2-q0002 status=error
+call-enter=string-3-q0003
+call-exit=string-3-q0003 status=error
+call-enter=string-4-q0004
+call-exit=string-4-q0004 status=error
+call-enter=string-5-q0005
+call-exit=string-5-q0005 status=error
+call-enter=string-6-q0006
+call-exit=string-6-q0006 status=error
+call-enter=string-7-q0007
+call-exit=string-7-q0007 status=error
+call-enter=string-8-q0008
+call-exit=string-8-q0008 status=error
+call-enter=string-9-q0009
+call-exit=string-9-q0009 status=error
+call-enter=string-10-q0010
+call-exit=string-10-q0010 status=error
+call-enter=string-11-q0011
+call-exit=string-11-q0011 status=error
+session-closed mode=string rows=12 public-calls=12 success=1 errors=11

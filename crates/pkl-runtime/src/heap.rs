@@ -207,6 +207,9 @@ pub struct CollectionCast {
 #[derive(Clone, Debug)]
 pub struct CacheSlot {
     pub key: CacheKey,
+    /// The key retained by the receiver cache, independently of its declaration.
+    /// Bootstrap strict slots recover their declaration key when this is None.
+    pub entry_key: Option<Value>,
     pub value: Value,
 }
 
@@ -219,6 +222,9 @@ pub struct Object {
     pub regex_match: Option<Arc<crate::pkl_regex::RegexMatchData>>,
     /// Recursive force publishes this mark before traversing children.
     pub forced: bool,
+    /// VmDynamic caches its first regular-member count, including a reentrant
+    /// force prefix. Later cache publication does not invalidate that count.
+    pub dynamic_regular_member_count: Option<usize>,
     /// Evaluator-owned canonical identity, populated only after key hashing succeeds.
     pub structural_key: Option<u64>,
     /// Numeric Java hash, independent of canonical equality identity.
@@ -282,12 +288,17 @@ pub struct Object {
     pub collection_kind: CollectionKind,
     pub collection_members: Vec<CollectionMember>,
     pub map_index: Option<Box<crate::strict_map::MapIndex>>,
+    /// Captured Map insertion-order keys, independent of stored trie slots.
+    /// Removal can change a different slot after recursive key forcing.
+    pub map_key_order: Option<Vec<CollectionMember>>,
     /// Strict Set hash-table keys; element order lives in collection_members.
     pub set_entries: Vec<Value>,
     pub declaration_index: Option<crate::economic_map::EconomicMapIndex>,
     pub declaration_hashes: Vec<i32>,
     pub length: usize,
     pub mapping_length: Option<usize>,
+    /// VmMapping.getAllKeys caches its own persistent Set wrapper.
+    pub mapping_keys: Option<ObjectId>,
     pub specialized_literal: bool,
     pub member_environments: BTreeMap<CacheKey, Environment>,
     pub member_values: BTreeMap<CacheKey, Value>,
@@ -318,6 +329,7 @@ impl Object {
             self.completed_cache_order.push(key.clone());
             self.cache_slots.push(CacheSlot {
                 key: key.clone(),
+                entry_key: None,
                 value: value.clone(),
             });
         }
@@ -450,6 +462,7 @@ impl Heap {
 
     pub fn allocate(&mut self, mut object: Object) -> ObjectId {
         object.forced = false;
+        object.dynamic_regular_member_count = None;
         self.allocate_entry(Entry::Object(Box::new(object)))
     }
 
@@ -997,6 +1010,12 @@ impl Heap {
             if let Some(native) = &object.native_function {
                 pending.extend(self.traced_id(&native.receiver));
             }
+            if let Some(order) = &object.map_key_order {
+                for member in order {
+                    pending.extend(self.traced_id(&member.key));
+                }
+            }
+            pending.extend(object.mapping_keys);
             for member in &object.collection_members {
                 pending.extend(self.traced_id(&member.key));
             }
@@ -1071,6 +1090,12 @@ impl Heap {
                 .chain(object.member_values.values())
                 .chain(object.set_entries.iter())
                 .chain(object.cache_slots.iter().map(|slot| &slot.value))
+                .chain(
+                    object
+                        .cache_slots
+                        .iter()
+                        .filter_map(|slot| slot.entry_key.as_ref()),
+                )
                 .chain(object.cache.values().filter_map(|state| match state {
                     LazyState::Completed(value) => Some(value),
                     _ => None,

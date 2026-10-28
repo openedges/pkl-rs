@@ -1,0 +1,1 @@
+(new PcfRenderer { converters { [String] = (s) -> trace(s) } }).renderValue(probe)

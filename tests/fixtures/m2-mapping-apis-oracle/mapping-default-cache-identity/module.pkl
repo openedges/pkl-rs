@@ -1,0 +1,4 @@
+hidden parent = new Mapping { default = (k) -> this
+ [1] = 2 }
+hidden child = (parent) {}
+hidden cache = parent.default

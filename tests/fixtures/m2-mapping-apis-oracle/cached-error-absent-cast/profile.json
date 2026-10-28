@@ -1,0 +1,19 @@
+{
+  "Java_authority": {
+    "bytes": 346717,
+    "path": "target/m2/stage102-mapping-cached15-oracle-01/report.json",
+    "sha256": "8f5e0d1ac84b190dbec98377537d009ccf89c30654f1f8891c6514715b43ff70"
+  },
+  "Java_input_transport": "queries.tsv expression column is Base64 UTF8 envelope only; actual API receives original decoded expression",
+  "Rust_execution": "unexecuted",
+  "Rust_query_input": "repeat-specific original expression.bin (UTF8), validated against expression.code-units.bin; never Base64",
+  "cohort": "cached15",
+  "evaluator_environment": {},
+  "evaluator_external_properties": {},
+  "power_assertions": false,
+  "program": "cached-error-absent-cast",
+  "queries": 5,
+  "repetitions": 2,
+  "required": true,
+  "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-api-candidate-05/auxiliary-modules/cached-error-absent-cast.pkl"
+}

@@ -1,0 +1,15 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "cached"
+
+9 | hidden typed: Mapping<String,Int> = raw
+                                 ^^^
+at cache-cast-hashed-parent#typed (file:///stage102/cache-cast-hashed-parent.pkl)
+
+8 | [declared] = "cached" }
+                 ^^^^^^^^
+at cache-cast-hashed-parent#raw[#1] (file:///stage102/cache-cast-hashed-parent.pkl)
+
+1 | typed.getOrNull(probe).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

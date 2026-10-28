@@ -72,6 +72,7 @@ impl Vm {
             cache_slots: source.cache_slots.clone(),
             cache_index: source.cache_index.clone(),
             map_index: source.map_index.clone(),
+            map_key_order: source.map_key_order.clone(),
             set_entries: source.set_entries.clone(),
             ..Object::default()
         });

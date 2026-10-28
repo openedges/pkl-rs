@@ -1,0 +1,15 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "cached"
+
+3 | hidden typed: Mapping<Int,Int> = raw
+                              ^^^
+at cache-cast-errors-power#typed (file:///stage102/cache-cast-errors-power.pkl)
+
+1 | hidden raw = new Mapping { [1] = "cached"
+                                     ^^^^^^^^
+at cache-cast-errors-power#raw[1] (file:///stage102/cache-cast-errors-power.pkl)
+
+1 | typed.getOrNull(1).toString()
+    ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Operator `<` is not defined for operand types `String` and `Int`.
+Left operand : "x"
+Right operand: 1
+
+1 | (List(1,"x").minOrNull).toString()
+     ^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

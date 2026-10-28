@@ -1,0 +1,4 @@
+hidden raw = new Mapping { [1] = 1
+ [2] = 2
+ [3] = 3 }
+hidden typed: Mapping<Int,Int(if (this < 3) typed.getOrNull(this + 1) > 0 else throw("inner cast"))> = raw

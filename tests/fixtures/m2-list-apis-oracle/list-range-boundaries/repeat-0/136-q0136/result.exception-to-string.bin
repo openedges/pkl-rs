@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Int`, but got `null`.
+
+3242 | start: Int,
+              ^^^
+at pkl.base#List.replaceRangeOrNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3242)
+
+1 | (List(1,2).replaceRangeOrNull(null,0, List(9))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -23,6 +23,14 @@ resolution, let/for const scopes, and structured source diagnostics with recursi
 and standard-library frames. The [latest checkpoint](reports/m2/README.md)
 records the accepted local verification scope, known failures, and unexecuted
 environments.
+
+The [Stage102 collection checkpoint](reports/m2/stage102-collection-apis-checkpoint.json)
+records **3,718 ordinary observations matching Java** in the shared Rust tests
+and on each selected native, N-API and Chromium target, plus **1,502 passing
+workspace tests** (four ignored). Original Map's `Typed.hasProperty` gap, required
+internal-error contracts, the original whole-List Java heap failure, and the full
+language/API/performance gates remain open.
+
 The [Stage66 checkpoint](reports/m2/stage66-implementation-checkpoint.json)
 adds String/List/Set reversal, constructor resolution inside constraints, and
 union-marker diagnostics. Its 1,081 selected expressions and forty separate

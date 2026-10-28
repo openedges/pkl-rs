@@ -1,0 +1,4 @@
+hidden raw = new Mapping { [1] = "cached"
+ [2] = trace("computed") }
+hidden typed: Mapping<Int,Int> = raw
+hidden constrained: Mapping<Int,String(throw("constraint failure"))> = raw

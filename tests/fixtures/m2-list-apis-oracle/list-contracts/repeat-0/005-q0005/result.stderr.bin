@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3142 | external function endsWith(coll: Collection<Any>): Boolean
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.endsWith (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3142)
+
+1 | (List(1).endsWith()).toString()
+     ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 2 function arguments but got 0.
+
+3333 | external function foldIndexed<Result>(
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.foldIndexed (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3333)
+
+1 | (List(1).foldIndexed()).toString()
+     ^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

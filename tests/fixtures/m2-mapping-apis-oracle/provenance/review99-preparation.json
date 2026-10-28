@@ -1,0 +1,103 @@
+{
+  "actual_executions": {
+    "browser": 0,
+    "cargo": 0,
+    "guest": 0,
+    "java": 0,
+    "javac": 0,
+    "node": 0,
+    "rustc": 0
+  },
+  "auxiliary": {
+    "bytes": 2837,
+    "path": "target/m2/stage102-mapping-review-oracle-prep-01/auxiliary-admission.json",
+    "sha256": "df115670d052db0fe66253d6880eea3d4882446b82790efee18e0a4a82b63162"
+  },
+  "candidate": {
+    "bytes": 2717,
+    "path": "target/m2/stage102-mapping-api-candidate-06/report.json",
+    "sha256": "232337c2bffafb09675d1ec28e8bc7120d72c099378a1b5e536a3bbf1ec00440"
+  },
+  "canonical_mutations": 0,
+  "capture": {
+    "bytes": 17451,
+    "path": "target/m2/stage102-mapping-review-oracle-prep-01/capture.py",
+    "sha256": "4d42929d44c18c6475d5f3877ee1ff61874c37ef304339d7426794f33abe593f"
+  },
+  "cohorts": {
+    "bytes": 2469,
+    "path": "target/m2/stage102-mapping-review-oracle-prep-01/cohorts.json",
+    "sha256": "0b55a4f08bf358b046bcef28169bd209cbb41f6b5810bcb729813de7ba13100b"
+  },
+  "commands": {
+    "bytes": 3106,
+    "path": "target/m2/stage102-mapping-review-oracle-prep-01/commands.json",
+    "sha256": "0a1bb009a999683597cdb1e71498f02890777813f8511c8c953b79fe6d6d7df3"
+  },
+  "complete": true,
+  "complete_scope": "Preparation only; future explicit root execution window required",
+  "contracts": 99,
+  "execution_gate": {
+    "bytes": 327,
+    "path": "target/m2/stage102-mapping-review-oracle-prep-01/execution-gate.json",
+    "sha256": "0ff7bd3e662195ce80b0ecb92dda8f5deff2d9e84f154d02becf20a6d36ceb73"
+  },
+  "helper_derivation": {
+    "bytes": 1190,
+    "path": "target/m2/stage102-mapping-review-oracle-prep-01/helper-derivation.json",
+    "sha256": "3101b50d1038cc717facce741d14faf65734c68bb67b9d5baf02ce90b78b8b23"
+  },
+  "input_preflight": {
+    "bytes": 9969,
+    "path": "target/m2/stage102-mapping-review-oracle-prep-01/main-input-preflight.json",
+    "sha256": "1d416b00d2c50ba29fba731776eff1a5ae6df432a74996439150cea61f3061c3"
+  },
+  "kind": "Source-only Stage102 Mapping99 pinned Java acquisition preparation",
+  "observations": 198,
+  "plan": {
+    "bytes": 3405,
+    "path": "target/m2/stage102-mapping-review-oracle-prep-01/PLAN.md",
+    "sha256": "067c1abd646eb1299638495b23dabc13a4afc241e44b1c9487841d676b4f0a7a"
+  },
+  "power_false": 78,
+  "power_true": 21,
+  "prior377_fixture_proposal": {
+    "bytes": 4701,
+    "path": "target/m2/stage102-mapping-oracle-fixtures-03/report.json",
+    "sha256": "95984023ee97265a45a344b8019b148efefb42722e6e16fbdbe16c93562df9bd"
+  },
+  "prior_failed_candidate_review": {
+    "bytes": 7404,
+    "path": "target/m2/stage102-mapping05-independent-review-01/report.json",
+    "sha256": "f3a11883704e2bc42bbe0a8f7d59bedfe98122fa61ac244c733bab7caa14cb04"
+  },
+  "programs": 20,
+  "readback": {
+    "bytes": 10270,
+    "path": "target/m2/stage102-mapping-review-oracle-prep-01/readback.py",
+    "sha256": "ed26615af566a7b5215770cb64486346dec633c844196954bd0a2c89ac71d455"
+  },
+  "recorder_derivation": {
+    "bytes": 1541,
+    "path": "target/m2/stage102-mapping-review-oracle-prep-01/derivation.json",
+    "sha256": "6760fe539235d8bfb80fa428bb4db7c3aabe94883cd70bb2283102f14347744e"
+  },
+  "resources": {
+    "bytes": 352,
+    "path": "target/m2/stage102-mapping-review-oracle-prep-01/resource-admission.json",
+    "sha256": "3ab3b8cf6910cc6e61ffe9398375c17ca06fe70b1e1281e59e93812cf18e0611"
+  },
+  "sessions": 40,
+  "source_checks": {
+    "all99_Base64_UTF8_roundtrips_exact": true,
+    "authored_expected_values": false,
+    "original_inputs_modified": false,
+    "python_ast": true
+  },
+  "success": true,
+  "transport": {
+    "bytes": 32985,
+    "path": "target/m2/stage102-mapping-review-oracle-prep-01/transport-roundtrip.json",
+    "sha256": "586c2c2f1da0462318ba7796bf58c389a1c7c3a2a09c4b3ae5923bb3be3bead0"
+  }
+}

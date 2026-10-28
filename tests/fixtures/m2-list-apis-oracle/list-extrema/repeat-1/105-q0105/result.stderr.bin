@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Expected value of type `Boolean`, but got type `Float`.
+Value: 0.0
+
+1 | (List(1,2).maxWithOrNull((a,b)->0.0)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

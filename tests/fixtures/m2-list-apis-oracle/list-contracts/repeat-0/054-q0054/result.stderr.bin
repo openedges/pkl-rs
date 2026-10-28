@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Cannot find method `max` in class `List`.
+
+1 | (List(1).max()).toString()
+     ^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+max
+maxBy(selector)
+maxWith(comparator)
+maxOrNull
+maxByOrNull(selector)
+map(transform)
+maxWithOrNull(comparator)

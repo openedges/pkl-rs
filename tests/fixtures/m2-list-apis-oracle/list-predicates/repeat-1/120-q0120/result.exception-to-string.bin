@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Function2`, but got type `Function1`.
+Value: new Function1 {}
+
+3154 | external function filterIndexed(predicate: (Int, Element) -> Boolean): List<Element>
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.filterIndexed (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3154)
+
+1 | (List(1).filterIndexed((x)->true)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -12,6 +12,9 @@ mod string_api;
 #[derive(Clone, Copy, Debug)]
 pub enum Operation {
     SetSequence(set_sequence::Operation),
+    ListOps(list_ops::Operation),
+    MapOps(map_ops::Operation),
+    MappingOps(mapping_ops::Operation),
     SetOrder(set_order::Operation),
     NumericApi(numeric_apis::Operation),
     StringApi(string_api::Operation),
@@ -300,6 +303,9 @@ pub(super) fn blocks(
     result.extend(numeric_apis::blocks(blocks, metadata));
     result.extend(set_order::blocks(blocks, metadata));
     result.extend(set_sequence::blocks(blocks, metadata));
+    result.extend(list_ops::blocks(blocks, metadata));
+    result.extend(map_ops::blocks(blocks, metadata));
+    result.extend(mapping_ops::blocks(blocks, metadata));
     result.extend(remaining_apis::blocks(blocks, metadata));
     result.extend(data_size::blocks(blocks, metadata));
     result.extend(duration::blocks(blocks, metadata));
@@ -724,6 +730,7 @@ impl Vm {
             Value::Function(_) => "Function",
             Value::Object(_) if self.is_list(receiver) => "List",
             Value::Object(_) if self.is_set(receiver) => "Set",
+            Value::Object(_) if self.is_map(receiver) => "Map",
             Value::Object(id)
                 if self.heap.get(*id)?.collection_kind == crate::heap::CollectionKind::Listing =>
             {
@@ -736,17 +743,32 @@ impl Vm {
             }
             _ => return Ok(false),
         };
+        if !method && class == "Mapping" && name == "keys" {
+            let block = self.program.primitive_methods[&("Mapping".into(), "keys".into())];
+            let id = self.heap.allocate(Object {
+                function: Some(Function {
+                    block,
+                    arity: 0,
+                    method: true,
+                    captured_this: Some(receiver.clone()),
+                }),
+                ..Default::default()
+            });
+            self.invoke_function(id, Vec::new(), false)?;
+            return Ok(true);
+        }
         if method
-            && matches!(class, "List" | "Set" | "Listing")
-            && (matches!(
-                name,
-                "first" | "firstOrNull" | "last" | "lastOrNull" | "single" | "singleOrNull"
-            ) || (class == "Listing" && name == "distinct")
-                || (class == "Set"
-                    && matches!(
-                        name,
-                        "rest" | "restOrNull" | "min" | "minOrNull" | "max" | "maxOrNull"
-                    )))
+            && ((matches!(class, "List" | "Set" | "Listing")
+                && (matches!(
+                    name,
+                    "first" | "firstOrNull" | "last" | "lastOrNull" | "single" | "singleOrNull"
+                ) || (class == "Listing" && name == "distinct")
+                    || (matches!(class, "List" | "Set")
+                        && matches!(
+                            name,
+                            "rest" | "restOrNull" | "min" | "minOrNull" | "max" | "maxOrNull"
+                        ))))
+                || (class == "Mapping" && name == "keys"))
         {
             let mut error = RuntimeError::new(
                 ErrorKind::MissingMember,
@@ -792,7 +814,7 @@ impl Vm {
                     name,
                     "first" | "firstOrNull" | "last" | "lastOrNull" | "single" | "singleOrNull"
                 ))
-                || (class == "Set"
+                || (matches!(class, "List" | "Set")
                     && matches!(
                         name,
                         "rest" | "restOrNull" | "min" | "minOrNull" | "max" | "maxOrNull"
@@ -833,9 +855,18 @@ impl Vm {
             else {
                 return Ok(false);
             };
-            let arity = if class == "Set" && set_sequence::method_arity(name).is_some() {
+            let arity = if class == "Mapping" && name == "containsKey" {
+                1
+            } else if class == "Map" && name == "put" {
+                2
+            } else if class == "Map" && name == "remove" {
+                1
+            } else if class == "List" && list_ops::method_arity(name).is_some() {
+                list_ops::method_arity(name).unwrap()
+            } else if matches!(class, "List" | "Set") && set_sequence::method_arity(name).is_some()
+            {
                 set_sequence::method_arity(name).unwrap()
-            } else if class == "Set" && set_order::method_arity(name).is_some() {
+            } else if matches!(class, "List" | "Set") && set_order::method_arity(name).is_some() {
                 set_order::method_arity(name).unwrap()
             } else {
                 match name {
@@ -909,6 +940,9 @@ impl Vm {
             .ok_or_else(|| invalid("primitive receiver"))?;
         match operation {
             Operation::SetSequence(operation) => self.set_sequence(receiver, operation)?,
+            Operation::ListOps(operation) => self.list_ops(receiver, operation)?,
+            Operation::MapOps(operation) => self.map_ops(receiver, operation)?,
+            Operation::MappingOps(operation) => self.mapping_ops(receiver, operation)?,
             Operation::SetOrder(operation) => self.set_order(receiver, operation)?,
             Operation::NumericApi(operation) => self.numeric_api_operation(receiver, operation)?,
             Operation::StringApi(operation) => self.string_api_operation(receiver, operation)?,

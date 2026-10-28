@@ -1,0 +1,1773 @@
+{
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/helper-true/CollectionEveryOracle.java",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power",
+    "file:///stage101/map-read-contracts-power.pkl"
+  ],
+  "cleanup_events": [],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01",
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 0,
+  "finished_epoch": 1793086401.997781,
+  "helper": {
+    "bytes": 6239,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/helper-true/CollectionEveryOracle.java",
+    "sha256": "b3a031312543dc239f6b3034ab7c64c080745dc823373d1f787c6beef4797a91"
+  },
+  "owned_child_reaped": true,
+  "owned_processes": {
+    "root_observed": true,
+    "root_pid": 16866,
+    "terminal_live": [],
+    "tracked": [
+      {
+        "group_id_at_discovery": 16866,
+        "parent_pid_at_discovery": 16748,
+        "pid": 16866,
+        "started": "Tue Oct 27 16:33:20 2026"
+      }
+    ]
+  },
+  "owned_start": "Tue Oct 27 16:33:20 2026",
+  "pgid": 16866,
+  "pid": 16866,
+  "power_assertions": true,
+  "program": "map-read-contracts-power",
+  "repeat": 0,
+  "rows": [
+    {
+      "directory": "target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000",
+      "expression": "(Map(3,1,1,2,2,3).any((k,v) -> null)).toString()",
+      "id": "q0000",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 48,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/expression.bin",
+          "sha256": "4d5121b8666d08bd1b3f95ad145e1a4f136efcf7592c941943e5216f7c052e88"
+        },
+        "expression.code-units.bin": {
+          "bytes": 96,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/expression.code-units.bin",
+          "sha256": "33424ddb069625531053894bed864666cc4909664fa019dc2102ff9645826a5a"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 212,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/result.exception-to-string.bin",
+          "sha256": "5af264ced7c8226e6a202a66f1b35bcbf912e4ba37520b0d64794f27ca5ed569"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 408,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/result.exception-to-string.code-units.bin",
+          "sha256": "fc41fbcc0f4e39569dee5850e38a69e817cd18e2f344253572bbee5e20d43c51"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 185,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/result.stderr.bin",
+          "sha256": "a84bd06a9c9532a1fe06192ec529b88f3bdb851fc5bd696cb6a4837225f4aa51"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 354,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/result.stderr.code-units.bin",
+          "sha256": "bf5387e308109fca512a618b0e7bec16f7f107ea5408be0436ce2c15cd04c3c1"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/000-q0000/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001",
+      "expression": "(Map(3,1,1,2,2,3).any(typed)).toString()",
+      "id": "q0001",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 40,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/expression.bin",
+          "sha256": "f1bb05d5c551203d19ebdbd94acd2d2d8b80613445d4fa17c9b04ad8084f6fd0"
+        },
+        "expression.code-units.bin": {
+          "bytes": 80,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/expression.code-units.bin",
+          "sha256": "fa10d5ab4e78556fa120bebd2ef27020c82f74e924c05362e3e70a889cbc5681"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 216,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/result.exception-to-string.bin",
+          "sha256": "2e1a0d7cf2154c1883379dc63aea563cfdc232fa86993603ad3df642df49d36e"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 416,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/result.exception-to-string.code-units.bin",
+          "sha256": "e206023c139975f65adfb1b66e41cccaeae3b636edb8dc3ff49426e19a2cba58"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 189,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/result.stderr.bin",
+          "sha256": "389ac11c5011731364f5a2cc91092f20524b98b04e356dc605158cbf5b1b473e"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 362,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/result.stderr.code-units.bin",
+          "sha256": "f4048472a0e9778d382add7fc893bb28df81784dc236c1fc063d99636af1bfb8"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/001-q0001/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002",
+      "expression": "(Map(3,1,1,2,2,3).any((k) -> true)).toString()",
+      "id": "q0002",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 46,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/expression.bin",
+          "sha256": "35782d12f9a08a995665565cd9765b74055d1a2b551ef4a946931c69338482dd"
+        },
+        "expression.code-units.bin": {
+          "bytes": 92,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/expression.code-units.bin",
+          "sha256": "fd48dd10a68ebad520dadde383570f43a46956f46dcd911e44a481e89f25b90e"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 468,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/result.exception-to-string.bin",
+          "sha256": "81645bb49abf31c434facd91e53c39bc3cfbd4a4f824128c7e465b792a6be7ea"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 920,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/result.exception-to-string.code-units.bin",
+          "sha256": "9f8dd6ce8e443c11bb8dc726db444017d11b32e585abd006c142877c9ddfbe80"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 441,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/result.stderr.bin",
+          "sha256": "47602414d0fc39c452aad53578763eeee7234d5370b62af7a98b88ae6ecd704c"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 866,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/result.stderr.code-units.bin",
+          "sha256": "ff49e9d2cda774f09e00a78c1490a7730e1350424c4223a0355c5c075e3f98c7"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/002-q0002/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003",
+      "expression": "(Map(3,1,1,2,2,3).any(() -> true)).toString()",
+      "id": "q0003",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 45,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/expression.bin",
+          "sha256": "2aff68ce43536a825cada707b95a3640edda097f5c4fc07768f8eb8bb594675d"
+        },
+        "expression.code-units.bin": {
+          "bytes": 90,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/expression.code-units.bin",
+          "sha256": "53d6d12f07169b5c51153672b174602150257b31a2c785137650c02544f75744"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 466,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/result.exception-to-string.bin",
+          "sha256": "cfef058537f885dd7eaf975f64d29afac4be7f87086795cf81bcdb54a8601046"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 916,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/result.exception-to-string.code-units.bin",
+          "sha256": "457b71a8693c0367ca9f8b8d0fbc98e0fadca003336b8293abe58b696a7f6086"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 439,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/result.stderr.bin",
+          "sha256": "1b9f5c0af4e30ce5f82f79d0b5405b7813c2c28c8d7134f3ad9e387ac3c79607"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 862,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/result.stderr.code-units.bin",
+          "sha256": "8256059540773a54227c8eae7605a7abe25c767b74707832660d00938c36a98c"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/003-q0003/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004",
+      "expression": "(Map(3,1,1,2,2,3).any((a,b,c) -> true)).toString()",
+      "id": "q0004",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/expression.bin",
+          "sha256": "22b12ce8c12798b12c7ca3d27e1fa9ba9a42e457c099f12b107370000c8f5fe3"
+        },
+        "expression.code-units.bin": {
+          "bytes": 100,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/expression.code-units.bin",
+          "sha256": "33d01565f027aaa08333da4ac41a20f1048d2127e4d2c7b5cd07f1c79317a1b0"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 476,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/result.exception-to-string.bin",
+          "sha256": "365a0a90b3c5864a01fa7aac87c884c599b80628dbcac663ad8324e2226e37bc"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 936,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/result.exception-to-string.code-units.bin",
+          "sha256": "513a7c14a876c8b65135204fcf7c3cf62f4900fe4735aa0ec2390c0c1120bfe8"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 449,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/result.stderr.bin",
+          "sha256": "d844243db468104c57a951fbd3f412f7c0ae6c870d5064d89ea209c7b27fdae7"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 882,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/result.stderr.code-units.bin",
+          "sha256": "a826b4fd3a43678a8e3a4626fbc71882b2594554f2dc4e2f30e0afb79defd9ba"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/004-q0004/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005",
+      "expression": "(Map(3,1,1,2,2,3).any(1)).toString()",
+      "id": "q0005",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 36,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/expression.bin",
+          "sha256": "d6a23588c1c1dc33e7d066643aa664f3e8d84784eea592de2a6bd188403a45a6"
+        },
+        "expression.code-units.bin": {
+          "bytes": 72,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/expression.code-units.bin",
+          "sha256": "b869ff4c25fcb89939b755ab406b5be899774fc3a266bd4e48a9a26eeb0422e7"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 427,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/result.exception-to-string.bin",
+          "sha256": "663ead601e607aed22d2832bb922c6a7eca8381f524790ce86e5722dc4ccd793"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 838,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/result.exception-to-string.code-units.bin",
+          "sha256": "55777d49349c168cd8b5931f0f65180cc3e46e3453368b50bbce9538712730f1"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 400,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/result.stderr.bin",
+          "sha256": "0ef3fbe1b04127a8e0943d6d6f825ba2d2686306d3dde1504361541bb38f30d9"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 784,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/result.stderr.code-units.bin",
+          "sha256": "523acac8920b1118e0b54dff300ee0e962f288f162adbc3887e4de5fca9033d2"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/005-q0005/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006",
+      "expression": "(Map(3,1,1,2,2,3).any(null)).toString()",
+      "id": "q0006",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 39,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/expression.bin",
+          "sha256": "112c757bec875bb2c15862a545cfa54fa57facfe3498db24f8b9711f1767a5ea"
+        },
+        "expression.code-units.bin": {
+          "bytes": 78,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/expression.code-units.bin",
+          "sha256": "b16a45708d73c77041d24f34a37d9db6a813805ca9ff36bcfe99143e1e343dbb"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 420,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/result.exception-to-string.bin",
+          "sha256": "2b839f08c995fd5e073ff99243c0c2a658eb158f56bd3ee3771b90d9eee23050"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 824,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/result.exception-to-string.code-units.bin",
+          "sha256": "0972a9a6b9a81a1d483b9d8d969a2b4bb4736e6af43eff2e3309968eb72c0a73"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 393,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/result.stderr.bin",
+          "sha256": "c773043dca737e3162b0831f47f2fa8c418d87db3c8f10551f0d2e1183331ecb"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 770,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/result.stderr.code-units.bin",
+          "sha256": "3e93d96319b3047e97025387c74cf0c6a591d3758c9da39ec052316167857a6d"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/006-q0006/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007",
+      "expression": "(Map().any()).toString()",
+      "id": "q0007",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 24,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/expression.bin",
+          "sha256": "a187375fca4d0c48bc60e88ded03f2bc9d7ef2d428b060860003df64e7cb0ae4"
+        },
+        "expression.code-units.bin": {
+          "bytes": 48,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/expression.code-units.bin",
+          "sha256": "fb8b2c905f78745a1d70ad9158ca3838595db113e744fe55fb789fd030c2b635"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 389,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/result.exception-to-string.bin",
+          "sha256": "0cd49ccd4e3b6f004c996739b4e39083aed73fab425689727b2405131f09997f"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 762,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/result.exception-to-string.code-units.bin",
+          "sha256": "19436098de8d97b05a0b6138d7b37b771fbb2aa62781fccef85a8a638d2b10d2"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 362,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/result.stderr.bin",
+          "sha256": "15a89459e839c2754619e19e31de24dc4bcdbe1f81de0740173142020af057c4"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 708,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/result.stderr.code-units.bin",
+          "sha256": "764e3ae120cdad268a1b30604bd9fb61eaa3e804c838da4bc04f9fef537beb57"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/007-q0007/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008",
+      "expression": "(Map().any((k,v)->true,1)).toString()",
+      "id": "q0008",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 37,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/expression.bin",
+          "sha256": "4160e87098c92c3fdef8744f7654352104e5234e180f7c706029408fa662c860"
+        },
+        "expression.code-units.bin": {
+          "bytes": 74,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/expression.code-units.bin",
+          "sha256": "c81c0182932f4e9d369d59bfa7e5dfab240e1eb1ced71dcfcfe966c01ea1730d"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 415,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/result.exception-to-string.bin",
+          "sha256": "f22692e65a44d1c4208b85e412d2cdeb3aee7c8369a6b3ab03465aab6b6ddd21"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 814,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/result.exception-to-string.code-units.bin",
+          "sha256": "2e7e0efbff97e2d5fb6760d77eb0c76bc790e67dec98b6d059dc5ab74dba8563"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 388,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/result.stderr.bin",
+          "sha256": "3ec30f7a92e536662226d5b6f959eaf936d75cf4275181e2bcf46e9b5a382ae3"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 760,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/result.stderr.code-units.bin",
+          "sha256": "0f4751d25a672a16e6ad3433fde1f6f9caee9ebc6e9a55c1d480aef1584f8a2d"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/008-q0008/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009",
+      "expression": "(Map().entries()).toString()",
+      "id": "q0009",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 28,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/expression.bin",
+          "sha256": "0aa7200a83ef403ff7ea199a477beadbd0e69f3eaa3f21906ec7ad7e0ec15bc7"
+        },
+        "expression.code-units.bin": {
+          "bytes": 56,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/expression.code-units.bin",
+          "sha256": "b3e3d1acb0bb601e22e94bafd49847ed7a563479d025ebe6396201d6f4efd797"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 211,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/result.exception-to-string.bin",
+          "sha256": "679f7891e98274316da87785bc405f8a88367fab6eb704948b9eb187cd0f8690"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 406,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/result.exception-to-string.code-units.bin",
+          "sha256": "5e8152866f4d21fc6d955eef2ee482455406434c21f9eaf6db9d6736cbf2096a"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 184,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/result.stderr.bin",
+          "sha256": "63b39c60dad8dcce5c136c340b6f9876eed42f2e55463fffe583862561510dd7"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 352,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/result.stderr.code-units.bin",
+          "sha256": "a2cd9314df240bd6c102947124d671c32a39b6e56fc376fa601ae83523b2d068"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/009-q0009/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010",
+      "expression": "(Map().containsValue()).toString()",
+      "id": "q0010",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 34,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/expression.bin",
+          "sha256": "156fb8e332e4f651a28f397758914924fb2d950f64687dfb14be8f071c61861c"
+        },
+        "expression.code-units.bin": {
+          "bytes": 68,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/expression.code-units.bin",
+          "sha256": "ada6eecfb0cda5de6b9d47ca78c625fc11d56a825d8b27a30b58dfb3c8a38140"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 391,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/result.exception-to-string.bin",
+          "sha256": "5f1bcf96fb470fbedf93b926993dfb8a96aa6a2fce72c95faacbc19695846ca1"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 766,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/result.exception-to-string.code-units.bin",
+          "sha256": "c145bc1aefd24018f0afca11a8a81281fe65c391e0432053db44d4e0ceabd7b1"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 364,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/result.stderr.bin",
+          "sha256": "5ac9fbf7777af0991c3ac89ae101d0b7384ab9485af4f0c732e81e7a007625fe"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 712,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/result.stderr.code-units.bin",
+          "sha256": "21e1f4fdb6b205c8759eb0d00547cfeda063779fb6b16f74003d6d442c338a7f"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/010-q0010/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011",
+      "expression": "(Map().containsValue(1,2)).toString()",
+      "id": "q0011",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 37,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/expression.bin",
+          "sha256": "23079b8077878b260154341e215e9fdcbcdef1f50f3bbd730f7a57fb3c81e494"
+        },
+        "expression.code-units.bin": {
+          "bytes": 74,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/expression.code-units.bin",
+          "sha256": "7eb59d51e6e513a33e80fa8f009333e15cd69f4e1c468a2198fa64f25d3ef4fd"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 397,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/result.exception-to-string.bin",
+          "sha256": "999a131210923c20e4a39a6b2b6473814327b39dbcb4406ec4edc30f548a8be8"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 778,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/result.exception-to-string.code-units.bin",
+          "sha256": "7a660cf241da15eb43a00bd05356b49f287c0eeda7aff35c3941fb8d73afab67"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 370,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/result.stderr.bin",
+          "sha256": "47e5f50c64b7b009e6389e4e6399993cf5d68a7c57042dcf05602b923893a325"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 724,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/result.stderr.code-units.bin",
+          "sha256": "f760adcff7f9ce30e878149fc8e0b026337bb5d54a721c76c8864b0a6074ab8b"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/011-q0011/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    }
+  ],
+  "started_epoch": 1793086400.935871,
+  "stderr": {
+    "bytes": 0,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/process.stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 876,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage101-map-oracle-01/programs/map-read-contracts-power/repeat-0/process.stdout.bin",
+    "sha256": "f162b5ed1a4f96a572eda505e51867a53ba48871a04cf58d1423c7076d5f8657"
+  }
+}

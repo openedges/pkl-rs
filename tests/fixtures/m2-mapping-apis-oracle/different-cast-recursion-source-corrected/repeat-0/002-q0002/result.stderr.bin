@@ -1,0 +1,22 @@
+–– Pkl Error ––
+inner cast
+
+3 | hidden inner: Mapping<Int,Int(throw("inner cast"))> = raw
+                                  ^^^^^^^^^^^^^^^^^^^
+at different-cast-recursion#inner (file:///stage102/different-cast-recursion.pkl)
+
+3 | hidden inner: Mapping<Int,Int(throw("inner cast"))> = raw
+                                                          ^^^
+at different-cast-recursion#inner (file:///stage102/different-cast-recursion.pkl)
+
+4 | hidden wrapped: Mapping<Int,Int(inner.getOrNull(2) > 0)> = raw
+                                    ^^^^^
+at different-cast-recursion#wrapped (file:///stage102/different-cast-recursion.pkl)
+
+1 | hidden raw = new Mapping { [1] = 1
+                                     ^
+at different-cast-recursion#raw[1] (file:///stage102/different-cast-recursion.pkl)
+
+1 | wrapped.getOrNull(1).toString()
+    ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

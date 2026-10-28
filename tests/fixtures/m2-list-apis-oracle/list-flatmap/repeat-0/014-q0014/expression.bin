@@ -1,0 +1,1 @@
+(List(3,1,2).flatMapIndexed((i,x)->trace(List(x)))).toString()

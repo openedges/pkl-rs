@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "second"
+
+5 | hidden typed: Mapping<Dynamic,Int> = raw
+                                  ^^^
+at cache-cast-recursive-probe#typed (file:///stage102/cache-cast-recursive-probe.pkl)
+
+4 | [twin] = "second" }
+             ^^^^^^^^
+at cache-cast-recursive-probe#raw[#2] (file:///stage102/cache-cast-recursive-probe.pkl)
+
+1 | typed.getOrNull(twin).toString()
+    ^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -161,8 +161,12 @@ pub struct RuntimeError {
 
 /// Rare structured provenance is detached so the common Result error stays
 /// compact. Field access remains available through RuntimeError's dereference.
-#[derive(Clone, Debug, Default, PartialEq, Eq)]
+#[derive(Clone, Debug, Default)]
 pub struct RuntimeErrorDetails {
+    /// VM-only insertion identities and their first position. Excluded from
+    /// observable error equality; cloned with cached exceptions and never
+    /// consumed by diagnostic rendering.
+    pub(crate) cast_insertions: Vec<(crate::heap::TypeNodeId, Option<usize>, bool)>,
     pub(crate) callback_origin: Option<crate::logging::CallbackOrigin>,
     /// Policy belongs to this throw, not to a cached declaration or source.
     pub(crate) frame_transformer: crate::logging::FrameTransformer,
@@ -186,7 +190,29 @@ pub struct RuntimeErrorDetails {
     pub spread_hint: Option<Box<Span>>,
     pub type_diagnostic: Option<Box<crate::diagnostic::TypeDiagnostic>>,
 }
-const EMPTY_ERROR_DETAILS: RuntimeErrorDetails = RuntimeErrorDetails {
+// Executable identities are evaluator-local bookkeeping, not error payload.
+// Complete diagnostic frames and all existing provenance still compare exactly.
+impl PartialEq for RuntimeErrorDetails {
+    fn eq(&self, other: &Self) -> bool {
+        self.callback_origin == other.callback_origin
+            && self.frame_transformer == other.frame_transformer
+            && self.rendered_diagnostic == other.rendered_diagnostic
+            && self.hint == other.hint
+            && self.hint_from_template == other.hint_from_template
+            && self.type_lookup_module == other.type_lookup_module
+            && self.host_language_exception == other.host_language_exception
+            && self.unavailable_origin == other.unavailable_origin
+            && self.frontend == other.frontend
+            && self.cached_module_frames == other.cached_module_frames
+            && self.module_failure_id == other.module_failure_id
+            && self.spread_hint == other.spread_hint
+            && self.type_diagnostic == other.type_diagnostic
+    }
+}
+impl Eq for RuntimeErrorDetails {}
+
+static EMPTY_ERROR_DETAILS: RuntimeErrorDetails = RuntimeErrorDetails {
+    cast_insertions: Vec::new(),
     callback_origin: None,
     frame_transformer: crate::logging::FrameTransformer::Default,
     rendered_diagnostic: None,
@@ -228,6 +254,86 @@ impl std::ops::DerefMut for RuntimeError {
 }
 
 impl RuntimeError {
+    pub(crate) fn diagnostic_roots(&self, roots: &mut Vec<Value>) {
+        roots.extend(
+            self.cast_insertions
+                .iter()
+                .map(|(target, _, _)| target.0.root()),
+        );
+    }
+
+    /// Insert a leading/intermediate frame while retaining keyed insertion slots.
+    pub(crate) fn insert_frame(&mut self, index: usize, frame: RuntimeFrame) {
+        for (_, position, _) in &mut self.cast_insertions {
+            if let Some(position) = position
+                && *position >= index
+            {
+                *position += 1;
+            }
+        }
+        self.frames.insert(index, frame);
+    }
+
+    /// Reserve the innermost cast-target position even when its declaration
+    /// has no displayable section. A later outer insertion still belongs here.
+    pub(crate) fn reserve_cast_target(&mut self, target: crate::heap::TypeNodeId) {
+        if !self
+            .cast_insertions
+            .iter()
+            .any(|(old, _, _)| *old == target)
+        {
+            // A frozen module exception cannot acquire a new captured target.
+            // Keep its put-only identity, but do not display a new stack frame.
+            let position = (!self.cached_module_frames).then_some(self.frames.len());
+            self.cast_insertions.push((target, position, false));
+        }
+    }
+
+    /// Java replaces a target's frame and displays it after its first captured
+    /// occurrence. Distinct targets at an unavailable source retain stack order.
+    pub(crate) fn insert_cast_frame(
+        &mut self,
+        target: crate::heap::TypeNodeId,
+        frame: RuntimeFrame,
+    ) -> Result<(), RuntimeError> {
+        self.reserve_cast_target(target);
+        let entry = self
+            .cast_insertions
+            .iter()
+            .position(|(old, _, _)| *old == target)
+            .expect("reserved cast target");
+        let (_, position, occupied) = self.cast_insertions[entry];
+        let Some(position) = position else {
+            return Ok(());
+        };
+        if occupied {
+            let slot = self.frames.get_mut(position).ok_or_else(|| {
+                RuntimeError::new(
+                    ErrorKind::InvalidBytecode,
+                    "invalid cast insertion position",
+                )
+            })?;
+            *slot = frame;
+        } else {
+            if position > self.frames.len() {
+                return Err(RuntimeError::new(
+                    ErrorKind::InvalidBytecode,
+                    "invalid cast insertion anchor",
+                ));
+            }
+            for (other, (_, slot, _)) in self.cast_insertions.iter_mut().enumerate() {
+                if let Some(slot) = slot
+                    && (*slot > position || (*slot == position && other > entry))
+                {
+                    *slot += 1;
+                }
+            }
+            self.frames.insert(position, frame);
+            self.cast_insertions[entry].2 = true;
+        }
+        Ok(())
+    }
+
     pub(crate) fn set_template_hint(&mut self, hint: impl Into<PklString>) {
         self.hint = Some(hint.into());
         self.hint_from_template = true;

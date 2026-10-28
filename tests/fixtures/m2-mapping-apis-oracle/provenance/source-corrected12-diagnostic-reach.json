@@ -1,0 +1,441 @@
+{
+  "Rust_executions": 0,
+  "complete": true,
+  "meaning": "Actual corrected source gets past the prior outer/hidden source diagnostics. warm queries succeed; two later queries per program reach ordinary cast constraints/type diagnostics. These full raw observations are authority; no unseen internal cache slot/identity state or Rust compatibility inferred.",
+  "new_source_preemptions_observed": 0,
+  "observations": [
+    {
+      "expression": "raw.getOrNull(declared).toString()",
+      "id": "q0000",
+      "logger_events": 0,
+      "program": "cache-cast-hashed-parent-source-corrected",
+      "repeat": 0,
+      "status": "success",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/cache-cast-hashed-parent-source-corrected/repeat-0/000-q0000/result.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 6,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/cache-cast-hashed-parent-source-corrected/repeat-0/000-q0000/result.stdout.bin",
+        "sha256": "3673014e72b67383be302485694555a57ad393afdebaed6ded110a775bd0556d"
+      }
+    },
+    {
+      "expression": "typed.getOrNull(probe).toString()",
+      "id": "q0001",
+      "logger_events": 0,
+      "program": "cache-cast-hashed-parent-source-corrected",
+      "repeat": 0,
+      "status": "error",
+      "stderr": {
+        "bytes": 478,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/cache-cast-hashed-parent-source-corrected/repeat-0/001-q0001/result.stderr.bin",
+        "sha256": "7cd1f15b5cbb4f188d9128c2c9fd0d9ba206650025b5d0e7f44eba0a4c3188fc"
+      },
+      "stdout": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/cache-cast-hashed-parent-source-corrected/repeat-0/001-q0001/result.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "expression": "wrapped.getOrNull(probe).toString()",
+      "id": "q0002",
+      "logger_events": 0,
+      "program": "cache-cast-hashed-parent-source-corrected",
+      "repeat": 0,
+      "status": "error",
+      "stderr": {
+        "bytes": 482,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/cache-cast-hashed-parent-source-corrected/repeat-0/002-q0002/result.stderr.bin",
+        "sha256": "889201a01cb1e0a182304862a6e59e5bce61da9f1c344cb5cd56ddf3cbe48c6b"
+      },
+      "stdout": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/cache-cast-hashed-parent-source-corrected/repeat-0/002-q0002/result.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "expression": "raw.getOrNull(probe).toString()",
+      "id": "q0003",
+      "logger_events": 0,
+      "program": "cache-cast-hashed-parent-source-corrected",
+      "repeat": 0,
+      "status": "success",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/cache-cast-hashed-parent-source-corrected/repeat-0/003-q0003/result.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 6,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/cache-cast-hashed-parent-source-corrected/repeat-0/003-q0003/result.stdout.bin",
+        "sha256": "3673014e72b67383be302485694555a57ad393afdebaed6ded110a775bd0556d"
+      }
+    },
+    {
+      "expression": "raw.getOrNull(declared).toString()",
+      "id": "q0000",
+      "logger_events": 0,
+      "program": "cache-cast-hashed-parent-source-corrected",
+      "repeat": 1,
+      "status": "success",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/cache-cast-hashed-parent-source-corrected/repeat-1/000-q0000/result.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 6,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/cache-cast-hashed-parent-source-corrected/repeat-1/000-q0000/result.stdout.bin",
+        "sha256": "3673014e72b67383be302485694555a57ad393afdebaed6ded110a775bd0556d"
+      }
+    },
+    {
+      "expression": "typed.getOrNull(probe).toString()",
+      "id": "q0001",
+      "logger_events": 0,
+      "program": "cache-cast-hashed-parent-source-corrected",
+      "repeat": 1,
+      "status": "error",
+      "stderr": {
+        "bytes": 478,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/cache-cast-hashed-parent-source-corrected/repeat-1/001-q0001/result.stderr.bin",
+        "sha256": "7cd1f15b5cbb4f188d9128c2c9fd0d9ba206650025b5d0e7f44eba0a4c3188fc"
+      },
+      "stdout": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/cache-cast-hashed-parent-source-corrected/repeat-1/001-q0001/result.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "expression": "wrapped.getOrNull(probe).toString()",
+      "id": "q0002",
+      "logger_events": 0,
+      "program": "cache-cast-hashed-parent-source-corrected",
+      "repeat": 1,
+      "status": "error",
+      "stderr": {
+        "bytes": 482,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/cache-cast-hashed-parent-source-corrected/repeat-1/002-q0002/result.stderr.bin",
+        "sha256": "889201a01cb1e0a182304862a6e59e5bce61da9f1c344cb5cd56ddf3cbe48c6b"
+      },
+      "stdout": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/cache-cast-hashed-parent-source-corrected/repeat-1/002-q0002/result.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "expression": "raw.getOrNull(probe).toString()",
+      "id": "q0003",
+      "logger_events": 0,
+      "program": "cache-cast-hashed-parent-source-corrected",
+      "repeat": 1,
+      "status": "success",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/cache-cast-hashed-parent-source-corrected/repeat-1/003-q0003/result.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 6,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/cache-cast-hashed-parent-source-corrected/repeat-1/003-q0003/result.stdout.bin",
+        "sha256": "3673014e72b67383be302485694555a57ad393afdebaed6ded110a775bd0556d"
+      }
+    },
+    {
+      "expression": "raw.getOrNull(1).toString()",
+      "id": "q0000",
+      "logger_events": 0,
+      "program": "different-cast-recursion-source-corrected",
+      "repeat": 0,
+      "status": "success",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/different-cast-recursion-source-corrected/repeat-0/000-q0000/result.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 1,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/different-cast-recursion-source-corrected/repeat-0/000-q0000/result.stdout.bin",
+        "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+      }
+    },
+    {
+      "expression": "raw.getOrNull(2).toString()",
+      "id": "q0001",
+      "logger_events": 0,
+      "program": "different-cast-recursion-source-corrected",
+      "repeat": 0,
+      "status": "success",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/different-cast-recursion-source-corrected/repeat-0/001-q0001/result.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 1,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/different-cast-recursion-source-corrected/repeat-0/001-q0001/result.stdout.bin",
+        "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+      }
+    },
+    {
+      "expression": "wrapped.getOrNull(1).toString()",
+      "id": "q0002",
+      "logger_events": 0,
+      "program": "different-cast-recursion-source-corrected",
+      "repeat": 0,
+      "status": "error",
+      "stderr": {
+        "bytes": 875,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/different-cast-recursion-source-corrected/repeat-0/002-q0002/result.stderr.bin",
+        "sha256": "1058c6839f2c19fdcdfb26903e50fbc7f4841fa6d33dcfc785b8eedb012b4701"
+      },
+      "stdout": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/different-cast-recursion-source-corrected/repeat-0/002-q0002/result.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "expression": "inner.getOrNull(2).toString()",
+      "id": "q0003",
+      "logger_events": 0,
+      "program": "different-cast-recursion-source-corrected",
+      "repeat": 0,
+      "status": "error",
+      "stderr": {
+        "bytes": 418,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/different-cast-recursion-source-corrected/repeat-0/003-q0003/result.stderr.bin",
+        "sha256": "802971a19a4137cd5ccb3c14d957da96323829cdf3c890dd95eddfcafd78b8fc"
+      },
+      "stdout": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/different-cast-recursion-source-corrected/repeat-0/003-q0003/result.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "expression": "raw.getOrNull(1).toString()",
+      "id": "q0000",
+      "logger_events": 0,
+      "program": "different-cast-recursion-source-corrected",
+      "repeat": 1,
+      "status": "success",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/different-cast-recursion-source-corrected/repeat-1/000-q0000/result.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 1,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/different-cast-recursion-source-corrected/repeat-1/000-q0000/result.stdout.bin",
+        "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+      }
+    },
+    {
+      "expression": "raw.getOrNull(2).toString()",
+      "id": "q0001",
+      "logger_events": 0,
+      "program": "different-cast-recursion-source-corrected",
+      "repeat": 1,
+      "status": "success",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/different-cast-recursion-source-corrected/repeat-1/001-q0001/result.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 1,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/different-cast-recursion-source-corrected/repeat-1/001-q0001/result.stdout.bin",
+        "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+      }
+    },
+    {
+      "expression": "wrapped.getOrNull(1).toString()",
+      "id": "q0002",
+      "logger_events": 0,
+      "program": "different-cast-recursion-source-corrected",
+      "repeat": 1,
+      "status": "error",
+      "stderr": {
+        "bytes": 875,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/different-cast-recursion-source-corrected/repeat-1/002-q0002/result.stderr.bin",
+        "sha256": "1058c6839f2c19fdcdfb26903e50fbc7f4841fa6d33dcfc785b8eedb012b4701"
+      },
+      "stdout": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/different-cast-recursion-source-corrected/repeat-1/002-q0002/result.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "expression": "inner.getOrNull(2).toString()",
+      "id": "q0003",
+      "logger_events": 0,
+      "program": "different-cast-recursion-source-corrected",
+      "repeat": 1,
+      "status": "error",
+      "stderr": {
+        "bytes": 418,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/different-cast-recursion-source-corrected/repeat-1/003-q0003/result.stderr.bin",
+        "sha256": "802971a19a4137cd5ccb3c14d957da96323829cdf3c890dd95eddfcafd78b8fc"
+      },
+      "stdout": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/different-cast-recursion-source-corrected/repeat-1/003-q0003/result.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "expression": "raw.getOrNull(1).toString()",
+      "id": "q0000",
+      "logger_events": 0,
+      "program": "shared-cast-wrappers-source-corrected",
+      "repeat": 0,
+      "status": "success",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/shared-cast-wrappers-source-corrected/repeat-0/000-q0000/result.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 1,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/shared-cast-wrappers-source-corrected/repeat-0/000-q0000/result.stdout.bin",
+        "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+      }
+    },
+    {
+      "expression": "raw.getOrNull(2).toString()",
+      "id": "q0001",
+      "logger_events": 0,
+      "program": "shared-cast-wrappers-source-corrected",
+      "repeat": 0,
+      "status": "success",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/shared-cast-wrappers-source-corrected/repeat-0/001-q0001/result.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 1,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/shared-cast-wrappers-source-corrected/repeat-0/001-q0001/result.stdout.bin",
+        "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+      }
+    },
+    {
+      "expression": "other.getOrNull(2).toString()",
+      "id": "q0002",
+      "logger_events": 0,
+      "program": "shared-cast-wrappers-source-corrected",
+      "repeat": 0,
+      "status": "error",
+      "stderr": {
+        "bytes": 507,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/shared-cast-wrappers-source-corrected/repeat-0/002-q0002/result.stderr.bin",
+        "sha256": "f47fc166121de467f69a401417b780d6cfcfb07b0581f9360785a639c5e72bbf"
+      },
+      "stdout": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/shared-cast-wrappers-source-corrected/repeat-0/002-q0002/result.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "expression": "first.getOrNull(1).toString()",
+      "id": "q0003",
+      "logger_events": 0,
+      "program": "shared-cast-wrappers-source-corrected",
+      "repeat": 0,
+      "status": "error",
+      "stderr": {
+        "bytes": 824,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/shared-cast-wrappers-source-corrected/repeat-0/003-q0003/result.stderr.bin",
+        "sha256": "c5beaba49ae6e51bf6693b42ad0529d790758288be9dd62939f75e4f577329ae"
+      },
+      "stdout": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/shared-cast-wrappers-source-corrected/repeat-0/003-q0003/result.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "expression": "raw.getOrNull(1).toString()",
+      "id": "q0000",
+      "logger_events": 0,
+      "program": "shared-cast-wrappers-source-corrected",
+      "repeat": 1,
+      "status": "success",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/shared-cast-wrappers-source-corrected/repeat-1/000-q0000/result.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 1,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/shared-cast-wrappers-source-corrected/repeat-1/000-q0000/result.stdout.bin",
+        "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+      }
+    },
+    {
+      "expression": "raw.getOrNull(2).toString()",
+      "id": "q0001",
+      "logger_events": 0,
+      "program": "shared-cast-wrappers-source-corrected",
+      "repeat": 1,
+      "status": "success",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/shared-cast-wrappers-source-corrected/repeat-1/001-q0001/result.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 1,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/shared-cast-wrappers-source-corrected/repeat-1/001-q0001/result.stdout.bin",
+        "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+      }
+    },
+    {
+      "expression": "other.getOrNull(2).toString()",
+      "id": "q0002",
+      "logger_events": 0,
+      "program": "shared-cast-wrappers-source-corrected",
+      "repeat": 1,
+      "status": "error",
+      "stderr": {
+        "bytes": 507,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/shared-cast-wrappers-source-corrected/repeat-1/002-q0002/result.stderr.bin",
+        "sha256": "f47fc166121de467f69a401417b780d6cfcfb07b0581f9360785a639c5e72bbf"
+      },
+      "stdout": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/shared-cast-wrappers-source-corrected/repeat-1/002-q0002/result.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "expression": "first.getOrNull(1).toString()",
+      "id": "q0003",
+      "logger_events": 0,
+      "program": "shared-cast-wrappers-source-corrected",
+      "repeat": 1,
+      "status": "error",
+      "stderr": {
+        "bytes": 824,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/shared-cast-wrappers-source-corrected/repeat-1/003-q0003/result.stderr.bin",
+        "sha256": "c5beaba49ae6e51bf6693b42ad0529d790758288be9dd62939f75e4f577329ae"
+      },
+      "stdout": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping-source-correction12-oracle-01/programs/shared-cast-wrappers-source-corrected/repeat-1/003-q0003/result.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "original24source_preemptions_preserved": true
+}

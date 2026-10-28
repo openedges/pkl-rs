@@ -1,0 +1,4 @@
+hidden failed = import("cached-failure.pkl")
+hidden raw = new Mapping { [1] = 1
+ [2] = 2 }
+hidden typed: Mapping<Int,Int(failed.any == this)> = raw

@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3358 | external function maxByOrNull(selector: (Element) -> Comparable): Element?
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.maxByOrNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3358)
+
+1 | (List(1).maxByOrNull()).toString()
+     ^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3146 | external function partition(predicate: (Element) -> Boolean): Pair<List<Element>, List<Element>>
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.partition (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3146)
+
+1 | (List(1).partition()).toString()
+     ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

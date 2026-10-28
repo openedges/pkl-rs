@@ -1,0 +1,6 @@
+–– Pkl Error ––
+replacement
+
+1 | (List(1).replaceOrNull(-1,throw("replacement"))).toString()
+                              ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

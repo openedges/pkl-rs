@@ -1078,7 +1078,7 @@ impl Vm {
             Err(mut error) => {
                 checkpoint.rollback(program);
                 if let Some(span) = error.span {
-                    error.frames.insert(
+                    error.insert_frame(
                         0,
                         RuntimeFrame {
                             span,
@@ -1131,9 +1131,12 @@ impl Vm {
             collection_transform: None,
             set_order: None,
             set_sequence: None,
+            list_ops: None,
             string_transform: None,
             int_seq_run: None,
             lazy_collection_run: None,
+            mapping_lookup: None,
+            mapping_keys: None,
             conversion_run: None,
             collection_addition: None,
             function_owner: None,

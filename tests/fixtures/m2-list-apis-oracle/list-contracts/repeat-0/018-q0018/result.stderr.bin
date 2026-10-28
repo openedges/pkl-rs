@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 2 function arguments but got 0.
+
+3222 | external function replace<Other>(index: Int, replacement: Other): List<Element | Other>
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.replace (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3222)
+
+1 | (List(1).replace()).toString()
+     ^^^^^^^^^^^^^^^^^
+at  (repl:text)

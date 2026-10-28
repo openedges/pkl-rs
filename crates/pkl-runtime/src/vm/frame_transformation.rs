@@ -18,6 +18,14 @@ enum Continuation {
     },
 }
 
+impl PendingTransform {
+    pub(super) fn roots(&self, roots: &mut Vec<Value>) {
+        if let Continuation::Diagnostic { error, .. } = &self.continuation {
+            error.diagnostic_roots(roots);
+        }
+    }
+}
+
 impl Vm {
     pub(crate) fn set_frame_transformer(
         &mut self,

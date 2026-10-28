@@ -1,0 +1,12 @@
+string	q0000	(Map(3,1,1,2,2,3).any((k,v) -> null)).toString()	000-q0000
+string	q0001	(Map(3,1,1,2,2,3).any(typed)).toString()	001-q0001
+string	q0002	(Map(3,1,1,2,2,3).any((k) -> true)).toString()	002-q0002
+string	q0003	(Map(3,1,1,2,2,3).any(() -> true)).toString()	003-q0003
+string	q0004	(Map(3,1,1,2,2,3).any((a,b,c) -> true)).toString()	004-q0004
+string	q0005	(Map(3,1,1,2,2,3).any(1)).toString()	005-q0005
+string	q0006	(Map(3,1,1,2,2,3).any(null)).toString()	006-q0006
+string	q0007	(Map().any()).toString()	007-q0007
+string	q0008	(Map().any((k,v)->true,1)).toString()	008-q0008
+string	q0009	(Map().entries()).toString()	009-q0009
+string	q0010	(Map().containsValue()).toString()	010-q0010
+string	q0011	(Map().containsValue(1,2)).toString()	011-q0011

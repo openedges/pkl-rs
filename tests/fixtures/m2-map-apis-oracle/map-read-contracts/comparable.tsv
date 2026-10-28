@@ -1,0 +1,31 @@
+string	q0000	(Map().any((k,v) -> true)).toString()	000-q0000
+string	q0001	(Map().any((k,v) -> false)).toString()	001-q0001
+string	q0002	(Map().any((k,v) -> v == 2)).toString()	002-q0002
+string	q0003	(Map().any((k,v) -> trace(k) == 1)).toString()	003-q0003
+string	q0004	(Map().any((k,v) -> throw("callback"))).toString()	004-q0004
+string	q0005	(Map().any((k,v) -> 1)).toString()	005-q0005
+string	q0006	(Map().any((k,v) -> null)).toString()	006-q0006
+string	q0007	(Map().any(typed)).toString()	007-q0007
+string	q0008	(Map().any((k) -> true)).toString()	008-q0008
+string	q0009	(Map().any(() -> true)).toString()	009-q0009
+string	q0010	(Map().any((a,b,c) -> true)).toString()	010-q0010
+string	q0011	(Map().any(1)).toString()	011-q0011
+string	q0012	(Map().any(null)).toString()	012-q0012
+string	q0013	(Map(3,1,1,2,2,3).any((k,v) -> true)).toString()	013-q0013
+string	q0014	(Map(3,1,1,2,2,3).any((k,v) -> false)).toString()	014-q0014
+string	q0015	(Map(3,1,1,2,2,3).any((k,v) -> v == 2)).toString()	015-q0015
+string	q0016	(Map(3,1,1,2,2,3).any((k,v) -> trace(k) == 1)).toString()	016-q0016
+string	q0017	(Map(3,1,1,2,2,3).any((k,v) -> throw("callback"))).toString()	017-q0017
+string	q0018	(Map(3,1,1,2,2,3).any((k,v) -> 1)).toString()	018-q0018
+string	q0019	(Map(3,1,1,2,2,3).any((k,v) -> null)).toString()	019-q0019
+string	q0020	(Map(3,1,1,2,2,3).any(typed)).toString()	020-q0020
+string	q0021	(Map(3,1,1,2,2,3).any((k) -> true)).toString()	021-q0021
+string	q0022	(Map(3,1,1,2,2,3).any(() -> true)).toString()	022-q0022
+string	q0023	(Map(3,1,1,2,2,3).any((a,b,c) -> true)).toString()	023-q0023
+string	q0024	(Map(3,1,1,2,2,3).any(1)).toString()	024-q0024
+string	q0025	(Map(3,1,1,2,2,3).any(null)).toString()	025-q0025
+string	q0026	(Map().any()).toString()	026-q0026
+string	q0027	(Map().any((k,v)->true,1)).toString()	027-q0027
+string	q0028	(Map().entries()).toString()	028-q0028
+string	q0029	(Map().containsValue()).toString()	029-q0029
+string	q0030	(Map().containsValue(1,2)).toString()	030-q0030

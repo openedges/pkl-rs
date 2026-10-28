@@ -1,0 +1,4 @@
+module stage100
+hidden a = new Dynamic { value = trace(7) }
+hidden b = new Dynamic { value = trace(7) }
+hidden bad = new Dynamic { value = throw("equality-value") }

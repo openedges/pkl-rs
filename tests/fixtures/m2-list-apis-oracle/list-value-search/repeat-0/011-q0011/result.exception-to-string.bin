@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+equality-value
+
+4 | hidden bad = new Dynamic { value = throw("equality-value") }
+                                       ^^^^^^^^^^^^^^^^^^^^^^^
+at stage100#bad.value (file:///stage100/list-value-search.pkl)
+
+1 | (List(a).indexOf(bad)).toString()
+     ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

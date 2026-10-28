@@ -1,0 +1,5 @@
+module stage100
+hidden a = new Dynamic { value = trace(7) }
+hidden b = new Dynamic { value = trace(7) }
+hidden zero = new Dynamic { ["x"] = trace(120) }
+hidden bad = new Dynamic { value = throw("distinct-key") }

@@ -1,0 +1,7 @@
+string	q0000	Map(key,0).keys.first["x"].toString()	000-q0000
+string	q0001	changed.filter((k,v) -> trace(v) == "second").toString()	001-q0001
+string	q0002	changed.flatMap((k,v) -> Map(k,trace(v),0,v)).toString()	002-q0002
+string	q0003	(Map() + changed).toString()	003-q0003
+string	q0004	(changed + Map(key,"third")).containsValue("first").toString()	004-q0004
+string	q0005	changed.flatMap((k,v) -> Map(k,v,k,"last")).entries.toString()	005-q0005
+string	q0006	changed.fold("",(a,k,v) -> a + trace(v)).toString()	006-q0006

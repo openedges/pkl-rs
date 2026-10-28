@@ -1,0 +1,65 @@
+{
+  "cached15": {
+    "contracts": 15,
+    "dependencies": [
+      {
+        "bytes": 31,
+        "file_kind": "regular",
+        "mode": 420,
+        "path": "target/m2/stage102-mapping-api-candidate-05/auxiliary-modules/cached-failure.pkl",
+        "sha256": "7bb14bde850bab39e374bf37bcee9027b8880ff8108aa01dd668ad8470c2b9ce",
+        "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-api-candidate-05/auxiliary-modules/cached-failure.pkl"
+      }
+    ],
+    "matrix": "target/m2/stage102-mapping-api-candidate-05/cached-error-and-let-queries.json",
+    "matrix_sha256": "2d04dbf7f6304a54a13cc9236ec5833e72f66048e99b3e372958a038242f3dc7",
+    "output": "target/m2/stage102-mapping-cached15-oracle-01",
+    "power_true": 0,
+    "programs": 3
+  },
+  "cast21": {
+    "contracts": 21,
+    "dependencies": [],
+    "matrix": "target/m2/stage102-mapping-api-candidate-04/queries.json",
+    "matrix_sha256": "f0f534a5a69e614922f2c550e81ad59c59ba93e8dc1cfcdbbd76e9847912a349",
+    "output": "target/m2/stage102-mapping-cast21-oracle-01",
+    "power_true": 6,
+    "programs": 4
+  },
+  "inline16": {
+    "contracts": 16,
+    "dependencies": [],
+    "matrix": "target/m2/stage102-mapping-api-candidate-05/ordinary-and-inline-queries.json",
+    "matrix_sha256": "8d3c1b4df7dcd1b877569db30d250600ad10f0a2e37c54704f551b6714c150b2",
+    "output": "target/m2/stage102-mapping-inline16-oracle-01",
+    "power_true": 4,
+    "programs": 4
+  },
+  "mixed10": {
+    "contracts": 10,
+    "dependencies": [],
+    "matrix": "target/m2/stage102-mapping-api-candidate-05/mixed-cast-queries.json",
+    "matrix_sha256": "ebbf7816711518f6bc839fa6352f5aaabc58c4ae6b863ac79ccd2591b86defc3",
+    "output": "target/m2/stage102-mapping-mixed10-oracle-01",
+    "power_true": 5,
+    "programs": 2
+  },
+  "review17": {
+    "contracts": 17,
+    "dependencies": [],
+    "matrix": "target/m2/stage102-mapping-api-candidate-03/queries.json",
+    "matrix_sha256": "7d50800e4ff359830fb8364ae6c167ebd2107f3031e95daaa0e152a3d77e3b58",
+    "output": "target/m2/stage102-mapping-review17-oracle-01",
+    "power_true": 0,
+    "programs": 3
+  },
+  "same20": {
+    "contracts": 20,
+    "dependencies": [],
+    "matrix": "target/m2/stage102-mapping-api-candidate-05/queries.json",
+    "matrix_sha256": "9ab23994420ea35813c475f8e5fe88e103a63d32978f41cd544a6f7403c84d1c",
+    "output": "target/m2/stage102-mapping-same20-oracle-01",
+    "power_true": 6,
+    "programs": 4
+  }
+}

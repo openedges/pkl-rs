@@ -1,0 +1,1 @@
+(Map(1,new Dynamic { ["x"] = throw("untouched") }).containsValue(0)).toString()

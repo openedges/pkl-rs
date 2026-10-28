@@ -1,0 +1,1 @@
+(Map().filter((k,v) -> throw("filter"))).toString()

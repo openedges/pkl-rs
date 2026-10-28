@@ -1,0 +1,10 @@
+hidden declared = "key"
+hidden probe = "k" + "ey"
+hidden raw = new Mapping { ["a"] = 1
+ ["b"] = 2
+ ["c"] = 3
+ ["d"] = 4
+ ["e"] = 5
+ [declared] = "cached" }
+hidden typed: Mapping<String,Int> = raw
+hidden wrapped: Mapping<String,Int> = typed

@@ -1,0 +1,5 @@
+hidden empty = Map()
+hidden ordinary = Map(31, "last", 0, "first", 1, "middle")
+hidden collision = Map("Aa",1,"BB",2,"Aa",3)
+hidden key = new Dynamic { ["x"] = trace(120) }
+hidden zero = Map(key,new Dynamic { ["x"] = trace(7) },0,new Dynamic { ["x"] = trace(8) })

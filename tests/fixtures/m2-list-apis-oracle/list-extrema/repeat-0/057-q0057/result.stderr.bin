@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got type `Int`.
+Value: 42
+
+3348 | external function minBy(selector: (Element) -> Comparable): Element
+                                         ^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.minBy (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3348)
+
+1 | (List().minBy(42)).toString()
+     ^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got type `Function2`.
+Value: new Function2 {}
+
+3269 | external function findIndexOrNull(predicate: (Element) -> Boolean): Int?
+                                                    ^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.findIndexOrNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3269)
+
+1 | (List(1,2).findIndexOrNull((x,y)->true)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

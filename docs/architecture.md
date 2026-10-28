@@ -53,6 +53,28 @@ Acquisition tools own process deadlines; the adapter adds no instruction ceiling
 The legacy scalar facade and portable `evaluateLanguage` API remain separate,
 bounded experiments. See the [Stage97 evidence](../reports/m2/stage97-token-expression-checkpoint.json).
 
+### Shared collection operations and suspended evaluation
+
+List callbacks/searches, strict Map operations and lazy Mapping lookups/type
+wrappers use the common VM, values, tracing heap, diagnostics and Host
+continuations. Callback owners, partial builders, retained keys and typed lookup
+state remain evaluator-owned across suspension, retry, reentry and collection.
+Cast-insertion bookkeeping stays separate from observable error fields.
+
+Lifecycle checks force nested lazy members when a pending Host read is required
+and verify retry, token, cancellation, reentry and cleanup. These Rust invariance
+checks remain separate from Java-derived expected bytes. Selected adapters use
+the existing Host module continuations to supply the exact pinned auxiliary
+source to two importing programs; the remaining 72 receive empty registries and
+unknown URIs are rejected. Shared module resolution and caching remain in the
+engine. Production evaluation has no Java fallback.
+
+Current targeted, workspace, bounded M1 and selected native/N-API/Chromium
+records cover their stated scopes. The original Map replay
+exposes an existing missing `Typed.hasProperty` route after successful
+`Map.toTyped`; implementing that API remains required work.
+
+
 ### Shared numeric and Set API operations
 
 Recorded local evidence: [Stage99 checkpoint](../reports/m2/stage99-numeric-set-apis-checkpoint.json).

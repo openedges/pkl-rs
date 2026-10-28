@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "computed"
+
+3 | hidden typed: Mapping<Int,Int> = raw
+                              ^^^
+at cache-cast-errors-power#typed (file:///stage102/cache-cast-errors-power.pkl)
+
+2 | [2] = trace("computed") }
+          ^^^^^^^^^^^^^^^^^
+at cache-cast-errors-power#raw[2] (file:///stage102/cache-cast-errors-power.pkl)
+
+1 | typed.getOrNull(2).toString()
+    ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

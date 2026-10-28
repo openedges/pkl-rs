@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Boolean`, but got `null`.
+
+1 | (List(1,2).findLastIndex((x)->null)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

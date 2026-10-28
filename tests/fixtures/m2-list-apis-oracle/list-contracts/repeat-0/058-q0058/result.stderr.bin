@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3360 | external function maxWith(comparator: (Element, Element) -> Boolean): Element
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.maxWith (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3360)
+
+1 | (List(1).maxWith()).toString()
+     ^^^^^^^^^^^^^^^^^
+at  (repl:text)

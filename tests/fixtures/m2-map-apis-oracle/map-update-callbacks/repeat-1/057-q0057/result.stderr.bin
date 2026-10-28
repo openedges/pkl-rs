@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Expected value of type `Map`, but got type `List`.
+Value: List(1)
+
+1 | (Map("Aa",1,"BB",2).flatMap((k,v) -> List(v))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

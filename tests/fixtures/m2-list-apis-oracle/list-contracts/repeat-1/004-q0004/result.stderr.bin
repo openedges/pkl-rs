@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3141 | external function startsWith(coll: Collection<Any>): Boolean
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.startsWith (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3141)
+
+1 | (List(1).startsWith()).toString()
+     ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3154 | external function filterIndexed(predicate: (Int, Element) -> Boolean): List<Element>
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.filterIndexed (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3154)
+
+1 | (List(1).filterIndexed()).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

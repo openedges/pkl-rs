@@ -26,6 +26,9 @@ pub(crate) mod deprecation;
 mod duration;
 mod int_seq;
 mod lazy_collections;
+mod list_ops;
+mod map_ops;
+mod mapping_ops;
 mod regex;
 mod set_order;
 mod set_sequence;
@@ -948,8 +951,8 @@ pub struct Program {
     pub(crate) string_repeat_block: usize,
     pub(crate) collection_join_blocks: [usize; 4],
     collection_every_blocks: [usize; 5],
-    collection_transform_blocks: [usize; 25],
-    collection_projection_blocks: [usize; 13],
+    collection_transform_blocks: [usize; 37],
+    collection_projection_blocks: [usize; 16],
     conversion_blocks: BTreeMap<(Arc<str>, Arc<str>), (usize, usize)>,
     conversion_delegate_block: usize,
     object_default_block: usize,
@@ -1185,6 +1188,11 @@ pub enum VmPoll {
 #[derive(Clone)]
 struct Force {
     entry: bool,
+    /// The actual argument of the member call, not its declaration key.
+    entry_probe: Option<Value>,
+    publishing_cache: bool,
+    stolen_cache_value: bool,
+    stolen_cast: Option<Box<mapping_ops::CastFailure>>,
     receiver: ObjectId,
     owner: ObjectId,
     name: Arc<str>,
@@ -1218,9 +1226,12 @@ struct Frame {
     collection_transform: Option<Box<collection_transforms::TransformRun>>,
     set_order: Option<Box<set_order::Run>>,
     set_sequence: Option<Box<set_sequence::Run>>,
+    list_ops: Option<Box<list_ops::Run>>,
     string_transform: Option<Box<string_transforms::Run>>,
     int_seq_run: Option<Box<int_seq::Run>>,
     lazy_collection_run: Option<Box<lazy_collections::Run>>,
+    mapping_lookup: Option<Box<mapping_ops::LookupRun>>,
+    mapping_keys: Option<Box<mapping_ops::KeysRun>>,
     conversion_run: Option<Box<collection_conversions::Run>>,
     collection_addition: Option<Box<collection_addition::Run>>,
     function_owner: Option<ObjectId>,
@@ -1241,6 +1252,7 @@ struct Frame {
 impl Frame {
     fn hides_callsite(&self) -> bool {
         self.callsite_hidden
+            || self.force.as_ref().is_some_and(|force| force.stolen_cache_value)
             // Module initialization is invoked from ModuleCache without a guest
             // call node. Resolve failures still originate at the ImportNode.
             || self.module_load.as_ref().is_some_and(|run| run.initializing)
@@ -1498,9 +1510,12 @@ impl Vm {
             collection_transform: None,
             set_order: None,
             set_sequence: None,
+            list_ops: None,
             string_transform: None,
             int_seq_run: None,
             lazy_collection_run: None,
+            mapping_lookup: None,
+            mapping_keys: None,
             conversion_run: None,
             collection_addition: None,
             function_owner: None,
@@ -1898,6 +1913,16 @@ impl Vm {
                     _ => None,
                 }),
         );
+        for module in self
+            .modules_original
+            .values()
+            .chain(self.modules_resolved.values())
+            .chain(self.modules_stdlib.values())
+        {
+            if let modules::CachedModule::Failed(error) = module {
+                error.diagnostic_roots(&mut roots);
+            }
+        }
         roots.extend(self.builtin_classes.values().copied().map(Value::Class));
         self.declaration_code_roots(&mut roots);
         for (stack, inputs, frames, state) in self
@@ -1920,8 +1945,13 @@ impl Vm {
         {
             roots.extend(stack.iter().cloned());
             roots.extend(inputs.iter().cloned());
-            if let State::Finished(Ok(value)) = state {
-                roots.push(value.clone());
+            match state {
+                State::Finished(Ok(value)) => roots.push(value.clone()),
+                State::Finished(Err(error)) => error.diagnostic_roots(&mut roots),
+                State::Waiting(PendingRequest::TransformFrame(pending)) => {
+                    pending.roots(&mut roots)
+                }
+                _ => (),
             }
             for frame in frames {
                 roots.extend(frame.module_receiver.map(Value::Object));
@@ -1958,6 +1988,12 @@ impl Vm {
                 if let Some(run) = &frame.collection_join {
                     run.roots(&mut roots);
                 }
+                if let Some(run) = &frame.mapping_lookup {
+                    run.roots(&mut roots);
+                }
+                if let Some(run) = &frame.mapping_keys {
+                    run.roots(&mut roots);
+                }
                 if let Some(run) = &frame.lazy_collection_run {
                     run.roots(&mut roots);
                 }
@@ -1977,6 +2013,9 @@ impl Vm {
                     run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.set_sequence {
+                    run.roots(&mut roots);
+                }
+                if let Some(run) = &frame.list_ops {
                     run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.string_transform {
@@ -2016,6 +2055,10 @@ impl Vm {
                 if let Some(force) = &frame.force {
                     roots.push(Value::Object(force.receiver));
                     roots.push(Value::Object(force.owner));
+                    roots.extend(force.entry_probe.iter().cloned());
+                    if let Some(handler) = &force.stolen_cast {
+                        handler.roots(&mut roots);
+                    }
                     if let Some(copy) = &force.const_receiver {
                         roots.push(Value::Object(copy.0));
                     }
@@ -2066,7 +2109,9 @@ impl Vm {
         {
             error.unavailable_origin = true;
         }
-        if error.undefined_value && self.catch_force_undefined(self.guest_catch_boundary(&error)) {
+        let cast_boundary = self.mapping_cast_boundary(&error);
+        let catch_boundary = self.guest_catch_boundary(&error).max(cast_boundary);
+        if error.undefined_value && self.catch_force_undefined(catch_boundary) {
             return;
         }
         if error.undefined_value && error.hint.is_none() {
@@ -2101,7 +2146,6 @@ impl Vm {
         if let Some((_, span)) = callback_root {
             error.span = Some(span);
         }
-        let catch_boundary = self.guest_catch_boundary(&error);
         let unavailable_origin = error.unavailable_origin;
         if unavailable_origin {
             // Consume this origin once: cached exceptions already contain the
@@ -2109,6 +2153,11 @@ impl Vm {
             error.unavailable_origin = false;
         }
         let unwind_start = catch_boundary.map_or(0, |index| index + 1);
+        // The internal boundary retains its frame for findMember, but abandons
+        // that frame's cast work, including any module/force subcontinuation.
+        let cleanup_start = catch_boundary
+            .filter(|index| Some(*index) == cast_boundary)
+            .unwrap_or(unwind_start);
         if guest_exceptions::is_guest_exception(&error) && !error.hint_from_template {
             match self.document_conversion_hint(unwind_start) {
                 Ok(Some(hint)) => error.hint = Some(hint),
@@ -2128,7 +2177,7 @@ impl Vm {
                 Err(_) => (),
             }
         }
-        self.reset_force_marks(unwind_start);
+        self.reset_force_marks(cleanup_start);
         // Inferred properties read their class prototype without type checks.
         // An undefined prototype value is caught by the inference node, whose
         // authored new expression becomes the error origin. Keep all frames for
@@ -2172,9 +2221,12 @@ impl Vm {
         // Unwinding replaces inner scopes with the outermost active scope,
         // including across recursive calls. Initializers and type checks are
         // outside the body range and therefore do not insert a frame.
+        let logical_frames = &self.frames[..diagnostic_count];
         let mut let_frames = BTreeMap::new();
+        let mut cast_let_frames: Vec<(TypeNodeId, RuntimeFrame)> = Vec::new();
+        let mut cast_targets = Vec::with_capacity(self.frames.len());
         let mut logical_targets = Vec::with_capacity(self.frames.len());
-        for frame in diagnostic_frames {
+        for frame in logical_frames {
             let target = if frame.return_to_type
                 && self
                     .program
@@ -2186,9 +2238,25 @@ impl Vm {
             } else {
                 frame.block
             };
+            let cast_target = if frame.return_to_type
+                && self
+                    .program
+                    .metadata
+                    .get(frame.block)
+                    .is_some_and(|m| m.inline_constraint)
+            {
+                cast_targets.last().copied().flatten()
+            } else {
+                frame
+                    .force
+                    .as_ref()
+                    .and_then(|force| force.stolen_cast.as_ref())
+                    .and_then(|handler| handler.active_target())
+            };
+            cast_targets.push(cast_target);
             logical_targets.push(target);
         }
-        for (index, frame) in diagnostic_frames[unwind_start.min(diagnostic_frames.len())..]
+        for (index, frame) in logical_frames[unwind_start.min(logical_frames.len())..]
             .iter()
             .rev()
             .enumerate()
@@ -2214,7 +2282,10 @@ impl Vm {
                 .program
                 .metadata
                 .get(frame.block)
-                .filter(|metadata| !metadata.inline_constraint)
+                .filter(|metadata| {
+                    !metadata.inline_constraint
+                        || cast_targets[logical_frames.len() - 1 - index].is_some()
+                })
                 .and_then(|metadata| {
                     metadata
                         .let_scopes
@@ -2223,10 +2294,20 @@ impl Vm {
                         .find(|scope| scope.body.contains(&frame.pc.saturating_sub(1)))
                 })
             {
-                let_frames.insert(
-                    logical_targets[diagnostic_frames.len() - 1 - index],
-                    scope.frame.clone(),
-                );
+                if let Some(target) = cast_targets[logical_frames.len() - 1 - index] {
+                    if let Some((_, previous)) =
+                        cast_let_frames.iter_mut().find(|(old, _)| *old == target)
+                    {
+                        *previous = scope.frame.clone();
+                    } else {
+                        cast_let_frames.push((target, scope.frame.clone()));
+                    }
+                } else {
+                    let_frames.insert(
+                        logical_targets[logical_frames.len() - 1 - index],
+                        scope.frame.clone(),
+                    );
+                }
             }
         }
         if error.kind == ErrorKind::MissingMember
@@ -2301,7 +2382,10 @@ impl Vm {
                 // argument's insertion while retaining the UInt8 type frame.
                 let replaced_byte_argument =
                     matches!(instruction(frame), Some(Instruction::CheckByte))
-                        && let_frames.contains_key(&logical_targets[frame_index]);
+                        && (let_frames.contains_key(&logical_targets[frame_index])
+                            || cast_targets[frame_index].is_some_and(|target| {
+                                cast_let_frames.iter().any(|(old, _)| *old == target)
+                            }));
                 if (!frame.hides_callsite()
                     || callback_root.is_some_and(|(index, _)| index == frame_index))
                     && !diagnostic_frames
@@ -2311,7 +2395,7 @@ impl Vm {
                     && !replaced_byte_argument
                     && !(unavailable_origin && frame_index + 1 == diagnostic_frames.len())
                 {
-                    error.frames.push(RuntimeFrame {
+                    let displayed = RuntimeFrame {
                         source: metadata.source.clone(),
                         span: if error.frames.is_empty() {
                             error.span.unwrap_or(*span)
@@ -2325,7 +2409,16 @@ impl Vm {
                             .diagnostic_member
                             .clone()
                             .unwrap_or_else(|| metadata.member.clone()),
-                    });
+                    };
+                    if matches!(instruction(frame), Some(Instruction::CheckByte))
+                        && let Some(target) = cast_targets[frame_index]
+                    {
+                        if let Err(invalid) = error.insert_cast_frame(target, displayed) {
+                            error = invalid;
+                        }
+                    } else {
+                        error.frames.push(displayed);
+                    }
                 }
                 // Object-local checks run inside LocalTypedPropertyNode.
                 // Module/class declarations use a separate PropertyTypeNode
@@ -2349,8 +2442,37 @@ impl Vm {
             if let Some(run) = &frame.type_run {
                 error.frames.extend(run.fatal_value_frames().cloned());
             }
+            if let Some(target) = cast_targets[frame_index]
+                && let Some(index) = cast_let_frames.iter().position(|(old, _)| *old == target)
+            {
+                let (_, inserted) = cast_let_frames.remove(index);
+                if let Err(invalid) = error.insert_cast_frame(target, inserted) {
+                    error = invalid;
+                }
+            }
+            // A slot-writing constraint has its own shared Java call target.
+            // Mapping cast catches unwind it before an outer invocation of the
+            // same root catches the exception. Reserve its first stack position
+            // even when this invocation has no active let body; a later LetExpr
+            // insertion belongs to that first occurrence, not the outer frame.
+            let constraint_target = self
+                .program
+                .metadata
+                .get(frame.block)
+                .filter(|metadata| metadata.constraint_root.is_some())
+                .and(frame.environment.executable_owner)
+                .map(TypeNodeId);
+            if let Some(target) = constraint_target {
+                error.reserve_cast_target(target);
+            }
             if let Some(inserted) = let_frames.remove(&logical_targets[frame_index]) {
-                error.frames.push(inserted);
+                if let Some(target) = constraint_target {
+                    if let Err(invalid) = error.insert_cast_frame(target, inserted) {
+                        error = invalid;
+                    }
+                } else {
+                    error.frames.push(inserted);
+                }
             }
             if frame.return_to_type
                 && let Some(span) = self
@@ -2370,6 +2492,15 @@ impl Vm {
                 });
             }
         }
+        if error.cached_module_frames {
+            // Java rethrows the cached exception without recapturing its stack,
+            // but active LetExpr catches still mutate the same insertion map.
+            for (target, inserted) in cast_let_frames {
+                if let Err(invalid) = error.insert_cast_frame(target, inserted) {
+                    error = invalid;
+                }
+            }
+        }
         // Callback failures expose callers in suspended contexts without
         // unwinding those contexts or changing their force/cache ownership.
         if !error.cached_module_frames && catch_boundary.is_none() {
@@ -2382,14 +2513,14 @@ impl Vm {
         if error.span.is_none() {
             error.span = error.frames.first().map(|frame| frame.span);
         }
-        for frame in &self.frames[unwind_start..] {
+        for frame in &self.frames[cleanup_start..] {
             if let Some(force) = &frame.force
                 && let Some(key) = &force.cache
                 && !self
                     .suspended
                     .iter()
                     .flat_map(|context| &context.frames)
-                    .chain(self.frames[..unwind_start].iter())
+                    .chain(self.frames[..cleanup_start].iter())
                     .any(|frame| {
                         frame.force.as_ref().is_some_and(|other| {
                             other.receiver == force.receiver && other.cache.as_ref() == Some(key)
@@ -2407,8 +2538,13 @@ impl Vm {
         // Truffle retains the same source/initialization exception in every
         // module-cache alias. Its lazy stack keeps unwinding across guest catches;
         // the first uncaught rendering freezes the completed stack.
-        if !error.cached_module_frames && error.module_failure_id.is_some() {
-            error.cached_module_frames = catch_boundary.is_none();
+        if error.module_failure_id.is_some() {
+            if !error.cached_module_frames {
+                error.cached_module_frames = catch_boundary.is_none();
+            }
+            // A rethrow may replace an insertion on an already captured cast
+            // target. Propagate that mutation to every alias without recapturing
+            // caller frames or changing the exception's failure identity.
             if let Some(key) = &error.module_failure_id {
                 for cached in self
                     .modules_original
@@ -2423,7 +2559,7 @@ impl Vm {
                 }
             }
         }
-        for frame in &self.frames[unwind_start..] {
+        for frame in &self.frames[cleanup_start..] {
             if let Some(receiver) = frame.module_receiver
                 && self
                     .heap
@@ -2483,7 +2619,9 @@ impl Vm {
                 }
             }
         }
-        if let Some(index) = catch_boundary {
+        if let Some(index) = catch_boundary.filter(|index| Some(*index) == cast_boundary) {
+            self.catch_mapping_cast(index, error);
+        } else if let Some(index) = catch_boundary {
             let value = self.render_caught_exception(&error);
             let handler = self.frames[index]
                 .guest_catch
@@ -2673,13 +2811,113 @@ impl Vm {
         initial_owner: ObjectId,
         name: Arc<str>,
         local: bool,
-        mut memoize: bool,
+        memoize: bool,
         method: bool,
         entry: bool,
         predicate: bool,
         hash_prepared: bool,
         resolved_member: Option<Member>,
     ) -> Result<(), RuntimeError> {
+        self.force_key_mode_probe(
+            receiver,
+            initial_owner,
+            name,
+            local,
+            memoize,
+            method,
+            entry,
+            predicate,
+            hash_prepared,
+            resolved_member,
+            None,
+        )
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn force_key_probe(
+        &mut self,
+        receiver: ObjectId,
+        owner: ObjectId,
+        name: Arc<str>,
+        memoize: bool,
+        probe: Value,
+    ) -> Result<(), RuntimeError> {
+        self.force_key_mode_probe(
+            receiver,
+            owner,
+            name,
+            false,
+            memoize,
+            false,
+            true,
+            false,
+            false,
+            None,
+            Some(probe),
+        )
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn force_key_mode_probe(
+        &mut self,
+        receiver: ObjectId,
+        initial_owner: ObjectId,
+        name: Arc<str>,
+        local: bool,
+        memoize: bool,
+        method: bool,
+        entry: bool,
+        predicate: bool,
+        hash_prepared: bool,
+        resolved_member: Option<Member>,
+        entry_probe: Option<Value>,
+    ) -> Result<(), RuntimeError> {
+        self.force_key_mode_value(
+            receiver,
+            initial_owner,
+            name,
+            local,
+            memoize,
+            method,
+            entry,
+            predicate,
+            hash_prepared,
+            resolved_member,
+            entry_probe,
+            None,
+        )
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn force_key_mode_value(
+        &mut self,
+        receiver: ObjectId,
+        initial_owner: ObjectId,
+        name: Arc<str>,
+        local: bool,
+        mut memoize: bool,
+        method: bool,
+        entry: bool,
+        predicate: bool,
+        hash_prepared: bool,
+        resolved_member: Option<Member>,
+        entry_probe: Option<Value>,
+        stolen_value: Option<Value>,
+    ) -> Result<(), RuntimeError> {
+        let entry_probe = if entry && entry_probe.is_none() {
+            collections::cache_entry_key(
+                &self.heap,
+                initial_owner,
+                &CacheKey {
+                    entry,
+                    owner: local.then_some(initial_owner),
+                    name: name.clone(),
+                    method,
+                },
+            )?
+        } else {
+            entry_probe
+        };
         if !hash_prepared
             && self.prepare_cache_read(
                 receiver,
@@ -2690,6 +2928,7 @@ impl Vm {
                 method,
                 entry,
                 predicate,
+                entry_probe.clone(),
             )?
         {
             return Ok(());
@@ -2700,7 +2939,10 @@ impl Vm {
             name: name.clone(),
             method,
         };
-        if memoize && let Some(value) = self.cached_slot(receiver, &key)? {
+        if memoize
+            && !entry
+            && let Some(value) = self.cached_slot(receiver, &key)?
+        {
             self.stack.push(value);
             return Ok(());
         }
@@ -2850,6 +3092,7 @@ impl Vm {
             .and_then(|frame| frame.deep_force.as_ref())
             .is_some_and(|run| run.reads(receiver, owner, &name, entry));
         if memoize
+            && stolen_value.is_none()
             && !direct_force_read
             && !callback_attempt
             && matches!(
@@ -2871,21 +3114,26 @@ impl Vm {
         {
             memoize = false;
         }
-        if active && !direct_force_read && !callback_attempt {
+        if stolen_value.is_none() && active && !direct_force_read && !callback_attempt {
             return Err(RuntimeError::new(
                 ErrorKind::Cycle,
                 format!("cyclic forcing of {name}"),
             ));
         }
         let mut collection_casts = Vec::new();
-        let mut constant_value = None;
-        if entry && !local && !method && !predicate {
+        let mut constant_value = stolen_value.clone();
+        if stolen_value.is_some() {
+            // getCachedValue already selected this exact parent value. An empty
+            // wrapper applies only its own cast and never relooks up/reexecutes it.
+            collection_casts.extend(self.heap.get(receiver)?.collection_cast.clone());
+        } else if memoize && entry && !local && !method && !predicate {
             let mut current = receiver;
             let mut cached = None;
             loop {
                 let object = self.heap.get(current)?;
                 if current != receiver
-                    && let Some(value) = self.cached_slot(current, &key)?
+                    && let Some(value) =
+                        self.cached_slot_probe(current, &key, entry_probe.as_ref())?
                 {
                     cached = Some(value);
                     break;
@@ -2916,11 +3164,8 @@ impl Vm {
                 current = parent;
             }
             collection_casts.reverse();
-            collection_casts.dedup_by(|later, earlier| {
-                later.source == earlier.source
-                    && later.span == earlier.span
-                    && later.ty.equivalent(&earlier.ty)
-            });
+            collection_casts
+                .dedup_by(|later, earlier| later.node.is_some() && later.node == earlier.node);
             if cached.is_some()
                 && !collection_casts.is_empty()
                 && let Some(frame) = self.frames.last_mut()
@@ -2950,7 +3195,7 @@ impl Vm {
         if let Some(value) = &constant_value {
             if collection_casts.is_empty() && implicit_default_type.is_none() {
                 if memoize {
-                    self.complete_cache(receiver, key, value.clone())?;
+                    self.complete_cache_probe(receiver, key, value.clone(), entry_probe.clone())?;
                 }
                 self.stack.push(value.clone());
                 return Ok(());
@@ -2965,7 +3210,7 @@ impl Vm {
             ));
         }
         let mut inherited_types = Vec::new();
-        if !local && !method && member.ty.is_none() {
+        if stolen_value.is_none() && !local && !method && member.ty.is_none() {
             let mut parent = self.heap.get(owner)?.parent;
             let mut visited = BTreeSet::new();
             while let Some(id) = parent {
@@ -2990,7 +3235,7 @@ impl Vm {
                 parent = object.parent;
             }
         }
-        if inherited_types.is_empty() && member.ty.is_none() {
+        if stolen_value.is_none() && inherited_types.is_empty() && member.ty.is_none() {
             inherited_types.extend(implicit_default_type);
         }
         let object = self.heap.get(owner)?;
@@ -3022,7 +3267,7 @@ impl Vm {
             environment.restore_for_bindings = false;
         }
         environment.scopes.insert(0, Scope { receiver, owner });
-        if memoize {
+        if memoize && stolen_value.is_none() {
             self.heap
                 .get_mut(receiver)?
                 .cache
@@ -3059,9 +3304,12 @@ impl Vm {
             collection_transform: None,
             set_order: None,
             set_sequence: None,
+            list_ops: None,
             string_transform: None,
             int_seq_run: None,
             lazy_collection_run: None,
+            mapping_lookup: None,
+            mapping_keys: None,
             conversion_run: None,
             collection_addition: None,
             function_owner: None,
@@ -3079,6 +3327,10 @@ impl Vm {
             module_receiver: None,
             force: Some(Box::new(Force {
                 entry,
+                entry_probe,
+                publishing_cache: false,
+                stolen_cache_value: stolen_value.is_some(),
+                stolen_cast: None,
                 receiver,
                 owner,
                 name,
@@ -4125,9 +4377,12 @@ impl Vm {
             collection_transform: None,
             set_order: None,
             set_sequence: None,
+            list_ops: None,
             string_transform: None,
             int_seq_run: None,
             lazy_collection_run: None,
+            mapping_lookup: None,
+            mapping_keys: None,
             conversion_run: None,
             collection_addition: None,
             function_owner: Some(id),
@@ -4178,6 +4433,9 @@ impl Vm {
         }
         if self.frames.last().is_some_and(|f| f.equality_run.is_some()) {
             return self.step_equality();
+        }
+        if self.mapping_cast_failure_pending() {
+            return self.step_mapping_cast_failure();
         }
         if self
             .frames
@@ -6082,6 +6340,10 @@ impl Vm {
             return Err(invalid("unbalanced return stack"));
         }
         let value = self.pop()?;
+        if let Some(force) = &mut self.frames.last_mut().expect("active frame").force {
+            // A successful cast exits its Java try block before cache publication.
+            force.stolen_cast = None;
+        }
         if let Some(force) = &mut self.frames.last_mut().expect("active frame").force
             && !force.skip_typecheck
             && !force.inherited_types.is_empty()
@@ -6102,7 +6364,7 @@ impl Vm {
                 .metadata
                 .get(declaration)
                 .and_then(|m| m.source.clone());
-            let node = if typecheck::needs_custom_this(&ty) {
+            let node = if typecheck::needs_type_identity(&ty) {
                 let executable =
                     if let Some(parent) = self.heap.get(owner)?.environment.executable_owner {
                         self.heap
@@ -6159,22 +6421,59 @@ impl Vm {
             && !force.skip_typecheck
             && !force.collection_casts.is_empty()
         {
+            let stolen = force.stolen_cache_value;
+            let receiver = force.receiver;
+            let probe = force.entry_probe.clone();
             let cast = force.collection_casts.remove(0);
-            let mut frames = vec![RuntimeFrame {
+            let frames = vec![RuntimeFrame {
                 source: cast.source,
                 span: cast.span,
                 member: cast.member,
             }];
-            let frame = self.frames.last().expect("active frame");
-            if let Some(metadata) = self.program.metadata.get(frame.block)
-                && let Some(span) = metadata.value_span
-            {
-                frames.push(RuntimeFrame {
-                    source: metadata.source.clone(),
-                    span,
-                    member: metadata.member.clone(),
+            let target = cast
+                .node
+                .ok_or_else(|| invalid("missing wrapper cast target identity"))?;
+            let frame = self.frames.last().expect("cast frame");
+            let handler = if stolen {
+                let parent = self
+                    .heap
+                    .get(receiver)?
+                    .parent
+                    .ok_or_else(|| invalid("stolen Mapping cast without parent"))?;
+                let probe = probe.ok_or_else(|| invalid("stolen Mapping cast without probe"))?;
+                mapping_ops::CastFailure::new(parent, probe, self.stack.len(), frame.pc, target)
+            } else {
+                let member = self.program.metadata.get(frame.block).and_then(|metadata| {
+                    metadata
+                        .value_span
+                        .or(metadata.declaration)
+                        .map(|span| RuntimeFrame {
+                            source: metadata.source.clone(),
+                            span,
+                            member: metadata.member.clone(),
+                        })
                 });
-            }
+                let constant = self
+                    .program
+                    .metadata
+                    .get(frame.block)
+                    .is_some_and(|metadata| metadata.constant_member);
+                mapping_ops::CastFailure::known_member(
+                    receiver,
+                    self.stack.len(),
+                    frame.pc,
+                    target,
+                    member,
+                    constant,
+                )
+            };
+            self.frames
+                .last_mut()
+                .expect("cast frame")
+                .force
+                .as_mut()
+                .expect("cast force")
+                .stolen_cast = Some(Box::new(handler));
             self.begin_type_node(cast.ty, value, TypeDestination::Return, frames, cast.node)?;
             let mut environment = cast.environment;
             environment.custom_this = self
@@ -6193,10 +6492,15 @@ impl Vm {
             return Ok(());
         }
         if let Some(force) = self.frames.last_mut().expect("active frame").force.as_mut()
-            && let Some(key) = force.cache.take()
+            && !force.publishing_cache
+            && let Some(key) = force.cache.clone()
         {
+            // Publication can itself hash/compare keys and suspend. Keep ownership
+            // of the pending slot until it succeeds, so failed publication retries.
+            force.publishing_cache = true;
             let receiver = force.receiver;
-            self.complete_cache(receiver, key, value.clone())?;
+            let probe = force.entry_probe.clone();
+            self.complete_cache_probe(receiver, key, value.clone(), probe)?;
             if self.frames.len() > 1 {
                 let caller = self.frames.len() - 2;
                 self.frames[caller].callsite_hidden = true;
@@ -6204,6 +6508,12 @@ impl Vm {
             self.stack.push(value);
             self.frames.last_mut().expect("active frame").pc -= 1;
             return Ok(());
+        }
+        if let Some(force) = self.frames.last_mut().expect("active frame").force.as_mut()
+            && force.publishing_cache
+        {
+            force.cache = None;
+            force.publishing_cache = false;
         }
         if self.publish_const_receiver(&value)? {
             return Ok(());

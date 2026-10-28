@@ -1,0 +1,188 @@
+string	q0000	(List().sublist(-9223372036854775808,9223372036854775807)).toString()	000-q0000
+string	q0001	(List().sublist(-1,-1)).toString()	001-q0001
+string	q0002	(List().sublist(-1,4)).toString()	002-q0002
+string	q0003	(List().sublist(0,0)).toString()	003-q0003
+string	q0004	(List().sublist(0,1)).toString()	004-q0004
+string	q0005	(List().sublist(0,3)).toString()	005-q0005
+string	q0006	(List().sublist(0,4)).toString()	006-q0006
+string	q0007	(List().sublist(1,0)).toString()	007-q0007
+string	q0008	(List().sublist(1,1)).toString()	008-q0008
+string	q0009	(List().sublist(1,2)).toString()	009-q0009
+string	q0010	(List().sublist(1,3)).toString()	010-q0010
+string	q0011	(List().sublist(3,3)).toString()	011-q0011
+string	q0012	(List().sublist(4,4)).toString()	012-q0012
+string	q0013	(List().sublist(9223372036854775807,0)).toString()	013-q0013
+string	q0014	(List(3,1,2).sublist(-9223372036854775808,9223372036854775807)).toString()	014-q0014
+string	q0015	(List(3,1,2).sublist(-1,-1)).toString()	015-q0015
+string	q0016	(List(3,1,2).sublist(-1,4)).toString()	016-q0016
+string	q0017	(List(3,1,2).sublist(0,0)).toString()	017-q0017
+string	q0018	(List(3,1,2).sublist(0,1)).toString()	018-q0018
+string	q0019	(List(3,1,2).sublist(0,3)).toString()	019-q0019
+string	q0020	(List(3,1,2).sublist(0,4)).toString()	020-q0020
+string	q0021	(List(3,1,2).sublist(1,0)).toString()	021-q0021
+string	q0022	(List(3,1,2).sublist(1,1)).toString()	022-q0022
+string	q0023	(List(3,1,2).sublist(1,2)).toString()	023-q0023
+string	q0024	(List(3,1,2).sublist(1,3)).toString()	024-q0024
+string	q0025	(List(3,1,2).sublist(3,3)).toString()	025-q0025
+string	q0026	(List(3,1,2).sublist(4,4)).toString()	026-q0026
+string	q0027	(List(3,1,2).sublist(9223372036854775807,0)).toString()	027-q0027
+string	q0028	(List(1,2).sublist("x",0)).toString()	028-q0028
+string	q0029	(List(1,2).sublist(0,"x")).toString()	029-q0029
+string	q0030	(List(1,2).sublist(null,0)).toString()	030-q0030
+string	q0031	(List(1,2).sublist(1.0,2)).toString()	031-q0031
+string	q0032	(List(1,2).sublist(trace(-1),throw("end-before-bounds"))).toString()	032-q0032
+string	q0033	(List().sublistOrNull(-9223372036854775808,9223372036854775807)).toString()	033-q0033
+string	q0034	(List().sublistOrNull(-1,-1)).toString()	034-q0034
+string	q0035	(List().sublistOrNull(-1,4)).toString()	035-q0035
+string	q0036	(List().sublistOrNull(0,0)).toString()	036-q0036
+string	q0037	(List().sublistOrNull(0,1)).toString()	037-q0037
+string	q0038	(List().sublistOrNull(0,3)).toString()	038-q0038
+string	q0039	(List().sublistOrNull(0,4)).toString()	039-q0039
+string	q0040	(List().sublistOrNull(1,0)).toString()	040-q0040
+string	q0041	(List().sublistOrNull(1,1)).toString()	041-q0041
+string	q0042	(List().sublistOrNull(1,2)).toString()	042-q0042
+string	q0043	(List().sublistOrNull(1,3)).toString()	043-q0043
+string	q0044	(List().sublistOrNull(3,3)).toString()	044-q0044
+string	q0045	(List().sublistOrNull(4,4)).toString()	045-q0045
+string	q0046	(List().sublistOrNull(9223372036854775807,0)).toString()	046-q0046
+string	q0047	(List(3,1,2).sublistOrNull(-9223372036854775808,9223372036854775807)).toString()	047-q0047
+string	q0048	(List(3,1,2).sublistOrNull(-1,-1)).toString()	048-q0048
+string	q0049	(List(3,1,2).sublistOrNull(-1,4)).toString()	049-q0049
+string	q0050	(List(3,1,2).sublistOrNull(0,0)).toString()	050-q0050
+string	q0051	(List(3,1,2).sublistOrNull(0,1)).toString()	051-q0051
+string	q0052	(List(3,1,2).sublistOrNull(0,3)).toString()	052-q0052
+string	q0053	(List(3,1,2).sublistOrNull(0,4)).toString()	053-q0053
+string	q0054	(List(3,1,2).sublistOrNull(1,0)).toString()	054-q0054
+string	q0055	(List(3,1,2).sublistOrNull(1,1)).toString()	055-q0055
+string	q0056	(List(3,1,2).sublistOrNull(1,2)).toString()	056-q0056
+string	q0057	(List(3,1,2).sublistOrNull(1,3)).toString()	057-q0057
+string	q0058	(List(3,1,2).sublistOrNull(3,3)).toString()	058-q0058
+string	q0059	(List(3,1,2).sublistOrNull(4,4)).toString()	059-q0059
+string	q0060	(List(3,1,2).sublistOrNull(9223372036854775807,0)).toString()	060-q0060
+string	q0061	(List(1,2).sublistOrNull("x",0)).toString()	061-q0061
+string	q0062	(List(1,2).sublistOrNull(0,"x")).toString()	062-q0062
+string	q0063	(List(1,2).sublistOrNull(null,0)).toString()	063-q0063
+string	q0064	(List(1,2).sublistOrNull(1.0,2)).toString()	064-q0064
+string	q0065	(List(1,2).sublistOrNull(trace(-1),throw("end-before-bounds"))).toString()	065-q0065
+string	q0066	(List().replaceRange(-9223372036854775808,9223372036854775807, List(9,8))).toString()	066-q0066
+string	q0067	(List().replaceRange(-1,-1, List(9,8))).toString()	067-q0067
+string	q0068	(List().replaceRange(-1,4, List(9,8))).toString()	068-q0068
+string	q0069	(List().replaceRange(0,0, List(9,8))).toString()	069-q0069
+string	q0070	(List().replaceRange(0,1, List(9,8))).toString()	070-q0070
+string	q0071	(List().replaceRange(0,3, List(9,8))).toString()	071-q0071
+string	q0072	(List().replaceRange(0,4, List(9,8))).toString()	072-q0072
+string	q0073	(List().replaceRange(1,0, List(9,8))).toString()	073-q0073
+string	q0074	(List().replaceRange(1,1, List(9,8))).toString()	074-q0074
+string	q0075	(List().replaceRange(1,2, List(9,8))).toString()	075-q0075
+string	q0076	(List().replaceRange(1,3, List(9,8))).toString()	076-q0076
+string	q0077	(List().replaceRange(3,3, List(9,8))).toString()	077-q0077
+string	q0078	(List().replaceRange(4,4, List(9,8))).toString()	078-q0078
+string	q0079	(List().replaceRange(9223372036854775807,0, List(9,8))).toString()	079-q0079
+string	q0080	(List(3,1,2).replaceRange(-9223372036854775808,9223372036854775807, List(9,8))).toString()	080-q0080
+string	q0081	(List(3,1,2).replaceRange(-1,-1, List(9,8))).toString()	081-q0081
+string	q0082	(List(3,1,2).replaceRange(-1,4, List(9,8))).toString()	082-q0082
+string	q0083	(List(3,1,2).replaceRange(0,0, List(9,8))).toString()	083-q0083
+string	q0084	(List(3,1,2).replaceRange(0,1, List(9,8))).toString()	084-q0084
+string	q0085	(List(3,1,2).replaceRange(0,3, List(9,8))).toString()	085-q0085
+string	q0086	(List(3,1,2).replaceRange(0,4, List(9,8))).toString()	086-q0086
+string	q0087	(List(3,1,2).replaceRange(1,0, List(9,8))).toString()	087-q0087
+string	q0088	(List(3,1,2).replaceRange(1,1, List(9,8))).toString()	088-q0088
+string	q0089	(List(3,1,2).replaceRange(1,2, List(9,8))).toString()	089-q0089
+string	q0090	(List(3,1,2).replaceRange(1,3, List(9,8))).toString()	090-q0090
+string	q0091	(List(3,1,2).replaceRange(3,3, List(9,8))).toString()	091-q0091
+string	q0092	(List(3,1,2).replaceRange(4,4, List(9,8))).toString()	092-q0092
+string	q0093	(List(3,1,2).replaceRange(9223372036854775807,0, List(9,8))).toString()	093-q0093
+string	q0094	(List(1,2).replaceRange("x",0, List(9))).toString()	094-q0094
+string	q0095	(List(1,2).replaceRange(0,"x", List(9))).toString()	095-q0095
+string	q0096	(List(1,2).replaceRange(null,0, List(9))).toString()	096-q0096
+string	q0097	(List(1,2).replaceRange(1.0,2, List(9))).toString()	097-q0097
+string	q0098	(List(1,2).replaceRange(trace(-1),throw("end-before-bounds"), List(9))).toString()	098-q0098
+string	q0099	(List(3,1,2).replaceRange(1,2,List())).toString()	099-q0099
+string	q0100	(List(3,1,2).replaceRange(1,2,Set(9,8))).toString()	100-q0100
+string	q0101	(List(3,1,2).replaceRange(1,2,new Listing {9;8})).toString()	101-q0101
+string	q0102	(List(3,1,2).replaceRange(1,2,null)).toString()	102-q0102
+string	q0103	(List(3,1,2).replaceRange(1,2,3)).toString()	103-q0103
+string	q0104	(List(3,1,2).replaceRange(1,2,trace(List(9)))).toString()	104-q0104
+string	q0105	(List(1).replaceRange(-1,9,"x")).toString()	105-q0105
+string	q0106	(List().replaceRangeOrNull(-9223372036854775808,9223372036854775807, List(9,8))).toString()	106-q0106
+string	q0107	(List().replaceRangeOrNull(-1,-1, List(9,8))).toString()	107-q0107
+string	q0108	(List().replaceRangeOrNull(-1,4, List(9,8))).toString()	108-q0108
+string	q0109	(List().replaceRangeOrNull(0,0, List(9,8))).toString()	109-q0109
+string	q0110	(List().replaceRangeOrNull(0,1, List(9,8))).toString()	110-q0110
+string	q0111	(List().replaceRangeOrNull(0,3, List(9,8))).toString()	111-q0111
+string	q0112	(List().replaceRangeOrNull(0,4, List(9,8))).toString()	112-q0112
+string	q0113	(List().replaceRangeOrNull(1,0, List(9,8))).toString()	113-q0113
+string	q0114	(List().replaceRangeOrNull(1,1, List(9,8))).toString()	114-q0114
+string	q0115	(List().replaceRangeOrNull(1,2, List(9,8))).toString()	115-q0115
+string	q0116	(List().replaceRangeOrNull(1,3, List(9,8))).toString()	116-q0116
+string	q0117	(List().replaceRangeOrNull(3,3, List(9,8))).toString()	117-q0117
+string	q0118	(List().replaceRangeOrNull(4,4, List(9,8))).toString()	118-q0118
+string	q0119	(List().replaceRangeOrNull(9223372036854775807,0, List(9,8))).toString()	119-q0119
+string	q0120	(List(3,1,2).replaceRangeOrNull(-9223372036854775808,9223372036854775807, List(9,8))).toString()	120-q0120
+string	q0121	(List(3,1,2).replaceRangeOrNull(-1,-1, List(9,8))).toString()	121-q0121
+string	q0122	(List(3,1,2).replaceRangeOrNull(-1,4, List(9,8))).toString()	122-q0122
+string	q0123	(List(3,1,2).replaceRangeOrNull(0,0, List(9,8))).toString()	123-q0123
+string	q0124	(List(3,1,2).replaceRangeOrNull(0,1, List(9,8))).toString()	124-q0124
+string	q0125	(List(3,1,2).replaceRangeOrNull(0,3, List(9,8))).toString()	125-q0125
+string	q0126	(List(3,1,2).replaceRangeOrNull(0,4, List(9,8))).toString()	126-q0126
+string	q0127	(List(3,1,2).replaceRangeOrNull(1,0, List(9,8))).toString()	127-q0127
+string	q0128	(List(3,1,2).replaceRangeOrNull(1,1, List(9,8))).toString()	128-q0128
+string	q0129	(List(3,1,2).replaceRangeOrNull(1,2, List(9,8))).toString()	129-q0129
+string	q0130	(List(3,1,2).replaceRangeOrNull(1,3, List(9,8))).toString()	130-q0130
+string	q0131	(List(3,1,2).replaceRangeOrNull(3,3, List(9,8))).toString()	131-q0131
+string	q0132	(List(3,1,2).replaceRangeOrNull(4,4, List(9,8))).toString()	132-q0132
+string	q0133	(List(3,1,2).replaceRangeOrNull(9223372036854775807,0, List(9,8))).toString()	133-q0133
+string	q0134	(List(1,2).replaceRangeOrNull("x",0, List(9))).toString()	134-q0134
+string	q0135	(List(1,2).replaceRangeOrNull(0,"x", List(9))).toString()	135-q0135
+string	q0136	(List(1,2).replaceRangeOrNull(null,0, List(9))).toString()	136-q0136
+string	q0137	(List(1,2).replaceRangeOrNull(1.0,2, List(9))).toString()	137-q0137
+string	q0138	(List(1,2).replaceRangeOrNull(trace(-1),throw("end-before-bounds"), List(9))).toString()	138-q0138
+string	q0139	(List(3,1,2).replaceRangeOrNull(1,2,List())).toString()	139-q0139
+string	q0140	(List(3,1,2).replaceRangeOrNull(1,2,Set(9,8))).toString()	140-q0140
+string	q0141	(List(3,1,2).replaceRangeOrNull(1,2,new Listing {9;8})).toString()	141-q0141
+string	q0142	(List(3,1,2).replaceRangeOrNull(1,2,null)).toString()	142-q0142
+string	q0143	(List(3,1,2).replaceRangeOrNull(1,2,3)).toString()	143-q0143
+string	q0144	(List(3,1,2).replaceRangeOrNull(1,2,trace(List(9)))).toString()	144-q0144
+string	q0145	(List(1).replaceRangeOrNull(-1,9,"x")).toString()	145-q0145
+string	q0146	(List().replace(-9223372036854775808,9)).toString()	146-q0146
+string	q0147	(List().replace(-1,9)).toString()	147-q0147
+string	q0148	(List().replace(0,9)).toString()	148-q0148
+string	q0149	(List().replace(1,9)).toString()	149-q0149
+string	q0150	(List().replace(2,9)).toString()	150-q0150
+string	q0151	(List().replace(3,9)).toString()	151-q0151
+string	q0152	(List().replace(9223372036854775807,9)).toString()	152-q0152
+string	q0153	(List(3,1,2).replace(-9223372036854775808,9)).toString()	153-q0153
+string	q0154	(List(3,1,2).replace(-1,9)).toString()	154-q0154
+string	q0155	(List(3,1,2).replace(0,9)).toString()	155-q0155
+string	q0156	(List(3,1,2).replace(1,9)).toString()	156-q0156
+string	q0157	(List(3,1,2).replace(2,9)).toString()	157-q0157
+string	q0158	(List(3,1,2).replace(3,9)).toString()	158-q0158
+string	q0159	(List(3,1,2).replace(9223372036854775807,9)).toString()	159-q0159
+string	q0160	(List(1).replace("x",1)).toString()	160-q0160
+string	q0161	(List(1).replace(1.0,1)).toString()	161-q0161
+string	q0162	(List(1).replace(0,null)).toString()	162-q0162
+string	q0163	(List(1).replace(-1,throw("replacement"))).toString()	163-q0163
+string	q0164	(List().replaceOrNull(-9223372036854775808,9)).toString()	164-q0164
+string	q0165	(List().replaceOrNull(-1,9)).toString()	165-q0165
+string	q0166	(List().replaceOrNull(0,9)).toString()	166-q0166
+string	q0167	(List().replaceOrNull(1,9)).toString()	167-q0167
+string	q0168	(List().replaceOrNull(2,9)).toString()	168-q0168
+string	q0169	(List().replaceOrNull(3,9)).toString()	169-q0169
+string	q0170	(List().replaceOrNull(9223372036854775807,9)).toString()	170-q0170
+string	q0171	(List(3,1,2).replaceOrNull(-9223372036854775808,9)).toString()	171-q0171
+string	q0172	(List(3,1,2).replaceOrNull(-1,9)).toString()	172-q0172
+string	q0173	(List(3,1,2).replaceOrNull(0,9)).toString()	173-q0173
+string	q0174	(List(3,1,2).replaceOrNull(1,9)).toString()	174-q0174
+string	q0175	(List(3,1,2).replaceOrNull(2,9)).toString()	175-q0175
+string	q0176	(List(3,1,2).replaceOrNull(3,9)).toString()	176-q0176
+string	q0177	(List(3,1,2).replaceOrNull(9223372036854775807,9)).toString()	177-q0177
+string	q0178	(List(1).replaceOrNull("x",1)).toString()	178-q0178
+string	q0179	(List(1).replaceOrNull(1.0,1)).toString()	179-q0179
+string	q0180	(List(1).replaceOrNull(0,null)).toString()	180-q0180
+string	q0181	(List(1).replaceOrNull(-1,throw("replacement"))).toString()	181-q0181
+string	q0182	(List().rest).toString()	182-q0182
+string	q0183	(List(1).rest).toString()	183-q0183
+string	q0184	(List(3,1,2).rest).toString()	184-q0184
+string	q0185	(List().restOrNull).toString()	185-q0185
+string	q0186	(List(1).restOrNull).toString()	186-q0186
+string	q0187	(List(3,1,2).restOrNull).toString()	187-q0187

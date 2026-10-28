@@ -1,0 +1,14 @@
+[
+  {
+    "program": "list-flatmap",
+    "id": "q0022",
+    "expression": "(List(Map(1,2)).flatten()).toString()",
+    "status": "oracle-error",
+    "authority": {
+      "path": "target/m2/stage100-list-oracle-01/report.json",
+      "bytes": 22111179,
+      "sha256": "7afda4cfd0c79c4c7277634c9437c2912ab96a1ec1afb152f86f5af9a57b260e"
+    },
+    "reason": "Pinned Java oracle internal result; required comparison/foreign-value protocol remains unresolved, never a pass"
+  }
+]

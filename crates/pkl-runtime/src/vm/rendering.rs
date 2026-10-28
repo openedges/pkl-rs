@@ -374,12 +374,7 @@ impl Vm {
                     }
                     let mut path = path.clone();
                     if force.entry {
-                        let object = self.heap.get(force.owner).ok()?;
-                        let descriptor = object
-                            .collection_members
-                            .iter()
-                            .find(|member| member.name == force.name)?;
-                        path.push(PathPart::Entry(descriptor.key.clone()));
+                        path.push(PathPart::Entry(force.entry_probe.clone()?));
                     } else {
                         path.push(PathPart::Property(force.name.as_ref().into()));
                     }

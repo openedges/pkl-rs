@@ -1,0 +1,10 @@
+–– Pkl Error ––
+callback
+
+1 | (Map(3,1,1,2,2,3).any((k,v) -> throw("callback"))).toString()
+                                   ^^^^^^^^^^^^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | (Map(3,1,1,2,2,3).any((k,v) -> throw("callback"))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

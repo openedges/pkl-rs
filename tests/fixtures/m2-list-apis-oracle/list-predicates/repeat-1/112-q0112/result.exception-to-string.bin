@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Boolean`, but got type `Int`.
+Value: 1
+
+1 | (List(1,2).partition((x)->1)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

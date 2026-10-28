@@ -1,0 +1,15 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "wrong"
+
+6 | hidden typed: Mapping<Int, Int> = new Mapping { [1] = trace(1)
+                               ^^^
+at mapping-fold-order#typed (file:///stage102/mapping-fold-order.pkl)
+
+7 | [2] = "wrong" }
+          ^^^^^^^
+at mapping-fold-order#typed[2] (file:///stage102/mapping-fold-order.pkl)
+
+1 | ((typed).fold(0,(a,k,v) -> trace(k) + v)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

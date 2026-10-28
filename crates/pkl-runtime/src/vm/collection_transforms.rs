@@ -21,6 +21,9 @@ pub enum Transform {
     FindLast,
     FindLastOrNull,
     FlatMapIndexed,
+    DistinctBy,
+    IsDistinctBy,
+    Fold,
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -35,7 +38,10 @@ pub enum Projection {
     Values,
     Distinct,
     IsDistinct,
+    ListIsDistinct,
     Contains,
+    MapContainsValue,
+    Entries,
 }
 
 #[derive(Clone, Copy)]
@@ -64,6 +70,9 @@ impl Transform {
             Self::FindLast => "findLast",
             Self::FindLastOrNull => "findLastOrNull",
             Self::FlatMapIndexed => "flatMapIndexed",
+            Self::DistinctBy => "distinctBy",
+            Self::IsDistinctBy => "isDistinctBy",
+            Self::Fold => "fold",
         }
     }
 
@@ -78,7 +87,7 @@ impl Transform {
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
-) -> [usize; 25] {
+) -> [usize; 37] {
     use Transform::*;
     let source = crate::stdlib_sources::base();
     let methods = [
@@ -107,6 +116,18 @@ pub(super) fn blocks(
         ("Set", FindLast),
         ("Set", FindLastOrNull),
         ("Set", FlatMapIndexed),
+        ("List", Any),
+        ("List", FilterIndexed),
+        ("List", FindOrNull),
+        ("List", FindLast),
+        ("List", FindLastOrNull),
+        ("List", FlatMapIndexed),
+        ("List", DistinctBy),
+        ("List", IsDistinctBy),
+        ("Map", Any),
+        ("Map", Filter),
+        ("Map", FlatMap),
+        ("Map", Fold),
     ];
     methods.map(|(class, operation)| {
         let class_start = source
@@ -117,7 +138,8 @@ pub(super) fn blocks(
             operation,
             Find | FindOrNull | FindLast | FindLastOrNull | Filter | FilterIndexed | Count | Any
         );
-        let delimiter = if predicate { '(' } else { '<' };
+        let selector = matches!(operation, DistinctBy | IsDistinctBy);
+        let delimiter = if predicate || selector { '(' } else { '<' };
         let start = class_start
             + source.text[class_start..]
                 .find(&format!(
@@ -127,6 +149,10 @@ pub(super) fn blocks(
                 .expect("pinned transform");
         let parameter_name = if predicate {
             "predicate: "
+        } else if selector {
+            "selector: "
+        } else if matches!(operation, Fold) {
+            "operator: "
         } else {
             "transform: "
         };
@@ -153,7 +179,9 @@ pub(super) fn blocks(
             + 4;
         let closing = arrow + source.text[arrow..].find("):").expect("method return type");
         let declaration_end = closing + source.text[closing..].find('\n').unwrap_or(0);
-        let arity = if class == "Map" || operation.indexed() {
+        let arity = if matches!(operation, Fold) {
+            3
+        } else if class == "Map" || operation.indexed() {
             2
         } else {
             1
@@ -177,11 +205,20 @@ pub(super) fn blocks(
             // A successful find leaves the original element on the stack and
             // releases its cursor. A false predicate jumps back to instruction 3.
             Find | FindOrNull | FindLast | FindLastOrNull | Any => code.push(Instruction::Return),
-            Count => code.push(Instruction::Jump(3)),
+            Count | Fold => code.push(Instruction::Jump(3)),
+            DistinctBy | IsDistinctBy => {
+                code.push(Instruction::CollectionDistinctStep { next: 3, end: 0 });
+                if matches!(operation, DistinctBy) {
+                    code.push(Instruction::AppendStrictElement);
+                }
+                code.push(Instruction::Jump(3));
+            }
             FlatMap | FlatMapIndexed => {
                 code.push(Instruction::CollectionFlatMapNext { end: 3 });
                 if class == "Set" {
                     code.extend([Instruction::PrepareSetElement, Instruction::AddSetElement]);
+                } else if class == "Map" {
+                    code.extend([Instruction::PrepareMapEntry, Instruction::AddMapEntry]);
                 } else {
                     code.push(Instruction::AppendStrictElement);
                 }
@@ -201,6 +238,9 @@ pub(super) fn blocks(
         }
         let end = code.len();
         code[3] = Instruction::CollectionTransformNext { end };
+        if selector {
+            code[6] = Instruction::CollectionDistinctStep { next: 3, end };
+        }
         code.extend([Instruction::EndCollectionTransform, Instruction::Return]);
         let mut spans = vec![None; code.len()];
         spans[1] = Some(Span::new(parameter, type_end));
@@ -220,7 +260,7 @@ pub(super) fn blocks(
 pub(super) fn projection_blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
-) -> [usize; 13] {
+) -> [usize; 16] {
     let source = crate::stdlib_sources::base();
     [
         ("List", "toList", None),
@@ -236,6 +276,9 @@ pub(super) fn projection_blocks(
         ("List", "distinct", Some(Projection::Distinct)),
         ("Listing", "isDistinct", Some(Projection::IsDistinct)),
         ("List", "contains", Some(Projection::Contains)),
+        ("List", "isDistinct", Some(Projection::ListIsDistinct)),
+        ("Map", "entries", Some(Projection::Entries)),
+        ("Map", "containsValue", Some(Projection::MapContainsValue)),
     ]
     .map(|(class, name, operation)| {
         let class_start = source
@@ -244,6 +287,8 @@ pub(super) fn projection_blocks(
             .expect("collection class");
         let signature = if name == "add" {
             "external function add<Other>(element: Other):".to_owned()
+        } else if name == "containsValue" {
+            "external function containsValue(value: Any):".to_owned()
         } else if name == "contains" {
             "external function contains(element: Any):".to_owned()
         } else if class == "Map" || matches!(name, "distinct" | "isDistinct") {
@@ -268,8 +313,8 @@ pub(super) fn projection_blocks(
                 Instruction::AppendStrictElement,
                 Instruction::Jump(5),
             ],
-            Some(Projection::Contains) => vec![
-                Instruction::BeginCollectionProjection(Projection::Contains),
+            Some(operation @ (Projection::Contains | Projection::MapContainsValue)) => vec![
+                Instruction::BeginCollectionProjection(operation),
                 Instruction::CollectionTransformNext { end: 4 },
                 Instruction::CollectionContainsStep { matched: 5 },
                 Instruction::Jump(1),
@@ -281,8 +326,8 @@ pub(super) fn projection_blocks(
                 Instruction::AppendStrictElement,
                 Instruction::Jump(1),
             ],
-            Some(Projection::IsDistinct) => vec![
-                Instruction::BeginCollectionProjection(Projection::IsDistinct),
+            Some(operation @ (Projection::IsDistinct | Projection::ListIsDistinct)) => vec![
+                Instruction::BeginCollectionProjection(operation),
                 Instruction::CollectionTransformNext { end: 4 },
                 Instruction::CollectionDistinctStep { next: 1, end: 4 },
                 Instruction::Jump(1),
@@ -333,6 +378,7 @@ pub(super) struct TransformRun {
     next: usize,
     current: Option<(Value, Value)>,
     matched: i64,
+    accumulator: Option<Value>,
     lazy: Option<LazyEvery>,
     inner: Option<FlatMapRun>,
     distinct: Option<DistinctRun>,
@@ -357,6 +403,7 @@ impl TransformRun {
             roots.extend(distinct.values.iter().cloned());
         }
         roots.extend(self.callback.iter().cloned());
+        roots.extend(self.accumulator.iter().cloned());
         if let Some(inner) = &self.inner {
             roots.push(Value::Object(inner.source));
         }
@@ -390,12 +437,14 @@ impl Vm {
             (true, "reverse") if self.is_list(&receiver) => 8,
             (true, "reverse") if self.is_set(&receiver) => 9,
             (true, "contains") if self.is_list(&receiver) => 12,
+            (false, "entries") if self.is_map(&receiver) => 14,
+            (true, "containsValue") if self.is_map(&receiver) => 15,
             _ => return Ok(false),
         };
         let id = self.heap.allocate(Object {
             function: Some(Function {
                 block: self.program.collection_projection_blocks[index],
-                arity: usize::from(matches!(index, 7 | 12)),
+                arity: usize::from(matches!(index, 7 | 12 | 15)),
                 method: true,
                 captured_this: Some(receiver),
             }),
@@ -426,10 +475,22 @@ impl Vm {
             (0 | 4, "mapNonNullIndexed") => 3,
             (8, "mapKeys") => 1,
             (8, "mapValues") => 2,
+            (8, "any") => 25,
+            (8, "filter") => 26,
+            (8, "flatMap") => 27,
+            (8, "fold") => 28,
             (0, "find") => 11,
             (0, "filter") => 12,
             (0, "flatMap") => 13,
             (0, "count") => 14,
+            (0, "any") => 25,
+            (0, "filterIndexed") => 26,
+            (0, "findOrNull") => 27,
+            (0, "findLast") => 28,
+            (0, "findLastOrNull") => 29,
+            (0, "flatMapIndexed") => 30,
+            (0, "distinctBy") => 31,
+            (0, "isDistinctBy") => 32,
             (4, "find") => 11,
             (4, "filter") => 12,
             (4, "flatMap") => 13,
@@ -445,7 +506,7 @@ impl Vm {
         let id = self.heap.allocate(Object {
             function: Some(Function {
                 block: self.program.collection_transform_blocks[offset + index],
-                arity: 1,
+                arity: if offset == 8 && name == "fold" { 2 } else { 1 },
                 method: true,
                 captured_this: Some(receiver),
             }),
@@ -481,7 +542,10 @@ impl Vm {
             .and_then(|frame| frame.environment.this_value.clone())
             .ok_or_else(|| invalid("transform receiver"))?
             .as_object()?;
-        let mut members = if matches!(operation, Operation::Projection(Projection::KeysHash)) {
+        let mut members = if matches!(
+            operation,
+            Operation::Projection(Projection::KeysHash | Projection::MapContainsValue)
+        ) {
             self.map_hash_members(source)?
         } else {
             collections::ordered_members(&self.heap, source)?
@@ -503,7 +567,14 @@ impl Vm {
                     | Transform::FindLastOrNull
                     | Transform::Any
                     | Transform::Count
-            ) | Operation::Projection(Projection::IsDistinct | Projection::Contains)
+                    | Transform::IsDistinctBy
+                    | Transform::Fold
+            ) | Operation::Projection(
+                Projection::IsDistinct
+                    | Projection::ListIsDistinct
+                    | Projection::Contains
+                    | Projection::MapContainsValue
+            )
         ) {
             None
         } else {
@@ -531,10 +602,18 @@ impl Vm {
             next: 0,
             current: None,
             matched: 0,
+            accumulator: if matches!(operation, Operation::Callback(Transform::Fold)) {
+                Some(frame.environment.locals[frame.environment.locals.len() - 2].clone())
+            } else {
+                None
+            },
             lazy: None,
             inner: None,
             distinct: match operation {
-                Operation::Projection(Projection::Distinct | Projection::IsDistinct) => {
+                Operation::Projection(
+                    Projection::Distinct | Projection::IsDistinct | Projection::ListIsDistinct,
+                )
+                | Operation::Callback(Transform::DistinctBy | Transform::IsDistinctBy) => {
                     Some(DistinctRun::default())
                 }
                 _ => None,
@@ -611,12 +690,28 @@ impl Vm {
             return self.jump(end);
         };
         let source = run.source;
+        let entries = matches!(run.operation, Operation::Projection(Projection::Entries));
         let map = self.heap.get(source)?.collection_kind == CollectionKind::Map;
         let value = if matches!(
             run.operation,
             Operation::Projection(Projection::KeysHash | Projection::KeysOrder)
         ) {
             member.key.clone()
+        } else if matches!(
+            run.operation,
+            Operation::Projection(Projection::MapContainsValue)
+        ) {
+            // Paguro UnmodMap.containsValue walks the backing trie directly:
+            // read its stored value without rehashing/relooking up this key.
+            match self.heap.get(source)?.cache.get(&CacheKey {
+                owner: None,
+                name: member.name.clone(),
+                method: false,
+                entry: true,
+            }) {
+                Some(LazyState::Completed(value)) => value.clone(),
+                _ => return Err(invalid("uncached Map.containsValue entry")),
+            }
         } else if map {
             if self.prepare_map_lookup(source, &member.key)? {
                 return Ok(());
@@ -627,6 +722,13 @@ impl Vm {
             collections::cached_render_value(&self.heap, source, &member)?
                 .ok_or_else(|| invalid("uncached strict transform element"))?
         };
+        let value = if entries {
+            // VmMap.entries allocates a fresh Pair for each insertion-order
+            // entry after its ordinary resumable map.get(key) above completes.
+            self.make_pair(member.key.clone(), value)
+        } else {
+            value
+        };
         let run = self
             .frames
             .last_mut()
@@ -635,6 +737,9 @@ impl Vm {
         if matches!(run.operation, Operation::Every | Operation::Callback(_)) {
             self.stack
                 .push(run.callback.clone().expect("transform callback"));
+            if let Some(accumulator) = &run.accumulator {
+                self.stack.push(accumulator.clone());
+            }
             if map {
                 self.stack.push(member.key.clone());
             } else if matches!(run.operation, Operation::Callback(operation) if operation.indexed())
@@ -660,7 +765,8 @@ impl Vm {
             .and_then(|f| f.environment.locals.first())
             .cloned()
             .ok_or_else(|| invalid("contains argument"))?;
-        // Pinned Paguro UnmodList.contains calls Objects.equals(element, query).
+        // Pinned Paguro UnmodList.contains and UnmodMap.containsValue both
+        // call Objects.equals(stored element/value, query).
         // No key hashes are requested; boxed equality preserves numeric kinds.
         // The element stays on the value stack while equality suspends/retries,
         // and the query stays in the ordinary method environment.
@@ -701,6 +807,25 @@ impl Vm {
             (operation, run.source, key, input)
         };
         match operation {
+            Transform::Fold => {
+                self.frames
+                    .last_mut()
+                    .unwrap()
+                    .collection_transform
+                    .as_mut()
+                    .unwrap()
+                    .accumulator = Some(value);
+            }
+            Transform::DistinctBy | Transform::IsDistinctBy => {
+                self.frames
+                    .last_mut()
+                    .unwrap()
+                    .collection_transform
+                    .as_mut()
+                    .unwrap()
+                    .current = Some((key, input));
+                self.stack.push(value);
+            }
             Transform::Find
             | Transform::FindOrNull
             | Transform::FindLast
@@ -740,6 +865,11 @@ impl Vm {
                     ) {
                         self.frames.last_mut().unwrap().collection_transform = None;
                     }
+                    if matches!(operation, Transform::Filter)
+                        && self.heap.get(source)?.collection_kind == CollectionKind::Map
+                    {
+                        self.stack.push(key);
+                    }
                     self.stack.push(if matches!(operation, Transform::Any) {
                         Value::Bool(true)
                     } else {
@@ -750,9 +880,18 @@ impl Vm {
                 }
             }
             Transform::FlatMap | Transform::FlatMapIndexed => {
-                if !self.is_list(&value) && !self.is_set(&value) {
+                let map = self.heap.get(source)?.collection_kind == CollectionKind::Map;
+                if if map {
+                    !self.is_map(&value)
+                } else {
+                    !self.is_list(&value) && !self.is_set(&value)
+                } {
                     return Err(type_error(
-                        &TypeCheck::CollectionBase { arguments: vec![] },
+                        &if map {
+                            TypeCheck::Collection(CollectionKind::Map)
+                        } else {
+                            TypeCheck::CollectionBase { arguments: vec![] }
+                        },
                         &value,
                         &self.program.module_name,
                         &self.heap,
@@ -799,22 +938,46 @@ impl Vm {
     /// Drain a strict callback result in ordinary VM steps. The inner source
     /// remains rooted across yields, and is exhausted before the next callback.
     pub(super) fn collection_flat_map_next(&mut self, end: usize) -> Result<(), RuntimeError> {
-        let run = self
-            .frames
+        let (source, member) = {
+            let run = self
+                .frames
+                .last_mut()
+                .and_then(|frame| frame.collection_transform.as_mut())
+                .ok_or_else(|| invalid("flatMap cursor"))?;
+            let inner = run
+                .inner
+                .as_mut()
+                .ok_or_else(|| invalid("flatMap result"))?;
+            let Some(member) = inner.members.get(inner.next).cloned() else {
+                run.inner = None;
+                return self.jump(end);
+            };
+            (inner.source, member)
+        };
+        let map = self.heap.get(source)?.collection_kind == CollectionKind::Map;
+        let value = if map {
+            if self.prepare_map_lookup(source, &member.key)? {
+                return Ok(());
+            }
+            self.map_value(source, &member.key)?
+                .ok_or_else(|| invalid("flatMap Map key"))?
+        } else {
+            collections::cached_render_value(&self.heap, source, &member)?
+                .ok_or_else(|| invalid("uncached strict flatMap element"))?
+        };
+        self.frames
             .last_mut()
-            .and_then(|frame| frame.collection_transform.as_mut())
-            .ok_or_else(|| invalid("flatMap cursor"))?;
-        let inner = run
+            .unwrap()
+            .collection_transform
+            .as_mut()
+            .unwrap()
             .inner
             .as_mut()
-            .ok_or_else(|| invalid("flatMap result"))?;
-        let Some(member) = inner.members.get(inner.next).cloned() else {
-            run.inner = None;
-            return self.jump(end);
-        };
-        let value = collections::cached_render_value(&self.heap, inner.source, &member)?
-            .ok_or_else(|| invalid("uncached strict flatMap element"))?;
-        inner.next += 1;
+            .unwrap()
+            .next += 1;
+        if map {
+            self.stack.push(member.key);
+        }
         self.stack.push(value);
         Ok(())
     }
@@ -853,6 +1016,13 @@ impl Vm {
             self.stack.push(Value::Null);
             return Ok(());
         }
+        if matches!(run.operation, Operation::Callback(Transform::Fold)) {
+            self.stack.push(
+                run.accumulator
+                    .ok_or_else(|| invalid("Map.fold accumulator"))?,
+            );
+            return Ok(());
+        }
         if matches!(run.operation, Operation::Callback(Transform::Any)) {
             self.stack.push(Value::Bool(false));
             return Ok(());
@@ -881,11 +1051,18 @@ impl Vm {
             self.stack.push(Value::Int(run.matched.into()));
             return Ok(());
         }
-        if matches!(run.operation, Operation::Projection(Projection::Contains)) {
+        if matches!(
+            run.operation,
+            Operation::Projection(Projection::Contains | Projection::MapContainsValue)
+        ) {
             self.stack.push(Value::Bool(false));
             return Ok(());
         }
-        if matches!(run.operation, Operation::Projection(Projection::IsDistinct)) {
+        if matches!(
+            run.operation,
+            Operation::Projection(Projection::IsDistinct | Projection::ListIsDistinct)
+                | Operation::Callback(Transform::IsDistinctBy)
+        ) {
             self.stack.push(Value::Bool(run.distinct.unwrap().result));
             return Ok(());
         }
@@ -1172,6 +1349,7 @@ impl Vm {
             next: 0,
             current: None,
             matched: 0,
+            accumulator: None,
             lazy,
             inner: None,
             distinct: None,
@@ -1589,6 +1767,7 @@ impl Vm {
     ) -> Result<Option<Member>, RuntimeError> {
         let code = match (self.heap.get(receiver)?.collection_kind, name) {
             (CollectionKind::List, "distinct") => self.program.collection_projection_blocks[10],
+            (CollectionKind::List, "isDistinct") => self.program.collection_projection_blocks[13],
             (CollectionKind::Listing, "isDistinct") => {
                 self.program.collection_projection_blocks[11]
             }
@@ -1613,14 +1792,17 @@ impl Vm {
 
     // VmListingOrMapping.getCachedValue steals an Identifier-valued property
     // only through empty-member wrappers, without applying the element type.
+    // Mapping.default uses this same cache path before an implicit invocation.
     pub(super) fn steal_collection_property(
         &mut self,
         receiver: ObjectId,
         name: &str,
     ) -> Result<bool, RuntimeError> {
-        if (!matches!(name, "isDistinct" | "distinct") && !listing_endpoint(name))
-            || self.heap.get(receiver)?.collection_kind != CollectionKind::Listing
-        {
+        let kind = self.heap.get(receiver)?.collection_kind;
+        let listing_cached = kind == CollectionKind::Listing
+            && (matches!(name, "isDistinct" | "distinct") || listing_endpoint(name));
+        let mapping_default = kind == CollectionKind::Mapping && name == "default";
+        if !listing_cached && !mapping_default {
             return Ok(false);
         }
         let key = CacheKey {
@@ -1633,7 +1815,10 @@ impl Vm {
         let mut current = receiver;
         loop {
             let object = self.heap.get(current)?;
-            if !object.members.is_empty() || !object.collection_members.is_empty() {
+            if !object.members.is_empty()
+                || !object.collection_members.is_empty()
+                || (mapping_default && object.collection_default.is_some())
+            {
                 return Ok(false);
             }
             let Some(parent) = object.parent else {
@@ -1687,6 +1872,19 @@ impl Vm {
             .last()
             .cloned()
             .ok_or_else(|| invalid("distinct input"))?;
+        let operation = self
+            .frames
+            .last()
+            .unwrap()
+            .collection_transform
+            .as_ref()
+            .unwrap()
+            .operation;
+        let stop_on_duplicate = matches!(
+            operation,
+            Operation::Projection(Projection::IsDistinct | Projection::ListIsDistinct)
+                | Operation::Callback(Transform::IsDistinctBy)
+        );
         let listing = matches!(
             self.frames
                 .last()
@@ -1748,7 +1946,7 @@ impl Vm {
                     .any(|old| equality::same_key(&self.heap, &value, old))
                 {
                     self.pop()?;
-                    if listing {
+                    if stop_on_duplicate {
                         let run = self.distinct_run_mut();
                         run.listing_lookup = None;
                         run.result = false;
@@ -1837,6 +2035,23 @@ impl Vm {
             }
             DistinctStage::Complete => {
                 self.distinct_run_mut().stage = DistinctStage::Lookup;
+                if matches!(operation, Operation::Callback(Transform::DistinctBy)) {
+                    self.pop()?;
+                    let input = self
+                        .frames
+                        .last_mut()
+                        .unwrap()
+                        .collection_transform
+                        .as_mut()
+                        .unwrap()
+                        .current
+                        .take()
+                        .unwrap()
+                        .1;
+                    self.stack.push(input);
+                } else if stop_on_duplicate {
+                    self.pop()?;
+                }
                 return Ok(());
             }
         }

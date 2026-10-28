@@ -1,0 +1,1 @@
+(zero.any((k,v) -> trace(v) == null)).toString()

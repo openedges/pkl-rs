@@ -1,5 +1,35 @@
 # M2 language verification
 
+## Stage102 List, Map and Mapping — current local evidence
+
+The collection matrix covers **List 995, Map 377 and Mapping 488 query/profile
+contracts**. Targeted05 records **83 passes, zero failures and one ignored test**
+on freeze04. All **1,859 ordinary contracts / 3,718 repeated observations** match
+Java, including **37,368 raw fields and 1,506 ordered Logger events**. Corrected
+selected native, N-API and Chromium acquisitions independently match the same 3,718
+ordinary observations, with **44,804 shared fields and 1,506 Logger events per
+target** in their portable field scope. Their acquisition/source integrity and
+ordinary raw compatibility verdicts are separate from required internal failures.
+
+One List internal contract retains two required unresolved observations on each
+target. The original whole-List Java 512 MiB heap failure and earlier Set/glob
+protocol obligations remain open. All eight default roles have actual local
+passing records, including **1,502 workspace passes with four ignored**. Current
+M1 matches Java on **6,078 checks per native, Node and browser target**, with
+strict and architecture readback recorded separately. Unchanged original Set and
+Mapping match; original Map retains the existing `Typed.hasProperty` gap at line
+134 after successful `toTyped(Person)`.
+
+Inventory remains **4,545 cases: 4,442 ready, 71 unimplemented and 32 unmapped**,
+with **475 requirements**. Stage94's earlier-source **4,268/4,424** whole-corpus
+aggregate is unchanged. Selected results do not produce a current full
+ready-corpus result or an M2 completion percentage. Historical numeric/Set
+1,218-contract results remain a separate scope. Full language/API, release-platform
+and performance requirements remain open. See the
+[Stage102 checkpoint](../reports/m2/stage102-collection-apis-checkpoint.json) for
+the bounded local evidence and retained failures.
+
+
 ## Stage99 numeric and Set APIs — selected validation complete
 
 Recorded local evidence: [Stage99 checkpoint](../reports/m2/stage99-numeric-set-apis-checkpoint.json).

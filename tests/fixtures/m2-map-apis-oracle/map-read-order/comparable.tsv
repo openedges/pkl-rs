@@ -1,0 +1,29 @@
+string	q0000	(empty.entries).toString()	000-q0000
+string	q0001	(empty.entries.length).toString()	001-q0001
+string	q0002	(empty.entries.isEmpty).toString()	002-q0002
+string	q0003	(empty.entries.map((p) -> p.first)).toString()	003-q0003
+string	q0004	(empty.entries.map((p) -> p.second)).toString()	004-q0004
+string	q0005	(empty.any((k,v) -> false)).toString()	005-q0005
+string	q0006	(empty.any((k,v) -> true)).toString()	006-q0006
+string	q0007	(empty.any((k,v) -> trace(k) == 0)).toString()	007-q0007
+string	q0008	(ordinary.entries).toString()	008-q0008
+string	q0009	(ordinary.entries.length).toString()	009-q0009
+string	q0010	(ordinary.entries.isEmpty).toString()	010-q0010
+string	q0011	(ordinary.entries.map((p) -> p.first)).toString()	011-q0011
+string	q0012	(ordinary.entries.map((p) -> p.second)).toString()	012-q0012
+string	q0013	(ordinary.any((k,v) -> false)).toString()	013-q0013
+string	q0014	(ordinary.any((k,v) -> true)).toString()	014-q0014
+string	q0015	(ordinary.any((k,v) -> trace(k) == 0)).toString()	015-q0015
+string	q0016	(collision.entries).toString()	016-q0016
+string	q0017	(collision.entries.length).toString()	017-q0017
+string	q0018	(collision.entries.isEmpty).toString()	018-q0018
+string	q0019	(collision.entries.map((p) -> p.first)).toString()	019-q0019
+string	q0020	(collision.entries.map((p) -> p.second)).toString()	020-q0020
+string	q0021	(collision.any((k,v) -> false)).toString()	021-q0021
+string	q0022	(collision.any((k,v) -> true)).toString()	022-q0022
+string	q0023	(collision.any((k,v) -> trace(k) == 0)).toString()	023-q0023
+string	q0024	(zero.containsValue(new Dynamic { ["x"] = 7 })).toString()	024-q0024
+string	q0025	(zero.entries).toString()	025-q0025
+string	q0026	(zero.any((k,v) -> trace(v) == null)).toString()	026-q0026
+string	q0027	(zero.values).toString()	027-q0027
+string	q0028	(zero.keys).toString()	028-q0028

@@ -1,0 +1,966 @@
+{
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/CollectionEveryOracle.java",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts",
+    "file:///stage102/cache-steal-casts.pkl"
+  ],
+  "cleanup_events": [],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01",
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 0,
+  "finished_epoch": 1793099523.748668,
+  "helper": {
+    "bytes": 6329,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/CollectionEveryOracle.java",
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "owned_child_reaped": true,
+  "owned_processes": {
+    "root_observed": true,
+    "root_pid": 77910,
+    "terminal_live": [],
+    "tracked": [
+      {
+        "group_id_at_discovery": 77910,
+        "parent_pid_at_discovery": 77875,
+        "pid": 77910,
+        "started": "Tue Oct 27 20:12:02 2026"
+      }
+    ]
+  },
+  "owned_start": "Tue Oct 27 20:12:02 2026",
+  "pgid": 77910,
+  "pid": 77910,
+  "power_assertions": false,
+  "program": "cache-steal-casts",
+  "repeat": 1,
+  "rows": [
+    {
+      "directory": "target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000",
+      "expression": "raw.getOrNull(1).toString()",
+      "id": "q0000",
+      "logger_events": 1,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 27,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/expression.bin",
+          "sha256": "9cdee5df703041a74ccd25e85e471dddab8823429c6c83b6bbca342fab369881"
+        },
+        "expression.code-units.bin": {
+          "bytes": 54,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/expression.code-units.bin",
+          "sha256": "5254d59b4206210b15f56810966c9fb6d4cb6d576e59eb4149ca9ac67fa2e065"
+        },
+        "log-000.level.bin": {
+          "bytes": 5,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/log-000.level.bin",
+          "sha256": "eafe895eb8119e6e5d06463590b2ef81b3651c157d5c8e18f1889186c7fd0ac0"
+        },
+        "log-000.level.code-units.bin": {
+          "bytes": 10,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/log-000.level.code-units.bin",
+          "sha256": "bae7cd13d3a470f673d4806706354d602758dd7e9ee758fbeb4b955dd2ced1cb"
+        },
+        "log-000.member.bin": {
+          "bytes": 4,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/log-000.member.bin",
+          "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        "log-000.member.code-units.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/log-000.member.code-units.bin",
+          "sha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+        },
+        "log-000.message.bin": {
+          "bytes": 19,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/log-000.message.bin",
+          "sha256": "f274f14e52a0eaac9faa4637b7c33ae0ea7eba83fe10626d117478d9571ccdf1"
+        },
+        "log-000.message.code-units.bin": {
+          "bytes": 38,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/log-000.message.code-units.bin",
+          "sha256": "95de42cef048c5ec3335ce5b21df6b335a349715094a7afbbdec580d50f95ca8"
+        },
+        "log-000.module-uri.bin": {
+          "bytes": 38,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/log-000.module-uri.bin",
+          "sha256": "f04bd7bde7e9213f9455548d126911a40b31a0b863229107893f59ac1fb3ca80"
+        },
+        "log-000.module-uri.code-units.bin": {
+          "bytes": 76,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/log-000.module-uri.code-units.bin",
+          "sha256": "acecccf77fb68babea473fb755d18bac3763dcce66aa076322576684e2816fc3"
+        },
+        "log-000.position.bin": {
+          "bytes": 9,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/log-000.position.bin",
+          "sha256": "2299e4826a6c6a284349db49f73f151d2ff98501ad46231c50a644203439b238"
+        },
+        "log-000.position.code-units.bin": {
+          "bytes": 18,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/log-000.position.code-units.bin",
+          "sha256": "713818159dfed936fc4f68598988c3f9e7eaff5fc8dc4fde7774e60e86a188d0"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/logs.count.bin",
+          "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/result.stdout.bin",
+          "sha256": "87b04e58961f9a99d853d4046a0b5b793e7c3e4bbd21f5aca8fb17c20cdb1d8b"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/000-q0000/result.stdout.code-units.bin",
+          "sha256": "a3b3835a0cc26f6374ea4e99448935656edf50683f6259db682e20f8812a6ef2"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001",
+      "expression": "two.getOrNull(1).toString()",
+      "id": "q0001",
+      "logger_events": 2,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 27,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/expression.bin",
+          "sha256": "de87903e8e530d7bb0df7eb05247fd9808d11156c43638580b71bbb9aaa3d980"
+        },
+        "expression.code-units.bin": {
+          "bytes": 54,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/expression.code-units.bin",
+          "sha256": "da9d6fff0e642c31098a858a4a9eb2e915fb850eebaaee161b8066e1220f8806"
+        },
+        "log-000.level.bin": {
+          "bytes": 5,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/log-000.level.bin",
+          "sha256": "eafe895eb8119e6e5d06463590b2ef81b3651c157d5c8e18f1889186c7fd0ac0"
+        },
+        "log-000.level.code-units.bin": {
+          "bytes": 10,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/log-000.level.code-units.bin",
+          "sha256": "bae7cd13d3a470f673d4806706354d602758dd7e9ee758fbeb4b955dd2ced1cb"
+        },
+        "log-000.member.bin": {
+          "bytes": 4,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/log-000.member.bin",
+          "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        "log-000.member.code-units.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/log-000.member.code-units.bin",
+          "sha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+        },
+        "log-000.message.bin": {
+          "bytes": 15,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/log-000.message.bin",
+          "sha256": "91091d083f5023b3a603cfd758a483ba72c4ac61270c9357923a223ef4e844e1"
+        },
+        "log-000.message.code-units.bin": {
+          "bytes": 30,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/log-000.message.code-units.bin",
+          "sha256": "deb2c21ec443a7629a2875c208fa787befe04d4b668cf1339802b1a56c84a611"
+        },
+        "log-000.module-uri.bin": {
+          "bytes": 38,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/log-000.module-uri.bin",
+          "sha256": "f04bd7bde7e9213f9455548d126911a40b31a0b863229107893f59ac1fb3ca80"
+        },
+        "log-000.module-uri.code-units.bin": {
+          "bytes": 76,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/log-000.module-uri.code-units.bin",
+          "sha256": "acecccf77fb68babea473fb755d18bac3763dcce66aa076322576684e2816fc3"
+        },
+        "log-000.position.bin": {
+          "bytes": 9,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/log-000.position.bin",
+          "sha256": "9d4571186d12a2526a25d588e90e0e4958ecfcedb04982a435891325ad9417c4"
+        },
+        "log-000.position.code-units.bin": {
+          "bytes": 18,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/log-000.position.code-units.bin",
+          "sha256": "f2addaed63d029b03dc432ee56cdbad1240621577184bfec7312faaa6a3963ae"
+        },
+        "log-001.level.bin": {
+          "bytes": 5,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/log-001.level.bin",
+          "sha256": "eafe895eb8119e6e5d06463590b2ef81b3651c157d5c8e18f1889186c7fd0ac0"
+        },
+        "log-001.level.code-units.bin": {
+          "bytes": 10,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/log-001.level.code-units.bin",
+          "sha256": "bae7cd13d3a470f673d4806706354d602758dd7e9ee758fbeb4b955dd2ced1cb"
+        },
+        "log-001.member.bin": {
+          "bytes": 4,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/log-001.member.bin",
+          "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        "log-001.member.code-units.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/log-001.member.code-units.bin",
+          "sha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+        },
+        "log-001.message.bin": {
+          "bytes": 15,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/log-001.message.bin",
+          "sha256": "91091d083f5023b3a603cfd758a483ba72c4ac61270c9357923a223ef4e844e1"
+        },
+        "log-001.message.code-units.bin": {
+          "bytes": 30,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/log-001.message.code-units.bin",
+          "sha256": "deb2c21ec443a7629a2875c208fa787befe04d4b668cf1339802b1a56c84a611"
+        },
+        "log-001.module-uri.bin": {
+          "bytes": 38,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/log-001.module-uri.bin",
+          "sha256": "f04bd7bde7e9213f9455548d126911a40b31a0b863229107893f59ac1fb3ca80"
+        },
+        "log-001.module-uri.code-units.bin": {
+          "bytes": 76,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/log-001.module-uri.code-units.bin",
+          "sha256": "acecccf77fb68babea473fb755d18bac3763dcce66aa076322576684e2816fc3"
+        },
+        "log-001.position.bin": {
+          "bytes": 9,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/log-001.position.bin",
+          "sha256": "284c63a1f1551add31d3dc4bcd3e20b2c4207889fa7939be5e5aa6839e40e106"
+        },
+        "log-001.position.code-units.bin": {
+          "bytes": 18,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/log-001.position.code-units.bin",
+          "sha256": "979f679bfaa4cfb5b63d7e2eef9e387dc14281f01294418e2285ffc10cdf8747"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/logs.count.bin",
+          "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/result.stdout.bin",
+          "sha256": "87b04e58961f9a99d853d4046a0b5b793e7c3e4bbd21f5aca8fb17c20cdb1d8b"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/001-q0001/result.stdout.code-units.bin",
+          "sha256": "a3b3835a0cc26f6374ea4e99448935656edf50683f6259db682e20f8812a6ef2"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002",
+      "expression": "one.getOrNull(1).toString()",
+      "id": "q0002",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 27,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/expression.bin",
+          "sha256": "722afbd081d8fd4a89664360cffe39515be99771045aa35bc0e505f6e4272bd4"
+        },
+        "expression.code-units.bin": {
+          "bytes": 54,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/expression.code-units.bin",
+          "sha256": "78c58af9bf42325e707cff3fcdaf4ab4f607cf1e3fc32b582474450b0f5ab2f3"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/result.stdout.bin",
+          "sha256": "87b04e58961f9a99d853d4046a0b5b793e7c3e4bbd21f5aca8fb17c20cdb1d8b"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/002-q0002/result.stdout.code-units.bin",
+          "sha256": "a3b3835a0cc26f6374ea4e99448935656edf50683f6259db682e20f8812a6ef2"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003",
+      "expression": "two.getOrNull(1).toString()",
+      "id": "q0003",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 27,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/expression.bin",
+          "sha256": "de87903e8e530d7bb0df7eb05247fd9808d11156c43638580b71bbb9aaa3d980"
+        },
+        "expression.code-units.bin": {
+          "bytes": 54,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/expression.code-units.bin",
+          "sha256": "da9d6fff0e642c31098a858a4a9eb2e915fb850eebaaee161b8066e1220f8806"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/result.stdout.bin",
+          "sha256": "87b04e58961f9a99d853d4046a0b5b793e7c3e4bbd21f5aca8fb17c20cdb1d8b"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/003-q0003/result.stdout.code-units.bin",
+          "sha256": "a3b3835a0cc26f6374ea4e99448935656edf50683f6259db682e20f8812a6ef2"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004",
+      "expression": "two.fold(\"\",(a,k,v) -> a + v).toString()",
+      "id": "q0004",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 40,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/expression.bin",
+          "sha256": "0f665fa1ecf9d62536089f29170de9eba5da73c409048cd02f2e91befbca7b8f"
+        },
+        "expression.code-units.bin": {
+          "bytes": 80,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/expression.code-units.bin",
+          "sha256": "6e660017bda2a5bac4e5c83a99414ace47b4f415459f3d882f0ee96a5ec19622"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/result.stdout.bin",
+          "sha256": "87b04e58961f9a99d853d4046a0b5b793e7c3e4bbd21f5aca8fb17c20cdb1d8b"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/004-q0004/result.stdout.code-units.bin",
+          "sha256": "a3b3835a0cc26f6374ea4e99448935656edf50683f6259db682e20f8812a6ef2"
+        }
+      },
+      "status": "success"
+    }
+  ],
+  "started_epoch": 1793099522.850415,
+  "stderr": {
+    "bytes": 0,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/process.stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 430,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-review17-oracle-01/programs/cache-steal-casts/repeat-1/process.stdout.bin",
+    "sha256": "b9aaa32e3a7d82d22f1fe036da0a9134cc47c118f5b354f4c8d5e5900b1432a4"
+  }
+}

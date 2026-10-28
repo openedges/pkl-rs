@@ -1,0 +1,4 @@
+string	q0000	(array.containsValue(new Dynamic { x = -1 })).toString()
+string	q0001	(array.entries.map((e) -> e.first)).toString()
+string	q0002	(array.remove(8).remove(7).remove(6).remove(5).remove(4).remove(3).remove(2).remove(1).remove(0).remove(9).remove(10).keys).toString()
+string	q0003	(array.filter((k,v) -> k >= 16).keys).toString()

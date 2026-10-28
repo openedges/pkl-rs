@@ -1,0 +1,19 @@
+{
+  "Java_authority": {
+    "bytes": 445090,
+    "path": "target/m2/stage102-mapping-same20-oracle-01/report.json",
+    "sha256": "cd255a9f9b6332f24ed34a22810d02bd446e37a36e435ed6b645a1d054723c2d"
+  },
+  "Java_input_transport": "queries.tsv expression column is Base64 UTF8 envelope only; actual API receives original decoded expression",
+  "Rust_execution": "unexecuted",
+  "Rust_query_input": "repeat-specific original expression.bin (UTF8), validated against expression.code-units.bin; never Base64",
+  "cohort": "same20",
+  "evaluator_environment": {},
+  "evaluator_external_properties": {},
+  "power_assertions": false,
+  "program": "shared-cast-wrappers",
+  "queries": 4,
+  "repetitions": 2,
+  "required": true,
+  "source_uri": "file:///stage102/shared-cast-wrappers.pkl"
+}

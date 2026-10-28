@@ -1,0 +1,1 @@
+(List(3).minByOrNull((x)->trace(x))).toString()

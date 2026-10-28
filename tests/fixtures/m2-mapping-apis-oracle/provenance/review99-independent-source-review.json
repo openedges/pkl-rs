@@ -1,0 +1,91 @@
+{
+  "candidate": {
+    "bytes": 2717,
+    "path": "target/m2/stage102-mapping-api-candidate-06/report.json",
+    "sha256": "232337c2bffafb09675d1ec28e8bc7120d72c099378a1b5e536a3bbf1ec00440"
+  },
+  "complete": true,
+  "controller": {
+    "bytes": 6694,
+    "path": "target/m2/stage102-mapping06-oracleprep-independent-review-01/review.py",
+    "sha256": "a50a458712abcfe9715348695718270b8e863fb70bf31f24a6e7daaf568caf18"
+  },
+  "controller_corrections": {
+    "bytes": 1142,
+    "path": "target/m2/stage102-mapping06-oracleprep-independent-review-01/review-controller-corrections.json",
+    "sha256": "5132b3e878318f96bd3d46470b5d1c36bdd7d3c03a240d413dfda502983beaa4"
+  },
+  "disposition": "GO_SOURCE_READINESS_ONLY",
+  "kind": "Stage102 Mapping06 and Mapping99 oracle preparation independent source review",
+  "limitations": [
+    "No Java, Rust, Cargo, Node, browser or evaluator executed by this review. No compatibility or intended-branch reach claim.",
+    "Mapping06 remains a target-only source proposal; coherent integration/compilation and actual differential results pending.",
+    "Recursive/cached-cast controls can preempt intended observations; actual failures must remain authoritative.",
+    "Previously reviewed05 broader semantics were not re-proved; only exact06 restoration and finite acquisition readiness reviewed.",
+    "Current successful Stage99 targeted04 is separate source/runtime scope and supplies no Mapping compatibility evidence."
+  ],
+  "mutations": "Only new target review receipt/controller files. No canonical, Git, cache or reference mutation.",
+  "pin_readback": {
+    "bytes": 11623,
+    "path": "target/m2/stage102-mapping06-oracleprep-independent-review-01/pin-readback.json",
+    "sha256": "d1841ba4de8a8e7dc2c1e0ab1d29d97ed50fc164c2ab9ce3cfed7a17754d54d3"
+  },
+  "preparation": {
+    "bytes": 3765,
+    "path": "target/m2/stage102-mapping-review-oracle-prep-01/preparation.json",
+    "sha256": "ea59dcee47eb45fb837e9fc98b8c431459704e7253ef1a6924d9fdd90e32fb6f"
+  },
+  "previous_review": {
+    "bytes": 7404,
+    "path": "target/m2/stage102-mapping05-independent-review-01/report.json",
+    "sha256": "f3a11883704e2bc42bbe0a8f7d59bedfe98122fa61ac244c733bab7caa14cb04"
+  },
+  "prohibited_paths_accessed": false,
+  "query_review": {
+    "bytes": 29733,
+    "path": "target/m2/stage102-mapping06-oracleprep-independent-review-01/query-identity-review.json",
+    "sha256": "b9bf8c9c915a02b4416292a1c639ba2857bcba1538c7b0a0de1bb020f5481b25"
+  },
+  "required_execution_conditions": [
+    "Root must explicitly grant a fresh Java window and verify prior owned children terminal before launch.",
+    "Run serial cohort capture commands in commands.json, then mandatory full readback; keep failures, internal errors, timeout and unexecuted dispositions.",
+    "Fresh resource/input/helper/JDK/oracle checks are launch-time obligations; this review does not assert current ownership or free disk."
+  ],
+  "resource_policy": {
+    "actual_resource_admission_performed": false,
+    "child_wall_seconds": 180,
+    "cohort_wall_seconds": 3600,
+    "disk_floor_MiB": 1024,
+    "heap_MiB": 512,
+    "owned_output_cap_MiB": 512,
+    "serial_JVMs": 1
+  },
+  "source_findings": [
+    {
+      "detail": "Only value.rs differs across the19 selected05/06 files. Exact set_template_hint method restored byte-for-byte from05 preimage; other18 source files unchanged. Existing call sites retained.",
+      "disposition": "resolved in source; not compiled",
+      "id": "S102-06"
+    },
+    {
+      "detail": "Six separate immutable matrices17+21+20+10+15+16; all99 expressions, expected-unset fields, IDs/order/source/URI/profile and Base64 roundtrips checked.20programs40sessions198planned observations;78false21true. Original377 contracts untouched.",
+      "disposition": "source-ready",
+      "id": "ACQUISITION-99"
+    },
+    {
+      "detail": "Only two explicit cached-failure.pkl imports resolve to the single admitted31-byte regular0644 file. Exact URI/bytes/mode/security sources pinned. Main source stays in-memory with exact authored URI. Capture admission/bookends plus mandatory final readback enforce the auxiliary contract.",
+      "disposition": "source-ready with mandatory acquisition/readback checks",
+      "id": "AUXILIARY-15"
+    },
+    {
+      "detail": "Existing reviewed Base64 helper bytes unchanged; empty evaluator properties/environment, pinned Pkl/JDK profile, UTF8/UTF16/status/error-class/cause and ordered Logger preserved. Query-disposition ledger retains partial/unexecuted outcomes; no normalization.",
+      "disposition": "source-ready",
+      "id": "RAW-LIFECYCLE"
+    }
+  ],
+  "success": true,
+  "transport_review": {
+    "bytes": 619,
+    "path": "target/m2/stage102-mapping06-oracleprep-independent-review-01/transport-final-check.json",
+    "sha256": "c8550e5796f01caf9cafffdc552a91bd83d871839adb3a6866be3554bf68bcfd"
+  }
+}

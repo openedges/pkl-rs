@@ -1,0 +1,1 @@
+(List().fold(0,(a,x)->trace(a*10+x))).toString()

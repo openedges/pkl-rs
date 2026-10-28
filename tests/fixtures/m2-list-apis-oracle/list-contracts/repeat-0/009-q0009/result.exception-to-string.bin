@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 0 function arguments but got 1.
+
+3149 | external function filterNonNull(): List<Element(this != null)>
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.filterNonNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3149)
+
+1 | (List(1).filterNonNull(trace(1))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

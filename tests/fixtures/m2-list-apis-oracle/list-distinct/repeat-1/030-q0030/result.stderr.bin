@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got type `Int`.
+Value: 42
+
+3210 | external function distinctBy(selector: (Element) -> Any): List<Element>
+                                              ^^^^^^^^^^^^^^^^
+at pkl.base#List.distinctBy (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3210)
+
+1 | (List().distinctBy(42)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

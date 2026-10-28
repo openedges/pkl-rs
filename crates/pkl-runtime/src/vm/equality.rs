@@ -203,7 +203,28 @@ struct SetRestLookup {
 }
 
 #[derive(Clone)]
+struct CacheRead {
+    receiver: ObjectId,
+    owner: ObjectId,
+    name: Arc<str>,
+    local: bool,
+    memoize: bool,
+    method: bool,
+    entry: bool,
+    predicate: bool,
+    probe: Option<Value>,
+}
+
+#[derive(Clone)]
 enum Task {
+    MapRemoveHash(ObjectId, Value, bool),
+    MapRemoveLookup(ObjectId, Value, bool),
+    MapRemoveCompare(Box<SetRestLookup>, usize),
+    MapRemoveMatched(Box<SetRestLookup>, usize),
+    MapRemoveConfirmed(Box<SetRestLookup>),
+    MapRemoveAbsent(ObjectId),
+    MapRemoveOrder(ObjectId, Value, Option<(usize, Option<i32>)>, usize),
+    MapRemoveFinish(ObjectId, Option<(usize, Option<i32>)>, usize),
     SetRestHash(ObjectId, Value, bool),
     SetRestLookup(ObjectId, Value, bool),
     SetRestCompare(Box<SetRestLookup>, usize),
@@ -236,11 +257,15 @@ enum Task {
     ),
     ForceCached(ObjectId, ObjectId, Member, Option<Vec<usize>>, usize),
     ForceCachedMatch(Value, Value, Value),
-    PublishCache(ObjectId, CacheKey, Value),
-    AppendCache(ObjectId, CacheKey, Value),
+    PublishCache(ObjectId, CacheKey, Value, Option<Value>),
+    PublishProbe(ObjectId, CacheKey, Value, Value, Vec<usize>, usize),
+    PublishMatch(ObjectId, CacheKey, Value, usize),
+    AppendCache(ObjectId, CacheKey, Value, Option<Value>),
     CacheRebuild(ObjectId, usize),
     CacheLink(ObjectId, usize, bool),
-    ResumeForce(ObjectId, ObjectId, Arc<str>, bool, bool, bool, bool, bool),
+    ResumeForce(Box<CacheRead>),
+    ReadCache(Box<CacheRead>, Vec<usize>, usize),
+    ReadCacheMatch(Value),
     Reject,
     Compare(Value, Value, bool),
     CompareMembers(ObjectId, ObjectId),
@@ -264,7 +289,7 @@ enum Task {
         Option<bool>,
     ),
     Resolved(ObjectId, CollectionMember, Value, Option<bool>),
-    Read(ObjectId, CollectionMember, Option<bool>),
+    Read(ObjectId, CollectionMember, Option<bool>, Option<Value>),
     Await(bool),
 }
 pub(super) struct EqualityRun {
@@ -346,6 +371,14 @@ impl Vm {
         collections::cache_entry_key(&self.heap, receiver, key)
     }
 
+    fn cache_slot_value_key(
+        &self,
+        receiver: ObjectId,
+        slot: &crate::heap::CacheSlot,
+    ) -> Result<Option<Value>, RuntimeError> {
+        collections::cache_slot_entry_key(&self.heap, receiver, slot)
+    }
+
     fn cache_key_hash(&self, receiver: ObjectId, key: &CacheKey) -> Result<i32, RuntimeError> {
         // Property/local identity hashes are evaluator-local bucket assignments;
         // they are not claimed to reproduce JVM identity allocation.
@@ -361,18 +394,43 @@ impl Vm {
         receiver: ObjectId,
         key: &CacheKey,
     ) -> Result<Option<Value>, RuntimeError> {
+        let probe = self.cache_value_key(receiver, key)?;
+        self.cached_slot_probe(receiver, key, probe.as_ref())
+    }
+
+    pub(super) fn cached_slot_probe(
+        &self,
+        receiver: ObjectId,
+        key: &CacheKey,
+        probe: Option<&Value>,
+    ) -> Result<Option<Value>, RuntimeError> {
         let object = self.heap.get(receiver)?;
+        let hash = if let Some(probe) = probe {
+            self.java_hash(probe)?.unwrap_or(0)
+        } else {
+            self.cache_key_hash(receiver, key)?
+        };
         let indices = if object.cache_index.len() == object.cache_slots.len() {
-            object
-                .cache_index
-                .candidates(Some(self.cache_key_hash(receiver, key)?))
+            object.cache_index.candidates(Some(hash))
         } else {
             (0..object.cache_slots.len()).collect()
         };
-        Ok(indices.into_iter().find_map(|index| {
+        for index in indices {
             let slot = &object.cache_slots[index];
-            (slot.key == *key).then(|| slot.value.clone())
-        }))
+            let matched = if let Some(probe) = probe {
+                slot.key.entry
+                    && slot.key.owner.is_none()
+                    && !slot.key.method
+                    && collections::cache_slot_entry_key(&self.heap, receiver, slot)?
+                        .is_some_and(|stored| same_key(&self.heap, probe, &stored))
+            } else {
+                slot.key == *key
+            };
+            if matched {
+                return Ok(Some(slot.value.clone()));
+            }
+        }
+        Ok(None)
     }
 
     pub(super) fn complete_cache(
@@ -381,13 +439,31 @@ impl Vm {
         key: CacheKey,
         value: Value,
     ) -> Result<(), RuntimeError> {
-        let mut tasks = vec![Task::PublishCache(receiver, key.clone(), value.clone())];
+        let probe = self.cache_value_key(receiver, &key)?;
+        self.complete_cache_probe(receiver, key, value, probe)
+    }
+
+    pub(super) fn complete_cache_probe(
+        &mut self,
+        receiver: ObjectId,
+        key: CacheKey,
+        value: Value,
+        probe: Option<Value>,
+    ) -> Result<(), RuntimeError> {
+        let mut tasks = vec![Task::PublishCache(
+            receiver,
+            key,
+            value.clone(),
+            probe.clone(),
+        )];
         if self.heap.get(receiver)?.cache_index.has_hash()
-            && let Some(value_key) = self.cache_value_key(receiver, &key)?
+            && let Some(probe) = &probe
         {
-            tasks.push(Task::Prepare(value_key));
+            tasks.push(Task::Prepare(probe.clone()));
         }
-        self.schedule_tasks(tasks, vec![Value::Object(receiver), value]);
+        let mut roots = vec![Value::Object(receiver), value];
+        roots.extend(probe);
+        self.schedule_tasks(tasks, roots);
         Ok(())
     }
 
@@ -402,25 +478,34 @@ impl Vm {
         method: bool,
         entry: bool,
         predicate: bool,
+        probe: Option<Value>,
     ) -> Result<bool, RuntimeError> {
-        let key = CacheKey {
-            name: name.clone(),
-            owner: local.then_some(owner),
+        if !memoize {
+            return Ok(false);
+        }
+        let object = self.heap.get(receiver)?;
+        if object.cache_slots.is_empty() {
+            return Ok(false);
+        }
+        let request = Box::new(CacheRead {
+            receiver,
+            owner,
+            name,
+            local,
+            memoize,
             method,
             entry,
-        };
-        if self.heap.get(receiver)?.cache_index.has_hash()
-            && let Some(value) = self.cache_value_key(receiver, &key)?
-            && matches!(&value, Value::Object(id) if self.needs_key_hash(*id)?)
-        {
+            predicate,
+            probe: probe.clone(),
+        });
+        if let Some(probe) = probe {
+            let mut tasks = vec![Task::ResumeForce(request)];
+            if object.cache_index.has_hash() {
+                tasks.push(Task::Prepare(probe.clone()));
+            }
             self.schedule_tasks(
-                vec![
-                    Task::ResumeForce(
-                        receiver, owner, name, local, memoize, method, entry, predicate,
-                    ),
-                    Task::Prepare(value.clone()),
-                ],
-                vec![Value::Object(receiver), Value::Object(owner), value],
+                tasks,
+                vec![Value::Object(receiver), Value::Object(owner), probe],
             );
             return Ok(true);
         }
@@ -540,6 +625,13 @@ impl Vm {
         run.hide_callsite = false;
     }
 
+    pub(super) fn begin_map_remove(&mut self, source: ObjectId, key: Value) {
+        self.schedule_tasks(
+            vec![Task::MapRemoveHash(source, key.clone(), false)],
+            vec![Value::Object(source), key],
+        );
+    }
+
     pub(super) fn begin_set_rest(&mut self, source: ObjectId, first: Value) {
         self.schedule_tasks(
             vec![Task::SetRestHash(source, first.clone(), false)],
@@ -570,12 +662,13 @@ impl Vm {
         member: CollectionMember,
     ) -> Result<(), RuntimeError> {
         let candidates = collections::forcing_members(&self.heap, id)?;
+        let probe = member.key.clone();
         self.frames.last_mut().expect("active frame").equality_run = Some(EqualityRun {
             tasks: vec![Task::Resolve(id, member, candidates, 0, None)],
             on_false: Vec::new(),
             active: BTreeSet::new(),
             forced: BTreeSet::new(),
-            roots: vec![Value::Object(id)],
+            roots: vec![Value::Object(id), probe],
             equal: true,
             negate: false,
             retry: false,
@@ -732,9 +825,51 @@ impl Vm {
             method: false,
             entry: member.kind != CollectionMemberKind::Property,
         };
-        self.cached_slot(id, &key)?
-            .ok_or_else(|| invalid("unforced equality member"))
+        self.cached_slot_probe(
+            id,
+            &key,
+            (member.kind != CollectionMemberKind::Property).then_some(&member.key),
+        )?
+        .ok_or_else(|| invalid("unforced equality member"))
     }
+    fn cached_comparison_entries(
+        &self,
+        id: ObjectId,
+    ) -> Result<Vec<(CollectionMember, Value)>, RuntimeError> {
+        let members = self.equality_members(id)?;
+        let mut result = Vec::new();
+        for slot in &self.heap.get(id)?.cache_slots {
+            if slot.key.owner.is_some() || slot.key.method {
+                continue;
+            }
+            if let Some(descriptor) = members.iter().find(|member| {
+                member.name == slot.key.name
+                    && (member.kind != CollectionMemberKind::Property) == slot.key.entry
+            }) {
+                let mut member = descriptor.clone();
+                if slot.key.entry {
+                    member.key = self
+                        .cache_slot_value_key(id, slot)?
+                        .ok_or_else(|| invalid("physical cache entry key"))?;
+                }
+                result.push((member, slot.value.clone()));
+            }
+        }
+        Ok(result)
+    }
+
+    fn dynamic_regular_member_count(&mut self, id: ObjectId) -> Result<usize, RuntimeError> {
+        if let Some(count) = self.heap.get(id)?.dynamic_regular_member_count {
+            return Ok(count);
+        }
+        // VmDynamic.getRegularMemberCount observes cachedValues after force,
+        // which can still be incomplete during recursive equality. Its cached
+        // result survives publication of the currently evaluating property.
+        let count = self.cached_comparison_entries(id)?.len();
+        self.heap.get_mut(id)?.dynamic_regular_member_count = Some(count);
+        Ok(count)
+    }
+
     /// Equality visits typed properties in class declaration order; collection
     /// equality visits values in successful cache insertion order. Neither order
     /// is the child-first declaration traversal used by VmObject.force.
@@ -769,17 +904,11 @@ impl Vm {
                 owner = object.parent;
             }
         } else {
-            for key in &self.heap.get(id)?.completed_cache_order {
-                if key.owner.is_none()
-                    && !key.method
-                    && let Some(member) = members.iter().find(|member| {
-                        member.name == key.name
-                            && (member.kind != CollectionMemberKind::Property) == key.entry
-                    })
-                {
-                    result.push(member.clone());
-                }
-            }
+            result.extend(
+                self.cached_comparison_entries(id)?
+                    .into_iter()
+                    .map(|(member, _)| member),
+            );
         }
         Ok(result)
     }
@@ -833,7 +962,11 @@ impl Vm {
                     && (member.kind != CollectionMemberKind::Property) == key.entry
             }) {
                 result.push((
-                    (member.kind != CollectionMemberKind::Property).then(|| member.key.clone()),
+                    if member.kind != CollectionMemberKind::Property {
+                        self.cache_slot_value_key(id, slot)?
+                    } else {
+                        None
+                    },
                     value.clone(),
                 ));
             }
@@ -872,6 +1005,114 @@ impl Vm {
             return Ok(());
         };
         match task {
+            Task::MapRemoveHash(source, key, removing) => {
+                // A second hash must recompute zero/uncached structural hashes
+                // and collection hashes. Do not reuse prepare_keys' per-bytecode
+                // completion set or suppress recursive forcing from the prior lookup.
+                run.forced.clear();
+                run.tasks
+                    .push(Task::MapRemoveLookup(source, key.clone(), removing));
+                run.tasks.push(Task::Prepare(key));
+            }
+            Task::MapRemoveLookup(source, key, removing) => {
+                let hash = self.java_hash(&key)?;
+                let index = self.heap.get(source)?.map_index();
+                let candidates = index.candidates(hash);
+                let repeat_equality = !removing && index.repeats_lookup_equality(hash);
+                run.tasks.push(Task::MapRemoveCompare(
+                    Box::new(SetRestLookup {
+                        source,
+                        key,
+                        removing,
+                        hash,
+                        candidates,
+                        repeat_equality,
+                    }),
+                    0,
+                ));
+            }
+            Task::MapRemoveCompare(state, position) => {
+                if let Some(slot) = state.candidates.get(position).copied() {
+                    let candidate = self.heap.get(state.source)?.collection_members[slot]
+                        .key
+                        .clone();
+                    let depth = run.tasks.len();
+                    run.on_false
+                        .push((depth, Task::MapRemoveCompare(state.clone(), position + 1)));
+                    run.tasks.push(Task::MapRemoveMatched(state.clone(), slot));
+                    run.forced.clear();
+                    run.tasks
+                        .push(Task::Compare(state.key.clone(), candidate, false));
+                } else if state.removing {
+                    run.tasks
+                        .push(Task::MapRemoveOrder(state.source, state.key, None, 0));
+                } else {
+                    self.stack.push(Value::Object(state.source));
+                }
+            }
+            Task::MapRemoveMatched(state, slot) => {
+                run.on_false
+                    .pop()
+                    .ok_or_else(|| invalid("Map removal comparison"))?;
+                if state.repeat_equality {
+                    let candidate = self.heap.get(state.source)?.collection_members[slot]
+                        .key
+                        .clone();
+                    let depth = run.tasks.len();
+                    run.on_false
+                        .push((depth, Task::MapRemoveAbsent(state.source)));
+                    run.tasks.push(Task::MapRemoveConfirmed(state.clone()));
+                    run.forced.clear();
+                    run.tasks
+                        .push(Task::Compare(state.key.clone(), candidate, false));
+                } else if state.removing {
+                    run.tasks.push(Task::MapRemoveOrder(
+                        state.source,
+                        state.key.clone(),
+                        Some((slot, state.hash)),
+                        0,
+                    ));
+                } else {
+                    run.tasks
+                        .push(Task::MapRemoveHash(state.source, state.key.clone(), true));
+                }
+            }
+            Task::MapRemoveConfirmed(state) => {
+                run.on_false
+                    .pop()
+                    .ok_or_else(|| invalid("Map collision confirmation"))?;
+                run.tasks
+                    .push(Task::MapRemoveHash(state.source, state.key.clone(), true));
+            }
+            Task::MapRemoveAbsent(source) => {
+                self.stack.push(Value::Object(source));
+            }
+            Task::MapRemoveOrder(source, key, removed, position) => {
+                let members = collections::ordered_members(&self.heap, source)?;
+                let Some(member) = members.get(position) else {
+                    // Upstream invokes RrbTree.without(-1), an internal exception.
+                    // Its external diagnostic protocol remains an explicit gap.
+                    return Err(invalid("Map.remove keyOrder.indexOf returned -1"));
+                };
+                let depth = run.tasks.len();
+                run.on_false.push((
+                    depth,
+                    Task::MapRemoveOrder(source, key.clone(), removed, position + 1),
+                ));
+                run.tasks
+                    .push(Task::MapRemoveFinish(source, removed, position));
+                run.forced.clear();
+                // UnmodList.indexOf uses stored.equals(query), unlike trie lookup.
+                run.tasks
+                    .push(Task::Compare(member.key.clone(), key, false));
+            }
+            Task::MapRemoveFinish(source, removed, position) => {
+                run.on_false
+                    .pop()
+                    .ok_or_else(|| invalid("Map.remove order comparison"))?;
+                let result = self.finish_map_remove(source, removed, position)?;
+                self.stack.push(Value::Object(result));
+            }
             Task::SetRestHash(source, key, removing) => {
                 // A second hash must recompute zero/uncached structural hashes
                 // and collection hashes. Do not reuse prepare_keys' per-bytecode
@@ -1108,7 +1349,7 @@ impl Vm {
                     }
                     if entry {
                         if let Some(key) =
-                            collections::cache_entry_key(&self.heap, state.receiver, &slot.key)?
+                            collections::cache_slot_entry_key(&self.heap, state.receiver, slot)?
                         {
                             candidates.push(key);
                         }
@@ -1204,11 +1445,82 @@ impl Vm {
                 run.tasks.push(Task::CountKey(id, keys, position + 1, seen));
             }
             Task::Reject => run.reject(),
-            Task::ResumeForce(receiver, owner, name, local, memoize, method, entry, predicate) => {
-                self.frames[frame_index].equality_run = Some(run);
-                return self.force_key_mode_prepared(
-                    receiver, owner, name, local, memoize, method, entry, predicate, true, None,
-                );
+            Task::ResumeForce(request) => {
+                let object = self.heap.get(request.receiver)?;
+                let indices = if object.cache_index.has_hash() {
+                    object.cache_index.candidates(Some(
+                        self.java_hash(
+                            request
+                                .probe
+                                .as_ref()
+                                .ok_or_else(|| invalid("cache lookup probe"))?,
+                        )?
+                        .unwrap_or(0),
+                    ))
+                } else {
+                    (0..object.cache_slots.len()).collect()
+                };
+                run.tasks.push(Task::ReadCache(request, indices, 0));
+            }
+            Task::ReadCache(request, indices, position) => {
+                if let Some(slot) = indices
+                    .get(position)
+                    .and_then(|index| {
+                        self.heap
+                            .get(request.receiver)
+                            .ok()?
+                            .cache_slots
+                            .get(*index)
+                    })
+                    .cloned()
+                {
+                    let stored =
+                        collections::cache_slot_entry_key(&self.heap, request.receiver, &slot)?;
+                    let query = request
+                        .probe
+                        .clone()
+                        .ok_or_else(|| invalid("cache lookup probe"))?;
+                    let retry = Task::ReadCache(request, indices, position + 1);
+                    if slot.key.entry
+                        && slot.key.owner.is_none()
+                        && !slot.key.method
+                        && let Some(stored) = stored
+                    {
+                        if identical_key(&self.heap, &query, &stored) {
+                            self.stack.push(slot.value);
+                        } else {
+                            let depth = run.tasks.len();
+                            run.on_false.push((depth, retry));
+                            run.roots
+                                .extend([query.clone(), stored.clone(), slot.value.clone()]);
+                            run.tasks.push(Task::ReadCacheMatch(slot.value));
+                            run.tasks.push(Task::Compare(query, stored, false));
+                        }
+                    } else {
+                        run.tasks.push(retry);
+                    }
+                } else {
+                    self.frames[frame_index].equality_run = Some(run);
+                    return self.force_key_mode_probe(
+                        request.receiver,
+                        request.owner,
+                        request.name,
+                        request.local,
+                        request.memoize,
+                        request.method,
+                        request.entry,
+                        request.predicate,
+                        true,
+                        None,
+                        request.probe,
+                    );
+                }
+            }
+            Task::ReadCacheMatch(value) => {
+                run.on_false
+                    .pop()
+                    .ok_or_else(|| invalid("cache lookup branch"))?;
+                self.stack.push(value);
             }
             Task::ForceCached(receiver, owner, member, candidates, index) => {
                 let key = CacheKey {
@@ -1244,7 +1556,7 @@ impl Vm {
                         run.tasks.push(retry);
                     } else {
                         let stored = self
-                            .cache_value_key(receiver, &slot.key)?
+                            .cache_slot_value_key(receiver, &slot)?
                             .ok_or_else(|| invalid("cached entry key"))?;
                         if same_key(&self.heap, &query, &stored) {
                             self.stack.push(slot.value);
@@ -1286,13 +1598,27 @@ impl Vm {
                 }
                 self.stack.push(value);
             }
-            Task::PublishCache(id, key, value) => {
+            Task::PublishCache(id, key, value, probe) => {
                 // Bootstrap strict collections can carry completed scalar slots
                 // before their object is installed in the heap.
                 while self.heap.get(id)?.cache_index.len() < self.heap.get(id)?.cache_slots.len() {
                     let object = self.heap.get_mut(id)?;
                     object.cache_index.grow_before_append();
                     object.cache_index.push();
+                }
+                if let Some(probe) = probe {
+                    let object = self.heap.get(id)?;
+                    let indices = if object.cache_index.has_hash() {
+                        object
+                            .cache_index
+                            .candidates(Some(self.java_hash(&probe)?.unwrap_or(0)))
+                    } else {
+                        (0..object.cache_slots.len()).collect()
+                    };
+                    run.tasks
+                        .push(Task::PublishProbe(id, key, value, probe, indices, 0));
+                    self.frames[frame_index].equality_run = Some(run);
+                    return Ok(());
                 }
                 let hash = self.cache_key_hash(id, &key)?;
                 let existing = self
@@ -1309,14 +1635,64 @@ impl Vm {
                     object.cache_slots[index].value = value.clone();
                     object.cache.insert(key, LazyState::Completed(value));
                 } else {
-                    run.tasks.push(Task::AppendCache(id, key, value));
+                    run.tasks.push(Task::AppendCache(id, key, value, None));
                     if self.heap.get_mut(id)?.cache_index.grow_before_append() {
                         self.heap.get_mut(id)?.cache_index.start_rehash();
                         run.tasks.push(Task::CacheRebuild(id, 0));
                     }
                 }
             }
-            Task::AppendCache(id, key, value) => {
+            Task::PublishProbe(id, key, value, probe, indices, position) => {
+                if let Some(index) = indices.get(position).copied() {
+                    let slot = self.heap.get(id)?.cache_slots[index].clone();
+                    let stored = self.cache_slot_value_key(id, &slot)?;
+                    let retry = Task::PublishProbe(
+                        id,
+                        key.clone(),
+                        value.clone(),
+                        probe.clone(),
+                        indices,
+                        position + 1,
+                    );
+                    if slot.key.entry
+                        && slot.key.owner.is_none()
+                        && !slot.key.method
+                        && let Some(stored) = stored
+                    {
+                        if identical_key(&self.heap, &probe, &stored) {
+                            let object = self.heap.get_mut(id)?;
+                            object.cache_slots[index].value = value.clone();
+                            object.cache.insert(key, LazyState::Completed(value));
+                        } else {
+                            let depth = run.tasks.len();
+                            run.on_false.push((depth, retry));
+                            run.roots
+                                .extend([probe.clone(), stored.clone(), value.clone()]);
+                            run.tasks.push(Task::PublishMatch(id, key, value, index));
+                            run.tasks.push(Task::Compare(probe, stored, false));
+                        }
+                    } else {
+                        run.tasks.push(retry);
+                    }
+                } else {
+                    run.tasks
+                        .push(Task::AppendCache(id, key, value, Some(probe)));
+                    if self.heap.get_mut(id)?.cache_index.grow_before_append() {
+                        self.heap.get_mut(id)?.cache_index.start_rehash();
+                        run.tasks.push(Task::CacheRebuild(id, 0));
+                    }
+                }
+            }
+            Task::PublishMatch(id, key, value, index) => {
+                run.on_false
+                    .pop()
+                    .ok_or_else(|| invalid("cache publication branch"))?;
+                let object = self.heap.get_mut(id)?;
+                // EconomicMap replaces the value, retaining the original key object.
+                object.cache_slots[index].value = value.clone();
+                object.cache.insert(key, LazyState::Completed(value));
+            }
+            Task::AppendCache(id, key, value, probe) => {
                 // Warming local slots or publishing duplicate slots can change
                 // directional object equality, including that of enclosing keys.
                 if key.owner.is_some()
@@ -1334,6 +1710,7 @@ impl Vm {
                 object.completed_cache_order.push(key.clone());
                 object.cache_slots.push(crate::heap::CacheSlot {
                     key: key.clone(),
+                    entry_key: probe.clone(),
                     value: value.clone(),
                 });
                 object
@@ -1341,7 +1718,7 @@ impl Vm {
                     .insert(key.clone(), LazyState::Completed(value));
                 if object.cache_index.has_hash() {
                     run.tasks.push(Task::CacheLink(id, index, true));
-                    if let Some(value) = self.cache_value_key(id, &key)? {
+                    if let Some(value) = probe {
                         run.tasks.push(Task::Prepare(value));
                     }
                 } else if object.cache_index.len() > 4 {
@@ -1353,15 +1730,19 @@ impl Vm {
                 if let Some(slot) = self.heap.get(id)?.cache_slots.get(index).cloned() {
                     run.tasks.push(Task::CacheRebuild(id, index + 1));
                     run.tasks.push(Task::CacheLink(id, index, false));
-                    if let Some(value) = self.cache_value_key(id, &slot.key)? {
+                    if let Some(value) = self.cache_slot_value_key(id, &slot)? {
                         run.roots.push(value.clone());
                         run.tasks.push(Task::Prepare(value));
                     }
                 }
             }
             Task::CacheLink(id, index, allow_rehash) => {
-                let key = self.heap.get(id)?.cache_slots[index].key.clone();
-                let hash = self.cache_key_hash(id, &key)?;
+                let slot = &self.heap.get(id)?.cache_slots[index];
+                let hash = if let Some(probe) = self.cache_slot_value_key(id, slot)? {
+                    self.java_hash(&probe)?.unwrap_or(0)
+                } else {
+                    self.cache_key_hash(id, &slot.key)?
+                };
                 let object = self.heap.get_mut(id)?;
                 if object.cache_index.put_hash(
                     index,
@@ -1622,10 +2003,23 @@ impl Vm {
                         member.name == slot.key.name
                             && (member.kind != CollectionMemberKind::Property) == slot.key.entry
                     }) {
-                        entries.push((Some(member.clone()), None, slot.value.clone()));
+                        let mut member = member.clone();
+                        if slot.key.entry {
+                            member.key = self
+                                .cache_slot_value_key(a, slot)?
+                                .ok_or_else(|| invalid("left equality cache key"))?;
+                        }
+                        entries.push((Some(member), None, slot.value.clone()));
                     }
                 }
-                if self.equality_members(a)?.len() != rhs.len() {
+                let different_length = if self.heap.get(a)?.collection_kind
+                    == CollectionKind::Dynamic
+                {
+                    self.dynamic_regular_member_count(a)? != self.dynamic_regular_member_count(b)?
+                } else {
+                    self.equality_members(a)?.len() != rhs.len()
+                };
+                if different_length {
                     run.reject();
                 } else {
                     for (member, local, left) in entries.into_iter().rev() {
@@ -1662,8 +2056,14 @@ impl Vm {
                                 && (member.kind == CollectionMemberKind::Property)
                                     == (other.kind == CollectionMemberKind::Property)
                             {
-                                run.roots.extend([other.key.clone(), slot.value.clone()]);
-                                candidates.push((other.key.clone(), slot.value.clone()));
+                                let key = if slot.key.entry {
+                                    self.cache_slot_value_key(b, slot)?
+                                        .ok_or_else(|| invalid("right equality cache key"))?
+                                } else {
+                                    other.key.clone()
+                                };
+                                run.roots.extend([key.clone(), slot.value.clone()]);
+                                candidates.push((key, slot.value.clone()));
                             }
                         }
                         run.roots.extend([member.key.clone(), left.clone()]);
@@ -1767,13 +2167,14 @@ impl Vm {
             }
             Task::Resolve(id, member, candidates, index, prepare) => {
                 if member.kind == CollectionMemberKind::Property {
-                    run.tasks.push(Task::Read(id, member, prepare));
+                    run.tasks.push(Task::Read(id, member, prepare, None));
                 } else if let Some(candidate) = candidates.get(index).cloned() {
                     if candidate.kind == CollectionMemberKind::Property {
                         run.tasks
                             .push(Task::Resolve(id, member, candidates, index + 1, prepare));
                     } else if same_key(&self.heap, &member.key, &candidate.key) {
-                        run.tasks.push(Task::Read(id, candidate, prepare));
+                        run.tasks
+                            .push(Task::Read(id, candidate, prepare, Some(member.key)));
                     } else {
                         let depth = run.tasks.len();
                         run.on_false.push((
@@ -1797,19 +2198,19 @@ impl Vm {
                 run.on_false
                     .pop()
                     .ok_or_else(|| invalid("missing member resolution branch"))?;
-                if let (Value::Object(a), Value::Object(b)) = (key, &member.key) {
-                    self.heap.key_equalities.insert((a, *b));
+                if let (Value::Object(a), Value::Object(b)) = (&key, &member.key) {
+                    self.heap.key_equalities.insert((*a, *b));
                 }
-                run.tasks.push(Task::Read(id, member, prepare));
+                run.tasks.push(Task::Read(id, member, prepare, Some(key)));
             }
-            Task::Read(id, member, prepare) => {
+            Task::Read(id, member, prepare, probe) => {
                 if let Some(prepare) = prepare {
                     run.tasks.push(Task::Await(prepare));
                 }
                 let hide_callsite = run.hide_callsite;
                 self.frames[frame_index].equality_run = Some(run);
                 self.frames[frame_index].callsite_hidden = hide_callsite;
-                return self.force_key(
+                return self.force_key_mode_probe(
                     id,
                     id,
                     member.name,
@@ -1817,6 +2218,10 @@ impl Vm {
                     true,
                     false,
                     member.kind != CollectionMemberKind::Property,
+                    false,
+                    false,
+                    None,
+                    probe,
                 );
             }
             Task::Await(prepare) => {
@@ -1933,7 +2338,7 @@ impl Vm {
                     // VmDynamic/VmListing/VmMapping hash that current cache;
                     // constructing our internal key must not demand later values
                     // which Java's hash traversal never reads.
-                    let descriptors = if self.class_identity(id)?.is_none()
+                    let entries = if self.class_identity(id)?.is_none()
                         && !self.heap.get(id)?.is_module
                         && matches!(
                             self.heap.get(id)?.collection_kind,
@@ -1941,12 +2346,17 @@ impl Vm {
                                 | CollectionKind::Listing
                                 | CollectionKind::Mapping
                         ) {
-                        self.comparison_members(id)?
+                        self.cached_comparison_entries(id)?
                     } else {
                         self.equality_members(id)?
+                            .into_iter()
+                            .map(|member| {
+                                let value = self.cached_equality_member(id, &member)?;
+                                Ok((member, value))
+                            })
+                            .collect::<Result<Vec<_>, RuntimeError>>()?
                     };
-                    for member in descriptors {
-                        let value = self.cached_equality_member(id, &member)?;
+                    for (member, value) in entries {
                         members.push((
                             member.kind == CollectionMemberKind::Property,
                             atom(&self.heap, &member.key)?,

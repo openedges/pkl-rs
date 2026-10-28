@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Element index `3` is out of range `0`..`2`.
+Collection: List(3, 1, 2)
+
+1 | (List(3,1,2).replace(3,9)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

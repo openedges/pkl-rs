@@ -1,0 +1,6 @@
+hidden original = "same"
+hidden probe = List("sa", "me").join("")
+hidden values = new Mapping { default = (k) -> new Dynamic { captured = k }
+ [original] {} }
+hidden other = new Mapping { default = (k) -> new Dynamic { captured = k }
+ [original] {} }

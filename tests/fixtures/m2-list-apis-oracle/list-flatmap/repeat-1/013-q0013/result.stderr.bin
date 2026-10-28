@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Expected value of type `Collection`, but got type `Int`.
+Value: 3
+
+1 | (List(3,1,2).flatMapIndexed((i,x)->x)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

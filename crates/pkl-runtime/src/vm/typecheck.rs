@@ -351,6 +351,34 @@ fn module_environment(environment: &Environment) -> Result<Environment, RuntimeE
     Ok(result)
 }
 
+/// Lazy collection cast roots have identity even when their value type does
+/// not need a custom-this cell. Keep these two allocation policies separate.
+pub(super) fn needs_type_identity(ty: &TypeCheck) -> bool {
+    if needs_custom_this(ty) {
+        return true;
+    }
+    let mut pending = vec![ty];
+    let mut seen = BTreeSet::new();
+    while let Some(ty) = pending.pop() {
+        let ty = ty.resolved();
+        if !seen.insert(ty as *const TypeCheck) {
+            continue;
+        }
+        match ty {
+            TypeCheck::ParameterizedCollection {
+                kind: crate::heap::CollectionKind::Listing | crate::heap::CollectionKind::Mapping,
+                ..
+            } => return true,
+            // These types are metadata; their nested annotations do not execute
+            // at this type-check site.
+            TypeCheck::Function { .. } => (),
+            TypeCheck::Reference { domain, .. } => pending.push(domain),
+            _ => pending.extend(ty.type_children()),
+        }
+    }
+    false
+}
+
 impl Vm {
     pub(super) fn observe(&mut self, span: Span, value: Value) {
         self.observe_value(span, ObservedValue::Runtime(value));
@@ -398,7 +426,7 @@ impl Vm {
                 .ok_or_else(|| invalid("missing type-check frame"))?
                 .environment,
         )?;
-        let node = if needs_custom_this(&ty) {
+        let node = if needs_type_identity(&ty) {
             let owner = self.current_executable()?;
             let frame = self.frames.last().expect("type-check frame");
             let instruction = frame.pc.saturating_sub(1);
@@ -498,7 +526,7 @@ impl Vm {
         span: Span,
         index: usize,
     ) -> Result<(), RuntimeError> {
-        if needs_custom_this(&ty) {
+        if needs_type_identity(&ty) {
             let parent = run
                 .node
                 .ok_or_else(|| invalid("missing parent type node"))?;
@@ -651,9 +679,12 @@ impl Vm {
             collection_transform: None,
             set_order: None,
             set_sequence: None,
+            list_ops: None,
             string_transform: None,
             int_seq_run: None,
             lazy_collection_run: None,
+            mapping_lookup: None,
+            mapping_keys: None,
             conversion_run: None,
             collection_addition: None,
             function_owner: None,
@@ -814,7 +845,7 @@ impl Vm {
                                 member: run.member.clone(),
                             });
                         }
-                        error.frames.insert(1, frame.clone());
+                        error.insert_frame(1, frame.clone());
                         self.frames.last_mut().expect("type frame").callsite_hidden = true;
                     }
                     if let Some(frame) = error.frames.first_mut() {
@@ -1631,17 +1662,13 @@ impl Vm {
             }
         } else {
             let (ty, span) = state.arguments.last().expect("value type").clone();
-            let node = if needs_custom_this(&ty) {
-                let parent = run
-                    .node
-                    .ok_or_else(|| invalid("missing collection type node"))?;
-                Some(TypeNodeId(self.heap.executable_child(
-                    parent.0,
-                    ExecutionSite::TypeChild(state.arguments.len() - 1),
-                )?))
-            } else {
-                None
-            };
+            let parent = run
+                .node
+                .ok_or_else(|| invalid("missing collection type node"))?;
+            let node = Some(TypeNodeId(self.heap.executable_child(
+                parent.0,
+                ExecutionSite::TypeChild(state.arguments.len() - 1),
+            )?));
             if ty.noop()
                 || self
                     .heap
@@ -1651,7 +1678,7 @@ impl Vm {
                     .is_some_and(|cast| {
                         // ConstrainedTypeNode is equivalent only to itself. Shared
                         // bytecode (especially let roots) is not type-node identity.
-                        cast.ty.equivalent(&ty) && (node.is_none() || cast.node == node)
+                        cast.ty.equivalent(&ty) && (!needs_custom_this(&ty) || cast.node == node)
                     })
             {
                 Value::Object(id)

@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3348 | external function minBy(selector: (Element) -> Comparable): Element
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.minBy (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3348)
+
+1 | (List(1).minBy()).toString()
+     ^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,856 @@
+{
+  "Rust_evaluation": "unexecuted; no Rust identity compatibility claimed",
+  "authority": {
+    "bytes": 540562,
+    "path": "target/m2/stage102-mapping-capture-oracle-01/report.json",
+    "sha256": "a777ea4e0b22107f62ac48223910a4e738b03231451d8f51d03de56d75f5b84b"
+  },
+  "complete": true,
+  "correction": "The earlier phrase not successful key-identity coverage must not be interpreted as no identity observation. These contracts intentionally observe Java reference identity through the complete ordinary-error payload: the optional conversion hint is controlled by converted != value. All24 contracts reach this path after converter name capture succeeds. None returns a success value, but the ordinary error is an identity-sensitive observation. The preceding probe44 converter lookup errors still preempt this observer.",
+  "finished_epoch": 1793091360.940644,
+  "hint_absent": 24,
+  "hint_present": 24,
+  "kind": "Correction of capture24 identity-observer interpretation; no raw changes",
+  "observations": 48,
+  "raw_expectations": "Every result remains a full exact UTF8/UTF16/status/Logger comparison. Hint-presence summaries are interpretation only and cannot replace full raw stderr equality or become a partial comparison.",
+  "raw_rewrites": 0,
+  "rows": [
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 740,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-0/000-q0000/result.stderr.bin",
+        "sha256": "a8f2b6bf920e77d719ec1dca87be3d631b905923056ba1a9e950cb2cf0ae99fd"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1464,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-0/000-q0000/result.stderr.code-units.bin",
+        "sha256": "4c6dcd69ca0350602654e4f589a22a42020d9964b78957def17af46220e628ad"
+      },
+      "program": "probe-shared-mapping-1-capture",
+      "query": "q0000",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 829,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-0/001-q0001/result.stderr.bin",
+        "sha256": "88c98285e00369278e46477d3745daa9ba707439a9420a317ee3ba9bb80e34ec"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1642,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-0/001-q0001/result.stderr.code-units.bin",
+        "sha256": "8f26458c42d24d7b2f2a5eb4e32065579f2846f2f7e0335fe9a0efd3008b1ad1"
+      },
+      "program": "probe-shared-mapping-1-capture",
+      "query": "q0001",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 740,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-0/002-q0002/result.stderr.bin",
+        "sha256": "4ffff97fcd6bc88e7e3b535cc9edf7e6f1b930127249f48feffe07e36925327c"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1464,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-0/002-q0002/result.stderr.code-units.bin",
+        "sha256": "82386c971ca9ff5b33df44b0781225bc8b420414c090d6ea43b1ac216d3eb8a9"
+      },
+      "program": "probe-shared-mapping-1-capture",
+      "query": "q0002",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 829,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-0/003-q0003/result.stderr.bin",
+        "sha256": "114c241a39644a7cb449af4aed5834cb08d10e9557bb5b18378beb1f10634a3c"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1642,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-0/003-q0003/result.stderr.code-units.bin",
+        "sha256": "1677328721316ea6ee5c8864dc603b80506a0c4493f6eb587181f489b72422be"
+      },
+      "program": "probe-shared-mapping-1-capture",
+      "query": "q0003",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 736,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-0/004-q0004/result.stderr.bin",
+        "sha256": "0aa9da8ceec906a194ec6dcbb54b056f1a558be070a8117ee1a0d63e89794e30"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1456,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-0/004-q0004/result.stderr.code-units.bin",
+        "sha256": "506a00ba119409772f2beb62ef95968091f8d69e19210695e6436e35904b7fa9"
+      },
+      "program": "probe-shared-mapping-1-capture",
+      "query": "q0004",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 825,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-0/005-q0005/result.stderr.bin",
+        "sha256": "449c91158df93eecf9faa9dcd58c08923965c972c3bb365db0014737ca15a252"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1634,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-0/005-q0005/result.stderr.code-units.bin",
+        "sha256": "9625bf39495ebcaba81ff7dfa6434e7f98646a5fee0e587bcbcec5d6155243a4"
+      },
+      "program": "probe-shared-mapping-1-capture",
+      "query": "q0005",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 740,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-1/000-q0000/result.stderr.bin",
+        "sha256": "a8f2b6bf920e77d719ec1dca87be3d631b905923056ba1a9e950cb2cf0ae99fd"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1464,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-1/000-q0000/result.stderr.code-units.bin",
+        "sha256": "4c6dcd69ca0350602654e4f589a22a42020d9964b78957def17af46220e628ad"
+      },
+      "program": "probe-shared-mapping-1-capture",
+      "query": "q0000",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 829,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-1/001-q0001/result.stderr.bin",
+        "sha256": "88c98285e00369278e46477d3745daa9ba707439a9420a317ee3ba9bb80e34ec"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1642,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-1/001-q0001/result.stderr.code-units.bin",
+        "sha256": "8f26458c42d24d7b2f2a5eb4e32065579f2846f2f7e0335fe9a0efd3008b1ad1"
+      },
+      "program": "probe-shared-mapping-1-capture",
+      "query": "q0001",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 740,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-1/002-q0002/result.stderr.bin",
+        "sha256": "4ffff97fcd6bc88e7e3b535cc9edf7e6f1b930127249f48feffe07e36925327c"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1464,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-1/002-q0002/result.stderr.code-units.bin",
+        "sha256": "82386c971ca9ff5b33df44b0781225bc8b420414c090d6ea43b1ac216d3eb8a9"
+      },
+      "program": "probe-shared-mapping-1-capture",
+      "query": "q0002",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 829,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-1/003-q0003/result.stderr.bin",
+        "sha256": "114c241a39644a7cb449af4aed5834cb08d10e9557bb5b18378beb1f10634a3c"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1642,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-1/003-q0003/result.stderr.code-units.bin",
+        "sha256": "1677328721316ea6ee5c8864dc603b80506a0c4493f6eb587181f489b72422be"
+      },
+      "program": "probe-shared-mapping-1-capture",
+      "query": "q0003",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 736,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-1/004-q0004/result.stderr.bin",
+        "sha256": "0aa9da8ceec906a194ec6dcbb54b056f1a558be070a8117ee1a0d63e89794e30"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1456,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-1/004-q0004/result.stderr.code-units.bin",
+        "sha256": "506a00ba119409772f2beb62ef95968091f8d69e19210695e6436e35904b7fa9"
+      },
+      "program": "probe-shared-mapping-1-capture",
+      "query": "q0004",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 825,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-1/005-q0005/result.stderr.bin",
+        "sha256": "449c91158df93eecf9faa9dcd58c08923965c972c3bb365db0014737ca15a252"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1634,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-1-capture/repeat-1/005-q0005/result.stderr.code-units.bin",
+        "sha256": "9625bf39495ebcaba81ff7dfa6434e7f98646a5fee0e587bcbcec5d6155243a4"
+      },
+      "program": "probe-shared-mapping-1-capture",
+      "query": "q0005",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 740,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-0/000-q0000/result.stderr.bin",
+        "sha256": "a8f2b6bf920e77d719ec1dca87be3d631b905923056ba1a9e950cb2cf0ae99fd"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1464,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-0/000-q0000/result.stderr.code-units.bin",
+        "sha256": "4c6dcd69ca0350602654e4f589a22a42020d9964b78957def17af46220e628ad"
+      },
+      "program": "probe-shared-mapping-6-capture",
+      "query": "q0000",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 829,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-0/001-q0001/result.stderr.bin",
+        "sha256": "88c98285e00369278e46477d3745daa9ba707439a9420a317ee3ba9bb80e34ec"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1642,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-0/001-q0001/result.stderr.code-units.bin",
+        "sha256": "8f26458c42d24d7b2f2a5eb4e32065579f2846f2f7e0335fe9a0efd3008b1ad1"
+      },
+      "program": "probe-shared-mapping-6-capture",
+      "query": "q0001",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 740,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-0/002-q0002/result.stderr.bin",
+        "sha256": "4ffff97fcd6bc88e7e3b535cc9edf7e6f1b930127249f48feffe07e36925327c"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1464,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-0/002-q0002/result.stderr.code-units.bin",
+        "sha256": "82386c971ca9ff5b33df44b0781225bc8b420414c090d6ea43b1ac216d3eb8a9"
+      },
+      "program": "probe-shared-mapping-6-capture",
+      "query": "q0002",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 829,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-0/003-q0003/result.stderr.bin",
+        "sha256": "114c241a39644a7cb449af4aed5834cb08d10e9557bb5b18378beb1f10634a3c"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1642,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-0/003-q0003/result.stderr.code-units.bin",
+        "sha256": "1677328721316ea6ee5c8864dc603b80506a0c4493f6eb587181f489b72422be"
+      },
+      "program": "probe-shared-mapping-6-capture",
+      "query": "q0003",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 736,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-0/004-q0004/result.stderr.bin",
+        "sha256": "0aa9da8ceec906a194ec6dcbb54b056f1a558be070a8117ee1a0d63e89794e30"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1456,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-0/004-q0004/result.stderr.code-units.bin",
+        "sha256": "506a00ba119409772f2beb62ef95968091f8d69e19210695e6436e35904b7fa9"
+      },
+      "program": "probe-shared-mapping-6-capture",
+      "query": "q0004",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 825,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-0/005-q0005/result.stderr.bin",
+        "sha256": "449c91158df93eecf9faa9dcd58c08923965c972c3bb365db0014737ca15a252"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1634,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-0/005-q0005/result.stderr.code-units.bin",
+        "sha256": "9625bf39495ebcaba81ff7dfa6434e7f98646a5fee0e587bcbcec5d6155243a4"
+      },
+      "program": "probe-shared-mapping-6-capture",
+      "query": "q0005",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 740,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/result.stderr.bin",
+        "sha256": "a8f2b6bf920e77d719ec1dca87be3d631b905923056ba1a9e950cb2cf0ae99fd"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1464,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/result.stderr.code-units.bin",
+        "sha256": "4c6dcd69ca0350602654e4f589a22a42020d9964b78957def17af46220e628ad"
+      },
+      "program": "probe-shared-mapping-6-capture",
+      "query": "q0000",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 829,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/result.stderr.bin",
+        "sha256": "88c98285e00369278e46477d3745daa9ba707439a9420a317ee3ba9bb80e34ec"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1642,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/result.stderr.code-units.bin",
+        "sha256": "8f26458c42d24d7b2f2a5eb4e32065579f2846f2f7e0335fe9a0efd3008b1ad1"
+      },
+      "program": "probe-shared-mapping-6-capture",
+      "query": "q0001",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 740,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/result.stderr.bin",
+        "sha256": "4ffff97fcd6bc88e7e3b535cc9edf7e6f1b930127249f48feffe07e36925327c"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1464,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/result.stderr.code-units.bin",
+        "sha256": "82386c971ca9ff5b33df44b0781225bc8b420414c090d6ea43b1ac216d3eb8a9"
+      },
+      "program": "probe-shared-mapping-6-capture",
+      "query": "q0002",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 829,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/result.stderr.bin",
+        "sha256": "114c241a39644a7cb449af4aed5834cb08d10e9557bb5b18378beb1f10634a3c"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1642,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/result.stderr.code-units.bin",
+        "sha256": "1677328721316ea6ee5c8864dc603b80506a0c4493f6eb587181f489b72422be"
+      },
+      "program": "probe-shared-mapping-6-capture",
+      "query": "q0003",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 736,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/result.stderr.bin",
+        "sha256": "0aa9da8ceec906a194ec6dcbb54b056f1a558be070a8117ee1a0d63e89794e30"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1456,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/result.stderr.code-units.bin",
+        "sha256": "506a00ba119409772f2beb62ef95968091f8d69e19210695e6436e35904b7fa9"
+      },
+      "program": "probe-shared-mapping-6-capture",
+      "query": "q0004",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 825,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/result.stderr.bin",
+        "sha256": "449c91158df93eecf9faa9dcd58c08923965c972c3bb365db0014737ca15a252"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1634,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/result.stderr.code-units.bin",
+        "sha256": "9625bf39495ebcaba81ff7dfa6434e7f98646a5fee0e587bcbcec5d6155243a4"
+      },
+      "program": "probe-shared-mapping-6-capture",
+      "query": "q0005",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 740,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-0/000-q0000/result.stderr.bin",
+        "sha256": "a8f2b6bf920e77d719ec1dca87be3d631b905923056ba1a9e950cb2cf0ae99fd"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1464,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-0/000-q0000/result.stderr.code-units.bin",
+        "sha256": "4c6dcd69ca0350602654e4f589a22a42020d9964b78957def17af46220e628ad"
+      },
+      "program": "probe-shared-dynamic-1-capture",
+      "query": "q0000",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 829,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-0/001-q0001/result.stderr.bin",
+        "sha256": "88c98285e00369278e46477d3745daa9ba707439a9420a317ee3ba9bb80e34ec"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1642,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-0/001-q0001/result.stderr.code-units.bin",
+        "sha256": "8f26458c42d24d7b2f2a5eb4e32065579f2846f2f7e0335fe9a0efd3008b1ad1"
+      },
+      "program": "probe-shared-dynamic-1-capture",
+      "query": "q0001",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 740,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-0/002-q0002/result.stderr.bin",
+        "sha256": "4ffff97fcd6bc88e7e3b535cc9edf7e6f1b930127249f48feffe07e36925327c"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1464,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-0/002-q0002/result.stderr.code-units.bin",
+        "sha256": "82386c971ca9ff5b33df44b0781225bc8b420414c090d6ea43b1ac216d3eb8a9"
+      },
+      "program": "probe-shared-dynamic-1-capture",
+      "query": "q0002",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 829,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-0/003-q0003/result.stderr.bin",
+        "sha256": "114c241a39644a7cb449af4aed5834cb08d10e9557bb5b18378beb1f10634a3c"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1642,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-0/003-q0003/result.stderr.code-units.bin",
+        "sha256": "1677328721316ea6ee5c8864dc603b80506a0c4493f6eb587181f489b72422be"
+      },
+      "program": "probe-shared-dynamic-1-capture",
+      "query": "q0003",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 736,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-0/004-q0004/result.stderr.bin",
+        "sha256": "0aa9da8ceec906a194ec6dcbb54b056f1a558be070a8117ee1a0d63e89794e30"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1456,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-0/004-q0004/result.stderr.code-units.bin",
+        "sha256": "506a00ba119409772f2beb62ef95968091f8d69e19210695e6436e35904b7fa9"
+      },
+      "program": "probe-shared-dynamic-1-capture",
+      "query": "q0004",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 825,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-0/005-q0005/result.stderr.bin",
+        "sha256": "449c91158df93eecf9faa9dcd58c08923965c972c3bb365db0014737ca15a252"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1634,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-0/005-q0005/result.stderr.code-units.bin",
+        "sha256": "9625bf39495ebcaba81ff7dfa6434e7f98646a5fee0e587bcbcec5d6155243a4"
+      },
+      "program": "probe-shared-dynamic-1-capture",
+      "query": "q0005",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 740,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-1/000-q0000/result.stderr.bin",
+        "sha256": "a8f2b6bf920e77d719ec1dca87be3d631b905923056ba1a9e950cb2cf0ae99fd"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1464,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-1/000-q0000/result.stderr.code-units.bin",
+        "sha256": "4c6dcd69ca0350602654e4f589a22a42020d9964b78957def17af46220e628ad"
+      },
+      "program": "probe-shared-dynamic-1-capture",
+      "query": "q0000",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 829,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-1/001-q0001/result.stderr.bin",
+        "sha256": "88c98285e00369278e46477d3745daa9ba707439a9420a317ee3ba9bb80e34ec"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1642,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-1/001-q0001/result.stderr.code-units.bin",
+        "sha256": "8f26458c42d24d7b2f2a5eb4e32065579f2846f2f7e0335fe9a0efd3008b1ad1"
+      },
+      "program": "probe-shared-dynamic-1-capture",
+      "query": "q0001",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 740,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-1/002-q0002/result.stderr.bin",
+        "sha256": "4ffff97fcd6bc88e7e3b535cc9edf7e6f1b930127249f48feffe07e36925327c"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1464,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-1/002-q0002/result.stderr.code-units.bin",
+        "sha256": "82386c971ca9ff5b33df44b0781225bc8b420414c090d6ea43b1ac216d3eb8a9"
+      },
+      "program": "probe-shared-dynamic-1-capture",
+      "query": "q0002",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 829,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-1/003-q0003/result.stderr.bin",
+        "sha256": "114c241a39644a7cb449af4aed5834cb08d10e9557bb5b18378beb1f10634a3c"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1642,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-1/003-q0003/result.stderr.code-units.bin",
+        "sha256": "1677328721316ea6ee5c8864dc603b80506a0c4493f6eb587181f489b72422be"
+      },
+      "program": "probe-shared-dynamic-1-capture",
+      "query": "q0003",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 736,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-1/004-q0004/result.stderr.bin",
+        "sha256": "0aa9da8ceec906a194ec6dcbb54b056f1a558be070a8117ee1a0d63e89794e30"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1456,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-1/004-q0004/result.stderr.code-units.bin",
+        "sha256": "506a00ba119409772f2beb62ef95968091f8d69e19210695e6436e35904b7fa9"
+      },
+      "program": "probe-shared-dynamic-1-capture",
+      "query": "q0004",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 825,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-1/005-q0005/result.stderr.bin",
+        "sha256": "449c91158df93eecf9faa9dcd58c08923965c972c3bb365db0014737ca15a252"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1634,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-1-capture/repeat-1/005-q0005/result.stderr.code-units.bin",
+        "sha256": "9625bf39495ebcaba81ff7dfa6434e7f98646a5fee0e587bcbcec5d6155243a4"
+      },
+      "program": "probe-shared-dynamic-1-capture",
+      "query": "q0005",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 740,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-0/000-q0000/result.stderr.bin",
+        "sha256": "a8f2b6bf920e77d719ec1dca87be3d631b905923056ba1a9e950cb2cf0ae99fd"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1464,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-0/000-q0000/result.stderr.code-units.bin",
+        "sha256": "4c6dcd69ca0350602654e4f589a22a42020d9964b78957def17af46220e628ad"
+      },
+      "program": "probe-shared-dynamic-6-capture",
+      "query": "q0000",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 829,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-0/001-q0001/result.stderr.bin",
+        "sha256": "88c98285e00369278e46477d3745daa9ba707439a9420a317ee3ba9bb80e34ec"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1642,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-0/001-q0001/result.stderr.code-units.bin",
+        "sha256": "8f26458c42d24d7b2f2a5eb4e32065579f2846f2f7e0335fe9a0efd3008b1ad1"
+      },
+      "program": "probe-shared-dynamic-6-capture",
+      "query": "q0001",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 740,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-0/002-q0002/result.stderr.bin",
+        "sha256": "4ffff97fcd6bc88e7e3b535cc9edf7e6f1b930127249f48feffe07e36925327c"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1464,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-0/002-q0002/result.stderr.code-units.bin",
+        "sha256": "82386c971ca9ff5b33df44b0781225bc8b420414c090d6ea43b1ac216d3eb8a9"
+      },
+      "program": "probe-shared-dynamic-6-capture",
+      "query": "q0002",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 829,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-0/003-q0003/result.stderr.bin",
+        "sha256": "114c241a39644a7cb449af4aed5834cb08d10e9557bb5b18378beb1f10634a3c"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1642,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-0/003-q0003/result.stderr.code-units.bin",
+        "sha256": "1677328721316ea6ee5c8864dc603b80506a0c4493f6eb587181f489b72422be"
+      },
+      "program": "probe-shared-dynamic-6-capture",
+      "query": "q0003",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 736,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-0/004-q0004/result.stderr.bin",
+        "sha256": "0aa9da8ceec906a194ec6dcbb54b056f1a558be070a8117ee1a0d63e89794e30"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1456,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-0/004-q0004/result.stderr.code-units.bin",
+        "sha256": "506a00ba119409772f2beb62ef95968091f8d69e19210695e6436e35904b7fa9"
+      },
+      "program": "probe-shared-dynamic-6-capture",
+      "query": "q0004",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 825,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-0/005-q0005/result.stderr.bin",
+        "sha256": "449c91158df93eecf9faa9dcd58c08923965c972c3bb365db0014737ca15a252"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1634,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-0/005-q0005/result.stderr.code-units.bin",
+        "sha256": "9625bf39495ebcaba81ff7dfa6434e7f98646a5fee0e587bcbcec5d6155243a4"
+      },
+      "program": "probe-shared-dynamic-6-capture",
+      "query": "q0005",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 740,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-1/000-q0000/result.stderr.bin",
+        "sha256": "a8f2b6bf920e77d719ec1dca87be3d631b905923056ba1a9e950cb2cf0ae99fd"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1464,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-1/000-q0000/result.stderr.code-units.bin",
+        "sha256": "4c6dcd69ca0350602654e4f589a22a42020d9964b78957def17af46220e628ad"
+      },
+      "program": "probe-shared-dynamic-6-capture",
+      "query": "q0000",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 829,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-1/001-q0001/result.stderr.bin",
+        "sha256": "88c98285e00369278e46477d3745daa9ba707439a9420a317ee3ba9bb80e34ec"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1642,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-1/001-q0001/result.stderr.code-units.bin",
+        "sha256": "8f26458c42d24d7b2f2a5eb4e32065579f2846f2f7e0335fe9a0efd3008b1ad1"
+      },
+      "program": "probe-shared-dynamic-6-capture",
+      "query": "q0001",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 740,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-1/002-q0002/result.stderr.bin",
+        "sha256": "4ffff97fcd6bc88e7e3b535cc9edf7e6f1b930127249f48feffe07e36925327c"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1464,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-1/002-q0002/result.stderr.code-units.bin",
+        "sha256": "82386c971ca9ff5b33df44b0781225bc8b420414c090d6ea43b1ac216d3eb8a9"
+      },
+      "program": "probe-shared-dynamic-6-capture",
+      "query": "q0002",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 829,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-1/003-q0003/result.stderr.bin",
+        "sha256": "114c241a39644a7cb449af4aed5834cb08d10e9557bb5b18378beb1f10634a3c"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1642,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-1/003-q0003/result.stderr.code-units.bin",
+        "sha256": "1677328721316ea6ee5c8864dc603b80506a0c4493f6eb587181f489b72422be"
+      },
+      "program": "probe-shared-dynamic-6-capture",
+      "query": "q0003",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": false,
+      "full_stderr": {
+        "bytes": 736,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-1/004-q0004/result.stderr.bin",
+        "sha256": "0aa9da8ceec906a194ec6dcbb54b056f1a558be070a8117ee1a0d63e89794e30"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1456,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-1/004-q0004/result.stderr.code-units.bin",
+        "sha256": "506a00ba119409772f2beb62ef95968091f8d69e19210695e6436e35904b7fa9"
+      },
+      "program": "probe-shared-dynamic-6-capture",
+      "query": "q0004",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "contains_exact_same_payload_conversion_hint": true,
+      "full_stderr": {
+        "bytes": 825,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-1/005-q0005/result.stderr.bin",
+        "sha256": "449c91158df93eecf9faa9dcd58c08923965c972c3bb365db0014737ca15a252"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1634,
+        "path": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-dynamic-6-capture/repeat-1/005-q0005/result.stderr.code-units.bin",
+        "sha256": "9625bf39495ebcaba81ff7dfa6434e7f98646a5fee0e587bcbcec5d6155243a4"
+      },
+      "program": "probe-shared-dynamic-6-capture",
+      "query": "q0005",
+      "repeat": 1,
+      "status": "error"
+    }
+  ],
+  "source": {
+    "bytes": 14727,
+    "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/AbstractRenderer.java",
+    "sha256": "a005456a2f0348fbb520e4479b642538c424cc756f797b0ac5a6cec26570d7e4"
+  },
+  "source_lines": "renderDocument lines91\u2013104: converter.convert runs before visitDocument; catch adds conversion hint iff converted != value",
+  "statuses": {
+    "error": 48
+  },
+  "supersedes_interpretation_in": [
+    {
+      "bytes": 4334,
+      "path": "target/m2/stage102-mapping-capture-oracle-handoff-01/report.json",
+      "sha256": "99630bf23d1cd29fb03d03f4c774a67b1e22448ce84f1bce46b145372abc5a99"
+    },
+    {
+      "bytes": 3861,
+      "path": "target/m2/stage102-mapping-oracle-fixtures-02/report.json",
+      "sha256": "c9666a5f190bcad7e1e963e81fa1ba78e3d73f74021e841060e199d6a06b92bb"
+    }
+  ]
+}

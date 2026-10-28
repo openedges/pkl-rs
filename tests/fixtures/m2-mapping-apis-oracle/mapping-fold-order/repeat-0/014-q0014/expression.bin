@@ -1,0 +1,1 @@
+((bad).fold(0,(a,k,v) -> List(a,k,trace(v)))).toString()

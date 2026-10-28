@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find property `child`.
+
+1 | (new PcfRenderer { converters { [Mapping] = (m) -> child.getOrDefault(3) } }).renderDocument(child)
+                                                       ^^^^^
+at repl:text.converters[#1].<function#1> (repl:text)
+
+1 | (new PcfRenderer { converters { [Mapping] = (m) -> child.getOrDefault(3) } }).renderDocument(child)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

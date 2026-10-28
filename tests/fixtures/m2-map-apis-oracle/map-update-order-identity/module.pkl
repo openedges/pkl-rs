@@ -1,0 +1,9 @@
+hidden make = () -> new Dynamic { ["x"] = trace(120) }
+hidden key = make.apply()
+hidden values = Map(31,new Dynamic { value = trace("thirty-one") },0,new Dynamic { value = trace("zero") },1,new Dynamic { value = trace("one") })
+hidden keyed = Map(key,1,"Aa",2,"BB",3)
+hidden captured = new Dynamic { v = 42 }
+hidden identityMap = Map("captured", captured)
+hidden entryKey = "captured"
+hidden entryValue = "payload"
+hidden identityEntries = Map(entryKey, entryValue)

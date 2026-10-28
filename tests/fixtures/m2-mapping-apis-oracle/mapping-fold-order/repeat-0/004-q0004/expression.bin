@@ -1,0 +1,1 @@
+((new Mapping {}).fold(0,(k,v) -> 0)).toString()

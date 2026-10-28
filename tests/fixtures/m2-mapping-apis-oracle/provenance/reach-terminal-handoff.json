@@ -1,0 +1,142 @@
+{
+  "JDK_property_preflight_processes": 1,
+  "all_JVM_launches_terminal": true,
+  "authority": {
+    "bytes": 852583,
+    "path": "target/m2/stage102-probe-reach-oracle-01/report.json",
+    "sha256": "ae474be13fc63d082b02b90715d1fcaeb1194422c60216353b6c2e7e89914b59"
+  },
+  "canonical_Cargo_Node_browser_Git_changes_or_execution": false,
+  "capture_process": {
+    "bytes": 486,
+    "path": "target/m2/stage102-probe-reach-oracle-01/capture-process.json",
+    "sha256": "c1656f5b27efa5bd0b7f601ee50b25138f588318299f2257aa8ca5d37a195a6b"
+  },
+  "complete": true,
+  "concurrency": "Root public review/Git and archive I/O only may overlap. Java binds immutable inputs/helper/JDK/JAR/lock/reference, not canonical Rust context. No performance or Rust compatibility claim.",
+  "contracts": 28,
+  "evaluation_sessions": 10,
+  "exclusive_Java_window_released": true,
+  "finished_epoch": 1793091501.674386,
+  "forced_cleanup_events": 0,
+  "helper_review": {
+    "bytes": 68733,
+    "path": "target/m2/stage102-oracle-envelope-independent-review-02/report.json",
+    "sha256": "f919b42b1df6ccfb9ba5055864ef903a96dc7b265bd1333458414948b763f593"
+  },
+  "host_execution": {
+    "exit_code": 0,
+    "session_id": 57090
+  },
+  "interpretation": "Minimal4 contracts/two repeats produce4 success/4 ordinary errors and8 ordered Logger events. Separate24 renderValue controls/two repeats produce48 success with48 Logger events. Full raw errors and hint identity observers remain required; successful value observers supplement them without replacing any original contract.",
+  "kind": "Stage102 separate reach28 pinned Java terminal handoff",
+  "minimum_free_bytes": 3349266432,
+  "observations": 56,
+  "ordered_logger_events": 56,
+  "original349_and_identity_observer_correction_preserved": true,
+  "owned_PID_later_checks": [
+    {
+      "exit": 1,
+      "pid": 39645,
+      "recorded_start": "Tue Oct 27 17:57:48 2026",
+      "same_identity_live": false,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "pid": 39683,
+      "recorded_start": "Tue Oct 27 17:57:50 2026",
+      "same_identity_live": false,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "pid": 39696,
+      "recorded_start": "Tue Oct 27 17:57:51 2026",
+      "same_identity_live": false,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "pid": 39709,
+      "recorded_start": "Tue Oct 27 17:57:51 2026",
+      "same_identity_live": false,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "pid": 39720,
+      "recorded_start": "Tue Oct 27 17:57:52 2026",
+      "same_identity_live": false,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "pid": 39736,
+      "recorded_start": "Tue Oct 27 17:57:54 2026",
+      "same_identity_live": false,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "pid": 39748,
+      "recorded_start": "Tue Oct 27 17:57:55 2026",
+      "same_identity_live": false,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "pid": 39760,
+      "recorded_start": "Tue Oct 27 17:57:56 2026",
+      "same_identity_live": false,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "pid": 39778,
+      "recorded_start": "Tue Oct 27 17:57:57 2026",
+      "same_identity_live": false,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "pid": 39790,
+      "recorded_start": "Tue Oct 27 17:57:58 2026",
+      "same_identity_live": false,
+      "stderr": "",
+      "stdout": ""
+    }
+  ],
+  "raw_readback": {
+    "bytes": 7481,
+    "path": "target/m2/stage102-probe-reach-oracle-readback-01/report.json",
+    "sha256": "35811669c4e9a2a4976530bc83fa3dff7d525ae9aca7d3d1b05f2dd7b5f61bd0"
+  },
+  "readback_host_execution": {
+    "exit_code": 0
+  },
+  "remaining_owned_processes": [],
+  "repeat_differences": [],
+  "source_scope_qualification": "Inherited prior_main370/prior_followup7 fields authenticate historical immutable matrices only; actual acquired scope is the exact reach28 matrix/programs/profiles/decoded expressions.",
+  "source_tool_materialized_bookends_stable": true,
+  "statuses": {
+    "error": 4,
+    "success": 52
+  },
+  "success": true,
+  "transport_roundtrip": {
+    "bytes": 21238,
+    "path": "target/m2/stage102-probe-reach-oracle-prep-01/transport-roundtrip.json",
+    "sha256": "69fe31f441ab3966393e7d1c1faf6d02f2481df18548fc5cbddb7a29fe1ea15b"
+  },
+  "unrun_or_partial_observations": 0
+}

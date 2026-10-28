@@ -1,0 +1,927 @@
+{
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/CollectionEveryOracle.java",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture",
+    "file:///stage102/probe-shared-mapping-6.pkl"
+  ],
+  "cleanup_events": [],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01",
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 0,
+  "finished_epoch": 1793090954.1079738,
+  "helper": {
+    "bytes": 6329,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/CollectionEveryOracle.java",
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "owned_child_reaped": true,
+  "owned_processes": {
+    "root_observed": true,
+    "root_pid": 37509,
+    "terminal_live": [],
+    "tracked": [
+      {
+        "group_id_at_discovery": 37509,
+        "parent_pid_at_discovery": 37415,
+        "pid": 37509,
+        "started": "Tue Oct 27 17:49:13 2026"
+      }
+    ]
+  },
+  "owned_start": "Tue Oct 27 17:49:13 2026",
+  "pgid": 37509,
+  "pid": 37509,
+  "power_assertions": false,
+  "program": "probe-shared-mapping-6-capture",
+  "repeat": 1,
+  "rows": [
+    {
+      "directory": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000",
+      "expression": "(let (capturedKey = values[probe].captured) (new PcfRenderer { converters { [String] = (s) -> capturedKey } }).renderDocument(probe))",
+      "id": "q0000",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 133,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/expression.bin",
+          "sha256": "8d75e9f27f88bd67b797417445ac14d0a49106483765d9e3a806d566b5bf7026"
+        },
+        "expression.code-units.bin": {
+          "bytes": 266,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/expression.code-units.bin",
+          "sha256": "c217e7748b9932884fec4b1015dcaf1ebfdd7a1c7f65e82e10069f83616f0ccd"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 767,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/result.exception-to-string.bin",
+          "sha256": "dcc4ba46ef308494e22d18fa4b98255d8b0616e7dc1c108dfa0bc930692b6dea"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 1518,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/result.exception-to-string.code-units.bin",
+          "sha256": "02c6fb650a69cb940658a8d992f4b1c96b9acb2150d45ac9f19877af78ef7a0c"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 740,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/result.stderr.bin",
+          "sha256": "a8f2b6bf920e77d719ec1dca87be3d631b905923056ba1a9e950cb2cf0ae99fd"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 1464,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/result.stderr.code-units.bin",
+          "sha256": "4c6dcd69ca0350602654e4f589a22a42020d9964b78957def17af46220e628ad"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/000-q0000/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001",
+      "expression": "(let (capturedKey = values[probe].captured) (new PcfRenderer { converters { [String] = (s) -> capturedKey } }).renderDocument(declared))",
+      "id": "q0001",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 136,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/expression.bin",
+          "sha256": "846c34e7b3ffa775a48e2a3b7edeb0e2de93c7b394062538e23c90b748d2a873"
+        },
+        "expression.code-units.bin": {
+          "bytes": 272,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/expression.code-units.bin",
+          "sha256": "58158a9a7717b34b27a3b858d45a3ce598740decc637c9204ff52720e4098c5d"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 856,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/result.exception-to-string.bin",
+          "sha256": "1df98a04fc3762db3baaedb6c95e7a91490db9bf098ffe38666dfa5438ea6b42"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 1696,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/result.exception-to-string.code-units.bin",
+          "sha256": "40da186046b6fcf1f20214eded8614389484831189cda3d783063d4e3ae06f4e"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 829,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/result.stderr.bin",
+          "sha256": "88c98285e00369278e46477d3745daa9ba707439a9420a317ee3ba9bb80e34ec"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 1642,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/result.stderr.code-units.bin",
+          "sha256": "8f26458c42d24d7b2f2a5eb4e32065579f2846f2f7e0335fe9a0efd3008b1ad1"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/001-q0001/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002",
+      "expression": "(let (capturedKey = direct[probe].captured) (new PcfRenderer { converters { [String] = (s) -> capturedKey } }).renderDocument(probe))",
+      "id": "q0002",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 133,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/expression.bin",
+          "sha256": "93cbf604a07495005d69855487bf38cd804fb9a4a93d6dd98402fa93821090b2"
+        },
+        "expression.code-units.bin": {
+          "bytes": 266,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/expression.code-units.bin",
+          "sha256": "c28e7047088bc90a21cc761d667c69938a5443f98f21818dff15f256ac40c0d1"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 767,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/result.exception-to-string.bin",
+          "sha256": "23229f971770823936cb458f1511fbc6c25a2e7adedc5c9bbf753fac8a5da89c"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 1518,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/result.exception-to-string.code-units.bin",
+          "sha256": "7dec460c420cdc8e68ba007bd6ce2a70b4d5ba37165f04f60bf85d0a6ea9a8a7"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 740,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/result.stderr.bin",
+          "sha256": "4ffff97fcd6bc88e7e3b535cc9edf7e6f1b930127249f48feffe07e36925327c"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 1464,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/result.stderr.code-units.bin",
+          "sha256": "82386c971ca9ff5b33df44b0781225bc8b420414c090d6ea43b1ac216d3eb8a9"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/002-q0002/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003",
+      "expression": "(let (capturedKey = direct[probe].captured) (new PcfRenderer { converters { [String] = (s) -> capturedKey } }).renderDocument(declared))",
+      "id": "q0003",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 136,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/expression.bin",
+          "sha256": "cf96f8fe6af31945846670e5cfd2ea7ec96051eece744ee98660e46637e5b359"
+        },
+        "expression.code-units.bin": {
+          "bytes": 272,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/expression.code-units.bin",
+          "sha256": "9d2a4fe542a8ce4ac81e1c87666a6aa05fa25752b27b275f290354953f9b5758"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 856,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/result.exception-to-string.bin",
+          "sha256": "b0a11dc6f9fa2be3dc68717f1fe8e45198f2785559202f7e01698b9629e3da3b"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 1696,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/result.exception-to-string.code-units.bin",
+          "sha256": "9cdd7b380eee50119e74e966d5a69239418672e20a501b9fe0d97929c695ec14"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 829,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/result.stderr.bin",
+          "sha256": "114c241a39644a7cb449af4aed5834cb08d10e9557bb5b18378beb1f10634a3c"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 1642,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/result.stderr.code-units.bin",
+          "sha256": "1677328721316ea6ee5c8864dc603b80506a0c4493f6eb587181f489b72422be"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/003-q0003/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004",
+      "expression": "(let (capturedKey = child[probe].captured) (new PcfRenderer { converters { [String] = (s) -> capturedKey } }).renderDocument(probe))",
+      "id": "q0004",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 132,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/expression.bin",
+          "sha256": "7d0bc54563017b8a04a0f0963f8a5c57a4ee628ae2978d1c797b452e2e05ef54"
+        },
+        "expression.code-units.bin": {
+          "bytes": 264,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/expression.code-units.bin",
+          "sha256": "25a3c8fd9038a05c23438f18361bea578e4b1c7b258b47a29b96d73be88d5da4"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 763,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/result.exception-to-string.bin",
+          "sha256": "082ea0e250b3c514564c5ba6dd3a8b206b5ff6e505295ec62ae47366e300e493"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 1510,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/result.exception-to-string.code-units.bin",
+          "sha256": "150ca5ee69b53cb4499298630783670aecdffb4d2ec1d218b2f20cb5e466b02c"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 736,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/result.stderr.bin",
+          "sha256": "0aa9da8ceec906a194ec6dcbb54b056f1a558be070a8117ee1a0d63e89794e30"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 1456,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/result.stderr.code-units.bin",
+          "sha256": "506a00ba119409772f2beb62ef95968091f8d69e19210695e6436e35904b7fa9"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/004-q0004/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005",
+      "expression": "(let (capturedKey = child[probe].captured) (new PcfRenderer { converters { [String] = (s) -> capturedKey } }).renderDocument(declared))",
+      "id": "q0005",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 135,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/expression.bin",
+          "sha256": "f5fc505b65efdc2b43bca92d42db087797ba987132bb99d7dadb675d7aa49a2a"
+        },
+        "expression.code-units.bin": {
+          "bytes": 270,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/expression.code-units.bin",
+          "sha256": "e6b53f33d759e0c9f3425bf44eb3a550e813f409586e981b1bb39a4674c6f8b3"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 852,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/result.exception-to-string.bin",
+          "sha256": "6e641d903fd89486c8a265c9a84b69e768008c71d2bf717cb7be387387c25489"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 1688,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/result.exception-to-string.code-units.bin",
+          "sha256": "a30f133f22f4c470b43048ed030817eb50e0db2ee8d82b7173122f692738d4ad"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 825,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/result.stderr.bin",
+          "sha256": "449c91158df93eecf9faa9dcd58c08923965c972c3bb365db0014737ca15a252"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 1634,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/result.stderr.code-units.bin",
+          "sha256": "9625bf39495ebcaba81ff7dfa6434e7f98646a5fee0e587bcbcec5d6155243a4"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/005-q0005/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    }
+  ],
+  "started_epoch": 1793090953.033421,
+  "stderr": {
+    "bytes": 0,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/process.stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 484,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-capture-oracle-01/programs/probe-shared-mapping-6-capture/repeat-1/process.stdout.bin",
+    "sha256": "fb85d33362d53d17c91e16834417b4d53b5e1fb88599e2ccb02b0c4d991fbcbe"
+  }
+}

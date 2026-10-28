@@ -1,0 +1,2 @@
+hidden marker = "map-read-contracts"
+hidden typed: (Int, Int) -> Boolean = (k,v) -> "bad"

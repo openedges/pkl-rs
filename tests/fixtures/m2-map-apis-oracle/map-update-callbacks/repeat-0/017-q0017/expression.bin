@@ -1,0 +1,1 @@
+(Map().fold(0,(a,k,v) -> a + v)).toString()

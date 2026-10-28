@@ -1,0 +1,56 @@
+{
+  "actual_execution": false,
+  "failure_policy": [
+    "Missing/changed auxiliary file, URI, mode or unsupported input admission stops acquisition before Java when detected",
+    "Deliberately malformed auxiliary source is a required guest input; its actual status/full diagnostic remains authority, not an authored expected result",
+    "All actual ordinary/internal/API outcomes are retained; syntax/lookup preemption is not proof of intended cached-target reach",
+    "No source URI normalization, auxiliary substitution, error trimming, Java fallback or fixture overwriting"
+  ],
+  "file": {
+    "bytes": 31,
+    "file_kind": "regular",
+    "mode": 420,
+    "path": "target/m2/stage102-mapping-api-candidate-05/auxiliary-modules/cached-failure.pkl",
+    "sha256": "7bb14bde850bab39e374bf37bcee9027b8880ff8108aa01dd668ad8470c2b9ce",
+    "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-api-candidate-05/auxiliary-modules/cached-failure.pkl"
+  },
+  "module_source": "Primary source uses exact ModuleSource.create(uri,text), auxiliary is read by the standard file ModuleKey factory",
+  "primary_uris": [
+    "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-api-candidate-05/auxiliary-modules/cached-error-absent-cast.pkl",
+    "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-api-candidate-05/auxiliary-modules/cached-error-present-cast.pkl",
+    "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-api-candidate-05/auxiliary-modules/same-cast-let-frames.pkl"
+  ],
+  "required_for": "cached15",
+  "resolution": "Literal relative import cached-failure.pkl resolves against exact authored physical file URI; file already exists, never rewritten during capture",
+  "security": {
+    "allowed_module_source": {
+      "bytes": 12138,
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/SecurityManagers.java",
+      "sha256": "18d813d8c34fc9837883ca4d8916d3266ec4113a6142f20f6d53d0ad4c4dff15"
+    },
+    "allowed_modules": [
+      "repl:",
+      "file:",
+      "jar:file:",
+      "jar:nested:",
+      "modulepath:",
+      "https:",
+      "pkl:",
+      "package:",
+      "projectpackage:"
+    ],
+    "builder_source": {
+      "bytes": 21095,
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/EvaluatorBuilder.java",
+      "sha256": "83e6139f2fcda0ae0019452a3cf5f993b7e5e6366574033a2a4c328a492f822f"
+    },
+    "custom_security_override": false,
+    "module_factory_source": {
+      "bytes": 10432,
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/module/ModuleKeyFactories.java",
+      "sha256": "6360af26c7011bcd24d28ca9acb90dc817f9e93bc19e1c82a987db52a17ec08d"
+    },
+    "profile": "Unchanged EvaluatorBuilder.preconfigured()",
+    "root_directory": null
+  }
+}

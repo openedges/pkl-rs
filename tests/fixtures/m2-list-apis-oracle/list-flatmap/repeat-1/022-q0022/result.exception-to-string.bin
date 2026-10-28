@@ -1,0 +1,55 @@
+org.pkl.core.PklBugException: An unexpected error has occurred. Would you mind filing a bug report?
+Cmd+Double-click the link below to open an issue.
+Please copy and paste the entire error output into the issue's description.
+
+https://github.com/apple/pkl/issues/new
+
+java.lang.IllegalArgumentException%3A%20Unknown%20VM%20value%20type%3A%20java.util.KeyValueHolder
+
+–– Pkl Error ––
+Unknown VM value type: java.util.KeyValueHolder
+
+54 | external function toString(): String
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Any.toString (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L54)
+
+1 | (List(Map(1,2)).flatten()).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Pkl 0.32.0 (macOS 27.0, Java 21.0.12.1)
+
+java.lang.IllegalArgumentException: Unknown VM value type: java.util.KeyValueHolder
+	at org.pkl.core.runtime.VmValueVisitor.visit(VmValueVisitor.java:79)
+	at org.pkl.core.runtime.VmValueRenderer$Visitor.doVisitCollection(VmValueRenderer.java:322)
+	at org.pkl.core.runtime.VmValueRenderer$Visitor.visitList(VmValueRenderer.java:182)
+	at org.pkl.core.runtime.VmList.accept(VmList.java:438)
+	at org.pkl.core.runtime.VmValueVisitor.visit(VmValueVisitor.java:69)
+	at org.pkl.core.runtime.VmValueRenderer.render(VmValueRenderer.java:67)
+	at org.pkl.core.runtime.VmValueRenderer.render(VmValueRenderer.java:61)
+	at org.pkl.core.runtime.VmCollection.toString(VmCollection.java:180)
+	at org.pkl.core.stdlib.base.AnyNodes$toString.evalString(AnyNodes.java:44)
+	at org.pkl.core.stdlib.base.AnyNodesFactory$toStringNodeGen.executeGeneric(AnyNodesFactory.java:78)
+	at org.pkl.core.ast.member.FunctionNode.executeImpl(FunctionNode.java:116)
+	at org.pkl.core.ast.PklRootNode.execute(PklRootNode.java:46)
+	at com.oracle.truffle.api.impl.DefaultCallTarget.call(DefaultCallTarget.java:118)
+	at com.oracle.truffle.api.impl.DefaultDirectCallNode.call(DefaultDirectCallNode.java:59)
+	at org.pkl.core.ast.expression.member.InvokeMethodVirtualNode.evalCached(InvokeMethodVirtualNode.java:137)
+	at org.pkl.core.ast.expression.member.InvokeMethodVirtualNodeGen.executeAndSpecialize(InvokeMethodVirtualNodeGen.java:268)
+	at org.pkl.core.ast.expression.member.InvokeMethodVirtualNodeGen.executeGeneric(InvokeMethodVirtualNodeGen.java:189)
+	at org.pkl.core.ast.SimpleRootNode.executeImpl(SimpleRootNode.java:53)
+	at org.pkl.core.ast.PklRootNode.execute(PklRootNode.java:46)
+	at com.oracle.truffle.api.impl.DefaultCallTarget.call(DefaultCallTarget.java:118)
+	at com.oracle.truffle.api.impl.DefaultIndirectCallNode.call(DefaultIndirectCallNode.java:53)
+	at org.pkl.core.runtime.VmUtils.evaluateExpression(VmUtils.java:969)
+	at org.pkl.core.EvaluatorImpl.lambda$evaluateExpressionString$0(EvaluatorImpl.java:267)
+	at org.pkl.core.EvaluatorImpl.lambda$doEvaluate$0(EvaluatorImpl.java:470)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:388)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at CollectionEveryOracle.main(CollectionEveryOracle.java:102)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at jdk.compiler/com.sun.tools.javac.launcher.Main.execute(Main.java:484)
+	at jdk.compiler/com.sun.tools.javac.launcher.Main.run(Main.java:208)
+	at jdk.compiler/com.sun.tools.javac.launcher.Main.main(Main.java:135)

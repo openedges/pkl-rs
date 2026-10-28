@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Expected value of type `Boolean` or `Int`, but got type `Float`.
+Value: 0.0
+
+1 | (List(-0.0,0.0,-0.0).sortWith((a,b)->trace(a-b))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

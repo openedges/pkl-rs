@@ -1,0 +1,15 @@
+hidden declared = "same"
+hidden probe = List("sa", "me").join("")
+hidden values = new Dynamic {
+  default = (k) -> new Dynamic { captured = k }
+  [declared] {}
+}
+hidden direct = new Dynamic {
+  default = (k) -> new Dynamic { captured = k }
+  [declared] {}
+}
+hidden inherited = new Dynamic {
+  default = (k) -> new Dynamic { captured = k }
+  [declared] {}
+}
+hidden child = (inherited) { [declared] { extra = 1 } }

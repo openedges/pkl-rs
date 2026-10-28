@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+2287 | external function getOrDefault(key: Any): Value
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Mapping.getOrDefault (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2287)
+
+1 | ((new Mapping { [1] = 2 }).getOrDefault()).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

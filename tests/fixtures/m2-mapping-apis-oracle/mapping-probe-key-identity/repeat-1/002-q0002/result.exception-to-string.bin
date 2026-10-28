@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `values`.
+
+1 | (new PcfRenderer { converters { [String] = (s) -> values.getOrNull(probe).captured } }).renderDocument(original)
+                                                      ^^^^^^
+at repl:text.converters[#1].<function#1> (repl:text)
+
+1 | (new PcfRenderer { converters { [String] = (s) -> values.getOrNull(probe).captured } }).renderDocument(original)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

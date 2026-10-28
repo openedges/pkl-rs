@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function2`, but got type `Int`.
+Value: 42
+
+3331 | external function fold<Result>(initial: Result, operator: (Result, Element) -> Result): Result
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.fold (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3331)
+
+1 | (List().fold(trace(4),42)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Expected value of type `Boolean`, but got `null`.
+
+1 | (Map(3,1,1,2,2,3).any((k,v) -> null)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

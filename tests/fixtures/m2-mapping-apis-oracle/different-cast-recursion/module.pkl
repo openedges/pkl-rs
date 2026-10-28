@@ -1,0 +1,4 @@
+hidden raw = new Mapping { [1] = 1
+ [2] = 2 }
+hidden inner: Mapping<Int,Int(throw("inner cast"))> = raw
+hidden outer: Mapping<Int,Int(inner.getOrNull(2) > 0)> = raw

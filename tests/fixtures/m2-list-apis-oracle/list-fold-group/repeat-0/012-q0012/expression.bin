@@ -1,0 +1,1 @@
+(List().reduce((a,x)->throw("unreached"))).toString()

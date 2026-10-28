@@ -1,0 +1,8 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find element in collection.
+Element   : 1
+Collection: List()
+
+1 | (List().lastIndexOf(1)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,64 @@
+session-open mode=string rows=31
+call-enter=string-0-q0000
+call-exit=string-0-q0000 status=success
+call-enter=string-1-q0001
+call-exit=string-1-q0001 status=success
+call-enter=string-2-q0002
+call-exit=string-2-q0002 status=success
+call-enter=string-3-q0003
+call-exit=string-3-q0003 status=success
+call-enter=string-4-q0004
+call-exit=string-4-q0004 status=success
+call-enter=string-5-q0005
+call-exit=string-5-q0005 status=success
+call-enter=string-6-q0006
+call-exit=string-6-q0006 status=success
+call-enter=string-7-q0007
+call-exit=string-7-q0007 status=success
+call-enter=string-8-q0008
+call-exit=string-8-q0008 status=error
+call-enter=string-9-q0009
+call-exit=string-9-q0009 status=error
+call-enter=string-10-q0010
+call-exit=string-10-q0010 status=error
+call-enter=string-11-q0011
+call-exit=string-11-q0011 status=error
+call-enter=string-12-q0012
+call-exit=string-12-q0012 status=error
+call-enter=string-13-q0013
+call-exit=string-13-q0013 status=success
+call-enter=string-14-q0014
+call-exit=string-14-q0014 status=success
+call-enter=string-15-q0015
+call-exit=string-15-q0015 status=success
+call-enter=string-16-q0016
+call-exit=string-16-q0016 status=success
+call-enter=string-17-q0017
+call-exit=string-17-q0017 status=error
+call-enter=string-18-q0018
+call-exit=string-18-q0018 status=error
+call-enter=string-19-q0019
+call-exit=string-19-q0019 status=error
+call-enter=string-20-q0020
+call-exit=string-20-q0020 status=error
+call-enter=string-21-q0021
+call-exit=string-21-q0021 status=error
+call-enter=string-22-q0022
+call-exit=string-22-q0022 status=error
+call-enter=string-23-q0023
+call-exit=string-23-q0023 status=error
+call-enter=string-24-q0024
+call-exit=string-24-q0024 status=error
+call-enter=string-25-q0025
+call-exit=string-25-q0025 status=error
+call-enter=string-26-q0026
+call-exit=string-26-q0026 status=error
+call-enter=string-27-q0027
+call-exit=string-27-q0027 status=error
+call-enter=string-28-q0028
+call-exit=string-28-q0028 status=error
+call-enter=string-29-q0029
+call-exit=string-29-q0029 status=error
+call-enter=string-30-q0030
+call-exit=string-30-q0030 status=error
+session-closed mode=string rows=31 public-calls=31 success=12 errors=19

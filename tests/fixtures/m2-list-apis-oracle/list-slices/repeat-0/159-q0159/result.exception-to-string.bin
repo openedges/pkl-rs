@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Collection`, but got type `String`.
+Value: "x"
+
+3369 | external function zip<Other>(coll: Collection<Other>): List<Pair<Element, Other>>
+                                          ^^^^^^^^^^^^^^^^^
+at pkl.base#List.zip (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3369)
+
+1 | (List(3,1,2).zip("x")).toString()
+     ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

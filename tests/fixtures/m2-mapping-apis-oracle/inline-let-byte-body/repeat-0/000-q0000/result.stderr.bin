@@ -1,0 +1,23 @@
+–– Pkl Error ––
+Type constraint `isBetween(0, 255)` violated.
+Value: 256
+
+    isBetween(0, 255)
+    │
+    false
+
+1109 | typealias UInt8 = Int(isBetween(0, 255))
+                             ^^^^^^^^^^^^^^^^^
+at inline-let-byte-body#typed (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1109)
+
+2 | hidden typed: Mapping<Int,Int(let (_ = 1) Bytes(256).length > 0)> = raw
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at inline-let-byte-body#typed.<let expr> (file:///stage102/inline-let-byte-body.pkl)
+
+1 | hidden raw = new Mapping { [1] = trace(1) }
+                                     ^^^^^^^^
+at inline-let-byte-body#raw[1] (file:///stage102/inline-let-byte-body.pkl)
+
+1 | typed.getOrNull(1).toString()
+    ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+comparator
+
+1 | (List(1,2).sortWith((a,b)->throw("comparator"))).toString()
+                               ^^^^^^^^^^^^^^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | (List(1,2).sortWith((a,b)->throw("comparator"))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

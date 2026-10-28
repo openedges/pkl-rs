@@ -1,0 +1,19 @@
+{
+  "Java_authority": {
+    "bytes": 479372,
+    "path": "target/m2/stage102-mapping-cast21-oracle-01/report.json",
+    "sha256": "ec6f4de3fade0910178379568310a7f9b2985f90c83b112c962506ae839bbc5e"
+  },
+  "Java_input_transport": "queries.tsv expression column is Base64 UTF8 envelope only; actual API receives original decoded expression",
+  "Rust_execution": "unexecuted",
+  "Rust_query_input": "repeat-specific original expression.bin (UTF8), validated against expression.code-units.bin; never Base64",
+  "cohort": "cast21",
+  "evaluator_environment": {},
+  "evaluator_external_properties": {},
+  "power_assertions": false,
+  "program": "cache-cast-errors",
+  "queries": 6,
+  "repetitions": 2,
+  "required": true,
+  "source_uri": "file:///stage102/cache-cast-errors.pkl"
+}

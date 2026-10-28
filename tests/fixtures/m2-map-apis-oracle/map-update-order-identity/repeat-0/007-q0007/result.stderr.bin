@@ -1,0 +1,13 @@
+–– Pkl Error ––
+Cannot find property `identityMap`.
+
+1 | (new PcfRenderer { converters { [Map] = (m) -> identityMap.remove("missing") } }).renderDocument(identityMap)
+                                                   ^^^^^^^^^^^
+at repl:text.converters[#1].<function#1> (repl:text)
+
+Did you mean any of the following?
+identityEntries
+
+1 | (new PcfRenderer { converters { [Map] = (m) -> identityMap.remove("missing") } }).renderDocument(identityMap)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

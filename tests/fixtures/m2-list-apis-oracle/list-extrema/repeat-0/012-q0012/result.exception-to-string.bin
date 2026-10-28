@@ -1,0 +1,8 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Operator `<` is not defined for operand types `Boolean` and `Boolean`.
+Left operand : false
+Right operand: true
+
+1 | (List(true,false).min).toString()
+     ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

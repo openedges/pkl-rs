@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Modifier `hidden` is not applicable to methods.
+
+3 | hidden function cast(value: Mapping<Int,Int(if (this == 1) other.getOrNull(2) > 0 else throw("shared cast"))>) = value
+    ^^^^^^
+at shared-cast-wrappers (file:///stage102/shared-cast-wrappers.pkl)

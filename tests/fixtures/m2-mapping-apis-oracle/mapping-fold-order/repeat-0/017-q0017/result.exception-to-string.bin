@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+late value
+
+5 | [2] = throw("late value") }
+          ^^^^^^^^^^^^^^^^^^^
+at mapping-fold-order#bad[2] (file:///stage102/mapping-fold-order.pkl)
+
+1 | ((bad).fold(0,(a,k,v) -> throw("callback"))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

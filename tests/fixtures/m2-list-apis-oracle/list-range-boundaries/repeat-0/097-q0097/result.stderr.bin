@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `Float`.
+Value: 1.0
+
+3233 | start: Int,
+              ^^^
+at pkl.base#List.replaceRange (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3233)
+
+1 | (List(1,2).replaceRange(1.0,2, List(9))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

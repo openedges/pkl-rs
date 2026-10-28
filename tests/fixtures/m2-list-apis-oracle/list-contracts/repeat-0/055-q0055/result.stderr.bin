@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Cannot find method `maxOrNull` in class `List`.
+
+1 | (List(1).maxOrNull()).toString()
+     ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+maxOrNull
+maxByOrNull(selector)
+maxWithOrNull(comparator)
+minOrNull
+max
+lastOrNull
+minByOrNull(selector)
+mapNonNull(transform)
+minWithOrNull(comparator)
+getOrNull(index)
+indexOfOrNull(element)

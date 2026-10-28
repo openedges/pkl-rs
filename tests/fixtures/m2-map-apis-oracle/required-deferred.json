@@ -1,0 +1,100 @@
+{
+  "Rust_execution": "unexecuted",
+  "complete": true,
+  "contracts": [
+    {
+      "Rust_status": "unexecuted",
+      "cohort": "main",
+      "deferred_member": "Mapping.keys",
+      "expression": "(mapping.keys).toString()",
+      "id": "q0026",
+      "implementation_scope": "required-deferred-Mapping",
+      "oracle_statuses": [
+        "success",
+        "success"
+      ],
+      "ordinal": 26,
+      "power_assertions": false,
+      "program": "map-mapping-inventory",
+      "repetitions": 2,
+      "required": true,
+      "source_uri": "file:///stage101/map-mapping-inventory.pkl"
+    },
+    {
+      "Rust_status": "unexecuted",
+      "cohort": "main",
+      "deferred_member": "Mapping.containsKey",
+      "expression": "(mapping.containsKey(1)).toString()",
+      "id": "q0027",
+      "implementation_scope": "required-deferred-Mapping",
+      "oracle_statuses": [
+        "success",
+        "success"
+      ],
+      "ordinal": 27,
+      "power_assertions": false,
+      "program": "map-mapping-inventory",
+      "repetitions": 2,
+      "required": true,
+      "source_uri": "file:///stage101/map-mapping-inventory.pkl"
+    },
+    {
+      "Rust_status": "unexecuted",
+      "cohort": "main",
+      "deferred_member": "Mapping.getOrNull",
+      "expression": "(mapping.getOrNull(1)).toString()",
+      "id": "q0029",
+      "implementation_scope": "required-deferred-Mapping",
+      "oracle_statuses": [
+        "success",
+        "success"
+      ],
+      "ordinal": 29,
+      "power_assertions": false,
+      "program": "map-mapping-inventory",
+      "repetitions": 2,
+      "required": true,
+      "source_uri": "file:///stage101/map-mapping-inventory.pkl"
+    },
+    {
+      "Rust_status": "unexecuted",
+      "cohort": "main",
+      "deferred_member": "Mapping.getOrDefault",
+      "expression": "(mapping.getOrDefault(3)).toString()",
+      "id": "q0030",
+      "implementation_scope": "required-deferred-Mapping",
+      "oracle_statuses": [
+        "success",
+        "success"
+      ],
+      "ordinal": 30,
+      "power_assertions": false,
+      "program": "map-mapping-inventory",
+      "repetitions": 2,
+      "required": true,
+      "source_uri": "file:///stage101/map-mapping-inventory.pkl"
+    },
+    {
+      "Rust_status": "unexecuted",
+      "cohort": "main",
+      "deferred_member": "Mapping.fold",
+      "expression": "(mapping.fold(0,(a,k,v)->a+v)).toString()",
+      "id": "q0031",
+      "implementation_scope": "required-deferred-Mapping",
+      "oracle_statuses": [
+        "success",
+        "success"
+      ],
+      "ordinal": 31,
+      "power_assertions": false,
+      "program": "map-mapping-inventory",
+      "repetitions": 2,
+      "required": true,
+      "source_uri": "file:///stage101/map-mapping-inventory.pkl"
+    }
+  ],
+  "getOrDefault_note": "Mapping.getOrDefault(key) uses its hidden default. q0030 Java succeeds with new Dynamic {}; no missing-second-argument error is invented.",
+  "observations": 10,
+  "policy": "Do not drop, rewrite, ignore-as-pass or bless unsupported results. Proposed strict oracle target executes these five within the original35-row program and fails on any raw mismatch. Map02 does not implement these five Mapping methods.",
+  "required": true
+}

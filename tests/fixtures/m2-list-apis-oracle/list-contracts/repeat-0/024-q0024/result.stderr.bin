@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3251 | external function findLastOrNull(predicate: (Element) -> Boolean): Element?
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.findLastOrNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3251)
+
+1 | (List(1).findLastOrNull()).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

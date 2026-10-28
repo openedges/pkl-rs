@@ -1,0 +1,17 @@
+{
+  "Java_authority": {
+    "bytes": 7214546,
+    "path": "target/m2/stage101-map-oracle-01/report.json",
+    "sha256": "4da0a8dde5cff7ac0229332b3059df5a56f77804a9ad5314bba2c30fc9f1b235"
+  },
+  "Rust_execution": "unexecuted",
+  "cohort": "main",
+  "evaluator_environment": {},
+  "evaluator_external_properties": {},
+  "power_assertions": true,
+  "program": "map-update-power",
+  "queries": 12,
+  "repetitions": 2,
+  "required": true,
+  "source_uri": "file:///stage101/map-update-power.pkl"
+}

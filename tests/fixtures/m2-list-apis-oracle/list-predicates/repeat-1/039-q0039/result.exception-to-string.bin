@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find matching element in collection.
+Collection: List(3, 1, 2)
+
+1 | (List(3,1,2).findIndex((x)->false)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

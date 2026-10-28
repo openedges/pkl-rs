@@ -1,0 +1,119 @@
+{
+  "JDK_property_preflight_processes": 1,
+  "all_JVM_launches_terminal": true,
+  "authority": {
+    "bytes": 540562,
+    "path": "target/m2/stage102-mapping-capture-oracle-01/report.json",
+    "sha256": "a777ea4e0b22107f62ac48223910a4e738b03231451d8f51d03de56d75f5b84b"
+  },
+  "canonical_Cargo_Node_browser_Git_changes_or_execution": false,
+  "capture_process": {
+    "bytes": 507,
+    "path": "target/m2/stage102-mapping-capture-oracle-01/capture-process.json",
+    "sha256": "d21a72ca62de69b7a8764f4e84f15124c6eada4f39c77427e1a9054b93098cd4"
+  },
+  "complete": true,
+  "concurrency": "Root archive I/O may overlap. No performance or Rust compatibility claim.",
+  "contracts": 24,
+  "controller_exit_evidence": "capture-process.json records controller PID37415 exit_code0 and exact argv. Initial host-tool return was context-truncated, so no host exec session ID/exit is invented; complete raw authority and child process records/readback establish terminal acquisition.",
+  "evaluation_sessions": 8,
+  "exclusive_Java_window_released": true,
+  "finished_epoch": 1793091210.929461,
+  "forced_cleanup_events": 0,
+  "helper_review": {
+    "bytes": 68733,
+    "path": "target/m2/stage102-oracle-envelope-independent-review-02/report.json",
+    "sha256": "f919b42b1df6ccfb9ba5055864ef903a96dc7b265bd1333458414948b763f593"
+  },
+  "kind": "Stage102 separate capture24 pinned Java terminal handoff",
+  "minimum_free_bytes": 3602935808,
+  "observations": 48,
+  "ordered_logger_events": 0,
+  "ordinary_error_interpretation": "All24 separate capture-correction contracts/two repeats reach Pcf renderDocument top-level String rejection. These are ordinary Pkl errors; no successful key-identity observation is claimed. Earlier24 converter property-name errors remain separate unchanged expectations.",
+  "original281_and_separate44_preserved": true,
+  "owned_PID_later_checks": [
+    {
+      "exit": 1,
+      "pid": 37467,
+      "recorded_start": "Tue Oct 27 17:49:09 2026",
+      "same_identity_live": false,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "pid": 37483,
+      "recorded_start": "Tue Oct 27 17:49:10 2026",
+      "same_identity_live": false,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "pid": 37497,
+      "recorded_start": "Tue Oct 27 17:49:11 2026",
+      "same_identity_live": false,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "pid": 37509,
+      "recorded_start": "Tue Oct 27 17:49:13 2026",
+      "same_identity_live": false,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "pid": 37522,
+      "recorded_start": "Tue Oct 27 17:49:14 2026",
+      "same_identity_live": false,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "pid": 37556,
+      "recorded_start": "Tue Oct 27 17:49:15 2026",
+      "same_identity_live": false,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "pid": 37568,
+      "recorded_start": "Tue Oct 27 17:49:16 2026",
+      "same_identity_live": false,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "exit": 1,
+      "pid": 37581,
+      "recorded_start": "Tue Oct 27 17:49:17 2026",
+      "same_identity_live": false,
+      "stderr": "",
+      "stdout": ""
+    }
+  ],
+  "raw_readback": {
+    "bytes": 6331,
+    "path": "target/m2/stage102-mapping-capture-oracle-readback-01/report.json",
+    "sha256": "2b153da985c2e7836f0b2597258f577d00538ad0bf8c660f8870533c2e0b52f2"
+  },
+  "remaining_owned_processes": [],
+  "repeat_differences": [],
+  "source_scope_qualification": "Capture implementation inherited descriptive context strings mentioning Mapping281/Map370/followup7 and five deferred methods. Actual cohort/matrix/programs/decoded bytes are capture24 as authenticated by transport-roundtrip and raw readback; descriptions do not expand or replace acquired inputs. getOrNull/getOrDefault are existing generated routes, not newly absent methods.",
+  "source_tool_materialized_bookends_stable": true,
+  "statuses": {
+    "error": 48
+  },
+  "success": true,
+  "transport_roundtrip": {
+    "bytes": 8153,
+    "path": "target/m2/stage102-mapping-capture-oracle-prep-01/transport-roundtrip.json",
+    "sha256": "e4f34d7baf5a94c3621f95a5710dec15539f5c82feb04bffe0a41ede406de93f"
+  },
+  "unrun_or_partial_observations": 0
+}

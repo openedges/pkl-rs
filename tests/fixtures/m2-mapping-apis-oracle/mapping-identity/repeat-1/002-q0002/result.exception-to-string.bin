@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `identity`.
+
+1 | (new PcfRenderer { converters { [String] = (s) -> identity.getOrNull(key) } }).renderDocument(value)
+                                                      ^^^^^^^^
+at repl:text.converters[#1].<function#1> (repl:text)
+
+1 | (new PcfRenderer { converters { [String] = (s) -> identity.getOrNull(key) } }).renderDocument(value)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

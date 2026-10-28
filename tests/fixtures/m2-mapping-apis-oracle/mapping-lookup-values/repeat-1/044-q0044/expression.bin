@@ -1,0 +1,2 @@
+((new Mapping { [1] = "one"
+ [2] = "two" }).getOrNull(0.0)).toString()

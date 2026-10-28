@@ -19,7 +19,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: Stage99 numeric13·Set52 targeted04 25/0/1·workspace1418/0/3; 기본8역할·플랫폼 일반2430관찰 일치·원본2/3 일치·내부3계약 미해결, 엄격한 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: Stage102 targeted 83개·workspace 1,502개 통과, 기본 검증 8개 역할·M1·선택 native/N-API/Chromium 확인; 원본 Map·내부 계약 미해결, 엄격한 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
@@ -3471,4 +3471,56 @@ freeze04 실행으로 바꾸어 부르지 않는다.
 원본 List Java OOM, Stage98 glob 내부오류, 미구현71·미연결32, ready4442 전체 재실행과
 M2 아홉 영역·API·릴리스·성능 gate는 열려 있다. Stage94의 이전 source4268/4424에
 선택 결과를 더하거나 M2 완료율로 환산하지 않는다.
+
+### Stage102 — List·Map·Mapping 구현과 현재 로컬 검증
+
+소스 파일 32개와 Java fixture 97,737개를 composite06 및 freeze04에 연결했다.
+실제 targeted05 결과는 **83개 통과·실패 0개·보류(ignored) 1개**다. List 995개,
+Map 377개, Mapping 488개로 구성한 계약 1,860개를 각각 두 번 관찰했다.
+일반 계약 1,859개에 대한 관찰 3,718개, 성공 2,338개와 일반 오류 1,380개,
+원시 필드 37,368개와 순서 있는 Logger 이벤트 1,506개가 고정 Java와 일치했다.
+
+수정한 선택 native·N-API·Chromium 취득은 각각 프로그램 74개·반복 세션 148개에서
+일반 관찰 **3,718개**, 공유 원시 필드 **44,804개**, Logger 이벤트 **1,506개**가
+일치했다. 이 플랫폼 필드 범위는 일반 관찰당 8개 필드와 Logger 이벤트당 10개
+필드이며 Rust harness의 관찰당 6개 필드 범위와 구분한다. 세 취득 모두 완료됐고
+소스와 추적 입력이 안정적이었다. List 내부 계약 1개에 대한 관찰 2개는 각 대상에서
+필수 미해결이며 `all_required_pass`는 false다. 원본 List의 Java 512 MiB heap 실패와
+이전 Set/glob protocol 의무도 유지한다.
+
+첫 native 취득은 필수 보조 모듈을 Host에 등록하지 않아 미완료로 끝났다.
+이를 엔진의 원시 비교 실패나 통과로 바꾸지 않는다. 수정한 Host는 import하는
+프로그램 2개에만 고정 Java의 정확한 보조 소스를 제공하고 나머지 72개에는 빈
+registry를 제공한다. 실제 Node 모의 Host·전송 테스트 9개와 native adapter 테스트
+5개가 통과했다. 실패 기록과 승인 후 삭제한 원시 파일은 정확한 archive·복구 map,
+원래 판정과 함께 보존한다.
+
+전체 workspace-deferred01 결과는 **1,502개 통과·실패 0개·보류 4개**다.
+테스트 대상 252개, 컴파일만 하는 example 25개와 doctest library 2개를 확인했다.
+기본 검증 8개 역할에 실제 통과 기록이 있으며 Python 테스트는 180개다.
+fmt 입력 414개와 Clippy 입력 712개의 기존 전후 identity는 freeze04의 bytes/SHA와
+일치한다. manifest04는 같은 catalog에 직접 연결된다. 기록하지 않은 과거 mode나
+전체 fixture snapshot을 새로 만든 것처럼 쓰지 않는다.
+
+workspace는 기존 시작 조건 2 GiB와 구분한 1.5 GiB 시작·1 GiB sticky floor trial이다.
+heap, profile, workload, timeout과 raw cap은 유지했다. deferred-evidence controller와
+observer는 별도 증거다. 이전 disk floor, stale Fresh, 컴파일·개발·Clippy 실패도
+원래대로 보존한다. 관찰한 디스크 변화로 원인이나 peak memory·성능을 단정하지 않는다.
+
+현재 M1의 단일 취득에서는 native·Node·브라우저가 각각 6,078개를 Java와 일치시켰다.
+같은 취득에 대한 엄격 비교와 구조 계약은 별도로 통과했으며 Node와 브라우저의
+구조 검사는 각각 92개다. 변경하지 않은 원본 Set과 Mapping은 일치하지만 원본 Map은
+134행의 기존 `Typed.hasProperty` 구현 공백으로 실패한다. `Map.toTyped(Person)`는
+성공한다. 해당 Typed API 보완과 Java 기반 회귀·수명주기 검증은 checkpoint 이후의
+필수 작업으로 남긴다.
+
+Stage102의 로컬 증거와 입력·artifact identity, 보존한 실패와 복구 참조는
+`reports/m2/stage102-collection-apis-checkpoint.json`에 연결한다. 검증 기록은
+checkpoint의 범위에 한정하며 Git push 완료나 전체 M2 완료를 뜻하지 않는다.
+이전 numeric/Set 계약 1,218개를 새 collection coverage로 세지 않는다.
+
+목록은 사례 4,545개(ready 4,442개·미구현 71개·미연결 32개)와 요구사항 475개를 유지한다.
+Stage94의 이전 소스에서 얻은 전체 코퍼스 결과 4,268/4,424도 그대로다. 현재 소스의
+전체 ready 코퍼스, M2의 아홉 영역, API·릴리스 플랫폼·성능 gate는 계속 열려 있다.
+보류하거나 실행하지 않은 결과를 통과 또는 전체 M2 완료율로 바꾸지 않는다.
 

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Expected a positive number, but got `-9,223,372,036,854,775,808`.
+
+1 | (List().takeLast(-9223372036854775808)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

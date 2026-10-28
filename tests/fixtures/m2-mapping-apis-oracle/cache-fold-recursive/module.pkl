@@ -1,0 +1,4 @@
+hidden key = new Dynamic { ["x"] = values.length }
+hidden twin = new Dynamic { ["x"] = 2 }
+hidden values = new Mapping { [key] = "first"
+  [twin] = "second" }

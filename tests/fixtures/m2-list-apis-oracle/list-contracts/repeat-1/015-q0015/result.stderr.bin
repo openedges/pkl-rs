@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3210 | external function distinctBy(selector: (Element) -> Any): List<Element>
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.distinctBy (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3210)
+
+1 | (List(1).distinctBy()).toString()
+     ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

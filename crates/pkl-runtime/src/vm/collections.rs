@@ -362,6 +362,9 @@ pub fn ordered_members(
 ) -> Result<Vec<CollectionMember>, RuntimeError> {
     if heap.get(receiver)?.collection_kind == CollectionKind::Map {
         let object = heap.get(receiver)?;
+        if let Some(order) = &object.map_key_order {
+            return Ok(order.clone());
+        }
         return Ok(object
             .map_index()
             .insertion_order()
@@ -444,6 +447,18 @@ pub(crate) fn cache_entry_key(
     Err(invalid("missing cache entry key"))
 }
 
+/// Recover the key physically retained by a completed cache slot.
+pub(crate) fn cache_slot_entry_key(
+    heap: &Heap,
+    receiver: ObjectId,
+    slot: &crate::heap::CacheSlot,
+) -> Result<Option<Value>, RuntimeError> {
+    if let Some(key) = &slot.entry_key {
+        return Ok(Some(key.clone()));
+    }
+    cache_entry_key(heap, receiver, &slot.key)
+}
+
 /// Snapshot an already cached receiver value. Runtime rendering prepares key
 /// equality before this lookup; this helper itself never evaluates a member.
 pub(crate) fn cached_render_value(
@@ -458,7 +473,7 @@ pub(crate) fn cached_render_value(
             if slot.key.entry
                 && slot.key.owner.is_none()
                 && !slot.key.method
-                && let Some(key) = cache_entry_key(heap, receiver, &slot.key)?
+                && let Some(key) = cache_slot_entry_key(heap, receiver, slot)?
                 && same_key(heap, &member.key, &key)
             {
                 return Ok(Some(slot.value.clone()));
@@ -826,7 +841,7 @@ impl Vm {
         id: ObjectId,
         key: &Value,
     ) -> Result<bool, RuntimeError> {
-        if self.heap.get(id)?.length == 0 {
+        if self.heap.get(id)?.map_index().len() == 0 {
             return Ok(false);
         }
         if self.prepare_keys(vec![key.clone()])? {
@@ -841,13 +856,15 @@ impl Vm {
         key: &Value,
     ) -> Result<Option<Value>, RuntimeError> {
         let object = self.heap.get(id)?;
-        let candidates = self.map_candidates(id, key)?;
-        let member = object.collection_members.iter().find(|member| {
-            candidates
-                .iter()
-                .any(|candidate| equality::identical_key(&self.heap, candidate, &member.key))
-                && same_key(&self.heap, key, &member.key)
-        });
+        if object.map_index().len() == 0 {
+            return Ok(None);
+        }
+        let member = object
+            .map_index()
+            .candidates(self.java_hash(key)?)
+            .into_iter()
+            .map(|slot| &object.collection_members[slot])
+            .find(|member| same_key(&self.heap, key, &member.key));
         Ok(member.and_then(|member| {
             object
                 .member_values
@@ -884,15 +901,6 @@ impl Vm {
             }
         }
         error
-    }
-
-    fn insert_map_entry(
-        &mut self,
-        id: ObjectId,
-        key: Value,
-        value: Value,
-    ) -> Result<(), RuntimeError> {
-        self.insert_map_entry_ordered(id, key, value, None)
     }
 
     pub(super) fn prepare_map_association(
@@ -938,21 +946,16 @@ impl Vm {
         value: Value,
         append_order: Option<bool>,
     ) -> Result<(), RuntimeError> {
+        let mut order = ordered_members(&self.heap, id)?;
         let object = self.heap.get(id)?;
         let append_order = match append_order {
             Some(append) => append,
             None => self.map_value(id, &key)?.is_none(),
         };
         let candidates = object.map_index().assoc_candidates(self.java_hash(&key)?);
-        let replacing = object.collection_members.iter().position(|member| {
-            candidates.iter().any(|index| {
-                equality::identical_key(
-                    &self.heap,
-                    &object.collection_members[*index].key,
-                    &member.key,
-                )
-            }) && same_key(&self.heap, &key, &member.key)
-        });
+        let replacing = candidates
+            .into_iter()
+            .find(|slot| same_key(&self.heap, &key, &object.collection_members[*slot].key));
         let name = replacing
             .map(|index| object.collection_members[index].name.clone())
             .unwrap_or_else(|| {
@@ -962,6 +965,13 @@ impl Vm {
                     object.collection_members.len()
                 ))
             });
+        if append_order {
+            order.push(CollectionMember {
+                key: key.clone(),
+                name: name.clone(),
+                kind: CollectionMemberKind::Entry,
+            });
+        }
         let mut hashes = object
             .collection_members
             .iter()
@@ -993,6 +1003,8 @@ impl Vm {
             });
             object.length = object.map_index().insertion_order().len();
         }
+        object.length = order.len();
+        object.map_key_order = Some(order);
         let cache = CacheKey {
             owner: None,
             name,
@@ -1056,34 +1068,29 @@ impl Vm {
         let value = self.pop()?;
         let key = self.pop()?;
         let id = self.builder()?;
-        if self.prepare_keys(vec![key.clone()])?
-            || self.search_key(&key, self.map_candidates(id, &key)?)?
-        {
+        if self.prepare_map_lookup(id, &key)? {
             self.stack.extend([key, value]);
             return Ok(());
         }
-        self.stack.extend([key, value]);
+        let append_order = self.map_value(id, &key)?.is_none();
+        self.stack.extend([key, value, Value::Bool(append_order)]);
         Ok(())
     }
 
     fn add_map_entry(&mut self) -> Result<(), RuntimeError> {
+        let Value::Bool(append_order) = self.pop()? else {
+            return Err(invalid("Map builder contains result"));
+        };
         let value = self.pop()?;
         let key = self.pop()?;
         let id = self.builder()?;
-        if self.map_value(id, &key)?.is_none() {
-            let object = self.heap.get(id)?;
-            let old_keys = object
-                .map_index()
-                .rehash(self.java_hash(&key)?)
-                .into_iter()
-                .map(|index| object.collection_members[index].key.clone())
-                .collect();
-            if self.prepare_keys(old_keys)? {
-                self.stack.extend([key, value]);
-                return Ok(());
-            }
+        // VmMap.Builder.add repeats hashing/equality for assoc after contains.
+        // A distinct instruction owns its own prepared-hash retry state.
+        if self.prepare_map_association(id, &key)? {
+            self.stack.extend([key, value, Value::Bool(append_order)]);
+            return Ok(());
         }
-        self.insert_map_entry(id, key, value)
+        self.insert_map_entry_ordered(id, key, value, Some(append_order))
     }
 
     fn next_map_entry(&mut self, iterator: ObjectId, end: usize) -> Result<(), RuntimeError> {
@@ -1198,7 +1205,11 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
         if object.collection_kind == CollectionKind::Dynamic
             || object.is_module
             || !(matches!(name, "length" | "isEmpty" | "isNotEmpty")
-                || (name == "lastIndex" && object.collection_kind == CollectionKind::Listing))
+                || (name == "lastIndex"
+                    && matches!(
+                        object.collection_kind,
+                        CollectionKind::List | CollectionKind::Listing
+                    )))
         {
             return Ok(false);
         }
@@ -1899,6 +1910,9 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                     })?;
             }
             Instruction::Subscript { .. } | Instruction::SuperSubscript { .. } => {
+                if self.resume_entry_lookup()? {
+                    return Ok(());
+                }
                 let key = self.pop()?;
                 let is_super = matches!(instruction, Instruction::SuperSubscript { .. });
                 let receiver = if is_super {
@@ -1979,6 +1993,18 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                         self.stack.push(result);
                     }
                     return Ok(());
+                }
+                if let Instruction::SuperSubscript { end } = instruction {
+                    let owner = self.heap.get(self.scope(0)?.owner)?.parent;
+                    return self.super_entry_lookup(receiver, owner, key, end, false);
+                }
+                if !is_super
+                    && matches!(
+                        self.heap.get(receiver)?.collection_kind,
+                        CollectionKind::Mapping | CollectionKind::Dynamic
+                    )
+                {
+                    return self.mapping_lookup(receiver, key, mapping_ops::LookupMode::Subscript);
                 }
                 let owner = if is_super {
                     let Some(parent) = self.heap.get(self.scope(0)?.owner)?.parent else {
@@ -2107,7 +2133,7 @@ crate::diagnostic_values::render(
                 let Some(member) = member else {
                     return self.fail_missing_key(receiver, key);
                 };
-                self.force_key(receiver, owner, member.name, false, !is_super, false, true)?;
+                self.force_key_probe(receiver, owner, member.name, !is_super, key)?;
             }
             Instruction::EntryKey => {
                 let force = self
@@ -2115,15 +2141,10 @@ crate::diagnostic_values::render(
                     .last()
                     .and_then(|frame| frame.force.as_ref())
                     .ok_or_else(|| invalid("entry key outside member"))?;
-                let key = self
-                    .heap
-                    .get(force.owner)?
-                    .collection_members
-                    .iter()
-                    .find(|member| member.name == force.name)
-                    .ok_or_else(|| invalid("entry key is missing"))?
-                    .key
-                    .clone();
+                let key = force
+                    .entry_probe
+                    .clone()
+                    .ok_or_else(|| invalid("entry key is missing"))?;
                 self.stack.push(key);
             }
             Instruction::EntryDefault => {
@@ -2136,65 +2157,20 @@ crate::diagnostic_values::render(
                 self.force(receiver, receiver, "default".into(), false, true, false)?;
             }
             Instruction::EntryParent { end } => {
+                if self.resume_entry_lookup()? {
+                    return Ok(());
+                }
                 let force = self
                     .frames
                     .last()
-                    .and_then(|f| f.force.as_ref())
+                    .and_then(|frame| frame.force.as_ref())
                     .cloned()
                     .ok_or_else(|| invalid("entry parent outside member"))?;
-                let parent = self.heap.get(force.owner)?.parent;
-                let key = self
-                    .heap
-                    .get(force.owner)?
-                    .collection_members
-                    .iter()
-                    .find(|m| m.name == force.name)
-                    .map(|m| m.key.clone());
-                if let (Some(parent), Some(key)) = (parent, &key) {
-                    let candidates = forcing_members(&self.heap, parent)?
-                        .into_iter()
-                        .filter(|m| m.kind != CollectionMemberKind::Property)
-                        .map(|m| m.key)
-                        .collect();
-                    if self.search_key(key, candidates)? {
-                        return Ok(());
-                    }
-                }
-                let inherited = parent
-                    .map(|parent| ordered_members(&self.heap, parent))
-                    .transpose()?
-                    .unwrap_or_default()
-                    .into_iter()
-                    .find(|member| {
-                        member.kind != CollectionMemberKind::Property
-                            && (member.name == force.name
-                                || key
-                                    .as_ref()
-                                    .is_some_and(|key| same_key(&self.heap, key, &member.key)))
-                    });
-                if let (Some(parent), Some(member)) = (parent, inherited) {
-                    // The inherited value is already the parent; skip the
-                    // default(key) call emitted for the missing-entry branch.
-                    self.frames.last_mut().expect("entry frame").pc = end;
-                    self.force_key(
-                        force.receiver,
-                        parent,
-                        member.name,
-                        false,
-                        false,
-                        false,
-                        true,
-                    )?;
-                } else {
-                    self.force(
-                        force.receiver,
-                        force.receiver,
-                        "default".into(),
-                        false,
-                        true,
-                        false,
-                    )?;
-                }
+                let owner = self.heap.get(force.owner)?.parent;
+                let key = force
+                    .entry_probe
+                    .ok_or_else(|| invalid("entry parent key"))?;
+                self.super_entry_lookup(force.receiver, owner, key, end, true)?;
             }
             Instruction::OpenIterator { nullable, spread } => {
                 let value = self.pop()?;

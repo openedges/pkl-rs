@@ -1,0 +1,4 @@
+module stage101
+hidden key = new Dynamic { ["x"] = items.length }
+hidden twin = new Dynamic { ["x"] = 2 }
+hidden items = Map(key, "first", twin, "second")

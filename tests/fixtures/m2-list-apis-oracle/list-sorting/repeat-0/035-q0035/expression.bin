@@ -1,0 +1,1 @@
+(List(1,"x").sortWith((a,b)->trace(a-b))).toString()

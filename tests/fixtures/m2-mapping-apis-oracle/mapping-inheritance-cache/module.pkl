@@ -1,0 +1,14 @@
+hidden parent = new Mapping {
+  default = (k) -> "parent:" + k.toString()
+  [31] = trace("thirty-one")
+  [0] = trace("zero")
+  [1] = trace("one")
+}
+hidden child = (parent) {
+  default = (k) -> "child:" + k.toString()
+  [0] = trace("override")
+  [2] = trace("two")
+}
+hidden emptyChild = (parent) {}
+hidden firstKey = new Dynamic { ["x"] = trace(120) }
+hidden keyed = new Mapping { [firstKey] = throw("must remain lazy") }

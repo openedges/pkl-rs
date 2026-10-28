@@ -1,0 +1,3 @@
+module stage100
+hidden zero = new Dynamic { ["x"] = trace(120) }
+hidden bad = new Dynamic { value = throw("do-not-hash-group-element") }

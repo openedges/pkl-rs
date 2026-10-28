@@ -1,0 +1,17 @@
+–– Pkl Error ––
+Cannot find method `restOrNull` in class `List`.
+
+1 | (List(1).restOrNull()).toString()
+     ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+restOrNull
+firstOrNull
+rest
+lastOrNull
+splitOrNull(index)
+getOrNull(index)
+findLastOrNull(predicate)
+reduceOrNull(operator)
+lastIndexOfOrNull(element)

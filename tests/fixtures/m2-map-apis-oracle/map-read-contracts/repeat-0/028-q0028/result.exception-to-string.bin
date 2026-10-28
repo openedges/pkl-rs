@@ -1,0 +1,9 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find method `entries` in class `Map`.
+
+1 | (Map().entries()).toString()
+     ^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+entries

@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+stored-child
+
+1 | (Map(31,new Dynamic { ["x"] = 1 },0,new Dynamic { ["x"] = throw("stored-child") }).containsValue(new Dynamic { ["x"] = 1 })).toString()
+                                                              ^^^^^^^^^^^^^^^^^^^^^
+at repl:text["x"] (repl:text)
+
+1 | (Map(31,new Dynamic { ["x"] = 1 },0,new Dynamic { ["x"] = throw("stored-child") }).containsValue(new Dynamic { ["x"] = 1 })).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -9,13 +9,20 @@ pub enum Operation {
     Distinct,
     DistinctBy,
     IsDistinctBy,
+    Fold,
 }
 impl Operation {
     fn callback(self) -> bool {
-        matches!(self, Self::Any | Self::DistinctBy | Self::IsDistinctBy)
+        matches!(
+            self,
+            Self::Any | Self::DistinctBy | Self::IsDistinctBy | Self::Fold
+        )
     }
     fn shallow(self) -> bool {
-        matches!(self, Self::Distinct | Self::DistinctBy | Self::IsDistinctBy)
+        matches!(
+            self,
+            Self::Distinct | Self::DistinctBy | Self::IsDistinctBy | Self::Fold
+        )
     }
     fn builder(self) -> bool {
         matches!(self, Self::Distinct | Self::DistinctBy)
@@ -29,6 +36,13 @@ pub(super) fn blocks(
     let source = crate::stdlib_sources::base();
     let mut result = BTreeMap::new();
     for (class, name, declaration, function_type, operation) in [
+        (
+            "Mapping",
+            "fold",
+            "external function fold<Result>(initial: Result, operator: (Result, Key, Value) -> Result): Result",
+            "(Result, Key, Value) -> Result",
+            Operation::Fold,
+        ),
         (
             "Listing",
             "any",
@@ -87,9 +101,19 @@ pub(super) fn blocks(
             + source.text[class_start..]
                 .find(declaration)
                 .expect("pinned lazy member");
-        let arity = if class == "Mapping" { 2 } else { 1 };
+        let arity = if operation == Operation::Fold {
+            3
+        } else if class == "Mapping" {
+            2
+        } else {
+            1
+        };
         let mut code = Vec::new();
         let mut spans = Vec::new();
+        if operation == Operation::Fold {
+            code.push(Instruction::LoadLocal(1));
+            spans.push(None);
+        }
         if operation != Operation::Distinct {
             code.push(Instruction::LoadLocal(0));
             spans.push(None);
@@ -158,6 +182,7 @@ pub(super) struct Run {
     awaiting: Option<CollectionMember>,
     current: Option<(Value, Value)>,
     argument: Option<Value>,
+    accumulator: Option<Value>,
     selected: Option<Value>,
     selected_hash: Option<Option<i32>>,
     projected: Seen,
@@ -177,6 +202,7 @@ impl Run {
         );
         roots.extend(self.projected.values.iter().cloned());
         roots.extend(self.argument.iter().chain(&self.selected).cloned());
+        roots.extend(self.accumulator.iter().cloned());
         if let Some((key, value)) = &self.current {
             roots.extend([key.clone(), value.clone()]);
         }
@@ -209,6 +235,11 @@ impl Vm {
         } else {
             Some(self.pop()?)
         };
+        let accumulator = if operation == Operation::Fold {
+            Some(self.pop()?)
+        } else {
+            None
+        };
         let source = self.conversion_receiver()?;
         let mapping = self.heap.get(source)?.collection_kind == CollectionKind::Mapping;
         let run = Run {
@@ -223,6 +254,7 @@ impl Vm {
             awaiting: None,
             current: None,
             argument,
+            accumulator,
             selected: None,
             selected_hash: None,
             projected: Seen::default(),
@@ -249,6 +281,9 @@ impl Vm {
     }
 
     pub(super) fn lazy_collection_next(&mut self, end: usize) -> Result<(), RuntimeError> {
+        if self.resume_visitor_lookup()? {
+            return Ok(());
+        }
         if self.lazy_run().shallow {
             self.pop()?;
             self.lazy_run_mut().shallow = false;
@@ -307,9 +342,31 @@ impl Vm {
             self.frames.last_mut().unwrap().pc -= 1;
             return Ok(());
         }
-        if let Some(value) = collections::cached_render_value(&self.heap, source, &member)? {
+        if !property {
+            let mode = if self.lazy_run().operation.shallow() {
+                mapping_ops::LookupMode::ForcedVisitor
+            } else {
+                mapping_ops::LookupMode::LazyVisitor
+            };
+            self.lazy_run_mut().awaiting = Some(member.clone());
+            self.frames.last_mut().unwrap().prepared_hashes = None;
+            return self.mapping_lookup(source, member.key, mode);
+        }
+        let cache = CacheKey {
+            owner: None,
+            name: member.name.clone(),
+            method: false,
+            entry: false,
+        };
+        if let Some(value) = self.cached_slot(source, &cache)? {
             self.lazy_run_mut().current = Some((member.key, value));
             return self.lazy_collection_input(end);
+        }
+        if self.lazy_run().operation.shallow() {
+            return Err(RuntimeError::new(
+                ErrorKind::Unsupported,
+                "The pinned forced-iteration missing-cache internal-error protocol is not implemented.",
+            ));
         }
         self.lazy_run_mut().awaiting = Some(member.clone());
         self.frames.last_mut().unwrap().pc -= 1;
@@ -331,7 +388,11 @@ impl Vm {
         if run.operation.callback() {
             let callback = run.argument.clone().expect("lazy callback");
             let mapping = run.mapping;
+            let accumulator = run.accumulator.clone();
             self.stack.push(callback);
+            if let Some(accumulator) = accumulator {
+                self.stack.push(accumulator);
+            }
             if mapping {
                 self.stack.push(key);
             }
@@ -365,6 +426,13 @@ impl Vm {
         next: usize,
         end: usize,
     ) -> Result<(), RuntimeError> {
+        if self.lazy_run().operation == Operation::Fold {
+            let value = self.pop()?;
+            let run = self.lazy_run_mut();
+            run.accumulator = Some(value);
+            run.current = None;
+            return self.jump(next);
+        }
         if self.lazy_run().operation == Operation::Any {
             let value = self.pop()?;
             let Value::Bool(accepted) = value else {
@@ -434,7 +502,10 @@ impl Vm {
             .lazy_collection_run
             .take()
             .ok_or_else(|| invalid("lazy collection result"))?;
-        let value = if run.operation.builder() {
+        let value = if run.operation == Operation::Fold {
+            run.accumulator
+                .ok_or_else(|| invalid("Mapping.fold accumulator"))?
+        } else if run.operation.builder() {
             Value::Object(
                 frame
                     .builders

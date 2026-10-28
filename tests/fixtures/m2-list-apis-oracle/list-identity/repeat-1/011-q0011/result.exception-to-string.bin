@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `List`.
+Value: List(1, 2)
+
+1 | ((new PcfRenderer { converters { [List]=(xs)->xs.dropLast(0) } }).renderDocument(List(1,2))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

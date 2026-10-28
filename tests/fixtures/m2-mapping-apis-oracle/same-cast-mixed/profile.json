@@ -1,0 +1,19 @@
+{
+  "Java_authority": {
+    "bytes": 269136,
+    "path": "target/m2/stage102-mapping-mixed10-oracle-01/report.json",
+    "sha256": "a98b5e23a55f8795db18d6349854db7da71d489eb2cec7d0a8e2d121469f6180"
+  },
+  "Java_input_transport": "queries.tsv expression column is Base64 UTF8 envelope only; actual API receives original decoded expression",
+  "Rust_execution": "unexecuted",
+  "Rust_query_input": "repeat-specific original expression.bin (UTF8), validated against expression.code-units.bin; never Base64",
+  "cohort": "mixed10",
+  "evaluator_environment": {},
+  "evaluator_external_properties": {},
+  "power_assertions": false,
+  "program": "same-cast-mixed",
+  "queries": 5,
+  "repetitions": 2,
+  "required": true,
+  "source_uri": "file:///stage102/same-cast-mixed.pkl"
+}

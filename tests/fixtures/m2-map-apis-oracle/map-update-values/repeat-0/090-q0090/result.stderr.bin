@@ -1,0 +1,6 @@
+–– Pkl Error ––
+value
+
+1 | (Map().put(1,throw("value"))).toString()
+                 ^^^^^^^^^^^^^^
+at  (repl:text)

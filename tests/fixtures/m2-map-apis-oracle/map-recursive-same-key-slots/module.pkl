@@ -1,0 +1,4 @@
+module stage101
+hidden key = new Dynamic { ["x"] = items.length }
+hidden items = Map(key, "first")
+hidden changed = items.put(key, "second")

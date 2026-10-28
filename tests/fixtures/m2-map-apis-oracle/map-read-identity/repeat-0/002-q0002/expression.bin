@@ -1,0 +1,1 @@
+(Map("a",new Dynamic { ["x"]=1 }).entries.first.second == Map("a",new Dynamic { ["x"]=1 }).values.first).toString()

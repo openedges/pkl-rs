@@ -1,0 +1,1 @@
+(Map().any((k,v) -> trace(k) == 1)).toString()

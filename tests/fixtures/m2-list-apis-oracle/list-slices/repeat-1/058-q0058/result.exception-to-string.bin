@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Int`, but got type `Float`.
+Value: 1.0
+
+3326 | external function drop(n: Int): List<Element>
+                                 ^^^
+at pkl.base#List.drop (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3326)
+
+1 | (List(1,2).drop(1.0)).toString()
+     ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

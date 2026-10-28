@@ -1,0 +1,8 @@
+hidden raw = new Mapping { [1] = trace(3)
+ [2] = trace("bad") }
+hidden typed: Mapping<Int, Int> = raw
+hidden positive: Mapping<Int, Int(trace(this) > 0)> = raw
+hidden limited: Mapping<Int, Int(trace(this) < 10)> = positive
+hidden amended = (limited) { [1] = trace(4) }
+hidden undefinedDefault: Mapping<Int, String(length > 0)> = new Mapping {}
+hidden defaulted: Mapping<Int, Int> = new Mapping {}

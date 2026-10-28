@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+selector
+
+1 | (List(1,2).sortBy((x)->throw("selector"))).toString()
+                           ^^^^^^^^^^^^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | (List(1,2).sortBy((x)->throw("selector"))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

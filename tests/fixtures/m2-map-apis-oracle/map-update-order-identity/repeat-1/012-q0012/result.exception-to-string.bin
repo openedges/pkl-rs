@@ -1,0 +1,13 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `identityEntries`.
+
+1 | (new PcfRenderer { converters { [String] = (x) -> identityEntries.entries.first.first } }).renderDocument(entryKey)
+                                                      ^^^^^^^^^^^^^^^
+at repl:text.converters[#1].<function#1> (repl:text)
+
+Did you mean any of the following?
+identityMap
+
+1 | (new PcfRenderer { converters { [String] = (x) -> identityEntries.entries.first.first } }).renderDocument(entryKey)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

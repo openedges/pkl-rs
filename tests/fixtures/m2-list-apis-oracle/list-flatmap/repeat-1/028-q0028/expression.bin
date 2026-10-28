@@ -1,0 +1,1 @@
+((let (xs=List(Map(1,2)).flatten()) xs.first is Dynamic)).toString()

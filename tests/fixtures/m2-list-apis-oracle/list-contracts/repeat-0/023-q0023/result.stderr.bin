@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3250 | external function findLast(predicate: (Element) -> Boolean): Element
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.findLast (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3250)
+
+1 | (List(1).findLast()).toString()
+     ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

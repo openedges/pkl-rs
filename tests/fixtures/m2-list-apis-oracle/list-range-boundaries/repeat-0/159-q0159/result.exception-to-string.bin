@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Element index `9,223,372,036,854,775,807` is out of range `0`..`2`.
+Collection: List(3, 1, 2)
+
+1 | (List(3,1,2).replace(9223372036854775807,9)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

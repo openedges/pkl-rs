@@ -1,0 +1,5 @@
+((new Mapping { [null] = null
+ [0] = "int"
+ [0.0] = "float"
+ [-0.0] = "negative"
+ [NaN] = "nan" }).keys).toString()

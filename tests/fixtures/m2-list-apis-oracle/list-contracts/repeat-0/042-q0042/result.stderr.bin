@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 2 function arguments but got 0.
+
+3332 | external function foldBack<Result>(initial: Result, operator: (Element, Result) -> Result): Result
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.foldBack (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3332)
+
+1 | (List(1).foldBack()).toString()
+     ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

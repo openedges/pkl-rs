@@ -1,0 +1,6 @@
+hidden base = new Mapping { [1] = trace("base") }
+hidden amended = (base) {
+  [1] = trace("amended")
+  [2] = super[1]
+}
+hidden typed: Mapping<Int,String> = amended

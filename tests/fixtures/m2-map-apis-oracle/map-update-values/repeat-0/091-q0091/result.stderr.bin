@@ -1,0 +1,6 @@
+–– Pkl Error ––
+key
+
+1 | (Map().remove(throw("key"))).toString()
+                  ^^^^^^^^^^^^
+at  (repl:text)

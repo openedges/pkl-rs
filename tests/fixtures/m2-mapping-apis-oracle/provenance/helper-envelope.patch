@@ -1,0 +1,19 @@
+--- target/m2/stage95-plist-oracle-03/CollectionEveryOracle.java
++++ target/m2/stage102-mapping-oracle-prep-01/helper-false/CollectionEveryOracle.java
+@@ -4,6 +4,7 @@
+ import java.nio.charset.StandardCharsets;
+ import java.nio.file.Files;
+ import java.nio.file.Path;
++import java.util.Base64;
+ import java.util.Locale;
+ import java.util.Map;
+ import org.pkl.core.EvaluatorBuilder;
+@@ -87,7 +88,7 @@
+         var columns = lines.get(i).split("\t", -1);
+         if (columns.length != 3 || !columns[0].equals(sessionMode)
+             || !columns[1].matches("[a-z0-9-]+")) throw new IllegalArgumentException("bad row " + i);
+-        String mode = columns[0], id = columns[1], expression = columns[2];
++        String mode = columns[0], id = columns[1], expression = new String(Base64.getDecoder().decode(columns[2]), StandardCharsets.UTF_8);
+         Path folder = output.resolve(String.format(Locale.ROOT, "%03d-%s", i, id));
+         Files.createDirectory(folder);
+         logger.begin(folder);

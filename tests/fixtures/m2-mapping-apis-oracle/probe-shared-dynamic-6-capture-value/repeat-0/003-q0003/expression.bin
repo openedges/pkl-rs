@@ -1,0 +1,1 @@
+(let (capturedKey = direct[probe].captured) (new PcfRenderer { converters { [String] = (s) -> trace(capturedKey) } }).renderValue(declared))

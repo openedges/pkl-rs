@@ -1,0 +1,92 @@
+{
+  "all_executed_false": true,
+  "all_expected_unset": true,
+  "complete": true,
+  "contracts": 12,
+  "derivations": [
+    {
+      "executed": false,
+      "expected": null,
+      "new_program": "cache-cast-hashed-parent-source-corrected",
+      "operation": "Rename authored reserved outer binding and its references to wrapped; no lexical outer-expression was present.",
+      "original_matrix": {
+        "bytes": 8809,
+        "path": "target/m2/stage102-mapping-api-candidate-04/queries.json",
+        "sha256": "f0f534a5a69e614922f2c550e81ad59c59ba93e8dc1cfcdbbd76e9847912a349"
+      },
+      "original_program": "cache-cast-hashed-parent",
+      "original_queries_required": true,
+      "query_changes": [
+        {
+          "after": "wrapped.getOrNull(probe).toString()",
+          "before": "outer.getOrNull(probe).toString()",
+          "id": "q0002"
+        }
+      ],
+      "source_patch": "--- cache-cast-hashed-parent\n+++ cache-cast-hashed-parent-source-corrected\n@@ -7,4 +7,4 @@\n  [\"e\"] = 5\n  [declared] = \"cached\" }\n hidden typed: Mapping<String,Int> = raw\n-hidden outer: Mapping<String,Int> = typed\n+hidden wrapped: Mapping<String,Int> = typed\n",
+      "source_uri_preserved": "file:///stage102/cache-cast-hashed-parent.pkl"
+    },
+    {
+      "executed": false,
+      "expected": null,
+      "new_program": "different-cast-recursion-source-corrected",
+      "operation": "Rename authored reserved outer binding and its references to wrapped; no lexical outer-expression was present.",
+      "original_matrix": {
+        "bytes": 8723,
+        "path": "target/m2/stage102-mapping-api-candidate-05/queries.json",
+        "sha256": "9ab23994420ea35813c475f8e5fe88e103a63d32978f41cd544a6f7403c84d1c"
+      },
+      "original_program": "different-cast-recursion",
+      "original_queries_required": true,
+      "query_changes": [
+        {
+          "after": "wrapped.getOrNull(1).toString()",
+          "before": "outer.getOrNull(1).toString()",
+          "id": "q0002"
+        }
+      ],
+      "source_patch": "--- different-cast-recursion\n+++ different-cast-recursion-source-corrected\n@@ -1,4 +1,4 @@\n hidden raw = new Mapping { [1] = 1\n  [2] = 2 }\n hidden inner: Mapping<Int,Int(throw(\"inner cast\"))> = raw\n-hidden outer: Mapping<Int,Int(inner.getOrNull(2) > 0)> = raw\n+hidden wrapped: Mapping<Int,Int(inner.getOrNull(2) > 0)> = raw\n",
+      "source_uri_preserved": "file:///stage102/different-cast-recursion.pkl"
+    },
+    {
+      "executed": false,
+      "expected": null,
+      "new_program": "shared-cast-wrappers-source-corrected",
+      "operation": "Remove hidden only from function cast declaration; preserve body/type/all reads.",
+      "original_matrix": {
+        "bytes": 8723,
+        "path": "target/m2/stage102-mapping-api-candidate-05/queries.json",
+        "sha256": "9ab23994420ea35813c475f8e5fe88e103a63d32978f41cd544a6f7403c84d1c"
+      },
+      "original_program": "shared-cast-wrappers",
+      "original_queries_required": true,
+      "query_changes": [],
+      "source_patch": "--- shared-cast-wrappers\n+++ shared-cast-wrappers-source-corrected\n@@ -1,5 +1,5 @@\n hidden raw = new Mapping { [1] = 1\n  [2] = 2 }\n-hidden function cast(value: Mapping<Int,Int(if (this == 1) other.getOrNull(2) > 0 else throw(\"shared cast\"))>) = value\n+function cast(value: Mapping<Int,Int(if (this == 1) other.getOrNull(2) > 0 else throw(\"shared cast\"))>) = value\n hidden first = cast(raw)\n hidden other = cast((raw) {})\n",
+      "source_uri_preserved": "file:///stage102/shared-cast-wrappers.pkl"
+    }
+  ],
+  "limitations": "Static grammar/source review is not an actual parse or runtime branch observation; future Java may reveal further preemption.",
+  "no_IO_or_unbounded_constructor_added": true,
+  "pinned_grammar": [
+    {
+      "bytes": 3840,
+      "path": "external/pkl/pkl-parser/src/main/java/org/pkl/parser/Token.java",
+      "sha256": "d7ed2ddba00558b96369292a6ba76f1b93aa3776640b6d98c4f21fc9677d5aec"
+    },
+    {
+      "bytes": 6544,
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/VmModifier.java",
+      "sha256": "7fdaefce1574e11a3698c035439b14ddac421c44debd632425de17b551122814"
+    },
+    {
+      "bytes": 121807,
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/builder/AstBuilder.java",
+      "sha256": "e423325b3cef4b7410d7a01c3e9c776b7c1e5993f93f7bec02e0852d5d5fd7d8"
+    }
+  ],
+  "power_true": 0,
+  "programs": 3,
+  "repetitions": 2,
+  "runtime_author_coordination": "Runtime author confirmed wrapped and removing hidden only preserve intended source scenario; no differential execution claimed.",
+  "source_only": true
+}

@@ -1,0 +1,1 @@
+(new PcfRenderer { converters { [String] = (x) -> identityEntries.entries.first.second } }).renderDocument(entryValue)

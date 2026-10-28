@@ -1,0 +1,7 @@
+hidden values = new Mapping {
+  [4] = throw("value-4")
+  [3] = throw("value-3")
+  [2] = throw("value-2")
+  [1] = throw("value-1")
+  [0] = throw("value-0")
+}

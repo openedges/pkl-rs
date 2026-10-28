@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function2`, but got type `Function1`.
+Value: new Function1 {}
+
+3620 | external function filter(predicate: (Key, Value) -> Boolean): Map<Key, Value>
+                                           ^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Map.filter (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3620)
+
+1 | (Map().filter((v) -> true)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

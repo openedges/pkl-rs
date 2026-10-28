@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Keyword `outer` is not allowed here.
+
+If you must use this name as identifier, enclose it in backticks.
+
+10 | hidden outer: Mapping<String,Int> = typed
+            ^^^^^
+at cache-cast-hashed-parent (file:///stage102/cache-cast-hashed-parent.pkl)

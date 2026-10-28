@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Class`, but got `null`.
+
+3165 | external function filterIsInstance<Type>(clazz: Class<Type>): List<Type>
+                                                       ^^^^^^^^^^^
+at pkl.base#List.filterIsInstance (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3165)
+
+1 | (List(1,1.5,"x",null,List(1),Set(2)).filterIsInstance(null)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

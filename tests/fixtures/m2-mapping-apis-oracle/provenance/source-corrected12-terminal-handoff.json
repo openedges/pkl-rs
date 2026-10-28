@@ -1,0 +1,116 @@
+{
+  "Reflection225_executed": false,
+  "Rust_evaluations": 0,
+  "all_owned_children_reaped": true,
+  "all_repeats_exact": true,
+  "authority": {
+    "bytes": 309555,
+    "path": "target/m2/stage102-mapping-source-correction12-oracle-01/report.json",
+    "sha256": "676eb735efc70b687eaee95995cc41290f3842767df5aa420c423a8385c67991"
+  },
+  "capture_host_session_id": 27515,
+  "capture_process": {
+    "bytes": 567,
+    "path": "target/m2/stage102-mapping-source-correction12-oracle-01/capture-process.json",
+    "sha256": "27c4530f10338a0f98ee73d99741661db102c6ffd27035baa29cb4773054cad3"
+  },
+  "capture_stderr": {
+    "bytes": 0,
+    "path": "target/m2/stage102-mapping-source-correction12-window-01/corrected12.stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "capture_stdout": {
+    "bytes": 756,
+    "path": "target/m2/stage102-mapping-source-correction12-window-01/corrected12.stdout.bin",
+    "sha256": "3c649f23154a197e965fae54b5a33e88e0fe984fbe8e561c8cf0f75f2fceac99"
+  },
+  "capture_terminal": {
+    "bytes": 518,
+    "path": "target/m2/stage102-mapping-source-correction12-window-01/corrected12.terminal.json",
+    "sha256": "343dcb887fe1ce578739bd9919b501fc1d05d6256d5de33bc5b825c44fea08ab"
+  },
+  "checked_record_occurrences": 626,
+  "cleanup_events": 0,
+  "compatibility_pass_claim": false,
+  "complete": true,
+  "contracts": 12,
+  "diagnostic_reach": {
+    "bytes": 19890,
+    "path": "target/m2/stage102-mapping-source-correction12-window-01/diagnostic-reach.json",
+    "sha256": "103a0cf863ca8409088a4db901b10964f99e7a82c34b86de0ef0815a9520d66e"
+  },
+  "kind": "Stage102 corrected12 actual Java authority and window release",
+  "observations": 24,
+  "oracle_internal_observations": 0,
+  "ordered_logger_events": 0,
+  "original476_preserved": {
+    "bytes": 7616,
+    "path": "target/m2/stage102-mapping-oracle-fixtures-04/report.json",
+    "sha256": "ae54790c913c78cb8223210b3d31a868653bc386a705be50ef24e685ca96b007"
+  },
+  "owned_PID_final_check": {
+    "argv": [
+      "/bin/ps",
+      "-p",
+      "87186,87211,87225,87237,87248,87262,87182,87341",
+      "-o",
+      "pid=,ppid=,pgid=,lstart=,comm="
+    ],
+    "exit": 1,
+    "meaning": "Later exact PID absence; actual reaping/terminal group records are lifecycle authority.",
+    "stderr": {
+      "bytes": 0,
+      "path": "target/m2/stage102-mapping-source-correction12-window-01/owned-pids-after.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 0,
+      "path": "target/m2/stage102-mapping-source-correction12-window-01/owned-pids-after.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "performance_claim": false,
+  "preflight": {
+    "bytes": 971,
+    "path": "target/m2/stage102-mapping-source-correction12-window-01/preflight.json",
+    "sha256": "900fe19f1e663e116b2b8f53768b33ef0fcb0238e4c000c073ea10a0ca1974c0"
+  },
+  "preparation": {
+    "bytes": 4718,
+    "path": "target/m2/stage102-mapping-source-correction-oracle-prep-01/preparation.json",
+    "sha256": "7b85a5f75a2d54b9d3043de5587864bc2d86df23dc24a793b1b6742f28aa4e01"
+  },
+  "programs": 3,
+  "readback": {
+    "bytes": 5414,
+    "path": "target/m2/stage102-mapping-source-correction12-oracle-readback-01/report.json",
+    "sha256": "20e076a16b0a2fa9119c175f775a19c1d7a2942d08b6bb0632d33548e2305f43"
+  },
+  "readback_stderr": {
+    "bytes": 0,
+    "path": "target/m2/stage102-mapping-source-correction12-window-01/readback.stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "readback_stdout": {
+    "bytes": 138,
+    "path": "target/m2/stage102-mapping-source-correction12-window-01/readback.stdout.bin",
+    "sha256": "1b314b5f1cd0f51250b893fd2b09043308c9fef0292a49761a9b40dbdef1f7b9"
+  },
+  "readback_terminal": {
+    "bytes": 449,
+    "path": "target/m2/stage102-mapping-source-correction12-window-01/readback.terminal.json",
+    "sha256": "22259f3bcdcb958e0fafd935691d841aea60d8d9910f3c8e92dd616ae12eeee2"
+  },
+  "retries": 0,
+  "sessions": 6,
+  "statuses": {
+    "error": 12,
+    "success": 12
+  },
+  "success": true,
+  "terminal_live": [],
+  "time": "2026-10-27T11:36:25.840515+00:00",
+  "timeouts": 0,
+  "unexecuted_observations": 0,
+  "window_released": true
+}

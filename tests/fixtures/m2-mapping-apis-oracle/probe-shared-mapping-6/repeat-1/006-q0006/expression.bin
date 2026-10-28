@@ -1,0 +1,1 @@
+(new PcfRenderer { converters { [String] = (s) -> direct[probe].captured } }).renderDocument(declared)

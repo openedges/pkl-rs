@@ -1,0 +1,1 @@
+(List(1,"x").sortWith((a,b)->trace(Pair(a,b)).first<b)).toString()

@@ -1,0 +1,1 @@
+(keyed.fold("",(a,k,v) -> a + trace(v).toString())).toString()

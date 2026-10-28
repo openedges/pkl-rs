@@ -1,0 +1,8 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Operator `>` is not defined for operand types `Null` and `Null`.
+Left operand : null
+Right operand: null
+
+1 | (List(1,2).maxByOrNull((x)->null)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

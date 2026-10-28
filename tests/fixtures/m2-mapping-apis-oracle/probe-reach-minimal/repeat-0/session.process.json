@@ -1,0 +1,885 @@
+{
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/CollectionEveryOracle.java",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal",
+    "file:///stage102/probe-shared-mapping-1.pkl"
+  ],
+  "cleanup_events": [],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01",
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 0,
+  "finished_epoch": 1793091470.011744,
+  "helper": {
+    "bytes": 6329,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/CollectionEveryOracle.java",
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "owned_child_reaped": true,
+  "owned_processes": {
+    "root_observed": true,
+    "root_pid": 39645,
+    "terminal_live": [],
+    "tracked": [
+      {
+        "group_id_at_discovery": 39645,
+        "parent_pid_at_discovery": 39628,
+        "pid": 39645,
+        "started": "Tue Oct 27 17:57:48 2026"
+      }
+    ]
+  },
+  "owned_start": "Tue Oct 27 17:57:48 2026",
+  "pgid": 39645,
+  "pid": 39645,
+  "power_assertions": false,
+  "program": "probe-reach-minimal",
+  "repeat": 0,
+  "rows": [
+    {
+      "directory": "target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000",
+      "expression": "(let (capturedKey = values[probe].captured) (new PcfRenderer { converters { [String] = (s) -> trace(capturedKey) } }).renderValue(probe))",
+      "id": "q0000",
+      "logger_events": 1,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 137,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/expression.bin",
+          "sha256": "7252855a827b32d256d6c77ff0a8a57727d371a1d4a043fbd6cd35b978eeb88a"
+        },
+        "expression.code-units.bin": {
+          "bytes": 274,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/expression.code-units.bin",
+          "sha256": "afc19715968823886e0bc5f7001524b88d5fd62cfdef2abe6145c6cff80c4ca1"
+        },
+        "log-000.level.bin": {
+          "bytes": 5,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/log-000.level.bin",
+          "sha256": "eafe895eb8119e6e5d06463590b2ef81b3651c157d5c8e18f1889186c7fd0ac0"
+        },
+        "log-000.level.code-units.bin": {
+          "bytes": 10,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/log-000.level.code-units.bin",
+          "sha256": "bae7cd13d3a470f673d4806706354d602758dd7e9ee758fbeb4b955dd2ced1cb"
+        },
+        "log-000.member.bin": {
+          "bytes": 4,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/log-000.member.bin",
+          "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        "log-000.member.code-units.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/log-000.member.code-units.bin",
+          "sha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+        },
+        "log-000.message.bin": {
+          "bytes": 20,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/log-000.message.bin",
+          "sha256": "36e3a4094149762dd400e25c809bf041e861f492d698d833e8172d19df551e53"
+        },
+        "log-000.message.code-units.bin": {
+          "bytes": 40,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/log-000.message.code-units.bin",
+          "sha256": "d901a61073aa40cbfcf45c08793eb4d8b1d41e7569c4f68d952d31320e8ce65d"
+        },
+        "log-000.module-uri.bin": {
+          "bytes": 9,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/log-000.module-uri.bin",
+          "sha256": "c3d457a4ea8ff667ba6e2cf290489e88c9370f969e2883290b8c9f36b719f46d"
+        },
+        "log-000.module-uri.code-units.bin": {
+          "bytes": 18,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/log-000.module-uri.code-units.bin",
+          "sha256": "d01e3014638d2f40f3f55fc4fd719e5388d03101d0ee89fbfefd985dbe90568b"
+        },
+        "log-000.position.bin": {
+          "bytes": 11,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/log-000.position.bin",
+          "sha256": "df59f813d2f652390138025783d60d516e85ea0e9c565b6245c556d2ee728727"
+        },
+        "log-000.position.code-units.bin": {
+          "bytes": 22,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/log-000.position.code-units.bin",
+          "sha256": "39a833ba53cebc9cea8e391fa146473a27bbb9ea9c0855c9c8f0b3f0e2207c36"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/logs.count.bin",
+          "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/result.stdout.bin",
+          "sha256": "106c4202d3d02a3ff34000f19889ac489e6a40f2ee68ea9e3984633ab059dd4d"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/000-q0000/result.stdout.code-units.bin",
+          "sha256": "2f020a5e3d30e48ed9eac3b8bcf67cdb0803dacb26a7e25a6988a840ccf9ed54"
+        }
+      },
+      "status": "success"
+    },
+    {
+      "directory": "target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001",
+      "expression": "(let (capturedKey = values[probe].captured) (new PcfRenderer { converters { [String] = (s) -> trace(capturedKey) } }).renderDocument(probe))",
+      "id": "q0001",
+      "logger_events": 1,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 140,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/expression.bin",
+          "sha256": "ffd002e14f3ba22bc2676fd2338fd38d8b2f67dbd038e93f989b03112ebb224a"
+        },
+        "expression.code-units.bin": {
+          "bytes": 280,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/expression.code-units.bin",
+          "sha256": "74984d4681bc9a6f67ecfd0604cb0ff0a84cc64e96ffb897d15c72170b2e375e"
+        },
+        "log-000.level.bin": {
+          "bytes": 5,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/log-000.level.bin",
+          "sha256": "eafe895eb8119e6e5d06463590b2ef81b3651c157d5c8e18f1889186c7fd0ac0"
+        },
+        "log-000.level.code-units.bin": {
+          "bytes": 10,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/log-000.level.code-units.bin",
+          "sha256": "bae7cd13d3a470f673d4806706354d602758dd7e9ee758fbeb4b955dd2ced1cb"
+        },
+        "log-000.member.bin": {
+          "bytes": 4,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/log-000.member.bin",
+          "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        "log-000.member.code-units.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/log-000.member.code-units.bin",
+          "sha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+        },
+        "log-000.message.bin": {
+          "bytes": 20,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/log-000.message.bin",
+          "sha256": "36e3a4094149762dd400e25c809bf041e861f492d698d833e8172d19df551e53"
+        },
+        "log-000.message.code-units.bin": {
+          "bytes": 40,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/log-000.message.code-units.bin",
+          "sha256": "d901a61073aa40cbfcf45c08793eb4d8b1d41e7569c4f68d952d31320e8ce65d"
+        },
+        "log-000.module-uri.bin": {
+          "bytes": 9,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/log-000.module-uri.bin",
+          "sha256": "c3d457a4ea8ff667ba6e2cf290489e88c9370f969e2883290b8c9f36b719f46d"
+        },
+        "log-000.module-uri.code-units.bin": {
+          "bytes": 18,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/log-000.module-uri.code-units.bin",
+          "sha256": "d01e3014638d2f40f3f55fc4fd719e5388d03101d0ee89fbfefd985dbe90568b"
+        },
+        "log-000.position.bin": {
+          "bytes": 11,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/log-000.position.bin",
+          "sha256": "df59f813d2f652390138025783d60d516e85ea0e9c565b6245c556d2ee728727"
+        },
+        "log-000.position.code-units.bin": {
+          "bytes": 22,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/log-000.position.code-units.bin",
+          "sha256": "39a833ba53cebc9cea8e391fa146473a27bbb9ea9c0855c9c8f0b3f0e2207c36"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/logs.count.bin",
+          "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 795,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/result.exception-to-string.bin",
+          "sha256": "093cc6ce7a3aaed19219266e51293e2a35bf929ae793e24cd1975363f2236684"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 1574,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/result.exception-to-string.code-units.bin",
+          "sha256": "65376c4e888ac7deda23cd6dcc4b584ee778954e4b9b7b1b4d4a95d6f08c610c"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 768,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/result.stderr.bin",
+          "sha256": "0f174d757509fe449e4921aa9a9d53091ff8243b01ed212fa3504ace197616a7"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 1520,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/result.stderr.code-units.bin",
+          "sha256": "c08be05f6e9fa9d178529f7ac82f5c08394e5286fccd77de72ca06688ffb60b4"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/001-q0001/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002",
+      "expression": "(let (capturedKey = values[probe].captured) (new PcfRenderer { converters { [String] = (s) -> trace(capturedKey) } }).renderDocument(declared))",
+      "id": "q0002",
+      "logger_events": 1,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 143,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/expression.bin",
+          "sha256": "73e01bebd93eb9fff719e6a0df7d52d88ac812da822096f194ecf8dfb1b0c071"
+        },
+        "expression.code-units.bin": {
+          "bytes": 286,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/expression.code-units.bin",
+          "sha256": "78fae159b6b11fe42277a0af667f5f3a9e701e752a3bc74fb03a6bd38c5faa1c"
+        },
+        "log-000.level.bin": {
+          "bytes": 5,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/log-000.level.bin",
+          "sha256": "eafe895eb8119e6e5d06463590b2ef81b3651c157d5c8e18f1889186c7fd0ac0"
+        },
+        "log-000.level.code-units.bin": {
+          "bytes": 10,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/log-000.level.code-units.bin",
+          "sha256": "bae7cd13d3a470f673d4806706354d602758dd7e9ee758fbeb4b955dd2ced1cb"
+        },
+        "log-000.member.bin": {
+          "bytes": 4,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/log-000.member.bin",
+          "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        "log-000.member.code-units.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/log-000.member.code-units.bin",
+          "sha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+        },
+        "log-000.message.bin": {
+          "bytes": 20,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/log-000.message.bin",
+          "sha256": "36e3a4094149762dd400e25c809bf041e861f492d698d833e8172d19df551e53"
+        },
+        "log-000.message.code-units.bin": {
+          "bytes": 40,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/log-000.message.code-units.bin",
+          "sha256": "d901a61073aa40cbfcf45c08793eb4d8b1d41e7569c4f68d952d31320e8ce65d"
+        },
+        "log-000.module-uri.bin": {
+          "bytes": 9,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/log-000.module-uri.bin",
+          "sha256": "c3d457a4ea8ff667ba6e2cf290489e88c9370f969e2883290b8c9f36b719f46d"
+        },
+        "log-000.module-uri.code-units.bin": {
+          "bytes": 18,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/log-000.module-uri.code-units.bin",
+          "sha256": "d01e3014638d2f40f3f55fc4fd719e5388d03101d0ee89fbfefd985dbe90568b"
+        },
+        "log-000.position.bin": {
+          "bytes": 11,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/log-000.position.bin",
+          "sha256": "df59f813d2f652390138025783d60d516e85ea0e9c565b6245c556d2ee728727"
+        },
+        "log-000.position.code-units.bin": {
+          "bytes": 22,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/log-000.position.code-units.bin",
+          "sha256": "39a833ba53cebc9cea8e391fa146473a27bbb9ea9c0855c9c8f0b3f0e2207c36"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/logs.count.bin",
+          "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 884,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/result.exception-to-string.bin",
+          "sha256": "004fc65f1330cfb5e56bbcbabaa39dd25f0b3441192721113dd50e621dd7755b"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 1752,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/result.exception-to-string.code-units.bin",
+          "sha256": "4fce349d8cc8b7d8a202ffa7e67aab1963ea6dab47ea1f5fecec5f2aeaeba1ca"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 857,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/result.stderr.bin",
+          "sha256": "6c3077b168aabb28de3c732a6ccecd5fb9a0441f068103a86f83cbbd21322101"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 1698,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/result.stderr.code-units.bin",
+          "sha256": "c1d9f048b13b8b47f6c7e9de48d934752325a7d3efae2436162a4dfd020accbc"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/002-q0002/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003",
+      "expression": "(new PcfRenderer { converters { [String] = (s) -> trace(s) } }).renderValue(probe)",
+      "id": "q0003",
+      "logger_events": 1,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 82,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/expression.bin",
+          "sha256": "16e97554132ab6bdefae3d1c0889b03acd3a8c9deb55e3b08583df7ee736f12a"
+        },
+        "expression.code-units.bin": {
+          "bytes": 164,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/expression.code-units.bin",
+          "sha256": "251a8991ffcc2f665cc0120d6ce8c86c5b729ee0b344037d9dd7f1c881576825"
+        },
+        "log-000.level.bin": {
+          "bytes": 5,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/log-000.level.bin",
+          "sha256": "eafe895eb8119e6e5d06463590b2ef81b3651c157d5c8e18f1889186c7fd0ac0"
+        },
+        "log-000.level.code-units.bin": {
+          "bytes": 10,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/log-000.level.code-units.bin",
+          "sha256": "bae7cd13d3a470f673d4806706354d602758dd7e9ee758fbeb4b955dd2ced1cb"
+        },
+        "log-000.member.bin": {
+          "bytes": 4,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/log-000.member.bin",
+          "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        "log-000.member.code-units.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/log-000.member.code-units.bin",
+          "sha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+        },
+        "log-000.message.bin": {
+          "bytes": 10,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/log-000.message.bin",
+          "sha256": "2a6108d2c9a0e76de928933ac0e1f82cf1b2f785cf46550b32e8debe9b0ad1a1"
+        },
+        "log-000.message.code-units.bin": {
+          "bytes": 20,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/log-000.message.code-units.bin",
+          "sha256": "c9274540f8d696284e6cdc3ac2b93d15d43855d13b98d633c77e87ffd43c8178"
+        },
+        "log-000.module-uri.bin": {
+          "bytes": 9,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/log-000.module-uri.bin",
+          "sha256": "c3d457a4ea8ff667ba6e2cf290489e88c9370f969e2883290b8c9f36b719f46d"
+        },
+        "log-000.module-uri.code-units.bin": {
+          "bytes": 18,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/log-000.module-uri.code-units.bin",
+          "sha256": "d01e3014638d2f40f3f55fc4fd719e5388d03101d0ee89fbfefd985dbe90568b"
+        },
+        "log-000.position.bin": {
+          "bytes": 9,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/log-000.position.bin",
+          "sha256": "ae4b90825e54102ca9a1d0d97391aef405c00fe229898294aeaa522a13c2e622"
+        },
+        "log-000.position.code-units.bin": {
+          "bytes": 18,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/log-000.position.code-units.bin",
+          "sha256": "065655115799ceb1e4269c8b2b4092c9990db80b944ea2f72df1ea46b33575a9"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/logs.count.bin",
+          "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 8,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        "result.stderr.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/result.stdout.bin",
+          "sha256": "106c4202d3d02a3ff34000f19889ac489e6a40f2ee68ea9e3984633ab059dd4d"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/003-q0003/result.stdout.code-units.bin",
+          "sha256": "2f020a5e3d30e48ed9eac3b8bcf67cdb0803dacb26a7e25a6988a840ccf9ed54"
+        }
+      },
+      "status": "success"
+    }
+  ],
+  "started_epoch": 1793091468.5813901,
+  "stderr": {
+    "bytes": 0,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/process.stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 360,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/programs/probe-reach-minimal/repeat-0/process.stdout.bin",
+    "sha256": "a9b07853c512e3e279b0edfd8f0d17a5eca2e275c01e8cebc69c49fd10339e47"
+  }
+}

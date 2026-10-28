@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function2`, but got type `Function1`.
+Value: new Function1 {}
+
+3638 | transform: (Key, Value) -> Map<NewKey, NewValue>,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Map.flatMap (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3638)
+
+1 | (Map("Aa",1,"BB",2).flatMap((v) -> Map())).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

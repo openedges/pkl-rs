@@ -1,0 +1,1 @@
+((new Mapping { [1] = 2 }).containsKey(1,2)).toString()

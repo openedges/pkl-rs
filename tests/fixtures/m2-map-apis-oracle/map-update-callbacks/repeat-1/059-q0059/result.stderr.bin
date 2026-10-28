@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Expected value of type `Map`, but got `null`.
+
+1 | (Map("Aa",1,"BB",2).flatMap((k,v) -> null)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

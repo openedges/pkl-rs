@@ -1,0 +1,5 @@
+hidden raw = new Mapping { [1] = 1
+ [2] = 2 }
+hidden function cast(value: Mapping<Int,Int(if (this == 1) other.getOrNull(2) > 0 else throw("shared cast"))>) = value
+hidden first = cast(raw)
+hidden other = cast((raw) {})

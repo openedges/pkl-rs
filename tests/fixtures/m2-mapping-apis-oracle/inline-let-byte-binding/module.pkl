@@ -1,0 +1,2 @@
+hidden raw = new Mapping { [1] = trace(1) }
+hidden typed: Mapping<Int,Int(let (_ = Bytes(256)) true)> = raw

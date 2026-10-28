@@ -1,0 +1,1 @@
+(List().sortBy((x)->trace(x%3))).toString()

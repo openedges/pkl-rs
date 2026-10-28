@@ -1,0 +1,5 @@
+string	q0000	(Map().entries == List()).toString()
+string	q0001	(Map(1,2).entries == List(Pair(1,2))).toString()
+string	q0002	(Map("a",new Dynamic { ["x"]=1 }).entries.first.second == Map("a",new Dynamic { ["x"]=1 }).values.first).toString()
+string	q0003	((new PcfRenderer { converters { [List] = (x) -> Map(1,2).entries } }).renderDocument(List(Pair(1,2)))).toString()
+string	q0004	((new PcfRenderer { converters { [Pair] = (x) -> Map(1,2).entries.first } }).renderDocument(Pair(1,2))).toString()

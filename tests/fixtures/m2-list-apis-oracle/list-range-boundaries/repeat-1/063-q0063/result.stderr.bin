@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got `null`.
+
+3126 | external function sublistOrNull(start: Int, exclusiveEnd: Int): List<Element>?
+                                              ^^^
+at pkl.base#List.sublistOrNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3126)
+
+1 | (List(1,2).sublistOrNull(null,0)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

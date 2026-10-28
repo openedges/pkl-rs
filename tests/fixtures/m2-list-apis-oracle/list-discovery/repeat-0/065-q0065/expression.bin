@@ -1,0 +1,1 @@
+(List(3,1,2).foldBack(0,(x,a)->a*10+x)).toString()

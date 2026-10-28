@@ -1,0 +1,21 @@
+org.pkl.core.PklException: –– Pkl Error ––
+inner cast
+
+4 | hidden typed: Mapping<Int,Int(if (this < 3) typed.getOrNull(this + 1) > 0 else throw("inner cast"))> = raw
+                                                                                   ^^^^^^^^^^^^^^^^^^^
+at same-cast-recursion-power#typed (file:///stage102/same-cast-recursion-power.pkl)
+
+1 | hidden raw = new Mapping { [1] = 1
+                                     ^
+at same-cast-recursion-power#raw[1] (file:///stage102/same-cast-recursion-power.pkl)
+
+┌─ 2 repetitions of:
+│ 
+│ 4 | hidden typed: Mapping<Int,Int(if (this < 3) typed.getOrNull(this + 1) > 0 else throw("inner cast"))> = raw
+│                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+│ at same-cast-recursion-power#typed (file:///stage102/same-cast-recursion-power.pkl)
+└─
+
+1 | typed.getOrNull(1).toString()
+    ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

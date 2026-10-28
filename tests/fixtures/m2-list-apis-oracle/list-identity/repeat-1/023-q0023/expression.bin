@@ -1,0 +1,1 @@
+((new PcfRenderer { converters { [List]=(xs)->xs.restOrNull } }).renderDocument(List(1,2))).toString()

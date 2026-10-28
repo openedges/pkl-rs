@@ -1,0 +1,1 @@
+(new PcfRenderer { converters { [String] = (s) -> other.getOrNull(original).captured } }).renderDocument(original)

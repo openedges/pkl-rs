@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+shared cast
+
+3 | function cast(value: Mapping<Int,Int(if (this == 1) other.getOrNull(2) > 0 else throw("shared cast"))>) = value
+                                                                                    ^^^^^^^^^^^^^^^^^^^^
+at shared-cast-wrappers#cast (file:///stage102/shared-cast-wrappers.pkl)
+
+2 | [2] = 2 }
+          ^
+at shared-cast-wrappers#raw[2] (file:///stage102/shared-cast-wrappers.pkl)
+
+1 | other.getOrNull(2).toString()
+    ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

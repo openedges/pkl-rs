@@ -1,0 +1,17 @@
+{
+  "Java_authority": {
+    "bytes": 220954,
+    "path": "target/m2/stage101-map-builder-followup-oracle-01/report.json",
+    "sha256": "e7c8e27252709f5dda7ab429183ce642627e9ebb220cf1ac959d7151b7e7503e"
+  },
+  "Rust_execution": "unexecuted",
+  "cohort": "builder-followup",
+  "evaluator_environment": {},
+  "evaluator_external_properties": {},
+  "power_assertions": false,
+  "program": "map-recursive-builder-followup",
+  "queries": 7,
+  "repetitions": 2,
+  "required": true,
+  "source_uri": "file:///stage101/map-recursive-builder-followup.pkl"
+}

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Expected value of type `Collection`, but got `null`.
+
+1 | (List(3,1,2).flatMap((x)->null)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

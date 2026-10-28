@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Int`, but got type `Float`.
+Value: 1.0
+
+3227 | external function replaceOrNull<Other>(index: Int, replacement: Other): List<Element | Other>?
+                                                     ^^^
+at pkl.base#List.replaceOrNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3227)
+
+1 | (List(1).replaceOrNull(1.0,1)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

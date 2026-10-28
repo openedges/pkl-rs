@@ -1,0 +1,1 @@
+(List(1.0,NaN,2.0).sortBy((x)->trace(x%3))).toString()

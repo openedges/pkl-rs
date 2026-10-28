@@ -1,0 +1,19 @@
+{
+  "Java_authority": {
+    "bytes": 852583,
+    "path": "target/m2/stage102-probe-reach-oracle-01/report.json",
+    "sha256": "ae474be13fc63d082b02b90715d1fcaeb1194422c60216353b6c2e7e89914b59"
+  },
+  "Java_input_transport": "queries.tsv expression column is Base64 UTF8 envelope only; actual API receives original decoded expression",
+  "Rust_execution": "unexecuted",
+  "Rust_query_input": "repeat-specific original expression.bin (UTF8), validated against expression.code-units.bin; never Base64",
+  "cohort": "reach",
+  "evaluator_environment": {},
+  "evaluator_external_properties": {},
+  "power_assertions": false,
+  "program": "probe-shared-dynamic-6-capture-value",
+  "queries": 6,
+  "repetitions": 2,
+  "required": true,
+  "source_uri": "file:///stage102/probe-shared-dynamic-6.pkl"
+}

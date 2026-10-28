@@ -1,0 +1,29 @@
+{
+  "Java_executed": false,
+  "false": {
+    "bytes": 6329,
+    "path": "target/m2/stage102-mapping-review-oracle-prep-01/helper-false/CollectionEveryOracle.java",
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "kind": "Byte-identical reuse of reviewed lossless Base64 helpers; no Java behavior change",
+  "old_false": {
+    "bytes": 6329,
+    "path": "target/m2/stage102-probe-reach-oracle-prep-01/helper-false/CollectionEveryOracle.java",
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "old_true": {
+    "bytes": 6328,
+    "path": "target/m2/stage102-probe-reach-oracle-prep-01/CollectionEveryOracle.java",
+    "sha256": "56defcb9f990729eedc3a3b98854c07319859a683cae4a404fedaf821cc2a98f"
+  },
+  "review": {
+    "bytes": 68733,
+    "path": "target/m2/stage102-oracle-envelope-independent-review-02/report.json",
+    "sha256": "f919b42b1df6ccfb9ba5055864ef903a96dc7b265bd1333458414948b763f593"
+  },
+  "true": {
+    "bytes": 6328,
+    "path": "target/m2/stage102-mapping-review-oracle-prep-01/CollectionEveryOracle.java",
+    "sha256": "56defcb9f990729eedc3a3b98854c07319859a683cae4a404fedaf821cc2a98f"
+  }
+}

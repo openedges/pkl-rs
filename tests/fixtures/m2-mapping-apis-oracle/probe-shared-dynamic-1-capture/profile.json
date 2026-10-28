@@ -1,0 +1,19 @@
+{
+  "Java_authority": {
+    "bytes": 540562,
+    "path": "target/m2/stage102-mapping-capture-oracle-01/report.json",
+    "sha256": "a777ea4e0b22107f62ac48223910a4e738b03231451d8f51d03de56d75f5b84b"
+  },
+  "Java_input_transport": "queries.tsv expression column is Base64 UTF8 envelope only; actual API receives original decoded expression",
+  "Rust_execution": "unexecuted",
+  "Rust_query_input": "repeat-specific original expression.bin (UTF8), validated against expression.code-units.bin; never Base64",
+  "cohort": "capture-correction",
+  "evaluator_environment": {},
+  "evaluator_external_properties": {},
+  "power_assertions": false,
+  "program": "probe-shared-dynamic-1-capture",
+  "queries": 6,
+  "repetitions": 2,
+  "required": true,
+  "source_uri": "file:///stage102/probe-shared-dynamic-1.pkl"
+}

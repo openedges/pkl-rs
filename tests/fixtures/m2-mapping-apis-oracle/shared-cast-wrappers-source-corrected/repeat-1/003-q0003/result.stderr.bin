@@ -1,0 +1,18 @@
+–– Pkl Error ––
+shared cast
+
+3 | function cast(value: Mapping<Int,Int(if (this == 1) other.getOrNull(2) > 0 else throw("shared cast"))>) = value
+                                                                                    ^^^^^^^^^^^^^^^^^^^^
+at shared-cast-wrappers#cast (file:///stage102/shared-cast-wrappers.pkl)
+
+1 | hidden raw = new Mapping { [1] = 1
+                                     ^
+at shared-cast-wrappers#raw[1] (file:///stage102/shared-cast-wrappers.pkl)
+
+3 | function cast(value: Mapping<Int,Int(if (this == 1) other.getOrNull(2) > 0 else throw("shared cast"))>) = value
+                                                        ^^^^^^^^^^^^^^^^^^
+at shared-cast-wrappers#cast (file:///stage102/shared-cast-wrappers.pkl)
+
+1 | first.getOrNull(1).toString()
+    ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

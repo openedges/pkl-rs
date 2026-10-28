@@ -1,0 +1,1 @@
+((new PcfRenderer { converters { [Pair] = (x) -> Map(1,2).entries.first } }).renderDocument(Pair(1,2))).toString()

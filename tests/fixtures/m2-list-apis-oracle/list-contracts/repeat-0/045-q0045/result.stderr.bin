@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3339 | external function reduceOrNull<Result>(operator: (Element | Result, Element) -> Result): Result?
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.reduceOrNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3339)
+
+1 | (List(1).reduceOrNull()).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

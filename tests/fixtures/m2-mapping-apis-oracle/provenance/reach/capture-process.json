@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "target/m2/stage102-probe-reach-oracle-prep-01/capture.py",
+    "--cohort",
+    "reach",
+    "--root-window-authorized"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+  "exit_code": 0,
+  "pid": 39628,
+  "report": {
+    "bytes": 852583,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-probe-reach-oracle-01/report.json",
+    "sha256": "ae474be13fc63d082b02b90715d1fcaeb1194422c60216353b6c2e7e89914b59"
+  }
+}

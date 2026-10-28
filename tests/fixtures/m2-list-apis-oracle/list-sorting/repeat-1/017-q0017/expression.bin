@@ -1,0 +1,1 @@
+(List(9,1,8,2,7,3,6,4,5).sortBy((x)->trace(x%3))).toString()

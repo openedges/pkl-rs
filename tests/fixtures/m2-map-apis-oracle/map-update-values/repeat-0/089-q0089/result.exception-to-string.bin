@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+key
+
+1 | (Map().put(throw("key"),throw("value"))).toString()
+               ^^^^^^^^^^^^
+at  (repl:text)

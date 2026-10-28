@@ -1,0 +1,19 @@
+{
+  "Java_authority": {
+    "bytes": 458963,
+    "path": "target/m2/stage102-mapping-review17-oracle-01/report.json",
+    "sha256": "6a8a9bb630f47665df47349dc465f7053db07b0891c27876667955ca8f9ac7d3"
+  },
+  "Java_input_transport": "queries.tsv expression column is Base64 UTF8 envelope only; actual API receives original decoded expression",
+  "Rust_execution": "unexecuted",
+  "Rust_query_input": "repeat-specific original expression.bin (UTF8), validated against expression.code-units.bin; never Base64",
+  "cohort": "review17",
+  "evaluator_environment": {},
+  "evaluator_external_properties": {},
+  "power_assertions": false,
+  "program": "cache-steal-casts",
+  "queries": 5,
+  "repetitions": 2,
+  "required": true,
+  "source_uri": "file:///stage102/cache-steal-casts.pkl"
+}

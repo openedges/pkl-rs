@@ -1,0 +1,1 @@
+(new PcfRenderer { converters { [Map] = (m) -> identityMap.filter((k,v) -> true) } }).renderDocument(identityMap)

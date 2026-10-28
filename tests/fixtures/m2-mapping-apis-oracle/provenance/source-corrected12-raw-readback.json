@@ -1,0 +1,119 @@
+{
+  "Rust_evaluations": 0,
+  "checked_record_occurrences": 626,
+  "complete": true,
+  "errors": [],
+  "finished_epoch": 1793100962.134945,
+  "kind": "Stage102-required-source-corrected12-independent-full-raw-readback",
+  "limitations": [
+    "Pinned Java authority establishes reference observations, not Rust/API/M2 compatibility.",
+    "Separate12 corrected controls have24 planned observations; original476 including12 preempted source-error contracts and identity-observer qualifications remain unchanged.",
+    "Any observed upstream internal outcomes remain oracle-error, never ordinary error or compatibility pass.",
+    "Original Map/Mapping whole modules and all original Mapping requirements remain required; bounded Java authority is not their candidate success.",
+    "No giant allocations, frozen native executables, protected archives or global cache copies are inputs."
+  ],
+  "observations": 24,
+  "ordered_logger_events": 0,
+  "performance_claim": false,
+  "queries": 12,
+  "reports": [
+    {
+      "capture_process": {
+        "bytes": 567,
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-source-correction12-oracle-01/capture-process.json",
+        "sha256": "27c4530f10338a0f98ee73d99741661db102c6ffd27035baa29cb4773054cad3"
+      },
+      "observations": 24,
+      "queries": 12,
+      "report": {
+        "bytes": 309555,
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-source-correction12-oracle-01/report.json",
+        "sha256": "676eb735efc70b687eaee95995cc41290f3842767df5aa420c423a8385c67991"
+      },
+      "sessions": [
+        {
+          "captured_pid": 87186,
+          "process_record": {
+            "bytes": 40104,
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-source-correction12-oracle-01/programs/cache-cast-hashed-parent-source-corrected/repeat-0/process.json",
+            "sha256": "d7498e731fa2f765664f9ed07dc588006bd64fb26b2553e6116bcf7a2d71a2db"
+          },
+          "ps_exit_code": 1,
+          "scope": "Actual Popen reaping is recorded above; later PID reuse is observational only.",
+          "stderr_hex": "",
+          "stdout_hex": ""
+        },
+        {
+          "captured_pid": 87211,
+          "process_record": {
+            "bytes": 40105,
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-source-correction12-oracle-01/programs/cache-cast-hashed-parent-source-corrected/repeat-1/process.json",
+            "sha256": "68846ce93b47c44da07a772def78682b31ad66af5b38a58471b76db8b0ce13b3"
+          },
+          "ps_exit_code": 1,
+          "scope": "Actual Popen reaping is recorded above; later PID reuse is observational only.",
+          "stderr_hex": "",
+          "stdout_hex": ""
+        },
+        {
+          "captured_pid": 87225,
+          "process_record": {
+            "bytes": 40084,
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-source-correction12-oracle-01/programs/different-cast-recursion-source-corrected/repeat-0/process.json",
+            "sha256": "bfccb4771d195c57e81e13c33d175866b885182ad94b3a16a6756662f19ab091"
+          },
+          "ps_exit_code": 1,
+          "scope": "Actual Popen reaping is recorded above; later PID reuse is observational only.",
+          "stderr_hex": "",
+          "stdout_hex": ""
+        },
+        {
+          "captured_pid": 87237,
+          "process_record": {
+            "bytes": 40086,
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-source-correction12-oracle-01/programs/different-cast-recursion-source-corrected/repeat-1/process.json",
+            "sha256": "8b7a99ac017f853ca932ecab849c9ad21905aa33318e42961717c92efcae08f1"
+          },
+          "ps_exit_code": 1,
+          "scope": "Actual Popen reaping is recorded above; later PID reuse is observational only.",
+          "stderr_hex": "",
+          "stdout_hex": ""
+        },
+        {
+          "captured_pid": 87248,
+          "process_record": {
+            "bytes": 39692,
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-source-correction12-oracle-01/programs/shared-cast-wrappers-source-corrected/repeat-0/process.json",
+            "sha256": "8fc9e22d7de8c9dad89fc2f238666f18acd64216b175364d7e2f856755f9ca23"
+          },
+          "ps_exit_code": 1,
+          "scope": "Actual Popen reaping is recorded above; later PID reuse is observational only.",
+          "stderr_hex": "",
+          "stdout_hex": ""
+        },
+        {
+          "captured_pid": 87262,
+          "process_record": {
+            "bytes": 39691,
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-source-correction12-oracle-01/programs/shared-cast-wrappers-source-corrected/repeat-1/process.json",
+            "sha256": "79474e6c246963ae94b8cc95478e126ec9a95b6c788c2a284f2b1f4cb883a614"
+          },
+          "ps_exit_code": 1,
+          "scope": "Actual Popen reaping is recorded above; later PID reuse is observational only.",
+          "stderr_hex": "",
+          "stdout_hex": ""
+        }
+      ],
+      "statuses": {
+        "error": 12,
+        "success": 12
+      }
+    }
+  ],
+  "schema_version": 1,
+  "started_epoch": 1793100961.759914,
+  "statuses": {
+    "error": 12,
+    "success": 12
+  }
+}

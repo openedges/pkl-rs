@@ -1,0 +1,8 @@
+hidden values = new Mapping { [31] = trace(1)
+ [0] = trace(2)
+ [1] = trace(3) }
+hidden bad = new Mapping { [1] = trace(1)
+ [2] = throw("late value") }
+hidden typed: Mapping<Int, Int> = new Mapping { [1] = trace(1)
+ [2] = "wrong" }
+hidden typedCallback: (Any, Int, Int) -> Int = (a,k,v) -> "wrong"

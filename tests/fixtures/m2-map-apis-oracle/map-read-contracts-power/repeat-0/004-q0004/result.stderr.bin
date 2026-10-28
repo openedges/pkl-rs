@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function2`, but got type `Function3`.
+Value: new Function3 {}
+
+3649 | external function any(predicate: (Key, Value) -> Boolean): Boolean
+                                        ^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Map.any (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3649)
+
+1 | (Map(3,1,1,2,2,3).any((a,b,c) -> true)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

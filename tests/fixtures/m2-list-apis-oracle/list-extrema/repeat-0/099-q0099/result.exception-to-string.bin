@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Function2`, but got type `Int`.
+Value: 42
+
+3360 | external function maxWith(comparator: (Element, Element) -> Boolean): Element
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.maxWith (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3360)
+
+1 | (List().maxWith(42)).toString()
+     ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

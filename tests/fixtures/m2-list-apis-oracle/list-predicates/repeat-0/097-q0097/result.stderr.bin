@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `String`, but got type `Int`.
+Value: 1
+
+1 | (List(1,2).dropWhile((x:String)->true)).toString()
+                            ^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | (List(1,2).dropWhile((x:String)->true)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

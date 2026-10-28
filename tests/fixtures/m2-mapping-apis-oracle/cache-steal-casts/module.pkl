@@ -1,0 +1,3 @@
+hidden raw = new Mapping { [1] = trace("stored") }
+hidden one: Mapping<Int,String(trace(this.length) > 0)> = raw
+hidden two: Mapping<Int,String(trace(this.length) < 20)> = one

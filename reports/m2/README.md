@@ -1,5 +1,19 @@
 # M2 language evidence
 
+## Stage102 shared collection API checkpoint
+
+Recorded local evidence: [Stage102 checkpoint](stage102-collection-apis-checkpoint.json). All numbered evidence archive parts are required for source restoration.
+
+The targeted run passes 83 tests, with 0 failures and 1 ignored tests. It matches 3718 ordinary observations, 37368 shared raw fields and 1506 ordered Logger events. The workspace records 1502 passes, 0 failures and 4 ignored tests. All eight local default roles pass; their actual source and resource qualifications are retained.
+
+native: 3718/3718 ordinary observations match across 148 sessions; 2 required internal observations remain unresolved.
+napi: 3718/3718 ordinary observations match across 148 sessions; 2 required internal observations remain unresolved.
+chromium: 3718/3718 ordinary observations match across 148 sessions; 2 required internal observations remain unresolved.
+
+The separate M1 strict and architecture gates pass on the recorded acquisition. Original Set/Map/Mapping replay retains 2/3 raw matches. Original Map Typed.hasProperty: required unresolved; future implementation and fresh oracle cases pending. The failed first selected native acquisition remains incomplete and preserved.
+
+Ignored tests, the original whole List Java heap failure, earlier failures and the existing whole-corpus aggregate remain separate obligations. Full M2, API, release-platform and performance gates remain open. These local results are not hosted CI.
+
 ## Stage99 numeric and Set API checkpoint
 
 Recorded local evidence: [Stage99 checkpoint](stage99-numeric-set-apis-checkpoint.json); archive prefix `stage99-numeric-set-apis-evidence` uses numbered parts of at most 45 MiB.

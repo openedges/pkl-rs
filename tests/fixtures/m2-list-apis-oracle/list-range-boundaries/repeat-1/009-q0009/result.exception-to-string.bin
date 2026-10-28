@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Element index `1` is out of range `0`..`0`.
+Collection: List()
+
+1 | (List().sublist(1,2)).toString()
+     ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

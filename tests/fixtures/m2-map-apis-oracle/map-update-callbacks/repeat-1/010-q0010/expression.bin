@@ -1,0 +1,1 @@
+(Map().flatMap((k,v) -> Map(0,v,k,trace(v)))).toString()

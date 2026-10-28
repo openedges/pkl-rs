@@ -1,0 +1,224 @@
+{
+  "complete": true,
+  "contracts": 24,
+  "exact_helper_copies": [
+    {
+      "bytes": 6329,
+      "path": "target/m2/stage102-mapping-capture-oracle-prep-01/helper-false/CollectionEveryOracle.java",
+      "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+    },
+    {
+      "bytes": 6328,
+      "path": "target/m2/stage102-mapping-capture-oracle-prep-01/CollectionEveryOracle.java",
+      "sha256": "56defcb9f990729eedc3a3b98854c07319859a683cae4a404fedaf821cc2a98f"
+    }
+  ],
+  "no_Java_executed": true,
+  "original_module_source_and_URI_retained": true,
+  "program_session_ids_distinct": true,
+  "queries": {
+    "bytes": 19219,
+    "path": "target/m2/stage102-mapping-api-candidate-02/probe-capture-queries.json",
+    "sha256": "e7b377eea67628e3c16df4ad43c9ae87df512f7026770f54739f02ffe30280f6"
+  },
+  "root_independent_helper_review": {
+    "bytes": 68733,
+    "path": "target/m2/stage102-oracle-envelope-independent-review-02/report.json",
+    "sha256": "f919b42b1df6ccfb9ba5055864ef903a96dc7b265bd1333458414948b763f593"
+  },
+  "rows": [
+    {
+      "UTF8_bytes": 133,
+      "UTF8_sha256": "8d75e9f27f88bd67b797417445ac14d0a49106483765d9e3a806d566b5bf7026",
+      "decoded_exact": true,
+      "id": "q0000",
+      "program": "probe-shared-mapping-1-capture",
+      "source_uri": "file:///stage102/probe-shared-mapping-1.pkl"
+    },
+    {
+      "UTF8_bytes": 136,
+      "UTF8_sha256": "846c34e7b3ffa775a48e2a3b7edeb0e2de93c7b394062538e23c90b748d2a873",
+      "decoded_exact": true,
+      "id": "q0001",
+      "program": "probe-shared-mapping-1-capture",
+      "source_uri": "file:///stage102/probe-shared-mapping-1.pkl"
+    },
+    {
+      "UTF8_bytes": 133,
+      "UTF8_sha256": "93cbf604a07495005d69855487bf38cd804fb9a4a93d6dd98402fa93821090b2",
+      "decoded_exact": true,
+      "id": "q0002",
+      "program": "probe-shared-mapping-1-capture",
+      "source_uri": "file:///stage102/probe-shared-mapping-1.pkl"
+    },
+    {
+      "UTF8_bytes": 136,
+      "UTF8_sha256": "cf96f8fe6af31945846670e5cfd2ea7ec96051eece744ee98660e46637e5b359",
+      "decoded_exact": true,
+      "id": "q0003",
+      "program": "probe-shared-mapping-1-capture",
+      "source_uri": "file:///stage102/probe-shared-mapping-1.pkl"
+    },
+    {
+      "UTF8_bytes": 132,
+      "UTF8_sha256": "7d0bc54563017b8a04a0f0963f8a5c57a4ee628ae2978d1c797b452e2e05ef54",
+      "decoded_exact": true,
+      "id": "q0004",
+      "program": "probe-shared-mapping-1-capture",
+      "source_uri": "file:///stage102/probe-shared-mapping-1.pkl"
+    },
+    {
+      "UTF8_bytes": 135,
+      "UTF8_sha256": "f5fc505b65efdc2b43bca92d42db087797ba987132bb99d7dadb675d7aa49a2a",
+      "decoded_exact": true,
+      "id": "q0005",
+      "program": "probe-shared-mapping-1-capture",
+      "source_uri": "file:///stage102/probe-shared-mapping-1.pkl"
+    },
+    {
+      "UTF8_bytes": 133,
+      "UTF8_sha256": "8d75e9f27f88bd67b797417445ac14d0a49106483765d9e3a806d566b5bf7026",
+      "decoded_exact": true,
+      "id": "q0000",
+      "program": "probe-shared-mapping-6-capture",
+      "source_uri": "file:///stage102/probe-shared-mapping-6.pkl"
+    },
+    {
+      "UTF8_bytes": 136,
+      "UTF8_sha256": "846c34e7b3ffa775a48e2a3b7edeb0e2de93c7b394062538e23c90b748d2a873",
+      "decoded_exact": true,
+      "id": "q0001",
+      "program": "probe-shared-mapping-6-capture",
+      "source_uri": "file:///stage102/probe-shared-mapping-6.pkl"
+    },
+    {
+      "UTF8_bytes": 133,
+      "UTF8_sha256": "93cbf604a07495005d69855487bf38cd804fb9a4a93d6dd98402fa93821090b2",
+      "decoded_exact": true,
+      "id": "q0002",
+      "program": "probe-shared-mapping-6-capture",
+      "source_uri": "file:///stage102/probe-shared-mapping-6.pkl"
+    },
+    {
+      "UTF8_bytes": 136,
+      "UTF8_sha256": "cf96f8fe6af31945846670e5cfd2ea7ec96051eece744ee98660e46637e5b359",
+      "decoded_exact": true,
+      "id": "q0003",
+      "program": "probe-shared-mapping-6-capture",
+      "source_uri": "file:///stage102/probe-shared-mapping-6.pkl"
+    },
+    {
+      "UTF8_bytes": 132,
+      "UTF8_sha256": "7d0bc54563017b8a04a0f0963f8a5c57a4ee628ae2978d1c797b452e2e05ef54",
+      "decoded_exact": true,
+      "id": "q0004",
+      "program": "probe-shared-mapping-6-capture",
+      "source_uri": "file:///stage102/probe-shared-mapping-6.pkl"
+    },
+    {
+      "UTF8_bytes": 135,
+      "UTF8_sha256": "f5fc505b65efdc2b43bca92d42db087797ba987132bb99d7dadb675d7aa49a2a",
+      "decoded_exact": true,
+      "id": "q0005",
+      "program": "probe-shared-mapping-6-capture",
+      "source_uri": "file:///stage102/probe-shared-mapping-6.pkl"
+    },
+    {
+      "UTF8_bytes": 133,
+      "UTF8_sha256": "8d75e9f27f88bd67b797417445ac14d0a49106483765d9e3a806d566b5bf7026",
+      "decoded_exact": true,
+      "id": "q0000",
+      "program": "probe-shared-dynamic-1-capture",
+      "source_uri": "file:///stage102/probe-shared-dynamic-1.pkl"
+    },
+    {
+      "UTF8_bytes": 136,
+      "UTF8_sha256": "846c34e7b3ffa775a48e2a3b7edeb0e2de93c7b394062538e23c90b748d2a873",
+      "decoded_exact": true,
+      "id": "q0001",
+      "program": "probe-shared-dynamic-1-capture",
+      "source_uri": "file:///stage102/probe-shared-dynamic-1.pkl"
+    },
+    {
+      "UTF8_bytes": 133,
+      "UTF8_sha256": "93cbf604a07495005d69855487bf38cd804fb9a4a93d6dd98402fa93821090b2",
+      "decoded_exact": true,
+      "id": "q0002",
+      "program": "probe-shared-dynamic-1-capture",
+      "source_uri": "file:///stage102/probe-shared-dynamic-1.pkl"
+    },
+    {
+      "UTF8_bytes": 136,
+      "UTF8_sha256": "cf96f8fe6af31945846670e5cfd2ea7ec96051eece744ee98660e46637e5b359",
+      "decoded_exact": true,
+      "id": "q0003",
+      "program": "probe-shared-dynamic-1-capture",
+      "source_uri": "file:///stage102/probe-shared-dynamic-1.pkl"
+    },
+    {
+      "UTF8_bytes": 132,
+      "UTF8_sha256": "7d0bc54563017b8a04a0f0963f8a5c57a4ee628ae2978d1c797b452e2e05ef54",
+      "decoded_exact": true,
+      "id": "q0004",
+      "program": "probe-shared-dynamic-1-capture",
+      "source_uri": "file:///stage102/probe-shared-dynamic-1.pkl"
+    },
+    {
+      "UTF8_bytes": 135,
+      "UTF8_sha256": "f5fc505b65efdc2b43bca92d42db087797ba987132bb99d7dadb675d7aa49a2a",
+      "decoded_exact": true,
+      "id": "q0005",
+      "program": "probe-shared-dynamic-1-capture",
+      "source_uri": "file:///stage102/probe-shared-dynamic-1.pkl"
+    },
+    {
+      "UTF8_bytes": 133,
+      "UTF8_sha256": "8d75e9f27f88bd67b797417445ac14d0a49106483765d9e3a806d566b5bf7026",
+      "decoded_exact": true,
+      "id": "q0000",
+      "program": "probe-shared-dynamic-6-capture",
+      "source_uri": "file:///stage102/probe-shared-dynamic-6.pkl"
+    },
+    {
+      "UTF8_bytes": 136,
+      "UTF8_sha256": "846c34e7b3ffa775a48e2a3b7edeb0e2de93c7b394062538e23c90b748d2a873",
+      "decoded_exact": true,
+      "id": "q0001",
+      "program": "probe-shared-dynamic-6-capture",
+      "source_uri": "file:///stage102/probe-shared-dynamic-6.pkl"
+    },
+    {
+      "UTF8_bytes": 133,
+      "UTF8_sha256": "93cbf604a07495005d69855487bf38cd804fb9a4a93d6dd98402fa93821090b2",
+      "decoded_exact": true,
+      "id": "q0002",
+      "program": "probe-shared-dynamic-6-capture",
+      "source_uri": "file:///stage102/probe-shared-dynamic-6.pkl"
+    },
+    {
+      "UTF8_bytes": 136,
+      "UTF8_sha256": "cf96f8fe6af31945846670e5cfd2ea7ec96051eece744ee98660e46637e5b359",
+      "decoded_exact": true,
+      "id": "q0003",
+      "program": "probe-shared-dynamic-6-capture",
+      "source_uri": "file:///stage102/probe-shared-dynamic-6.pkl"
+    },
+    {
+      "UTF8_bytes": 132,
+      "UTF8_sha256": "7d0bc54563017b8a04a0f0963f8a5c57a4ee628ae2978d1c797b452e2e05ef54",
+      "decoded_exact": true,
+      "id": "q0004",
+      "program": "probe-shared-dynamic-6-capture",
+      "source_uri": "file:///stage102/probe-shared-dynamic-6.pkl"
+    },
+    {
+      "UTF8_bytes": 135,
+      "UTF8_sha256": "f5fc505b65efdc2b43bca92d42db087797ba987132bb99d7dadb675d7aa49a2a",
+      "decoded_exact": true,
+      "id": "q0005",
+      "program": "probe-shared-dynamic-6-capture",
+      "source_uri": "file:///stage102/probe-shared-dynamic-6.pkl"
+    }
+  ],
+  "success": true
+}

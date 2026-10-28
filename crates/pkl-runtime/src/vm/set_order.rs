@@ -1,4 +1,4 @@
-//! Resumable Set folds, extrema, and the pinned eight-element-block merge sort.
+//! Resumable List/Set folds, extrema, and the pinned eight-element-block merge sort.
 use super::*;
 use crate::heap::CollectionKind;
 
@@ -113,116 +113,122 @@ pub(super) fn blocks(
 ) -> BTreeMap<(Arc<str>, Arc<str>), usize> {
     use Kind::*;
     let source = crate::stdlib_sources::base();
-    let class = source.text.find("external class Set<").unwrap();
     let mut result = BTreeMap::new();
-    for kind in [
-        Fold,
-        FoldBack,
-        FoldIndexed,
-        Reduce,
-        ReduceOrNull,
-        Min,
-        MinOrNull,
-        Max,
-        MaxOrNull,
-        MinBy,
-        MinByOrNull,
-        MaxBy,
-        MaxByOrNull,
-        MinWith,
-        MinWithOrNull,
-        MaxWith,
-        MaxWithOrNull,
-        Sort,
-        SortBy,
-        SortWith,
-    ] {
-        let property = matches!(kind, Min | MinOrNull | Max | MaxOrNull);
-        let name = kind.name();
-        let needle = if property {
-            format!("external {name}:")
-        } else {
-            format!("external function {name}")
-        };
-        let start = class + source.text[class..].find(&needle).expect("pinned Set API");
-        let end = if property {
-            start + source.text[start..].find('\n').unwrap()
-        } else {
-            let open = start + source.text[start..].find('(').unwrap();
-            let mut depth = 0;
-            let mut closing = open;
-            for (i, c) in source.text[open..].char_indices() {
-                if c == '(' {
-                    depth += 1;
-                }
-                if c == ')' {
-                    depth -= 1;
-                    if depth == 0 {
-                        closing = open + i;
-                        break;
+    for class_name in ["Set", "List"] {
+        let class = source
+            .text
+            .find(&format!("external class {class_name}<"))
+            .unwrap();
+        for kind in [
+            Fold,
+            FoldBack,
+            FoldIndexed,
+            Reduce,
+            ReduceOrNull,
+            Min,
+            MinOrNull,
+            Max,
+            MaxOrNull,
+            MinBy,
+            MinByOrNull,
+            MaxBy,
+            MaxByOrNull,
+            MinWith,
+            MinWithOrNull,
+            MaxWith,
+            MaxWithOrNull,
+            Sort,
+            SortBy,
+            SortWith,
+        ] {
+            let property = matches!(kind, Min | MinOrNull | Max | MaxOrNull);
+            let name = kind.name();
+            let needle = if property {
+                format!("external {name}:")
+            } else {
+                format!("external function {name}")
+            };
+            let start = class + source.text[class..].find(&needle).expect("pinned Set API");
+            let end = if property {
+                start + source.text[start..].find('\n').unwrap()
+            } else {
+                let open = start + source.text[start..].find('(').unwrap();
+                let mut depth = 0;
+                let mut closing = open;
+                for (i, c) in source.text[open..].char_indices() {
+                    if c == '(' {
+                        depth += 1;
+                    }
+                    if c == ')' {
+                        depth -= 1;
+                        if depth == 0 {
+                            closing = open + i;
+                            break;
+                        }
                     }
                 }
-            }
-            closing + source.text[closing..].find('\n').unwrap()
-        };
-        let mut code = vec![];
-        let mut spans = vec![];
-        if kind.arity() == 2 {
-            code.push(Instruction::LoadLocal(1));
-            spans.push(None);
-        }
-        if kind.arity() != 0 {
-            let label = if kind.fold() {
-                "operator: "
-            } else if kind.selector() {
-                "selector: "
-            } else {
-                "comparator: "
+                closing + source.text[closing..].find('\n').unwrap()
             };
-            let parameter = start + source.text[start..end].find(label).unwrap() + label.len();
-            let arrow = parameter + source.text[parameter..end].find(" -> ").unwrap();
-            let type_end = arrow + 4 + source.text[arrow + 4..end].find([')', '\n']).unwrap();
-            let type_end = arrow + 4 + source.text[arrow + 4..type_end].trim_end_matches(',').len();
+            let mut code = vec![];
+            let mut spans = vec![];
+            if kind.arity() == 2 {
+                code.push(Instruction::LoadLocal(1));
+                spans.push(None);
+            }
+            if kind.arity() != 0 {
+                let label = if kind.fold() {
+                    "operator: "
+                } else if kind.selector() {
+                    "selector: "
+                } else {
+                    "comparator: "
+                };
+                let parameter = start + source.text[start..end].find(label).unwrap() + label.len();
+                let arrow = parameter + source.text[parameter..end].find(" -> ").unwrap();
+                let type_end = arrow + 4 + source.text[arrow + 4..end].find([')', '\n']).unwrap();
+                let type_end =
+                    arrow + 4 + source.text[arrow + 4..type_end].trim_end_matches(',').len();
+                code.extend([
+                    Instruction::LoadLocal(0),
+                    Instruction::CheckType(TypeCheck::Function {
+                        parameters: Some(vec![
+                            TypeCheck::Any;
+                            if matches!(kind, FoldIndexed) {
+                                3
+                            } else if kind.fold() || kind.comparator() {
+                                2
+                            } else {
+                                1
+                            }
+                        ]),
+                        result: Box::new(TypeCheck::Any),
+                        syntax: true,
+                    }),
+                ]);
+                spans.extend([None, Some(Span::new(parameter, type_end))]);
+            }
+            code.push(Instruction::Primitive(primitives::Operation::SetOrder(
+                Operation::Start(kind),
+            )));
+            spans.push(None);
+            let step = code.len();
             code.extend([
-                Instruction::LoadLocal(0),
-                Instruction::CheckType(TypeCheck::Function {
-                    parameters: Some(vec![
-                        TypeCheck::Any;
-                        if matches!(kind, FoldIndexed) {
-                            3
-                        } else if kind.fold() || kind.comparator() {
-                            2
-                        } else {
-                            1
-                        }
-                    ]),
-                    result: Box::new(TypeCheck::Any),
-                    syntax: true,
-                }),
+                Instruction::Primitive(primitives::Operation::SetOrder(Operation::Step)),
+                Instruction::Jump(step),
+                Instruction::Return,
             ]);
-            spans.extend([None, Some(Span::new(parameter, type_end))]);
+            spans.extend([None, None, None]);
+            let block = blocks.len();
+            blocks.push(code);
+            metadata.push(BlockMetadata {
+                source: Some(source.clone()),
+                member: format!("#{class_name}.{name}").into(),
+                declaration: Some(Span::new(start, end)),
+                spans,
+                ..Default::default()
+            });
+            result.insert((class_name.into(), name.into()), block);
         }
-        code.push(Instruction::Primitive(primitives::Operation::SetOrder(
-            Operation::Start(kind),
-        )));
-        spans.push(None);
-        let step = code.len();
-        code.extend([
-            Instruction::Primitive(primitives::Operation::SetOrder(Operation::Step)),
-            Instruction::Jump(step),
-            Instruction::Return,
-        ]);
-        spans.extend([None, None, None]);
-        let block = blocks.len();
-        blocks.push(code);
-        metadata.push(BlockMetadata {
-            source: Some(source.clone()),
-            member: format!("#Set.{name}").into(),
-            declaration: Some(Span::new(start, end)),
-            spans,
-            ..Default::default()
-        });
-        result.insert(("Set".into(), name.into()), block);
     }
     result
 }
@@ -243,6 +249,7 @@ enum Stage {
 pub(super) struct Run {
     kind: Kind,
     source: ObjectId,
+    list: bool,
     values: Vec<Value>,
     callback: Option<ObjectId>,
     cursor: usize,
@@ -518,6 +525,7 @@ impl Vm {
                 None
             };
             let source = receiver.as_object()?;
+            let list = self.is_list(&receiver);
             let mut values = collections::ordered_members(&self.heap, source)?
                 .iter()
                 .map(|m| {
@@ -532,7 +540,11 @@ impl Vm {
                 if !kind.nullable() {
                     return Err(RuntimeError::new(
                         ErrorKind::Type,
-                        "Expected a non-empty collection.\nCollection: Set()",
+                        if list {
+                            "Expected a non-empty collection.\nCollection: List()"
+                        } else {
+                            "Expected a non-empty collection.\nCollection: Set()"
+                        },
                     ));
                 }
                 self.stack.push(Value::Null);
@@ -563,6 +575,7 @@ impl Vm {
             let run = Run {
                 kind,
                 source,
+                list,
                 values,
                 callback,
                 cursor,
@@ -613,7 +626,21 @@ impl Vm {
                 run.stage = Stage::Next;
             }
             Stage::ComparatorResult => {
-                if comparator(self.pop()?, &self.heap, &self.program.module_name)? {
+                let value = self.pop()?;
+                let accepted = if run.list {
+                    let Value::Bool(accepted) = value else {
+                        return Err(type_error(
+                            &TypeCheck::Boolean,
+                            &value,
+                            &self.program.module_name,
+                            &self.heap,
+                        )?);
+                    };
+                    accepted
+                } else {
+                    comparator(value, &self.heap, &self.program.module_name)?
+                };
+                if accepted {
                     run.accumulator = run.current.clone();
                 }
                 run.stage = Stage::Next;
@@ -710,11 +737,15 @@ impl Vm {
                         call = Some(vec![run.current.clone()]);
                     } else if run.kind.comparator() {
                         run.stage = Stage::ComparatorResult;
-                        call = Some(if matches!(run.kind, Kind::MaxWithOrNull) {
-                            vec![run.accumulator.clone(), run.current.clone()]
-                        } else {
-                            vec![run.current.clone(), run.accumulator.clone()]
-                        });
+                        call = Some(
+                            if matches!(run.kind, Kind::MaxWithOrNull)
+                                || (run.list && matches!(run.kind, Kind::MaxWith))
+                            {
+                                vec![run.accumulator.clone(), run.current.clone()]
+                            } else {
+                                vec![run.current.clone(), run.accumulator.clone()]
+                            },
+                        );
                     } else if order(
                         &run.kind,
                         &run.current,

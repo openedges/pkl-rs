@@ -1,0 +1,18 @@
+–– Pkl Error ––
+Unexpected token `)`.
+
+2 | value = )
+            ^
+at cached-error-present-cast#failed (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-api-candidate-05/auxiliary-modules/cached-failure.pkl)
+
+4 | hidden typed: Mapping<Int,Int(failed.any == this)> = raw
+                                  ^^^^^^
+at cached-error-present-cast#typed (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-api-candidate-05/auxiliary-modules/cached-error-present-cast.pkl)
+
+3 | [2] = 2 }
+          ^
+at cached-error-present-cast#raw[2] (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage102-mapping-api-candidate-05/auxiliary-modules/cached-error-present-cast.pkl)
+
+1 | typed.getOrNull(1).toString()
+    ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

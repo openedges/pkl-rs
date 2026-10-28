@@ -1,0 +1,1 @@
+(List().findLastOrNull((x)->throw("unreached"))).toString()

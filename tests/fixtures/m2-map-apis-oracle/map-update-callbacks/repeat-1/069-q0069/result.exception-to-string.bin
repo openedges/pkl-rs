@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+initial
+
+1 | (Map().fold(throw("initial"),throw("operator"))).toString()
+                ^^^^^^^^^^^^^^^^
+at  (repl:text)

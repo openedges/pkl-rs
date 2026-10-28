@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3352 | external function minWithOrNull(comparator: (Element, Element) -> Boolean): Element?
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.minWithOrNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3352)
+
+1 | (List(1).minWithOrNull()).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

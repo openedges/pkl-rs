@@ -206,3 +206,74 @@ fn cancellation_at_key_default_and_callback_releases_continuations() {
         }
     }
 }
+
+#[test]
+fn object_key_hash_suspends_before_default_and_retries_after_host_failure() {
+    let source = r#"
+outerValue = read("mem:outer")
+parent = new Mapping { ["hit"] = "inherited" }
+child = (parent) {
+  default = let (gate = read("mem:default")) (key) -> gate + key.value
+  ["miss"] = super[new Dynamic { value = read("mem:key-hash") }]
+}
+result = child["miss"]
+hit = child["hit"]
+"#;
+    let (mut session, module, entries) = setup(source, &["outerValue", "result", "hit"]);
+    session
+        .start(entries[0], vec![module.clone()], 0, None)
+        .unwrap();
+    let outer = read(&mut session, "mem:outer");
+    session
+        .reenter(&outer, entries[1], vec![module.clone()], 0, None)
+        .unwrap();
+    // The ephemeral object key must be hashed before even reading default.
+    // Polling collects on every step; the lookup owns the key while suspended.
+    let failed_hash = read(&mut session, "mem:key-hash");
+    session
+        .reenter(&failed_hash, entries[2], vec![module.clone()], 0, None)
+        .unwrap();
+    assert_eq!(ready(&mut session), Ok(Value::string("inherited")));
+    assert_eq!(session.context_depth(), 2);
+    assert_eq!(read(&mut session, "mem:key-hash"), failed_hash);
+    session
+        .resume(
+            &failed_hash,
+            Err(RuntimeError::new(ErrorKind::Host, "retry object key hash")),
+            0,
+        )
+        .unwrap();
+    assert_eq!(ready(&mut session).unwrap_err().kind, ErrorKind::Host);
+    assert_eq!(session.context_depth(), 1);
+    assert_eq!(read(&mut session, "mem:outer"), outer);
+    session
+        .reenter(&outer, entries[1], vec![module.clone()], 0, None)
+        .unwrap();
+    let retry_hash = read(&mut session, "mem:key-hash");
+    for _ in 0..4 {
+        session.collect(&[]);
+        assert_eq!(read(&mut session, "mem:key-hash"), retry_hash);
+    }
+    session
+        .resume(&retry_hash, Ok(Value::string("key")), 0)
+        .unwrap();
+    // Resuming the terminal declaration probe must not report a cyclic owner.
+    // The completed hash also caches key.value, which default reads below.
+    let default = read(&mut session, "mem:default");
+    session
+        .reenter(&default, entries[2], vec![module], 0, None)
+        .unwrap();
+    assert_eq!(ready(&mut session), Ok(Value::string("inherited")));
+    assert_eq!(read(&mut session, "mem:default"), default);
+    session
+        .resume(&default, Ok(Value::string("fallback-")), 0)
+        .unwrap();
+    assert_eq!(ready(&mut session), Ok(Value::string("fallback-key")));
+    assert_eq!(session.context_depth(), 1);
+    assert_eq!(read(&mut session, "mem:outer"), outer);
+    session.resume(&outer, Ok(Value::Null), 0).unwrap();
+    assert_eq!(ready(&mut session), Ok(Value::Null));
+    session.close();
+    assert_eq!(session.collect(&[]).slots, 0);
+    assert!(session.drain_cancelled_reads().is_empty());
+}

@@ -1,0 +1,1 @@
+(List().minBy((x)->throw("unreached"))).toString()

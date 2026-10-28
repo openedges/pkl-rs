@@ -1,0 +1,6 @@
+–– Pkl Error ––
+initial
+
+1 | (values.fold(throw("initial"),throw("operator"))).toString()
+                 ^^^^^^^^^^^^^^^^
+at  (repl:text)

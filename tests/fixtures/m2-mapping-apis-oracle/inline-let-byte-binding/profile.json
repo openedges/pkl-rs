@@ -1,0 +1,19 @@
+{
+  "Java_authority": {
+    "bytes": 439113,
+    "path": "target/m2/stage102-mapping-inline16-oracle-01/report.json",
+    "sha256": "7ef71f10fc8ae25cd871938b8b0d71ba84cb889adaa62c98b2cadc2db951ece3"
+  },
+  "Java_input_transport": "queries.tsv expression column is Base64 UTF8 envelope only; actual API receives original decoded expression",
+  "Rust_execution": "unexecuted",
+  "Rust_query_input": "repeat-specific original expression.bin (UTF8), validated against expression.code-units.bin; never Base64",
+  "cohort": "inline16",
+  "evaluator_environment": {},
+  "evaluator_external_properties": {},
+  "power_assertions": false,
+  "program": "inline-let-byte-binding",
+  "queries": 4,
+  "repetitions": 2,
+  "required": true,
+  "source_uri": "file:///stage102/inline-let-byte-binding.pkl"
+}

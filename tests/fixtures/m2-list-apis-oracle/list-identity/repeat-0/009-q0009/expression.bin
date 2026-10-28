@@ -1,0 +1,1 @@
+((new PcfRenderer { converters { [List]=(xs)->xs.drop(9) } }).renderDocument(List(1,2))).toString()

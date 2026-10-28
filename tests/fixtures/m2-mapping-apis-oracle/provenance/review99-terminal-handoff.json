@@ -1,0 +1,347 @@
+{
+  "Rust_evaluations": 0,
+  "all_JVMs_exit0": true,
+  "all_owned_children_reaped": true,
+  "all_repeats_exact": true,
+  "all_selected55_pins_unchanged_after": true,
+  "api_exception_observations": 0,
+  "checked_record_occurrences": 5398,
+  "cohorts": [
+    {
+      "authority": {
+        "bytes": 458963,
+        "path": "target/m2/stage102-mapping-review17-oracle-01/report.json",
+        "sha256": "6a8a9bb630f47665df47349dc465f7053db07b0891c27876667955ca8f9ac7d3"
+      },
+      "capture_process": {
+        "bytes": 542,
+        "path": "target/m2/stage102-mapping-review17-oracle-01/capture-process.json",
+        "sha256": "f9384d9b8a8379907706037b622718fa12b452cd2d8c2e2fd6e6c54985db8062"
+      },
+      "cohort": "review17",
+      "contracts": 17,
+      "host_session_id": 91325,
+      "ordered_logger_events": 20,
+      "sessions": 6,
+      "statuses": {
+        "success": 34
+      },
+      "wrapper_started": {
+        "bytes": 407,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/review17.started.json",
+        "sha256": "24deb0f9d2ffc1f7286f15df496808492f4a1a0e72850214146d2856531b6cd5"
+      },
+      "wrapper_stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/review17.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "wrapper_stdout": {
+        "bytes": 545,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/review17.stdout.bin",
+        "sha256": "5e07a1b86a48e877254ba9b6e1907576a2888332ca5cc06ad9c06e3a83c549c8"
+      },
+      "wrapper_terminal": {
+        "bytes": 501,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/review17.terminal.json",
+        "sha256": "6cd03fa7e919af46f32eac5e693c9a04836bf7897e83d31d46be981cec1cbb70"
+      }
+    },
+    {
+      "authority": {
+        "bytes": 479372,
+        "path": "target/m2/stage102-mapping-cast21-oracle-01/report.json",
+        "sha256": "ec6f4de3fade0910178379568310a7f9b2985f90c83b112c962506ae839bbc5e"
+      },
+      "capture_process": {
+        "bytes": 538,
+        "path": "target/m2/stage102-mapping-cast21-oracle-01/capture-process.json",
+        "sha256": "7d0df493c0f62aa42296b496b839cf8be1b9ae9d0a4d3ebc701291061c07c151"
+      },
+      "cohort": "cast21",
+      "contracts": 21,
+      "host_session_id": 89451,
+      "ordered_logger_events": 4,
+      "sessions": 8,
+      "statuses": {
+        "error": 28,
+        "success": 14
+      },
+      "wrapper_started": {
+        "bytes": 403,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/cast21.started.json",
+        "sha256": "221780ea935b52765739f82445bbddcf4a24d8234ea00991239e539be4a2ba1d"
+      },
+      "wrapper_stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/cast21.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "wrapper_stdout": {
+        "bytes": 808,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/cast21.stdout.bin",
+        "sha256": "b2edbb6fb3200cb101b4f9f6b73cf1b9f53aaad4798833dce5f918f58eefab43"
+      },
+      "wrapper_terminal": {
+        "bytes": 497,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/cast21.terminal.json",
+        "sha256": "91d276dd6ac811601dd3ac5e1c5c798f9143901b737fbed5da82994e08157d0e"
+      }
+    },
+    {
+      "authority": {
+        "bytes": 445090,
+        "path": "target/m2/stage102-mapping-same20-oracle-01/report.json",
+        "sha256": "cd255a9f9b6332f24ed34a22810d02bd446e37a36e435ed6b645a1d054723c2d"
+      },
+      "capture_process": {
+        "bytes": 538,
+        "path": "target/m2/stage102-mapping-same20-oracle-01/capture-process.json",
+        "sha256": "f8ecdb7873bad5328914d35ef0106df163373ef547d2b641e5d49d418822088f"
+      },
+      "cohort": "same20",
+      "contracts": 20,
+      "host_session_id": 5882,
+      "ordered_logger_events": 0,
+      "sessions": 8,
+      "statuses": {
+        "error": 28,
+        "success": 12
+      },
+      "wrapper_started": {
+        "bytes": 403,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/same20.started.json",
+        "sha256": "823a2cc5c5c23c30f530fcd7d702265cc178ea5fa64450dce5f2cb577b5fc79f"
+      },
+      "wrapper_stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/same20.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "wrapper_stdout": {
+        "bytes": 776,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/same20.stdout.bin",
+        "sha256": "9a3532b0ca5068055db3be16c3c42a0db936350ecb2644db6e51b35d27949910"
+      },
+      "wrapper_terminal": {
+        "bytes": 497,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/same20.terminal.json",
+        "sha256": "b868e1be0296a0bd8651dd2d1b7e92526a9df8eab10467bccf1970af232eb653"
+      }
+    },
+    {
+      "authority": {
+        "bytes": 269136,
+        "path": "target/m2/stage102-mapping-mixed10-oracle-01/report.json",
+        "sha256": "a98b5e23a55f8795db18d6349854db7da71d489eb2cec7d0a8e2d121469f6180"
+      },
+      "capture_process": {
+        "bytes": 540,
+        "path": "target/m2/stage102-mapping-mixed10-oracle-01/capture-process.json",
+        "sha256": "6a04ad709caa40b3223168003864e9df594ee19cf0ab767c0d70c4b67a1a97b1"
+      },
+      "cohort": "mixed10",
+      "contracts": 10,
+      "host_session_id": 26013,
+      "ordered_logger_events": 8,
+      "sessions": 4,
+      "statuses": {
+        "error": 12,
+        "success": 8
+      },
+      "wrapper_started": {
+        "bytes": 405,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/mixed10.started.json",
+        "sha256": "569de7832c4d851e09baa26a160eb0ace5dd8a14f8e12aaaac77b2a337453c6d"
+      },
+      "wrapper_stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/mixed10.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "wrapper_stdout": {
+        "bytes": 451,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/mixed10.stdout.bin",
+        "sha256": "5d790e4ff6810e72154794bcf0491295bbf701b0b7be82b0f02962ee7660e40d"
+      },
+      "wrapper_terminal": {
+        "bytes": 499,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/mixed10.terminal.json",
+        "sha256": "10298f71e8c5511032c45281095f7e997ed2fef773e9999b171e8090d4124347"
+      }
+    },
+    {
+      "authority": {
+        "bytes": 346717,
+        "path": "target/m2/stage102-mapping-cached15-oracle-01/report.json",
+        "sha256": "8f5e0d1ac84b190dbec98377537d009ccf89c30654f1f8891c6514715b43ff70"
+      },
+      "capture_process": {
+        "bytes": 542,
+        "path": "target/m2/stage102-mapping-cached15-oracle-01/capture-process.json",
+        "sha256": "c61b247b39bf81e1ea720d5a4be402c396894e77a2618b77e5dbb8147f99e0ac"
+      },
+      "cohort": "cached15",
+      "contracts": 15,
+      "host_session_id": 69900,
+      "ordered_logger_events": 0,
+      "sessions": 6,
+      "statuses": {
+        "error": 20,
+        "success": 10
+      },
+      "wrapper_started": {
+        "bytes": 407,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/cached15.started.json",
+        "sha256": "183da92d3f9349036cee0df648e38ad1a9fc0679adb7d285d55272ce9f0e1404"
+      },
+      "wrapper_stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/cached15.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "wrapper_stdout": {
+        "bytes": 656,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/cached15.stdout.bin",
+        "sha256": "87b396e5c71f3fbb6e1bac419fb491cc927e4f46a498f7e0960a73f6d1e89b2d"
+      },
+      "wrapper_terminal": {
+        "bytes": 501,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/cached15.terminal.json",
+        "sha256": "9c1305e4e58fa352b765d8d243b4f30bb047fd2e17c7704e1c2829ca007e4102"
+      }
+    },
+    {
+      "authority": {
+        "bytes": 439113,
+        "path": "target/m2/stage102-mapping-inline16-oracle-01/report.json",
+        "sha256": "7ef71f10fc8ae25cd871938b8b0d71ba84cb889adaa62c98b2cadc2db951ece3"
+      },
+      "capture_process": {
+        "bytes": 542,
+        "path": "target/m2/stage102-mapping-inline16-oracle-01/capture-process.json",
+        "sha256": "67458a5d9021d451368f5e8802822d3466d03f057bd75d68b6203866f0741444"
+      },
+      "cohort": "inline16",
+      "contracts": 16,
+      "host_session_id": 50796,
+      "ordered_logger_events": 16,
+      "sessions": 8,
+      "statuses": {
+        "error": 20,
+        "success": 12
+      },
+      "wrapper_started": {
+        "bytes": 407,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/inline16.started.json",
+        "sha256": "93f90e96800a6f2a7c9847108708ae7bf85793cd219107f75ca67fd71a346ba7"
+      },
+      "wrapper_stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/inline16.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "wrapper_stdout": {
+        "bytes": 862,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/inline16.stdout.bin",
+        "sha256": "62e77260cb0dd640a5c8daf0fca23f4dc8802e651e970766733361500c8ae620"
+      },
+      "wrapper_terminal": {
+        "bytes": 501,
+        "path": "target/m2/stage102-mapping99-oracle-window-01/inline16.terminal.json",
+        "sha256": "89e4185799c4e6c9bf32a2659d5fcd964cacea344cb16c753e4652f0bc8d0f79"
+      }
+    }
+  ],
+  "commands": {
+    "bytes": 3106,
+    "path": "target/m2/stage102-mapping-review-oracle-prep-01/commands.json",
+    "sha256": "0a1bb009a999683597cdb1e71498f02890777813f8511c8c953b79fe6d6d7df3"
+  },
+  "compatibility_pass_claim": false,
+  "complete": true,
+  "contracts": 99,
+  "finished": "2026-10-27T11:13:57.321946+00:00",
+  "forced_cleanup_events": 0,
+  "kind": "Stage102 Mapping99 actual Java authority handoff and exclusive window release",
+  "launcher": {
+    "bytes": 1255,
+    "path": "target/m2/stage102-mapping99-oracle-window-01/run-one.py",
+    "sha256": "4d8edbc0628ed72a03b89e103011faf974b452ed970855f89fd67e39b7a92956"
+  },
+  "observation_timeout_restarts": 0,
+  "observations": 198,
+  "oracle_internal_observations": 0,
+  "ordered_logger_events": 48,
+  "original377_preserved": true,
+  "owned_pids_final": {
+    "argv": [
+      "/bin/ps",
+      "-p",
+      "77880,77910,77924,77938,77964,77979,78064,78080,78096,78112,78139,78155,78167,78181,78231,78264,78279,78308,78323,78335,78349,78369,78413,78429,78443,78460,78528,78681,78697,78713,78729,78743,78824,78840,78858,78875,78890,78906,78920,78933,77875,78059,78227,78408,78523,78817,79016",
+      "-o",
+      "pid=,ppid=,pgid=,lstart=,comm="
+    ],
+    "exit": 1,
+    "qualification": "Actual Popen reaping plus per-child terminal owned-group records are authority; final PID absence is a later observation.",
+    "stderr": {
+      "bytes": 0,
+      "path": "target/m2/stage102-mapping99-oracle-window-01/owned-pids-after.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 0,
+      "path": "target/m2/stage102-mapping99-oracle-window-01/owned-pids-after.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "performance_claim": false,
+  "preflight": {
+    "bytes": 1096,
+    "path": "target/m2/stage102-mapping99-oracle-window-01/preflight.json",
+    "sha256": "572144f67c75434e761bb35b00131f0897041dd7681f024be2f16d8168a97450"
+  },
+  "programs": 20,
+  "qualifications": [
+    "90success+108ordinaryerror are actual Java observations, not Rust/API compatibility passes. Preserve every syntax/lookup/cast error and full raw observer; no inferred branch reach from success alone.",
+    "Six cohorts remain distinct17+21+20+10+15+16; original377 authorities and observer qualifications unchanged.",
+    "Only root read-only default-check/schema activity overlapped; immutable Java-bound inputs/helper/JDK/oracle and single admitted local auxiliary module bookended, no canonical Rust binding.",
+    "No source normalization, authored expected replacements, giant inputs, forbidden partial/private/frozen executable access or cache mutation."
+  ],
+  "readback": {
+    "bytes": 27870,
+    "path": "target/m2/stage102-mapping-review-oracle-readback-01/report.json",
+    "sha256": "85df9291bee8c7eae95dfc63b1f3743d0a62982aec41c81d6b833700ee893a2e"
+  },
+  "readback_host_session_id": 18626,
+  "readback_stderr": {
+    "bytes": 0,
+    "path": "target/m2/stage102-mapping99-oracle-window-01/readback.stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "readback_stdout": {
+    "bytes": 141,
+    "path": "target/m2/stage102-mapping99-oracle-window-01/readback.stdout.bin",
+    "sha256": "abca865bd5d7e52b8deed50adc12921fe8c52f96c20cfd06930fdcbf86726189"
+  },
+  "readback_terminal": {
+    "bytes": 438,
+    "path": "target/m2/stage102-mapping99-oracle-window-01/readback.terminal.json",
+    "sha256": "9b1da014d9d971b61e7e4e1c4636ae173c7dad615b4111c3dd58c34dcf14b70d"
+  },
+  "retries": 0,
+  "sessions": 40,
+  "source_readiness": {
+    "bytes": 4884,
+    "path": "target/m2/stage102-mapping06-oracleprep-independent-review-01/report.json",
+    "sha256": "deb448a59f58b8edef241b1750ae6236b4bf51881869d8a8ea76856a06ad06e4"
+  },
+  "statuses": {
+    "error": 108,
+    "success": 90
+  },
+  "success": true,
+  "terminal_live": [],
+  "unexecuted_observations": 0,
+  "window_released": true
+}

@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `String`, but got type `Int`.
+Value: 1
+
+1 | (List(1,2).takeWhile((x:String)->true)).toString()
+                            ^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | (List(1,2).takeWhile((x:String)->true)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

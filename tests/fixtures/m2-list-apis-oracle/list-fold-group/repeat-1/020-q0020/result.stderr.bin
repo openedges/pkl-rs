@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function2`, but got type `Int`.
+Value: 42
+
+3339 | external function reduceOrNull<Result>(operator: (Element | Result, Element) -> Result): Result?
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.reduceOrNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3339)
+
+1 | (List().reduceOrNull(42)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

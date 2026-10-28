@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+2271 | external function containsKey(key: Any): Boolean
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Mapping.containsKey (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2271)
+
+1 | ((new Mapping { [1] = 2 }).containsKey()).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

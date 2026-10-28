@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 2 function arguments but got 3.
+
+3609 | external function put<NewKey, NewValue>(
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Map.put (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3609)
+
+1 | (Map().put(1,2,3)).toString()
+     ^^^^^^^^^^^^^^^^
+at  (repl:text)

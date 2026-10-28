@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Expected value of type `Map`, but got type `Mapping`.
+Value: new Mapping { [31] = ? }
+
+1 | (Map(31,1,0,2,1,3).flatMap((k,v) -> new Mapping { [k] = v })).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

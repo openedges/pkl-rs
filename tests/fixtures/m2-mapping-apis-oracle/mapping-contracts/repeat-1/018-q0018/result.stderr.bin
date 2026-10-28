@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot find method `keys` in class `Mapping`.
+
+1 | ((new Mapping {}).keys()).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+keys

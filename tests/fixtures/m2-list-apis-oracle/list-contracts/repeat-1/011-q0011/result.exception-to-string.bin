@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+3161 | external function flatMapIndexed<Result>(
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.flatMapIndexed (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3161)
+
+1 | (List(1).flatMapIndexed()).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

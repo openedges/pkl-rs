@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Collection`, but got type `String`.
+Value: "x"
+
+3142 | external function endsWith(coll: Collection<Any>): Boolean
+                                        ^^^^^^^^^^^^^^^
+at pkl.base#List.endsWith (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3142)
+
+1 | (List(3,1,2).endsWith("x")).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function2`, but got type `Int`.
+Value: 42
+
+3361 | external function maxWithOrNull(comparator: (Element, Element) -> Boolean): Element?
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.maxWithOrNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3361)
+
+1 | (List().maxWithOrNull(42)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
