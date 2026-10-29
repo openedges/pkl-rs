@@ -1,0 +1,108 @@
+{
+  "source_only": true,
+  "actual_Java_executed": false,
+  "compiler_or_guest_executed": false,
+  "root_execution_grant_received": false,
+  "canonical_mutations": 0,
+  "predecessor": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-prep-01/preparation.json",
+    "bytes": 3347,
+    "mode": 420,
+    "sha256": "857da4270c1658c4e23cf870c5bfc622dd386e457f4192582619c8549da61e6b"
+  },
+  "source_controller": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-prep-01/capture.py",
+    "bytes": 19135,
+    "mode": 420,
+    "sha256": "189c00265599df34871ca1f1d485f0496cb5f0c839f30bd6400ff457bc3280f5"
+  },
+  "capture": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/capture.py",
+    "bytes": 19277,
+    "mode": 420,
+    "sha256": "0f3e5aff6100fd3218186d7490dfafb60f78ee6c11214e78003fc9c16a5845e3"
+  },
+  "matrix": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/queries.json",
+    "bytes": 57800,
+    "mode": 420,
+    "sha256": "4b7f4877e9ebd6cda94c82618853a893f9ba6d37cda83d766c9767164542055a"
+  },
+  "proposal": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/proposals.json",
+    "bytes": 34606,
+    "mode": 420,
+    "sha256": "0c43cdf4100419a30379bc8251b8f9d881efa851d69478436ff11bf932abd550"
+  },
+  "cohorts": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/cohorts.json",
+    "bytes": 364,
+    "mode": 420,
+    "sha256": "fb0bbaac10cd3ba9476fca8c081ef3189443142ebe058774768697eec67ab099"
+  },
+  "helper_default": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/helper-false/CollectionEveryOracle.java",
+    "bytes": 6329,
+    "mode": 420,
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "helper_identity": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/CollectionEveryOracle.java",
+    "bytes": 6379,
+    "mode": 420,
+    "sha256": "79f44ba41e839d656ec6c886cf04134ca8c7060acb8afb2944e067788133fcb5"
+  },
+  "trace_forcing_delta": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/trace-forcing-delta.json",
+    "bytes": 1991,
+    "mode": 420,
+    "sha256": "5402f1bff123b99d73dc9df9313225ae40ea4168b2b29cbe00b1d5f5fce6cf82"
+  },
+  "static_checks": {
+    "source_prefixes_preserved": true,
+    "query_transport_roundtrip": true,
+    "Python_AST_parse": true,
+    "public_bridge_functions_not_cached_properties": true,
+    "forced_retry_conditions_present": true,
+    "same_evaluator_passes_two": true,
+    "same_profile_counts": true
+  },
+  "program_profiles": 11,
+  "original_queries": 42,
+  "identity_profile_queries": 8,
+  "profile_queries": 50,
+  "planned_sessions": 22,
+  "planned_observations": 200,
+  "source_authorities": [
+    {
+      "path": "external/pkl/stdlib/reflect.pkl",
+      "bytes": 14693,
+      "mode": 420,
+      "sha256": "4555cda897a771a555e3f15d294a7f03774fd8d4602d9891117803505fb1f6eb"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/builder/SymbolTable.java",
+      "bytes": 34496,
+      "mode": 420,
+      "sha256": "3457f5fbf22819b7ec8707f72f3f29b2fc8fb51eeac793980999a8b44f678bb2"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/builder/AstBuilder.java",
+      "bytes": 121807,
+      "mode": 420,
+      "sha256": "e423325b3cef4b7410d7a01c3e9c776b7c1e5993f93f7bec02e0852d5d5fd7d8"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/const/constImplicitThisMethod.pkl",
+      "bytes": 81,
+      "mode": 420,
+      "sha256": "02ae324c0fed6a21e809c3411ad0c712a4ca5d72625e5487715138c5fa08613d"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/const/constFunctionCallingNonConst.pkl",
+      "bytes": 191,
+      "mode": 420,
+      "sha256": "fb6be0fab46a76f607949a0ba0f179434b455b8da279561d7d2e939a85c52e5d"
+    }
+  ]
+}

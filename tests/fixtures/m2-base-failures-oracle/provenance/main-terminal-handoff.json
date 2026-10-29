@@ -1,0 +1,871 @@
+{
+  "schema_version": 1,
+  "kind": "Stage111 root-authorized pinned-Java acquisition execution audit",
+  "complete": true,
+  "acquisition_integrity_valid": true,
+  "compatibility_verdict": null,
+  "Rust_executions": 0,
+  "canonical_mutations": 0,
+  "observations": 324,
+  "original_queries": 67,
+  "identity_profile_queries": 14,
+  "profiles": 20,
+  "fresh_evaluator_sessions": 40,
+  "same_evaluator_passes": 2,
+  "statuses": {
+    "error": 260,
+    "success": 64
+  },
+  "raw_row_files": 7248,
+  "ordered_logger_events": 12,
+  "raw_file_hashes_independently_reread": true,
+  "root_window_grant": "Exact prepared Stage111 base_failures capture:20 profiles/40 sessions/324 observations; no additional Java until separately granted.",
+  "correctness_only": true,
+  "performance_evidence": false,
+  "controller_exit_code": 0,
+  "all_owned_children_terminal": true,
+  "all_62_prelaunch_identities_stable": true,
+  "source_and_runtime_stable": true,
+  "materialized_stable": true,
+  "repeat_differences": [],
+  "minimum_free_seen_bytes": 20467494912,
+  "peak_owned_bytes": 22097920,
+  "terminal_usage": {
+    "allocated_bytes": 22097920,
+    "free_bytes": 20467421184,
+    "logical_bytes": 6739176
+  },
+  "raw_pins": [
+    {
+      "path": "target/m2/stage111-base-failures-oracle-01/report.json",
+      "bytes": 3304989,
+      "mode": 420,
+      "sha256": "51caa62966ddd3e4805ccdb869d198b2d9615cf7e2158ba064401eff2883f5e1"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-oracle-01/capture-process.json",
+      "bytes": 499,
+      "mode": 420,
+      "sha256": "2499dc7b5505908b7ee92e10c341357018ca7c39eb7387dc7ce0b9e58e03fc6f"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-oracle-01/java-preflight.stdout.bin",
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-oracle-01/java-preflight.stderr.bin",
+      "bytes": 2749,
+      "mode": 420,
+      "sha256": "e613d050e0516a1e36b6d94d2fc6d7fd35ea135ce495b9d871a0f7ba1617fd0c"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-oracle-execution-01/controller.stdout.bin",
+      "bytes": 3075,
+      "mode": 420,
+      "sha256": "0e1abbb9c5245c86e278e205f0bb9a2e5a7e30c1c0c11d6fb9ecfe3a0284d74a"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-oracle-execution-01/controller.stderr.bin",
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-oracle-execution-01/prelaunch.json",
+      "bytes": 16748,
+      "mode": 420,
+      "sha256": "4e7bb7b7b86d2a321ace2987215ba5a204fb94f6621b2b67298092fa9bcfd782"
+    }
+  ],
+  "sessions": [
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "frame_transformer": "default",
+      "rows": 20,
+      "statuses": {
+        "error": 20
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "frame_transformer": "default",
+      "rows": 20,
+      "statuses": {
+        "error": 20
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "frame_transformer": "identity",
+      "rows": 20,
+      "statuses": {
+        "error": 20
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "frame_transformer": "identity",
+      "rows": 20,
+      "statuses": {
+        "error": 20
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 0,
+      "frame_transformer": "default",
+      "rows": 16,
+      "statuses": {
+        "error": 16
+      },
+      "logger_events": 4
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 1,
+      "frame_transformer": "default",
+      "rows": 16,
+      "statuses": {
+        "error": 16
+      },
+      "logger_events": 4
+    },
+    {
+      "program": "lexical-shadow",
+      "fresh_session": 0,
+      "frame_transformer": "default",
+      "rows": 8,
+      "statuses": {
+        "success": 4,
+        "error": 4
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "lexical-shadow",
+      "fresh_session": 1,
+      "frame_transformer": "default",
+      "rows": 8,
+      "statuses": {
+        "success": 4,
+        "error": 4
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "separate-namespaces",
+      "fresh_session": 0,
+      "frame_transformer": "default",
+      "rows": 8,
+      "statuses": {
+        "success": 4,
+        "error": 4
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "separate-namespaces",
+      "fresh_session": 1,
+      "frame_transformer": "default",
+      "rows": 8,
+      "statuses": {
+        "success": 4,
+        "error": 4
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "class-shadow",
+      "fresh_session": 0,
+      "frame_transformer": "default",
+      "rows": 4,
+      "statuses": {
+        "success": 4
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "class-shadow",
+      "fresh_session": 1,
+      "frame_transformer": "default",
+      "rows": 4,
+      "statuses": {
+        "success": 4
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "custom-this",
+      "fresh_session": 0,
+      "frame_transformer": "default",
+      "rows": 4,
+      "statuses": {
+        "error": 4
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "custom-this",
+      "fresh_session": 1,
+      "frame_transformer": "default",
+      "rows": 4,
+      "statuses": {
+        "error": 4
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "const-methods",
+      "fresh_session": 0,
+      "frame_transformer": "default",
+      "rows": 8,
+      "statuses": {
+        "error": 8
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "const-methods",
+      "fresh_session": 1,
+      "frame_transformer": "default",
+      "rows": 8,
+      "statuses": {
+        "error": 8
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "const-shadow-control",
+      "fresh_session": 0,
+      "frame_transformer": "default",
+      "rows": 2,
+      "statuses": {
+        "success": 2
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "const-shadow-control",
+      "fresh_session": 1,
+      "frame_transformer": "default",
+      "rows": 2,
+      "statuses": {
+        "success": 2
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 0,
+      "frame_transformer": "default",
+      "rows": 14,
+      "statuses": {
+        "success": 10,
+        "error": 4
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 1,
+      "frame_transformer": "default",
+      "rows": 14,
+      "statuses": {
+        "success": 10,
+        "error": 4
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 0,
+      "frame_transformer": "default",
+      "rows": 12,
+      "statuses": {
+        "success": 4,
+        "error": 8
+      },
+      "logger_events": 1
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 1,
+      "frame_transformer": "default",
+      "rows": 12,
+      "statuses": {
+        "success": 4,
+        "error": 8
+      },
+      "logger_events": 1
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 0,
+      "frame_transformer": "default",
+      "rows": 10,
+      "statuses": {
+        "success": 4,
+        "error": 6
+      },
+      "logger_events": 1
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 1,
+      "frame_transformer": "default",
+      "rows": 10,
+      "statuses": {
+        "success": 4,
+        "error": 6
+      },
+      "logger_events": 1
+    },
+    {
+      "program": "render-undefined",
+      "fresh_session": 0,
+      "frame_transformer": "default",
+      "rows": 6,
+      "statuses": {
+        "error": 6
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "render-undefined",
+      "fresh_session": 1,
+      "frame_transformer": "default",
+      "rows": 6,
+      "statuses": {
+        "error": 6
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "render-undefined-identity",
+      "fresh_session": 0,
+      "frame_transformer": "identity",
+      "rows": 6,
+      "statuses": {
+        "error": 6
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "render-undefined-identity",
+      "fresh_session": 1,
+      "frame_transformer": "identity",
+      "rows": 6,
+      "statuses": {
+        "error": 6
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "render-property-control",
+      "fresh_session": 0,
+      "frame_transformer": "default",
+      "rows": 4,
+      "statuses": {
+        "error": 4
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "render-property-control",
+      "fresh_session": 1,
+      "frame_transformer": "default",
+      "rows": 4,
+      "statuses": {
+        "error": 4
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "render-todo",
+      "fresh_session": 0,
+      "frame_transformer": "default",
+      "rows": 2,
+      "statuses": {
+        "error": 2
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "render-todo",
+      "fresh_session": 1,
+      "frame_transformer": "default",
+      "rows": 2,
+      "statuses": {
+        "error": 2
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "render-todo-identity",
+      "fresh_session": 0,
+      "frame_transformer": "identity",
+      "rows": 2,
+      "statuses": {
+        "error": 2
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "render-todo-identity",
+      "fresh_session": 1,
+      "frame_transformer": "identity",
+      "rows": 2,
+      "statuses": {
+        "error": 2
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "infer-parent",
+      "fresh_session": 0,
+      "frame_transformer": "default",
+      "rows": 6,
+      "statuses": {
+        "error": 6
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "infer-parent",
+      "fresh_session": 1,
+      "frame_transformer": "default",
+      "rows": 6,
+      "statuses": {
+        "error": 6
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "infer-catch-order",
+      "fresh_session": 0,
+      "frame_transformer": "default",
+      "rows": 6,
+      "statuses": {
+        "error": 6
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "infer-catch-order",
+      "fresh_session": 1,
+      "frame_transformer": "default",
+      "rows": 6,
+      "statuses": {
+        "error": 6
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "receiverless-lazy-module",
+      "fresh_session": 0,
+      "frame_transformer": "default",
+      "rows": 4,
+      "statuses": {
+        "error": 4
+      },
+      "logger_events": 0
+    },
+    {
+      "program": "receiverless-lazy-module",
+      "fresh_session": 1,
+      "frame_transformer": "default",
+      "rows": 4,
+      "statuses": {
+        "error": 4
+      },
+      "logger_events": 0
+    }
+  ],
+  "source_postlaunch": [
+    {
+      "path": "target/m2/stage110-regex-pcf-oracle-prep-02/capture.py",
+      "bytes": 18017,
+      "mode": 420,
+      "sha256": "c5399681588e43d0f3da3e4b946e1bcfe6f509a507030d9c33f52b2405e622d0"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-oracle-prep-01/capture.py",
+      "bytes": 18636,
+      "mode": 420,
+      "sha256": "e681dee5f8f69c28fc6652bcd7457c45fcd54305e1313134f8980f154d8d139c"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-oracle-prep-01/queries.json",
+      "bytes": 75587,
+      "mode": 420,
+      "sha256": "34e85ba486f0c3057cdde46a160c8700fe15bf0a7adea1cc4a6d9c464f3663e4"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-oracle-prep-01/cohorts.json",
+      "bytes": 342,
+      "mode": 420,
+      "sha256": "1991b7765b6723943faf876e4089dfebdcedb6ea3fdffb985c108133e1dbe799"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-oracle-prep-01/helper-false/CollectionEveryOracle.java",
+      "bytes": 6329,
+      "mode": 420,
+      "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-oracle-prep-01/CollectionEveryOracle.java",
+      "bytes": 6379,
+      "mode": 420,
+      "sha256": "79f44ba41e839d656ec6c886cf04134ca8c7060acb8afb2944e067788133fcb5"
+    },
+    {
+      "path": "target/m2/stage110-regex-pcf-oracle-prep-02/CollectionEveryOracle.java",
+      "bytes": 6328,
+      "mode": 420,
+      "sha256": "56defcb9f990729eedc3a3b98854c07319859a683cae4a404fedaf821cc2a98f"
+    },
+    {
+      "path": "target/m2/stage110-regex-pcf-oracle-prep-02/helper-false/CollectionEveryOracle.java",
+      "bytes": 6329,
+      "mode": 420,
+      "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/candidate.patch",
+      "bytes": 6282,
+      "mode": 420,
+      "sha256": "889a96519da1649778e89f7f76054951ee59001f6f0a3c5eb147c60c13aa3f74"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/source-manifest.json",
+      "bytes": 1554,
+      "mode": 420,
+      "sha256": "f385ea7be2683c43e476aceebe4997259be270bf44c42bbd7231f0796113b4d1"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/primary-sources.json",
+      "bytes": 3415,
+      "mode": 420,
+      "sha256": "5f016c8734456502f0d2d0ca5de3bf5cc7b77de8af28be79684e4c57de87eaff"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/oracle-proposals.json",
+      "bytes": 11520,
+      "mode": 420,
+      "sha256": "6df84527e373bbb8af913501a4280531780031eb6d6c282386538134bfe803ad"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/static-checks.json",
+      "bytes": 2415,
+      "mode": 420,
+      "sha256": "5b0841bdbe95e5d564acf2e560cbb62fc28159b738e0550cee4dc17e6e0d5956"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/README.md",
+      "bytes": 5522,
+      "mode": 420,
+      "sha256": "50787ead6cd6c68d17d95cb6b4a328ed02296d965bafb0bad2021e28c1214981"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/PLAN.md",
+      "bytes": 2584,
+      "mode": 420,
+      "sha256": "bbd438053ec175b4d5b83753881870985d74d5c8a8e1130ca53df38202c4b8ec"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/preimages/crates/pkl-runtime/src/vm.rs",
+      "bytes": 404420,
+      "mode": 420,
+      "sha256": "1147f9e03b80ad507ff79d915a91f23aeeeb8fb1af8bc54f7b1b3b436e5a1331"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/overlay/crates/pkl-runtime/src/vm.rs",
+      "bytes": 405285,
+      "mode": 420,
+      "sha256": "a235cd3812c58891b19f6d3b860ec9274b528518d23b31e2d70946ee03ba7370"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/preimages/crates/pkl-runtime/src/vm/stdlib_modules.rs",
+      "bytes": 30636,
+      "mode": 420,
+      "sha256": "943f41ba00b94323e00bb96c6862b6a8a6279fad48d3bc9743b0658468618f4b"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/overlay/crates/pkl-runtime/src/vm/stdlib_modules.rs",
+      "bytes": 30874,
+      "mode": 420,
+      "sha256": "0a1cb09874d63dd1b01c3a0b388ca1a632ddbfde93b1b1d48a254a3c47afb40c"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/preimages/crates/pkl-runtime/src/resolver.rs",
+      "bytes": 111758,
+      "mode": 420,
+      "sha256": "5b06cdfd4bed3e1fa732c3f674524d8aaacffc661de702794c7390f813dab690"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/overlay/crates/pkl-runtime/src/resolver.rs",
+      "bytes": 111869,
+      "mode": 420,
+      "sha256": "47e1fdfac9ec6fde3cbf584913d2c3ac261dc1f99377531f06ecfe975738ee44"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/preimages/crates/pkl-runtime/src/value.rs",
+      "bytes": 15214,
+      "mode": 420,
+      "sha256": "2e60c057c65b517df761d299e0d929228a28a696bdef68588807954148e2f6ce"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/overlay/crates/pkl-runtime/src/value.rs",
+      "bytes": 15624,
+      "mode": 420,
+      "sha256": "9ab043394939f6d80ec132510a78350b6ef746b685742a8a2d8a15a8afb2a3e6"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/proposals/direct.pkl",
+      "bytes": 136,
+      "mode": 420,
+      "sha256": "038970d551abeed4f3e09c121ce4d6e3ca965abbfc1f24a6d5a9f7888599e985"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/proposals/arity-order.pkl",
+      "bytes": 24,
+      "mode": 420,
+      "sha256": "d9d2805316d64abc6e60424740918d6734edded79a43711dface860ef278a712"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/proposals/lexical-shadow.pkl",
+      "bytes": 122,
+      "mode": 420,
+      "sha256": "a94eb8204a9c324a312b0f40790e54fc5eb147d1afb6bb1cc78c1f577264645f"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/proposals/separate-namespaces.pkl",
+      "bytes": 60,
+      "mode": 420,
+      "sha256": "c24984934bc8ba6186c78ebfcd60f5cd3d585263d4c8199372dcb5378a92f81d"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/proposals/class-shadow.pkl",
+      "bytes": 141,
+      "mode": 420,
+      "sha256": "08dc03e4048c9b5a07ac6c87654be330e99fbbced0e9b2f00d3957a3f0c3d42d"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/proposals/custom-this.pkl",
+      "bytes": 109,
+      "mode": 420,
+      "sha256": "f9408d0eabc9996f22b4f429ea4515ff4249ae6c642ed1d4c88074b26f9e6551"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/proposals/const-methods.pkl",
+      "bytes": 177,
+      "mode": 420,
+      "sha256": "82cba1548a8cedc54f2ab829191e65161e4f51f5618f64d188014175e9a4d882"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/proposals/const-shadow-control.pkl",
+      "bytes": 70,
+      "mode": 420,
+      "sha256": "9537016a5f5ac72e63159cecdbd6bc967c642e8569401bc2d5b6a4af802eb114"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/proposals/lazy-unreached.pkl",
+      "bytes": 78,
+      "mode": 420,
+      "sha256": "5e82e7052ced8addbfe1687a6860887d469011a35c6e7f2f29504db3999afd74"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/proposals/retry-logger.pkl",
+      "bytes": 142,
+      "mode": 420,
+      "sha256": "9570143bb0e423e4a56f8529f8fb12ddff44a2c1a7b28b26d2f49149e480aa7c"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/proposals/string-force.pkl",
+      "bytes": 102,
+      "mode": 420,
+      "sha256": "5b2e45b60591cba945168e1c0f9954b7e30907d7fb8d4658dda7ae58f44a6bae"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/proposals/render-undefined.pkl",
+      "bytes": 95,
+      "mode": 420,
+      "sha256": "79b2534a6d339ac90c22c3941e2c3a23de051ce9f04d0cfc311c5cacf4eb8275"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/proposals/render-property-control.pkl",
+      "bytes": 83,
+      "mode": 420,
+      "sha256": "6bb7407d51985ef8f2ed643c91bc92228959c52735a7efed477d7d01d96e362d"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/proposals/render-todo.pkl",
+      "bytes": 72,
+      "mode": 420,
+      "sha256": "6d1efc49bea97a19ef4c3a9836b6ce16e62fb4764597053e10aee89fa60be2a3"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/proposals/infer-parent.pkl",
+      "bytes": 292,
+      "mode": 420,
+      "sha256": "dfaa65e8acb812c9e7eb705a1ee5c073b7998a4c885a242cba4c4a329c325ec0"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/proposals/infer-catch-order.pkl",
+      "bytes": 158,
+      "mode": 420,
+      "sha256": "50989b333d7ff5673bc86397d3a6bbbb1ec2dc7e0904f7b4a99b921e759fbd83"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-candidate-01/proposals/receiverless-lazy-module.pkl",
+      "bytes": 54,
+      "mode": 420,
+      "sha256": "c0e2b0882ecfaad2f8c559191d25eacbd789d7b8ef99277cd04c637569e07185"
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm.rs",
+      "bytes": 404420,
+      "mode": 420,
+      "sha256": "1147f9e03b80ad507ff79d915a91f23aeeeb8fb1af8bc54f7b1b3b436e5a1331"
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
+      "bytes": 30636,
+      "mode": 420,
+      "sha256": "943f41ba00b94323e00bb96c6862b6a8a6279fad48d3bc9743b0658468618f4b"
+    },
+    {
+      "path": "crates/pkl-runtime/src/resolver.rs",
+      "bytes": 111758,
+      "mode": 420,
+      "sha256": "5b06cdfd4bed3e1fa732c3f674524d8aaacffc661de702794c7390f813dab690"
+    },
+    {
+      "path": "crates/pkl-runtime/src/value.rs",
+      "bytes": 15214,
+      "mode": 420,
+      "sha256": "2e60c057c65b517df761d299e0d929228a28a696bdef68588807954148e2f6ce"
+    },
+    {
+      "path": "references.lock",
+      "bytes": 648,
+      "mode": 420,
+      "sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b"
+    },
+    {
+      "path": "external/pkl/stdlib/base.pkl",
+      "bytes": 126112,
+      "mode": 420,
+      "sha256": "fddb53666b6e37bc5b70e2d7a2864730c1eab2a4edd90b5c2defefcfdd0b57fb"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/BaseNodes.java",
+      "bytes": 5859,
+      "mode": 420,
+      "sha256": "c19497d400ae466d32f464b325c69d97bc169f213cd508e71ebc77d30772a237"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmExceptionBuilder.java",
+      "bytes": 16054,
+      "mode": 420,
+      "sha256": "48642db11ecdc2377e8ab7013359931e72007ae1a16813de615d7138a309d659"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/main/resources/org/pkl/core/errorMessages.properties",
+      "bytes": 34657,
+      "mode": 420,
+      "sha256": "fe93e838a3278091b0be0d02cb4519f0720ad66319e76f2b1741d65ab217292b"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmUndefinedValueException.java",
+      "bytes": 3628,
+      "mode": 420,
+      "sha256": "6e78cebd23f79d9945190a48886ed62b9d1217d07db235218ff233a21b005253"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/AbstractRenderer.java",
+      "bytes": 14727,
+      "mode": 420,
+      "sha256": "a005456a2f0348fbb520e4479b642538c424cc756f797b0ac5a6cec26570d7e4"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/expression/member/InferParentWithinPropertyNode.java",
+      "bytes": 4519,
+      "mode": 420,
+      "sha256": "bde7fe35156ff8859608390ba77f58b49d16fcbc3b050096bc7741d06a246e44"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmObject.java",
+      "bytes": 7333,
+      "mode": 420,
+      "sha256": "5f74b5d18f72377b0ba8405f3dd34a9144acc419e068be5178ee8c2bc98b2fde"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/builder/SymbolTable.java",
+      "bytes": 34496,
+      "mode": 420,
+      "sha256": "3457f5fbf22819b7ec8707f72f3f29b2fc8fb51eeac793980999a8b44f678bb2"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/baseModule.pkl",
+      "bytes": 501,
+      "mode": 420,
+      "sha256": "0254ebc8307215f3e6a75c74a15b1783d62e2713b6b6f1278e016ed17c2c6d98"
+    },
+    {
+      "path": "crates/pkl-runtime/src/stdlib/base.pkl",
+      "bytes": 126112,
+      "mode": 420,
+      "sha256": "fddb53666b6e37bc5b70e2d7a2864730c1eab2a4edd90b5c2defefcfdd0b57fb"
+    },
+    {
+      "path": ".cache/oracle/pkl-tools-0.32.0.jar",
+      "bytes": 26877190,
+      "mode": 420,
+      "sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059"
+    },
+    {
+      "path": "/usr/bin/java",
+      "bytes": 217296,
+      "mode": 493,
+      "sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552"
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+      "bytes": 70432,
+      "mode": 493,
+      "sha256": "9be1d0a740ff6502df1a762145e62860f5de4b7e17658d9cb9498da3acf9d16c"
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/modules",
+      "bytes": 140714013,
+      "mode": 420,
+      "sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf"
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/release",
+      "bytes": 1628,
+      "mode": 420,
+      "sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/src.zip",
+      "bytes": 54198945,
+      "mode": 420,
+      "sha256": "173282dd3f4c4004548e6a09e6687acff25120967b1a8375a5df4c677d7f4e4e"
+    }
+  ],
+  "unreached_local_alias_or_method_observations": 120,
+  "coverage_disposition": "Ordinary Pkl errors remain ordinary captured observations. Queries blocked by local import/method visibility are not coverage of their stated intended paths. Acquisition integrity is not Rust compatibility or checkpoint completion.",
+  "next_action": "Prepare source-only corrected public bridges and missing reflection/custom-receiver controls; no further Java until root separately grants its window."
+}

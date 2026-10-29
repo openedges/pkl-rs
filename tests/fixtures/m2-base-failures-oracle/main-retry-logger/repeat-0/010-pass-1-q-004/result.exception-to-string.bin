@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `test`.
+
+1 | test.catch(() -> todo)
+    ^^^^
+at  (repl:text)

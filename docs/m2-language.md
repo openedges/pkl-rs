@@ -1,5 +1,30 @@
 # M2 language verification
 
+## Stage114 diagnostic and Regex compatibility
+
+The shared implementation now preserves single-line Regex formatting in PCF,
+the distinction between receiverless `Undefined()` and undefined properties,
+quoted diagnostic scope names, the raw class declaration name, and the enclosing
+owner of an over-arity lambda error. Scalar custom receivers dispatch `getClass`
+through the common runtime. The change adds 42 tests and 14,609 pinned Java
+fixture files across the selected families.
+
+The current full ready comparison records **4,336 matches, 22 mismatches, 82
+unsupported cases and two oracle errors across 4,442 cases**. The same 888 original
+modules improve from 786 to 790 matches; `baseModule`, `constraintsLambdaThis`,
+`stackTraceWithQuotedMemberName` and `tooManyLambdaParams` now match. No historical
+pass regresses, and all 88 metamorphic checks pass. Each selected native, Node and
+browser comparison matches 902 ordinary observations with two required internal
+observations unresolved; its success does not establish full language coverage.
+
+The inventory remains **4,545 cases: 4,442 ready, 71 unimplemented and 32 unmapped**,
+with 475 requirements. The exact full-gate function reports 1,780 overlapping
+unmet conditions: 472 implementation, 472 mapping and 836 required-case conditions.
+Stage116 glob, Stage118 hash-prefix, Stage119 quoted-identifier and Stage117
+mapping work remains outside this canonical checkpoint. See the
+[checkpoint](../reports/m2/stage114-diagnostics-regex-checkpoint.json) and [verification contract](../TESTING.md)
+for the actual validation and preserved limitations.
+
 ## Stage109 Typed lookup, module paths and annotation diagnostics — local validation
 
 Stage109 integrates 18 source/tool paths and 6,996 pinned Java fixture paths, with two generated metadata paths recorded separately. The combined targeted run records **152 passes, zero failures and one ignored required placeholder**. Its three new-family independent native readback matches **276 ordinary observations: 102 successful values and 174 ordinary errors**, including **1,736 harness fields and eight ordered Logger events**. One required Java internal contract retains two unresolved observations. The ignored test and unresolved Java results are not compatibility passes. The same current normal runtime separately matches **1,138 existing Typed/reflection observations**, **6,988 harness fields and 16 Logger events**.

@@ -1,0 +1,392 @@
+{
+  "kind": "Stage110 expected-free language PCF Regex representation",
+  "baseline": "Pkl 0.32.0",
+  "contracts": 47,
+  "programs": [
+    {
+      "id": "regex-pcf",
+      "source": "module regexPcf\npatterns = List(\"\", \"plain\", #\"[ab]\\s+\"#, \"\\\"\", \"\\\"\\\"#x\", \"\\\\#\", \"a\\nb\", \"a\\r\\nb\\tc\", \"😀é\", \"a\\\\s\\nb\", #\"a\\nb\"#, #\"a\\rb\"#, #\"a\\tb\"#, \"a\\rb\", \"a\\tb\", ##\"\"#\\#x\"##)\nfunction renderer(custom: Boolean): PcfRenderer = new PcfRenderer { useCustomStringDelimiters = custom }\n",
+      "source_uri": "file:///stage110/regex-pcf.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "queries": [
+        {
+          "id": "empty-false",
+          "expression": "renderer(false).renderValue(Regex(patterns[0]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=false",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "empty-true",
+          "expression": "renderer(true).renderValue(Regex(patterns[0]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=true",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "plain-false",
+          "expression": "renderer(false).renderValue(Regex(patterns[1]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=false",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "plain-true",
+          "expression": "renderer(true).renderValue(Regex(patterns[1]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=true",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "regex-escaped-s-false",
+          "expression": "renderer(false).renderValue(Regex(patterns[2]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=false",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "regex-escaped-s-true",
+          "expression": "renderer(true).renderValue(Regex(patterns[2]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=true",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "single-quote-false",
+          "expression": "renderer(false).renderValue(Regex(patterns[3]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=false",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "single-quote-true",
+          "expression": "renderer(true).renderValue(Regex(patterns[3]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=true",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "leading-two-quotes-hash-false",
+          "expression": "renderer(false).renderValue(Regex(patterns[4]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=false",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "leading-two-quotes-hash-true",
+          "expression": "renderer(true).renderValue(Regex(patterns[4]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=true",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "backslash-hash-false",
+          "expression": "renderer(false).renderValue(Regex(patterns[5]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=false",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "backslash-hash-true",
+          "expression": "renderer(true).renderValue(Regex(patterns[5]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=true",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "literal-lf-false",
+          "expression": "renderer(false).renderValue(Regex(patterns[6]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=false",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "literal-lf-true",
+          "expression": "renderer(true).renderValue(Regex(patterns[6]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=true",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "literal-crlf-tab-false",
+          "expression": "renderer(false).renderValue(Regex(patterns[7]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=false",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "literal-crlf-tab-true",
+          "expression": "renderer(true).renderValue(Regex(patterns[7]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=true",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "nonbmp-unicode-false",
+          "expression": "renderer(false).renderValue(Regex(patterns[8]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=false",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "nonbmp-unicode-true",
+          "expression": "renderer(true).renderValue(Regex(patterns[8]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=true",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "backslash-with-literal-lf-false",
+          "expression": "renderer(false).renderValue(Regex(patterns[9]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=false",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "backslash-with-literal-lf-true",
+          "expression": "renderer(true).renderValue(Regex(patterns[9]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=true",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "regex-escaped-n-false",
+          "expression": "renderer(false).renderValue(Regex(patterns[10]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=false",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "regex-escaped-n-true",
+          "expression": "renderer(true).renderValue(Regex(patterns[10]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=true",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "regex-escaped-r-false",
+          "expression": "renderer(false).renderValue(Regex(patterns[11]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=false",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "regex-escaped-r-true",
+          "expression": "renderer(true).renderValue(Regex(patterns[11]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=true",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "regex-escaped-t-false",
+          "expression": "renderer(false).renderValue(Regex(patterns[12]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=false",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "regex-escaped-t-true",
+          "expression": "renderer(true).renderValue(Regex(patterns[12]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=true",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "literal-cr-false",
+          "expression": "renderer(false).renderValue(Regex(patterns[13]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=false",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "literal-cr-true",
+          "expression": "renderer(true).renderValue(Regex(patterns[13]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=true",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "literal-tab-false",
+          "expression": "renderer(false).renderValue(Regex(patterns[14]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=false",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "literal-tab-true",
+          "expression": "renderer(true).renderValue(Regex(patterns[14]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=true",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "quote-backslash-hash-collision-false",
+          "expression": "renderer(false).renderValue(Regex(patterns[15]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=false",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "quote-backslash-hash-collision-true",
+          "expression": "renderer(true).renderValue(Regex(patterns[15]))",
+          "edge": "PCF Regex; exact original UTF8 and decoded control/escape distinction, custom=true",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "direct-regex-escaped-s",
+          "expression": "Regex(patterns[2]).toString()",
+          "edge": "Direct VmRegex shared representation vs PCF results in the same evaluator/session.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "direct-literal-lf",
+          "expression": "Regex(patterns[6]).toString()",
+          "edge": "Direct VmRegex shared representation vs PCF results in the same evaluator/session.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "direct-backslash-with-literal-lf",
+          "expression": "Regex(patterns[9]).toString()",
+          "edge": "Direct VmRegex shared representation vs PCF results in the same evaluator/session.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "direct-regex-escaped-n",
+          "expression": "Regex(patterns[10]).toString()",
+          "edge": "Direct VmRegex shared representation vs PCF results in the same evaluator/session.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "direct-literal-cr",
+          "expression": "Regex(patterns[13]).toString()",
+          "edge": "Direct VmRegex shared representation vs PCF results in the same evaluator/session.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "direct-literal-tab",
+          "expression": "Regex(patterns[14]).toString()",
+          "edge": "Direct VmRegex shared representation vs PCF results in the same evaluator/session.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "direct-quote-backslash-hash-collision",
+          "expression": "Regex(patterns[15]).toString()",
+          "edge": "Direct VmRegex shared representation vs PCF results in the same evaluator/session.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "string-control-false",
+          "expression": "renderer(false).renderValue(patterns[2])",
+          "edge": "Ordinary string remains configurable; Regex always uses its own formatter.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "nested-indent-false",
+          "expression": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = false }).renderDocument(new { nested { pattern = Regex(patterns[9]) } })",
+          "edge": "Renderer indent must not enter the single-line Regex literal.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "collection-false",
+          "expression": "renderer(false).renderValue(List(Regex(patterns[2]), Regex(patterns[6])))",
+          "edge": "Nested collection Regex rendering.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "string-control-true",
+          "expression": "renderer(true).renderValue(patterns[2])",
+          "edge": "Ordinary string remains configurable; Regex always uses its own formatter.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "nested-indent-true",
+          "expression": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = true }).renderDocument(new { nested { pattern = Regex(patterns[9]) } })",
+          "edge": "Renderer indent must not enter the single-line Regex literal.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "collection-true",
+          "expression": "renderer(true).renderValue(List(Regex(patterns[2]), Regex(patterns[6])))",
+          "edge": "Nested collection Regex rendering.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "json-rejection",
+          "expression": "(new JsonRenderer {}).renderValue(Regex(patterns[2]))",
+          "edge": "Unchanged raw unsupported-type error.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "invalid-regex",
+          "expression": "renderer(false).renderValue(Regex(\"(\"))",
+          "edge": "Constructor error ordering before rendering.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    }
+  ]
+}

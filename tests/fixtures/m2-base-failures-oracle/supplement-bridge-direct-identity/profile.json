@@ -1,0 +1,25 @@
+{
+  "Java_authority": {
+    "bytes": 2195037,
+    "mode": 420,
+    "path": "target/m2/stage111-base-failures-supplement-oracle-01/report.json",
+    "sha256": "8fd4a2d33d12cec1064218a226c5ffdc9d655aead4c8161511705bd912ed0580"
+  },
+  "Rust_execution": "unexecuted",
+  "Rust_query_input": "Exact corresponding repeat expression.bin; original UTF8/UTF16 preserved, never Base64.",
+  "cohort": "supplement",
+  "evaluator_environment": {},
+  "evaluator_external_properties": {},
+  "frame_transformer": "identity",
+  "fresh_evaluator_sessions": 2,
+  "oracle_internal": false,
+  "original_program": "bridge-direct-identity",
+  "power_assertions": false,
+  "program": "supplement-bridge-direct-identity",
+  "queries": 16,
+  "query_passes_same_evaluator": 2,
+  "repetitions": 2,
+  "required": true,
+  "required_unresolved": false,
+  "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+}

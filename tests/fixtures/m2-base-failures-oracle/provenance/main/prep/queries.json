@@ -1,0 +1,1920 @@
+{
+  "kind": "Stage111 expected-free TODO and Undefined proposals",
+  "baseline": "Pkl 0.32.0",
+  "proposal_identity": {
+    "path": "target/m2/stage111-base-failures-candidate-01/oracle-proposals.json",
+    "bytes": 11520,
+    "mode": 420,
+    "sha256": "6df84527e373bbb8af913501a4280531780031eb6d6c282386538134bfe803ad"
+  },
+  "original_programs": 17,
+  "original_queries": 67,
+  "profile_programs": 20,
+  "profile_queries": 81,
+  "same_evaluator_passes": 2,
+  "contracts": 162,
+  "fresh_evaluator_sessions_per_profile": 2,
+  "planned_observations": 324,
+  "programs": [
+    {
+      "id": "direct",
+      "proposal_program": "direct",
+      "source": "import \"pkl:test\"\nimport \"pkl:base\"\nlocal function nestedTodo(): Int = TODO()\nlocal function nestedUndefined(): Int = Undefined()\nx = 1\n",
+      "source_sha256": "038970d551abeed4f3e09c121ce4d6e3ca965abbfc1f24a6d5a9f7888599e985",
+      "source_input": "target/m2/stage111-base-failures-candidate-01/proposals/direct.pkl",
+      "source_uri": "file:///stage111/direct.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "frame_transformer": "default",
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "TODO()",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 0,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "Undefined()",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 0,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-002",
+          "expression": "base.TODO()",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 0,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-003",
+          "expression": "base.Undefined()",
+          "proposal_query_index": 3,
+          "same_evaluator_pass": 0,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-004",
+          "expression": "nestedTodo()",
+          "proposal_query_index": 4,
+          "same_evaluator_pass": 0,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-005",
+          "expression": "nestedUndefined()",
+          "proposal_query_index": 5,
+          "same_evaluator_pass": 0,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-006",
+          "expression": "test.catch(() -> TODO())",
+          "proposal_query_index": 6,
+          "same_evaluator_pass": 0,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-007",
+          "expression": "test.catch(() -> Undefined())",
+          "proposal_query_index": 7,
+          "same_evaluator_pass": 0,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-008",
+          "expression": "test.catchOrNull(() -> TODO())",
+          "proposal_query_index": 8,
+          "same_evaluator_pass": 0,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-009",
+          "expression": "test.catchOrNull(() -> Undefined())",
+          "proposal_query_index": 9,
+          "same_evaluator_pass": 0,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "TODO()",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 1,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "Undefined()",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 1,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-002",
+          "expression": "base.TODO()",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 1,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-003",
+          "expression": "base.Undefined()",
+          "proposal_query_index": 3,
+          "same_evaluator_pass": 1,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-004",
+          "expression": "nestedTodo()",
+          "proposal_query_index": 4,
+          "same_evaluator_pass": 1,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-005",
+          "expression": "nestedUndefined()",
+          "proposal_query_index": 5,
+          "same_evaluator_pass": 1,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-006",
+          "expression": "test.catch(() -> TODO())",
+          "proposal_query_index": 6,
+          "same_evaluator_pass": 1,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-007",
+          "expression": "test.catch(() -> Undefined())",
+          "proposal_query_index": 7,
+          "same_evaluator_pass": 1,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-008",
+          "expression": "test.catchOrNull(() -> TODO())",
+          "proposal_query_index": 8,
+          "same_evaluator_pass": 1,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-009",
+          "expression": "test.catchOrNull(() -> Undefined())",
+          "proposal_query_index": 9,
+          "same_evaluator_pass": 1,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "direct-identity",
+      "proposal_program": "direct",
+      "source": "import \"pkl:test\"\nimport \"pkl:base\"\nlocal function nestedTodo(): Int = TODO()\nlocal function nestedUndefined(): Int = Undefined()\nx = 1\n",
+      "source_sha256": "038970d551abeed4f3e09c121ce4d6e3ca965abbfc1f24a6d5a9f7888599e985",
+      "source_input": "target/m2/stage111-base-failures-candidate-01/proposals/direct.pkl",
+      "source_uri": "file:///stage111/direct.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "frame_transformer": "identity",
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "TODO()",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 0,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "Undefined()",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 0,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-002",
+          "expression": "base.TODO()",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 0,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-003",
+          "expression": "base.Undefined()",
+          "proposal_query_index": 3,
+          "same_evaluator_pass": 0,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-004",
+          "expression": "nestedTodo()",
+          "proposal_query_index": 4,
+          "same_evaluator_pass": 0,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-005",
+          "expression": "nestedUndefined()",
+          "proposal_query_index": 5,
+          "same_evaluator_pass": 0,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-006",
+          "expression": "test.catch(() -> TODO())",
+          "proposal_query_index": 6,
+          "same_evaluator_pass": 0,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-007",
+          "expression": "test.catch(() -> Undefined())",
+          "proposal_query_index": 7,
+          "same_evaluator_pass": 0,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-008",
+          "expression": "test.catchOrNull(() -> TODO())",
+          "proposal_query_index": 8,
+          "same_evaluator_pass": 0,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-009",
+          "expression": "test.catchOrNull(() -> Undefined())",
+          "proposal_query_index": 9,
+          "same_evaluator_pass": 0,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "TODO()",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 1,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "Undefined()",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 1,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-002",
+          "expression": "base.TODO()",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 1,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-003",
+          "expression": "base.Undefined()",
+          "proposal_query_index": 3,
+          "same_evaluator_pass": 1,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-004",
+          "expression": "nestedTodo()",
+          "proposal_query_index": 4,
+          "same_evaluator_pass": 1,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-005",
+          "expression": "nestedUndefined()",
+          "proposal_query_index": 5,
+          "same_evaluator_pass": 1,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-006",
+          "expression": "test.catch(() -> TODO())",
+          "proposal_query_index": 6,
+          "same_evaluator_pass": 1,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-007",
+          "expression": "test.catch(() -> Undefined())",
+          "proposal_query_index": 7,
+          "same_evaluator_pass": 1,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-008",
+          "expression": "test.catchOrNull(() -> TODO())",
+          "proposal_query_index": 8,
+          "same_evaluator_pass": 1,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-009",
+          "expression": "test.catchOrNull(() -> Undefined())",
+          "proposal_query_index": 9,
+          "same_evaluator_pass": 1,
+          "edge": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "arity-order",
+      "proposal_program": "arity-order",
+      "source": "import \"pkl:base\"\nx = 1\n",
+      "source_sha256": "d9d2805316d64abc6e60424740918d6734edded79a43711dface860ef278a712",
+      "source_input": "target/m2/stage111-base-failures-candidate-01/proposals/arity-order.pkl",
+      "source_uri": "file:///stage111/arity-order.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "frame_transformer": "default",
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "TODO(1)",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 0,
+          "edge": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "Undefined(1)",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 0,
+          "edge": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-002",
+          "expression": "TODO(trace(1))",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 0,
+          "edge": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-003",
+          "expression": "Undefined(trace(2))",
+          "proposal_query_index": 3,
+          "same_evaluator_pass": 0,
+          "edge": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-004",
+          "expression": "TODO(throw(\"argument-first\"))",
+          "proposal_query_index": 4,
+          "same_evaluator_pass": 0,
+          "edge": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-005",
+          "expression": "Undefined(throw(\"argument-first\"))",
+          "proposal_query_index": 5,
+          "same_evaluator_pass": 0,
+          "edge": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-006",
+          "expression": "base.TODO(1, 2)",
+          "proposal_query_index": 6,
+          "same_evaluator_pass": 0,
+          "edge": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-007",
+          "expression": "base.Undefined(1, 2)",
+          "proposal_query_index": 7,
+          "same_evaluator_pass": 0,
+          "edge": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "TODO(1)",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 1,
+          "edge": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "Undefined(1)",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 1,
+          "edge": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-002",
+          "expression": "TODO(trace(1))",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 1,
+          "edge": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-003",
+          "expression": "Undefined(trace(2))",
+          "proposal_query_index": 3,
+          "same_evaluator_pass": 1,
+          "edge": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-004",
+          "expression": "TODO(throw(\"argument-first\"))",
+          "proposal_query_index": 4,
+          "same_evaluator_pass": 1,
+          "edge": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-005",
+          "expression": "Undefined(throw(\"argument-first\"))",
+          "proposal_query_index": 5,
+          "same_evaluator_pass": 1,
+          "edge": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-006",
+          "expression": "base.TODO(1, 2)",
+          "proposal_query_index": 6,
+          "same_evaluator_pass": 1,
+          "edge": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-007",
+          "expression": "base.Undefined(1, 2)",
+          "proposal_query_index": 7,
+          "same_evaluator_pass": 1,
+          "edge": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "lexical-shadow",
+      "proposal_program": "lexical-shadow",
+      "source": "import \"pkl:base\"\nlocal function TODO(): Int = 17\nlocal function Undefined(): String = \"local\"\na = TODO()\nb = Undefined()\n",
+      "source_sha256": "a94eb8204a9c324a312b0f40790e54fc5eb147d1afb6bb1cc78c1f577264645f",
+      "source_input": "target/m2/stage111-base-failures-candidate-01/proposals/lexical-shadow.pkl",
+      "source_uri": "file:///stage111/lexical-shadow.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "frame_transformer": "default",
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "a",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 0,
+          "edge": "Lexical method declarations precede base methods; explicit imported base remains distinct.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "b",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 0,
+          "edge": "Lexical method declarations precede base methods; explicit imported base remains distinct.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-002",
+          "expression": "base.TODO()",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 0,
+          "edge": "Lexical method declarations precede base methods; explicit imported base remains distinct.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-003",
+          "expression": "base.Undefined()",
+          "proposal_query_index": 3,
+          "same_evaluator_pass": 0,
+          "edge": "Lexical method declarations precede base methods; explicit imported base remains distinct.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "a",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 1,
+          "edge": "Lexical method declarations precede base methods; explicit imported base remains distinct.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "b",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 1,
+          "edge": "Lexical method declarations precede base methods; explicit imported base remains distinct.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-002",
+          "expression": "base.TODO()",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 1,
+          "edge": "Lexical method declarations precede base methods; explicit imported base remains distinct.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-003",
+          "expression": "base.Undefined()",
+          "proposal_query_index": 3,
+          "same_evaluator_pass": 1,
+          "edge": "Lexical method declarations precede base methods; explicit imported base remains distinct.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "separate-namespaces",
+      "proposal_program": "separate-namespaces",
+      "source": "TODO = 17\nUndefined = \"property\"\na = TODO()\nb = Undefined()\n",
+      "source_sha256": "c24984934bc8ba6186c78ebfcd60f5cd3d585263d4c8199372dcb5378a92f81d",
+      "source_input": "target/m2/stage111-base-failures-candidate-01/proposals/separate-namespaces.pkl",
+      "source_uri": "file:///stage111/separate-namespaces.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "frame_transformer": "default",
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "TODO",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 0,
+          "edge": "A property with the same name does not shadow a method namespace.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "Undefined",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 0,
+          "edge": "A property with the same name does not shadow a method namespace.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-002",
+          "expression": "a",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 0,
+          "edge": "A property with the same name does not shadow a method namespace.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-003",
+          "expression": "b",
+          "proposal_query_index": 3,
+          "same_evaluator_pass": 0,
+          "edge": "A property with the same name does not shadow a method namespace.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "TODO",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 1,
+          "edge": "A property with the same name does not shadow a method namespace.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "Undefined",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 1,
+          "edge": "A property with the same name does not shadow a method namespace.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-002",
+          "expression": "a",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 1,
+          "edge": "A property with the same name does not shadow a method namespace.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-003",
+          "expression": "b",
+          "proposal_query_index": 3,
+          "same_evaluator_pass": 1,
+          "edge": "A property with the same name does not shadow a method namespace.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "class-shadow",
+      "proposal_program": "class-shadow",
+      "source": "class Holder {\n  function TODO(): Int = 23\n  function Undefined(): String = \"member\"\n  a = TODO()\n  b = Undefined()\n}\nholder = new Holder {}\n",
+      "source_sha256": "08dc03e4048c9b5a07ac6c87654be330e99fbbced0e9b2f00d3957a3f0c3d42d",
+      "source_input": "target/m2/stage111-base-failures-candidate-01/proposals/class-shadow.pkl",
+      "source_uri": "file:///stage111/class-shadow.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "frame_transformer": "default",
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "holder.a",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 0,
+          "edge": "Class lexical methods retain priority over implicit base method lowering.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "holder.b",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 0,
+          "edge": "Class lexical methods retain priority over implicit base method lowering.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "holder.a",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 1,
+          "edge": "Class lexical methods retain priority over implicit base method lowering.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "holder.b",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 1,
+          "edge": "Class lexical methods retain priority over implicit base method lowering.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "custom-this",
+      "proposal_program": "custom-this",
+      "source": "typealias TodoInt = Int(TODO())\ntypealias UndefinedInt = Int(Undefined())\na: TodoInt = 1\nb: UndefinedInt = 2\n",
+      "source_sha256": "f9408d0eabc9996f22b4f429ea4515ff4249ae6c642ed1d4c88074b26f9e6551",
+      "source_input": "target/m2/stage111-base-failures-candidate-01/proposals/custom-this.pkl",
+      "source_uri": "file:///stage111/custom-this.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "frame_transformer": "default",
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "a",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 0,
+          "edge": "Base methods remain visible in custom-this type constraints and carry full constraint error context.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "b",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 0,
+          "edge": "Base methods remain visible in custom-this type constraints and carry full constraint error context.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "a",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 1,
+          "edge": "Base methods remain visible in custom-this type constraints and carry full constraint error context.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "b",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 1,
+          "edge": "Base methods remain visible in custom-this type constraints and carry full constraint error context.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "const-methods",
+      "proposal_program": "const-methods",
+      "source": "const function failTodo(): nothing = TODO()\nconst function failUndefined(): nothing = Undefined()\nclass Holder {\n  x = failTodo()\n  y = failUndefined()\n}\nholder = new Holder {}\n",
+      "source_sha256": "82cba1548a8cedc54f2ab829191e65161e4f51f5618f64d188014175e9a4d882",
+      "source_input": "target/m2/stage111-base-failures-candidate-01/proposals/const-methods.pkl",
+      "source_uri": "file:///stage111/const-methods.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "frame_transformer": "default",
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "failTodo()",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 0,
+          "edge": "Const methods and return type nothing use the shared compiler and ordinary invocation path.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "failUndefined()",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 0,
+          "edge": "Const methods and return type nothing use the shared compiler and ordinary invocation path.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-002",
+          "expression": "holder.x",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 0,
+          "edge": "Const methods and return type nothing use the shared compiler and ordinary invocation path.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-003",
+          "expression": "holder.y",
+          "proposal_query_index": 3,
+          "same_evaluator_pass": 0,
+          "edge": "Const methods and return type nothing use the shared compiler and ordinary invocation path.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "failTodo()",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 1,
+          "edge": "Const methods and return type nothing use the shared compiler and ordinary invocation path.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "failUndefined()",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 1,
+          "edge": "Const methods and return type nothing use the shared compiler and ordinary invocation path.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-002",
+          "expression": "holder.x",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 1,
+          "edge": "Const methods and return type nothing use the shared compiler and ordinary invocation path.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-003",
+          "expression": "holder.y",
+          "proposal_query_index": 3,
+          "same_evaluator_pass": 1,
+          "edge": "Const methods and return type nothing use the shared compiler and ordinary invocation path.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "const-shadow-control",
+      "proposal_program": "const-shadow-control",
+      "source": "function TODO(): Int = 17\nconst function invoke(): Int = TODO()\nx = 1\n",
+      "source_sha256": "9537016a5f5ac72e63159cecdbd6bc967c642e8569401bc2d5b6a4af802eb114",
+      "source_input": "target/m2/stage111-base-failures-candidate-01/proposals/const-shadow-control.pkl",
+      "source_uri": "file:///stage111/const-shadow-control.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "frame_transformer": "default",
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "invoke()",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 0,
+          "edge": "A non-const lexical shadow must still trigger the ordinary const restriction.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "invoke()",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 1,
+          "edge": "A non-const lexical shadow must still trigger the ordinary const restriction.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "lazy-unreached",
+      "proposal_program": "lazy-unreached",
+      "source": "import \"pkl:test\"\nsafe = new { good = 7\n  bad = Undefined()\n  todo = TODO() }\n",
+      "source_sha256": "5e82e7052ced8addbfe1687a6860887d469011a35c6e7f2f29504db3999afd74",
+      "source_input": "target/m2/stage111-base-failures-candidate-01/proposals/lazy-unreached.pkl",
+      "source_uri": "file:///stage111/lazy-unreached.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "frame_transformer": "default",
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "safe.good",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 0,
+          "edge": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "false && Undefined()",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 0,
+          "edge": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-002",
+          "expression": "true || TODO()",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 0,
+          "edge": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-003",
+          "expression": "if (true) 11 else Undefined()",
+          "proposal_query_index": 3,
+          "same_evaluator_pass": 0,
+          "edge": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-004",
+          "expression": "test.catch(() -> safe.bad)",
+          "proposal_query_index": 4,
+          "same_evaluator_pass": 0,
+          "edge": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-005",
+          "expression": "test.catch(() -> safe.todo)",
+          "proposal_query_index": 5,
+          "same_evaluator_pass": 0,
+          "edge": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-006",
+          "expression": "safe.good",
+          "proposal_query_index": 6,
+          "same_evaluator_pass": 0,
+          "edge": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "safe.good",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 1,
+          "edge": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "false && Undefined()",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 1,
+          "edge": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-002",
+          "expression": "true || TODO()",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 1,
+          "edge": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-003",
+          "expression": "if (true) 11 else Undefined()",
+          "proposal_query_index": 3,
+          "same_evaluator_pass": 1,
+          "edge": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-004",
+          "expression": "test.catch(() -> safe.bad)",
+          "proposal_query_index": 4,
+          "same_evaluator_pass": 1,
+          "edge": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-005",
+          "expression": "test.catch(() -> safe.todo)",
+          "proposal_query_index": 5,
+          "same_evaluator_pass": 1,
+          "edge": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-006",
+          "expression": "safe.good",
+          "proposal_query_index": 6,
+          "same_evaluator_pass": 1,
+          "edge": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "retry-logger",
+      "proposal_program": "retry-logger",
+      "source": "import \"pkl:test\"\nlocal good = trace(7)\nundefined = let (seen = trace(good)) Undefined()\ntodo = let (seen = trace(good)) TODO()\nstable = good\n",
+      "source_sha256": "9570143bb0e423e4a56f8529f8fb12ddff44a2c1a7b28b26d2f49149e480aa7c",
+      "source_input": "target/m2/stage111-base-failures-candidate-01/proposals/retry-logger.pkl",
+      "source_uri": "file:///stage111/retry-logger.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "frame_transformer": "default",
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "stable",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 0,
+          "edge": "Failed reads retry; successful dependency caching and ordered Logger traces are observed across repeated queries.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "test.catch(() -> undefined)",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 0,
+          "edge": "Failed reads retry; successful dependency caching and ordered Logger traces are observed across repeated queries.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-002",
+          "expression": "test.catch(() -> undefined)",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 0,
+          "edge": "Failed reads retry; successful dependency caching and ordered Logger traces are observed across repeated queries.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-003",
+          "expression": "test.catch(() -> todo)",
+          "proposal_query_index": 3,
+          "same_evaluator_pass": 0,
+          "edge": "Failed reads retry; successful dependency caching and ordered Logger traces are observed across repeated queries.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-004",
+          "expression": "test.catch(() -> todo)",
+          "proposal_query_index": 4,
+          "same_evaluator_pass": 0,
+          "edge": "Failed reads retry; successful dependency caching and ordered Logger traces are observed across repeated queries.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-005",
+          "expression": "stable",
+          "proposal_query_index": 5,
+          "same_evaluator_pass": 0,
+          "edge": "Failed reads retry; successful dependency caching and ordered Logger traces are observed across repeated queries.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "stable",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 1,
+          "edge": "Failed reads retry; successful dependency caching and ordered Logger traces are observed across repeated queries.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "test.catch(() -> undefined)",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 1,
+          "edge": "Failed reads retry; successful dependency caching and ordered Logger traces are observed across repeated queries.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-002",
+          "expression": "test.catch(() -> undefined)",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 1,
+          "edge": "Failed reads retry; successful dependency caching and ordered Logger traces are observed across repeated queries.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-003",
+          "expression": "test.catch(() -> todo)",
+          "proposal_query_index": 3,
+          "same_evaluator_pass": 1,
+          "edge": "Failed reads retry; successful dependency caching and ordered Logger traces are observed across repeated queries.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-004",
+          "expression": "test.catch(() -> todo)",
+          "proposal_query_index": 4,
+          "same_evaluator_pass": 1,
+          "edge": "Failed reads retry; successful dependency caching and ordered Logger traces are observed across repeated queries.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-005",
+          "expression": "stable",
+          "proposal_query_index": 5,
+          "same_evaluator_pass": 1,
+          "edge": "Failed reads retry; successful dependency caching and ordered Logger traces are observed across repeated queries.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "string-force",
+      "proposal_program": "string-force",
+      "source": "undefined = new { bad = Undefined()\n  good = trace(7) }\ntodo = new { bad = TODO()\n  good = trace(9) }\n",
+      "source_sha256": "5b2e45b60591cba945168e1c0f9954b7e30907d7fb8d4658dda7ae58f44a6bae",
+      "source_input": "target/m2/stage111-base-failures-candidate-01/proposals/string-force.pkl",
+      "source_uri": "file:///stage111/string-force.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "frame_transformer": "default",
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "undefined.toString()",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 0,
+          "edge": "Undefined-value exception classification in allow-undefined forcing; ordinary TODO is distinct; failed marks reset.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "undefined.bad",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 0,
+          "edge": "Undefined-value exception classification in allow-undefined forcing; ordinary TODO is distinct; failed marks reset.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-002",
+          "expression": "undefined.toString()",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 0,
+          "edge": "Undefined-value exception classification in allow-undefined forcing; ordinary TODO is distinct; failed marks reset.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-003",
+          "expression": "todo.toString()",
+          "proposal_query_index": 3,
+          "same_evaluator_pass": 0,
+          "edge": "Undefined-value exception classification in allow-undefined forcing; ordinary TODO is distinct; failed marks reset.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-004",
+          "expression": "todo.bad",
+          "proposal_query_index": 4,
+          "same_evaluator_pass": 0,
+          "edge": "Undefined-value exception classification in allow-undefined forcing; ordinary TODO is distinct; failed marks reset.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "undefined.toString()",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 1,
+          "edge": "Undefined-value exception classification in allow-undefined forcing; ordinary TODO is distinct; failed marks reset.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "undefined.bad",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 1,
+          "edge": "Undefined-value exception classification in allow-undefined forcing; ordinary TODO is distinct; failed marks reset.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-002",
+          "expression": "undefined.toString()",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 1,
+          "edge": "Undefined-value exception classification in allow-undefined forcing; ordinary TODO is distinct; failed marks reset.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-003",
+          "expression": "todo.toString()",
+          "proposal_query_index": 3,
+          "same_evaluator_pass": 1,
+          "edge": "Undefined-value exception classification in allow-undefined forcing; ordinary TODO is distinct; failed marks reset.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-004",
+          "expression": "todo.bad",
+          "proposal_query_index": 4,
+          "same_evaluator_pass": 1,
+          "edge": "Undefined-value exception classification in allow-undefined forcing; ordinary TODO is distinct; failed marks reset.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "render-undefined",
+      "proposal_program": "render-undefined",
+      "source": "import \"pkl:base\"\nvalue = new { nested { bad = Undefined() } }\noutput { value = module.value }\n",
+      "source_sha256": "79b2534a6d339ac90c22c3941e2c3a23de051ce9f04d0cfc311c5cacf4eb8275",
+      "source_input": "target/m2/stage111-base-failures-candidate-01/proposals/render-undefined.pkl",
+      "source_uri": "file:///stage111/render-undefined.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "frame_transformer": "default",
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "output.text",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 0,
+          "edge": "Receiverless Undefined must retain normal source frames without an undefined-property rendering path hint.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "new PcfRenderer {}.renderValue(value)",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 0,
+          "edge": "Receiverless Undefined must retain normal source frames without an undefined-property rendering path hint.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-002",
+          "expression": "new JsonRenderer {}.renderValue(value)",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 0,
+          "edge": "Receiverless Undefined must retain normal source frames without an undefined-property rendering path hint.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "output.text",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 1,
+          "edge": "Receiverless Undefined must retain normal source frames without an undefined-property rendering path hint.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "new PcfRenderer {}.renderValue(value)",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 1,
+          "edge": "Receiverless Undefined must retain normal source frames without an undefined-property rendering path hint.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-002",
+          "expression": "new JsonRenderer {}.renderValue(value)",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 1,
+          "edge": "Receiverless Undefined must retain normal source frames without an undefined-property rendering path hint.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "render-undefined-identity",
+      "proposal_program": "render-undefined",
+      "source": "import \"pkl:base\"\nvalue = new { nested { bad = Undefined() } }\noutput { value = module.value }\n",
+      "source_sha256": "79b2534a6d339ac90c22c3941e2c3a23de051ce9f04d0cfc311c5cacf4eb8275",
+      "source_input": "target/m2/stage111-base-failures-candidate-01/proposals/render-undefined.pkl",
+      "source_uri": "file:///stage111/render-undefined.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "frame_transformer": "identity",
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "output.text",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 0,
+          "edge": "Receiverless Undefined must retain normal source frames without an undefined-property rendering path hint.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "new PcfRenderer {}.renderValue(value)",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 0,
+          "edge": "Receiverless Undefined must retain normal source frames without an undefined-property rendering path hint.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-002",
+          "expression": "new JsonRenderer {}.renderValue(value)",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 0,
+          "edge": "Receiverless Undefined must retain normal source frames without an undefined-property rendering path hint.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "output.text",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 1,
+          "edge": "Receiverless Undefined must retain normal source frames without an undefined-property rendering path hint.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "new PcfRenderer {}.renderValue(value)",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 1,
+          "edge": "Receiverless Undefined must retain normal source frames without an undefined-property rendering path hint.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-002",
+          "expression": "new JsonRenderer {}.renderValue(value)",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 1,
+          "edge": "Receiverless Undefined must retain normal source frames without an undefined-property rendering path hint.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "render-property-control",
+      "proposal_program": "render-property-control",
+      "source": "class Holder { bad: String }\nvalue = new Holder {}\noutput { value = module.value }\n",
+      "source_sha256": "6bb7407d51985ef8f2ed643c91bc92228959c52735a7efed477d7d01d96e362d",
+      "source_input": "target/m2/stage111-base-failures-candidate-01/proposals/render-property-control.pkl",
+      "source_uri": "file:///stage111/render-property-control.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "frame_transformer": "default",
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "output.text",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 0,
+          "edge": "Existing undefined-property path hints remain present; do not suppress all undefined diagnostics.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "new PcfRenderer {}.renderValue(value)",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 0,
+          "edge": "Existing undefined-property path hints remain present; do not suppress all undefined diagnostics.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "output.text",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 1,
+          "edge": "Existing undefined-property path hints remain present; do not suppress all undefined diagnostics.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "new PcfRenderer {}.renderValue(value)",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 1,
+          "edge": "Existing undefined-property path hints remain present; do not suppress all undefined diagnostics.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "render-todo",
+      "proposal_program": "render-todo",
+      "source": "value = new { nested { bad = TODO() } }\noutput { value = module.value }\n",
+      "source_sha256": "6d1efc49bea97a19ef4c3a9836b6ce16e62fb4764597053e10aee89fa60be2a3",
+      "source_input": "target/m2/stage111-base-failures-candidate-01/proposals/render-todo.pkl",
+      "source_uri": "file:///stage111/render-todo.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "frame_transformer": "default",
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "output.text",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 0,
+          "edge": "Source-backed TODO retains its actual throw expression and default transformed base source frame.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "output.text",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 1,
+          "edge": "Source-backed TODO retains its actual throw expression and default transformed base source frame.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "render-todo-identity",
+      "proposal_program": "render-todo",
+      "source": "value = new { nested { bad = TODO() } }\noutput { value = module.value }\n",
+      "source_sha256": "6d1efc49bea97a19ef4c3a9836b6ce16e62fb4764597053e10aee89fa60be2a3",
+      "source_input": "target/m2/stage111-base-failures-candidate-01/proposals/render-todo.pkl",
+      "source_uri": "file:///stage111/render-todo.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "frame_transformer": "identity",
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "output.text",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 0,
+          "edge": "Source-backed TODO retains its actual throw expression and default transformed base source frame.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "output.text",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 1,
+          "edge": "Source-backed TODO retains its actual throw expression and default transformed base source frame.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "infer-parent",
+      "proposal_program": "infer-parent",
+      "source": "class UndefinedParent { value = Undefined() }\nclass TodoParent { value = TODO() }\nclass TypedParent { value: Dynamic = Undefined() }\na = new UndefinedParent { value = new { answer = 42 } }\nb = new TodoParent { value = new { answer = 42 } }\nc = new TypedParent { value = new { answer = 42 } }\n",
+      "source_sha256": "dfaa65e8acb812c9e7eb705a1ee5c073b7998a4c885a242cba4c4a329c325ec0",
+      "source_input": "target/m2/stage111-base-failures-candidate-01/proposals/infer-parent.pkl",
+      "source_uri": "file:///stage111/infer-parent.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "frame_transformer": "default",
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "a.value",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 0,
+          "edge": "Inferred property parent catches all undefined-value exceptions from prototype read; TODO stays ordinary failure.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "b.value",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 0,
+          "edge": "Inferred property parent catches all undefined-value exceptions from prototype read; TODO stays ordinary failure.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-002",
+          "expression": "c.value",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 0,
+          "edge": "Inferred property parent catches all undefined-value exceptions from prototype read; TODO stays ordinary failure.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "a.value",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 1,
+          "edge": "Inferred property parent catches all undefined-value exceptions from prototype read; TODO stays ordinary failure.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "b.value",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 1,
+          "edge": "Inferred property parent catches all undefined-value exceptions from prototype read; TODO stays ordinary failure.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-002",
+          "expression": "c.value",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 1,
+          "edge": "Inferred property parent catches all undefined-value exceptions from prototype read; TODO stays ordinary failure.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "infer-catch-order",
+      "proposal_program": "infer-catch-order",
+      "source": "import \"pkl:test\"\nclass C { value = Undefined() }\nx = new C { value = new {} }\nclass D { value = test.catch(() -> Undefined()) }\ny = new D { value = new {} }\n",
+      "source_sha256": "50989b333d7ff5673bc86397d3a6bbbb1ec2dc7e0904f7b4a99b921e759fbd83",
+      "source_input": "target/m2/stage111-base-failures-candidate-01/proposals/infer-catch-order.pkl",
+      "source_uri": "file:///stage111/infer-catch-order.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "frame_transformer": "default",
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "test.catch(() -> x.value)",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 0,
+          "edge": "Nearest guest catch, inferred-parent conversion and allow-undefined forcing boundaries preserve error ordering.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "test.catch(() -> y.value)",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 0,
+          "edge": "Nearest guest catch, inferred-parent conversion and allow-undefined forcing boundaries preserve error ordering.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-002",
+          "expression": "x.toString()",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 0,
+          "edge": "Nearest guest catch, inferred-parent conversion and allow-undefined forcing boundaries preserve error ordering.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "test.catch(() -> x.value)",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 1,
+          "edge": "Nearest guest catch, inferred-parent conversion and allow-undefined forcing boundaries preserve error ordering.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "test.catch(() -> y.value)",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 1,
+          "edge": "Nearest guest catch, inferred-parent conversion and allow-undefined forcing boundaries preserve error ordering.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-002",
+          "expression": "x.toString()",
+          "proposal_query_index": 2,
+          "same_evaluator_pass": 1,
+          "edge": "Nearest guest catch, inferred-parent conversion and allow-undefined forcing boundaries preserve error ordering.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "receiverless-lazy-module",
+      "proposal_program": "receiverless-lazy-module",
+      "source": "import \"pkl:test\"\nconst value = Undefined()\nx = value\n",
+      "source_sha256": "c0e2b0882ecfaad2f8c559191d25eacbd789d7b8ef99277cd04c637569e07185",
+      "source_input": "target/m2/stage111-base-failures-candidate-01/proposals/receiverless-lazy-module.pkl",
+      "source_uri": "file:///stage111/receiverless-lazy-module.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "frame_transformer": "default",
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "test.catch(() -> x)",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 0,
+          "edge": "Receiverless provenance survives any lazy/module error caching path; a frontend or eager-init error remains an actual outcome.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "test.catch(() -> x)",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 0,
+          "edge": "Receiverless provenance survives any lazy/module error caching path; a frontend or eager-init error remains an actual outcome.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "test.catch(() -> x)",
+          "proposal_query_index": 0,
+          "same_evaluator_pass": 1,
+          "edge": "Receiverless provenance survives any lazy/module error caching path; a frontend or eager-init error remains an actual outcome.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "test.catch(() -> x)",
+          "proposal_query_index": 1,
+          "same_evaluator_pass": 1,
+          "edge": "Receiverless provenance survives any lazy/module error caching path; a frontend or eager-init error remains an actual outcome.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+import "pkl:test"
+import "pkl:base"
+local function nestedTodo(): Int = TODO()
+local function nestedUndefined(): Int = Undefined()
+x = 1

@@ -1,0 +1,6 @@
+session-open mode=string rows=2
+call-enter=string-0-nested-indent-false
+call-exit=string-0-nested-indent-false status=error
+call-enter=string-1-nested-indent-true
+call-exit=string-1-nested-indent-true status=error
+session-closed mode=string rows=2 public-calls=2 success=0 errors=2

@@ -1,0 +1,25 @@
+{
+  "Java_authority": {
+    "bytes": 3304989,
+    "mode": 420,
+    "path": "target/m2/stage111-base-failures-oracle-01/report.json",
+    "sha256": "51caa62966ddd3e4805ccdb869d198b2d9615cf7e2158ba064401eff2883f5e1"
+  },
+  "Rust_execution": "unexecuted",
+  "Rust_query_input": "Exact corresponding repeat expression.bin; original UTF8/UTF16 preserved, never Base64.",
+  "cohort": "main",
+  "evaluator_environment": {},
+  "evaluator_external_properties": {},
+  "frame_transformer": "identity",
+  "fresh_evaluator_sessions": 2,
+  "oracle_internal": false,
+  "original_program": "render-undefined-identity",
+  "power_assertions": false,
+  "program": "main-render-undefined-identity",
+  "queries": 6,
+  "query_passes_same_evaluator": 2,
+  "repetitions": 2,
+  "required": true,
+  "required_unresolved": false,
+  "source_uri": "file:///stage111/render-undefined.pkl"
+}

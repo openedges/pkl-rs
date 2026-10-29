@@ -1,0 +1,3 @@
+# Regex PCF Java fixtures
+
+Pinned Pkl0.32.0:51contracts/102observations;90success and12ordinaryerrors,0Logger. Main ambiguous new{} and supplemental original-module lookup errors remain required ordinary raw controls; neither proves successful nested indentation rendering. The separate inline exact-pattern cohort has4successful observations and establishes both renderer settings with object indentation; Regex itself remains single-line. JSON rejection and invalid pattern errors are retained. Initial transient-cache scanner failure is separate preserved acquisition evidence, not a language observation. No Rust comparison has executed.

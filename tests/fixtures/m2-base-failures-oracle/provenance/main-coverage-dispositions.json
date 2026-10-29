@@ -1,0 +1,2926 @@
+{
+  "classifications": [
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "query": "pass-0-q-000",
+      "expression": "TODO()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-0/000-pass-0-q-000"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "query": "pass-0-q-001",
+      "expression": "Undefined()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-0/001-pass-0-q-001"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "query": "pass-0-q-002",
+      "expression": "base.TODO()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-0/002-pass-0-q-002"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "query": "pass-0-q-003",
+      "expression": "base.Undefined()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-0/003-pass-0-q-003"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "query": "pass-0-q-004",
+      "expression": "nestedTodo()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-0/004-pass-0-q-004"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "query": "pass-0-q-005",
+      "expression": "nestedUndefined()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-0/005-pass-0-q-005"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "query": "pass-0-q-006",
+      "expression": "test.catch(() -> TODO())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-0/006-pass-0-q-006"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "query": "pass-0-q-007",
+      "expression": "test.catch(() -> Undefined())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-0/007-pass-0-q-007"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "query": "pass-0-q-008",
+      "expression": "test.catchOrNull(() -> TODO())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-0/008-pass-0-q-008"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "query": "pass-0-q-009",
+      "expression": "test.catchOrNull(() -> Undefined())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-0/009-pass-0-q-009"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "query": "pass-1-q-000",
+      "expression": "TODO()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-0/010-pass-1-q-000"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "query": "pass-1-q-001",
+      "expression": "Undefined()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-0/011-pass-1-q-001"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "query": "pass-1-q-002",
+      "expression": "base.TODO()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-0/012-pass-1-q-002"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "query": "pass-1-q-003",
+      "expression": "base.Undefined()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-0/013-pass-1-q-003"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "query": "pass-1-q-004",
+      "expression": "nestedTodo()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-0/014-pass-1-q-004"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "query": "pass-1-q-005",
+      "expression": "nestedUndefined()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-0/015-pass-1-q-005"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "query": "pass-1-q-006",
+      "expression": "test.catch(() -> TODO())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-0/016-pass-1-q-006"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "query": "pass-1-q-007",
+      "expression": "test.catch(() -> Undefined())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-0/017-pass-1-q-007"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "query": "pass-1-q-008",
+      "expression": "test.catchOrNull(() -> TODO())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-0/018-pass-1-q-008"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 0,
+      "query": "pass-1-q-009",
+      "expression": "test.catchOrNull(() -> Undefined())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-0/019-pass-1-q-009"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "query": "pass-0-q-000",
+      "expression": "TODO()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-1/000-pass-0-q-000"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "query": "pass-0-q-001",
+      "expression": "Undefined()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-1/001-pass-0-q-001"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "query": "pass-0-q-002",
+      "expression": "base.TODO()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-1/002-pass-0-q-002"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "query": "pass-0-q-003",
+      "expression": "base.Undefined()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-1/003-pass-0-q-003"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "query": "pass-0-q-004",
+      "expression": "nestedTodo()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-1/004-pass-0-q-004"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "query": "pass-0-q-005",
+      "expression": "nestedUndefined()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-1/005-pass-0-q-005"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "query": "pass-0-q-006",
+      "expression": "test.catch(() -> TODO())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-1/006-pass-0-q-006"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "query": "pass-0-q-007",
+      "expression": "test.catch(() -> Undefined())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-1/007-pass-0-q-007"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "query": "pass-0-q-008",
+      "expression": "test.catchOrNull(() -> TODO())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-1/008-pass-0-q-008"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "query": "pass-0-q-009",
+      "expression": "test.catchOrNull(() -> Undefined())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-1/009-pass-0-q-009"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "query": "pass-1-q-000",
+      "expression": "TODO()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-1/010-pass-1-q-000"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "query": "pass-1-q-001",
+      "expression": "Undefined()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-1/011-pass-1-q-001"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "query": "pass-1-q-002",
+      "expression": "base.TODO()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-1/012-pass-1-q-002"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "query": "pass-1-q-003",
+      "expression": "base.Undefined()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-1/013-pass-1-q-003"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "query": "pass-1-q-004",
+      "expression": "nestedTodo()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-1/014-pass-1-q-004"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "query": "pass-1-q-005",
+      "expression": "nestedUndefined()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-1/015-pass-1-q-005"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "query": "pass-1-q-006",
+      "expression": "test.catch(() -> TODO())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-1/016-pass-1-q-006"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "query": "pass-1-q-007",
+      "expression": "test.catch(() -> Undefined())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-1/017-pass-1-q-007"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "query": "pass-1-q-008",
+      "expression": "test.catchOrNull(() -> TODO())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-1/018-pass-1-q-008"
+    },
+    {
+      "program": "direct",
+      "fresh_session": 1,
+      "query": "pass-1-q-009",
+      "expression": "test.catchOrNull(() -> Undefined())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct/repeat-1/019-pass-1-q-009"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "query": "pass-0-q-000",
+      "expression": "TODO()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-0/000-pass-0-q-000"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "query": "pass-0-q-001",
+      "expression": "Undefined()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-0/001-pass-0-q-001"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "query": "pass-0-q-002",
+      "expression": "base.TODO()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-0/002-pass-0-q-002"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "query": "pass-0-q-003",
+      "expression": "base.Undefined()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-0/003-pass-0-q-003"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "query": "pass-0-q-004",
+      "expression": "nestedTodo()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-0/004-pass-0-q-004"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "query": "pass-0-q-005",
+      "expression": "nestedUndefined()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-0/005-pass-0-q-005"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "query": "pass-0-q-006",
+      "expression": "test.catch(() -> TODO())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-0/006-pass-0-q-006"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "query": "pass-0-q-007",
+      "expression": "test.catch(() -> Undefined())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-0/007-pass-0-q-007"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "query": "pass-0-q-008",
+      "expression": "test.catchOrNull(() -> TODO())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-0/008-pass-0-q-008"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "query": "pass-0-q-009",
+      "expression": "test.catchOrNull(() -> Undefined())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-0/009-pass-0-q-009"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "query": "pass-1-q-000",
+      "expression": "TODO()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-0/010-pass-1-q-000"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "query": "pass-1-q-001",
+      "expression": "Undefined()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-0/011-pass-1-q-001"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "query": "pass-1-q-002",
+      "expression": "base.TODO()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-0/012-pass-1-q-002"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "query": "pass-1-q-003",
+      "expression": "base.Undefined()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-0/013-pass-1-q-003"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "query": "pass-1-q-004",
+      "expression": "nestedTodo()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-0/014-pass-1-q-004"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "query": "pass-1-q-005",
+      "expression": "nestedUndefined()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-0/015-pass-1-q-005"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "query": "pass-1-q-006",
+      "expression": "test.catch(() -> TODO())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-0/016-pass-1-q-006"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "query": "pass-1-q-007",
+      "expression": "test.catch(() -> Undefined())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-0/017-pass-1-q-007"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "query": "pass-1-q-008",
+      "expression": "test.catchOrNull(() -> TODO())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-0/018-pass-1-q-008"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 0,
+      "query": "pass-1-q-009",
+      "expression": "test.catchOrNull(() -> Undefined())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-0/019-pass-1-q-009"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "query": "pass-0-q-000",
+      "expression": "TODO()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-1/000-pass-0-q-000"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "query": "pass-0-q-001",
+      "expression": "Undefined()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-1/001-pass-0-q-001"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "query": "pass-0-q-002",
+      "expression": "base.TODO()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-1/002-pass-0-q-002"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "query": "pass-0-q-003",
+      "expression": "base.Undefined()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-1/003-pass-0-q-003"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "query": "pass-0-q-004",
+      "expression": "nestedTodo()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-1/004-pass-0-q-004"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "query": "pass-0-q-005",
+      "expression": "nestedUndefined()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-1/005-pass-0-q-005"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "query": "pass-0-q-006",
+      "expression": "test.catch(() -> TODO())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-1/006-pass-0-q-006"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "query": "pass-0-q-007",
+      "expression": "test.catch(() -> Undefined())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-1/007-pass-0-q-007"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "query": "pass-0-q-008",
+      "expression": "test.catchOrNull(() -> TODO())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-1/008-pass-0-q-008"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "query": "pass-0-q-009",
+      "expression": "test.catchOrNull(() -> Undefined())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-1/009-pass-0-q-009"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "query": "pass-1-q-000",
+      "expression": "TODO()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-1/010-pass-1-q-000"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "query": "pass-1-q-001",
+      "expression": "Undefined()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-1/011-pass-1-q-001"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "query": "pass-1-q-002",
+      "expression": "base.TODO()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-1/012-pass-1-q-002"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "query": "pass-1-q-003",
+      "expression": "base.Undefined()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-1/013-pass-1-q-003"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "query": "pass-1-q-004",
+      "expression": "nestedTodo()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-1/014-pass-1-q-004"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "query": "pass-1-q-005",
+      "expression": "nestedUndefined()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-1/015-pass-1-q-005"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "query": "pass-1-q-006",
+      "expression": "test.catch(() -> TODO())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-1/016-pass-1-q-006"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "query": "pass-1-q-007",
+      "expression": "test.catch(() -> Undefined())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-1/017-pass-1-q-007"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "query": "pass-1-q-008",
+      "expression": "test.catchOrNull(() -> TODO())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-1/018-pass-1-q-008"
+    },
+    {
+      "program": "direct-identity",
+      "fresh_session": 1,
+      "query": "pass-1-q-009",
+      "expression": "test.catchOrNull(() -> Undefined())",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/direct-identity/repeat-1/019-pass-1-q-009"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 0,
+      "query": "pass-0-q-000",
+      "expression": "TODO(1)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-0/000-pass-0-q-000"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 0,
+      "query": "pass-0-q-001",
+      "expression": "Undefined(1)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-0/001-pass-0-q-001"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 0,
+      "query": "pass-0-q-002",
+      "expression": "TODO(trace(1))",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-0/002-pass-0-q-002"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 0,
+      "query": "pass-0-q-003",
+      "expression": "Undefined(trace(2))",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-0/003-pass-0-q-003"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 0,
+      "query": "pass-0-q-004",
+      "expression": "TODO(throw(\"argument-first\"))",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-0/004-pass-0-q-004"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 0,
+      "query": "pass-0-q-005",
+      "expression": "Undefined(throw(\"argument-first\"))",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-0/005-pass-0-q-005"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 0,
+      "query": "pass-0-q-006",
+      "expression": "base.TODO(1, 2)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-0/006-pass-0-q-006"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 0,
+      "query": "pass-0-q-007",
+      "expression": "base.Undefined(1, 2)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-0/007-pass-0-q-007"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 0,
+      "query": "pass-1-q-000",
+      "expression": "TODO(1)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-0/008-pass-1-q-000"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 0,
+      "query": "pass-1-q-001",
+      "expression": "Undefined(1)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-0/009-pass-1-q-001"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 0,
+      "query": "pass-1-q-002",
+      "expression": "TODO(trace(1))",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-0/010-pass-1-q-002"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 0,
+      "query": "pass-1-q-003",
+      "expression": "Undefined(trace(2))",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-0/011-pass-1-q-003"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 0,
+      "query": "pass-1-q-004",
+      "expression": "TODO(throw(\"argument-first\"))",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-0/012-pass-1-q-004"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 0,
+      "query": "pass-1-q-005",
+      "expression": "Undefined(throw(\"argument-first\"))",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-0/013-pass-1-q-005"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 0,
+      "query": "pass-1-q-006",
+      "expression": "base.TODO(1, 2)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-0/014-pass-1-q-006"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 0,
+      "query": "pass-1-q-007",
+      "expression": "base.Undefined(1, 2)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-0/015-pass-1-q-007"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 1,
+      "query": "pass-0-q-000",
+      "expression": "TODO(1)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-1/000-pass-0-q-000"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 1,
+      "query": "pass-0-q-001",
+      "expression": "Undefined(1)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-1/001-pass-0-q-001"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 1,
+      "query": "pass-0-q-002",
+      "expression": "TODO(trace(1))",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-1/002-pass-0-q-002"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 1,
+      "query": "pass-0-q-003",
+      "expression": "Undefined(trace(2))",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-1/003-pass-0-q-003"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 1,
+      "query": "pass-0-q-004",
+      "expression": "TODO(throw(\"argument-first\"))",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-1/004-pass-0-q-004"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 1,
+      "query": "pass-0-q-005",
+      "expression": "Undefined(throw(\"argument-first\"))",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-1/005-pass-0-q-005"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 1,
+      "query": "pass-0-q-006",
+      "expression": "base.TODO(1, 2)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-1/006-pass-0-q-006"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 1,
+      "query": "pass-0-q-007",
+      "expression": "base.Undefined(1, 2)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-1/007-pass-0-q-007"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 1,
+      "query": "pass-1-q-000",
+      "expression": "TODO(1)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-1/008-pass-1-q-000"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 1,
+      "query": "pass-1-q-001",
+      "expression": "Undefined(1)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-1/009-pass-1-q-001"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 1,
+      "query": "pass-1-q-002",
+      "expression": "TODO(trace(1))",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-1/010-pass-1-q-002"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 1,
+      "query": "pass-1-q-003",
+      "expression": "Undefined(trace(2))",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-1/011-pass-1-q-003"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 1,
+      "query": "pass-1-q-004",
+      "expression": "TODO(throw(\"argument-first\"))",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-1/012-pass-1-q-004"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 1,
+      "query": "pass-1-q-005",
+      "expression": "Undefined(throw(\"argument-first\"))",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-1/013-pass-1-q-005"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 1,
+      "query": "pass-1-q-006",
+      "expression": "base.TODO(1, 2)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-1/014-pass-1-q-006"
+    },
+    {
+      "program": "arity-order",
+      "fresh_session": 1,
+      "query": "pass-1-q-007",
+      "expression": "base.Undefined(1, 2)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/arity-order/repeat-1/015-pass-1-q-007"
+    },
+    {
+      "program": "lexical-shadow",
+      "fresh_session": 0,
+      "query": "pass-0-q-000",
+      "expression": "a",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lexical-shadow/repeat-0/000-pass-0-q-000"
+    },
+    {
+      "program": "lexical-shadow",
+      "fresh_session": 0,
+      "query": "pass-0-q-001",
+      "expression": "b",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lexical-shadow/repeat-0/001-pass-0-q-001"
+    },
+    {
+      "program": "lexical-shadow",
+      "fresh_session": 0,
+      "query": "pass-0-q-002",
+      "expression": "base.TODO()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lexical-shadow/repeat-0/002-pass-0-q-002"
+    },
+    {
+      "program": "lexical-shadow",
+      "fresh_session": 0,
+      "query": "pass-0-q-003",
+      "expression": "base.Undefined()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lexical-shadow/repeat-0/003-pass-0-q-003"
+    },
+    {
+      "program": "lexical-shadow",
+      "fresh_session": 0,
+      "query": "pass-1-q-000",
+      "expression": "a",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lexical-shadow/repeat-0/004-pass-1-q-000"
+    },
+    {
+      "program": "lexical-shadow",
+      "fresh_session": 0,
+      "query": "pass-1-q-001",
+      "expression": "b",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lexical-shadow/repeat-0/005-pass-1-q-001"
+    },
+    {
+      "program": "lexical-shadow",
+      "fresh_session": 0,
+      "query": "pass-1-q-002",
+      "expression": "base.TODO()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lexical-shadow/repeat-0/006-pass-1-q-002"
+    },
+    {
+      "program": "lexical-shadow",
+      "fresh_session": 0,
+      "query": "pass-1-q-003",
+      "expression": "base.Undefined()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lexical-shadow/repeat-0/007-pass-1-q-003"
+    },
+    {
+      "program": "lexical-shadow",
+      "fresh_session": 1,
+      "query": "pass-0-q-000",
+      "expression": "a",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lexical-shadow/repeat-1/000-pass-0-q-000"
+    },
+    {
+      "program": "lexical-shadow",
+      "fresh_session": 1,
+      "query": "pass-0-q-001",
+      "expression": "b",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lexical-shadow/repeat-1/001-pass-0-q-001"
+    },
+    {
+      "program": "lexical-shadow",
+      "fresh_session": 1,
+      "query": "pass-0-q-002",
+      "expression": "base.TODO()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lexical-shadow/repeat-1/002-pass-0-q-002"
+    },
+    {
+      "program": "lexical-shadow",
+      "fresh_session": 1,
+      "query": "pass-0-q-003",
+      "expression": "base.Undefined()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lexical-shadow/repeat-1/003-pass-0-q-003"
+    },
+    {
+      "program": "lexical-shadow",
+      "fresh_session": 1,
+      "query": "pass-1-q-000",
+      "expression": "a",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lexical-shadow/repeat-1/004-pass-1-q-000"
+    },
+    {
+      "program": "lexical-shadow",
+      "fresh_session": 1,
+      "query": "pass-1-q-001",
+      "expression": "b",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lexical-shadow/repeat-1/005-pass-1-q-001"
+    },
+    {
+      "program": "lexical-shadow",
+      "fresh_session": 1,
+      "query": "pass-1-q-002",
+      "expression": "base.TODO()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lexical-shadow/repeat-1/006-pass-1-q-002"
+    },
+    {
+      "program": "lexical-shadow",
+      "fresh_session": 1,
+      "query": "pass-1-q-003",
+      "expression": "base.Undefined()",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lexical-shadow/repeat-1/007-pass-1-q-003"
+    },
+    {
+      "program": "separate-namespaces",
+      "fresh_session": 0,
+      "query": "pass-0-q-000",
+      "expression": "TODO",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/separate-namespaces/repeat-0/000-pass-0-q-000"
+    },
+    {
+      "program": "separate-namespaces",
+      "fresh_session": 0,
+      "query": "pass-0-q-001",
+      "expression": "Undefined",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/separate-namespaces/repeat-0/001-pass-0-q-001"
+    },
+    {
+      "program": "separate-namespaces",
+      "fresh_session": 0,
+      "query": "pass-0-q-002",
+      "expression": "a",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/separate-namespaces/repeat-0/002-pass-0-q-002"
+    },
+    {
+      "program": "separate-namespaces",
+      "fresh_session": 0,
+      "query": "pass-0-q-003",
+      "expression": "b",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/separate-namespaces/repeat-0/003-pass-0-q-003"
+    },
+    {
+      "program": "separate-namespaces",
+      "fresh_session": 0,
+      "query": "pass-1-q-000",
+      "expression": "TODO",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/separate-namespaces/repeat-0/004-pass-1-q-000"
+    },
+    {
+      "program": "separate-namespaces",
+      "fresh_session": 0,
+      "query": "pass-1-q-001",
+      "expression": "Undefined",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/separate-namespaces/repeat-0/005-pass-1-q-001"
+    },
+    {
+      "program": "separate-namespaces",
+      "fresh_session": 0,
+      "query": "pass-1-q-002",
+      "expression": "a",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/separate-namespaces/repeat-0/006-pass-1-q-002"
+    },
+    {
+      "program": "separate-namespaces",
+      "fresh_session": 0,
+      "query": "pass-1-q-003",
+      "expression": "b",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/separate-namespaces/repeat-0/007-pass-1-q-003"
+    },
+    {
+      "program": "separate-namespaces",
+      "fresh_session": 1,
+      "query": "pass-0-q-000",
+      "expression": "TODO",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/separate-namespaces/repeat-1/000-pass-0-q-000"
+    },
+    {
+      "program": "separate-namespaces",
+      "fresh_session": 1,
+      "query": "pass-0-q-001",
+      "expression": "Undefined",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/separate-namespaces/repeat-1/001-pass-0-q-001"
+    },
+    {
+      "program": "separate-namespaces",
+      "fresh_session": 1,
+      "query": "pass-0-q-002",
+      "expression": "a",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/separate-namespaces/repeat-1/002-pass-0-q-002"
+    },
+    {
+      "program": "separate-namespaces",
+      "fresh_session": 1,
+      "query": "pass-0-q-003",
+      "expression": "b",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/separate-namespaces/repeat-1/003-pass-0-q-003"
+    },
+    {
+      "program": "separate-namespaces",
+      "fresh_session": 1,
+      "query": "pass-1-q-000",
+      "expression": "TODO",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/separate-namespaces/repeat-1/004-pass-1-q-000"
+    },
+    {
+      "program": "separate-namespaces",
+      "fresh_session": 1,
+      "query": "pass-1-q-001",
+      "expression": "Undefined",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/separate-namespaces/repeat-1/005-pass-1-q-001"
+    },
+    {
+      "program": "separate-namespaces",
+      "fresh_session": 1,
+      "query": "pass-1-q-002",
+      "expression": "a",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/separate-namespaces/repeat-1/006-pass-1-q-002"
+    },
+    {
+      "program": "separate-namespaces",
+      "fresh_session": 1,
+      "query": "pass-1-q-003",
+      "expression": "b",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/separate-namespaces/repeat-1/007-pass-1-q-003"
+    },
+    {
+      "program": "class-shadow",
+      "fresh_session": 0,
+      "query": "pass-0-q-000",
+      "expression": "holder.a",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/class-shadow/repeat-0/000-pass-0-q-000"
+    },
+    {
+      "program": "class-shadow",
+      "fresh_session": 0,
+      "query": "pass-0-q-001",
+      "expression": "holder.b",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/class-shadow/repeat-0/001-pass-0-q-001"
+    },
+    {
+      "program": "class-shadow",
+      "fresh_session": 0,
+      "query": "pass-1-q-000",
+      "expression": "holder.a",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/class-shadow/repeat-0/002-pass-1-q-000"
+    },
+    {
+      "program": "class-shadow",
+      "fresh_session": 0,
+      "query": "pass-1-q-001",
+      "expression": "holder.b",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/class-shadow/repeat-0/003-pass-1-q-001"
+    },
+    {
+      "program": "class-shadow",
+      "fresh_session": 1,
+      "query": "pass-0-q-000",
+      "expression": "holder.a",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/class-shadow/repeat-1/000-pass-0-q-000"
+    },
+    {
+      "program": "class-shadow",
+      "fresh_session": 1,
+      "query": "pass-0-q-001",
+      "expression": "holder.b",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/class-shadow/repeat-1/001-pass-0-q-001"
+    },
+    {
+      "program": "class-shadow",
+      "fresh_session": 1,
+      "query": "pass-1-q-000",
+      "expression": "holder.a",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/class-shadow/repeat-1/002-pass-1-q-000"
+    },
+    {
+      "program": "class-shadow",
+      "fresh_session": 1,
+      "query": "pass-1-q-001",
+      "expression": "holder.b",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/class-shadow/repeat-1/003-pass-1-q-001"
+    },
+    {
+      "program": "custom-this",
+      "fresh_session": 0,
+      "query": "pass-0-q-000",
+      "expression": "a",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-0/000-pass-0-q-000"
+    },
+    {
+      "program": "custom-this",
+      "fresh_session": 0,
+      "query": "pass-0-q-001",
+      "expression": "b",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-0/001-pass-0-q-001"
+    },
+    {
+      "program": "custom-this",
+      "fresh_session": 0,
+      "query": "pass-1-q-000",
+      "expression": "a",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-0/002-pass-1-q-000"
+    },
+    {
+      "program": "custom-this",
+      "fresh_session": 0,
+      "query": "pass-1-q-001",
+      "expression": "b",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-0/003-pass-1-q-001"
+    },
+    {
+      "program": "custom-this",
+      "fresh_session": 1,
+      "query": "pass-0-q-000",
+      "expression": "a",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000"
+    },
+    {
+      "program": "custom-this",
+      "fresh_session": 1,
+      "query": "pass-0-q-001",
+      "expression": "b",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001"
+    },
+    {
+      "program": "custom-this",
+      "fresh_session": 1,
+      "query": "pass-1-q-000",
+      "expression": "a",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000"
+    },
+    {
+      "program": "custom-this",
+      "fresh_session": 1,
+      "query": "pass-1-q-001",
+      "expression": "b",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001"
+    },
+    {
+      "program": "const-methods",
+      "fresh_session": 0,
+      "query": "pass-0-q-000",
+      "expression": "failTodo()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/const-methods/repeat-0/000-pass-0-q-000"
+    },
+    {
+      "program": "const-methods",
+      "fresh_session": 0,
+      "query": "pass-0-q-001",
+      "expression": "failUndefined()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/const-methods/repeat-0/001-pass-0-q-001"
+    },
+    {
+      "program": "const-methods",
+      "fresh_session": 0,
+      "query": "pass-0-q-002",
+      "expression": "holder.x",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/const-methods/repeat-0/002-pass-0-q-002"
+    },
+    {
+      "program": "const-methods",
+      "fresh_session": 0,
+      "query": "pass-0-q-003",
+      "expression": "holder.y",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/const-methods/repeat-0/003-pass-0-q-003"
+    },
+    {
+      "program": "const-methods",
+      "fresh_session": 0,
+      "query": "pass-1-q-000",
+      "expression": "failTodo()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/const-methods/repeat-0/004-pass-1-q-000"
+    },
+    {
+      "program": "const-methods",
+      "fresh_session": 0,
+      "query": "pass-1-q-001",
+      "expression": "failUndefined()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/const-methods/repeat-0/005-pass-1-q-001"
+    },
+    {
+      "program": "const-methods",
+      "fresh_session": 0,
+      "query": "pass-1-q-002",
+      "expression": "holder.x",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/const-methods/repeat-0/006-pass-1-q-002"
+    },
+    {
+      "program": "const-methods",
+      "fresh_session": 0,
+      "query": "pass-1-q-003",
+      "expression": "holder.y",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/const-methods/repeat-0/007-pass-1-q-003"
+    },
+    {
+      "program": "const-methods",
+      "fresh_session": 1,
+      "query": "pass-0-q-000",
+      "expression": "failTodo()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/const-methods/repeat-1/000-pass-0-q-000"
+    },
+    {
+      "program": "const-methods",
+      "fresh_session": 1,
+      "query": "pass-0-q-001",
+      "expression": "failUndefined()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/const-methods/repeat-1/001-pass-0-q-001"
+    },
+    {
+      "program": "const-methods",
+      "fresh_session": 1,
+      "query": "pass-0-q-002",
+      "expression": "holder.x",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/const-methods/repeat-1/002-pass-0-q-002"
+    },
+    {
+      "program": "const-methods",
+      "fresh_session": 1,
+      "query": "pass-0-q-003",
+      "expression": "holder.y",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/const-methods/repeat-1/003-pass-0-q-003"
+    },
+    {
+      "program": "const-methods",
+      "fresh_session": 1,
+      "query": "pass-1-q-000",
+      "expression": "failTodo()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/const-methods/repeat-1/004-pass-1-q-000"
+    },
+    {
+      "program": "const-methods",
+      "fresh_session": 1,
+      "query": "pass-1-q-001",
+      "expression": "failUndefined()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/const-methods/repeat-1/005-pass-1-q-001"
+    },
+    {
+      "program": "const-methods",
+      "fresh_session": 1,
+      "query": "pass-1-q-002",
+      "expression": "holder.x",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/const-methods/repeat-1/006-pass-1-q-002"
+    },
+    {
+      "program": "const-methods",
+      "fresh_session": 1,
+      "query": "pass-1-q-003",
+      "expression": "holder.y",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/const-methods/repeat-1/007-pass-1-q-003"
+    },
+    {
+      "program": "const-shadow-control",
+      "fresh_session": 0,
+      "query": "pass-0-q-000",
+      "expression": "invoke()",
+      "status": "success",
+      "disposition": "method-executed-but-intended-const-restriction-not-observed",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/const-shadow-control/repeat-0/000-pass-0-q-000"
+    },
+    {
+      "program": "const-shadow-control",
+      "fresh_session": 0,
+      "query": "pass-1-q-000",
+      "expression": "invoke()",
+      "status": "success",
+      "disposition": "method-executed-but-intended-const-restriction-not-observed",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/const-shadow-control/repeat-0/001-pass-1-q-000"
+    },
+    {
+      "program": "const-shadow-control",
+      "fresh_session": 1,
+      "query": "pass-0-q-000",
+      "expression": "invoke()",
+      "status": "success",
+      "disposition": "method-executed-but-intended-const-restriction-not-observed",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/const-shadow-control/repeat-1/000-pass-0-q-000"
+    },
+    {
+      "program": "const-shadow-control",
+      "fresh_session": 1,
+      "query": "pass-1-q-000",
+      "expression": "invoke()",
+      "status": "success",
+      "disposition": "method-executed-but-intended-const-restriction-not-observed",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/const-shadow-control/repeat-1/001-pass-1-q-000"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 0,
+      "query": "pass-0-q-000",
+      "expression": "safe.good",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-0/000-pass-0-q-000"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 0,
+      "query": "pass-0-q-001",
+      "expression": "false && Undefined()",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-0/001-pass-0-q-001"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 0,
+      "query": "pass-0-q-002",
+      "expression": "true || TODO()",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-0/002-pass-0-q-002"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 0,
+      "query": "pass-0-q-003",
+      "expression": "if (true) 11 else Undefined()",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-0/003-pass-0-q-003"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 0,
+      "query": "pass-0-q-004",
+      "expression": "test.catch(() -> safe.bad)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-0/004-pass-0-q-004"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 0,
+      "query": "pass-0-q-005",
+      "expression": "test.catch(() -> safe.todo)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-0/005-pass-0-q-005"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 0,
+      "query": "pass-0-q-006",
+      "expression": "safe.good",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-0/006-pass-0-q-006"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 0,
+      "query": "pass-1-q-000",
+      "expression": "safe.good",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-0/007-pass-1-q-000"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 0,
+      "query": "pass-1-q-001",
+      "expression": "false && Undefined()",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-0/008-pass-1-q-001"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 0,
+      "query": "pass-1-q-002",
+      "expression": "true || TODO()",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-0/009-pass-1-q-002"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 0,
+      "query": "pass-1-q-003",
+      "expression": "if (true) 11 else Undefined()",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-0/010-pass-1-q-003"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 0,
+      "query": "pass-1-q-004",
+      "expression": "test.catch(() -> safe.bad)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-0/011-pass-1-q-004"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 0,
+      "query": "pass-1-q-005",
+      "expression": "test.catch(() -> safe.todo)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-0/012-pass-1-q-005"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 0,
+      "query": "pass-1-q-006",
+      "expression": "safe.good",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-0/013-pass-1-q-006"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 1,
+      "query": "pass-0-q-000",
+      "expression": "safe.good",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-1/000-pass-0-q-000"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 1,
+      "query": "pass-0-q-001",
+      "expression": "false && Undefined()",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-1/001-pass-0-q-001"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 1,
+      "query": "pass-0-q-002",
+      "expression": "true || TODO()",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-1/002-pass-0-q-002"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 1,
+      "query": "pass-0-q-003",
+      "expression": "if (true) 11 else Undefined()",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-1/003-pass-0-q-003"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 1,
+      "query": "pass-0-q-004",
+      "expression": "test.catch(() -> safe.bad)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-1/004-pass-0-q-004"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 1,
+      "query": "pass-0-q-005",
+      "expression": "test.catch(() -> safe.todo)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-1/005-pass-0-q-005"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 1,
+      "query": "pass-0-q-006",
+      "expression": "safe.good",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-1/006-pass-0-q-006"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 1,
+      "query": "pass-1-q-000",
+      "expression": "safe.good",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-1/007-pass-1-q-000"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 1,
+      "query": "pass-1-q-001",
+      "expression": "false && Undefined()",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-1/008-pass-1-q-001"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 1,
+      "query": "pass-1-q-002",
+      "expression": "true || TODO()",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-1/009-pass-1-q-002"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 1,
+      "query": "pass-1-q-003",
+      "expression": "if (true) 11 else Undefined()",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-1/010-pass-1-q-003"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 1,
+      "query": "pass-1-q-004",
+      "expression": "test.catch(() -> safe.bad)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-1/011-pass-1-q-004"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 1,
+      "query": "pass-1-q-005",
+      "expression": "test.catch(() -> safe.todo)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-1/012-pass-1-q-005"
+    },
+    {
+      "program": "lazy-unreached",
+      "fresh_session": 1,
+      "query": "pass-1-q-006",
+      "expression": "safe.good",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/lazy-unreached/repeat-1/013-pass-1-q-006"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 0,
+      "query": "pass-0-q-000",
+      "expression": "stable",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-0/000-pass-0-q-000"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 0,
+      "query": "pass-0-q-001",
+      "expression": "test.catch(() -> undefined)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-0/001-pass-0-q-001"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 0,
+      "query": "pass-0-q-002",
+      "expression": "test.catch(() -> undefined)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-0/002-pass-0-q-002"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 0,
+      "query": "pass-0-q-003",
+      "expression": "test.catch(() -> todo)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-0/003-pass-0-q-003"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 0,
+      "query": "pass-0-q-004",
+      "expression": "test.catch(() -> todo)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-0/004-pass-0-q-004"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 0,
+      "query": "pass-0-q-005",
+      "expression": "stable",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-0/005-pass-0-q-005"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 0,
+      "query": "pass-1-q-000",
+      "expression": "stable",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-0/006-pass-1-q-000"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 0,
+      "query": "pass-1-q-001",
+      "expression": "test.catch(() -> undefined)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-0/007-pass-1-q-001"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 0,
+      "query": "pass-1-q-002",
+      "expression": "test.catch(() -> undefined)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-0/008-pass-1-q-002"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 0,
+      "query": "pass-1-q-003",
+      "expression": "test.catch(() -> todo)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-0/009-pass-1-q-003"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 0,
+      "query": "pass-1-q-004",
+      "expression": "test.catch(() -> todo)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-0/010-pass-1-q-004"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 0,
+      "query": "pass-1-q-005",
+      "expression": "stable",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-0/011-pass-1-q-005"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 1,
+      "query": "pass-0-q-000",
+      "expression": "stable",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-1/000-pass-0-q-000"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 1,
+      "query": "pass-0-q-001",
+      "expression": "test.catch(() -> undefined)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-1/001-pass-0-q-001"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 1,
+      "query": "pass-0-q-002",
+      "expression": "test.catch(() -> undefined)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-1/002-pass-0-q-002"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 1,
+      "query": "pass-0-q-003",
+      "expression": "test.catch(() -> todo)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-1/003-pass-0-q-003"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 1,
+      "query": "pass-0-q-004",
+      "expression": "test.catch(() -> todo)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-1/004-pass-0-q-004"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 1,
+      "query": "pass-0-q-005",
+      "expression": "stable",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-1/005-pass-0-q-005"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 1,
+      "query": "pass-1-q-000",
+      "expression": "stable",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-1/006-pass-1-q-000"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 1,
+      "query": "pass-1-q-001",
+      "expression": "test.catch(() -> undefined)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-1/007-pass-1-q-001"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 1,
+      "query": "pass-1-q-002",
+      "expression": "test.catch(() -> undefined)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-1/008-pass-1-q-002"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 1,
+      "query": "pass-1-q-003",
+      "expression": "test.catch(() -> todo)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-1/009-pass-1-q-003"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 1,
+      "query": "pass-1-q-004",
+      "expression": "test.catch(() -> todo)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-1/010-pass-1-q-004"
+    },
+    {
+      "program": "retry-logger",
+      "fresh_session": 1,
+      "query": "pass-1-q-005",
+      "expression": "stable",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/retry-logger/repeat-1/011-pass-1-q-005"
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 0,
+      "query": "pass-0-q-000",
+      "expression": "undefined.toString()",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/string-force/repeat-0/000-pass-0-q-000"
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 0,
+      "query": "pass-0-q-001",
+      "expression": "undefined.bad",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/string-force/repeat-0/001-pass-0-q-001"
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 0,
+      "query": "pass-0-q-002",
+      "expression": "undefined.toString()",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/string-force/repeat-0/002-pass-0-q-002"
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 0,
+      "query": "pass-0-q-003",
+      "expression": "todo.toString()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/string-force/repeat-0/003-pass-0-q-003"
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 0,
+      "query": "pass-0-q-004",
+      "expression": "todo.bad",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/string-force/repeat-0/004-pass-0-q-004"
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 0,
+      "query": "pass-1-q-000",
+      "expression": "undefined.toString()",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/string-force/repeat-0/005-pass-1-q-000"
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 0,
+      "query": "pass-1-q-001",
+      "expression": "undefined.bad",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/string-force/repeat-0/006-pass-1-q-001"
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 0,
+      "query": "pass-1-q-002",
+      "expression": "undefined.toString()",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/string-force/repeat-0/007-pass-1-q-002"
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 0,
+      "query": "pass-1-q-003",
+      "expression": "todo.toString()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/string-force/repeat-0/008-pass-1-q-003"
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 0,
+      "query": "pass-1-q-004",
+      "expression": "todo.bad",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/string-force/repeat-0/009-pass-1-q-004"
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 1,
+      "query": "pass-0-q-000",
+      "expression": "undefined.toString()",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/string-force/repeat-1/000-pass-0-q-000"
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 1,
+      "query": "pass-0-q-001",
+      "expression": "undefined.bad",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/string-force/repeat-1/001-pass-0-q-001"
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 1,
+      "query": "pass-0-q-002",
+      "expression": "undefined.toString()",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/string-force/repeat-1/002-pass-0-q-002"
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 1,
+      "query": "pass-0-q-003",
+      "expression": "todo.toString()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/string-force/repeat-1/003-pass-0-q-003"
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 1,
+      "query": "pass-0-q-004",
+      "expression": "todo.bad",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/string-force/repeat-1/004-pass-0-q-004"
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 1,
+      "query": "pass-1-q-000",
+      "expression": "undefined.toString()",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/string-force/repeat-1/005-pass-1-q-000"
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 1,
+      "query": "pass-1-q-001",
+      "expression": "undefined.bad",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/string-force/repeat-1/006-pass-1-q-001"
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 1,
+      "query": "pass-1-q-002",
+      "expression": "undefined.toString()",
+      "status": "success",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/string-force/repeat-1/007-pass-1-q-002"
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 1,
+      "query": "pass-1-q-003",
+      "expression": "todo.toString()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/string-force/repeat-1/008-pass-1-q-003"
+    },
+    {
+      "program": "string-force",
+      "fresh_session": 1,
+      "query": "pass-1-q-004",
+      "expression": "todo.bad",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/string-force/repeat-1/009-pass-1-q-004"
+    },
+    {
+      "program": "render-undefined",
+      "fresh_session": 0,
+      "query": "pass-0-q-000",
+      "expression": "output.text",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined/repeat-0/000-pass-0-q-000"
+    },
+    {
+      "program": "render-undefined",
+      "fresh_session": 0,
+      "query": "pass-0-q-001",
+      "expression": "new PcfRenderer {}.renderValue(value)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined/repeat-0/001-pass-0-q-001"
+    },
+    {
+      "program": "render-undefined",
+      "fresh_session": 0,
+      "query": "pass-0-q-002",
+      "expression": "new JsonRenderer {}.renderValue(value)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined/repeat-0/002-pass-0-q-002"
+    },
+    {
+      "program": "render-undefined",
+      "fresh_session": 0,
+      "query": "pass-1-q-000",
+      "expression": "output.text",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined/repeat-0/003-pass-1-q-000"
+    },
+    {
+      "program": "render-undefined",
+      "fresh_session": 0,
+      "query": "pass-1-q-001",
+      "expression": "new PcfRenderer {}.renderValue(value)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined/repeat-0/004-pass-1-q-001"
+    },
+    {
+      "program": "render-undefined",
+      "fresh_session": 0,
+      "query": "pass-1-q-002",
+      "expression": "new JsonRenderer {}.renderValue(value)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined/repeat-0/005-pass-1-q-002"
+    },
+    {
+      "program": "render-undefined",
+      "fresh_session": 1,
+      "query": "pass-0-q-000",
+      "expression": "output.text",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined/repeat-1/000-pass-0-q-000"
+    },
+    {
+      "program": "render-undefined",
+      "fresh_session": 1,
+      "query": "pass-0-q-001",
+      "expression": "new PcfRenderer {}.renderValue(value)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined/repeat-1/001-pass-0-q-001"
+    },
+    {
+      "program": "render-undefined",
+      "fresh_session": 1,
+      "query": "pass-0-q-002",
+      "expression": "new JsonRenderer {}.renderValue(value)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined/repeat-1/002-pass-0-q-002"
+    },
+    {
+      "program": "render-undefined",
+      "fresh_session": 1,
+      "query": "pass-1-q-000",
+      "expression": "output.text",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined/repeat-1/003-pass-1-q-000"
+    },
+    {
+      "program": "render-undefined",
+      "fresh_session": 1,
+      "query": "pass-1-q-001",
+      "expression": "new PcfRenderer {}.renderValue(value)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined/repeat-1/004-pass-1-q-001"
+    },
+    {
+      "program": "render-undefined",
+      "fresh_session": 1,
+      "query": "pass-1-q-002",
+      "expression": "new JsonRenderer {}.renderValue(value)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined/repeat-1/005-pass-1-q-002"
+    },
+    {
+      "program": "render-undefined-identity",
+      "fresh_session": 0,
+      "query": "pass-0-q-000",
+      "expression": "output.text",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined-identity/repeat-0/000-pass-0-q-000"
+    },
+    {
+      "program": "render-undefined-identity",
+      "fresh_session": 0,
+      "query": "pass-0-q-001",
+      "expression": "new PcfRenderer {}.renderValue(value)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined-identity/repeat-0/001-pass-0-q-001"
+    },
+    {
+      "program": "render-undefined-identity",
+      "fresh_session": 0,
+      "query": "pass-0-q-002",
+      "expression": "new JsonRenderer {}.renderValue(value)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined-identity/repeat-0/002-pass-0-q-002"
+    },
+    {
+      "program": "render-undefined-identity",
+      "fresh_session": 0,
+      "query": "pass-1-q-000",
+      "expression": "output.text",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined-identity/repeat-0/003-pass-1-q-000"
+    },
+    {
+      "program": "render-undefined-identity",
+      "fresh_session": 0,
+      "query": "pass-1-q-001",
+      "expression": "new PcfRenderer {}.renderValue(value)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined-identity/repeat-0/004-pass-1-q-001"
+    },
+    {
+      "program": "render-undefined-identity",
+      "fresh_session": 0,
+      "query": "pass-1-q-002",
+      "expression": "new JsonRenderer {}.renderValue(value)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined-identity/repeat-0/005-pass-1-q-002"
+    },
+    {
+      "program": "render-undefined-identity",
+      "fresh_session": 1,
+      "query": "pass-0-q-000",
+      "expression": "output.text",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined-identity/repeat-1/000-pass-0-q-000"
+    },
+    {
+      "program": "render-undefined-identity",
+      "fresh_session": 1,
+      "query": "pass-0-q-001",
+      "expression": "new PcfRenderer {}.renderValue(value)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined-identity/repeat-1/001-pass-0-q-001"
+    },
+    {
+      "program": "render-undefined-identity",
+      "fresh_session": 1,
+      "query": "pass-0-q-002",
+      "expression": "new JsonRenderer {}.renderValue(value)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined-identity/repeat-1/002-pass-0-q-002"
+    },
+    {
+      "program": "render-undefined-identity",
+      "fresh_session": 1,
+      "query": "pass-1-q-000",
+      "expression": "output.text",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined-identity/repeat-1/003-pass-1-q-000"
+    },
+    {
+      "program": "render-undefined-identity",
+      "fresh_session": 1,
+      "query": "pass-1-q-001",
+      "expression": "new PcfRenderer {}.renderValue(value)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined-identity/repeat-1/004-pass-1-q-001"
+    },
+    {
+      "program": "render-undefined-identity",
+      "fresh_session": 1,
+      "query": "pass-1-q-002",
+      "expression": "new JsonRenderer {}.renderValue(value)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-undefined-identity/repeat-1/005-pass-1-q-002"
+    },
+    {
+      "program": "render-property-control",
+      "fresh_session": 0,
+      "query": "pass-0-q-000",
+      "expression": "output.text",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-property-control/repeat-0/000-pass-0-q-000"
+    },
+    {
+      "program": "render-property-control",
+      "fresh_session": 0,
+      "query": "pass-0-q-001",
+      "expression": "new PcfRenderer {}.renderValue(value)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-property-control/repeat-0/001-pass-0-q-001"
+    },
+    {
+      "program": "render-property-control",
+      "fresh_session": 0,
+      "query": "pass-1-q-000",
+      "expression": "output.text",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-property-control/repeat-0/002-pass-1-q-000"
+    },
+    {
+      "program": "render-property-control",
+      "fresh_session": 0,
+      "query": "pass-1-q-001",
+      "expression": "new PcfRenderer {}.renderValue(value)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-property-control/repeat-0/003-pass-1-q-001"
+    },
+    {
+      "program": "render-property-control",
+      "fresh_session": 1,
+      "query": "pass-0-q-000",
+      "expression": "output.text",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-property-control/repeat-1/000-pass-0-q-000"
+    },
+    {
+      "program": "render-property-control",
+      "fresh_session": 1,
+      "query": "pass-0-q-001",
+      "expression": "new PcfRenderer {}.renderValue(value)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-property-control/repeat-1/001-pass-0-q-001"
+    },
+    {
+      "program": "render-property-control",
+      "fresh_session": 1,
+      "query": "pass-1-q-000",
+      "expression": "output.text",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-property-control/repeat-1/002-pass-1-q-000"
+    },
+    {
+      "program": "render-property-control",
+      "fresh_session": 1,
+      "query": "pass-1-q-001",
+      "expression": "new PcfRenderer {}.renderValue(value)",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-property-control/repeat-1/003-pass-1-q-001"
+    },
+    {
+      "program": "render-todo",
+      "fresh_session": 0,
+      "query": "pass-0-q-000",
+      "expression": "output.text",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-todo/repeat-0/000-pass-0-q-000"
+    },
+    {
+      "program": "render-todo",
+      "fresh_session": 0,
+      "query": "pass-1-q-000",
+      "expression": "output.text",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-todo/repeat-0/001-pass-1-q-000"
+    },
+    {
+      "program": "render-todo",
+      "fresh_session": 1,
+      "query": "pass-0-q-000",
+      "expression": "output.text",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-todo/repeat-1/000-pass-0-q-000"
+    },
+    {
+      "program": "render-todo",
+      "fresh_session": 1,
+      "query": "pass-1-q-000",
+      "expression": "output.text",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-todo/repeat-1/001-pass-1-q-000"
+    },
+    {
+      "program": "render-todo-identity",
+      "fresh_session": 0,
+      "query": "pass-0-q-000",
+      "expression": "output.text",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-todo-identity/repeat-0/000-pass-0-q-000"
+    },
+    {
+      "program": "render-todo-identity",
+      "fresh_session": 0,
+      "query": "pass-1-q-000",
+      "expression": "output.text",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-todo-identity/repeat-0/001-pass-1-q-000"
+    },
+    {
+      "program": "render-todo-identity",
+      "fresh_session": 1,
+      "query": "pass-0-q-000",
+      "expression": "output.text",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-todo-identity/repeat-1/000-pass-0-q-000"
+    },
+    {
+      "program": "render-todo-identity",
+      "fresh_session": 1,
+      "query": "pass-1-q-000",
+      "expression": "output.text",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/render-todo-identity/repeat-1/001-pass-1-q-000"
+    },
+    {
+      "program": "infer-parent",
+      "fresh_session": 0,
+      "query": "pass-0-q-000",
+      "expression": "a.value",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-parent/repeat-0/000-pass-0-q-000"
+    },
+    {
+      "program": "infer-parent",
+      "fresh_session": 0,
+      "query": "pass-0-q-001",
+      "expression": "b.value",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-parent/repeat-0/001-pass-0-q-001"
+    },
+    {
+      "program": "infer-parent",
+      "fresh_session": 0,
+      "query": "pass-0-q-002",
+      "expression": "c.value",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-parent/repeat-0/002-pass-0-q-002"
+    },
+    {
+      "program": "infer-parent",
+      "fresh_session": 0,
+      "query": "pass-1-q-000",
+      "expression": "a.value",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-parent/repeat-0/003-pass-1-q-000"
+    },
+    {
+      "program": "infer-parent",
+      "fresh_session": 0,
+      "query": "pass-1-q-001",
+      "expression": "b.value",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-parent/repeat-0/004-pass-1-q-001"
+    },
+    {
+      "program": "infer-parent",
+      "fresh_session": 0,
+      "query": "pass-1-q-002",
+      "expression": "c.value",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-parent/repeat-0/005-pass-1-q-002"
+    },
+    {
+      "program": "infer-parent",
+      "fresh_session": 1,
+      "query": "pass-0-q-000",
+      "expression": "a.value",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-parent/repeat-1/000-pass-0-q-000"
+    },
+    {
+      "program": "infer-parent",
+      "fresh_session": 1,
+      "query": "pass-0-q-001",
+      "expression": "b.value",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-parent/repeat-1/001-pass-0-q-001"
+    },
+    {
+      "program": "infer-parent",
+      "fresh_session": 1,
+      "query": "pass-0-q-002",
+      "expression": "c.value",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-parent/repeat-1/002-pass-0-q-002"
+    },
+    {
+      "program": "infer-parent",
+      "fresh_session": 1,
+      "query": "pass-1-q-000",
+      "expression": "a.value",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-parent/repeat-1/003-pass-1-q-000"
+    },
+    {
+      "program": "infer-parent",
+      "fresh_session": 1,
+      "query": "pass-1-q-001",
+      "expression": "b.value",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-parent/repeat-1/004-pass-1-q-001"
+    },
+    {
+      "program": "infer-parent",
+      "fresh_session": 1,
+      "query": "pass-1-q-002",
+      "expression": "c.value",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-parent/repeat-1/005-pass-1-q-002"
+    },
+    {
+      "program": "infer-catch-order",
+      "fresh_session": 0,
+      "query": "pass-0-q-000",
+      "expression": "test.catch(() -> x.value)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-catch-order/repeat-0/000-pass-0-q-000"
+    },
+    {
+      "program": "infer-catch-order",
+      "fresh_session": 0,
+      "query": "pass-0-q-001",
+      "expression": "test.catch(() -> y.value)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-catch-order/repeat-0/001-pass-0-q-001"
+    },
+    {
+      "program": "infer-catch-order",
+      "fresh_session": 0,
+      "query": "pass-0-q-002",
+      "expression": "x.toString()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-catch-order/repeat-0/002-pass-0-q-002"
+    },
+    {
+      "program": "infer-catch-order",
+      "fresh_session": 0,
+      "query": "pass-1-q-000",
+      "expression": "test.catch(() -> x.value)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-catch-order/repeat-0/003-pass-1-q-000"
+    },
+    {
+      "program": "infer-catch-order",
+      "fresh_session": 0,
+      "query": "pass-1-q-001",
+      "expression": "test.catch(() -> y.value)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-catch-order/repeat-0/004-pass-1-q-001"
+    },
+    {
+      "program": "infer-catch-order",
+      "fresh_session": 0,
+      "query": "pass-1-q-002",
+      "expression": "x.toString()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-catch-order/repeat-0/005-pass-1-q-002"
+    },
+    {
+      "program": "infer-catch-order",
+      "fresh_session": 1,
+      "query": "pass-0-q-000",
+      "expression": "test.catch(() -> x.value)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-catch-order/repeat-1/000-pass-0-q-000"
+    },
+    {
+      "program": "infer-catch-order",
+      "fresh_session": 1,
+      "query": "pass-0-q-001",
+      "expression": "test.catch(() -> y.value)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-catch-order/repeat-1/001-pass-0-q-001"
+    },
+    {
+      "program": "infer-catch-order",
+      "fresh_session": 1,
+      "query": "pass-0-q-002",
+      "expression": "x.toString()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-catch-order/repeat-1/002-pass-0-q-002"
+    },
+    {
+      "program": "infer-catch-order",
+      "fresh_session": 1,
+      "query": "pass-1-q-000",
+      "expression": "test.catch(() -> x.value)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-catch-order/repeat-1/003-pass-1-q-000"
+    },
+    {
+      "program": "infer-catch-order",
+      "fresh_session": 1,
+      "query": "pass-1-q-001",
+      "expression": "test.catch(() -> y.value)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-catch-order/repeat-1/004-pass-1-q-001"
+    },
+    {
+      "program": "infer-catch-order",
+      "fresh_session": 1,
+      "query": "pass-1-q-002",
+      "expression": "x.toString()",
+      "status": "error",
+      "disposition": "primary-language-target-evaluated",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/infer-catch-order/repeat-1/005-pass-1-q-002"
+    },
+    {
+      "program": "receiverless-lazy-module",
+      "fresh_session": 0,
+      "query": "pass-0-q-000",
+      "expression": "test.catch(() -> x)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000"
+    },
+    {
+      "program": "receiverless-lazy-module",
+      "fresh_session": 0,
+      "query": "pass-0-q-001",
+      "expression": "test.catch(() -> x)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001"
+    },
+    {
+      "program": "receiverless-lazy-module",
+      "fresh_session": 0,
+      "query": "pass-1-q-000",
+      "expression": "test.catch(() -> x)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000"
+    },
+    {
+      "program": "receiverless-lazy-module",
+      "fresh_session": 0,
+      "query": "pass-1-q-001",
+      "expression": "test.catch(() -> x)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001"
+    },
+    {
+      "program": "receiverless-lazy-module",
+      "fresh_session": 1,
+      "query": "pass-0-q-000",
+      "expression": "test.catch(() -> x)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-1/000-pass-0-q-000"
+    },
+    {
+      "program": "receiverless-lazy-module",
+      "fresh_session": 1,
+      "query": "pass-0-q-001",
+      "expression": "test.catch(() -> x)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-1/001-pass-0-q-001"
+    },
+    {
+      "program": "receiverless-lazy-module",
+      "fresh_session": 1,
+      "query": "pass-1-q-000",
+      "expression": "test.catch(() -> x)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-1/002-pass-1-q-000"
+    },
+    {
+      "program": "receiverless-lazy-module",
+      "fresh_session": 1,
+      "query": "pass-1-q-001",
+      "expression": "test.catch(() -> x)",
+      "status": "error",
+      "disposition": "intended-target-unreached-local-lookup",
+      "raw_directory": "target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-1/003-pass-1-q-001"
+    }
+  ],
+  "counts": {
+    "primary-language-target-evaluated": 200,
+    "intended-target-unreached-local-lookup": 120,
+    "method-executed-but-intended-const-restriction-not-observed": 4
+  },
+  "scope": "Source-informed coverage triage, not a Rust compatibility verdict; ordinary errors are retained as recorded. The original const-shadow invocation succeeds and is not a negative restriction witness."
+}

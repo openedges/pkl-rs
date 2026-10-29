@@ -1029,13 +1029,9 @@ impl Vm {
                         if run.format == Format::Json {
                             return self.pcf_unrenderable(run, &Value::Regex(value));
                         }
-                        run.append("Regex(");
-                        run.append_value(&super::pcf_format::string(
-                            value.pattern(),
-                            &run.indentation(depth),
-                            run.custom,
-                        ));
-                        run.append(")");
+                        // The language PcfRenderer delegates to VmRegex.toString;
+                        // renderer string settings do not apply to Regex patterns.
+                        run.append_value(&super::regex::string(&value));
                     }
                     Value::Duration(value) => {
                         if run.format == Format::Json {

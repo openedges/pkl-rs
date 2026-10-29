@@ -1,0 +1,1253 @@
+{
+  "kind": "Stage111 corrected public bridges and metadata/receiver supplement; forced per-failure retry trace",
+  "baseline": "Pkl 0.32.0",
+  "contracts": 100,
+  "original_queries": 42,
+  "identity_profile_queries": 8,
+  "profile_queries": 50,
+  "programs": [
+    {
+      "id": "bridge-direct",
+      "source": "import \"pkl:test\"\nimport \"pkl:base\"\nlocal function nestedTodo(): Int = TODO()\nlocal function nestedUndefined(): Int = Undefined()\nx = 1\n\nfunction stage111Bridge000(): Any = base.TODO()\nfunction stage111Bridge001(): Any = base.Undefined()\nfunction stage111Bridge002(): Any = nestedTodo()\nfunction stage111Bridge003(): Any = nestedUndefined()\nfunction stage111Bridge004(): Any = test.catch(() -> TODO())\nfunction stage111Bridge005(): Any = test.catch(() -> Undefined())\nfunction stage111Bridge006(): Any = test.catchOrNull(() -> TODO())\nfunction stage111Bridge007(): Any = test.catchOrNull(() -> Undefined())\n",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-direct.pkl",
+      "source_sha256": "9e97448fe5451f7ce4b52eaa3a58ab3ea16f9c64dd0f499aed943341fd6ac1a7",
+      "source_uri": "file:///stage111-supplement/bridge-direct.pkl",
+      "frame_transformer": "default",
+      "power_assertions": false,
+      "repetitions": 2,
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "base.TODO()",
+          "origin_query_index": 2,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "base.Undefined()",
+          "origin_query_index": 3,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-002",
+          "expression": "stage111Bridge002()",
+          "intended_expression": "nestedTodo()",
+          "origin_query_index": 4,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-003",
+          "expression": "stage111Bridge003()",
+          "intended_expression": "nestedUndefined()",
+          "origin_query_index": 5,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-004",
+          "expression": "stage111Bridge004()",
+          "intended_expression": "test.catch(() -> TODO())",
+          "origin_query_index": 6,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-005",
+          "expression": "stage111Bridge005()",
+          "intended_expression": "test.catch(() -> Undefined())",
+          "origin_query_index": 7,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-006",
+          "expression": "stage111Bridge006()",
+          "intended_expression": "test.catchOrNull(() -> TODO())",
+          "origin_query_index": 8,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-007",
+          "expression": "stage111Bridge007()",
+          "intended_expression": "test.catchOrNull(() -> Undefined())",
+          "origin_query_index": 9,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "base.TODO()",
+          "origin_query_index": 2,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "base.Undefined()",
+          "origin_query_index": 3,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-002",
+          "expression": "stage111Bridge002()",
+          "intended_expression": "nestedTodo()",
+          "origin_query_index": 4,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-003",
+          "expression": "stage111Bridge003()",
+          "intended_expression": "nestedUndefined()",
+          "origin_query_index": 5,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-004",
+          "expression": "stage111Bridge004()",
+          "intended_expression": "test.catch(() -> TODO())",
+          "origin_query_index": 6,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-005",
+          "expression": "stage111Bridge005()",
+          "intended_expression": "test.catch(() -> Undefined())",
+          "origin_query_index": 7,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-006",
+          "expression": "stage111Bridge006()",
+          "intended_expression": "test.catchOrNull(() -> TODO())",
+          "origin_query_index": 8,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-007",
+          "expression": "stage111Bridge007()",
+          "intended_expression": "test.catchOrNull(() -> Undefined())",
+          "origin_query_index": 9,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "bridge-direct-identity",
+      "source": "import \"pkl:test\"\nimport \"pkl:base\"\nlocal function nestedTodo(): Int = TODO()\nlocal function nestedUndefined(): Int = Undefined()\nx = 1\n\nfunction stage111Bridge000(): Any = base.TODO()\nfunction stage111Bridge001(): Any = base.Undefined()\nfunction stage111Bridge002(): Any = nestedTodo()\nfunction stage111Bridge003(): Any = nestedUndefined()\nfunction stage111Bridge004(): Any = test.catch(() -> TODO())\nfunction stage111Bridge005(): Any = test.catch(() -> Undefined())\nfunction stage111Bridge006(): Any = test.catchOrNull(() -> TODO())\nfunction stage111Bridge007(): Any = test.catchOrNull(() -> Undefined())\n",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-direct.pkl",
+      "source_sha256": "9e97448fe5451f7ce4b52eaa3a58ab3ea16f9c64dd0f499aed943341fd6ac1a7",
+      "source_uri": "file:///stage111-supplement/bridge-direct.pkl",
+      "frame_transformer": "identity",
+      "power_assertions": false,
+      "repetitions": 2,
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "base.TODO()",
+          "origin_query_index": 2,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "base.Undefined()",
+          "origin_query_index": 3,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-002",
+          "expression": "stage111Bridge002()",
+          "intended_expression": "nestedTodo()",
+          "origin_query_index": 4,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-003",
+          "expression": "stage111Bridge003()",
+          "intended_expression": "nestedUndefined()",
+          "origin_query_index": 5,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-004",
+          "expression": "stage111Bridge004()",
+          "intended_expression": "test.catch(() -> TODO())",
+          "origin_query_index": 6,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-005",
+          "expression": "stage111Bridge005()",
+          "intended_expression": "test.catch(() -> Undefined())",
+          "origin_query_index": 7,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-006",
+          "expression": "stage111Bridge006()",
+          "intended_expression": "test.catchOrNull(() -> TODO())",
+          "origin_query_index": 8,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-007",
+          "expression": "stage111Bridge007()",
+          "intended_expression": "test.catchOrNull(() -> Undefined())",
+          "origin_query_index": 9,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "base.TODO()",
+          "origin_query_index": 2,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "base.Undefined()",
+          "origin_query_index": 3,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-002",
+          "expression": "stage111Bridge002()",
+          "intended_expression": "nestedTodo()",
+          "origin_query_index": 4,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-003",
+          "expression": "stage111Bridge003()",
+          "intended_expression": "nestedUndefined()",
+          "origin_query_index": 5,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-004",
+          "expression": "stage111Bridge004()",
+          "intended_expression": "test.catch(() -> TODO())",
+          "origin_query_index": 6,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-005",
+          "expression": "stage111Bridge005()",
+          "intended_expression": "test.catch(() -> Undefined())",
+          "origin_query_index": 7,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-006",
+          "expression": "stage111Bridge006()",
+          "intended_expression": "test.catchOrNull(() -> TODO())",
+          "origin_query_index": 8,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-007",
+          "expression": "stage111Bridge007()",
+          "intended_expression": "test.catchOrNull(() -> Undefined())",
+          "origin_query_index": 9,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "bridge-arity-order",
+      "source": "import \"pkl:base\"\nx = 1\n\nfunction stage111Bridge000(): Any = base.TODO(1, 2)\nfunction stage111Bridge001(): Any = base.Undefined(1, 2)\n",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-arity-order.pkl",
+      "source_sha256": "9d36d6dd129307e784d857634c6d001729933ea5ed66af73a59f2767a6c6e685",
+      "source_uri": "file:///stage111-supplement/bridge-arity-order.pkl",
+      "frame_transformer": "default",
+      "power_assertions": false,
+      "repetitions": 2,
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "base.TODO(1, 2)",
+          "origin_query_index": 6,
+          "purpose": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "base.Undefined(1, 2)",
+          "origin_query_index": 7,
+          "purpose": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "base.TODO(1, 2)",
+          "origin_query_index": 6,
+          "purpose": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "base.Undefined(1, 2)",
+          "origin_query_index": 7,
+          "purpose": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "bridge-lexical-shadow",
+      "source": "import \"pkl:base\"\nlocal function TODO(): Int = 17\nlocal function Undefined(): String = \"local\"\na = TODO()\nb = Undefined()\n\nfunction stage111Bridge000(): Any = base.TODO()\nfunction stage111Bridge001(): Any = base.Undefined()\n",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-lexical-shadow.pkl",
+      "source_sha256": "0fb062425ad8ac6ed043b890433121f22ab64f6e7d055cfd17d9282ca904ff47",
+      "source_uri": "file:///stage111-supplement/bridge-lexical-shadow.pkl",
+      "frame_transformer": "default",
+      "power_assertions": false,
+      "repetitions": 2,
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "base.TODO()",
+          "origin_query_index": 2,
+          "purpose": "Lexical method declarations precede base methods; explicit imported base remains distinct.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "base.Undefined()",
+          "origin_query_index": 3,
+          "purpose": "Lexical method declarations precede base methods; explicit imported base remains distinct.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "base.TODO()",
+          "origin_query_index": 2,
+          "purpose": "Lexical method declarations precede base methods; explicit imported base remains distinct.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "base.Undefined()",
+          "origin_query_index": 3,
+          "purpose": "Lexical method declarations precede base methods; explicit imported base remains distinct.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "bridge-lazy-unreached",
+      "source": "import \"pkl:test\"\nsafe = new { good = 7\n  bad = Undefined()\n  todo = TODO() }\n\nfunction stage111Bridge000(): Any = safe.good\nfunction stage111Bridge001(): Any = test.catch(() -> safe.bad)\nfunction stage111Bridge002(): Any = test.catch(() -> safe.todo)\nfunction stage111Bridge003(): Any = safe.good\n",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-lazy-unreached.pkl",
+      "source_sha256": "48fd3e1babe586e850ca5122f409f98edf1517d2025dd4cb38022d9af08d0acb",
+      "source_uri": "file:///stage111-supplement/bridge-lazy-unreached.pkl",
+      "frame_transformer": "default",
+      "power_assertions": false,
+      "repetitions": 2,
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "safe.good",
+          "origin_query_index": 0,
+          "purpose": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "test.catch(() -> safe.bad)",
+          "origin_query_index": 4,
+          "purpose": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-002",
+          "expression": "stage111Bridge002()",
+          "intended_expression": "test.catch(() -> safe.todo)",
+          "origin_query_index": 5,
+          "purpose": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-003",
+          "expression": "stage111Bridge003()",
+          "intended_expression": "safe.good",
+          "origin_query_index": 6,
+          "purpose": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "safe.good",
+          "origin_query_index": 0,
+          "purpose": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "test.catch(() -> safe.bad)",
+          "origin_query_index": 4,
+          "purpose": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-002",
+          "expression": "stage111Bridge002()",
+          "intended_expression": "test.catch(() -> safe.todo)",
+          "origin_query_index": 5,
+          "purpose": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-003",
+          "expression": "stage111Bridge003()",
+          "intended_expression": "safe.good",
+          "origin_query_index": 6,
+          "purpose": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "bridge-retry-logger",
+      "source": "import \"pkl:test\"\nlocal good = trace(7)\nundefined = let (seen = trace(good)) Undefined()\ntodo = let (seen = trace(good)) TODO()\nstable = good\n\nlocal stage111RetryUndefined = if (trace(true)) Undefined() else 0\nlocal stage111RetryTodo = if (trace(false)) 0 else TODO()\n\nfunction stage111Bridge000(): Any = stable\nfunction stage111Bridge001(): Any = test.catch(() -> stage111RetryUndefined)\nfunction stage111Bridge002(): Any = test.catch(() -> stage111RetryUndefined)\nfunction stage111Bridge003(): Any = test.catch(() -> stage111RetryTodo)\nfunction stage111Bridge004(): Any = test.catch(() -> stage111RetryTodo)\nfunction stage111Bridge005(): Any = stable\n",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-retry-logger.pkl",
+      "source_sha256": "9d9f3f0d2aa5787f50892f68c79d98810728072126c57be50d72ac1cb51e855a",
+      "source_uri": "file:///stage111-supplement/bridge-retry-logger.pkl",
+      "frame_transformer": "default",
+      "power_assertions": false,
+      "repetitions": 2,
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "stable",
+          "origin_query_index": 0,
+          "purpose": "Successful good/stable dependency trace remains cached; each failed initializer forces trace(true/false) as its condition before Undefined/TODO, making retries observable through ordered Logger rows across both same-evaluator passes.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "test.catch(() -> stage111RetryUndefined)",
+          "origin_query_index": 1,
+          "purpose": "Successful good/stable dependency trace remains cached; each failed initializer forces trace(true/false) as its condition before Undefined/TODO, making retries observable through ordered Logger rows across both same-evaluator passes.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-002",
+          "expression": "stage111Bridge002()",
+          "intended_expression": "test.catch(() -> stage111RetryUndefined)",
+          "origin_query_index": 2,
+          "purpose": "Successful good/stable dependency trace remains cached; each failed initializer forces trace(true/false) as its condition before Undefined/TODO, making retries observable through ordered Logger rows across both same-evaluator passes.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-003",
+          "expression": "stage111Bridge003()",
+          "intended_expression": "test.catch(() -> stage111RetryTodo)",
+          "origin_query_index": 3,
+          "purpose": "Successful good/stable dependency trace remains cached; each failed initializer forces trace(true/false) as its condition before Undefined/TODO, making retries observable through ordered Logger rows across both same-evaluator passes.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-004",
+          "expression": "stage111Bridge004()",
+          "intended_expression": "test.catch(() -> stage111RetryTodo)",
+          "origin_query_index": 4,
+          "purpose": "Successful good/stable dependency trace remains cached; each failed initializer forces trace(true/false) as its condition before Undefined/TODO, making retries observable through ordered Logger rows across both same-evaluator passes.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-005",
+          "expression": "stage111Bridge005()",
+          "intended_expression": "stable",
+          "origin_query_index": 5,
+          "purpose": "Successful good/stable dependency trace remains cached; each failed initializer forces trace(true/false) as its condition before Undefined/TODO, making retries observable through ordered Logger rows across both same-evaluator passes.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "stable",
+          "origin_query_index": 0,
+          "purpose": "Successful good/stable dependency trace remains cached; each failed initializer forces trace(true/false) as its condition before Undefined/TODO, making retries observable through ordered Logger rows across both same-evaluator passes.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "test.catch(() -> stage111RetryUndefined)",
+          "origin_query_index": 1,
+          "purpose": "Successful good/stable dependency trace remains cached; each failed initializer forces trace(true/false) as its condition before Undefined/TODO, making retries observable through ordered Logger rows across both same-evaluator passes.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-002",
+          "expression": "stage111Bridge002()",
+          "intended_expression": "test.catch(() -> stage111RetryUndefined)",
+          "origin_query_index": 2,
+          "purpose": "Successful good/stable dependency trace remains cached; each failed initializer forces trace(true/false) as its condition before Undefined/TODO, making retries observable through ordered Logger rows across both same-evaluator passes.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-003",
+          "expression": "stage111Bridge003()",
+          "intended_expression": "test.catch(() -> stage111RetryTodo)",
+          "origin_query_index": 3,
+          "purpose": "Successful good/stable dependency trace remains cached; each failed initializer forces trace(true/false) as its condition before Undefined/TODO, making retries observable through ordered Logger rows across both same-evaluator passes.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-004",
+          "expression": "stage111Bridge004()",
+          "intended_expression": "test.catch(() -> stage111RetryTodo)",
+          "origin_query_index": 4,
+          "purpose": "Successful good/stable dependency trace remains cached; each failed initializer forces trace(true/false) as its condition before Undefined/TODO, making retries observable through ordered Logger rows across both same-evaluator passes.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-005",
+          "expression": "stage111Bridge005()",
+          "intended_expression": "stable",
+          "origin_query_index": 5,
+          "purpose": "Successful good/stable dependency trace remains cached; each failed initializer forces trace(true/false) as its condition before Undefined/TODO, making retries observable through ordered Logger rows across both same-evaluator passes.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "bridge-infer-catch-order",
+      "source": "import \"pkl:test\"\nclass C { value = Undefined() }\nx = new C { value = new {} }\nclass D { value = test.catch(() -> Undefined()) }\ny = new D { value = new {} }\n\nfunction stage111Bridge000(): Any = test.catch(() -> x.value)\nfunction stage111Bridge001(): Any = test.catch(() -> y.value)\nfunction stage111Bridge002(): Any = x.toString()\n",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-infer-catch-order.pkl",
+      "source_sha256": "0e8eb935e562229879a120f566cac10a92d230b77b3c48c0c45919458849f940",
+      "source_uri": "file:///stage111-supplement/bridge-infer-catch-order.pkl",
+      "frame_transformer": "default",
+      "power_assertions": false,
+      "repetitions": 2,
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "test.catch(() -> x.value)",
+          "origin_query_index": 0,
+          "purpose": "Nearest guest catch, inferred-parent conversion and allow-undefined forcing boundaries preserve error ordering.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "test.catch(() -> y.value)",
+          "origin_query_index": 1,
+          "purpose": "Nearest guest catch, inferred-parent conversion and allow-undefined forcing boundaries preserve error ordering.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-002",
+          "expression": "stage111Bridge002()",
+          "intended_expression": "x.toString()",
+          "origin_query_index": 2,
+          "purpose": "Nearest guest catch, inferred-parent conversion and allow-undefined forcing boundaries preserve error ordering.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "test.catch(() -> x.value)",
+          "origin_query_index": 0,
+          "purpose": "Nearest guest catch, inferred-parent conversion and allow-undefined forcing boundaries preserve error ordering.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "test.catch(() -> y.value)",
+          "origin_query_index": 1,
+          "purpose": "Nearest guest catch, inferred-parent conversion and allow-undefined forcing boundaries preserve error ordering.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-002",
+          "expression": "stage111Bridge002()",
+          "intended_expression": "x.toString()",
+          "origin_query_index": 2,
+          "purpose": "Nearest guest catch, inferred-parent conversion and allow-undefined forcing boundaries preserve error ordering.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "bridge-receiverless-lazy-module",
+      "source": "import \"pkl:test\"\nconst value = Undefined()\nx = value\n\nfunction stage111Bridge000(): Any = test.catch(() -> x)\nfunction stage111Bridge001(): Any = test.catch(() -> x)\n",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-receiverless-lazy-module.pkl",
+      "source_sha256": "5cc975e08977b18b706782a96a78210dc84ea4663fb95e46b031bd9f6b8458bc",
+      "source_uri": "file:///stage111-supplement/bridge-receiverless-lazy-module.pkl",
+      "frame_transformer": "default",
+      "power_assertions": false,
+      "repetitions": 2,
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "test.catch(() -> x)",
+          "origin_query_index": 0,
+          "purpose": "Receiverless provenance survives any lazy/module error caching path; a frontend or eager-init error remains an actual outcome.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "test.catch(() -> x)",
+          "origin_query_index": 1,
+          "purpose": "Receiverless provenance survives any lazy/module error caching path; a frontend or eager-init error remains an actual outcome.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "test.catch(() -> x)",
+          "origin_query_index": 0,
+          "purpose": "Receiverless provenance survives any lazy/module error caching path; a frontend or eager-init error remains an actual outcome.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "test.catch(() -> x)",
+          "origin_query_index": 1,
+          "purpose": "Receiverless provenance survives any lazy/module error caching path; a frontend or eager-init error remains an actual outcome.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "reflection-metadata",
+      "source": "import \"pkl:base\"\nimport \"pkl:reflect\"\nlocal todo = reflect.Module(base).moduleClass.methods[\"TODO\"]\nlocal undefined = reflect.Module(base).moduleClass.methods[\"Undefined\"]\nfunction stage111Bridge000(): Any = todo.name\nfunction stage111Bridge001(): Any = todo.modifiers\nfunction stage111Bridge002(): Any = todo.parameters.length\nfunction stage111Bridge003(): Any = todo.returnType == reflect.nothingType\nfunction stage111Bridge004(): Any = todo.docComment\nfunction stage111Bridge005(): Any = todo.location.toString()\nfunction stage111Bridge006(): Any = undefined.name\nfunction stage111Bridge007(): Any = undefined.modifiers\nfunction stage111Bridge008(): Any = undefined.parameters.length\nfunction stage111Bridge009(): Any = undefined.returnType == reflect.nothingType\nfunction stage111Bridge010(): Any = undefined.docComment\nfunction stage111Bridge011(): Any = undefined.location.toString()\n",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/reflection-metadata.pkl",
+      "source_sha256": "9f4a0ff9c41f84d6a4a9dceb05733a599f5640e4e2e8c355be423edaae14f1be",
+      "source_uri": "file:///stage111-supplement/reflection-metadata.pkl",
+      "frame_transformer": "default",
+      "power_assertions": false,
+      "repetitions": 2,
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "todo.name",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "todo.modifiers",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-002",
+          "expression": "stage111Bridge002()",
+          "intended_expression": "todo.parameters.length",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-003",
+          "expression": "stage111Bridge003()",
+          "intended_expression": "todo.returnType == reflect.nothingType",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-004",
+          "expression": "stage111Bridge004()",
+          "intended_expression": "todo.docComment",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-005",
+          "expression": "stage111Bridge005()",
+          "intended_expression": "todo.location.toString()",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-006",
+          "expression": "stage111Bridge006()",
+          "intended_expression": "undefined.name",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-007",
+          "expression": "stage111Bridge007()",
+          "intended_expression": "undefined.modifiers",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-008",
+          "expression": "stage111Bridge008()",
+          "intended_expression": "undefined.parameters.length",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-009",
+          "expression": "stage111Bridge009()",
+          "intended_expression": "undefined.returnType == reflect.nothingType",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-010",
+          "expression": "stage111Bridge010()",
+          "intended_expression": "undefined.docComment",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-011",
+          "expression": "stage111Bridge011()",
+          "intended_expression": "undefined.location.toString()",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "todo.name",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "todo.modifiers",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-002",
+          "expression": "stage111Bridge002()",
+          "intended_expression": "todo.parameters.length",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-003",
+          "expression": "stage111Bridge003()",
+          "intended_expression": "todo.returnType == reflect.nothingType",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-004",
+          "expression": "stage111Bridge004()",
+          "intended_expression": "todo.docComment",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-005",
+          "expression": "stage111Bridge005()",
+          "intended_expression": "todo.location.toString()",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-006",
+          "expression": "stage111Bridge006()",
+          "intended_expression": "undefined.name",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-007",
+          "expression": "stage111Bridge007()",
+          "intended_expression": "undefined.modifiers",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-008",
+          "expression": "stage111Bridge008()",
+          "intended_expression": "undefined.parameters.length",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-009",
+          "expression": "stage111Bridge009()",
+          "intended_expression": "undefined.returnType == reflect.nothingType",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-010",
+          "expression": "stage111Bridge010()",
+          "intended_expression": "undefined.docComment",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-011",
+          "expression": "stage111Bridge011()",
+          "intended_expression": "undefined.location.toString()",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "custom-receiver-competing-methods",
+      "source": "class Receiver {\n  function TODO(): Boolean = true\n  function Undefined(): Boolean = true\n}\ntypealias TodoReceiver = Receiver(TODO())\ntypealias UndefinedReceiver = Receiver(Undefined())\na: TodoReceiver = new Receiver {}\nb: UndefinedReceiver = new Receiver {}\nfunction stage111Bridge000(): Any = a\nfunction stage111Bridge001(): Any = b\n",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/custom-receiver-competing-methods.pkl",
+      "source_sha256": "e32fc20a05a2957476b8d2a0a440918a1bf85e1cd997c9c2aedcb08765c8eb0f",
+      "source_uri": "file:///stage111-supplement/custom-receiver-competing-methods.pkl",
+      "frame_transformer": "default",
+      "power_assertions": false,
+      "repetitions": 2,
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "a",
+          "origin_query_index": null,
+          "purpose": "Receiver has same-named methods; a source-local constraint call distinguishes base-before-custom-receiver precedence.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-0-q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "b",
+          "origin_query_index": null,
+          "purpose": "Receiver has same-named methods; a source-local constraint call distinguishes base-before-custom-receiver precedence.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "a",
+          "origin_query_index": null,
+          "purpose": "Receiver has same-named methods; a source-local constraint call distinguishes base-before-custom-receiver precedence.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "b",
+          "origin_query_index": null,
+          "purpose": "Receiver has same-named methods; a source-local constraint call distinguishes base-before-custom-receiver precedence.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        }
+      ]
+    },
+    {
+      "id": "const-property-shadow-control",
+      "source": "function TODO(): Int = 17\nconst rejected = TODO()\nfunction stage111Bridge000(): Any = rejected\n",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/const-property-shadow-control.pkl",
+      "source_sha256": "a3ccc34fbe237f0eaad84dc2c70dcba76fdd5c5fbcef77611576cf3249153fb3",
+      "source_uri": "file:///stage111-supplement/const-property-shadow-control.pkl",
+      "frame_transformer": "default",
+      "power_assertions": false,
+      "repetitions": 2,
+      "query_passes_same_evaluator": 2,
+      "queries": [
+        {
+          "id": "pass-0-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "rejected",
+          "origin_query_index": null,
+          "purpose": "A const property initializer references a non-const lexical method, avoiding the const-function lexical barrier present in the original successful control.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 0,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "pass-1-q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "rejected",
+          "origin_query_index": null,
+          "purpose": "A const property initializer references a non-const lexical method, avoiding the const-function lexical barrier present in the original successful control.",
+          "expected": null,
+          "executed": false,
+          "same_evaluator_pass": 1,
+          "resource_class": "bounded"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "complete": true,
+  "source_only": true,
+  "changes": [
+    {
+      "program": "bridge-retry-logger",
+      "before_source": "import \"pkl:test\"\nlocal good = trace(7)\nundefined = let (seen = trace(good)) Undefined()\ntodo = let (seen = trace(good)) TODO()\nstable = good\n\nfunction stage111Bridge000(): Any = stable\nfunction stage111Bridge001(): Any = test.catch(() -> undefined)\nfunction stage111Bridge002(): Any = test.catch(() -> undefined)\nfunction stage111Bridge003(): Any = test.catch(() -> todo)\nfunction stage111Bridge004(): Any = test.catch(() -> todo)\nfunction stage111Bridge005(): Any = stable\n",
+      "after_source": "import \"pkl:test\"\nlocal good = trace(7)\nundefined = let (seen = trace(good)) Undefined()\ntodo = let (seen = trace(good)) TODO()\nstable = good\n\nlocal stage111RetryUndefined = if (trace(true)) Undefined() else 0\nlocal stage111RetryTodo = if (trace(false)) 0 else TODO()\n\nfunction stage111Bridge000(): Any = stable\nfunction stage111Bridge001(): Any = test.catch(() -> stage111RetryUndefined)\nfunction stage111Bridge002(): Any = test.catch(() -> stage111RetryUndefined)\nfunction stage111Bridge003(): Any = test.catch(() -> stage111RetryTodo)\nfunction stage111Bridge004(): Any = test.catch(() -> stage111RetryTodo)\nfunction stage111Bridge005(): Any = stable\n",
+      "query_envelopes_unchanged": true,
+      "reason": "Force a distinct per-failed-attempt trace while preserving original source prefix and successful cached good/stable trace."
+    }
+  ],
+  "matrix_scope_unchanged": true,
+  "counts_metadata_correction": "42 unique original queries +8 identity-profile copies =50profilequeries; two same-evaluator passes and two fresh sessions produce200observations.",
+  "predecessor": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-prep-01/preparation.json",
+    "bytes": 3347,
+    "mode": 420,
+    "sha256": "857da4270c1658c4e23cf870c5bfc622dd386e457f4192582619c8549da61e6b"
+  },
+  "prior_Java_executed": false
+}

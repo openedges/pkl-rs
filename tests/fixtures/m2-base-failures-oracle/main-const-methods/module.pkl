@@ -1,0 +1,7 @@
+const function failTodo(): nothing = TODO()
+const function failUndefined(): nothing = Undefined()
+class Holder {
+  x = failTodo()
+  y = failUndefined()
+}
+holder = new Holder {}

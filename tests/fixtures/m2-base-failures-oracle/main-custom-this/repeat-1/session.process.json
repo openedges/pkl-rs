@@ -1,0 +1,647 @@
+{
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/CollectionEveryOracle.java",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this",
+    "file:///stage111/custom-this.pkl"
+  ],
+  "cleanup_events": [],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01",
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 0,
+  "finished_epoch": 1793262200.7715771,
+  "frame_transformer": "default",
+  "helper": {
+    "bytes": 6329,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/CollectionEveryOracle.java",
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "owned_child_reaped": true,
+  "owned_processes": {
+    "root_observed": true,
+    "root_pid": 40419,
+    "terminal_live": [],
+    "tracked": [
+      {
+        "group_id_at_discovery": 40419,
+        "parent_pid_at_discovery": 40173,
+        "pid": 40419,
+        "started": "Thu Oct 29 17:23:19 2026"
+      }
+    ]
+  },
+  "owned_start": "Thu Oct 29 17:23:19 2026",
+  "pgid": 40419,
+  "pid": 40419,
+  "power_assertions": false,
+  "program": "custom-this",
+  "query_passes_same_evaluator": 2,
+  "repeat": 1,
+  "rows": [
+    {
+      "directory": "target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000",
+      "expression": "a",
+      "id": "pass-0-q-000",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 1,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/expression.bin",
+          "sha256": "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb"
+        },
+        "expression.code-units.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/expression.code-units.bin",
+          "sha256": "022a6979e6dab7aa5ae4c3e5e45f7e977112a7e63593820dbec1ec738a24f93c"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 491,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/result.exception-to-string.bin",
+          "sha256": "8716c739b16000383acaaa8d1678713c88f1ed445467544044c3cfa0687af72f"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 966,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/result.exception-to-string.code-units.bin",
+          "sha256": "6956e71a97e8e1cc942f77dfb0c12cfcce6d8a7c22e01c6f9b8d8e57da163d15"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 464,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/result.stderr.bin",
+          "sha256": "8c82125046359cbcaf36a9e12b3772b42d851bf3e797b6d7b92fde3f64a7685a"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 912,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/result.stderr.code-units.bin",
+          "sha256": "b4941928d1e880aa3cd0b21085c3ab9919248f1a7694d71fa9972725e1d68021"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/000-pass-0-q-000/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001",
+      "expression": "b",
+      "id": "pass-0-q-001",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 1,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/expression.bin",
+          "sha256": "3e23e8160039594a33894f6564e1b1348bbd7a0088d42c4acb73eeaed59c009d"
+        },
+        "expression.code-units.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/expression.code-units.bin",
+          "sha256": "57eb35615d47f34ec714cacdf5fd74608a5e8e102724e80b24b287c0c27b6a31"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 342,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/result.exception-to-string.bin",
+          "sha256": "943e2b3dd6768462239ae51f53747bf7ebcdea7a4da098db2beb41e1392ef5ff"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 668,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/result.exception-to-string.code-units.bin",
+          "sha256": "7a0f4ebd9a917abeb594d3b9bea8e3f433ccb304d1318e9c6b8bf01a43fa3bcd"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 315,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/result.stderr.bin",
+          "sha256": "c4451dc7f2e4a28e6e4c2c9bc77e61a4c7d478cb2452814f240a2d08e9dab427"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 614,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/result.stderr.code-units.bin",
+          "sha256": "00911a67eef5650970075701bf27722bf65bd3d2273e2eab03130d0052ea8dcd"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/001-pass-0-q-001/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000",
+      "expression": "a",
+      "id": "pass-1-q-000",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 1,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/expression.bin",
+          "sha256": "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb"
+        },
+        "expression.code-units.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/expression.code-units.bin",
+          "sha256": "022a6979e6dab7aa5ae4c3e5e45f7e977112a7e63593820dbec1ec738a24f93c"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 491,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/result.exception-to-string.bin",
+          "sha256": "8716c739b16000383acaaa8d1678713c88f1ed445467544044c3cfa0687af72f"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 966,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/result.exception-to-string.code-units.bin",
+          "sha256": "6956e71a97e8e1cc942f77dfb0c12cfcce6d8a7c22e01c6f9b8d8e57da163d15"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 464,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/result.stderr.bin",
+          "sha256": "8c82125046359cbcaf36a9e12b3772b42d851bf3e797b6d7b92fde3f64a7685a"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 912,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/result.stderr.code-units.bin",
+          "sha256": "b4941928d1e880aa3cd0b21085c3ab9919248f1a7694d71fa9972725e1d68021"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/002-pass-1-q-000/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001",
+      "expression": "b",
+      "id": "pass-1-q-001",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 1,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/expression.bin",
+          "sha256": "3e23e8160039594a33894f6564e1b1348bbd7a0088d42c4acb73eeaed59c009d"
+        },
+        "expression.code-units.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/expression.code-units.bin",
+          "sha256": "57eb35615d47f34ec714cacdf5fd74608a5e8e102724e80b24b287c0c27b6a31"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 342,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/result.exception-to-string.bin",
+          "sha256": "943e2b3dd6768462239ae51f53747bf7ebcdea7a4da098db2beb41e1392ef5ff"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 668,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/result.exception-to-string.code-units.bin",
+          "sha256": "7a0f4ebd9a917abeb594d3b9bea8e3f433ccb304d1318e9c6b8bf01a43fa3bcd"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 315,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/result.stderr.bin",
+          "sha256": "c4451dc7f2e4a28e6e4c2c9bc77e61a4c7d478cb2452814f240a2d08e9dab427"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 614,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/result.stderr.code-units.bin",
+          "sha256": "00911a67eef5650970075701bf27722bf65bd3d2273e2eab03130d0052ea8dcd"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/003-pass-1-q-001/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    }
+  ],
+  "started_epoch": 1793262199.633834,
+  "stderr": {
+    "bytes": 0,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/process.stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 412,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/custom-this/repeat-1/process.stdout.bin",
+    "sha256": "1c5d8fa5a81ee6822d2cf808128b4c4e3e8b1dd35546aea1f3dfe3dd2d0e82d6"
+  }
+}

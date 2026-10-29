@@ -1467,6 +1467,8 @@ impl<'a> Resolver<'a> {
                                             | "IntSeq"
                                             | "Regex"
                                             | "Null"
+                                            | "TODO"
+                                            | "Undefined"
                                     ) {
                                         return Err(Diagnostic::unsupported(
                                             DiagnosticOrigin::Resolver,
@@ -1534,12 +1536,22 @@ impl<'a> Resolver<'a> {
                             work.push(Work::EndTypeParameters);
                         }
                         if !method && parameters.len() > 5 {
-                            return Err(Diagnostic::language(
+                            // AstBuilder validates arity before entering the
+                            // lambda scope: the enclosing property/entry owns
+                            // this failure, without a new function ordinal.
+                            self.diagnostic_owner_requested = true;
+                            let mut error = Diagnostic::language(
                                 DiagnosticOrigin::Resolver,
                                 DiagnosticKind::Syntax,
                                 expression.span,
                                 "Function literals can have at most five parameters.",
-                            ));
+                            );
+                            error.member = self
+                                .diagnostic_owners
+                                .name()
+                                .filter(|name| !name.is_empty())
+                                .map(Into::into);
+                            return Err(error);
                         }
                         let mut seen = std::collections::BTreeSet::new();
                         for parameter in parameters {

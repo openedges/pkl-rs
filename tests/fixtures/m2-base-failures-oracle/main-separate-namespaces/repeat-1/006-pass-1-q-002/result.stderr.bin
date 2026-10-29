@@ -1,0 +1,14 @@
+–– Pkl Error ––
+TODO
+
+2377 | const function TODO(): nothing = throw("TODO")
+                                        ^^^^^^^^^^^^^
+at pkl.base#TODO (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2377)
+
+3 | a = TODO()
+        ^^^^^^
+at separate-namespaces#a (file:///stage111/separate-namespaces.pkl)
+
+1 | a
+    ^
+at  (repl:text)

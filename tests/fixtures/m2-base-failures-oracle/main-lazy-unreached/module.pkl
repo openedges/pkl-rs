@@ -1,0 +1,4 @@
+import "pkl:test"
+safe = new { good = 7
+  bad = Undefined()
+  todo = TODO() }

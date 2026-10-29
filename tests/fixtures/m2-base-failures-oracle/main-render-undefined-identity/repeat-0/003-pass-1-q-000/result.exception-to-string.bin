@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Undefined value.
+
+2 | value = new { nested { bad = Undefined() } }
+                                 ^^^^^^^^^^^
+at render-undefined#value.nested.bad (file:///stage111/render-undefined.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (pkl:base)

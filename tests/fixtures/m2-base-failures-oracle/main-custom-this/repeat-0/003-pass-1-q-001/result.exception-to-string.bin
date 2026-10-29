@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Undefined value.
+
+2 | typealias UndefinedInt = Int(Undefined())
+                                 ^^^^^^^^^^^
+at custom-this#b (file:///stage111/custom-this.pkl)
+
+4 | b: UndefinedInt = 2
+                      ^
+at custom-this#b (file:///stage111/custom-this.pkl)
+
+1 | b
+    ^
+at  (repl:text)

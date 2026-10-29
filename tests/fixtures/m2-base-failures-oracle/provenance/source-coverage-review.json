@@ -1,0 +1,112 @@
+{
+  "complete": true,
+  "success": true,
+  "verdict": "GO for root source review and an explicitly granted Java acquisition; actual supplemental target reach remains unexecuted.",
+  "source_only": true,
+  "Java_executed": false,
+  "Rust_compiler_or_guest_executed": false,
+  "canonical_mutations": 0,
+  "supplement_prep02_retry_author_is_reviewer": true,
+  "independent_root_delta_review_required": true,
+  "main_observations": 324,
+  "main_unreached_preserved": 120,
+  "main_other_disposition_qualification": "Author classified200target-evaluated and4const-call successes without intended restriction; this review independently linked120lookup errors and checked session/profile structure.",
+  "supplement_original_queries": 42,
+  "supplement_identity_queries": 8,
+  "supplement_profile_queries": 50,
+  "supplement_same_evaluator_passes": 2,
+  "supplement_fresh_sessions": 22,
+  "supplement_planned_observations": 200,
+  "main_coverage": {
+    "path": "target/m2/stage111-capture-coverage-review-01/main-coverage.json",
+    "bytes": 2303,
+    "mode": 420,
+    "sha256": "c2eeec827e3800e5b2d97067f7c90d8c05f44886938205246d7817e4eeb7b32d"
+  },
+  "source_checks": {
+    "path": "target/m2/stage111-capture-coverage-review-01/supplement-source-checks.json",
+    "bytes": 7875,
+    "mode": 420,
+    "sha256": "40bdca16b20814585a17938d1f9354c1bbbadd60e05efdb1e1632e87f2c46ed7"
+  },
+  "fixture_derivation": {
+    "path": "target/m2/stage111-capture-coverage-review-01/fixture-derivation-notes.md",
+    "bytes": 3282,
+    "mode": 420,
+    "sha256": "5359fce027f56d748a7387f3b6f9adbf873a45ef8641285c5848b00b62bc5231"
+  },
+  "inputs": [
+    {
+      "path": "target/m2/stage111-base-failures-oracle-01/report.json",
+      "bytes": 3304989,
+      "mode": 420,
+      "sha256": "51caa62966ddd3e4805ccdb869d198b2d9615cf7e2158ba064401eff2883f5e1"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-oracle-execution-01/report.json",
+      "bytes": 25492,
+      "mode": 420,
+      "sha256": "0165ce63be5d041eb25b2ccdb51699d821a8a155bf7ba6a90e05a9d58a0de727"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-oracle-execution-01/unreached-controls.json",
+      "bytes": 50151,
+      "mode": 420,
+      "sha256": "564856110226384d2ee670f57307aadb953d4c1410e5b9aa08cbb411911953ac"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-oracle-execution-01/coverage-dispositions.json",
+      "bytes": 113331,
+      "mode": 420,
+      "sha256": "61a854b7c200a16dd6748788abf153ca3b55e5704deba625f8e59b5eb1512065"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/preparation.json",
+      "bytes": 3957,
+      "mode": 420,
+      "sha256": "2bceee8528adf9ab2901d2944fc936b1ffcfb506f0afdadd1e0b23a99123917a"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/capture.py",
+      "bytes": 19277,
+      "mode": 420,
+      "sha256": "0f3e5aff6100fd3218186d7490dfafb60f78ee6c11214e78003fc9c16a5845e3"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/proposals.json",
+      "bytes": 34606,
+      "mode": 420,
+      "sha256": "0c43cdf4100419a30379bc8251b8f9d881efa851d69478436ff11bf932abd550"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/queries.json",
+      "bytes": 57800,
+      "mode": 420,
+      "sha256": "4b7f4877e9ebd6cda94c82618853a893f9ba6d37cda83d766c9767164542055a"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/trace-forcing-delta.json",
+      "bytes": 1991,
+      "mode": 420,
+      "sha256": "5402f1bff123b99d73dc9df9313225ae40ea4168b2b29cbe00b1d5f5fce6cf82"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-supplement-oracle-prep-01/preparation.json",
+      "bytes": 3347,
+      "mode": 420,
+      "sha256": "857da4270c1658c4e23cf870c5bfc622dd386e457f4192582619c8549da61e6b"
+    },
+    {
+      "path": "crates/pkl-runtime/src/probe.rs",
+      "bytes": 51146,
+      "mode": 420,
+      "sha256": "a2ad111a55b2cd757d46c2c93545a013ad2606fc1db5384bc2776eed232e2d40"
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_annotation_const_oracle.rs",
+      "bytes": 12460,
+      "mode": 420,
+      "sha256": "27f3765558b6ef2c5c282d8958344fd8d617147c41cd2d7309c90a11f5f71e53"
+    }
+  ]
+}

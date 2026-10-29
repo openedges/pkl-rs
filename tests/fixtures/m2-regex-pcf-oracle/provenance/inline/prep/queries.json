@@ -1,0 +1,32 @@
+{
+  "kind": "Stage110 final expected-free explicit Dynamic inline exact-pattern PCF indentation",
+  "baseline": "Pkl 0.32.0",
+  "contracts": 2,
+  "programs": [
+    {
+      "id": "regex-pcf",
+      "source": "module regexPcf\npatterns = List(\"\", \"plain\", #\"[ab]\\s+\"#, \"\\\"\", \"\\\"\\\"#x\", \"\\\\#\", \"a\\nb\", \"a\\r\\nb\\tc\", \"😀é\", \"a\\\\s\\nb\", #\"a\\nb\"#, #\"a\\rb\"#, #\"a\\tb\"#, \"a\\rb\", \"a\\tb\", ##\"\"#\\#x\"##)\nfunction renderer(custom: Boolean): PcfRenderer = new PcfRenderer { useCustomStringDelimiters = custom }\n",
+      "source_uri": "file:///stage110/regex-pcf.pkl",
+      "repetitions": 2,
+      "power_assertions": false,
+      "queries": [
+        {
+          "id": "nested-indent-false",
+          "expression": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = false }).renderDocument(new Dynamic { nested = new Dynamic { pattern = Regex(\"a\\\\s\\nb\") } })",
+          "edge": "Inline exact original pattern9 codeunits; explicit Dynamic parents, no nested original-module lookup.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "nested-indent-true",
+          "expression": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = true }).renderDocument(new Dynamic { nested = new Dynamic { pattern = Regex(\"a\\\\s\\nb\") } })",
+          "edge": "Inline exact original pattern9 codeunits; explicit Dynamic parents, no nested original-module lookup.",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    }
+  ]
+}

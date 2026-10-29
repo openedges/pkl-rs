@@ -1,0 +1,127 @@
+{
+  "actual_Java_executed": false,
+  "all_exact": true,
+  "programs": [
+    {
+      "program": "bridge-direct",
+      "rows": 16,
+      "exact_UTF8_roundtrip": true,
+      "source": {
+        "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-direct.pkl",
+        "bytes": 607,
+        "mode": 420,
+        "sha256": "9e97448fe5451f7ce4b52eaa3a58ab3ea16f9c64dd0f499aed943341fd6ac1a7"
+      }
+    },
+    {
+      "program": "bridge-direct-identity",
+      "rows": 16,
+      "exact_UTF8_roundtrip": true,
+      "source": {
+        "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-direct.pkl",
+        "bytes": 607,
+        "mode": 420,
+        "sha256": "9e97448fe5451f7ce4b52eaa3a58ab3ea16f9c64dd0f499aed943341fd6ac1a7"
+      }
+    },
+    {
+      "program": "bridge-arity-order",
+      "rows": 4,
+      "exact_UTF8_roundtrip": true,
+      "source": {
+        "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-arity-order.pkl",
+        "bytes": 134,
+        "mode": 420,
+        "sha256": "9d36d6dd129307e784d857634c6d001729933ea5ed66af73a59f2767a6c6e685"
+      }
+    },
+    {
+      "program": "bridge-lexical-shadow",
+      "rows": 4,
+      "exact_UTF8_roundtrip": true,
+      "source": {
+        "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-lexical-shadow.pkl",
+        "bytes": 224,
+        "mode": 420,
+        "sha256": "0fb062425ad8ac6ed043b890433121f22ab64f6e7d055cfd17d9282ca904ff47"
+      }
+    },
+    {
+      "program": "bridge-lazy-unreached",
+      "rows": 8,
+      "exact_UTF8_roundtrip": true,
+      "source": {
+        "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-lazy-unreached.pkl",
+        "bytes": 298,
+        "mode": 420,
+        "sha256": "48fd3e1babe586e850ca5122f409f98edf1517d2025dd4cb38022d9af08d0acb"
+      }
+    },
+    {
+      "program": "bridge-retry-logger",
+      "rows": 12,
+      "exact_UTF8_roundtrip": true,
+      "source": {
+        "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-retry-logger.pkl",
+        "bytes": 653,
+        "mode": 420,
+        "sha256": "9d9f3f0d2aa5787f50892f68c79d98810728072126c57be50d72ac1cb51e855a"
+      }
+    },
+    {
+      "program": "bridge-infer-catch-order",
+      "rows": 6,
+      "exact_UTF8_roundtrip": true,
+      "source": {
+        "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-infer-catch-order.pkl",
+        "bytes": 332,
+        "mode": 420,
+        "sha256": "0e8eb935e562229879a120f566cac10a92d230b77b3c48c0c45919458849f940"
+      }
+    },
+    {
+      "program": "bridge-receiverless-lazy-module",
+      "rows": 4,
+      "exact_UTF8_roundtrip": true,
+      "source": {
+        "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-receiverless-lazy-module.pkl",
+        "bytes": 167,
+        "mode": 420,
+        "sha256": "5cc975e08977b18b706782a96a78210dc84ea4663fb95e46b031bd9f6b8458bc"
+      }
+    },
+    {
+      "program": "reflection-metadata",
+      "rows": 24,
+      "exact_UTF8_roundtrip": true,
+      "source": {
+        "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/reflection-metadata.pkl",
+        "bytes": 891,
+        "mode": 420,
+        "sha256": "9f4a0ff9c41f84d6a4a9dceb05733a599f5640e4e2e8c355be423edaae14f1be"
+      }
+    },
+    {
+      "program": "custom-receiver-competing-methods",
+      "rows": 4,
+      "exact_UTF8_roundtrip": true,
+      "source": {
+        "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/custom-receiver-competing-methods.pkl",
+        "bytes": 335,
+        "mode": 420,
+        "sha256": "e32fc20a05a2957476b8d2a0a440918a1bf85e1cd997c9c2aedcb08765c8eb0f"
+      }
+    },
+    {
+      "program": "const-property-shadow-control",
+      "rows": 2,
+      "exact_UTF8_roundtrip": true,
+      "source": {
+        "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/const-property-shadow-control.pkl",
+        "bytes": 95,
+        "mode": 420,
+        "sha256": "a3ccc34fbe237f0eaad84dc2c70dcba76fdd5c5fbcef77611576cf3249153fb3"
+      }
+    }
+  ]
+}

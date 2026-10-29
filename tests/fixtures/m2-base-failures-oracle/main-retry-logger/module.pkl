@@ -1,0 +1,5 @@
+import "pkl:test"
+local good = trace(7)
+undefined = let (seen = trace(good)) Undefined()
+todo = let (seen = trace(good)) TODO()
+stable = good

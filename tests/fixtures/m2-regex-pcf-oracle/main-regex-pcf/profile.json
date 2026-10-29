@@ -1,0 +1,22 @@
+{
+  "Java_authority": {
+    "bytes": 914808,
+    "mode": 420,
+    "path": "target/m2/stage110-regex-pcf-oracle-02/report.json",
+    "sha256": "581d031bac14595940a341f0ff9362c03a64dc8760eeaffbc7ede3bffc62cbaa"
+  },
+  "Rust_execution": "unexecuted",
+  "Rust_query_input": "Exact corresponding repeat expression.bin; original UTF8/UTF16 preserved, never Base64.",
+  "cohort": "main",
+  "evaluator_environment": {},
+  "evaluator_external_properties": {},
+  "oracle_internal": false,
+  "original_program": "regex-pcf",
+  "power_assertions": false,
+  "program": "main-regex-pcf",
+  "queries": 47,
+  "repetitions": 2,
+  "required": true,
+  "required_unresolved": false,
+  "source_uri": "file:///stage110/regex-pcf.pkl"
+}

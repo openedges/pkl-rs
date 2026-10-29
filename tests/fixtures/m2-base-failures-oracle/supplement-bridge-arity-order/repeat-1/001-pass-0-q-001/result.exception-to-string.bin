@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 0 function arguments but got 2.
+
+2374 | external const function Undefined(): nothing
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Undefined (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2374)
+
+5 | function stage111Bridge001(): Any = base.Undefined(1, 2)
+                                        ^^^^^^^^^^^^^^^^^^^^
+at bridge-arity-order#stage111Bridge001 (file:///stage111-supplement/bridge-arity-order.pkl)
+
+1 | stage111Bridge001()
+    ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

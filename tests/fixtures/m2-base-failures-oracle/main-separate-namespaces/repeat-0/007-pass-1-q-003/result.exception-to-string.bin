@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Undefined value.
+
+4 | b = Undefined()
+        ^^^^^^^^^^^
+at separate-namespaces#b (file:///stage111/separate-namespaces.pkl)
+
+1 | b
+    ^
+at  (repl:text)

@@ -1,0 +1,647 @@
+{
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/CollectionEveryOracle.java",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods",
+    "file:///stage111-supplement/custom-receiver-competing-methods.pkl"
+  ],
+  "cleanup_events": [],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01",
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 0,
+  "finished_epoch": 1793262971.247585,
+  "frame_transformer": "default",
+  "helper": {
+    "bytes": 6329,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/CollectionEveryOracle.java",
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "owned_child_reaped": true,
+  "owned_processes": {
+    "root_observed": true,
+    "root_pid": 43941,
+    "terminal_live": [],
+    "tracked": [
+      {
+        "group_id_at_discovery": 43941,
+        "parent_pid_at_discovery": 43646,
+        "pid": 43941,
+        "started": "Thu Oct 29 17:36:10 2026"
+      }
+    ]
+  },
+  "owned_start": "Thu Oct 29 17:36:10 2026",
+  "pgid": 43941,
+  "pid": 43941,
+  "power_assertions": false,
+  "program": "custom-receiver-competing-methods",
+  "query_passes_same_evaluator": 2,
+  "repeat": 1,
+  "rows": [
+    {
+      "directory": "target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000",
+      "expression": "stage111Bridge000()",
+      "id": "pass-0-q-000",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 19,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/expression.bin",
+          "sha256": "f4fdec237e5d9acc937cab4e7092adf402f4f7ee9156513868cefcbb274673ce"
+        },
+        "expression.code-units.bin": {
+          "bytes": 38,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/expression.code-units.bin",
+          "sha256": "e181e4fcc5a9faff314c79c1192d5683b7e388f36a71d4f730121af63fb5df64"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 903,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/result.exception-to-string.bin",
+          "sha256": "2db8e73303b6e50612e071e08f790ac4ae2e2f4296d73b1e29436383e5f73711"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 1790,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/result.exception-to-string.code-units.bin",
+          "sha256": "d38e92bd2e923311ecbac75102ad4e5f54ac79e31c6bd2315a3c2ec53e83894d"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 876,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/result.stderr.bin",
+          "sha256": "61f5866ad0d5a65081d4ee55d64cfe6014a363454c667a5ca7ff83279bfab82a"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 1736,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/result.stderr.code-units.bin",
+          "sha256": "7258d3c12163e3e37dd52ce6ab3f79b25b4379052abcb8a8171e8191ecbddc5b"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/000-pass-0-q-000/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001",
+      "expression": "stage111Bridge001()",
+      "id": "pass-0-q-001",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 19,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/expression.bin",
+          "sha256": "67e3d5df6ee2fa0071b9a18cdd65e5fee8f8af5f5f2a9e2b7f799e155e992a1a"
+        },
+        "expression.code-units.bin": {
+          "bytes": 38,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/expression.code-units.bin",
+          "sha256": "693b2be7f84ce9abeb2fef931b295706889e234dae93daea1956529a03965e32"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 756,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/result.exception-to-string.bin",
+          "sha256": "ad9a050d2055ccaeb3b65bfa1bfb9ee2a13c4492af35a69da29d5cc9b635cb09"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 1496,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/result.exception-to-string.code-units.bin",
+          "sha256": "502ee64fdf59fb11644fc495e6fe0f05fae615e285a8fc7d454cdd19cb34fe68"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 729,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/result.stderr.bin",
+          "sha256": "49ac12d5eed3f494fb861eb435fd60b1aa631df37bb6bceb0372652b17237739"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 1442,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/result.stderr.code-units.bin",
+          "sha256": "479ab52585281f30e905d72b733e0afb3c1ba865d56ee63faaf9fdc3a6be564d"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/001-pass-0-q-001/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000",
+      "expression": "stage111Bridge000()",
+      "id": "pass-1-q-000",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 19,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/expression.bin",
+          "sha256": "f4fdec237e5d9acc937cab4e7092adf402f4f7ee9156513868cefcbb274673ce"
+        },
+        "expression.code-units.bin": {
+          "bytes": 38,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/expression.code-units.bin",
+          "sha256": "e181e4fcc5a9faff314c79c1192d5683b7e388f36a71d4f730121af63fb5df64"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 903,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/result.exception-to-string.bin",
+          "sha256": "2db8e73303b6e50612e071e08f790ac4ae2e2f4296d73b1e29436383e5f73711"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 1790,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/result.exception-to-string.code-units.bin",
+          "sha256": "d38e92bd2e923311ecbac75102ad4e5f54ac79e31c6bd2315a3c2ec53e83894d"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 876,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/result.stderr.bin",
+          "sha256": "61f5866ad0d5a65081d4ee55d64cfe6014a363454c667a5ca7ff83279bfab82a"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 1736,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/result.stderr.code-units.bin",
+          "sha256": "7258d3c12163e3e37dd52ce6ab3f79b25b4379052abcb8a8171e8191ecbddc5b"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/002-pass-1-q-000/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001",
+      "expression": "stage111Bridge001()",
+      "id": "pass-1-q-001",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 19,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/expression.bin",
+          "sha256": "67e3d5df6ee2fa0071b9a18cdd65e5fee8f8af5f5f2a9e2b7f799e155e992a1a"
+        },
+        "expression.code-units.bin": {
+          "bytes": 38,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/expression.code-units.bin",
+          "sha256": "693b2be7f84ce9abeb2fef931b295706889e234dae93daea1956529a03965e32"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 756,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/result.exception-to-string.bin",
+          "sha256": "ad9a050d2055ccaeb3b65bfa1bfb9ee2a13c4492af35a69da29d5cc9b635cb09"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 1496,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/result.exception-to-string.code-units.bin",
+          "sha256": "502ee64fdf59fb11644fc495e6fe0f05fae615e285a8fc7d454cdd19cb34fe68"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 729,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/result.stderr.bin",
+          "sha256": "49ac12d5eed3f494fb861eb435fd60b1aa631df37bb6bceb0372652b17237739"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 1442,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/result.stderr.code-units.bin",
+          "sha256": "479ab52585281f30e905d72b733e0afb3c1ba865d56ee63faaf9fdc3a6be564d"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/003-pass-1-q-001/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    }
+  ],
+  "started_epoch": 1793262970.0189419,
+  "stderr": {
+    "bytes": 0,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/process.stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 412,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-supplement-oracle-01/programs/custom-receiver-competing-methods/repeat-1/process.stdout.bin",
+    "sha256": "1c5d8fa5a81ee6822d2cf808128b4c4e3e8b1dd35546aea1f3dfe3dd2d0e82d6"
+  }
+}

@@ -1,0 +1,197 @@
+{
+  "complete": true,
+  "success": true,
+  "acquisition_integrity_valid": true,
+  "compatibility_verdict": "Rust_unexecuted",
+  "Java_actual_report": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-01/report.json",
+    "bytes": 2195037,
+    "mode": 420,
+    "sha256": "8fd4a2d33d12cec1064218a226c5ffdc9d655aead4c8161511705bd912ed0580"
+  },
+  "execution": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-execution-01/execution.json",
+    "bytes": 5030,
+    "mode": 420,
+    "sha256": "bafb091dd28e9bfeac0219f2109f89faf7c073cb6634a379bc9cd4a33b721fef"
+  },
+  "profiles": 11,
+  "original_queries": 42,
+  "identity_profile_queries": 8,
+  "profile_queries": 50,
+  "same_evaluator_passes": 2,
+  "fresh_evaluator_sessions": 22,
+  "observations": 200,
+  "statuses": {
+    "error": 64,
+    "success": 136
+  },
+  "raw_row_files_reread": 4580,
+  "ordered_logger_events": 18,
+  "all_ordinary": true,
+  "all_children_terminal": true,
+  "source_and_runtime_stable": true,
+  "materialized_stable": true,
+  "repeat_differences": [],
+  "main324_unchanged": true,
+  "target_reach": "Public source functions reached original local aliases/helpers; both reflection/custom receiver/const-property controls produced the captured intended-boundary outcomes. Inferred-parent controls deliberately retain actual first errors rather than assuming successful amendment.",
+  "retry_logger": [
+    {
+      "fresh_repeat": 0,
+      "sequence": [
+        {
+          "query": "pass-0-q-000",
+          "messages": [
+            "7 = 7"
+          ]
+        },
+        {
+          "query": "pass-0-q-001",
+          "messages": [
+            "true = true"
+          ]
+        },
+        {
+          "query": "pass-0-q-002",
+          "messages": [
+            "true = true"
+          ]
+        },
+        {
+          "query": "pass-0-q-003",
+          "messages": [
+            "false = false"
+          ]
+        },
+        {
+          "query": "pass-0-q-004",
+          "messages": [
+            "false = false"
+          ]
+        },
+        {
+          "query": "pass-0-q-005",
+          "messages": []
+        },
+        {
+          "query": "pass-1-q-000",
+          "messages": []
+        },
+        {
+          "query": "pass-1-q-001",
+          "messages": [
+            "true = true"
+          ]
+        },
+        {
+          "query": "pass-1-q-002",
+          "messages": [
+            "true = true"
+          ]
+        },
+        {
+          "query": "pass-1-q-003",
+          "messages": [
+            "false = false"
+          ]
+        },
+        {
+          "query": "pass-1-q-004",
+          "messages": [
+            "false = false"
+          ]
+        },
+        {
+          "query": "pass-1-q-005",
+          "messages": []
+        }
+      ],
+      "cached_good_events": 1,
+      "per_failed_undefined_events": 4,
+      "per_failed_todo_events": 4
+    },
+    {
+      "fresh_repeat": 1,
+      "sequence": [
+        {
+          "query": "pass-0-q-000",
+          "messages": [
+            "7 = 7"
+          ]
+        },
+        {
+          "query": "pass-0-q-001",
+          "messages": [
+            "true = true"
+          ]
+        },
+        {
+          "query": "pass-0-q-002",
+          "messages": [
+            "true = true"
+          ]
+        },
+        {
+          "query": "pass-0-q-003",
+          "messages": [
+            "false = false"
+          ]
+        },
+        {
+          "query": "pass-0-q-004",
+          "messages": [
+            "false = false"
+          ]
+        },
+        {
+          "query": "pass-0-q-005",
+          "messages": []
+        },
+        {
+          "query": "pass-1-q-000",
+          "messages": []
+        },
+        {
+          "query": "pass-1-q-001",
+          "messages": [
+            "true = true"
+          ]
+        },
+        {
+          "query": "pass-1-q-002",
+          "messages": [
+            "true = true"
+          ]
+        },
+        {
+          "query": "pass-1-q-003",
+          "messages": [
+            "false = false"
+          ]
+        },
+        {
+          "query": "pass-1-q-004",
+          "messages": [
+            "false = false"
+          ]
+        },
+        {
+          "query": "pass-1-q-005",
+          "messages": []
+        }
+      ],
+      "cached_good_events": 1,
+      "per_failed_undefined_events": 4,
+      "per_failed_todo_events": 4
+    }
+  ],
+  "semantics": [
+    "TODO and Undefined reflection modifiers are Set(\"const\"), zero parameters and nothing return type.",
+    "TODO default frame location is GitHub stdlib/base.pkl line2377; identity retains pkl:base. Undefined source metadata is line2374.",
+    "Custom receiver same-named methods do not displace bare base functions in constraint calls.",
+    "Const property control rejects calling the non-const lexical TODO method."
+  ],
+  "canonical_mutations": 0,
+  "Rust_executions": 0,
+  "performance_evidence": false
+}

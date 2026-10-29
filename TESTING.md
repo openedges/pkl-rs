@@ -21,6 +21,28 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+### Stage114 current local verification
+
+The integrated source passes one complete workspace acquisition: **1,700 tests
+passed, zero failed and five ignored**, including all 42 new tests across five
+targets. Formatting, xtask verification, all-target Clippy with warnings denied,
+the Wasm runtime check, 43 affected Python tests and eight freshness commands pass.
+Ignored tests remain required gaps.
+
+The full ordered ready replay records **4,336 matches, 22 mismatches, 82 unsupported
+cases and two Java oracle errors across 4,442 cases**, with no previous-pass
+regressions and 88/88 metamorphic checks passing. Each selected Native, N-API and
+Chromium acquisition matches 902 ordinary observations from 95 programs and 190
+sessions; two required internal observations remain unresolved. Matched errors
+that never reach the intended operation are not semantic coverage. The separate
+M1 matrix matches 6,078 checks per target.
+
+The [checkpoint](reports/m2/stage114-diagnostics-regex-checkpoint.json) and [evidence report](reports/m2/README.md)
+record the exact source, artifacts, raw channels, restoration dependencies and
+preserved failed acquisitions. Local macOS validation establishes no hosted CI,
+Linux/Windows, whole-language or performance result. The strict M2 gate still
+reports 1,780 overlapping unmet conditions; this is not a completion percentage.
+
 ### Stage109 Typed lookup, module paths and annotation diagnostics — local validation
 
 Stage109 integrates 18 source/tool paths and 6,996 pinned Java fixture paths, with two generated metadata paths recorded separately. The combined targeted run records **152 passes, zero failures and one ignored required placeholder**. Its three new-family independent native readback matches **276 ordinary observations: 102 successful values and 174 ordinary errors**, including **1,736 harness fields and eight ordered Logger events**. One required Java internal contract retains two unresolved observations. The ignored test and unresolved Java results are not compatibility passes. The same current normal runtime separately matches **1,138 existing Typed/reflection observations**, **6,988 harness fields and 16 Logger events**.

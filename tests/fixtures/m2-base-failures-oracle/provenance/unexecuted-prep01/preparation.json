@@ -1,0 +1,92 @@
+{
+  "source_only": true,
+  "actual_Java_executed": false,
+  "compiler_or_guest_executed": false,
+  "root_execution_grant_received": false,
+  "canonical_mutations": 0,
+  "source_controller": {
+    "path": "target/m2/stage111-base-failures-oracle-prep-01/capture.py",
+    "bytes": 18636,
+    "mode": 420,
+    "sha256": "e681dee5f8f69c28fc6652bcd7457c45fcd54305e1313134f8980f154d8d139c"
+  },
+  "capture": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-prep-01/capture.py",
+    "bytes": 19135,
+    "mode": 420,
+    "sha256": "189c00265599df34871ca1f1d485f0496cb5f0c839f30bd6400ff457bc3280f5"
+  },
+  "matrix": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-prep-01/queries.json",
+    "bytes": 55984,
+    "mode": 420,
+    "sha256": "747da59f23ab54c2b2e95820d9ab9d4fcab5c57e1f58dfcc58220da096e42259"
+  },
+  "proposal": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-prep-01/proposals.json",
+    "bytes": 33353,
+    "mode": 420,
+    "sha256": "d814b8c208e2c7909e4a8d11694a4020e3e1965580e02c445057f0b94b256c0b"
+  },
+  "cohorts": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-prep-01/cohorts.json",
+    "bytes": 364,
+    "mode": 420,
+    "sha256": "9cf80793214e67d32a5306e206e421e62dca74b88844d4fa9971f1afd89018ab"
+  },
+  "helper_default": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-prep-01/helper-false/CollectionEveryOracle.java",
+    "bytes": 6329,
+    "mode": 420,
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "helper_identity": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-prep-01/CollectionEveryOracle.java",
+    "bytes": 6379,
+    "mode": 420,
+    "sha256": "79f44ba41e839d656ec6c886cf04134ca8c7060acb8afb2944e067788133fcb5"
+  },
+  "static_checks": {
+    "Python_AST_parse": true,
+    "query_transport_roundtrip": true,
+    "original_source_prefixes_preserved": true
+  },
+  "main_capture": {
+    "path": "target/m2/stage111-base-failures-oracle-01/report.json",
+    "bytes": 3304989,
+    "mode": 420,
+    "sha256": "51caa62966ddd3e4805ccdb869d198b2d9615cf7e2158ba064401eff2883f5e1"
+  },
+  "source_authorities": [
+    {
+      "path": "external/pkl/stdlib/reflect.pkl",
+      "bytes": 14693,
+      "mode": 420,
+      "sha256": "4555cda897a771a555e3f15d294a7f03774fd8d4602d9891117803505fb1f6eb"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/builder/SymbolTable.java",
+      "bytes": 34496,
+      "mode": 420,
+      "sha256": "3457f5fbf22819b7ec8707f72f3f29b2fc8fb51eeac793980999a8b44f678bb2"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/builder/AstBuilder.java",
+      "bytes": 121807,
+      "mode": 420,
+      "sha256": "e423325b3cef4b7410d7a01c3e9c776b7c1e5993f93f7bec02e0852d5d5fd7d8"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/const/constImplicitThisMethod.pkl",
+      "bytes": 81,
+      "mode": 420,
+      "sha256": "02ae324c0fed6a21e809c3411ad0c712a4ca5d72625e5487715138c5fa08613d"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/const/constFunctionCallingNonConst.pkl",
+      "bytes": 191,
+      "mode": 420,
+      "sha256": "fb6be0fab46a76f607949a0ba0f179434b455b8da279561d7d2e939a85c52e5d"
+    }
+  ]
+}

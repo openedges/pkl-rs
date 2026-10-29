@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Undefined value.
+
+4 | local function nestedUndefined(): Int = Undefined()
+                                            ^^^^^^^^^^^
+at bridge-direct#nestedUndefined (file:///stage111-supplement/bridge-direct.pkl)
+
+10 | function stage111Bridge003(): Any = nestedUndefined()
+                                         ^^^^^^^^^^^^^^^^^
+at bridge-direct#stage111Bridge003 (file:///stage111-supplement/bridge-direct.pkl)
+
+1 | stage111Bridge003()
+    ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

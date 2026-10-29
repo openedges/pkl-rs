@@ -1,0 +1,7 @@
+class Holder {
+  function TODO(): Int = 23
+  function Undefined(): String = "member"
+  a = TODO()
+  b = Undefined()
+}
+holder = new Holder {}

@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Undefined value.
+
+2 | const function failUndefined(): nothing = Undefined()
+                                              ^^^^^^^^^^^
+at const-methods#failUndefined (file:///stage111/const-methods.pkl)
+
+1 | failUndefined()
+    ^^^^^^^^^^^^^^^
+at  (repl:text)

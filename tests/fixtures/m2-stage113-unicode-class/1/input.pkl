@@ -1,0 +1,4 @@
+module unicode
+class `P😀` { x=1 }
+lone="\u{d800}"
+stable=42

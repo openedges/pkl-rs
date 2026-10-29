@@ -1,0 +1,10 @@
+class Receiver {
+  function TODO(): Boolean = true
+  function Undefined(): Boolean = true
+}
+typealias TodoReceiver = Receiver(TODO())
+typealias UndefinedReceiver = Receiver(Undefined())
+a: TodoReceiver = new Receiver {}
+b: UndefinedReceiver = new Receiver {}
+function stage111Bridge000(): Any = a
+function stage111Bridge001(): Any = b

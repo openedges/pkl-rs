@@ -1,0 +1,18 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot call method `TODO` from here because it is not `const`.
+
+2 | const rejected = TODO()
+                     ^^^^^^
+at const-property-shadow-control#rejected (file:///stage111-supplement/const-property-shadow-control.pkl)
+
+To fix, do either of:
+1. Add modifier `const` to method `TODO`
+2. Self-import this module, and reference this method from the import.
+
+3 | function stage111Bridge000(): Any = rejected
+                                        ^^^^^^^^
+at const-property-shadow-control#stage111Bridge000 (file:///stage111-supplement/const-property-shadow-control.pkl)
+
+1 | stage111Bridge000()
+    ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

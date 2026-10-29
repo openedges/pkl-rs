@@ -1,0 +1,22 @@
+{
+  "Java_authority": {
+    "bytes": 84528,
+    "mode": 420,
+    "path": "target/m2/stage110-regex-pcf-indent-oracle-01/report.json",
+    "sha256": "6a02120475387078b9388652a9286a413e8db681a4b85859b88b44924a367482"
+  },
+  "Rust_execution": "unexecuted",
+  "Rust_query_input": "Exact corresponding repeat expression.bin; original UTF8/UTF16 preserved, never Base64.",
+  "cohort": "indent",
+  "evaluator_environment": {},
+  "evaluator_external_properties": {},
+  "oracle_internal": false,
+  "original_program": "regex-pcf",
+  "power_assertions": false,
+  "program": "indent-regex-pcf",
+  "queries": 2,
+  "repetitions": 2,
+  "required": true,
+  "required_unresolved": false,
+  "source_uri": "file:///stage110/regex-pcf.pkl"
+}

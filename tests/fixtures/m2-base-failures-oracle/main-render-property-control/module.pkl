@@ -1,0 +1,3 @@
+class Holder { bad: String }
+value = new Holder {}
+output { value = module.value }

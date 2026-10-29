@@ -1,0 +1,716 @@
+{
+  "status": "expected-free source-only proposal; no Java grant received",
+  "supersedes_no_evidence": true,
+  "main_capture": {
+    "path": "target/m2/stage111-base-failures-oracle-01/report.json",
+    "bytes": 3304989,
+    "mode": 420,
+    "sha256": "51caa62966ddd3e4805ccdb869d198b2d9615cf7e2158ba064401eff2883f5e1"
+  },
+  "main_execution_audit": {
+    "path": "target/m2/stage111-base-failures-oracle-execution-01/report.json",
+    "bytes": 25492,
+    "mode": 420,
+    "sha256": "0165ce63be5d041eb25b2ccdb51699d821a8a155bf7ba6a90e05a9d58a0de727"
+  },
+  "coverage_dispositions": {
+    "path": "target/m2/stage111-base-failures-oracle-execution-01/coverage-dispositions.json",
+    "bytes": 113331,
+    "mode": 420,
+    "sha256": "61a854b7c200a16dd6748788abf153ca3b55e5704deba625f8e59b5eb1512065"
+  },
+  "program_profiles": 11,
+  "profile_queries": 50,
+  "planned_sessions": 22,
+  "planned_observations": 200,
+  "programs": [
+    {
+      "id": "bridge-direct",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-direct.pkl",
+      "source_sha256": "9e97448fe5451f7ce4b52eaa3a58ab3ea16f9c64dd0f499aed943341fd6ac1a7",
+      "source_uri": "file:///stage111-supplement/bridge-direct.pkl",
+      "source": "import \"pkl:test\"\nimport \"pkl:base\"\nlocal function nestedTodo(): Int = TODO()\nlocal function nestedUndefined(): Int = Undefined()\nx = 1\n\nfunction stage111Bridge000(): Any = base.TODO()\nfunction stage111Bridge001(): Any = base.Undefined()\nfunction stage111Bridge002(): Any = nestedTodo()\nfunction stage111Bridge003(): Any = nestedUndefined()\nfunction stage111Bridge004(): Any = test.catch(() -> TODO())\nfunction stage111Bridge005(): Any = test.catch(() -> Undefined())\nfunction stage111Bridge006(): Any = test.catchOrNull(() -> TODO())\nfunction stage111Bridge007(): Any = test.catchOrNull(() -> Undefined())\n",
+      "frame_transformer": "default",
+      "power_assertions": false,
+      "query_passes_same_evaluator": 2,
+      "fresh_evaluator_sessions": 2,
+      "queries": [
+        {
+          "id": "q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "base.TODO()",
+          "origin_query_index": 2,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "base.Undefined()",
+          "origin_query_index": 3,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-002",
+          "expression": "stage111Bridge002()",
+          "intended_expression": "nestedTodo()",
+          "origin_query_index": 4,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-003",
+          "expression": "stage111Bridge003()",
+          "intended_expression": "nestedUndefined()",
+          "origin_query_index": 5,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-004",
+          "expression": "stage111Bridge004()",
+          "intended_expression": "test.catch(() -> TODO())",
+          "origin_query_index": 6,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-005",
+          "expression": "stage111Bridge005()",
+          "intended_expression": "test.catch(() -> Undefined())",
+          "origin_query_index": 7,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-006",
+          "expression": "stage111Bridge006()",
+          "intended_expression": "test.catchOrNull(() -> TODO())",
+          "origin_query_index": 8,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-007",
+          "expression": "stage111Bridge007()",
+          "intended_expression": "test.catchOrNull(() -> Undefined())",
+          "origin_query_index": 9,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false
+        }
+      ],
+      "original_proposal": {
+        "program": "direct",
+        "input": {
+          "path": "target/m2/stage111-base-failures-candidate-01/proposals/direct.pkl",
+          "bytes": 136,
+          "mode": 420,
+          "sha256": "038970d551abeed4f3e09c121ce4d6e3ca965abbfc1f24a6d5a9f7888599e985"
+        }
+      },
+      "original_source_preserved_as_prefix": true
+    },
+    {
+      "id": "bridge-direct-identity",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-direct.pkl",
+      "source_sha256": "9e97448fe5451f7ce4b52eaa3a58ab3ea16f9c64dd0f499aed943341fd6ac1a7",
+      "source_uri": "file:///stage111-supplement/bridge-direct.pkl",
+      "source": "import \"pkl:test\"\nimport \"pkl:base\"\nlocal function nestedTodo(): Int = TODO()\nlocal function nestedUndefined(): Int = Undefined()\nx = 1\n\nfunction stage111Bridge000(): Any = base.TODO()\nfunction stage111Bridge001(): Any = base.Undefined()\nfunction stage111Bridge002(): Any = nestedTodo()\nfunction stage111Bridge003(): Any = nestedUndefined()\nfunction stage111Bridge004(): Any = test.catch(() -> TODO())\nfunction stage111Bridge005(): Any = test.catch(() -> Undefined())\nfunction stage111Bridge006(): Any = test.catchOrNull(() -> TODO())\nfunction stage111Bridge007(): Any = test.catchOrNull(() -> Undefined())\n",
+      "frame_transformer": "identity",
+      "power_assertions": false,
+      "query_passes_same_evaluator": 2,
+      "fresh_evaluator_sessions": 2,
+      "queries": [
+        {
+          "id": "q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "base.TODO()",
+          "origin_query_index": 2,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "base.Undefined()",
+          "origin_query_index": 3,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-002",
+          "expression": "stage111Bridge002()",
+          "intended_expression": "nestedTodo()",
+          "origin_query_index": 4,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-003",
+          "expression": "stage111Bridge003()",
+          "intended_expression": "nestedUndefined()",
+          "origin_query_index": 5,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-004",
+          "expression": "stage111Bridge004()",
+          "intended_expression": "test.catch(() -> TODO())",
+          "origin_query_index": 6,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-005",
+          "expression": "stage111Bridge005()",
+          "intended_expression": "test.catch(() -> Undefined())",
+          "origin_query_index": 7,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-006",
+          "expression": "stage111Bridge006()",
+          "intended_expression": "test.catchOrNull(() -> TODO())",
+          "origin_query_index": 8,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-007",
+          "expression": "stage111Bridge007()",
+          "intended_expression": "test.catchOrNull(() -> Undefined())",
+          "origin_query_index": 9,
+          "purpose": "Original source spans, imported/global binding, nothing return, nested calls and guest catches.",
+          "expected": null,
+          "executed": false
+        }
+      ],
+      "original_proposal": {
+        "program": "direct",
+        "input": {
+          "path": "target/m2/stage111-base-failures-candidate-01/proposals/direct.pkl",
+          "bytes": 136,
+          "mode": 420,
+          "sha256": "038970d551abeed4f3e09c121ce4d6e3ca965abbfc1f24a6d5a9f7888599e985"
+        }
+      },
+      "original_source_preserved_as_prefix": true
+    },
+    {
+      "id": "bridge-arity-order",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-arity-order.pkl",
+      "source_sha256": "9d36d6dd129307e784d857634c6d001729933ea5ed66af73a59f2767a6c6e685",
+      "source_uri": "file:///stage111-supplement/bridge-arity-order.pkl",
+      "source": "import \"pkl:base\"\nx = 1\n\nfunction stage111Bridge000(): Any = base.TODO(1, 2)\nfunction stage111Bridge001(): Any = base.Undefined(1, 2)\n",
+      "frame_transformer": "default",
+      "power_assertions": false,
+      "query_passes_same_evaluator": 2,
+      "fresh_evaluator_sessions": 2,
+      "queries": [
+        {
+          "id": "q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "base.TODO(1, 2)",
+          "origin_query_index": 6,
+          "purpose": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "base.Undefined(1, 2)",
+          "origin_query_index": 7,
+          "purpose": "Zero arity, argument evaluation ordering, Logger records and imported method diagnostics.",
+          "expected": null,
+          "executed": false
+        }
+      ],
+      "original_proposal": {
+        "program": "arity-order",
+        "input": {
+          "path": "target/m2/stage111-base-failures-candidate-01/proposals/arity-order.pkl",
+          "bytes": 24,
+          "mode": 420,
+          "sha256": "d9d2805316d64abc6e60424740918d6734edded79a43711dface860ef278a712"
+        }
+      },
+      "original_source_preserved_as_prefix": true
+    },
+    {
+      "id": "bridge-lexical-shadow",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-lexical-shadow.pkl",
+      "source_sha256": "0fb062425ad8ac6ed043b890433121f22ab64f6e7d055cfd17d9282ca904ff47",
+      "source_uri": "file:///stage111-supplement/bridge-lexical-shadow.pkl",
+      "source": "import \"pkl:base\"\nlocal function TODO(): Int = 17\nlocal function Undefined(): String = \"local\"\na = TODO()\nb = Undefined()\n\nfunction stage111Bridge000(): Any = base.TODO()\nfunction stage111Bridge001(): Any = base.Undefined()\n",
+      "frame_transformer": "default",
+      "power_assertions": false,
+      "query_passes_same_evaluator": 2,
+      "fresh_evaluator_sessions": 2,
+      "queries": [
+        {
+          "id": "q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "base.TODO()",
+          "origin_query_index": 2,
+          "purpose": "Lexical method declarations precede base methods; explicit imported base remains distinct.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "base.Undefined()",
+          "origin_query_index": 3,
+          "purpose": "Lexical method declarations precede base methods; explicit imported base remains distinct.",
+          "expected": null,
+          "executed": false
+        }
+      ],
+      "original_proposal": {
+        "program": "lexical-shadow",
+        "input": {
+          "path": "target/m2/stage111-base-failures-candidate-01/proposals/lexical-shadow.pkl",
+          "bytes": 122,
+          "mode": 420,
+          "sha256": "a94eb8204a9c324a312b0f40790e54fc5eb147d1afb6bb1cc78c1f577264645f"
+        }
+      },
+      "original_source_preserved_as_prefix": true
+    },
+    {
+      "id": "bridge-lazy-unreached",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-lazy-unreached.pkl",
+      "source_sha256": "48fd3e1babe586e850ca5122f409f98edf1517d2025dd4cb38022d9af08d0acb",
+      "source_uri": "file:///stage111-supplement/bridge-lazy-unreached.pkl",
+      "source": "import \"pkl:test\"\nsafe = new { good = 7\n  bad = Undefined()\n  todo = TODO() }\n\nfunction stage111Bridge000(): Any = safe.good\nfunction stage111Bridge001(): Any = test.catch(() -> safe.bad)\nfunction stage111Bridge002(): Any = test.catch(() -> safe.todo)\nfunction stage111Bridge003(): Any = safe.good\n",
+      "frame_transformer": "default",
+      "power_assertions": false,
+      "query_passes_same_evaluator": 2,
+      "fresh_evaluator_sessions": 2,
+      "queries": [
+        {
+          "id": "q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "safe.good",
+          "origin_query_index": 0,
+          "purpose": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "test.catch(() -> safe.bad)",
+          "origin_query_index": 4,
+          "purpose": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-002",
+          "expression": "stage111Bridge002()",
+          "intended_expression": "test.catch(() -> safe.todo)",
+          "origin_query_index": 5,
+          "purpose": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-003",
+          "expression": "stage111Bridge003()",
+          "intended_expression": "safe.good",
+          "origin_query_index": 6,
+          "purpose": "Unforced branches and lazy fields; caught failure must not corrupt successful cached fields.",
+          "expected": null,
+          "executed": false
+        }
+      ],
+      "original_proposal": {
+        "program": "lazy-unreached",
+        "input": {
+          "path": "target/m2/stage111-base-failures-candidate-01/proposals/lazy-unreached.pkl",
+          "bytes": 78,
+          "mode": 420,
+          "sha256": "5e82e7052ced8addbfe1687a6860887d469011a35c6e7f2f29504db3999afd74"
+        }
+      },
+      "original_source_preserved_as_prefix": true
+    },
+    {
+      "id": "bridge-retry-logger",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-retry-logger.pkl",
+      "source_sha256": "9d9f3f0d2aa5787f50892f68c79d98810728072126c57be50d72ac1cb51e855a",
+      "source_uri": "file:///stage111-supplement/bridge-retry-logger.pkl",
+      "source": "import \"pkl:test\"\nlocal good = trace(7)\nundefined = let (seen = trace(good)) Undefined()\ntodo = let (seen = trace(good)) TODO()\nstable = good\n\nlocal stage111RetryUndefined = if (trace(true)) Undefined() else 0\nlocal stage111RetryTodo = if (trace(false)) 0 else TODO()\n\nfunction stage111Bridge000(): Any = stable\nfunction stage111Bridge001(): Any = test.catch(() -> stage111RetryUndefined)\nfunction stage111Bridge002(): Any = test.catch(() -> stage111RetryUndefined)\nfunction stage111Bridge003(): Any = test.catch(() -> stage111RetryTodo)\nfunction stage111Bridge004(): Any = test.catch(() -> stage111RetryTodo)\nfunction stage111Bridge005(): Any = stable\n",
+      "frame_transformer": "default",
+      "power_assertions": false,
+      "query_passes_same_evaluator": 2,
+      "fresh_evaluator_sessions": 2,
+      "queries": [
+        {
+          "id": "q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "stable",
+          "origin_query_index": 0,
+          "purpose": "Successful good/stable dependency trace remains cached; each failed initializer forces trace(true/false) as its condition before Undefined/TODO, making retries observable through ordered Logger rows across both same-evaluator passes.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "test.catch(() -> stage111RetryUndefined)",
+          "origin_query_index": 1,
+          "purpose": "Successful good/stable dependency trace remains cached; each failed initializer forces trace(true/false) as its condition before Undefined/TODO, making retries observable through ordered Logger rows across both same-evaluator passes.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-002",
+          "expression": "stage111Bridge002()",
+          "intended_expression": "test.catch(() -> stage111RetryUndefined)",
+          "origin_query_index": 2,
+          "purpose": "Successful good/stable dependency trace remains cached; each failed initializer forces trace(true/false) as its condition before Undefined/TODO, making retries observable through ordered Logger rows across both same-evaluator passes.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-003",
+          "expression": "stage111Bridge003()",
+          "intended_expression": "test.catch(() -> stage111RetryTodo)",
+          "origin_query_index": 3,
+          "purpose": "Successful good/stable dependency trace remains cached; each failed initializer forces trace(true/false) as its condition before Undefined/TODO, making retries observable through ordered Logger rows across both same-evaluator passes.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-004",
+          "expression": "stage111Bridge004()",
+          "intended_expression": "test.catch(() -> stage111RetryTodo)",
+          "origin_query_index": 4,
+          "purpose": "Successful good/stable dependency trace remains cached; each failed initializer forces trace(true/false) as its condition before Undefined/TODO, making retries observable through ordered Logger rows across both same-evaluator passes.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-005",
+          "expression": "stage111Bridge005()",
+          "intended_expression": "stable",
+          "origin_query_index": 5,
+          "purpose": "Successful good/stable dependency trace remains cached; each failed initializer forces trace(true/false) as its condition before Undefined/TODO, making retries observable through ordered Logger rows across both same-evaluator passes.",
+          "expected": null,
+          "executed": false
+        }
+      ],
+      "original_proposal": {
+        "program": "retry-logger",
+        "input": {
+          "path": "target/m2/stage111-base-failures-candidate-01/proposals/retry-logger.pkl",
+          "bytes": 142,
+          "mode": 420,
+          "sha256": "9570143bb0e423e4a56f8529f8fb12ddff44a2c1a7b28b26d2f49149e480aa7c"
+        }
+      },
+      "original_source_preserved_as_prefix": true
+    },
+    {
+      "id": "bridge-infer-catch-order",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-infer-catch-order.pkl",
+      "source_sha256": "0e8eb935e562229879a120f566cac10a92d230b77b3c48c0c45919458849f940",
+      "source_uri": "file:///stage111-supplement/bridge-infer-catch-order.pkl",
+      "source": "import \"pkl:test\"\nclass C { value = Undefined() }\nx = new C { value = new {} }\nclass D { value = test.catch(() -> Undefined()) }\ny = new D { value = new {} }\n\nfunction stage111Bridge000(): Any = test.catch(() -> x.value)\nfunction stage111Bridge001(): Any = test.catch(() -> y.value)\nfunction stage111Bridge002(): Any = x.toString()\n",
+      "frame_transformer": "default",
+      "power_assertions": false,
+      "query_passes_same_evaluator": 2,
+      "fresh_evaluator_sessions": 2,
+      "queries": [
+        {
+          "id": "q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "test.catch(() -> x.value)",
+          "origin_query_index": 0,
+          "purpose": "Nearest guest catch, inferred-parent conversion and allow-undefined forcing boundaries preserve error ordering.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "test.catch(() -> y.value)",
+          "origin_query_index": 1,
+          "purpose": "Nearest guest catch, inferred-parent conversion and allow-undefined forcing boundaries preserve error ordering.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-002",
+          "expression": "stage111Bridge002()",
+          "intended_expression": "x.toString()",
+          "origin_query_index": 2,
+          "purpose": "Nearest guest catch, inferred-parent conversion and allow-undefined forcing boundaries preserve error ordering.",
+          "expected": null,
+          "executed": false
+        }
+      ],
+      "original_proposal": {
+        "program": "infer-catch-order",
+        "input": {
+          "path": "target/m2/stage111-base-failures-candidate-01/proposals/infer-catch-order.pkl",
+          "bytes": 158,
+          "mode": 420,
+          "sha256": "50989b333d7ff5673bc86397d3a6bbbb1ec2dc7e0904f7b4a99b921e759fbd83"
+        }
+      },
+      "original_source_preserved_as_prefix": true
+    },
+    {
+      "id": "bridge-receiverless-lazy-module",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/bridge-receiverless-lazy-module.pkl",
+      "source_sha256": "5cc975e08977b18b706782a96a78210dc84ea4663fb95e46b031bd9f6b8458bc",
+      "source_uri": "file:///stage111-supplement/bridge-receiverless-lazy-module.pkl",
+      "source": "import \"pkl:test\"\nconst value = Undefined()\nx = value\n\nfunction stage111Bridge000(): Any = test.catch(() -> x)\nfunction stage111Bridge001(): Any = test.catch(() -> x)\n",
+      "frame_transformer": "default",
+      "power_assertions": false,
+      "query_passes_same_evaluator": 2,
+      "fresh_evaluator_sessions": 2,
+      "queries": [
+        {
+          "id": "q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "test.catch(() -> x)",
+          "origin_query_index": 0,
+          "purpose": "Receiverless provenance survives any lazy/module error caching path; a frontend or eager-init error remains an actual outcome.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "test.catch(() -> x)",
+          "origin_query_index": 1,
+          "purpose": "Receiverless provenance survives any lazy/module error caching path; a frontend or eager-init error remains an actual outcome.",
+          "expected": null,
+          "executed": false
+        }
+      ],
+      "original_proposal": {
+        "program": "receiverless-lazy-module",
+        "input": {
+          "path": "target/m2/stage111-base-failures-candidate-01/proposals/receiverless-lazy-module.pkl",
+          "bytes": 54,
+          "mode": 420,
+          "sha256": "c0e2b0882ecfaad2f8c559191d25eacbd789d7b8ef99277cd04c637569e07185"
+        }
+      },
+      "original_source_preserved_as_prefix": true
+    },
+    {
+      "id": "reflection-metadata",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/reflection-metadata.pkl",
+      "source_sha256": "9f4a0ff9c41f84d6a4a9dceb05733a599f5640e4e2e8c355be423edaae14f1be",
+      "source_uri": "file:///stage111-supplement/reflection-metadata.pkl",
+      "source": "import \"pkl:base\"\nimport \"pkl:reflect\"\nlocal todo = reflect.Module(base).moduleClass.methods[\"TODO\"]\nlocal undefined = reflect.Module(base).moduleClass.methods[\"Undefined\"]\nfunction stage111Bridge000(): Any = todo.name\nfunction stage111Bridge001(): Any = todo.modifiers\nfunction stage111Bridge002(): Any = todo.parameters.length\nfunction stage111Bridge003(): Any = todo.returnType == reflect.nothingType\nfunction stage111Bridge004(): Any = todo.docComment\nfunction stage111Bridge005(): Any = todo.location.toString()\nfunction stage111Bridge006(): Any = undefined.name\nfunction stage111Bridge007(): Any = undefined.modifiers\nfunction stage111Bridge008(): Any = undefined.parameters.length\nfunction stage111Bridge009(): Any = undefined.returnType == reflect.nothingType\nfunction stage111Bridge010(): Any = undefined.docComment\nfunction stage111Bridge011(): Any = undefined.location.toString()\n",
+      "frame_transformer": "default",
+      "power_assertions": false,
+      "query_passes_same_evaluator": 2,
+      "fresh_evaluator_sessions": 2,
+      "queries": [
+        {
+          "id": "q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "todo.name",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "todo.modifiers",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-002",
+          "expression": "stage111Bridge002()",
+          "intended_expression": "todo.parameters.length",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-003",
+          "expression": "stage111Bridge003()",
+          "intended_expression": "todo.returnType == reflect.nothingType",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-004",
+          "expression": "stage111Bridge004()",
+          "intended_expression": "todo.docComment",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-005",
+          "expression": "stage111Bridge005()",
+          "intended_expression": "todo.location.toString()",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-006",
+          "expression": "stage111Bridge006()",
+          "intended_expression": "undefined.name",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-007",
+          "expression": "stage111Bridge007()",
+          "intended_expression": "undefined.modifiers",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-008",
+          "expression": "stage111Bridge008()",
+          "intended_expression": "undefined.parameters.length",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-009",
+          "expression": "stage111Bridge009()",
+          "intended_expression": "undefined.returnType == reflect.nothingType",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-010",
+          "expression": "stage111Bridge010()",
+          "intended_expression": "undefined.docComment",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-011",
+          "expression": "stage111Bridge011()",
+          "intended_expression": "undefined.location.toString()",
+          "origin_query_index": null,
+          "purpose": "Published function body resolves source-local mirrors/imports, observing original base method metadata without invoking the method.",
+          "expected": null,
+          "executed": false
+        }
+      ],
+      "original_proposal": null,
+      "original_source_preserved_as_prefix": null
+    },
+    {
+      "id": "custom-receiver-competing-methods",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/custom-receiver-competing-methods.pkl",
+      "source_sha256": "e32fc20a05a2957476b8d2a0a440918a1bf85e1cd997c9c2aedcb08765c8eb0f",
+      "source_uri": "file:///stage111-supplement/custom-receiver-competing-methods.pkl",
+      "source": "class Receiver {\n  function TODO(): Boolean = true\n  function Undefined(): Boolean = true\n}\ntypealias TodoReceiver = Receiver(TODO())\ntypealias UndefinedReceiver = Receiver(Undefined())\na: TodoReceiver = new Receiver {}\nb: UndefinedReceiver = new Receiver {}\nfunction stage111Bridge000(): Any = a\nfunction stage111Bridge001(): Any = b\n",
+      "frame_transformer": "default",
+      "power_assertions": false,
+      "query_passes_same_evaluator": 2,
+      "fresh_evaluator_sessions": 2,
+      "queries": [
+        {
+          "id": "q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "a",
+          "origin_query_index": null,
+          "purpose": "Receiver has same-named methods; a source-local constraint call distinguishes base-before-custom-receiver precedence.",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q-001",
+          "expression": "stage111Bridge001()",
+          "intended_expression": "b",
+          "origin_query_index": null,
+          "purpose": "Receiver has same-named methods; a source-local constraint call distinguishes base-before-custom-receiver precedence.",
+          "expected": null,
+          "executed": false
+        }
+      ],
+      "original_proposal": null,
+      "original_source_preserved_as_prefix": null
+    },
+    {
+      "id": "const-property-shadow-control",
+      "source_input": "target/m2/stage111-base-failures-supplement-oracle-prep-02/sources/const-property-shadow-control.pkl",
+      "source_sha256": "a3ccc34fbe237f0eaad84dc2c70dcba76fdd5c5fbcef77611576cf3249153fb3",
+      "source_uri": "file:///stage111-supplement/const-property-shadow-control.pkl",
+      "source": "function TODO(): Int = 17\nconst rejected = TODO()\nfunction stage111Bridge000(): Any = rejected\n",
+      "frame_transformer": "default",
+      "power_assertions": false,
+      "query_passes_same_evaluator": 2,
+      "fresh_evaluator_sessions": 2,
+      "queries": [
+        {
+          "id": "q-000",
+          "expression": "stage111Bridge000()",
+          "intended_expression": "rejected",
+          "origin_query_index": null,
+          "purpose": "A const property initializer references a non-const lexical method, avoiding the const-function lexical barrier present in the original successful control.",
+          "expected": null,
+          "executed": false
+        }
+      ],
+      "original_proposal": null,
+      "original_source_preserved_as_prefix": null
+    }
+  ],
+  "invalid_input_rule": "Retain all actual results and unreached controls; write separate corrections. Never derive expected results from Rust.",
+  "original_queries": 42,
+  "identity_profile_queries": 8,
+  "prepared_predecessor": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-prep-01/preparation.json",
+    "bytes": 3347,
+    "mode": 420,
+    "sha256": "857da4270c1658c4e23cf870c5bfc622dd386e457f4192582619c8549da61e6b"
+  }
+}

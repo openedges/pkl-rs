@@ -1,0 +1,10 @@
+session-open mode=string rows=4
+call-enter=string-0-pass-0-q-000
+call-exit=string-0-pass-0-q-000 status=success
+call-enter=string-1-pass-0-q-001
+call-exit=string-1-pass-0-q-001 status=success
+call-enter=string-2-pass-1-q-000
+call-exit=string-2-pass-1-q-000 status=success
+call-enter=string-3-pass-1-q-001
+call-exit=string-3-pass-1-q-001 status=success
+session-closed mode=string rows=4 public-calls=4 success=4 errors=0

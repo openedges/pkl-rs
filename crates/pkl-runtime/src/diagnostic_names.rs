@@ -1,6 +1,16 @@
 //! Property-name candidates from the pinned Pkl 0.32.0 base module.
 //! These diagnostic names do not imply that their runtime values are implemented.
 
+/// SymbolTable.toQualifiedName uses Lexer.maybeQuoteIdentifier for each named
+/// scope. Keep metadata labels separate from raw member lookup/class names.
+pub(crate) fn quote_identifier(name: &str) -> String {
+    if crate::parser::is_regular_identifier(name) {
+        name.to_owned()
+    } else {
+        format!("`{name}`")
+    }
+}
+
 pub(crate) const BASE_PROPERTIES: &[&str] = &[
     "Any",
     "Null",

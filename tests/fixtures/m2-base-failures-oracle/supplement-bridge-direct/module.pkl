@@ -1,0 +1,14 @@
+import "pkl:test"
+import "pkl:base"
+local function nestedTodo(): Int = TODO()
+local function nestedUndefined(): Int = Undefined()
+x = 1
+
+function stage111Bridge000(): Any = base.TODO()
+function stage111Bridge001(): Any = base.Undefined()
+function stage111Bridge002(): Any = nestedTodo()
+function stage111Bridge003(): Any = nestedUndefined()
+function stage111Bridge004(): Any = test.catch(() -> TODO())
+function stage111Bridge005(): Any = test.catch(() -> Undefined())
+function stage111Bridge006(): Any = test.catchOrNull(() -> TODO())
+function stage111Bridge007(): Any = test.catchOrNull(() -> Undefined())

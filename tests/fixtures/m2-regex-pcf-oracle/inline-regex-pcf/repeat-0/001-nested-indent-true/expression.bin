@@ -1,0 +1,1 @@
+(new PcfRenderer { indent = "----"; useCustomStringDelimiters = true }).renderDocument(new Dynamic { nested = new Dynamic { pattern = Regex("a\\s\nb") } })

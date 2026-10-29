@@ -1,0 +1,5 @@
+import "pkl:test"
+class C { value = Undefined() }
+x = new C { value = new {} }
+class D { value = test.catch(() -> Undefined()) }
+y = new D { value = new {} }

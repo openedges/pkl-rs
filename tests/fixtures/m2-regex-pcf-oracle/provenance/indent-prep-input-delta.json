@@ -1,0 +1,21 @@
+{
+  "preserved_main_authority": {
+    "path": "target/m2/stage110-regex-pcf-oracle-02/report.json",
+    "bytes": 914808,
+    "mode": 420,
+    "sha256": "581d031bac14595940a341f0ff9362c03a64dc8760eeaffbc7ede3bffc62cbaa"
+  },
+  "changes": [
+    {
+      "id": "nested-indent-false",
+      "before": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = false }).renderDocument(new { nested { pattern = Regex(patterns[9]) } })",
+      "after": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = false }).renderDocument(new Dynamic { nested = new Dynamic { pattern = Regex(patterns[9]) } })"
+    },
+    {
+      "id": "nested-indent-true",
+      "before": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = true }).renderDocument(new { nested { pattern = Regex(patterns[9]) } })",
+      "after": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = true }).renderDocument(new Dynamic { nested = new Dynamic { pattern = Regex(patterns[9]) } })"
+    }
+  ],
+  "reason": "Only ambiguous new{} argument changed to explicit Dynamic parents. Main actual error observations remain unchanged; they do not establish indentation coverage."
+}

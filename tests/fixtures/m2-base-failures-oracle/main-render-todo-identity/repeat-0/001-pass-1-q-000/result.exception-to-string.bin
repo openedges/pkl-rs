@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+TODO
+
+2377 | const function TODO(): nothing = throw("TODO")
+                                        ^^^^^^^^^^^^^
+at pkl.base#TODO (pkl:base)
+
+1 | value = new { nested { bad = TODO() } }
+                                 ^^^^^^
+at render-todo#value.nested.bad (file:///stage111/render-todo.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (pkl:base)

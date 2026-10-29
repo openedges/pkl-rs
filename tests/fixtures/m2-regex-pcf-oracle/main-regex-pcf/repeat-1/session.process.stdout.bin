@@ -1,0 +1,96 @@
+session-open mode=string rows=47
+call-enter=string-0-empty-false
+call-exit=string-0-empty-false status=success
+call-enter=string-1-empty-true
+call-exit=string-1-empty-true status=success
+call-enter=string-2-plain-false
+call-exit=string-2-plain-false status=success
+call-enter=string-3-plain-true
+call-exit=string-3-plain-true status=success
+call-enter=string-4-regex-escaped-s-false
+call-exit=string-4-regex-escaped-s-false status=success
+call-enter=string-5-regex-escaped-s-true
+call-exit=string-5-regex-escaped-s-true status=success
+call-enter=string-6-single-quote-false
+call-exit=string-6-single-quote-false status=success
+call-enter=string-7-single-quote-true
+call-exit=string-7-single-quote-true status=success
+call-enter=string-8-leading-two-quotes-hash-false
+call-exit=string-8-leading-two-quotes-hash-false status=success
+call-enter=string-9-leading-two-quotes-hash-true
+call-exit=string-9-leading-two-quotes-hash-true status=success
+call-enter=string-10-backslash-hash-false
+call-exit=string-10-backslash-hash-false status=success
+call-enter=string-11-backslash-hash-true
+call-exit=string-11-backslash-hash-true status=success
+call-enter=string-12-literal-lf-false
+call-exit=string-12-literal-lf-false status=success
+call-enter=string-13-literal-lf-true
+call-exit=string-13-literal-lf-true status=success
+call-enter=string-14-literal-crlf-tab-false
+call-exit=string-14-literal-crlf-tab-false status=success
+call-enter=string-15-literal-crlf-tab-true
+call-exit=string-15-literal-crlf-tab-true status=success
+call-enter=string-16-nonbmp-unicode-false
+call-exit=string-16-nonbmp-unicode-false status=success
+call-enter=string-17-nonbmp-unicode-true
+call-exit=string-17-nonbmp-unicode-true status=success
+call-enter=string-18-backslash-with-literal-lf-false
+call-exit=string-18-backslash-with-literal-lf-false status=success
+call-enter=string-19-backslash-with-literal-lf-true
+call-exit=string-19-backslash-with-literal-lf-true status=success
+call-enter=string-20-regex-escaped-n-false
+call-exit=string-20-regex-escaped-n-false status=success
+call-enter=string-21-regex-escaped-n-true
+call-exit=string-21-regex-escaped-n-true status=success
+call-enter=string-22-regex-escaped-r-false
+call-exit=string-22-regex-escaped-r-false status=success
+call-enter=string-23-regex-escaped-r-true
+call-exit=string-23-regex-escaped-r-true status=success
+call-enter=string-24-regex-escaped-t-false
+call-exit=string-24-regex-escaped-t-false status=success
+call-enter=string-25-regex-escaped-t-true
+call-exit=string-25-regex-escaped-t-true status=success
+call-enter=string-26-literal-cr-false
+call-exit=string-26-literal-cr-false status=success
+call-enter=string-27-literal-cr-true
+call-exit=string-27-literal-cr-true status=success
+call-enter=string-28-literal-tab-false
+call-exit=string-28-literal-tab-false status=success
+call-enter=string-29-literal-tab-true
+call-exit=string-29-literal-tab-true status=success
+call-enter=string-30-quote-backslash-hash-collision-false
+call-exit=string-30-quote-backslash-hash-collision-false status=success
+call-enter=string-31-quote-backslash-hash-collision-true
+call-exit=string-31-quote-backslash-hash-collision-true status=success
+call-enter=string-32-direct-regex-escaped-s
+call-exit=string-32-direct-regex-escaped-s status=success
+call-enter=string-33-direct-literal-lf
+call-exit=string-33-direct-literal-lf status=success
+call-enter=string-34-direct-backslash-with-literal-lf
+call-exit=string-34-direct-backslash-with-literal-lf status=success
+call-enter=string-35-direct-regex-escaped-n
+call-exit=string-35-direct-regex-escaped-n status=success
+call-enter=string-36-direct-literal-cr
+call-exit=string-36-direct-literal-cr status=success
+call-enter=string-37-direct-literal-tab
+call-exit=string-37-direct-literal-tab status=success
+call-enter=string-38-direct-quote-backslash-hash-collision
+call-exit=string-38-direct-quote-backslash-hash-collision status=success
+call-enter=string-39-string-control-false
+call-exit=string-39-string-control-false status=success
+call-enter=string-40-nested-indent-false
+call-exit=string-40-nested-indent-false status=error
+call-enter=string-41-collection-false
+call-exit=string-41-collection-false status=success
+call-enter=string-42-string-control-true
+call-exit=string-42-string-control-true status=success
+call-enter=string-43-nested-indent-true
+call-exit=string-43-nested-indent-true status=error
+call-enter=string-44-collection-true
+call-exit=string-44-collection-true status=success
+call-enter=string-45-json-rejection
+call-exit=string-45-json-rejection status=error
+call-enter=string-46-invalid-regex
+call-exit=string-46-invalid-regex status=error
+session-closed mode=string rows=47 public-calls=47 success=43 errors=4

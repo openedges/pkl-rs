@@ -1,0 +1,3 @@
+# Base failure Java fixtures
+
+Pinned Pkl0.32.0 main324 and supplemental200 observations:524total (200success/324ordinaryerrors),30orderedLogger events. Retain all262expanded query slots from131profile queries across31profiles, two same-evaluator passes and two fresh sessions. Main120lookup-unreached errors and4successful const-call controls which did not establish their intended restriction remain ordinary required raw contracts; dispositions are preserved separately. Supplement public bridge functions reach local aliases/helpers; forced retry trace is separate from successfully cached good7. Default and identity frame modes are distinct profiles sharing original source URI/bytes where specified. No Rust comparison has executed.

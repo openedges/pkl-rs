@@ -1,0 +1,818 @@
+[
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(false).renderValue(Regex(patterns[0]))",
+    "id": "empty-false",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(true).renderValue(Regex(patterns[0]))",
+    "id": "empty-true",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(false).renderValue(Regex(patterns[1]))",
+    "id": "plain-false",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(true).renderValue(Regex(patterns[1]))",
+    "id": "plain-true",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 3,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(false).renderValue(Regex(patterns[2]))",
+    "id": "regex-escaped-s-false",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 4,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(true).renderValue(Regex(patterns[2]))",
+    "id": "regex-escaped-s-true",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 5,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(false).renderValue(Regex(patterns[3]))",
+    "id": "single-quote-false",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 6,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(true).renderValue(Regex(patterns[3]))",
+    "id": "single-quote-true",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 7,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(false).renderValue(Regex(patterns[4]))",
+    "id": "leading-two-quotes-hash-false",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 8,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(true).renderValue(Regex(patterns[4]))",
+    "id": "leading-two-quotes-hash-true",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 9,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(false).renderValue(Regex(patterns[5]))",
+    "id": "backslash-hash-false",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 10,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(true).renderValue(Regex(patterns[5]))",
+    "id": "backslash-hash-true",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 11,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(false).renderValue(Regex(patterns[6]))",
+    "id": "literal-lf-false",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 12,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(true).renderValue(Regex(patterns[6]))",
+    "id": "literal-lf-true",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 13,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(false).renderValue(Regex(patterns[7]))",
+    "id": "literal-crlf-tab-false",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 14,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(true).renderValue(Regex(patterns[7]))",
+    "id": "literal-crlf-tab-true",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 15,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(false).renderValue(Regex(patterns[8]))",
+    "id": "nonbmp-unicode-false",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 16,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(true).renderValue(Regex(patterns[8]))",
+    "id": "nonbmp-unicode-true",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 17,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(false).renderValue(Regex(patterns[9]))",
+    "id": "backslash-with-literal-lf-false",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 18,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(true).renderValue(Regex(patterns[9]))",
+    "id": "backslash-with-literal-lf-true",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 19,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(false).renderValue(Regex(patterns[10]))",
+    "id": "regex-escaped-n-false",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 20,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(true).renderValue(Regex(patterns[10]))",
+    "id": "regex-escaped-n-true",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 21,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(false).renderValue(Regex(patterns[11]))",
+    "id": "regex-escaped-r-false",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 22,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(true).renderValue(Regex(patterns[11]))",
+    "id": "regex-escaped-r-true",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 23,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(false).renderValue(Regex(patterns[12]))",
+    "id": "regex-escaped-t-false",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 24,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(true).renderValue(Regex(patterns[12]))",
+    "id": "regex-escaped-t-true",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 25,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(false).renderValue(Regex(patterns[13]))",
+    "id": "literal-cr-false",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 26,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(true).renderValue(Regex(patterns[13]))",
+    "id": "literal-cr-true",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 27,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(false).renderValue(Regex(patterns[14]))",
+    "id": "literal-tab-false",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 28,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(true).renderValue(Regex(patterns[14]))",
+    "id": "literal-tab-true",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 29,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(false).renderValue(Regex(patterns[15]))",
+    "id": "quote-backslash-hash-collision-false",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 30,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(true).renderValue(Regex(patterns[15]))",
+    "id": "quote-backslash-hash-collision-true",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 31,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "Regex(patterns[2]).toString()",
+    "id": "direct-regex-escaped-s",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 32,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "Regex(patterns[6]).toString()",
+    "id": "direct-literal-lf",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 33,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "Regex(patterns[9]).toString()",
+    "id": "direct-backslash-with-literal-lf",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 34,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "Regex(patterns[10]).toString()",
+    "id": "direct-regex-escaped-n",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 35,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "Regex(patterns[13]).toString()",
+    "id": "direct-literal-cr",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 36,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "Regex(patterns[14]).toString()",
+    "id": "direct-literal-tab",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 37,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "Regex(patterns[15]).toString()",
+    "id": "direct-quote-backslash-hash-collision",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 38,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(false).renderValue(patterns[2])",
+    "id": "string-control-false",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 39,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = false }).renderDocument(new { nested { pattern = Regex(patterns[9]) } })",
+    "id": "nested-indent-false",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 40,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(false).renderValue(List(Regex(patterns[2]), Regex(patterns[6])))",
+    "id": "collection-false",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 41,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(true).renderValue(patterns[2])",
+    "id": "string-control-true",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 42,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = true }).renderDocument(new { nested { pattern = Regex(patterns[9]) } })",
+    "id": "nested-indent-true",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 43,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(true).renderValue(List(Regex(patterns[2]), Regex(patterns[6])))",
+    "id": "collection-true",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 44,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "(new JsonRenderer {}).renderValue(Regex(patterns[2]))",
+    "id": "json-rejection",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 45,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "renderer(false).renderValue(Regex(\"(\"))",
+    "id": "invalid-regex",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 46,
+    "original_program": "regex-pcf",
+    "program": "main-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "indent",
+    "expression": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = false }).renderDocument(new Dynamic { nested = new Dynamic { pattern = Regex(patterns[9]) } })",
+    "id": "nested-indent-false",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "regex-pcf",
+    "program": "indent-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "indent",
+    "expression": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = true }).renderDocument(new Dynamic { nested = new Dynamic { pattern = Regex(patterns[9]) } })",
+    "id": "nested-indent-true",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "regex-pcf",
+    "program": "indent-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "inline",
+    "expression": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = false }).renderDocument(new Dynamic { nested = new Dynamic { pattern = Regex(\"a\\\\s\\nb\") } })",
+    "id": "nested-indent-false",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "regex-pcf",
+    "program": "inline-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "inline",
+    "expression": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = true }).renderDocument(new Dynamic { nested = new Dynamic { pattern = Regex(\"a\\\\s\\nb\") } })",
+    "id": "nested-indent-true",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "regex-pcf",
+    "program": "inline-regex-pcf",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  }
+]

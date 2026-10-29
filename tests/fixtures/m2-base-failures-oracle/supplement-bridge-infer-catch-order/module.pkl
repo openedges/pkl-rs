@@ -1,0 +1,9 @@
+import "pkl:test"
+class C { value = Undefined() }
+x = new C { value = new {} }
+class D { value = test.catch(() -> Undefined()) }
+y = new D { value = new {} }
+
+function stage111Bridge000(): Any = test.catch(() -> x.value)
+function stage111Bridge001(): Any = test.catch(() -> y.value)
+function stage111Bridge002(): Any = x.toString()

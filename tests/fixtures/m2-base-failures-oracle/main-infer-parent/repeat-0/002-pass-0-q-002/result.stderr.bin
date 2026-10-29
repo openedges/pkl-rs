@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Cannot tell which parent to amend.
+
+6 | c = new TypedParent { value = new { answer = 42 } }
+                                  ^^^
+at infer-parent#c.value (file:///stage111/infer-parent.pkl)
+
+Please specify a parent explicitly, for example `new Person { ... }` instead of `new { ... }`.
+
+1 | c.value
+    ^^^^^^^
+at  (repl:text)

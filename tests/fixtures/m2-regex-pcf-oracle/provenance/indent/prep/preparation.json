@@ -1,0 +1,49 @@
+{
+  "complete": true,
+  "success": true,
+  "source_only": true,
+  "Java_executed": false,
+  "root_execution_grant_received": false,
+  "programs": 1,
+  "contracts": 2,
+  "planned_sessions": 2,
+  "planned_observations": 4,
+  "matrix": {
+    "path": "target/m2/stage110-regex-pcf-indent-oracle-prep-01/queries.json",
+    "bytes": 1646,
+    "mode": 420,
+    "sha256": "6a885b6e90a8f331a8567ee4bc91293a26139f161dec06df90d2c06af46fc20a"
+  },
+  "capture": {
+    "path": "target/m2/stage110-regex-pcf-indent-oracle-prep-01/capture.py",
+    "bytes": 18017,
+    "mode": 420,
+    "sha256": "3e37576017421ae6866e5cf610cfbfdba65f71f31363cf5b3141ec211921403f"
+  },
+  "cohorts": {
+    "path": "target/m2/stage110-regex-pcf-indent-oracle-prep-01/cohorts.json",
+    "bytes": 337,
+    "mode": 420,
+    "sha256": "d364b1e079f82830cf43e7e7c8580a5e998a5bc94f31197618cb206e2a50efc1"
+  },
+  "source": {
+    "path": "target/m2/stage110-regex-pcf-indent-oracle-prep-01/module.pkl",
+    "bytes": 287,
+    "mode": 420,
+    "sha256": "63fada681310b908ff685c000ba6c24f9464a5ba5e59e86866e8aa195a3e4d95"
+  },
+  "input_delta": {
+    "path": "target/m2/stage110-regex-pcf-indent-oracle-prep-01/input-delta.json",
+    "bytes": 1184,
+    "mode": 420,
+    "sha256": "770e41b6cfc79c56fe7f5defe33719624a8e9f5a7770ca00ac2b827451088949"
+  },
+  "predecessor": {
+    "path": "target/m2/stage110-regex-pcf-oracle-prep-02/preparation.json",
+    "bytes": 2440,
+    "mode": 420,
+    "sha256": "59799557c407920ae25b621038a5eea691c78bca056a8d04df5f144c47284a0d"
+  },
+  "limits_and_helpers_unchanged": true,
+  "canonical_writes": false
+}

@@ -1,0 +1,67 @@
+{
+  "complete": true,
+  "success": true,
+  "source_only": true,
+  "actual_Java_executed": false,
+  "root_execution_grant_received": false,
+  "programs": 1,
+  "contracts": 47,
+  "planned_sessions": 2,
+  "planned_observations": 94,
+  "reason": "Preserved oracle01 acquisition failure: FileNotFoundError while JVM transient libtruffleattach cache entry vanished during recursive resource scan. Only vanished entry lstat ENOENT is skipped; all other errors propagate. No cap/heap/floor/deadline/input change.",
+  "predecessor": {
+    "path": "target/m2/stage110-regex-pcf-oracle-prep-01/preparation.json",
+    "bytes": 1365,
+    "mode": 420,
+    "sha256": "15ce25c330703b3397328f51c538c793f4f308718596ebf5aa84a0e457d628b6"
+  },
+  "failed_capture": {
+    "path": "target/m2/stage110-regex-pcf-oracle-01/report.json",
+    "bytes": 78291,
+    "mode": 420,
+    "sha256": "6ce227356e68d6b9d2238534a0e39b0df05d53ff878258d17ff7ec112bf4f14e"
+  },
+  "failed_execution": {
+    "path": "target/m2/stage110-regex-pcf-oracle-execution-01/report.json",
+    "bytes": 4846,
+    "mode": 420,
+    "sha256": "efd4e340a1e6f673bdfedbae0ba5aaa62421a3cf990b2c8b25af9f626d14e0f6"
+  },
+  "capture": {
+    "path": "target/m2/stage110-regex-pcf-oracle-prep-02/capture.py",
+    "bytes": 18017,
+    "mode": 420,
+    "sha256": "c5399681588e43d0f3da3e4b946e1bcfe6f509a507030d9c33f52b2405e622d0"
+  },
+  "matrix": {
+    "path": "target/m2/stage110-regex-pcf-oracle-prep-02/queries.json",
+    "bytes": 16300,
+    "mode": 420,
+    "sha256": "fc069d420b143d6e9cb895b7b03df6d5cbe0451e3cd6b73a707e0f8be56e579c"
+  },
+  "cohorts": {
+    "path": "target/m2/stage110-regex-pcf-oracle-prep-02/cohorts.json",
+    "bytes": 324,
+    "mode": 420,
+    "sha256": "b25317beaee0160770b6a02daa3212356de651ebfdbfa1af297d7f83083dc6d1"
+  },
+  "source": {
+    "path": "target/m2/stage110-regex-pcf-oracle-prep-02/module.pkl",
+    "bytes": 287,
+    "mode": 420,
+    "sha256": "63fada681310b908ff685c000ba6c24f9464a5ba5e59e86866e8aa195a3e4d95"
+  },
+  "controls": {
+    "path": "target/m2/stage110-regex-pcf-oracle-prep-02/controls.json",
+    "bytes": 392,
+    "mode": 420,
+    "sha256": "ae1020b4d46d4ce1cc044fe8364703477ddc02a980f32fa91a6bfca4fec8dee0"
+  },
+  "delta": {
+    "path": "target/m2/stage110-regex-pcf-oracle-prep-02/scanner-delta.patch",
+    "bytes": 1017,
+    "mode": 420,
+    "sha256": "ce5955184ec0f8a2b8b9f23cd91e08dfa9da7bf26a326149dda341c9fb13884d"
+  },
+  "canonical_mutations": 0
+}

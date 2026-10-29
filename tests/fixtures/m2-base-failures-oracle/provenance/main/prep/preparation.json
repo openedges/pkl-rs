@@ -1,0 +1,64 @@
+{
+  "source_only": true,
+  "actual_Java_executed": false,
+  "compiler_or_guest_executed": false,
+  "root_execution_grant_received": false,
+  "canonical_mutations": 0,
+  "source_controller": {
+    "path": "target/m2/stage110-regex-pcf-oracle-prep-02/capture.py",
+    "bytes": 18017,
+    "mode": 420,
+    "sha256": "c5399681588e43d0f3da3e4b946e1bcfe6f509a507030d9c33f52b2405e622d0"
+  },
+  "source_helpers": [
+    {
+      "path": "target/m2/stage110-regex-pcf-oracle-prep-02/CollectionEveryOracle.java",
+      "bytes": 6328,
+      "mode": 420,
+      "sha256": "56defcb9f990729eedc3a3b98854c07319859a683cae4a404fedaf821cc2a98f"
+    },
+    {
+      "path": "target/m2/stage110-regex-pcf-oracle-prep-02/helper-false/CollectionEveryOracle.java",
+      "bytes": 6329,
+      "mode": 420,
+      "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+    }
+  ],
+  "capture": {
+    "path": "target/m2/stage111-base-failures-oracle-prep-01/capture.py",
+    "bytes": 18636,
+    "mode": 420,
+    "sha256": "e681dee5f8f69c28fc6652bcd7457c45fcd54305e1313134f8980f154d8d139c"
+  },
+  "matrix": {
+    "path": "target/m2/stage111-base-failures-oracle-prep-01/queries.json",
+    "bytes": 75587,
+    "mode": 420,
+    "sha256": "34e85ba486f0c3057cdde46a160c8700fe15bf0a7adea1cc4a6d9c464f3663e4"
+  },
+  "cohorts": {
+    "path": "target/m2/stage111-base-failures-oracle-prep-01/cohorts.json",
+    "bytes": 342,
+    "mode": 420,
+    "sha256": "1991b7765b6723943faf876e4089dfebdcedb6ea3fdffb985c108133e1dbe799"
+  },
+  "helper_default": {
+    "path": "target/m2/stage111-base-failures-oracle-prep-01/helper-false/CollectionEveryOracle.java",
+    "bytes": 6329,
+    "mode": 420,
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "helper_identity": {
+    "path": "target/m2/stage111-base-failures-oracle-prep-01/CollectionEveryOracle.java",
+    "bytes": 6379,
+    "mode": 420,
+    "sha256": "79f44ba41e839d656ec6c886cf04134ca8c7060acb8afb2944e067788133fcb5"
+  },
+  "static_checks": {
+    "Python_AST_parse": true,
+    "query_transport_roundtrip": true,
+    "original_queries_preserved": true,
+    "canonical_preimages_equal": true
+  },
+  "obligations": "No behavioral or compatibility verdict; Java capture pending root window."
+}

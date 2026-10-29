@@ -1,0 +1,18 @@
+org.pkl.core.PklException: –– Pkl Error ––
+TODO
+
+2377 | const function TODO(): nothing = throw("TODO")
+                                        ^^^^^^^^^^^^^
+at pkl.base#TODO (pkl:base)
+
+3 | local function nestedTodo(): Int = TODO()
+                                       ^^^^^^
+at bridge-direct#nestedTodo (file:///stage111-supplement/bridge-direct.pkl)
+
+9 | function stage111Bridge002(): Any = nestedTodo()
+                                        ^^^^^^^^^^^^
+at bridge-direct#stage111Bridge002 (file:///stage111-supplement/bridge-direct.pkl)
+
+1 | stage111Bridge002()
+    ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

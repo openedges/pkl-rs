@@ -1,0 +1,647 @@
+{
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/CollectionEveryOracle.java",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module",
+    "file:///stage111/receiverless-lazy-module.pkl"
+  ],
+  "cleanup_events": [],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01",
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 0,
+  "finished_epoch": 1793262236.505412,
+  "frame_transformer": "default",
+  "helper": {
+    "bytes": 6329,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/CollectionEveryOracle.java",
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "owned_child_reaped": true,
+  "owned_processes": {
+    "root_observed": true,
+    "root_pid": 40797,
+    "terminal_live": [],
+    "tracked": [
+      {
+        "group_id_at_discovery": 40797,
+        "parent_pid_at_discovery": 40173,
+        "pid": 40797,
+        "started": "Thu Oct 29 17:23:55 2026"
+      }
+    ]
+  },
+  "owned_start": "Thu Oct 29 17:23:55 2026",
+  "pgid": 40797,
+  "pid": 40797,
+  "power_assertions": false,
+  "program": "receiverless-lazy-module",
+  "query_passes_same_evaluator": 2,
+  "repeat": 0,
+  "rows": [
+    {
+      "directory": "target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000",
+      "expression": "test.catch(() -> x)",
+      "id": "pass-0-q-000",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 19,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/expression.bin",
+          "sha256": "dc49b37b87cf868f4c487afb7369bc74f13fcfb0afaac05f5691baf9fe19a249"
+        },
+        "expression.code-units.bin": {
+          "bytes": 38,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/expression.code-units.bin",
+          "sha256": "06265384e765650232060347174c847ab7d78ea58596ce0d11f4250dd83f003d"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 130,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/result.exception-to-string.bin",
+          "sha256": "24537f9d180c18909bdb907a096a162a02e67412ce139ed06c35885abb7ea6ee"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 244,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/result.exception-to-string.code-units.bin",
+          "sha256": "1c2b198d2c9605454065af7fc3cabe1b0777efe4fe63089c91b1397882709613"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 103,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/result.stderr.bin",
+          "sha256": "9b81deb77d5268fd45f75c0d51d1f874d35792c29c549d9708e37a68128a69ef"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 190,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/result.stderr.code-units.bin",
+          "sha256": "dff1b82820e2fd42afe637d96cc12a1b2d6387a532816be8b6854b7118bfa27b"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/000-pass-0-q-000/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001",
+      "expression": "test.catch(() -> x)",
+      "id": "pass-0-q-001",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 19,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/expression.bin",
+          "sha256": "dc49b37b87cf868f4c487afb7369bc74f13fcfb0afaac05f5691baf9fe19a249"
+        },
+        "expression.code-units.bin": {
+          "bytes": 38,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/expression.code-units.bin",
+          "sha256": "06265384e765650232060347174c847ab7d78ea58596ce0d11f4250dd83f003d"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 130,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/result.exception-to-string.bin",
+          "sha256": "24537f9d180c18909bdb907a096a162a02e67412ce139ed06c35885abb7ea6ee"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 244,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/result.exception-to-string.code-units.bin",
+          "sha256": "1c2b198d2c9605454065af7fc3cabe1b0777efe4fe63089c91b1397882709613"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 103,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/result.stderr.bin",
+          "sha256": "9b81deb77d5268fd45f75c0d51d1f874d35792c29c549d9708e37a68128a69ef"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 190,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/result.stderr.code-units.bin",
+          "sha256": "dff1b82820e2fd42afe637d96cc12a1b2d6387a532816be8b6854b7118bfa27b"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/001-pass-0-q-001/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000",
+      "expression": "test.catch(() -> x)",
+      "id": "pass-1-q-000",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 19,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/expression.bin",
+          "sha256": "dc49b37b87cf868f4c487afb7369bc74f13fcfb0afaac05f5691baf9fe19a249"
+        },
+        "expression.code-units.bin": {
+          "bytes": 38,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/expression.code-units.bin",
+          "sha256": "06265384e765650232060347174c847ab7d78ea58596ce0d11f4250dd83f003d"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 130,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/result.exception-to-string.bin",
+          "sha256": "24537f9d180c18909bdb907a096a162a02e67412ce139ed06c35885abb7ea6ee"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 244,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/result.exception-to-string.code-units.bin",
+          "sha256": "1c2b198d2c9605454065af7fc3cabe1b0777efe4fe63089c91b1397882709613"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 103,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/result.stderr.bin",
+          "sha256": "9b81deb77d5268fd45f75c0d51d1f874d35792c29c549d9708e37a68128a69ef"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 190,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/result.stderr.code-units.bin",
+          "sha256": "dff1b82820e2fd42afe637d96cc12a1b2d6387a532816be8b6854b7118bfa27b"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/002-pass-1-q-000/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001",
+      "expression": "test.catch(() -> x)",
+      "id": "pass-1-q-001",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 19,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/expression.bin",
+          "sha256": "dc49b37b87cf868f4c487afb7369bc74f13fcfb0afaac05f5691baf9fe19a249"
+        },
+        "expression.code-units.bin": {
+          "bytes": 38,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/expression.code-units.bin",
+          "sha256": "06265384e765650232060347174c847ab7d78ea58596ce0d11f4250dd83f003d"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 130,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/result.exception-to-string.bin",
+          "sha256": "24537f9d180c18909bdb907a096a162a02e67412ce139ed06c35885abb7ea6ee"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 244,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/result.exception-to-string.code-units.bin",
+          "sha256": "1c2b198d2c9605454065af7fc3cabe1b0777efe4fe63089c91b1397882709613"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 103,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/result.stderr.bin",
+          "sha256": "9b81deb77d5268fd45f75c0d51d1f874d35792c29c549d9708e37a68128a69ef"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 190,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/result.stderr.code-units.bin",
+          "sha256": "dff1b82820e2fd42afe637d96cc12a1b2d6387a532816be8b6854b7118bfa27b"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/003-pass-1-q-001/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    }
+  ],
+  "started_epoch": 1793262235.349016,
+  "stderr": {
+    "bytes": 0,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/process.stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 412,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage111-base-failures-oracle-01/programs/receiverless-lazy-module/repeat-0/process.stdout.bin",
+    "sha256": "1c5d8fa5a81ee6822d2cf808128b4c4e3e8b1dd35546aea1f3dfe3dd2d0e82d6"
+  }
+}

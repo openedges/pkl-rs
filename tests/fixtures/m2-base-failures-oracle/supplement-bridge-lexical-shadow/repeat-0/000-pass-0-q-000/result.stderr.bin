@@ -1,0 +1,14 @@
+–– Pkl Error ––
+TODO
+
+2377 | const function TODO(): nothing = throw("TODO")
+                                        ^^^^^^^^^^^^^
+at pkl.base#TODO (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2377)
+
+7 | function stage111Bridge000(): Any = base.TODO()
+                                        ^^^^^^^^^^^
+at bridge-lexical-shadow#stage111Bridge000 (file:///stage111-supplement/bridge-lexical-shadow.pkl)
+
+1 | stage111Bridge000()
+    ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

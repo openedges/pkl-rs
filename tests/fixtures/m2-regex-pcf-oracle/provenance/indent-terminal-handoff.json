@@ -1,0 +1,125 @@
+{
+  "complete": true,
+  "success": true,
+  "argv": [
+    "python3",
+    "-B",
+    "target/m2/stage110-regex-pcf-indent-oracle-prep-01/capture.py",
+    "--cohort",
+    "regex",
+    "--root-window-authorized"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+  "started_epoch": 1793260487.4494028,
+  "root_authorization": "Exactly two corrected explicit Dynamic nested-indent queries, four observations/two512MiB serial sessions; all original conditions unchanged. No Rust compiler/guest/canonical mutation.",
+  "overlap": {
+    "root_session": 93065,
+    "root_expected_pids": [
+      26490,
+      26491
+    ],
+    "before": "26490 26486 Thu Oct 29 16:28:59 2026     /Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo test -p pkl-runtime --locked --test m2_reflection_apis_oracle --test m2_reflection_apis_lifecycle --test m2_reflection_source_metadata --no-fail-fast -vv --message-format=json-render-diagnostics -- --test-threads=1 --nocapture\n26491 26490 Thu Oct 29 16:28:59 2026     /Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/debug/deps/m2_reflection_apis_lifecycle-a1238e0624c14c55 --test-threads=1 --nocapture\n",
+    "scope": "Concurrent Stage109 GC1 correctness tests; no performance or memory inference.",
+    "after": "26490 26486 Thu Oct 29 16:28:59 2026     /Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo test -p pkl-runtime --locked --test m2_reflection_apis_oracle --test m2_reflection_apis_lifecycle --test m2_reflection_source_metadata --no-fail-fast -vv --message-format=json-render-diagnostics -- --test-threads=1 --nocapture\n26491 26490 Thu Oct 29 16:28:59 2026     /Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/debug/deps/m2_reflection_apis_lifecycle-a1238e0624c14c55 --test-threads=1 --nocapture\n"
+  },
+  "inputs_before": [
+    {
+      "path": "target/m2/stage110-regex-pcf-indent-oracle-prep-01/preparation.json",
+      "bytes": 1589,
+      "mode": 420,
+      "sha256": "3d4b44d987ca86e9baa8b96d21ed103cf7ee424f0d22fa54fb1523900d446279"
+    },
+    {
+      "path": "target/m2/stage110-regex-pcf-indent-oracle-prep-01/capture.py",
+      "bytes": 18017,
+      "mode": 420,
+      "sha256": "3e37576017421ae6866e5cf610cfbfdba65f71f31363cf5b3141ec211921403f"
+    },
+    {
+      "path": "target/m2/stage110-regex-pcf-indent-oracle-prep-01/queries.json",
+      "bytes": 1646,
+      "mode": 420,
+      "sha256": "6a885b6e90a8f331a8567ee4bc91293a26139f161dec06df90d2c06af46fc20a"
+    },
+    {
+      "path": "target/m2/stage110-regex-pcf-indent-oracle-prep-01/input-delta.json",
+      "bytes": 1184,
+      "mode": 420,
+      "sha256": "770e41b6cfc79c56fe7f5defe33719624a8e9f5a7770ca00ac2b827451088949"
+    },
+    {
+      "path": "target/m2/stage110-regex-pcf-oracle-02/report.json",
+      "bytes": 914808,
+      "mode": 420,
+      "sha256": "581d031bac14595940a341f0ff9362c03a64dc8760eeaffbc7ede3bffc62cbaa"
+    }
+  ],
+  "pid": 32362,
+  "exit_code": 0,
+  "finished_epoch": 1793260490.675329,
+  "inputs_after": [
+    {
+      "path": "target/m2/stage110-regex-pcf-indent-oracle-prep-01/preparation.json",
+      "bytes": 1589,
+      "mode": 420,
+      "sha256": "3d4b44d987ca86e9baa8b96d21ed103cf7ee424f0d22fa54fb1523900d446279"
+    },
+    {
+      "path": "target/m2/stage110-regex-pcf-indent-oracle-prep-01/capture.py",
+      "bytes": 18017,
+      "mode": 420,
+      "sha256": "3e37576017421ae6866e5cf610cfbfdba65f71f31363cf5b3141ec211921403f"
+    },
+    {
+      "path": "target/m2/stage110-regex-pcf-indent-oracle-prep-01/queries.json",
+      "bytes": 1646,
+      "mode": 420,
+      "sha256": "6a885b6e90a8f331a8567ee4bc91293a26139f161dec06df90d2c06af46fc20a"
+    },
+    {
+      "path": "target/m2/stage110-regex-pcf-indent-oracle-prep-01/input-delta.json",
+      "bytes": 1184,
+      "mode": 420,
+      "sha256": "770e41b6cfc79c56fe7f5defe33719624a8e9f5a7770ca00ac2b827451088949"
+    },
+    {
+      "path": "target/m2/stage110-regex-pcf-oracle-02/report.json",
+      "bytes": 914808,
+      "mode": 420,
+      "sha256": "581d031bac14595940a341f0ff9362c03a64dc8760eeaffbc7ede3bffc62cbaa"
+    }
+  ],
+  "stdout": {
+    "path": "target/m2/stage110-regex-pcf-indent-oracle-execution-01/stdout.bin",
+    "bytes": 216,
+    "mode": 420,
+    "sha256": "68706e97f713970d478b4bdec94d38d0894f7d9d23b8644bc4f3b9cf8e174293"
+  },
+  "stderr": {
+    "path": "target/m2/stage110-regex-pcf-indent-oracle-execution-01/stderr.bin",
+    "bytes": 0,
+    "mode": 420,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "input_stable": true,
+  "actual_report": {
+    "path": "target/m2/stage110-regex-pcf-indent-oracle-01/report.json",
+    "bytes": 84528,
+    "mode": 420,
+    "sha256": "6a02120475387078b9388652a9286a413e8db681a4b85859b88b44924a367482"
+  },
+  "capture_summary": {
+    "complete": true,
+    "statuses": {
+      "error": 4
+    },
+    "failure": null,
+    "repeat_differences": [],
+    "source_and_runtime_stable": true,
+    "materialized_stable": true,
+    "query_disposition_counts": {
+      "recorded": 4
+    },
+    "minimum_free_seen_bytes": 21737373696
+  }
+}

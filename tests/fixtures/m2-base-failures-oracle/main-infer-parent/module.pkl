@@ -1,0 +1,6 @@
+class UndefinedParent { value = Undefined() }
+class TodoParent { value = TODO() }
+class TypedParent { value: Dynamic = Undefined() }
+a = new UndefinedParent { value = new { answer = 42 } }
+b = new TodoParent { value = new { answer = 42 } }
+c = new TypedParent { value = new { answer = 42 } }

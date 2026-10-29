@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Expected 0 function arguments but got 2.
+
+2377 | const function TODO(): nothing = throw("TODO")
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#TODO (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2377)
+
+4 | function stage111Bridge000(): Any = base.TODO(1, 2)
+                                        ^^^^^^^^^^^^^^^
+at bridge-arity-order#stage111Bridge000 (file:///stage111-supplement/bridge-arity-order.pkl)
+
+1 | stage111Bridge000()
+    ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

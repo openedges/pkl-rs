@@ -1,0 +1,68 @@
+[
+  {
+    "Java_authority": {
+      "bytes": 914808,
+      "mode": 420,
+      "path": "target/m2/stage110-regex-pcf-oracle-02/report.json",
+      "sha256": "581d031bac14595940a341f0ff9362c03a64dc8760eeaffbc7ede3bffc62cbaa"
+    },
+    "Rust_execution": "unexecuted",
+    "Rust_query_input": "Exact corresponding repeat expression.bin; original UTF8/UTF16 preserved, never Base64.",
+    "cohort": "main",
+    "evaluator_environment": {},
+    "evaluator_external_properties": {},
+    "oracle_internal": false,
+    "original_program": "regex-pcf",
+    "power_assertions": false,
+    "program": "main-regex-pcf",
+    "queries": 47,
+    "repetitions": 2,
+    "required": true,
+    "required_unresolved": false,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Java_authority": {
+      "bytes": 84528,
+      "mode": 420,
+      "path": "target/m2/stage110-regex-pcf-indent-oracle-01/report.json",
+      "sha256": "6a02120475387078b9388652a9286a413e8db681a4b85859b88b44924a367482"
+    },
+    "Rust_execution": "unexecuted",
+    "Rust_query_input": "Exact corresponding repeat expression.bin; original UTF8/UTF16 preserved, never Base64.",
+    "cohort": "indent",
+    "evaluator_environment": {},
+    "evaluator_external_properties": {},
+    "oracle_internal": false,
+    "original_program": "regex-pcf",
+    "power_assertions": false,
+    "program": "indent-regex-pcf",
+    "queries": 2,
+    "repetitions": 2,
+    "required": true,
+    "required_unresolved": false,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  },
+  {
+    "Java_authority": {
+      "bytes": 84505,
+      "mode": 420,
+      "path": "target/m2/stage110-regex-pcf-indent-oracle-02/report.json",
+      "sha256": "45f73e834856a00b4a0b29d4418b4060c12af9dc64a59894a03428a08d451e55"
+    },
+    "Rust_execution": "unexecuted",
+    "Rust_query_input": "Exact corresponding repeat expression.bin; original UTF8/UTF16 preserved, never Base64.",
+    "cohort": "inline",
+    "evaluator_environment": {},
+    "evaluator_external_properties": {},
+    "oracle_internal": false,
+    "original_program": "regex-pcf",
+    "power_assertions": false,
+    "program": "inline-regex-pcf",
+    "queries": 2,
+    "repetitions": 2,
+    "required": true,
+    "required_unresolved": false,
+    "source_uri": "file:///stage110/regex-pcf.pkl"
+  }
+]

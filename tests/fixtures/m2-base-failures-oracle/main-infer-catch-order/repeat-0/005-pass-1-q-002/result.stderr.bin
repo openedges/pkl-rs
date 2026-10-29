@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Cannot tell which parent to amend.
+
+3 | x = new C { value = new {} }
+                        ^^^
+at infer-catch-order#x.value (file:///stage111/infer-catch-order.pkl)
+
+Please specify a parent explicitly, for example `new Person { ... }` instead of `new { ... }`.
+
+1 | x.toString()
+    ^^^^^^^^^^^^
+at  (repl:text)

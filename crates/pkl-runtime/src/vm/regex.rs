@@ -22,7 +22,7 @@ pub(super) fn string(regex: &PklRegex) -> PklString {
     PklString::join(
         &[
             "Regex(".into(),
-            pcf_format::string(regex.pattern(), &"".into(), true),
+            pcf_format::single_line_custom_string(regex.pattern()),
             ")".into(),
         ],
         "",

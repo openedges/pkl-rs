@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Tried to read property `bad` but its value is undefined.
+
+1 | class Holder { bad: String }
+                   ^^^
+at render-property-control#Holder.bad (file:///stage111/render-property-control.pkl)
+
+The above error occurred when rendering path `bad`.
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

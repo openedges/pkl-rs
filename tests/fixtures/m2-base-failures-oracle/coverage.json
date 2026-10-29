@@ -1,0 +1,4718 @@
+[
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "TODO()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "direct",
+    "program": "main-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "Undefined()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "direct",
+    "program": "main-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "base.TODO()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "direct",
+    "program": "main-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "base.Undefined()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "direct",
+    "program": "main-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "nestedTodo()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-004",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 4,
+    "original_program": "direct",
+    "program": "main-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "nestedUndefined()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-005",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 5,
+    "original_program": "direct",
+    "program": "main-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> TODO())",
+    "frame_transformer": "default",
+    "id": "pass-0-q-006",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 6,
+    "original_program": "direct",
+    "program": "main-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> Undefined())",
+    "frame_transformer": "default",
+    "id": "pass-0-q-007",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 7,
+    "original_program": "direct",
+    "program": "main-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catchOrNull(() -> TODO())",
+    "frame_transformer": "default",
+    "id": "pass-0-q-008",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 8,
+    "original_program": "direct",
+    "program": "main-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catchOrNull(() -> Undefined())",
+    "frame_transformer": "default",
+    "id": "pass-0-q-009",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 9,
+    "original_program": "direct",
+    "program": "main-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "TODO()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 10,
+    "original_program": "direct",
+    "program": "main-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "Undefined()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 11,
+    "original_program": "direct",
+    "program": "main-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "base.TODO()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 12,
+    "original_program": "direct",
+    "program": "main-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "base.Undefined()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 13,
+    "original_program": "direct",
+    "program": "main-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "nestedTodo()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-004",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 14,
+    "original_program": "direct",
+    "program": "main-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "nestedUndefined()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-005",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 15,
+    "original_program": "direct",
+    "program": "main-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> TODO())",
+    "frame_transformer": "default",
+    "id": "pass-1-q-006",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 16,
+    "original_program": "direct",
+    "program": "main-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> Undefined())",
+    "frame_transformer": "default",
+    "id": "pass-1-q-007",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 17,
+    "original_program": "direct",
+    "program": "main-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catchOrNull(() -> TODO())",
+    "frame_transformer": "default",
+    "id": "pass-1-q-008",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 18,
+    "original_program": "direct",
+    "program": "main-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catchOrNull(() -> Undefined())",
+    "frame_transformer": "default",
+    "id": "pass-1-q-009",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 19,
+    "original_program": "direct",
+    "program": "main-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "TODO()",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "direct-identity",
+    "program": "main-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "Undefined()",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "direct-identity",
+    "program": "main-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "base.TODO()",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "direct-identity",
+    "program": "main-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "base.Undefined()",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "direct-identity",
+    "program": "main-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "nestedTodo()",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-004",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 4,
+    "original_program": "direct-identity",
+    "program": "main-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "nestedUndefined()",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-005",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 5,
+    "original_program": "direct-identity",
+    "program": "main-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> TODO())",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-006",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 6,
+    "original_program": "direct-identity",
+    "program": "main-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> Undefined())",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-007",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 7,
+    "original_program": "direct-identity",
+    "program": "main-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catchOrNull(() -> TODO())",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-008",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 8,
+    "original_program": "direct-identity",
+    "program": "main-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catchOrNull(() -> Undefined())",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-009",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 9,
+    "original_program": "direct-identity",
+    "program": "main-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "TODO()",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 10,
+    "original_program": "direct-identity",
+    "program": "main-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "Undefined()",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 11,
+    "original_program": "direct-identity",
+    "program": "main-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "base.TODO()",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 12,
+    "original_program": "direct-identity",
+    "program": "main-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "base.Undefined()",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 13,
+    "original_program": "direct-identity",
+    "program": "main-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "nestedTodo()",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-004",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 14,
+    "original_program": "direct-identity",
+    "program": "main-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "nestedUndefined()",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-005",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 15,
+    "original_program": "direct-identity",
+    "program": "main-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> TODO())",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-006",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 16,
+    "original_program": "direct-identity",
+    "program": "main-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> Undefined())",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-007",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 17,
+    "original_program": "direct-identity",
+    "program": "main-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catchOrNull(() -> TODO())",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-008",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 18,
+    "original_program": "direct-identity",
+    "program": "main-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catchOrNull(() -> Undefined())",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-009",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 19,
+    "original_program": "direct-identity",
+    "program": "main-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "TODO(1)",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "arity-order",
+    "program": "main-arity-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/arity-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "Undefined(1)",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "arity-order",
+    "program": "main-arity-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/arity-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "TODO(trace(1))",
+    "frame_transformer": "default",
+    "id": "pass-0-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "arity-order",
+    "program": "main-arity-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/arity-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "Undefined(trace(2))",
+    "frame_transformer": "default",
+    "id": "pass-0-q-003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "arity-order",
+    "program": "main-arity-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/arity-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "TODO(throw(\"argument-first\"))",
+    "frame_transformer": "default",
+    "id": "pass-0-q-004",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 4,
+    "original_program": "arity-order",
+    "program": "main-arity-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/arity-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "Undefined(throw(\"argument-first\"))",
+    "frame_transformer": "default",
+    "id": "pass-0-q-005",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 5,
+    "original_program": "arity-order",
+    "program": "main-arity-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/arity-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "base.TODO(1, 2)",
+    "frame_transformer": "default",
+    "id": "pass-0-q-006",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 6,
+    "original_program": "arity-order",
+    "program": "main-arity-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/arity-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "base.Undefined(1, 2)",
+    "frame_transformer": "default",
+    "id": "pass-0-q-007",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 7,
+    "original_program": "arity-order",
+    "program": "main-arity-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/arity-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "TODO(1)",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 8,
+    "original_program": "arity-order",
+    "program": "main-arity-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/arity-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "Undefined(1)",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 9,
+    "original_program": "arity-order",
+    "program": "main-arity-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/arity-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "TODO(trace(1))",
+    "frame_transformer": "default",
+    "id": "pass-1-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 10,
+    "original_program": "arity-order",
+    "program": "main-arity-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/arity-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "Undefined(trace(2))",
+    "frame_transformer": "default",
+    "id": "pass-1-q-003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 11,
+    "original_program": "arity-order",
+    "program": "main-arity-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/arity-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "TODO(throw(\"argument-first\"))",
+    "frame_transformer": "default",
+    "id": "pass-1-q-004",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 12,
+    "original_program": "arity-order",
+    "program": "main-arity-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/arity-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "Undefined(throw(\"argument-first\"))",
+    "frame_transformer": "default",
+    "id": "pass-1-q-005",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 13,
+    "original_program": "arity-order",
+    "program": "main-arity-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/arity-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "base.TODO(1, 2)",
+    "frame_transformer": "default",
+    "id": "pass-1-q-006",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 14,
+    "original_program": "arity-order",
+    "program": "main-arity-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/arity-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "base.Undefined(1, 2)",
+    "frame_transformer": "default",
+    "id": "pass-1-q-007",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 15,
+    "original_program": "arity-order",
+    "program": "main-arity-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/arity-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "a",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "lexical-shadow",
+    "program": "main-lexical-shadow",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/lexical-shadow.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "b",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "lexical-shadow",
+    "program": "main-lexical-shadow",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/lexical-shadow.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "base.TODO()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "lexical-shadow",
+    "program": "main-lexical-shadow",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/lexical-shadow.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "base.Undefined()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "lexical-shadow",
+    "program": "main-lexical-shadow",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/lexical-shadow.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "a",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 4,
+    "original_program": "lexical-shadow",
+    "program": "main-lexical-shadow",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/lexical-shadow.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "b",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 5,
+    "original_program": "lexical-shadow",
+    "program": "main-lexical-shadow",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/lexical-shadow.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "base.TODO()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 6,
+    "original_program": "lexical-shadow",
+    "program": "main-lexical-shadow",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/lexical-shadow.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "base.Undefined()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 7,
+    "original_program": "lexical-shadow",
+    "program": "main-lexical-shadow",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/lexical-shadow.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "TODO",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "separate-namespaces",
+    "program": "main-separate-namespaces",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/separate-namespaces.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "Undefined",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "separate-namespaces",
+    "program": "main-separate-namespaces",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/separate-namespaces.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "a",
+    "frame_transformer": "default",
+    "id": "pass-0-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "separate-namespaces",
+    "program": "main-separate-namespaces",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/separate-namespaces.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "b",
+    "frame_transformer": "default",
+    "id": "pass-0-q-003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "separate-namespaces",
+    "program": "main-separate-namespaces",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/separate-namespaces.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "TODO",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 4,
+    "original_program": "separate-namespaces",
+    "program": "main-separate-namespaces",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/separate-namespaces.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "Undefined",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 5,
+    "original_program": "separate-namespaces",
+    "program": "main-separate-namespaces",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/separate-namespaces.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "a",
+    "frame_transformer": "default",
+    "id": "pass-1-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 6,
+    "original_program": "separate-namespaces",
+    "program": "main-separate-namespaces",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/separate-namespaces.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "b",
+    "frame_transformer": "default",
+    "id": "pass-1-q-003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 7,
+    "original_program": "separate-namespaces",
+    "program": "main-separate-namespaces",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/separate-namespaces.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "holder.a",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "class-shadow",
+    "program": "main-class-shadow",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/class-shadow.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "holder.b",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "class-shadow",
+    "program": "main-class-shadow",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/class-shadow.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "holder.a",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "class-shadow",
+    "program": "main-class-shadow",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/class-shadow.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "holder.b",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 3,
+    "original_program": "class-shadow",
+    "program": "main-class-shadow",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/class-shadow.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "a",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "custom-this",
+    "program": "main-custom-this",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/custom-this.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "b",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "custom-this",
+    "program": "main-custom-this",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/custom-this.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "a",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "custom-this",
+    "program": "main-custom-this",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/custom-this.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "b",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "custom-this",
+    "program": "main-custom-this",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/custom-this.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "failTodo()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "const-methods",
+    "program": "main-const-methods",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/const-methods.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "failUndefined()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "const-methods",
+    "program": "main-const-methods",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/const-methods.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "holder.x",
+    "frame_transformer": "default",
+    "id": "pass-0-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "const-methods",
+    "program": "main-const-methods",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/const-methods.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "holder.y",
+    "frame_transformer": "default",
+    "id": "pass-0-q-003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "const-methods",
+    "program": "main-const-methods",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/const-methods.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "failTodo()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 4,
+    "original_program": "const-methods",
+    "program": "main-const-methods",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/const-methods.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "failUndefined()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 5,
+    "original_program": "const-methods",
+    "program": "main-const-methods",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/const-methods.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "holder.x",
+    "frame_transformer": "default",
+    "id": "pass-1-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 6,
+    "original_program": "const-methods",
+    "program": "main-const-methods",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/const-methods.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "holder.y",
+    "frame_transformer": "default",
+    "id": "pass-1-q-003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 7,
+    "original_program": "const-methods",
+    "program": "main-const-methods",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/const-methods.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "invoke()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "const-shadow-control",
+    "program": "main-const-shadow-control",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/const-shadow-control.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "invoke()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "const-shadow-control",
+    "program": "main-const-shadow-control",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/const-shadow-control.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "safe.good",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "lazy-unreached",
+    "program": "main-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "false && Undefined()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "lazy-unreached",
+    "program": "main-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "true || TODO()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "lazy-unreached",
+    "program": "main-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "if (true) 11 else Undefined()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-003",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 3,
+    "original_program": "lazy-unreached",
+    "program": "main-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> safe.bad)",
+    "frame_transformer": "default",
+    "id": "pass-0-q-004",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 4,
+    "original_program": "lazy-unreached",
+    "program": "main-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> safe.todo)",
+    "frame_transformer": "default",
+    "id": "pass-0-q-005",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 5,
+    "original_program": "lazy-unreached",
+    "program": "main-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "safe.good",
+    "frame_transformer": "default",
+    "id": "pass-0-q-006",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 6,
+    "original_program": "lazy-unreached",
+    "program": "main-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "safe.good",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 7,
+    "original_program": "lazy-unreached",
+    "program": "main-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "false && Undefined()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 8,
+    "original_program": "lazy-unreached",
+    "program": "main-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "true || TODO()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 9,
+    "original_program": "lazy-unreached",
+    "program": "main-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "if (true) 11 else Undefined()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-003",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 10,
+    "original_program": "lazy-unreached",
+    "program": "main-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> safe.bad)",
+    "frame_transformer": "default",
+    "id": "pass-1-q-004",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 11,
+    "original_program": "lazy-unreached",
+    "program": "main-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> safe.todo)",
+    "frame_transformer": "default",
+    "id": "pass-1-q-005",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 12,
+    "original_program": "lazy-unreached",
+    "program": "main-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "safe.good",
+    "frame_transformer": "default",
+    "id": "pass-1-q-006",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 13,
+    "original_program": "lazy-unreached",
+    "program": "main-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "stable",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "retry-logger",
+    "program": "main-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> undefined)",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "retry-logger",
+    "program": "main-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> undefined)",
+    "frame_transformer": "default",
+    "id": "pass-0-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "retry-logger",
+    "program": "main-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> todo)",
+    "frame_transformer": "default",
+    "id": "pass-0-q-003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "retry-logger",
+    "program": "main-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> todo)",
+    "frame_transformer": "default",
+    "id": "pass-0-q-004",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 4,
+    "original_program": "retry-logger",
+    "program": "main-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "stable",
+    "frame_transformer": "default",
+    "id": "pass-0-q-005",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 5,
+    "original_program": "retry-logger",
+    "program": "main-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "stable",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 6,
+    "original_program": "retry-logger",
+    "program": "main-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> undefined)",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 7,
+    "original_program": "retry-logger",
+    "program": "main-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> undefined)",
+    "frame_transformer": "default",
+    "id": "pass-1-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 8,
+    "original_program": "retry-logger",
+    "program": "main-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> todo)",
+    "frame_transformer": "default",
+    "id": "pass-1-q-003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 9,
+    "original_program": "retry-logger",
+    "program": "main-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> todo)",
+    "frame_transformer": "default",
+    "id": "pass-1-q-004",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 10,
+    "original_program": "retry-logger",
+    "program": "main-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "stable",
+    "frame_transformer": "default",
+    "id": "pass-1-q-005",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 11,
+    "original_program": "retry-logger",
+    "program": "main-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "undefined.toString()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "string-force",
+    "program": "main-string-force",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/string-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "undefined.bad",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "string-force",
+    "program": "main-string-force",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/string-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "undefined.toString()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "string-force",
+    "program": "main-string-force",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/string-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "todo.toString()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "string-force",
+    "program": "main-string-force",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/string-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "todo.bad",
+    "frame_transformer": "default",
+    "id": "pass-0-q-004",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 4,
+    "original_program": "string-force",
+    "program": "main-string-force",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/string-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "undefined.toString()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 5,
+    "original_program": "string-force",
+    "program": "main-string-force",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/string-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "undefined.bad",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 6,
+    "original_program": "string-force",
+    "program": "main-string-force",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/string-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "undefined.toString()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 7,
+    "original_program": "string-force",
+    "program": "main-string-force",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/string-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "todo.toString()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 8,
+    "original_program": "string-force",
+    "program": "main-string-force",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/string-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "todo.bad",
+    "frame_transformer": "default",
+    "id": "pass-1-q-004",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 9,
+    "original_program": "string-force",
+    "program": "main-string-force",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/string-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "output.text",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "render-undefined",
+    "program": "main-render-undefined",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/render-undefined.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "new PcfRenderer {}.renderValue(value)",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "render-undefined",
+    "program": "main-render-undefined",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/render-undefined.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "new JsonRenderer {}.renderValue(value)",
+    "frame_transformer": "default",
+    "id": "pass-0-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "render-undefined",
+    "program": "main-render-undefined",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/render-undefined.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "output.text",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "render-undefined",
+    "program": "main-render-undefined",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/render-undefined.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "new PcfRenderer {}.renderValue(value)",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 4,
+    "original_program": "render-undefined",
+    "program": "main-render-undefined",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/render-undefined.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "new JsonRenderer {}.renderValue(value)",
+    "frame_transformer": "default",
+    "id": "pass-1-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 5,
+    "original_program": "render-undefined",
+    "program": "main-render-undefined",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/render-undefined.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "output.text",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "render-undefined-identity",
+    "program": "main-render-undefined-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/render-undefined.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "new PcfRenderer {}.renderValue(value)",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "render-undefined-identity",
+    "program": "main-render-undefined-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/render-undefined.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "new JsonRenderer {}.renderValue(value)",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "render-undefined-identity",
+    "program": "main-render-undefined-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/render-undefined.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "output.text",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "render-undefined-identity",
+    "program": "main-render-undefined-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/render-undefined.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "new PcfRenderer {}.renderValue(value)",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 4,
+    "original_program": "render-undefined-identity",
+    "program": "main-render-undefined-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/render-undefined.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "new JsonRenderer {}.renderValue(value)",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 5,
+    "original_program": "render-undefined-identity",
+    "program": "main-render-undefined-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/render-undefined.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "output.text",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "render-property-control",
+    "program": "main-render-property-control",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/render-property-control.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "new PcfRenderer {}.renderValue(value)",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "render-property-control",
+    "program": "main-render-property-control",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/render-property-control.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "output.text",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "render-property-control",
+    "program": "main-render-property-control",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/render-property-control.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "new PcfRenderer {}.renderValue(value)",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "render-property-control",
+    "program": "main-render-property-control",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/render-property-control.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "output.text",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "render-todo",
+    "program": "main-render-todo",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/render-todo.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "output.text",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "render-todo",
+    "program": "main-render-todo",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/render-todo.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "output.text",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "render-todo-identity",
+    "program": "main-render-todo-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/render-todo.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "output.text",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "render-todo-identity",
+    "program": "main-render-todo-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/render-todo.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "a.value",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "infer-parent",
+    "program": "main-infer-parent",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/infer-parent.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "b.value",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "infer-parent",
+    "program": "main-infer-parent",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/infer-parent.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "c.value",
+    "frame_transformer": "default",
+    "id": "pass-0-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "infer-parent",
+    "program": "main-infer-parent",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/infer-parent.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "a.value",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "infer-parent",
+    "program": "main-infer-parent",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/infer-parent.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "b.value",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 4,
+    "original_program": "infer-parent",
+    "program": "main-infer-parent",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/infer-parent.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "c.value",
+    "frame_transformer": "default",
+    "id": "pass-1-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 5,
+    "original_program": "infer-parent",
+    "program": "main-infer-parent",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/infer-parent.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> x.value)",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "infer-catch-order",
+    "program": "main-infer-catch-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/infer-catch-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> y.value)",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "infer-catch-order",
+    "program": "main-infer-catch-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/infer-catch-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "x.toString()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "infer-catch-order",
+    "program": "main-infer-catch-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/infer-catch-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> x.value)",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "infer-catch-order",
+    "program": "main-infer-catch-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/infer-catch-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> y.value)",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 4,
+    "original_program": "infer-catch-order",
+    "program": "main-infer-catch-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/infer-catch-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "x.toString()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 5,
+    "original_program": "infer-catch-order",
+    "program": "main-infer-catch-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/infer-catch-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> x)",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "receiverless-lazy-module",
+    "program": "main-receiverless-lazy-module",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/receiverless-lazy-module.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> x)",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "receiverless-lazy-module",
+    "program": "main-receiverless-lazy-module",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111/receiverless-lazy-module.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> x)",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "receiverless-lazy-module",
+    "program": "main-receiverless-lazy-module",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/receiverless-lazy-module.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "test.catch(() -> x)",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "receiverless-lazy-module",
+    "program": "main-receiverless-lazy-module",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111/receiverless-lazy-module.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "bridge-direct",
+    "program": "supplement-bridge-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge001()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "bridge-direct",
+    "program": "supplement-bridge-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge002()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "bridge-direct",
+    "program": "supplement-bridge-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge003()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "bridge-direct",
+    "program": "supplement-bridge-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge004()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-004",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 4,
+    "original_program": "bridge-direct",
+    "program": "supplement-bridge-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge005()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-005",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 5,
+    "original_program": "bridge-direct",
+    "program": "supplement-bridge-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge006()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-006",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 6,
+    "original_program": "bridge-direct",
+    "program": "supplement-bridge-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge007()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-007",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 7,
+    "original_program": "bridge-direct",
+    "program": "supplement-bridge-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 8,
+    "original_program": "bridge-direct",
+    "program": "supplement-bridge-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge001()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 9,
+    "original_program": "bridge-direct",
+    "program": "supplement-bridge-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge002()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 10,
+    "original_program": "bridge-direct",
+    "program": "supplement-bridge-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge003()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 11,
+    "original_program": "bridge-direct",
+    "program": "supplement-bridge-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge004()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-004",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 12,
+    "original_program": "bridge-direct",
+    "program": "supplement-bridge-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge005()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-005",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 13,
+    "original_program": "bridge-direct",
+    "program": "supplement-bridge-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge006()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-006",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 14,
+    "original_program": "bridge-direct",
+    "program": "supplement-bridge-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge007()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-007",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 15,
+    "original_program": "bridge-direct",
+    "program": "supplement-bridge-direct",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "bridge-direct-identity",
+    "program": "supplement-bridge-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge001()",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "bridge-direct-identity",
+    "program": "supplement-bridge-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge002()",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "bridge-direct-identity",
+    "program": "supplement-bridge-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge003()",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "bridge-direct-identity",
+    "program": "supplement-bridge-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge004()",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-004",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 4,
+    "original_program": "bridge-direct-identity",
+    "program": "supplement-bridge-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge005()",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-005",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 5,
+    "original_program": "bridge-direct-identity",
+    "program": "supplement-bridge-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge006()",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-006",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 6,
+    "original_program": "bridge-direct-identity",
+    "program": "supplement-bridge-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge007()",
+    "frame_transformer": "identity",
+    "id": "pass-0-q-007",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 7,
+    "original_program": "bridge-direct-identity",
+    "program": "supplement-bridge-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 8,
+    "original_program": "bridge-direct-identity",
+    "program": "supplement-bridge-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge001()",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 9,
+    "original_program": "bridge-direct-identity",
+    "program": "supplement-bridge-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge002()",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 10,
+    "original_program": "bridge-direct-identity",
+    "program": "supplement-bridge-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge003()",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 11,
+    "original_program": "bridge-direct-identity",
+    "program": "supplement-bridge-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge004()",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-004",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 12,
+    "original_program": "bridge-direct-identity",
+    "program": "supplement-bridge-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge005()",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-005",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 13,
+    "original_program": "bridge-direct-identity",
+    "program": "supplement-bridge-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge006()",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-006",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 14,
+    "original_program": "bridge-direct-identity",
+    "program": "supplement-bridge-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge007()",
+    "frame_transformer": "identity",
+    "id": "pass-1-q-007",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 15,
+    "original_program": "bridge-direct-identity",
+    "program": "supplement-bridge-direct-identity",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "bridge-arity-order",
+    "program": "supplement-bridge-arity-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-arity-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge001()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "bridge-arity-order",
+    "program": "supplement-bridge-arity-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-arity-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "bridge-arity-order",
+    "program": "supplement-bridge-arity-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-arity-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge001()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "bridge-arity-order",
+    "program": "supplement-bridge-arity-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-arity-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "bridge-lexical-shadow",
+    "program": "supplement-bridge-lexical-shadow",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-lexical-shadow.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge001()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "bridge-lexical-shadow",
+    "program": "supplement-bridge-lexical-shadow",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-lexical-shadow.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "bridge-lexical-shadow",
+    "program": "supplement-bridge-lexical-shadow",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-lexical-shadow.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge001()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "bridge-lexical-shadow",
+    "program": "supplement-bridge-lexical-shadow",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-lexical-shadow.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "bridge-lazy-unreached",
+    "program": "supplement-bridge-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge001()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "bridge-lazy-unreached",
+    "program": "supplement-bridge-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge002()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "bridge-lazy-unreached",
+    "program": "supplement-bridge-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge003()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-003",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 3,
+    "original_program": "bridge-lazy-unreached",
+    "program": "supplement-bridge-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 4,
+    "original_program": "bridge-lazy-unreached",
+    "program": "supplement-bridge-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge001()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 5,
+    "original_program": "bridge-lazy-unreached",
+    "program": "supplement-bridge-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge002()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 6,
+    "original_program": "bridge-lazy-unreached",
+    "program": "supplement-bridge-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge003()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-003",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 7,
+    "original_program": "bridge-lazy-unreached",
+    "program": "supplement-bridge-lazy-unreached",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-lazy-unreached.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "bridge-retry-logger",
+    "program": "supplement-bridge-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge001()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "bridge-retry-logger",
+    "program": "supplement-bridge-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge002()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "bridge-retry-logger",
+    "program": "supplement-bridge-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge003()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-003",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 3,
+    "original_program": "bridge-retry-logger",
+    "program": "supplement-bridge-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge004()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-004",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 4,
+    "original_program": "bridge-retry-logger",
+    "program": "supplement-bridge-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge005()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-005",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 5,
+    "original_program": "bridge-retry-logger",
+    "program": "supplement-bridge-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 6,
+    "original_program": "bridge-retry-logger",
+    "program": "supplement-bridge-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge001()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 7,
+    "original_program": "bridge-retry-logger",
+    "program": "supplement-bridge-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge002()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 8,
+    "original_program": "bridge-retry-logger",
+    "program": "supplement-bridge-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge003()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-003",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 9,
+    "original_program": "bridge-retry-logger",
+    "program": "supplement-bridge-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge004()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-004",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 10,
+    "original_program": "bridge-retry-logger",
+    "program": "supplement-bridge-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge005()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-005",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 11,
+    "original_program": "bridge-retry-logger",
+    "program": "supplement-bridge-retry-logger",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-retry-logger.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "bridge-infer-catch-order",
+    "program": "supplement-bridge-infer-catch-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-infer-catch-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge001()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "bridge-infer-catch-order",
+    "program": "supplement-bridge-infer-catch-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-infer-catch-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge002()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "bridge-infer-catch-order",
+    "program": "supplement-bridge-infer-catch-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-infer-catch-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 3,
+    "original_program": "bridge-infer-catch-order",
+    "program": "supplement-bridge-infer-catch-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-infer-catch-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge001()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 4,
+    "original_program": "bridge-infer-catch-order",
+    "program": "supplement-bridge-infer-catch-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-infer-catch-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge002()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 5,
+    "original_program": "bridge-infer-catch-order",
+    "program": "supplement-bridge-infer-catch-order",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-infer-catch-order.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "bridge-receiverless-lazy-module",
+    "program": "supplement-bridge-receiverless-lazy-module",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-receiverless-lazy-module.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge001()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "bridge-receiverless-lazy-module",
+    "program": "supplement-bridge-receiverless-lazy-module",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/bridge-receiverless-lazy-module.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "bridge-receiverless-lazy-module",
+    "program": "supplement-bridge-receiverless-lazy-module",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-receiverless-lazy-module.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge001()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 3,
+    "original_program": "bridge-receiverless-lazy-module",
+    "program": "supplement-bridge-receiverless-lazy-module",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/bridge-receiverless-lazy-module.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge001()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge002()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge003()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-003",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 3,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge004()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-004",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 4,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge005()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-005",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 5,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge006()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-006",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 6,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge007()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-007",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 7,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge008()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-008",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 8,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge009()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-009",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 9,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge010()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-010",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 10,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge011()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-011",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 11,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 12,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge001()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 13,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge002()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 14,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge003()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-003",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 15,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge004()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-004",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 16,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge005()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-005",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 17,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge006()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-006",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 18,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge007()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-007",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 19,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge008()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-008",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 20,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge009()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-009",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 21,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge010()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-010",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 22,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge011()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-011",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 23,
+    "original_program": "reflection-metadata",
+    "program": "supplement-reflection-metadata",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/reflection-metadata.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "custom-receiver-competing-methods",
+    "program": "supplement-custom-receiver-competing-methods",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/custom-receiver-competing-methods.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge001()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "custom-receiver-competing-methods",
+    "program": "supplement-custom-receiver-competing-methods",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/custom-receiver-competing-methods.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "custom-receiver-competing-methods",
+    "program": "supplement-custom-receiver-competing-methods",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/custom-receiver-competing-methods.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge001()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "custom-receiver-competing-methods",
+    "program": "supplement-custom-receiver-competing-methods",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/custom-receiver-competing-methods.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "default",
+    "id": "pass-0-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "const-property-shadow-control",
+    "program": "supplement-const-property-shadow-control",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 0,
+    "source_uri": "file:///stage111-supplement/const-property-shadow-control.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "stage111Bridge000()",
+    "frame_transformer": "default",
+    "id": "pass-1-q-000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "const-property-shadow-control",
+    "program": "supplement-const-property-shadow-control",
+    "repetitions": 2,
+    "required": true,
+    "same_evaluator_pass": 1,
+    "source_uri": "file:///stage111-supplement/const-property-shadow-control.pkl"
+  }
+]

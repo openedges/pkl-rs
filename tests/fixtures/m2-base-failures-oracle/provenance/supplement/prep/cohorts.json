@@ -1,0 +1,11 @@
+{
+  "base_failures": {
+    "contracts": 100,
+    "programs": 11,
+    "power_true": 0,
+    "matrix": "target/m2/stage111-base-failures-supplement-oracle-prep-02/queries.json",
+    "matrix_sha256": "4b7f4877e9ebd6cda94c82618853a893f9ba6d37cda83d766c9767164542055a",
+    "output": "target/m2/stage111-base-failures-supplement-oracle-01",
+    "dependencies": []
+  }
+}

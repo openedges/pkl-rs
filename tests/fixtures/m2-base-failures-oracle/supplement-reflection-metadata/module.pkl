@@ -1,0 +1,16 @@
+import "pkl:base"
+import "pkl:reflect"
+local todo = reflect.Module(base).moduleClass.methods["TODO"]
+local undefined = reflect.Module(base).moduleClass.methods["Undefined"]
+function stage111Bridge000(): Any = todo.name
+function stage111Bridge001(): Any = todo.modifiers
+function stage111Bridge002(): Any = todo.parameters.length
+function stage111Bridge003(): Any = todo.returnType == reflect.nothingType
+function stage111Bridge004(): Any = todo.docComment
+function stage111Bridge005(): Any = todo.location.toString()
+function stage111Bridge006(): Any = undefined.name
+function stage111Bridge007(): Any = undefined.modifiers
+function stage111Bridge008(): Any = undefined.parameters.length
+function stage111Bridge009(): Any = undefined.returnType == reflect.nothingType
+function stage111Bridge010(): Any = undefined.docComment
+function stage111Bridge011(): Any = undefined.location.toString()

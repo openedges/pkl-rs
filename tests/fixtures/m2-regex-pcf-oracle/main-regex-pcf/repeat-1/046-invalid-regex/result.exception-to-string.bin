@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Syntax error in regex `(`: Unclosed group near index 1
+(
+
+1 | renderer(false).renderValue(Regex("("))
+                                ^^^^^^^^^^
+at  (repl:text)

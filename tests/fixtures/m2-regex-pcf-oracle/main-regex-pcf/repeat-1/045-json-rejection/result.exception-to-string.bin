@@ -1,0 +1,9 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot render value of type `Regex` as JSON.
+Value: Regex(#"[ab]\s+"#)
+
+1 | (new JsonRenderer {}).renderValue(Regex(patterns[2]))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Consider adding a converter to `output.converters`.

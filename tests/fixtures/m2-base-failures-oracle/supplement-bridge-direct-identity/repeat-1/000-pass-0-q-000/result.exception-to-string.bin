@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+TODO
+
+2377 | const function TODO(): nothing = throw("TODO")
+                                        ^^^^^^^^^^^^^
+at pkl.base#TODO (pkl:base)
+
+7 | function stage111Bridge000(): Any = base.TODO()
+                                        ^^^^^^^^^^^
+at bridge-direct#stage111Bridge000 (file:///stage111-supplement/bridge-direct.pkl)
+
+1 | stage111Bridge000()
+    ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

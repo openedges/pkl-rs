@@ -1,0 +1,170 @@
+{
+  "schema": 1,
+  "authority": "Preserved actual pinned Java 0.32.0 process captures, never Rust-generated expected output.",
+  "upstream_revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+  "current_report": {
+    "path": "target/m2/stage109-current-original-replay-01/report.json",
+    "sha256": "b16238f2b47d8d3f65867c4f80dc2978dc451b5be7b3259829c63bc13579b116"
+  },
+  "scope": "Single-source shared output adapter with matching source URI/name, properties/environment and default CLI-bundled diagnostic profile. Tests do not reexecute the Java CLI or assert the full CLI contract.",
+  "cases": [
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/classes/constraintsLambdaThis.pkl",
+      "original": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/classes/constraintsLambdaThis.pkl",
+      "original_sha256": "a642d52f3a4c285767bc28d5bc9dc5e4d4d9b1530f0c68726d6e00d04a8c6d11",
+      "current_process": {
+        "bytes": 5666,
+        "path": "target/m2/stage109-current-original-replay-01/c5333afde8c967699f44ee56/0/process.json",
+        "sha256": "36fa0a601c1ca9dee9ca7effffd6e4fdf98fd1818c599a5a312aaf72676337a9"
+      },
+      "current_exit_code": 1,
+      "current_raw_channels": {
+        "stdout": {
+          "bytes": 0,
+          "path": "target/m2/stage109-current-original-replay-01/c5333afde8c967699f44ee56/0/stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "bytes": 1669,
+          "path": "target/m2/stage109-current-original-replay-01/c5333afde8c967699f44ee56/0/stderr.bin",
+          "sha256": "af4755a2f28f7ea5ebae36a708a32371874d46fd89cc505eb635b4961f509d5d"
+        }
+      },
+      "expected_records": {
+        "process.json": {
+          "bytes": 3182,
+          "path": "target/m2/stage94-originals-replay-01/cases/c5333afde8c967699f44ee56/java/process.json",
+          "sha256": "e7283e0ecffb8dea07d6a0febae8c8800c087a8aa7ade530cd97bc61bd154503"
+        },
+        "result.json": {
+          "bytes": 294,
+          "path": "target/m2/stage94-originals-replay-01/cases/c5333afde8c967699f44ee56/java/result.json",
+          "sha256": "917ed9b16dde352cbdfe1dcdc3b75bf3ebf292c6449a27e1fa47f4b8ce842ca6"
+        },
+        "stderr.bin": {
+          "bytes": 0,
+          "path": "target/m2/stage94-originals-replay-01/cases/c5333afde8c967699f44ee56/java/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout.bin": {
+          "bytes": 78,
+          "path": "target/m2/stage94-originals-replay-01/cases/c5333afde8c967699f44ee56/java/stdout.bin",
+          "sha256": "01a03285a32ad70666f16f25055535454e46df301b02ad50b33f64b87fafbb4a"
+        }
+      },
+      "java_exit_code": 0,
+      "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/classes/constraintsLambdaThis.pkl",
+      "fixture_directory": "tests/fixtures/m2-original-diagnostics-stage113/constraintsLambdaThis",
+      "raw_differences": [
+        "stdout",
+        "stderr",
+        "exit_code"
+      ],
+      "status": "observed Stage109 mismatch; candidate unexecuted"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/stackTraceWithQuotedMemberName.pkl",
+      "original": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/stackTraceWithQuotedMemberName.pkl",
+      "original_sha256": "44f2a273c13849b37a6456a5d42ece97a948b794e34380170a492c8d875479cf",
+      "current_process": {
+        "bytes": 5659,
+        "path": "target/m2/stage109-current-original-replay-01/ab9baf887c3ae8de2327e986/0/process.json",
+        "sha256": "72b20b8e576d8f28980cd6b8c5f59141f329115bc8e9727979e9fa04104b615d"
+      },
+      "current_exit_code": 1,
+      "current_raw_channels": {
+        "stdout": {
+          "bytes": 0,
+          "path": "target/m2/stage109-current-original-replay-01/ab9baf887c3ae8de2327e986/0/stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "bytes": 788,
+          "path": "target/m2/stage109-current-original-replay-01/ab9baf887c3ae8de2327e986/0/stderr.bin",
+          "sha256": "3da71674f3832dfaeb6feb450745ef1ab8a7bde33d51cfacc9e35594358bd6da"
+        }
+      },
+      "expected_records": {
+        "process.json": {
+          "bytes": 3198,
+          "path": "target/m2/stage94-originals-replay-01/cases/ab9baf887c3ae8de2327e986/java/process.json",
+          "sha256": "d1c67c5f02282ddf5ba16d1ae68a610513db0517a3ea1e7e7ef23ced452a46ef"
+        },
+        "result.json": {
+          "bytes": 294,
+          "path": "target/m2/stage94-originals-replay-01/cases/ab9baf887c3ae8de2327e986/java/result.json",
+          "sha256": "11438364bc465e0fef488790959943c6b0ac337219e94dbda5a3e7c35531dfa0"
+        },
+        "stderr.bin": {
+          "bytes": 790,
+          "path": "target/m2/stage94-originals-replay-01/cases/ab9baf887c3ae8de2327e986/java/stderr.bin",
+          "sha256": "b0b8fb8e22a34e6c5dbe2b42d6bef27f9ced44ba0abe9720fca68c4943ccf4dd"
+        },
+        "stdout.bin": {
+          "bytes": 0,
+          "path": "target/m2/stage94-originals-replay-01/cases/ab9baf887c3ae8de2327e986/java/stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_exit_code": 1,
+      "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/stackTraceWithQuotedMemberName.pkl",
+      "fixture_directory": "tests/fixtures/m2-original-diagnostics-stage113/stackTraceWithQuotedMemberName",
+      "raw_differences": [
+        "stderr"
+      ],
+      "status": "observed Stage109 mismatch; candidate unexecuted"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/lambdas/tooManyLambdaParams.pkl",
+      "original": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/lambdas/tooManyLambdaParams.pkl",
+      "original_sha256": "c3c5817086e5782ed0cdc1b40dfb90b191db046e16ef5f2e213f10c5343164d6",
+      "current_process": {
+        "bytes": 5629,
+        "path": "target/m2/stage109-current-original-replay-01/28da2e44c6e10ca7f917add0/0/process.json",
+        "sha256": "db2114f448f99624d189d18c091da296d3938c12003f705239b2512ef3adac2c"
+      },
+      "current_exit_code": 1,
+      "current_raw_channels": {
+        "stdout": {
+          "bytes": 0,
+          "path": "target/m2/stage109-current-original-replay-01/28da2e44c6e10ca7f917add0/0/stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "bytes": 377,
+          "path": "target/m2/stage109-current-original-replay-01/28da2e44c6e10ca7f917add0/0/stderr.bin",
+          "sha256": "aab27373d82ff1eaa36d9c26c319394ef6222038cc8dc2acbfedbe58ee079d06"
+        }
+      },
+      "expected_records": {
+        "process.json": {
+          "bytes": 3178,
+          "path": "target/m2/stage94-originals-replay-01/cases/28da2e44c6e10ca7f917add0/java/process.json",
+          "sha256": "654e76a3baa342af23324ff62ef034ba54cc4b710530e8e572b4d9fc763a064b"
+        },
+        "result.json": {
+          "bytes": 294,
+          "path": "target/m2/stage94-originals-replay-01/cases/28da2e44c6e10ca7f917add0/java/result.json",
+          "sha256": "4161e884b050886415a4613c3084fc214153842a9fb0fc4f0fb177a8a6e00579"
+        },
+        "stderr.bin": {
+          "bytes": 379,
+          "path": "target/m2/stage94-originals-replay-01/cases/28da2e44c6e10ca7f917add0/java/stderr.bin",
+          "sha256": "f74590d862ad3ec69cb716695b2bc7d5a6263cf3a9697fb8a9d15511a1afa43b"
+        },
+        "stdout.bin": {
+          "bytes": 0,
+          "path": "target/m2/stage94-originals-replay-01/cases/28da2e44c6e10ca7f917add0/java/stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_exit_code": 1,
+      "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/lambdas/tooManyLambdaParams.pkl",
+      "fixture_directory": "tests/fixtures/m2-original-diagnostics-stage113/tooManyLambdaParams",
+      "raw_differences": [
+        "stderr"
+      ],
+      "status": "observed Stage109 mismatch; candidate unexecuted"
+    }
+  ]
+}

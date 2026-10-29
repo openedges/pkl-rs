@@ -89,11 +89,7 @@ impl OwnerScopes {
 
     pub(super) fn enter_member(&mut self, name: &str) {
         if let Some(scopes) = &mut self.0 {
-            let name = if crate::parser::is_regular_identifier(name) {
-                name.to_owned()
-            } else {
-                format!("`{name}`")
-            };
+            let name = crate::diagnostic_names::quote_identifier(name);
             let parent = &scopes.last().unwrap().name;
             let name = if parent.is_empty() {
                 name.into()

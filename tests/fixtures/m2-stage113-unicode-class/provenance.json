@@ -1,0 +1,304 @@
+{
+  "authority_archive": {
+    "path": "tests/fixtures/m2-class-values/oracle-evidence.tar.gz",
+    "bytes": 2082943,
+    "sha256": "a39060fbf155947212aaae5b2e950dc2cd04381a78cb2860a7f8b1675b3657fc"
+  },
+  "source_case": "unicode-class-name-and-java-string",
+  "uri": "file:///stage56-class-values/main.pkl",
+  "existing_authority": true,
+  "new_Java_run": false,
+  "repeats": 2,
+  "queries": 4,
+  "files": [
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/input.pkl",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/input.pkl",
+      "bytes": 63,
+      "sha256": "e47004c079fd35643db9998dbdaa2a6bdf258320243b0b06b9a0faca4c677bd2"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/expressions.txt",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/expressions.txt",
+      "bytes": 73,
+      "sha256": "9e2b00c1071d04f2ece6768517e34e398e380f6a0df16f3186d31170eebad94a"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/protocol.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/protocol.bin",
+      "bytes": 233,
+      "sha256": "ec4b166a78d274ff85d4d7150421cf0bcab93d914463f21b4a2f2c9848927281"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/process/result.json",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/process/result.json",
+      "bytes": 1669,
+      "sha256": "4d78474ec3617593f35120b8ac2c668e572f00653ef51e1ccfcc8d9de2988d25"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/outer-0.status.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/outer-0.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/outer-0.stdout.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/outer-0.stdout.bin",
+      "bytes": 5,
+      "sha256": "d385512c08d33507d9a649b9d6fe14f5eb4f2a8db5d2970241d49740aad54f52"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/outer-0.stdout.code-units.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/outer-0.stdout.code-units.bin",
+      "bytes": 6,
+      "sha256": "76b9c84ef60f6ffe90ca6439e799a0cf6d897602f5e999ea8c8eccc664b9a952"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/outer-0.stderr.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/outer-0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/outer-0.stderr.code-units.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/outer-0.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/outer-1.status.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/outer-1.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/outer-1.stdout.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/outer-1.stdout.bin",
+      "bytes": 13,
+      "sha256": "579498dc7d8b875f37c22fb4fd8a20e25e1c31b911ef525acbdc46e1b4579c9a"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/outer-1.stdout.code-units.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/outer-1.stdout.code-units.bin",
+      "bytes": 22,
+      "sha256": "6befbadd2381d1476591f529b868799e24b65a18f97ca04a8cbb21ae5f0a4904"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/outer-1.stderr.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/outer-1.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/outer-1.stderr.code-units.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/outer-1.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/outer-2.status.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/outer-2.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/outer-2.stdout.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/outer-2.stdout.bin",
+      "bytes": 5,
+      "sha256": "4f3a9bd003974a5ed8c9ad65d4aeda3b8a0db6fd903e36e83a3a950624b09bbd"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/outer-2.stdout.code-units.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/outer-2.stdout.code-units.bin",
+      "bytes": 10,
+      "sha256": "b2c17d780e49e6fc43cbb70741ac6bccf6038f50ce4642e9068d1f8396c3e57c"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/outer-2.stderr.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/outer-2.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/outer-2.stderr.code-units.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/outer-2.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/outer-3.status.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/outer-3.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/outer-3.stdout.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/outer-3.stdout.bin",
+      "bytes": 1,
+      "sha256": "8a8de823d5ed3e12746a62ef169bcf372be0ca44f0a1236abc35df05d96928e1"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/outer-3.stdout.code-units.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/outer-3.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "6e6535d29be7bfac2971dc0853620d739dd43a62c41409d21d39ccb9b29e224b"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/outer-3.stderr.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/outer-3.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/0/outer-3.stderr.code-units.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/0/outer-3.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/input.pkl",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/input.pkl",
+      "bytes": 63,
+      "sha256": "e47004c079fd35643db9998dbdaa2a6bdf258320243b0b06b9a0faca4c677bd2"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/expressions.txt",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/expressions.txt",
+      "bytes": 73,
+      "sha256": "9e2b00c1071d04f2ece6768517e34e398e380f6a0df16f3186d31170eebad94a"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/protocol.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/protocol.bin",
+      "bytes": 233,
+      "sha256": "ec4b166a78d274ff85d4d7150421cf0bcab93d914463f21b4a2f2c9848927281"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/process/result.json",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/process/result.json",
+      "bytes": 1690,
+      "sha256": "3e0e57c37c3206a133620264ccdc35a98f0bd9bdeac091d0d99c62a7e9c0ef8b"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/outer-0.status.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/outer-0.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/outer-0.stdout.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/outer-0.stdout.bin",
+      "bytes": 5,
+      "sha256": "d385512c08d33507d9a649b9d6fe14f5eb4f2a8db5d2970241d49740aad54f52"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/outer-0.stdout.code-units.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/outer-0.stdout.code-units.bin",
+      "bytes": 6,
+      "sha256": "76b9c84ef60f6ffe90ca6439e799a0cf6d897602f5e999ea8c8eccc664b9a952"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/outer-0.stderr.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/outer-0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/outer-0.stderr.code-units.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/outer-0.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/outer-1.status.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/outer-1.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/outer-1.stdout.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/outer-1.stdout.bin",
+      "bytes": 13,
+      "sha256": "579498dc7d8b875f37c22fb4fd8a20e25e1c31b911ef525acbdc46e1b4579c9a"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/outer-1.stdout.code-units.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/outer-1.stdout.code-units.bin",
+      "bytes": 22,
+      "sha256": "6befbadd2381d1476591f529b868799e24b65a18f97ca04a8cbb21ae5f0a4904"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/outer-1.stderr.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/outer-1.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/outer-1.stderr.code-units.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/outer-1.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/outer-2.status.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/outer-2.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/outer-2.stdout.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/outer-2.stdout.bin",
+      "bytes": 5,
+      "sha256": "4f3a9bd003974a5ed8c9ad65d4aeda3b8a0db6fd903e36e83a3a950624b09bbd"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/outer-2.stdout.code-units.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/outer-2.stdout.code-units.bin",
+      "bytes": 10,
+      "sha256": "b2c17d780e49e6fc43cbb70741ac6bccf6038f50ce4642e9068d1f8396c3e57c"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/outer-2.stderr.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/outer-2.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/outer-2.stderr.code-units.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/outer-2.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/outer-3.status.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/outer-3.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/outer-3.stdout.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/outer-3.stdout.bin",
+      "bytes": 1,
+      "sha256": "8a8de823d5ed3e12746a62ef169bcf372be0ca44f0a1236abc35df05d96928e1"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/outer-3.stdout.code-units.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/outer-3.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "6e6535d29be7bfac2971dc0853620d739dd43a62c41409d21d39ccb9b29e224b"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/outer-3.stderr.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/outer-3.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_member": "main/cases/unicode-class-name-and-java-string/1/outer-3.stderr.code-units.bin",
+      "destination": "tests/fixtures/m2-stage113-unicode-class/1/outer-3.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "comparison": "Full status/stdout/stderr UTF8+UTF16, zero Logger. Java class/provider protocol retained as provenance; source-inferred lifecycle assertions are separate."
+}

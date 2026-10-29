@@ -1,0 +1,95 @@
+{
+  "alias_mode_transformations": [],
+  "alias_policy": "Direct regular-file recovery with exact byte, size and mode identity; 25 retained acquisition aliases bound to their original payloads. No live alias rehash in this independent readback.",
+  "all_archive_hashes_verified": true,
+  "all_member_raw_bytes_size_mode_verified": true,
+  "auxiliary_payloads": 1,
+  "binding": {
+    "bytes": 8026,
+    "mode": 420,
+    "path": "target/m2/stage114-archive-independent-readback-01/binding.json",
+    "sha256": "d08a29fa98cf1c96261887244af7e40f3bd3c9d342e9e7173e97cd056296d19b"
+  },
+  "canonical_fixtures_verified": 14609,
+  "complete": true,
+  "compressed_bytes": 94758075,
+  "config": {
+    "bytes": 19345,
+    "mode": 420,
+    "path": "target/m2/stage114-archive-prep-01/config.json",
+    "sha256": "71e11603506f148cb84311e6d9320b0979e51fd8a4ebc412c87cb005ac3e2781"
+  },
+  "controller": {
+    "bytes": 18687,
+    "mode": 420,
+    "path": "target/m2/stage114-archive-independent-readback-01/verify.py",
+    "sha256": "659d15e47b4e0554dd62b63427035598ce5f2da8d9aa629ab041faa482400c4a"
+  },
+  "direct_restoration_aliases": 196064,
+  "errors": [],
+  "exact_global_disjoint_union": true,
+  "finished_epoch": 1793287923.927207,
+  "full_API_complete": false,
+  "full_M2_complete": false,
+  "guest_compiler_Java_canonical_public_Git_writes": false,
+  "hosted_CI_result_claimed": false,
+  "independence": "Manual tar/PAX and zlib gzip streaming. No producer import/functions or tarfile reader; preserved parser functions from the reviewed Stage104 verifier.",
+  "kind": "Stage114 independent manual-tar/zlib streaming archive readback",
+  "known_limits": [
+    "No repository/toolchain or full workspace executable recovery claim.",
+    "Prior published archive dependencies retain their earlier independent provenance and are not decompressed here.",
+    "Unrecovered historical context and external prerequisites remain explicitly classified in the bound catalog."
+  ],
+  "logical_payload_bytes": 669814683,
+  "mandatory_payload_or_alias_count": 35,
+  "part_manifest_members": 2,
+  "parts": [
+    {
+      "archive": {
+        "bytes": 67654362,
+        "mode": 420,
+        "path": "target/m2/stage114-evidence-archives-01/stage114-diagnostics-regex-evidence-01.tar.gz",
+        "sha256": "0e91432420f33cff2b70c020bc47d0610b204e0ef5260cd4c5d631398ac0a12b"
+      },
+      "gzip_EOF_CRC_single_member_no_trailing": true,
+      "index": 1,
+      "logical_members_including_manifest": 9652,
+      "raw_hash_size_mode_order": true
+    },
+    {
+      "archive": {
+        "bytes": 27103713,
+        "mode": 420,
+        "path": "target/m2/stage114-evidence-archives-01/stage114-diagnostics-regex-evidence-02.tar.gz",
+        "sha256": "df1d3029b77f2a490785a8c85c83ce10017a2f4a8e5dd033f326a88c11e98ee7"
+      },
+      "gzip_EOF_CRC_single_member_no_trailing": true,
+      "index": 2,
+      "logical_members_including_manifest": 14513,
+      "raw_hash_size_mode_order": true
+    }
+  ],
+  "performance_targets_met": false,
+  "preflight": {
+    "bytes": 3657,
+    "mode": 420,
+    "path": "target/m2/stage114-archive-preflight-01/report.json",
+    "sha256": "1b61338189b91483214a4f7248215281a53a6d94b52bfa5f3d51ec185ae67e2f"
+  },
+  "producer": {
+    "bytes": 4152,
+    "mode": 420,
+    "path": "target/m2/stage114-evidence-archives-01/report.json",
+    "sha256": "d7660dc9fe0841003b608a8fe0ff8ee03b114ad098a394a88c340605751d860e"
+  },
+  "selected_payloads": 24162,
+  "selection": {
+    "bytes": 77286315,
+    "mode": 420,
+    "path": "target/m2/stage114-archive-preflight-01/selection.json",
+    "sha256": "05dd214ad1070b961ea6205fe1ab9dd9904f5acad8d7fb3487e533ebcb83ca26"
+  },
+  "started_epoch": 1793287920.207063,
+  "success": true,
+  "total_logical_regular_members": 24165
+}

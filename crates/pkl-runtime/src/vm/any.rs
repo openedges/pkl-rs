@@ -67,6 +67,14 @@ impl Vm {
     pub(super) fn any_member(&mut self, receiver: &Value, name: &str, method: bool) -> bool {
         // Objects must search their ordinary method ancestry first. This also
         // preserves the distinct lookup origins of local and super calls.
+        if method && name == "getClass" && !matches!(receiver, Value::Object(_) | Value::Class(_)) {
+            // Lambdas capture custom this as their ordinary receiver. Both
+            // explicit and implicit calls must dispatch Any.getClass on that
+            // value, rather than trying to resolve a scalar object's member.
+            let function = self.native_reference_method(receiver.clone(), "getClass");
+            self.stack.push(function);
+            return true;
+        }
         if method && name == "ifNonNull" && !matches!(receiver, Value::Object(_)) {
             self.any_method(receiver.clone());
             return true;

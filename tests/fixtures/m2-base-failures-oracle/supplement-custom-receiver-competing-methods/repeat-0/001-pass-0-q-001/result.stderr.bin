@@ -1,0 +1,18 @@
+–– Pkl Error ––
+Undefined value.
+
+6 | typealias UndefinedReceiver = Receiver(Undefined())
+                                           ^^^^^^^^^^^
+at custom-receiver-competing-methods#b (file:///stage111-supplement/custom-receiver-competing-methods.pkl)
+
+8 | b: UndefinedReceiver = new Receiver {}
+                           ^^^^^^^^^^^^^^^
+at custom-receiver-competing-methods#b (file:///stage111-supplement/custom-receiver-competing-methods.pkl)
+
+10 | function stage111Bridge001(): Any = b
+                                         ^
+at custom-receiver-competing-methods#stage111Bridge001 (file:///stage111-supplement/custom-receiver-competing-methods.pkl)
+
+1 | stage111Bridge001()
+    ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

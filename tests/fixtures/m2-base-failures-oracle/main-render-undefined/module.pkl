@@ -1,0 +1,3 @@
+import "pkl:base"
+value = new { nested { bad = Undefined() } }
+output { value = module.value }

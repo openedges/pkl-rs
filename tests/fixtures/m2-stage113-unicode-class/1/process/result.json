@@ -1,0 +1,43 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage56/.cache/oracle/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage56/.cache/oracle/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage56/target/m2/stage56-class-oracle-04/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage56/.cache/oracle/pkl-tools-0.32.0.jar",
+    "M2ClassValuesProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage56/target/m2/stage56-class-oracle-04/cases/unicode-class-name-and-java-string/1",
+    "file:///stage56-class-values/main.pkl",
+    "capture",
+    "none",
+    "",
+    "0"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage56",
+  "status": "executed",
+  "exit_code": 0,
+  "elapsed_ns": 593142834,
+  "peak_rss_bytes": 132644864,
+  "user_cpu_seconds": 0.9981599999999999,
+  "system_cpu_seconds": 0.07960199999999999,
+  "stdout": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage56/target/m2/stage56-class-oracle-04/cases/unicode-class-name-and-java-string/1/process/stdout.bin",
+    "sha256": "ec4b166a78d274ff85d4d7150421cf0bcab93d914463f21b4a2f2c9848927281",
+    "bytes": 233
+  },
+  "stderr": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage56/target/m2/stage56-class-oracle-04/cases/unicode-class-name-and-java-string/1/process/stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  }
+}

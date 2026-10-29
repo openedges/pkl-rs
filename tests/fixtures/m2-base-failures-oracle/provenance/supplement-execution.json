@@ -1,0 +1,141 @@
+{
+  "complete": true,
+  "success": true,
+  "argv": [
+    "python3",
+    "-B",
+    "target/m2/stage111-base-failures-supplement-oracle-prep-02/capture.py",
+    "--cohort",
+    "base_failures",
+    "--root-window-authorized"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+  "started_epoch": 1793262942.106712,
+  "root_authorization": "Root independently reviewed exact prep02 forced trace delta, granted one serialized Java acquisition11profiles22sessions200observations,512MiB pinnedJDK21/Pkl0.32, two same-evaluator passes/twofresh sessions. No additional Java/compiler/canonical mutation authorized.",
+  "overlap": "Root Stage109 owner correctness tests may overlap; no performance or memory comparison claim.",
+  "inputs_before": [
+    {
+      "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/preparation.json",
+      "bytes": 3957,
+      "mode": 420,
+      "sha256": "2bceee8528adf9ab2901d2944fc936b1ffcfb506f0afdadd1e0b23a99123917a"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/capture.py",
+      "bytes": 19277,
+      "mode": 420,
+      "sha256": "0f3e5aff6100fd3218186d7490dfafb60f78ee6c11214e78003fc9c16a5845e3"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/queries.json",
+      "bytes": 57800,
+      "mode": 420,
+      "sha256": "4b7f4877e9ebd6cda94c82618853a893f9ba6d37cda83d766c9767164542055a"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/trace-forcing-delta.json",
+      "bytes": 1991,
+      "mode": 420,
+      "sha256": "5402f1bff123b99d73dc9df9313225ae40ea4168b2b29cbe00b1d5f5fce6cf82"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-oracle-01/report.json",
+      "bytes": 3304989,
+      "mode": 420,
+      "sha256": "51caa62966ddd3e4805ccdb869d198b2d9615cf7e2158ba064401eff2883f5e1"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-supplement-oracle-prep-01/preparation.json",
+      "bytes": 3347,
+      "mode": 420,
+      "sha256": "857da4270c1658c4e23cf870c5bfc622dd386e457f4192582619c8549da61e6b"
+    },
+    {
+      "path": "target/m2/stage111-capture-coverage-review-01/report.json",
+      "bytes": 4297,
+      "mode": 420,
+      "sha256": "b65d496dc749e0559bab24b5e3ed0421d01a5c64a4e50d1110ffa6162a2d99ab"
+    }
+  ],
+  "pid": 43646,
+  "exit_code": 0,
+  "finished_epoch": 1793262974.582796,
+  "inputs_after": [
+    {
+      "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/preparation.json",
+      "bytes": 3957,
+      "mode": 420,
+      "sha256": "2bceee8528adf9ab2901d2944fc936b1ffcfb506f0afdadd1e0b23a99123917a"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/capture.py",
+      "bytes": 19277,
+      "mode": 420,
+      "sha256": "0f3e5aff6100fd3218186d7490dfafb60f78ee6c11214e78003fc9c16a5845e3"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/queries.json",
+      "bytes": 57800,
+      "mode": 420,
+      "sha256": "4b7f4877e9ebd6cda94c82618853a893f9ba6d37cda83d766c9767164542055a"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-supplement-oracle-prep-02/trace-forcing-delta.json",
+      "bytes": 1991,
+      "mode": 420,
+      "sha256": "5402f1bff123b99d73dc9df9313225ae40ea4168b2b29cbe00b1d5f5fce6cf82"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-oracle-01/report.json",
+      "bytes": 3304989,
+      "mode": 420,
+      "sha256": "51caa62966ddd3e4805ccdb869d198b2d9615cf7e2158ba064401eff2883f5e1"
+    },
+    {
+      "path": "target/m2/stage111-base-failures-supplement-oracle-prep-01/preparation.json",
+      "bytes": 3347,
+      "mode": 420,
+      "sha256": "857da4270c1658c4e23cf870c5bfc622dd386e457f4192582619c8549da61e6b"
+    },
+    {
+      "path": "target/m2/stage111-capture-coverage-review-01/report.json",
+      "bytes": 4297,
+      "mode": 420,
+      "sha256": "b65d496dc749e0559bab24b5e3ed0421d01a5c64a4e50d1110ffa6162a2d99ab"
+    }
+  ],
+  "stdout": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-execution-01/stdout.bin",
+    "bytes": 1919,
+    "mode": 420,
+    "sha256": "86c4f09dfb2c3f2237bccc65d1d22eea656f78938474a0db371b4592638a1a3d"
+  },
+  "stderr": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-execution-01/stderr.bin",
+    "bytes": 0,
+    "mode": 420,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "inputs_stable": true,
+  "actual_report": {
+    "path": "target/m2/stage111-base-failures-supplement-oracle-01/report.json",
+    "bytes": 2195037,
+    "mode": 420,
+    "sha256": "8fd4a2d33d12cec1064218a226c5ffdc9d655aead4c8161511705bd912ed0580"
+  },
+  "capture_summary": {
+    "complete": true,
+    "statuses": {
+      "error": 64,
+      "success": 136
+    },
+    "failure": null,
+    "repeat_differences": [],
+    "source_and_runtime_stable": true,
+    "materialized_stable": true,
+    "query_disposition_counts": {
+      "recorded": 200
+    },
+    "minimum_free_seen_bytes": 20175581184
+  }
+}

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot find property `test`.
+
+1 | test.catch(() -> x)
+    ^^^^
+at  (repl:text)

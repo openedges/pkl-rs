@@ -1,0 +1,126 @@
+{
+  "actual_Java_executed": false,
+  "programs": [
+    {
+      "program": "direct",
+      "queries": 20,
+      "exact_query_UTF8_roundtrip": true,
+      "wire_sha256": "eddf3923c125e00950f90f0ed7b9ef72f967b7164911e7dc793fcdb3af1f463a"
+    },
+    {
+      "program": "direct-identity",
+      "queries": 20,
+      "exact_query_UTF8_roundtrip": true,
+      "wire_sha256": "eddf3923c125e00950f90f0ed7b9ef72f967b7164911e7dc793fcdb3af1f463a"
+    },
+    {
+      "program": "arity-order",
+      "queries": 16,
+      "exact_query_UTF8_roundtrip": true,
+      "wire_sha256": "bdaa279427795a17eb4f3b2395e9642dacc7d3a2a2388ca057d78673e84c87c6"
+    },
+    {
+      "program": "lexical-shadow",
+      "queries": 8,
+      "exact_query_UTF8_roundtrip": true,
+      "wire_sha256": "c695e8fdd6361965778b001a5e3cbc9882bfe70614c870a87bdef82c602417bb"
+    },
+    {
+      "program": "separate-namespaces",
+      "queries": 8,
+      "exact_query_UTF8_roundtrip": true,
+      "wire_sha256": "ab15943ed480a4f3b2236e29af72933ed5e012ed1c7bbbdb97e999df68d3f900"
+    },
+    {
+      "program": "class-shadow",
+      "queries": 4,
+      "exact_query_UTF8_roundtrip": true,
+      "wire_sha256": "ed213e25e64ddc586cf2af2663f8c86981a5325dbc42a002dd943ee8700aa95b"
+    },
+    {
+      "program": "custom-this",
+      "queries": 4,
+      "exact_query_UTF8_roundtrip": true,
+      "wire_sha256": "3402f7ee3a3aa97ffc5a1c78ccf8fac44a99657b507cbf76663a56090fdf2038"
+    },
+    {
+      "program": "const-methods",
+      "queries": 8,
+      "exact_query_UTF8_roundtrip": true,
+      "wire_sha256": "aacbb0c31afe186c3e5d54f50e15a7a72da823e0859d6732a15fe0ae9ab8da5c"
+    },
+    {
+      "program": "const-shadow-control",
+      "queries": 2,
+      "exact_query_UTF8_roundtrip": true,
+      "wire_sha256": "9cb5f6320480974a23e367c80e7caee7e40ec76ce20b75c9bd0ebe235a4b8ea9"
+    },
+    {
+      "program": "lazy-unreached",
+      "queries": 14,
+      "exact_query_UTF8_roundtrip": true,
+      "wire_sha256": "2d22f797d4c4ff566b705917903b207dcba2b1a1d0e3cdc9638c882d9f7fdda8"
+    },
+    {
+      "program": "retry-logger",
+      "queries": 12,
+      "exact_query_UTF8_roundtrip": true,
+      "wire_sha256": "a1c2af2a1266db9f976192627a8c6203187fb782abe9c735f8a5388e550ad2b8"
+    },
+    {
+      "program": "string-force",
+      "queries": 10,
+      "exact_query_UTF8_roundtrip": true,
+      "wire_sha256": "a66667c9a6ff0ef9d04808227b6474a928f799006d5d7a993de42ee55c3c435b"
+    },
+    {
+      "program": "render-undefined",
+      "queries": 6,
+      "exact_query_UTF8_roundtrip": true,
+      "wire_sha256": "703c30e706cd4fb51958d1cc7e7ff21f742a958751b05bd0914cfc43ff786fb9"
+    },
+    {
+      "program": "render-undefined-identity",
+      "queries": 6,
+      "exact_query_UTF8_roundtrip": true,
+      "wire_sha256": "703c30e706cd4fb51958d1cc7e7ff21f742a958751b05bd0914cfc43ff786fb9"
+    },
+    {
+      "program": "render-property-control",
+      "queries": 4,
+      "exact_query_UTF8_roundtrip": true,
+      "wire_sha256": "fa42bf07e9880d17f5cb5b535cebdfccd4f053e238de03ab04f3d7b093a3b03c"
+    },
+    {
+      "program": "render-todo",
+      "queries": 2,
+      "exact_query_UTF8_roundtrip": true,
+      "wire_sha256": "dfb4ac3303b241a7e51faba6e40626c9613522f6604dbe93f79507f923c0fdd3"
+    },
+    {
+      "program": "render-todo-identity",
+      "queries": 2,
+      "exact_query_UTF8_roundtrip": true,
+      "wire_sha256": "dfb4ac3303b241a7e51faba6e40626c9613522f6604dbe93f79507f923c0fdd3"
+    },
+    {
+      "program": "infer-parent",
+      "queries": 6,
+      "exact_query_UTF8_roundtrip": true,
+      "wire_sha256": "187b78dd4a6197155b3f4e0a12037e2a146947f4d35bf5c0fbc2247a97971faf"
+    },
+    {
+      "program": "infer-catch-order",
+      "queries": 6,
+      "exact_query_UTF8_roundtrip": true,
+      "wire_sha256": "c8a7a233baca800696fb043b6b0bea00f1c1f25bf0797f948d9daee6a24d3c89"
+    },
+    {
+      "program": "receiverless-lazy-module",
+      "queries": 4,
+      "exact_query_UTF8_roundtrip": true,
+      "wire_sha256": "ad654d8c1254039cf634ae286af5644035066c3bc0dc9b4a0e676b673aa4cf5c"
+    }
+  ],
+  "all_exact": true
+}

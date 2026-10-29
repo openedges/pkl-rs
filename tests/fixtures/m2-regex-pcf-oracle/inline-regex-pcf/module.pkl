@@ -1,0 +1,3 @@
+module regexPcf
+patterns = List("", "plain", #"[ab]\s+"#, "\"", "\"\"#x", "\\#", "a\nb", "a\r\nb\tc", "😀é", "a\\s\nb", #"a\nb"#, #"a\rb"#, #"a\tb"#, "a\rb", "a\tb", ##""#\#x"##)
+function renderer(custom: Boolean): PcfRenderer = new PcfRenderer { useCustomStringDelimiters = custom }

@@ -1,0 +1,30 @@
+session-open mode=string rows=14
+call-enter=string-0-pass-0-q-000
+call-exit=string-0-pass-0-q-000 status=success
+call-enter=string-1-pass-0-q-001
+call-exit=string-1-pass-0-q-001 status=success
+call-enter=string-2-pass-0-q-002
+call-exit=string-2-pass-0-q-002 status=success
+call-enter=string-3-pass-0-q-003
+call-exit=string-3-pass-0-q-003 status=success
+call-enter=string-4-pass-0-q-004
+call-exit=string-4-pass-0-q-004 status=error
+call-enter=string-5-pass-0-q-005
+call-exit=string-5-pass-0-q-005 status=error
+call-enter=string-6-pass-0-q-006
+call-exit=string-6-pass-0-q-006 status=success
+call-enter=string-7-pass-1-q-000
+call-exit=string-7-pass-1-q-000 status=success
+call-enter=string-8-pass-1-q-001
+call-exit=string-8-pass-1-q-001 status=success
+call-enter=string-9-pass-1-q-002
+call-exit=string-9-pass-1-q-002 status=success
+call-enter=string-10-pass-1-q-003
+call-exit=string-10-pass-1-q-003 status=success
+call-enter=string-11-pass-1-q-004
+call-exit=string-11-pass-1-q-004 status=error
+call-enter=string-12-pass-1-q-005
+call-exit=string-12-pass-1-q-005 status=error
+call-enter=string-13-pass-1-q-006
+call-exit=string-13-pass-1-q-006 status=success
+session-closed mode=string rows=14 public-calls=14 success=10 errors=4

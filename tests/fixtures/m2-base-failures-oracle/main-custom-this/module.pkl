@@ -1,0 +1,4 @@
+typealias TodoInt = Int(TODO())
+typealias UndefinedInt = Int(Undefined())
+a: TodoInt = 1
+b: UndefinedInt = 2

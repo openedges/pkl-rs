@@ -1,0 +1,126 @@
+{
+  "complete": true,
+  "success": true,
+  "argv": [
+    "python3",
+    "-B",
+    "target/m2/stage110-regex-pcf-oracle-prep-02/capture.py",
+    "--cohort",
+    "regex",
+    "--root-window-authorized"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+  "started_epoch": 1793260363.217508,
+  "root_authorization": "One fresh Java-only Stage110 prep02 capture after transient cache scan correction; 47 contracts/94 observations/two serial512MiB sessions, unchanged limits. No Rust compiler/guest/canonical mutation.",
+  "overlap": {
+    "root_session": 93065,
+    "root_expected_pids": [
+      26490,
+      26491
+    ],
+    "before": "26490 26486 Thu Oct 29 16:28:59 2026     /Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo test -p pkl-runtime --locked --test m2_reflection_apis_oracle --test m2_reflection_apis_lifecycle --test m2_reflection_source_metadata --no-fail-fast -vv --message-format=json-render-diagnostics -- --test-threads=1 --nocapture\n26491 26490 Thu Oct 29 16:28:59 2026     /Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/debug/deps/m2_reflection_apis_lifecycle-a1238e0624c14c55 --test-threads=1 --nocapture\n",
+    "scope": "Concurrent Stage109 GC1 correctness tests; no performance or memory inference.",
+    "after": "26490 26486 Thu Oct 29 16:28:59 2026     /Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo test -p pkl-runtime --locked --test m2_reflection_apis_oracle --test m2_reflection_apis_lifecycle --test m2_reflection_source_metadata --no-fail-fast -vv --message-format=json-render-diagnostics -- --test-threads=1 --nocapture\n26491 26490 Thu Oct 29 16:28:59 2026     /Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/debug/deps/m2_reflection_apis_lifecycle-a1238e0624c14c55 --test-threads=1 --nocapture\n"
+  },
+  "inputs_before": [
+    {
+      "path": "target/m2/stage110-regex-pcf-oracle-prep-02/preparation.json",
+      "bytes": 2440,
+      "mode": 420,
+      "sha256": "59799557c407920ae25b621038a5eea691c78bca056a8d04df5f144c47284a0d"
+    },
+    {
+      "path": "target/m2/stage110-regex-pcf-oracle-prep-02/capture.py",
+      "bytes": 18017,
+      "mode": 420,
+      "sha256": "c5399681588e43d0f3da3e4b946e1bcfe6f509a507030d9c33f52b2405e622d0"
+    },
+    {
+      "path": "target/m2/stage110-regex-pcf-oracle-prep-02/queries.json",
+      "bytes": 16300,
+      "mode": 420,
+      "sha256": "fc069d420b143d6e9cb895b7b03df6d5cbe0451e3cd6b73a707e0f8be56e579c"
+    },
+    {
+      "path": "target/m2/stage110-regex-pcf-oracle-prep-02/controls.json",
+      "bytes": 392,
+      "mode": 420,
+      "sha256": "ae1020b4d46d4ce1cc044fe8364703477ddc02a980f32fa91a6bfca4fec8dee0"
+    },
+    {
+      "path": "target/m2/stage110-regex-pcf-oracle-01/report.json",
+      "bytes": 78291,
+      "mode": 420,
+      "sha256": "6ce227356e68d6b9d2238534a0e39b0df05d53ff878258d17ff7ec112bf4f14e"
+    }
+  ],
+  "pid": 31791,
+  "exit_code": 0,
+  "finished_epoch": 1793260367.926878,
+  "inputs_after": [
+    {
+      "path": "target/m2/stage110-regex-pcf-oracle-prep-02/preparation.json",
+      "bytes": 2440,
+      "mode": 420,
+      "sha256": "59799557c407920ae25b621038a5eea691c78bca056a8d04df5f144c47284a0d"
+    },
+    {
+      "path": "target/m2/stage110-regex-pcf-oracle-prep-02/capture.py",
+      "bytes": 18017,
+      "mode": 420,
+      "sha256": "c5399681588e43d0f3da3e4b946e1bcfe6f509a507030d9c33f52b2405e622d0"
+    },
+    {
+      "path": "target/m2/stage110-regex-pcf-oracle-prep-02/queries.json",
+      "bytes": 16300,
+      "mode": 420,
+      "sha256": "fc069d420b143d6e9cb895b7b03df6d5cbe0451e3cd6b73a707e0f8be56e579c"
+    },
+    {
+      "path": "target/m2/stage110-regex-pcf-oracle-prep-02/controls.json",
+      "bytes": 392,
+      "mode": 420,
+      "sha256": "ae1020b4d46d4ce1cc044fe8364703477ddc02a980f32fa91a6bfca4fec8dee0"
+    },
+    {
+      "path": "target/m2/stage110-regex-pcf-oracle-01/report.json",
+      "bytes": 78291,
+      "mode": 420,
+      "sha256": "6ce227356e68d6b9d2238534a0e39b0df05d53ff878258d17ff7ec112bf4f14e"
+    }
+  ],
+  "stdout": {
+    "path": "target/m2/stage110-regex-pcf-oracle-execution-02/stdout.bin",
+    "bytes": 261,
+    "mode": 420,
+    "sha256": "0c2725816eeeddd2d23f1693250be6dad80fdf744fc439e40242ae9f8d56a561"
+  },
+  "stderr": {
+    "path": "target/m2/stage110-regex-pcf-oracle-execution-02/stderr.bin",
+    "bytes": 0,
+    "mode": 420,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "input_stable": true,
+  "actual_report": {
+    "path": "target/m2/stage110-regex-pcf-oracle-02/report.json",
+    "bytes": 914808,
+    "mode": 420,
+    "sha256": "581d031bac14595940a341f0ff9362c03a64dc8760eeaffbc7ede3bffc62cbaa"
+  },
+  "capture_summary": {
+    "complete": true,
+    "statuses": {
+      "error": 8,
+      "success": 86
+    },
+    "failure": null,
+    "repeat_differences": [],
+    "source_and_runtime_stable": true,
+    "materialized_stable": true,
+    "query_disposition_counts": {
+      "recorded": 94
+    },
+    "minimum_free_seen_bytes": 21904637952
+  }
+}

@@ -37,6 +37,28 @@ Portable entry validation delegates the primary file/http/no-loader policy to th
 
 Annotation/const diagnostics are verified against their exact authored Java outcomes. The required Java const-lambda internal failure remains unresolved. These bounded probes and their raw results do not imply complete diagnostic, language or API compatibility, and correctness acquisition profiles are not performance measurements.
 
+### Base failures and diagnostic ownership
+
+`Undefined()` carries a receiverless undefined-value marker. The common VM
+preserves undefined catching and inferred-parent behavior while reserving
+renderer-path hints for failures associated with an undefined property receiver.
+Unavailable source information suppresses only the original throwing frame;
+an authored boundary that replaces the error remains visible. `TODO` and
+`Undefined` use compiled base-module methods, so their reflection metadata and
+execution bodies share the same declaration.
+
+Diagnostic labels quote individual member names according to the parser's
+identifier rules. Raw class names remain separate from these qualified scope
+labels. Lambda arity validation occurs before entering a new function scope and
+attributes the error to its enclosing declaration. Scalar custom receivers use
+the same `Any.getClass` dispatch as other runtime values.
+
+Regex display and PCF rendering share the single-line custom-delimiter formatter
+used by the pinned Java implementation. Renderer indentation and ordinary String
+formatting options do not change the Regex pattern representation. These rules
+live in the shared engine used by native, Wasm and N-API; their bounded evidence
+is recorded in the Stage114 checkpoint.
+
 ## Compatibility Boundaries
 
 | Boundary | Design Requirement |

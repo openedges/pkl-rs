@@ -1,0 +1,15 @@
+import "pkl:test"
+local good = trace(7)
+undefined = let (seen = trace(good)) Undefined()
+todo = let (seen = trace(good)) TODO()
+stable = good
+
+local stage111RetryUndefined = if (trace(true)) Undefined() else 0
+local stage111RetryTodo = if (trace(false)) 0 else TODO()
+
+function stage111Bridge000(): Any = stable
+function stage111Bridge001(): Any = test.catch(() -> stage111RetryUndefined)
+function stage111Bridge002(): Any = test.catch(() -> stage111RetryUndefined)
+function stage111Bridge003(): Any = test.catch(() -> stage111RetryTodo)
+function stage111Bridge004(): Any = test.catch(() -> stage111RetryTodo)
+function stage111Bridge005(): Any = stable

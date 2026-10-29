@@ -1,0 +1,5 @@
+import "pkl:base"
+local function TODO(): Int = 17
+local function Undefined(): String = "local"
+a = TODO()
+b = Undefined()

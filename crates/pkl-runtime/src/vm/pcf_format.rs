@@ -2,8 +2,22 @@
 use super::PklString;
 
 pub(super) fn string(value: &PklString, indent: &PklString, custom: bool) -> PklString {
+    format_string(value, indent, custom, true)
+}
+
+/// VmRegex.toString uses ValueFormatter(false, true), even for newline patterns.
+pub(super) fn single_line_custom_string(value: &PklString) -> PklString {
+    format_string(value, &"".into(), true, false)
+}
+
+fn format_string(
+    value: &PklString,
+    indent: &PklString,
+    custom: bool,
+    use_multiline: bool,
+) -> PklString {
     let units: Vec<_> = value.encode_utf16().collect();
-    let multiline = units.contains(&10);
+    let multiline = use_multiline && units.contains(&10);
     let (mut quotes, mut context, mut current, mut maxima) =
         (0usize, 0usize, [0usize; 4], [0usize; 4]);
     for &unit in &units {

@@ -1,0 +1,21 @@
+{
+  "labels": {
+    "0": "empty",
+    "1": "plain",
+    "2": "regex-escaped-s",
+    "3": "single-quote",
+    "4": "leading-two-quotes-hash",
+    "5": "backslash-hash",
+    "6": "literal-lf",
+    "7": "literal-crlf-tab",
+    "8": "nonbmp-unicode",
+    "9": "backslash-with-literal-lf",
+    "10": "regex-escaped-n",
+    "11": "regex-escaped-r",
+    "12": "regex-escaped-t",
+    "13": "literal-cr",
+    "14": "literal-tab",
+    "15": "quote-backslash-hash-collision"
+  },
+  "literal_controls": "Pkl ordinary-string escapes become actual LF/CR/tab pattern code units; custom string inputs a\\nb/a\\rb/a\\tb retain backslash-letter regex escapes. No decoding or normalization is performed by capture transport."
+}

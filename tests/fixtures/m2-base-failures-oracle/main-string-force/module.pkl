@@ -1,0 +1,4 @@
+undefined = new { bad = Undefined()
+  good = trace(7) }
+todo = new { bad = TODO()
+  good = trace(9) }

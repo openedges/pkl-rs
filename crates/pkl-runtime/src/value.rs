@@ -181,6 +181,8 @@ pub struct RuntimeErrorDetails {
     pub(crate) type_lookup_module: Option<Arc<str>>,
     /// A typed Host SPI mapping produced an ordinary guest exception.
     pub(crate) host_language_exception: bool,
+    /// Undefined() has no receiver; renderer paths belong only to undefined properties.
+    pub(crate) undefined_receiverless: bool,
     /// The throwing helper has neither a guest node nor a source section.
     /// Its innermost call-target frame is unavailable; caller frames remain.
     pub(crate) unavailable_origin: bool,
@@ -201,6 +203,7 @@ impl PartialEq for RuntimeErrorDetails {
             && self.hint_from_template == other.hint_from_template
             && self.type_lookup_module == other.type_lookup_module
             && self.host_language_exception == other.host_language_exception
+            && self.undefined_receiverless == other.undefined_receiverless
             && self.unavailable_origin == other.unavailable_origin
             && self.frontend == other.frontend
             && self.cached_module_frames == other.cached_module_frames
@@ -220,6 +223,7 @@ static EMPTY_ERROR_DETAILS: RuntimeErrorDetails = RuntimeErrorDetails {
     hint_from_template: false,
     type_lookup_module: None,
     host_language_exception: false,
+    undefined_receiverless: false,
     unavailable_origin: false,
     frontend: None,
     cached_module_frames: false,
@@ -374,6 +378,12 @@ impl RuntimeError {
 
     pub(crate) fn undefined(mut self) -> Self {
         self.undefined_value = true;
+        self
+    }
+
+    pub(crate) fn undefined_without_receiver(mut self) -> Self {
+        self.undefined_value = true;
+        self.undefined_receiverless = true;
         self
     }
 

@@ -1,0 +1,9 @@
+import "pkl:test"
+safe = new { good = 7
+  bad = Undefined()
+  todo = TODO() }
+
+function stage111Bridge000(): Any = safe.good
+function stage111Bridge001(): Any = test.catch(() -> safe.bad)
+function stage111Bridge002(): Any = test.catch(() -> safe.todo)
+function stage111Bridge003(): Any = safe.good

@@ -1,0 +1,16 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot tell which parent to amend.
+
+3 | x = new C { value = new {} }
+                        ^^^
+at bridge-infer-catch-order#x.value (file:///stage111-supplement/bridge-infer-catch-order.pkl)
+
+Please specify a parent explicitly, for example `new Person { ... }` instead of `new { ... }`.
+
+9 | function stage111Bridge002(): Any = x.toString()
+                                        ^^^^^^^^^^^^
+at bridge-infer-catch-order#stage111Bridge002 (file:///stage111-supplement/bridge-infer-catch-order.pkl)
+
+1 | stage111Bridge002()
+    ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,52 @@
+{
+  "preserved_main_authority": {
+    "path": "target/m2/stage110-regex-pcf-oracle-02/report.json",
+    "bytes": 914808,
+    "mode": 420,
+    "sha256": "581d031bac14595940a341f0ff9362c03a64dc8760eeaffbc7ede3bffc62cbaa"
+  },
+  "preserved_lookup_error_authority": {
+    "path": "target/m2/stage110-regex-pcf-indent-oracle-01/report.json",
+    "bytes": 84528,
+    "mode": 420,
+    "sha256": "6a02120475387078b9388652a9286a413e8db681a4b85859b88b44924a367482"
+  },
+  "changes": [
+    {
+      "id": "nested-indent-false",
+      "before": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = false }).renderDocument(new Dynamic { nested = new Dynamic { pattern = Regex(patterns[9]) } })",
+      "after": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = false }).renderDocument(new Dynamic { nested = new Dynamic { pattern = Regex(\"a\\\\s\\nb\") } })"
+    },
+    {
+      "id": "nested-indent-true",
+      "before": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = true }).renderDocument(new Dynamic { nested = new Dynamic { pattern = Regex(patterns[9]) } })",
+      "after": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = true }).renderDocument(new Dynamic { nested = new Dynamic { pattern = Regex(\"a\\\\s\\nb\") } })"
+    }
+  ],
+  "pattern_identity": {
+    "source": {
+      "path": "target/m2/stage110-regex-pcf-indent-oracle-prep-01/module.pkl",
+      "bytes": 287,
+      "mode": 420,
+      "sha256": "63fada681310b908ff685c000ba6c24f9464a5ba5e59e86866e8aa195a3e4d95"
+    },
+    "token_index": 9,
+    "original_literal_exact_UTF8": "\"a\\\\s\\nb\"",
+    "inlined_literal_exact_UTF8": "\"a\\\\s\\nb\"",
+    "decoded_UTF16BE_units": [
+      97,
+      92,
+      115,
+      10,
+      98
+    ],
+    "actual_Java_direct_result": {
+      "path": "target/m2/stage110-regex-pcf-oracle-02/programs/regex-pcf/repeat-0/034-direct-backslash-with-literal-lf/result.stdout.bin",
+      "bytes": 18,
+      "mode": 420,
+      "sha256": "81911ceeca72cd5dd831a297972b1bf1492bf1a9be0f8adfa03d1820bbe5e333"
+    },
+    "actual_Java_VmRegex_representation": "Regex(#\"a\\s\\#nb\"#)",
+    "interpretation": "Input identity proof from exact copied token and pinned Java ValueFormatter(false,true) representation. No actual comparator output/error normalization."
+  }
+}

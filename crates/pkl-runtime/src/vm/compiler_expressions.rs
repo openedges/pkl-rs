@@ -861,10 +861,11 @@ impl Compiler<'_> {
                             std::mem::replace(&mut self.modifiers, member.modifiers.clone());
                         self.validate_modifiers(member)?;
                         let previous_member = self.member.clone();
+                        let label = crate::diagnostic_names::quote_identifier(&member.name);
                         self.member = if previous_member.is_empty() {
-                            format!("#{}", member.name).into()
+                            format!("#{label}").into()
                         } else {
-                            previous_member.concat(&format!(".{}", member.name).into())
+                            previous_member.concat(&format!(".{label}").into())
                         };
                         let mut initialization_error = None;
                         let compiled_type = member.ty.as_ref().map(|ty| {

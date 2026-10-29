@@ -1,0 +1,8 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot tell which parent to amend.
+
+1 | (new PcfRenderer { indent = "----"; useCustomStringDelimiters = false }).renderDocument(new { nested { pattern = Regex(patterns[9]) } })
+                                                                                            ^^^
+at repl:text (repl:text)
+
+Please specify a parent explicitly, for example `new Person { ... }` instead of `new { ... }`.

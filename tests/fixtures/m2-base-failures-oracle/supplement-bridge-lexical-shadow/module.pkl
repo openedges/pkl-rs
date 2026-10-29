@@ -1,0 +1,8 @@
+import "pkl:base"
+local function TODO(): Int = 17
+local function Undefined(): String = "local"
+a = TODO()
+b = Undefined()
+
+function stage111Bridge000(): Any = base.TODO()
+function stage111Bridge001(): Any = base.Undefined()

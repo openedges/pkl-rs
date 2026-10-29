@@ -1,0 +1,5 @@
+import "pkl:base"
+x = 1
+
+function stage111Bridge000(): Any = base.TODO(1, 2)
+function stage111Bridge001(): Any = base.Undefined(1, 2)

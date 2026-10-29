@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Undefined value.
+
+2 | const function failUndefined(): nothing = Undefined()
+                                              ^^^^^^^^^^^
+at const-methods#failUndefined (file:///stage111/const-methods.pkl)
+
+5 | y = failUndefined()
+        ^^^^^^^^^^^^^^^
+at const-methods#Holder.y (file:///stage111/const-methods.pkl)
+
+1 | holder.y
+    ^^^^^^^^
+at  (repl:text)

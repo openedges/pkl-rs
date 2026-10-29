@@ -169,6 +169,8 @@ fn append_members(
                         | "Char"
                         | "Uri"
                         | "Mixin"
+                        | "TODO"
+                        | "Undefined"
                 ))
     });
     let resolved = crate::resolver::resolve_stdlib_module(&header)
@@ -186,7 +188,9 @@ fn append_members(
             resolved_uri: uri.into(),
         }),
     )?;
-    let compiled_members = program.units[unit.0 as usize].initial_members.clone();
+    // Methods are published during module initialization, so they are absent
+    // from initial_members. Preserve their compiled bodies from the template.
+    let compiled_members = program.objects[program.units[unit.0 as usize].template].clone();
     let mut members = Vec::new();
     for declaration in &parsed.members {
         if let Some(member) = compiled_members

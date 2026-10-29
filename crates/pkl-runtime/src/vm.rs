@@ -2130,7 +2130,9 @@ impl Vm {
         if error.undefined_value && self.catch_force_undefined(catch_boundary) {
             return;
         }
-        if error.undefined_value && error.hint.is_none() {
+        // Undefined() has no property receiver in VmUndefinedValueException;
+        // only undefined-property failures can acquire a renderer leaf hint.
+        if error.undefined_value && !error.undefined_receiverless && error.hint.is_none() {
             error.hint = self.pcf_undefined_hint();
         }
         // Logger callbacks throw outside the language exception hierarchy.
@@ -2162,6 +2164,9 @@ impl Vm {
         if let Some((_, span)) = callback_root {
             error.span = Some(span);
         }
+        // Source absence belongs to the original throwing frame. If an
+        // inferred-parent boundary replaces this error and shortens the visible
+        // stack, that boundary's authored origin must remain visible.
         let unavailable_origin = error.unavailable_origin;
         if unavailable_origin {
             // Consume this origin once: cached exceptions already contain the
@@ -2204,17 +2209,11 @@ impl Vm {
                 .get(frame.block)
                 .and_then(|code| code.get(frame.pc.saturating_sub(1)))
         };
-        let caught_undefined = error.undefined_value
-            && error.kind == ErrorKind::MissingMember
-            && self.frames.last().is_some_and(|frame| {
-                matches!(
-                    instruction(frame),
-                    Some(Instruction::Undefined(_) | Instruction::EntryParent { .. })
-                )
-            });
         let diagnostic_count = if let Some((index, _)) = callback_root {
             index + 1
-        } else if caught_undefined {
+        } else if error.undefined_value {
+            // InferParentWithinPropertyNode catches every undefined-value
+            // exception from its prototype read, including Undefined().
             self.frames[unwind_start..]
                 .iter()
                 .rposition(|frame| {
@@ -2409,7 +2408,7 @@ impl Vm {
                         .is_some_and(|child| self.object_method_signature_frame(child))
                     && !reading_inferred_parent
                     && !replaced_byte_argument
-                    && !(unavailable_origin && frame_index + 1 == diagnostic_frames.len())
+                    && !(unavailable_origin && frame_index + 1 == self.frames.len())
                 {
                     let displayed = RuntimeFrame {
                         source: metadata.source.clone(),
@@ -7397,7 +7396,13 @@ impl Compiler<'_> {
                     // declaration's override error. Replay failures during class
                     // initialization, without running any property initializer.
                     self.type_scopes.truncate(scope_count);
-                    self.member = previous_member.concat(&format!(".{}", member.name).into());
+                    self.member = previous_member.concat(
+                        &format!(
+                            ".{}",
+                            crate::diagnostic_names::quote_identifier(&member.name)
+                        )
+                        .into(),
+                    );
                     let mut code = Code::default();
                     code.push_at(
                         Instruction::Fail(error.clone()),
@@ -7461,15 +7466,16 @@ impl Compiler<'_> {
         let previous_modifiers = std::mem::replace(&mut self.modifiers, member.modifiers.clone());
         self.validate_modifiers(member)?;
         let previous_member = self.member.clone();
+        let label = crate::diagnostic_names::quote_identifier(&member.name);
         self.member = if previous_member.is_empty() {
             format!(
                 "{}{}",
                 if self.module_annotation { "." } else { "#" },
-                member.name
+                label
             )
             .into()
         } else {
-            previous_member.concat(&format!(".{}", member.name).into())
+            previous_member.concat(&format!(".{label}").into())
         };
         let mut initialization_error = None;
         let compiled_type = member.ty.as_ref().map(|ty| {
@@ -7805,12 +7811,16 @@ impl Compiler<'_> {
                         .map(|identity| identity.original_uri.clone())
                         .or_else(|| self.source.as_ref().map(|source| source.uri.clone())),
                     id: self.declaration_base + expression.span.start,
-                    name: Arc::from(
-                        self.member
-                            .as_str()
-                            .expect("classes are declared in module scope")
-                            .trim_start_matches('#'),
-                    ),
+                    // PClassInfo receives the raw declaration name; quoted
+                    // SymbolTable scope labels belong only to diagnostics.
+                    name: self
+                        .type_scopes
+                        .iter()
+                        .rev()
+                        .flatten()
+                        .find(|member| member.expr.span == expression.span)
+                        .map(|member| Arc::from(member.name.as_str()))
+                        .ok_or_else(|| invalid("missing class declaration name"))?,
                     open: crate::syntax::modifier_flags(&self.modifiers)
                         & crate::syntax::ModifierKind::Open.flag()
                         != 0,
@@ -7934,6 +7944,21 @@ impl Compiler<'_> {
             }
             ExprKind::Uninitialized => {
                 if self
+                    .source
+                    .as_ref()
+                    .is_some_and(|source| source.uri.as_ref() == "pkl:base")
+                    && self.member.as_str() == Some("#Undefined")
+                {
+                    // BaseNodes.Undefined uses undefinedValue(), without the
+                    // property receiver carried by undefinedPropertyValue().
+                    let mut error = RuntimeError::new(ErrorKind::Type, "Undefined value.")
+                        .undefined_without_receiver();
+                    // ExternalMemberNode's body has an unavailable source
+                    // section. Its declaration remains available to reflection,
+                    // but StackTraceGenerator omits this throwing body frame.
+                    error.unavailable_origin = true;
+                    output.push(Instruction::Fail(error));
+                } else if self
                     .source
                     .as_ref()
                     .is_some_and(|source| source.uri.as_ref() == "pkl:reflect")
@@ -8063,6 +8088,10 @@ impl Compiler<'_> {
                             owner_depth: *owner_depth,
                             local: *local,
                         })
+                    }
+                    Binding::ImplicitMethod if matches!(name.as_ref(), "TODO" | "Undefined") => {
+                        output.push(Instruction::LoadBaseModule);
+                        output.push(Instruction::GetMethod(name));
                     }
                     Binding::ImplicitMethod if name.as_ref() == "Regex" => {
                         output.push(Instruction::RegexConstructor)
@@ -9389,10 +9418,13 @@ impl Compiler<'_> {
                                 std::mem::replace(&mut self.argument_spans, argument_spans);
                             let previous_module =
                                 std::mem::replace(&mut self.constraint_module, true);
-                            let previous_member = std::mem::replace(
-                                &mut self.member,
-                                format!("#{}", member.name).into(),
-                            );
+                            let alias_owner: PklString = format!(
+                                "#{}",
+                                crate::diagnostic_names::quote_identifier(&member.name)
+                            )
+                            .into();
+                            let previous_member =
+                                std::mem::replace(&mut self.member, alias_owner.clone());
                             self.alias_frames.push(RuntimeFrame {
                                 span: ty.span,
                                 member: previous_member.clone(),
@@ -9404,7 +9436,7 @@ impl Compiler<'_> {
                                 .map_err(|mut error| {
                                     error.frames.push(RuntimeFrame {
                                         span: aliased.span,
-                                        member: format!("#{}", member.name).into(),
+                                        member: alias_owner.clone(),
                                         source: self.source.clone(),
                                     });
                                     error
@@ -9413,7 +9445,7 @@ impl Compiler<'_> {
                                 if let Some(Err(error)) = &mut recipe.reference {
                                     error.frames.push(RuntimeFrame {
                                         span: aliased.span,
-                                        member: format!("#{}", member.name).into(),
+                                        member: alias_owner.clone(),
                                         source: self.source.clone(),
                                     });
                                 }

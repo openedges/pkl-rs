@@ -1,0 +1,18 @@
+–– Pkl Error ––
+TODO
+
+2377 | const function TODO(): nothing = throw("TODO")
+                                        ^^^^^^^^^^^^^
+at pkl.base#TODO (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2377)
+
+1 | typealias TodoInt = Int(TODO())
+                            ^^^^^^
+at custom-this#a (file:///stage111/custom-this.pkl)
+
+3 | a: TodoInt = 1
+                 ^
+at custom-this#a (file:///stage111/custom-this.pkl)
+
+1 | a
+    ^
+at  (repl:text)

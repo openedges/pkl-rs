@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Undefined value.
+
+8 | function stage111Bridge001(): Any = base.Undefined()
+                                        ^^^^^^^^^^^^^^^^
+at bridge-lexical-shadow#stage111Bridge001 (file:///stage111-supplement/bridge-lexical-shadow.pkl)
+
+1 | stage111Bridge001()
+    ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

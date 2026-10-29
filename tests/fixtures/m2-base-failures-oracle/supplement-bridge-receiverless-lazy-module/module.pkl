@@ -1,0 +1,6 @@
+import "pkl:test"
+const value = Undefined()
+x = value
+
+function stage111Bridge000(): Any = test.catch(() -> x)
+function stage111Bridge001(): Any = test.catch(() -> x)

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Function literals can have at most five parameters.
+
+1 | f = (a1, a2, a3, a4, a5, a6) -> a1
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at tooManyLambdaParams#f (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/lambdas/tooManyLambdaParams.pkl, line 1)

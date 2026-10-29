@@ -1,0 +1,18 @@
+{
+  "originals": [],
+  "scope": "Historical baseModule remains a separate original-adapter contract. Stage111 globals alone do not fix its independent Regex string rendering difference.",
+  "historical_observations": [
+    {
+      "role": "Stage104 historical Rust",
+      "path": "target/m2/stage104-full-ready-modules-02/26ccdfad78abd1cf73604d50/0/stdout.bin",
+      "bytes": 392,
+      "sha256": "eb96598f5fae3ba64304c3b74f42654a5b1abe148be4d918ed8398f19cfa8393"
+    },
+    {
+      "role": "Stage94 historical Java",
+      "path": "target/m2/stage94-originals-replay-01/cases/26ccdfad78abd1cf73604d50/java/stdout.bin",
+      "bytes": 341,
+      "sha256": "06b763f8046d3162c9ef721d77fca64538cd722e75abf528bf0980397186820d"
+    }
+  ]
+}

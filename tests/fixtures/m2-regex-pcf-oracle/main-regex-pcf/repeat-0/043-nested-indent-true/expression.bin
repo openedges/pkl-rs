@@ -1,0 +1,1 @@
+(new PcfRenderer { indent = "----"; useCustomStringDelimiters = true }).renderDocument(new { nested { pattern = Regex(patterns[9]) } })

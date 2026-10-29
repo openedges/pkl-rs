@@ -1,0 +1,1467 @@
+{
+  "Rust_evaluations": 0,
+  "acquisition_mode": "root-authorized serial pinned Java",
+  "acquisition_started": true,
+  "admission": {
+    "allocated_bytes": 77824,
+    "free_bytes": 21739225088,
+    "logical_bytes": 38229
+  },
+  "auxiliary_inputs": [],
+  "canonical_Rust_source_binding": false,
+  "cohort": "regex",
+  "complete": true,
+  "concurrency": {
+    "canonical_Rust_sources_are_not_bound_Java_inputs": true,
+    "context": "Root must explicitly hand off the serialized Java window. Immutable selected matrix, exact auxiliary inputs, helper/JDK/JAR/lock/reference identities are bound. Canonical Rust files are not Java inputs. Stage109 GC1 correctness tests may overlap only under explicit root window; no Rust compatibility or performance claim.",
+    "performance_evidence_claimed": false,
+    "root_serialized_Java_handoff": true
+  },
+  "contracts": 2,
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/tmp",
+    "TZ": "UTC"
+  },
+  "evaluator_environment": {},
+  "evaluator_external_properties": {},
+  "events": [],
+  "expression_wire_encoding": "base64-of-exact-original-UTF8",
+  "finished_epoch": 1793260490.659733,
+  "input_after": {
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java": {
+      "bytes": 70432,
+      "mode": 493,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+      "sha256": "9be1d0a740ff6502df1a762145e62860f5de4b7e17658d9cb9498da3acf9d16c"
+    },
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/modules": {
+      "bytes": 140714013,
+      "mode": 420,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/modules",
+      "sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf"
+    },
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/src.zip": {
+      "bytes": 54198945,
+      "mode": 420,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/src.zip",
+      "sha256": "173282dd3f4c4004548e6a09e6687acff25120967b1a8375a5df4c677d7f4e4e"
+    },
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/release": {
+      "bytes": 1628,
+      "mode": 420,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/release",
+      "sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar": {
+      "bytes": 26877190,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+      "sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/EvaluatorBuilder.java": {
+      "bytes": 21095,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/EvaluatorBuilder.java",
+      "sha256": "83e6139f2fcda0ae0019452a3cf5f993b7e5e6366574033a2a4c328a492f822f"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/SecurityManagers.java": {
+      "bytes": 12138,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/SecurityManagers.java",
+      "sha256": "18d813d8c34fc9837883ca4d8916d3266ec4113a6142f20f6d53d0ad4c4dff15"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/ValueFormatter.java": {
+      "bytes": 11750,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/ValueFormatter.java",
+      "sha256": "bb599f86a5f8ad1a8e4c469c700f5b4ab6a30f2329bfb9b2ac5ea1393fcd1194"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/builder/AstBuilder.java": {
+      "bytes": 121807,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/builder/AstBuilder.java",
+      "sha256": "e423325b3cef4b7410d7a01c3e9c776b7c1e5993f93f7bec02e0852d5d5fd7d8"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/builder/SymbolTable.java": {
+      "bytes": 34496,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/builder/SymbolTable.java",
+      "sha256": "3457f5fbf22819b7ec8707f72f3f29b2fc8fb51eeac793980999a8b44f678bb2"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/module/ModuleKeyFactories.java": {
+      "bytes": 10432,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/module/ModuleKeyFactories.java",
+      "sha256": "6360af26c7011bcd24d28ca9acb90dc817f9e93bc19e1c82a987db52a17ec08d"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/ModuleCache.java": {
+      "bytes": 8387,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/ModuleCache.java",
+      "sha256": "96eb6429a710d0b4db09664b6d84a0cb25a17a3206983183f66a65382ae69d82"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmClass.java": {
+      "bytes": 26863,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmClass.java",
+      "sha256": "a11d5d69f6c6d51e3f524a6b1b00f5444905ef0de188da3b7d5e60f3080c8526"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmObject.java": {
+      "bytes": 7333,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmObject.java",
+      "sha256": "5f74b5d18f72377b0ba8405f3dd34a9144acc419e068be5178ee8c2bc98b2fde"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmRegex.java": {
+      "bytes": 2316,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmRegex.java",
+      "sha256": "4ef15fadd144827053743cb320f78f8cb26712c7365c724439d54228c7343e4e"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmTyped.java": {
+      "bytes": 6859,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmTyped.java",
+      "sha256": "c59fa8b230ac2f9a7c0215676957e356e3c1fb282c387c83a22463990dbf1073"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmUtils.java": {
+      "bytes": 35993,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmUtils.java",
+      "sha256": "17a5b4a3750ec5ebf9a1bc8ed930cd6165f072ca97ce9d37f4f4043ac8fcce2a"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/DynamicNodes.java": {
+      "bytes": 3901,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/DynamicNodes.java",
+      "sha256": "92b59b6376edab53d7e43fea4de089b4cf3ce9d17d6aea9db71be5514327c3ae"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/MapNodes.java": {
+      "bytes": 8827,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/MapNodes.java",
+      "sha256": "4589563a59688e5790142541d38430a9ad55071015d2a72915bf06bd17bd6777"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/PcfRenderer.java": {
+      "bytes": 8315,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/PcfRenderer.java",
+      "sha256": "a9499b574b8309fdd70bcd8fc35a85e11e50079ab4202fdb3680736c6db3eb7d"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/TypedNodes.java": {
+      "bytes": 2790,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/TypedNodes.java",
+      "sha256": "4aa1adc4f80a6955017b36bcb3c2a32fcd7e3c3fa060ef7a46abad1811f1dded"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/resources/org/pkl/core/errorMessages.properties": {
+      "bytes": 34657,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/resources/org/pkl/core/errorMessages.properties",
+      "sha256": "fe93e838a3278091b0be0d02cb4519f0720ad66319e76f2b1741d65ab217292b"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/stdlib/base.pkl": {
+      "bytes": 126112,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/stdlib/base.pkl",
+      "sha256": "fddb53666b6e37bc5b70e2d7a2864730c1eab2a4edd90b5c2defefcfdd0b57fb"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/oracle.lock.json": {
+      "bytes": 4421,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/oracle.lock.json",
+      "sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/references.lock": {
+      "bytes": 648,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/references.lock",
+      "sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-candidate-01/copy-plan.json": {
+      "bytes": 1727,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-candidate-01/copy-plan.json",
+      "sha256": "ac53decb69a26fab49390997d2381c832cee690c9cff3df0958ce0f4c96d975e"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-candidate-01/evidence-pins.json": {
+      "bytes": 2124,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-candidate-01/evidence-pins.json",
+      "sha256": "768fef9f5199c4c7b0f800255035f794c8bc0cf385e338fc9e04177fd0e83b50"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/CollectionEveryOracle.java": {
+      "bytes": 6328,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/CollectionEveryOracle.java",
+      "sha256": "56defcb9f990729eedc3a3b98854c07319859a683cae4a404fedaf821cc2a98f"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/PLAN.md": {
+      "bytes": 676,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/PLAN.md",
+      "sha256": "ed16f4d242a4fa613de7f0cbc26dd6c6f6b25f8b0ffa9e00236717f2d6ccc2a6"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/capture.py": {
+      "bytes": 18017,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/capture.py",
+      "sha256": "3e37576017421ae6866e5cf610cfbfdba65f71f31363cf5b3141ec211921403f"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/cohorts.json": {
+      "bytes": 337,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/cohorts.json",
+      "sha256": "d364b1e079f82830cf43e7e7c8580a5e998a5bc94f31197618cb206e2a50efc1"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/helper-false/CollectionEveryOracle.java": {
+      "bytes": 6329,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/helper-false/CollectionEveryOracle.java",
+      "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/historical-originals.json": {
+      "bytes": 414,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/historical-originals.json",
+      "sha256": "86998c0c2a8eae8eec03c0f891fdf8124cdf0cfd22ec08677556854ef71d00dc"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/module.pkl": {
+      "bytes": 287,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/module.pkl",
+      "sha256": "63fada681310b908ff685c000ba6c24f9464a5ba5e59e86866e8aa195a3e4d95"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/pattern-index.json": {
+      "bytes": 709,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/pattern-index.json",
+      "sha256": "2626ed1136657c2f0bb3790c828d081228964bb4a0cc8c545eb15e98ee6abcb1"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/preparation.json": {
+      "bytes": 1589,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/preparation.json",
+      "sha256": "3d4b44d987ca86e9baa8b96d21ed103cf7ee424f0d22fa54fb1523900d446279"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/queries.json": {
+      "bytes": 1646,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/queries.json",
+      "sha256": "6a885b6e90a8f331a8567ee4bc91293a26139f161dec06df90d2c06af46fc20a"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/transport-roundtrip.json": {
+      "bytes": 81,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/transport-roundtrip.json",
+      "sha256": "33f7081f3e64f9aeb8df5a178f767fc276f366e70e8df326c46b6b115099c4f2"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage95-plist-oracle-prep-03/artifact-inputs.json": {
+      "bytes": 1972,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage95-plist-oracle-prep-03/artifact-inputs.json",
+      "sha256": "54fe5230beae30f35e1aa736271b49c87af2f3f78f500dbbc1fd73803fcbcfb5"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage98-platform-prep-01/owned_processes.py": {
+      "bytes": 3681,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage98-platform-prep-01/owned_processes.py",
+      "sha256": "304d8aaead76ab89ff824f4b2fff5ca3270084c5d532bafc0d8407fc3fe1b7f0"
+    },
+    "/usr/bin/java": {
+      "bytes": 217296,
+      "mode": 493,
+      "path": "/usr/bin/java",
+      "sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552"
+    }
+  },
+  "input_before": {
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java": {
+      "bytes": 70432,
+      "mode": 493,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+      "sha256": "9be1d0a740ff6502df1a762145e62860f5de4b7e17658d9cb9498da3acf9d16c"
+    },
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/modules": {
+      "bytes": 140714013,
+      "mode": 420,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/modules",
+      "sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf"
+    },
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/src.zip": {
+      "bytes": 54198945,
+      "mode": 420,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/src.zip",
+      "sha256": "173282dd3f4c4004548e6a09e6687acff25120967b1a8375a5df4c677d7f4e4e"
+    },
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/release": {
+      "bytes": 1628,
+      "mode": 420,
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/release",
+      "sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar": {
+      "bytes": 26877190,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+      "sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/EvaluatorBuilder.java": {
+      "bytes": 21095,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/EvaluatorBuilder.java",
+      "sha256": "83e6139f2fcda0ae0019452a3cf5f993b7e5e6366574033a2a4c328a492f822f"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/SecurityManagers.java": {
+      "bytes": 12138,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/SecurityManagers.java",
+      "sha256": "18d813d8c34fc9837883ca4d8916d3266ec4113a6142f20f6d53d0ad4c4dff15"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/ValueFormatter.java": {
+      "bytes": 11750,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/ValueFormatter.java",
+      "sha256": "bb599f86a5f8ad1a8e4c469c700f5b4ab6a30f2329bfb9b2ac5ea1393fcd1194"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/builder/AstBuilder.java": {
+      "bytes": 121807,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/builder/AstBuilder.java",
+      "sha256": "e423325b3cef4b7410d7a01c3e9c776b7c1e5993f93f7bec02e0852d5d5fd7d8"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/builder/SymbolTable.java": {
+      "bytes": 34496,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/builder/SymbolTable.java",
+      "sha256": "3457f5fbf22819b7ec8707f72f3f29b2fc8fb51eeac793980999a8b44f678bb2"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/module/ModuleKeyFactories.java": {
+      "bytes": 10432,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/module/ModuleKeyFactories.java",
+      "sha256": "6360af26c7011bcd24d28ca9acb90dc817f9e93bc19e1c82a987db52a17ec08d"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/ModuleCache.java": {
+      "bytes": 8387,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/ModuleCache.java",
+      "sha256": "96eb6429a710d0b4db09664b6d84a0cb25a17a3206983183f66a65382ae69d82"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmClass.java": {
+      "bytes": 26863,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmClass.java",
+      "sha256": "a11d5d69f6c6d51e3f524a6b1b00f5444905ef0de188da3b7d5e60f3080c8526"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmObject.java": {
+      "bytes": 7333,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmObject.java",
+      "sha256": "5f74b5d18f72377b0ba8405f3dd34a9144acc419e068be5178ee8c2bc98b2fde"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmRegex.java": {
+      "bytes": 2316,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmRegex.java",
+      "sha256": "4ef15fadd144827053743cb320f78f8cb26712c7365c724439d54228c7343e4e"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmTyped.java": {
+      "bytes": 6859,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmTyped.java",
+      "sha256": "c59fa8b230ac2f9a7c0215676957e356e3c1fb282c387c83a22463990dbf1073"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmUtils.java": {
+      "bytes": 35993,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmUtils.java",
+      "sha256": "17a5b4a3750ec5ebf9a1bc8ed930cd6165f072ca97ce9d37f4f4043ac8fcce2a"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/DynamicNodes.java": {
+      "bytes": 3901,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/DynamicNodes.java",
+      "sha256": "92b59b6376edab53d7e43fea4de089b4cf3ce9d17d6aea9db71be5514327c3ae"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/MapNodes.java": {
+      "bytes": 8827,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/MapNodes.java",
+      "sha256": "4589563a59688e5790142541d38430a9ad55071015d2a72915bf06bd17bd6777"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/PcfRenderer.java": {
+      "bytes": 8315,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/PcfRenderer.java",
+      "sha256": "a9499b574b8309fdd70bcd8fc35a85e11e50079ab4202fdb3680736c6db3eb7d"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/TypedNodes.java": {
+      "bytes": 2790,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/TypedNodes.java",
+      "sha256": "4aa1adc4f80a6955017b36bcb3c2a32fcd7e3c3fa060ef7a46abad1811f1dded"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/resources/org/pkl/core/errorMessages.properties": {
+      "bytes": 34657,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/resources/org/pkl/core/errorMessages.properties",
+      "sha256": "fe93e838a3278091b0be0d02cb4519f0720ad66319e76f2b1741d65ab217292b"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/stdlib/base.pkl": {
+      "bytes": 126112,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/stdlib/base.pkl",
+      "sha256": "fddb53666b6e37bc5b70e2d7a2864730c1eab2a4edd90b5c2defefcfdd0b57fb"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/oracle.lock.json": {
+      "bytes": 4421,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/oracle.lock.json",
+      "sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/references.lock": {
+      "bytes": 648,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/references.lock",
+      "sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-candidate-01/copy-plan.json": {
+      "bytes": 1727,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-candidate-01/copy-plan.json",
+      "sha256": "ac53decb69a26fab49390997d2381c832cee690c9cff3df0958ce0f4c96d975e"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-candidate-01/evidence-pins.json": {
+      "bytes": 2124,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-candidate-01/evidence-pins.json",
+      "sha256": "768fef9f5199c4c7b0f800255035f794c8bc0cf385e338fc9e04177fd0e83b50"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/CollectionEveryOracle.java": {
+      "bytes": 6328,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/CollectionEveryOracle.java",
+      "sha256": "56defcb9f990729eedc3a3b98854c07319859a683cae4a404fedaf821cc2a98f"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/PLAN.md": {
+      "bytes": 676,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/PLAN.md",
+      "sha256": "ed16f4d242a4fa613de7f0cbc26dd6c6f6b25f8b0ffa9e00236717f2d6ccc2a6"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/capture.py": {
+      "bytes": 18017,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/capture.py",
+      "sha256": "3e37576017421ae6866e5cf610cfbfdba65f71f31363cf5b3141ec211921403f"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/cohorts.json": {
+      "bytes": 337,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/cohorts.json",
+      "sha256": "d364b1e079f82830cf43e7e7c8580a5e998a5bc94f31197618cb206e2a50efc1"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/helper-false/CollectionEveryOracle.java": {
+      "bytes": 6329,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/helper-false/CollectionEveryOracle.java",
+      "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/historical-originals.json": {
+      "bytes": 414,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/historical-originals.json",
+      "sha256": "86998c0c2a8eae8eec03c0f891fdf8124cdf0cfd22ec08677556854ef71d00dc"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/module.pkl": {
+      "bytes": 287,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/module.pkl",
+      "sha256": "63fada681310b908ff685c000ba6c24f9464a5ba5e59e86866e8aa195a3e4d95"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/pattern-index.json": {
+      "bytes": 709,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/pattern-index.json",
+      "sha256": "2626ed1136657c2f0bb3790c828d081228964bb4a0cc8c545eb15e98ee6abcb1"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/preparation.json": {
+      "bytes": 1589,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/preparation.json",
+      "sha256": "3d4b44d987ca86e9baa8b96d21ed103cf7ee424f0d22fa54fb1523900d446279"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/queries.json": {
+      "bytes": 1646,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/queries.json",
+      "sha256": "6a885b6e90a8f331a8567ee4bc91293a26139f161dec06df90d2c06af46fc20a"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/transport-roundtrip.json": {
+      "bytes": 81,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-prep-01/transport-roundtrip.json",
+      "sha256": "33f7081f3e64f9aeb8df5a178f767fc276f366e70e8df326c46b6b115099c4f2"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage95-plist-oracle-prep-03/artifact-inputs.json": {
+      "bytes": 1972,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage95-plist-oracle-prep-03/artifact-inputs.json",
+      "sha256": "54fe5230beae30f35e1aa736271b49c87af2f3f78f500dbbc1fd73803fcbcfb5"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage98-platform-prep-01/owned_processes.py": {
+      "bytes": 3681,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage98-platform-prep-01/owned_processes.py",
+      "sha256": "304d8aaead76ab89ff824f4b2fff5ca3270084c5d532bafc0d8407fc3fe1b7f0"
+    },
+    "/usr/bin/java": {
+      "bytes": 217296,
+      "mode": 493,
+      "path": "/usr/bin/java",
+      "sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552"
+    }
+  },
+  "jdk_preflight": {
+    "argv": [
+      "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+      "-Xms64m",
+      "-Xmx512m",
+      "-Dfile.encoding=UTF-8",
+      "-Dstdout.encoding=UTF-8",
+      "-Dstderr.encoding=UTF-8",
+      "-Duser.language=en",
+      "-Duser.country=US",
+      "-Duser.timezone=UTC",
+      "-Djava.awt.headless=true",
+      "-Duser.name=oracle",
+      "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/home",
+      "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/tmp",
+      "-XshowSettings:properties",
+      "-version"
+    ],
+    "exit_code": 0,
+    "properties": {
+      "java.runtime.version": "21.0.12.1+1-LTS",
+      "java.vendor": "Eclipse Adoptium",
+      "java.version": "21.0.12.1",
+      "java.vm.name": "OpenJDK 64-Bit Server VM",
+      "java.vm.version": "21.0.12.1+1-LTS"
+    },
+    "stderr": {
+      "bytes": 2761,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/java-preflight.stderr.bin",
+      "sha256": "e817f8abb2e181cc7bbcaed802595a05955288707b6e89d7db06a6fb58e18d34"
+    },
+    "stdout": {
+      "bytes": 0,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/java-preflight.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "kind": "Stage110-regex-PCF-pinned-Java-authority",
+  "materialized_after": {
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/CollectionEveryOracle.java": {
+      "bytes": 6329,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/CollectionEveryOracle.java",
+      "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/helper-true/CollectionEveryOracle.java": {
+      "bytes": 6328,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/helper-true/CollectionEveryOracle.java",
+      "sha256": "56defcb9f990729eedc3a3b98854c07319859a683cae4a404fedaf821cc2a98f"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/module.pkl": {
+      "bytes": 287,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/module.pkl",
+      "sha256": "63fada681310b908ff685c000ba6c24f9464a5ba5e59e86866e8aa195a3e4d95"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/queries.tsv": {
+      "bytes": 479,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/queries.tsv",
+      "sha256": "55a38da37169eb28eba76c6c81e465f8b8c5cafe5a67d447a8150bf85ad24ecb"
+    }
+  },
+  "materialized_before": {
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/CollectionEveryOracle.java": {
+      "bytes": 6329,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/CollectionEveryOracle.java",
+      "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/helper-true/CollectionEveryOracle.java": {
+      "bytes": 6328,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/helper-true/CollectionEveryOracle.java",
+      "sha256": "56defcb9f990729eedc3a3b98854c07319859a683cae4a404fedaf821cc2a98f"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/module.pkl": {
+      "bytes": 287,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/module.pkl",
+      "sha256": "63fada681310b908ff685c000ba6c24f9464a5ba5e59e86866e8aa195a3e4d95"
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/queries.tsv": {
+      "bytes": 479,
+      "mode": 420,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/queries.tsv",
+      "sha256": "55a38da37169eb28eba76c6c81e465f8b8c5cafe5a67d447a8150bf85ad24ecb"
+    }
+  },
+  "materialized_stable": true,
+  "minimum_free_seen_bytes": 21737373696,
+  "peak_owned_bytes": 475136,
+  "planned_sessions": 2,
+  "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "power_assertions_enabled": "per-program",
+  "powerfalse_queries": 2,
+  "powertrue_queries": 0,
+  "preserved_historical_authorities": {
+    "historical_context": {
+      "bytes": 2124,
+      "mode": 420,
+      "path": "target/m2/stage110-regex-pcf-candidate-01/evidence-pins.json",
+      "sha256": "768fef9f5199c4c7b0f800255035f794c8bc0cf385e338fc9e04177fd0e83b50"
+    },
+    "originals": [],
+    "scope": "Old baseModule raw evidence is pinned separately; original case contains independent TODO/Undefined gaps and is not replaced by this focused acquisition."
+  },
+  "process_timeout_or_resource_failure_is_not_ordinary_Pkl_error": true,
+  "programs": [
+    {
+      "actual_inputs": {
+        "module.pkl": {
+          "bytes": 287,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/module.pkl",
+          "sha256": "63fada681310b908ff685c000ba6c24f9464a5ba5e59e86866e8aa195a3e4d95"
+        },
+        "queries.tsv": {
+          "bytes": 479,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/queries.tsv",
+          "sha256": "55a38da37169eb28eba76c6c81e465f8b8c5cafe5a67d447a8150bf85ad24ecb"
+        }
+      },
+      "id": "regex-pcf",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Corrected explicit Dynamic parent for actual indent coverage; original ambiguous new{} errors remain preserved.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = false }).renderDocument(new Dynamic { nested = new Dynamic { pattern = Regex(patterns[9]) } })",
+          "id": "nested-indent-false",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Corrected explicit Dynamic parent for actual indent coverage; original ambiguous new{} errors remain preserved.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = true }).renderDocument(new Dynamic { nested = new Dynamic { pattern = Regex(patterns[9]) } })",
+          "id": "nested-indent-true",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module regexPcf\npatterns = List(\"\", \"plain\", #\"[ab]\\s+\"#, \"\\\"\", \"\\\"\\\"#x\", \"\\\\#\", \"a\\nb\", \"a\\r\\nb\\tc\", \"\ud83d\ude00\u00e9\", \"a\\\\s\\nb\", #\"a\\nb\"#, #\"a\\rb\"#, #\"a\\tb\"#, \"a\\rb\", \"a\\tb\", ##\"\"#\\#x\"##)\nfunction renderer(custom: Boolean): PcfRenderer = new PcfRenderer { useCustomStringDelimiters = custom }\n",
+      "source_uri": "file:///stage110/regex-pcf.pkl"
+    }
+  ],
+  "query_disposition_counts": {
+    "recorded": 4
+  },
+  "query_dispositions": [
+    {
+      "disposition": "recorded",
+      "id": "nested-indent-false",
+      "program": "regex-pcf",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "disposition": "recorded",
+      "id": "nested-indent-true",
+      "program": "regex-pcf",
+      "repeat": 0,
+      "status": "error"
+    },
+    {
+      "disposition": "recorded",
+      "id": "nested-indent-false",
+      "program": "regex-pcf",
+      "repeat": 1,
+      "status": "error"
+    },
+    {
+      "disposition": "recorded",
+      "id": "nested-indent-true",
+      "program": "regex-pcf",
+      "repeat": 1,
+      "status": "error"
+    }
+  ],
+  "repeat_differences": [],
+  "resource_policy": {
+    "live_floor_bytes": 1073741824,
+    "owned_cap_bytes": 536870912,
+    "poll_seconds": 0.1,
+    "serial_Java_limit": 1,
+    "watchdog_seconds": 180
+  },
+  "schema_version": 1,
+  "sessions": [
+    {
+      "argv": [
+        "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/CollectionEveryOracle.java",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf",
+        "file:///stage110/regex-pcf.pkl"
+      ],
+      "cleanup_events": [],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01",
+      "environment": {
+        "COLUMNS": "80",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/tmp",
+        "TZ": "UTC"
+      },
+      "exit_code": 0,
+      "finished_epoch": 1793260489.4173849,
+      "helper": {
+        "bytes": 6329,
+        "mode": 420,
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/CollectionEveryOracle.java",
+        "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+      },
+      "owned_child_reaped": true,
+      "owned_processes": {
+        "root_observed": true,
+        "root_pid": 32367,
+        "terminal_live": [],
+        "tracked": [
+          {
+            "group_id_at_discovery": 32367,
+            "parent_pid_at_discovery": 32362,
+            "pid": 32367,
+            "started": "Thu Oct 29 16:54:47 2026"
+          }
+        ]
+      },
+      "owned_start": "Thu Oct 29 16:54:47 2026",
+      "pgid": 32367,
+      "pid": 32367,
+      "power_assertions": false,
+      "program": "regex-pcf",
+      "repeat": 0,
+      "rows": [
+        {
+          "directory": "target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false",
+          "expression": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = false }).renderDocument(new Dynamic { nested = new Dynamic { pattern = Regex(patterns[9]) } })",
+          "id": "nested-indent-false",
+          "logger_events": 0,
+          "raw_files": {
+            "expression.bin": {
+              "bytes": 158,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/expression.bin",
+              "sha256": "de91c10210b22a3c698759c31f88c5b4834d3aa261ce4dce09527a0aa18439f3"
+            },
+            "expression.code-units.bin": {
+              "bytes": 316,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/expression.code-units.bin",
+              "sha256": "49727f4d9d2819b902faaed932d76416dc8eca9ec25f43555cfb998abc8c8cf7"
+            },
+            "logs.count.bin": {
+              "bytes": 2,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/logs.count.bin",
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "mode.bin": {
+              "bytes": 6,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/mode.bin",
+              "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+            },
+            "mode.code-units.bin": {
+              "bytes": 12,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/mode.code-units.bin",
+              "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+            },
+            "result.cause-class.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/result.cause-class.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.cause-class.code-units.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/result.cause-class.code-units.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.cause-message.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/result.cause-message.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.cause-message.code-units.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/result.cause-message.code-units.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.cause-to-string.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/result.cause-to-string.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.cause-to-string.code-units.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/result.cause-to-string.code-units.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.error-class.bin": {
+              "bytes": 25,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/result.error-class.bin",
+              "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+            },
+            "result.error-class.code-units.bin": {
+              "bytes": 50,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/result.error-class.code-units.bin",
+              "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+            },
+            "result.exception-to-string.bin": {
+              "bytes": 829,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/result.exception-to-string.bin",
+              "sha256": "0ac4760697ce2eb4961f31a87e95a9393a926caa039b1166d83351aece185a56"
+            },
+            "result.exception-to-string.code-units.bin": {
+              "bytes": 1642,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/result.exception-to-string.code-units.bin",
+              "sha256": "ac39ada02f7f25e774a6114b4b6c79d6e89e2db5572a37045fe87a5c92c8312a"
+            },
+            "result.java-type.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/result.java-type.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.java-type.code-units.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/result.java-type.code-units.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.status.bin": {
+              "bytes": 6,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/result.status.bin",
+              "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+            },
+            "result.stderr.bin": {
+              "bytes": 802,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/result.stderr.bin",
+              "sha256": "fb4ce6e94f5db5f7603bd575363526c2fb2fe17c1e29c5439b017c091ff2df84"
+            },
+            "result.stderr.code-units.bin": {
+              "bytes": 1588,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/result.stderr.code-units.bin",
+              "sha256": "5e8f161a5e023e70d42b90c86b3141ccf954768ff9dfdfcef65b7ba7096d4f7a"
+            },
+            "result.stdout.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/result.stdout.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.stdout.code-units.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/000-nested-indent-false/result.stdout.code-units.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          },
+          "status": "error"
+        },
+        {
+          "directory": "target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true",
+          "expression": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = true }).renderDocument(new Dynamic { nested = new Dynamic { pattern = Regex(patterns[9]) } })",
+          "id": "nested-indent-true",
+          "logger_events": 0,
+          "raw_files": {
+            "expression.bin": {
+              "bytes": 157,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/expression.bin",
+              "sha256": "ea4543a1d5b8309ee0597f6ea269838cfe82c6a5a2b7994238904aa233f44e8f"
+            },
+            "expression.code-units.bin": {
+              "bytes": 314,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/expression.code-units.bin",
+              "sha256": "eaded6535f4658d374da890359cba5296701d16d04d95bac411d55ff8704068f"
+            },
+            "logs.count.bin": {
+              "bytes": 2,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/logs.count.bin",
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "mode.bin": {
+              "bytes": 6,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/mode.bin",
+              "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+            },
+            "mode.code-units.bin": {
+              "bytes": 12,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/mode.code-units.bin",
+              "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+            },
+            "result.cause-class.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/result.cause-class.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.cause-class.code-units.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/result.cause-class.code-units.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.cause-message.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/result.cause-message.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.cause-message.code-units.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/result.cause-message.code-units.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.cause-to-string.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/result.cause-to-string.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.cause-to-string.code-units.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/result.cause-to-string.code-units.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.error-class.bin": {
+              "bytes": 25,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/result.error-class.bin",
+              "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+            },
+            "result.error-class.code-units.bin": {
+              "bytes": 50,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/result.error-class.code-units.bin",
+              "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+            },
+            "result.exception-to-string.bin": {
+              "bytes": 825,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/result.exception-to-string.bin",
+              "sha256": "540f0d9a22f85046d51250a6045cac1fcf89c79c27fc4378f155f72343e1ca8d"
+            },
+            "result.exception-to-string.code-units.bin": {
+              "bytes": 1634,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/result.exception-to-string.code-units.bin",
+              "sha256": "c613bbbd701207446a43d3386be159384c80359a0d12c06941cea68480d6b473"
+            },
+            "result.java-type.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/result.java-type.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.java-type.code-units.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/result.java-type.code-units.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.status.bin": {
+              "bytes": 6,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/result.status.bin",
+              "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+            },
+            "result.stderr.bin": {
+              "bytes": 798,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/result.stderr.bin",
+              "sha256": "66e8012fc1dc63fc3c257031ad86d7f4f7da80ee01a4a03146c8239c97c618b3"
+            },
+            "result.stderr.code-units.bin": {
+              "bytes": 1580,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/result.stderr.code-units.bin",
+              "sha256": "a20c8b0a407f8521daece5cf3279cad2f6dd3758099b78ca7e208dade3a32cfb"
+            },
+            "result.stdout.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/result.stdout.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.stdout.code-units.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/001-nested-indent-true/result.stdout.code-units.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          },
+          "status": "error"
+        }
+      ],
+      "started_epoch": 1793260487.962503,
+      "stderr": {
+        "bytes": 0,
+        "mode": 420,
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/process.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 282,
+        "mode": 420,
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-0/process.stdout.bin",
+        "sha256": "f20ecfed613e8bec593924b038ab07f036dc71bb061e2f98210ddc67a264c6f8"
+      }
+    },
+    {
+      "argv": [
+        "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/CollectionEveryOracle.java",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf",
+        "file:///stage110/regex-pcf.pkl"
+      ],
+      "cleanup_events": [],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01",
+      "environment": {
+        "COLUMNS": "80",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/tmp",
+        "TZ": "UTC"
+      },
+      "exit_code": 0,
+      "finished_epoch": 1793260490.505989,
+      "helper": {
+        "bytes": 6329,
+        "mode": 420,
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/CollectionEveryOracle.java",
+        "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+      },
+      "owned_child_reaped": true,
+      "owned_processes": {
+        "root_observed": true,
+        "root_pid": 32384,
+        "terminal_live": [],
+        "tracked": [
+          {
+            "group_id_at_discovery": 32384,
+            "parent_pid_at_discovery": 32362,
+            "pid": 32384,
+            "started": "Thu Oct 29 16:54:49 2026"
+          }
+        ]
+      },
+      "owned_start": "Thu Oct 29 16:54:49 2026",
+      "pgid": 32384,
+      "pid": 32384,
+      "power_assertions": false,
+      "program": "regex-pcf",
+      "repeat": 1,
+      "rows": [
+        {
+          "directory": "target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false",
+          "expression": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = false }).renderDocument(new Dynamic { nested = new Dynamic { pattern = Regex(patterns[9]) } })",
+          "id": "nested-indent-false",
+          "logger_events": 0,
+          "raw_files": {
+            "expression.bin": {
+              "bytes": 158,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/expression.bin",
+              "sha256": "de91c10210b22a3c698759c31f88c5b4834d3aa261ce4dce09527a0aa18439f3"
+            },
+            "expression.code-units.bin": {
+              "bytes": 316,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/expression.code-units.bin",
+              "sha256": "49727f4d9d2819b902faaed932d76416dc8eca9ec25f43555cfb998abc8c8cf7"
+            },
+            "logs.count.bin": {
+              "bytes": 2,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/logs.count.bin",
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "mode.bin": {
+              "bytes": 6,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/mode.bin",
+              "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+            },
+            "mode.code-units.bin": {
+              "bytes": 12,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/mode.code-units.bin",
+              "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+            },
+            "result.cause-class.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/result.cause-class.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.cause-class.code-units.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/result.cause-class.code-units.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.cause-message.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/result.cause-message.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.cause-message.code-units.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/result.cause-message.code-units.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.cause-to-string.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/result.cause-to-string.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.cause-to-string.code-units.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/result.cause-to-string.code-units.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.error-class.bin": {
+              "bytes": 25,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/result.error-class.bin",
+              "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+            },
+            "result.error-class.code-units.bin": {
+              "bytes": 50,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/result.error-class.code-units.bin",
+              "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+            },
+            "result.exception-to-string.bin": {
+              "bytes": 829,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/result.exception-to-string.bin",
+              "sha256": "0ac4760697ce2eb4961f31a87e95a9393a926caa039b1166d83351aece185a56"
+            },
+            "result.exception-to-string.code-units.bin": {
+              "bytes": 1642,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/result.exception-to-string.code-units.bin",
+              "sha256": "ac39ada02f7f25e774a6114b4b6c79d6e89e2db5572a37045fe87a5c92c8312a"
+            },
+            "result.java-type.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/result.java-type.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.java-type.code-units.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/result.java-type.code-units.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.status.bin": {
+              "bytes": 6,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/result.status.bin",
+              "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+            },
+            "result.stderr.bin": {
+              "bytes": 802,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/result.stderr.bin",
+              "sha256": "fb4ce6e94f5db5f7603bd575363526c2fb2fe17c1e29c5439b017c091ff2df84"
+            },
+            "result.stderr.code-units.bin": {
+              "bytes": 1588,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/result.stderr.code-units.bin",
+              "sha256": "5e8f161a5e023e70d42b90c86b3141ccf954768ff9dfdfcef65b7ba7096d4f7a"
+            },
+            "result.stdout.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/result.stdout.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.stdout.code-units.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/000-nested-indent-false/result.stdout.code-units.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          },
+          "status": "error"
+        },
+        {
+          "directory": "target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true",
+          "expression": "(new PcfRenderer { indent = \"----\"; useCustomStringDelimiters = true }).renderDocument(new Dynamic { nested = new Dynamic { pattern = Regex(patterns[9]) } })",
+          "id": "nested-indent-true",
+          "logger_events": 0,
+          "raw_files": {
+            "expression.bin": {
+              "bytes": 157,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/expression.bin",
+              "sha256": "ea4543a1d5b8309ee0597f6ea269838cfe82c6a5a2b7994238904aa233f44e8f"
+            },
+            "expression.code-units.bin": {
+              "bytes": 314,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/expression.code-units.bin",
+              "sha256": "eaded6535f4658d374da890359cba5296701d16d04d95bac411d55ff8704068f"
+            },
+            "logs.count.bin": {
+              "bytes": 2,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/logs.count.bin",
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "mode.bin": {
+              "bytes": 6,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/mode.bin",
+              "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+            },
+            "mode.code-units.bin": {
+              "bytes": 12,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/mode.code-units.bin",
+              "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+            },
+            "result.cause-class.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/result.cause-class.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.cause-class.code-units.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/result.cause-class.code-units.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.cause-message.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/result.cause-message.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.cause-message.code-units.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/result.cause-message.code-units.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.cause-to-string.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/result.cause-to-string.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.cause-to-string.code-units.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/result.cause-to-string.code-units.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.error-class.bin": {
+              "bytes": 25,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/result.error-class.bin",
+              "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+            },
+            "result.error-class.code-units.bin": {
+              "bytes": 50,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/result.error-class.code-units.bin",
+              "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+            },
+            "result.exception-to-string.bin": {
+              "bytes": 825,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/result.exception-to-string.bin",
+              "sha256": "540f0d9a22f85046d51250a6045cac1fcf89c79c27fc4378f155f72343e1ca8d"
+            },
+            "result.exception-to-string.code-units.bin": {
+              "bytes": 1634,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/result.exception-to-string.code-units.bin",
+              "sha256": "c613bbbd701207446a43d3386be159384c80359a0d12c06941cea68480d6b473"
+            },
+            "result.java-type.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/result.java-type.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.java-type.code-units.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/result.java-type.code-units.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.status.bin": {
+              "bytes": 6,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/result.status.bin",
+              "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+            },
+            "result.stderr.bin": {
+              "bytes": 798,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/result.stderr.bin",
+              "sha256": "66e8012fc1dc63fc3c257031ad86d7f4f7da80ee01a4a03146c8239c97c618b3"
+            },
+            "result.stderr.code-units.bin": {
+              "bytes": 1580,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/result.stderr.code-units.bin",
+              "sha256": "a20c8b0a407f8521daece5cf3279cad2f6dd3758099b78ca7e208dade3a32cfb"
+            },
+            "result.stdout.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/result.stdout.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "result.stdout.code-units.bin": {
+              "bytes": 0,
+              "mode": 420,
+              "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/001-nested-indent-true/result.stdout.code-units.bin",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          },
+          "status": "error"
+        }
+      ],
+      "started_epoch": 1793260489.445421,
+      "stderr": {
+        "bytes": 0,
+        "mode": 420,
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/process.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 282,
+        "mode": 420,
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage110-regex-pcf-indent-oracle-01/programs/regex-pcf/repeat-1/process.stdout.bin",
+        "sha256": "f20ecfed613e8bec593924b038ab07f036dc71bb061e2f98210ddc67a264c6f8"
+      }
+    }
+  ],
+  "source_and_runtime_stable": true,
+  "started_epoch": 1793260487.5442402,
+  "statuses": {
+    "error": 4
+  },
+  "terminal_usage": {
+    "allocated_bytes": 475136,
+    "free_bytes": 21737373696,
+    "logical_bytes": 235696
+  }
+}

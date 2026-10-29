@@ -4,6 +4,8 @@
 
 ## 현재 상태
 
+현재 M2는 [Stage114 체크포인트](reports/m2/stage114-diagnostics-regex-checkpoint.json)의 공통 진단·Regex PCF 통합을 검증했습니다. 전체 ready 코퍼스 4,442개 중 4,336개가 일치하며 불일치 22개·미지원 82개·Java 오류 2개가 남습니다. 전체 M2와 아홉 작업 영역의 종료 조건은 계속 열려 있습니다.
+
 Git 저장소, Rust workspace, 참조 submodule, 개발 문서와 초기 구성 검증 도구가 준비되어 있습니다. M1에서 제한된 parser·resolver·lazy VM·heap·Host와 실제 Node·브라우저 호출 경로를 구현했습니다. 전체 Pkl 언어·표준 라이브러리·CLI·REPL·server·제품 API는 아직 구현되지 않았습니다.
 
 M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등 실행 도구, Pantry 조사, 초기 Java 성능 측정과 CI 구성을 완료했습니다. 최종 코드 커밋 `2164ffa`의 원격 CI 작업 4개가 모두 성공했고, 내려받은 원시 증거와 Java 재비교 결과도 검증했습니다. [CI 확인 기록](reports/m0/ci-summary.json)을 참조하세요. 초기 Rust 빌드와 테스트, Java 재실행 결과는 Rust 언어 호환성이나 성능 목표 달성의 증거가 아닙니다.
@@ -19,7 +21,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: Stage103/104 reflection·Typed 구현, workspace 1,596개 통과·전체 ready 4,325/4,442 일치·선택 3개 플랫폼 각각 1,138개 일치; 엄격한 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: Stage114 진단·Regex PCF 구현, workspace 1,700개 통과·전체 ready 4,336/4,442 일치·선택 3개 플랫폼 각각 일반 관측 902개 일치와 필수 미해결 2개; 엄격한 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
@@ -3591,3 +3593,21 @@ Stage104 `257be85deeb3ee65ca19660338710d6f93542918` 이후 공통 엔진에 `Typ
 다음 순서는 이미 독립 검토한 Stage114 통합안의 적용과 현재 소스 검증입니다. 이는 Regex PCF, TODO/Undefined 진단, 원래 constraint/lambda 소유자 오류 수정과 Java 회귀 사례를 포함합니다. 그와 병렬로 glob의 공통 탐색·지연 값·Host·Native/N-API/Wasm 전달을 구현하며 14개 원본 사례 전체를 목표로 합니다. 격리 후보의 성공을 canonical 통과로 대체하지 않습니다. 이후 전체 언어 목록의 나머지 미지원·불일치·미연결 의무를 계속 처리합니다.
 
 normal `.rlib`·`.rmeta`·dep-info와 실행 artifact는 취득 당시 identity로 보존하며, 기존 Java authority는 published Stage104 의존성으로 연결합니다. 필수 내부 오류·무시된 검사·원본 List의 512 MiB Java heap 실패는 미해결입니다. M2 전체·API·릴리스 플랫폼·성능 목표의 완료는 주장하지 않습니다.
+
+### Stage114 — 기본 진단·Regex PCF·원본 오류 통합 (로컬 검증 체크포인트)
+
+검토한 Stage110·Stage111·Stage113 후보의 소스·도구 17개와 Java fixture 14,609개를 canonical 소스에 통합했습니다. 단일 전체 workspace 취득은 통과 1,700개·실패 0개·ignored 5개이며, 새 대상 5개의 검사 42개를 모두 포함합니다. 종료 후 readback은 실행 테스트 대상 267개·compile-only example 25개·doctest library 2개와 전체 outer summary를 확인합니다. 필터된 child summary는 별도로 유지하며 ignored 검사를 통과로 세지 않습니다.
+
+현재 전체 ready 4,442개는 **통과 4,336개·불일치 22개·미지원 82개·Java oracle 오류 2개**입니다. 과거 통과의 회귀가 없으며 metamorphic 88개가 모두 통과했습니다. 같은 원본 module 888개에서 통과는 786개에서 790개로, 불일치는 19개에서 15개로 개선됐습니다. `baseModule`, `constraintsLambdaThis`, `stackTraceWithQuotedMemberName`, `tooManyLambdaParams`가 개선됐고 기존 original 11개와 `baseModule`이 모두 일치합니다. 남은 실패는 원본 결과 그대로 보존합니다.
+
+현재 Native01·NAPI01·Chromium01은 각각 program 95개·session 190개에서 일반 관측 902개·portable raw field 7,596개·순서 있는 Logger 38개가 일치합니다. 전체 시도 904개 중 필수 내부 오류 관측 2개는 미해결이므로 `all_required_pass=false`입니다. identity profile 4개 program의 query slot 44개·관측 88개를 포함합니다. lookup-unreached 오류 120개·const non-witness 성공 4개는 의도한 의미 검증으로 재분류하지 않습니다. Stage113 Unicode outer-evaluate protocol은 별도 계약으로 유지합니다. M1은 같은 실제 취득에서 target마다 6,078개 일치와 strict·architecture 판정을 기록하며 Native 12개·Node 3개 qualification도 통과했습니다.
+
+normal runtime과 replay example 3개는 실제 workspace의 non-Fresh compiler origin에서 나왔습니다. 후속 build-only 명령은 Cargo exit 0이지만 example이 Fresh이므로 admission 실패로 보존합니다. 수정한 qualification은 원래 workspace rustc·dep-info·source·extern·artifact를 연결하며 재컴파일하지 않았고 negative control 9개를 통과했습니다. 취득 당시 normal `.rlib`·`.rmeta`·dep-info 3개와 추가 cache path 25개의 고유 payload 22개·141,845,478 bytes를 Clippy 전에 보존했습니다. 현재 cache가 바뀌어도 보존된 취득 바이트를 사용합니다.
+
+최초 format 실패와 수정 후 format 통과를 모두 보존합니다. 준비 단계의 Python 검사 43개와 inventory·manifest metadata 재생성과 SHA-only link 74개 변경을 확인했고 inventory·contract는 바뀌지 않았습니다. freshness 명령 8개가 통과했습니다. exact current `full_gate_failures` 함수를 AST로 적용한 중복 미충족 조건 1,780개(구현 472·mapping 472·case 836)는 새 full CLI 실행이나 완료율이 아닙니다. 전체 목록 4,545개·ready 4,442개·미구현 71개·미연결 32개·요구사항 475개와 모든 미해결 의무를 유지합니다.
+
+실제 xtask verification·all-target Clippy·Wasm 검사는 각각 exit 0으로 종료했고 explicit input이 안정적이며 compiler/guest window가 해제됐습니다. 정확한 aggregate receipt는 `target/m2/stage114-defaults-commands-01/report.json`(17,530 bytes, SHA256 `c1656fd69991c493ef1496f3f46249e11192e6256f5c2a8b5f0d37e92f002fec`)입니다.
+
+증거 archive 두 개(94,758,075 compressed bytes)를 게시했습니다. 독립 tar/PAX·zlib readback에서 regular member 24,165개와 전체 bytes·size·mode·SHA256, gzip CRC·종료, tar EOF, 중복 없는 전체 payload와 직접 복원 alias 196,064개를 검증했습니다. 각 part는 85 MiB 미만입니다. 정확한 소스·문서·증거 경로만 Git에 기록합니다. 미실행 pre-review 계획의 과거 byte identity 5개는 복원하지 못한 한계로 명시합니다. 실제 config04·결과의 의존성이 아니며 없는 바이트를 만들거나 대체하지 않습니다. 현 소스 catalog 646개와 replay catalog 486개는 겹치며 합산하지 않습니다. 과거 published 증거와 고정 tool·reference는 복원 전제 조건으로 구분합니다.
+
+Stage116 glob·Stage118 hash·Stage119 quoted-name·Stage117 mapping은 별도 후보 작업으로 유지합니다. 기존 실패·ignored·Java 내부 protocol과 원본 List의 512 MiB Java heap 실패는 미해결입니다. 이 제한된 체크포인트의 마감은 M2 전체·API·릴리스 플랫폼·속도·메모리·hosted CI 완료 선언이 아닙니다.

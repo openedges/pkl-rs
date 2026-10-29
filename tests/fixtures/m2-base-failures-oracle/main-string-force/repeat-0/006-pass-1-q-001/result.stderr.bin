@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Undefined value.
+
+1 | undefined = new { bad = Undefined()
+                            ^^^^^^^^^^^
+at string-force#undefined.bad (file:///stage111/string-force.pkl)
+
+1 | undefined.bad
+    ^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Undefined value.
+
+8 | function stage111Bridge001(): Any = base.Undefined()
+                                        ^^^^^^^^^^^^^^^^
+at bridge-direct#stage111Bridge001 (file:///stage111-supplement/bridge-direct.pkl)
+
+1 | stage111Bridge001()
+    ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
