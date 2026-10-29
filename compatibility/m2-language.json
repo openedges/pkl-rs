@@ -89055,7 +89055,14 @@
       "required": true,
       "requirements": [
         "semantic:modules",
-        "semantic:diagnostics"
+        "semantic:diagnostics",
+        "semantic:lazy-evaluation",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:control-flow",
+        "semantic:scalar-literals"
       ],
       "upstream_case": {
         "assertion_count": null,
@@ -89246,7 +89253,10 @@
       "required": true,
       "requirements": [
         "semantic:modules",
-        "semantic:diagnostics"
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:lexing"
       ],
       "upstream_case": {
         "assertion_count": null,
@@ -90664,7 +90674,13 @@
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/float.pkl",
       "input_sha256": "b9aa8e32399e39a434635a1a926c5532b9fae48e9a666f02702438be3977c554",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:operators",
+        "semantic:numeric-literals"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -90758,7 +90774,15 @@
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
       "input_sha256": "a571dec47cc29c054b77aad7996d2698f1a09aa2811246416f1d0c0908f10ff7",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:objects",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:strings",
+        "semantic:lexing",
+        "semantic:name-resolution"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -91628,7 +91652,16 @@
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl",
       "input_sha256": "8fc7f28fe3fccb052a6239fc4a01109b91bd744959ba5600ef4e2abdefaed6c5",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics",
+        "semantic:functions",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:operators",
+        "semantic:numeric-errors",
+        "semantic:numeric-literals"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -96180,7 +96213,21 @@
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
       "input_sha256": "a322b892df5573d8988ac0013f79f04b524c1cddb785572eb37eb117c277d5ac",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:objects",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:operators",
+        "semantic:strings",
+        "semantic:control-flow",
+        "semantic:scalar-literals",
+        "semantic:type-tests-casts"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -96653,7 +96700,11 @@
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/parens.pkl",
       "input_sha256": "f8129049ac552b49560c62fdc8f43605b3db213c0a28d443b5fc072cbd2023ff",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:operators"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -96847,7 +96898,13 @@
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/rawString.pkl",
       "input_sha256": "ae16196bc11ceaafad5ec74a11f49238ecf16ec7595836f69e1d974ec2bebafc",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:strings",
+        "semantic:lexing",
+        "semantic:name-resolution"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -97423,7 +97480,19 @@
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
       "input_sha256": "dd7d7d23c4d63b5b9657ca927e0ffb9f22b834d66cac00f94f2237d97ada3dc6",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:functions",
+        "semantic:objects",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:strings",
+        "semantic:lexing",
+        "semantic:name-resolution"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -97612,7 +97681,14 @@
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultiline.pkl",
       "input_sha256": "66f640f0e3c2beafbf2621f953c3d2134274b9f6f2635c508d4e330f53f4f6b3",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:objects",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:strings",
+        "semantic:lexing",
+        "semantic:name-resolution"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -97706,7 +97782,12 @@
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultilineContinuation.pkl",
       "input_sha256": "8d72e6fd4890e85dcc23aad795853c0d187bfa97261e5d18227e73708fd7fe78",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:strings",
+        "semantic:lexing"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -98365,7 +98446,23 @@
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl",
       "input_sha256": "6b106e40c9481d18d934106c6f74a9f6eefe0ec838e5d1eae455fff5419a1499",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:amendment",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:objects",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:strings",
+        "semantic:closures",
+        "semantic:generators",
+        "semantic:lexing",
+        "semantic:name-resolution"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -131863,7 +131960,12 @@
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/shebang.pkl",
       "input_sha256": "63910c9007459a432b228f337c5ee2fa8a178f59a6f1321e043bd135f7b3aa77",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:lexing"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -160379,7 +160481,11 @@
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/syntax/shebang.pkl",
       "input_sha256": "fd83ffde76c295e585f1787c8d6b4f04cc8a76f0b864bd409d7d1c3f9720c648",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:lexing"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -164721,12 +164827,36 @@
       "description": "All tokens, whitespace, nested comments, quoted and blank identifiers, Unicode and source positions",
       "id": "semantic:lexing",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "876a47b2d5b7e31f3473e14357685c94556b73bc203b8cf2f3915622afdb7802",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "876a47b2d5b7e31f3473e14357685c94556b73bc203b8cf2f3915622afdb7802",
+            "symbol": "parse_module_for_evaluation"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser/string_lexer.rs",
+            "sha256": "6566ee8cf6b404f8f94da0eb8fa3a593dc4543cd42f4e02073b7c2765763091f",
+            "symbol": "string_in_context"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "All tokens, whitespace, nested comments, quoted and blank identifiers, Unicode and source positions",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
+        ],
+        "scope": "Selected supporting cases already present in the manifest remain supporting evidence only. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "identifier-greek",
@@ -165015,7 +165145,16 @@
           "string-stage28-deep-multiline-leaf-raw-24",
           "string-stage28-deep-multiline-leaf-raw-31",
           "string-stage28-deep-multiline-leaf-multiline-24",
-          "string-stage28-deep-multiline-leaf-multiline-31"
+          "string-stage28-deep-multiline-leaf-multiline-31",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/rawString.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultiline.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultilineContinuation.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/syntax/shebang.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/shebang.pkl"
         ],
         "state": "partial"
       }
@@ -165024,12 +165163,36 @@
       "description": "Integer bases, separators, signed boundaries, floating syntax and numerical values",
       "id": "semantic:numeric-literals",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "876a47b2d5b7e31f3473e14357685c94556b73bc203b8cf2f3915622afdb7802",
+            "symbol": "number"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "876a47b2d5b7e31f3473e14357685c94556b73bc203b8cf2f3915622afdb7802",
+            "symbol": "integer"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "876a47b2d5b7e31f3473e14357685c94556b73bc203b8cf2f3915622afdb7802",
+            "symbol": "primary"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Integer bases, separators, signed boundaries, floating syntax and numerical values",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
+        ],
+        "scope": "Selected supporting cases already present in the manifest remain supporting evidence only. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "int-zero",
@@ -165105,7 +165268,9 @@
           "diagnostic-stage32-object-public-negative-int",
           "diagnostic-stage32-object-public-negative-float",
           "diagnostic-stage32-object-public-grouped-negative",
-          "diagnostic-stage32-object-public-negative-grouped"
+          "diagnostic-stage32-object-public-negative-grouped",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/float.pkl"
         ],
         "state": "partial"
       }
@@ -165114,12 +165279,31 @@
       "description": "Boolean and null literals and defaults",
       "id": "semantic:scalar-literals",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "876a47b2d5b7e31f3473e14357685c94556b73bc203b8cf2f3915622afdb7802",
+            "symbol": "primary"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+            "sha256": "4b39b5664f281a0c75412ad30454ca7d470f35d2d760dcd56c99f24af4ac0b59",
+            "symbol": "literal_value"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Boolean and null literals and defaults",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
+        ],
+        "scope": "Selected supporting cases already present in the manifest remain supporting evidence only. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "literal-true",
@@ -165128,7 +165312,9 @@
           "diagnostic-stage31-local-bool",
           "diagnostic-stage31-local-null",
           "diagnostic-stage31-class-public-bool",
-          "diagnostic-stage31-class-public-null"
+          "diagnostic-stage31-class-public-null",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl"
         ],
         "state": "partial"
       }
@@ -165182,6 +165368,21 @@
             "path": "crates/pkl-runtime/src/vm/string_transforms.rs",
             "sha256": "d308322107f7108af40ac534e3baf9536c431470d8fef0c12750e8160fbc4fee",
             "symbol": "string_transform"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser/string_lexer.rs",
+            "sha256": "6566ee8cf6b404f8f94da0eb8fa3a593dc4543cd42f4e02073b7c2765763091f",
+            "symbol": "string_in_context"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser/string_lexer.rs",
+            "sha256": "6566ee8cf6b404f8f94da0eb8fa3a593dc4543cd42f4e02073b7c2765763091f",
+            "symbol": "multiline_parts"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser/string_parser.rs",
+            "sha256": "71e44e9c70d314248d53fa7d2d779c95556fcc03e61fd8ab98b51b765817c4b7",
+            "symbol": "interpolated_expression_machine"
           }
         ],
         "state": "partial"
@@ -165192,9 +165393,10 @@
       "reviewed_mapping": {
         "remaining": [
           "The complete pinned string syntax, builtin API, diagnostics and upstream original programs still require passing raw differential execution.",
-          "Whole-module rendering, malformed UTF-16 transport and each target environment retain their independent execution gates; focused reversal does not close them."
+          "Whole-module rendering, malformed UTF-16 transport and each target environment retain their independent execution gates; focused reversal does not close them.",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
         ],
-        "scope": "Stage66 links the existing lossless UTF-16 string value and Java-compatible StringBuilder-style reversal. Stage67 adds shared length, isEmpty, isNotEmpty, isBlank, isNotBlank and lastIndex property lookup for explicit access and implicit constraints, plus synthetic Reference property types. Blankness uses the pinned Pkl StringUtils 25-unit White_Space set, while lastIndex uses code-point count minus one. Independent Java fixtures retain paired/unpaired surrogates, direct BMP membership and full diagnostic controls. These partial source links and selected comparisons do not claim the complete String API or original-program completion. Stage76 adds a shared checked UTF-16 Regex/RegexMatch value and String regex predicate, index, split, replacement and mapped-callback paths, including flag-aware syntax classification and pinned generic Character names. The isolated candidate10 Java-derived389 query comparisons and Host controls are bounded evidence; canonical integration, full original programs and platform execution remain separate gates.",
+        "scope": "Stage66 links the existing lossless UTF-16 string value and Java-compatible StringBuilder-style reversal. Stage67 adds shared length, isEmpty, isNotEmpty, isBlank, isNotBlank and lastIndex property lookup for explicit access and implicit constraints, plus synthetic Reference property types. Blankness uses the pinned Pkl StringUtils 25-unit White_Space set, while lastIndex uses code-point count minus one. Independent Java fixtures retain paired/unpaired surrogates, direct BMP membership and full diagnostic controls. These partial source links and selected comparisons do not claim the complete String API or original-program completion. Stage76 adds a shared checked UTF-16 Regex/RegexMatch value and String regex predicate, index, split, replacement and mapped-callback paths, including flag-aware syntax classification and pinned generic Character names. The isolated candidate10 Java-derived389 query comparisons and Host controls are bounded evidence; canonical integration, full original programs and platform execution remain separate gates. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -165318,7 +165520,14 @@
           "trace-stage37-repeat-arity-two-before-constraint",
           "read-stage38-uri-unpaired-surrogate",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/string.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/stringUnicode.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/stringUnicode.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/rawString.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultiline.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultilineContinuation.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
         ],
         "state": "partial"
       }
@@ -165362,9 +165571,10 @@
       "reviewed_mapping": {
         "remaining": [
           "Complete operand-pair coverage, error ordering, source frames and the entire upstream operator corpus remain unverified.",
-          "Other language operators and all original cases retain their existing failed, unsupported, unexecuted or unmapped obligations; these source links are not a completion verdict."
+          "Other language operators and all original cases retain their existing failed, unsupported, unexecuted or unmapped obligations; these source links are not a completion verdict.",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
         ],
-        "scope": "Stage63 implements strict List/Set cross-kind addition and Map addition, including left-kind result, order, key representatives, empty-right identity and resumable key processing. Heap-aware errors cover ordinary Add and the integer-constant specialization without forcing diagnostic values. The linked unchanged original programs exercise these paths; their execution outcomes remain separate from focused Java string and Rust lifecycle evidence. Stage78 adds selected sign/abs/ceil/floor properties and round/truncate methods in the shared primitive dispatcher, including Reference metadata. The Java48+24 profiles are separate from the required numeric and platform corpora.",
+        "scope": "Stage63 implements strict List/Set cross-kind addition and Map addition, including left-kind result, order, key representatives, empty-right identity and resumable key processing. Heap-aware errors cover ordinary Add and the integer-constant specialization without forcing diagnostic values. The linked unchanged original programs exercise these paths; their execution outcomes remain separate from focused Java string and Rust lifecycle evidence. Stage78 adds selected sign/abs/ceil/floor properties and round/truncate methods in the shared primitive dispatcher, including Reference metadata. The Java48+24 profiles are separate from the required numeric and platform corpora. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -166501,7 +166711,14 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/list.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/set.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/map.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/mappings/typeCheck.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/mappings/typeCheck.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/float.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/parens.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
         ],
         "state": "partial"
       }
@@ -166510,12 +166727,36 @@
       "description": "Integer overflow, division, remainder, nonfinite floating values and first error selection",
       "id": "semantic:numeric-errors",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "bd41361cbed96febe8fcf046bba76bca047b813c0cc115f5f4de296e78ed7037",
+            "symbol": "binary"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "bd41361cbed96febe8fcf046bba76bca047b813c0cc115f5f4de296e78ed7037",
+            "symbol": "integer_power"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "bd41361cbed96febe8fcf046bba76bca047b813c0cc115f5f4de296e78ed7037",
+            "symbol": "binary_error"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Integer overflow, division, remainder, nonfinite floating values and first error selection",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
+        ],
+        "scope": "Selected supporting cases already present in the manifest remain supporting evidence only. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "error-division-zero",
@@ -166523,7 +166764,8 @@
           "error-float-div-zero",
           "error-float-div-large",
           "error-float-div-nonfinite",
-          "error-remainder-zero"
+          "error-remainder-zero",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl"
         ],
         "state": "partial"
       }
@@ -166532,12 +166774,36 @@
       "description": "Conditional expressions, short circuiting, coalescing, null propagation and non-null assertion",
       "id": "semantic:control-flow",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+            "sha256": "4b39b5664f281a0c75412ad30454ca7d470f35d2d760dcd56c99f24af4ac0b59",
+            "symbol": "expression_context"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "bd41361cbed96febe8fcf046bba76bca047b813c0cc115f5f4de296e78ed7037",
+            "symbol": "JumpIfNotNull"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "bd41361cbed96febe8fcf046bba76bca047b813c0cc115f5f4de296e78ed7037",
+            "symbol": "JumpIfFalse"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Conditional expressions, short circuiting, coalescing, null propagation and non-null assertion",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
+        ],
+        "scope": "Selected supporting cases already present in the manifest remain supporting evidence only. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "control-if-true",
@@ -166589,7 +166855,9 @@
           "types-stage20-null-nonnull",
           "types-stage20-null-propagation",
           "types-stage21-direct-let",
-          "types-stage21-direct-closure-let-factory"
+          "types-stage21-direct-closure-let-factory",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl"
         ],
         "state": "partial"
       }
@@ -166598,12 +166866,36 @@
       "description": "0.32 lexical/receiver/owner resolution, this, outer, super, module and forward references",
       "id": "semantic:name-resolution",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/resolver.rs",
+            "sha256": "762a3f8fe2bf7eea20622e65e3669b8b1918f431370928d1957d8c743334ed84",
+            "symbol": "binding"
+          },
+          {
+            "path": "crates/pkl-runtime/src/resolver.rs",
+            "sha256": "762a3f8fe2bf7eea20622e65e3669b8b1918f431370928d1957d8c743334ed84",
+            "symbol": "leaf_expression"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/identity.rs",
+            "sha256": "b0c788d0b7197e354d060d0c1af7041e1431763ebf09e96ce61238b7c4bd5f96",
+            "symbol": "copy_captured_locals"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "0.32 lexical/receiver/owner resolution, this, outer, super, module and forward references",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
+        ],
+        "scope": "Selected supporting cases already present in the manifest remain supporting evidence only. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "let-shadow",
@@ -167125,7 +167417,12 @@
           "method-stage38-order-equal-rank-declaration-order",
           "method-stage38-order-explicit-module-excludes-base-properties",
           "method-stage38-order-same-scope-property-before-method",
-          "method-stage38-order-nested-method-before-outer-property"
+          "method-stage38-order-nested-method-before-outer-property",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/rawString.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultiline.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
         ],
         "state": "partial"
       }
@@ -167223,9 +167520,10 @@
           "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases.",
           "Full module, amendment, inheritance and object API semantics and the original upstream suite remain incomplete.",
           "Cyclic rendering oracle failures, identity-dependent keys, complete diagnostic-time forcing/Host suspension and finite truncation side effects remain unresolved or unverified.",
-          "The new persistent originals use trace; complete trace logging and its original sequence contract remain required."
+          "The new persistent originals use trace; complete trace logging and its original sequence contract remain required.",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
         ],
-        "scope": "Selected probes preserve unforced fixed initializers, class type-before-modifier errors, fixed override checks before body forcing, and fixed Reference metadata without evaluating referent bodies. Stage 16: Selected lazy member calls isolate receiver slots and alias const checks remain deferred until a lexical read executes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Five late Stage22 scalar witnesses retain the observed Paguro HashCollisionNode find/assoc asymmetry after Listing cache warm-up, including distinct table entries and insertion-order length. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations. Stage65 publishes successful per-node parent defaults before later body failures, roots them through live code arenas, and releases them with retired query code. Retry, reentry, cancellation, and terminal cleanup have separate focused ownership tests.",
+        "scope": "Selected probes preserve unforced fixed initializers, class type-before-modifier errors, fixed override checks before body forcing, and fixed Reference metadata without evaluating referent bodies. Stage 16: Selected lazy member calls isolate receiver slots and alias const checks remain deferred until a lexical read executes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Five late Stage22 scalar witnesses retain the observed Paguro HashCollisionNode find/assoc asymmetry after Listing cache warm-up, including distinct table entries and insertion-order length. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations. Stage65 publishes successful per-node parent defaults before later body failures, roots them through live code arenas, and releases them with retired query code. Retry, reentry, cancellation, and terminal cleanup have separate focused ownership tests. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -168745,7 +169043,9 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/moduleType3.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/moduleType4.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/moduleType5.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/propertyDefaults.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/propertyDefaults.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl"
         ],
         "state": "partial"
       }
@@ -168795,9 +169095,10 @@
         "remaining": [
           "Full module, amendment, inheritance and object API semantics and the original upstream suite remain incomplete.",
           "Cyclic rendering oracle failures, identity-dependent keys, complete diagnostic-time forcing/Host suspension and finite truncation side effects remain unresolved or unverified.",
-          "The new persistent originals use trace; complete trace logging and its original sequence contract remain required."
+          "The new persistent originals use trace; complete trace logging and its original sequence contract remain required.",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
         ],
-        "scope": "Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations. Stage73 isolated evidence covers first-access local/public generator property selection by executable owner and call site, including the original localProperty5 output and 24 Java-authored rows. Canonical full-corpus and platform validation remain separate.",
+        "scope": "Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations. Stage73 isolated evidence covers first-access local/public generator property selection by executable owner and call site, including the original localProperty5 output and 24 Java-authored rows. Canonical full-corpus and platform validation remain separate. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -169740,7 +170041,12 @@
           "object-string-stage36-review-modifier-import-bit",
           "object-string-stage36-review-modifier-class-bit",
           "object-string-stage36-review-modifier-type-alias-bit",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/localProperty5.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/localProperty5.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultiline.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
         ],
         "state": "partial"
       }
@@ -169818,9 +170124,10 @@
       "required": true,
       "reviewed_mapping": {
         "remaining": [
-          "General module amendments, function amendments, generic and cyclic object inheritance, and the complete amendment corpus remain open."
+          "General module amendments, function amendments, generic and cyclic object inheritance, and the complete amendment corpus remain open.",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
         ],
-        "scope": "Selected fixed instance amendments are rejected; extracting the fixed property value still permits amendment of that value. Empty receiver amendments preserve fixed values. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage64 adds repeated authored property/entry/predicate bodies, class-valued construction parents, no-effective-generator parent identity, function/curry construction paths, first-body local declaration diagnostics, and bounded iterative frontend/compiler lifetime handling. Independent Java string/declaration/frontend authorities and native Host/identity regressions are distinct from the unchanged original CLI cases; their remaining raw outcomes stay required. Stage65 unifies explicit nullable, union, alias, generic, and constrained constructor parent selection without converting assigned entries into inherited bare amendments. Original program outcomes are not inferred from focused string controls.",
+        "scope": "Selected fixed instance amendments are rejected; extracting the fixed property value still permits amendment of that value. Empty receiver amendments preserve fixed values. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage64 adds repeated authored property/entry/predicate bodies, class-valued construction parents, no-effective-generator parent identity, function/curry construction paths, first-body local declaration diagnostics, and bounded iterative frontend/compiler lifetime handling. Independent Java string/declaration/frontend authorities and native Host/identity regressions are distinct from the unchanged original CLI cases; their remaining raw outcomes stay required. Stage65 unifies explicit nullable, union, alias, generic, and constrained constructor parent selection without converting assigned entries into inherited bare amendments. Original program outcomes are not inferred from focused string controls. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -170009,7 +170316,9 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/mappings2/default.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/propertyDefaults.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/listings/listing3.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/listings2/listing3.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/listings2/listing3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
         ],
         "state": "partial"
       }
@@ -170054,9 +170363,10 @@
         "remaining": [
           "Module extends/amends and the original upstream fixed-property snippet suite contracts remain unimplemented or unexecuted.",
           "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
-          "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions."
+          "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions.",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
         ],
-        "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair.",
+        "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -170419,7 +170729,10 @@
           "diagnostic-stage31-class-public-null",
           "diagnostic-stage32-class-control",
           "diagnostic-stage33-class-const-control",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/localModuleMemberOverride2.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/localModuleMemberOverride2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
         ],
         "state": "partial"
       }
@@ -170490,9 +170803,10 @@
           "Module extends/amends and the original upstream fixed-property snippet suite contracts remain unimplemented or unexecuted.",
           "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
           "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions.",
-          "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps."
+          "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps.",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
         ],
-        "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 16: Selected alias lexical property/method reads apply a deferred module const barrier, including unused and short-circuited reads. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair.",
+        "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 16: Selected alias lexical property/method reads apply a deferred module const barrier, including unused and short-circuited reads. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -170771,7 +171085,9 @@
           "types-stage17-grouped-call-list",
           "types-stage17-grouped-call-group",
           "types-stage17-grouped-call-interpolation",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/constModifier5.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/constModifier5.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
         ],
         "state": "partial"
       }
@@ -170841,9 +171157,10 @@
         "remaining": [
           "Function amendments, full callable/builtin behavior, imports and the original function suite contracts remain outside this bounded selection.",
           "The broader function, closure, diagnostic and reflection inventories are not completed by metadata comparisons.",
-          "The retained inherited local-object-method alias shape produces pinned Java PklBugException oracle errors; those observations remain unresolved and are not compatibility passes."
+          "The retained inherited local-object-method alias shape produces pinned Java PklBugException oracle errors; those observations remain unresolved and are not compatibility passes.",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
         ],
-        "scope": "Function and Function0..5 class types and arrow annotations retain parameter/result metadata while selected runtime value checks use arity. Comparisons distinguish annotation checks from a lambda declaration's own argument checks and distinguish Reference type tests from exported-type equality. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected lambdas snapshot the custom receiver at creation; function and local-writing let roots isolate subsequent receiver mutations. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic constraint lambdas retain invocation-specific type argument captures. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage65 connects inferred method parents through if, trace, and let bodies while retaining lambda and let-binding barriers. Per-call-site successful parent caches remain evaluator-owned and distinguish inferred methods from explicit nonfinal module constructors.",
+        "scope": "Function and Function0..5 class types and arrow annotations retain parameter/result metadata while selected runtime value checks use arity. Comparisons distinguish annotation checks from a lambda declaration's own argument checks and distinguish Reference type tests from exported-type equality. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected lambdas snapshot the custom receiver at creation; function and local-writing let roots isolate subsequent receiver mutations. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic constraint lambdas retain invocation-specific type argument captures. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage65 connects inferred method parents through if, trace, and let bodies while retaining lambda and let-binding barriers. Per-call-site successful parent caches remain evaluator-owned and distinguish inferred methods from explicit nonfinal module constructors. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -171275,7 +171592,10 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/moduleType2.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/moduleType3.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/moduleType4.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/moduleType5.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/moduleType5.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
         ],
         "state": "partial"
       }
@@ -171284,12 +171604,36 @@
       "description": "Function literals, lexical captures, owner/receiver lifetime and returned closures",
       "id": "semantic:closures",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+            "sha256": "4b39b5664f281a0c75412ad30454ca7d470f35d2d760dcd56c99f24af4ac0b59",
+            "symbol": "expression_context"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "bd41361cbed96febe8fcf046bba76bca047b813c0cc115f5f4de296e78ed7037",
+            "symbol": "MakeFunction"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/identity.rs",
+            "sha256": "b0c788d0b7197e354d060d0c1af7041e1431763ebf09e96ce61238b7c4bd5f96",
+            "symbol": "copy_captured_locals"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Function literals, lexical captures, owner/receiver lifetime and returned closures",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
+        ],
+        "scope": "Selected supporting cases already present in the manifest remain supporting evidence only. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "let-basic",
@@ -171382,7 +171726,8 @@
           "diagnostic-stage33-lambda-valid-inferred",
           "diagnostic-stage33-lambda-quoted-inferred",
           "diagnostic-stage33-lambda-body-earlier-error",
-          "diagnostic-stage33-lambda-argument-new"
+          "diagnostic-stage33-lambda-argument-new",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
         ],
         "state": "partial"
       }
@@ -171391,12 +171736,36 @@
       "description": "When/for generators, nesting, scopes, spreads, nullable spreads and member predicates",
       "id": "semantic:generators",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+            "sha256": "4b39b5664f281a0c75412ad30454ca7d470f35d2d760dcd56c99f24af4ac0b59",
+            "symbol": "schedule_expression"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/identity.rs",
+            "sha256": "b0c788d0b7197e354d060d0c1af7041e1431763ebf09e96ce61238b7c4bd5f96",
+            "symbol": "GeneratorScope"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/identity.rs",
+            "sha256": "b0c788d0b7197e354d060d0c1af7041e1431763ebf09e96ce61238b7c4bd5f96",
+            "symbol": "enter_for_scope"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "When/for generators, nesting, scopes, spreads, nullable spreads and member predicates",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
+        ],
+        "scope": "Selected supporting cases already present in the manifest remain supporting evidence only. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "collection-dynamic-mixed",
@@ -171631,7 +172000,8 @@
           "set-stage23-spread-set-typed",
           "diagnostic-stage32-when-body",
           "diagnostic-stage32-when-false-body",
-          "diagnostic-stage32-for-entry-body"
+          "diagnostic-stage32-for-entry-body",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
         ],
         "state": "partial"
       }
@@ -171720,9 +172090,10 @@
       "reviewed_mapping": {
         "remaining": [
           "The remaining strict and lazy collection members, custom defaults, typed wrappers, generators and complete hashing/cyclic-key behavior remain separate implementation and verification work.",
-          "All original collection/type-check and public API contracts must execute with matching raw results before this semantic family can be marked complete."
+          "All original collection/type-check and public API contracts must execute with matching raw results before this semantic family can be marked complete.",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
         ],
-        "scope": "Stage63 connects ordered strict collection addition to shared hashing, equality, insertion and GC/Host continuations, and supplies the four Set endpoint properties through the existing endpoint primitive. The linked original List/Set/Map and Mapping type-check programs are preserved unchanged. Focused string results and internal ownership checks do not establish the full original-program or collection requirement. Stage64 connects Listing.fold to shallow forcing before callbacks and inherited ordered cached values, retaining Host suspension/reentry/retry/cancellation roots. Empty builtin class construction uses weak canonical instances; zero-effective object generators reuse their parent. The linked original programs remain whole-program obligations, not passing verdicts inferred from focused controls. Stage65 assigns inferred collection new expressions through receiver.default(key); bare entry amendments retain inherited-entry lookup before default fallback. Missing typed defaults fail at the default property read, preserving lazy error order. Stage66 adds shallow List/Set reversal through the existing resumable collection builder, canonical empty List results, ordered element preservation, and List-only nonforcing bounds displays. Focused Java and lifecycle controls are separate from whole original-program and platform gates. Stage76 adds shared List/Set single and singleOrNull property behavior; its Java13 controls preserve empty/multiple errors and nonforcing selected values. Complete collection APIs remain open.",
+        "scope": "Stage63 connects ordered strict collection addition to shared hashing, equality, insertion and GC/Host continuations, and supplies the four Set endpoint properties through the existing endpoint primitive. The linked original List/Set/Map and Mapping type-check programs are preserved unchanged. Focused string results and internal ownership checks do not establish the full original-program or collection requirement. Stage64 connects Listing.fold to shallow forcing before callbacks and inherited ordered cached values, retaining Host suspension/reentry/retry/cancellation roots. Empty builtin class construction uses weak canonical instances; zero-effective object generators reuse their parent. The linked original programs remain whole-program obligations, not passing verdicts inferred from focused controls. Stage65 assigns inferred collection new expressions through receiver.default(key); bare entry amendments retain inherited-entry lookup before default fallback. Missing typed defaults fail at the default property read, preserving lazy error order. Stage66 adds shallow List/Set reversal through the existing resumable collection builder, canonical empty List results, ordered element preservation, and List-only nonforcing bounds displays. Focused Java and lifecycle controls are separate from whole original-program and platform gates. Stage76 adds shared List/Set single and singleOrNull property behavior; its Java13 controls preserve empty/multiple errors and nonforcing selected values. Complete collection APIs remain open. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -173356,7 +173727,10 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/mappings2/default.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/propertyDefaults.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/listings/listing3.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/listings2/listing3.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/listings2/listing3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
         ],
         "state": "partial"
       }
@@ -173456,9 +173830,10 @@
         "remaining": [
           "The complete type, structural/generic class, constraint, recursive and imported-type corpus still requires implementation and original-adapter execution.",
           "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. The Stage 18 changing-argument native-stack abort remains preserved as historical failure evidence. Shared metadata now has bounded extended execution and cleanup checks; exact Java stack diagnostics, wall-time bounds, and metadata/output resource bounds remain unverified.",
-          "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
+          "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases.",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
         ],
-        "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected nested is/as and recursive constraints retain receiver mutations, original successful values, predicate arguments and complete failure bytes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage65 routes explicit composite constructors through resumable type defaults and preserves first-resolution module finality through aliases and wrappers. The linked original programs remain required whole-program comparisons. Stage76 represents RegexMatch through an ordinary class-backed factory and keeps regex type identity in the shared value/type model. Focused results do not replace complete class/type corpus execution.",
+        "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected nested is/as and recursive constraints retain receiver mutations, original successful values, predicate arguments and complete failure bytes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage65 routes explicit composite constructors through resumable type defaults and preserves first-resolution module finality through aliases and wrappers. The linked original programs remain required whole-program comparisons. Stage76 represents RegexMatch through an ordinary class-backed factory and keeps regex type identity in the shared value/type model. Focused results do not replace complete class/type corpus execution. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -175149,7 +175524,9 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/noDefault2.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/notAUnionDefault.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/multipleDefaults.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/propertyDefaults.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/propertyDefaults.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
         ],
         "state": "partial"
       }
@@ -177420,12 +177797,31 @@
       "description": "Type tests, casts, narrowing and failures",
       "id": "semantic:type-tests-casts",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "bd41361cbed96febe8fcf046bba76bca047b813c0cc115f5f4de296e78ed7037",
+            "symbol": "TypeCheck"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "bd41361cbed96febe8fcf046bba76bca047b813c0cc115f5f4de296e78ed7037",
+            "symbol": "step_type"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Type tests, casts, narrowing and failures",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
+        ],
+        "scope": "Selected supporting cases already present in the manifest remain supporting evidence only. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "class-is-ancestor",
@@ -177825,7 +178221,8 @@
           "collection-stage24-set-nothing-null-bottom",
           "collection-stage24-relation-empty-nothing-left-bottom",
           "collection-stage24-relation-empty-nothing-right-bottom",
-          "diagnostic-stage31-cast-grouped-negative"
+          "diagnostic-stage31-cast-grouped-negative",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl"
         ],
         "state": "partial"
       }
@@ -178555,9 +178952,10 @@
           "Complete URI and primary-module identity rules, standard modules, external capabilities and source timeout/close behavior remain open.",
           "Output.files/multiple outputs and complete renderer/converter/transformer/reflection dependencies remain partial or unsupported; every original selected failure stays in the full gate.",
           "The selected output kernel does not establish whole-language, public evaluator API or performance compatibility.",
-          "The retained inherited local-object-method alias shape produces pinned Java PklBugException oracle errors; those observations remain unresolved and are not compatibility passes."
+          "The retained inherited local-object-method alias shape produces pinned Java PklBugException oracle errors; those observations remain unresolved and are not compatibility passes.",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
         ],
-        "scope": "Local const import members, explicit and inferred pkl:ref aliases, qualified type lookup and namespace diagnostics have selected raw comparisons. Stage40 adds an actual single-module output.bytes operation with typed preparation, real ModuleOutput checking and shared Host lifecycle. All reviewed original30 output/module contracts are executable without source/expression wrappers; readiness is not a pass claim. Stage41 connects shared-VM source loading, module caches and synthetic expression entries. Stage42 adds evaluator-owned imported class/alias resolution and module extends/amends initialization. All41 original input/modules contracts are registered, retaining every prior entry and all original command/input expectations. New registration and partial implementation are not passing compatibility evidence. A reviewed JVM-classpath execution profile now connects the unchanged original import1b case through actual evaluateOutputBytes and the native directory Host, preserving its historical blocked CLI contract and requiring two raw successful repetitions. This closes only that original execution obligation after passing acquisition; general loader/security and full language scope remain partial. Stage65 distinguishes lexical declaration owners from module receivers and preserves pinned first-resolution finality for inherited module self types. Multi-module Java authorities retain actual sibling-file Host boundaries.",
+        "scope": "Local const import members, explicit and inferred pkl:ref aliases, qualified type lookup and namespace diagnostics have selected raw comparisons. Stage40 adds an actual single-module output.bytes operation with typed preparation, real ModuleOutput checking and shared Host lifecycle. All reviewed original30 output/module contracts are executable without source/expression wrappers; readiness is not a pass claim. Stage41 connects shared-VM source loading, module caches and synthetic expression entries. Stage42 adds evaluator-owned imported class/alias resolution and module extends/amends initialization. All41 original input/modules contracts are registered, retaining every prior entry and all original command/input expectations. New registration and partial implementation are not passing compatibility evidence. A reviewed JVM-classpath execution profile now connects the unchanged original import1b case through actual evaluateOutputBytes and the native directory Host, preserving its historical blocked CLI contract and requiring two raw successful repetitions. This closes only that original execution obligation after passing acquisition; general loader/security and full language scope remain partial. Stage65 distinguishes lexical declaration owners from module receivers and preserves pinned first-resolution finality for inherited module self types. Multi-module Java authorities retain actual sibling-file Host boundaries. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -178644,7 +179042,9 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/moduleType4.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/moduleType5.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInAmendingModuleMethod.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/localModuleMemberOverride2.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/localModuleMemberOverride2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/float.pkl"
         ],
         "state": "partial"
       }
@@ -178772,9 +179172,10 @@
           "Exploratory double-negated minimum-integer overflow frames and invalid non-local object annotation frame names remain known differences outside the Stage 31 selected additions.",
           "Full module, amendment, inheritance and object API semantics and the original upstream suite remain incomplete.",
           "Cyclic rendering oracle failures, identity-dependent keys, complete diagnostic-time forcing/Host suspension and finite truncation side effects remain unresolved or unverified.",
-          "The new persistent originals use trace; complete trace logging and its original sequence contract remain required."
+          "The new persistent originals use trace; complete trace logging and its original sequence contract remain required.",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
         ],
-        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations. Stage38 adds original generic implicit/explicit missing-method, suggestions, call-span and argument-order controls; failures remain visible until differential verification. Stage38 additionally checks lexical candidate ordering across property/method and scope boundaries, stable similarity/arity ranking, and explicit-receiver contrast against nine fresh Java observations. Original module eval frontend failures are exercised through their unchanged argv/cwd/env/resource contracts with the bundled CLI frame profile; complete output evaluation remains unsupported. Stage40 adds actual module-output operation failures without expression-string conversion or a synthetic REPL boundary; the unchanged original output/module dependency contracts remain selected even when unsupported. Stage65 retains inferred-parent error spans, typed missing-default property frames, external versus constrained no-default classification, and module class display names. Complete raw diagnostics and every existing failure remain required. Stage66 preserves the complete first type span for a non-union default marker and rejects a second default marker before parsing the next type. Scalar member catalogs and List bounds details are source-backed; forty separate-module Java fixtures require independent raw native and portable replay. Stage76 preserves checked regex syntax/unsupported/resource-failure categories and full selected Java diagnostics; finite engine budgets are not reported as successful negative matches. Stage77 repairs leading shebang token grammar and empty nonfunction type ownership at the closing parenthesis against three original Java cases.",
+        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations. Stage38 adds original generic implicit/explicit missing-method, suggestions, call-span and argument-order controls; failures remain visible until differential verification. Stage38 additionally checks lexical candidate ordering across property/method and scope boundaries, stable similarity/arity ranking, and explicit-receiver contrast against nine fresh Java observations. Original module eval frontend failures are exercised through their unchanged argv/cwd/env/resource contracts with the bundled CLI frame profile; complete output evaluation remains unsupported. Stage40 adds actual module-output operation failures without expression-string conversion or a synthetic REPL boundary; the unchanged original output/module dependency contracts remain selected even when unsupported. Stage65 retains inferred-parent error spans, typed missing-default property frames, external versus constrained no-default classification, and module class display names. Complete raw diagnostics and every existing failure remain required. Stage66 preserves the complete first type span for a non-union default marker and rejects a second default marker before parsing the next type. Scalar member catalogs and List bounds details are source-backed; forty separate-module Java fixtures require independent raw native and portable replay. Stage76 preserves checked regex syntax/unsupported/resource-failure categories and full selected Java diagnostics; finite engine budgets are not reported as successful negative matches. Stage77 repairs leading shebang token grammar and empty nonfunction type ownership at the closing parenthesis against three original Java cases. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -180927,7 +181328,11 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInAmendingModuleMethod.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInsideIf.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInsideLet.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/newType.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/newType.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/shebang.pkl"
         ],
         "state": "partial"
       }
@@ -183681,9 +184086,10 @@
       "reviewed_mapping": {
         "remaining": [
           "Complete original valid and invalid grammar corpus, AST validation and error ordering.",
-          "Actual ModuleOutput.bytes and renderer success, imported modules and settings/project variants."
+          "Actual ModuleOutput.bytes and renderer success, imported modules and settings/project variants.",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
         ],
-        "scope": "Original delimiter and parser error module eval contracts execute the shared frontend with exact CLI diagnostic bytes. Ready describes executable original contracts, not passing results or complete module/output evaluation. Stage77 consumes one leading SHEBANG grammar token before module headers while retaining later occurrences for ordinary error ownership. The original success/error programs remain unchanged.",
+        "scope": "Original delimiter and parser error module eval contracts execute the shared frontend with exact CLI diagnostic bytes. Ready describes executable original contracts, not passing results or complete module/output evaluation. Stage77 consumes one leading SHEBANG grammar token before module headers while retaining later occurrences for ordinary error ownership. The original success/error programs remain unchanged. B4 links fourteen complete original module-entry contracts, including the rejected second-position shebang, to existing shared module parsing. It does not establish the full parseModule grammar or all declarations. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
         "source": "compatibility/m2-mappings.json"
       },
       "source": {
@@ -183763,7 +184169,21 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/invalidCharacter.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/spacesBetweenDocComments.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/typeAnnotationInAmends.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/wrongDocComment.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/wrongDocComment.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/float.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/parens.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/rawString.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultiline.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultilineContinuation.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/syntax/shebang.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/shebang.pkl"
         ],
         "state": "partial"
       }
@@ -184489,9 +184909,10 @@
       "reviewed_mapping": {
         "remaining": [
           "Complete original valid and invalid grammar corpus, AST validation and error ordering.",
-          "Actual ModuleOutput.bytes and renderer success, imported modules and settings/project variants."
+          "Actual ModuleOutput.bytes and renderer success, imported modules and settings/project variants.",
+          "Original-case mapping remains partial: matching eval output does not establish every authored fact as true or complete the requirement. Deferred source-review groups remain in reports/m2/stage117-original-case-mapping/deferred-source-requirements.json; missing and failed cases remain required."
         ],
-        "scope": "Original delimiter and parser error module eval contracts execute the shared frontend with exact CLI diagnostic bytes. Ready describes executable original contracts, not passing results or complete module/output evaluation. Stage77 adds the same leading SHEBANG grammar boundary; separate focused controls cover non-leading and expression uses.",
+        "scope": "Original delimiter and parser error module eval contracts execute the shared frontend with exact CLI diagnostic bytes. Ready describes executable original contracts, not passing results or complete module/output evaluation. Stage77 adds the same leading SHEBANG grammar boundary; separate focused controls cover non-leading and expression uses. B4 links fourteen complete original module-entry contracts, including the rejected second-position shebang, to existing shared module parsing. It does not establish the full parseModule grammar or all declarations. Stage117 adds reviewed links to unchanged original snippet contracts. A new readback of retained Stage120 observations confirms all fourteen original stdout/stderr/exit/file comparisons (thirteen successful evaluations and one matching error). Per-case operations and limits are recorded in reports/m2/stage117-original-case-mapping/case-evidence.json. This readback is not a new evaluator execution or a completion promotion.",
         "source": "compatibility/m2-mappings.json"
       },
       "source": {
@@ -184571,7 +184992,21 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/invalidCharacter.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/spacesBetweenDocComments.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/typeAnnotationInAmends.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/wrongDocComment.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/wrongDocComment.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/float.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/parens.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/rawString.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultiline.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultilineContinuation.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/syntax/shebang.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/shebang.pkl"
         ],
         "state": "partial"
       }
@@ -191754,7 +192189,7 @@
     "compatibility/m2-execution-profiles.json": "198850daa534a33f0d1b87f8bc8d38d7717f1e9b792ec70a13053c0affc6f477",
     "compatibility/m2-historical-collections.json": "f2cba632473ea199620804f8620a417226d005c04586c421fd985729faa83c6a",
     "compatibility/m2-jvm-classpath.json": "93a97f62fa55742f4ddaee342c6cf3e1509e76700bfffa9ce478352f9bab9af7",
-    "compatibility/m2-mappings.json": "fd7dde65b2b6f74dd1fda2117b012f36482c0ba1a5ff90249358d77cf4291909",
+    "compatibility/m2-mappings.json": "e8fdf2e336f093e034c4d31c287267271b477cbd783f1cc69136604877b00ed4",
     "compatibility/m2-module-eval.json": "1196b940cdd95daf5e360dabdbcf3f4329ee1c31db754879c32e4b26ea438f9c",
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",

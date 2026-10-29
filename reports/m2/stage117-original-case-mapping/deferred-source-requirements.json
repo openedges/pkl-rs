@@ -1,0 +1,365 @@
+{
+  "scope": "Unchanged B1/B2/B3 source-token/lexer/spec requirements remain outside this additive mapping because their current unimplemented/unmapped states cannot be represented in apply_mappings without a state change.",
+  "original_audit": {
+    "path": "target/m2/m2-completion-audit-20261029-01/report.json",
+    "bytes": 39033,
+    "sha256": "f51fe31e2e2a0bff5bbf3723e6e66c08ba134748eaf257457eb8be1025f1c544"
+  },
+  "exact_prior_batches": [
+    {
+      "id": "B1-shebang",
+      "requirement_ids": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:SHEBANG",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Lexer.java:lexShebang:d06260a2906b",
+        "semantic:lexing",
+        "semantic:diagnostics"
+      ],
+      "sources": [
+        {
+          "path": "crates/pkl-runtime/src/parser.rs",
+          "symbols": [
+            "next_with_comments",
+            "parse_module_for_evaluation"
+          ]
+        }
+      ],
+      "current_cases": [
+        {
+          "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/syntax/shebang.pkl",
+          "status": "pass",
+          "requirements": [],
+          "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/syntax/shebang.pkl"
+        },
+        {
+          "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/shebang.pkl",
+          "status": "pass",
+          "requirements": [],
+          "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/shebang.pkl"
+        }
+      ],
+      "unverified_edges": [
+        "Leading whitespace/comments and exact single-leading-token consumption",
+        "EOF-only shebang, CR/LF/CRLF, repeated and expression-position shebang",
+        "Complete lexer/parser API distinction and raw diagnostic positions"
+      ],
+      "state_evidence": "Source implementation exists while both source requirements are unimplemented/unmapped. Only two unchanged originals are specifically identified here; broad lexing remains partial."
+    },
+    {
+      "id": "B2-numeric-lexing",
+      "requirement_ids": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:BIN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:OCT",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:HEX",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:INT",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:FLOAT",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Lexer.java:lexBinNumber:0daeee3ea70e",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Lexer.java:lexOctNumber:d0c2459c91f3",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Lexer.java:lexHexNumber:d2659d755a45",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Lexer.java:lexNumber:f104039f57cc",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Lexer.java:lexDotNumber:b3f36e407271",
+        "semantic:numeric-literals",
+        "specification:docs/modules/language-reference/pages/index.adoc:Numbers"
+      ],
+      "sources": [
+        {
+          "path": "crates/pkl-runtime/src/parser.rs",
+          "symbols": [
+            "number",
+            "next_with_comments"
+          ]
+        }
+      ],
+      "current_cases": [
+        {
+          "id": "int-zero",
+          "status": "pass",
+          "requirements": [
+            "semantic:numeric-literals"
+          ],
+          "input": "tests/fixtures/m2/int-zero.pkl"
+        },
+        {
+          "id": "int-negative",
+          "status": "pass",
+          "requirements": [
+            "semantic:numeric-literals"
+          ],
+          "input": "tests/fixtures/m2/int-negative.pkl"
+        },
+        {
+          "id": "int-hex",
+          "status": "pass",
+          "requirements": [
+            "semantic:numeric-literals"
+          ],
+          "input": "tests/fixtures/m2/int-hex.pkl"
+        },
+        {
+          "id": "int-binary",
+          "status": "pass",
+          "requirements": [
+            "semantic:numeric-literals"
+          ],
+          "input": "tests/fixtures/m2/int-binary.pkl"
+        },
+        {
+          "id": "int-octal",
+          "status": "pass",
+          "requirements": [
+            "semantic:numeric-literals"
+          ],
+          "input": "tests/fixtures/m2/int-octal.pkl"
+        },
+        {
+          "id": "int-separated",
+          "status": "pass",
+          "requirements": [
+            "semantic:numeric-literals"
+          ],
+          "input": "tests/fixtures/m2/int-separated.pkl"
+        },
+        {
+          "id": "int-max",
+          "status": "pass",
+          "requirements": [
+            "semantic:numeric-literals"
+          ],
+          "input": "tests/fixtures/m2/int-max.pkl"
+        },
+        {
+          "id": "int-min",
+          "status": "pass",
+          "requirements": [
+            "semantic:numeric-literals"
+          ],
+          "input": "tests/fixtures/m2/int-min.pkl"
+        },
+        {
+          "id": "float-decimal",
+          "status": "pass",
+          "requirements": [
+            "semantic:numeric-literals"
+          ],
+          "input": "tests/fixtures/m2/float-decimal.pkl"
+        },
+        {
+          "id": "float-exponent",
+          "status": "pass",
+          "requirements": [
+            "semantic:numeric-literals"
+          ],
+          "input": "tests/fixtures/m2/float-exponent.pkl"
+        },
+        {
+          "id": "float-negative-zero",
+          "status": "pass",
+          "requirements": [
+            "semantic:numeric-literals"
+          ],
+          "input": "tests/fixtures/m2/float-negative-zero.pkl"
+        },
+        {
+          "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl",
+          "status": "pass",
+          "requirements": [],
+          "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl"
+        },
+        {
+          "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/float.pkl",
+          "status": "pass",
+          "requirements": [],
+          "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/float.pkl"
+        }
+      ],
+      "unverified_edges": [
+        "All invalid separator positions, malformed bases/exponents and consumed-end/error ordering",
+        "Signed boundary tokenization versus later arithmetic overflow",
+        "Whole Numbers specification includes semantics beyond token recognition"
+      ],
+      "state_evidence": "Existing implementation and passing authority support additive partial source mappings; complete numeric source contracts require a reviewed edge matrix."
+    },
+    {
+      "id": "B3-comments-identifiers",
+      "requirement_ids": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:LINE_COMMENT",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:BLOCK_COMMENT",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:DOC_COMMENT",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:IDENTIFIER",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:PROTECTED",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:OVERRIDE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:RECORD",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:DELETE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:CASE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:SWITCH",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:VARARG",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Lexer.java:lexBlockComment:02cd7bdf4ff6",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Lexer.java:lexIdentifier:7b048df42317",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Lexer.java:lexQuotedIdentifier:41fb4f1f941f",
+        "specification:docs/modules/language-reference/pages/index.adoc:Comments",
+        "specification:docs/modules/language-reference/pages/index.adoc:Doc Comments",
+        "specification:docs/modules/language-reference/pages/index.adoc:Quoted Identifiers",
+        "specification:docs/modules/language-reference/pages/index.adoc:Reserved keywords",
+        "semantic:lexing",
+        "semantic:diagnostics"
+      ],
+      "sources": [
+        {
+          "path": "crates/pkl-runtime/src/parser.rs",
+          "symbols": [
+            "next_with_comments",
+            "is_keyword",
+            "doc_comment",
+            "is_identifier_start",
+            "is_identifier_part"
+          ]
+        },
+        {
+          "path": "crates/pkl-runtime/src/parser/unicode_identifier.rs",
+          "symbols": [
+            "START_RANGES",
+            "PART_RANGES"
+          ]
+        }
+      ],
+      "current_cases": [
+        {
+          "id": "identifier-greek",
+          "status": "pass",
+          "requirements": [
+            "semantic:lexing"
+          ],
+          "input": "tests/fixtures/m2/identifier-greek.pkl"
+        },
+        {
+          "id": "identifier-combining",
+          "status": "pass",
+          "requirements": [
+            "semantic:lexing"
+          ],
+          "input": "tests/fixtures/m2/identifier-combining.pkl"
+        },
+        {
+          "id": "identifier-supplementary",
+          "status": "pass",
+          "requirements": [
+            "semantic:lexing"
+          ],
+          "input": "tests/fixtures/m2/identifier-supplementary.pkl"
+        },
+        {
+          "id": "identifier-join-control",
+          "status": "pass",
+          "requirements": [
+            "semantic:lexing"
+          ],
+          "input": "tests/fixtures/m2/identifier-join-control.pkl"
+        },
+        {
+          "id": "identifier-dollar",
+          "status": "pass",
+          "requirements": [
+            "semantic:lexing"
+          ],
+          "input": "tests/fixtures/m2/identifier-dollar.pkl"
+        },
+        {
+          "id": "string-stage27-eof-comment",
+          "status": "pass",
+          "requirements": [
+            "semantic:lexing",
+            "semantic:operators",
+            "semantic:diagnostics",
+            "semantic:shared-engine"
+          ],
+          "input": "tests/fixtures/m2/string-stage27-eof-comment.pkl"
+        },
+        {
+          "id": "string-stage27-nested-comment",
+          "status": "pass",
+          "requirements": [
+            "semantic:lexing",
+            "semantic:operators",
+            "semantic:diagnostics",
+            "semantic:shared-engine"
+          ],
+          "input": "tests/fixtures/m2/string-stage27-nested-comment.pkl"
+        },
+        {
+          "id": "string-stage27-crlf-comment",
+          "status": "pass",
+          "requirements": [
+            "semantic:lexing",
+            "semantic:operators",
+            "semantic:diagnostics",
+            "semantic:shared-engine"
+          ],
+          "input": "tests/fixtures/m2/string-stage27-crlf-comment.pkl"
+        },
+        {
+          "id": "string-stage27-line-comment-eof",
+          "status": "pass",
+          "requirements": [
+            "semantic:lexing",
+            "semantic:operators",
+            "semantic:diagnostics",
+            "semantic:shared-engine"
+          ],
+          "input": "tests/fixtures/m2/string-stage27-line-comment-eof.pkl"
+        },
+        {
+          "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
+          "status": "pass",
+          "requirements": [
+            "semantic:modules",
+            "semantic:diagnostics"
+          ],
+          "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl"
+        },
+        {
+          "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
+          "status": "pass",
+          "requirements": [],
+          "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl"
+        },
+        {
+          "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/keywordNotAllowedHere1.pkl",
+          "status": "pass",
+          "requirements": [],
+          "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/keywordNotAllowedHere1.pkl"
+        },
+        {
+          "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/keywordNotAllowedHere2.pkl",
+          "status": "pass",
+          "requirements": [],
+          "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/keywordNotAllowedHere2.pkl"
+        },
+        {
+          "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/keywordNotAllowedHere3.pkl",
+          "status": "pass",
+          "requirements": [],
+          "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/keywordNotAllowedHere3.pkl"
+        },
+        {
+          "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/keywordNotAllowedHere4.pkl",
+          "status": "pass",
+          "requirements": [],
+          "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/keywordNotAllowedHere4.pkl"
+        },
+        {
+          "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/singleBacktick.pkl",
+          "status": "mismatch",
+          "requirements": [],
+          "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/singleBacktick.pkl"
+        }
+      ],
+      "unverified_edges": [
+        "singleBacktick original currently mismatches",
+        "The specification says nestable block comments but pinned Lexer.lexBlockComment and Rust scan the first closing delimiter; unresolved source/spec scope conflict",
+        "Only record has a dedicated reserved-keyword original among the four inspected originals; other reserved words need boundary, rejection and quoted-use cases",
+        "Doc metadata attachment and tooling are broader than recognizing DOC_COMMENT"
+      ],
+      "state_evidence": "Implemented source and substantial Java matches do not establish full identifier/comment/spec coverage; keep partial and preserve the known mismatch."
+    }
+  ],
+  "no_completion_promotions": true
+}

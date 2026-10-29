@@ -1,0 +1,133 @@
+{
+  "kind": "Stage117 additive original-case mapping integration",
+  "source_parent": "e6a3f996a95db0a9f7be45cbb71e9637e0673d4a",
+  "complete": true,
+  "full_M2_complete": false,
+  "invariants": {
+    "complete": true,
+    "case_contracts_unchanged": 4545,
+    "requirement_states_unchanged": 475,
+    "added_links": 94,
+    "changed_cases": 14,
+    "reviewed_mapping_rows_before": 33,
+    "reviewed_mapping_rows_after": 42,
+    "full_gate_overlapping_unmet_conditions_before": 1780,
+    "full_gate_overlapping_unmet_conditions_after": 1768,
+    "full_gate_counts": {
+      "implementation incomplete": 472,
+      "test mapping incomplete": 472,
+      "required case incomplete": 824
+    },
+    "resolved_accounting_conditions": [
+      "required case incomplete: pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/float.pkl",
+      "required case incomplete: pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
+      "required case incomplete: pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl",
+      "required case incomplete: pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+      "required case incomplete: pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/parens.pkl",
+      "required case incomplete: pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/rawString.pkl",
+      "required case incomplete: pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+      "required case incomplete: pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultiline.pkl",
+      "required case incomplete: pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultilineContinuation.pkl",
+      "required case incomplete: pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl",
+      "required case incomplete: pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/shebang.pkl",
+      "required case incomplete: pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/syntax/shebang.pkl"
+    ],
+    "new_failure_conditions": [],
+    "full_gate_compatibility_pass": false,
+    "full_gate_provenance": "Actual m2_manifest.full_gate_failures applied to retained Stage120 complete ready results; no new CLI full-gate acquisition",
+    "known_compatibility_mismatches_hidden": false,
+    "all_nine_M2_areas_closed": false
+  },
+  "checks": {
+    "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "commands": [
+      {
+        "name": "mapping-tests",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/tests",
+          "-p",
+          "test_m2_mappings.py"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.20456194877624512,
+        "stdout": "",
+        "stderr": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.055s\n\nOK\n"
+      },
+      {
+        "name": "language-tooling-tests",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/tests",
+          "-p",
+          "test_m2_language.py"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 8.67500901222229,
+        "stdout": "",
+        "stderr": "..................................\n----------------------------------------------------------------------\nRan 34 tests in 8.481s\n\nOK\n"
+      },
+      {
+        "name": "manifest-freshness",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-B",
+          "tools/m2_manifest.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 4.483042001724243,
+        "stdout": "{\"cases\": 4545, \"cases_by_execution\": {\"ready\": 4442, \"unimplemented\": 71, \"unmapped\": 32}, \"requirements\": 475, \"requirements_by_kind\": {\"language_parser\": 137, \"language_token\": 109, \"semantic-family\": 31, \"specification\": 198}}\n",
+        "stderr": ""
+      }
+    ],
+    "all_pass": true
+  },
+  "raw_readback": {
+    "cases": 14,
+    "success_values": 13,
+    "matching_errors": 1,
+    "new_evaluator_executions": 0,
+    "new_Java_executions": 0,
+    "input_pins_verified": 633
+  },
+  "rust_code_changes": false,
+  "source_pins": [
+    {
+      "path": "compatibility/m2-mappings.json",
+      "bytes": 514660,
+      "sha256": "e8fdf2e336f093e034c4d31c287267271b477cbd783f1cc69136604877b00ed4"
+    },
+    {
+      "path": "compatibility/m2-language.json",
+      "bytes": 6833023,
+      "sha256": "6cd322b81ac945d460309bc76dbb559f0b3ae4c777ee538f64ad2653b9ed3ee4"
+    },
+    {
+      "path": "tools/m2_manifest.py",
+      "bytes": 20690,
+      "sha256": "3e055682dd412c4c5d22c2dac93ec785b7daf8197996b9a0c69fe9348f02bc39"
+    },
+    {
+      "path": "tools/tests/test_m2_mappings.py",
+      "bytes": 8255,
+      "sha256": "d70e2a141b8368bf7d97465b3e780b55875b6afee674a5272a41d482664a00ed"
+    },
+    {
+      "path": "tools/tests/test_m2_language.py",
+      "bytes": 34618,
+      "sha256": "9abc1fca21818e0efee3732d9ce21e13ea34c7c4584c4ab2509a39d91f79c9df"
+    }
+  ]
+}

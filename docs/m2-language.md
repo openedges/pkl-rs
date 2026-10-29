@@ -1,5 +1,22 @@
 # M2 language verification
 
+## Stage117 original-case mappings — integrated after Stage120
+
+The [mapping checkpoint](../reports/m2/stage117-original-case-mapping/README.md)
+adds 94 reviewed links across 14 unchanged original snippets and 23 mapping rows.
+Nine semantic families gain explicit source mappings. All 475 requirement states,
+4,545 execution contracts and known failures remain unchanged. A new readback of
+retained Stage120 bytes confirms 13 successful evaluations and one matching error;
+it is not a fresh evaluator execution or a broader assertion about authored facts.
+
+The 42 relevant Python tests and manifest freshness pass. Applying the unchanged
+full-gate function to the updated manifest and retained complete ready results
+leaves 1,768 overlapping unmet conditions: 472 implementation, 472 mapping and
+824 required-case conditions. Twelve previously unlinked cases now have reviewed
+requirement links. The inventory remains 4,442 ready, 71 unimplemented and 32
+unmapped cases. This accounting change resolves no runtime mismatch and closes
+none of the nine M2 work areas.
+
 ## Stage120 shebang, quoted identifiers and diagnostic ownership — bounded local checkpoint verified
 
 The shared lexer/parser handles the selected hash-prefix and quoted-identifier

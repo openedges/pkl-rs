@@ -4,6 +4,8 @@
 
 ## 현재 상태
 
+Stage120 이후 [Stage117 원본 사례 연결 보완](reports/m2/stage117-original-case-mapping/README.md)을 통합했습니다. 기존 원본 14개의 요구사항 연결 94개와 의미론 영역 9개의 명시적 소스 연결을 추가했습니다. Stage120의 보존된 원시 관측을 다시 읽어 성공 평가 13개·일치하는 오류 1개를 확인했고, Python 검사 42개와 목록 최신성 검사가 통과했습니다. 새 evaluator 실행은 아닙니다. 기존 4,545개 실행 계약과 요구사항 475개의 상태는 유지하며, 이전에 연결이 없던 12개 사례의 목록상 미충족 사유만 해소했습니다. 엄격한 전체 gate의 중복 가능한 미충족 조건은 1,780개에서 1,768개가 됐고, 런타임 불일치와 아홉 작업 영역은 계속 남아 있습니다.
+
 현재 M2는 [Stage120 체크포인트](reports/m2/stage120-shebang-quoted-identifier-checkpoint.json)의 shebang·quoted identifier·진단 소유자 통합을 검증했습니다. 원래 workspace 취득은 1,711개 통과·실패 0·ignored 5개이며, 테스트 전용 Clippy 수정 후 영향받은 검사 2개를 새로 통과했습니다. 전체 workspace는 재실행하지 않았으며 두 수를 합산하지 않습니다.  전체 ready 4,442개 중 4,337개 일치·불일치 21개·미지원 82개·Java 오류 2개를 기록합니다. 선택 portable 6개 집합과 defaults03 명령 7개, archive 독립 readback·게시를 확인했습니다. 전체 M2와 아홉 작업 영역의 종료 조건은 계속 열려 있습니다.
 
 Git 저장소, Rust workspace, 참조 submodule, 개발 문서와 초기 구성 검증 도구가 준비되어 있습니다. M1에서 제한된 parser·resolver·lazy VM·heap·Host와 실제 Node·브라우저 호출 경로를 구현했습니다. 전체 Pkl 언어·표준 라이브러리·CLI·REPL·server·제품 API는 아직 구현되지 않았습니다.

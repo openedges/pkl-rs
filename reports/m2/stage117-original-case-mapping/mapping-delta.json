@@ -1,0 +1,569 @@
+{
+  "requirement_changes": [
+    {
+      "requirement": "semantic:amendment",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
+      ],
+      "added_source_links": [],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "semantic:classes",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
+      ],
+      "added_source_links": [],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "semantic:closures",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
+      ],
+      "added_source_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+          "symbol": "expression_context"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm.rs",
+          "symbol": "MakeFunction"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm/identity.rs",
+          "symbol": "copy_captured_locals"
+        }
+      ],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "semantic:collections",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
+      ],
+      "added_source_links": [],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "semantic:control-flow",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl"
+      ],
+      "added_source_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+          "symbol": "expression_context"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm.rs",
+          "symbol": "JumpIfNotNull"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm.rs",
+          "symbol": "JumpIfFalse"
+        }
+      ],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "semantic:diagnostics",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/shebang.pkl"
+      ],
+      "added_source_links": [],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "semantic:functions",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
+      ],
+      "added_source_links": [],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "semantic:generators",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
+      ],
+      "added_source_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+          "symbol": "schedule_expression"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm/identity.rs",
+          "symbol": "GeneratorScope"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm/identity.rs",
+          "symbol": "enter_for_scope"
+        }
+      ],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "semantic:lazy-evaluation",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl"
+      ],
+      "added_source_links": [],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "semantic:lexing",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/rawString.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultiline.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultilineContinuation.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/syntax/shebang.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/shebang.pkl"
+      ],
+      "added_source_links": [
+        {
+          "path": "crates/pkl-runtime/src/parser.rs",
+          "symbol": "next_with_comments"
+        },
+        {
+          "path": "crates/pkl-runtime/src/parser.rs",
+          "symbol": "parse_module_for_evaluation"
+        },
+        {
+          "path": "crates/pkl-runtime/src/parser/string_lexer.rs",
+          "symbol": "string_in_context"
+        }
+      ],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "semantic:modifiers",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
+      ],
+      "added_source_links": [],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "semantic:modules",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/float.pkl"
+      ],
+      "added_source_links": [],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "semantic:name-resolution",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/rawString.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultiline.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
+      ],
+      "added_source_links": [
+        {
+          "path": "crates/pkl-runtime/src/resolver.rs",
+          "symbol": "binding"
+        },
+        {
+          "path": "crates/pkl-runtime/src/resolver.rs",
+          "symbol": "leaf_expression"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm/identity.rs",
+          "symbol": "copy_captured_locals"
+        }
+      ],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "semantic:numeric-errors",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl"
+      ],
+      "added_source_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm.rs",
+          "symbol": "binary"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm.rs",
+          "symbol": "integer_power"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm.rs",
+          "symbol": "binary_error"
+        }
+      ],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "semantic:numeric-literals",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/float.pkl"
+      ],
+      "added_source_links": [
+        {
+          "path": "crates/pkl-runtime/src/parser.rs",
+          "symbol": "number"
+        },
+        {
+          "path": "crates/pkl-runtime/src/parser.rs",
+          "symbol": "integer"
+        },
+        {
+          "path": "crates/pkl-runtime/src/parser.rs",
+          "symbol": "primary"
+        }
+      ],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "semantic:objects",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultiline.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
+      ],
+      "added_source_links": [],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "semantic:operators",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/float.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/parens.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
+      ],
+      "added_source_links": [],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "semantic:scalar-literals",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl"
+      ],
+      "added_source_links": [
+        {
+          "path": "crates/pkl-runtime/src/parser.rs",
+          "symbol": "primary"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+          "symbol": "literal_value"
+        }
+      ],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "semantic:strings",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/rawString.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultiline.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultilineContinuation.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
+      ],
+      "added_source_links": [
+        {
+          "path": "crates/pkl-runtime/src/parser/string_lexer.rs",
+          "symbol": "string_in_context"
+        },
+        {
+          "path": "crates/pkl-runtime/src/parser/string_lexer.rs",
+          "symbol": "multiline_parts"
+        },
+        {
+          "path": "crates/pkl-runtime/src/parser/string_parser.rs",
+          "symbol": "interpolated_expression_machine"
+        }
+      ],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "semantic:type-tests-casts",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl"
+      ],
+      "added_source_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm.rs",
+          "symbol": "TypeCheck"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm.rs",
+          "symbol": "step_type"
+        }
+      ],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "semantic:types",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl"
+      ],
+      "added_source_links": [],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/float.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/parens.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/rawString.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultiline.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultilineContinuation.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/syntax/shebang.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/shebang.pkl"
+      ],
+      "added_source_links": [],
+      "states_unchanged": true
+    },
+    {
+      "requirement": "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/float.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/parens.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/rawString.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultiline.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultilineContinuation.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/syntax/shebang.pkl",
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/shebang.pkl"
+      ],
+      "added_source_links": [],
+      "states_unchanged": true
+    }
+  ],
+  "case_changes": [
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+      "prior": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
+      "added": [
+        "semantic:lazy-evaluation",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:control-flow",
+        "semantic:scalar-literals"
+      ]
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
+      "prior": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
+      "added": [
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:lexing"
+      ]
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/float.pkl",
+      "prior": [],
+      "added": [
+        "semantic:modules",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:operators",
+        "semantic:numeric-literals"
+      ]
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
+      "prior": [],
+      "added": [
+        "semantic:modifiers",
+        "semantic:objects",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:strings",
+        "semantic:lexing",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl",
+      "prior": [],
+      "added": [
+        "semantic:modules",
+        "semantic:diagnostics",
+        "semantic:functions",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:operators",
+        "semantic:numeric-errors",
+        "semantic:numeric-literals"
+      ]
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+      "prior": [],
+      "added": [
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:objects",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:operators",
+        "semantic:strings",
+        "semantic:control-flow",
+        "semantic:scalar-literals",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/parens.pkl",
+      "prior": [],
+      "added": [
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/rawString.pkl",
+      "prior": [],
+      "added": [
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:strings",
+        "semantic:lexing",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+      "prior": [],
+      "added": [
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:functions",
+        "semantic:objects",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:strings",
+        "semantic:lexing",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultiline.pkl",
+      "prior": [],
+      "added": [
+        "semantic:objects",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:strings",
+        "semantic:lexing",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultilineContinuation.pkl",
+      "prior": [],
+      "added": [
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:strings",
+        "semantic:lexing"
+      ]
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl",
+      "prior": [],
+      "added": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:amendment",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:objects",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:strings",
+        "semantic:closures",
+        "semantic:generators",
+        "semantic:lexing",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/shebang.pkl",
+      "prior": [],
+      "added": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:lexing"
+      ]
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/syntax/shebang.pkl",
+      "prior": [],
+      "added": [
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+        "semantic:lexing"
+      ]
+    }
+  ],
+  "requirement_state_changes": [],
+  "case_contract_changes": []
+}

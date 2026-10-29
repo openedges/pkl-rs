@@ -1,0 +1,1072 @@
+{
+  "kind": "Stage117 mapping qualification from retained Stage120 raw observations",
+  "complete": true,
+  "new_evaluator_executions": 0,
+  "new_Java_executions": 0,
+  "full_M2_complete": false,
+  "observations": 14,
+  "repetitions_per_case": 1,
+  "original_rationale": {
+    "path": "target/m2/stage117-original-case-mapping-prep-02/case-evidence.json",
+    "bytes": 98672,
+    "sha256": "3190bf36b48e79cc0e9bbc809498e31af5f25cc7da7620190dd646acca97482c"
+  },
+  "full_ready": {
+    "path": "target/m2/stage120-full-ready-native-01.json",
+    "bytes": 2641539,
+    "sha256": "fa4ec6f70cb0d315b64ecb6ad319ad6d3b6bc36d9ac897818cdcfa231b2e2523"
+  },
+  "source_freeze": {
+    "path": "target/m2/stage120-workspace-replay-qualification-01/source-freeze.json",
+    "bytes": 83031,
+    "sha256": "6c32aaf4b933424de12a7ad6046191683ef1d6cd31daecccb3d92cf7de0a145e"
+  },
+  "recorded_test_only_source_differences": [
+    {
+      "path": "crates/pkl-runtime/src/parser/quoted_identifier_contract.rs",
+      "recorded": {
+        "bytes": 6447,
+        "sha256": "0cecfcc031e167bee16debde8a66bdcfb8b10514f75f9946b40d5ec3fda27b31"
+      },
+      "current": {
+        "path": "crates/pkl-runtime/src/parser/quoted_identifier_contract.rs",
+        "bytes": 6499,
+        "sha256": "77def3d1c4976da30695c6bad202c513b6911c2d3e86c33566cbad9a464b82b3"
+      }
+    },
+    {
+      "path": "crates/pkl-runtime/src/parser/shebang_contract.rs",
+      "recorded": {
+        "bytes": 4656,
+        "sha256": "0e5cfb2ca97ccb13651d6edc105ec6b184e3221d53aa5205b955d6e241d2e3cd"
+      },
+      "current": {
+        "path": "crates/pkl-runtime/src/parser/shebang_contract.rs",
+        "bytes": 4708,
+        "sha256": "81b6a3a6677082b2ff68a21c3ce1b8c591761f1faefd2cc946ec5b37f4fec169"
+      }
+    }
+  ],
+  "observation_boundary": "Original module eval stdout/stderr/exit/files. No UTF16 channel, full caught diagnostic frame or all-facts-true claim. Readback is not a new execution.",
+  "cases": [
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
+      "source": {
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
+        "bytes": 187,
+        "sha256": "cdd0ae20dcb2a49c117ac669e079ac2c41354d8520e061ddc9653055bf3bea2e"
+      },
+      "process": {
+        "path": "target/m2/stage120-full-ready-modules-01/52e8d8dae4d03ad293daef32/0/process.json",
+        "bytes": 5540,
+        "sha256": "6f9f7288f1fdbc48e71e91000bca69877b15e0313b527ecb5cd3153fbe394f86"
+      },
+      "native_result": {
+        "path": "target/m2/stage120-full-ready-modules-01/52e8d8dae4d03ad293daef32/0/result.json",
+        "bytes": 293,
+        "sha256": "f6a86be7158989b9aa375c8bfe8649507836951bc46a52dea2cd89c8499c6621"
+      },
+      "java_result": {
+        "path": "target/m2/stage94-originals-replay-01/cases/52e8d8dae4d03ad293daef32/java/result.json",
+        "bytes": 294,
+        "sha256": "65010dc09c6e02445e281895168f714d7271be383451385e7d0e1a205e5d0071"
+      },
+      "java_process": {
+        "path": "target/m2/stage94-originals-replay-01/cases/52e8d8dae4d03ad293daef32/java/process.json",
+        "bytes": 3152,
+        "sha256": "db7cf0f10bd5bda07f18396048fb6bf8863bdc91676cb10d96b731a97df11310"
+      },
+      "channels": {
+        "stdout": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/52e8d8dae4d03ad293daef32/0/stdout.bin",
+            "bytes": 28,
+            "sha256": "fbc11d425209f5a5b08979c3dc374f4fdd2f15edce67b0af0e0fddce3ca2c510"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/52e8d8dae4d03ad293daef32/java/stdout.bin",
+            "bytes": 28,
+            "sha256": "fbc11d425209f5a5b08979c3dc374f4fdd2f15edce67b0af0e0fddce3ca2c510"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": "eCA9IDEwCnkgPSAyMAp6ID0gMzAKYSA9IDIwCg=="
+        },
+        "stderr": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/52e8d8dae4d03ad293daef32/0/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/52e8d8dae4d03ad293daef32/java/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": ""
+        }
+      },
+      "exit_code": 0,
+      "generated_files": {},
+      "repeat": 0,
+      "semantic_rationales": {
+        "semantic:lexing": "Line comments including EOF, a block comment between declarations, and a documentation comment precede rendered numeric properties and an unforced function declaration. This observes comment recognition; it does not execute myFun or establish documentation metadata generation."
+      },
+      "source_requirement_rationale": {
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation.",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation."
+      },
+      "assertion_limit": "CLI eval renders data; facts are not executed by pkl test. A raw match is not an all-facts-true verdict."
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
+      "source": {
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
+        "bytes": 622,
+        "sha256": "a571dec47cc29c054b77aad7996d2698f1a09aa2811246416f1d0c0908f10ff7"
+      },
+      "process": {
+        "path": "target/m2/stage120-full-ready-modules-01/6925cbb0b70a6d75dde7f7e5/0/process.json",
+        "bytes": 5548,
+        "sha256": "957852e013d70a0534d1838352f9f5a9e47549c27d52d8b751255cc86b645088"
+      },
+      "native_result": {
+        "path": "target/m2/stage120-full-ready-modules-01/6925cbb0b70a6d75dde7f7e5/0/result.json",
+        "bytes": 293,
+        "sha256": "404cf21afa10e56ee3306782482675ecb36cac28fd3e215860f79ce57a8e3618"
+      },
+      "java_result": {
+        "path": "target/m2/stage94-originals-replay-01/cases/6925cbb0b70a6d75dde7f7e5/java/result.json",
+        "bytes": 294,
+        "sha256": "20aa271368658a9f1a29bd0b083fe660ce2970c002541bcea04fb213449174b4"
+      },
+      "java_process": {
+        "path": "target/m2/stage94-originals-replay-01/cases/6925cbb0b70a6d75dde7f7e5/java/process.json",
+        "bytes": 3156,
+        "sha256": "b12dfd98ac2f95e007fe75c96072eb27283aa5570c4af40c5ae139cc4dc2902c"
+      },
+      "channels": {
+        "stdout": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/6925cbb0b70a6d75dde7f7e5/0/stdout.bin",
+            "bytes": 227,
+            "sha256": "bb4653d0a91b174102fc88ddc5f77587f82d9c5ec5ae86adf4a271a746a6cd7d"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/6925cbb0b70a6d75dde7f7e5/java/stdout.bin",
+            "bytes": 227,
+            "sha256": "bb4653d0a91b174102fc88ddc5f77587f82d9c5ec5ae86adf4a271a746a6cd7d"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": "ZXhhbXBsZXMgewogIFsidmFyaWFibGUiXSB7CiAgICA0MgogICAgNDMKICAgIDQ0CiAgfQogIFsicHJvcGVydHkiXSB7CiAgICA0MgogICAgNDMKICAgIDQ0CiAgfQogIFsic3RyaW5nIGludGVycG9sYXRpb24iXSB7CiAgICAiNDIiCiAgICAiNDMiCiAgICAiNDQiCiAgfQogIFsibXVsdGlsaW5lIHN0cmluZyBpbnRlcnBvbGF0aW9uIl0gewogICAgIjQyIgogICAgIjQzIgogICAgIjQ0IgogIH0KfQo="
+        },
+        "stderr": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/6925cbb0b70a6d75dde7f7e5/0/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/6925cbb0b70a6d75dde7f7e5/java/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": ""
+        }
+      },
+      "exit_code": 0,
+      "generated_files": {},
+      "repeat": 0,
+      "semantic_rationales": {
+        "semantic:lexing": "Backtick names include the keyword this and spaces; ordinary and quoted names are declared and accessed.",
+        "semantic:name-resolution": "Local this/that/quick brown fox names and equally named object properties are read in direct and interpolated expressions.",
+        "semantic:objects": "A local new object exposes quoted and ordinary members to property lookup.",
+        "semantic:modifiers": "Local bindings remain available to rendered examples while excluded from ordinary module output.",
+        "semantic:strings": "Single-line and multiline interpolation evaluate the quoted local references; separate examples evaluate object-member references."
+      },
+      "source_requirement_rationale": {
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation.",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation."
+      },
+      "assertion_limit": "CLI eval renders data; facts are not executed by pkl test. A raw match is not an all-facts-true verdict."
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl",
+      "source": {
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/int.pkl",
+        "bytes": 3557,
+        "sha256": "8fc7f28fe3fccb052a6239fc4a01109b91bd744959ba5600ef4e2abdefaed6c5"
+      },
+      "process": {
+        "path": "target/m2/stage120-full-ready-modules-01/deabaf824c7e6f992f4a60fb/0/process.json",
+        "bytes": 5529,
+        "sha256": "c477d8e4d84f4769ae62e6d60d43d06a81eee62758b06f6fc3f897ab9d206800"
+      },
+      "native_result": {
+        "path": "target/m2/stage120-full-ready-modules-01/deabaf824c7e6f992f4a60fb/0/result.json",
+        "bytes": 293,
+        "sha256": "1dcd032a397e87b636611568836f95cf585a34d28fe6d91b752b75a2920ec0f8"
+      },
+      "java_result": {
+        "path": "target/m2/stage94-originals-replay-01/cases/deabaf824c7e6f992f4a60fb/java/result.json",
+        "bytes": 294,
+        "sha256": "98263e566821bd62e794cf023106d94526283cf42131d9cb79c579b05c04d2fd"
+      },
+      "java_process": {
+        "path": "target/m2/stage94-originals-replay-01/cases/deabaf824c7e6f992f4a60fb/java/process.json",
+        "bytes": 3142,
+        "sha256": "93b038bac79799562e4de047c5c91d39e5854b7bee814f7bc58b65034bdba59a"
+      },
+      "channels": {
+        "stdout": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/deabaf824c7e6f992f4a60fb/0/stdout.bin",
+            "bytes": 2001,
+            "sha256": "f2007e221fc14099daa112e34e8e11fb95ee14fbe8400bd6ca32f5a057224fdf"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/deabaf824c7e6f992f4a60fb/java/stdout.bin",
+            "bytes": 2001,
+            "sha256": "f2007e221fc14099daa112e34e8e11fb95ee14fbe8400bd6ca32f5a057224fdf"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": "ZmFjdHMgewogIFsiZXF1YWxpdHkiXSB7CiAgICB0cnVlCiAgICB0cnVlCiAgICB0cnVlCiAgfQogIFsiaW5lcXVhbGl0eSJdIHsKICAgIHRydWUKICAgIHRydWUKICAgIHRydWUKICB9CiAgWyJ1bmRlcnNjb3JlIC0gZGlnaXRzIl0gewogICAgdHJ1ZQogICAgdHJ1ZQogICAgdHJ1ZQogICAgdHJ1ZQogICAgdHJ1ZQogICAgdHJ1ZQogIH0KICBbInVuZGVyc2NvcmUgLSBoZXgiXSB7CiAgICB0cnVlCiAgICBmYWxzZQogICAgdHJ1ZQogICAgdHJ1ZQogIH0KICBbInVuZGVyc2NvcmUgLSBiaW5hcnkiXSB7CiAgICB0cnVlCiAgICB0cnVlCiAgICB0cnVlCiAgICB0cnVlCiAgfQogIFsidW5kZXJzY29yZSAtIG9jdGFsIl0gewogICAgdHJ1ZQogICAgdHJ1ZQogICAgdHJ1ZQogICAgdHJ1ZQogICAgdHJ1ZQogIH0KfQpleGFtcGxlcyB7CiAgWyJsaXRlcmFsIl0gewogICAgNDIKICAgIDQyCiAgICAxMjM0NTY3ODkxMjM0NTY3ODkKICAgIC00MgogICAgLTQyCiAgICAtMTIzNDU2Nzg5MTIzNDU2Nzg5CiAgICAtOTIyMzM3MjAzNjg1NDc3NTgwOAogICAgOTIyMzM3MjAzNjg1NDc3NTgwNwogICAgMTAwMAogICAgMTAwMDAwMAogICAgMQogICAgMTEKICAgIDEwMDAwCiAgICAtMTAwMDAKICB9CiAgWyJoZXggbGl0ZXJhbCJdIHsKICAgIDY2CiAgICA4MTk4NTUyOTIxNjQ4Njg5NQogICAgODE5ODU1MjkyMTY0ODY4OTUKICAgIDgxOTg1NTI5MjE2NDg2ODk1CiAgICA4MTk4NTUyOTIxNjQ4Njg5NQogICAgNjYKICAgIC04MTk4NTUyOTIxNjQ4Njg5NQogICAgLTgxOTg1NTI5MjE2NDg2ODk1CiAgICAtODE5ODU1MjkyMTY0ODY4OTUKICAgIC04MTk4NTUyOTIxNjQ4Njg5NQogICAgMjg2MzQ4MDA4OTc4CiAgICA2NQogICAgMTQzMwogICAgLTE0MzMKICB9CiAgWyJiaW5hcnkgbGl0ZXJhbCJdIHsKICAgIDQ1CiAgICA0NQogICAgLTQ1CiAgICAtNDUKICAgIDE4MgogICAgNgogICAgMgogICAgLTEKICB9CiAgWyJvY3RhbCBsaXRlcmFsIl0gewogICAgMzQyMzkxCiAgICAxNjQzNDgyNAogICAgLTM0MjM5MQogICAgLTE2NDM0ODI0CiAgICAyNzM5MTI4CiAgICAyNDIzCiAgICA1NgogICAgLTcKICAgIDQyMAogICAgNDkzCiAgfQogIFsiYWRkaXRpb24iXSB7CiAgICAzCiAgICAzCiAgfQogIFsic3VidHJhY3Rpb24iXSB7CiAgICAtMQogICAgLTEKICB9CiAgWyJtdWx0aXBsaWNhdGlvbiJdIHsKICAgIDEyCiAgICAxMgogIH0KICBbImRpdmlzaW9uIl0gewogICAgMS4zMzMzMzMzMzMzMzMzMzMzCiAgICAxLjMzMzMzMzMzMzMzMzMzMzMKICB9CiAgWyJpbnRlZ2VyIGRpdmlzaW9uIl0gewogICAgMQogICAgMQogIH0KICBbInJlbWFpbmRlciJdIHsKICAgIDUKICAgIDUKICB9CiAgWyJuZWdhdGlvbiJdIHsKICAgIC0xCiAgICAtMgogICAgLTMKICAgIC00CiAgICAxCiAgICAxCiAgfQogIFsicG93ZXIiXSB7CiAgICAxNgogICAgMQogICAgMC4wNjI1CiAgICAxCiAgICAxCiAgICAxCiAgICAwCiAgICAxCiAgICAtMQogICAgSW5maW5pdHkKICAgIDEuMAogICAgLTEuMAogICAgMAogICAgMQogICAgMQogICAgSW5maW5pdHkKICAgIDEuMAogICAgMS4wCiAgICAwCiAgICAxCiAgICAtMQogICAgSW5maW5pdHkKICAgIDEuMAogICAgMS4wCiAgICAxCiAgICA5MjIzMzcyMDM2ODU0Nzc1ODA3CiAgICB0cnVlCiAgICB0cnVlCiAgICB0cnVlCiAgICB0cnVlCiAgICB0cnVlCiAgfQogIFsiaW50ZWdlciBvdmVyZmxvdyJdIHsKICAgICJJbnRlZ2VyIG92ZXJmbG93LiIKICAgICJJbnRlZ2VyIG92ZXJmbG93LiIKICAgICJJbnRlZ2VyIG92ZXJmbG93LiIKICAgICJJbnRlZ2VyIG92ZXJmbG93LiIKICAgICJJbnRlZ2VyIG92ZXJmbG93LiIKICAgICJJbnRlZ2VyIG92ZXJmbG93LiIKICAgICJJbnRlZ2VyIG92ZXJmbG93LiIKICAgICJJbnRlZ2VyIG92ZXJmbG93LiIKICAgICJJbnRlZ2VyIG92ZXJmbG93LiIKICAgICJJbnRlZ2VyIG92ZXJmbG93LiIKICAgICJJbnRlZ2VyIG92ZXJmbG93LiIKICAgICJJbnRlZ2VyIG92ZXJmbG93LiIKICB9Cn0K"
+        },
+        "stderr": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/deabaf824c7e6f992f4a60fb/0/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/deabaf824c7e6f992f4a60fb/java/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": ""
+        }
+      },
+      "exit_code": 0,
+      "generated_files": {},
+      "repeat": 0,
+      "semantic_rationales": {
+        "semantic:numeric-literals": "Decimal leading zeros, hex/bin/oct digits, repeated and trailing separators, signed literals and signed64 limits are evaluated. The authored 0x41__ == 0x42 is false and is rendered as false.",
+        "semantic:operators": "Integer/Float equality and inequality, unary negation, abs binding, addition/subtraction/multiplication/division/truncating division/remainder and right-associative exponentiation are rendered, including extreme exponents and Int boundaries. This source has no ordering-comparison witness.",
+        "semantic:numeric-errors": "module.catch invokes lambdas and renders integer arithmetic/exponent overflow error messages alongside successful boundary results. These caught messages do not include full diagnostic frames, and this observation is distinct from invalid numeric lexing.",
+        "semantic:functions": "Zero-argument lambdas are passed to module.catch and invoked to capture arithmetic errors.",
+        "semantic:modules": "The explicit pkl:math import supplies minInt/maxInt values; inherited snippetTest output renders facts/examples.",
+        "semantic:diagnostics": "Caught arithmetic error message strings appear in the complete raw stdout comparison. This eval does not capture full diagnostic frames for the caught errors or run those facts as pkl test assertions."
+      },
+      "source_requirement_rationale": {
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation.",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation."
+      },
+      "assertion_limit": "CLI eval renders data; facts are not executed by pkl test. A raw match is not an all-facts-true verdict."
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/float.pkl",
+      "source": {
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/float.pkl",
+        "bytes": 3130,
+        "sha256": "b9aa8e32399e39a434635a1a926c5532b9fae48e9a666f02702438be3977c554"
+      },
+      "process": {
+        "path": "target/m2/stage120-full-ready-modules-01/57578064bc975bf90a19f7f4/0/process.json",
+        "bytes": 5535,
+        "sha256": "18a88a8a23e6c1b64e51419bde1856dcb7b23dd9c7ef8690283f0e12bac1ef58"
+      },
+      "native_result": {
+        "path": "target/m2/stage120-full-ready-modules-01/57578064bc975bf90a19f7f4/0/result.json",
+        "bytes": 293,
+        "sha256": "e19799ec36abcde0ea287fbbe16f16cae228b7bb907df140ad844e8d7fd988b8"
+      },
+      "java_result": {
+        "path": "target/m2/stage94-originals-replay-01/cases/57578064bc975bf90a19f7f4/java/result.json",
+        "bytes": 294,
+        "sha256": "d7e629310cc8df0716cc7626b1a90289280436d63f55436abe7d692cb7b0661e"
+      },
+      "java_process": {
+        "path": "target/m2/stage94-originals-replay-01/cases/57578064bc975bf90a19f7f4/java/process.json",
+        "bytes": 3146,
+        "sha256": "d86876f39686f0356b114b187d8045960360419db7677df5e3352c677debe382"
+      },
+      "channels": {
+        "stdout": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/57578064bc975bf90a19f7f4/0/stdout.bin",
+            "bytes": 1650,
+            "sha256": "70e309b4753d2701be6bd9da6770f417933f8b9cc9c6cc5902c66a59d1464b1a"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/57578064bc975bf90a19f7f4/java/stdout.bin",
+            "bytes": 1650,
+            "sha256": "70e309b4753d2701be6bd9da6770f417933f8b9cc9c6cc5902c66a59d1464b1a"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": "ZmFjdHMgewogIFsicG93Il0gewogICAgdHJ1ZQogICAgdHJ1ZQogICAgdHJ1ZQogICAgdHJ1ZQogICAgdHJ1ZQogIH0KICBbImVxdWFsaXR5Il0gewogICAgdHJ1ZQogICAgdHJ1ZQogICAgdHJ1ZQogICAgdHJ1ZQogICAgdHJ1ZQogIH0KICBbImluZXF1YWxpdHkiXSB7CiAgICB0cnVlCiAgICB0cnVlCiAgICB0cnVlCiAgICB0cnVlCiAgICB0cnVlCiAgfQogIFsiZ3JlYXRlciB0aGFuIl0gewogICAgdHJ1ZQogICAgdHJ1ZQogICAgdHJ1ZQogIH0KICBbImxlc3MgdGhhbiJdIHsKICAgIHRydWUKICAgIHRydWUKICAgIHRydWUKICB9CiAgWyJncmVhdGVyIHRoYW4gb3IgZXF1YWwiXSB7CiAgICB0cnVlCiAgICB0cnVlCiAgICB0cnVlCiAgfQogIFsibGVzcyB0aGFuIG9yIGVxdWFsIl0gewogICAgdHJ1ZQogICAgdHJ1ZQogICAgdHJ1ZQogIH0KICBbInVuZGVyc2NvcmVzIl0gewogICAgdHJ1ZQogICAgdHJ1ZQogICAgdHJ1ZQogICAgdHJ1ZQogICAgdHJ1ZQogICAgdHJ1ZQogICAgdHJ1ZQogIH0KfQpleGFtcGxlcyB7CiAgWyJsaXRlcmFsIl0gewogICAgMS4yMzQ1Njc4OTEyMzQ1Njc5RTgKICAgIDEuMjM0NTZFOQogICAgMS4yMzQ1NkUtNQogICAgLTEuMjM0NTY3ODkxMjM0NTY3OUU4CiAgICAtMS4yMzQ1NkU5CiAgICAtMS4yMzQ1NkUtNQogICAgNC45RS0zMjQKICAgIDEuNzk3NjkzMTM0ODYyMzE1N0UzMDgKICAgIDEuMjM0NTY3ODkxMjM0NTY3OUU4CiAgICAxLjEKICAgIDExLjExCiAgICAxLjIzNDU2RTkKICAgIDEuMjM0NTZFLTUKICAgIDEuMjM0NTZFMTIKICAgIDEuMjM0NTZFLTgKICB9CiAgWyJhZGRpdGlvbiJdIHsKICAgIDMuMzAwMDAwMDAwMDAwMDAwMwogICAgMy4yCiAgfQogIFsic3VidHJhY3Rpb24iXSB7CiAgICAtMS4wOTk5OTk5OTk5OTk5OTk2CiAgICAtMC43OTk5OTk5OTk5OTk5OTk4CiAgfQogIFsibXVsdGlwbGljYXRpb24iXSB7CiAgICAxNC41MgogICAgMTMuMjAwMDAwMDAwMDAwMDAxCiAgfQogIFsiZGl2aXNpb24iXSB7CiAgICAwLjgKICAgIDAuODgwMDAwMDAwMDAwMDAwMQogIH0KICBbImludGVnZXIgZGl2aXNpb24iXSB7CiAgICAxCiAgICAxCiAgICAxCiAgICAxCiAgICAxCiAgfQogIFsicmVtYWluZGVyIl0gewogICAgNS41CiAgICA1LjAKICB9CiAgWyJuZWdhdGlvbiJdIHsKICAgIC0xLjIKICAgIC0xLjIKICAgIDEuMAogICAgMS4wCiAgfQogIFsicG93ZXIiXSB7CiAgICAyNy45ODQwOTk5OTk5OTk5OQogICAgMS4wCiAgICAwLjAzNTczNDU3Nzg0OTU2NDU5CiAgICAxLjAKICAgIDEuMAogICAgMS4wCiAgICAwLjAKICAgIDEuMAogICAgLTEuMAogICAgSW5maW5pdHkKICAgIDEuMAogICAgLTEuMAogICAgMC4wCiAgICAxLjAKICAgIDEuMAogICAgSW5maW5pdHkKICAgIDEuMAogICAgMS4wCiAgICAwLjAKICAgIDEuMAogICAgMS4wCiAgICBJbmZpbml0eQogICAgMS4wCiAgICAxLjAKICAgIDEuNzAxNDExODM0NjA0NjkyM0UzOAogICAgSW5maW5pdHkKICAgIEluZmluaXR5CiAgICBJbmZpbml0eQogICAgSW5maW5pdHkKICAgIC0xLjcwMTQxMTgzNDYwNDY5MjNFMzgKICAgIC1JbmZpbml0eQogICAgLUluZmluaXR5CiAgICBJbmZpbml0eQogICAgSW5maW5pdHkKICAgIDEuMAogICAgMS43OTc2OTMxMzQ4NjIzMTU3RTMwOAogICAgSW5maW5pdHkKICB9Cn0K"
+        },
+        "stderr": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/57578064bc975bf90a19f7f4/0/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/57578064bc975bf90a19f7f4/java/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": ""
+        }
+      },
+      "exit_code": 0,
+      "generated_files": {},
+      "repeat": 0,
+      "semantic_rationales": {
+        "semantic:numeric-literals": "Decimal fractions and exponents, separators, subnormal and maximum finite values are evaluated.",
+        "semantic:operators": "Cross Int/Float equality and ordering, unary/abs precedence, mixed arithmetic including truncating division/remainder, power associativity, negative and extreme exponents, overflow to infinity and underflow are rendered.",
+        "semantic:modules": "The explicit pkl:math import supplies finite limits to rendered arithmetic examples."
+      },
+      "source_requirement_rationale": {
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation.",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation."
+      },
+      "assertion_limit": "CLI eval renders data; facts are not executed by pkl test. A raw match is not an all-facts-true verdict."
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+      "source": {
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+        "bytes": 1413,
+        "sha256": "997f0647c2c57c06a1e60ac18f1e0e128b9bfe415677d93ed527fa6706bd2076"
+      },
+      "process": {
+        "path": "target/m2/stage120-full-ready-modules-01/fe12a4029bb4e8569bdb7988/0/process.json",
+        "bytes": 5539,
+        "sha256": "f88c629b907dcfbd1681ac9bb1e891b4b27515cab96a78687c61e56bf4fe417a"
+      },
+      "native_result": {
+        "path": "target/m2/stage120-full-ready-modules-01/fe12a4029bb4e8569bdb7988/0/result.json",
+        "bytes": 293,
+        "sha256": "e62e095dc9844ed63e89d0bc9b20facad6d2055086a70407c211179d06fa09e1"
+      },
+      "java_result": {
+        "path": "target/m2/stage94-originals-replay-01/cases/fe12a4029bb4e8569bdb7988/java/result.json",
+        "bytes": 294,
+        "sha256": "a5371eab0c0163f4bf6d2c485807a6ce89aa76246eb629a4243757e1340f29a1"
+      },
+      "java_process": {
+        "path": "target/m2/stage94-originals-replay-01/cases/fe12a4029bb4e8569bdb7988/java/process.json",
+        "bytes": 3150,
+        "sha256": "bceb97819c5c84f33633f642e64a977d93d9312e07bdd338e6f1d9788b751a18"
+      },
+      "channels": {
+        "stdout": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/fe12a4029bb4e8569bdb7988/0/stdout.bin",
+            "bytes": 897,
+            "sha256": "2dfb0439b4f5fe9d608d956e9fd4fbf924a4428ceb34c2da92b1e75722c4a8d9"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/fe12a4029bb4e8569bdb7988/java/stdout.bin",
+            "bytes": 897,
+            "sha256": "2dfb0439b4f5fe9d608d956e9fd4fbf924a4428ceb34c2da92b1e75722c4a8d9"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": "ZXhhbXBsZXMgewogIFsibGl0ZXJhbCJdIHsKICAgIHRydWUKICAgIGZhbHNlCiAgfQogIFsiY29uanVuY3Rpb24iXSB7CiAgICBmYWxzZQogICAgZmFsc2UKICAgIGZhbHNlCiAgICAibm90IHNob3J0LWNpcmN1aXRlZCIKICAgICJub3Qgc2hvcnQtY2lyY3VpdGVkIgogICAgIk9wZXJhdG9yIGAmJmAgaXMgbm90IGRlZmluZWQgZm9yIGxlZnQgb3BlcmFuZCB0eXBlIGBJbnRgLiBMZWZ0IG9wZXJhbmQ6IDEiCiAgfQogIFsiZGlzanVuY3Rpb24iXSB7CiAgICB0cnVlCiAgICB0cnVlCiAgICB0cnVlCiAgICAibm90IHNob3J0LWNpcmN1aXRlZCIKICAgICJub3Qgc2hvcnQtY2lyY3VpdGVkIgogICAgIk9wZXJhdG9yIGB8fGAgaXMgbm90IGRlZmluZWQgZm9yIGxlZnQgb3BlcmFuZCB0eXBlIGBJbnRgLiBMZWZ0IG9wZXJhbmQ6IDAiCiAgfQogIFsibmVnYXRpb24iXSB7CiAgICBmYWxzZQogICAgdHJ1ZQogIH0KICBbImVxdWFsaXR5Il0gewogICAgdHJ1ZQogICAgZmFsc2UKICAgIGZhbHNlCiAgICB0cnVlCiAgfQogIFsiaW5lcXVhbGl0eSJdIHsKICAgIGZhbHNlCiAgICB0cnVlCiAgICB0cnVlCiAgICBmYWxzZQogIH0KICBbInhvcigpIl0gewogICAgZmFsc2UKICAgIHRydWUKICAgIHRydWUKICAgIGZhbHNlCiAgICBmYWxzZQogICAgdHJ1ZQogICAgdHJ1ZQogICAgZmFsc2UKICAgICJDYW5ub3QgZmluZCBtZXRob2QgYHhvcmAgaW4gY2xhc3MgYER5bmFtaWNgLiIKICAgICJFeHBlY3RlZCB2YWx1ZSBvZiB0eXBlIGBCb29sZWFuYCwgYnV0IGdvdCB0eXBlIGBEeW5hbWljYC4gVmFsdWU6IG5ldyBEeW5hbWljIHt9IgogIH0KICBbImltcGxpZXMoKSJdIHsKICAgIHRydWUKICAgIGZhbHNlCiAgICB0cnVlCiAgICB0cnVlCiAgICAibm90IHNob3J0LWNpcmN1aXRlZCIKICB9Cn0K"
+        },
+        "stderr": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/fe12a4029bb4e8569bdb7988/0/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/fe12a4029bb4e8569bdb7988/java/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": ""
+        }
+      },
+      "exit_code": 0,
+      "generated_files": {},
+      "repeat": 0,
+      "semantic_rationales": {
+        "semantic:scalar-literals": "True and false literals and local Boolean values feed rendered truth tables.",
+        "semantic:operators": "Equality/inequality, negation, conjunction/disjunction, xor and implies are observed, including invalid operand/receiver cases.",
+        "semantic:control-flow": "And/or skip invalid or throwing right operands where appropriate; implies evaluates its argument even when the receiver is false.",
+        "semantic:lazy-evaluation": "Short-circuited throws and invalid operands are distinguished from caught evaluated branches; no general memoization/retry claim follows.",
+        "semantic:collections": "Empty List.isEmpty results are used as xor operands; this is a narrow collection observation.",
+        "semantic:diagnostics": "module.catch renders the messages from evaluated throws and invalid operand/receiver failures. The complete raw eval output is compared; these caught message strings do not capture full diagnostic frames."
+      },
+      "source_requirement_rationale": {
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation.",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation."
+      },
+      "assertion_limit": "CLI eval renders data; facts are not executed by pkl test. A raw match is not an all-facts-true verdict."
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+      "source": {
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/nullable.pkl",
+        "bytes": 678,
+        "sha256": "a322b892df5573d8988ac0013f79f04b524c1cddb785572eb37eb117c277d5ac"
+      },
+      "process": {
+        "path": "target/m2/stage120-full-ready-modules-01/d156d00274584556fb356b69/0/process.json",
+        "bytes": 5542,
+        "sha256": "87510e60a78bfd3d49f493f3ebb41f3d06df2e3a431a71854ebe5b8a0d1d8a2a"
+      },
+      "native_result": {
+        "path": "target/m2/stage120-full-ready-modules-01/d156d00274584556fb356b69/0/result.json",
+        "bytes": 293,
+        "sha256": "a05bbcd633205bea2873b47c6cba04d3649c703236f50a21369b2435666b1a37"
+      },
+      "java_result": {
+        "path": "target/m2/stage94-originals-replay-01/cases/d156d00274584556fb356b69/java/result.json",
+        "bytes": 294,
+        "sha256": "582af111d2bc637e6b8cd552d02fc06493f439fe9cd8c2a6f96c59b29690b29f"
+      },
+      "java_process": {
+        "path": "target/m2/stage94-originals-replay-01/cases/d156d00274584556fb356b69/java/process.json",
+        "bytes": 3152,
+        "sha256": "065bde53b0bf84f73cfc0cc1480126d12d1dbbdc435a5628a3dbece5a7510bce"
+      },
+      "channels": {
+        "stdout": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/d156d00274584556fb356b69/0/stdout.bin",
+            "bytes": 446,
+            "sha256": "b3ec0ef83513213d3152caec826dba04dc0f7742217fa70918559654ac5ad609"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/d156d00274584556fb356b69/java/stdout.bin",
+            "bytes": 446,
+            "sha256": "b3ec0ef83513213d3152caec826dba04dc0f7742217fa70918559654ac5ad609"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": "ZmFjdHMgewogIFsiZXF1YWxpdHkiXSB7CiAgICB0cnVlCiAgICB0cnVlCiAgICB0cnVlCiAgfQogIFsiaW5lcXVhbGl0eSJdIHsKICAgIHRydWUKICAgIHRydWUKICAgIHRydWUKICB9Cn0KZXhhbXBsZXMgewogIFsibGl0ZXJhbCJdIHsKICAgIG51bGwKICB9CiAgWyJjb2FsZXNjaW5nIl0gewogICAgMgogICAgMQogICAgMQogICAgMwogICAgNDAKICB9CiAgWyJudWxsLXNhZmUgaW52b2NhdGlvbiJdIHsKICAgIG51bGwKICAgICJQSUdFT04iCiAgICBudWxsCiAgICAzLmtiCiAgICAiQ2Fubm90IGZpbmQgcHJvcGVydHkgYGZvb2AgaW4gb2JqZWN0IG9mIHR5cGUgYE51bGxgLiIKICAgICJDYW5ub3QgZmluZCBtZXRob2QgYGZvb2AgaW4gY2xhc3MgYE51bGxgLiIKICB9CiAgWyJhbWVuZG1lbnQiXSB7CiAgICBuZXcgewogICAgICBhZ2UgPSAyMAogICAgfQogICAgdHJ1ZQogIH0KfQo="
+        },
+        "stderr": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/d156d00274584556fb356b69/0/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/d156d00274584556fb356b69/java/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": ""
+        }
+      },
+      "exit_code": 0,
+      "generated_files": {},
+      "repeat": 0,
+      "semantic_rationales": {
+        "semantic:scalar-literals": "Null literals, equality/inequality and nullable default values are rendered.",
+        "semantic:operators": "Null comparison, Boolean negation, coalescing and nullable member access are observed alongside ordinary failed member/call access.",
+        "semantic:control-flow": "Coalescing selects the displayed scalar/default values, and null-safe access returns null or evaluates the non-null string/data-size receivers. The coalescing alternatives contain no observable forcing sentinel, so this output alone does not establish that unused alternatives were skipped.",
+        "semantic:lazy-evaluation": "Null-safe member/call access suppresses ordinary invalid-null receiver lookup. The coalescing examples alone do not witness unforced alternatives, memoization or retry behavior.",
+        "semantic:types": "Person.age: Int? has a null default; Null with a custom Person default and its amendment produce typed values.",
+        "semantic:type-tests-casts": "The source explicitly evaluates p2 is Person; no cast behavior is claimed.",
+        "semantic:classes": "Person class construction, its nullable property default and later typed value are observed.",
+        "semantic:amendment": "A custom default inside Null is amended with age=20 and then read.",
+        "semantic:objects": "Person instances and amended properties are forced through examples.",
+        "semantic:strings": "A non-null string nullable-member chain calls toUpperCase; this does not extend general string coverage.",
+        "semantic:diagnostics": "module.catch renders the error message strings from null.foo and null.foo(). The complete raw stdout is compared; the caught strings do not capture full diagnostic frames."
+      },
+      "source_requirement_rationale": {
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation.",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation."
+      },
+      "assertion_limit": "CLI eval renders data; facts are not executed by pkl test. A raw match is not an all-facts-true verdict."
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/parens.pkl",
+      "source": {
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/parens.pkl",
+        "bytes": 108,
+        "sha256": "f8129049ac552b49560c62fdc8f43605b3db213c0a28d443b5fc072cbd2023ff"
+      },
+      "process": {
+        "path": "target/m2/stage120-full-ready-modules-01/6ba0f8c87449634b2774a684/0/process.json",
+        "bytes": 5534,
+        "sha256": "25438d1ea9241c9cf047afe3ed85db991d77481df4b76afb341848795194c920"
+      },
+      "native_result": {
+        "path": "target/m2/stage120-full-ready-modules-01/6ba0f8c87449634b2774a684/0/result.json",
+        "bytes": 293,
+        "sha256": "efc7a3c32559b43f2a6f1676b6fe014d27a0e2e1b43eb1ed015e69bd1df98470"
+      },
+      "java_result": {
+        "path": "target/m2/stage94-originals-replay-01/cases/6ba0f8c87449634b2774a684/java/result.json",
+        "bytes": 294,
+        "sha256": "62f88c9177fb9181eab22177fab281b5579d38ef3e7e8d79540b68aed61d4040"
+      },
+      "java_process": {
+        "path": "target/m2/stage94-originals-replay-01/cases/6ba0f8c87449634b2774a684/java/process.json",
+        "bytes": 3148,
+        "sha256": "50e20b183cba432396b86a31aa238532d020c0d25e9056b1314817fa377e0040"
+      },
+      "channels": {
+        "stdout": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/6ba0f8c87449634b2774a684/0/stdout.bin",
+            "bytes": 50,
+            "sha256": "b8b1e0737261341c094895308aab869fcd177a765ebcd49fc2eb296ee4c183b4"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/6ba0f8c87449634b2774a684/java/stdout.bin",
+            "bytes": 50,
+            "sha256": "b8b1e0737261341c094895308aab869fcd177a765ebcd49fc2eb296ee4c183b4"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": "cmVzMSA9IDE0CnJlczIgPSAyMApyZXMzID0gMTQKcmVzNCA9IDE0CnJlczUgPSAyMAo="
+        },
+        "stderr": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/6ba0f8c87449634b2774a684/0/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/6ba0f8c87449634b2774a684/java/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": ""
+        }
+      },
+      "exit_code": 0,
+      "generated_files": {},
+      "repeat": 0,
+      "semantic_rationales": {
+        "semantic:operators": "Five directly rendered arithmetic properties distinguish nested parentheses from normal addition/multiplication precedence."
+      },
+      "source_requirement_rationale": {
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation.",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation."
+      },
+      "assertion_limit": "CLI eval renders data; facts are not executed by pkl test. A raw match is not an all-facts-true verdict."
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/rawString.pkl",
+      "source": {
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/rawString.pkl",
+        "bytes": 1805,
+        "sha256": "ae16196bc11ceaafad5ec74a11f49238ecf16ec7595836f69e1d974ec2bebafc"
+      },
+      "process": {
+        "path": "target/m2/stage120-full-ready-modules-01/5dcf818e8b049ce15bab68d6/0/process.json",
+        "bytes": 5547,
+        "sha256": "75c4939e992991949b0ca35908af9117a259d74984faef850cc02f5c218579e1"
+      },
+      "native_result": {
+        "path": "target/m2/stage120-full-ready-modules-01/5dcf818e8b049ce15bab68d6/0/result.json",
+        "bytes": 293,
+        "sha256": "e2a32ae3c29f34059545493a106e2a9c05a82c9c67ba70b5831fbfbf44a62159"
+      },
+      "java_result": {
+        "path": "target/m2/stage94-originals-replay-01/cases/5dcf818e8b049ce15bab68d6/java/result.json",
+        "bytes": 294,
+        "sha256": "d31c02bd60fd524a3d2c3b271c5ef5fe182537e3a0980c34febe8a7eb8d27d60"
+      },
+      "java_process": {
+        "path": "target/m2/stage94-originals-replay-01/cases/5dcf818e8b049ce15bab68d6/java/process.json",
+        "bytes": 3154,
+        "sha256": "ad4961baac00663e805740d59ec6b231861a3cc371b869e5263dbed7c9304ede"
+      },
+      "channels": {
+        "stdout": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/5dcf818e8b049ce15bab68d6/0/stdout.bin",
+            "bytes": 1401,
+            "sha256": "9e7c2c323c8812f6d1f0c9ac8076ebdc4d259ae9597a00e812ea3e7cd603220d"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/5dcf818e8b049ce15bab68d6/java/stdout.bin",
+            "bytes": 1401,
+            "sha256": "9e7c2c323c8812f6d1f0c9ac8076ebdc4d259ae9597a00e812ea3e7cd603220d"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": "cmVzMSA9ICJcXHJcXG5cXHRcXFxcIgpyZXMyID0gIiRmb28iCnJlczMgPSAiXFwoMyAqIDQpIgpyZXM0ID0gIlxcclxcblxcdFxcXFwiCnJlczUgPSAiJGZvbyIKcmVzNiA9ICJcXCgzICogNCkiCnJlczcgPSAiIiIKICBcXHJcXG5cXHRcXFxcCiAgJGZvbwogIFxcKDMgKiA0KQogICIiIgpyZXM5ID0gImxlYWRpbmcgYW5kIHRyYWlsaW5nIG5ld2xpbmUgdHJpbW1lZCIKcmVzMTAgPSAiIiIKICAKICBsZWFkaW5nIG5ld2xpbmUgbm90IHRyaW1tZWQKICAiIiIKcmVzMTEgPSAiIiIKICAKICAKICAKICBsZWFkaW5nIG5ld2xpbmVzIG5vdCB0cmltbWVkCiAgIiIiCnJlczEzID0gIiIiCiAgdHJhaWxpbmcgbmV3bGluZSBub3QgdHJpbW1lZAogIAogICIiIgpyZXMxNCA9ICIiIgogIHRyYWlsaW5nIG5ld2xpbmVzIG5vdCB0cmltbWVkCiAgCiAgCiAgCiAgIiIiCnJlczE2ID0gIiIiCiAgbGVhZGluZwogIHdoaXRlc3BhY2UKICB0cmltbWVkCiAgIiIiCnJlczE3ID0gIiIiCiAgICBsZWFkaW5nCiAgICB3aGl0ZXNwYWNlCiAgICBwYXJ0aWFsbHkKICAgIHRyaW1tZWQKICAiIiIKcmVzMTggPSAiIiIKICBsZWFkaW5nCiAgICB3aGl0ZXNwYWNlCiAgICAgIHBhcnRpYWxseQogICAgICAgIHRyaW1tZWQKICAiIiIKcmVzMTkgPSAiXCJBUyBJU1wiIgpyZXMyMCA9ICJcIlwiQVMgSVNcIlwiIgpyZXMyMSA9ICJcIlwiXCJcIlwiQVMgSVNcIlwiXCJcIlwiIgpyZXMyMiA9ICJcIkFTIElTXCIiCnJlczIzID0gIlwiXCJBUyBJU1wiXCIiCnJlczI0ID0gIlwiXCJcIlwiXCJBUyBJU1wiXCJcIlwiXCIiCnJlczI1ID0gIiMgIyMgIyMjIFwiIFwiXCIgXCJcIlwiIFxcIFxcIyIKcmVzMjYgPSAiIyAjIyAjIyMgIyMjIyBcIiBcIlwiIFwiXCJcIiBcIlwiXCJcIiBcXCBcXCMgXFwjIyIKcmVzMjcgPSAiIyAjIyAjIyMgIyMjIyAjIyMjIyAjIyMjIyMgXCIgXCJcIiBcIlwiXCIgXCJcIlwiXCIgXCJcIlwiXCJcIiBcXCBcXCMgXFwjIyBcXCMjIyBcXCMjIyMiCnJlczI4ID0gIm9uZXR3b3RocmVldHdvb25ldHdvIgpyZXMyOSA9ICJcdCBcdFx0IFx0XHRcdCBcdFx0IFx0IFx0XHQiCnJlczMwID0gImEg8J+koCDHnSIKcmVzMzEgPSAiYSDwn6SgIMedIgpyZXMzMiA9ICIjICMjICMjIyBcIiBcIlwiIFwiXCJcIiBcXCBcXCMiCnJlczMzID0gIiMgIyMgIyMjICMjIyMgXCIgXCJcIiBcIlwiXCIgXCJcIlwiXCIgXFwgXFwjIFxcIyMiCnJlczM0ID0gIiMgIyMgIyMjICMjIyMgIyMjIyMgIyMjIyMjIFwiIFwiXCIgXCJcIlwiIFwiXCJcIlwiIFwiXCJcIlwiXCIgXFwgXFwjIFxcIyMgXFwjIyMgXFwjIyMjIgpyZXMzNSA9ICJvbmV0d290aHJlZXR3b29uZXR3byIKcmVzMzYgPSAiXHQgXHRcdCBcdFx0XHQgXHRcdCBcdCBcdFx0IgpyZXMzNyA9ICJhIPCfpKAgx50iCnJlczM4ID0gImEg8J+koCDHnSIK"
+        },
+        "stderr": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/5dcf818e8b049ce15bab68d6/0/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/5dcf818e8b049ce15bab68d6/java/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": ""
+        }
+      },
+      "exit_code": 0,
+      "generated_files": {},
+      "repeat": 0,
+      "semantic_rationales": {
+        "semantic:lexing": "Raw delimiters with one, two, three and five hashes distinguish inactive escapes/interpolation from matching-hash escapes, including multiline forms.",
+        "semantic:strings": "Raw quote sequences, newline/indent trimming, matching-hash interpolation, activated tab and Unicode escapes, supplementary scalars and literal dollar/backslash text are rendered.",
+        "semantic:name-resolution": "Activated interpolation reads the local body value; inactive interpolation remains text."
+      },
+      "source_requirement_rationale": {
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation.",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation."
+      },
+      "assertion_limit": "CLI eval renders data; facts are not executed by pkl test. A raw match is not an all-facts-true verdict."
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+      "source": {
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/string.pkl",
+        "bytes": 1803,
+        "sha256": "dd7d7d23c4d63b5b9657ca927e0ffb9f22b834d66cac00f94f2237d97ada3dc6"
+      },
+      "process": {
+        "path": "target/m2/stage120-full-ready-modules-01/4b496b3732742fed15bbfab2/0/process.json",
+        "bytes": 5538,
+        "sha256": "81009e1e56a2324ec6a1640b2610dfbddcc1e06e11af055a7171c9c142741939"
+      },
+      "native_result": {
+        "path": "target/m2/stage120-full-ready-modules-01/4b496b3732742fed15bbfab2/0/result.json",
+        "bytes": 293,
+        "sha256": "34724e5023a8cc600d88a5598618d6e573a0f49c1e0618817287d562f4214b7b"
+      },
+      "java_result": {
+        "path": "target/m2/stage94-originals-replay-01/cases/4b496b3732742fed15bbfab2/java/result.json",
+        "bytes": 294,
+        "sha256": "8e6d991ea9906ded291cd6e9d9df445ace83ee802fbe153e76baa2176026466f"
+      },
+      "java_process": {
+        "path": "target/m2/stage94-originals-replay-01/cases/4b496b3732742fed15bbfab2/java/process.json",
+        "bytes": 3148,
+        "sha256": "456b18b0aada19abcc8cedc691a3a1e312973cd343c55160f540a512e3b16569"
+      },
+      "channels": {
+        "stdout": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/4b496b3732742fed15bbfab2/0/stdout.bin",
+            "bytes": 1283,
+            "sha256": "cfecf8f6705de0084a5ded56f9d33d187e2a6fa0d483175e35628b8d40e11dec"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/4b496b3732742fed15bbfab2/java/stdout.bin",
+            "bytes": 1283,
+            "sha256": "cfecf8f6705de0084a5ded56f9d33d187e2a6fa0d483175e35628b8d40e11dec"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": "ZXhhbXBsZXMgewogIFsiZXF1YWxpdHkiXSB7CiAgICB0cnVlCiAgICBmYWxzZQogIH0KICBbImluZXF1YWxpdHkiXSB7CiAgICBmYWxzZQogICAgdHJ1ZQogIH0KICBbImludGVycG9sYXRpb24iXSB7CiAgICAiSG93IGFyZSB5b3UgdG9kYXk/IEFyZSB5b3UgaHVuZ3J5PyIKICAgICJDYW4geW91IG5lc3QgdGhpcyBmb3IgbWU/IgogICAgIklzIEhvd3lvdSBhIHdvcmQ/IgogICAgIklzIHNvbWEgYSB3b3JkPyIKICAgICJDYW4geW91IG5lc3QgKCgoIGZvciBtZT8iCiAgICAiQ2FuIHlvdSBuZXN0ICkpKSBmb3IgbWU/IgogICAgIkNhbiB5b3UgbmVzdCB0aGlzIGZvciBtZT8iCiAgfQogIFsiaW50ZXJwb2xhdGlvbiBvZiBkaWZmZXJlbnQgdHlwZXMiXSB7CiAgICAiNDIiCiAgICAiMS4yMyIKICAgICJQaWdlb24iCiAgICAiZmFsc2UiCiAgICAiMS4yMy5ucyIKICAgICIxLjIzLm1iIgogICAgIlBhaXIoMSwgMikiCiAgICAiTGlzdCgxLCAyLCAzKSIKICAgICJTZXQoMSwgMiwgMykiCiAgICAiTWFwKDEsIDIsIDMsIDQpIgogICAgIm5ldyBMaXN0aW5nIHsgMTsgMjsgMyB9IgogICAgIm5ldyBNYXBwaW5nIHsgW1wiUGlnZW9uXCJdID0gNDI7IFtcIkJhcm4gT3dsXCJdID0gMjEgfSIKICAgICJuZXcgRHluYW1pYyB7IG5hbWUgPSBcIlBpZ2VvblwiOyBhZ2UgPSA0MiB9IgogICAgIm5ldyBQZXJzb24geyBuYW1lID0gXCJQaWdlb25cIjsgYWdlID0gNDIgfSIKICAgICJNeSBuYW1lIGlzIFBpZ2VvbiBhbmQgSSdtIDQyIHllYXJzIG9sZC4iCiAgICAibnVsbCIKICAgICJudWxsIgogICAgIm5ldyBGdW5jdGlvbjAge30iCiAgICAibmV3IEZ1bmN0aW9uMSB7fSIKICAgICJuZXcgRnVuY3Rpb24yIHt9IgogICAgIm5ldyBGdW5jdGlvbjMge30iCiAgfQogIFsiZXNjYXBpbmciXSB7CiAgICAiXFxcIlxcKCIKICAgICIiIgogICAgXHRccgogICAgCiAgICAiIiIKICAgICJcdDDEgOGAgPCQgIDwkICA8JCAgPCQgIAiCiAgfQogIFsic3Vic2NyaXB0Il0gewogICAgImkiCiAgICAiQ2hhcmFjdGVyIGluZGV4IGAtMWAgaXMgb3V0IG9mIHJhbmdlIGAwYC4uYDNgLiBTdHJpbmc6IFwidGhpc1wiIgogICAgIkNoYXJhY3RlciBpbmRleCBgNGAgaXMgb3V0IG9mIHJhbmdlIGAwYC4uYDNgLiBTdHJpbmc6IFwidGhpc1wiIgogICAgIvCfj4AiCiAgICAiPyIKICAgICI/IgogICAgImgiCiAgICAiaCIKICAgICI/IgogIH0KICBbImRvbGxhciBzaWduIGhhcyBubyBzcGVjaWFsIG1lYW5pbmciXSB7CiAgICAiMTIzJCIKICAgICIkMTIzIgogICAgIiQmJSIKICAgICIkIgogIH0KfQo="
+        },
+        "stderr": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/4b496b3732742fed15bbfab2/0/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/4b496b3732742fed15bbfab2/java/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": ""
+        }
+      },
+      "exit_code": 0,
+      "generated_files": {},
+      "repeat": 0,
+      "semantic_rationales": {
+        "semantic:lexing": "Escaped quotes, tab/CR/LF, authored Unicode escapes including supplementary and isolated-surrogate forms, and nested interpolation are accepted in this CLI eval observation. The retained channel comparison is UTF-8 bytes, without a separate Java UTF-16 code-unit observation.",
+        "semantic:strings": "Equality, interpolation, scalar/Duration/DataSize and object/function string conversion, custom toString, code-point indexing and invalid-index diagnostics are rendered; literal dollar text is retained.",
+        "semantic:operators": "String equality/inequality, concatenation inside interpolation and subscript operations contribute directly to output.",
+        "semantic:name-resolution": "Local strings and nested Dynamic members are resolved inside interpolation.",
+        "semantic:objects": "Dynamic and typed objects, nested members and custom/default toString results are interpolated.",
+        "semantic:classes": "Person/Person2 construction and Person2.toString are observed through interpolation.",
+        "semantic:collections": "Pair/List/Set/Map and Listing/Mapping values are interpolated; this covers representation, not their complete APIs.",
+        "semantic:functions": "Function values of several arities are created and converted to strings; the custom toString method is invoked.",
+        "semantic:diagnostics": "module.catch renders subscript boundary error messages in the complete raw eval output. These caught strings do not capture full diagnostic frames. Channel bytes are compared without normalization; this CLI acquisition does not independently compare Java UTF-16 code units."
+      },
+      "source_requirement_rationale": {
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation.",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation."
+      },
+      "assertion_limit": "CLI eval renders data; facts are not executed by pkl test. A raw match is not an all-facts-true verdict."
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultiline.pkl",
+      "source": {
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultiline.pkl",
+        "bytes": 1509,
+        "sha256": "66f640f0e3c2beafbf2621f953c3d2134274b9f6f2635c508d4e330f53f4f6b3"
+      },
+      "process": {
+        "path": "target/m2/stage120-full-ready-modules-01/75c764e59af132a4a0d97f6a/0/process.json",
+        "bytes": 5565,
+        "sha256": "2312fd81981e8f8d8c26a9976dfc2ea6d638a5039d2cc9a73973ed8e0af6458a"
+      },
+      "native_result": {
+        "path": "target/m2/stage120-full-ready-modules-01/75c764e59af132a4a0d97f6a/0/result.json",
+        "bytes": 293,
+        "sha256": "2527c8ce4b6282d5ddf5b0e495d384fcad95fce09294aa35a108ec72f58fa92d"
+      },
+      "java_result": {
+        "path": "target/m2/stage94-originals-replay-01/cases/75c764e59af132a4a0d97f6a/java/result.json",
+        "bytes": 294,
+        "sha256": "a4f9a173457e94981ce7e66645592d42f29909a7f7c66610c1985f7ebebcba66"
+      },
+      "java_process": {
+        "path": "target/m2/stage94-originals-replay-01/cases/75c764e59af132a4a0d97f6a/java/process.json",
+        "bytes": 3166,
+        "sha256": "63498490e894454d029e359013ebb62054184656271512c1af76840be8f6f207"
+      },
+      "channels": {
+        "stdout": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/75c764e59af132a4a0d97f6a/0/stdout.bin",
+            "bytes": 1151,
+            "sha256": "67e17fb332e2c9a4e2e1a011d7cf927d691d840a45ea4499ed2d416933210b54"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/75c764e59af132a4a0d97f6a/java/stdout.bin",
+            "bytes": 1151,
+            "sha256": "67e17fb332e2c9a4e2e1a011d7cf927d691d840a45ea4499ed2d416933210b54"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": "ZXhhbXBsZXMgewogIFsiaW50ZXJwb2xhdGlvbiJdIHsKICAgICIiIgogICAgSG93IGFyZSB5b3UgdG9kYXk/CiAgICBBcmUgeW91IGh1bmdyeT8KICAgIAogICAgQ2FuIHlvdSBuZXN0IHRoaXMgZm9yIG1lPwogICAgIiIiCiAgfQogIFsiZXNjYXBpbmciXSB7CiAgICAiXFxcIlxcKCIKICAgICIiIgogICAgXHRccgogICAgCiAgICAiIiIKICAgICJcdDDEgOGAgPCQgIDwkICA8JCAgPCQgIAiCiAgfQogIFsiZG9sbGFyIHNpZ24gaGFzIG5vIHNwZWNpYWwgbWVhbmluZyJdIHsKICAgICIxMjMkICQxMjMgJCYlICQiCiAgfQogIFsidHJpbW1pbmcgb2YgbGVhZGluZyBhbmQgdHJhaWxpbmcgbmV3bGluZXMiXSB7CiAgICAibGVhZGluZyBhbmQgdHJhaWxpbmcgbmV3bGluZSB0cmltbWVkIgogICAgIiIiCiAgICAKICAgIGxlYWRpbmcgbmV3bGluZSBub3QgdHJpbW1lZAogICAgIiIiCiAgICAiIiIKICAgIAogICAgCiAgICAKICAgIGxlYWRpbmcgbmV3bGluZXMgbm90IHRyaW1tZWQKICAgICIiIgogICAgIiIiCiAgICB0cmFpbGluZyBuZXdsaW5lIG5vdCB0cmltbWVkCiAgICAKICAgICIiIgogICAgIiIiCiAgICB0cmFpbGluZyBuZXdsaW5lcyBub3QgdHJpbW1lZAogICAgCiAgICAKICAgIAogICAgIiIiCiAgfQogIFsidHJpbW1pbmcgb2YgbGVhZGluZyB3aGl0ZXNwYWNlIl0gewogICAgIiIiCiAgICBsZWFkaW5nCiAgICB3aGl0ZXNwYWNlCiAgICB0cmltbWVkCiAgICAiIiIKICAgICIiIgogICAgICBsZWFkaW5nCiAgICAgIHdoaXRlc3BhY2UKICAgICAgcGFydGlhbGx5CiAgICAgIHRyaW1tZWQKICAgICIiIgogICAgIiIiCiAgICBsZWFkaW5nCiAgICAgIHdoaXRlc3BhY2UKICAgICAgICBwYXJ0aWFsbHkKICAgICAgICAgIHRyaW1tZWQKICAgICIiIgogIH0KICBbInF1b3RlcyJdIHsKICAgICJcIkFTIElTXCIiCiAgICAiXCJcIkFTIElTXCJcIiIKICAgICJcIkFTIElTXCIiCiAgICAiXCJcIkFTIElTXCJcIiIKICAgICIiIgogICAgdHJhaWxpbmcgbmV3bGluZSBub3QgdHJpbW1lZCAodHJhaWxpbmcgcXVvdGVzKQogICAgIiIKICAgICIiIgogICAgIiIiCiAgICB0cmFpbGluZyBuZXdsaW5lIHdpdGggaW50ZXJwb2xhdGVkIHN0cmluZyBub3QgdHJpbW1lZCAodHJhaWxpbmcgcXVvdGVzKQogICAgIiIKICAgICIiIgogIH0KfQo="
+        },
+        "stderr": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/75c764e59af132a4a0d97f6a/0/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/75c764e59af132a4a0d97f6a/java/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": ""
+        }
+      },
+      "exit_code": 0,
+      "generated_files": {},
+      "repeat": 0,
+      "semantic_rationales": {
+        "semantic:lexing": "Multiline delimiters, escapes, interpolation boundaries and quote runs adjacent to closing delimiters are parsed.",
+        "semantic:strings": "Opening/closing newline removal, retained blank lines, indentation trimming, tabs/Unicode, literal dollars and nested interpolation are rendered.",
+        "semantic:name-resolution": "Local strings and nested Dynamic member names are used by multiline interpolation.",
+        "semantic:objects": "A nested Dynamic property is read from multiline interpolation."
+      },
+      "source_requirement_rationale": {
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation.",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation."
+      },
+      "assertion_limit": "CLI eval renders data; facts are not executed by pkl test. A raw match is not an all-facts-true verdict."
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultilineContinuation.pkl",
+      "source": {
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/stringMultilineContinuation.pkl",
+        "bytes": 201,
+        "sha256": "8d72e6fd4890e85dcc23aad795853c0d187bfa97261e5d18227e73708fd7fe78"
+      },
+      "process": {
+        "path": "target/m2/stage120-full-ready-modules-01/a36b0db04a8afb2c6877ea40/0/process.json",
+        "bytes": 5597,
+        "sha256": "6b76007408f97bab52f32737114424ce89f41be0f223f8bb7eab7a7523104b82"
+      },
+      "native_result": {
+        "path": "target/m2/stage120-full-ready-modules-01/a36b0db04a8afb2c6877ea40/0/result.json",
+        "bytes": 293,
+        "sha256": "b5ec7bdbbde98fb806e60fe22844bc2f628ca76bddbb0a4a1e3e3650bd62eb71"
+      },
+      "java_result": {
+        "path": "target/m2/stage94-originals-replay-01/cases/a36b0db04a8afb2c6877ea40/java/result.json",
+        "bytes": 294,
+        "sha256": "34973cb19f60c0c9a9f1e5de77b4fc04696bca620cb4b22ac52415a3fa3c71cd"
+      },
+      "java_process": {
+        "path": "target/m2/stage94-originals-replay-01/cases/a36b0db04a8afb2c6877ea40/java/process.json",
+        "bytes": 3190,
+        "sha256": "fa501ee3fa9013ae739ffd92032bb8b5e34ad6a1e05b25573e1bba717f8b0fb5"
+      },
+      "channels": {
+        "stdout": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/a36b0db04a8afb2c6877ea40/0/stdout.bin",
+            "bytes": 99,
+            "sha256": "138fdab717d79f723a5a8fef48e1c00c925d95497fad0ab1f3501c793de1920c"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/a36b0db04a8afb2c6877ea40/java/stdout.bin",
+            "bytes": 99,
+            "sha256": "138fdab717d79f723a5a8fef48e1c00c925d95497fad0ab1f3501c793de1920c"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": "ZXhhbXBsZXMgewogIFsic3RyaW5nIGNvbnRpbnVhdGlvbiJdIHsKICAgICJoZWxsbyB3b3JsZCIKICAgICJoZWxsbyB3b3JsZCIKICAgICJoZWxsbyB3b3JsZCIKICB9Cn0K"
+        },
+        "stderr": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/a36b0db04a8afb2c6877ea40/0/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/a36b0db04a8afb2c6877ea40/java/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": ""
+        }
+      },
+      "exit_code": 0,
+      "generated_files": {},
+      "repeat": 0,
+      "semantic_rationales": {
+        "semantic:lexing": "Ordinary backslash and matching-hash raw multiline continuation markers, including repetitions, are recognized.",
+        "semantic:strings": "Continuation removes authored line breaks/indentation in ordinary and raw multiline forms, preserving the exact rendered result."
+      },
+      "source_requirement_rationale": {
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation.",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation."
+      },
+      "assertion_limit": "CLI eval renders data; facts are not executed by pkl test. A raw match is not an all-facts-true verdict."
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl",
+      "source": {
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/underscore.pkl",
+        "bytes": 1055,
+        "sha256": "6b106e40c9481d18d934106c6f74a9f6eefe0ec838e5d1eae455fff5419a1499"
+      },
+      "process": {
+        "path": "target/m2/stage120-full-ready-modules-01/d75574d9383ef604a819d5d1/0/process.json",
+        "bytes": 5548,
+        "sha256": "76fd260b3e7e6cd5fac2faea97cd07023ca1802413af98f4ffa90a45a3e4faeb"
+      },
+      "native_result": {
+        "path": "target/m2/stage120-full-ready-modules-01/d75574d9383ef604a819d5d1/0/result.json",
+        "bytes": 293,
+        "sha256": "9b3ef5f323be644f247f4dc2bf58ef7c537501ede164594ed5b2824a25e11016"
+      },
+      "java_result": {
+        "path": "target/m2/stage94-originals-replay-01/cases/d75574d9383ef604a819d5d1/java/result.json",
+        "bytes": 294,
+        "sha256": "2016400b4c280a1ecce3ca5bca2ee87a8fae6120160d64b1eb940cc754d3b225"
+      },
+      "java_process": {
+        "path": "target/m2/stage94-originals-replay-01/cases/d75574d9383ef604a819d5d1/java/process.json",
+        "bytes": 3156,
+        "sha256": "445b79a2e42c62347408a07174b9847c9e4cabc3ac5b7dd301c2b8a2f7c04535"
+      },
+      "channels": {
+        "stdout": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/d75574d9383ef604a819d5d1/0/stdout.bin",
+            "bytes": 354,
+            "sha256": "f0cc454878013d5f2061a754ae55d77f89ec64dc512be1eea5d1fdae3a10cf35"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/d75574d9383ef604a819d5d1/java/stdout.bin",
+            "bytes": 354,
+            "sha256": "f0cc454878013d5f2061a754ae55d77f89ec64dc512be1eea5d1fdae3a10cf35"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": "bDEgPSAzCmYxID0gMTEKZm9vIHsKICAwCiAgMAp9CmZvbzIgewogIDAKICAwCn0KYmFyIHsKICBbImExIl0gPSAxCiAgWyJiMSJdID0gMQogIFsiYTIiXSA9IDIKICBbImIyIl0gPSAyCn0KYmF6IHsKICBbImFhIl0gPSAiYSIKICBbImFiIl0gPSAiYSIKICBbImJhIl0gPSAiYiIKICBbImJiIl0gPSAiYiIKfQpxdXggewogIFsiMTEiXSA9IDIKICBbIjEyIl0gPSAzCiAgWyIyMSJdID0gMwogIFsiMjIiXSA9IDQKfQpiaXJkMSB7CiAgYmlyZCB7CiAgICBuYW1lID0gIlN3YWxsb3ciCiAgICBhZ2UgPSAyCiAgfQp9CmJpcmQyIHsKICBiaXJkIHsKICAgIG5hbWUgPSAiUm9iaW4iCiAgICBhZ2UgPSAzCiAgfQp9CnZhciA9IDAK"
+        },
+        "stderr": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/d75574d9383ef604a819d5d1/0/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/d75574d9383ef604a819d5d1/java/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": ""
+        }
+      },
+      "exit_code": 0,
+      "generated_files": {},
+      "repeat": 0,
+      "semantic_rationales": {
+        "semantic:lexing": "The blank identifier occurs in lambdas, typed function parameters, let bindings and one/two-variable generators.",
+        "semantic:functions": "Lambdas and named typed functions accept ignored parameters and are invoked through apply or normal calls; function-valued properties are amended.",
+        "semantic:closures": "Bird-producing lambdas capture the non-discarded name/age parameters, including inherited/amended function-valued properties.",
+        "semantic:generators": "Dynamic for generators discard map keys and/or values and nest loops while constructing interpolated entry keys.",
+        "semantic:collections": "Map construction and key/value iteration feed generated Dynamic entries.",
+        "semantic:objects": "Generated Dynamic members and Bird fields are forced into output.",
+        "semantic:classes": "Bird construction observes declared String/Int properties.",
+        "semantic:types": "Typed parameters and function-valued property types are applied to constructed Bird values.",
+        "semantic:amendment": "Bird-factory function properties are amended while ignored parameters preserve the remaining argument behavior.",
+        "semantic:modifiers": "The local lambda and hidden mkBird participate in visible call results and Bird-producing members.",
+        "semantic:name-resolution": "Ignored bindings coexist with named parameters, nested generator bindings and captured locals; let discards its binding.",
+        "semantic:strings": "Nested generator keys use interpolation of retained key/value bindings.",
+        "semantic:operators": "The named function computes x+10, and a nested generator computes v1+v2, before rendering their results."
+      },
+      "source_requirement_rationale": {
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation.",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation."
+      },
+      "assertion_limit": "CLI eval renders data; facts are not executed by pkl test. A raw match is not an all-facts-true verdict."
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/syntax/shebang.pkl",
+      "source": {
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/syntax/shebang.pkl",
+        "bytes": 32,
+        "sha256": "fd83ffde76c295e585f1787c8d6b4f04cc8a76f0b864bd409d7d1c3f9720c648"
+      },
+      "process": {
+        "path": "target/m2/stage120-full-ready-modules-01/43a712311da275aedda49774/0/process.json",
+        "bytes": 5542,
+        "sha256": "4af1020ff53dbc634f3925910e0e0baf4f0b054a93d704fc3a01fe06bd090314"
+      },
+      "native_result": {
+        "path": "target/m2/stage120-full-ready-modules-01/43a712311da275aedda49774/0/result.json",
+        "bytes": 293,
+        "sha256": "6365ec2fc7e2426a3c2cbd771ebbf3e098955d83d2080e8fca13d2ce72eaa24c"
+      },
+      "java_result": {
+        "path": "target/m2/stage94-originals-replay-01/cases/43a712311da275aedda49774/java/result.json",
+        "bytes": 294,
+        "sha256": "4de3fd1c04fdc747a8f6bc28e7512b33fd5e1a8d1a7eb949721a2b79723e2b32"
+      },
+      "java_process": {
+        "path": "target/m2/stage94-originals-replay-01/cases/43a712311da275aedda49774/java/process.json",
+        "bytes": 3152,
+        "sha256": "60e87dbe4f293d8f6cfc0d1bcd7c790d098f7868277c855aa246dd7694b5aa1d"
+      },
+      "channels": {
+        "stdout": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/43a712311da275aedda49774/0/stdout.bin",
+            "bytes": 8,
+            "sha256": "febdef644f16ce9d2385c8e1d15319d48d5f44c7a1bf83af20e48a37e02be3ac"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/43a712311da275aedda49774/java/stdout.bin",
+            "bytes": 8,
+            "sha256": "febdef644f16ce9d2385c8e1d15319d48d5f44c7a1bf83af20e48a37e02be3ac"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": "Zm9vID0gMQo="
+        },
+        "stderr": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/43a712311da275aedda49774/0/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/43a712311da275aedda49774/java/stderr.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": ""
+        }
+      },
+      "exit_code": 0,
+      "generated_files": {},
+      "repeat": 0,
+      "semantic_rationales": {
+        "semantic:lexing": "One leading #!/usr/bin/env pkl eval is accepted before a rendered property; no other shebang position or newline variant is implied."
+      },
+      "source_requirement_rationale": {
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation.",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation."
+      },
+      "assertion_limit": "CLI eval renders data; facts are not executed by pkl test. A raw match is not an all-facts-true verdict."
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/shebang.pkl",
+      "source": {
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/shebang.pkl",
+        "bytes": 32,
+        "sha256": "63910c9007459a432b228f337c5ee2fa8a178f59a6f1321e043bd135f7b3aa77"
+      },
+      "process": {
+        "path": "target/m2/stage120-full-ready-modules-01/1bcb79d554c7b4ade736a35b/0/process.json",
+        "bytes": 5546,
+        "sha256": "30349f77ed95da359811bb815cbda952c0349c89093e1cfdd080215f5d6bdcfd"
+      },
+      "native_result": {
+        "path": "target/m2/stage120-full-ready-modules-01/1bcb79d554c7b4ade736a35b/0/result.json",
+        "bytes": 293,
+        "sha256": "acfbb8a8668188f0e6eee416121765dff64f1b701eccce03356f835fc83580f7"
+      },
+      "java_result": {
+        "path": "target/m2/stage94-originals-replay-01/cases/1bcb79d554c7b4ade736a35b/java/result.json",
+        "bytes": 294,
+        "sha256": "b9a9110cf1559a7ca6282f320ade3e7909aa1564e1bf73d2fca14366f0d18dc1"
+      },
+      "java_process": {
+        "path": "target/m2/stage94-originals-replay-01/cases/1bcb79d554c7b4ade736a35b/java/process.json",
+        "bytes": 3152,
+        "sha256": "292459e85949a6c72bec858c642fc82c0876b1ae1a1f5646595d95d9f664f1a3"
+      },
+      "channels": {
+        "stdout": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/1bcb79d554c7b4ade736a35b/0/stdout.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/1bcb79d554c7b4ade736a35b/java/stdout.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": ""
+        },
+        "stderr": {
+          "actual": {
+            "path": "target/m2/stage120-full-ready-modules-01/1bcb79d554c7b4ade736a35b/0/stderr.bin",
+            "bytes": 355,
+            "sha256": "24b42e7c23b02f337b6817040426ea31d0003c476b8fae2eb1ddc88503a2d913"
+          },
+          "java": {
+            "path": "target/m2/stage94-originals-replay-01/cases/1bcb79d554c7b4ade736a35b/java/stderr.bin",
+            "bytes": 355,
+            "sha256": "24b42e7c23b02f337b6817040426ea31d0003c476b8fae2eb1ddc88503a2d913"
+          },
+          "full_bytes_equal": true,
+          "raw_base64": "4oCT4oCTIFBrbCBFcnJvciDigJPigJMKSW52YWxpZCB0b2tlbiBhdCBwb3NpdGlvbi4gRXhwZWN0ZWQgYSBjbGFzcywgdHlwZWFsaWFzLCBtZXRob2QsIG9yIHByb3BlcnR5LgoKMiB8ICMhL3Vzci9iaW4vZW52IHBrbCBldmFsCiAgICBeXl5eXl5eXl5eXl5eXl5eXl5eXl5eXgphdCBzaGViYW5nIChmaWxlOi8vL1VzZXJzL2NvZHkuaWouaHdhbmcvUHJvamVjdHMvcGtsLXJzLnN0YWdlNTcvdGFyZ2V0L20yL3N0YWdlOTQtb3JpZ2luYWxzLXdvcmtzcGFjZS0wMS9leHRlcm5hbC9wa2wvcGtsLWNvcmUvc3JjL3Rlc3QvZmlsZXMvTGFuZ3VhZ2VTbmlwcGV0VGVzdHMvaW5wdXQvZXJyb3JzL3NoZWJhbmcucGtsLCBsaW5lIDIpCg=="
+        }
+      },
+      "exit_code": 1,
+      "generated_files": {},
+      "repeat": 0,
+      "semantic_rationales": {
+        "semantic:lexing": "A shebang after an ordinary declaration is rejected as syntax, rather than skipped as a comment.",
+        "semantic:diagnostics": "The entire Java/native failure stdout/stderr/exit/files contract matches for this second-position shebang; unrelated malformed module errors remain outside this observation."
+      },
+      "source_requirement_rationale": {
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation.",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30": "Original module input enters shared parse_module_for_evaluation; full module output or first parse failure is compared. This links only this module-entry observation."
+      },
+      "assertion_limit": "CLI eval renders data; facts are not executed by pkl test. A raw match is not an all-facts-true verdict."
+    }
+  ]
+}
