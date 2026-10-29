@@ -1,0 +1,223 @@
+{
+  "input_matrices": [
+    {
+      "bytes": 5484,
+      "path": "target/m2/stage103-reflection-api-candidate-04/queries.json",
+      "sha256": "e2f89b9522784007ed909b87cf79a227a229666791057b07f6a8da505088a391"
+    },
+    {
+      "bytes": 2791,
+      "path": "target/m2/stage103-reflection-class-erasure-followup-01/queries.json",
+      "sha256": "893f97ea09e9cf922be34f810989214bc7a1b834e6d2e62218aa54a053d22a86"
+    }
+  ],
+  "kind": "Additive Reflection review9 plus canonical Class erasure7; expected-free Java acquisition inputs",
+  "original403_unchanged": true,
+  "program_count": 6,
+  "programs": [
+    {
+      "id": "named-imported-module-type",
+      "power_assertions": false,
+      "queries": [
+        {
+          "apis": [
+            "reflect declaration type identity"
+          ],
+          "edge": "Independent source finding S103-REFLECT-01/02",
+          "executed": false,
+          "expected": null,
+          "expression": "mirror.properties[\"x\"].type.referent.name",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "apis": [
+            "reflect declaration type identity"
+          ],
+          "edge": "Independent source finding S103-REFLECT-01/02",
+          "executed": false,
+          "expected": null,
+          "expression": "mirror.properties[\"x\"].type.referent.enclosingDeclaration.name",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "apis": [
+            "reflect declaration type identity"
+          ],
+          "edge": "Independent source finding S103-REFLECT-01/02",
+          "executed": false,
+          "expected": null,
+          "expression": "mirror.properties[\"x\"].type.typeArguments.length.toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage103.review.namedModule\nimport \"pkl:reflect\"\nimport \"pkl:base\" as b\nclass C { x: b }\nhidden mirror = reflect.Class(C)\n",
+      "source_uri": "file:///stage103/review-named-module.pkl"
+    },
+    {
+      "id": "class-value-does-not-shadow-simple-type",
+      "power_assertions": false,
+      "queries": [
+        {
+          "apis": [
+            "reflect declaration type identity"
+          ],
+          "edge": "Independent source finding S103-REFLECT-01/02",
+          "executed": false,
+          "expected": null,
+          "expression": "mirror.properties[\"x\"].type.referent.name",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "apis": [
+            "reflect declaration type identity"
+          ],
+          "edge": "Independent source finding S103-REFLECT-01/02",
+          "executed": false,
+          "expected": null,
+          "expression": "mirror.properties[\"x\"].type.typeArguments.length.toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage103.review.simpleShadow\nimport \"pkl:reflect\"\nclass C {\n  String: Int = throw(\"class value must remain lazy\")\n  x: String\n}\nhidden mirror = reflect.Class(C)\n",
+      "source_uri": "file:///stage103/review-simple-shadow.pkl"
+    },
+    {
+      "id": "class-value-does-not-shadow-qualified-import",
+      "power_assertions": false,
+      "queries": [
+        {
+          "apis": [
+            "reflect declaration type identity"
+          ],
+          "edge": "Independent source finding S103-REFLECT-01/02",
+          "executed": false,
+          "expected": null,
+          "expression": "mirror.properties[\"x\"].type.referent.name",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "apis": [
+            "reflect declaration type identity"
+          ],
+          "edge": "Independent source finding S103-REFLECT-01/02",
+          "executed": false,
+          "expected": null,
+          "expression": "mirror.properties[\"x\"].type.typeArguments.length.toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage103.review.qualifiedShadow\nimport \"pkl:reflect\"\nimport \"pkl:base\" as b\nclass C {\n  b: Int = throw(\"class value must remain lazy\")\n  x: b.String\n}\nhidden mirror = reflect.Class(C)\n",
+      "source_uri": "file:///stage103/review-qualified-shadow.pkl"
+    },
+    {
+      "id": "named-module-versus-self-type",
+      "power_assertions": false,
+      "queries": [
+        {
+          "apis": [
+            "reflect named module type",
+            "reflect keyword module type"
+          ],
+          "edge": "Named prototype class is distinct from keyword module mirror",
+          "executed": false,
+          "expected": null,
+          "expression": "mirror.properties[\"named\"].type.getClass().toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "apis": [
+            "reflect named module type",
+            "reflect keyword module type"
+          ],
+          "edge": "Named prototype class is distinct from keyword module mirror",
+          "executed": false,
+          "expected": null,
+          "expression": "mirror.properties[\"self\"].type.getClass().toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage103.review.moduleKind\nimport \"pkl:reflect\"\nimport \"pkl:base\" as b\nclass C { named: b; self: module }\nhidden mirror = reflect.Class(C)\n",
+      "source_uri": "file:///stage103/review-module-kind.pkl"
+    },
+    {
+      "id": "canonical-class-erasure",
+      "power_assertions": false,
+      "queries": [
+        {
+          "executed": false,
+          "expected": null,
+          "expression": "mirror.properties[\"simple\"].type.typeArguments[0].getClass().simpleName",
+          "id": "q0000",
+          "label": "simple-kind"
+        },
+        {
+          "executed": false,
+          "expected": null,
+          "expression": "mirror.properties[\"qualified\"].type.typeArguments[0].getClass().simpleName",
+          "id": "q0001",
+          "label": "qualified-erased-name"
+        },
+        {
+          "executed": false,
+          "expected": null,
+          "expression": "mirror.properties[\"alias\"].type.typeArguments[0].referent.name",
+          "id": "q0002",
+          "label": "alias-retains-argument"
+        },
+        {
+          "executed": false,
+          "expected": null,
+          "expression": "mirror.properties[\"alias\"].type.referent.referent.typeArguments[0].getClass().simpleName",
+          "id": "q0003",
+          "label": "alias-referent-erases-argument"
+        },
+        {
+          "executed": false,
+          "expected": null,
+          "expression": "explicit.typeArguments[0].referent.name",
+          "id": "q0004",
+          "label": "constructed-retains-argument"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage103.classErasure\nimport \"pkl:reflect\"\nimport \"pkl:base\" as b\ntypealias ClassAlias<T> = Class<T>\nclass Declaration {\n  simple: Class<String>\n  qualified: b.Class<DoesNotExist>\n  alias: ClassAlias<String>\n}\nhidden mirror = reflect.Class(Declaration)\nhidden explicit = reflect.DeclaredType(reflect.Class(Class)).withTypeArgument(reflect.DeclaredType(reflect.Class(String)))\n",
+      "source_uri": "file:///stage103/review-class-erasure.pkl"
+    },
+    {
+      "id": "alias-named-class-retains-arguments",
+      "power_assertions": false,
+      "queries": [
+        {
+          "executed": false,
+          "expected": null,
+          "expression": "mirror.properties[\"x\"].type.typeArguments[0].referent.name",
+          "id": "q0000"
+        },
+        {
+          "executed": false,
+          "expected": null,
+          "expression": "mirror.properties[\"x\"].type.referent.name",
+          "id": "q0001"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage103.classNameShadow\nimport \"pkl:reflect\"\ntypealias Class<T> = List<T>\nclass Declaration { x: Class<String> }\nhidden mirror = reflect.Class(Declaration)\n",
+      "source_uri": "file:///stage103/review-class-name-shadow.pkl"
+    }
+  ],
+  "query_count": 16,
+  "schema_version": 1
+}

@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `String`, but got type `List`.
+Value: List("value")
+
+1981 | external function hasProperty(name: String): Boolean
+                                           ^^^^^^
+at pkl.base#Typed.hasProperty (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1981)
+
+1 | subject.hasProperty(List("value")).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

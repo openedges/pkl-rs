@@ -1,0 +1,8 @@
+session-open mode=string rows=3
+call-enter=string-0-q0000
+call-exit=string-0-q0000 status=success
+call-enter=string-1-q0001
+call-exit=string-1-q0001 status=error
+call-enter=string-2-q0002
+call-exit=string-2-q0002 status=error
+session-closed mode=string rows=3 public-calls=3 success=1 errors=2

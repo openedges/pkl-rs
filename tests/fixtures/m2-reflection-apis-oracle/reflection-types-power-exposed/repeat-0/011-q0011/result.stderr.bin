@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Expected 1 type argument(s) but got 2.
+
+1 | (exposedReflection.listType.withTypeArguments(List(exposedReflection.intType,exposedReflection.stringType))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,2 @@
+module typedSuperclassFailure
+class C extends Missing { own = 1 }

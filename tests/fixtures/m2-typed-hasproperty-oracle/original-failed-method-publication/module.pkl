@@ -1,0 +1,7 @@
+module typedMethodFailure
+class C {
+ p = 1
+ function early() = 0
+ function broken(): Missing = 0
+ function late() = 0
+}

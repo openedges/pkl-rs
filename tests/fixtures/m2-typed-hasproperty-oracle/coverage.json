@@ -1,0 +1,2402 @@
+[
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"own\").toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "typed-members",
+    "program": "original-typed-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/typed-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"unset\").toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "typed-members",
+    "program": "original-typed-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/typed-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"inherited\").toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "typed-members",
+    "program": "original-typed-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/typed-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"hiddenParent\").toString()",
+    "id": "q0003",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 3,
+    "original_program": "typed-members",
+    "program": "original-typed-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/typed-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"hiddenChild\").toString()",
+    "id": "q0004",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 4,
+    "original_program": "typed-members",
+    "program": "original-typed-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/typed-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"localParent\").toString()",
+    "id": "q0005",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 5,
+    "original_program": "typed-members",
+    "program": "original-typed-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/typed-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"localChild\").toString()",
+    "id": "q0006",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 6,
+    "original_program": "typed-members",
+    "program": "original-typed-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/typed-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"method\").toString()",
+    "id": "q0007",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 7,
+    "original_program": "typed-members",
+    "program": "original-typed-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/typed-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"hasProperty\").toString()",
+    "id": "q0008",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 8,
+    "original_program": "typed-members",
+    "program": "original-typed-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/typed-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"getClass\").toString()",
+    "id": "q0009",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 9,
+    "original_program": "typed-members",
+    "program": "original-typed-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/typed-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"default\").toString()",
+    "id": "q0010",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 10,
+    "original_program": "typed-members",
+    "program": "original-typed-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/typed-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"absent\").toString()",
+    "id": "q0011",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 11,
+    "original_program": "typed-members",
+    "program": "original-typed-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/typed-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "overridden.hasProperty(\"inherited\").toString()",
+    "id": "q0012",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 12,
+    "original_program": "typed-members",
+    "program": "original-typed-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/typed-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.own.toString()",
+    "id": "q0013",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 13,
+    "original_program": "typed-members",
+    "program": "original-typed-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/typed-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"own\").toString()",
+    "id": "q0014",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 14,
+    "original_program": "typed-members",
+    "program": "original-typed-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/typed-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "overridden.inherited.toString()",
+    "id": "q0015",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 15,
+    "original_program": "typed-members",
+    "program": "original-typed-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/typed-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "overridden.hasProperty(\"inherited\").toString()",
+    "id": "q0016",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 16,
+    "original_program": "typed-members",
+    "program": "original-typed-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/typed-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "mapped.hasProperty(\"name\").toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "conversions",
+    "program": "original-conversions",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/conversions.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "mapped.hasProperty(\"age\").toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "conversions",
+    "program": "original-conversions",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/conversions.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "mapped.hasProperty(\"concealed\").toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "conversions",
+    "program": "original-conversions",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/conversions.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "mapped.hasProperty(\"secret\").toString()",
+    "id": "q0003",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 3,
+    "original_program": "conversions",
+    "program": "original-conversions",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/conversions.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "mapped.hasProperty(\"method\").toString()",
+    "id": "q0004",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 4,
+    "original_program": "conversions",
+    "program": "original-conversions",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/conversions.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "mapped.hasProperty(\"extra\").toString()",
+    "id": "q0005",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 5,
+    "original_program": "conversions",
+    "program": "original-conversions",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/conversions.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "mapped.hasProperty(\"default\").toString()",
+    "id": "q0006",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 6,
+    "original_program": "conversions",
+    "program": "original-conversions",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/conversions.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "dynamic.hasProperty(\"name\").toString()",
+    "id": "q0007",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 7,
+    "original_program": "conversions",
+    "program": "original-conversions",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/conversions.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "dynamic.hasProperty(\"age\").toString()",
+    "id": "q0008",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 8,
+    "original_program": "conversions",
+    "program": "original-conversions",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/conversions.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "dynamic.hasProperty(\"concealed\").toString()",
+    "id": "q0009",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 9,
+    "original_program": "conversions",
+    "program": "original-conversions",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/conversions.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "dynamic.hasProperty(\"secret\").toString()",
+    "id": "q0010",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 10,
+    "original_program": "conversions",
+    "program": "original-conversions",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/conversions.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "dynamic.hasProperty(\"method\").toString()",
+    "id": "q0011",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 11,
+    "original_program": "conversions",
+    "program": "original-conversions",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/conversions.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "dynamic.hasProperty(\"extra\").toString()",
+    "id": "q0012",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 12,
+    "original_program": "conversions",
+    "program": "original-conversions",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/conversions.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "dynamic.hasProperty(\"default\").toString()",
+    "id": "q0013",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 13,
+    "original_program": "conversions",
+    "program": "original-conversions",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/conversions.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "badValue.hasProperty(\"name\").toString()",
+    "id": "q0014",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 14,
+    "original_program": "conversions",
+    "program": "original-conversions",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/conversions.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "badValue.hasProperty(\"age\").toString()",
+    "id": "q0015",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 15,
+    "original_program": "conversions",
+    "program": "original-conversions",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/conversions.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "badValue.age.toString()",
+    "id": "q0016",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 16,
+    "original_program": "conversions",
+    "program": "original-conversions",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/conversions.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "badValue.hasProperty(\"age\").toString()",
+    "id": "q0017",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 17,
+    "original_program": "conversions",
+    "program": "original-conversions",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/conversions.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "wrongKeys.hasProperty(\"name\").toString()",
+    "id": "q0018",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 18,
+    "original_program": "conversions",
+    "program": "original-conversions",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/conversions.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "module.hasProperty(\"plain\").toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "module-members",
+    "program": "original-module-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "module.hasProperty(\"concealed\").toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "module-members",
+    "program": "original-module-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "module.hasProperty(\"secret\").toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "module-members",
+    "program": "original-module-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "module.hasProperty(\"method\").toString()",
+    "id": "q0003",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 3,
+    "original_program": "module-members",
+    "program": "original-module-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "module.hasProperty(\"Visible\").toString()",
+    "id": "q0004",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 4,
+    "original_program": "module-members",
+    "program": "original-module-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "module.hasProperty(\"LocalClass\").toString()",
+    "id": "q0005",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 5,
+    "original_program": "module-members",
+    "program": "original-module-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "module.hasProperty(\"Alias\").toString()",
+    "id": "q0006",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 6,
+    "original_program": "module-members",
+    "program": "original-module-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "module.hasProperty(\"LocalAlias\").toString()",
+    "id": "q0007",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 7,
+    "original_program": "module-members",
+    "program": "original-module-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "module.hasProperty(\"default\").toString()",
+    "id": "q0008",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 8,
+    "original_program": "module-members",
+    "program": "original-module-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "module.hasProperty(\"output\").toString()",
+    "id": "q0009",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 9,
+    "original_program": "module-members",
+    "program": "original-module-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "module.hasProperty(\"toString\").toString()",
+    "id": "q0010",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 10,
+    "original_program": "module-members",
+    "program": "original-module-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "module.hasProperty(\"hasProperty\").toString()",
+    "id": "q0011",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 11,
+    "original_program": "module-members",
+    "program": "original-module-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "module.hasProperty(\"missing\").toString()",
+    "id": "q0012",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 12,
+    "original_program": "module-members",
+    "program": "original-module-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "Visible.hasProperty(\"field\").toString()",
+    "id": "q0013",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 13,
+    "original_program": "module-members",
+    "program": "original-module-members",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-members.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"é\").toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "unicode-names",
+    "program": "original-unicode-names",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/unicode-names.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"e\\u{301}\").toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "unicode-names",
+    "program": "original-unicode-names",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/unicode-names.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"𐐀\").toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "unicode-names",
+    "program": "original-unicode-names",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/unicode-names.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"\\u{10400}\").toString()",
+    "id": "q0003",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 3,
+    "original_program": "unicode-names",
+    "program": "original-unicode-names",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/unicode-names.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"default\").toString()",
+    "id": "q0004",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 4,
+    "original_program": "unicode-names",
+    "program": "original-unicode-names",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/unicode-names.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"\").toString()",
+    "id": "q0005",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 5,
+    "original_program": "unicode-names",
+    "program": "original-unicode-names",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/unicode-names.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"\\n\").toString()",
+    "id": "q0006",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 6,
+    "original_program": "unicode-names",
+    "program": "original-unicode-names",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/unicode-names.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"\\t\").toString()",
+    "id": "q0007",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 7,
+    "original_program": "unicode-names",
+    "program": "original-unicode-names",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/unicode-names.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"\\u{0}\").toString()",
+    "id": "q0008",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 8,
+    "original_program": "unicode-names",
+    "program": "original-unicode-names",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/unicode-names.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"\\u{D800}\").toString()",
+    "id": "q0009",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 9,
+    "original_program": "unicode-names",
+    "program": "original-unicode-names",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/unicode-names.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"\\u{DC00}\").toString()",
+    "id": "q0010",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 10,
+    "original_program": "unicode-names",
+    "program": "original-unicode-names",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/unicode-names.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"\\u{D800}\\u{DC00}\").toString()",
+    "id": "q0011",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 11,
+    "original_program": "unicode-names",
+    "program": "original-unicode-names",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/unicode-names.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"é\\u{0}\").toString()",
+    "id": "q0012",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 12,
+    "original_program": "unicode-names",
+    "program": "original-unicode-names",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/unicode-names.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty().toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "call-diagnostics",
+    "program": "original-call-diagnostics",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/call-diagnostics.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"value\", \"extra\").toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "call-diagnostics",
+    "program": "original-call-diagnostics",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/call-diagnostics.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(1).toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "call-diagnostics",
+    "program": "original-call-diagnostics",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/call-diagnostics.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(true).toString()",
+    "id": "q0003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "call-diagnostics",
+    "program": "original-call-diagnostics",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/call-diagnostics.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(null).toString()",
+    "id": "q0004",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 4,
+    "original_program": "call-diagnostics",
+    "program": "original-call-diagnostics",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/call-diagnostics.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(List(\"value\")).toString()",
+    "id": "q0005",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 5,
+    "original_program": "call-diagnostics",
+    "program": "original-call-diagnostics",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/call-diagnostics.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(new Dynamic {}).toString()",
+    "id": "q0006",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 6,
+    "original_program": "call-diagnostics",
+    "program": "original-call-diagnostics",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/call-diagnostics.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty.toString()",
+    "id": "q0007",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 7,
+    "original_program": "call-diagnostics",
+    "program": "original-call-diagnostics",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/call-diagnostics.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty.apply(\"value\").toString()",
+    "id": "q0008",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 8,
+    "original_program": "call-diagnostics",
+    "program": "original-call-diagnostics",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/call-diagnostics.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty((() -> \"value\")).toString()",
+    "id": "q0009",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 9,
+    "original_program": "call-diagnostics",
+    "program": "original-call-diagnostics",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/call-diagnostics.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"value\").toString()",
+    "id": "q0010",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 10,
+    "original_program": "call-diagnostics",
+    "program": "original-call-diagnostics",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/call-diagnostics.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "subject.hasProperty(\"missing\").toString()",
+    "id": "q0011",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 11,
+    "original_program": "call-diagnostics",
+    "program": "original-call-diagnostics",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/call-diagnostics.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "direct.hasProperty(\"unset\").toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "no-force",
+    "program": "original-no-force",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "direct.hasProperty(\"throwing\").toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "no-force",
+    "program": "original-no-force",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "direct.hasProperty(\"reading\").toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "no-force",
+    "program": "original-no-force",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "direct.hasProperty(\"logging\").toString()",
+    "id": "q0003",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 3,
+    "original_program": "no-force",
+    "program": "original-no-force",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "direct.hasProperty(\"hiddenRead\").toString()",
+    "id": "q0004",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 4,
+    "original_program": "no-force",
+    "program": "original-no-force",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "direct.hasProperty(\"absent\").toString()",
+    "id": "q0005",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 5,
+    "original_program": "no-force",
+    "program": "original-no-force",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "mapped.hasProperty(\"unset\").toString()",
+    "id": "q0006",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 6,
+    "original_program": "no-force",
+    "program": "original-no-force",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "mapped.hasProperty(\"throwing\").toString()",
+    "id": "q0007",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 7,
+    "original_program": "no-force",
+    "program": "original-no-force",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "mapped.hasProperty(\"reading\").toString()",
+    "id": "q0008",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 8,
+    "original_program": "no-force",
+    "program": "original-no-force",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "mapped.hasProperty(\"logging\").toString()",
+    "id": "q0009",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 9,
+    "original_program": "no-force",
+    "program": "original-no-force",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "mapped.hasProperty(\"hiddenRead\").toString()",
+    "id": "q0010",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 10,
+    "original_program": "no-force",
+    "program": "original-no-force",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "mapped.hasProperty(\"absent\").toString()",
+    "id": "q0011",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 11,
+    "original_program": "no-force",
+    "program": "original-no-force",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "dynamic.hasProperty(\"unset\").toString()",
+    "id": "q0012",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 12,
+    "original_program": "no-force",
+    "program": "original-no-force",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "dynamic.hasProperty(\"throwing\").toString()",
+    "id": "q0013",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 13,
+    "original_program": "no-force",
+    "program": "original-no-force",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "dynamic.hasProperty(\"reading\").toString()",
+    "id": "q0014",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 14,
+    "original_program": "no-force",
+    "program": "original-no-force",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "dynamic.hasProperty(\"logging\").toString()",
+    "id": "q0015",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 15,
+    "original_program": "no-force",
+    "program": "original-no-force",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "dynamic.hasProperty(\"hiddenRead\").toString()",
+    "id": "q0016",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 16,
+    "original_program": "no-force",
+    "program": "original-no-force",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "dynamic.hasProperty(\"absent\").toString()",
+    "id": "q0017",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 17,
+    "original_program": "no-force",
+    "program": "original-no-force",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "direct.throwing.toString()",
+    "id": "q0018",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 18,
+    "original_program": "no-force",
+    "program": "original-no-force",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "direct.hasProperty(\"throwing\").toString()",
+    "id": "q0019",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 19,
+    "original_program": "no-force",
+    "program": "original-no-force",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "recursive.hasProperty(\"child\").toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "recursive-types",
+    "program": "original-recursive-types",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/recursive-types.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "recursive.hasProperty(\"missing\").toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "recursive-types",
+    "program": "original-recursive-types",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/recursive-types.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "constrained.hasProperty(\"child\").toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "recursive-types",
+    "program": "original-recursive-types",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/recursive-types.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "constrained.hasProperty(\"missing\").toString()",
+    "id": "q0003",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 3,
+    "original_program": "recursive-types",
+    "program": "original-recursive-types",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/recursive-types.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "recursive.hasProperty(\"child\").toString()",
+    "id": "q0004",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 4,
+    "original_program": "recursive-types",
+    "program": "original-recursive-types",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/recursive-types.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "forward.hasProperty(\"value\").toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "forward-publication",
+    "program": "original-forward-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/forward-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "forward.hasProperty(\"absent\").toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "forward-publication",
+    "program": "original-forward-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/forward-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "forward.hasProperty(\"missing\").toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "forward-publication",
+    "program": "original-forward-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/forward-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "module.hasProperty(\"Later\").toString()",
+    "id": "q0003",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 3,
+    "original_program": "forward-publication",
+    "program": "original-forward-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/forward-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "forward.value.toString()",
+    "id": "q0004",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 4,
+    "original_program": "forward-publication",
+    "program": "original-forward-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/forward-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "recursive.hasProperty(\"child\").toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "recursive-initializer",
+    "program": "original-recursive-initializer",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/recursive-initializer.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "recursive.hasProperty(\"missing\").toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "recursive-initializer",
+    "program": "original-recursive-initializer",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/recursive-initializer.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "recursive.child.hasProperty(\"child\").toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "recursive-initializer",
+    "program": "original-recursive-initializer",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/recursive-initializer.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "recursive.child.hasProperty(\"missing\").toString()",
+    "id": "q0003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "recursive-initializer",
+    "program": "original-recursive-initializer",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/recursive-initializer.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "C.toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "failed-property-publication",
+    "program": "original-failed-property-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/failed-property-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "(new C {}).hasProperty(\"early\").toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "failed-property-publication",
+    "program": "original-failed-property-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/failed-property-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "(new C {}).hasProperty(\"late\").toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "failed-property-publication",
+    "program": "original-failed-property-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/failed-property-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "(new C {}).hasProperty(\"unknown\").toString()",
+    "id": "q0003",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 3,
+    "original_program": "failed-property-publication",
+    "program": "original-failed-property-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/failed-property-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "(new C {}).hasProperty(\"method\").toString()",
+    "id": "q0004",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 4,
+    "original_program": "failed-property-publication",
+    "program": "original-failed-property-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/failed-property-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "(new C {}).hasProperty(\"localValue\").toString()",
+    "id": "q0005",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 5,
+    "original_program": "failed-property-publication",
+    "program": "original-failed-property-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/failed-property-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "(new C {}).hasProperty(\"default\").toString()",
+    "id": "q0006",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 6,
+    "original_program": "failed-property-publication",
+    "program": "original-failed-property-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/failed-property-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "C.toString()",
+    "id": "q0007",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 7,
+    "original_program": "failed-property-publication",
+    "program": "original-failed-property-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/failed-property-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "C.toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "failed-method-publication",
+    "program": "original-failed-method-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/failed-method-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "(new C {}).hasProperty(\"p\").toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "failed-method-publication",
+    "program": "original-failed-method-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/failed-method-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "(new C {}).hasProperty(\"unknown\").toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "failed-method-publication",
+    "program": "original-failed-method-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/failed-method-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "(new C {}).hasProperty(\"early\").toString()",
+    "id": "q0003",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 3,
+    "original_program": "failed-method-publication",
+    "program": "original-failed-method-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/failed-method-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "(new C {}).hasProperty(\"broken\").toString()",
+    "id": "q0004",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 4,
+    "original_program": "failed-method-publication",
+    "program": "original-failed-method-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/failed-method-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "(new C {}).hasProperty(\"late\").toString()",
+    "id": "q0005",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 5,
+    "original_program": "failed-method-publication",
+    "program": "original-failed-method-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/failed-method-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "(new C {}).hasProperty(\"default\").toString()",
+    "id": "q0006",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 6,
+    "original_program": "failed-method-publication",
+    "program": "original-failed-method-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/failed-method-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "C.toString()",
+    "id": "q0007",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 7,
+    "original_program": "failed-method-publication",
+    "program": "original-failed-method-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/failed-method-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "C.toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "failed-superclass-publication",
+    "program": "original-failed-superclass-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/failed-superclass-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "(new C {}).hasProperty(\"own\").toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "failed-superclass-publication",
+    "program": "original-failed-superclass-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/failed-superclass-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "(new C {}).hasProperty(\"unknown\").toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "failed-superclass-publication",
+    "program": "original-failed-superclass-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/failed-superclass-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "C.toString()",
+    "id": "q0003",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 3,
+    "original_program": "failed-superclass-publication",
+    "program": "original-failed-superclass-publication",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/failed-superclass-publication.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "module.hasProperty(\"A\").toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "incomplete-superclass",
+    "program": "original-incomplete-superclass",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/incomplete-superclass.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "(new A {}).hasProperty(\"missing\").toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "incomplete-superclass",
+    "program": "original-incomplete-superclass",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/incomplete-superclass.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "(new B {}).hasProperty(\"missing\").toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "incomplete-superclass",
+    "program": "original-incomplete-superclass",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/incomplete-superclass.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "module.hasProperty(\"absent\").toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "module-method-init",
+    "program": "original-module-method-init",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-method-init.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "deprecated().toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "module-method-init",
+    "program": "original-module-method-init",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-method-init.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "module.hasProperty(\"visible\").toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "module-method-init",
+    "program": "original-module-method-init",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-method-init.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "module.hasProperty(\"absent\").toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "module-version-init",
+    "program": "original-module-version-init",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-version-init.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "module.hasProperty(\"visible\").toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "module-version-init",
+    "program": "original-module-version-init",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-version-init.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "module.hasProperty(\"absent\").toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "module-version-init",
+    "program": "original-module-version-init",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-version-init.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "C.toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "class-method-init",
+    "program": "original-class-method-init",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/class-method-init.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "(new C {}).hasProperty(\"absent\").toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "class-method-init",
+    "program": "original-class-method-init",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/class-method-init.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "original",
+    "expression": "(new C {}).f().toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "class-method-init",
+    "program": "original-class-method-init",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/class-method-init.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "trace-corrected",
+    "expression": "module.hasProperty(\"absent\").toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "module-method-init",
+    "program": "trace-corrected-module-method-init",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-method-init.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "trace-corrected",
+    "expression": "deprecated().toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "module-method-init",
+    "program": "trace-corrected-module-method-init",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-method-init.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "trace-corrected",
+    "expression": "module.hasProperty(\"visible\").toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "module-method-init",
+    "program": "trace-corrected-module-method-init",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-method-init.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "trace-corrected",
+    "expression": "module.hasProperty(\"absent\").toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "module-version-init",
+    "program": "trace-corrected-module-version-init",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-version-init.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "trace-corrected",
+    "expression": "module.hasProperty(\"visible\").toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "module-version-init",
+    "program": "trace-corrected-module-version-init",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-version-init.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "trace-corrected",
+    "expression": "module.hasProperty(\"absent\").toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "module-version-init",
+    "program": "trace-corrected-module-version-init",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/module-version-init.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "trace-corrected",
+    "expression": "C.toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "class-method-init",
+    "program": "trace-corrected-class-method-init",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/class-method-init.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "trace-corrected",
+    "expression": "(new C {}).hasProperty(\"absent\").toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "class-method-init",
+    "program": "trace-corrected-class-method-init",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/class-method-init.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "trace-corrected",
+    "expression": "(new C {}).f().toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "class-method-init",
+    "program": "trace-corrected-class-method-init",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage104/typed-hasproperty/class-method-init.pkl"
+  }
+]

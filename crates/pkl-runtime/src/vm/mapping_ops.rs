@@ -458,14 +458,15 @@ impl Vm {
                 object.collection_kind,
                 CollectionKind::Mapping | CollectionKind::Listing
             );
-        // An unmatched explicit super entry probes the inherited declaration
-        // chain before invoking the receiver's default. Builtin declarations
+        // An unmatched subscript or explicit super entry probes the inherited
+        // declaration chain before reporting the miss or invoking the default.
+        // Builtin declarations
         // are represented separately here, so preserve their final key-hash
         // effect even when every materialized owner table was small. A hit in
         // an earlier small table still avoids hashing its query.
         // Keep the run and its roots intact before suspension, and do not mark
         // this terminal owner visited until the probe has completed.
-        if matches!(mode, LookupMode::Super(_))
+        if matches!(mode, LookupMode::Subscript | LookupMode::Super(_))
             && matches!(phase, Phase::Declaration(_))
             && parent.is_none()
             && self.prepare_keys(vec![query.clone()])?
@@ -612,6 +613,11 @@ impl Vm {
         self.frames.last_mut().unwrap().pc -= 1;
         // Each empty wrapper gets its own cast and cache publication, deepest
         // first. Its earlier raw cache lookup has already prepared key hashing.
+        // getCachedValue invokes checked cache stealing without a guest call
+        // node; preserve that boundary just as the ordinary force path does.
+        if self.heap.get(receiver)?.collection_cast.is_some() {
+            self.frames.last_mut().unwrap().callsite_hidden = true;
+        }
         self.force_key_mode_value(
             receiver,
             receiver,
@@ -714,6 +720,7 @@ impl Vm {
         frame.type_run = None;
         frame.type_resolution = None;
         frame.generic_default = None;
+        frame.reflection = None;
         frame.module_load = None;
         frame.uri_resolution = None;
         frame.deep_force = None;

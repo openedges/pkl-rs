@@ -1,0 +1,7 @@
+module stage103.docs
+import "pkl:reflect"
+/// class text
+class C {
+  /// property text
+  hidden p: String = throw("initializer must remain lazy")
+}

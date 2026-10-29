@@ -19,7 +19,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: Stage102 targeted 83개·workspace 1,502개 통과, 기본 검증 8개 역할·M1·선택 native/N-API/Chromium 확인; 원본 Map·내부 계약 미해결, 엄격한 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: Stage103/104 reflection·Typed 구현, workspace 1,596개 통과·전체 ready 4,325/4,442 일치·선택 3개 플랫폼 각각 1,138개 일치; 엄격한 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
@@ -3524,3 +3524,55 @@ Stage94의 이전 소스에서 얻은 전체 코퍼스 결과 4,268/4,424도 그
 전체 ready 코퍼스, M2의 아홉 영역, API·릴리스 플랫폼·성능 gate는 계속 열려 있다.
 보류하거나 실행하지 않은 결과를 통과 또는 전체 M2 완료율로 바꾸지 않는다.
 
+### Stage103/104 — reflection·Typed.hasProperty 구현과 로컬 검증
+
+공통 엔진에 source-backed reflection, 지연 Reference Access metadata와 값을 강제하지
+않는 `Typed.hasProperty`를 통합했다. 고정 Java 계약은 reflection 419개·Typed 150개다.
+poll64 조건의 native·N-API·Chromium은 각각 program/profile 67개·반복 session 134개,
+관찰 1,138개(성공 606개·일반 오류 532개), 원시 필드 9,264개와 순서 있는 Logger
+이벤트 16개가 일치했다. 이 선택 계약 안의 미해결 관찰은 0개다.
+
+이 판정은 selected02의 같은 capture에 대한 새 byte-preserving readback이다.
+Native02의 성공은 유지하고 원래 N-API02·Chromium02의 `complete=false`·`success=false`
+비교 도구 실패도 그대로 보존한다. 수정 reader는 source의 CRLF·CR을 보존하며 입력이나
+기대 바이트를 정규화하지 않는다. transport 검사 6개가 통과했고 이 재검사에서 guest·Java·
+compiler를 다시 실행하지 않았다. 두 번째 row/hash 검사는 같은 비교 primitive를 쓰며
+독립 구현 comparator 또는 새 취득으로 주장하지 않는다.
+
+poll마다 최대 64 step을 요청하고 session별 기존 2,000,000 requested-step 한도를 지킨다.
+GC는 batch마다 수행하며 constructor·heap·원래 profile별 timeout은 바꾸지 않았다.
+이전 poll1 timeout과 admission 실패는 별도 실패 취득이다. 동시 실행한 correctness
+검사나 이 조건으로 성능·메모리 목표 통과를 주장하지 않는다.
+
+최종 compile05·fmt03·xtask03·Clippy03·Wasm01은 종료 0·source stable이다. Reference
+진단 unit 1개, Mapping 수명주기 5개, 수정하지 않은 Reference 원본 2개와 focused scalar
+9개의 전체 Java raw 비교도 통과했다. 이전 stale-manifest Python 오류 9개와 읽기 전용
+freshness 8개는 실제 재검사에서 통과했다. Workspace는 실제 단일 `cargo test --workspace`에서 통과 1,596개·실패 0개·ignored 4개다.
+metadata readback은 executable target 257개·compile-only example 25개·doctest library
+2개 및 전체 coverage 조건 5개를 확인했다. filtered child summary 13개는 별도다.
+inventory cohort 39개를 실제 Cargo 명령 39회로 세지 않는다. Rust/build bookend와 종료 후
+실행 파일 hash는 전체 fixture·Python closure의 실행 전 봉인으로 확대하지 않는다.
+
+최종 source의 module replay02는 888개 중 통과 779개·불일치 26개·미지원 82개·oracle
+오류 1개이며 이전 통과에서의 회귀는 없다. historical 8개와 JVM profile 1개도 통과했고
+JVM 관찰은 두 번 유지한다. 전체 4,442개 ordered replay02는 complete·integrity-valid이며 통과 4,325개·불일치 33개·
+미지원 82개·oracle 오류 2개다. candidate 내부 오류·unexecuted·이전 통과 회귀는 0개다.
+metamorphic 88개도 모두 통과했다. 완전한 취득과 compatibility 통과를 구분한다.
+
+compile04의 원시 관찰 838개·300개, harness 필드 6,988개·Logger 16개 일치와 library
+테스트 4개 실패를 함께 보존한다. 첫 전체 replay의 통과 4,314개·불일치 42개·미지원 82개·
+내부 오류 2개·oracle 오류 2개와 이전 통과 회귀 11개를 새 통과로 바꾸지 않는다.
+
+M1 단일 취득은 세 target 각각 6,078개가 일치하고 같은 capture의 strict·구조 gate가
+통과했다. M1·선택 feature matrix·원본 전체 코퍼스는 별도 계약이다. 목록 4,545개
+(ready 4,442개·미구현 71개·미연결 32개), 요구사항 475개와 모든 미해결 의무를 유지한다.
+현재 manifest freshness 뒤 exact full-gate 함수의 미충족 조건은 겹치는 1,780개
+(구현472·test mapping472·required case836)다. 새 `--verify-full` CLI 실행이나 완료율로
+표시하지 않는다. 원본 List의 512 MiB Java heap 실패와 기존 내부 계약도 미해결이다. M2 전체·API·릴리스
+플랫폼·성능 및 hosted CI 통과는 주장하지 않는다.
+
+실제 source 35개와 Java fixture 26,092개, generated metadata 2개가 이번 구현 범위다.
+[Stage104 체크포인트](reports/m2/stage104-reflection-typed-checkpoint.json)에 현재 소스와
+실행 결과, 원시 기록의 복구 경로를 연결한다. compile04 preimage 9개, 이전 manifest와
+실패 기록은 원래 판정으로 보존한다. Stage105 이후의 고립 후보는 이 구현·검증 범위에
+포함하지 않고 별도 통합과 검증을 진행한다.

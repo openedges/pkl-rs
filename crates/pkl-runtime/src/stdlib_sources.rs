@@ -81,6 +81,20 @@ pub(crate) fn yaml() -> Arc<RuntimeSource> {
         .clone()
 }
 
+/// Exact pinned module; native bindings retain the authored declarations.
+pub(crate) fn reflect() -> Arc<RuntimeSource> {
+    static SOURCE: OnceLock<Arc<RuntimeSource>> = OnceLock::new();
+    SOURCE
+        .get_or_init(|| {
+            Arc::new(RuntimeSource {
+                text: include_str!("stdlib/reflect.pkl").into(),
+                uri: "pkl:reflect".into(),
+                module_name: "pkl.reflect".into(),
+            })
+        })
+        .clone()
+}
+
 #[cfg(test)]
 mod tests {
     #[test]

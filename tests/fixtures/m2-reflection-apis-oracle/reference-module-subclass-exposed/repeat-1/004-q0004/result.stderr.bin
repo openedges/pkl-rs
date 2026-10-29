@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Cannot find property `value` in object of type `pkl.ref#Reference<stage103.referenceInheritance#Domain, stage103.referenceInheritance#Grandchild>`.
+
+1 | exposedReference.Reference(domain,Grandchild,"").value.getPath().toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Cannot find property `value` in type `stage103.referenceInheritance#Grandchild`.

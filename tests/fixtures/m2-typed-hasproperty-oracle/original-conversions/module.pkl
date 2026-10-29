@@ -1,0 +1,11 @@
+class Person {
+ name: String
+ age: Int
+ hidden concealed: String = throw("hidden forced")
+ local secret = throw("local forced")
+ function method(): Int = throw("method forced")
+}
+hidden mapped = Map("name", "Pigeon").toTyped(Person)
+hidden dynamic = new Dynamic { name = "Pigeon"; extra = throw("extra forced") }.toTyped(Person)
+hidden badValue = Map("name", 1, "age", "bad").toTyped(Person)
+hidden wrongKeys = Map(1, "value").toTyped(Person)

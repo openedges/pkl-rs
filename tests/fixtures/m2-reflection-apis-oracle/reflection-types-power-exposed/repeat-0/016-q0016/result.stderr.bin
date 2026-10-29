@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 2 function arguments but got 1.
+
+152 | external const function FunctionType(parameterTypes: List<Type>, returnType: Type): FunctionType
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.reflect#FunctionType (https://github.com/apple/pkl/blob/0.32.0/stdlib/reflect.pkl#L152)
+
+1 | (exposedReflection.FunctionType(List())).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

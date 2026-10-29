@@ -1,0 +1,71 @@
+{
+  "kind": "Actual root-authorized reflection review16 Java acquisition and full offline readback",
+  "complete": true,
+  "success": true,
+  "execution_authority": "Explicit exclusive parent Java window granted for exact review16; released after capture/readback terminal0 and allownedchildreaping confirmed",
+  "preparation": {
+    "path": "target/m2/stage103-reflection-review16-oracle-prep-01/preparation.json",
+    "bytes": 6735,
+    "sha256": "19f312418963dcbcb8333d45a2ba27fd20d34f8903a6b2f2a9e8626deae1e019"
+  },
+  "capture": {
+    "path": "target/m2/stage103-reflection-review16-oracle-01/report.json",
+    "bytes": 425159,
+    "sha256": "8cbdf97820503014a31023f33e3d7901a786b22580a3360dc1072ca9f5e9afc0"
+  },
+  "capture_process": {
+    "path": "target/m2/stage103-reflection-review16-oracle-01/capture-process.json",
+    "bytes": 504,
+    "sha256": "19ccd01012e1578dc1fc25025d493ec71ad8ea798720ef0d923535b217b61fb8"
+  },
+  "readback": {
+    "path": "target/m2/stage103-reflection-review16-oracle-readback-01/report.json",
+    "bytes": 8738,
+    "sha256": "ac4d1aaefdc519f94f6f8302e2b1fc68f550a6c7d64982d7cabec20a1d1c1cb3"
+  },
+  "contracts": 16,
+  "observations": 32,
+  "programs": 6,
+  "sessions": 12,
+  "statuses": {
+    "success": 32
+  },
+  "ordered_Logger_events": 0,
+  "repeat_differences": [],
+  "query_dispositions": {
+    "recorded": 32
+  },
+  "source_and_runtime_stable": true,
+  "materialized_stable": true,
+  "all12_java_exit0_reaped_no_live_descendants_no_teardown": true,
+  "capture_exit": 0,
+  "offline_readback_exit": 0,
+  "exclusive_window_released": true,
+  "new_probe_reach": {
+    "all_seven": true,
+    "canonical_Class_String_argument": "UnknownType",
+    "qualified_Class_unresolved_argument": "UnknownType",
+    "generic_alias_argument": "String",
+    "generic_alias_referent_Class_argument": "UnknownType",
+    "constructed_DeclaredType_argument": "String",
+    "alias_named_Class_argument": "String",
+    "alias_named_Class_referent": "Class"
+  },
+  "conditions": {
+    "heap_MiB": 512,
+    "child_wall_seconds": 60,
+    "serial_Java_limit": 1,
+    "owned_cap_MiB": 512,
+    "reserve_MiB": 1024,
+    "minimum_free_seen_bytes": 1806831616,
+    "peak_owned_bytes": 2088960,
+    "previous403_child_wall_seconds": 180,
+    "original403_unchanged": true
+  },
+  "raw_payload_copies": 0,
+  "canonical_fixture_source_mutations": 0,
+  "Rust_compiler_Git_executions": 0,
+  "Rust_compatibility_established": false,
+  "original14_full_modules_still_required": true,
+  "full_M2_complete": false
+}

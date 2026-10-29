@@ -741,6 +741,8 @@ class SourceCatalogClosureTests(unittest.TestCase):
                 target.write_bytes(b'')
             profile = compare.m2_source_inputs.PROFILE
             (root / profile).write_bytes((compare.ROOT / profile).read_bytes())
+            historical = compare.m2_source_inputs.HISTORICAL
+            (root / historical).write_bytes((compare.ROOT / historical).read_bytes())
             collector = root / 'tools/m2_source_inputs.py'
             collector.write_text('raise RuntimeError("captured code must never execute")\n')
             self.assertEqual(compare.source_names(root), sorted(set(names) - compare.CATALOG_ADDITIONS))
@@ -761,6 +763,8 @@ class SourceCatalogClosureTests(unittest.TestCase):
                 target.write_bytes(b'')
             profile = compare.m2_source_inputs.PROFILE
             (root / profile).write_bytes((compare.ROOT / profile).read_bytes())
+            historical = compare.m2_source_inputs.HISTORICAL
+            (root / historical).write_bytes((compare.ROOT / historical).read_bytes())
             self.assertEqual(compare.source_names(root), names)
 
 

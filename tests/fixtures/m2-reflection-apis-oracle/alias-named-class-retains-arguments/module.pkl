@@ -1,0 +1,5 @@
+module stage103.classNameShadow
+import "pkl:reflect"
+typealias Class<T> = List<T>
+class Declaration { x: Class<String> }
+hidden mirror = reflect.Class(Declaration)

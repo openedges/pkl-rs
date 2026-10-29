@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `pkl.reflect#Type`, but got type `Int`.
+Value: 1
+
+158 | external const function UnionType(memberTypes: List<Type>): UnionType
+                                                          ^^^^
+at pkl.reflect#UnionType (https://github.com/apple/pkl/blob/0.32.0/stdlib/reflect.pkl#L158)
+
+1 | (exposedReflection.UnionType(List(1))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

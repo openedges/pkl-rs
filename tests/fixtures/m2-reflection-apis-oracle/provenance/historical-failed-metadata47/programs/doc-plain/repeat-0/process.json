@@ -1,0 +1,69 @@
+{
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-metadata47-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-metadata47-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-metadata47-oracle-01/CollectionEveryOracle.java",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-metadata47-oracle-01/programs/doc-plain/repeat-0",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-metadata47-oracle-01/programs/doc-plain",
+    "file:///stage103/doc-plain.pkl"
+  ],
+  "cleanup_events": [
+    "SIGTERM"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-metadata47-oracle-01",
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-metadata47-oracle-01/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-metadata47-oracle-01/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-metadata47-oracle-01/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-metadata47-oracle-01/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 143,
+  "finished_epoch": 1793101152.2614589,
+  "helper": {
+    "bytes": 6329,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-metadata47-oracle-01/CollectionEveryOracle.java",
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "owned_child_reaped": true,
+  "owned_processes": {
+    "root_observed": true,
+    "root_pid": 88150,
+    "terminal_live": [],
+    "tracked": [
+      {
+        "group_id_at_discovery": 88150,
+        "parent_pid_at_discovery": 88145,
+        "pid": 88150,
+        "started": "Tue Oct 27 20:39:11 2026"
+      }
+    ]
+  },
+  "owned_start": "Tue Oct 27 20:39:11 2026",
+  "pgid": 88150,
+  "pid": 88150,
+  "power_assertions": false,
+  "program": "doc-plain",
+  "repeat": 0,
+  "started_epoch": 1793101151.5938282
+}

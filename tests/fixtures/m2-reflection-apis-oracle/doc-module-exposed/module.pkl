@@ -1,0 +1,6 @@
+/// module text
+@ModuleInfo { minPklVersion = "0.32.0" }
+open module stage103.moduleDoc
+import "pkl:reflect"
+
+hidden exposedReflection = reflect

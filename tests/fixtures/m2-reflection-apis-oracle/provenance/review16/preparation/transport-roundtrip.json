@@ -1,0 +1,119 @@
+{
+  "Java_executed": false,
+  "complete": true,
+  "queries": [
+    {
+      "UTF8_bytes": 41,
+      "UTF8_sha256": "44dd6d9997ee5d198ef5b3a6c74c102f894bae35fcf554c647789371d7f5df61",
+      "base64_roundtrip": true,
+      "program": "named-imported-module-type",
+      "query": "q0000"
+    },
+    {
+      "UTF8_bytes": 62,
+      "UTF8_sha256": "ac6830a6cd05297358b476293c6f9c1da236716f190d66e60585a95c443b58ea",
+      "base64_roundtrip": true,
+      "program": "named-imported-module-type",
+      "query": "q0001"
+    },
+    {
+      "UTF8_bytes": 59,
+      "UTF8_sha256": "864c2ebd3b7d5e0fff044611f61bcb0eddd3b507ce51cb7cbff716b1411950d9",
+      "base64_roundtrip": true,
+      "program": "named-imported-module-type",
+      "query": "q0002"
+    },
+    {
+      "UTF8_bytes": 41,
+      "UTF8_sha256": "44dd6d9997ee5d198ef5b3a6c74c102f894bae35fcf554c647789371d7f5df61",
+      "base64_roundtrip": true,
+      "program": "class-value-does-not-shadow-simple-type",
+      "query": "q0000"
+    },
+    {
+      "UTF8_bytes": 59,
+      "UTF8_sha256": "864c2ebd3b7d5e0fff044611f61bcb0eddd3b507ce51cb7cbff716b1411950d9",
+      "base64_roundtrip": true,
+      "program": "class-value-does-not-shadow-simple-type",
+      "query": "q0001"
+    },
+    {
+      "UTF8_bytes": 41,
+      "UTF8_sha256": "44dd6d9997ee5d198ef5b3a6c74c102f894bae35fcf554c647789371d7f5df61",
+      "base64_roundtrip": true,
+      "program": "class-value-does-not-shadow-qualified-import",
+      "query": "q0000"
+    },
+    {
+      "UTF8_bytes": 59,
+      "UTF8_sha256": "864c2ebd3b7d5e0fff044611f61bcb0eddd3b507ce51cb7cbff716b1411950d9",
+      "base64_roundtrip": true,
+      "program": "class-value-does-not-shadow-qualified-import",
+      "query": "q0001"
+    },
+    {
+      "UTF8_bytes": 53,
+      "UTF8_sha256": "3503d7842e3bf4813ef14f45247dc57a60af8828e1cd34d9eb48f37345ab839b",
+      "base64_roundtrip": true,
+      "program": "named-module-versus-self-type",
+      "query": "q0000"
+    },
+    {
+      "UTF8_bytes": 52,
+      "UTF8_sha256": "5ed77f4ced9404322828c66544d727fac556c2be90ba53312d1d5e56db3b8407",
+      "base64_roundtrip": true,
+      "program": "named-module-versus-self-type",
+      "query": "q0001"
+    },
+    {
+      "UTF8_bytes": 71,
+      "UTF8_sha256": "596a5308c89a53512186dfd6e88979a8c28d6ebac9521745dccde372ae87a8fb",
+      "base64_roundtrip": true,
+      "program": "canonical-class-erasure",
+      "query": "q0000"
+    },
+    {
+      "UTF8_bytes": 74,
+      "UTF8_sha256": "8076c10e7681acd537ff55bf02ab5ad7e3d374f14a909afbd6a4cf0e67bca542",
+      "base64_roundtrip": true,
+      "program": "canonical-class-erasure",
+      "query": "q0001"
+    },
+    {
+      "UTF8_bytes": 62,
+      "UTF8_sha256": "594e61a76439fe3dd7c5391e97db673eee5eabdd804c6b10095fed7167c5df02",
+      "base64_roundtrip": true,
+      "program": "canonical-class-erasure",
+      "query": "q0002"
+    },
+    {
+      "UTF8_bytes": 88,
+      "UTF8_sha256": "fded7300d531dd7afdc562d6856b0820340c8e6ba6dc9e601004c523676ee52c",
+      "base64_roundtrip": true,
+      "program": "canonical-class-erasure",
+      "query": "q0003"
+    },
+    {
+      "UTF8_bytes": 39,
+      "UTF8_sha256": "29e3f3d8c6cf3628ff558664b5e9c61dec3489732eaabd5563459f3b056d9b74",
+      "base64_roundtrip": true,
+      "program": "canonical-class-erasure",
+      "query": "q0004"
+    },
+    {
+      "UTF8_bytes": 58,
+      "UTF8_sha256": "09655a2759488607d709a666d77f7501c30fb2a4ec20ce297837ca68c9a49c13",
+      "base64_roundtrip": true,
+      "program": "alias-named-class-retains-arguments",
+      "query": "q0000"
+    },
+    {
+      "UTF8_bytes": 41,
+      "UTF8_sha256": "44dd6d9997ee5d198ef5b3a6c74c102f894bae35fcf554c647789371d7f5df61",
+      "base64_roundtrip": true,
+      "program": "alias-named-class-retains-arguments",
+      "query": "q0001"
+    }
+  ],
+  "roundtrips": 16
+}

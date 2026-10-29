@@ -1,0 +1,6 @@
+module stage103.types
+import "pkl:reflect"
+class Person { name: String }
+typealias Box<T> = List<T>
+hidden person = reflect.Class(Person)
+hidden alias = reflect.TypeAlias(Box)

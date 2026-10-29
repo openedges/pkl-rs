@@ -1,0 +1,311 @@
+{
+  "complete": true,
+  "kind": "Additive178 alias-observer immutable Java source/query inputs",
+  "no_implementation_base_source_admission": true,
+  "original225_matrices_preserved": [
+    {
+      "bytes": 88317,
+      "path": "target/m2/stage103-reflection-api-candidate-01/queries.json",
+      "sha256": "35080de55a88e52f09a7859fe034d8ee849ad142f4b7505ccb18c961800e9190"
+    },
+    {
+      "bytes": 22460,
+      "path": "target/m2/stage103-reflection-api-candidate-02/metadata-queries.json",
+      "sha256": "210a71753a7fa34038cb2b503ca28121a3e950783c8883d29f8128ed658724f6"
+    },
+    {
+      "bytes": 2788,
+      "path": "target/m2/stage103-reflection-api-candidate-02/reference-queries.json",
+      "sha256": "89a3f5a7aa6cebd3444be8ee45ca3bd4e1e77641db7913a6cbfba97868e8b4d9"
+    },
+    {
+      "bytes": 2819,
+      "path": "target/m2/stage103-reflection-api-candidate-03/reference-legal-queries.json",
+      "sha256": "039d150d4451c388f1585c396afc41de6e1e021b4ffb942ee8c748fe0df12729"
+    }
+  ],
+  "programs": [
+    {
+      "cohort": "constructor82",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/module.pkl",
+      "power_assertions": false,
+      "program": "reflection-types-exposed",
+      "queries": 64,
+      "repetitions": 2,
+      "source_UTF16_sha256": "82868fabb0844becac9be49a1a5e110e186bbf8fbe5a6e34386ee5ce824db0a7",
+      "source_UTF8_bytes": 211,
+      "source_UTF8_sha256": "1bf75efbcf32b636339c154b6323166c95d3d2c04c98abffe6cfc77efb26cce0",
+      "source_uri": "file:///stage103/reflection-types-exposed.pkl"
+    },
+    {
+      "cohort": "constructor82",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/module.pkl",
+      "power_assertions": true,
+      "program": "reflection-types-power-exposed",
+      "queries": 18,
+      "repetitions": 2,
+      "source_UTF16_sha256": "82868fabb0844becac9be49a1a5e110e186bbf8fbe5a6e34386ee5ce824db0a7",
+      "source_UTF8_bytes": 211,
+      "source_UTF8_sha256": "1bf75efbcf32b636339c154b6323166c95d3d2c04c98abffe6cfc77efb26cce0",
+      "source_uri": "file:///stage103/reflection-types-power-exposed.pkl"
+    },
+    {
+      "cohort": "metadata-reference96",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reflection-declarations-exposed/module.pkl",
+      "power_assertions": false,
+      "program": "reflection-declarations-exposed",
+      "queries": 18,
+      "repetitions": 2,
+      "source_UTF16_sha256": "c252d93d46352948bd7d02bbcc7554ab085a041c76a96509186096122713f554",
+      "source_UTF8_bytes": 789,
+      "source_UTF8_sha256": "d19d9a2da938c8ebda1457c8ff46f8d7d787ea8fb2a7c10795f633d4681ff727",
+      "source_uri": "file:///stage103/reflection-declarations-exposed.pkl"
+    },
+    {
+      "cohort": "metadata-reference96",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reflection-annotations-defaults-exposed/module.pkl",
+      "power_assertions": false,
+      "program": "reflection-annotations-defaults-exposed",
+      "queries": 6,
+      "repetitions": 2,
+      "source_UTF16_sha256": "89ba56c1c299e98d993972d409f2ff022fa00564824635c8b9ac38b0b115fc26",
+      "source_UTF8_bytes": 502,
+      "source_UTF8_sha256": "f00b6c60c4d49f516c25c565866f3504f31a8ec0dc44a5f530380b44c61f27d4",
+      "source_uri": "file:///stage103/reflection-annotations-defaults-exposed.pkl"
+    },
+    {
+      "cohort": "metadata-reference96",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reflection-locations-exposed/module.pkl",
+      "power_assertions": false,
+      "program": "reflection-locations-exposed",
+      "queries": 9,
+      "repetitions": 2,
+      "source_UTF16_sha256": "fbd54fec714ab4eaf22a3d97449be253e0021b71f51402e348d8421e0b5427ab",
+      "source_UTF8_bytes": 281,
+      "source_UTF8_sha256": "811f25af4b7d0dbaa3e5ed64cf1e2aa162500af7ac1d5d089d4b561ce706ca38",
+      "source_uri": "file:///stage103/reflection-locations-exposed.pkl"
+    },
+    {
+      "cohort": "metadata-reference96",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-declaration-origin-exposed/module.pkl",
+      "power_assertions": false,
+      "program": "reference-declaration-origin-exposed",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "aa1eb495002a2f06a1b8130f10bea96170ecfbc4c8bd62ebb0dafa1f9a5be204",
+      "source_UTF8_bytes": 327,
+      "source_UTF8_sha256": "fd34ca21cee546bbdd8128af75a9fbc703010dbccad961c80dce4be53d3df12f",
+      "source_uri": "file:///stage103/reference-declaration-origin-exposed.pkl"
+    },
+    {
+      "cohort": "metadata-reference96",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/doc-plain-exposed/module.pkl",
+      "power_assertions": false,
+      "program": "doc-plain-exposed",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "6010d5d81764e95a5beed1aa5e7b6ba6048861ef8b4eedb2858c551bae97a43f",
+      "source_UTF8_bytes": 184,
+      "source_UTF8_sha256": "6907aaedc5459f7efe4a499393aa1418e291a97f9ae92e1dbf6aa75ecdf038cb",
+      "source_uri": "file:///stage103/doc-plain-exposed.pkl"
+    },
+    {
+      "cohort": "metadata-reference96",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/doc-empty-exposed/module.pkl",
+      "power_assertions": false,
+      "program": "doc-empty-exposed",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "5c0b99cd3b3e922cd8ea926a2b3ca5e3e25730b6bf1262d1fdda8d7eb0fe9266",
+      "source_UTF8_bytes": 173,
+      "source_UTF8_sha256": "5b378c2528e50821690fc1c41a066372014d323b594753706680b158a8a26dcc",
+      "source_uri": "file:///stage103/doc-empty-exposed.pkl"
+    },
+    {
+      "cohort": "metadata-reference96",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/doc-spacing-exposed/module.pkl",
+      "power_assertions": false,
+      "program": "doc-spacing-exposed",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "b798dbc4aa9bd0e08e126d95fb00a2649981914d775eafece0fb0bd7efa55661",
+      "source_UTF8_bytes": 214,
+      "source_UTF8_sha256": "048a2e2bbc58a8a0c38849000f480361f5a80f4009dce8752835634432b19840",
+      "source_uri": "file:///stage103/doc-spacing-exposed.pkl"
+    },
+    {
+      "cohort": "metadata-reference96",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/doc-crlf-exposed/module.pkl",
+      "power_assertions": false,
+      "program": "doc-crlf-exposed",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "9a687243ea7ed84ff4ed366ab969884d8fd3ba0554cc7923af77141ac828138d",
+      "source_UTF8_bytes": 192,
+      "source_UTF8_sha256": "5b8a049b74655806c8bab8ccb2f2fb73cd48b604c16909fbf8ed1e10a2e120ae",
+      "source_uri": "file:///stage103/doc-crlf-exposed.pkl"
+    },
+    {
+      "cohort": "metadata-reference96",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/doc-cr-exposed/module.pkl",
+      "power_assertions": false,
+      "program": "doc-cr-exposed",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "aca0dc149ed724897ea60ff47ba0412f557186eae5ca200207aaad74b4f7a0e5",
+      "source_UTF8_bytes": 190,
+      "source_UTF8_sha256": "a7e02bdb46094e523f0637b075066e10564a547648c96a71ed5b0ade7c9e4ff5",
+      "source_uri": "file:///stage103/doc-cr-exposed.pkl"
+    },
+    {
+      "cohort": "metadata-reference96",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/doc-separator-exposed/module.pkl",
+      "power_assertions": false,
+      "program": "doc-separator-exposed",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "f5ac0b2839f0b5b73bc650de9e969a5b7c54fc023cdb6db26005bbaf2278dee8",
+      "source_UTF8_bytes": 201,
+      "source_UTF8_sha256": "56b3f2565e3b877ebf4b58d639fb2e186bf5d33cad5f6269525ed9f9b3be9591",
+      "source_uri": "file:///stage103/doc-separator-exposed.pkl"
+    },
+    {
+      "cohort": "metadata-reference96",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/doc-block-separator-exposed/module.pkl",
+      "power_assertions": false,
+      "program": "doc-block-separator-exposed",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "a738282d371ffd246456fc0a70daf0556d76737fad464827e614f8259c091f77",
+      "source_UTF8_bytes": 210,
+      "source_UTF8_sha256": "97231a0014e88a6266f37e96652c1b150400cfb438f68b822f485734191847f6",
+      "source_uri": "file:///stage103/doc-block-separator-exposed.pkl"
+    },
+    {
+      "cohort": "metadata-reference96",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/doc-blank-before-class-exposed/module.pkl",
+      "power_assertions": false,
+      "program": "doc-blank-before-class-exposed",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "add513d40863ca4b89f21cdb68882f453cc14bfacf67d41a1f5b629093be50c0",
+      "source_UTF8_bytes": 180,
+      "source_UTF8_sha256": "a6800e9ba88ec26cbb4bd8e31a2b54818977e786de7f4077a27733ab75fcc49c",
+      "source_uri": "file:///stage103/doc-blank-before-class-exposed.pkl"
+    },
+    {
+      "cohort": "metadata-reference96",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/doc-unicode-exposed/module.pkl",
+      "power_assertions": false,
+      "program": "doc-unicode-exposed",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "68bb8e6e703db992e24c13657d786b9c6a3a4f0335be31308955fa41aa2fafcf",
+      "source_UTF8_bytes": 212,
+      "source_UTF8_sha256": "87a391eef616dd9fe55122f3424b645cda40af7747bd3043a74136f9b6981f36",
+      "source_uri": "file:///stage103/doc-unicode-exposed.pkl"
+    },
+    {
+      "cohort": "metadata-reference96",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/doc-absent-exposed/module.pkl",
+      "power_assertions": false,
+      "program": "doc-absent-exposed",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "6765733719450efa6d3a56ff6ce8eea729a2f620554471d58463ae651f1e6038",
+      "source_UTF8_bytes": 169,
+      "source_UTF8_sha256": "95d7eb6cf8ea0bbb6ec7e55d0d7679d83b6d463622168254a4812092fda04661",
+      "source_uri": "file:///stage103/doc-absent-exposed.pkl"
+    },
+    {
+      "cohort": "metadata-reference96",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/doc-module-exposed/module.pkl",
+      "power_assertions": false,
+      "program": "doc-module-exposed",
+      "queries": 3,
+      "repetitions": 2,
+      "source_UTF16_sha256": "f779352e405bff309dcdd012e547e3e81b775001648b27f875bb9bc6faaa6b7e",
+      "source_UTF8_bytes": 145,
+      "source_UTF8_sha256": "bf4d8340482da335442697c48e088a0da5b56b654bd403c48777826bb1104ab7",
+      "source_uri": "file:///stage103/doc-module-exposed.pkl"
+    },
+    {
+      "cohort": "metadata-reference96",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/doc-no-module-exposed/module.pkl",
+      "power_assertions": false,
+      "program": "doc-no-module-exposed",
+      "queries": 3,
+      "repetitions": 2,
+      "source_UTF16_sha256": "c1053df82d6cda71ebc5139daf2e2fe1204a249f729d64412eedc6bf4e204c97",
+      "source_UTF8_bytes": 86,
+      "source_UTF8_sha256": "4218dc271b28d1dd0aa78f9535e69430b0b8ab2604142fec487e332b7b096fd3",
+      "source_uri": "file:///stage103/doc-no-module-exposed.pkl"
+    },
+    {
+      "cohort": "metadata-reference96",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/doc-separated-docs-exposed/module.pkl",
+      "power_assertions": false,
+      "program": "doc-separated-docs-exposed",
+      "queries": 1,
+      "repetitions": 2,
+      "source_UTF16_sha256": "0cc927c34f96b4b0f861acd829430ed1abe7b5600a6b5b4d6c784747b9d45860",
+      "source_UTF8_bytes": 116,
+      "source_UTF8_sha256": "8cbdfa1cd524b36f0bf575269bbf5cde0af9ec05b098a67974a032d1131fb149",
+      "source_uri": "file:///stage103/doc-separated-docs-exposed.pkl"
+    },
+    {
+      "cohort": "metadata-reference96",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/module.pkl",
+      "power_assertions": false,
+      "program": "reference-module-subclass-exposed",
+      "queries": 6,
+      "repetitions": 2,
+      "source_UTF16_sha256": "ca67dda8918bbbe8eec4c75eb76a5a59d0d0441f7bff310a2c0964e3e3895883",
+      "source_UTF8_bytes": 433,
+      "source_UTF8_sha256": "94757696b990fce8eafb79d53e275e2e0416e5150f2aec1e2779171711ec229b",
+      "source_uri": "file:///stage103/reference-module-subclass-exposed.pkl"
+    },
+    {
+      "cohort": "metadata-reference96",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-legal-exposed/module.pkl",
+      "power_assertions": false,
+      "program": "reference-module-subclass-legal-exposed",
+      "queries": 6,
+      "repetitions": 2,
+      "source_UTF16_sha256": "5863f0824e9a7a905253b67c6e8b33c913ae3181d5d8752f33f6d5614f0ce85d",
+      "source_UTF8_bytes": 442,
+      "source_UTF8_sha256": "5b51328af76ff186961d0562c1bd7ae754d1165c730d847e64c984babd3a4466",
+      "source_uri": "file:///stage103/reference-module-subclass-legal-exposed.pkl"
+    }
+  ],
+  "snapshots": [
+    {
+      "cohort": "constructor82",
+      "exact_bytes": true,
+      "original": {
+        "bytes": 42084,
+        "path": "target/m2/stage103-reflection-api-candidate-03/constructor-exposed-queries.json",
+        "sha256": "48131584cbacf3e8c944d2d5809fa4aed928bc4cbd5321f566b6495877ee6fbf"
+      },
+      "primary_snapshot": {
+        "bytes": 42084,
+        "path": "target/m2/stage103-reflection-alias-oracle-prep-01/inputs/constructor82.json",
+        "sha256": "48131584cbacf3e8c944d2d5809fa4aed928bc4cbd5321f566b6495877ee6fbf"
+      }
+    },
+    {
+      "cohort": "metadata-reference96",
+      "exact_bytes": true,
+      "original": {
+        "bytes": 53341,
+        "path": "target/m2/stage103-reflection-api-candidate-03/metadata-reference-exposed-queries.json",
+        "sha256": "e1c654a49ccc592c4ac7d7bdb4a01f25d104106e95db3d038e89996da25badff"
+      },
+      "primary_snapshot": {
+        "bytes": 53341,
+        "path": "target/m2/stage103-reflection-alias-oracle-prep-01/inputs/metadata-reference96.json",
+        "sha256": "e1c654a49ccc592c4ac7d7bdb4a01f25d104106e95db3d038e89996da25badff"
+      }
+    }
+  ]
+}

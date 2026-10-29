@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot find property `reflect`.
+
+1 | reflect.Module(module).moduleClass.properties["p"].docComment.toString()
+    ^^^^^^^
+at  (repl:text)

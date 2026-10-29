@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot find property `reflect`.
+
+1 | reflect.Class(Parent).docComment!!
+    ^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+reflected

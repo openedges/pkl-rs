@@ -1,0 +1,37 @@
+{
+  "Java_relaunched": false,
+  "capture_direct_parent": {
+    "bytes": 17631,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/capture.py",
+    "sha256": "c4cb1ca2df4586e0ec20e75d7ea5f40bb7618c375fdbabaa5ed28c00a58caf58"
+  },
+  "capture_successor": {
+    "bytes": 18072,
+    "path": "target/m2/stage103-reflection-oracle-prep-03/capture.py",
+    "sha256": "ee3c8ced386777459a82223124f4fcf02214d7e60669fc7c85ec47b19f7446b4"
+  },
+  "complete": true,
+  "kind": "Prep03 direct-controller lineage supplement; no raw/source modification",
+  "meaning": "preparation.json inherited capture_parent/readback_parent fields describe historical prep01\u2192prep02 context. For prep03 the exact direct parent is prep02, demonstrated by these pins and successor.patch headers; no prep03 origin is assigned to actual main166.",
+  "preparation": {
+    "bytes": 6549,
+    "path": "target/m2/stage103-reflection-oracle-prep-03/preparation.json",
+    "sha256": "b8b1b5de970c095a2ee24aba9d9778f67abc1cb9a08cddf00993646c776b6b70"
+  },
+  "preparation_controller_failure_preserved": {
+    "cause": "Initial source generator expected terminal_usage standalone assignment; actual controller uses report.update(...terminal_usage=usage()). Corrected source derivation assertion before generating capture03. No guests/Java executed by failed preparation command.",
+    "raw_failed_generator_file_saved": false,
+    "type": "AssertionError"
+  },
+  "readback_direct_parent": {
+    "bytes": 10139,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/readback.py",
+    "sha256": "748ef7f67e7cd633ecf38e6880a603ba5473ae6168f747ae074591fcb6101b1b"
+  },
+  "readback_successor": {
+    "bytes": 10139,
+    "path": "target/m2/stage103-reflection-oracle-prep-03/readback.py",
+    "sha256": "8ca36d1b0dd2dcd3a9382f6b769de37339c09517980fdfcc85b7b97bc951985e"
+  },
+  "sealed_helpers_changed": false
+}

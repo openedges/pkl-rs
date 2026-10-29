@@ -1,0 +1,97 @@
+{
+  "complete": true,
+  "kind": "Exact original9 and new7 matrices plus order-preserving combined16 programs",
+  "no_Rust_implementation_source_admitted_as_authority": true,
+  "original403_unchanged": true,
+  "programs": [
+    {
+      "power_assertions": false,
+      "program": "named-imported-module-type",
+      "queries": 3,
+      "repetitions": 2,
+      "source_UTF16_sha256": "7df8fb106cb7ce4c7ff3c20880c3be62c772135b813e3739eecde493ac850374",
+      "source_UTF8_bytes": 129,
+      "source_UTF8_sha256": "9d2792457874a3ffa3018fe9a7289e0836b7f445d3fbf549186c6eb3014f6f62",
+      "source_uri": "file:///stage103/review-named-module.pkl"
+    },
+    {
+      "power_assertions": false,
+      "program": "class-value-does-not-shadow-simple-type",
+      "queries": 2,
+      "repetitions": 2,
+      "source_UTF16_sha256": "0d18829dbd4485c53ddc195a736d84457a0852d97a3a801397853feb67845709",
+      "source_UTF8_bytes": 168,
+      "source_UTF8_sha256": "0bf73c25fd6c904ee165cfcff02763a14515663762d0a894934d8fe30f1eff94",
+      "source_uri": "file:///stage103/review-simple-shadow.pkl"
+    },
+    {
+      "power_assertions": false,
+      "program": "class-value-does-not-shadow-qualified-import",
+      "queries": 2,
+      "repetitions": 2,
+      "source_UTF16_sha256": "5ea5417624f4d2b3b526b4c2984244f3ba7c5b632535209fcdc497f318b3e43e",
+      "source_UTF8_bytes": 191,
+      "source_UTF8_sha256": "3aad4d7b94bdacd10bde0ca023caac6837e8ba9d2caaf599481eb1508b57f8f9",
+      "source_uri": "file:///stage103/review-qualified-shadow.pkl"
+    },
+    {
+      "power_assertions": false,
+      "program": "named-module-versus-self-type",
+      "queries": 2,
+      "repetitions": 2,
+      "source_UTF16_sha256": "5c4a725e8ed76c676759f3f4d9a6299a0eb15953041c3d1acaf16b4d8f4c691b",
+      "source_UTF8_bytes": 146,
+      "source_UTF8_sha256": "360442957877e54c71939e542568ecae849dedd771ee35b3c76e03603db32b87",
+      "source_uri": "file:///stage103/review-module-kind.pkl"
+    },
+    {
+      "power_assertions": false,
+      "program": "canonical-class-erasure",
+      "queries": 5,
+      "repetitions": 2,
+      "source_UTF16_sha256": "f7a1e9cb1f84f7bde01adbc766b1d37333d652f9c98f727f5a6cf9cefb7f97b7",
+      "source_UTF8_bytes": 383,
+      "source_UTF8_sha256": "55055c2dd721fd2a97112a5b5173d977eed34634d5c8d6c0a6fffed6c321bf1f",
+      "source_uri": "file:///stage103/review-class-erasure.pkl"
+    },
+    {
+      "power_assertions": false,
+      "program": "alias-named-class-retains-arguments",
+      "queries": 2,
+      "repetitions": 2,
+      "source_UTF16_sha256": "78d4a0855e06024cb4b834a2126ba60214aa66443612a9573ad42d23d4942217",
+      "source_UTF8_bytes": 164,
+      "source_UTF8_sha256": "fb5ec996917ed4345e1bb56a4f806602890eb4970090d59173bcf6de760048e8",
+      "source_uri": "file:///stage103/review-class-name-shadow.pkl"
+    }
+  ],
+  "programs_equal_original9_then_new7": true,
+  "snapshots": [
+    {
+      "exact_bytes": true,
+      "original": {
+        "bytes": 5484,
+        "path": "target/m2/stage103-reflection-api-candidate-04/queries.json",
+        "sha256": "e2f89b9522784007ed909b87cf79a227a229666791057b07f6a8da505088a391"
+      },
+      "primary_snapshot": {
+        "bytes": 5484,
+        "path": "target/m2/stage103-reflection-review16-oracle-prep-01/inputs/review9.json",
+        "sha256": "e2f89b9522784007ed909b87cf79a227a229666791057b07f6a8da505088a391"
+      }
+    },
+    {
+      "exact_bytes": true,
+      "original": {
+        "bytes": 2791,
+        "path": "target/m2/stage103-reflection-class-erasure-followup-01/queries.json",
+        "sha256": "893f97ea09e9cf922be34f810989214bc7a1b834e6d2e62218aa54a053d22a86"
+      },
+      "primary_snapshot": {
+        "bytes": 2791,
+        "path": "target/m2/stage103-reflection-review16-oracle-prep-01/inputs/erasure7.json",
+        "sha256": "893f97ea09e9cf922be34f810989214bc7a1b834e6d2e62218aa54a053d22a86"
+      }
+    }
+  ]
+}

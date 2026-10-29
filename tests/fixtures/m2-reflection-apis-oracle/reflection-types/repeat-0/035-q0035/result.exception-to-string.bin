@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `reflect`.
+
+1 | reflect.DeclaredType(alias).typeArguments.length.toString()
+    ^^^^^^^
+at  (repl:text)

@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "bad"
+
+3 | age: Int
+         ^^^
+at conversions#Person.age (file:///stage104/typed-hasproperty/conversions.pkl)
+
+1 | badValue.age.toString()
+    ^^^^^^^^^^^^
+at  (repl:text)

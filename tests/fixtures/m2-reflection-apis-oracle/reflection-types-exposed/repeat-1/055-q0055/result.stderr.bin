@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `pkl.reflect#TypeParameter`, but got type `Int`.
+Value: 1
+
+161 | external const function TypeVariable(referent: TypeParameter): TypeVariable
+                                                     ^^^^^^^^^^^^^
+at pkl.reflect#TypeVariable (https://github.com/apple/pkl/blob/0.32.0/stdlib/reflect.pkl#L161)
+
+1 | (exposedReflection.TypeVariable(1)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

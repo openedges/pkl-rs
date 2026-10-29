@@ -1,0 +1,504 @@
+{
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/CollectionEveryOracle.java",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init",
+    "file:///stage104/typed-hasproperty/class-method-init.pkl"
+  ],
+  "cleanup_events": [],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01",
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 0,
+  "finished_epoch": 1793240587.024417,
+  "helper": {
+    "bytes": 6329,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/CollectionEveryOracle.java",
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "owned_child_reaped": true,
+  "owned_processes": {
+    "root_observed": true,
+    "root_pid": 68565,
+    "terminal_live": [],
+    "tracked": [
+      {
+        "group_id_at_discovery": 68565,
+        "parent_pid_at_discovery": 67949,
+        "pid": 68565,
+        "started": "Thu Oct 29 11:23:06 2026"
+      }
+    ]
+  },
+  "owned_start": "Thu Oct 29 11:23:06 2026",
+  "pgid": 68565,
+  "pid": 68565,
+  "power_assertions": false,
+  "program": "class-method-init",
+  "repeat": 1,
+  "rows": [
+    {
+      "directory": "target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000",
+      "expression": "C.toString()",
+      "id": "q0000",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/expression.bin",
+          "sha256": "f677df18f5399ae7cd93f145802f7ba0f87aac30c18058fad8750461620a5146"
+        },
+        "expression.code-units.bin": {
+          "bytes": 24,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/expression.code-units.bin",
+          "sha256": "61e6ecca801f50dc0d6d262facf0950b40e332fd8230a26d5328c5ad40a8caf8"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 342,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/result.exception-to-string.bin",
+          "sha256": "dde17508900fc578b8632bc040e2a18976f3d0e250daa5b10f27af77ff5c2077"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 668,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/result.exception-to-string.code-units.bin",
+          "sha256": "d40d587688f28c6dd3c002d1e2ea848519c07df0f8ebd1c16ceda37aeac89457"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 315,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/result.stderr.bin",
+          "sha256": "bb858f6e014b807bd8797a76b1e9bffff8db306557d536412e3d521b1aa72164"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 614,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/result.stderr.code-units.bin",
+          "sha256": "6e9c58640e2af8a6fd601bb6d09546a709fbc401db6ae71a9174f1cdf6fd4c5d"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/000-q0000/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001",
+      "expression": "(new C {}).hasProperty(\"absent\").toString()",
+      "id": "q0001",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 43,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/expression.bin",
+          "sha256": "8c3bbad7ba75d2d165d03253a261b508ee0068f836207de8afecc846e4d56c63"
+        },
+        "expression.code-units.bin": {
+          "bytes": 86,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/expression.code-units.bin",
+          "sha256": "004286744121f6473fec180a42aecf52395020fb9ba2d5bcd2a47ab4188c5420"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 342,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/result.exception-to-string.bin",
+          "sha256": "dde17508900fc578b8632bc040e2a18976f3d0e250daa5b10f27af77ff5c2077"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 668,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/result.exception-to-string.code-units.bin",
+          "sha256": "d40d587688f28c6dd3c002d1e2ea848519c07df0f8ebd1c16ceda37aeac89457"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 315,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/result.stderr.bin",
+          "sha256": "bb858f6e014b807bd8797a76b1e9bffff8db306557d536412e3d521b1aa72164"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 614,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/result.stderr.code-units.bin",
+          "sha256": "6e9c58640e2af8a6fd601bb6d09546a709fbc401db6ae71a9174f1cdf6fd4c5d"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/001-q0001/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002",
+      "expression": "(new C {}).f().toString()",
+      "id": "q0002",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/expression.bin",
+          "sha256": "4a548441ade15b2b37fe0f4f76f8461ae19f3d1178f2b52349fa72d3e2cce2bd"
+        },
+        "expression.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/expression.code-units.bin",
+          "sha256": "9a1d3ff6a11061e075c1766f4111127caf9276b03b07c908daa0ec699367837a"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 342,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/result.exception-to-string.bin",
+          "sha256": "dde17508900fc578b8632bc040e2a18976f3d0e250daa5b10f27af77ff5c2077"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 668,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/result.exception-to-string.code-units.bin",
+          "sha256": "d40d587688f28c6dd3c002d1e2ea848519c07df0f8ebd1c16ceda37aeac89457"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 315,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/result.stderr.bin",
+          "sha256": "bb858f6e014b807bd8797a76b1e9bffff8db306557d536412e3d521b1aa72164"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 614,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/result.stderr.code-units.bin",
+          "sha256": "6e9c58640e2af8a6fd601bb6d09546a709fbc401db6ae71a9174f1cdf6fd4c5d"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/002-q0002/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    }
+  ],
+  "started_epoch": 1793240586.23265,
+  "stderr": {
+    "bytes": 0,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/process.stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 292,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-typed-hasproperty-oracle-01/programs/class-method-init/repeat-1/process.stdout.bin",
+    "sha256": "f59ff9b6da3b73abf4f18ce33b6787c4e3014098a8a2f61ea3156fa4346ae528"
+  }
+}

@@ -1,0 +1,5 @@
+# Typed.hasProperty Java oracle fixtures
+
+Both actual pinned Pkl0.32.0 Java captures are preserved:150 required query contracts in19 cohort/program profiles, repeated twice (300observations:222success,78ordinary Pkl errors,4ordered Logger events). The original three two-argument trace programs retain18syntax-error observations. Their separate corrected programs retain12const-context errors and6class-initialization successes. No original source/query/error was replaced or ignored. Module in-progress membership beyond these const errors remains unproven.
+
+Fixture paths distinguish cohorts while keeping the exact source URI, source text, expressions, order, evaluator profile and repeat identities. queries.tsv retains the Java Base64 envelope; the Rust harness reads each repeat expression.bin directly and checks UTF16 units. It compares complete status, UTF8/UTF16 result/error bytes and ordered Logger fields. Java class/cause/process metadata is copied exactly as provenance and is not invented as Rust output. No normalization, sorting, partial diagnostics or Rust-authored golden values are used. Rust compatibility is unexecuted until an actual test run.

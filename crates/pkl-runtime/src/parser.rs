@@ -2,9 +2,9 @@
 use crate::diagnostic::{Diagnostic, DiagnosticKind, DiagnosticOrigin};
 use crate::source::Span;
 use crate::syntax::{
-    BinaryOp, Expr, ExprKind, Member, Modifier, ModifierKind, Module, ModuleDeclaration,
-    ModuleParent, ModuleParentKind, ObjectMember, Parameter, Type, TypeKind, TypeParameter,
-    UnaryOp, Variance, modifier_flags,
+    BinaryOp, DocComment, Expr, ExprKind, Member, Modifier, ModifierKind, Module,
+    ModuleDeclaration, ModuleParent, ModuleParentKind, ObjectMember, Parameter, Type, TypeKind,
+    TypeParameter, UnaryOp, Variance, modifier_flags,
 };
 use crate::value::PklString;
 
@@ -711,10 +711,11 @@ impl<'a> Parser<'a> {
         Ok((name, token.span))
     }
 
-    fn doc_comment(&mut self) -> Result<bool, Diagnostic> {
+    fn doc_comment(&mut self) -> Result<Option<DocComment>, Diagnostic> {
         if self.token.kind != Kind::DocComment {
-            return Ok(false);
+            return Ok(None);
         }
+        let mut sections = vec![self.token.span];
         let mut newlines = self.advance_comment()?;
         while matches!(
             self.token.kind,
@@ -726,12 +727,15 @@ impl<'a> Parser<'a> {
                 }
                 break;
             }
+            if self.token.kind == Kind::DocComment {
+                sections.push(self.token.span);
+            }
             newlines = self.advance_comment()?;
         }
         while matches!(self.token.kind, Kind::LineComment | Kind::BlockComment) {
             self.advance_comment()?;
         }
-        Ok(true)
+        Ok(Some(DocComment { sections }))
     }
 
     fn advance_comment(&mut self) -> Result<usize, Diagnostic> {
@@ -844,6 +848,7 @@ impl<'a> Parser<'a> {
         &mut self,
         modifiers: Vec<Modifier>,
         annotations: Vec<Expr>,
+        doc_comment: Option<DocComment>,
     ) -> Result<Option<ModuleDeclaration>, Diagnostic> {
         let start = modifiers
             .first()
@@ -886,6 +891,7 @@ impl<'a> Parser<'a> {
         };
         Ok(if name.is_some() || parent.is_some() {
             Some(ModuleDeclaration {
+                doc_comment,
                 annotations,
                 name,
                 parent,
@@ -900,7 +906,7 @@ impl<'a> Parser<'a> {
     fn member_list(
         &mut self,
         context: MemberContext,
-        mut initial: Option<(Vec<Modifier>, Vec<Expr>, bool)>,
+        mut initial: Option<(Vec<Modifier>, Vec<Expr>, Option<DocComment>)>,
     ) -> Result<Vec<Member>, Diagnostic> {
         let mut members = Vec::new();
         while self.token.kind != Kind::Eof
@@ -972,6 +978,7 @@ impl<'a> Parser<'a> {
         let clause_alias = Some(explicit_alias.then(|| name.clone()));
         let span = Span::new(start, self.previous_end);
         Ok(Member {
+            doc_comment: None,
             annotations: Vec::new(),
             name,
             name_span: span,
@@ -1005,9 +1012,9 @@ impl<'a> Parser<'a> {
     fn member(
         &mut self,
         context: MemberContext,
-        initial: Option<(Vec<Modifier>, Vec<Expr>, bool)>,
+        initial: Option<(Vec<Modifier>, Vec<Expr>, Option<DocComment>)>,
     ) -> Result<Member, Diagnostic> {
-        let (modifiers, annotations, _documented) = match initial {
+        let (modifiers, annotations, doc_comment) = match initial {
             Some(initial) => initial,
             None => {
                 let documented = self.doc_comment()?;
@@ -1214,6 +1221,7 @@ impl<'a> Parser<'a> {
         let override_fixed_span = override_modifier_span("fixed");
         let override_const_span = override_modifier_span("const");
         Ok(Member {
+            doc_comment,
             annotations,
             name,
             name_span,
@@ -2398,6 +2406,7 @@ impl<'a> Parser<'a> {
             Some(Span::new(begin, end))
         };
         Member {
+            doc_comment: None,
             annotations: Vec::new(),
             name,
             name_span,
@@ -2696,7 +2705,10 @@ pub(crate) fn parse_module_for_evaluation(source: &str) -> Result<Module, Diagno
     let has_declaration =
         parser.is_name("module") || parser.is_name("extends") || parser.is_name("amends");
     let (declaration, initial) = if has_declaration {
-        (parser.module_declaration(modifiers, annotations)?, None)
+        (
+            parser.module_declaration(modifiers, annotations, documented)?,
+            None,
+        )
     } else {
         (None, Some((modifiers, annotations, documented)))
     };
@@ -2705,7 +2717,7 @@ pub(crate) fn parse_module_for_evaluation(source: &str) -> Result<Module, Diagno
     let has_header = initial
         .as_ref()
         .is_some_and(|(modifiers, annotations, documented)| {
-            *documented || !modifiers.is_empty() || !annotations.is_empty()
+            documented.is_some() || !modifiers.is_empty() || !annotations.is_empty()
         });
     if has_header && parser.is_name("import") {
         return Err(Diagnostic::language(

@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+field must stay lazy
+
+21 | hidden field: Int = throw("field must stay lazy")
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage103.declarations#field (file:///stage103/reflection-declarations.pkl)
+
+1 | reflected.moduleClass.properties["field"].defaultValue.toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

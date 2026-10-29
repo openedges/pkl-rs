@@ -1,0 +1,18 @@
+{
+  "Java_authority": {
+    "bytes": 1039504,
+    "path": "target/m2/stage103-reflection-metadata47-oracle-02/report.json",
+    "sha256": "96e884aaadd90d8080e89720842abe04eb0e1272fd54c2199832b597865157f6"
+  },
+  "Java_transport": "Base64 envelope only; exact decoded expressions used by Java",
+  "Rust_input": "Corresponding-repeat original expression.bin; UTF16 checked, never Base64/TSVsplit",
+  "Rust_status": "unexecuted",
+  "additive_alias_program": false,
+  "cohort": "metadata47",
+  "power_assertions": false,
+  "program": "doc-separator",
+  "queries": 4,
+  "repetitions": 2,
+  "required": true,
+  "source_uri": "file:///stage103/doc-separator.pkl"
+}

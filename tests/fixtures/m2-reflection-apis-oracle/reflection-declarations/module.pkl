@@ -1,0 +1,25 @@
+/// Module documentation🙂.
+@ModuleInfo { minPklVersion = "0.32.0" }
+open module stage103.declarations
+import "pkl:reflect"
+/// Alias documentation.
+typealias Names<T> = Mapping<String,T>
+/// Class documentation.
+open class Parent {
+  /// Name documentation.
+  name: String = "base"
+  hidden secret: Int = 2
+  fixed fixedValue: Boolean = true
+  const constValue: Int = 1
+  function count(x: Int,y): Int = throw("method body must stay lazy")
+}
+class Child extends Parent {
+  name = "child"
+  own: List<String> = List("one")
+  function extra(): String = "extra"
+}
+hidden field: Int = throw("field must stay lazy")
+local localField = 3
+function top(a: String,b): Boolean = true
+hidden reflected = reflect.Module(module)
+hidden cls = reflect.Class(Child)

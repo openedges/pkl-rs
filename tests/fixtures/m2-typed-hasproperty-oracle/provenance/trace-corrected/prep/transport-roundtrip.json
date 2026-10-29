@@ -1,0 +1,53 @@
+{
+  "complete": true,
+  "lossless": true,
+  "queries": 9,
+  "rows": [
+    {
+      "id": "q0000",
+      "program": "module-method-init",
+      "sha256": "20602d27f3af49e68aad8f42840891cc31d6f12e8f8396b9e9cec53b46154e1d"
+    },
+    {
+      "id": "q0001",
+      "program": "module-method-init",
+      "sha256": "bbc39a7d451309e873ae8e58b871a8e86cfa389dcd0855bb0cb4cd29b7bb8099"
+    },
+    {
+      "id": "q0002",
+      "program": "module-method-init",
+      "sha256": "869532cdc2128f891bde328a5fad4d17c6f2309b327d17a9fdac2b511c0aa095"
+    },
+    {
+      "id": "q0000",
+      "program": "module-version-init",
+      "sha256": "20602d27f3af49e68aad8f42840891cc31d6f12e8f8396b9e9cec53b46154e1d"
+    },
+    {
+      "id": "q0001",
+      "program": "module-version-init",
+      "sha256": "869532cdc2128f891bde328a5fad4d17c6f2309b327d17a9fdac2b511c0aa095"
+    },
+    {
+      "id": "q0002",
+      "program": "module-version-init",
+      "sha256": "20602d27f3af49e68aad8f42840891cc31d6f12e8f8396b9e9cec53b46154e1d"
+    },
+    {
+      "id": "q0000",
+      "program": "class-method-init",
+      "sha256": "f677df18f5399ae7cd93f145802f7ba0f87aac30c18058fad8750461620a5146"
+    },
+    {
+      "id": "q0001",
+      "program": "class-method-init",
+      "sha256": "8c3bbad7ba75d2d165d03253a261b508ee0068f836207de8afecc846e4d56c63"
+    },
+    {
+      "id": "q0002",
+      "program": "class-method-init",
+      "sha256": "4a548441ade15b2b37fe0f4f76f8461ae19f3d1178f2b52349fa72d3e2cce2bd"
+    }
+  ],
+  "success": true
+}

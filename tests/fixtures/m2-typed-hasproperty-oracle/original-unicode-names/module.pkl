@@ -1,0 +1,6 @@
+class Names {
+ `é`: String = throw("accent forced")
+ `𐐀`: String = throw("non-BMP forced")
+ `default`: String = throw("default forced")
+}
+hidden subject = new Names {}

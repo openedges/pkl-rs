@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `reflect`.
+
+1 | (reflect.UnionType(trace(List(1)),trace(2))).toString()
+     ^^^^^^^
+at  (repl:text)

@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `String`, but got type `Int`.
+Value: 1
+
+155 | external const function StringLiteralType(value: String): StringLiteralType
+                                                       ^^^^^^
+at pkl.reflect#StringLiteralType (https://github.com/apple/pkl/blob/0.32.0/stdlib/reflect.pkl#L155)
+
+1 | (exposedReflection.StringLiteralType(1)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

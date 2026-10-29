@@ -1,0 +1,1281 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "contracts": 141,
+  "coverage_note": "Includes source-selected module/class method-deprecation initialization and later ModuleInfo version check; actual Java outcomes remain unknown until capture.",
+  "kind": "Typed.hasProperty expected-free Java boundary queries",
+  "programs": [
+    {
+      "id": "typed-members",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Class metadata includes inherited/required/hidden, excludes locals/methods; untitled override and cached failing values must not alter membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"own\").toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Class metadata includes inherited/required/hidden, excludes locals/methods; untitled override and cached failing values must not alter membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"unset\").toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Class metadata includes inherited/required/hidden, excludes locals/methods; untitled override and cached failing values must not alter membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"inherited\").toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Class metadata includes inherited/required/hidden, excludes locals/methods; untitled override and cached failing values must not alter membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"hiddenParent\").toString()",
+          "id": "q0003",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Class metadata includes inherited/required/hidden, excludes locals/methods; untitled override and cached failing values must not alter membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"hiddenChild\").toString()",
+          "id": "q0004",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Class metadata includes inherited/required/hidden, excludes locals/methods; untitled override and cached failing values must not alter membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"localParent\").toString()",
+          "id": "q0005",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Class metadata includes inherited/required/hidden, excludes locals/methods; untitled override and cached failing values must not alter membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"localChild\").toString()",
+          "id": "q0006",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Class metadata includes inherited/required/hidden, excludes locals/methods; untitled override and cached failing values must not alter membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"method\").toString()",
+          "id": "q0007",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Class metadata includes inherited/required/hidden, excludes locals/methods; untitled override and cached failing values must not alter membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"hasProperty\").toString()",
+          "id": "q0008",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Class metadata includes inherited/required/hidden, excludes locals/methods; untitled override and cached failing values must not alter membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"getClass\").toString()",
+          "id": "q0009",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Class metadata includes inherited/required/hidden, excludes locals/methods; untitled override and cached failing values must not alter membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"default\").toString()",
+          "id": "q0010",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Class metadata includes inherited/required/hidden, excludes locals/methods; untitled override and cached failing values must not alter membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"absent\").toString()",
+          "id": "q0011",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Class metadata includes inherited/required/hidden, excludes locals/methods; untitled override and cached failing values must not alter membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "overridden.hasProperty(\"inherited\").toString()",
+          "id": "q0012",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Class metadata includes inherited/required/hidden, excludes locals/methods; untitled override and cached failing values must not alter membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.own.toString()",
+          "id": "q0013",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Class metadata includes inherited/required/hidden, excludes locals/methods; untitled override and cached failing values must not alter membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"own\").toString()",
+          "id": "q0014",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Class metadata includes inherited/required/hidden, excludes locals/methods; untitled override and cached failing values must not alter membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "overridden.inherited.toString()",
+          "id": "q0015",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Class metadata includes inherited/required/hidden, excludes locals/methods; untitled override and cached failing values must not alter membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "overridden.hasProperty(\"inherited\").toString()",
+          "id": "q0016",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "open class Parent {\n inherited: String\n hidden hiddenParent: Int = throw(\"hidden parent forced\")\n local localParent = throw(\"local parent forced\")\n function method(): String = throw(\"method forced\")\n}\nclass Child extends Parent {\n own: String = throw(\"own forced\")\n unset: Int\n hidden hiddenChild: String = throw(\"hidden child forced\")\n local localChild = throw(\"local child forced\")\n}\nclass Override extends Parent { inherited = throw(\"override forced\") }\nhidden subject = new Child {}\nhidden overridden = new Override {}\n",
+      "source_uri": "file:///stage104/typed-hasproperty/typed-members.pkl"
+    },
+    {
+      "id": "conversions",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Map/Dynamic.toTyped delegates use target class metadata, including missing required values; data/key values are not membership evidence.",
+          "executed": false,
+          "expected": null,
+          "expression": "mapped.hasProperty(\"name\").toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Map/Dynamic.toTyped delegates use target class metadata, including missing required values; data/key values are not membership evidence.",
+          "executed": false,
+          "expected": null,
+          "expression": "mapped.hasProperty(\"age\").toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Map/Dynamic.toTyped delegates use target class metadata, including missing required values; data/key values are not membership evidence.",
+          "executed": false,
+          "expected": null,
+          "expression": "mapped.hasProperty(\"concealed\").toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Map/Dynamic.toTyped delegates use target class metadata, including missing required values; data/key values are not membership evidence.",
+          "executed": false,
+          "expected": null,
+          "expression": "mapped.hasProperty(\"secret\").toString()",
+          "id": "q0003",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Map/Dynamic.toTyped delegates use target class metadata, including missing required values; data/key values are not membership evidence.",
+          "executed": false,
+          "expected": null,
+          "expression": "mapped.hasProperty(\"method\").toString()",
+          "id": "q0004",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Map/Dynamic.toTyped delegates use target class metadata, including missing required values; data/key values are not membership evidence.",
+          "executed": false,
+          "expected": null,
+          "expression": "mapped.hasProperty(\"extra\").toString()",
+          "id": "q0005",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Map/Dynamic.toTyped delegates use target class metadata, including missing required values; data/key values are not membership evidence.",
+          "executed": false,
+          "expected": null,
+          "expression": "mapped.hasProperty(\"default\").toString()",
+          "id": "q0006",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Map/Dynamic.toTyped delegates use target class metadata, including missing required values; data/key values are not membership evidence.",
+          "executed": false,
+          "expected": null,
+          "expression": "dynamic.hasProperty(\"name\").toString()",
+          "id": "q0007",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Map/Dynamic.toTyped delegates use target class metadata, including missing required values; data/key values are not membership evidence.",
+          "executed": false,
+          "expected": null,
+          "expression": "dynamic.hasProperty(\"age\").toString()",
+          "id": "q0008",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Map/Dynamic.toTyped delegates use target class metadata, including missing required values; data/key values are not membership evidence.",
+          "executed": false,
+          "expected": null,
+          "expression": "dynamic.hasProperty(\"concealed\").toString()",
+          "id": "q0009",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Map/Dynamic.toTyped delegates use target class metadata, including missing required values; data/key values are not membership evidence.",
+          "executed": false,
+          "expected": null,
+          "expression": "dynamic.hasProperty(\"secret\").toString()",
+          "id": "q0010",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Map/Dynamic.toTyped delegates use target class metadata, including missing required values; data/key values are not membership evidence.",
+          "executed": false,
+          "expected": null,
+          "expression": "dynamic.hasProperty(\"method\").toString()",
+          "id": "q0011",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Map/Dynamic.toTyped delegates use target class metadata, including missing required values; data/key values are not membership evidence.",
+          "executed": false,
+          "expected": null,
+          "expression": "dynamic.hasProperty(\"extra\").toString()",
+          "id": "q0012",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Map/Dynamic.toTyped delegates use target class metadata, including missing required values; data/key values are not membership evidence.",
+          "executed": false,
+          "expected": null,
+          "expression": "dynamic.hasProperty(\"default\").toString()",
+          "id": "q0013",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Map/Dynamic.toTyped delegates use target class metadata, including missing required values; data/key values are not membership evidence.",
+          "executed": false,
+          "expected": null,
+          "expression": "badValue.hasProperty(\"name\").toString()",
+          "id": "q0014",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Map/Dynamic.toTyped delegates use target class metadata, including missing required values; data/key values are not membership evidence.",
+          "executed": false,
+          "expected": null,
+          "expression": "badValue.hasProperty(\"age\").toString()",
+          "id": "q0015",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Map/Dynamic.toTyped delegates use target class metadata, including missing required values; data/key values are not membership evidence.",
+          "executed": false,
+          "expected": null,
+          "expression": "badValue.age.toString()",
+          "id": "q0016",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Map/Dynamic.toTyped delegates use target class metadata, including missing required values; data/key values are not membership evidence.",
+          "executed": false,
+          "expected": null,
+          "expression": "badValue.hasProperty(\"age\").toString()",
+          "id": "q0017",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Map/Dynamic.toTyped delegates use target class metadata, including missing required values; data/key values are not membership evidence.",
+          "executed": false,
+          "expected": null,
+          "expression": "wrongKeys.hasProperty(\"name\").toString()",
+          "id": "q0018",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "class Person {\n name: String\n age: Int\n hidden concealed: String = throw(\"hidden forced\")\n local secret = throw(\"local forced\")\n function method(): Int = throw(\"method forced\")\n}\nhidden mapped = Map(\"name\", \"Pigeon\").toTyped(Person)\nhidden dynamic = new Dynamic { name = \"Pigeon\"; extra = throw(\"extra forced\") }.toTyped(Person)\nhidden badValue = Map(\"name\", 1, \"age\", \"bad\").toTyped(Person)\nhidden wrongKeys = Map(1, \"value\").toTyped(Person)\n",
+      "source_uri": "file:///stage104/typed-hasproperty/conversions.pkl"
+    },
+    {
+      "id": "module-members",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Module receiver property/class/typealias/method/local/default and inherited Module metadata boundaries; class value is a separate receiver.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"plain\").toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Module receiver property/class/typealias/method/local/default and inherited Module metadata boundaries; class value is a separate receiver.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"concealed\").toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Module receiver property/class/typealias/method/local/default and inherited Module metadata boundaries; class value is a separate receiver.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"secret\").toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Module receiver property/class/typealias/method/local/default and inherited Module metadata boundaries; class value is a separate receiver.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"method\").toString()",
+          "id": "q0003",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Module receiver property/class/typealias/method/local/default and inherited Module metadata boundaries; class value is a separate receiver.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"Visible\").toString()",
+          "id": "q0004",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Module receiver property/class/typealias/method/local/default and inherited Module metadata boundaries; class value is a separate receiver.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"LocalClass\").toString()",
+          "id": "q0005",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Module receiver property/class/typealias/method/local/default and inherited Module metadata boundaries; class value is a separate receiver.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"Alias\").toString()",
+          "id": "q0006",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Module receiver property/class/typealias/method/local/default and inherited Module metadata boundaries; class value is a separate receiver.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"LocalAlias\").toString()",
+          "id": "q0007",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Module receiver property/class/typealias/method/local/default and inherited Module metadata boundaries; class value is a separate receiver.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"default\").toString()",
+          "id": "q0008",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Module receiver property/class/typealias/method/local/default and inherited Module metadata boundaries; class value is a separate receiver.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"output\").toString()",
+          "id": "q0009",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Module receiver property/class/typealias/method/local/default and inherited Module metadata boundaries; class value is a separate receiver.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"toString\").toString()",
+          "id": "q0010",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Module receiver property/class/typealias/method/local/default and inherited Module metadata boundaries; class value is a separate receiver.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"hasProperty\").toString()",
+          "id": "q0011",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Module receiver property/class/typealias/method/local/default and inherited Module metadata boundaries; class value is a separate receiver.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"missing\").toString()",
+          "id": "q0012",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Module receiver property/class/typealias/method/local/default and inherited Module metadata boundaries; class value is a separate receiver.",
+          "executed": false,
+          "expected": null,
+          "expression": "Visible.hasProperty(\"field\").toString()",
+          "id": "q0013",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "plain: String = throw(\"plain forced\")\nhidden concealed: Int = throw(\"hidden module forced\")\nlocal secret = throw(\"local module forced\")\nfunction method(): String = throw(\"method forced\")\nclass Visible { field: String }\nlocal class LocalClass { field: String }\ntypealias Alias = String\nlocal typealias LocalAlias = Int\n`default`: String = throw(\"default forced\")\n",
+      "source_uri": "file:///stage104/typed-hasproperty/module-members.pkl"
+    },
+    {
+      "id": "unicode-names",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Exact Unicode/control/surrogate string argument boundaries; no normalization, parser diagnostics retained if a surrogate escape is rejected.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"é\").toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact Unicode/control/surrogate string argument boundaries; no normalization, parser diagnostics retained if a surrogate escape is rejected.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"e\\u{301}\").toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact Unicode/control/surrogate string argument boundaries; no normalization, parser diagnostics retained if a surrogate escape is rejected.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"𐐀\").toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact Unicode/control/surrogate string argument boundaries; no normalization, parser diagnostics retained if a surrogate escape is rejected.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"\\u{10400}\").toString()",
+          "id": "q0003",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact Unicode/control/surrogate string argument boundaries; no normalization, parser diagnostics retained if a surrogate escape is rejected.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"default\").toString()",
+          "id": "q0004",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact Unicode/control/surrogate string argument boundaries; no normalization, parser diagnostics retained if a surrogate escape is rejected.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"\").toString()",
+          "id": "q0005",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact Unicode/control/surrogate string argument boundaries; no normalization, parser diagnostics retained if a surrogate escape is rejected.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"\\n\").toString()",
+          "id": "q0006",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact Unicode/control/surrogate string argument boundaries; no normalization, parser diagnostics retained if a surrogate escape is rejected.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"\\t\").toString()",
+          "id": "q0007",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact Unicode/control/surrogate string argument boundaries; no normalization, parser diagnostics retained if a surrogate escape is rejected.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"\\u{0}\").toString()",
+          "id": "q0008",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact Unicode/control/surrogate string argument boundaries; no normalization, parser diagnostics retained if a surrogate escape is rejected.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"\\u{D800}\").toString()",
+          "id": "q0009",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact Unicode/control/surrogate string argument boundaries; no normalization, parser diagnostics retained if a surrogate escape is rejected.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"\\u{DC00}\").toString()",
+          "id": "q0010",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact Unicode/control/surrogate string argument boundaries; no normalization, parser diagnostics retained if a surrogate escape is rejected.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"\\u{D800}\\u{DC00}\").toString()",
+          "id": "q0011",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact Unicode/control/surrogate string argument boundaries; no normalization, parser diagnostics retained if a surrogate escape is rejected.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"é\\u{0}\").toString()",
+          "id": "q0012",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "class Names {\n `é`: String = throw(\"accent forced\")\n `𐐀`: String = throw(\"non-BMP forced\")\n `default`: String = throw(\"default forced\")\n}\nhidden subject = new Names {}\n",
+      "source_uri": "file:///stage104/typed-hasproperty/unicode-names.pkl"
+    },
+    {
+      "id": "call-diagnostics",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Exact arity/type/method-as-property diagnostics and valid controls, without expected Rust results.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty().toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact arity/type/method-as-property diagnostics and valid controls, without expected Rust results.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"value\", \"extra\").toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact arity/type/method-as-property diagnostics and valid controls, without expected Rust results.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(1).toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact arity/type/method-as-property diagnostics and valid controls, without expected Rust results.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(true).toString()",
+          "id": "q0003",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact arity/type/method-as-property diagnostics and valid controls, without expected Rust results.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(null).toString()",
+          "id": "q0004",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact arity/type/method-as-property diagnostics and valid controls, without expected Rust results.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(List(\"value\")).toString()",
+          "id": "q0005",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact arity/type/method-as-property diagnostics and valid controls, without expected Rust results.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(new Dynamic {}).toString()",
+          "id": "q0006",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact arity/type/method-as-property diagnostics and valid controls, without expected Rust results.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty.toString()",
+          "id": "q0007",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact arity/type/method-as-property diagnostics and valid controls, without expected Rust results.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty.apply(\"value\").toString()",
+          "id": "q0008",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact arity/type/method-as-property diagnostics and valid controls, without expected Rust results.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty((() -> \"value\")).toString()",
+          "id": "q0009",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact arity/type/method-as-property diagnostics and valid controls, without expected Rust results.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"value\").toString()",
+          "id": "q0010",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Exact arity/type/method-as-property diagnostics and valid controls, without expected Rust results.",
+          "executed": false,
+          "expected": null,
+          "expression": "subject.hasProperty(\"missing\").toString()",
+          "id": "q0011",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "class Subject { value: String }\nhidden subject = new Subject {}\n",
+      "source_uri": "file:///stage104/typed-hasproperty/call-diagnostics.pkl"
+    },
+    {
+      "id": "no-force",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "No initializer force, Logger event or Host resource read for membership, across direct and both conversion paths; explicit throw control afterwards.",
+          "executed": false,
+          "expected": null,
+          "expression": "direct.hasProperty(\"unset\").toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "No initializer force, Logger event or Host resource read for membership, across direct and both conversion paths; explicit throw control afterwards.",
+          "executed": false,
+          "expected": null,
+          "expression": "direct.hasProperty(\"throwing\").toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "No initializer force, Logger event or Host resource read for membership, across direct and both conversion paths; explicit throw control afterwards.",
+          "executed": false,
+          "expected": null,
+          "expression": "direct.hasProperty(\"reading\").toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "No initializer force, Logger event or Host resource read for membership, across direct and both conversion paths; explicit throw control afterwards.",
+          "executed": false,
+          "expected": null,
+          "expression": "direct.hasProperty(\"logging\").toString()",
+          "id": "q0003",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "No initializer force, Logger event or Host resource read for membership, across direct and both conversion paths; explicit throw control afterwards.",
+          "executed": false,
+          "expected": null,
+          "expression": "direct.hasProperty(\"hiddenRead\").toString()",
+          "id": "q0004",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "No initializer force, Logger event or Host resource read for membership, across direct and both conversion paths; explicit throw control afterwards.",
+          "executed": false,
+          "expected": null,
+          "expression": "direct.hasProperty(\"absent\").toString()",
+          "id": "q0005",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "No initializer force, Logger event or Host resource read for membership, across direct and both conversion paths; explicit throw control afterwards.",
+          "executed": false,
+          "expected": null,
+          "expression": "mapped.hasProperty(\"unset\").toString()",
+          "id": "q0006",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "No initializer force, Logger event or Host resource read for membership, across direct and both conversion paths; explicit throw control afterwards.",
+          "executed": false,
+          "expected": null,
+          "expression": "mapped.hasProperty(\"throwing\").toString()",
+          "id": "q0007",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "No initializer force, Logger event or Host resource read for membership, across direct and both conversion paths; explicit throw control afterwards.",
+          "executed": false,
+          "expected": null,
+          "expression": "mapped.hasProperty(\"reading\").toString()",
+          "id": "q0008",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "No initializer force, Logger event or Host resource read for membership, across direct and both conversion paths; explicit throw control afterwards.",
+          "executed": false,
+          "expected": null,
+          "expression": "mapped.hasProperty(\"logging\").toString()",
+          "id": "q0009",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "No initializer force, Logger event or Host resource read for membership, across direct and both conversion paths; explicit throw control afterwards.",
+          "executed": false,
+          "expected": null,
+          "expression": "mapped.hasProperty(\"hiddenRead\").toString()",
+          "id": "q0010",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "No initializer force, Logger event or Host resource read for membership, across direct and both conversion paths; explicit throw control afterwards.",
+          "executed": false,
+          "expected": null,
+          "expression": "mapped.hasProperty(\"absent\").toString()",
+          "id": "q0011",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "No initializer force, Logger event or Host resource read for membership, across direct and both conversion paths; explicit throw control afterwards.",
+          "executed": false,
+          "expected": null,
+          "expression": "dynamic.hasProperty(\"unset\").toString()",
+          "id": "q0012",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "No initializer force, Logger event or Host resource read for membership, across direct and both conversion paths; explicit throw control afterwards.",
+          "executed": false,
+          "expected": null,
+          "expression": "dynamic.hasProperty(\"throwing\").toString()",
+          "id": "q0013",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "No initializer force, Logger event or Host resource read for membership, across direct and both conversion paths; explicit throw control afterwards.",
+          "executed": false,
+          "expected": null,
+          "expression": "dynamic.hasProperty(\"reading\").toString()",
+          "id": "q0014",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "No initializer force, Logger event or Host resource read for membership, across direct and both conversion paths; explicit throw control afterwards.",
+          "executed": false,
+          "expected": null,
+          "expression": "dynamic.hasProperty(\"logging\").toString()",
+          "id": "q0015",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "No initializer force, Logger event or Host resource read for membership, across direct and both conversion paths; explicit throw control afterwards.",
+          "executed": false,
+          "expected": null,
+          "expression": "dynamic.hasProperty(\"hiddenRead\").toString()",
+          "id": "q0016",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "No initializer force, Logger event or Host resource read for membership, across direct and both conversion paths; explicit throw control afterwards.",
+          "executed": false,
+          "expected": null,
+          "expression": "dynamic.hasProperty(\"absent\").toString()",
+          "id": "q0017",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "No initializer force, Logger event or Host resource read for membership, across direct and both conversion paths; explicit throw control afterwards.",
+          "executed": false,
+          "expected": null,
+          "expression": "direct.throwing.toString()",
+          "id": "q0018",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "No initializer force, Logger event or Host resource read for membership, across direct and both conversion paths; explicit throw control afterwards.",
+          "executed": false,
+          "expected": null,
+          "expression": "direct.hasProperty(\"throwing\").toString()",
+          "id": "q0019",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "class Lazy {\n unset: Int\n throwing: String = throw(\"initializer forced\")\n reading: String = read(\"env:STAGE104_HASPROPERTY_MUST_NOT_READ\")\n logging: Int = trace(1)\n hidden hiddenRead: String = read(\"env:STAGE104_HASPROPERTY_HIDDEN_MUST_NOT_READ\")\n}\nhidden direct = new Lazy {}\nhidden mapped = Map().toTyped(Lazy)\nhidden dynamic = new Dynamic {}.toTyped(Lazy)\n",
+      "source_uri": "file:///stage104/typed-hasproperty/no-force.pkl"
+    },
+    {
+      "id": "recursive-types",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Recursive class property metadata and lazy self constraint must not force absent values or constraints during membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "recursive.hasProperty(\"child\").toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Recursive class property metadata and lazy self constraint must not force absent values or constraints during membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "recursive.hasProperty(\"missing\").toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Recursive class property metadata and lazy self constraint must not force absent values or constraints during membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "constrained.hasProperty(\"child\").toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Recursive class property metadata and lazy self constraint must not force absent values or constraints during membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "constrained.hasProperty(\"missing\").toString()",
+          "id": "q0003",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Recursive class property metadata and lazy self constraint must not force absent values or constraints during membership.",
+          "executed": false,
+          "expected": null,
+          "expression": "recursive.hasProperty(\"child\").toString()",
+          "id": "q0004",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "class Recursive { child: Recursive }\nclass Constrained { child: Constrained(this.hasProperty(\"missing\")) }\nhidden recursive = new Recursive {}\nhidden constrained = new Constrained {}\n",
+      "source_uri": "file:///stage104/typed-hasproperty/recursive-types.pkl"
+    },
+    {
+      "id": "forward-publication",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Forward class publication through typed inferred new; required-but-unset field remains metadata.",
+          "executed": false,
+          "expected": null,
+          "expression": "forward.hasProperty(\"value\").toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Forward class publication through typed inferred new; required-but-unset field remains metadata.",
+          "executed": false,
+          "expected": null,
+          "expression": "forward.hasProperty(\"absent\").toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Forward class publication through typed inferred new; required-but-unset field remains metadata.",
+          "executed": false,
+          "expected": null,
+          "expression": "forward.hasProperty(\"missing\").toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Forward class publication through typed inferred new; required-but-unset field remains metadata.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"Later\").toString()",
+          "id": "q0003",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Forward class publication through typed inferred new; required-but-unset field remains metadata.",
+          "executed": false,
+          "expected": null,
+          "expression": "forward.value.toString()",
+          "id": "q0004",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "hidden forward: Later = new { value = 1 }\nclass Later { value: Int; absent: String }\n",
+      "source_uri": "file:///stage104/typed-hasproperty/forward-publication.pkl"
+    },
+    {
+      "id": "recursive-initializer",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Recursive object initializer is separate from class membership and must stay lazy unless explicitly selected.",
+          "executed": false,
+          "expected": null,
+          "expression": "recursive.hasProperty(\"child\").toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Recursive object initializer is separate from class membership and must stay lazy unless explicitly selected.",
+          "executed": false,
+          "expected": null,
+          "expression": "recursive.hasProperty(\"missing\").toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Recursive object initializer is separate from class membership and must stay lazy unless explicitly selected.",
+          "executed": false,
+          "expected": null,
+          "expression": "recursive.child.hasProperty(\"child\").toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Recursive object initializer is separate from class membership and must stay lazy unless explicitly selected.",
+          "executed": false,
+          "expected": null,
+          "expression": "recursive.child.hasProperty(\"missing\").toString()",
+          "id": "q0003",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "hidden recursive: Recursive = new {}\nclass Recursive { child: Recursive = recursive }\n",
+      "source_uri": "file:///stage104/typed-hasproperty/recursive-initializer.pkl"
+    },
+    {
+      "id": "failed-property-publication",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Ordered failed initialization then cached incomplete class query; exact Java source publication behavior, no assumed result.",
+          "executed": false,
+          "expected": null,
+          "expression": "C.toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Ordered failed initialization then cached incomplete class query; exact Java source publication behavior, no assumed result.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new C {}).hasProperty(\"early\").toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Ordered failed initialization then cached incomplete class query; exact Java source publication behavior, no assumed result.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new C {}).hasProperty(\"late\").toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Ordered failed initialization then cached incomplete class query; exact Java source publication behavior, no assumed result.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new C {}).hasProperty(\"unknown\").toString()",
+          "id": "q0003",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Ordered failed initialization then cached incomplete class query; exact Java source publication behavior, no assumed result.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new C {}).hasProperty(\"method\").toString()",
+          "id": "q0004",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Ordered failed initialization then cached incomplete class query; exact Java source publication behavior, no assumed result.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new C {}).hasProperty(\"localValue\").toString()",
+          "id": "q0005",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Ordered failed initialization then cached incomplete class query; exact Java source publication behavior, no assumed result.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new C {}).hasProperty(\"default\").toString()",
+          "id": "q0006",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Ordered failed initialization then cached incomplete class query; exact Java source publication behavior, no assumed result.",
+          "executed": false,
+          "expected": null,
+          "expression": "C.toString()",
+          "id": "q0007",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module typedFailure\nclass C {\n early = 1\n broken: Missing\n late = 2\n local localValue = 0\n function method() = 0\n}\n",
+      "source_uri": "file:///stage104/typed-hasproperty/failed-property-publication.pkl"
+    },
+    {
+      "id": "failed-method-publication",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Ordered failed initialization then cached incomplete class query; exact Java source publication behavior, no assumed result.",
+          "executed": false,
+          "expected": null,
+          "expression": "C.toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Ordered failed initialization then cached incomplete class query; exact Java source publication behavior, no assumed result.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new C {}).hasProperty(\"p\").toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Ordered failed initialization then cached incomplete class query; exact Java source publication behavior, no assumed result.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new C {}).hasProperty(\"unknown\").toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Ordered failed initialization then cached incomplete class query; exact Java source publication behavior, no assumed result.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new C {}).hasProperty(\"early\").toString()",
+          "id": "q0003",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Ordered failed initialization then cached incomplete class query; exact Java source publication behavior, no assumed result.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new C {}).hasProperty(\"broken\").toString()",
+          "id": "q0004",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Ordered failed initialization then cached incomplete class query; exact Java source publication behavior, no assumed result.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new C {}).hasProperty(\"late\").toString()",
+          "id": "q0005",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Ordered failed initialization then cached incomplete class query; exact Java source publication behavior, no assumed result.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new C {}).hasProperty(\"default\").toString()",
+          "id": "q0006",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Ordered failed initialization then cached incomplete class query; exact Java source publication behavior, no assumed result.",
+          "executed": false,
+          "expected": null,
+          "expression": "C.toString()",
+          "id": "q0007",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module typedMethodFailure\nclass C {\n p = 1\n function early() = 0\n function broken(): Missing = 0\n function late() = 0\n}\n",
+      "source_uri": "file:///stage104/typed-hasproperty/failed-method-publication.pkl"
+    },
+    {
+      "id": "failed-superclass-publication",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Ordered failed initialization then cached incomplete class query; exact Java source publication behavior, no assumed result.",
+          "executed": false,
+          "expected": null,
+          "expression": "C.toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Ordered failed initialization then cached incomplete class query; exact Java source publication behavior, no assumed result.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new C {}).hasProperty(\"own\").toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Ordered failed initialization then cached incomplete class query; exact Java source publication behavior, no assumed result.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new C {}).hasProperty(\"unknown\").toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Ordered failed initialization then cached incomplete class query; exact Java source publication behavior, no assumed result.",
+          "executed": false,
+          "expected": null,
+          "expression": "C.toString()",
+          "id": "q0003",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module typedSuperclassFailure\nclass C extends Missing { own = 1 }\n",
+      "source_uri": "file:///stage104/typed-hasproperty/failed-superclass-publication.pkl"
+    },
+    {
+      "id": "incomplete-superclass",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Incomplete cyclic superclass publication is bounded negative authority; retain Java failure rather than assuming initialized-class behavior.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"A\").toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Incomplete cyclic superclass publication is bounded negative authority; retain Java failure rather than assuming initialized-class behavior.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new A {}).hasProperty(\"missing\").toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Incomplete cyclic superclass publication is bounded negative authority; retain Java failure rather than assuming initialized-class behavior.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new B {}).hasProperty(\"missing\").toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "class A extends B {}\nclass B extends A {}\n",
+      "source_uri": "file:///stage104/typed-hasproperty/incomplete-superclass.pkl"
+    },
+    {
+      "id": "module-method-init",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Method deprecation message read during unresolved method construction before class notifyInitialized; trace exposes actual partial module class state.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"absent\").toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Method deprecation message read during unresolved method construction before class notifyInitialized; trace exposes actual partial module class state.",
+          "executed": false,
+          "expected": null,
+          "expression": "deprecated().toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Method deprecation message read during unresolved method construction before class notifyInitialized; trace exposes actual partial module class state.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"visible\").toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module typedModuleInit\n@Deprecated { message = trace(module.hasProperty(\"absent\").toString(), \"module-class-init\") }\nfunction deprecated() = 1\nvisible = 2\n",
+      "source_uri": "file:///stage104/typed-hasproperty/module-method-init.pkl"
+    },
+    {
+      "id": "module-version-init",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "ModuleInfo min version checked after class notifyInitialized; distinguish module publication state from class metadata initialization.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"absent\").toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "ModuleInfo min version checked after class notifyInitialized; distinguish module publication state from class metadata initialization.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"visible\").toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "ModuleInfo min version checked after class notifyInitialized; distinguish module publication state from class metadata initialization.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"absent\").toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "@ModuleInfo { minPklVersion = trace(if (module.hasProperty(\"absent\")) \"0.0.0\" else \"0.0.1\", \"module-version-check\") }\nmodule typedVersionInit\nvisible = 2\n",
+      "source_uri": "file:///stage104/typed-hasproperty/module-version-init.pkl"
+    },
+    {
+      "id": "class-method-init",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Class method deprecation annotation executes before class initialization completes; exact newC membership and subsequent initialized state/logger behavior.",
+          "executed": false,
+          "expected": null,
+          "expression": "C.toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Class method deprecation annotation executes before class initialization completes; exact newC membership and subsequent initialized state/logger behavior.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new C {}).hasProperty(\"absent\").toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Class method deprecation annotation executes before class initialization completes; exact newC membership and subsequent initialized state/logger behavior.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new C {}).f().toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "class C {\n p = 1\n @Deprecated { message = trace((new C {}).hasProperty(\"absent\").toString(), \"class-init\") }\n function f() = 1\n}\n",
+      "source_uri": "file:///stage104/typed-hasproperty/class-method-init.pkl"
+    }
+  ],
+  "schema": 1
+}

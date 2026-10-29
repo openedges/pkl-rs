@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Cannot extend external class `Module`.
+
+5 | class Child extends Module { output: ModuleOutput = new { text = "override" }; value: Int = 1 }
+                        ^^^^^^
+at stage103.referenceInheritance#Child (file:///stage103/reference-module-subclass-exposed.pkl)
+
+External classes can only be extended by standard library classes.
+
+1 | exposedReference.Reference(domain,Child,"").output.getPath().toString()
+                                      ^^^^^
+at  (repl:text)

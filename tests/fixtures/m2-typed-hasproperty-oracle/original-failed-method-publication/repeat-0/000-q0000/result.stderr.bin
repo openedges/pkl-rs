@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Cannot find type `Missing`.
+
+5 | function broken(): Missing = 0
+                       ^^^^^^^
+at typedMethodFailure#C (file:///stage104/typed-hasproperty/failed-method-publication.pkl)
+
+Searched in the following places:
+* Module `typedMethodFailure` and any supermodules
+* Module `pkl#base`
+
+1 | C.toString()
+    ^
+at  (repl:text)

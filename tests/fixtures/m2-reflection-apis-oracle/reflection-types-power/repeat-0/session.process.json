@@ -1,0 +1,2619 @@
+{
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/helper-true/CollectionEveryOracle.java",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power",
+    "file:///stage103/reflection-types-power.pkl"
+  ],
+  "cleanup_events": [],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01",
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 0,
+  "finished_epoch": 1793101134.8427148,
+  "helper": {
+    "bytes": 6328,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/helper-true/CollectionEveryOracle.java",
+    "sha256": "56defcb9f990729eedc3a3b98854c07319859a683cae4a404fedaf821cc2a98f"
+  },
+  "owned_child_reaped": true,
+  "owned_processes": {
+    "root_observed": true,
+    "root_pid": 88061,
+    "terminal_live": [],
+    "tracked": [
+      {
+        "group_id_at_discovery": 88061,
+        "parent_pid_at_discovery": 87859,
+        "pid": 88061,
+        "started": "Tue Oct 27 20:38:53 2026"
+      }
+    ]
+  },
+  "owned_start": "Tue Oct 27 20:38:53 2026",
+  "pgid": 88061,
+  "pid": 88061,
+  "power_assertions": true,
+  "program": "reflection-types-power",
+  "repeat": 0,
+  "rows": [
+    {
+      "directory": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000",
+      "expression": "(reflect.Module(1)).toString()",
+      "id": "q0000",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 30,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/expression.bin",
+          "sha256": "a27a7c1a542784f4111e6bd4221dc3eaac7744cbb0f0f46761fae26934c8b07f"
+        },
+        "expression.code-units.bin": {
+          "bytes": 60,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/expression.code-units.bin",
+          "sha256": "64439882d92a892facdb72e924a178428ac2487bf56263844a803da7ae17fbaa"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 148,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/result.exception-to-string.bin",
+          "sha256": "28532a3fbc76955efd8f1b84871a22ad8c6c1f3c5517b1a0f3d72ee973bcc6c8"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 280,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/result.exception-to-string.code-units.bin",
+          "sha256": "839845a9de72756fa0aeea105e84887d89d1b9de70746bf1b5dc82f9092b3702"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 121,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/result.stderr.bin",
+          "sha256": "0cdb45b02fcf9096bebe1d7d47e9a950a07a2029306d32428b381371b75cb51b"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 226,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/result.stderr.code-units.bin",
+          "sha256": "b6487e84526c0ca11571a39b349f3edc1dce7828cf30b9c4dc8e720781d8040e"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/000-q0000/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001",
+      "expression": "(reflect.moduleOf(1)).toString()",
+      "id": "q0001",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 32,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/expression.bin",
+          "sha256": "27031ab66dba11c738fea0c679ae4969c69c6b86e2d898f822a94e758422e1bc"
+        },
+        "expression.code-units.bin": {
+          "bytes": 64,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/expression.code-units.bin",
+          "sha256": "4080628a68e69f8e595f976291a37a7e35917d526aa89b4e3a3bfc913883b50e"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 150,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/result.exception-to-string.bin",
+          "sha256": "0851631afb73dbdcd20600bcb2bdf3f57d3d203b5d4911763e2ab0ad52386a4b"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 284,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/result.exception-to-string.code-units.bin",
+          "sha256": "013d2f3f80217f46c3824799a9ff7cb02ff2d341b2e0c333baf5cade7f58f8c9"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 123,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/result.stderr.bin",
+          "sha256": "aea90d68f186e2dbfcc8ee1534bb51ec55153c7b647ef1c059ccaf95584b5964"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 230,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/result.stderr.code-units.bin",
+          "sha256": "938ea95f09d4a858d3e36f2bdc7e3e111605986688cb0da55d330e64d0e3c743"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/001-q0001/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002",
+      "expression": "(reflect.Class(1)).toString()",
+      "id": "q0002",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 29,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/expression.bin",
+          "sha256": "b63d1fa739611e380be16bec3079ed19ed7b66134f9651406c8cf0fafa0722f0"
+        },
+        "expression.code-units.bin": {
+          "bytes": 58,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/expression.code-units.bin",
+          "sha256": "89855d9d034fd3b97ad2f7c0d229d572637751f3d84c344ee5adb31af5dffde9"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 147,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/result.exception-to-string.bin",
+          "sha256": "5bf22eb07edeba2193044aa25266c2122c49737a92edfa000fa835d04e9a9047"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 278,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/result.exception-to-string.code-units.bin",
+          "sha256": "2266e8da9ea9b88c2ac78b7abebf02ea7c5eb9320833496ff97a611ba5b92981"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 120,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/result.stderr.bin",
+          "sha256": "17d72ba48bd32d3e49b273bdfc13fbc4231c249518f1d46132856c14b18945b6"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 224,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/result.stderr.code-units.bin",
+          "sha256": "18c1631f08ccb1af14a97a3b7c713482b69857308ff998ea4aaa67ba24b70d28"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/002-q0002/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003",
+      "expression": "(reflect.TypeAlias(Int)).toString()",
+      "id": "q0003",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 35,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/expression.bin",
+          "sha256": "2f4c827bbbff0d8cbde890ddef20005236cf296994ed56faffc949360622635d"
+        },
+        "expression.code-units.bin": {
+          "bytes": 70,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/expression.code-units.bin",
+          "sha256": "5602a9926e54d78c1a79fac531b0b2ac052ff69952536bc1c539b0b4386d218f"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 153,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/result.exception-to-string.bin",
+          "sha256": "7dc143d1b2106f65a2aca3b4aa834c93dd1a2d1b2b8b7dbc093db71ad19d64c8"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 290,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/result.exception-to-string.code-units.bin",
+          "sha256": "fa50d85a076d875bc36477fb91743a9c00eca0362324fad1a42f55662f211211"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 126,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/result.stderr.bin",
+          "sha256": "7f308aa23e6c5fccfa614a6120cd590fb0972c0dee23e67893d243e909b5f4df"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 236,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/result.stderr.code-units.bin",
+          "sha256": "359c3f4c6a5664c1a1392fc4639ac9e4e94f470812e713a80588630d9b8cd383"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/003-q0003/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004",
+      "expression": "(reflect.DeclaredType(1)).toString()",
+      "id": "q0004",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 36,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/expression.bin",
+          "sha256": "99c5f7051011c5472fe352d4de60403679b218ffe072966463877c2f842c6e49"
+        },
+        "expression.code-units.bin": {
+          "bytes": 72,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/expression.code-units.bin",
+          "sha256": "0d89051b6180ec2f9a2544edb4b67263a9ad68819270655bc39a3478cf96bc71"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 154,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/result.exception-to-string.bin",
+          "sha256": "30b08983a7f8d287392495f38e372da41e2dc46820d8524a01142aea47cd6076"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 292,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/result.exception-to-string.code-units.bin",
+          "sha256": "5b4f0b72d6048349d0f41b25bcaa9f10f2b91c1652a30f2ff5f85b892b6a1354"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 127,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/result.stderr.bin",
+          "sha256": "6fa1ce0b513423eb5ab62f08a4f2b942e7dcd2419d3cc9d28d4df52e3b276f20"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 238,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/result.stderr.code-units.bin",
+          "sha256": "ec6882b4835b84709eb9964ff0af8da0bcbcac8133924009edbdf195527dcf65"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/004-q0004/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005",
+      "expression": "(reflect.StringLiteralType(1)).toString()",
+      "id": "q0005",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 41,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/expression.bin",
+          "sha256": "edeec67f3ea052c02472d94afc0657548f5cf2c1a23d20a2dad1438f38d2c63d"
+        },
+        "expression.code-units.bin": {
+          "bytes": 82,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/expression.code-units.bin",
+          "sha256": "6d5a3502da13ca563dff8d7e47cb3843304f0be960f124dbb8a612613719d5c7"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 159,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/result.exception-to-string.bin",
+          "sha256": "ed44f910887c2aaddd441276e07fbc788c5a184813d36ded08a25fd8a2be5e89"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 302,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/result.exception-to-string.code-units.bin",
+          "sha256": "1d55ad12cc634e5faf7d87985da9c92d7fa3a332f292f0dce07cdf48387ef5f1"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 132,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/result.stderr.bin",
+          "sha256": "3115b36a29077e891a080bd56b296b05daee5015c149dae5ebd11596ae1445e4"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 248,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/result.stderr.code-units.bin",
+          "sha256": "a2f6004107e4ab849b825c2e03861e9d9fa196ead949b86f4fb2a752ac3aa73a"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/005-q0005/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006",
+      "expression": "(reflect.FunctionType(List(1),reflect.intType)).toString()",
+      "id": "q0006",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 58,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/expression.bin",
+          "sha256": "b445f895f7d45d45b1dcbffaf4b2bc97b75ef52f8f42555856f9930fa9b40639"
+        },
+        "expression.code-units.bin": {
+          "bytes": 116,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/expression.code-units.bin",
+          "sha256": "05b56bc85420a10bc501db411ccb6a3ea92bc2e509cf16a36ab6524931883835"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 176,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/result.exception-to-string.bin",
+          "sha256": "e97ce9565f744ff206e076cab6bcb63008a73f7e9fd22089b51919ce6a9690ae"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 336,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/result.exception-to-string.code-units.bin",
+          "sha256": "e0d31b5509098a373e8048c069a2171bb705c9f0d8162cc25ae00d7337e999ad"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 149,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/result.stderr.bin",
+          "sha256": "3117954eac649bdffc22b15edd1a8a61a1adb9877123a3f18505463c533bdb40"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 282,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/result.stderr.code-units.bin",
+          "sha256": "db7af8a03ea9e8ee03ec2c1382a4fa81b5dd204167d8161269b452831756d65a"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/006-q0006/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007",
+      "expression": "(reflect.FunctionType(List(),1)).toString()",
+      "id": "q0007",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 43,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/expression.bin",
+          "sha256": "52b4c2decd359155c4173ee05a58653fb65f858a9a3c3c02d63a3eac5665fa77"
+        },
+        "expression.code-units.bin": {
+          "bytes": 86,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/expression.code-units.bin",
+          "sha256": "19c2ff632f0a0e75784c99f649458c521e57db171551f5dafed8f26383a525fe"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 161,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/result.exception-to-string.bin",
+          "sha256": "64ee69035ea11035515dc3ec8bd86be2410b719cb058fcb89efc4ff195c9e772"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 306,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/result.exception-to-string.code-units.bin",
+          "sha256": "9f4bec8332ce85ec8cd5876e272b2d041233986f97c3f92a76055432d45f8090"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 134,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/result.stderr.bin",
+          "sha256": "c616d549ab81d591a9166ef83be898e6f7a8e14f17fadf269a44b2e1f31f0f5c"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 252,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/result.stderr.code-units.bin",
+          "sha256": "082b54319829073c6f656680fed2ae88aa2873146a8642c7e5a46c9a00f78419"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/007-q0007/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008",
+      "expression": "(reflect.UnionType(List(1))).toString()",
+      "id": "q0008",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 39,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/expression.bin",
+          "sha256": "3e0de45f1279f9634fc5a6304fe47bbe32866b4f8118c94b44f36e112701deec"
+        },
+        "expression.code-units.bin": {
+          "bytes": 78,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/expression.code-units.bin",
+          "sha256": "c4468a8caa7867c85fa3b239063f6d8e6d276d4b696d57754e819a8ae67c740c"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 157,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/result.exception-to-string.bin",
+          "sha256": "e964aa7787ed4f0bf2bcb7f681e8276f9e12216f51ba46b746875414c135fa42"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 298,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/result.exception-to-string.code-units.bin",
+          "sha256": "8ccca46a194302b375fd5edc7d648aa0935943c6d17b8d2ff35362250f7a99aa"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 130,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/result.stderr.bin",
+          "sha256": "53dcd33eeeffdebb8cc9a2a99dff9aa688e4f3ea17858ea5bb91a18836c67aca"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 244,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/result.stderr.code-units.bin",
+          "sha256": "c6b8bec2f3026b141bc68dcfb45359b9c2b9550fed46e3034278c39cb53ce986"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/008-q0008/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009",
+      "expression": "(reflect.TypeVariable(1)).toString()",
+      "id": "q0009",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 36,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/expression.bin",
+          "sha256": "6163e5687ddc7479cac0e68fbf5f910cf660449aba8c5be1d25d98d106f6fc64"
+        },
+        "expression.code-units.bin": {
+          "bytes": 72,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/expression.code-units.bin",
+          "sha256": "ed00b4ea46d239dab3a9bd9c0ca50e342b19d6f9ad8f37addbebf861b8569de6"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 154,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/result.exception-to-string.bin",
+          "sha256": "916e55ca6eacd1ec9e99bc383121156493948bb61c46330bceee1172383dd645"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 292,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/result.exception-to-string.code-units.bin",
+          "sha256": "74f94a3bc40a0c97b784588f3c7c036c6312ffc993a88f64a220879aadc62137"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 127,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/result.stderr.bin",
+          "sha256": "f659ec84b231ddb88f22ccf2cb30cc26fdadd570adb66c7f99069c0839de0d64"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 238,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/result.stderr.code-units.bin",
+          "sha256": "dfa6521c521443ad6071043c11e48cc6271ae5ca01bff2f9ba807a8614ef2f9c"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/009-q0009/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010",
+      "expression": "(reflect.listType.withTypeArguments(List())).toString()",
+      "id": "q0010",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 55,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/expression.bin",
+          "sha256": "97e117d0edf84e83603258671a807688cc0b669f959791054b0b0ce7cdc56d30"
+        },
+        "expression.code-units.bin": {
+          "bytes": 110,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/expression.code-units.bin",
+          "sha256": "b7e71397781e8761cb3fb2c1f458ffc2b0c2fed98dc303785eb602359cf02bce"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 173,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/result.exception-to-string.bin",
+          "sha256": "222f7103efbf7c56e8751610d0d629851c8739d2e9e4f58139388310d40e129e"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 330,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/result.exception-to-string.code-units.bin",
+          "sha256": "a457c516d84bf6d2907bb90204a609a3edae35a42ac467c1b545b8b53d19b13b"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 146,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/result.stderr.bin",
+          "sha256": "c3e4039dc52cf474517c815e34b5f3c6b76fa8e55e73a3c870c8e47d4fd306db"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 276,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/result.stderr.code-units.bin",
+          "sha256": "1aa089baa0c69bd92698f237e0e88308bbe26a934e93352c8381d7246d08f453"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/010-q0010/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011",
+      "expression": "(reflect.listType.withTypeArguments(List(reflect.intType,reflect.stringType))).toString()",
+      "id": "q0011",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 89,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/expression.bin",
+          "sha256": "d6815da471d4c819f14df6d50061ee4c4906493b57e51c367d3766d7f685b0ea"
+        },
+        "expression.code-units.bin": {
+          "bytes": 178,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/expression.code-units.bin",
+          "sha256": "c82465af18ad019408d72521c587a88880043c377583e24acd1a710b94083089"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 207,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/result.exception-to-string.bin",
+          "sha256": "6d65a4c411f2f5100b4085e5cc7b600436944c261133c5bd65ed5d334a24a280"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 398,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/result.exception-to-string.code-units.bin",
+          "sha256": "fe3ba175b8a092bc3259ccd7914ee6ca796d66ce03021ad253b7b765fe6fce6e"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 180,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/result.stderr.bin",
+          "sha256": "4374f092c7c0d5e611964f5b632272976f7c518e29dc2517fcf6788bdf987896"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 344,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/result.stderr.code-units.bin",
+          "sha256": "67e283866764c0b0af96a2e484d655b6bf6fea43a3b5a3cfb157e5c59483dbf3"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/011-q0011/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012",
+      "expression": "(reflect.intType.withTypeArgument(reflect.stringType)).toString()",
+      "id": "q0012",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 65,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/expression.bin",
+          "sha256": "c3a5e30c10cc9656b9179e124cc33abae3de596e19d9cc8324021c0f1ba122c1"
+        },
+        "expression.code-units.bin": {
+          "bytes": 130,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/expression.code-units.bin",
+          "sha256": "ed14c5821fa3190ad6c19bd2f11bb8af889cec65a04ff338cefe737ce7bac296"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 183,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/result.exception-to-string.bin",
+          "sha256": "7722be9a243f630ff102415d3f49eaf9cb80caddd18f0c93d613385d0db9b916"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 350,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/result.exception-to-string.code-units.bin",
+          "sha256": "3ed4af93d743d12732e4127dbc2e78c77ae444b1fcc857c4c34b07da177905f3"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 156,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/result.stderr.bin",
+          "sha256": "f70db6f4a8c3d39e7f358ddf1b3d5a7b76ca60119cc9fdec3060b85b8a3fd663"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 296,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/result.stderr.code-units.bin",
+          "sha256": "d839460a1ad88cd4a8d82f0c618a6aca8be39408f1f0acf8986c3136a9b3a4c8"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/012-q0012/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013",
+      "expression": "(reflect.listType.withTypeArgument(1)).toString()",
+      "id": "q0013",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 49,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/expression.bin",
+          "sha256": "74a85f65ca076bafcc7c3c03570cd36342b48900898708abdaaa90d2ef2595ed"
+        },
+        "expression.code-units.bin": {
+          "bytes": 98,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/expression.code-units.bin",
+          "sha256": "a91612aab75456972c2b60a71f5ae52db756232b0f7ecf01497149245cfab810"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 167,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/result.exception-to-string.bin",
+          "sha256": "41cd77c052006bc7cc5d2d9e8dcee1287f882d60d7d140e4b60e0090f19b43a4"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 318,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/result.exception-to-string.code-units.bin",
+          "sha256": "e9efdae2429e7685fe6ba4982e6a188399467dc1193ab9afa786257bf47ccf7c"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 140,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/result.stderr.bin",
+          "sha256": "9cd0b03109937ad2f1d10e0aae3ba418a2602a7899b9e20e8b83a952744661b6"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 264,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/result.stderr.code-units.bin",
+          "sha256": "2ce91300b42afc8f0caa538a2a19f6d3d6f7af93d2543fe348e97373720a446b"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/013-q0013/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014",
+      "expression": "(reflect.Class()).toString()",
+      "id": "q0014",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 28,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/expression.bin",
+          "sha256": "dc06c443d9f816b8773d1f6575d2a8c90d8a72832341d0d0f34b15edfec9845d"
+        },
+        "expression.code-units.bin": {
+          "bytes": 56,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/expression.code-units.bin",
+          "sha256": "6105f90dd6978581a88a2d0496fb5bd0511a0b3a17206dd504074acfbd6a1744"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 146,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/result.exception-to-string.bin",
+          "sha256": "75d323fbe5453f62c6eb0c3726e7022d2974e9a309e80d530a2ff5b597c3ad2f"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 276,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/result.exception-to-string.code-units.bin",
+          "sha256": "85a5b76593e48ba0b88c1ca8b2169e822984cfc32bb62940dd560af0fb1f1d75"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 119,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/result.stderr.bin",
+          "sha256": "2b51749272886fd1362bb85e2e69c318ec275712481e9672d4ba4e31f1f4fb01"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 222,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/result.stderr.code-units.bin",
+          "sha256": "bd80edec52d46f516e073efe1ab65effb92906332460fc5e3847195352123d90"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/014-q0014/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015",
+      "expression": "(reflect.Class(Int,Int)).toString()",
+      "id": "q0015",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 35,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/expression.bin",
+          "sha256": "ea7c438ef846084b369a3df45749f6da8b9c42324367c722b8dd1432cd750308"
+        },
+        "expression.code-units.bin": {
+          "bytes": 70,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/expression.code-units.bin",
+          "sha256": "2265097cedf2d0ccf47c6a20c429ad0d5ccf9d95155e4abecce9005c8fa0c77f"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 153,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/result.exception-to-string.bin",
+          "sha256": "0189da997ef227ef5dd3ea50bc00002fd3e36d5e4cfc4bc37934c87b2eab0eed"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 290,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/result.exception-to-string.code-units.bin",
+          "sha256": "a5df00df31c2e8f2dfa05a748efb13ccb5c1cb85cd27a8a09a77fc9607404961"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 126,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/result.stderr.bin",
+          "sha256": "35965107c9ac36a5b49383de2a9d1b3c89579e6cd7336de8188096ad94566ceb"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 236,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/result.stderr.code-units.bin",
+          "sha256": "97dea91c9353f7d4b295d46be93dae3b7867a7886273690c81669634ff6806b5"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/015-q0015/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016",
+      "expression": "(reflect.FunctionType(List())).toString()",
+      "id": "q0016",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 41,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/expression.bin",
+          "sha256": "319e9d3a2ce0054e2d75689b227e01a0714898bacd5605b5c13a111ec39c181e"
+        },
+        "expression.code-units.bin": {
+          "bytes": 82,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/expression.code-units.bin",
+          "sha256": "b18b614303115c3598cde11f27dac49bf08f2cd18ba8fcf6f6915f3fa651cdb0"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 159,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/result.exception-to-string.bin",
+          "sha256": "70a0443c1dbcaca266f67280f43687e339f4d98e4aeae0a965ed84add00f6d04"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 302,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/result.exception-to-string.code-units.bin",
+          "sha256": "c2a7f20c19505c68bb35f314d6d036eae108d3e5bd789fd897e6fb29d35731cc"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 132,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/result.stderr.bin",
+          "sha256": "c57629b95ebab9a3efb6b7aaa058e74ea17813229b5ba2dce8afa2280d4c1710"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 248,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/result.stderr.code-units.bin",
+          "sha256": "954f00aef26df33686261ada002be18a376e07c5a87d89e003ba07693f50a861"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/016-q0016/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017",
+      "expression": "(reflect.UnionType(trace(List(1)),trace(2))).toString()",
+      "id": "q0017",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 55,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/expression.bin",
+          "sha256": "c6b2ebf47d4ec4b11b50981047f56e387c7aaa577d52c3ef1364f7a3e1fad4f6"
+        },
+        "expression.code-units.bin": {
+          "bytes": 110,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/expression.code-units.bin",
+          "sha256": "e5044c8527e8ffcc7af7a034ad0c6c20aaeea52bcd4e3a6c18ba87ab4ab79104"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 173,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/result.exception-to-string.bin",
+          "sha256": "d02d6122fccbe6c012a667b3f8908fc2f9f64301bccfd930bcdf08691bd03d3d"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 330,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/result.exception-to-string.code-units.bin",
+          "sha256": "98df33d223881959346bad33b417a44fc2e6c55ea383ed62a68075d89e7fd47e"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 146,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/result.stderr.bin",
+          "sha256": "73d126753f63a7f00224fce4f5e6cb32241a5d900af4329b21d1a9e9a865f3fc"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 276,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/result.stderr.code-units.bin",
+          "sha256": "c6080dd39138b12478e500a71834c3e4ca238b76e9cb75da85be84e50f6c3536"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/017-q0017/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    }
+  ],
+  "started_epoch": 1793101133.837538,
+  "stderr": {
+    "bytes": 0,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/process.stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 1272,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/repeat-0/process.stdout.bin",
+    "sha256": "2452a52e291b73761dd00308926afc19215a716cb49c4a798f09e567f633ef54"
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "Java_Rust_Node_browser_compiler_executions": 0,
+  "all225_expected_unset": true,
+  "canonical_Git_mutations": 0,
+  "capture": {
+    "bytes": 17631,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/capture.py",
+    "sha256": "c4cb1ca2df4586e0ec20e75d7ea5f40bb7618c375fdbabaa5ed28c00a58caf58"
+  },
+  "capture_delta": {
+    "bytes": 2839,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/capture-derivation.patch",
+    "sha256": "d44d8ee41a48991f55bc6dcec3c894760bdb99bd1500331eefb30dc84187271a"
+  },
+  "capture_parent": {
+    "bytes": 17612,
+    "path": "target/m2/stage103-reflection-oracle-prep-01/capture.py",
+    "sha256": "3f5947f9db526672aadef15bd836d9d4aa0b14333cbcdc7d2bfe5276d637ccc8"
+  },
+  "cohorts": {
+    "bytes": 1409,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/cohorts.json",
+    "sha256": "9906fe6a7e0145a0ac1cd8cfdad1467f0b532ebca4469b1c5c39806e2e304f32"
+  },
+  "commands": {
+    "bytes": 2221,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/commands.json",
+    "sha256": "8fb0ca6d43fc3db4bd0b7970ee51b002624d729ad5b075eb951064c8685ec802"
+  },
+  "complete": true,
+  "contracts": 225,
+  "execution_authorized": false,
+  "execution_gate": {
+    "bytes": 242,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/execution-gate.json",
+    "sha256": "d4f6ca24486319472d4b70c6dabd9ec756c37b27219ecf61d047c2bd11038b79"
+  },
+  "full_reflection_scope_reduced": false,
+  "helper_derivation": {
+    "bytes": 1188,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/helper-derivation.json",
+    "sha256": "1abb72bbe5e92d1e22f9b346051b2063f1c2f1928a405435dd38abc00fda161d"
+  },
+  "helper_false": {
+    "bytes": 6329,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/helper-false/CollectionEveryOracle.java",
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "helper_true": {
+    "bytes": 6328,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/CollectionEveryOracle.java",
+    "sha256": "56defcb9f990729eedc3a3b98854c07319859a683cae4a404fedaf821cc2a98f"
+  },
+  "implementation_context": {
+    "bytes": 925,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/implementation-context.json",
+    "sha256": "44ebd59a6b681d1a2b88dcf60715e5c44a072504dd0a44ff4e1d1c8e7338d5d7"
+  },
+  "kind": "Stage103225 reflection Java authority acquisition preparation; no execution",
+  "observations": 450,
+  "plan": {
+    "bytes": 1355,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/PLAN.md",
+    "sha256": "c4d3531fd13a7392167341efc0a8e86ed371e316e7f62611cacf6efd13919b7c"
+  },
+  "power_false": 207,
+  "power_true": 18,
+  "primary_input_snapshots": {
+    "bytes": 19197,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/primary-input-snapshots.json",
+    "sha256": "2376e848d08cc26ae6def3044a91c2925dbfd8867da3dd4167ee8b325878a61a"
+  },
+  "prior219_preparation": {
+    "bytes": 5134,
+    "path": "target/m2/stage103-reflection-oracle-prep-01/preparation.json",
+    "sha256": "f6884133651bdfec8de4a00cbdf30fec74f1a1ba3b0cbc6211083f906c6c6102"
+  },
+  "programs": 21,
+  "qualifications": [
+    "Expected values will come only from future actual Java; no parse/semantic/compatibility result.",
+    "Original166/metadata47/Reference6 primary snapshot bytes unchanged; legal6 adds one separately identified program and URI. No stale Mapping implementation base is Java authority.",
+    "Old Reference6 closedChild/externalModule risks are possible source preemptions only, never observed before actual Java. Legal6 statically addresses those two risks; any further blockers remain exact outcomes.",
+    "All225 are required bounded contracts; full20-mirror/inherited routes/14whole originals/GC/Host/identity/further semantic work remain open.",
+    "No actual ownership/disk preflight until explicit future Java grant. Mapping corrected12 remains first queued."
+  ],
+  "readback": {
+    "bytes": 10139,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/readback.py",
+    "sha256": "748ef7f67e7cd633ecf38e6880a603ba5473ae6168f747ae074591fcb6101b1b"
+  },
+  "readback_delta": {
+    "bytes": 2855,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/readback-derivation.patch",
+    "sha256": "0d9874b95da8b1c8468386f487673efffd59503ba39e96c86ee67d2893aca2c3"
+  },
+  "readback_parent": {
+    "bytes": 9990,
+    "path": "target/m2/stage103-reflection-oracle-prep-01/readback.py",
+    "sha256": "bf8743e71f72e680df4a472b07cbcb0ab8a4b78fdc7e98c58d779e6713044b02"
+  },
+  "resource_policy": {
+    "bytes": 352,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/resource-admission.json",
+    "sha256": "3ab3b8cf6910cc6e61ffe9398375c17ca06fe70b1e1281e59e93812cf18e0611"
+  },
+  "sessions": 42,
+  "source_authority": {
+    "bytes": 2199,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/pinned-source-authority.json",
+    "sha256": "556c734192fd38acb1ec740f58c4784c83f8c4e91e5a5b0efb023d3a593f7e63"
+  },
+  "source_preflight": {
+    "bytes": 6621,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/main-input-preflight.json",
+    "sha256": "421d6d72b69a6cb3384fd7f0e5e0f334a954fba5b8d2eee6f4fad1da530478d8"
+  },
+  "source_ready": true,
+  "transport_roundtrip": {
+    "bytes": 102237,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/transport-roundtrip.json",
+    "sha256": "5b2171870b4362785d116aec8c702008505179912701247a0435b9835790b9aa"
+  }
+}

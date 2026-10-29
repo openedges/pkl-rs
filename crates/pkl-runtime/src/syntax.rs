@@ -17,8 +17,81 @@ pub struct Module {
     pub interpolation_spans: std::collections::BTreeMap<Span, Span>,
 }
 
+/// Exact documentation token sections, retained in authored order. The parser
+/// excludes intervening ordinary comments without losing their source offsets.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct DocComment {
+    pub sections: Vec<Span>,
+}
+
+impl DocComment {
+    /// Export the parser's single-line sections using VmUtils.exportDocComment's
+    /// prefix rule. At most one ASCII space, tab, or formfeed follows `///`.
+    /// Invalid source/section associations return None instead of slicing panic.
+    pub fn text(&self, source: &str) -> Option<PklString> {
+        let mut result = String::new();
+        for (index, section) in self.sections.iter().enumerate() {
+            let text = source
+                .get(section.start..section.end)?
+                .strip_prefix("///")?;
+            let text = if matches!(text.as_bytes().first(), Some(b' ' | b'\t' | b'\x0c')) {
+                &text[1..]
+            } else {
+                text
+            };
+            if index != 0 {
+                result.push('\n');
+            }
+            result.push_str(text);
+        }
+        Some(result.into())
+    }
+}
+
+/// Immutable source metadata for a compiled declaration body. Its owning
+/// BlockMetadata supplies unit/source identity; runtime mirror identity and
+/// owner/prototype objects are separate and must be retained by the heap.
+#[derive(Clone, Debug, PartialEq)]
+pub struct DeclarationSource {
+    pub name: String,
+    pub name_span: Span,
+    pub header_span: Span,
+    pub declaration_span: Span,
+    pub doc_comment: Option<DocComment>,
+    pub modifiers: Vec<Modifier>,
+    /// Original type syntax is independent of executable check normalization.
+    pub recipe: DeclarationRecipe,
+}
+
+/// Reflection retains declaration recipes instead of reconstructing aliases and
+/// type variables from their expanded runtime checks. No guest value is stored.
+#[derive(Clone, Debug, PartialEq)]
+pub enum DeclarationRecipe {
+    Property {
+        ty: Option<Type>,
+        undefined: bool,
+    },
+    Method {
+        type_parameters: Vec<TypeParameter>,
+        parameters: Vec<Parameter>,
+        return_type: Option<Type>,
+    },
+    Class {
+        type_parameters: Vec<TypeParameter>,
+        superclass: Option<Type>,
+    },
+    TypeAlias {
+        type_parameters: Vec<TypeParameter>,
+        referent: Type,
+    },
+    Import {
+        uri: String,
+    },
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct Member {
+    pub doc_comment: Option<DocComment>,
     pub annotations: Vec<Expr>,
     pub name: String,
     pub name_span: Span,
@@ -37,6 +110,71 @@ pub struct Member {
 }
 
 impl Member {
+    /// Reflection locations use declaration headers, never initializer spans.
+    pub fn declaration_source(&self) -> DeclarationSource {
+        let header_span = match &self.expr.kind {
+            ExprKind::Class { header_span, .. }
+            | ExprKind::TypeAlias { header_span, .. }
+            | ExprKind::Function {
+                header_span,
+                method: true,
+                ..
+            } => *header_span,
+            _ => Span::new(
+                self.span.start,
+                self.ty
+                    .as_ref()
+                    .map_or(self.name_span.end, |ty| ty.span.end),
+            ),
+        };
+        DeclarationSource {
+            name: self.name.clone(),
+            name_span: self.name_span,
+            header_span,
+            declaration_span: self.span,
+            doc_comment: self.doc_comment.clone(),
+            modifiers: self.modifiers.clone(),
+            recipe: match &self.expr.kind {
+                ExprKind::Class {
+                    type_parameters,
+                    superclass,
+                    ..
+                } => DeclarationRecipe::Class {
+                    type_parameters: type_parameters.clone(),
+                    superclass: superclass.clone(),
+                },
+                ExprKind::TypeAlias {
+                    type_parameters,
+                    ty,
+                    ..
+                } => DeclarationRecipe::TypeAlias {
+                    type_parameters: type_parameters.clone(),
+                    referent: ty.clone(),
+                },
+                ExprKind::Function {
+                    type_parameters,
+                    parameters,
+                    return_type,
+                    method: true,
+                    ..
+                } => DeclarationRecipe::Method {
+                    type_parameters: type_parameters.clone(),
+                    parameters: parameters.clone(),
+                    return_type: return_type.clone(),
+                },
+                ExprKind::Import {
+                    uri,
+                    clause_alias: Some(_),
+                    ..
+                } => DeclarationRecipe::Import { uri: uri.clone() },
+                _ => DeclarationRecipe::Property {
+                    ty: self.ty.clone(),
+                    undefined: matches!(self.expr.kind, ExprKind::Uninitialized),
+                },
+            },
+        }
+    }
+
     /// An authored `property { ... }` carries a synthetic super read at the
     /// property's name, including when more object bodies wrap that read.
     /// An explicit amendment expression keeps its own span.
@@ -123,6 +261,7 @@ pub struct Parameter {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModuleDeclaration {
+    pub doc_comment: Option<DocComment>,
     pub annotations: Vec<Expr>,
     pub name: Option<Vec<String>>,
     pub parent: Option<ModuleParent>,
@@ -453,6 +592,7 @@ impl Expr {
 
 fn clone_member(member: &Member, expr: Expr) -> Member {
     Member {
+        doc_comment: member.doc_comment.clone(),
         annotations: member.annotations.clone(),
         name: member.name.clone(),
         name_span: member.name_span,

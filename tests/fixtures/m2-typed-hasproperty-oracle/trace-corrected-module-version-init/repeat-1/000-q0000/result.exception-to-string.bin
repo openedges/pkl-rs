@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot call method `hasProperty` from here because it is not `const`.
+
+1 | @ModuleInfo { minPklVersion = trace(if (module.hasProperty("absent")) "0.0.0" else "0.0.1") }
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at typedVersionInit.minPklVersion (file:///stage104/typed-hasproperty/module-version-init.pkl)
+
+To fix, do either of:
+1. Add modifier `const` to method `hasProperty`
+2. Self-import this module, and reference this method from the import.

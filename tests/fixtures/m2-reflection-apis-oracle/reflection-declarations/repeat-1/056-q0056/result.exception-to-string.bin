@@ -1,0 +1,9 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `reflect`.
+
+1 | reflect.moduleOf((module) {}).name
+    ^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+reflected

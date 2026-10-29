@@ -1,0 +1,69 @@
+{
+  "actual_Java_executed": false,
+  "canonical_mutations": 0,
+  "complete": true,
+  "contracts": 9,
+  "exact_source_diff": {
+    "bytes": 965,
+    "path": "target/m2/stage104-typed-hasproperty-oracle-prep-03/sources.patch",
+    "sha256": "f9344ebdde990b6429f120efee67c2b2bf5460370585d6cf324dbe719d960110"
+  },
+  "files": [
+    {
+      "bytes": 6328,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-prep-03/CollectionEveryOracle.java",
+      "sha256": "56defcb9f990729eedc3a3b98854c07319859a683cae4a404fedaf821cc2a98f"
+    },
+    {
+      "bytes": 556,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-prep-03/PLAN.md",
+      "sha256": "a8e0fc705905901cfce508c648b7c5fde993cbbf7be0141a82093e25aad6c453"
+    },
+    {
+      "bytes": 17226,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-prep-03/capture.py",
+      "sha256": "3ad21be6a1c4b363c0ee5ac3e834715c31c113871b63df25cf4807fcf7244e28"
+    },
+    {
+      "bytes": 351,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-prep-03/cohorts.json",
+      "sha256": "37de40efd8815b6410268d6a646f6d7ed841d011b763f09356eacf8f531e1255"
+    },
+    {
+      "bytes": 6329,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-prep-03/helper-false/CollectionEveryOracle.java",
+      "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+    },
+    {
+      "bytes": 4613,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-prep-03/queries.json",
+      "sha256": "07c3d2bf3f3feed756079515368b2a02b5d41bbf78109f35fb84afed1cc66461"
+    },
+    {
+      "bytes": 965,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-prep-03/sources.patch",
+      "sha256": "f9344ebdde990b6429f120efee67c2b2bf5460370585d6cf324dbe719d960110"
+    },
+    {
+      "bytes": 1498,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-prep-03/transport-roundtrip.json",
+      "sha256": "a5e1be8921bab4c9f388e9dd4fced8278ac4f5d93754c3b4de3a486cff25474d"
+    }
+  ],
+  "only_semantic_source_change": "Remove invalid trace second label argument in exactly three existing program sources; queries/URI/order/repetition unchanged.",
+  "original_capture": {
+    "bytes": 2789145,
+    "path": "target/m2/stage104-typed-hasproperty-oracle-01/report.json",
+    "sha256": "bf6ffcea4bfc87f9657d2a7b7b28d96bb5aa2698612862b2de7dd1cb4f0b089f"
+  },
+  "planned_observations": 18,
+  "planned_sessions": 6,
+  "predecessor": {
+    "bytes": 4236,
+    "path": "target/m2/stage104-typed-hasproperty-oracle-prep-02/preparation.json",
+    "sha256": "94dc7b38506559891c2e83063d3543ee61a6363a9ed7a0f316365104e48629f0"
+  },
+  "preparation_complete": true,
+  "programs": 3,
+  "root_corrected_supplement_Java_window_granted": true
+}

@@ -459,6 +459,15 @@ fn evaluate_module_output_with_budget_and_hosts(
                 power_assertions: true,
             },
             log_delivery: crate::logging::LogDelivery::Host,
+            // CLI settings transform reflection locations as well as log and
+            // error frames. Keep the API default independent of editor settings.
+            frame_transformer: if options.diagnostic_profile
+                == DiagnosticProfile::CliBundledSettings
+            {
+                crate::logging::FrameTransformer::Host
+            } else {
+                crate::logging::FrameTransformer::Default
+            },
             ..Default::default()
         },
     ) {
@@ -489,23 +498,25 @@ fn evaluate_module_output_with_budget_and_hosts(
                         )?;
                     }
                 }
-                HostPoll::TransformFrame { .. } => {
-                    return Err(crate::value::RuntimeError::new(
-                        crate::value::ErrorKind::Unsupported,
-                        "the synchronous module boundary does not supply a frame transformer",
-                    ));
+                HostPoll::TransformFrame { token, frame } => {
+                    let mut frame =
+                        crate::logging::FrameTransformer::Default.transform((*frame).clone());
+                    // settings.System.urlScheme is "%{url}, line %{line}".
+                    // Apply it through the same Host continuation used by the
+                    // public evaluator, before reflection caches its result.
+                    if frame.module_uri.to_java_utf8().starts_with("file:") {
+                        frame.module_uri = frame
+                            .module_uri
+                            .concat(&format!(", line {}", frame.start_line).into());
+                    }
+                    session.complete_frame_transform(&token, Ok(frame), 0)?;
                 }
                 HostPoll::Log { token, event } => {
                     let level = match event.level {
                         crate::logging::LogLevel::Trace => "TRACE",
                         crate::logging::LogLevel::Warn => "WARN",
                     };
-                    let mut uri = event.frame.module_uri.to_java_utf8();
-                    if options.diagnostic_profile == DiagnosticProfile::CliBundledSettings
-                        && uri.starts_with("file:")
-                    {
-                        uri = format!("{uri}, line {}", event.frame.start_line);
-                    }
+                    let uri = event.frame.module_uri.to_java_utf8();
                     let message = event.message.to_java_utf8();
                     let space = if message.ends_with('\n') { "" } else { " " };
                     stderr.extend_from_slice(
@@ -547,6 +558,73 @@ fn evaluate_module_output_with_budget_and_hosts(
 #[cfg(test)]
 mod output_budget_tests {
     use super::*;
+
+    #[test]
+    fn reflection_locations_use_cli_editor_settings_without_changing_api_defaults() {
+        let input = ModuleSourceInput {
+            text: "\nmodule example\noutput { text = import(\"pkl:reflect\").Module(module).location.displayUri }",
+            uri: "file:///reflection-location.pkl",
+            inferred_name: "example",
+        };
+        for (profile, expected) in [
+            (
+                DiagnosticProfile::CliBundledSettings,
+                "file:///reflection-location.pkl, line 2",
+            ),
+            (
+                DiagnosticProfile::ApiIdentity,
+                "file:///reflection-location.pkl",
+            ),
+        ] {
+            let result = evaluate_module_output(
+                input,
+                &ModuleEvalOptions {
+                    diagnostic_profile: profile,
+                    ..Default::default()
+                },
+            );
+            assert_eq!(result.exit_code, 0, "{:?}", result.stderr);
+            assert_eq!(result.stdout, expected.as_bytes());
+            assert!(result.stderr.is_empty());
+        }
+    }
+
+    #[test]
+    fn cli_trace_uses_the_transformed_file_location_exactly_once() {
+        let result = evaluate_module_output(
+            ModuleSourceInput {
+                text: "output { text = trace(42).toString() }",
+                uri: "file:///cli-policy.pkl",
+                inferred_name: "example",
+            },
+            &ModuleEvalOptions::default(),
+        );
+        assert_eq!(result.exit_code, 0, "{:?}", result.stderr);
+        assert_eq!(result.stdout, b"42");
+        assert_eq!(
+            result.stderr,
+            b"pkl: TRACE: 42 = 42 (file:///cli-policy.pkl, line 1)\n"
+        );
+    }
+
+    #[test]
+    fn reflection_module_of_skips_an_object_amendment_without_its_own_module_info() {
+        let result = evaluate_module_output(
+            ModuleSourceInput {
+                text: r#"import "pkl:reflect"
+marker = false
+hidden amended = (module) { marker = true }
+output { text = (reflect.Module(module) == reflect.moduleOf(amended)).toString() }
+"#,
+                uri: "file:///reflection-module.pkl",
+                inferred_name: "example",
+            },
+            &ModuleEvalOptions::default(),
+        );
+        assert_eq!(result.exit_code, 0, "{:?}", result.stderr);
+        assert_eq!(result.stdout, b"true");
+        assert!(result.stderr.is_empty());
+    }
 
     #[test]
     fn interrupted_output_is_a_limit_failure_and_never_partial_success() {

@@ -1,0 +1,340 @@
+{
+  "additional_legal6": true,
+  "complete": true,
+  "kind": "Immutable Java primary source/query snapshots independent of implementation base",
+  "no_implementation_base_source_admission": true,
+  "original219_unchanged": true,
+  "programs": [
+    {
+      "cohort": "main166",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": false,
+      "program": "reflection-types",
+      "queries": 64,
+      "repetitions": 2,
+      "source_UTF16_sha256": "9ff50c288ed4bd8bd0b36bedb6b038f330525e37730f4f79f7c8ee93698d6efb",
+      "source_UTF8_bytes": 176,
+      "source_UTF8_sha256": "aeee5640fa60a7cdcb0303e264adccb2e559be4251219fd61011e67fe409522d",
+      "source_uri": "file:///stage103/reflection-types.pkl"
+    },
+    {
+      "cohort": "main166",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-declarations/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": false,
+      "program": "reflection-declarations",
+      "queries": 57,
+      "repetitions": 2,
+      "source_UTF16_sha256": "8a246bf867e5282635bcd73fcc6b13b048f3644825fb45731f591325a9b9eeb9",
+      "source_UTF8_bytes": 753,
+      "source_UTF8_sha256": "4d40bc246a098dcb5829adbf8d875645ea498ea62fc108f7289eab4c0ffb531c",
+      "source_uri": "file:///stage103/reflection-declarations.pkl"
+    },
+    {
+      "cohort": "main166",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-annotations-defaults/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": false,
+      "program": "reflection-annotations-defaults",
+      "queries": 14,
+      "repetitions": 2,
+      "source_UTF16_sha256": "a5e60539b1a5f47f8a3849dd152a76aad83d0055594e3ac79c02bc2e05a12247",
+      "source_UTF8_bytes": 466,
+      "source_UTF8_sha256": "8eed693609ed014cba6f1c1f5821446657d89788a4606b6150ce42a1ac759700",
+      "source_uri": "file:///stage103/reflection-annotations-defaults.pkl"
+    },
+    {
+      "cohort": "main166",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-locations/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": false,
+      "program": "reflection-locations",
+      "queries": 9,
+      "repetitions": 2,
+      "source_UTF16_sha256": "e8578541b13bfef97e84112832e67c05d303f69bc31949e56b9fe7443febb59e",
+      "source_UTF8_bytes": 245,
+      "source_UTF8_sha256": "ea6dcaabe55a78849fdfe89840d1a64af386b34a901e6a30ea8f81f1a5fcfa3a",
+      "source_uri": "file:///stage103/reflection-locations.pkl"
+    },
+    {
+      "cohort": "main166",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-main166-oracle-01/programs/reference-declaration-origin/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": false,
+      "program": "reference-declaration-origin",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "de4340d8641dc4d7896850f757e10d471eee8e9b6ffd0c5c52759f2e817da317",
+      "source_UTF8_bytes": 296,
+      "source_UTF8_sha256": "189a2509675ba45d4b05bdb39ad98c4cea29d3520733e3b3ca1ac9e3fcc2d82e",
+      "source_uri": "file:///stage103/reference-declaration-origin.pkl"
+    },
+    {
+      "cohort": "main166",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-main166-oracle-01/programs/reflection-types-power/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": true,
+      "program": "reflection-types-power",
+      "queries": 18,
+      "repetitions": 2,
+      "source_UTF16_sha256": "9ff50c288ed4bd8bd0b36bedb6b038f330525e37730f4f79f7c8ee93698d6efb",
+      "source_UTF8_bytes": 176,
+      "source_UTF8_sha256": "aeee5640fa60a7cdcb0303e264adccb2e559be4251219fd61011e67fe409522d",
+      "source_uri": "file:///stage103/reflection-types-power.pkl"
+    },
+    {
+      "cohort": "metadata47",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata47-oracle-01/programs/doc-plain/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": false,
+      "program": "doc-plain",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "88585a6c8432a629d23f0ffa6b491d0f00a5943b5799d527d8d7534d158b53a2",
+      "source_UTF8_bytes": 148,
+      "source_UTF8_sha256": "dc74d3cbde99bbb9fcceef6ecb4368aa48bd4c532bac5a41726ca72942636edb",
+      "source_uri": "file:///stage103/doc-plain.pkl"
+    },
+    {
+      "cohort": "metadata47",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata47-oracle-01/programs/doc-empty/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": false,
+      "program": "doc-empty",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "79ed9535f11cfdd6f97ba777e99bfc28c8639d27d2bf93fe44da278c19f68d5e",
+      "source_UTF8_bytes": 137,
+      "source_UTF8_sha256": "0196d7149cb19b8e3eec8e9520c356467441a4505f409dc58a100cb517fad650",
+      "source_uri": "file:///stage103/doc-empty.pkl"
+    },
+    {
+      "cohort": "metadata47",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata47-oracle-01/programs/doc-spacing/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": false,
+      "program": "doc-spacing",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "0745e214683e3f6490ce42f836370a1cba32df8120027aba66f8937bb89b3c8a",
+      "source_UTF8_bytes": 178,
+      "source_UTF8_sha256": "6cf68f2db01e66d4bc938035010187c72267157a94d2e48ca017c6ae563f7e2b",
+      "source_uri": "file:///stage103/doc-spacing.pkl"
+    },
+    {
+      "cohort": "metadata47",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata47-oracle-01/programs/doc-crlf/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": false,
+      "program": "doc-crlf",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "1edce65cad86f969e96c43343951237223f8030635410b26a71e2b7e8141af38",
+      "source_UTF8_bytes": 156,
+      "source_UTF8_sha256": "4e7dc8c24f610754290a8d32ba3ec63f9b6b2416b40e9d31ba4f1b4c336ae9e6",
+      "source_uri": "file:///stage103/doc-crlf.pkl"
+    },
+    {
+      "cohort": "metadata47",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata47-oracle-01/programs/doc-cr/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": false,
+      "program": "doc-cr",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "6d2a0aee239d7a8232365e22a24f43c6e1ae0c2cc7cc2177006462e57543dffd",
+      "source_UTF8_bytes": 154,
+      "source_UTF8_sha256": "b6a250b0e4dae7a6912a94fd7086cce1f5ba66bd7de53fdb72295397e93183be",
+      "source_uri": "file:///stage103/doc-cr.pkl"
+    },
+    {
+      "cohort": "metadata47",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata47-oracle-01/programs/doc-separator/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": false,
+      "program": "doc-separator",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "af6918d74f2913d95c4467d57a994a806877e96ae4d8060d6cbd7e5be151fb2a",
+      "source_UTF8_bytes": 165,
+      "source_UTF8_sha256": "a1dae299bc4963abc0dc257402b9fd73b81f2e9f7c502a1edabe99ce6bdde32a",
+      "source_uri": "file:///stage103/doc-separator.pkl"
+    },
+    {
+      "cohort": "metadata47",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata47-oracle-01/programs/doc-block-separator/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": false,
+      "program": "doc-block-separator",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "ceb91337153c8af61204855d52bc62a47334c74c239affce9dfca3c5ed8d572e",
+      "source_UTF8_bytes": 174,
+      "source_UTF8_sha256": "99337779568430e25e3f07d932df4f21cb9d15b77431e8ad260b2c5ab58c9a2b",
+      "source_uri": "file:///stage103/doc-block-separator.pkl"
+    },
+    {
+      "cohort": "metadata47",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata47-oracle-01/programs/doc-blank-before-class/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": false,
+      "program": "doc-blank-before-class",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "0314dfd7067951f3a49415f21124d97cbd1c1e49eb9275cf9ff8f9a5ed8d8ccb",
+      "source_UTF8_bytes": 144,
+      "source_UTF8_sha256": "90f86ed205b10c8f5b301e3dc1ad4e1e77951a8828787e7942960889f3ab040a",
+      "source_uri": "file:///stage103/doc-blank-before-class.pkl"
+    },
+    {
+      "cohort": "metadata47",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata47-oracle-01/programs/doc-unicode/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": false,
+      "program": "doc-unicode",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "84ff906465dd35ee12667d3a8c4f6bc1771242981b6e333d6b194dd9b32d2ae3",
+      "source_UTF8_bytes": 176,
+      "source_UTF8_sha256": "3404e871bb6a5725d5d9880da9835e9439873e57048212aa43b77dd89e653e92",
+      "source_uri": "file:///stage103/doc-unicode.pkl"
+    },
+    {
+      "cohort": "metadata47",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata47-oracle-01/programs/doc-absent/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": false,
+      "program": "doc-absent",
+      "queries": 4,
+      "repetitions": 2,
+      "source_UTF16_sha256": "d535e846470bb90ee636d405243c38dbf19039ff5d679cb1d343041287e359b3",
+      "source_UTF8_bytes": 133,
+      "source_UTF8_sha256": "618c797fc4d7c1aa0d698a3e2138a2c6e6df3d26d1d63b69c408541d15f5bc27",
+      "source_uri": "file:///stage103/doc-absent.pkl"
+    },
+    {
+      "cohort": "metadata47",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata47-oracle-01/programs/doc-module/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": false,
+      "program": "doc-module",
+      "queries": 3,
+      "repetitions": 2,
+      "source_UTF16_sha256": "209502876ef22ebddffeef2f622117bd9282a3c4c87f3f481cfc709bf894d25b",
+      "source_UTF8_bytes": 109,
+      "source_UTF8_sha256": "851a29dde12586901825af0fe6682c87cb2be087acd944ecc6c9b5934570c2b3",
+      "source_uri": "file:///stage103/doc-module.pkl"
+    },
+    {
+      "cohort": "metadata47",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata47-oracle-01/programs/doc-no-module/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": false,
+      "program": "doc-no-module",
+      "queries": 3,
+      "repetitions": 2,
+      "source_UTF16_sha256": "d6c09879cb38143205ddcd14873bfd5295573994566a7b0b67d8011b806a2de7",
+      "source_UTF8_bytes": 50,
+      "source_UTF8_sha256": "6285de456ebc1cd2fe0dc3c0776ed1d76ac83dab03be788883eb3ca22da0e6e7",
+      "source_uri": "file:///stage103/doc-no-module.pkl"
+    },
+    {
+      "cohort": "metadata47",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-metadata47-oracle-01/programs/doc-separated-docs/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": false,
+      "program": "doc-separated-docs",
+      "queries": 1,
+      "repetitions": 2,
+      "source_UTF16_sha256": "ccfb12b948d0d57c24ab38ddb95d1945f32bd101a876a8807005a3d3406df229",
+      "source_UTF8_bytes": 80,
+      "source_UTF8_sha256": "cdf22415a25c836e5e12c0a3356b2c84da100db27902bdc7530b3d14e0c6847c",
+      "source_uri": "file:///stage103/doc-separated-docs.pkl"
+    },
+    {
+      "cohort": "reference6",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-reference6-oracle-01/programs/reference-module-subclass/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": false,
+      "program": "reference-module-subclass",
+      "queries": 6,
+      "repetitions": 2,
+      "source_UTF16_sha256": "8dd692371dcd0711fdf1c209ecbee1a4d73d8c082cfb9316e5e9776299237ff6",
+      "source_UTF8_bytes": 402,
+      "source_UTF8_sha256": "0e682a6bd14ad565d48bbf1e52db128103592bccd6827d09ce5fcedae6c93247",
+      "source_uri": "file:///stage103/reference-module-subclass.pkl"
+    },
+    {
+      "cohort": "legal-reference6",
+      "future_materialized_physical_source": "target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/module.pkl",
+      "physical_source_contract": "Exact source bytes supplied via ModuleSource.create(authored URI,text); physical capture path differs from source URI deliberately; no /stage103 source file is created or substituted.",
+      "power_assertions": false,
+      "program": "reference-module-subclass-legal",
+      "queries": 6,
+      "repetitions": 2,
+      "source_UTF16_sha256": "6ebaf70fe5274292ef0c7eaa0451ef875d35b6c1610a205ffce87dc826ab5508",
+      "source_UTF8_bytes": 411,
+      "source_UTF8_sha256": "a25d021ad96643446c30d6fc113ea342df6ea538a548896c1c2ac3307a1bf3dc",
+      "source_uri": "file:///stage103/reference-module-subclass-legal.pkl"
+    }
+  ],
+  "snapshots": [
+    {
+      "cohort": "main166",
+      "exact_bytes": true,
+      "original": {
+        "bytes": 88317,
+        "path": "target/m2/stage103-reflection-api-candidate-01/queries.json",
+        "sha256": "35080de55a88e52f09a7859fe034d8ee849ad142f4b7505ccb18c961800e9190"
+      },
+      "primary_snapshot": {
+        "bytes": 88317,
+        "path": "target/m2/stage103-reflection-oracle-prep-02/inputs/main166.json",
+        "sha256": "35080de55a88e52f09a7859fe034d8ee849ad142f4b7505ccb18c961800e9190"
+      }
+    },
+    {
+      "cohort": "metadata47",
+      "exact_bytes": true,
+      "original": {
+        "bytes": 22460,
+        "path": "target/m2/stage103-reflection-api-candidate-02/metadata-queries.json",
+        "sha256": "210a71753a7fa34038cb2b503ca28121a3e950783c8883d29f8128ed658724f6"
+      },
+      "primary_snapshot": {
+        "bytes": 22460,
+        "path": "target/m2/stage103-reflection-oracle-prep-02/inputs/metadata47.json",
+        "sha256": "210a71753a7fa34038cb2b503ca28121a3e950783c8883d29f8128ed658724f6"
+      }
+    },
+    {
+      "cohort": "reference6",
+      "exact_bytes": true,
+      "original": {
+        "bytes": 2788,
+        "path": "target/m2/stage103-reflection-api-candidate-02/reference-queries.json",
+        "sha256": "89a3f5a7aa6cebd3444be8ee45ca3bd4e1e77641db7913a6cbfba97868e8b4d9"
+      },
+      "primary_snapshot": {
+        "bytes": 2788,
+        "path": "target/m2/stage103-reflection-oracle-prep-02/inputs/reference6.json",
+        "sha256": "89a3f5a7aa6cebd3444be8ee45ca3bd4e1e77641db7913a6cbfba97868e8b4d9"
+      }
+    },
+    {
+      "cohort": "legal-reference6",
+      "exact_bytes": true,
+      "original": {
+        "bytes": 2819,
+        "path": "target/m2/stage103-reflection-api-candidate-03/reference-legal-queries.json",
+        "sha256": "039d150d4451c388f1585c396afc41de6e1e021b4ffb942ee8c748fe0df12729"
+      },
+      "primary_snapshot": {
+        "bytes": 2819,
+        "path": "target/m2/stage103-reflection-oracle-prep-02/inputs/legal-reference6.json",
+        "sha256": "039d150d4451c388f1585c396afc41de6e1e021b4ffb942ee8c748fe0df12729"
+      }
+    }
+  ]
+}

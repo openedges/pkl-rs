@@ -1,0 +1,10 @@
+–– Pkl Error ––
+override forced
+
+13 | class Override extends Parent { inherited = throw("override forced") }
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+at typed-members#Override.inherited (file:///stage104/typed-hasproperty/typed-members.pkl)
+
+1 | overridden.inherited.toString()
+    ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

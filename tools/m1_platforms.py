@@ -155,7 +155,7 @@ def source_paths(root=ROOT):
              'tests/fixtures/m1/semantics/cases.json', 'crates/pkl-runtime/Cargo.toml',
              'crates/pkl-runtime/examples/semantics_probe.rs',
              'crates/pkl-runtime/src/stdlib/modules.txt']}
-    suffixes = {'.rs', '.pkl', '.toml', '.mjs', '.json'}
+    suffixes = {'.rs', '.pkl', '.toml', '.mjs', '.json', '.bin'}
     excluded = {'node_modules', 'target', '.cache'}
     for folder in ['crates/pkl-runtime/src', 'crates/pkl-wasm', 'crates/pkl-napi', 'tools/platform']:
         for directory, directories, names in os.walk(root / folder, topdown=True):

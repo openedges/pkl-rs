@@ -1,0 +1,142 @@
+{
+  "Java_Rust_Node_browser_compiler_executions": 0,
+  "Java_helper_bytes_changed": false,
+  "all225_expected_unset": true,
+  "canonical_Git_mutations": 0,
+  "capture": {
+    "bytes": 18072,
+    "path": "target/m2/stage103-reflection-oracle-prep-03/capture.py",
+    "sha256": "ee3c8ced386777459a82223124f4fcf02214d7e60669fc7c85ec47b19f7446b4"
+  },
+  "capture_delta": {
+    "bytes": 2078,
+    "path": "target/m2/stage103-reflection-oracle-prep-03/capture-successor.patch",
+    "sha256": "4badfae701862421ea1ec4b3da17b01f8b07541e377db93d52c94a892131aec6"
+  },
+  "capture_parent": {
+    "bytes": 17612,
+    "path": "target/m2/stage103-reflection-oracle-prep-01/capture.py",
+    "sha256": "3f5947f9db526672aadef15bd836d9d4aa0b14333cbcdc7d2bfe5276d637ccc8"
+  },
+  "cohorts": {
+    "bytes": 1409,
+    "path": "target/m2/stage103-reflection-oracle-prep-03/cohorts.json",
+    "sha256": "66d6aa8a84aa8a74e61fb9669f0e4a7203968d034c90ee1bdca781578f339c95"
+  },
+  "commands": {
+    "bytes": 2196,
+    "path": "target/m2/stage103-reflection-oracle-prep-03/commands.json",
+    "sha256": "eb06e779b901b4a442f2d2862fa5d421cc69c37a9201c99a492c44daa7f90ff3"
+  },
+  "complete": true,
+  "completed_main166": {
+    "bytes": 3249232,
+    "path": "target/m2/stage103-reflection-main166-oracle-01/report.json",
+    "sha256": "20daff552c18c726654e0f4f57fcb71cabd4ee59465a9faec7fbf2d72d7400c3"
+  },
+  "contracts": 225,
+  "execution_authorized": false,
+  "execution_gate": {
+    "bytes": 242,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/execution-gate.json",
+    "sha256": "d4f6ca24486319472d4b70c6dabd9ec756c37b27219ecf61d047c2bd11038b79"
+  },
+  "failed_metadata47": {
+    "bytes": 1398,
+    "path": "target/m2/stage103-reflection-oracle-window-01/metadata47-failure.json",
+    "sha256": "03e144872829bd6d41eada9caadb60db912d0d37bdae49827cf6d5088fa21315"
+  },
+  "full_reflection_scope_reduced": false,
+  "helper_derivation": {
+    "bytes": 1188,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/helper-derivation.json",
+    "sha256": "1abb72bbe5e92d1e22f9b346051b2063f1c2f1928a405435dd38abc00fda161d"
+  },
+  "helper_false": {
+    "bytes": 6329,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/helper-false/CollectionEveryOracle.java",
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "helper_true": {
+    "bytes": 6328,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/CollectionEveryOracle.java",
+    "sha256": "56defcb9f990729eedc3a3b98854c07319859a683cae4a404fedaf821cc2a98f"
+  },
+  "implementation_context": {
+    "bytes": 925,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/implementation-context.json",
+    "sha256": "44ebd59a6b681d1a2b88dcf60715e5c44a072504dd0a44ff4e1d1c8e7338d5d7"
+  },
+  "kind": "Stage103 Reflection225 successor after transient owned-cache usage race; source-only preparation",
+  "main166_lineage": "Actual report retains prep02/capture.py/inputbookends; fullreadback checks its original inputs unchanged. No prep03 producer origin is assigned to prior capture.",
+  "observations": 450,
+  "plan": {
+    "bytes": 824,
+    "path": "target/m2/stage103-reflection-oracle-prep-03/PLAN.md",
+    "sha256": "e05214da11318a4f177812c0124e90305d0130ebbd662e29ea922d3b08aac6ea"
+  },
+  "power_false": 207,
+  "power_true": 18,
+  "primary_input_snapshots": {
+    "bytes": 19197,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/primary-input-snapshots.json",
+    "sha256": "2376e848d08cc26ae6def3044a91c2925dbfd8867da3dd4167ee8b325878a61a"
+  },
+  "primary_matrix_bytes_changed": false,
+  "prior219_preparation": {
+    "bytes": 5134,
+    "path": "target/m2/stage103-reflection-oracle-prep-01/preparation.json",
+    "sha256": "f6884133651bdfec8de4a00cbdf30fec74f1a1ba3b0cbc6211083f906c6c6102"
+  },
+  "prior_preparation": {
+    "bytes": 5403,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/preparation.json",
+    "sha256": "0c774f0e9d572ba1de8510065f01afd9fba4d274cac5b469d7fd2d42c40b8513"
+  },
+  "programs": 21,
+  "qualifications": [
+    "Expected values will come only from future actual Java; no parse/semantic/compatibility result.",
+    "Original166/metadata47/Reference6 primary snapshot bytes unchanged; legal6 adds one separately identified program and URI. No stale Mapping implementation base is Java authority.",
+    "Old Reference6 closedChild/externalModule risks are possible source preemptions only, never observed before actual Java. Legal6 statically addresses those two risks; any further blockers remain exact outcomes.",
+    "All225 are required bounded contracts; full20-mirror/inherited routes/14whole originals/GC/Host/identity/further semantic work remain open.",
+    "No actual ownership/disk preflight until explicit future Java grant. Mapping corrected12 remains first queued."
+  ],
+  "readback": {
+    "bytes": 10139,
+    "path": "target/m2/stage103-reflection-oracle-prep-03/readback.py",
+    "sha256": "8ca36d1b0dd2dcd3a9382f6b769de37339c09517980fdfcc85b7b97bc951985e"
+  },
+  "readback_delta": {
+    "bytes": 1310,
+    "path": "target/m2/stage103-reflection-oracle-prep-03/readback-successor.patch",
+    "sha256": "233c4282decc31be4c9c18d2a9b8ea67925bb90ce3db196c6320012cab788f35"
+  },
+  "readback_parent": {
+    "bytes": 9990,
+    "path": "target/m2/stage103-reflection-oracle-prep-01/readback.py",
+    "sha256": "bf8743e71f72e680df4a472b07cbcb0ab8a4b78fdc7e98c58d779e6713044b02"
+  },
+  "resource_policy": {
+    "bytes": 352,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/resource-admission.json",
+    "sha256": "3ab3b8cf6910cc6e61ffe9398375c17ca06fe70b1e1281e59e93812cf18e0611"
+  },
+  "resource_policy_diff": "No limits/profile/timeout changes. Only disappearing paths under OUT/home/Library/Caches or OUT/tmp retry lstat; record path/count if still absent; sealed input/output authority paths still fail closed.",
+  "sessions": 42,
+  "source_authority": {
+    "bytes": 2199,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/pinned-source-authority.json",
+    "sha256": "556c734192fd38acb1ec740f58c4784c83f8c4e91e5a5b0efb023d3a593f7e63"
+  },
+  "source_preflight": {
+    "bytes": 6621,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/main-input-preflight.json",
+    "sha256": "421d6d72b69a6cb3384fd7f0e5e0f334a954fba5b8d2eee6f4fad1da530478d8"
+  },
+  "source_ready": true,
+  "transport_roundtrip": {
+    "bytes": 102237,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/transport-roundtrip.json",
+    "sha256": "5b2171870b4362785d116aec8c702008505179912701247a0435b9835790b9aa"
+  }
+}

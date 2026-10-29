@@ -1,0 +1,8 @@
+module stage103.separated
+import "pkl:reflect"
+/// first
+
+/// second
+class C {}
+
+hidden exposedReflection = reflect

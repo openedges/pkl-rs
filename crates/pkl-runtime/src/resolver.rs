@@ -225,6 +225,7 @@ pub(crate) enum AstPreparation {
 #[derive(Clone, Debug)]
 pub struct ResolvedModule {
     pub module: Module,
+    pub(crate) standard_library: bool,
     pub(crate) preparation: Vec<AstPreparation>,
     pub(crate) preparation_is_evaluation: bool,
     pub(crate) function_owners: BTreeMap<Span, crate::value::PklString>,
@@ -281,6 +282,7 @@ struct Resolver<'a> {
     preparation: Vec<AstPreparation>,
     deferred_diagnostics: &'a [Diagnostic],
     evaluation_preparation: bool,
+    standard_library: bool,
     scopes: Vec<Scope<'a>>,
     folded_integer_spans: &'a BTreeMap<Span, Span>,
     names: BTreeMap<Span, Binding>,
@@ -395,6 +397,7 @@ enum Work<'a> {
     EndFunction(bool, bool),
     EndMember(ConstLevel),
     EndObject(bool),
+    EndTypeParameters,
     PopScope,
     EndDiagnosticOwner,
     DiagnosticOwnerPrefix(&'a [ObjectMember]),
@@ -640,6 +643,9 @@ impl<'a> Resolver<'a> {
                     self.const_level = level;
                     self.scopes.pop();
                 }
+                Work::EndTypeParameters => {
+                    self.scopes.pop();
+                }
                 Work::PopScope => {
                     self.diagnostic_owners.exit();
                     self.scopes.pop();
@@ -882,6 +888,7 @@ impl<'a> Resolver<'a> {
                     }
                     if object
                         && self.amending_module
+                        && !self.standard_library
                         && self.object_levels.len() == 1
                         && let ExprKind::Function {
                             type_parameters_span: Some(span),
@@ -1517,6 +1524,10 @@ impl<'a> Resolver<'a> {
                         ..
                     } => {
                         self.reject_nonstdlib_type_parameters(type_parameters)?;
+                        if !type_parameters.is_empty() {
+                            self.scopes.push(Scope::TypeParameters(type_parameters));
+                            work.push(Work::EndTypeParameters);
+                        }
                         if !method && parameters.len() > 5 {
                             return Err(Diagnostic::language(
                                 DiagnosticOrigin::Resolver,
@@ -1596,6 +1607,10 @@ impl<'a> Resolver<'a> {
                         ..
                     } => {
                         self.reject_nonstdlib_type_parameters(type_parameters)?;
+                        if !type_parameters.is_empty() {
+                            self.scopes.push(Scope::TypeParameters(type_parameters));
+                            work.push(Work::EndTypeParameters);
+                        }
                         work.push(Work::ClassMembers(members));
                         if let Some(ty) = superclass {
                             if self.evaluation_preparation {
@@ -1732,13 +1747,26 @@ impl<'a> Resolver<'a> {
         &self,
         parameters: &[TypeParameter],
     ) -> Result<(), Diagnostic> {
-        if let Some(parameter) = parameters.first() {
+        if !self.standard_library
+            && let Some(parameter) = parameters.first()
+        {
             return Err(Diagnostic::language(
                 DiagnosticOrigin::Resolver,
                 DiagnosticKind::Syntax,
                 parameter.span,
                 "Only standard library members can have type parameters.",
             ));
+        }
+        let mut seen = std::collections::BTreeSet::new();
+        for parameter in parameters {
+            if !seen.insert(&parameter.name) {
+                return Err(Diagnostic::language(
+                    DiagnosticOrigin::Resolver,
+                    DiagnosticKind::DuplicateMember,
+                    parameter.span,
+                    format!("Duplicate type parameter `{}`.", parameter.name),
+                ));
+            }
         }
         Ok(())
     }
@@ -1774,15 +1802,17 @@ impl<'a> Resolver<'a> {
                 ),
             }
         };
-        validate_modifiers(&member.modifiers, valid, target).map_err(|mut error| {
-            // The pinned builder checks modifiers before entering the member's
-            // declaration scope, so the enclosing class or property owns it.
-            let enclosing = &self.diagnostic_path[..self.diagnostic_path.len() - 1];
-            if !enclosing.is_empty() {
-                error.member = Some(crate::value::PklString::join(enclosing, ".").into());
-            }
-            error
-        })?;
+        validate_modifiers(&member.modifiers, valid, target, self.standard_library).map_err(
+            |mut error| {
+                // The pinned builder checks modifiers before entering the member's
+                // declaration scope, so the enclosing class or property owns it.
+                let enclosing = &self.diagnostic_path[..self.diagnostic_path.len() - 1];
+                if !enclosing.is_empty() {
+                    error.member = Some(crate::value::PklString::join(enclosing, ".").into());
+                }
+                error
+            },
+        )?;
         let flags = modifier_flags(&member.modifiers);
         let has = |kind: ModifierKind| flags & kind.flag() != 0;
         let modifier = |kind| {
@@ -2132,6 +2162,7 @@ fn validate_modifiers(
     modifiers: &[Modifier],
     valid: &[ModifierKind],
     target: &str,
+    standard_library: bool,
 ) -> Result<(), Diagnostic> {
     use ModifierKind as M;
     for modifier in modifiers {
@@ -2149,7 +2180,7 @@ fn validate_modifiers(
     }
     let find = |kind| modifiers.iter().find(|modifier| modifier.kind == kind);
     let flags = modifier_flags(modifiers);
-    if flags & M::External.flag() != 0 {
+    if flags & M::External.flag() != 0 && !standard_library {
         let Some(modifier) = find(M::External) else {
             return Err(Diagnostic::unsupported(
                 DiagnosticOrigin::Resolver,
@@ -2203,12 +2234,26 @@ fn validate_modifiers(
 }
 
 pub fn resolve_module(module: &Module) -> Result<ResolvedModule, Diagnostic> {
-    let (resolved, error, owner_requested) = resolve_module_inner(module, false, false);
+    resolve_module_with_context(module, false)
+}
+
+/// Only the bundled-source loader may opt into the pinned stdlib declaration rules.
+/// User modules and separately parsed session expressions never receive this context.
+pub(crate) fn resolve_stdlib_module(module: &Module) -> Result<ResolvedModule, Diagnostic> {
+    resolve_module_with_context(module, true)
+}
+
+fn resolve_module_with_context(
+    module: &Module,
+    standard_library: bool,
+) -> Result<ResolvedModule, Diagnostic> {
+    let (resolved, error, owner_requested) =
+        resolve_module_inner(module, false, false, standard_library);
     let Some(mut error) = error else {
         return Ok(resolved);
     };
     if owner_requested {
-        let (_, replay, _) = resolve_module_inner(module, true, false);
+        let (_, replay, _) = resolve_module_inner(module, true, false, standard_library);
         if let Some(mut replay) = replay {
             let owner = replay.member.take();
             let original = error.member.take();
@@ -2220,7 +2265,7 @@ pub fn resolve_module(module: &Module) -> Result<ResolvedModule, Diagnostic> {
 
 /// An incomplete binding result can only compile to a failing initializer.
 pub(crate) fn resolve_module_for_evaluation(module: &Module) -> ResolvedModule {
-    let (mut resolved, error, _) = resolve_module_inner(module, true, true);
+    let (mut resolved, error, _) = resolve_module_inner(module, true, true, false);
     resolved.preparation_failure = error;
     resolved
 }
@@ -2229,6 +2274,7 @@ fn resolve_module_inner(
     module: &Module,
     capture_diagnostic_owner: bool,
     evaluation_preparation: bool,
+    standard_library: bool,
 ) -> (ResolvedModule, Option<Diagnostic>, bool) {
     let mut resolver = Resolver {
         function_owners: BTreeMap::new(),
@@ -2236,6 +2282,7 @@ fn resolve_module_inner(
         deferred_diagnostics: &module.deferred_diagnostics,
         source: &module.source,
         evaluation_preparation,
+        standard_library,
         scopes: Vec::new(),
         folded_integer_spans: &module.folded_integer_spans,
         names: BTreeMap::new(),
@@ -2276,6 +2323,7 @@ fn resolve_module_inner(
                 } else {
                     "modules"
                 },
+                standard_library,
             )?;
         }
         if evaluation_preparation {
@@ -2361,6 +2409,7 @@ fn resolve_module_inner(
     });
     let resolved = ResolvedModule {
         module: module.clone(),
+        standard_library,
         preparation: resolver.preparation,
         function_owners: resolver.function_owners,
         preparation_is_evaluation: evaluation_preparation,
@@ -2388,6 +2437,7 @@ pub(crate) fn resolve_session_expression(
         deferred_diagnostics: &parsed.deferred_diagnostics,
         source: text,
         evaluation_preparation: true,
+        standard_library: false,
         scopes: Vec::new(),
         folded_integer_spans: &parsed.folded_integer_spans,
         names: BTreeMap::new(),
@@ -2417,6 +2467,7 @@ pub(crate) fn resolve_session_expression(
             error
         });
     Ok(ResolvedModule {
+        standard_library: false,
         preparation: resolver.preparation,
         function_owners: resolver.function_owners,
         preparation_is_evaluation: true,
@@ -2434,4 +2485,104 @@ pub(crate) fn resolve_session_expression(
         custom_this: resolver.custom_this,
         custom_functions: resolver.custom_functions,
     })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::parser::parse_module;
+
+    #[test]
+    fn bundled_stdlib_resolution_preserves_external_and_generic_declarations() {
+        for source in [
+            crate::stdlib_sources::base(),
+            crate::stdlib_sources::reflect(),
+        ] {
+            let parsed = parse_module(&source.text).unwrap();
+            let resolved = resolve_stdlib_module(&parsed).unwrap();
+            assert!(resolved.standard_library);
+            assert_eq!(resolved.module, parsed, "{}", source.uri);
+        }
+
+        let parsed = parse_module(
+            "external class Box<out T> { value: T; external function get<U>(value: U): T }\n\
+             external function pass<V>(value: V): V\noutside: T\n",
+        )
+        .unwrap();
+        let resolved = resolve_stdlib_module(&parsed).unwrap();
+        assert_eq!(resolved.module, parsed);
+        let ExprKind::Class { members, .. } = &parsed.members[0].expr.kind else {
+            panic!("generic class");
+        };
+        assert!(
+            !resolved
+                .names
+                .contains_key(&members[0].ty.as_ref().unwrap().span)
+        );
+        assert_eq!(
+            resolved
+                .names
+                .get(&parsed.members[2].ty.as_ref().unwrap().span),
+            Some(&Binding::ImplicitThis),
+            "class/method type parameters must not escape their declaration"
+        );
+    }
+
+    #[test]
+    fn user_resolution_keeps_stdlib_restrictions_and_diagnostic_metadata() {
+        for (source, message) in [
+            (
+                "external class C {}",
+                "External members can only be defined by standard library modules.",
+            ),
+            (
+                "class C<T> {}",
+                "Only standard library members can have type parameters.",
+            ),
+            (
+                "function f<T>(value: T): T = value",
+                "Only standard library members can have type parameters.",
+            ),
+        ] {
+            let parsed = parse_module(source).unwrap();
+            let error = resolve_module(&parsed).unwrap_err();
+            let prepared = resolve_module_for_evaluation(&parsed);
+            assert!(!prepared.standard_library);
+            let deferred = prepared.preparation_failure.unwrap();
+            assert_eq!(error.message.to_java_utf8(), message);
+            assert_eq!(deferred.message, error.message);
+            assert_eq!(deferred.span, error.span);
+            assert_eq!(parsed.source.as_ref(), source);
+        }
+        let alias = parse_module("typealias Values<T> = List<T>").unwrap();
+        assert!(resolve_module(&alias).is_ok());
+    }
+
+    #[test]
+    fn trusted_context_does_not_disable_other_declaration_validation() {
+        for (source, message) in [
+            (
+                "hidden function f() = 1",
+                "Modifier `hidden` is not applicable to methods.",
+            ),
+            (
+                "local hidden value = 1",
+                "Modifier `hidden` is redundant here; just use `local`.",
+            ),
+        ] {
+            let parsed = parse_module(source).unwrap();
+            let ordinary = resolve_module(&parsed).unwrap_err();
+            let trusted = resolve_stdlib_module(&parsed).unwrap_err();
+            assert_eq!(trusted, ordinary);
+            assert_eq!(trusted.message.to_java_utf8(), message);
+        }
+        for source in ["class C<T, T> {}", "function f<T, T>() = 1"] {
+            let parsed = parse_module(source).unwrap();
+            let error = resolve_stdlib_module(&parsed).unwrap_err();
+            assert_eq!(
+                error.message.to_java_utf8(),
+                "Duplicate type parameter `T`."
+            );
+        }
+    }
 }

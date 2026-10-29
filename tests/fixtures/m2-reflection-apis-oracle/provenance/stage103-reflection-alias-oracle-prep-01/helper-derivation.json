@@ -1,0 +1,24 @@
+{
+  "Java_behavior_changed": false,
+  "false": {
+    "bytes": 6329,
+    "path": "target/m2/stage103-reflection-alias-oracle-prep-01/helper-false/CollectionEveryOracle.java",
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "kind": "Byte-identical lossless Base64 Java helpers; approved prep03 resource race handling retained",
+  "old_false": {
+    "bytes": 6329,
+    "path": "target/m2/stage103-reflection-oracle-prep-03/helper-false/CollectionEveryOracle.java",
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "old_true": {
+    "bytes": 6328,
+    "path": "target/m2/stage103-reflection-oracle-prep-03/CollectionEveryOracle.java",
+    "sha256": "56defcb9f990729eedc3a3b98854c07319859a683cae4a404fedaf821cc2a98f"
+  },
+  "true": {
+    "bytes": 6328,
+    "path": "target/m2/stage103-reflection-alias-oracle-prep-01/CollectionEveryOracle.java",
+    "sha256": "56defcb9f990729eedc3a3b98854c07319859a683cae4a404fedaf821cc2a98f"
+  }
+}

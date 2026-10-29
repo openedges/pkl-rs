@@ -29,6 +29,7 @@ mod lazy_collections;
 mod list_ops;
 mod map_ops;
 mod mapping_ops;
+pub(crate) mod reflection;
 mod regex;
 mod set_order;
 mod set_sequence;
@@ -72,6 +73,8 @@ use typecheck::{TypeDestination, TypeRun};
 #[derive(Clone, Debug)]
 pub enum Instruction {
     LoadRefModule,
+    ReflectCall(reflection::Operation),
+    MirrorProperty(Arc<str>),
     LoadBaseModule,
     /// Invoke a checked Function0 under a guest exception handler.
     GuestCatch {
@@ -933,6 +936,10 @@ pub(crate) struct LetScope {
 
 #[derive(Clone, Debug)]
 pub struct Program {
+    /// Immutable declaration source descriptors keyed by compiled member body.
+    /// ModuleUnit.syntax retains type/annotation recipes without forcing values.
+    pub declaration_sources: BTreeMap<usize, crate::syntax::DeclarationSource>,
+    reflection_annotations: BTreeMap<(Arc<str>, Span), usize>,
     pub(crate) units: CodeStorage<modules::ModuleUnit>,
     next_declaration: usize,
     type_recipes: CodeStorage<type_resolution::TypeRecipe>,
@@ -1045,6 +1052,7 @@ impl Program {
         ));
         builtin_members.extend(classes::ordinary_members(&mut blocks, &mut metadata));
         builtin_members.extend(regex::builtin_members(&mut blocks, &mut metadata));
+        builtin_members.extend(reflection::builtin_members(&mut blocks, &mut metadata));
         let string_repeat_block = strings::repeat_block(&mut blocks, &mut metadata);
         let collection_join_blocks = collections::join_blocks(&mut blocks, &mut metadata);
         let collection_transform_blocks = collection_transforms::blocks(&mut blocks, &mut metadata);
@@ -1079,6 +1087,8 @@ impl Program {
             collection_transforms::every_blocks(&mut blocks, &mut metadata);
         Self {
             units: CodeStorage::default(),
+            declaration_sources: BTreeMap::new(),
+            reflection_annotations: BTreeMap::new(),
             next_declaration: 0,
             type_recipes: CodeStorage::default(),
             alias_definitions: BTreeMap::new(),
@@ -1232,6 +1242,7 @@ struct Frame {
     lazy_collection_run: Option<Box<lazy_collections::Run>>,
     mapping_lookup: Option<Box<mapping_ops::LookupRun>>,
     mapping_keys: Option<Box<mapping_ops::KeysRun>>,
+    reflection: Option<Box<reflection::Run>>,
     conversion_run: Option<Box<collection_conversions::Run>>,
     collection_addition: Option<Box<collection_addition::Run>>,
     function_owner: Option<ObjectId>,
@@ -1516,6 +1527,7 @@ impl Vm {
             lazy_collection_run: None,
             mapping_lookup: None,
             mapping_keys: None,
+            reflection: None,
             conversion_run: None,
             collection_addition: None,
             function_owner: None,
@@ -1990,6 +2002,9 @@ impl Vm {
                 }
                 if let Some(run) = &frame.mapping_lookup {
                     run.roots(&mut roots);
+                }
+                if let Some(run) = &frame.reflection {
+                    roots.extend(run.roots());
                 }
                 if let Some(run) = &frame.mapping_keys {
                     run.roots(&mut roots);
@@ -3210,7 +3225,12 @@ impl Vm {
             ));
         }
         let mut inherited_types = Vec::new();
-        if stolen_value.is_none() && !local && !method && member.ty.is_none() {
+        if stolen_value.is_none()
+            && !local
+            && !method
+            && member.ty.is_none()
+            && self.heap.get(owner)?.mirror.is_none()
+        {
             let mut parent = self.heap.get(owner)?.parent;
             let mut visited = BTreeSet::new();
             while let Some(id) = parent {
@@ -3310,6 +3330,7 @@ impl Vm {
             lazy_collection_run: None,
             mapping_lookup: None,
             mapping_keys: None,
+            reflection: None,
             conversion_run: None,
             collection_addition: None,
             function_owner: None,
@@ -3384,7 +3405,11 @@ impl Vm {
             }
             owner = object.parent;
         }
-        if method && matches!(name, "toString" | "ifNonNull") {
+        if method
+            && (matches!(name, "toString" | "ifNonNull")
+                || matches!(name, "hasProperty" | "getPropertyOrNull")
+                    && self.typed_has_property_available(initial)?)
+        {
             return Err(Self::non_const_method_error(name));
         }
         Ok(())
@@ -4383,6 +4408,7 @@ impl Vm {
             lazy_collection_run: None,
             mapping_lookup: None,
             mapping_keys: None,
+            reflection: None,
             conversion_run: None,
             collection_addition: None,
             function_owner: Some(id),
@@ -4443,6 +4469,13 @@ impl Vm {
             .is_some_and(|frame| frame.type_run.is_some())
         {
             return self.step_type();
+        }
+        if self
+            .frames
+            .last()
+            .is_some_and(|frame| frame.reflection.is_some())
+        {
+            return self.step_reflection();
         }
         if self
             .frames
@@ -4730,6 +4763,7 @@ impl Vm {
                     let id = self.heap.allocate(Object {
                         type_alias: Some(name),
                         type_alias_declaration: Some(declaration),
+                        declaration_code: self.frames.last().map(|frame| frame.block),
                         environment,
                         ..Object::default()
                     });
@@ -5024,6 +5058,8 @@ impl Vm {
             }
             Instruction::MakeRegex => self.make_regex()?,
             Instruction::RegexMatchProperty(property) => self.regex_match_property(property)?,
+            Instruction::ReflectCall(operation) => self.begin_reflection(operation)?,
+            Instruction::MirrorProperty(name) => self.begin_mirror_property(name)?,
             Instruction::IntSeqConstructor => {
                 let value = self.int_seq_constructor();
                 self.stack.push(value);
@@ -5551,6 +5587,7 @@ impl Vm {
                             ..class
                         }),
                         class_initializing: true,
+                        declaration_code: self.frames.last().map(|frame| frame.block),
                         environment,
                         ..Object::default()
                     });
@@ -7366,6 +7403,9 @@ impl Compiler<'_> {
                     );
                     let block = self.block(code, Some(member.name_span))?;
                     self.program.metadata[block].initialization_error = Some(error);
+                    self.program
+                        .declaration_sources
+                        .insert(block, member.declaration_source());
                     result.push(Member {
                         flags: Member::declaration_flags(member),
                         entry: false,
@@ -7401,6 +7441,11 @@ impl Compiler<'_> {
         let previous_super_method_allowed =
             std::mem::replace(&mut self.super_method_allowed, !object_method);
         let result = self.object_member_body(member, object_method);
+        if let Ok(compiled) = &result {
+            self.program
+                .declaration_sources
+                .insert(compiled.code, member.declaration_source());
+        }
         self.super_method_allowed = previous_super_method_allowed;
         self.constructor_parameters_bound = previous;
         result
@@ -7471,7 +7516,16 @@ impl Compiler<'_> {
                 error.span.unwrap_or(member.span),
             );
         } else if matches!(member.expr.kind, crate::syntax::ExprKind::Uninitialized) {
-            self.default_property(member, &mut instructions)?;
+            if self
+                .source
+                .as_ref()
+                .is_some_and(|source| source.uri.as_ref() == "pkl:reflect")
+                && let Some(operation) = reflection::Operation::binding(&self.member)
+            {
+                instructions.push_at(Instruction::ReflectCall(operation), member.name_span);
+            } else {
+                self.default_property(member, &mut instructions)?;
+            }
         } else {
             self.expression_with_property_parent(&member.expr, &mut instructions, Some(member))?;
         }
@@ -7876,10 +7930,21 @@ impl Compiler<'_> {
                 output.push(Instruction::EntryKey);
                 output.push(Instruction::ApplyEntryDefault);
             }
-            ExprKind::Uninitialized => output.push(Instruction::AbstractMember {
-                name: self.member.clone(),
-                method: true,
-            }),
+            ExprKind::Uninitialized => {
+                if self
+                    .source
+                    .as_ref()
+                    .is_some_and(|source| source.uri.as_ref() == "pkl:reflect")
+                    && let Some(operation) = reflection::Operation::binding(&self.member)
+                {
+                    output.push(Instruction::ReflectCall(operation));
+                } else {
+                    output.push(Instruction::AbstractMember {
+                        name: self.member.clone(),
+                        method: true,
+                    });
+                }
+            }
             ExprKind::Int(value) => output.push(Instruction::Constant(Value::Int((*value).into()))),
             ExprKind::Float(value) => {
                 output.push(Instruction::Constant(Value::Float((*value).into())))
@@ -9855,7 +9920,7 @@ impl Compiler<'_> {
                 | ModifierKind::Fixed => true,
                 ModifierKind::Abstract => true,
                 ModifierKind::Open => matches!(member.expr.kind, ExprKind::Class { .. }),
-                _ => false,
+                ModifierKind::External => self.resolved.standard_library,
             };
             if !supported {
                 return Err(

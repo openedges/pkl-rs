@@ -685,6 +685,7 @@ impl Vm {
             lazy_collection_run: None,
             mapping_lookup: None,
             mapping_keys: None,
+            reflection: None,
             conversion_run: None,
             collection_addition: None,
             function_owner: None,

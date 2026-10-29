@@ -1,0 +1,8 @@
+module typedFailure
+class C {
+ early = 1
+ broken: Missing
+ late = 2
+ local localValue = 0
+ function method() = 0
+}

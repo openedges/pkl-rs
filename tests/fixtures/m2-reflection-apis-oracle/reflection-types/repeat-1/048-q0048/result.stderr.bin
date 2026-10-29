@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot find property `reflect`.
+
+1 | (reflect.Class(1)).toString()
+     ^^^^^^^
+at  (repl:text)

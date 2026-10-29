@@ -1,0 +1,93 @@
+{
+  "Java_source_launch_helper_compilation": "Performed inside actual pinned Java processes as recorded; no standalone javac or Rust compiler was invoked.",
+  "Rust_compiler_or_Rust_evaluations": 0,
+  "Rust_expected_outputs_generated": 0,
+  "all_child_groups_terminal": true,
+  "all_sessions_actual": 38,
+  "both_controller_exit": 0,
+  "canonical_fixture_writes": 0,
+  "complete": true,
+  "corrected_module_supplement": {
+    "bytes": 249657,
+    "path": "target/m2/stage104-typed-hasproperty-module-init-oracle-01/report.json",
+    "sha256": "f6cc2d32f1efd74fb3cca0971ecff8459b2cd8b80188addf50c74908a765e965"
+  },
+  "kind": "Actual Stage104 Typed.hasProperty pinned Java authority handoff",
+  "limits": [
+    "No Rust comparison or implementation pass claimed.",
+    "Module in-progress behavior beyond const-context rejection remains unproven by these actual inputs.",
+    "No performance or full M2/API claim.",
+    "Future fixture generation must preserve exact Java raw channels, source URIs, query order and separate original/corrected authority identities."
+  ],
+  "main": {
+    "bytes": 2789145,
+    "path": "target/m2/stage104-typed-hasproperty-oracle-01/report.json",
+    "sha256": "bf6ffcea4bfc87f9657d2a7b7b28d96bb5aa2698612862b2de7dd1cb4f0b089f"
+  },
+  "main_actual_observations": 282,
+  "main_statuses": {
+    "error": 66,
+    "success": 216
+  },
+  "no_repeat_differences": true,
+  "original_three_trace_syntax_failure_inputs_and18observations_retained": true,
+  "preparations": [
+    {
+      "bytes": 4236,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-prep-02/preparation.json",
+      "sha256": "94dc7b38506559891c2e83063d3543ee61a6363a9ed7a0f316365104e48629f0"
+    },
+    {
+      "bytes": 2703,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-prep-03/preparation.json",
+      "sha256": "f048f9fa217ca2d39cacbd919bec05554df331c9cc43d51ec31cc10eaa81e498"
+    }
+  ],
+  "raw_controller_logs": [
+    {
+      "bytes": 2741,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-execution-01/stdout.bin",
+      "sha256": "ce7c3ea00044fb944a6bbfe4b82b5d29b39c3baf7176103ca39450455840771b"
+    },
+    {
+      "bytes": 0,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-execution-01/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 545,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-execution-01/supplement.stdout.bin",
+      "sha256": "5897c70d544cd7b8ca08a67ec31bb2c26e4ee817bb93dc8e43ffc8b747a2ff70"
+    },
+    {
+      "bytes": 0,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-execution-01/supplement.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "root_exclusive_Java_window_released": true,
+  "semantics_from_actual_Java": {
+    "class_during_publication": "Corrected class @Deprecated message trace observes hasProperty(absent)=true during class construction; after initialization it is false. Method returns1 and deprecation warning preserves true message.",
+    "conversion": "Map/Dynamic.toTyped depend on target class metadata; missing or wrongly typed source values do not force during hasProperty. Non-string Map source keys do not prevent queried target property metadata true.",
+    "failed_class_publication": "After first C.toString errors resolving property or method type, cached C survives with uninitialized class flag; every queried name, including unknown/local/method/default, returns true.",
+    "failed_superclass": "C.toString initially errors resolving superclass; subsequent C.toString returns cached class, but hasProperty calls error because Typed superclass dispatch is unavailable.",
+    "initialized_class": "Required/unset/inherited/hidden property metadata true; local/method/builtin method/undeclared default names false. Explicit declared default true.",
+    "module": "Plain/hidden/default/output true; local/method/class/typealias declaration names false; class-value receiver hasProperty unavailable.",
+    "module_annotation_boundary": "Both corrected module @Deprecated and @ModuleInfo cases produce exact nonconst-method errors before hasProperty executes. This does not verify runtime module-initializing membership behavior.",
+    "no_force": "Direct/Map/Dynamic query all declared unset/throw/read/trace properties true, missing false, no Logger events; explicit subsequent throwing access errors then membership remains true.",
+    "unicode": "Exact composed accent and non-BMP identifiers match; canonically distinct decomposed spelling/control/NUL/unpaired surrogate names do not. All were captured raw without normalization."
+  },
+  "source_and_runtime_stable": true,
+  "success": true,
+  "supplement_actual_observations": 18,
+  "supplement_statuses": {
+    "error": 12,
+    "success": 6
+  },
+  "total_actual_observations": 300,
+  "trace_arity_correction_only": {
+    "bytes": 965,
+    "path": "target/m2/stage104-typed-hasproperty-oracle-prep-03/sources.patch",
+    "sha256": "f9344ebdde990b6429f120efee67c2b2bf5460370585d6cf324dbe719d960110"
+  }
+}

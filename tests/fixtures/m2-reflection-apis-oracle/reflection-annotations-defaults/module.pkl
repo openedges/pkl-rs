@@ -1,0 +1,19 @@
+module stage103.annotations
+import "pkl:reflect"
+class Mark extends Annotation { text: String }
+@Mark { text = "parent" }
+open class Parent {
+  @Mark { text = "old" }
+  hidden value: String = trace("default-parent")
+}
+@Mark { text = "child" }
+class Child extends Parent {
+  @Mark { text = "new" }
+  value = trace("default-child")
+}
+abstract class Abstract {
+  abstract absent: String
+  uninitialized: Int
+  implicit: Listing<Int>
+}
+hidden cls = reflect.Class(Child)

@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Class`, but got type `Int`.
+Value: 1
+
+143 | external const function Class(clazz: base.Class): Class
+                                           ^^^^^^^^^^
+at pkl.reflect#Class (https://github.com/apple/pkl/blob/0.32.0/stdlib/reflect.pkl#L143)
+
+1 | (exposedReflection.Class(1)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

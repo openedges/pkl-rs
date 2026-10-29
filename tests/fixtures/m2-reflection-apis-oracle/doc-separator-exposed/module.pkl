@@ -1,0 +1,11 @@
+module stage103.docs
+import "pkl:reflect"
+/// first
+// ignored
+/// second
+class C {
+  /// property text
+  hidden p: String = throw("initializer must remain lazy")
+}
+
+hidden exposedReflection = reflect

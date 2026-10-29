@@ -1,0 +1,9 @@
+module stage103.referenceInheritance
+import "pkl:ref"
+class Domain extends ref.Domain { function renderReference(value: ref.Reference<Domain,Any>): String = throw("render must not be reached") }
+hidden domain: Domain = new {}
+class Child extends Module { output: ModuleOutput = new { text = "override" }; value: Int = 1 }
+class Grandchild extends Child {}
+class Ordinary { output: String = "allowed" }
+
+hidden exposedReference = ref

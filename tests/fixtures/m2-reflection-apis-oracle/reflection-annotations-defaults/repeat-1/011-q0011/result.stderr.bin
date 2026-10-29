@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot find property `reflect`.
+
+1 | reflect.Class(Abstract).properties["implicit"].type.toString()
+    ^^^^^^^
+at  (repl:text)

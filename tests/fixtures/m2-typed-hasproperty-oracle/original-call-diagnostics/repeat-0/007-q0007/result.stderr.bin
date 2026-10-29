@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot find property `hasProperty` in object of type `call-diagnostics#Subject`.
+
+1 | subject.hasProperty.toString()
+    ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+getProperty(name)

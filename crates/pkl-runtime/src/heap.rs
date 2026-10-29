@@ -215,6 +215,9 @@ pub struct CacheSlot {
 
 #[derive(Clone, Debug, Default)]
 pub struct Object {
+    /// Lazy mirror factory payload. Edges are traced independently of the
+    /// class prototype, including the declaration's executable owner.
+    pub mirror: Option<Box<crate::vm::reflection::Payload>>,
     /// Reader payload has no heap edges. Factory property nodes read their
     /// declaration owner's payload, including when inherited by an amendment.
     pub resource: Option<Arc<crate::resources::Resource>>,
@@ -247,6 +250,13 @@ pub struct Object {
     pub native_function: Option<crate::vm::reference::NativeFunction>,
     pub type_alias: Option<Arc<str>>,
     pub type_alias_declaration: Option<usize>,
+    /// Compiled declaration identity, separate from resolved type identity.
+    /// The environment below retains the owning executable arena.
+    pub declaration_code: Option<usize>,
+    /// Successful mirror cache belongs to the declaration, never a VM-wide root.
+    pub declaration_mirror: Option<ObjectId>,
+    pub module_mirror: Option<ObjectId>,
+    pub mirror_annotations: BTreeMap<crate::source::Span, Vec<Value>>,
     pub type_alias_initialized: bool,
     /// Declaration-owned annotation values; fields remain ordinary lazy members.
     pub annotations: Vec<Value>,
@@ -956,6 +966,14 @@ impl Heap {
                 }
                 Entry::Object(object) => object,
             };
+            if let Some(mirror) = &object.mirror {
+                pending.extend(
+                    mirror
+                        .roots()
+                        .iter()
+                        .filter_map(|value| self.traced_id(value)),
+                );
+            }
             pending.extend(object.parent);
             pending.extend(object.instance_class);
             pending.extend(object.method_declaration.map(|(owner, _)| owner));
@@ -1066,6 +1084,15 @@ impl Heap {
                         .filter_map(|value| self.traced_id(value)),
                 );
             }
+            pending.extend(object.declaration_mirror);
+            pending.extend(object.module_mirror);
+            pending.extend(
+                object
+                    .mirror_annotations
+                    .values()
+                    .flatten()
+                    .filter_map(|value| self.traced_id(value)),
+            );
             pending.extend(object.environment.custom_this.map(|slot| slot.0));
             pending.extend(object.environment.executable_owner.map(|owner| owner.0));
             pending.extend(object.environment.code_owner.map(|owner| owner.0));

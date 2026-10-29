@@ -1,0 +1,9 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `reflect`.
+
+1 | cls.isSubclassOf(reflect.Class(Parent)).toString()
+                     ^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+reflected

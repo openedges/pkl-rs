@@ -493,8 +493,18 @@ impl Renderer<'_> {
                         name: name.into(),
                         method: false,
                     };
-                    match self.heap.get(*access)?.cache.get(&key) {
+                    let object = self.heap.get(*access)?;
+                    match object.cache.get(&key) {
                         Some(LazyState::Completed(value)) => Ok(value.clone()),
+                        // Generated Access components are native constant declarations.
+                        // Reading their stored payload neither forces arbitrary members
+                        // nor publishes a cache entry during diagnostic rendering.
+                        None => object.member_values.get(&key).cloned().ok_or_else(|| {
+                            RuntimeError::new(
+                                ErrorKind::InvalidBytecode,
+                                "Reference path component has no native value",
+                            )
+                        }),
                         _ => Err(RuntimeError::new(
                             ErrorKind::InvalidBytecode,
                             "Reference path component is not cached",

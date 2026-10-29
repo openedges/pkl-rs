@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot find method `hasProperty` in class `incomplete-superclass#B`.
+
+1 | (new B {}).hasProperty("missing").toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Available methods in class `incomplete-superclass#B`:
+

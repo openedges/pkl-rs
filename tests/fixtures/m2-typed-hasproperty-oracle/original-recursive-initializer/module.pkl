@@ -1,0 +1,2 @@
+hidden recursive: Recursive = new {}
+class Recursive { child: Recursive = recursive }

@@ -368,3 +368,49 @@ nested = read("mem:nested")
         assert_eq!(session.collect(&[]).slots, 0);
     }
 }
+
+#[test]
+fn missing_mapping_subscript_forces_object_key_before_missing_key_diagnostic() {
+    let source =
+        include_str!("../../../tests/fixtures/m2/equality-supplement-key-lookup-force-error.pkl");
+    let (mut session, module, entries) = setup(source, &["result"]);
+    session
+        .start(entries[0], vec![module.clone()], 0, None)
+        .unwrap();
+    let error = ready(&mut session, std::slice::from_ref(&module)).unwrap_err();
+    assert_eq!(error.message, "lookup key");
+    session.close();
+    assert_eq!(session.collect(&[]).slots, 0);
+}
+
+#[test]
+fn stolen_mapping_constraint_error_does_not_add_subscript_guest_frame() {
+    let source =
+        include_str!("../../../tests/fixtures/m2/collection-type-mapping-cache-steal-fail.pkl");
+    let (mut session, module, entries) = setup(source, &["result"]);
+    session
+        .start(entries[0], vec![module.clone()], 0, None)
+        .unwrap();
+    let error = ready(&mut session, std::slice::from_ref(&module)).unwrap_err();
+    assert_eq!(error.kind, ErrorKind::Type);
+    assert!(
+        error
+            .frames
+            .iter()
+            .any(|frame| frame.member.ends_with("#x"))
+    );
+    assert!(
+        error
+            .frames
+            .iter()
+            .any(|frame| frame.member.ends_with("#source[\"k\"]"))
+    );
+    assert!(
+        !error
+            .frames
+            .iter()
+            .any(|frame| frame.member.ends_with("#result"))
+    );
+    session.close();
+    assert_eq!(session.collect(&[]).slots, 0);
+}

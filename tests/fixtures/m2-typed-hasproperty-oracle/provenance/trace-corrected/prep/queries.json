@@ -1,0 +1,107 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "contracts": 9,
+  "kind": "Corrected trace arity for only three class/module initialization programs",
+  "programs": [
+    {
+      "id": "module-method-init",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Method deprecation message read during unresolved method construction before class notifyInitialized; trace exposes actual partial module class state.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"absent\").toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Method deprecation message read during unresolved method construction before class notifyInitialized; trace exposes actual partial module class state.",
+          "executed": false,
+          "expected": null,
+          "expression": "deprecated().toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Method deprecation message read during unresolved method construction before class notifyInitialized; trace exposes actual partial module class state.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"visible\").toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module typedModuleInit\n@Deprecated { message = trace(module.hasProperty(\"absent\").toString()) }\nfunction deprecated() = 1\nvisible = 2\n",
+      "source_uri": "file:///stage104/typed-hasproperty/module-method-init.pkl"
+    },
+    {
+      "id": "module-version-init",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "ModuleInfo min version checked after class notifyInitialized; distinguish module publication state from class metadata initialization.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"absent\").toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "ModuleInfo min version checked after class notifyInitialized; distinguish module publication state from class metadata initialization.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"visible\").toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "ModuleInfo min version checked after class notifyInitialized; distinguish module publication state from class metadata initialization.",
+          "executed": false,
+          "expected": null,
+          "expression": "module.hasProperty(\"absent\").toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "@ModuleInfo { minPklVersion = trace(if (module.hasProperty(\"absent\")) \"0.0.0\" else \"0.0.1\") }\nmodule typedVersionInit\nvisible = 2\n",
+      "source_uri": "file:///stage104/typed-hasproperty/module-version-init.pkl"
+    },
+    {
+      "id": "class-method-init",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Class method deprecation annotation executes before class initialization completes; exact newC membership and subsequent initialized state/logger behavior.",
+          "executed": false,
+          "expected": null,
+          "expression": "C.toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Class method deprecation annotation executes before class initialization completes; exact newC membership and subsequent initialized state/logger behavior.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new C {}).hasProperty(\"absent\").toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Class method deprecation annotation executes before class initialization completes; exact newC membership and subsequent initialized state/logger behavior.",
+          "executed": false,
+          "expected": null,
+          "expression": "(new C {}).f().toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "class C {\n p = 1\n @Deprecated { message = trace((new C {}).hasProperty(\"absent\").toString()) }\n function f() = 1\n}\n",
+      "source_uri": "file:///stage104/typed-hasproperty/class-method-init.pkl"
+    }
+  ],
+  "schema": 1
+}

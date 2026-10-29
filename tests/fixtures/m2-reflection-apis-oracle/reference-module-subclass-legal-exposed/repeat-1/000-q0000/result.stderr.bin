@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Cannot find property `output` in object of type `pkl.ref#Reference<pkl.stage103.referenceInheritance#Domain, pkl.stage103.referenceInheritance#Child>`.
+
+1 | exposedReference.Reference(domain,Child,"").output.getPath().toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Cannot reference property `output` because it is defined inside external class `Module`.

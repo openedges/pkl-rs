@@ -12,6 +12,7 @@ impl Vm {
             "pkl:base" => crate::stdlib_sources::base(),
             "pkl:test" => crate::stdlib_sources::test(),
             "pkl:ref" => crate::stdlib_sources::reference(),
+            "pkl:reflect" => crate::stdlib_sources::reflect(),
             "pkl:json" => crate::stdlib_sources::json(),
             "pkl:yaml" => crate::stdlib_sources::yaml(),
             "pkl:math" => crate::stdlib_sources::math(),
@@ -127,6 +128,29 @@ fn append_members(
     source: Arc<crate::value::RuntimeSource>,
     parsed: &crate::syntax::Module,
 ) -> Result<UnitId, RuntimeError> {
+    if uri == "pkl:reflect" {
+        // Compile the actual module, including distinct class/property and
+        // method namespaces. External bodies bind in the shared compiler.
+        // Publish the singleton before recursively forcing its constants, as
+        // StdLibModule.doLoad does for the JVM's statically shared modules.
+        let resolved = crate::resolver::resolve_stdlib_module(parsed)
+            .map_err(|error| RuntimeError::new(ErrorKind::Unsupported, error.message))?;
+        let unit = compile_unit_into(
+            program,
+            &resolved,
+            CompileOptions {
+                fuse_constant_add: true,
+            },
+            false,
+            Some(source),
+            Some(ModuleIdentity {
+                original_uri: uri.into(),
+                resolved_uri: uri.into(),
+            }),
+        )?;
+        append_bootstrap(program, unit, uri);
+        return Ok(unit);
+    }
     // Compile the real authored annotation/initialization path. External member
     // bodies are bound below; they are not rewritten into Pkl source strings.
     let mut header = parsed.clone();
@@ -147,7 +171,7 @@ fn append_members(
                         | "Mixin"
                 ))
     });
-    let resolved = crate::resolver::resolve_module(&header)
+    let resolved = crate::resolver::resolve_stdlib_module(&header)
         .map_err(|error| RuntimeError::new(ErrorKind::Unsupported, error.message))?;
     let unit = compile_unit_into(
         program,
@@ -289,6 +313,9 @@ fn append_members(
                 ..Default::default()
             },
         )?;
+        program
+            .declaration_sources
+            .insert(block, declaration.declaration_source());
         members.push(Member {
             flags: Member::declaration_flags(declaration),
             entry: false,
@@ -312,7 +339,14 @@ fn append_members(
     let definition = &mut program.units[unit.0 as usize];
     program.objects[definition.template] = members.clone();
     definition.initial_members = members;
-    let entry = definition.entry;
+    definition.syntax = Some(Arc::new(parsed.clone()));
+    append_bootstrap(program, unit, uri);
+    compile_reflection_annotations(program, unit, uri, source, parsed)?;
+    Ok(unit)
+}
+
+fn append_bootstrap(program: &mut Program, unit: UnitId, uri: &str) {
+    let entry = program.units[unit.0 as usize].entry;
     let finish = program.blocks[entry]
         .iter()
         .position(|instruction| matches!(instruction, Instruction::FinishModule))
@@ -335,7 +369,6 @@ fn append_members(
         .spans
         .splice(finish..finish, vec![None; bootstrap.len()]);
     program.blocks[entry].splice(finish..finish, bootstrap);
-    Ok(unit)
 }
 
 fn base_binding(declaration: &crate::syntax::Member) -> Vec<Instruction> {
@@ -426,12 +459,108 @@ fn unsupported_binding(uri: &str, declaration: &crate::syntax::Member) -> Vec<In
     ))]
 }
 
+// Builtin declaration annotations have ordinary executable bodies even when
+// their enclosing generic class uses native members. Compile only these exact
+// annotation ASTs, retaining source spans and the standard module code owner.
+fn compile_reflection_annotations(
+    program: &mut Program,
+    unit: UnitId,
+    uri: &str,
+    source: Arc<RuntimeSource>,
+    parsed: &crate::syntax::Module,
+) -> Result<(), RuntimeError> {
+    let resolved = crate::resolver::resolve_stdlib_module(parsed)
+        .map_err(|error| RuntimeError::new(ErrorKind::Unsupported, error.message))?;
+    let declaration_base = program.next_declaration;
+    program.next_declaration = declaration_base
+        .checked_add(source.text.len() + 2)
+        .ok_or_else(|| invalid("annotation declaration identity limit"))?;
+    let mut compiler = Compiler {
+        resolved: &resolved,
+        program,
+        unit,
+        declaration_base,
+        source: Some(source),
+        identity: Some(ModuleIdentity {
+            original_uri: uri.into(),
+            resolved_uri: uri.into(),
+        }),
+        options: CompileOptions {
+            fuse_constant_add: true,
+        },
+        member: PklString::default(),
+        super_method_allowed: false,
+        module_annotation: false,
+        let_members: Vec::new(),
+        type_scopes: Vec::new(),
+        runtime_type_owner: true,
+        runtime_type_fallback: None,
+        modifiers: Vec::new(),
+        constraint_module: false,
+        alias_frames: Vec::new(),
+        constraint_origins: BTreeMap::new(),
+        active_constraints: BTreeMap::new(),
+        shared_constraint_roots: BTreeMap::new(),
+        active_type_parameters: BTreeMap::new(),
+        constructor_parameters_bound: false,
+        parameter_spans: BTreeMap::new(),
+        argument_spans: BTreeMap::new(),
+        function_counts: BTreeMap::new(),
+        entry_counts: BTreeMap::new(),
+        function_names: BTreeMap::new(),
+        instrument: false,
+    };
+    let mut pending: Vec<_> = parsed
+        .members
+        .iter()
+        .rev()
+        .map(|member| (format!("#{}", member.name), member))
+        .collect();
+    while let Some((name, member)) = pending.pop() {
+        if !member.annotations.is_empty() {
+            compiler.member = name.as_str().into();
+            let mut code = Code::default();
+            code.push(Instruction::BeginMemberAnnotations);
+            compiler.annotations(&member.annotations, &mut code)?;
+            code.push(Instruction::Return);
+            let block = compiler.block(code, Some(member.declaration_source().header_span))?;
+            compiler
+                .program
+                .reflection_annotations
+                .insert((uri.into(), member.declaration_source().header_span), block);
+        }
+        if let ExprKind::Class { members, .. } = &member.expr.kind {
+            pending.extend(
+                members
+                    .iter()
+                    .rev()
+                    .map(|member| (format!("{name}.{}", member.name), member)),
+            );
+        }
+    }
+    compiler
+        .program
+        .constraint_origins
+        .extend(compiler.constraint_origins);
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
 
     fn ready(vm: &mut Vm) -> Result<Value, RuntimeError> {
-        for _ in 0..100_000 {
+        ready_with_limit(vm, 100_000)
+    }
+
+    fn ready_reflection(vm: &mut Vm) -> Result<Value, RuntimeError> {
+        // Eager standard mirrors exceed the smaller module bootstrap budget.
+        // Keep the same single-instruction polling and GC stress condition.
+        ready_with_limit(vm, 400_000)
+    }
+
+    fn ready_with_limit(vm: &mut Vm, limit: usize) -> Result<Value, RuntimeError> {
+        for _ in 0..limit {
             match vm.poll(1) {
                 VmPoll::Ready(value) => return value,
                 VmPoll::Yielded => {
@@ -456,6 +585,94 @@ mod tests {
             }
         }
         panic!("stdlib initialization did not settle")
+    }
+
+    #[test]
+    fn reflection_bootstrap_forces_standard_mirrors_without_user_frame_callbacks() {
+        let parsed = crate::parser::parse_module(
+            r#"reflect = import("pkl:reflect")
+class User {}
+unknownSame = reflect.listType.typeArguments.first == reflect.unknownType
+unknownSetSize = Set(reflect.listType.typeArguments.first, reflect.unknownType).length
+regularSame = reflect.StringLiteralType("a") == reflect.StringLiteralType("a")
+regularDifferent = reflect.StringLiteralType("a") == reflect.StringLiteralType("b")
+userLocation = reflect.Class(User).location.displayUri
+"#,
+        )
+        .unwrap();
+        let program = compile_module(&crate::resolver::resolve_module(&parsed).unwrap()).unwrap();
+        let mut vm = Vm::with_context(
+            program.clone(),
+            EvaluationContext {
+                primary_source: Some(Arc::new(crate::value::RuntimeSource {
+                    text: parsed.source.clone(),
+                    uri: "file:///reflection-bootstrap.pkl".into(),
+                    module_name: "main".into(),
+                })),
+                frame_transformer: crate::logging::FrameTransformer::Host,
+                ..Default::default()
+            },
+        );
+        vm.start(program.entry, vec![]).unwrap();
+        let module = ready_reflection(&mut vm).unwrap().as_object().unwrap();
+        vm.start_member(module, "reflect").unwrap();
+        // ready() rejects any Host event. In particular, eager standard mirror
+        // displayUri reads must finish with the default transformer.
+        let reflect = ready_reflection(&mut vm).unwrap().as_object().unwrap();
+        let mut current = reflect;
+        for name in ["intType", "referent", "location"] {
+            let LazyState::Completed(Value::Object(next)) = vm.member_state(current, name).unwrap()
+            else {
+                panic!("standard mirror {name} was not eagerly cached")
+            };
+            current = next;
+        }
+        let LazyState::Completed(Value::String(uri)) =
+            vm.member_state(current, "displayUri").unwrap()
+        else {
+            panic!("standard declaration location was not eagerly cached")
+        };
+        assert!(
+            uri.as_str()
+                .unwrap()
+                .starts_with("https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L")
+        );
+        // UnknownType has only the inherited external nullable property. Two
+        // distinct instances compare/hash without requesting a nullable cache.
+        for (name, expected) in [
+            ("unknownSame", Value::Bool(true)),
+            ("unknownSetSize", Value::Int(1.into())),
+            ("regularSame", Value::Bool(true)),
+            ("regularDifferent", Value::Bool(false)),
+        ] {
+            vm.start_member(module, name).unwrap();
+            assert_eq!(ready_reflection(&mut vm).unwrap(), expected, "{name}");
+        }
+        // The isolated bootstrap policy must not leak into user declarations.
+        vm.start_member(module, "userLocation").unwrap();
+        let mut request = None;
+        for _ in 0..100_000 {
+            match vm.poll(1) {
+                VmPoll::Yielded => {
+                    vm.collect(&[]);
+                }
+                VmPoll::TransformFrame(pending) => {
+                    request = Some(pending);
+                    break;
+                }
+                event => panic!("user location did not suspend for Host: {event:?}"),
+            }
+        }
+        let request = request.expect("bounded user location Host callback");
+        assert_eq!(request.frame.module_uri, "file:///reflection-bootstrap.pkl");
+        vm.complete_frame_transform(request.id, Ok((*request.frame).clone()))
+            .unwrap();
+        assert_eq!(
+            ready_reflection(&mut vm).unwrap(),
+            Value::String("file:///reflection-bootstrap.pkl".into())
+        );
+        vm.close();
+        assert_eq!(vm.heap_stats().slots, 0);
     }
 
     #[test]

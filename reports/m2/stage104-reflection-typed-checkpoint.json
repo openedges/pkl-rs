@@ -1,0 +1,2322 @@
+{
+  "schema_version": 1,
+  "kind": "Stage103/104 source-backed reflection and Typed property introspection checkpoint",
+  "compatibility_baseline": "Pkl 0.32.0",
+  "complete": true,
+  "publication_ready": true,
+  "source_parent": "3b4ee41a2bd2c85a37d2e421d7c577a332d58854",
+  "final_source": {
+    "source_parent_context_only": "3b4ee41a2bd2c85a37d2e421d7c577a332d58854",
+    "commit_self_hash": null,
+    "commit_self_hash_reason": "The checkpoint does not claim a containing commit hash or a self-referential index proof.",
+    "changed_source_and_tool_paths": 35,
+    "source_plan": {
+      "path": "target/m2/stage104-current-source-plan-01/sources.json",
+      "bytes": 5851,
+      "sha256": "62d0560172ab7c52e63e81c10e0998efc27d72672029b634f315410de0bfbb70",
+      "mode": 420
+    },
+    "sources": [
+      {
+        "path": "crates/pkl-runtime/src/diagnostic_values.rs",
+        "bytes": 29872,
+        "sha256": "a7a1a1275d89694b543b06f350a8d111f7fa741e226d84f1dbf9063636678e3d",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/evaluation/frontend.rs",
+        "bytes": 22877,
+        "sha256": "19ff1e145822b6f49473130c6dd4f4ac6d51a4e926919e18e51dd7fccd622b3e",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/heap.rs",
+        "bytes": 51609,
+        "sha256": "6c1a903dc6dbe3a28904c12dbf905856b9bced39bad69c751f5ffdbee17cfb9b",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/logging.rs",
+        "bytes": 3786,
+        "sha256": "a54ef76baed0e1b1e79c2858cab957f3497c07d506d302b14273e8d735b503e3",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/parser.rs",
+        "bytes": 105080,
+        "sha256": "865df6b02c605665e13201b475416ba58b3aedf3477095e7cca9c7d7a70a3699",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/resolver.rs",
+        "bytes": 110527,
+        "sha256": "79441e5adc1296d4685961a05dee33ccaa2e172cd64849530cefd69cabbec724",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/stdlib/reflect.pkl",
+        "bytes": 14693,
+        "sha256": "4555cda897a771a555e3f15d294a7f03774fd8d4602d9891117803505fb1f6eb",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/stdlib_sources.rs",
+        "bytes": 4724,
+        "sha256": "1f69ad5b4b62880859d3e2477962a47b290306c333bafa00996826ecc6c5e5ba",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/syntax.rs",
+        "bytes": 31109,
+        "sha256": "3ef492e8c136856eee00cf2556084b52ec2948c6bd06c6b4ee22288b1df0effe",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/vm.rs",
+        "bytes": 404296,
+        "sha256": "9b6107a1d55acb628179e812103073bb0a88387a2630e72cf5d8f627b8f9c79b",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/vm/classes.rs",
+        "bytes": 18918,
+        "sha256": "d7c61b5ee5ca1197d118f546a78c4a8a67fdc5bd731a74ec92eb6550611a5d46",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/vm/collection_conversions.rs",
+        "bytes": 29147,
+        "sha256": "27250f4416506820c274c2450455d676439970e0c16e580111f2be12042ce9a7",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/vm/equality.rs",
+        "bytes": 106934,
+        "sha256": "7348d11ecef2665aaecb908e82ad1ec47fd81a1a4d7e06567a8c097cbfcc3047",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/vm/forcing.rs",
+        "bytes": 20418,
+        "sha256": "6d7115a4d481df6d2be802f6bcb2a6372ca8ea78d8b4c035e10b1a58ec6d91c8",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/vm/frame_transformation.rs",
+        "bytes": 10847,
+        "sha256": "9087e838b33cdc85010827854662e2b75f083f9cbb7c08234c96380caed93b8f",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/vm/generics.rs",
+        "bytes": 30913,
+        "sha256": "268cd9d90a7104c9f1874311f499ed85bd45b02fda5e990e2e1996ec776e0679",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/vm/mapping_ops.rs",
+        "bytes": 31447,
+        "sha256": "3e2c247dc0ab4add727f47b08d2eff3a49440efd7db46add9c5e30ddd8ec3189",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/vm/modules.rs",
+        "bytes": 48477,
+        "sha256": "7fff3b35ef14d1f465fbf20033be0885b3dbd5c731121c7cac744ec663f402a3",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/vm/object_lookups.rs",
+        "bytes": 18992,
+        "sha256": "f88b51e3bb851ab0431290e15228f9a1ae6f08077b2b2eb82db6d345c2a41605",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/vm/query_lifecycle.rs",
+        "bytes": 69277,
+        "sha256": "8413fbb890624d01357eba1a40a2cf2b0137dcadc7bf07b2ff980ae734f0870d",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/vm/reference.rs",
+        "bytes": 76217,
+        "sha256": "9f642215116516a234f6de0c8a22068f42bc1c00c6549b9b5a81f2ed3fecb379",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/vm/reflection.rs",
+        "bytes": 37122,
+        "sha256": "6cf45d03f67a19060d700b8e8b9d8eed1cf9e05909a1725a1a1b48782e84b430",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/vm/reflection/declarations.rs",
+        "bytes": 53322,
+        "sha256": "9e1d503786d23e7f5adf8ba01c479410dd9b8cae75a953b1b31ae21861614bb1",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
+        "bytes": 30636,
+        "sha256": "943f41ba00b94323e00bb96c6862b6a8a6279fad48d3bc9743b0658468618f4b",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/vm/type_resolution.rs",
+        "bytes": 60440,
+        "sha256": "b70306de998e562e1c3814d7872c3a0e5632480d46766dcc6976e5fe5d4a8d78",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/src/vm/typecheck.rs",
+        "bytes": 71164,
+        "sha256": "c6abf18d2161db4a34d9e05e6b6eca6435a353953678196eecb6b5bab495cd94",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/tests/m2_mapping_apis_lifecycle.rs",
+        "bytes": 15144,
+        "sha256": "e0fd01dc91bdf78594ba117733b677d15c6f44355ab4fdae7a98914772104356",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/tests/m2_reflection_apis_lifecycle.rs",
+        "bytes": 10019,
+        "sha256": "aac59c65a5e0841de76e49b4020e777549a8e90278ddea7ae3161bd8fe376720",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/tests/m2_reflection_apis_oracle.rs",
+        "bytes": 12415,
+        "sha256": "93e83a8bfcc3859b32f6a61997abaea4ced6eec97c9e226d2cbae6a0aca3256b",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/tests/m2_reflection_source_metadata.rs",
+        "bytes": 4185,
+        "sha256": "d9a8d5879374aeaf7fa9a887074b92576327a6c31fc71ae82054193891c37d1a",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/tests/m2_typed_has_property_lifecycle.rs",
+        "bytes": 7701,
+        "sha256": "d9b4d574efe2c62996dc72000a7c467a8a708afa91d89d6b5dc45437abf2a4f9",
+        "mode": 420
+      },
+      {
+        "path": "crates/pkl-runtime/tests/m2_typed_hasproperty_oracle.rs",
+        "bytes": 9692,
+        "sha256": "053ef16fcf5a2ebcdd331fce501114166800d201d7ba2de0c44eb8cd0a546ed1",
+        "mode": 420
+      },
+      {
+        "path": "tools/m1_platforms.py",
+        "bytes": 13091,
+        "sha256": "841af1c7d2d740dd0924509f99b4f5643e26fe1cb96a8d909a5e176c9abc6ccb",
+        "mode": 420
+      },
+      {
+        "path": "tools/m2_source_inputs.py",
+        "bytes": 6027,
+        "sha256": "139599df30375fb3cf14797024928be1af30ba0001d8049e81b2074652e32966",
+        "mode": 420
+      },
+      {
+        "path": "tools/tests/test_class_values_compare.py",
+        "bytes": 45474,
+        "sha256": "bd99237788394bbfce6d7c4fb7ef11851485915e2dd67daf654539a1afaef6b8",
+        "mode": 420
+      }
+    ],
+    "runtime_M1_catalog": {
+      "pin": {
+        "path": "target/m2/stage104-selected-all-artifacts-01/source-freeze.json",
+        "bytes": 106483,
+        "sha256": "f2f313918c3a528d159634772f4fb024d7e4947e0b8981dee6f8824a7d1ac7e5",
+        "mode": 420
+      },
+      "source_count": 636,
+      "scope": "Exact normal-runtime and M1 shared source/tool inputs; not a whole-repository freeze."
+    },
+    "replay_catalog": {
+      "pin": {
+        "path": "target/m2/stage104-current-replay-build-03/source-freeze.json",
+        "bytes": 80423,
+        "sha256": "d0c5b4dabba74d9a7b98d82be64c30564e8c61c8b0837e833a41d40fa5a5efab",
+        "mode": 420
+      },
+      "source_count": 476,
+      "scope": "Exact native replay runtime/build inputs; not a whole-repository freeze."
+    },
+    "scope_relationship": "The 35 applied source/tool paths and the two input catalogs describe distinct, overlapping scopes; their counts must not be added as disjoint paths.",
+    "canonical_Java_fixture_paths": 26092,
+    "fixture_breakdown": {
+      "reflection_active": 19175,
+      "reflection_historical_failure": 38,
+      "typed": 6879
+    }
+  },
+  "full_m2_complete": false,
+  "full_API_complete": false,
+  "performance_targets_met": false,
+  "hosted_CI_result_claimed": false,
+  "inventory": {
+    "cases": 4545,
+    "ready": 4442,
+    "unimplemented": 71,
+    "unmapped": 32,
+    "requirements": 475
+  },
+  "historical_targeted": {
+    "reflection_contracts": 419,
+    "typed_contracts": 150,
+    "observations": 1138,
+    "raw_fields": 6988,
+    "logger_events": 16,
+    "source": "compile04",
+    "command_library_failures": 4,
+    "raw_comparison": {
+      "path": "target/m2/stage104-combined-tests-04/comparison-independent-readback-02.json",
+      "bytes": 9556,
+      "sha256": "071b739add56f98352366c58e710f496d03ae209a46d56afd679e1ffecd103f0",
+      "mode": 420
+    }
+  },
+  "historical_full_ready": {
+    "selected": 4442,
+    "passes": 4314,
+    "mismatches": 42,
+    "unsupported": 82,
+    "candidate_internal_errors": 2,
+    "oracle_errors": 2,
+    "old_pass_regressions": 11,
+    "report": {
+      "path": "target/m2/stage104-full-ready-native-01.json",
+      "bytes": 2642447,
+      "sha256": "0a7bbcba7193548bfbedce28f88fb0cf2edc5ebc1c4c2a43d6131185bd4ca05c",
+      "mode": 420
+    }
+  },
+  "actual_evidence_available": {
+    "final_compile_and_nonworkspace_checks": {
+      "path": "target/m2/stage104-final-validation-controller-03/report.json",
+      "bytes": 1296,
+      "sha256": "177a26490f618fca2d469c87d4040f1363766752cebc225319c9bd1099f651e8",
+      "mode": 420
+    },
+    "reference_unit": {
+      "path": "target/m2/stage104-reference-diagnostic-unit-01/report.json",
+      "bytes": 1368,
+      "sha256": "a71ae9e088d1b6e6283df6620250cb8cd0b842ffc4037546588f488a039eb6ea",
+      "mode": 420
+    },
+    "mapping_lifecycle": {
+      "path": "target/m2/stage104-mapping-lifecycle-01/report.json",
+      "bytes": 1335,
+      "sha256": "6921ff71a1307a570640d5243983292ea4c84a76f99cd2c9c4fa993e7355afc3",
+      "mode": 420
+    },
+    "reference_originals": {
+      "path": "target/m2/stage104-reference-originals-01/report.json",
+      "bytes": 9127,
+      "sha256": "4b30c5e35933cddb6160de0d945b7b73d044d961a8d6cf8f1a6b8e9ad3fdd8c2",
+      "mode": 420
+    },
+    "python_final_nine_and_freshness": {
+      "path": "target/m2/stage104-python-final-freshness-bookends-01/report.json",
+      "bytes": 2410,
+      "sha256": "2852127a4ff5ca2e37302e658a7aa7e0cd0882aa26923cf005d624a9ea8cabcb",
+      "mode": 420
+    },
+    "earlier_source_raw_comparison": {
+      "path": "target/m2/stage104-combined-tests-04/comparison-independent-readback-02.json",
+      "bytes": 9556,
+      "sha256": "071b739add56f98352366c58e710f496d03ae209a46d56afd679e1ffecd103f0",
+      "mode": 420
+    },
+    "earlier_source_failed_command": {
+      "path": "target/m2/stage104-combined-tests-04/report.json",
+      "bytes": 1662,
+      "sha256": "56ac59220a47d476a1037a4c275c4449d65b434f12b5c0b1861204d4c74d9954",
+      "mode": 420
+    },
+    "earlier_source_full_replay": {
+      "path": "target/m2/stage104-full-ready-native-01.json",
+      "bytes": 2642447,
+      "sha256": "0a7bbcba7193548bfbedce28f88fb0cf2edc5ebc1c4c2a43d6131185bd4ca05c",
+      "mode": 420
+    },
+    "finite_source_fixture_and_preimage_inventory": {
+      "path": "target/m2/stage104-publication-path-inventory-prep-01/report.json",
+      "bytes": 6572,
+      "sha256": "1baa7cd12fcc8ee5f47e6d8e7f4ba0f99fa5200341e23c8078c614a5ede801ac",
+      "mode": 420
+    },
+    "actual_m1": {
+      "total_per_target": 6078,
+      "targets": [
+        "native",
+        "node",
+        "chromium"
+      ],
+      "strict_pass": true,
+      "architecture_pass": true,
+      "one_actual_acquisition": true,
+      "receipts": {
+        "acquisition": {
+          "path": "target/m2/stage104-m1-platform-01/report.json",
+          "bytes": 3400372,
+          "sha256": "87fba02ddb8da078e667366fbf3c4f418a0a32ae167cf276f87ea28ebb5b2fe6",
+          "mode": 420
+        },
+        "outer_command": {
+          "path": "target/m2/stage104-m1-platform-command-01/report.json",
+          "bytes": 4757,
+          "sha256": "63223231314fb132e0692e8bb31fb31f47b68b126ed9e8e141f2abac81e2b0e7",
+          "mode": 420
+        },
+        "same_capture_readback": {
+          "path": "target/m2/stage104-m1-gates-01.json",
+          "bytes": 1171,
+          "sha256": "82783576eace460fca4d61e792d0a512e0ad5b4c04ff1b4f08615b5de78baf3c",
+          "mode": 420
+        }
+      }
+    },
+    "focused_nine_scalars": {
+      "path": "target/m2/stage104-focused-scalar-regressions-01/report.json",
+      "bytes": 15788,
+      "sha256": "18570582189308041624474f86c218fdcc6705583c6a28b06b5df40064021464",
+      "mode": 420
+    },
+    "selected_same_capture_summary": {
+      "path": "target/m2/stage104-selected-byte-readback-summary-01/report.json",
+      "bytes": 17323,
+      "sha256": "5888c163be6c94bc6fadea0f92c71e7e861a61ab9de4e05f93ef6a29e695b59f",
+      "mode": 420
+    },
+    "workspace_readback": {
+      "path": "target/m2/stage104-workspace-readback-01/report.json",
+      "bytes": 6417,
+      "sha256": "0441735cadb3ed1fb05a39af87cdf441bf5b7377051e0e4ecb5d44b4aa9ea4ae",
+      "mode": 420
+    },
+    "affected_python_bookends": {
+      "path": "target/m2/stage104-python-affected-bookends-01/after-source-catalog.json",
+      "bytes": 2192,
+      "sha256": "1b65bbb9fdfc047080ee7b6357893c94c83432597792e0f35f1f94bdc17b6d60",
+      "mode": 420
+    },
+    "affected_python_cheap8": {
+      "path": "target/m2/stage104-python-affected-cheap-01/report.json",
+      "bytes": 1383,
+      "sha256": "75fbf72d615f97b2d432393418963e854a61b7803447c8a0711379fda6d6a2cb",
+      "mode": 420
+    },
+    "source_catalog_tests3": {
+      "path": "target/m2/stage104-python-source-catalog-unit-02/report.json",
+      "bytes": 1372,
+      "sha256": "bebf094d30e9abef1a53f017caf5c0b6ece244f0781a8efb5508eb500979db2f",
+      "mode": 420
+    }
+  },
+  "actual_workspace": {
+    "record": {
+      "bytes": 1360,
+      "path": "target/m2/stage104-workspace-test-01/report.json",
+      "sha256": "2565e52c9910d58a430564490a952337f379d38e9d3b209147e4a9d4218e7d8c"
+    },
+    "readback": {
+      "path": "target/m2/stage104-workspace-readback-01/report.json",
+      "bytes": 6417,
+      "sha256": "0441735cadb3ed1fb05a39af87cdf441bf5b7377051e0e4ecb5d44b4aa9ea4ae",
+      "mode": 420
+    },
+    "tests": {
+      "failed": 0,
+      "ignored": 4,
+      "passed": 1596
+    },
+    "coverage": {
+      "doctests": true,
+      "examples": true,
+      "invoked_targets": true,
+      "outer_summaries": true,
+      "test_targets": true
+    },
+    "target_counts": {
+      "bin_unit_tests": 1,
+      "commands": 39,
+      "compile_only_examples": 25,
+      "doctest_libraries": 2,
+      "integration_tests": 254,
+      "lib_unit_tests": 2,
+      "total_executable_test_targets": 257
+    },
+    "nested_summaries_separate": 13,
+    "one_actual_workspace_Cargo_command": true,
+    "artifact_scope": "Test executables hashed after the terminal command; normal compile05 proof is linked separately.",
+    "source_scope": "Original recorder's Rust/build source bookends; not a full fixture or transitive Python freeze."
+  },
+  "actual_full_ready": {
+    "report": {
+      "path": "target/m2/stage104-full-ready-native-02.json",
+      "bytes": 2641623,
+      "sha256": "2d2ae7456d7d3986952596a89a68ffc318bde9ec83ae82a829002089f51edd67",
+      "mode": 420
+    },
+    "selected_count": 4442,
+    "complete": true,
+    "integrity_valid": true,
+    "all_required_compatibility_pass": false,
+    "status_counts": {
+      "candidate-unsupported": 82,
+      "mismatch": 33,
+      "oracle-error": 2,
+      "pass": 4325
+    },
+    "old_pass_regressions": [],
+    "unexecuted_ids": [],
+    "metamorphic_pass": 88,
+    "metamorphic_total": 88,
+    "cohort_reports": {
+      "historical": {
+        "bytes": 19367,
+        "path": "target/m2/stage104-full-ready-historical-02/report.json",
+        "sha256": "8956e787289ccd410d25d89ddb3fc5ca188294a432cf468e98580c0a97f7adda"
+      },
+      "jvm": {
+        "bytes": 9439,
+        "path": "target/m2/stage104-full-ready-jvm-02/report.json",
+        "sha256": "f36bb9a70b393cc836c8abed93f1416c945c3c8c7fc2b29715278db242b04b3c"
+      },
+      "modules": {
+        "bytes": 1572019,
+        "path": "target/m2/stage104-full-ready-modules-02/report.json",
+        "sha256": "8b586f0a6640d0f6c7c0434ca3329ac49e014425fcc096ed2dcc31db2badfd9d"
+      },
+      "scalars": {
+        "bytes": 5814688,
+        "path": "target/m2/stage104-full-ready-scalars-02/report.json",
+        "sha256": "74ed0fc62b4543f788cf9c3d11d31ce072ea482a89992c92c6383d98a066db69"
+      }
+    }
+  },
+  "actual_m1": {
+    "total_per_target": 6078,
+    "targets": [
+      "native",
+      "node",
+      "chromium"
+    ],
+    "strict_pass": true,
+    "architecture_pass": true,
+    "one_actual_acquisition": true,
+    "receipts": {
+      "acquisition": {
+        "path": "target/m2/stage104-m1-platform-01/report.json",
+        "bytes": 3400372,
+        "sha256": "87fba02ddb8da078e667366fbf3c4f418a0a32ae167cf276f87ea28ebb5b2fe6",
+        "mode": 420
+      },
+      "outer_command": {
+        "path": "target/m2/stage104-m1-platform-command-01/report.json",
+        "bytes": 4757,
+        "sha256": "63223231314fb132e0692e8bb31fb31f47b68b126ed9e8e141f2abac81e2b0e7",
+        "mode": 420
+      },
+      "same_capture_readback": {
+        "path": "target/m2/stage104-m1-gates-01.json",
+        "bytes": 1171,
+        "sha256": "82783576eace460fca4d61e792d0a512e0ad5b4c04ff1b4f08615b5de78baf3c",
+        "mode": 420
+      }
+    }
+  },
+  "selected_platforms": {
+    "same_capture": true,
+    "summary": {
+      "path": "target/m2/stage104-selected-byte-readback-summary-01/report.json",
+      "bytes": 17323,
+      "sha256": "5888c163be6c94bc6fadea0f92c71e7e861a61ab9de4e05f93ef6a29e695b59f",
+      "mode": 420
+    },
+    "targets": {
+      "native": {
+        "summary": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-selected-native-byte-readback-01/summary.json",
+          "bytes": 3510,
+          "sha256": "5b5c57f2c1f19fe9dac96d9419f005970f92c328e6fc953daa62ddc6f3c2520a"
+        },
+        "comparison": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-selected-native-byte-readback-01/comparison.json",
+          "bytes": 452850,
+          "sha256": "d5b6750b5b36f3b4aad9642e348f0db46f53fffcffe458e5b3b76726c02da6a4"
+        },
+        "comparison_raw_manifest": {
+          "bytes": 181308,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-selected-native-byte-readback-01/comparison-candidate-raw.json.gz",
+          "sha256": "22a15e4004748c102eccc13846acc8c4d1341958bce0fc905e413ee14d0c6713"
+        },
+        "execution_report": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-selected-native-byte-readback-command-01/report.json",
+          "bytes": 1440,
+          "sha256": "aa8d567249b64756b3fb20f57dd880ac91e1681d489fe068b029ebf0073ec163"
+        },
+        "original_capture_report": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-selected-native-02/report.json",
+          "bytes": 354953,
+          "sha256": "c866ee01f7582adf822cee900d2ba98f7469afdd7c56d3470326398e91d2d97a"
+        },
+        "original_capture_complete": true,
+        "original_capture_success": true,
+        "sessions": 134,
+        "observations": 1138,
+        "matches": 1138,
+        "status_counts": {
+          "error": 532,
+          "success": 606
+        },
+        "shared_raw_fields": 9264,
+        "logger_events": 16,
+        "candidate_row_files": 13816,
+        "all_required_pass": true,
+        "required_unresolved_contracts": [],
+        "cohorts": {
+          "reflection-constructor82": {
+            "all_required_pass": true,
+            "comparable_observations": 164,
+            "comparable_pass": true,
+            "observations": 164,
+            "raw_matches": 164,
+            "required_unresolved": 0
+          },
+          "reflection-legal-reference6": {
+            "all_required_pass": true,
+            "comparable_observations": 12,
+            "comparable_pass": true,
+            "observations": 12,
+            "raw_matches": 12,
+            "required_unresolved": 0
+          },
+          "reflection-main166": {
+            "all_required_pass": true,
+            "comparable_observations": 332,
+            "comparable_pass": true,
+            "observations": 332,
+            "raw_matches": 332,
+            "required_unresolved": 0
+          },
+          "reflection-metadata-reference96": {
+            "all_required_pass": true,
+            "comparable_observations": 192,
+            "comparable_pass": true,
+            "observations": 192,
+            "raw_matches": 192,
+            "required_unresolved": 0
+          },
+          "reflection-metadata47": {
+            "all_required_pass": true,
+            "comparable_observations": 94,
+            "comparable_pass": true,
+            "observations": 94,
+            "raw_matches": 94,
+            "required_unresolved": 0
+          },
+          "reflection-reference6": {
+            "all_required_pass": true,
+            "comparable_observations": 12,
+            "comparable_pass": true,
+            "observations": 12,
+            "raw_matches": 12,
+            "required_unresolved": 0
+          },
+          "reflection-review16": {
+            "all_required_pass": true,
+            "comparable_observations": 32,
+            "comparable_pass": true,
+            "observations": 32,
+            "raw_matches": 32,
+            "required_unresolved": 0
+          },
+          "typed-original": {
+            "all_required_pass": true,
+            "comparable_observations": 282,
+            "comparable_pass": true,
+            "observations": 282,
+            "raw_matches": 282,
+            "required_unresolved": 0
+          },
+          "typed-trace-corrected": {
+            "all_required_pass": true,
+            "comparable_observations": 18,
+            "comparable_pass": true,
+            "observations": 18,
+            "raw_matches": 18,
+            "required_unresolved": 0
+          }
+        },
+        "observed_total_polls": 198670,
+        "observed_requested_instruction_fuel": 12714880,
+        "observed_condition": {
+          "gc_schedule": "every-poll-batch",
+          "heap_and_constructor": "unchanged",
+          "max_requested_instruction_fuel": 2000000,
+          "per_program_timeout": "unchanged bundle program timeout_seconds",
+          "portable_outer_timeout_seconds": 1800,
+          "prior_poll1_capture_is_separate": true,
+          "steps_per_poll": 64
+        }
+      },
+      "napi": {
+        "summary": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-selected-napi-byte-readback-01/summary.json",
+          "bytes": 3276,
+          "sha256": "cc7cf970c390c14635026afb8143063ec34d6305d7bb654cab477ff2ca4d2120"
+        },
+        "comparison": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-selected-napi-byte-readback-01/comparison.json",
+          "bytes": 452846,
+          "sha256": "bad8e6d5cb1bd440ecd02ad3d372281df2e26b84b10666ab17975f848bb1a1f0"
+        },
+        "comparison_raw_manifest": {
+          "bytes": 181202,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-selected-napi-byte-readback-01/comparison-candidate-raw.json.gz",
+          "sha256": "83a03b3dd1c8bfeba5c3c532217777cdaf6713327ba87c6433b432058bd1f650"
+        },
+        "execution_report": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-selected-napi-byte-readback-command-01/report.json",
+          "bytes": 1436,
+          "sha256": "3e402a8a83c33a3b47b3132690c59c9b863140190ebb0bd36269c8927b0aca79"
+        },
+        "original_capture_report": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-selected-napi-02/report.json",
+          "bytes": 58719,
+          "sha256": "dd1d57eb1c000a8d0ec979dae49039118f8b18a71f1ce8ca1cbd66d537755072"
+        },
+        "original_capture_complete": false,
+        "original_capture_success": false,
+        "sessions": 134,
+        "observations": 1138,
+        "matches": 1138,
+        "status_counts": {
+          "error": 532,
+          "success": 606
+        },
+        "shared_raw_fields": 9264,
+        "logger_events": 16,
+        "candidate_row_files": 13816,
+        "all_required_pass": true,
+        "required_unresolved_contracts": [],
+        "cohorts": {
+          "reflection-constructor82": {
+            "all_required_pass": true,
+            "comparable_observations": 164,
+            "comparable_pass": true,
+            "observations": 164,
+            "raw_matches": 164,
+            "required_unresolved": 0
+          },
+          "reflection-legal-reference6": {
+            "all_required_pass": true,
+            "comparable_observations": 12,
+            "comparable_pass": true,
+            "observations": 12,
+            "raw_matches": 12,
+            "required_unresolved": 0
+          },
+          "reflection-main166": {
+            "all_required_pass": true,
+            "comparable_observations": 332,
+            "comparable_pass": true,
+            "observations": 332,
+            "raw_matches": 332,
+            "required_unresolved": 0
+          },
+          "reflection-metadata-reference96": {
+            "all_required_pass": true,
+            "comparable_observations": 192,
+            "comparable_pass": true,
+            "observations": 192,
+            "raw_matches": 192,
+            "required_unresolved": 0
+          },
+          "reflection-metadata47": {
+            "all_required_pass": true,
+            "comparable_observations": 94,
+            "comparable_pass": true,
+            "observations": 94,
+            "raw_matches": 94,
+            "required_unresolved": 0
+          },
+          "reflection-reference6": {
+            "all_required_pass": true,
+            "comparable_observations": 12,
+            "comparable_pass": true,
+            "observations": 12,
+            "raw_matches": 12,
+            "required_unresolved": 0
+          },
+          "reflection-review16": {
+            "all_required_pass": true,
+            "comparable_observations": 32,
+            "comparable_pass": true,
+            "observations": 32,
+            "raw_matches": 32,
+            "required_unresolved": 0
+          },
+          "typed-original": {
+            "all_required_pass": true,
+            "comparable_observations": 282,
+            "comparable_pass": true,
+            "observations": 282,
+            "raw_matches": 282,
+            "required_unresolved": 0
+          },
+          "typed-trace-corrected": {
+            "all_required_pass": true,
+            "comparable_observations": 18,
+            "comparable_pass": true,
+            "observations": 18,
+            "raw_matches": 18,
+            "required_unresolved": 0
+          }
+        },
+        "observed_total_polls": 198670,
+        "observed_requested_instruction_fuel": 12714880,
+        "observed_condition": {
+          "gc_schedule": "every-poll-batch",
+          "heap_and_constructor": "unchanged",
+          "max_requested_instruction_fuel": 2000000,
+          "per_program_timeout": "unchanged bundle program timeout_seconds",
+          "portable_outer_timeout_seconds": 1800,
+          "prior_poll1_capture_is_separate": true,
+          "steps_per_poll": 64
+        }
+      },
+      "chromium": {
+        "summary": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-selected-chromium-byte-readback-01/summary.json",
+          "bytes": 3289,
+          "sha256": "4c6c9890b9a91f7dde537fbdc0314abf1133c1a80bc9363212419150613d30ec"
+        },
+        "comparison": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-selected-chromium-byte-readback-01/comparison.json",
+          "bytes": 452854,
+          "sha256": "2f41b934cce16a02b873928ac22e18dd6e4c9c41185d6b10d194c71b29c1ef56"
+        },
+        "comparison_raw_manifest": {
+          "bytes": 181406,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-selected-chromium-byte-readback-01/comparison-candidate-raw.json.gz",
+          "sha256": "be6c43666a5f6f5d5b36bf50da25adc332667845ca0f1b802aaf927533d907c6"
+        },
+        "execution_report": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-selected-chromium-byte-readback-command-01/report.json",
+          "bytes": 1445,
+          "sha256": "3bb340d3e4da0c0a02d11e6dff57f333aac89afe5ff7635bd41c7cc7b32e1763"
+        },
+        "original_capture_report": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage104-selected-chromium-02/report.json",
+          "bytes": 116797,
+          "sha256": "4cbbb38489a62743fc6b2a22191b1e2d72cb3979ea6f9accee861ac9f18f1694"
+        },
+        "original_capture_complete": false,
+        "original_capture_success": false,
+        "sessions": 134,
+        "observations": 1138,
+        "matches": 1138,
+        "status_counts": {
+          "error": 532,
+          "success": 606
+        },
+        "shared_raw_fields": 9264,
+        "logger_events": 16,
+        "candidate_row_files": 13816,
+        "all_required_pass": true,
+        "required_unresolved_contracts": [],
+        "cohorts": {
+          "reflection-constructor82": {
+            "all_required_pass": true,
+            "comparable_observations": 164,
+            "comparable_pass": true,
+            "observations": 164,
+            "raw_matches": 164,
+            "required_unresolved": 0
+          },
+          "reflection-legal-reference6": {
+            "all_required_pass": true,
+            "comparable_observations": 12,
+            "comparable_pass": true,
+            "observations": 12,
+            "raw_matches": 12,
+            "required_unresolved": 0
+          },
+          "reflection-main166": {
+            "all_required_pass": true,
+            "comparable_observations": 332,
+            "comparable_pass": true,
+            "observations": 332,
+            "raw_matches": 332,
+            "required_unresolved": 0
+          },
+          "reflection-metadata-reference96": {
+            "all_required_pass": true,
+            "comparable_observations": 192,
+            "comparable_pass": true,
+            "observations": 192,
+            "raw_matches": 192,
+            "required_unresolved": 0
+          },
+          "reflection-metadata47": {
+            "all_required_pass": true,
+            "comparable_observations": 94,
+            "comparable_pass": true,
+            "observations": 94,
+            "raw_matches": 94,
+            "required_unresolved": 0
+          },
+          "reflection-reference6": {
+            "all_required_pass": true,
+            "comparable_observations": 12,
+            "comparable_pass": true,
+            "observations": 12,
+            "raw_matches": 12,
+            "required_unresolved": 0
+          },
+          "reflection-review16": {
+            "all_required_pass": true,
+            "comparable_observations": 32,
+            "comparable_pass": true,
+            "observations": 32,
+            "raw_matches": 32,
+            "required_unresolved": 0
+          },
+          "typed-original": {
+            "all_required_pass": true,
+            "comparable_observations": 282,
+            "comparable_pass": true,
+            "observations": 282,
+            "raw_matches": 282,
+            "required_unresolved": 0
+          },
+          "typed-trace-corrected": {
+            "all_required_pass": true,
+            "comparable_observations": 18,
+            "comparable_pass": true,
+            "observations": 18,
+            "raw_matches": 18,
+            "required_unresolved": 0
+          }
+        },
+        "observed_total_polls": 198670,
+        "observed_requested_instruction_fuel": 12714880,
+        "observed_condition": {
+          "gc_schedule": "every-poll-batch",
+          "heap_and_constructor": "unchanged",
+          "max_requested_instruction_fuel": 2000000,
+          "per_program_timeout": "unchanged bundle program timeout_seconds",
+          "portable_outer_timeout_seconds": 1800,
+          "prior_poll1_capture_is_separate": true,
+          "steps_per_poll": 64
+        }
+      }
+    },
+    "source_condition": "67 program/profile groups, 569 contracts, 134 repeated sessions and 1138 ordinary observations PER TARGET; same selected02 captures, separate byte-preserving comparator/readback receipts.",
+    "no_guest_rerun": true,
+    "original_portable_failures_preserved": true,
+    "shared_comparator_not_independent_implementation": true
+  },
+  "documents": {
+    "integration": {
+      "path": "target/m2/stage104-document-integration-01/report.json",
+      "bytes": 2610,
+      "sha256": "80b10ed54725e48f040c11c971564165de99a888de7d174616633171d6f1f8fb",
+      "mode": 420
+    },
+    "standard_documents": [
+      {
+        "path": "README.md",
+        "bytes": 16076,
+        "sha256": "acdb3a9213834e24a523b1ed3bdcbd711d8bbbb3d0fe693be4740d2bba99760e",
+        "mode": 420
+      },
+      {
+        "path": "TESTING.md",
+        "bytes": 105040,
+        "sha256": "4db49a5f7398ceb53a71e75a990920d541aadedae0812302ad2122a86e3a92aa",
+        "mode": 420
+      },
+      {
+        "path": "docs/m2-language.md",
+        "bytes": 116575,
+        "sha256": "9532bc1bd571aa4c5c427f21105abf41de5c55a0c9c73fa84b3cca8250e66a79",
+        "mode": 420
+      },
+      {
+        "path": "docs/architecture.md",
+        "bytes": 110734,
+        "sha256": "a14ff7573873ec6aed295b7b92efc3aaa07f46198f169c27fcfe4c0124af4e1f",
+        "mode": 420
+      },
+      {
+        "path": "PLAN.md",
+        "bytes": 481180,
+        "sha256": "e0e927d94cf349e3af206fdc713f5b0e07c5544e45be2508bb9aa80bd2954ade",
+        "mode": 420
+      }
+    ],
+    "separate_public_index": {
+      "path": "reports/m2/README.md",
+      "bytes": 384498,
+      "sha256": "af9719fb4f504a8b54fe473ad663b781f2ba240f404d14335067fe3be2228060",
+      "mode": 420
+    },
+    "current_bytes_revalidated_for_draft": true
+  },
+  "archives": [
+    {
+      "path": "reports/m2/stage104-reflection-typed-evidence-01.tar.gz",
+      "bytes": 16381675,
+      "sha256": "81fddcb8b83b20a9a58822e35e0cd9a7dea1ed6083f16537c842cc2e05528e62",
+      "mode": 420,
+      "part": 1,
+      "source_target_archive": {
+        "bytes": 16381675,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-01.tar.gz",
+        "sha256": "81fddcb8b83b20a9a58822e35e0cd9a7dea1ed6083f16537c842cc2e05528e62"
+      },
+      "public_copy_verified": true,
+      "manifest": {
+        "bytes": 2154701,
+        "sha256": "a91d8041a532ce31a1855ea7e80f64a432998a144f3e7dfde1cd34b61d271bfc"
+      },
+      "logical_members_including_manifest": 20262
+    },
+    {
+      "path": "reports/m2/stage104-reflection-typed-evidence-02.tar.gz",
+      "bytes": 10446634,
+      "sha256": "aae85a8eea8ce93fdb6c20c9c650632848b56607bb9bd499bfe9e144351f463c",
+      "mode": 420,
+      "part": 2,
+      "source_target_archive": {
+        "bytes": 10446634,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-02.tar.gz",
+        "sha256": "aae85a8eea8ce93fdb6c20c9c650632848b56607bb9bd499bfe9e144351f463c"
+      },
+      "public_copy_verified": true,
+      "manifest": {
+        "bytes": 1987573,
+        "sha256": "f74d021c6381bec34be1e5c297a57ea83ec8be375efc0d3663a806d122c8f291"
+      },
+      "logical_members_including_manifest": 21404
+    },
+    {
+      "path": "reports/m2/stage104-reflection-typed-evidence-03.tar.gz",
+      "bytes": 18623526,
+      "sha256": "c70bdf514e6fa3f6fc4a838c57e54b6eaad89b32b97822eafa79e2e535d92cd5",
+      "mode": 420,
+      "part": 3,
+      "source_target_archive": {
+        "bytes": 18623526,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-03.tar.gz",
+        "sha256": "c70bdf514e6fa3f6fc4a838c57e54b6eaad89b32b97822eafa79e2e535d92cd5"
+      },
+      "public_copy_verified": true,
+      "manifest": {
+        "bytes": 1998360,
+        "sha256": "c9bae69ed033f3d6627be19dcc0da979f11062c4eb92d29ecc448987ad4a0eda"
+      },
+      "logical_members_including_manifest": 16967
+    },
+    {
+      "path": "reports/m2/stage104-reflection-typed-evidence-04.tar.gz",
+      "bytes": 11872022,
+      "sha256": "a29de6fc1c0f28abf38a82eb014a61f92511b9d38ce7c7c2fdea77ba5b7708bc",
+      "mode": 420,
+      "part": 4,
+      "source_target_archive": {
+        "bytes": 11872022,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-04.tar.gz",
+        "sha256": "a29de6fc1c0f28abf38a82eb014a61f92511b9d38ce7c7c2fdea77ba5b7708bc"
+      },
+      "public_copy_verified": true,
+      "manifest": {
+        "bytes": 2985187,
+        "sha256": "580e759396400f928b61a9812e0d2eeabc8894656f4a9e7a2fa936b641080a85"
+      },
+      "logical_members_including_manifest": 23457
+    },
+    {
+      "path": "reports/m2/stage104-reflection-typed-evidence-05.tar.gz",
+      "bytes": 13217143,
+      "sha256": "20e758beac89fa0a894701ae97175a837e440eaa87090c375a7157d96991905c",
+      "mode": 420,
+      "part": 5,
+      "source_target_archive": {
+        "bytes": 13217143,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-05.tar.gz",
+        "sha256": "20e758beac89fa0a894701ae97175a837e440eaa87090c375a7157d96991905c"
+      },
+      "public_copy_verified": true,
+      "manifest": {
+        "bytes": 2529707,
+        "sha256": "2267eb8b794180c1b4f9111073fc5aebf4a1bcabb0968c0f7858710aca190c1f"
+      },
+      "logical_members_including_manifest": 21494
+    },
+    {
+      "path": "reports/m2/stage104-reflection-typed-evidence-06.tar.gz",
+      "bytes": 19187410,
+      "sha256": "6534b2d051b12f6d96cfcc188f2f2d1bcd131533571d98653d3329729f78a8fd",
+      "mode": 420,
+      "part": 6,
+      "source_target_archive": {
+        "bytes": 19187410,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-06.tar.gz",
+        "sha256": "6534b2d051b12f6d96cfcc188f2f2d1bcd131533571d98653d3329729f78a8fd"
+      },
+      "public_copy_verified": true,
+      "manifest": {
+        "bytes": 1194968,
+        "sha256": "1b56eddc900332dcaa7b9f37134323da47bbe3d8a104f64e20b53f3ccbb79a8d"
+      },
+      "logical_members_including_manifest": 11362
+    },
+    {
+      "path": "reports/m2/stage104-reflection-typed-evidence-07.tar.gz",
+      "bytes": 15471782,
+      "sha256": "6504cf3a9888c13426969f7afbd2b6f99f97f852643cc4c4e89ad404f0b99a69",
+      "mode": 420,
+      "part": 7,
+      "source_target_archive": {
+        "bytes": 15471782,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-07.tar.gz",
+        "sha256": "6504cf3a9888c13426969f7afbd2b6f99f97f852643cc4c4e89ad404f0b99a69"
+      },
+      "public_copy_verified": true,
+      "manifest": {
+        "bytes": 2356672,
+        "sha256": "847fa786c277d66377599b57fcc4bac1f5b5138c1bc3b6110b9290569d89f2f0"
+      },
+      "logical_members_including_manifest": 21224
+    },
+    {
+      "path": "reports/m2/stage104-reflection-typed-evidence-08.tar.gz",
+      "bytes": 1904337,
+      "sha256": "6c14b5e1177eb0ae73cca987a68195128785775db8099591d68e5249b9068e75",
+      "mode": 420,
+      "part": 8,
+      "source_target_archive": {
+        "bytes": 1904337,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-08.tar.gz",
+        "sha256": "6c14b5e1177eb0ae73cca987a68195128785775db8099591d68e5249b9068e75"
+      },
+      "public_copy_verified": true,
+      "manifest": {
+        "bytes": 786373,
+        "sha256": "51f199714e31bfacba8165e7322e823e03fd3def032b7073f117d2b31411eaa0"
+      },
+      "logical_members_including_manifest": 8640
+    }
+  ],
+  "evidence": {
+    "producer": {
+      "path": "target/m2/stage104-evidence-archives-01/report.json",
+      "bytes": 5908,
+      "sha256": "ae4dbc87366db6b5fe5152f0d8020a47037e8899f971c73abfeeb97aea926823",
+      "mode": 420
+    },
+    "preflight": {
+      "path": "target/m2/stage104-archive-preflight-03/report.json",
+      "bytes": 3061,
+      "sha256": "0d2359ad60605c2699e940657eed5b984ceada6a7e81c99d28cd13c6100445b9",
+      "mode": 420
+    },
+    "config": {
+      "path": "target/m2/stage104-evidence-selection-draft-05/config.json",
+      "bytes": 8146,
+      "sha256": "6f5f2ed264bb74232bdf12cd8c0cfa77d2c914f370139de95a1ff25005edc40c",
+      "mode": 420
+    },
+    "selection": {
+      "bytes": 35273514,
+      "mode": 420,
+      "path": "target/m2/stage104-archive-preflight-03/selection.json",
+      "sha256": "2d5fe2ec28266537ebdbb93b302d534fc0eb7dae59d9538327c14bc7ad306e61"
+    },
+    "controller": {
+      "bytes": 22785,
+      "mode": 420,
+      "path": "target/m2/stage104-archive-producer-prep-01/produce.py",
+      "sha256": "163b1a362af46f2fe161912c93208aa353f85d23eb1b96c5865a1fb84fb9410d"
+    },
+    "catalogs": [
+      {
+        "bytes": 8146,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-selection-draft-05/config.json",
+        "sha256": "6f5f2ed264bb74232bdf12cd8c0cfa77d2c914f370139de95a1ff25005edc40c"
+      },
+      {
+        "bytes": 74754533,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-selection-draft-02/members.final.json",
+        "sha256": "48f0a54c7929571f274ffe6abb230d9ea3fb6cc57be3d77a1ccd03ae610d6f59"
+      },
+      {
+        "bytes": 428,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-selection-draft-02/staging-metadata-member.json",
+        "sha256": "713ea56b136164604fb9464d257447cd7dc36b42d24554d8792c844785cdac1d"
+      },
+      {
+        "bytes": 4370916,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-selection-draft-03/mandatory.members.json",
+        "sha256": "10c7dc132f55cd1b7f7125c2ce4e5311ba045ce851bb71d3b14bf69f0680deac"
+      },
+      {
+        "bytes": 35934,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-selection-draft-04/token-provenance.members.json",
+        "sha256": "b99558172355090b02746c3a3c0420dfbda4de87c1b1b01ca4ac646b2d159609"
+      },
+      {
+        "bytes": 4056,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-selection-draft-05/historical-inputs.members.json",
+        "sha256": "27d30b6a363c3d0acb51c6f61abf8dbe93ae042c894bf7d18f771a46992425f0"
+      },
+      {
+        "bytes": 18860893,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-selection-draft-02/restoration-aliases.final.json",
+        "sha256": "92c83f3d03b2fcc7b728ef6c73cf3c30087c59f46dbf97c430de988cdaeefd88"
+      },
+      {
+        "bytes": 5150,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-selection-independent-review-01/closure-review.json",
+        "sha256": "dc355309a8b2f5497da45cb0357cffe91537ca1fad14617449b4e60ee663183b"
+      }
+    ],
+    "independent_archive_readback": {
+      "path": "target/m2/stage104-archive-independent-readback-01/report.json",
+      "bytes": 6776,
+      "sha256": "70270f96f6bd9907fe65671384a68889f2bf46452621cbad4e3f60c895df2f51",
+      "mode": 420
+    },
+    "independent_readback_execution": {
+      "path": "target/m2/stage104-archive-independent-readback-01/execution.json",
+      "bytes": 1182,
+      "sha256": "9e6c2ec5b89a12dd1e9d56e020b09c98dca9657a4de91fbf26895514c3c05e77",
+      "mode": 420
+    },
+    "selection_payloads": 144801,
+    "selection_auxiliary_payloads": 1,
+    "part_manifest_members": 8,
+    "total_logical_regular_archive_members": 144810,
+    "logical_payload_bytes": 688503882,
+    "compressed_parts": 8,
+    "compressed_bytes": 107104529,
+    "compressed_cap_bytes_per_part": 47185920,
+    "producer_member_and_EOF_verification_passed": true,
+    "independent_member_and_EOF_verification_passed": true,
+    "original_producer_independent_field": "The exact original producer receipt still says independent_archive_readback=pending. The separate later independent receipt resolves that pending acquisition without editing or relabeling the producer receipt.",
+    "public_copy_receipt": {
+      "path": "target/m2/stage104-public-copy-02/archives.json",
+      "bytes": 4470,
+      "sha256": "3cc86fc474024d1c26f38a6bb9d3f633e76323018e89342cfbe75ec4d10cdce4",
+      "mode": 420
+    },
+    "public_copy_status": "Eight public archive files copied and rehashed against the verified producer identities.",
+    "final_index_readback_receipt": "Target-only after publication; deliberately not a checkpoint self-reference."
+  },
+  "source_restoration": {
+    "standalone_repository": false,
+    "selection_member": "STAGE104-FULL-SELECTION.json",
+    "selection_identity": {
+      "bytes": 35273514,
+      "mode": 420,
+      "path": "target/m2/stage104-archive-preflight-03/selection.json",
+      "sha256": "2d5fe2ec28266537ebdbb93b302d534fc0eb7dae59d9538327c14bc7ad306e61"
+    },
+    "catalogs": [
+      {
+        "bytes": 8146,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-selection-draft-05/config.json",
+        "sha256": "6f5f2ed264bb74232bdf12cd8c0cfa77d2c914f370139de95a1ff25005edc40c"
+      },
+      {
+        "bytes": 74754533,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-selection-draft-02/members.final.json",
+        "sha256": "48f0a54c7929571f274ffe6abb230d9ea3fb6cc57be3d77a1ccd03ae610d6f59"
+      },
+      {
+        "bytes": 428,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-selection-draft-02/staging-metadata-member.json",
+        "sha256": "713ea56b136164604fb9464d257447cd7dc36b42d24554d8792c844785cdac1d"
+      },
+      {
+        "bytes": 4370916,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-selection-draft-03/mandatory.members.json",
+        "sha256": "10c7dc132f55cd1b7f7125c2ce4e5311ba045ce851bb71d3b14bf69f0680deac"
+      },
+      {
+        "bytes": 35934,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-selection-draft-04/token-provenance.members.json",
+        "sha256": "b99558172355090b02746c3a3c0420dfbda4de87c1b1b01ca4ac646b2d159609"
+      },
+      {
+        "bytes": 4056,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-selection-draft-05/historical-inputs.members.json",
+        "sha256": "27d30b6a363c3d0acb51c6f61abf8dbe93ae042c894bf7d18f771a46992425f0"
+      },
+      {
+        "bytes": 18860893,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-selection-draft-02/restoration-aliases.final.json",
+        "sha256": "92c83f3d03b2fcc7b728ef6c73cf3c30087c59f46dbf97c430de988cdaeefd88"
+      },
+      {
+        "bytes": 5150,
+        "mode": 420,
+        "path": "target/m2/stage104-evidence-selection-independent-review-01/closure-review.json",
+        "sha256": "dc355309a8b2f5497da45cb0357cffe91537ca1fad14617449b4e60ee663183b"
+      }
+    ],
+    "selected_payloads": 144801,
+    "direct_restoration_aliases": 26431,
+    "aliases_have_direct_payload_targets": true,
+    "alias_restoration": "Restore each alias as a separate regular-file copy of its direct payload, verify raw size/SHA256, and chmod to that destination\u2019s recorded mode. Do not create hardlinks. Payload and alias own modes are independently guarded.",
+    "alias_mode_transformations": [
+      {
+        "destination": "target/m2/stage104-selected-all-artifacts-01/pkl_napi.node",
+        "payload": "target/m2/stage104-m1-platform-01/pkl_napi.node",
+        "destination_mode": 493,
+        "payload_mode": 420
+      }
+    ],
+    "required_current_dependency_additions": 8065,
+    "required_additions_breakdown": {
+      "current_executing_helpers_and_prior_authorities": 7969,
+      "token_acquisition_provenance": 88,
+      "historical_replay_source_inputs": 8
+    },
+    "mandatory_closure_review": {
+      "path": "target/m2/stage104-evidence-selection-independent-review-01/closure-review.json",
+      "bytes": 5150,
+      "sha256": "dc355309a8b2f5497da45cb0357cffe91537ca1fad14617449b4e60ee663183b",
+      "mode": 420
+    },
+    "all_mandatory_additions_verified_present_by_preflight": true,
+    "external_reference_prerequisites": {
+      "module_source_prefixes": 888,
+      "jvm_source_prefixes": 1,
+      "physical_source_prerequisite": "Pinned upstream reference/workspace source at preserved URI and input SHA; baseline/profile records are selected. Not physically restored by these archives and not self-contained guest execution.",
+      "references_lock": "references.lock"
+    },
+    "external_tools_scope": "Pinned JDK, Rust, Node, browser and upstream tool identities are provenance, not installed toolchain copies in this archive. Re-execution requires those exact dependencies.",
+    "explicit_source_inheritance_used": false,
+    "inherited_source_mappings": [],
+    "inherited_source_archives": [],
+    "historical_compile04": {
+      "preimage_files": 9,
+      "preimage_bytes": 317182,
+      "restoration_view": {
+        "path": "target/m2/stage104-publication-path-inventory-prep-01/compile04-preimages.json",
+        "bytes": 5531,
+        "sha256": "7543b39257d03af2bd9f0fe600e468af99892b0b8e699e542b5aed86a15240d8",
+        "mode": 420
+      },
+      "old_manifest_catalog": {
+        "path": "target/m2/stage104-final-validation-controller-01/prior-manifests.json",
+        "bytes": 565,
+        "sha256": "b8c375a0ad4db9e18a474c1bad7fe0cc38456c80b7426b1deade954ef214498a",
+        "mode": 420
+      },
+      "scope": "Apply the nine exact retained preimages to the recorded current source view and restore the retained prior manifest bytes to reconstruct the relevant compile04 inputs. This is not a full repository or external workspace snapshot."
+    },
+    "historical_failures": "Original failed library, lifecycle, selected01/02 comparison/controller, earlier full replay and oracle outcomes are retained without status promotion."
+  },
+  "known_limits": [
+    "All selected569 ordinary contracts match; legacy required List internal2 observations and whole List512MiB Java heap failure remain unresolved outside that matrix.",
+    "Stage105/106/107/108 noncanonical work is not Stage104 validation.",
+    "Counts of incomplete implementation/mapping/case coverage overlap and are not completion percentages.",
+    "Full ready4442 acquisition is complete but retains33mismatches82unsupported2oracleerror; strictfullM2 gate remainsfalse.",
+    "Source35, runtime/M1 catalog636 and replay catalog476 are precise overlapping scopes, not a whole-repository freeze.",
+    "The archive is not self-contained: 888 module and one JVM physical source prefixes require the pinned external reference/workspace at preserved source URI and input SHA; selected baseline/profile records do not replace those physical sources.",
+    "Independent archive readback uses a manual tar/PAX parser plus zlib and no producer/tarfile reader; Python hashing, JSON and zlib primitives are shared. It rechecks archived payloads and alias metadata, while live source/alias bookends remain producer/preflight evidence.",
+    "Selected same-capture readback reuses the shared comparison primitive; it is neither independent acquisition nor a wholly independent comparator implementation. Excluded Java-only exception/type/cause and provenance metadata are not claimed equal.",
+    "Selected poll64/GC-every-batch and 2,000,000 requested-instruction session fuel are explicit separate conditions; prior poll1 timeout and original NAPI/Chromium comparator failures remain preserved. Dedicated GC1 lifecycle evidence is separate.",
+    "Strict full M2 remains false with 1,780 overlapping unmet conditions; current ready4442 retains 33 mismatches, 82 unsupported and two oracle errors."
+  ],
+  "actual_default_checks": {
+    "stage104-format-check-03": {
+      "report": {
+        "path": "target/m2/stage104-format-check-03/report.json",
+        "bytes": 1279,
+        "sha256": "b95598ad56bedda494b53ffd83d40395cce314dcb5f456581984ea39c8981566",
+        "mode": 420
+      },
+      "argv": [
+        "cargo",
+        "+1.98.1",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "complete": true,
+      "success": true,
+      "source_stable": true
+    },
+    "stage104-xtask-verify-03": {
+      "report": {
+        "path": "target/m2/stage104-xtask-verify-03/report.json",
+        "bytes": 1257,
+        "sha256": "4349b702d7d9ef687417e2c92b9c74a80de9b685982dff06e82349c82cc7d2a8",
+        "mode": 420
+      },
+      "argv": [
+        "cargo",
+        "+1.98.1",
+        "xtask",
+        "verify"
+      ],
+      "complete": true,
+      "success": true,
+      "source_stable": true
+    },
+    "stage104-clippy-03": {
+      "report": {
+        "path": "target/m2/stage104-clippy-03/report.json",
+        "bytes": 1396,
+        "sha256": "e1c96925776ece2be023e4c7bdf968cb9a2f477a7757085e7852d85beff948c3",
+        "mode": 420
+      },
+      "argv": [
+        "cargo",
+        "+1.98.1",
+        "clippy",
+        "-vv",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--message-format=json-render-diagnostics",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "complete": true,
+      "success": true,
+      "source_stable": true
+    },
+    "stage104-wasm-check-01": {
+      "report": {
+        "path": "target/m2/stage104-wasm-check-01/report.json",
+        "bytes": 1394,
+        "sha256": "4dbbdf7b1a7d18a0f774a32cd826c3f2421ba8f3c7ec97a39ec28218c934783a",
+        "mode": 420
+      },
+      "argv": [
+        "cargo",
+        "+1.98.1",
+        "check",
+        "-vv",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked",
+        "--message-format=json-render-diagnostics"
+      ],
+      "complete": true,
+      "success": true,
+      "source_stable": true
+    },
+    "stage104-combined-compile-05": {
+      "report": {
+        "path": "target/m2/stage104-combined-compile-05/report.json",
+        "bytes": 1672,
+        "sha256": "b1c973644aa628fdd52f95a144c1a283f4176c81876beeba9545ecf17a675928",
+        "mode": 420
+      },
+      "argv": [
+        "cargo",
+        "+1.98.1",
+        "test",
+        "-p",
+        "pkl-runtime",
+        "--locked",
+        "--lib",
+        "--test",
+        "m2_reflection_apis_oracle",
+        "--test",
+        "m2_reflection_apis_lifecycle",
+        "--test",
+        "m2_reflection_source_metadata",
+        "--test",
+        "m2_typed_hasproperty_oracle",
+        "--test",
+        "m2_typed_has_property_lifecycle",
+        "--test",
+        "m2_mapping_apis_lifecycle",
+        "--no-run",
+        "-vv",
+        "--message-format=json-render-diagnostics"
+      ],
+      "complete": true,
+      "success": true,
+      "source_stable": true
+    },
+    "workspace": {
+      "report": {
+        "bytes": 1360,
+        "path": "target/m2/stage104-workspace-test-01/report.json",
+        "sha256": "2565e52c9910d58a430564490a952337f379d38e9d3b209147e4a9d4218e7d8c"
+      },
+      "readback": {
+        "path": "target/m2/stage104-workspace-readback-01/report.json",
+        "bytes": 6417,
+        "sha256": "0441735cadb3ed1fb05a39af87cdf441bf5b7377051e0e4ecb5d44b4aa9ea4ae",
+        "mode": 420
+      },
+      "complete": true,
+      "success": true
+    }
+  },
+  "strict_full_gate": {
+    "required_requirements": 475,
+    "incomplete_implementation_rows": 472,
+    "incomplete_test_mapping_rows": 472,
+    "required_cases_without_requirement_links": 827,
+    "required_unready_cases": 103,
+    "full_gate_complete": false,
+    "overlapping_counts_not_progress_percent": true,
+    "actual_accounting_report": {
+      "path": "target/m2/stage104-current-full-gate-01/report.json",
+      "bytes": 226591,
+      "sha256": "ac62bc65b4b1ecec79769a4f2deafefb299c3c8c8eda45c684a9c041d2b1a47f",
+      "mode": 420
+    },
+    "failure_total": 1780,
+    "failure_categories": {
+      "implementation_incomplete": 472,
+      "test_mapping_incomplete": 472,
+      "required_case_incomplete": 836
+    },
+    "verify_full_CLI_invocation": false,
+    "kind": "Exact gate function plus current_manifest freshness; overlapping unmet conditions"
+  },
+  "canonical_scope": {
+    "source_paths": 35,
+    "root_reported_tracked_modified": 27,
+    "root_reported_new": 8,
+    "fixtures": 26092,
+    "generated_metadata_paths": 2,
+    "standard_documents": 5,
+    "separate_public_index": 1,
+    "path_inventory": {
+      "path": "target/m2/stage104-publication-path-inventory-prep-01/report.json",
+      "bytes": 6572,
+      "sha256": "1baa7cd12fcc8ee5f47e6d8e7f4ba0f99fa5200341e23c8078c614a5ede801ac",
+      "mode": 420
+    },
+    "not_final_git_staging_receipt": true,
+    "source_fixture_staging": {
+      "path": "target/m2/stage104-source-fixture-staging-01/report.json",
+      "bytes": 509,
+      "sha256": "ce4f0fd808057bc603642301f5100ab243de33ccf3b2dc72cc61f0efe3f880a4",
+      "mode": 420
+    },
+    "current_index_empty_claimed": false
+  },
+  "excluded_isolated_or_target_only_work": [
+    "Stage105 isolated property API validation",
+    "Stage106 relativePathTo work",
+    "Stage107 project command candidate",
+    "Stage108 annotation diagnostic candidate"
+  ],
+  "completed_full_ready_cohorts": {
+    "modules": {
+      "report": {
+        "bytes": 1572019,
+        "path": "target/m2/stage104-full-ready-modules-02/report.json",
+        "sha256": "8b586f0a6640d0f6c7c0434ca3329ac49e014425fcc096ed2dcc31db2badfd9d"
+      },
+      "status_counts": {
+        "candidate-unsupported": 82,
+        "mismatch": 26,
+        "oracle-error": 1,
+        "pass": 779
+      },
+      "old_pass_regressions": [],
+      "integrity_valid": true,
+      "compatibility_pass": false
+    },
+    "historical": {
+      "report": {
+        "bytes": 19367,
+        "path": "target/m2/stage104-full-ready-historical-02/report.json",
+        "sha256": "8956e787289ccd410d25d89ddb3fc5ca188294a432cf468e98580c0a97f7adda"
+      },
+      "status_counts": {
+        "pass": 8
+      },
+      "old_pass_regressions": [],
+      "integrity_valid": true,
+      "compatibility_pass": true
+    },
+    "jvm": {
+      "report": {
+        "bytes": 9439,
+        "path": "target/m2/stage104-full-ready-jvm-02/report.json",
+        "sha256": "f36bb9a70b393cc836c8abed93f1416c945c3c8c7fc2b29715278db242b04b3c"
+      },
+      "status_counts": {
+        "pass": 2
+      },
+      "old_pass_regressions": [],
+      "integrity_valid": true,
+      "compatibility_pass": true
+    },
+    "scalars": {
+      "report": {
+        "bytes": 5814688,
+        "path": "target/m2/stage104-full-ready-scalars-02/report.json",
+        "sha256": "74ed0fc62b4543f788cf9c3d11d31ce072ea482a89992c92c6383d98a066db69"
+      },
+      "status_counts": {
+        "mismatch": 7,
+        "oracle-error": 1,
+        "pass": 3537
+      },
+      "old_pass_regressions": [],
+      "integrity_valid": true,
+      "compatibility_pass": false
+    }
+  },
+  "embedded_publication_receipts": {
+    "archive_producer": {
+      "pin": {
+        "path": "target/m2/stage104-evidence-archives-01/report.json",
+        "bytes": 5908,
+        "sha256": "ae4dbc87366db6b5fe5152f0d8020a47037e8899f971c73abfeeb97aea926823",
+        "mode": 420
+      },
+      "receipt": {
+        "alias_mode_transformations": 1,
+        "all_gzip_EOF_checked": true,
+        "archives": [
+          {
+            "archive": {
+              "bytes": 16381675,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-01.tar.gz",
+              "sha256": "81fddcb8b83b20a9a58822e35e0cd9a7dea1ed6083f16537c842cc2e05528e62"
+            },
+            "gzip_EOF_checked": true,
+            "index": 1,
+            "logical_members_including_manifest": 20262,
+            "manifest": {
+              "bytes": 2154701,
+              "sha256": "a91d8041a532ce31a1855ea7e80f64a432998a144f3e7dfde1cd34b61d271bfc"
+            }
+          },
+          {
+            "archive": {
+              "bytes": 10446634,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-02.tar.gz",
+              "sha256": "aae85a8eea8ce93fdb6c20c9c650632848b56607bb9bd499bfe9e144351f463c"
+            },
+            "gzip_EOF_checked": true,
+            "index": 2,
+            "logical_members_including_manifest": 21404,
+            "manifest": {
+              "bytes": 1987573,
+              "sha256": "f74d021c6381bec34be1e5c297a57ea83ec8be375efc0d3663a806d122c8f291"
+            }
+          },
+          {
+            "archive": {
+              "bytes": 18623526,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-03.tar.gz",
+              "sha256": "c70bdf514e6fa3f6fc4a838c57e54b6eaad89b32b97822eafa79e2e535d92cd5"
+            },
+            "gzip_EOF_checked": true,
+            "index": 3,
+            "logical_members_including_manifest": 16967,
+            "manifest": {
+              "bytes": 1998360,
+              "sha256": "c9bae69ed033f3d6627be19dcc0da979f11062c4eb92d29ecc448987ad4a0eda"
+            }
+          },
+          {
+            "archive": {
+              "bytes": 11872022,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-04.tar.gz",
+              "sha256": "a29de6fc1c0f28abf38a82eb014a61f92511b9d38ce7c7c2fdea77ba5b7708bc"
+            },
+            "gzip_EOF_checked": true,
+            "index": 4,
+            "logical_members_including_manifest": 23457,
+            "manifest": {
+              "bytes": 2985187,
+              "sha256": "580e759396400f928b61a9812e0d2eeabc8894656f4a9e7a2fa936b641080a85"
+            }
+          },
+          {
+            "archive": {
+              "bytes": 13217143,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-05.tar.gz",
+              "sha256": "20e758beac89fa0a894701ae97175a837e440eaa87090c375a7157d96991905c"
+            },
+            "gzip_EOF_checked": true,
+            "index": 5,
+            "logical_members_including_manifest": 21494,
+            "manifest": {
+              "bytes": 2529707,
+              "sha256": "2267eb8b794180c1b4f9111073fc5aebf4a1bcabb0968c0f7858710aca190c1f"
+            }
+          },
+          {
+            "archive": {
+              "bytes": 19187410,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-06.tar.gz",
+              "sha256": "6534b2d051b12f6d96cfcc188f2f2d1bcd131533571d98653d3329729f78a8fd"
+            },
+            "gzip_EOF_checked": true,
+            "index": 6,
+            "logical_members_including_manifest": 11362,
+            "manifest": {
+              "bytes": 1194968,
+              "sha256": "1b56eddc900332dcaa7b9f37134323da47bbe3d8a104f64e20b53f3ccbb79a8d"
+            }
+          },
+          {
+            "archive": {
+              "bytes": 15471782,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-07.tar.gz",
+              "sha256": "6504cf3a9888c13426969f7afbd2b6f99f97f852643cc4c4e89ad404f0b99a69"
+            },
+            "gzip_EOF_checked": true,
+            "index": 7,
+            "logical_members_including_manifest": 21224,
+            "manifest": {
+              "bytes": 2356672,
+              "sha256": "847fa786c277d66377599b57fcc4bac1f5b5138c1bc3b6110b9290569d89f2f0"
+            }
+          },
+          {
+            "archive": {
+              "bytes": 1904337,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-08.tar.gz",
+              "sha256": "6c14b5e1177eb0ae73cca987a68195128785775db8099591d68e5249b9068e75"
+            },
+            "gzip_EOF_checked": true,
+            "index": 8,
+            "logical_members_including_manifest": 8640,
+            "manifest": {
+              "bytes": 786373,
+              "sha256": "51f199714e31bfacba8165e7322e823e03fd3def032b7073f117d2b31411eaa0"
+            }
+          }
+        ],
+        "auxiliary_payloads": 1,
+        "canonical_publication_or_Git_writes": false,
+        "catalogs": [
+          {
+            "bytes": 8146,
+            "mode": 420,
+            "path": "target/m2/stage104-evidence-selection-draft-05/config.json",
+            "sha256": "6f5f2ed264bb74232bdf12cd8c0cfa77d2c914f370139de95a1ff25005edc40c"
+          },
+          {
+            "bytes": 74754533,
+            "mode": 420,
+            "path": "target/m2/stage104-evidence-selection-draft-02/members.final.json",
+            "sha256": "48f0a54c7929571f274ffe6abb230d9ea3fb6cc57be3d77a1ccd03ae610d6f59"
+          },
+          {
+            "bytes": 428,
+            "mode": 420,
+            "path": "target/m2/stage104-evidence-selection-draft-02/staging-metadata-member.json",
+            "sha256": "713ea56b136164604fb9464d257447cd7dc36b42d24554d8792c844785cdac1d"
+          },
+          {
+            "bytes": 4370916,
+            "mode": 420,
+            "path": "target/m2/stage104-evidence-selection-draft-03/mandatory.members.json",
+            "sha256": "10c7dc132f55cd1b7f7125c2ce4e5311ba045ce851bb71d3b14bf69f0680deac"
+          },
+          {
+            "bytes": 35934,
+            "mode": 420,
+            "path": "target/m2/stage104-evidence-selection-draft-04/token-provenance.members.json",
+            "sha256": "b99558172355090b02746c3a3c0420dfbda4de87c1b1b01ca4ac646b2d159609"
+          },
+          {
+            "bytes": 4056,
+            "mode": 420,
+            "path": "target/m2/stage104-evidence-selection-draft-05/historical-inputs.members.json",
+            "sha256": "27d30b6a363c3d0acb51c6f61abf8dbe93ae042c894bf7d18f771a46992425f0"
+          },
+          {
+            "bytes": 18860893,
+            "mode": 420,
+            "path": "target/m2/stage104-evidence-selection-draft-02/restoration-aliases.final.json",
+            "sha256": "92c83f3d03b2fcc7b728ef6c73cf3c30087c59f46dbf97c430de988cdaeefd88"
+          },
+          {
+            "bytes": 5150,
+            "mode": 420,
+            "path": "target/m2/stage104-evidence-selection-independent-review-01/closure-review.json",
+            "sha256": "dc355309a8b2f5497da45cb0357cffe91537ca1fad14617449b4e60ee663183b"
+          }
+        ],
+        "complete": true,
+        "compressed_cap_bytes_per_part": 47185920,
+        "controller": {
+          "bytes": 22785,
+          "mode": 420,
+          "path": "target/m2/stage104-archive-producer-prep-01/produce.py",
+          "sha256": "163b1a362af46f2fe161912c93208aa353f85d23eb1b96c5865a1fb84fb9410d"
+        },
+        "direct_restoration_aliases": 26431,
+        "errors": [],
+        "every_member_bytes_size_mode_order_sha256_rechecked": true,
+        "exact_global_disjoint_union": true,
+        "finished_epoch": 1793256761.503378,
+        "floor_breaches": [],
+        "independent_archive_readback": "pending",
+        "kind": "Stage104 finite deterministic target archive producer",
+        "live_alias_bytes_modes_before_after_equal": true,
+        "live_source_before_stream_after_equal": true,
+        "minimum_free": 21156356096,
+        "preflight": {
+          "bytes": 3061,
+          "mode": 420,
+          "path": "target/m2/stage104-archive-preflight-03/report.json",
+          "sha256": "0d2359ad60605c2699e940657eed5b984ceada6a7e81c99d28cd13c6100445b9"
+        },
+        "selected_payloads": 144801,
+        "selection": {
+          "bytes": 35273514,
+          "mode": 420,
+          "path": "target/m2/stage104-archive-preflight-03/selection.json",
+          "sha256": "2d5fe2ec28266537ebdbb93b302d534fc0eb7dae59d9538327c14bc7ad306e61"
+        },
+        "standalone_repository": false,
+        "started_epoch": 1793256474.4723399,
+        "success": true
+      },
+      "raw_utf8": "{\"alias_mode_transformations\":1,\"all_gzip_EOF_checked\":true,\"archives\":[{\"archive\":{\"bytes\":16381675,\"mode\":420,\"path\":\"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-01.tar.gz\",\"sha256\":\"81fddcb8b83b20a9a58822e35e0cd9a7dea1ed6083f16537c842cc2e05528e62\"},\"gzip_EOF_checked\":true,\"index\":1,\"logical_members_including_manifest\":20262,\"manifest\":{\"bytes\":2154701,\"sha256\":\"a91d8041a532ce31a1855ea7e80f64a432998a144f3e7dfde1cd34b61d271bfc\"}},{\"archive\":{\"bytes\":10446634,\"mode\":420,\"path\":\"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-02.tar.gz\",\"sha256\":\"aae85a8eea8ce93fdb6c20c9c650632848b56607bb9bd499bfe9e144351f463c\"},\"gzip_EOF_checked\":true,\"index\":2,\"logical_members_including_manifest\":21404,\"manifest\":{\"bytes\":1987573,\"sha256\":\"f74d021c6381bec34be1e5c297a57ea83ec8be375efc0d3663a806d122c8f291\"}},{\"archive\":{\"bytes\":18623526,\"mode\":420,\"path\":\"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-03.tar.gz\",\"sha256\":\"c70bdf514e6fa3f6fc4a838c57e54b6eaad89b32b97822eafa79e2e535d92cd5\"},\"gzip_EOF_checked\":true,\"index\":3,\"logical_members_including_manifest\":16967,\"manifest\":{\"bytes\":1998360,\"sha256\":\"c9bae69ed033f3d6627be19dcc0da979f11062c4eb92d29ecc448987ad4a0eda\"}},{\"archive\":{\"bytes\":11872022,\"mode\":420,\"path\":\"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-04.tar.gz\",\"sha256\":\"a29de6fc1c0f28abf38a82eb014a61f92511b9d38ce7c7c2fdea77ba5b7708bc\"},\"gzip_EOF_checked\":true,\"index\":4,\"logical_members_including_manifest\":23457,\"manifest\":{\"bytes\":2985187,\"sha256\":\"580e759396400f928b61a9812e0d2eeabc8894656f4a9e7a2fa936b641080a85\"}},{\"archive\":{\"bytes\":13217143,\"mode\":420,\"path\":\"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-05.tar.gz\",\"sha256\":\"20e758beac89fa0a894701ae97175a837e440eaa87090c375a7157d96991905c\"},\"gzip_EOF_checked\":true,\"index\":5,\"logical_members_including_manifest\":21494,\"manifest\":{\"bytes\":2529707,\"sha256\":\"2267eb8b794180c1b4f9111073fc5aebf4a1bcabb0968c0f7858710aca190c1f\"}},{\"archive\":{\"bytes\":19187410,\"mode\":420,\"path\":\"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-06.tar.gz\",\"sha256\":\"6534b2d051b12f6d96cfcc188f2f2d1bcd131533571d98653d3329729f78a8fd\"},\"gzip_EOF_checked\":true,\"index\":6,\"logical_members_including_manifest\":11362,\"manifest\":{\"bytes\":1194968,\"sha256\":\"1b56eddc900332dcaa7b9f37134323da47bbe3d8a104f64e20b53f3ccbb79a8d\"}},{\"archive\":{\"bytes\":15471782,\"mode\":420,\"path\":\"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-07.tar.gz\",\"sha256\":\"6504cf3a9888c13426969f7afbd2b6f99f97f852643cc4c4e89ad404f0b99a69\"},\"gzip_EOF_checked\":true,\"index\":7,\"logical_members_including_manifest\":21224,\"manifest\":{\"bytes\":2356672,\"sha256\":\"847fa786c277d66377599b57fcc4bac1f5b5138c1bc3b6110b9290569d89f2f0\"}},{\"archive\":{\"bytes\":1904337,\"mode\":420,\"path\":\"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-08.tar.gz\",\"sha256\":\"6c14b5e1177eb0ae73cca987a68195128785775db8099591d68e5249b9068e75\"},\"gzip_EOF_checked\":true,\"index\":8,\"logical_members_including_manifest\":8640,\"manifest\":{\"bytes\":786373,\"sha256\":\"51f199714e31bfacba8165e7322e823e03fd3def032b7073f117d2b31411eaa0\"}}],\"auxiliary_payloads\":1,\"canonical_publication_or_Git_writes\":false,\"catalogs\":[{\"bytes\":8146,\"mode\":420,\"path\":\"target/m2/stage104-evidence-selection-draft-05/config.json\",\"sha256\":\"6f5f2ed264bb74232bdf12cd8c0cfa77d2c914f370139de95a1ff25005edc40c\"},{\"bytes\":74754533,\"mode\":420,\"path\":\"target/m2/stage104-evidence-selection-draft-02/members.final.json\",\"sha256\":\"48f0a54c7929571f274ffe6abb230d9ea3fb6cc57be3d77a1ccd03ae610d6f59\"},{\"bytes\":428,\"mode\":420,\"path\":\"target/m2/stage104-evidence-selection-draft-02/staging-metadata-member.json\",\"sha256\":\"713ea56b136164604fb9464d257447cd7dc36b42d24554d8792c844785cdac1d\"},{\"bytes\":4370916,\"mode\":420,\"path\":\"target/m2/stage104-evidence-selection-draft-03/mandatory.members.json\",\"sha256\":\"10c7dc132f55cd1b7f7125c2ce4e5311ba045ce851bb71d3b14bf69f0680deac\"},{\"bytes\":35934,\"mode\":420,\"path\":\"target/m2/stage104-evidence-selection-draft-04/token-provenance.members.json\",\"sha256\":\"b99558172355090b02746c3a3c0420dfbda4de87c1b1b01ca4ac646b2d159609\"},{\"bytes\":4056,\"mode\":420,\"path\":\"target/m2/stage104-evidence-selection-draft-05/historical-inputs.members.json\",\"sha256\":\"27d30b6a363c3d0acb51c6f61abf8dbe93ae042c894bf7d18f771a46992425f0\"},{\"bytes\":18860893,\"mode\":420,\"path\":\"target/m2/stage104-evidence-selection-draft-02/restoration-aliases.final.json\",\"sha256\":\"92c83f3d03b2fcc7b728ef6c73cf3c30087c59f46dbf97c430de988cdaeefd88\"},{\"bytes\":5150,\"mode\":420,\"path\":\"target/m2/stage104-evidence-selection-independent-review-01/closure-review.json\",\"sha256\":\"dc355309a8b2f5497da45cb0357cffe91537ca1fad14617449b4e60ee663183b\"}],\"complete\":true,\"compressed_cap_bytes_per_part\":47185920,\"controller\":{\"bytes\":22785,\"mode\":420,\"path\":\"target/m2/stage104-archive-producer-prep-01/produce.py\",\"sha256\":\"163b1a362af46f2fe161912c93208aa353f85d23eb1b96c5865a1fb84fb9410d\"},\"direct_restoration_aliases\":26431,\"errors\":[],\"every_member_bytes_size_mode_order_sha256_rechecked\":true,\"exact_global_disjoint_union\":true,\"finished_epoch\":1793256761.503378,\"floor_breaches\":[],\"independent_archive_readback\":\"pending\",\"kind\":\"Stage104 finite deterministic target archive producer\",\"live_alias_bytes_modes_before_after_equal\":true,\"live_source_before_stream_after_equal\":true,\"minimum_free\":21156356096,\"preflight\":{\"bytes\":3061,\"mode\":420,\"path\":\"target/m2/stage104-archive-preflight-03/report.json\",\"sha256\":\"0d2359ad60605c2699e940657eed5b984ceada6a7e81c99d28cd13c6100445b9\"},\"selected_payloads\":144801,\"selection\":{\"bytes\":35273514,\"mode\":420,\"path\":\"target/m2/stage104-archive-preflight-03/selection.json\",\"sha256\":\"2d5fe2ec28266537ebdbb93b302d534fc0eb7dae59d9538327c14bc7ad306e61\"},\"standalone_repository\":false,\"started_epoch\":1793256474.4723399,\"success\":true}\n"
+    },
+    "archive_preflight": {
+      "pin": {
+        "path": "target/m2/stage104-archive-preflight-03/report.json",
+        "bytes": 3061,
+        "sha256": "0d2359ad60605c2699e940657eed5b984ceada6a7e81c99d28cd13c6100445b9",
+        "mode": 420
+      },
+      "receipt": {
+        "alias_mode_transformations": 1,
+        "all_aliases_direct": true,
+        "canonical_publication_or_Git_writes": false,
+        "catalogs": [
+          {
+            "bytes": 8146,
+            "mode": 420,
+            "path": "target/m2/stage104-evidence-selection-draft-05/config.json",
+            "sha256": "6f5f2ed264bb74232bdf12cd8c0cfa77d2c914f370139de95a1ff25005edc40c"
+          },
+          {
+            "bytes": 74754533,
+            "mode": 420,
+            "path": "target/m2/stage104-evidence-selection-draft-02/members.final.json",
+            "sha256": "48f0a54c7929571f274ffe6abb230d9ea3fb6cc57be3d77a1ccd03ae610d6f59"
+          },
+          {
+            "bytes": 428,
+            "mode": 420,
+            "path": "target/m2/stage104-evidence-selection-draft-02/staging-metadata-member.json",
+            "sha256": "713ea56b136164604fb9464d257447cd7dc36b42d24554d8792c844785cdac1d"
+          },
+          {
+            "bytes": 4370916,
+            "mode": 420,
+            "path": "target/m2/stage104-evidence-selection-draft-03/mandatory.members.json",
+            "sha256": "10c7dc132f55cd1b7f7125c2ce4e5311ba045ce851bb71d3b14bf69f0680deac"
+          },
+          {
+            "bytes": 35934,
+            "mode": 420,
+            "path": "target/m2/stage104-evidence-selection-draft-04/token-provenance.members.json",
+            "sha256": "b99558172355090b02746c3a3c0420dfbda4de87c1b1b01ca4ac646b2d159609"
+          },
+          {
+            "bytes": 4056,
+            "mode": 420,
+            "path": "target/m2/stage104-evidence-selection-draft-05/historical-inputs.members.json",
+            "sha256": "27d30b6a363c3d0acb51c6f61abf8dbe93ae042c894bf7d18f771a46992425f0"
+          },
+          {
+            "bytes": 18860893,
+            "mode": 420,
+            "path": "target/m2/stage104-evidence-selection-draft-02/restoration-aliases.final.json",
+            "sha256": "92c83f3d03b2fcc7b728ef6c73cf3c30087c59f46dbf97c430de988cdaeefd88"
+          },
+          {
+            "bytes": 5150,
+            "mode": 420,
+            "path": "target/m2/stage104-evidence-selection-independent-review-01/closure-review.json",
+            "sha256": "dc355309a8b2f5497da45cb0357cffe91537ca1fad14617449b4e60ee663183b"
+          }
+        ],
+        "complete": true,
+        "compression_performed": false,
+        "config": {
+          "bytes": 8146,
+          "mode": 420,
+          "path": "target/m2/stage104-evidence-selection-draft-05/config.json",
+          "sha256": "6f5f2ed264bb74232bdf12cd8c0cfa77d2c914f370139de95a1ff25005edc40c"
+        },
+        "controller": {
+          "bytes": 22785,
+          "mode": 420,
+          "path": "target/m2/stage104-archive-producer-prep-01/produce.py",
+          "sha256": "163b1a362af46f2fe161912c93208aa353f85d23eb1b96c5865a1fb84fb9410d"
+        },
+        "direct_restoration_aliases": 26431,
+        "errors": [],
+        "every_live_payload_and_alias_bytes_sha256_mode_verified": true,
+        "finished_epoch": 1793256374.997613,
+        "floor_breaches": [],
+        "identity_error_receipt": {
+          "bytes": 3,
+          "mode": 420,
+          "path": "target/m2/stage104-archive-preflight-03/identity-errors.json",
+          "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+        },
+        "identity_errors": 0,
+        "kind": "Stage104 finite archive live preflight",
+        "logical_payload_bytes": 688503882,
+        "minimum_free": 21705715712,
+        "runtime": {
+          "executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+          "zlib": "1.2.12"
+        },
+        "selected_payloads": 144801,
+        "selection": {
+          "bytes": 35273514,
+          "mode": 420,
+          "path": "target/m2/stage104-archive-preflight-03/selection.json",
+          "sha256": "2d5fe2ec28266537ebdbb93b302d534fc0eb7dae59d9538327c14bc7ad306e61"
+        },
+        "source_bookends_scope": "Live content/mode hashes; actual archive producer checks before/stream/after again.",
+        "standalone_repository": false,
+        "started_epoch": 1793256315.389672,
+        "success": true
+      },
+      "raw_utf8": "{\"alias_mode_transformations\":1,\"all_aliases_direct\":true,\"canonical_publication_or_Git_writes\":false,\"catalogs\":[{\"bytes\":8146,\"mode\":420,\"path\":\"target/m2/stage104-evidence-selection-draft-05/config.json\",\"sha256\":\"6f5f2ed264bb74232bdf12cd8c0cfa77d2c914f370139de95a1ff25005edc40c\"},{\"bytes\":74754533,\"mode\":420,\"path\":\"target/m2/stage104-evidence-selection-draft-02/members.final.json\",\"sha256\":\"48f0a54c7929571f274ffe6abb230d9ea3fb6cc57be3d77a1ccd03ae610d6f59\"},{\"bytes\":428,\"mode\":420,\"path\":\"target/m2/stage104-evidence-selection-draft-02/staging-metadata-member.json\",\"sha256\":\"713ea56b136164604fb9464d257447cd7dc36b42d24554d8792c844785cdac1d\"},{\"bytes\":4370916,\"mode\":420,\"path\":\"target/m2/stage104-evidence-selection-draft-03/mandatory.members.json\",\"sha256\":\"10c7dc132f55cd1b7f7125c2ce4e5311ba045ce851bb71d3b14bf69f0680deac\"},{\"bytes\":35934,\"mode\":420,\"path\":\"target/m2/stage104-evidence-selection-draft-04/token-provenance.members.json\",\"sha256\":\"b99558172355090b02746c3a3c0420dfbda4de87c1b1b01ca4ac646b2d159609\"},{\"bytes\":4056,\"mode\":420,\"path\":\"target/m2/stage104-evidence-selection-draft-05/historical-inputs.members.json\",\"sha256\":\"27d30b6a363c3d0acb51c6f61abf8dbe93ae042c894bf7d18f771a46992425f0\"},{\"bytes\":18860893,\"mode\":420,\"path\":\"target/m2/stage104-evidence-selection-draft-02/restoration-aliases.final.json\",\"sha256\":\"92c83f3d03b2fcc7b728ef6c73cf3c30087c59f46dbf97c430de988cdaeefd88\"},{\"bytes\":5150,\"mode\":420,\"path\":\"target/m2/stage104-evidence-selection-independent-review-01/closure-review.json\",\"sha256\":\"dc355309a8b2f5497da45cb0357cffe91537ca1fad14617449b4e60ee663183b\"}],\"complete\":true,\"compression_performed\":false,\"config\":{\"bytes\":8146,\"mode\":420,\"path\":\"target/m2/stage104-evidence-selection-draft-05/config.json\",\"sha256\":\"6f5f2ed264bb74232bdf12cd8c0cfa77d2c914f370139de95a1ff25005edc40c\"},\"controller\":{\"bytes\":22785,\"mode\":420,\"path\":\"target/m2/stage104-archive-producer-prep-01/produce.py\",\"sha256\":\"163b1a362af46f2fe161912c93208aa353f85d23eb1b96c5865a1fb84fb9410d\"},\"direct_restoration_aliases\":26431,\"errors\":[],\"every_live_payload_and_alias_bytes_sha256_mode_verified\":true,\"finished_epoch\":1793256374.997613,\"floor_breaches\":[],\"identity_error_receipt\":{\"bytes\":3,\"mode\":420,\"path\":\"target/m2/stage104-archive-preflight-03/identity-errors.json\",\"sha256\":\"37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570\"},\"identity_errors\":0,\"kind\":\"Stage104 finite archive live preflight\",\"logical_payload_bytes\":688503882,\"minimum_free\":21705715712,\"runtime\":{\"executable\":\"/opt/homebrew/opt/python@3.14/bin/python3.14\",\"python\":\"3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]\",\"zlib\":\"1.2.12\"},\"selected_payloads\":144801,\"selection\":{\"bytes\":35273514,\"mode\":420,\"path\":\"target/m2/stage104-archive-preflight-03/selection.json\",\"sha256\":\"2d5fe2ec28266537ebdbb93b302d534fc0eb7dae59d9538327c14bc7ad306e61\"},\"source_bookends_scope\":\"Live content/mode hashes; actual archive producer checks before/stream/after again.\",\"standalone_repository\":false,\"started_epoch\":1793256315.389672,\"success\":true}\n"
+    },
+    "independent_archive_readback": {
+      "pin": {
+        "path": "target/m2/stage104-archive-independent-readback-01/report.json",
+        "bytes": 6776,
+        "sha256": "70270f96f6bd9907fe65671384a68889f2bf46452621cbad4e3f60c895df2f51",
+        "mode": 420
+      },
+      "receipt": {
+        "alias_mode_transformations": [
+          {
+            "destination": "target/m2/stage104-selected-all-artifacts-01/pkl_napi.node",
+            "destination_mode": 493,
+            "payload": "target/m2/stage104-m1-platform-01/pkl_napi.node",
+            "payload_mode": 420
+          }
+        ],
+        "alias_policy": "Separate regular-file restoration with recorded destination mode; no hardlinks. Alias graph/content checked against verified payloads; current live alias paths not reread.",
+        "all_archive_hashes_verified": true,
+        "all_member_raw_bytes_size_mode_verified": true,
+        "auxiliary_payloads": 1,
+        "complete": true,
+        "compressed_bytes": 107104529,
+        "config": {
+          "bytes": 8146,
+          "mode": 420,
+          "path": "target/m2/stage104-evidence-selection-draft-05/config.json",
+          "sha256": "6f5f2ed264bb74232bdf12cd8c0cfa77d2c914f370139de95a1ff25005edc40c"
+        },
+        "controller": {
+          "bytes": 16131,
+          "mode": 420,
+          "path": "target/m2/stage104-archive-independent-readback-01/verify.py",
+          "sha256": "97e62e9b61ebd485df1a9a1d36a6e876e922f67f6612187e3f62b410b7afcffa"
+        },
+        "dependencies": {
+          "jvm_source_prefixes": 1,
+          "module_source_prefixes": 888,
+          "physical_source_prerequisite": "Pinned upstream reference/workspace source at preserved URI and input SHA; baseline/profile records are selected. Not physically restored by these archives and not self-contained guest execution.",
+          "references_lock": "references.lock"
+        },
+        "direct_restoration_aliases": 26431,
+        "errors": [],
+        "exact_global_disjoint_union": true,
+        "finished_epoch": 1793257103.686473,
+        "full_API_complete": false,
+        "full_M2_complete": false,
+        "guest_compiler_Java_canonical_public_Git_writes": false,
+        "hosted_CI_result_claimed": false,
+        "independence": "Manual tar/PAX parser and zlib gzip stream; no producer imports/functions or tarfile reader. Shared Python hashing/JSON/zlib primitives remain.",
+        "kind": "Stage104 independent manual-tar/zlib streaming archive readback",
+        "known_limits": [
+          "Archive evidence is not standalone repository/toolchain/workspace restoration.",
+          "Live source and alias bookends are producer/preflight evidence; this independent pass verifies archived payloads and exact alias metadata, not live source trees.",
+          "Historical failed outcomes and current strict full-M2 failures are preserved; no compatibility/status promotion."
+        ],
+        "logical_payload_bytes": 688503882,
+        "part_manifest_members": 8,
+        "parts": [
+          {
+            "archive": {
+              "bytes": 16381675,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-01.tar.gz",
+              "sha256": "81fddcb8b83b20a9a58822e35e0cd9a7dea1ed6083f16537c842cc2e05528e62"
+            },
+            "gzip_EOF_CRC_single_member_no_trailing": true,
+            "index": 1,
+            "logical_members_including_manifest": 20262,
+            "raw_hash_size_mode_order": true
+          },
+          {
+            "archive": {
+              "bytes": 10446634,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-02.tar.gz",
+              "sha256": "aae85a8eea8ce93fdb6c20c9c650632848b56607bb9bd499bfe9e144351f463c"
+            },
+            "gzip_EOF_CRC_single_member_no_trailing": true,
+            "index": 2,
+            "logical_members_including_manifest": 21404,
+            "raw_hash_size_mode_order": true
+          },
+          {
+            "archive": {
+              "bytes": 18623526,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-03.tar.gz",
+              "sha256": "c70bdf514e6fa3f6fc4a838c57e54b6eaad89b32b97822eafa79e2e535d92cd5"
+            },
+            "gzip_EOF_CRC_single_member_no_trailing": true,
+            "index": 3,
+            "logical_members_including_manifest": 16967,
+            "raw_hash_size_mode_order": true
+          },
+          {
+            "archive": {
+              "bytes": 11872022,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-04.tar.gz",
+              "sha256": "a29de6fc1c0f28abf38a82eb014a61f92511b9d38ce7c7c2fdea77ba5b7708bc"
+            },
+            "gzip_EOF_CRC_single_member_no_trailing": true,
+            "index": 4,
+            "logical_members_including_manifest": 23457,
+            "raw_hash_size_mode_order": true
+          },
+          {
+            "archive": {
+              "bytes": 13217143,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-05.tar.gz",
+              "sha256": "20e758beac89fa0a894701ae97175a837e440eaa87090c375a7157d96991905c"
+            },
+            "gzip_EOF_CRC_single_member_no_trailing": true,
+            "index": 5,
+            "logical_members_including_manifest": 21494,
+            "raw_hash_size_mode_order": true
+          },
+          {
+            "archive": {
+              "bytes": 19187410,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-06.tar.gz",
+              "sha256": "6534b2d051b12f6d96cfcc188f2f2d1bcd131533571d98653d3329729f78a8fd"
+            },
+            "gzip_EOF_CRC_single_member_no_trailing": true,
+            "index": 6,
+            "logical_members_including_manifest": 11362,
+            "raw_hash_size_mode_order": true
+          },
+          {
+            "archive": {
+              "bytes": 15471782,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-07.tar.gz",
+              "sha256": "6504cf3a9888c13426969f7afbd2b6f99f97f852643cc4c4e89ad404f0b99a69"
+            },
+            "gzip_EOF_CRC_single_member_no_trailing": true,
+            "index": 7,
+            "logical_members_including_manifest": 21224,
+            "raw_hash_size_mode_order": true
+          },
+          {
+            "archive": {
+              "bytes": 1904337,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-08.tar.gz",
+              "sha256": "6c14b5e1177eb0ae73cca987a68195128785775db8099591d68e5249b9068e75"
+            },
+            "gzip_EOF_CRC_single_member_no_trailing": true,
+            "index": 8,
+            "logical_members_including_manifest": 8640,
+            "raw_hash_size_mode_order": true
+          }
+        ],
+        "performance_targets_met": false,
+        "preflight": {
+          "bytes": 3061,
+          "mode": 420,
+          "path": "target/m2/stage104-archive-preflight-03/report.json",
+          "sha256": "0d2359ad60605c2699e940657eed5b984ceada6a7e81c99d28cd13c6100445b9"
+        },
+        "producer": {
+          "bytes": 5908,
+          "mode": 420,
+          "path": "target/m2/stage104-evidence-archives-01/report.json",
+          "sha256": "ae4dbc87366db6b5fe5152f0d8020a47037e8899f971c73abfeeb97aea926823"
+        },
+        "selected_payloads": 144801,
+        "selection": {
+          "bytes": 35273514,
+          "mode": 420,
+          "path": "target/m2/stage104-archive-preflight-03/selection.json",
+          "sha256": "2d5fe2ec28266537ebdbb93b302d534fc0eb7dae59d9538327c14bc7ad306e61"
+        },
+        "standalone_repository": false,
+        "started_epoch": 1793257098.201358,
+        "success": true,
+        "total_logical_regular_members": 144810
+      },
+      "raw_utf8": "{\n  \"alias_mode_transformations\": [\n    {\n      \"destination\": \"target/m2/stage104-selected-all-artifacts-01/pkl_napi.node\",\n      \"destination_mode\": 493,\n      \"payload\": \"target/m2/stage104-m1-platform-01/pkl_napi.node\",\n      \"payload_mode\": 420\n    }\n  ],\n  \"alias_policy\": \"Separate regular-file restoration with recorded destination mode; no hardlinks. Alias graph/content checked against verified payloads; current live alias paths not reread.\",\n  \"all_archive_hashes_verified\": true,\n  \"all_member_raw_bytes_size_mode_verified\": true,\n  \"auxiliary_payloads\": 1,\n  \"complete\": true,\n  \"compressed_bytes\": 107104529,\n  \"config\": {\n    \"bytes\": 8146,\n    \"mode\": 420,\n    \"path\": \"target/m2/stage104-evidence-selection-draft-05/config.json\",\n    \"sha256\": \"6f5f2ed264bb74232bdf12cd8c0cfa77d2c914f370139de95a1ff25005edc40c\"\n  },\n  \"controller\": {\n    \"bytes\": 16131,\n    \"mode\": 420,\n    \"path\": \"target/m2/stage104-archive-independent-readback-01/verify.py\",\n    \"sha256\": \"97e62e9b61ebd485df1a9a1d36a6e876e922f67f6612187e3f62b410b7afcffa\"\n  },\n  \"dependencies\": {\n    \"jvm_source_prefixes\": 1,\n    \"module_source_prefixes\": 888,\n    \"physical_source_prerequisite\": \"Pinned upstream reference/workspace source at preserved URI and input SHA; baseline/profile records are selected. Not physically restored by these archives and not self-contained guest execution.\",\n    \"references_lock\": \"references.lock\"\n  },\n  \"direct_restoration_aliases\": 26431,\n  \"errors\": [],\n  \"exact_global_disjoint_union\": true,\n  \"finished_epoch\": 1793257103.686473,\n  \"full_API_complete\": false,\n  \"full_M2_complete\": false,\n  \"guest_compiler_Java_canonical_public_Git_writes\": false,\n  \"hosted_CI_result_claimed\": false,\n  \"independence\": \"Manual tar/PAX parser and zlib gzip stream; no producer imports/functions or tarfile reader. Shared Python hashing/JSON/zlib primitives remain.\",\n  \"kind\": \"Stage104 independent manual-tar/zlib streaming archive readback\",\n  \"known_limits\": [\n    \"Archive evidence is not standalone repository/toolchain/workspace restoration.\",\n    \"Live source and alias bookends are producer/preflight evidence; this independent pass verifies archived payloads and exact alias metadata, not live source trees.\",\n    \"Historical failed outcomes and current strict full-M2 failures are preserved; no compatibility/status promotion.\"\n  ],\n  \"logical_payload_bytes\": 688503882,\n  \"part_manifest_members\": 8,\n  \"parts\": [\n    {\n      \"archive\": {\n        \"bytes\": 16381675,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-01.tar.gz\",\n        \"sha256\": \"81fddcb8b83b20a9a58822e35e0cd9a7dea1ed6083f16537c842cc2e05528e62\"\n      },\n      \"gzip_EOF_CRC_single_member_no_trailing\": true,\n      \"index\": 1,\n      \"logical_members_including_manifest\": 20262,\n      \"raw_hash_size_mode_order\": true\n    },\n    {\n      \"archive\": {\n        \"bytes\": 10446634,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-02.tar.gz\",\n        \"sha256\": \"aae85a8eea8ce93fdb6c20c9c650632848b56607bb9bd499bfe9e144351f463c\"\n      },\n      \"gzip_EOF_CRC_single_member_no_trailing\": true,\n      \"index\": 2,\n      \"logical_members_including_manifest\": 21404,\n      \"raw_hash_size_mode_order\": true\n    },\n    {\n      \"archive\": {\n        \"bytes\": 18623526,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-03.tar.gz\",\n        \"sha256\": \"c70bdf514e6fa3f6fc4a838c57e54b6eaad89b32b97822eafa79e2e535d92cd5\"\n      },\n      \"gzip_EOF_CRC_single_member_no_trailing\": true,\n      \"index\": 3,\n      \"logical_members_including_manifest\": 16967,\n      \"raw_hash_size_mode_order\": true\n    },\n    {\n      \"archive\": {\n        \"bytes\": 11872022,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-04.tar.gz\",\n        \"sha256\": \"a29de6fc1c0f28abf38a82eb014a61f92511b9d38ce7c7c2fdea77ba5b7708bc\"\n      },\n      \"gzip_EOF_CRC_single_member_no_trailing\": true,\n      \"index\": 4,\n      \"logical_members_including_manifest\": 23457,\n      \"raw_hash_size_mode_order\": true\n    },\n    {\n      \"archive\": {\n        \"bytes\": 13217143,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-05.tar.gz\",\n        \"sha256\": \"20e758beac89fa0a894701ae97175a837e440eaa87090c375a7157d96991905c\"\n      },\n      \"gzip_EOF_CRC_single_member_no_trailing\": true,\n      \"index\": 5,\n      \"logical_members_including_manifest\": 21494,\n      \"raw_hash_size_mode_order\": true\n    },\n    {\n      \"archive\": {\n        \"bytes\": 19187410,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-06.tar.gz\",\n        \"sha256\": \"6534b2d051b12f6d96cfcc188f2f2d1bcd131533571d98653d3329729f78a8fd\"\n      },\n      \"gzip_EOF_CRC_single_member_no_trailing\": true,\n      \"index\": 6,\n      \"logical_members_including_manifest\": 11362,\n      \"raw_hash_size_mode_order\": true\n    },\n    {\n      \"archive\": {\n        \"bytes\": 15471782,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-07.tar.gz\",\n        \"sha256\": \"6504cf3a9888c13426969f7afbd2b6f99f97f852643cc4c4e89ad404f0b99a69\"\n      },\n      \"gzip_EOF_CRC_single_member_no_trailing\": true,\n      \"index\": 7,\n      \"logical_members_including_manifest\": 21224,\n      \"raw_hash_size_mode_order\": true\n    },\n    {\n      \"archive\": {\n        \"bytes\": 1904337,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-08.tar.gz\",\n        \"sha256\": \"6c14b5e1177eb0ae73cca987a68195128785775db8099591d68e5249b9068e75\"\n      },\n      \"gzip_EOF_CRC_single_member_no_trailing\": true,\n      \"index\": 8,\n      \"logical_members_including_manifest\": 8640,\n      \"raw_hash_size_mode_order\": true\n    }\n  ],\n  \"performance_targets_met\": false,\n  \"preflight\": {\n    \"bytes\": 3061,\n    \"mode\": 420,\n    \"path\": \"target/m2/stage104-archive-preflight-03/report.json\",\n    \"sha256\": \"0d2359ad60605c2699e940657eed5b984ceada6a7e81c99d28cd13c6100445b9\"\n  },\n  \"producer\": {\n    \"bytes\": 5908,\n    \"mode\": 420,\n    \"path\": \"target/m2/stage104-evidence-archives-01/report.json\",\n    \"sha256\": \"ae4dbc87366db6b5fe5152f0d8020a47037e8899f971c73abfeeb97aea926823\"\n  },\n  \"selected_payloads\": 144801,\n  \"selection\": {\n    \"bytes\": 35273514,\n    \"mode\": 420,\n    \"path\": \"target/m2/stage104-archive-preflight-03/selection.json\",\n    \"sha256\": \"2d5fe2ec28266537ebdbb93b302d534fc0eb7dae59d9538327c14bc7ad306e61\"\n  },\n  \"standalone_repository\": false,\n  \"started_epoch\": 1793257098.201358,\n  \"success\": true,\n  \"total_logical_regular_members\": 144810\n}\n"
+    },
+    "public_archive_copy": {
+      "pin": {
+        "path": "target/m2/stage104-public-copy-02/archives.json",
+        "bytes": 4470,
+        "sha256": "3cc86fc474024d1c26f38a6bb9d3f633e76323018e89342cfbe75ec4d10cdce4",
+        "mode": 420
+      },
+      "receipt": {
+        "kind": "Stage104 exact public archive copy and raw hash readback",
+        "complete": true,
+        "success": true,
+        "archives": [
+          {
+            "source": {
+              "bytes": 16381675,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-01.tar.gz",
+              "sha256": "81fddcb8b83b20a9a58822e35e0cd9a7dea1ed6083f16537c842cc2e05528e62"
+            },
+            "public": {
+              "path": "reports/m2/stage104-reflection-typed-evidence-01.tar.gz",
+              "bytes": 16381675,
+              "sha256": "81fddcb8b83b20a9a58822e35e0cd9a7dea1ed6083f16537c842cc2e05528e62",
+              "mode": 420
+            }
+          },
+          {
+            "source": {
+              "bytes": 10446634,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-02.tar.gz",
+              "sha256": "aae85a8eea8ce93fdb6c20c9c650632848b56607bb9bd499bfe9e144351f463c"
+            },
+            "public": {
+              "path": "reports/m2/stage104-reflection-typed-evidence-02.tar.gz",
+              "bytes": 10446634,
+              "sha256": "aae85a8eea8ce93fdb6c20c9c650632848b56607bb9bd499bfe9e144351f463c",
+              "mode": 420
+            }
+          },
+          {
+            "source": {
+              "bytes": 18623526,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-03.tar.gz",
+              "sha256": "c70bdf514e6fa3f6fc4a838c57e54b6eaad89b32b97822eafa79e2e535d92cd5"
+            },
+            "public": {
+              "path": "reports/m2/stage104-reflection-typed-evidence-03.tar.gz",
+              "bytes": 18623526,
+              "sha256": "c70bdf514e6fa3f6fc4a838c57e54b6eaad89b32b97822eafa79e2e535d92cd5",
+              "mode": 420
+            }
+          },
+          {
+            "source": {
+              "bytes": 11872022,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-04.tar.gz",
+              "sha256": "a29de6fc1c0f28abf38a82eb014a61f92511b9d38ce7c7c2fdea77ba5b7708bc"
+            },
+            "public": {
+              "path": "reports/m2/stage104-reflection-typed-evidence-04.tar.gz",
+              "bytes": 11872022,
+              "sha256": "a29de6fc1c0f28abf38a82eb014a61f92511b9d38ce7c7c2fdea77ba5b7708bc",
+              "mode": 420
+            }
+          },
+          {
+            "source": {
+              "bytes": 13217143,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-05.tar.gz",
+              "sha256": "20e758beac89fa0a894701ae97175a837e440eaa87090c375a7157d96991905c"
+            },
+            "public": {
+              "path": "reports/m2/stage104-reflection-typed-evidence-05.tar.gz",
+              "bytes": 13217143,
+              "sha256": "20e758beac89fa0a894701ae97175a837e440eaa87090c375a7157d96991905c",
+              "mode": 420
+            }
+          },
+          {
+            "source": {
+              "bytes": 19187410,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-06.tar.gz",
+              "sha256": "6534b2d051b12f6d96cfcc188f2f2d1bcd131533571d98653d3329729f78a8fd"
+            },
+            "public": {
+              "path": "reports/m2/stage104-reflection-typed-evidence-06.tar.gz",
+              "bytes": 19187410,
+              "sha256": "6534b2d051b12f6d96cfcc188f2f2d1bcd131533571d98653d3329729f78a8fd",
+              "mode": 420
+            }
+          },
+          {
+            "source": {
+              "bytes": 15471782,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-07.tar.gz",
+              "sha256": "6504cf3a9888c13426969f7afbd2b6f99f97f852643cc4c4e89ad404f0b99a69"
+            },
+            "public": {
+              "path": "reports/m2/stage104-reflection-typed-evidence-07.tar.gz",
+              "bytes": 15471782,
+              "sha256": "6504cf3a9888c13426969f7afbd2b6f99f97f852643cc4c4e89ad404f0b99a69",
+              "mode": 420
+            }
+          },
+          {
+            "source": {
+              "bytes": 1904337,
+              "mode": 420,
+              "path": "target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-08.tar.gz",
+              "sha256": "6c14b5e1177eb0ae73cca987a68195128785775db8099591d68e5249b9068e75"
+            },
+            "public": {
+              "path": "reports/m2/stage104-reflection-typed-evidence-08.tar.gz",
+              "bytes": 1904337,
+              "sha256": "6c14b5e1177eb0ae73cca987a68195128785775db8099591d68e5249b9068e75",
+              "mode": 420
+            }
+          }
+        ],
+        "public_archive_files": 8,
+        "compressed_bytes": 107104529,
+        "source_mutations": 0,
+        "git_commit_or_push_claimed": false,
+        "scope": "Public archive files only; checkpoint descriptor and staged-index verification are separate subsequent records."
+      },
+      "raw_utf8": "{\n  \"kind\": \"Stage104 exact public archive copy and raw hash readback\",\n  \"complete\": true,\n  \"success\": true,\n  \"archives\": [\n    {\n      \"source\": {\n        \"bytes\": 16381675,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-01.tar.gz\",\n        \"sha256\": \"81fddcb8b83b20a9a58822e35e0cd9a7dea1ed6083f16537c842cc2e05528e62\"\n      },\n      \"public\": {\n        \"path\": \"reports/m2/stage104-reflection-typed-evidence-01.tar.gz\",\n        \"bytes\": 16381675,\n        \"sha256\": \"81fddcb8b83b20a9a58822e35e0cd9a7dea1ed6083f16537c842cc2e05528e62\",\n        \"mode\": 420\n      }\n    },\n    {\n      \"source\": {\n        \"bytes\": 10446634,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-02.tar.gz\",\n        \"sha256\": \"aae85a8eea8ce93fdb6c20c9c650632848b56607bb9bd499bfe9e144351f463c\"\n      },\n      \"public\": {\n        \"path\": \"reports/m2/stage104-reflection-typed-evidence-02.tar.gz\",\n        \"bytes\": 10446634,\n        \"sha256\": \"aae85a8eea8ce93fdb6c20c9c650632848b56607bb9bd499bfe9e144351f463c\",\n        \"mode\": 420\n      }\n    },\n    {\n      \"source\": {\n        \"bytes\": 18623526,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-03.tar.gz\",\n        \"sha256\": \"c70bdf514e6fa3f6fc4a838c57e54b6eaad89b32b97822eafa79e2e535d92cd5\"\n      },\n      \"public\": {\n        \"path\": \"reports/m2/stage104-reflection-typed-evidence-03.tar.gz\",\n        \"bytes\": 18623526,\n        \"sha256\": \"c70bdf514e6fa3f6fc4a838c57e54b6eaad89b32b97822eafa79e2e535d92cd5\",\n        \"mode\": 420\n      }\n    },\n    {\n      \"source\": {\n        \"bytes\": 11872022,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-04.tar.gz\",\n        \"sha256\": \"a29de6fc1c0f28abf38a82eb014a61f92511b9d38ce7c7c2fdea77ba5b7708bc\"\n      },\n      \"public\": {\n        \"path\": \"reports/m2/stage104-reflection-typed-evidence-04.tar.gz\",\n        \"bytes\": 11872022,\n        \"sha256\": \"a29de6fc1c0f28abf38a82eb014a61f92511b9d38ce7c7c2fdea77ba5b7708bc\",\n        \"mode\": 420\n      }\n    },\n    {\n      \"source\": {\n        \"bytes\": 13217143,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-05.tar.gz\",\n        \"sha256\": \"20e758beac89fa0a894701ae97175a837e440eaa87090c375a7157d96991905c\"\n      },\n      \"public\": {\n        \"path\": \"reports/m2/stage104-reflection-typed-evidence-05.tar.gz\",\n        \"bytes\": 13217143,\n        \"sha256\": \"20e758beac89fa0a894701ae97175a837e440eaa87090c375a7157d96991905c\",\n        \"mode\": 420\n      }\n    },\n    {\n      \"source\": {\n        \"bytes\": 19187410,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-06.tar.gz\",\n        \"sha256\": \"6534b2d051b12f6d96cfcc188f2f2d1bcd131533571d98653d3329729f78a8fd\"\n      },\n      \"public\": {\n        \"path\": \"reports/m2/stage104-reflection-typed-evidence-06.tar.gz\",\n        \"bytes\": 19187410,\n        \"sha256\": \"6534b2d051b12f6d96cfcc188f2f2d1bcd131533571d98653d3329729f78a8fd\",\n        \"mode\": 420\n      }\n    },\n    {\n      \"source\": {\n        \"bytes\": 15471782,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-07.tar.gz\",\n        \"sha256\": \"6504cf3a9888c13426969f7afbd2b6f99f97f852643cc4c4e89ad404f0b99a69\"\n      },\n      \"public\": {\n        \"path\": \"reports/m2/stage104-reflection-typed-evidence-07.tar.gz\",\n        \"bytes\": 15471782,\n        \"sha256\": \"6504cf3a9888c13426969f7afbd2b6f99f97f852643cc4c4e89ad404f0b99a69\",\n        \"mode\": 420\n      }\n    },\n    {\n      \"source\": {\n        \"bytes\": 1904337,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage104-evidence-archives-01/stage104-reflection-typed-evidence-08.tar.gz\",\n        \"sha256\": \"6c14b5e1177eb0ae73cca987a68195128785775db8099591d68e5249b9068e75\"\n      },\n      \"public\": {\n        \"path\": \"reports/m2/stage104-reflection-typed-evidence-08.tar.gz\",\n        \"bytes\": 1904337,\n        \"sha256\": \"6c14b5e1177eb0ae73cca987a68195128785775db8099591d68e5249b9068e75\",\n        \"mode\": 420\n      }\n    }\n  ],\n  \"public_archive_files\": 8,\n  \"compressed_bytes\": 107104529,\n  \"source_mutations\": 0,\n  \"git_commit_or_push_claimed\": false,\n  \"scope\": \"Public archive files only; checkpoint descriptor and staged-index verification are separate subsequent records.\"\n}\n"
+    },
+    "earlier_public_copy_preflight_failure": {
+      "pin": {
+        "path": "target/m2/stage104-public-copy-01/report.json",
+        "bytes": 203,
+        "sha256": "30fa028b114b71a786bf6427d32f70786d24e0f41e2f77fa2885fd0fae607cfe",
+        "mode": 420
+      },
+      "receipt": {
+        "complete": true,
+        "success": false,
+        "error": "TypeError while treating documents mapping as list during preflight. No public files or Git writes occurred.",
+        "failed_before_public_copy": true
+      },
+      "raw_utf8": "{\n  \"complete\": true,\n  \"success\": false,\n  \"error\": \"TypeError while treating documents mapping as list during preflight. No public files or Git writes occurred.\",\n  \"failed_before_public_copy\": true\n}\n"
+    }
+  },
+  "embedded_publication_helpers": {
+    "independent_archive_verifier": {
+      "pin": {
+        "path": "target/m2/stage104-archive-independent-readback-01/verify.py",
+        "bytes": 16131,
+        "sha256": "97e62e9b61ebd485df1a9a1d36a6e876e922f67f6612187e3f62b410b7afcffa",
+        "mode": 420
+      },
+      "encoding": "UTF-8",
+      "raw_utf8": "\"\"\"Independent Stage104 readback: manual tar records and zlib gzip streaming.\n\nNo producer imports, tarfile reader, extraction, source-tree hashing or status promotion.\n\"\"\"\nimport hashlib\nimport json\nimport os\nfrom pathlib import Path, PurePosixPath\nimport stat\nimport sys\nimport time\nimport traceback\nimport zlib\n\nROOT = Path(__file__).absolute().parents[3]\nOUT = Path(__file__).absolute().parent\nPRODUCER = 'target/m2/stage104-evidence-archives-01/report.json'\nPRODUCER_SHA = 'ae4dbc87366db6b5fe5152f0d8020a47037e8899f971c73abfeeb97aea926823'\nSELECTION_SHA = '2d5fe2ec28266537ebdbb93b302d534fc0eb7dae59d9538327c14bc7ad306e61'\nCONFIG_SHA = '6f5f2ed264bb74232bdf12cd8c0cfa77d2c914f370139de95a1ff25005edc40c'\nPREFLIGHT_SHA = '0d2359ad60605c2699e940657eed5b984ceada6a7e81c99d28cd13c6100445b9'\nAUX = 'STAGE104-FULL-SELECTION.json'\n\n\ndef require(ok, message):\n    if not ok:\n        raise ValueError(message)\n\n\ndef name_ok(name):\n    require(isinstance(name, str) and name and '\\x00' not in name and '\\\\' not in name, 'bad path')\n    p = PurePosixPath(name)\n    require(not p.is_absolute() and str(p) == name and not any(c in ('.', '..') for c in p.parts), 'noncanonical path')\n    require(not any(c.endswith('.partial') or c.startswith('stage86-') or 'private8' in c\n                    or c in ('.git', '.cache', 'external', 'node_modules', '__pycache__') for c in p.parts), 'protected/excluded path')\n    return p\n\n\ndef opened(name):\n    parts = name_ok(name).parts\n    fd = os.open(ROOT, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)\n    try:\n        for c in parts[:-1]:\n            child = os.open(c, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=fd)\n            os.close(fd)\n            fd = child\n        leaf = os.open(parts[-1], os.O_RDONLY | os.O_NOFOLLOW, dir_fd=fd)\n        try:\n            require(stat.S_ISREG(os.fstat(leaf).st_mode), 'nonregular input')\n        except BaseException:\n            os.close(leaf)\n            raise\n        return os.fdopen(leaf, 'rb')\n    finally:\n        os.close(fd)\n\n\ndef stable(a, b):\n    require(all(getattr(a, k) == getattr(b, k) for k in\n                ('st_dev', 'st_ino', 'st_mode', 'st_size', 'st_nlink', 'st_mtime_ns', 'st_ctime_ns')), 'input changed during read')\n\n\ndef load_pin(pin):\n    with opened(pin['path']) as f:\n        before = os.fstat(f.fileno())\n        raw = f.read()\n        stable(before, os.fstat(f.fileno()))\n    actual = dict(path=pin['path'], bytes=len(raw), mode=stat.S_IMODE(before.st_mode), sha256=hashlib.sha256(raw).hexdigest())\n    require(all(actual[k] == pin[k] for k in pin), 'input pin mismatch: ' + pin['path'])\n    return raw, actual\n\n\nclass Inflated:\n    \"\"\"One exact gzip member, bounded decompression, compressed identity bookends.\"\"\"\n    def __init__(self, f):\n        self.f, self.z = f, zlib.decompressobj(31)\n        self.pending, self.buffer = b'', bytearray()\n        self.sha, self.count, self.done = hashlib.sha256(), 0, False\n\n    def read(self, size):\n        while len(self.buffer) < size and not self.done:\n            data = self.pending\n            if not data:\n                data = self.f.read(65536)\n                if not data:\n                    raise ValueError('truncated gzip stream')\n                self.sha.update(data)\n                self.count += len(data)\n            block = self.z.decompress(data, 1024 * 1024)\n            self.buffer.extend(block)\n            self.pending = self.z.unconsumed_tail\n            if self.z.eof:\n                require(not self.z.unused_data and not self.pending, 'extra gzip member/trailing compressed bytes')\n                require(not self.f.read(1), 'trailing compressed bytes')\n                self.done = True\n        n = min(size, len(self.buffer))\n        answer = bytes(self.buffer[:n])\n        del self.buffer[:n]\n        return answer\n\n    def exact(self, size):\n        b = self.read(size)\n        require(len(b) == size, 'truncated tar record')\n        return b\n\n\ndef octal(raw):\n    value = raw.rstrip(b'\\0 ').lstrip(b' ')\n    require(not value or all(c in b'01234567' for c in value), 'non-octal tar integer')\n    return int(value or b'0', 8)\n\n\ndef pax_path(raw):\n    fields = {}\n    pos = 0\n    while pos < len(raw):\n        space = raw.find(b' ', pos)\n        require(space > pos and raw[pos:space].isdigit(), 'malformed PAX length')\n        n = int(raw[pos:space])\n        require(n > space - pos + 1 and pos + n <= len(raw), 'PAX extent')\n        row = raw[space + 1:pos + n]\n        require(row.endswith(b'\\n') and b'=' in row, 'malformed PAX row')\n        key, value = row[:-1].split(b'=', 1)\n        require(key not in fields, 'duplicate PAX field')\n        fields[key] = value\n        pos += n\n    require(set(fields) == {b'path'}, 'unexpected PAX fields')\n    return fields[b'path'].decode('utf-8')\n\n\ndef read_part(stream, expected, seen, archive_row, selection_pin, number, part_count):\n    actual_names = []\n    manifest = None\n    next_path = None\n    while True:\n        header = stream.exact(512)\n        if header == bytes(512):\n            require(next_path is None and stream.exact(512) == bytes(512), 'bad tar end markers')\n            while True:\n                tail = stream.read(1024 * 1024)\n                if not tail:\n                    break\n                require(not any(tail), 'nonzero bytes after tar EOF')\n            break\n        require(octal(header[148:156]) == sum(header[:148]) + 8 * 32 + sum(header[156:]), 'tar checksum mismatch')\n        require(header[257:263] == b'ustar\\0' and header[263:265] == b'00', 'unexpected tar format')\n        raw_name = header[:100].split(b'\\0', 1)[0]\n        prefix = header[345:500].split(b'\\0', 1)[0]\n        name = ((prefix + b'/') if prefix else b'') + raw_name\n        name = name.decode('utf-8')\n        mode, uid, gid, size, mtime = [octal(header[a:b]) for a, b in [(100,108),(108,116),(116,124),(124,136),(136,148)]]\n        kind = header[156:157]\n        require(not uid and not gid and not mtime and not header[265:329].strip(b'\\0'), 'unexpected tar owner/time')\n        require(not header[157:257].strip(b'\\0'), 'tar link target')\n        if kind == b'x':\n            require(next_path is None and size <= 1024 * 1024, 'invalid PAX record')\n            next_path = pax_path(stream.exact(size))\n            name_ok(next_path)\n        else:\n            require(kind in (b'0', b'\\0'), 'nonregular tar payload')\n            if next_path is not None:\n                name = next_path\n                next_path = None\n            name_ok(name)\n            if not actual_names:\n                require(name == 'MANIFEST.json' and size <= 10 * 1024 * 1024 and mode == 0o644, 'part manifest missing')\n                raw = stream.exact(size)\n                require((len(raw), hashlib.sha256(raw).hexdigest()) == (archive_row['manifest']['bytes'], archive_row['manifest']['sha256']), 'manifest pin mismatch')\n                manifest = json.loads(raw)\n                require(manifest['index'] == number and manifest['parts'] == part_count and manifest['all_parts_required'] is True,\n                        'manifest part metadata')\n                require(manifest['selection'] == selection_pin and manifest['standalone_repository'] is False, 'manifest selection/scope')\n                require(len(manifest['members']) == len(set(manifest['members'])), 'duplicate manifest member')\n            else:\n                require(name != 'MANIFEST.json' and name in expected and name not in seen, 'extra/duplicate payload: ' + name)\n                want = expected[name]\n                require((size, mode) == (want[0], want[1]), 'member size/mode mismatch: ' + name)\n                sha, remaining = hashlib.sha256(), size\n                while remaining:\n                    chunk = stream.exact(min(remaining, 1024 * 1024))\n                    sha.update(chunk)\n                    remaining -= len(chunk)\n                require(sha.hexdigest() == want[2], 'member raw hash mismatch: ' + name)\n                seen.add(name)\n            actual_names.append(name)\n        padding = (-size) % 512\n        require(not any(stream.exact(padding)), 'nonzero tar record padding')\n    require(manifest is not None and actual_names == ['MANIFEST.json', *manifest['members']], 'part manifest member order/set mismatch')\n    require(len(actual_names) == archive_row['logical_members_including_manifest'], 'part count mismatch')\n    return len(actual_names)\n\n\ndef write_receipt(report):\n    p = OUT / 'report.json'\n    with p.open('x') as f:\n        json.dump(report, f, ensure_ascii=True, indent=2, sort_keys=True)\n        f.write('\\n'); f.flush(); os.fsync(f.fileno())\n    fd = os.open(OUT, os.O_RDONLY | os.O_DIRECTORY)\n    try:\n        os.fsync(fd)\n    finally:\n        os.close(fd)\n\n\ndef main():\n    report = dict(kind='Stage104 independent manual-tar/zlib streaming archive readback', complete=False, success=False,\n                  started_epoch=time.time(), errors=[], parts=[], standalone_repository=False,\n                  guest_compiler_Java_canonical_public_Git_writes=False)\n    try:\n        _, helper_pin = load_pin(dict(path=str(Path(__file__).relative_to(ROOT))))\n        raw, producer_pin = load_pin(dict(path=PRODUCER, bytes=5908, sha256=PRODUCER_SHA))\n        producer = json.loads(raw)\n        require(producer['complete'] is True and producer['success'] is True and not producer['errors'] and not producer['floor_breaches'], 'producer not successful')\n        require(len(producer['archives']) == 8 and producer['selection']['sha256'] == SELECTION_SHA, 'unexpected archive/selection identity')\n        raw, preflight_pin = load_pin(producer['preflight'])\n        require(preflight_pin['sha256'] == PREFLIGHT_SHA, 'preflight identity')\n        preflight = json.loads(raw)\n        require(preflight['complete'] is True and preflight['success'] is True and preflight['identity_errors'] == 0, 'preflight failed')\n        raw, selection_pin = load_pin(producer['selection'])\n        selection = json.loads(raw)\n        del raw\n        require(selection['complete'] is True and selection['standalone_repository'] is False, 'selection status')\n        raw, config_pin = load_pin(selection['config'])\n        require(config_pin['sha256'] == CONFIG_SHA, 'config identity')\n        config = json.loads(raw)\n        require(config['required_final_dependency_additions'] == 8065 and config['current_full_gate_is_false'] is True, 'closure/fullgate qualifications changed')\n        expected = {}\n        for name, size, mode, sha in selection['members']:\n            name_ok(name)\n            require(name not in expected and type(size) is int and size >= 0 and type(mode) is int and 0 <= mode <= 0o777\n                    and len(sha) == 64 and all(c in '0123456789abcdef' for c in sha), 'invalid/duplicate selection member')\n            expected[name] = (size, mode, sha)\n        require(len(expected) == producer['selected_payloads'] == preflight['selected_payloads'] == 144801, 'selected count')\n        logical = sum(row[0] for row in expected.values())\n        require(logical == preflight['logical_payload_bytes'] == 688503882, 'logical size')\n        alias_names, transformations = set(), []\n        for dest, payload, size, mode, sha in selection['aliases']:\n            name_ok(dest); name_ok(payload)\n            require(dest not in expected and dest not in alias_names and payload in expected, 'alias collision/chain/missing payload')\n            require((size, sha) == (expected[payload][0], expected[payload][2]) and type(mode) is int and 0 <= mode <= 0o777, 'alias byte/mode mismatch')\n            alias_names.add(dest)\n            if mode != expected[payload][1]:\n                transformations.append(dict(destination=dest, payload=payload, destination_mode=mode, payload_mode=expected[payload][1]))\n        require(len(alias_names) == producer['direct_restoration_aliases'] == 26431 and transformations == config['alias_mode_transformations'], 'alias counts/transformation')\n        for catalog in selection['catalogs']:\n            require(expected.get(catalog['path']) == (catalog['bytes'],catalog['mode'],catalog['sha256']), 'bound catalog not preserved exactly')\n        for manifest_name in ['mandatory-current-additions.json', 'mandatory-token-acquisition-provenance-additions.json', 'mandatory-historical-inputs.json']:\n            p = 'target/m2/stage104-evidence-selection-independent-review-01/' + manifest_name\n            raw, _ = load_pin(dict(path=p))\n            for row in json.loads(raw)['all_additions']:\n                require(row['path'] in expected and expected[row['path']][0] == row['bytes'] and expected[row['path']][2] == row['sha256'], 'required closure addition missing/different')\n        del selection\n        expected[AUX] = (selection_pin['bytes'], selection_pin['mode'], selection_pin['sha256'])\n        seen, compressed = set(), 0\n        for number, archive in enumerate(producer['archives'], 1):\n            pin = archive['archive']\n            require(archive['index'] == number and pin['bytes'] <= 45 * 1024**2, 'archive order/cap')\n            with opened(pin['path']) as f:\n                before = os.fstat(f.fileno())\n                require((before.st_size, stat.S_IMODE(before.st_mode)) == (pin['bytes'], pin['mode']), 'archive live size/mode')\n                inflated = Inflated(f)\n                count = read_part(inflated, expected, seen, archive, selection_pin, number, len(producer['archives']))\n                stable(before, os.fstat(f.fileno()))\n                require(inflated.done and (inflated.count, inflated.sha.hexdigest()) == (pin['bytes'],pin['sha256']), 'compressed archive identity')\n                compressed += inflated.count\n            report['parts'].append(dict(index=number,archive=pin,logical_members_including_manifest=count,raw_hash_size_mode_order=True,gzip_EOF_CRC_single_member_no_trailing=True))\n            print(json.dumps(dict(part=number,parts=8,verified_payloads=len(seen))), flush=True)\n        require(seen == set(expected), 'global payload union differs')\n        for pin in [producer_pin,preflight_pin,selection_pin,config_pin,helper_pin]:\n            load_pin(pin)\n        report.update(complete=True,success=True,producer=producer_pin,preflight=preflight_pin,selection=selection_pin,config=config_pin,\n                      controller=helper_pin,selected_payloads=len(expected)-1,auxiliary_payloads=1,part_manifest_members=8,\n                      total_logical_regular_members=len(expected)+8,logical_payload_bytes=logical,compressed_bytes=compressed,\n                      exact_global_disjoint_union=True,all_member_raw_bytes_size_mode_verified=True,all_archive_hashes_verified=True,\n                      direct_restoration_aliases=len(alias_names),alias_mode_transformations=transformations,\n                      alias_policy='Separate regular-file restoration with recorded destination mode; no hardlinks. Alias graph/content checked against verified payloads; current live alias paths not reread.',\n                      independence='Manual tar/PAX parser and zlib gzip stream; no producer imports/functions or tarfile reader. Shared Python hashing/JSON/zlib primitives remain.',\n                      dependencies=config['external_reference_scope'],known_limits=['Archive evidence is not standalone repository/toolchain/workspace restoration.','Live source and alias bookends are producer/preflight evidence; this independent pass verifies archived payloads and exact alias metadata, not live source trees.','Historical failed outcomes and current strict full-M2 failures are preserved; no compatibility/status promotion.'],\n                      full_M2_complete=False,full_API_complete=False,performance_targets_met=False,hosted_CI_result_claimed=False)\n    except BaseException as error:\n        report['errors'].append(dict(error=repr(error),traceback=traceback.format_exc()))\n    report['finished_epoch'] = time.time()\n    write_receipt(report)\n    print(json.dumps(dict(complete=report['complete'],success=report['success'],errors=report['errors'])), flush=True)\n    return 0 if report['success'] else 1\n\n\nif __name__ == '__main__':\n    sys.exit(main())\n"
+    },
+    "independent_archive_controls": {
+      "pin": {
+        "path": "target/m2/stage104-archive-independent-readback-01/controls.json",
+        "bytes": 1540,
+        "sha256": "c5857e3dd60a6a57a9e47180828029898c0784d55c37df1f184a75dc298b11ec",
+        "mode": 420
+      },
+      "encoding": "UTF-8",
+      "raw_utf8": "{\n  \"complete\": true,\n  \"success\": true,\n  \"controls\": [\n    {\n      \"control\": \"ordinary CRLF exact\",\n      \"passed\": true,\n      \"accepted\": true,\n      \"error\": null\n    },\n    {\n      \"control\": \"UTF8/PAX long name\",\n      \"passed\": true,\n      \"accepted\": true,\n      \"error\": null\n    },\n    {\n      \"control\": \"rawhash mismatch rejects\",\n      \"passed\": true,\n      \"accepted\": false,\n      \"error\": \"ValueError\"\n    },\n    {\n      \"control\": \"mode mismatch rejects\",\n      \"passed\": true,\n      \"accepted\": false,\n      \"error\": \"ValueError\"\n    },\n    {\n      \"control\": \"unexpected payload rejects\",\n      \"passed\": true,\n      \"accepted\": false,\n      \"error\": \"ValueError\"\n    },\n    {\n      \"control\": \"truncated gzip rejects\",\n      \"passed\": true,\n      \"accepted\": false,\n      \"error\": \"ValueError\"\n    },\n    {\n      \"control\": \"bad gzip CRC rejects\",\n      \"passed\": true,\n      \"accepted\": false,\n      \"error\": \"error\"\n    },\n    {\n      \"control\": \"trailing gzip bytes rejects\",\n      \"passed\": true,\n      \"accepted\": false,\n      \"error\": \"ValueError\"\n    },\n    {\n      \"control\": \"concatenated gzip rejects\",\n      \"passed\": true,\n      \"accepted\": false,\n      \"error\": \"ValueError\"\n    },\n    {\n      \"control\": \"symlink rejects\",\n      \"passed\": true,\n      \"accepted\": false,\n      \"error\": \"ValueError\"\n    },\n    {\n      \"control\": \"partial lexical\",\n      \"passed\": true\n    },\n    {\n      \"control\": \"private lexical\",\n      \"passed\": true\n    }\n  ],\n  \"actual_archive_reads\": 0,\n  \"producer_imports\": 0\n}\n"
+    },
+    "independent_archive_execution": {
+      "pin": {
+        "path": "target/m2/stage104-archive-independent-readback-01/execution.json",
+        "bytes": 1182,
+        "sha256": "9e6c2ec5b89a12dd1e9d56e020b09c98dca9657a4de91fbf26895514c3c05e77",
+        "mode": 420
+      },
+      "encoding": "UTF-8",
+      "raw_utf8": "{\n  \"actual_child_exit_code\": 0,\n  \"actual_tool_session\": 64979,\n  \"claim\": \"Independent archive readback only; no full-M2 completion/publication claim\",\n  \"command\": [\n    \"python3\",\n    \"-B\",\n    \"target/m2/stage104-archive-independent-readback-01/verify.py\"\n  ],\n  \"complete\": true,\n  \"controller\": {\n    \"bytes\": 16131,\n    \"mode\": 420,\n    \"path\": \"target/m2/stage104-archive-independent-readback-01/verify.py\",\n    \"sha256\": \"97e62e9b61ebd485df1a9a1d36a6e876e922f67f6612187e3f62b410b7afcffa\"\n  },\n  \"controls\": {\n    \"bytes\": 1540,\n    \"mode\": 420,\n    \"path\": \"target/m2/stage104-archive-independent-readback-01/controls.json\",\n    \"sha256\": \"c5857e3dd60a6a57a9e47180828029898c0784d55c37df1f184a75dc298b11ec\"\n  },\n  \"executable\": \"/opt/homebrew/opt/python@3.14/bin/python3.14\",\n  \"free_bytes\": 20840873984,\n  \"host\": \"macOS-27.0-arm64-arm-64bit-Mach-O\",\n  \"python\": \"3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]\",\n  \"report\": {\n    \"bytes\": 6776,\n    \"mode\": 420,\n    \"path\": \"target/m2/stage104-archive-independent-readback-01/report.json\",\n    \"sha256\": \"70270f96f6bd9907fe65671384a68889f2bf46452621cbad4e3f60c895df2f51\"\n  },\n  \"success\": true\n}\n"
+    }
+  },
+  "publication_status": {
+    "checkpoint_destination": "reports/m2/stage104-reflection-typed-checkpoint.json",
+    "archive_destinations": 8,
+    "public_files_created_by_this_draft": 0,
+    "pending": [
+      "Root public copy of the eight verified parts and final checkpoint descriptor.",
+      "Root actual public-file byte/mode verification and receipt.",
+      "Root final global staged NUL metadata and approved-blob byte proof; receipt remains target-only."
+    ],
+    "independent_archive_readback": "actual terminal PASS; embedded above",
+    "containing_commit_hash_claimed": false
+  },
+  "publication_scope": "The complete flag describes this bounded local checkpoint and its eight verified archive files. It does not claim full M2, API, performance, hosted CI, or a containing Git commit/index proof."
+}

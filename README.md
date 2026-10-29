@@ -24,12 +24,21 @@ and standard-library frames. The [latest checkpoint](reports/m2/README.md)
 records the accepted local verification scope, known failures, and unexecuted
 environments.
 
+The Stage103/104 checkpoint adds source-backed reflection, lazy Reference metadata
+and non-forcing `Typed.hasProperty` to the shared engine. Byte-preserving readbacks
+of the selected poll64 captures match **1,138 observations per native, N-API and
+Chromium target** against pinned Java. The original portable comparator failures
+remain recorded; the corrected readbacks reused those captures without a guest
+rerun. Formatting, xtask, Clippy and Wasm checks pass, and the workspace suite passes
+**1,596 tests with four ignored**. The complete ready-corpus replay records **4,325 passes out of 4,442 cases**,
+with 33 mismatches, 82 unsupported cases, two oracle errors and no regressions
+from the historical passing baseline. Full M2, API and performance gates remain open. See the [M2 evidence index](reports/m2/README.md).
+
 The [Stage102 collection checkpoint](reports/m2/stage102-collection-apis-checkpoint.json)
-records **3,718 ordinary observations matching Java** in the shared Rust tests
-and on each selected native, N-API and Chromium target, plus **1,502 passing
-workspace tests** (four ignored). Original Map's `Typed.hasProperty` gap, required
-internal-error contracts, the original whole-List Java heap failure, and the full
-language/API/performance gates remain open.
+is retained as historical evidence: 3,718 ordinary observations match Java in its
+shared Rust and selected target captures, and 1,502 workspace tests pass with four
+ignored. Its original Map failure predates the Typed implementation; its required
+internal-error contracts and original whole-List Java heap failure remain explicit.
 
 The [Stage66 checkpoint](reports/m2/stage66-implementation-checkpoint.json)
 adds String/List/Set reversal, constructor resolution inside constraints, and

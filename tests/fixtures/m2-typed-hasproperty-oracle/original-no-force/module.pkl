@@ -1,0 +1,10 @@
+class Lazy {
+ unset: Int
+ throwing: String = throw("initializer forced")
+ reading: String = read("env:STAGE104_HASPROPERTY_MUST_NOT_READ")
+ logging: Int = trace(1)
+ hidden hiddenRead: String = read("env:STAGE104_HASPROPERTY_HIDDEN_MUST_NOT_READ")
+}
+hidden direct = new Lazy {}
+hidden mapped = Map().toTyped(Lazy)
+hidden dynamic = new Dynamic {}.toTyped(Lazy)

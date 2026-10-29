@@ -411,7 +411,6 @@ impl Vm {
                                 ));
                             }
                             DeclarationValue::Value(Value::Object(id)) => {
-                                let object = self.heap.get(*id)?;
                                 let class = collections::typed_class(&self.heap, *id)?
                                     .ok_or_else(|| invalid("module type has no class"))?;
                                 if !arguments.is_empty() {
@@ -425,9 +424,7 @@ impl Vm {
                                     .at(definition.argument_spans[0])
                                     .into());
                                 }
-                                if !object.is_module || object.class_definition.is_none() {
-                                    return Err(RuntimeError::new(ErrorKind::Type, format!("Module `{}` cannot be extended or used as type because it amends another module.", class.name)).at(definition.span).into());
-                                }
+                                self.declared_module_class(*id, definition.span)?;
                                 values.push((
                                     TypeCheck::Class {
                                         module: class.module.clone(),
@@ -770,6 +767,87 @@ impl Vm {
         Ok(Some(instruction))
     }
 
+    /// Select an authored declaration in one module, without virtual property
+    /// lookup or evaluation. Both executable types and mirror recipes use this
+    /// boundary; class value properties are never part of this namespace.
+    pub(super) fn declared_type_member(
+        &self,
+        owner: ObjectId,
+        name: &Arc<str>,
+        local: bool,
+        allow_import: bool,
+        span: Span,
+    ) -> Result<Option<Member>, RuntimeError> {
+        let member = self
+            .heap
+            .get(owner)?
+            .members
+            .iter()
+            .find(|member| member.local == local && !member.method && member.name == *name);
+        if let Some(member) = member
+            && !member.definition()
+            && !(allow_import && member.import())
+        {
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                format!("Expected `{name}` to be a type, but it is not."),
+            )
+            .at(span));
+        }
+        Ok(member.cloned())
+    }
+
+    pub(super) fn declared_type_import(
+        &self,
+        owner: ObjectId,
+        name: &Arc<str>,
+        span: Span,
+    ) -> Result<Member, RuntimeError> {
+        let member = self
+            .heap
+            .get(owner)?
+            .members
+            .iter()
+            .find(|member| member.local && !member.method && member.name == *name)
+            .cloned()
+            .ok_or_else(|| {
+                RuntimeError::new(
+                    ErrorKind::Type,
+                    format!("Cannot find module import `{name}`."),
+                )
+                .at(span)
+            })?;
+        if !member.import() {
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                format!("Expected `{name}` to be a module import, but it is not."),
+            )
+            .at(span));
+        }
+        Ok(member)
+    }
+
+    /// Named module declarations denote their prototype class. Amending module
+    /// values and arbitrary objects are not named module types (keyword `module`
+    /// has its separate receiver-dependent resolution path).
+    pub(super) fn declared_module_class(
+        &self,
+        id: ObjectId,
+        span: Span,
+    ) -> Result<ObjectId, RuntimeError> {
+        let object = self.heap.get(id)?;
+        let class = self
+            .heap
+            .object_class(id)?
+            .ok_or_else(|| invalid("module type has no class"))?;
+        if !object.is_module || object.class_definition.is_none() {
+            let name = &self.heap.class_definition(class)?.name;
+            return Err(RuntimeError::new(ErrorKind::Type,
+                format!("Module `{name}` cannot be extended or used as type because it amends another module.")).at(span));
+        }
+        Ok(class)
+    }
+
     fn begin_declared_type(
         &mut self,
         need: Need,
@@ -808,31 +886,17 @@ impl Vm {
             let mut owner = Some(need.owner);
             let mut first = true;
             while let Some(id) = owner {
-                let object = self.heap.get(id)?;
-                let member = if first {
-                    object
-                        .members
-                        .iter()
-                        .find(|member| member.local && !member.method && member.name == name)
-                        .or_else(|| {
-                            object.members.iter().find(|member| {
-                                !member.local && !member.method && member.name == name
-                            })
-                        })
+                let local_member = if first {
+                    self.declared_type_member(id, &name, true, true, recipe.span)?
                 } else {
-                    object
-                        .members
-                        .iter()
-                        .find(|member| !member.local && !member.method && member.name == name)
+                    None
+                };
+                let member = if local_member.is_some() {
+                    local_member
+                } else {
+                    self.declared_type_member(id, &name, false, true, recipe.span)?
                 };
                 if let Some(member) = member {
-                    if !member.definition() && !member.import() {
-                        return Err(RuntimeError::new(
-                            ErrorKind::Type,
-                            format!("Expected `{name}` to be a type, but it is not."),
-                        )
-                        .at(recipe.span));
-                    }
                     let local = member.local;
                     self.frames
                         .last_mut()
@@ -858,7 +922,7 @@ impl Vm {
                     return Ok(());
                 }
                 first = false;
-                owner = object.parent;
+                owner = self.heap.get(id)?.parent;
             }
             // Unit types are authored base aliases. Resolve their retained
             // declaration after lexical/user parents, preserving its union's
@@ -897,27 +961,7 @@ impl Vm {
             .path
             .first()
             .ok_or_else(|| invalid("empty declared type path"))?;
-        let member = self
-            .heap
-            .get(need.owner)?
-            .members
-            .iter()
-            .find(|member| member.local && !member.method && member.name == *import)
-            .cloned()
-            .ok_or_else(|| {
-                RuntimeError::new(
-                    ErrorKind::Type,
-                    format!("Cannot find module import `{import}`."),
-                )
-                .at(recipe.names[0])
-            })?;
-        if !member.import() {
-            return Err(RuntimeError::new(
-                ErrorKind::Type,
-                format!("Expected `{import}` to be a module import, but it is not."),
-            )
-            .at(recipe.names[0]));
-        }
+        self.declared_type_import(need.owner, import, recipe.names[0])?;
         self.frames
             .last_mut()
             .expect("type resolution frame")
@@ -968,21 +1012,19 @@ impl Vm {
                 let mut owner = Some(module);
                 while let Some(id) = owner {
                     let object = self.heap.get(id)?;
-                    if let Some(member) = object
-                        .members
-                        .iter()
-                        .find(|member| !member.local && !member.method && member.name == name)
-                    {
-                        if !member.definition() {
-                            return Err(RuntimeError::new(
-                                ErrorKind::Type,
-                                format!("Expected `{name}` to be a type, but it is not."),
-                            )
-                            .at(Span::new(
+                    if self
+                        .declared_type_member(
+                            id,
+                            &name,
+                            false,
+                            false,
+                            Span::new(
                                 recipe.names[0].start,
                                 recipe.names.last().expect("qualified type name").end,
-                            )));
-                        }
+                            ),
+                        )?
+                        .is_some()
+                    {
                         run.phase = Phase::Type;
                         self.frames.last_mut().unwrap().type_resolution = Some(run);
                         return self.force(id, id, name, false, true, false);

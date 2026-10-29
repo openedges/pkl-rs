@@ -1,0 +1,315 @@
+{
+  "Rust_evaluations": 0,
+  "accepted_api_exception_observations": 0,
+  "accepted_oracle_internal_observations": 0,
+  "accepted_repeats_exact": true,
+  "accepted_sessions_cleanup_events": 0,
+  "accepted_unexecuted_observations": 0,
+  "all_owned_children_reaped": true,
+  "checked_record_occurrences": 10404,
+  "cohorts": [
+    {
+      "authority": {
+        "bytes": 3249232,
+        "path": "target/m2/stage103-reflection-main166-oracle-01/report.json",
+        "sha256": "20daff552c18c726654e0f4f57fcb71cabd4ee59465a9faec7fbf2d72d7400c3"
+      },
+      "capture_process": {
+        "bytes": 540,
+        "path": "target/m2/stage103-reflection-main166-oracle-01/capture-process.json",
+        "sha256": "4689d01bf292bc57805e9a81653dacab3e5049aca1cdd5a7b260cf9cd8bfa413"
+      },
+      "cohort": "main166",
+      "collector_source_context": "prep02",
+      "contracts": 166,
+      "host_session_id": 58998,
+      "observations": 332,
+      "sessions": 12,
+      "statuses": {
+        "error": 240,
+        "success": 92
+      },
+      "transient_disappearance_count": 0,
+      "wrapper_started": {
+        "bytes": 401,
+        "path": "target/m2/stage103-reflection-oracle-window-01/main166.started.json",
+        "sha256": "e7532c65a4616fddaef40540a071c6ed0fc4cc7a51c481ca9cf863369d72b928"
+      },
+      "wrapper_stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage103-reflection-oracle-window-01/main166.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "wrapper_stdout": {
+        "bytes": 1109,
+        "path": "target/m2/stage103-reflection-oracle-window-01/main166.stdout.bin",
+        "sha256": "d5d97b6315a335dbb57de389e64345d1e0c361d1c8c5c94b15d58b765cabebc4"
+      },
+      "wrapper_terminal": {
+        "bytes": 495,
+        "path": "target/m2/stage103-reflection-oracle-window-01/main166.terminal.json",
+        "sha256": "b3ebeabf8dffe1d9ed736ea18b43827a821ce18056006ea3e8567ab253871f1a"
+      }
+    },
+    {
+      "authority": {
+        "bytes": 1039504,
+        "path": "target/m2/stage103-reflection-metadata47-oracle-02/report.json",
+        "sha256": "96e884aaadd90d8080e89720842abe04eb0e1272fd54c2199832b597865157f6"
+      },
+      "capture_process": {
+        "bytes": 546,
+        "path": "target/m2/stage103-reflection-metadata47-oracle-02/capture-process.json",
+        "sha256": "c873bb3d7b5002058df09e91194bf05748d8921744e29314d15bde212aa28670"
+      },
+      "cohort": "metadata47",
+      "collector_source_context": "prep03",
+      "contracts": 47,
+      "host_session_id": 23967,
+      "observations": 94,
+      "sessions": 26,
+      "statuses": {
+        "error": 94
+      },
+      "transient_disappearance_count": 0,
+      "wrapper_started": {
+        "bytes": 407,
+        "path": "target/m2/stage103-reflection-oracle-window-01/remaining03/metadata47.started.json",
+        "sha256": "04521793974b7beb54cc17743a545e623ae914dce158da012ed92c9a63205462"
+      },
+      "wrapper_stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage103-reflection-oracle-window-01/remaining03/metadata47.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "wrapper_stdout": {
+        "bytes": 1837,
+        "path": "target/m2/stage103-reflection-oracle-window-01/remaining03/metadata47.stdout.bin",
+        "sha256": "62c2b73db21a6a26a2b6b57c578c0523a6f2e29ab91c75b8a8a56a64e911e5a7"
+      },
+      "wrapper_terminal": {
+        "bytes": 501,
+        "path": "target/m2/stage103-reflection-oracle-window-01/remaining03/metadata47.terminal.json",
+        "sha256": "8513e9f27cfad48606b2e117f10db4e7fd82a594fc94ed6f385aac37232f45a9"
+      }
+    },
+    {
+      "authority": {
+        "bytes": 166379,
+        "path": "target/m2/stage103-reflection-reference6-oracle-01/report.json",
+        "sha256": "4f6ed1bdb92c03f115ac51e731ec83ab481c557908ba22f5ec329ef4c03fb578"
+      },
+      "capture_process": {
+        "bytes": 545,
+        "path": "target/m2/stage103-reflection-reference6-oracle-01/capture-process.json",
+        "sha256": "7776f75bc953fac4321f8d657e15b0cf4b5a17fd1d5e442dd51e9e601e7601e2"
+      },
+      "cohort": "reference6",
+      "collector_source_context": "prep03",
+      "contracts": 6,
+      "host_session_id": 16830,
+      "observations": 12,
+      "sessions": 2,
+      "statuses": {
+        "error": 12
+      },
+      "transient_disappearance_count": 0,
+      "wrapper_started": {
+        "bytes": 407,
+        "path": "target/m2/stage103-reflection-oracle-window-01/remaining03/reference6.started.json",
+        "sha256": "250cdf0e233e6096e3ef14603aa21e1df09f7d1af49e6fb68e4f77b0cd1b127b"
+      },
+      "wrapper_stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage103-reflection-oracle-window-01/remaining03/reference6.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "wrapper_stdout": {
+        "bytes": 249,
+        "path": "target/m2/stage103-reflection-oracle-window-01/remaining03/reference6.stdout.bin",
+        "sha256": "0efb5097900bff6532143a4bc2b4621fc488ac1915824cbe9c44df613a3ad8ed"
+      },
+      "wrapper_terminal": {
+        "bytes": 501,
+        "path": "target/m2/stage103-reflection-oracle-window-01/remaining03/reference6.terminal.json",
+        "sha256": "f61b719f1a6944d8152978653d7d93506a6521c6517443c7522ce7f5479020b1"
+      }
+    },
+    {
+      "authority": {
+        "bytes": 170260,
+        "path": "target/m2/stage103-reflection-legal-reference6-oracle-01/report.json",
+        "sha256": "9489bdb50cff4de7e98c63dbe22343b088fe0060c62e115eb6ef17d889666c6b"
+      },
+      "capture_process": {
+        "bytes": 557,
+        "path": "target/m2/stage103-reflection-legal-reference6-oracle-01/capture-process.json",
+        "sha256": "912d8d27d0f30d2a4967395120528accaeb87bbc31a3a2de3b6eb56a6b5fa6d0"
+      },
+      "cohort": "legal-reference6",
+      "collector_source_context": "prep03",
+      "contracts": 6,
+      "host_session_id": 62051,
+      "observations": 12,
+      "sessions": 2,
+      "statuses": {
+        "error": 12
+      },
+      "transient_disappearance_count": 0,
+      "wrapper_started": {
+        "bytes": 419,
+        "path": "target/m2/stage103-reflection-oracle-window-01/remaining03/legal-reference6.started.json",
+        "sha256": "32682b1bad43d91c09d732730b1239adf66caabbb74ba2d8a80cad59e50611d9"
+      },
+      "wrapper_stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage103-reflection-oracle-window-01/remaining03/legal-reference6.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "wrapper_stdout": {
+        "bytes": 261,
+        "path": "target/m2/stage103-reflection-oracle-window-01/remaining03/legal-reference6.stdout.bin",
+        "sha256": "2cd7f0f0e9b805f96ac410f04b9a4adc5183155ca277fd19f37157dbed43956d"
+      },
+      "wrapper_terminal": {
+        "bytes": 513,
+        "path": "target/m2/stage103-reflection-oracle-window-01/remaining03/legal-reference6.terminal.json",
+        "sha256": "4c10a63e89288d0ebad594f11972aa9e50d4fa8d03bb87c6a22e944379fc891b"
+      }
+    }
+  ],
+  "compatibility_pass_claim": false,
+  "complete": true,
+  "contracts": 225,
+  "coverage_preemptions": {
+    "bytes": 294728,
+    "path": "target/m2/stage103-reflection-oracle-window-01/coverage-preemptions.json",
+    "sha256": "fd5886f8ac171525618dffe243431679015b4749b282e48b5141895a282fec54"
+  },
+  "failed_attempt_Java_exit": 143,
+  "failed_attempt_owned_cleanup": [
+    "SIGTERM"
+  ],
+  "failed_attempt_unexecuted_observations": 94,
+  "failed_first_metadata_attempt": {
+    "bytes": 1398,
+    "path": "target/m2/stage103-reflection-oracle-window-01/metadata47-failure.json",
+    "sha256": "03e144872829bd6d41eada9caadb60db912d0d37bdae49827cf6d5088fa21315"
+  },
+  "failed_first_metadata_authority": {
+    "bytes": 116668,
+    "path": "target/m2/stage103-reflection-metadata47-oracle-01/report.json",
+    "sha256": "0461e6bd3edbf6ee2f7cb2d009c7c305ca0a9fd48198654021717bcffe9439e2"
+  },
+  "full_readback": {
+    "bytes": 27711,
+    "path": "target/m2/stage103-reflection-oracle-readback-01/report.json",
+    "sha256": "978b6609d8a5ed771505086839367ac50c178cb083f862649a1c910a60ac9fed"
+  },
+  "kind": "Stage103 Reflection225 actual Java authority/readback and exclusive window release",
+  "limitations": [
+    "A readback limitation retains inherited bounded219 prose. Actual membership/kind/count225 with450observations is fully checked; no scope exclusion.",
+    "Full20mirrors/inherited methods/type recipes/default forcing/GC/Host/identity and whole14originals remain required. Bounded225 and92Java successes do not establish full reflection or Rust compatibility.",
+    "Failedmetadata01 and all94unexecuted records remain separate; acceptedmetadata02 is a fresh controller-race recovery, not a query timeout restart.",
+    "No original source/URI/query rewrites, generated Rust expected values, canonical/Git/cache purge or forbidden paths."
+  ],
+  "lineage_qualification": {
+    "bytes": 1874,
+    "path": "target/m2/stage103-reflection-oracle-prep-03/lineage-supplement.json",
+    "sha256": "a314a31fd252c149e78961e687fbbcf2cd90ce8707cb857b35c33f2411a2cd44"
+  },
+  "observation_timeouts": 0,
+  "observations": 450,
+  "ordered_logger_events": 2,
+  "original219_preserved": true,
+  "owned_PID_final_check": {
+    "argv": [
+      "/bin/ps",
+      "-p",
+      "87859,87864,87905,87922,87949,87976,87987,88012,88027,88040,88049,88061,88094,89364,89370,89384,89398,89412,89423,89434,89448,89459,89470,89485,89498,89512,89524,89534,89544,89561,89571,89581,89607,89618,89629,89657,89667,89677,89690,89700,89729,89733,89763,89839,89843,89855,89914,88150,88145",
+      "-o",
+      "pid=,ppid=,pgid=,lstart=,comm="
+    ],
+    "exit": 1,
+    "qualification": "Later PID absence; actual owned process reaping/group receipts retained per session.",
+    "stderr": {
+      "bytes": 0,
+      "path": "target/m2/stage103-reflection-oracle-window-01/owned-pids-after.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 0,
+      "path": "target/m2/stage103-reflection-oracle-window-01/owned-pids-after.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "performance_claim": false,
+  "preflight": {
+    "bytes": 1339,
+    "path": "target/m2/stage103-reflection-oracle-window-01/preflight.json",
+    "sha256": "3345e80b8320baad2abe1ff5c7262bf48317b74a4a7062d25c4e8a131c01bf6d"
+  },
+  "prep02": {
+    "bytes": 5403,
+    "path": "target/m2/stage103-reflection-oracle-prep-02/preparation.json",
+    "sha256": "0c774f0e9d572ba1de8510065f01afd9fba4d274cac5b469d7fd2d42c40b8513"
+  },
+  "prep03": {
+    "bytes": 6549,
+    "path": "target/m2/stage103-reflection-oracle-prep-03/preparation.json",
+    "sha256": "b8b1b5de970c095a2ee24aba9d9778f67abc1cb9a08cddf00993646c776b6b70"
+  },
+  "preseal_prose_count_correction": {
+    "detail": "Counts table was correct322+32+4. Corrected coverage prose356 to354 lookup-preempted observations before handoff; no raw results changed.",
+    "prior_coverage": {
+      "bytes": 294728,
+      "path": "target/m2/stage103-reflection-oracle-window-01/preseal-count-prose-correction/coverage-preemptions.json",
+      "sha256": "fbb8de54a2ecf6a54b5380aacf7237197beff20bf0e775db672bb7bba6cc6225"
+    },
+    "prior_report": {
+      "bytes": 12471,
+      "path": "target/m2/stage103-reflection-oracle-window-01/preseal-count-prose-correction/report.json",
+      "sha256": "4d9f3e725cfc89e3cac98ed484ce29ad3e29e0e34de723d61b10872e5d207f34"
+    }
+  },
+  "programs": 21,
+  "readback_host_session_id": 88490,
+  "readback_stderr": {
+    "bytes": 0,
+    "path": "target/m2/stage103-reflection-oracle-window-01/remaining03/readback.stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "readback_stdout": {
+    "bytes": 141,
+    "path": "target/m2/stage103-reflection-oracle-window-01/remaining03/readback.stdout.bin",
+    "sha256": "dcc6eecc5528232b62cdc65836b62e8fe134b6e786dcec5c3eb6aaec7a9b43c4"
+  },
+  "readback_terminal": {
+    "bytes": 434,
+    "path": "target/m2/stage103-reflection-oracle-window-01/remaining03/readback.terminal.json",
+    "sha256": "0939cbefb4a1364e4a585649a64ba8c762d2ec3f04a486412643e62730b5d726"
+  },
+  "resource_limits_unchanged": true,
+  "retry_preflight": {
+    "bytes": 1374,
+    "path": "target/m2/stage103-reflection-oracle-window-01/remaining03/preflight.json",
+    "sha256": "ccd1d98fcc469914e40bf14e3a4d4bdc9a3ce5223cf5ce2d22f92d7d8ae8def9"
+  },
+  "root_race_review": {
+    "bytes": 2005,
+    "path": "target/m2/stage103-resource-race-root-review-01/report.json",
+    "sha256": "e91e8ad8b3fabb0d421208930e202eb657f45fddf63b2658ae50f8fce5c75b08"
+  },
+  "sessions": 42,
+  "statuses": {
+    "error": 358,
+    "success": 92
+  },
+  "success": true,
+  "successful_acquisition_JVMs": 42,
+  "terminal_live": [],
+  "time": "2026-10-27T11:46:12.213906+00:00",
+  "total_JVMs_including_failed_attempt": 43,
+  "transient_cache_races_in_successful_retry": 0,
+  "window_released": true
+}

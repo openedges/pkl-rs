@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `pkl.reflect#TypeDeclaration`, but got type `Int`.
+Value: 1
+
+149 | external const function DeclaredType(referent: TypeDeclaration): DeclaredType
+                                                     ^^^^^^^^^^^^^^^
+at pkl.reflect#DeclaredType (https://github.com/apple/pkl/blob/0.32.0/stdlib/reflect.pkl#L149)
+
+1 | (exposedReflection.DeclaredType(1)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

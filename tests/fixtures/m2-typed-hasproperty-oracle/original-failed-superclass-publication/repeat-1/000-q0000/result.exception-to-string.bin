@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find type `Missing`.
+
+2 | class C extends Missing { own = 1 }
+                    ^^^^^^^
+at typedSuperclassFailure#C (file:///stage104/typed-hasproperty/failed-superclass-publication.pkl)
+
+Searched in the following places:
+* Module `typedSuperclassFailure` and any supermodules
+* Module `pkl#base`
+
+1 | C.toString()
+    ^
+at  (repl:text)

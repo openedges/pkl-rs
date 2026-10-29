@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot find property `reflect`.
+
+1 | (reflect.intType.withTypeArguments(List()).referent == reflect.intType.referent).toString()
+     ^^^^^^^
+at  (repl:text)

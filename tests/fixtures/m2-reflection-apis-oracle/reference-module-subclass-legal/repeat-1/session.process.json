@@ -1,0 +1,927 @@
+{
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/CollectionEveryOracle.java",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal",
+    "file:///stage103/reference-module-subclass-legal.pkl"
+  ],
+  "cleanup_events": [],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01",
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 0,
+  "finished_epoch": 1793101511.7724621,
+  "helper": {
+    "bytes": 6329,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/CollectionEveryOracle.java",
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "owned_child_reaped": true,
+  "owned_processes": {
+    "root_observed": true,
+    "root_pid": 89855,
+    "terminal_live": [],
+    "tracked": [
+      {
+        "group_id_at_discovery": 89855,
+        "parent_pid_at_discovery": 89839,
+        "pid": 89855,
+        "started": "Tue Oct 27 20:45:10 2026"
+      }
+    ]
+  },
+  "owned_start": "Tue Oct 27 20:45:10 2026",
+  "pgid": 89855,
+  "pid": 89855,
+  "power_assertions": false,
+  "program": "reference-module-subclass-legal",
+  "repeat": 1,
+  "rows": [
+    {
+      "directory": "target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000",
+      "expression": "ref.Reference(domain,Child,\"\").output.getPath().toString()",
+      "id": "q0000",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 58,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/expression.bin",
+          "sha256": "ebc7b10ee252b9c6476b5f4e4110231a4235302b0fc6782b2442aadb6f6506b6"
+        },
+        "expression.code-units.bin": {
+          "bytes": 116,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/expression.code-units.bin",
+          "sha256": "d508bfffc783a03b2f535464fed6bc34ea49a4b1eb6a7204132a6b592d3e04db"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 167,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/result.exception-to-string.bin",
+          "sha256": "dc013963ea22a5f7530f320737656ab1e4decfe840bd818c8503f992937edf63"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 318,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/result.exception-to-string.code-units.bin",
+          "sha256": "0e14bacd5276ab73ef674d737325db08e1d0f05145c1f2fd0ac35598f2f5e429"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 140,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/result.stderr.bin",
+          "sha256": "ad08658e50e381f65317e027f48b958e9cba2cd14f4418b33224a179ed7eaac2"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 264,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/result.stderr.code-units.bin",
+          "sha256": "8c78b8e201314c457f0c035b4434dff3ce347425265f88a14a533bcc3b2e9c7d"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/000-q0000/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001",
+      "expression": "ref.Reference(domain,Grandchild,\"\").output.getPath().toString()",
+      "id": "q0001",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 63,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/expression.bin",
+          "sha256": "e0c6a8080603d3d72df0afa8324463949cea368cc63d6107e776938eb6bc36d0"
+        },
+        "expression.code-units.bin": {
+          "bytes": 126,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/expression.code-units.bin",
+          "sha256": "803164f13ab1039f8745cd27c633fa655369a63528a629ea1187330d7b410ef6"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 172,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/result.exception-to-string.bin",
+          "sha256": "6b59375a8db3c2136cbc6d8522ab1059891b7bc4e85bb98a8bb94206604317ab"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 328,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/result.exception-to-string.code-units.bin",
+          "sha256": "60a21821235179cc10da6448f360d1e7899af537a22bdc409aa16e69c78a1279"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 145,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/result.stderr.bin",
+          "sha256": "08226abb1acb836ecb193d6f68c017a23b5ab59744a7a2f4861202888831072c"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 274,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/result.stderr.code-units.bin",
+          "sha256": "2b24c993ef40fb2856f919208469062bec92d4755aa3ceadbd1269a64be665d6"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/001-q0001/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002",
+      "expression": "ref.Reference(domain,Module,\"\").output.getPath().toString()",
+      "id": "q0002",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 59,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/expression.bin",
+          "sha256": "365ebbf4caf038db8ab027fe12bd2db6fc4998f8f5c9e8a814daa245ca250d37"
+        },
+        "expression.code-units.bin": {
+          "bytes": 118,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/expression.code-units.bin",
+          "sha256": "a7bbfe7c672d8043840a307b3e3f3186edb1ee88faffae22048c86dfc7470252"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 168,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/result.exception-to-string.bin",
+          "sha256": "0e64aa5900674c96388ac7fe2366d8e1e8fd49157331ebdfbe0ef77ef319100b"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 320,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/result.exception-to-string.code-units.bin",
+          "sha256": "544153d2e5b2a28a3baf85cbce191c9b46f57509ea555911944d05f919ac4139"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 141,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/result.stderr.bin",
+          "sha256": "6ff83591988acb3a8c498378942800323c68294f14e6a1d41d9fce79ef978a12"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 266,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/result.stderr.code-units.bin",
+          "sha256": "8908996aec9c8a7e3f49992c9d50284479dabd509f72795e46a8a09fc3241201"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/002-q0002/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003",
+      "expression": "ref.Reference(domain,Child,\"\").value.getPath().toString()",
+      "id": "q0003",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 57,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/expression.bin",
+          "sha256": "2546338a0f5dd2f947dc781490403ca4f9532952556e305bb82cb17a3092dd3a"
+        },
+        "expression.code-units.bin": {
+          "bytes": 114,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/expression.code-units.bin",
+          "sha256": "3dfb6d4c29838a9f92d34b7949bc1a5ff933dcab68ae644bfc8b7ed972004549"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 166,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/result.exception-to-string.bin",
+          "sha256": "c81200356583eed537ca6680dcfa27141a4d4143860d17d6a275042f8cc1ffc5"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 316,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/result.exception-to-string.code-units.bin",
+          "sha256": "04759b49e964ec758f2a6cb0c24470ad6cb4c179a38d8a54409a32527327bd89"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 139,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/result.stderr.bin",
+          "sha256": "a90f4b76b6f5cb5112deb2eb2b825ef203c4871b599219a99b49defcdce78091"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 262,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/result.stderr.code-units.bin",
+          "sha256": "c95493dd4bab8b78091969ea9bf1308c78e0b36888fc13240ad1faaf5b865a08"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/003-q0003/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004",
+      "expression": "ref.Reference(domain,Grandchild,\"\").value.getPath().toString()",
+      "id": "q0004",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 62,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/expression.bin",
+          "sha256": "2234ffc246244c6d4756ef6c04c1e5620114a64ab7d2648144365d3ed6083111"
+        },
+        "expression.code-units.bin": {
+          "bytes": 124,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/expression.code-units.bin",
+          "sha256": "60c9c9ee706f2b024c7d7f65a6baa38e26faae568ac8525cc78f89da44002d1b"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 171,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/result.exception-to-string.bin",
+          "sha256": "0aedc2a8862ee2d26dc038e571487a94c460c6eb7d063c0c41e2b1692e51513e"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 326,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/result.exception-to-string.code-units.bin",
+          "sha256": "e5f186a8bc94cf3a9287c091a04b4e52fe7d30e8bb96428cab7b7bf5d5e10c2c"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 144,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/result.stderr.bin",
+          "sha256": "40d488c928d4c5c5ae2171457e48df72940a20b51b045adcce1a3a7b1e6f763a"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 272,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/result.stderr.code-units.bin",
+          "sha256": "0f14262b9604ab735da9a4ad91020ad82eff53d6e3f84a8cb92a2fd01dae97e2"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/004-q0004/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    },
+    {
+      "directory": "target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005",
+      "expression": "ref.Reference(domain,Ordinary,\"\").output.getPath().toString()",
+      "id": "q0005",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 61,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/expression.bin",
+          "sha256": "4ad72a19d7b5884a3646d482d69e21d245b01703f43c8d2774676477a7e388ac"
+        },
+        "expression.code-units.bin": {
+          "bytes": 122,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/expression.code-units.bin",
+          "sha256": "fe5c8560e94b27f9bdaac93d317319787721b7fcdddd5d03d18208522fecdffb"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 170,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/result.exception-to-string.bin",
+          "sha256": "ec2f35c3350661d1a3c300584164e758fd1d306f6464418a29d4f5f727d18293"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 324,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/result.exception-to-string.code-units.bin",
+          "sha256": "d9d8b043bfc1e509b0fcc6915fcceaec7230675dac557b1bcb79cb0ff2c252d5"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 143,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/result.stderr.bin",
+          "sha256": "f436205d5dbf26ff71cc4ebada5e15ede67fe9e5b68e546492f744e684a49729"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 270,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/result.stderr.code-units.bin",
+          "sha256": "a3a66eb81a7475172fb1d8f7cc3be3ae5faffa15bf705a6d11fc62b440837997"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/005-q0005/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    }
+  ],
+  "started_epoch": 1793101510.885472,
+  "stderr": {
+    "bytes": 0,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/process.stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 484,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-legal-reference6-oracle-01/programs/reference-module-subclass-legal/repeat-1/process.stdout.bin",
+    "sha256": "fb85d33362d53d17c91e16834417b4d53b5e1fb88599e2ccb02b0c4d991fbcbe"
+  }
+}

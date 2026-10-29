@@ -1,0 +1,169 @@
+{
+  "Java_compiler_guest_Git_canonical_changes": 0,
+  "Rust_expected_results_generated": false,
+  "all_expected_unset": true,
+  "capture_parent": {
+    "bytes": 18030,
+    "path": "target/m2/stage103-reflection-review9-oracle-prep-01/capture.py",
+    "sha256": "87a30d239973adda172e9585e465ef58a0c0fa4b2286317be982fbef6cf29716"
+  },
+  "complete": true,
+  "conditions": {
+    "child_wall_seconds": 60,
+    "disk_reserve_MiB": 1024,
+    "heap_MiB": 512,
+    "owned_cap_MiB": 512,
+    "serial_Java_limit": 1,
+    "total_cohort_seconds": 3600
+  },
+  "contracts": 16,
+  "erasure_source_proposal": {
+    "bytes": 5094,
+    "path": "target/m2/stage103-reflection-class-erasure-followup-01/report.json",
+    "sha256": "2746ff3b5f55e523bb0b2ccbf3756e4508da930e9e5abc5cd83bb90f5ac62691"
+  },
+  "execution_authorized": false,
+  "files": [
+    {
+      "bytes": 6328,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/CollectionEveryOracle.java",
+      "sha256": "56defcb9f990729eedc3a3b98854c07319859a683cae4a404fedaf821cc2a98f"
+    },
+    {
+      "bytes": 1818,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/PLAN.md",
+      "sha256": "0cbb4e31e68438451701aa6ec09205af4421df372c35d699f5637cc9306e12fe"
+    },
+    {
+      "bytes": 2094,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/README.md",
+      "sha256": "3dbdf93ad0581e96c9ba32a73bdfc703de44e94a35cbe46252fefd9ca36c2f3f"
+    },
+    {
+      "bytes": 219,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/auxiliary-admission.json",
+      "sha256": "81f400f2e8927424b98b31a36f374f91f66c7687bcd5066c0177cc63289c1e05"
+    },
+    {
+      "bytes": 18032,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/capture.py",
+      "sha256": "0bfad444ba32a1018389377ff9f1dd47d2bd8a42e5fed7cc4808bcfdb2e45b29"
+    },
+    {
+      "bytes": 2947,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/capture.py.derivation.patch",
+      "sha256": "5f083b2296e7f557cf55648fb25bc9ec88a6c5e08f34bc1853f3b11e341a5c00"
+    },
+    {
+      "bytes": 355,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/cohorts.json",
+      "sha256": "9a1677b1d794f596adc934878c7c4384798abc9caa9e7158fa46c2becea24e26"
+    },
+    {
+      "bytes": 1317,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/commands.json",
+      "sha256": "c03da57fbf37930e7f8e952e10c1525a127e434ddb9cb54243ca02f8ab9da02d"
+    },
+    {
+      "bytes": 251,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/execution-gate.json",
+      "sha256": "9444e37fba34739d943124ab618f2ecb48231d3087ee43ebd4d314483a4ee7c1"
+    },
+    {
+      "bytes": 984,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/helper-derivation.json",
+      "sha256": "a0e13dc0bdf8405c25b914d14bbea4ec9f7c964cdb74afd5e8bf631916a5efa6"
+    },
+    {
+      "bytes": 6329,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/helper-false/CollectionEveryOracle.java",
+      "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+    },
+    {
+      "bytes": 851,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/implementation-context.json",
+      "sha256": "3f95f9df65ef28ef5f1f68af3876cc95486a3bf358f892a24ead28888b8bed32"
+    },
+    {
+      "bytes": 2791,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/inputs/erasure7.json",
+      "sha256": "893f97ea09e9cf922be34f810989214bc7a1b834e6d2e62218aa54a053d22a86"
+    },
+    {
+      "bytes": 8303,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/inputs/review16.json",
+      "sha256": "72a0d9919f5703817e8277f2461be6d25a27ee3f1092ee64ea55305b55a69e87"
+    },
+    {
+      "bytes": 5484,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/inputs/review9.json",
+      "sha256": "e2f89b9522784007ed909b87cf79a227a229666791057b07f6a8da505088a391"
+    },
+    {
+      "bytes": 734,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/main-input-preflight.json",
+      "sha256": "5db3dcc25dd7fa31ac8cdfa9c6ba93de5c1bea55e9e384e88d6b9926015e8cdb"
+    },
+    {
+      "bytes": 6159,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/pinned-source-authority.json",
+      "sha256": "e016c874fafa537ec7d7b7dbf245537eeff636ce1bd8b8b2efc8c79233a565b2"
+    },
+    {
+      "bytes": 3891,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/primary-input-snapshots.json",
+      "sha256": "4a92b0663e388e8af1ba7d4b983d9a3e6674446284e03d3fe5f08005f8f1e4d5"
+    },
+    {
+      "bytes": 9743,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/readback.py",
+      "sha256": "3aee76c73559330fa59564404cb9a6e2d6d879f0bc37565bd36ff49caf3f79ad"
+    },
+    {
+      "bytes": 1498,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/readback.py.derivation.patch",
+      "sha256": "b135285f84958b531d5396a827b6ff7537589501bb3bb4b09a7dceebdf8b9942"
+    },
+    {
+      "bytes": 521,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/resource-admission.json",
+      "sha256": "5db569a4a5ee33e19f9809303fb0babe0e85e9cb505ae91c3ffeaa617bc12245"
+    },
+    {
+      "bytes": 1545,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/rust-integration-admission-addendum.json",
+      "sha256": "7312c100f6df760a7fa8b03163eea7cac66be791ef30ca98a21dc506c14a2fd1"
+    },
+    {
+      "bytes": 422,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/source-checks.json",
+      "sha256": "45588713869810b3836a07985c9b8affdd3db12b8c9b34aaf9a568e7fb0cf615"
+    },
+    {
+      "bytes": 3807,
+      "path": "target/m2/stage103-reflection-review16-oracle-prep-01/transport-roundtrip.json",
+      "sha256": "c59979904a5b2702acfcdd9626ff2e1ff9a82bd8536251a6fb52a6eb03bc3ece"
+    }
+  ],
+  "full_reflection_scope_reduced": false,
+  "kind": "Stage103 reflection combined review9+erasure7 pinned Java source-only preparation",
+  "meaning_of_complete": "Preparation and source-only checks; execution remains unauthorized",
+  "new7_unchanged": true,
+  "observations": 32,
+  "original403_unchanged": true,
+  "original9_unchanged": true,
+  "parent_preparation": {
+    "bytes": 4802,
+    "path": "target/m2/stage103-reflection-review9-oracle-prep-01/preparation.json",
+    "sha256": "412c0b99df7d14593c8ced9779246ae13b506f4f9d8d9dba42adfa981108a3e6"
+  },
+  "programs": 6,
+  "raw_payload_copies": 0,
+  "readback_parent": {
+    "bytes": 9724,
+    "path": "target/m2/stage103-reflection-review9-oracle-prep-01/readback.py",
+    "sha256": "50ee9949430771198bfc0cac74e74c2cff7822af328a918f12b4f2e24d4b0f23"
+  },
+  "sessions": 12,
+  "source_ready": true
+}

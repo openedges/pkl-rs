@@ -1,0 +1,5 @@
+module stage103.review.moduleKind
+import "pkl:reflect"
+import "pkl:base" as b
+class C { named: b; self: module }
+hidden mirror = reflect.Class(C)

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Unexpected token `,`. Expected `)`.
+
+1 | @ModuleInfo { minPklVersion = trace(if (module.hasProperty("absent")) "0.0.0" else "0.0.1", "module-version-check") }
+                                                                                              ^
+at module-version-init (file:///stage104/typed-hasproperty/module-version-init.pkl)

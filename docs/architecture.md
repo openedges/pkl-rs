@@ -1669,3 +1669,31 @@ cases, ordinary mismatches, and Java oracle errors. Its separate integrity
 verification and independent regression audit succeeded without a prior-pass
 regression. This architecture covers selected paths only and does
 not imply complete regex syntax, numeric API, frontend grammar, or M2 parity.
+
+## Reflection metadata and membership boundaries
+
+Reflection uses the shared evaluator's declaration identities and source-backed
+standard-library modules. Trusted standard-library resolution is an internal
+compilation context; a user-supplied URI does not grant `external` declarations
+or change public module restrictions. Declaration locations come from the
+owning compilation unit when explicit metadata is absent, including source
+registered through expression sessions and the CLI.
+
+`Typed.hasProperty` consults class metadata and does not force property values.
+Initialized classes include inherited, hidden and required properties and exclude
+local members and methods. Pinned Java fixtures also preserve class publication
+failures and repeated queries; they do not justify an additional module
+initialization flag. Reference access exposes lazy property/key values through
+the existing traced object representation. GC tests retain escaped mirrors while
+needed, then replace module-cache aliases before asserting collection. Uncached
+loads preserve Java's distinction between bypassing lookup and publishing aliases.
+Cancellation closes a Host session; stale completion tokens are rejected, and
+continuation after cancellation uses a fresh evaluator.
+
+The selected native, N-API and Chromium captures use an explicit poll64/GC-after-
+batch profile with the original two-million requested-step ceiling per session.
+Byte-preserving comparisons of these same captures match the selected 569-contract
+matrix on all three targets. Earlier poll1 and comparator failures retain their
+original outcomes. Correcting source-byte decoding in verification tooling does
+not change the evaluator, fixture bytes or captured payloads. This selected profile
+is distinct from the workspace suite and full original-corpus execution.

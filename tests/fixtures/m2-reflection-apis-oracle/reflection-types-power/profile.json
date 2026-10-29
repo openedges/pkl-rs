@@ -1,0 +1,18 @@
+{
+  "Java_authority": {
+    "bytes": 3249232,
+    "path": "target/m2/stage103-reflection-main166-oracle-01/report.json",
+    "sha256": "20daff552c18c726654e0f4f57fcb71cabd4ee59465a9faec7fbf2d72d7400c3"
+  },
+  "Java_transport": "Base64 envelope only; exact decoded expressions used by Java",
+  "Rust_input": "Corresponding-repeat original expression.bin; UTF16 checked, never Base64/TSVsplit",
+  "Rust_status": "unexecuted",
+  "additive_alias_program": false,
+  "cohort": "main166",
+  "power_assertions": true,
+  "program": "reflection-types-power",
+  "queries": 18,
+  "repetitions": 2,
+  "required": true,
+  "source_uri": "file:///stage103/reflection-types-power.pkl"
+}

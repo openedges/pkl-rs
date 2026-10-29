@@ -113,6 +113,7 @@ pub enum CallbackOrigin {
     LogDelegate,
     DiagnosticTransformer,
     DiagnosticRenderer,
+    ReflectionTransformer,
 }
 impl CallbackOrigin {
     pub fn as_str(self) -> &'static str {
@@ -121,6 +122,7 @@ impl CallbackOrigin {
             Self::LogDelegate => "log-delegate",
             Self::DiagnosticTransformer => "diagnostic-transformer",
             Self::DiagnosticRenderer => "diagnostic-renderer",
+            Self::ReflectionTransformer => "reflection-transformer",
         }
     }
 }

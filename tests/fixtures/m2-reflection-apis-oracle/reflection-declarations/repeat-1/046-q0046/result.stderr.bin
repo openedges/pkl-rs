@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot find property `reflect`.
+
+1 | reflect.Class(Parent).methods["count"].parameters["y"].type.toString()
+    ^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+reflected

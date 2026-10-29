@@ -1,0 +1,11 @@
+module stage103.classErasure
+import "pkl:reflect"
+import "pkl:base" as b
+typealias ClassAlias<T> = Class<T>
+class Declaration {
+  simple: Class<String>
+  qualified: b.Class<DoesNotExist>
+  alias: ClassAlias<String>
+}
+hidden mirror = reflect.Class(Declaration)
+hidden explicit = reflect.DeclaredType(reflect.Class(Class)).withTypeArgument(reflect.DeclaredType(reflect.Class(String)))

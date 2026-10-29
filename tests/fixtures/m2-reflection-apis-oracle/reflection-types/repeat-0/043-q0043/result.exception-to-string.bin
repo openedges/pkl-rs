@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `reflect`.
+
+1 | reflect.mapType.withTypeArguments(List(reflect.intType,reflect.stringType)).typeArguments.toString()
+    ^^^^^^^
+at  (repl:text)

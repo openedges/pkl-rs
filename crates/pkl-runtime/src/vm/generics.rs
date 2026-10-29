@@ -166,6 +166,7 @@ impl TypeCheck {
 
 enum DefaultTask {
     Stack,
+    Probe,
     Visit(TypeCheck),
     Nullable,
     Collection(ObjectId),
@@ -179,6 +180,16 @@ pub(super) struct GenericDefaultRun {
     origin: Option<RuntimeFrame>,
 }
 impl GenericDefaultRun {
+    /// DefaultPropertyBodyNode.isUndefined probes the same type-default logic
+    /// without turning absence into an undefined-property exception.
+    pub(super) fn probe(ty: TypeCheck) -> Self {
+        Self {
+            tasks: vec![DefaultTask::Probe, DefaultTask::Visit(ty)],
+            value: None,
+            origin: None,
+        }
+    }
+
     pub(super) fn stack(ty: TypeCheck, origin: Option<RuntimeFrame>) -> Self {
         Self {
             tasks: vec![DefaultTask::Stack, DefaultTask::Visit(ty)],
@@ -224,6 +235,7 @@ impl GenericDefaultRun {
         roots.extend(self.tasks.iter().filter_map(|task| match task {
             DefaultTask::Collection(id) | DefaultTask::Publish(id) => Some(Value::Object(*id)),
             DefaultTask::Stack
+            | DefaultTask::Probe
             | DefaultTask::Visit(_)
             | DefaultTask::Nullable
             | DefaultTask::Constructor(_, _, _)
@@ -279,6 +291,10 @@ impl Vm {
             task
         };
         match task {
+            DefaultTask::Probe => {
+                self.stack.push(Value::Bool(run.value.is_some()));
+                return Ok(());
+            }
             DefaultTask::Stack => {
                 let value = run.value.ok_or_else(|| {
                     let name = self

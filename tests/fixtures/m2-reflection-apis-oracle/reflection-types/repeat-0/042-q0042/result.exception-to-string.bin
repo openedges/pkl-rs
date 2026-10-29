@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `reflect`.
+
+1 | (reflect.TypeVariable(alias.typeParameters.first).referent == alias.typeParameters.first).toString()
+     ^^^^^^^
+at  (repl:text)

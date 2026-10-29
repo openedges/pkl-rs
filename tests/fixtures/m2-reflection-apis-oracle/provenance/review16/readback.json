@@ -1,0 +1,189 @@
+{
+  "Rust_evaluations": 0,
+  "checked_record_occurrences": 860,
+  "complete": true,
+  "errors": [],
+  "finished_epoch": 1793179370.764738,
+  "kind": "Stage103-required-reflection-review16-independent-full-raw-readback",
+  "limitations": [
+    "Pinned Java authority establishes reference observations, not Rust/API/M2 compatibility.",
+    "Separate9 review controls preserve9 required inputs and18 planned observations; original403 and14whole-original/full20mirror scope remain unchanged.",
+    "Any observed upstream internal outcomes remain oracle-error, never ordinary error or compatibility pass.",
+    "All14 original reflection/Reference modules and full20-mirror reflection/API obligations remain required; bounded9 Java authority is not their candidate success.",
+    "No giant allocations, frozen native executables, protected archives or global cache copies are inputs."
+  ],
+  "observations": 32,
+  "ordered_logger_events": 0,
+  "performance_claim": false,
+  "queries": 16,
+  "reports": [
+    {
+      "capture_process": {
+        "bytes": 504,
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-review16-oracle-01/capture-process.json",
+        "sha256": "19ccd01012e1578dc1fc25025d493ec71ad8ea798720ef0d923535b217b61fb8"
+      },
+      "observations": 32,
+      "queries": 16,
+      "report": {
+        "bytes": 425159,
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-review16-oracle-01/report.json",
+        "sha256": "8cbdf97820503014a31023f33e3d7901a786b22580a3360dc1072ca9f5e9afc0"
+      },
+      "sessions": [
+        {
+          "captured_pid": 9709,
+          "process_record": {
+            "bytes": 29253,
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-review16-oracle-01/programs/named-imported-module-type/repeat-0/process.json",
+            "sha256": "fac58ad7d3ec9ebba220ad14d8874fc74c4f7d0086179f12d4ddbfc321d84452"
+          },
+          "ps_exit_code": 1,
+          "scope": "Actual Popen reaping is recorded above; later PID reuse is observational only.",
+          "stderr_hex": "",
+          "stdout_hex": ""
+        },
+        {
+          "captured_pid": 9724,
+          "process_record": {
+            "bytes": 29254,
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-review16-oracle-01/programs/named-imported-module-type/repeat-1/process.json",
+            "sha256": "c054c1d15a9c2701ac2346abb7b401ec407bca07f45178c9bc47e0fffc160d5b"
+          },
+          "ps_exit_code": 1,
+          "scope": "Actual Popen reaping is recorded above; later PID reuse is observational only.",
+          "stderr_hex": "",
+          "stdout_hex": ""
+        },
+        {
+          "captured_pid": 9735,
+          "process_record": {
+            "bytes": 21283,
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-review16-oracle-01/programs/class-value-does-not-shadow-simple-type/repeat-0/process.json",
+            "sha256": "6699e2949892e95d94311ec095ba6d02b1720db7c732e0a9273c3bd44fa95dab"
+          },
+          "ps_exit_code": 1,
+          "scope": "Actual Popen reaping is recorded above; later PID reuse is observational only.",
+          "stderr_hex": "",
+          "stdout_hex": ""
+        },
+        {
+          "captured_pid": 9751,
+          "process_record": {
+            "bytes": 21285,
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-review16-oracle-01/programs/class-value-does-not-shadow-simple-type/repeat-1/process.json",
+            "sha256": "b2c04283575a5e89b747ebb178b429494c7521505ead9b1082174630da153380"
+          },
+          "ps_exit_code": 1,
+          "scope": "Actual Popen reaping is recorded above; later PID reuse is observational only.",
+          "stderr_hex": "",
+          "stdout_hex": ""
+        },
+        {
+          "captured_pid": 9762,
+          "process_record": {
+            "bytes": 21542,
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-review16-oracle-01/programs/class-value-does-not-shadow-qualified-import/repeat-0/process.json",
+            "sha256": "aa30545d7b0c79cdd30a5f551e346d0bfe0471c2dea3a5beb49deca244b22607"
+          },
+          "ps_exit_code": 1,
+          "scope": "Actual Popen reaping is recorded above; later PID reuse is observational only.",
+          "stderr_hex": "",
+          "stdout_hex": ""
+        },
+        {
+          "captured_pid": 9773,
+          "process_record": {
+            "bytes": 21542,
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-review16-oracle-01/programs/class-value-does-not-shadow-qualified-import/repeat-1/process.json",
+            "sha256": "b1ccba945d891109a38dfadeaa83e437b1646e2e30046644458c64b8b7dcfadb"
+          },
+          "ps_exit_code": 1,
+          "scope": "Actual Popen reaping is recorded above; later PID reuse is observational only.",
+          "stderr_hex": "",
+          "stdout_hex": ""
+        },
+        {
+          "captured_pid": 9787,
+          "process_record": {
+            "bytes": 20783,
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-review16-oracle-01/programs/named-module-versus-self-type/repeat-0/process.json",
+            "sha256": "0076289d12310181cfcac0c9c0a8c6208a0a43deadf1870bab79c124d47b38a4"
+          },
+          "ps_exit_code": 1,
+          "scope": "Actual Popen reaping is recorded above; later PID reuse is observational only.",
+          "stderr_hex": "",
+          "stdout_hex": ""
+        },
+        {
+          "captured_pid": 9798,
+          "process_record": {
+            "bytes": 20780,
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-review16-oracle-01/programs/named-module-versus-self-type/repeat-1/process.json",
+            "sha256": "1aae409d556f42bb8c347c45b72f6f3be6869b54e102e7deb2c17178f168154d"
+          },
+          "ps_exit_code": 1,
+          "scope": "Actual Popen reaping is recorded above; later PID reuse is observational only.",
+          "stderr_hex": "",
+          "stdout_hex": ""
+        },
+        {
+          "captured_pid": 9809,
+          "process_record": {
+            "bytes": 46208,
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-review16-oracle-01/programs/canonical-class-erasure/repeat-0/process.json",
+            "sha256": "758eee389c259bb5130471c7b543d6a6784642e7725fc1cae882d4a20f51b1b0"
+          },
+          "ps_exit_code": 1,
+          "scope": "Actual Popen reaping is recorded above; later PID reuse is observational only.",
+          "stderr_hex": "",
+          "stdout_hex": ""
+        },
+        {
+          "captured_pid": 9826,
+          "process_record": {
+            "bytes": 46208,
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-review16-oracle-01/programs/canonical-class-erasure/repeat-1/process.json",
+            "sha256": "e803516e928657717e503f330f4af4ca8a7106309e07140fccf747782db46b95"
+          },
+          "ps_exit_code": 1,
+          "scope": "Actual Popen reaping is recorded above; later PID reuse is observational only.",
+          "stderr_hex": "",
+          "stdout_hex": ""
+        },
+        {
+          "captured_pid": 9838,
+          "process_record": {
+            "bytes": 21084,
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-review16-oracle-01/programs/alias-named-class-retains-arguments/repeat-0/process.json",
+            "sha256": "da0ff4c6d39b19cc4044710f2b290c1caf08db05e3ba5898d552f3ab4fe06c0d"
+          },
+          "ps_exit_code": 1,
+          "scope": "Actual Popen reaping is recorded above; later PID reuse is observational only.",
+          "stderr_hex": "",
+          "stdout_hex": ""
+        },
+        {
+          "captured_pid": 9851,
+          "process_record": {
+            "bytes": 21086,
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-review16-oracle-01/programs/alias-named-class-retains-arguments/repeat-1/process.json",
+            "sha256": "73578dc377aceb824201db9567c6ef7fe2dadc5b2fc69b7c868c0a06c42a7f59"
+          },
+          "ps_exit_code": 1,
+          "scope": "Actual Popen reaping is recorded above; later PID reuse is observational only.",
+          "stderr_hex": "",
+          "stdout_hex": ""
+        }
+      ],
+      "statuses": {
+        "success": 32
+      }
+    }
+  ],
+  "schema_version": 1,
+  "started_epoch": 1793179370.265794,
+  "statuses": {
+    "success": 32
+  }
+}

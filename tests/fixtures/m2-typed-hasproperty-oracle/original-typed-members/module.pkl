@@ -1,0 +1,15 @@
+open class Parent {
+ inherited: String
+ hidden hiddenParent: Int = throw("hidden parent forced")
+ local localParent = throw("local parent forced")
+ function method(): String = throw("method forced")
+}
+class Child extends Parent {
+ own: String = throw("own forced")
+ unset: Int
+ hidden hiddenChild: String = throw("hidden child forced")
+ local localChild = throw("local child forced")
+}
+class Override extends Parent { inherited = throw("override forced") }
+hidden subject = new Child {}
+hidden overridden = new Override {}

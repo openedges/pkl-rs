@@ -1,0 +1,5 @@
+import "pkl:reflect"
+/// first property doc
+p = 1
+
+hidden exposedReflection = reflect

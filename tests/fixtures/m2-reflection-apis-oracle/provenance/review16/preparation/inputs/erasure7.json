@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "kind": "Stage103 Class<T> erasure source-derived regression proposal; no observed outcomes",
+  "query_count": 7,
+  "program_count": 2,
+  "programs": [
+    {
+      "id": "canonical-class-erasure",
+      "source_uri": "file:///stage103/review-class-erasure.pkl",
+      "source": "module stage103.classErasure\nimport \"pkl:reflect\"\nimport \"pkl:base\" as b\ntypealias ClassAlias<T> = Class<T>\nclass Declaration {\n  simple: Class<String>\n  qualified: b.Class<DoesNotExist>\n  alias: ClassAlias<String>\n}\nhidden mirror = reflect.Class(Declaration)\nhidden explicit = reflect.DeclaredType(reflect.Class(Class)).withTypeArgument(reflect.DeclaredType(reflect.Class(String)))\n",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "label": "simple-kind",
+          "expression": "mirror.properties[\"simple\"].type.typeArguments[0].getClass().simpleName",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0001",
+          "label": "qualified-erased-name",
+          "expression": "mirror.properties[\"qualified\"].type.typeArguments[0].getClass().simpleName",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0002",
+          "label": "alias-retains-argument",
+          "expression": "mirror.properties[\"alias\"].type.typeArguments[0].referent.name",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0003",
+          "label": "alias-referent-erases-argument",
+          "expression": "mirror.properties[\"alias\"].type.referent.referent.typeArguments[0].getClass().simpleName",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0004",
+          "label": "constructed-retains-argument",
+          "expression": "explicit.typeArguments[0].referent.name",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    },
+    {
+      "id": "alias-named-class-retains-arguments",
+      "source_uri": "file:///stage103/review-class-name-shadow.pkl",
+      "source": "module stage103.classNameShadow\nimport \"pkl:reflect\"\ntypealias Class<T> = List<T>\nclass Declaration { x: Class<String> }\nhidden mirror = reflect.Class(Declaration)\n",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "mirror.properties[\"x\"].type.typeArguments[0].referent.name",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0001",
+          "expression": "mirror.properties[\"x\"].type.referent.name",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    }
+  ]
+}

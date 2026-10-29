@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+initializer forced
+
+3 | throwing: String = throw("initializer forced")
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at no-force#Lazy.throwing (file:///stage104/typed-hasproperty/no-force.pkl)
+
+1 | direct.throwing.toString()
+    ^^^^^^^^^^^^^^^
+at  (repl:text)

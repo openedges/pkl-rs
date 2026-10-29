@@ -1,0 +1,1 @@
+new UnionType { members = List(new StringLiteralType { value = "🙂" }, new StringLiteralType { value = "x" }) }

@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Module`, but got type `Int`.
+Value: 1
+
+127 | external const function Module(mod: base.Module): Module
+                                          ^^^^^^^^^^^
+at pkl.reflect#Module (https://github.com/apple/pkl/blob/0.32.0/stdlib/reflect.pkl#L127)
+
+1 | (exposedReflection.Module(1)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

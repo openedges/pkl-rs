@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot call method `hasProperty` from here because it is not `const`.
+
+2 | @Deprecated { message = trace(module.hasProperty("absent").toString()) }
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at typedModuleInit#deprecated.message (file:///stage104/typed-hasproperty/module-method-init.pkl)
+
+To fix, do either of:
+1. Add modifier `const` to method `hasProperty`
+2. Self-import this module, and reference this method from the import.

@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `TypeAlias`, but got type `Class`.
+Value: Int
+
+146 | external const function TypeAlias(typeAlias: base.TypeAlias): TypeAlias
+                                                   ^^^^^^^^^^^^^^
+at pkl.reflect#TypeAlias (https://github.com/apple/pkl/blob/0.32.0/stdlib/reflect.pkl#L146)
+
+1 | (exposedReflection.TypeAlias(Int)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -541,7 +541,15 @@ impl Vm {
             .builtin_type
             .as_ref()
             .and_then(BuiltinClass::from_type)
-            .is_some_and(BuiltinClass::external))
+            .is_some_and(BuiltinClass::external)
+            || prototype
+                .declaration_code
+                .and_then(|code| self.program.declaration_sources.get(&code))
+                .is_some_and(|declaration| {
+                    crate::syntax::modifier_flags(&declaration.modifiers)
+                        & crate::syntax::ModifierKind::External.flag()
+                        != 0
+                }))
     }
 }
 

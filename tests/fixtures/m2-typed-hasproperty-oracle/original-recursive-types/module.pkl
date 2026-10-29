@@ -1,0 +1,4 @@
+class Recursive { child: Recursive }
+class Constrained { child: Constrained(this.hasProperty("missing")) }
+hidden recursive = new Recursive {}
+hidden constrained = new Constrained {}

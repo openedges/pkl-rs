@@ -67,6 +67,8 @@ def source_paths(root: Path):
                                ('tests/fixtures/m2-list-apis-oracle', '*'),
                                ('tests/fixtures/m2-map-apis-oracle', '*'),
                                ('tests/fixtures/m2-mapping-apis-oracle', '*'),
+                               ('tests/fixtures/m2-typed-hasproperty-oracle', '*'),
+                               ('tests/fixtures/m2-reflection-apis-oracle', '*'),
                                ('tests/fixtures/m2-deprecation', '*'),
                                ('tests/fixtures/m2-frame-transformers', '*'),
                                ('tests/fixtures/m2-class-values', '*'),

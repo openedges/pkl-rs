@@ -979,9 +979,20 @@ impl Vm {
                 .builtin_type
                 .clone()
                 .unwrap_or_else(|| TypeCheck::Class {
-                    module: class.module.clone(),
+                    // Module Class values display their module name directly,
+                    // independently of the caller's module. Keep their actual
+                    // class id for property/subtype lookup.
+                    module: if object.is_module {
+                        Some(class.name.clone())
+                    } else {
+                        class.module.clone()
+                    },
                     id: class.id,
-                    name: class.name.clone(),
+                    name: if object.is_module {
+                        "ModuleClass".into()
+                    } else {
+                        class.name.clone()
+                    },
                 });
             let reference = Reference {
                 domain: args[0].clone(),
@@ -1111,8 +1122,6 @@ impl Vm {
         for (name, value) in [
             ("property", property.map_or(Value::Null, Value::string)),
             ("key", key.unwrap_or(Value::Null)),
-            ("isProperty", Value::Bool(property.is_some())),
-            ("isSubscript", Value::Bool(property.is_none())),
         ] {
             let name: Arc<str> = Arc::from(name);
             object.members.push(Member {
@@ -1127,7 +1136,10 @@ impl Vm {
                 constant: false,
                 fixed: false,
             });
-            object.complete_cache(
+            // VmObjectBuilder supplies constant declarations, not evaluated
+            // member caches. Ordinary lookup publishes these values lazily;
+            // the prototype's computed flags retain their real dependencies.
+            object.member_values.insert(
                 CacheKey {
                     entry: false,
                     owner: None,
@@ -1136,15 +1148,6 @@ impl Vm {
                 },
                 value,
             );
-        }
-        if self
-            .heap
-            .get(parent)
-            .expect("access class")
-            .members
-            .is_empty()
-        {
-            self.heap.get_mut(parent).expect("access class").members = object.members.clone();
         }
         Value::Object(self.heap.allocate(object))
     }
@@ -1224,8 +1227,7 @@ impl Vm {
                 ),
             );
             error.hint = Some(
-                if property == "output" && matches!(failed, TypeCheck::Class { id: MODULE_ID, .. })
-                {
+                if property == "output" && self.reference_module_class(failed) {
                     "Cannot reference property `output` because it is defined inside external class `Module`.".into()
                 } else if property == "default"
                     && matches!(
@@ -1304,6 +1306,21 @@ impl Vm {
         Ok(error)
     }
 
+    // VmReference checks the class relation to base.Module before looking at
+    // a property declaration; an overriding annotation cannot remove the ban.
+    fn reference_module_class(&self, ty: &TypeCheck) -> bool {
+        let TypeCheck::Class { id, .. } = ty.resolved() else {
+            return false;
+        };
+        if matches!(*id, MODULE_ID | output::MODULE) {
+            return true;
+        }
+        self.heap
+            .find_class(*id)
+            .zip(self.heap.find_class(output::MODULE))
+            .is_some_and(|(class, module)| self.heap.is_subclass(class, module))
+    }
+
     fn reference_candidate(
         &mut self,
         ty: &TypeCheck,
@@ -1320,7 +1337,9 @@ impl Vm {
                 }
                 TypeCheck::Unknown
             }
-            TypeCheck::Class { id: MODULE_ID, .. } if property == Some("output") => {
+            TypeCheck::Class { .. }
+                if property == Some("output") && self.reference_module_class(ty) =>
+            {
                 return Ok(Candidate::Unavailable);
             }
             TypeCheck::Class { id, .. } if property.is_some() => {
@@ -1615,6 +1634,199 @@ pub(super) fn access_members(
 #[cfg(test)]
 mod generic_metadata_tests {
     use super::*;
+
+    #[test]
+    fn reference_module_class_names_do_not_acquire_the_callers_module_prefix() {
+        let mut vm = Vm::new(Arc::new(Program::new(vec![vec![Instruction::Return]])));
+        let Value::Class(domain_class) = vm.builtin_class(TypeCheck::RefDomain) else {
+            unreachable!()
+        };
+        let domain_parent = vm.heap.get_class(domain_class).unwrap().prototype;
+        let domain = Value::Object(vm.heap.allocate(Object {
+            parent: Some(domain_parent),
+            instance_class: Some(domain_class),
+            ..Default::default()
+        }));
+        for (is_module, name, module, expected) in [
+            (true, "imported.module", None, "imported.module"),
+            (
+                false,
+                "Child",
+                Some("imported.module"),
+                "imported.module#Child",
+            ),
+        ] {
+            let prototype = vm.heap.allocate(Object {
+                is_module,
+                class_definition: Some(Class {
+                    module: module.map(Arc::from),
+                    origin_uri: None,
+                    id: if is_module { 700 } else { 701 },
+                    name: name.into(),
+                    open: false,
+                    abstract_: false,
+                }),
+                ..Default::default()
+            });
+            let class = vm.heap.allocate_class(prototype);
+            vm.invoke_reference_native(
+                NativeFunction {
+                    receiver: Value::Null,
+                    name: "Reference".into(),
+                },
+                vec![domain.clone(), Value::Class(class), Value::Null],
+            )
+            .unwrap();
+            let reference = vm.stack.pop().unwrap().as_object().unwrap();
+            let reference = vm.heap.get(reference).unwrap().reference.as_ref().unwrap();
+            assert_eq!(
+                export_type_name_value(reference, &vm.heap, "caller").unwrap(),
+                PklString::from(format!("pkl.ref#Reference<pkl.ref#Domain, {expected}>"))
+            );
+        }
+        vm.close();
+        assert_eq!(vm.heap_stats().slots, 0);
+    }
+
+    fn access_member(vm: &mut Vm, access: &Value, name: &str) -> Value {
+        // Native constant declarations publish through the ordinary equality
+        // continuation, which belongs to the caller's executing bytecode frame.
+        let entry = Arc::make_mut(&mut vm.program)
+            .alloc_block(
+                vec![
+                    Instruction::Input(0),
+                    Instruction::GetMember(name.into()),
+                    Instruction::Return,
+                ],
+                BlockMetadata {
+                    spans: vec![None; 3],
+                    ..Default::default()
+                },
+            )
+            .unwrap();
+        vm.start(entry, vec![access.clone()]).unwrap();
+        for _ in 0..1_000 {
+            vm.collect(std::slice::from_ref(access));
+            match vm.poll(1) {
+                VmPoll::Yielded => {}
+                VmPoll::Ready(result) => return result.unwrap(),
+                event => panic!("Access field requested unexpected work: {event:?}"),
+            }
+        }
+        panic!("Access field did not settle")
+    }
+
+    #[test]
+    fn reference_access_fields_stay_lazy_and_computed_flags_use_normal_caches() {
+        let mut vm = Vm::new(Arc::new(Program::new(vec![vec![Instruction::Return]])));
+        let access = vm.reference_access_value(Some("name"), None);
+        let id = access.as_object().unwrap();
+        assert!(vm.heap.get(id).unwrap().cache.is_empty());
+        assert_eq!(
+            access_member(&mut vm, &access, "isProperty"),
+            Value::Bool(true)
+        );
+        let cached: Vec<_> = vm
+            .heap
+            .get(id)
+            .unwrap()
+            .completed_cache_order
+            .iter()
+            .map(|key| key.name.as_ref())
+            .collect();
+        assert_eq!(cached, ["property", "isProperty"]);
+        assert_eq!(
+            access_member(&mut vm, &access, "property"),
+            Value::string("name")
+        );
+        assert_eq!(
+            access_member(&mut vm, &access, "isSubscript"),
+            Value::Bool(false)
+        );
+        assert_eq!(access_member(&mut vm, &access, "key"), Value::Null);
+        vm.close();
+        assert_eq!(vm.heap_stats().slots, 0);
+    }
+
+    #[test]
+    fn diagnostics_render_unforced_reference_path_constants_after_gc() {
+        let mut vm = Vm::new(Arc::new(Program::new(vec![vec![Instruction::Return]])));
+        let property = vm.reference_access_value(Some("name"), None);
+        let key = vm.heap.allocate(Object::default());
+        let subscript = vm.reference_access_value(None, Some(Value::Object(key)));
+        let reference = Value::Object(vm.heap.allocate(Object {
+            reference: Some(Reference {
+                domain: Value::Null,
+                data: Value::Null,
+                path: vec![property.clone(), subscript.clone()],
+                referent: TypeCheck::Int,
+                classes: vec![],
+                forced: false,
+            }),
+            ..Object::default()
+        }));
+        vm.collect(std::slice::from_ref(&reference));
+        assert!(vm.heap.get(key).is_ok(), "unforced path key remains traced");
+        let render =
+            |vm: &Vm| crate::diagnostic_values::render(&reference, &vm.heap, "test", 1000).unwrap();
+        assert_eq!(
+            render(&vm),
+            "Reference(null, Int, null).name[new Dynamic {}]"
+        );
+        for access in [&property, &subscript] {
+            assert!(
+                vm.heap
+                    .get(access.as_object().unwrap())
+                    .unwrap()
+                    .cache
+                    .is_empty()
+            );
+        }
+        // Completed caches retain the same rendering behavior. Ordinary forcing
+        // and its cache publication are covered by the adjacent Access tests.
+        for access in [&property, &subscript] {
+            let object = vm.heap.get_mut(access.as_object().unwrap()).unwrap();
+            for (key, value) in object.member_values.clone() {
+                object.cache.insert(key, LazyState::Completed(value));
+            }
+        }
+        vm.collect(std::slice::from_ref(&reference));
+        assert_eq!(
+            render(&vm),
+            "Reference(null, Int, null).name[new Dynamic {}]"
+        );
+        vm.close();
+        assert_eq!(vm.heap_stats().slots, 0);
+    }
+
+    #[test]
+    fn lazy_reference_access_payload_survives_gc_and_amendment_uses_its_own_cache() {
+        let mut vm = Vm::new(Arc::new(Program::new(vec![vec![Instruction::Return]])));
+        let key = vm.heap.allocate(Object::default());
+        let parent = vm.reference_access_value(None, Some(Value::Object(key)));
+        let parent_id = parent.as_object().unwrap();
+        let instance_class = vm.heap.get(parent_id).unwrap().instance_class;
+        let access = Value::Object(vm.heap.allocate(Object {
+            parent: Some(parent_id),
+            instance_class,
+            ..Object::default()
+        }));
+        vm.collect(std::slice::from_ref(&access));
+        assert!(
+            vm.heap.get(key).is_ok(),
+            "unforced native key must remain traced"
+        );
+        assert_eq!(
+            access_member(&mut vm, &access, "isSubscript"),
+            Value::Bool(true)
+        );
+        assert!(vm.heap.get(parent_id).unwrap().cache.is_empty());
+        assert_eq!(access_member(&mut vm, &access, "key"), Value::Object(key));
+        vm.collect(std::slice::from_ref(&access));
+        assert!(vm.heap.get(key).is_ok());
+        vm.close();
+        assert_eq!(vm.heap_stats().slots, 0);
+    }
 
     fn collection(kind: CollectionKind, arguments: Vec<TypeCheck>) -> TypeCheck {
         TypeCheck::ParameterizedCollection {

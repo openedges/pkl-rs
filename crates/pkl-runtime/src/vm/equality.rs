@@ -795,6 +795,29 @@ impl Vm {
             return self.map_hash_members(id);
         }
         let mut members = collections::forcing_members(&self.heap, id)?;
+        if let Some(prototype) = self
+            .class_identity(id)?
+            .map(|class| self.heap.get_class(class).map(|class| class.prototype))
+            .transpose()?
+            .or(self.heap.get(id)?.is_module.then_some(id))
+        {
+            // VmClass.getAllRegularPropertyNames excludes external declarations.
+            // Their native getters need not have a cached value after force().
+            // Union each class's own regular names with its inherited names, so
+            // a regular superclass property survives an external override too.
+            let mut regular = BTreeSet::new();
+            let mut owner = Some(prototype);
+            while let Some(id) = owner {
+                let object = self.heap.get(id)?;
+                for member in &object.members {
+                    if !member.local && !member.method && !member.entry && !member.external() {
+                        regular.insert(member.name.clone());
+                    }
+                }
+                owner = object.parent;
+            }
+            members.retain(|member| regular.contains(&member.name));
+        }
         members.retain(|descriptor| {
             let mut owner = Some(id);
             while let Some(id) = owner {

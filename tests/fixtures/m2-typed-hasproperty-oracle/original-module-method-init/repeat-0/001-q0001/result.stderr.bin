@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Unexpected token `,`. Expected `)`.
+
+2 | @Deprecated { message = trace(module.hasProperty("absent").toString(), "module-class-init") }
+                                                                         ^
+at module-method-init (file:///stage104/typed-hasproperty/module-method-init.pkl)

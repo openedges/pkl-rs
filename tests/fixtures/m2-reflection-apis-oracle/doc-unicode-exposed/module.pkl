@@ -1,0 +1,10 @@
+module stage103.docs
+import "pkl:reflect"
+/// 🙂αé𐐀
+/// not-horizontal-ascii
+class C {
+  /// property text
+  hidden p: String = throw("initializer must remain lazy")
+}
+
+hidden exposedReflection = reflect

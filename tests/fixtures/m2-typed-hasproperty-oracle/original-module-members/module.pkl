@@ -1,0 +1,9 @@
+plain: String = throw("plain forced")
+hidden concealed: Int = throw("hidden module forced")
+local secret = throw("local module forced")
+function method(): String = throw("method forced")
+class Visible { field: String }
+local class LocalClass { field: String }
+typealias Alias = String
+local typealias LocalAlias = Int
+`default`: String = throw("default forced")

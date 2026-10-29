@@ -1,0 +1,26 @@
+{
+  "cohort": "review16",
+  "program": "named-module-versus-self-type",
+  "source_uri": "file:///stage103/review-module-kind.pkl",
+  "queries": 2,
+  "repetitions": 2,
+  "power_assertions": false,
+  "required": true,
+  "Java_authority": {
+    "path": "target/m2/stage103-reflection-review16-oracle-01/report.json",
+    "bytes": 425159,
+    "sha256": "8cbdf97820503014a31023f33e3d7901a786b22580a3360dc1072ca9f5e9afc0"
+  },
+  "Java_readback": {
+    "path": "target/m2/stage103-reflection-review16-oracle-readback-01/report.json",
+    "bytes": 8738,
+    "sha256": "ac4d1aaefdc519f94f6f8302e2b1fc68f550a6c7d64982d7cabec20a1d1c1cb3"
+  },
+  "heap_MiB": 512,
+  "child_wall_seconds": 60,
+  "prior403_child_wall_seconds": 180,
+  "resource_condition_qualification": "Separate additive acquisition; original403 conditions unchanged.",
+  "Rust_status": "unexecuted",
+  "Java_transport": "Base64 of exact authored UTF8",
+  "Rust_input": "Corresponding repeat original expression.bin; exact UTF8/UTF16 comparison"
+}

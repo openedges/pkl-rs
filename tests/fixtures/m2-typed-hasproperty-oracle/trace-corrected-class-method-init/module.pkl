@@ -1,0 +1,5 @@
+class C {
+ p = 1
+ @Deprecated { message = trace((new C {}).hasProperty("absent").toString()) }
+ function f() = 1
+}

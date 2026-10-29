@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `ref`.
+
+1 | ref.Reference(domain,module.getClass(),"").name.getPath().toString()
+    ^^^
+at  (repl:text)

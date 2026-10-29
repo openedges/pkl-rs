@@ -1,0 +1,18 @@
+{
+  "Java_authority": {
+    "bytes": 2148313,
+    "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/report.json",
+    "sha256": "6662814c08530e8fd7e821fa4fd72c223d68e30a12cf149db04ed256d1a304c0"
+  },
+  "Java_transport": "Base64 envelope only; exact decoded expressions used by Java",
+  "Rust_input": "Corresponding-repeat original expression.bin; UTF16 checked, never Base64/TSVsplit",
+  "Rust_status": "unexecuted",
+  "additive_alias_program": true,
+  "cohort": "metadata-reference96",
+  "power_assertions": false,
+  "program": "doc-crlf-exposed",
+  "queries": 4,
+  "repetitions": 2,
+  "required": true,
+  "source_uri": "file:///stage103/doc-crlf-exposed.pkl"
+}

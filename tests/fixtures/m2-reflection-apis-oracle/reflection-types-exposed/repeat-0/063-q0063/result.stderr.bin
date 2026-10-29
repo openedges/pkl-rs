@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 2.
+
+158 | external const function UnionType(memberTypes: List<Type>): UnionType
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.reflect#UnionType (https://github.com/apple/pkl/blob/0.32.0/stdlib/reflect.pkl#L158)
+
+1 | (exposedReflection.UnionType(trace(List(1)),trace(2))).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

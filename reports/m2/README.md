@@ -1,5 +1,28 @@
 # M2 language evidence
 
+## Stage103/104 reflection and Typed checkpoint
+
+The [Stage104 descriptor](stage104-reflection-typed-checkpoint.json) records the
+implementation, raw evidence and source identities. Same-capture byte-preserving readbacks
+match 1,138 selected observations, 9,264 shared raw fields and 16 ordered Logger
+events on each native/N-API/Chromium target under the explicit poll64 profile.
+Original portable comparator failures remain preserved. M1 separately matches
+6,078 checks per target with strict and architecture predicates passing.
+
+The workspace suite passes 1,596 tests with four ignored; metadata target coverage
+and raw-summary readback pass. The complete ordered replay02 records 4,325 passes, 33 mismatches, 82 unsupported
+cases and two oracle errors, with no historical-pass regression; all 88 metamorphic
+checks pass. The function-based full M2 gate still reports 1,780 overlapping unmet
+conditions.
+The earlier compile04 command's four library failures and its full01 result of
+4,314/4,442 passes remain historical failures. Stage105 isolated validation is
+separate from the canonical Stage104 claim. Full M2/API and performance remain open.
+
+The descriptor lists every numbered evidence archive and its byte identity, with
+explicit restoration paths and dependencies. Earlier checkpoint entries retain
+their original source and validation scopes.
+
+
 ## Stage102 shared collection API checkpoint
 
 Recorded local evidence: [Stage102 checkpoint](stage102-collection-apis-checkpoint.json). All numbered evidence archive parts are required for source restoration.

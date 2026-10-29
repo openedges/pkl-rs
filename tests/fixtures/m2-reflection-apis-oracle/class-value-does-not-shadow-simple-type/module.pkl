@@ -1,0 +1,7 @@
+module stage103.review.simpleShadow
+import "pkl:reflect"
+class C {
+  String: Int = throw("class value must remain lazy")
+  x: String
+}
+hidden mirror = reflect.Class(C)

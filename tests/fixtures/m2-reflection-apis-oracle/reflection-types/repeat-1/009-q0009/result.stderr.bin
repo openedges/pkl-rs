@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot find property `reflect`.
+
+1 | reflect.uint32Type.getClass().toString()
+    ^^^^^^^
+at  (repl:text)

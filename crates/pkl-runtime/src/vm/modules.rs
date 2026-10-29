@@ -1137,6 +1137,7 @@ impl Vm {
             lazy_collection_run: None,
             mapping_lookup: None,
             mapping_keys: None,
+            reflection: None,
             conversion_run: None,
             collection_addition: None,
             function_owner: None,
@@ -1266,6 +1267,12 @@ impl ArenaCheckpoint {
         program
             .constraint_origins
             .retain(|block, _| *block < self.blocks);
+        program
+            .declaration_sources
+            .retain(|block, _| *block < self.blocks);
+        program
+            .reflection_annotations
+            .retain(|_, block| *block < self.blocks);
     }
 }
 

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot find property `reflect`.
+
+1 | (reflect.DeclaredType(person).referent == person).toString()
+     ^^^^^^^
+at  (repl:text)

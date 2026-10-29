@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+own forced
+
+8 | own: String = throw("own forced")
+                  ^^^^^^^^^^^^^^^^^^^
+at typed-members#Child.own (file:///stage104/typed-hasproperty/typed-members.pkl)
+
+1 | subject.own.toString()
+    ^^^^^^^^^^^
+at  (repl:text)

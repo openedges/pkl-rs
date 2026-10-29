@@ -1,0 +1,8 @@
+module stage103.referenceOrigin
+import "pkl:ref"
+class Domain extends ref.Domain { function renderReference(value: ref.Reference<Domain,Any>): String = throw("render must not be reached") }
+hidden domain: Domain = new {}
+name: String = "x"
+hidden output: ModuleOutput = new { text = "override" }
+
+hidden exposedReference = ref

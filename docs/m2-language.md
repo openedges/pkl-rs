@@ -1,6 +1,82 @@
 # M2 language verification
 
-## Stage102 List, Map and Mapping — current local evidence
+## Stage103/104 reflection and Typed.hasProperty — recorded local validation
+
+The shared engine implements source-backed reflection, lazy Reference access
+metadata and non-forcing `Typed.hasProperty`. The selected Java authority contains
+419 reflection and 150 Typed query/profile contracts. Under the explicit poll64
+profile, each native, N-API and Chromium target now matches **1,138 observations**
+from **67 program/profile groups and 134 repeated sessions**: **606 successful
+values and 532 ordinary errors**, with **9,264 shared raw fields and 16 ordered
+Logger events**. No contract in this selected matrix remains unresolved. Java
+exception-class, cause and typed-export provenance stays separate from the shared
+string/error/logger equality boundary.
+
+These results use fresh byte-preserving readbacks of the existing selected02
+captures. Native02's original report remains successful. The original N-API02
+and Chromium02 reports remain `complete=false` and `success=false`: their first
+comparator used universal newline decoding on source text. The corrected reader
+preserves CRLF and CR bytes; six transport controls pass. No source payload,
+expected output or old report was rewritten, and no compiler, Java or guest was
+rerun for the corrected comparison. The direct second row/hash read shares the
+comparison primitive; it is not an independently implemented comparator.
+
+The selected profile requests at most 64 steps per poll, charges requested fuel
+against the existing 2,000,000-step ceiling per session, and collects after each
+batch. Evaluator constructors, heap settings and original per-program deadlines
+are unchanged. The earlier poll1 timeout and admission failures remain separate
+failed acquisitions. These profiles and concurrent correctness runs establish no
+performance or memory comparison.
+
+Final-source compile05, formatting03, xtask03, Clippy03 and Wasm01 pass with stable
+source records. The Reference diagnostic unit test passes once, Mapping lifecycle
+passes five tests, two unchanged Reference originals match Java, and the nine
+focused scalar regressions match complete Java exit/stdout/stderr channels. The
+nine previous stale-manifest Python errors pass on rerun, and eight read-only
+freshness checks pass. Earlier Python acquisitions keep their own provenance.
+Workspace validation passes **1,596 tests, zero failed and four ignored** across
+257 executable test targets, 25 compile-only examples and two doctest libraries.
+The terminal readback verifies expected/invoked targets, examples, doctests and
+outer-summary coverage; 13 filtered child summaries remain separate. These counts
+come from one actual `cargo test --workspace` acquisition. Metadata inventory
+cohorts are not additional command invocations. Recorder Rust/build bookends and
+post-terminal test-artifact hashes do not assert a full fixture or transitive
+Python freeze.
+
+The final-source original-module replay02 is terminal: **779 passes, 26
+mismatches, 82 unsupported cases and one oracle error across 888 cases**, with no
+regression from its historical passing baseline. The eight historical cases and
+the JVM-profile boundary also pass; the JVM case retains two observations. The full ordered replay02 is complete and integrity-valid: **4,325 passes, 33
+mismatches, 82 unsupported cases and two oracle errors across 4,442 cases**, with
+zero candidate internal errors, no unexecuted cases and no regressions from the
+historical passing baseline. All **88 metamorphic checks** pass. Complete
+acquisition preserves these incompatibilities; it is not a compatibility pass.
+
+The earlier compile04 command still records four failed library tests despite
+matching 838 reflection and 300 Typed observations, 6,988 harness fields and 16
+Logger events. Its first full replay remains **4,314 passes, 42 mismatches, 82
+unsupported cases, two candidate internal errors and two oracle errors**, including
+11 regressions. Final repairs and focused matches do not relabel those failures.
+
+One actual M1 acquisition separately matches **6,078 checks per native, Node and
+Chromium target**; strict and architecture predicates pass on that same capture.
+M1 is a bounded primitive/scenario matrix, distinct from the selected feature
+matrix and the full corpus. The inventory remains **4,545 cases: 4,442 ready, 71
+unimplemented and 32 unmapped**, with **475 requirements**. The exact current full-gate function reports **1,780 overlapping unmet
+conditions**: 472 implementation rows, 472 test-mapping rows and 836 required-case
+conditions. This is function-based strict accounting after manifest freshness,
+not a new `tools/m2_language.py --verify-full` CLI invocation or a completion
+percentage. The strict full M2 gate remains failed.
+Legacy List internal obligations and the whole-List 512 MiB Java heap failure
+remain required and unresolved. Full M2/API, release-platform, performance and
+hosted CI completion are not claimed.
+
+The [Stage104 checkpoint](../reports/m2/stage104-reflection-typed-checkpoint.json)
+records these outcomes, source identities and restoration inputs. Later isolated
+candidates are separate from this canonical implementation and validation scope.
+
+
+## Stage102 List, Map and Mapping — historical local evidence
 
 The collection matrix covers **List 995, Map 377 and Mapping 488 query/profile
 contracts**. Targeted05 records **83 passes, zero failures and one ignored test**

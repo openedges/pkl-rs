@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Cannot find property `missing` in object of type `pkl.ref#Reference<stage103.referenceOrigin#Domain, stage103.referenceOrigin>`.
+
+1 | exposedReference.Reference(domain,module.getClass(),"").missing.getPath().toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Cannot find property `missing` in type `stage103.referenceOrigin`.

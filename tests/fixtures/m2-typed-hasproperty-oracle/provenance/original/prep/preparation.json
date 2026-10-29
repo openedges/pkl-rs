@@ -1,0 +1,98 @@
+{
+  "AST_and_lossless_transport_controls_pass": true,
+  "Rust_expected_results_generated": false,
+  "actual_Java_executed": false,
+  "actual_oracle_capture_complete": false,
+  "canonical_mutations": 0,
+  "complete": true,
+  "contracts": 141,
+  "coverage_limit": "No expected outcomes before actual Java capture; all requested ordinary and source-selected publication boundaries are authored, not claimed passing.",
+  "exclusive_Java_window": "NOT_GRANTED; root held execution during user disk cleanup",
+  "files": [
+    {
+      "bytes": 6328,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-prep-02/CollectionEveryOracle.java",
+      "sha256": "56defcb9f990729eedc3a3b98854c07319859a683cae4a404fedaf821cc2a98f"
+    },
+    {
+      "bytes": 1283,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-prep-02/PLAN.md",
+      "sha256": "740582e41794eaf9881e8dc1565b442854b6bfbf1fd845892b3c7ea01b57fe9d"
+    },
+    {
+      "bytes": 17226,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-prep-02/capture.py",
+      "sha256": "555362fc306f2124d929f80b994f736ac6c24e857d2ab15acd9c544561925ff0"
+    },
+    {
+      "bytes": 342,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-prep-02/cohorts.json",
+      "sha256": "c7f9f1488d9fe56af6ca48857e419a8517aa5466424ac1a2a97a11a1ef34a2d4"
+    },
+    {
+      "bytes": 460,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-prep-02/commands.json",
+      "sha256": "76d0826ef0a6c261f71625c5c7afeb4ba898185fa63258bd0a00575bfe54edad"
+    },
+    {
+      "bytes": 547,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-prep-02/derivation.patch",
+      "sha256": "a7176d24833757a7efe4d15a7976d274aa5e18bf3980a6d6ad74f83d163224e3"
+    },
+    {
+      "bytes": 6329,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-prep-02/helper-false/CollectionEveryOracle.java",
+      "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+    },
+    {
+      "bytes": 58584,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-prep-02/queries.json",
+      "sha256": "4b30e6da3e4e4c3e5113cdcf9500f5e49d2c54262a86e501693bacaa03c4e5d4"
+    },
+    {
+      "bytes": 24465,
+      "path": "target/m2/stage104-typed-hasproperty-oracle-prep-02/transport-roundtrip.json",
+      "sha256": "0bc156138473ad149d7d0bc7457201fc321953f4324a447fabb0cf580abfaa60"
+    }
+  ],
+  "helper_unchanged": true,
+  "kind": "Stage104 Typed.hasProperty module-publication-complete expected-free pinned Java source preparation",
+  "planned_observations": 282,
+  "planned_sessions": 32,
+  "predecessor": {
+    "bytes": 4139,
+    "path": "target/m2/stage104-typed-hasproperty-oracle-prep-01/preparation.json",
+    "sha256": "dddb0d40c413319e36877f50a345a5e3b7ffe8a8484227bdbd915ef3f5b46ca5"
+  },
+  "preparation_complete": true,
+  "programs": 16,
+  "queries": {
+    "bytes": 58584,
+    "path": "target/m2/stage104-typed-hasproperty-oracle-prep-02/queries.json",
+    "sha256": "4b30e6da3e4e4c3e5113cdcf9500f5e49d2c54262a86e501693bacaa03c4e5d4"
+  },
+  "repetitions": 2,
+  "resource_note": "Inherited immediate guard failures remain failed; added post-bookend and terminal resource probes. No relaxed heap/time/cap/raw conditions.",
+  "resource_policy": {
+    "JDK": "Temurin21.0.12.1+1-LTS",
+    "Java_heap_MiB": 512,
+    "owned_output_cap_bytes": 536870912,
+    "serial_Java_limit": 1,
+    "session_watchdog_seconds": 180,
+    "start_free_bytes": 1610612736,
+    "sticky_stop_floor_bytes": 1073741824,
+    "total_watchdog_seconds": 3600
+  },
+  "scope": [
+    "direct Typed/class inheritance/unset/hidden/local/method names",
+    "Map and Dynamic.toTyped target-class metadata",
+    "module/class/typealias/default names",
+    "no forcing throw/read/trace initializers",
+    "control and Unicode/surrogate argument/parser boundaries",
+    "wrongtype/arity/method-as-property diagnostics",
+    "forward/recursive class and inferred new",
+    "ordered failed property/method/superclass class publication with cached class queries",
+    "cyclic superclass negative last to preserve prior meaningful observations if acquisition fails",
+    "Module/class deprecation annotation during class initialization versus ModuleInfo version check after class initialization"
+  ]
+}

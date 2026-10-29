@@ -1,0 +1,8 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Dangling documentation comment.
+
+Documentation comments must be attached to modules, classes, typealiases, methods, or properties.
+
+5 | /// second
+    ^^^^^^^^^^
+at doc-separated-docs-exposed (file:///stage103/doc-separated-docs-exposed.pkl)

@@ -1,0 +1,4 @@
+module typedModuleInit
+@Deprecated { message = trace(module.hasProperty("absent").toString()) }
+function deprecated() = 1
+visible = 2

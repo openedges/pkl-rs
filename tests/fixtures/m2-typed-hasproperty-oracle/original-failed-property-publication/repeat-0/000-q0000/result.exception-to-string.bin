@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find type `Missing`.
+
+4 | broken: Missing
+            ^^^^^^^
+at typedFailure#C (file:///stage104/typed-hasproperty/failed-property-publication.pkl)
+
+Searched in the following places:
+* Module `typedFailure` and any supermodules
+* Module `pkl#base`
+
+1 | C.toString()
+    ^
+at  (repl:text)

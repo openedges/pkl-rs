@@ -1,0 +1,18 @@
+{
+  "Rust_execution": "unexecuted",
+  "all_required": true,
+  "complete": true,
+  "contracts": 150,
+  "corrected_trace_const_error_observations": 12,
+  "full_M2_complete": false,
+  "module_initializing_runtime_membership_proven": false,
+  "observations": 300,
+  "ordered_Logger_events": 4,
+  "original_and_corrected_sources_kept_distinct": true,
+  "original_trace_arity_syntax_error_observations": 18,
+  "programs": 19,
+  "reference_statuses": {
+    "error": 78,
+    "success": 222
+  }
+}

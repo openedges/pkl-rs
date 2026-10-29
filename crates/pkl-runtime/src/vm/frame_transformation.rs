@@ -11,6 +11,7 @@ pub(crate) struct PendingTransform {
 
 #[derive(Clone)]
 enum Continuation {
+    Reflection,
     Log(Arc<LogEvent>),
     Diagnostic {
         error: RuntimeError,
@@ -34,6 +35,53 @@ impl Vm {
         self.available()?;
         self.context.frame_transformer = transformer;
         Ok(())
+    }
+
+    pub(super) fn reflection_display_uri(
+        &mut self,
+        frame: &RuntimeFrame,
+    ) -> Result<Option<PklString>, RuntimeError> {
+        let source = frame
+            .source
+            .as_ref()
+            .ok_or_else(|| invalid("reflection location source"))?;
+        let mut raw = if frame.span.start == frame.span.end {
+            let mut sources = crate::source::SourceMap::default();
+            let id = sources.add(source.uri.as_ref(), source.text.as_ref());
+            let position = sources
+                .get(id)
+                .unwrap()
+                .position(frame.span.start)
+                .ok_or_else(|| invalid("empty declaration location"))?;
+            LogFrame {
+                module_uri: source.uri.as_ref().into(),
+                member_name: None,
+                source_lines: Arc::from([]),
+                start_line: position.line,
+                start_column: position.column_utf16,
+                end_line: position.line,
+                end_column: position.column_utf16,
+            }
+        } else {
+            tracing::source_frame(source, frame.span)?
+        };
+        // VmUtils.getDisplayUri passes no member name or source lines.
+        raw.member_name = None;
+        raw.source_lines = Arc::from([]);
+        // StdLibModule.doLoad uses an isolated context with the default
+        // transformer. Its eagerly cached metadata must not invoke the user's
+        // callback or retain a user-specific URI in shared standard mirrors.
+        let transformer = if self.in_stdlib_bootstrap() {
+            FrameTransformer::Default
+        } else {
+            self.context.frame_transformer
+        };
+        if transformer == FrameTransformer::Host {
+            self.suspend_frame_transform(raw, Continuation::Reflection)?;
+            Ok(None)
+        } else {
+            Ok(Some(transformer.transform(raw).module_uri))
+        }
     }
 
     fn next_frame_request_id(&mut self) -> Result<u64, RuntimeError> {
@@ -120,6 +168,15 @@ impl Vm {
             unreachable!("validated transform request")
         };
         match (pending.continuation, completion) {
+            (Continuation::Reflection, Ok(frame)) => {
+                self.stack.push(Value::String(frame.module_uri));
+            }
+            (Continuation::Reflection, Err(failure)) => {
+                self.fail(RuntimeError::callback_failure(
+                    CallbackOrigin::ReflectionTransformer,
+                    failure.message,
+                ));
+            }
             (Continuation::Log(event), Ok(frame)) => {
                 let mut event = (*event).clone();
                 event.frame = frame;

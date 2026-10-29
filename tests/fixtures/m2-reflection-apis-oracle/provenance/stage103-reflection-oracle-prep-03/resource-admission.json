@@ -1,0 +1,11 @@
+{
+  "actual_prelaunch_resource_check_performed": false,
+  "child_wall_seconds": 180,
+  "complete_scope": "Source-only policy; actual disk/runtime admission deferred to each launch",
+  "disk_reserve_MiB": 1024,
+  "heap_MiB": 512,
+  "no_unbounded_allocations": true,
+  "owned_cap_MiB": 512,
+  "serial_Java_limit": 1,
+  "total_seconds_per_cohort": 3600
+}

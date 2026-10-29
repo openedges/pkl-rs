@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `pkl.reflect#Type`, but got type `Int`.
+Value: 1
+
+388 | external function withTypeArgument(typeArgument: Type): DeclaredType
+                                                       ^^^^
+at pkl.reflect#DeclaredType.withTypeArgument (https://github.com/apple/pkl/blob/0.32.0/stdlib/reflect.pkl#L388)
+
+1 | (exposedReflection.listType.withTypeArgument(1)).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

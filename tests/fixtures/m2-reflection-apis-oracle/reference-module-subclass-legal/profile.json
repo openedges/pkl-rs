@@ -1,0 +1,18 @@
+{
+  "Java_authority": {
+    "bytes": 170260,
+    "path": "target/m2/stage103-reflection-legal-reference6-oracle-01/report.json",
+    "sha256": "9489bdb50cff4de7e98c63dbe22343b088fe0060c62e115eb6ef17d889666c6b"
+  },
+  "Java_transport": "Base64 envelope only; exact decoded expressions used by Java",
+  "Rust_input": "Corresponding-repeat original expression.bin; UTF16 checked, never Base64/TSVsplit",
+  "Rust_status": "unexecuted",
+  "additive_alias_program": false,
+  "cohort": "legal-reference6",
+  "power_assertions": false,
+  "program": "reference-module-subclass-legal",
+  "queries": 6,
+  "repetitions": 2,
+  "required": true,
+  "source_uri": "file:///stage103/reference-module-subclass-legal.pkl"
+}

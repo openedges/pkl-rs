@@ -55,6 +55,12 @@ impl CodeArena {
         program
             .constraint_origins
             .retain(|block, _| !self.blocks.contains(block));
+        program
+            .declaration_sources
+            .retain(|block, _| !self.blocks.contains(block));
+        program
+            .reflection_annotations
+            .retain(|_, block| !self.blocks.contains(block));
     }
 }
 impl Start {
@@ -182,6 +188,10 @@ impl Vm {
             let program = Arc::make_mut(&mut self.program);
             program.blocks.retire(entry..entry + 1);
             program.metadata.retire(entry..entry + 1);
+            program.declaration_sources.remove(&entry);
+            program
+                .reflection_annotations
+                .retain(|_, block| *block != entry);
         }
     }
 }
@@ -237,7 +247,15 @@ mod tests {
         external: &[Value],
         raw_result: bool,
     ) -> Result<Value, RuntimeError> {
-        for _ in 0..100_000 {
+        settle_result_bounded(vm, external, raw_result, 100_000)
+    }
+    fn settle_result_bounded(
+        vm: &mut Vm,
+        external: &[Value],
+        raw_result: bool,
+        poll_limit: usize,
+    ) -> Result<Value, RuntimeError> {
+        for _ in 0..poll_limit {
             match vm.poll(1) {
                 VmPoll::Yielded => {}
                 VmPoll::Module(request) => {
@@ -274,6 +292,12 @@ mod tests {
     }
     fn settle(vm: &mut Vm, external: &[Value], raw_result: bool) -> Value {
         settle_result(vm, external, raw_result).unwrap()
+    }
+    fn settle_reflection(vm: &mut Vm, external: &[Value], raw_result: bool) -> Value {
+        // The pinned eager reflect bootstrap measured 237_534 instructions.
+        // Only these reflection workloads get a 400_000-step bound; poll(1)
+        // and collection after every instruction remain unchanged.
+        settle_result_bounded(vm, external, raw_result, 400_000).unwrap()
     }
     fn start(vm: &mut Vm, expression: &str) {
         let entry = vm
@@ -620,7 +644,7 @@ mod tests {
         executable_live: usize,
         aliases: usize,
         owners: usize,
-        declaration_caches: [usize; 6],
+        declaration_caches: [usize; 8],
     }
     fn resident_stats(vm: &Vm) -> ResidentStats {
         let p = &vm.program;
@@ -688,6 +712,8 @@ mod tests {
             aliases: p.alias_definitions.len(),
             owners: vm.code_arenas.len(),
             declaration_caches: [
+                p.declaration_sources.len(),
+                p.reflection_annotations.len(),
                 p.constraint_origins.len(),
                 vm.class_singletons.len(),
                 vm.alias_singletons.len(),
@@ -1088,6 +1114,8 @@ mod tests {
             .names
             .insert(bad, crate::resolver::Binding::Lexical { depth: 0, slot: 1 });
         let original_unit = format!("{:?}", program.units[0]);
+        let original_declarations = program.declaration_sources.clone();
+        let original_reflection_annotations = program.reflection_annotations.clone();
         let original = (
             program.blocks.next_id(),
             program.objects.next_id(),
@@ -1127,6 +1155,11 @@ mod tests {
             original
         );
         assert_eq!(format!("{:?}", program.units[0]), original_unit);
+        assert_eq!(program.declaration_sources, original_declarations);
+        assert_eq!(
+            program.reflection_annotations,
+            original_reflection_annotations
+        );
         assert_eq!(program.units.len(), prepared.units.len());
         assert_eq!(program.blocks.len(), prepared.blocks.len());
         let entry = program.entry;
@@ -1377,6 +1410,85 @@ mod tests {
             assert_eq!(counts(&vm), initial);
         }
     }
+    #[test]
+    fn escaped_property_mirror_retains_uncached_declaration_code_until_its_last_root_is_gone() {
+        let mut vm = Vm::new(Arc::new(Program::new(Vec::new())));
+        start(
+            &mut vm,
+            "import(\"pkl:reflect\").Class(import(\"memo:/rich.pkl\").C).properties[\"value\"]",
+        );
+        let mirror = settle_reflection(&mut vm, &[], true);
+        let id = mirror.as_object().unwrap();
+        let owner = match &vm.heap.get(id).unwrap().mirror.as_ref().unwrap().data {
+            reflection::Data::Member(declaration) => declaration.owner,
+            _ => panic!("property mirror"),
+        };
+        let executable = vm.heap.get(owner).unwrap().environment.code_owner.unwrap();
+        // Uncached keys bypass lookups but still publish both URI aliases,
+        // matching ModuleCache.doLoad. This query drops only the query result;
+        // the last loaded module remains an ordinary evaluator cache root.
+        start(&mut vm, "stable");
+        settle_reflection(&mut vm, std::slice::from_ref(&mirror), false);
+        assert!(vm.heap.executable_is_live(executable));
+        vm.start_member(id, "defaultValue").unwrap();
+        assert_eq!(
+            settle_reflection(&mut vm, std::slice::from_ref(&mirror), false),
+            Value::Int(9.into())
+        );
+        // Check the legitimate module-cache roots before replacing them.
+        // A fresh import site bypasses lookups for this uncached key.
+        let lexical_module = vm
+            .declaring_module(&vm.heap.get(owner).unwrap().environment, false)
+            .unwrap();
+        let original_alias = matches!(vm.modules_original.get("memo:/rich.pkl"), Some(modules::CachedModule::Value(module)) if *module == lexical_module);
+        let resolved_alias = matches!(vm.modules_resolved.get("memo:/rich.pkl"), Some(modules::CachedModule::Value(module)) if *module == lexical_module);
+        assert!(original_alias);
+        assert!(resolved_alias);
+        start(&mut vm, "import(\"memo:/rich.pkl\").tag");
+        assert_eq!(
+            settle_reflection(&mut vm, std::slice::from_ref(&mirror), false),
+            Value::string("9")
+        );
+        assert!(vm.modules_original.values().chain(vm.modules_resolved.values()).all(|value| !matches!(value, modules::CachedModule::Value(module) if *module == lexical_module)));
+        // With both aliases replaced, only the escaped mirror keeps its old
+        // declaration, dependency and constraint code usable across collection.
+        assert!(vm.heap.get(id).is_ok());
+        assert!(vm.heap.executable_is_live(executable));
+        start(&mut vm, "stable");
+        settle_reflection(&mut vm, &[], false);
+        assert!(vm.heap.get(id).is_err());
+        assert!(!vm.heap.executable_is_live(executable));
+        vm.close();
+        assert_eq!(vm.heap.stats().slots, 0);
+    }
+
+    #[test]
+    fn uncached_reflection_defaults_release_owner_resolution_caches_between_queries() {
+        let mut vm = Vm::new(Arc::new(Program::new(Vec::new())));
+        let mut baseline = None;
+        for iteration in 1..=24 {
+            start(
+                &mut vm,
+                "import(\"pkl:reflect\").Class(import(\"memo:/rich.pkl\").C).properties[\"value\"].defaultValue",
+            );
+            assert_eq!(settle_reflection(&mut vm, &[], false), Value::string("9"));
+            // Retire the reflected declaration's two last-loaded URI aliases
+            // using a fresh uncached load, rather than mistaking them for leaks.
+            start(&mut vm, "import(\"memo:/rich.pkl\").tag");
+            assert_eq!(settle_reflection(&mut vm, &[], false), Value::string("9"));
+            start(&mut vm, "stable");
+            assert_eq!(settle_reflection(&mut vm, &[], false), Value::string("7"));
+            let current = resident_stats(&vm);
+            if iteration == 4 {
+                baseline = Some(current);
+            } else if iteration > 4 {
+                assert_eq!(Some(&current), baseline.as_ref(), "iteration {iteration}");
+            }
+        }
+        vm.close();
+        assert_eq!(vm.heap.stats().slots, 0);
+    }
+
     #[test]
     fn escaped_object_keeps_lazy_property_and_constraint_code_until_collection() {
         let mut vm = Vm::new(Arc::new(Program::new(Vec::new())));

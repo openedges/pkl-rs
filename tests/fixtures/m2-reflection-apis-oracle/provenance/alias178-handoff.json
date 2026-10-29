@@ -1,0 +1,186 @@
+{
+  "Rust_evaluations": 0,
+  "accepted_repeats_exact": true,
+  "all_owned_children_reaped": true,
+  "api_exception_observations": 0,
+  "checked_record_occurrences": 8208,
+  "cohorts": [
+    {
+      "authority": {
+        "bytes": 1685172,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/report.json",
+        "sha256": "5ac37259199aedf253d38982577aa099aca55ab7d329b8ab660a33139aaa42a3"
+      },
+      "capture_process": {
+        "bytes": 558,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/capture-process.json",
+        "sha256": "847ee328acbf7ac862ae4bfc48d7336ba652f86ec5a57ce329f73414ed19741e"
+      },
+      "cohort": "constructor82",
+      "contracts": 82,
+      "host_session_id": 15353,
+      "observations": 164,
+      "sessions": 4,
+      "statuses": {
+        "error": 72,
+        "success": 92
+      },
+      "usage_transient_disappearances": [],
+      "wrapper_started": {
+        "bytes": 419,
+        "path": "target/m2/stage103-reflection-alias-oracle-window-01/constructor82.started.json",
+        "sha256": "e36df882e1ee14be78c3ec12544414f797043267333467a9bb9bce01db47a357"
+      },
+      "wrapper_stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage103-reflection-alias-oracle-window-01/constructor82.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "wrapper_stdout": {
+        "bytes": 466,
+        "path": "target/m2/stage103-reflection-alias-oracle-window-01/constructor82.stdout.bin",
+        "sha256": "183a07c32d152c47de681d033a72f102e7089580179ebbb879002f1f17e636e9"
+      },
+      "wrapper_terminal": {
+        "bytes": 513,
+        "path": "target/m2/stage103-reflection-alias-oracle-window-01/constructor82.terminal.json",
+        "sha256": "769aa2b6a4b742da2836bbe0eb2bd9367d3f7baf8b0f08bb10155ee3252cac7f"
+      }
+    },
+    {
+      "authority": {
+        "bytes": 2148313,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/report.json",
+        "sha256": "6662814c08530e8fd7e821fa4fd72c223d68e30a12cf149db04ed256d1a304c0"
+      },
+      "capture_process": {
+        "bytes": 572,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/capture-process.json",
+        "sha256": "85ba5f6957ba883f6a53865edf59cf84a16b9fe2f33dabdb43c86bb0f6b2a438"
+      },
+      "cohort": "metadata-reference96",
+      "contracts": 96,
+      "host_session_id": 83623,
+      "observations": 192,
+      "sessions": 38,
+      "statuses": {
+        "error": 24,
+        "success": 168
+      },
+      "usage_transient_disappearances": [],
+      "wrapper_started": {
+        "bytes": 433,
+        "path": "target/m2/stage103-reflection-alias-oracle-window-01/metadata-reference96.started.json",
+        "sha256": "aa829a84315f1bac7d09caa9cfb8e3e157d21f50edd0994fb20c5f14df2c55b9"
+      },
+      "wrapper_stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage103-reflection-alias-oracle-window-01/metadata-reference96.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "wrapper_stdout": {
+        "bytes": 3279,
+        "path": "target/m2/stage103-reflection-alias-oracle-window-01/metadata-reference96.stdout.bin",
+        "sha256": "780be877c51c8841e4bad75d5ad2a411ca961f14e17a282ff5bb6f9b25b10105"
+      },
+      "wrapper_terminal": {
+        "bytes": 527,
+        "path": "target/m2/stage103-reflection-alias-oracle-window-01/metadata-reference96.terminal.json",
+        "sha256": "50e7dcaf991e769c910f13d92afa463d70024b32182cb3149403f6ea1bb36e6d"
+      }
+    }
+  ],
+  "compatibility_pass_claim": false,
+  "complete": true,
+  "contracts": 178,
+  "coverage": {
+    "bytes": 86555,
+    "path": "target/m2/stage103-reflection-alias-oracle-window-01/coverage-and-preemptions.json",
+    "sha256": "2fa7442f2481fdaf5b5fee2ffbb80d1c04951c87ed182a95361314b29bf49da5"
+  },
+  "forced_cleanup_events": 0,
+  "full_readback": {
+    "bytes": 27124,
+    "path": "target/m2/stage103-reflection-alias-oracle-readback-01/report.json",
+    "sha256": "417cf783c5605c4af9b97baa21e55ed5cbe92af6d378cd417a281e2c15782538"
+  },
+  "full_reflection_scope_reduced": false,
+  "kind": "Stage103 additive reflection alias178 actual Java authority and window release",
+  "limitations": [
+    "All178 additive contracts remain required; original225 are not replaced and full20mirrors/inherited/API/GC/Host/identity/14wholeoriginal obligations remain open.",
+    "Expected values are actual pinned Java only. No Rust comparison or compatibility success inferred from Java successes.",
+    "No further firstblocker retries/source rewrites or scope exclusion. Ordinary source/runtime errors preserved in full UTF8/UTF16/status/orderedLogger/class/cause/process channels."
+  ],
+  "observations": 356,
+  "oracle_internal_observations": 0,
+  "ordered_logger_events": 10,
+  "original225_authority": {
+    "bytes": 13167,
+    "path": "target/m2/stage103-reflection-oracle-window-01/report.json",
+    "sha256": "819e2b331afefff0d7b90cf45050dac4e5c8249c2329edcd9083cd378dacf9fb"
+  },
+  "original225_unchanged": true,
+  "owned_PID_final_check": {
+    "argv": [
+      "/bin/ps",
+      "-p",
+      "95128,95133,95219,95291,95332,95605,95628,95704,95781,95830,95905,95925,95955,95977,96007,96036,96057,96086,96105,96135,96156,96184,96206,96236,96260,96291,96312,96342,96370,96400,96433,96456,96489,96508,96537,96574,96609,96637,96658,96685,96703,96735,96755,96795,96943",
+      "-o",
+      "pid=,ppid=,pgid=,lstart=,comm="
+    ],
+    "exit": 1,
+    "scope": "Later exact PID absence; actual session Popen reaping/ownedgroup receipts are authority.",
+    "stderr": {
+      "bytes": 0,
+      "path": "target/m2/stage103-reflection-alias-oracle-window-01/owned-pids-after.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 0,
+      "path": "target/m2/stage103-reflection-alias-oracle-window-01/owned-pids-after.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "performance_claim": false,
+  "preflight": {
+    "bytes": 962,
+    "path": "target/m2/stage103-reflection-alias-oracle-window-01/preflight.json",
+    "sha256": "8bfad9e48e0ccd269237240ab77a31feb1fea8bef76a83fc2962e00bee513a38"
+  },
+  "preparation": {
+    "bytes": 5439,
+    "path": "target/m2/stage103-reflection-alias-oracle-prep-01/preparation.json",
+    "sha256": "6b896e1f38310abc527764646a2473eea8606e536c2c39075252528453191d23"
+  },
+  "programs": 21,
+  "readback_host_session_id": 2181,
+  "readback_stderr": {
+    "bytes": 0,
+    "path": "target/m2/stage103-reflection-alias-oracle-window-01/readback.stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "readback_stdout": {
+    "bytes": 142,
+    "path": "target/m2/stage103-reflection-alias-oracle-window-01/readback.stdout.bin",
+    "sha256": "a51bc1b35fb50b22fe7359fe8168ff67c01ae29cd59ba2aa4a2f0a7d2b1d7fc6"
+  },
+  "readback_terminal": {
+    "bytes": 440,
+    "path": "target/m2/stage103-reflection-alias-oracle-window-01/readback.terminal.json",
+    "sha256": "765d5edaa5c593c3eae52550e9478387ad333f314ab816ab6ea34d5b72c567e5"
+  },
+  "retries": 0,
+  "sessions": 42,
+  "statuses": {
+    "error": 96,
+    "success": 260
+  },
+  "success": true,
+  "terminal_live": [],
+  "time": "2026-10-27T11:55:10.514516+00:00",
+  "timeouts": 0,
+  "unexecuted_observations": 0,
+  "usage_transient_disappearance_count": 0,
+  "usage_transient_disappearances": [],
+  "window_released": true
+}

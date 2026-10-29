@@ -1,0 +1,40 @@
+{
+  "Java_exit": 143,
+  "cleanup": [
+    "SIGTERM"
+  ],
+  "complete": true,
+  "failed_authority": {
+    "bytes": 116668,
+    "path": "target/m2/stage103-reflection-metadata47-oracle-01/report.json",
+    "sha256": "0461e6bd3edbf6ee2f7cb2d009c7c305ca0a9fd48198654021717bcffe9439e2"
+  },
+  "failure": {
+    "message": "[Errno 2] No such file or directory: '/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage103-reflection-metadata47-oracle-01/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/2870576686257321509/bin/libtruffleattach.dylib'",
+    "type": "FileNotFoundError"
+  },
+  "host_session_id": 42070,
+  "later_exact_pid_absent": true,
+  "meaning": "Controller usage walk raced a disappearing Graal cache file; SIGTERM143 is owned cleanup of this failed acquisition, not ordinary Pkl error or query timeout. Full failed directory preserved; no completed session observations admitted.",
+  "owned_child_reaped": true,
+  "owned_process": {
+    "root_observed": true,
+    "root_pid": 88150,
+    "terminal_live": [],
+    "tracked": [
+      {
+        "group_id_at_discovery": 88150,
+        "parent_pid_at_discovery": 88145,
+        "pid": 88150,
+        "started": "Tue Oct 27 20:39:11 2026"
+      }
+    ]
+  },
+  "planned_observations": 94,
+  "query_disposition_counts": {
+    "unexecuted": 94
+  },
+  "recorded_observations": 0,
+  "terminal_live": [],
+  "wrapper_exit": 1
+}

@@ -1,0 +1,15 @@
+module stage103.locations
+import "pkl:reflect"
+/// First line.
+// separator
+/// Second line🙂.
+class Named {
+  /// Property line.
+  // kept separator
+  /// Next line.
+  property: String = "x"
+}
+/// Alias line.
+typealias Unicode = "🙂" | "x"
+
+hidden exposedReflection = reflect

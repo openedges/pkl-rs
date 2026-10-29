@@ -5,6 +5,7 @@ use crate::heap::{CollectionKind, CollectionMemberKind};
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Lookup {
     HasProperty,
+    TypedHasProperty,
     Property,
     PropertyOrNull,
     EntryOrNull,
@@ -18,6 +19,8 @@ pub(super) fn blocks(
     let source = crate::stdlib_sources::base();
     let mut result = BTreeMap::new();
     for (class, name, operation) in [
+        ("Typed", "hasProperty", Lookup::TypedHasProperty),
+        ("Typed", "getPropertyOrNull", Lookup::PropertyOrNull),
         ("Dynamic", "hasProperty", Lookup::HasProperty),
         ("Dynamic", "getProperty", Lookup::Property),
         ("Dynamic", "getPropertyOrNull", Lookup::PropertyOrNull),
@@ -26,8 +29,8 @@ pub(super) fn blocks(
         ("Mapping", "getOrNull", Lookup::EntryOrNull),
         ("Mapping", "getOrDefault", Lookup::EntryOrDefault),
     ] {
-        let anchor = if class == "Dynamic" {
-            "class Dynamic extends".into()
+        let anchor = if matches!(class, "Typed" | "Dynamic") {
+            format!("class {class} extends")
         } else {
             format!("class {class}<")
         };
@@ -41,7 +44,7 @@ pub(super) fn blocks(
         let mut code = Vec::new();
         let mut spans = Vec::new();
         let ty = match class {
-            "Dynamic" => Some(("String", TypeCheck::String)),
+            "Typed" | "Dynamic" => Some(("String", TypeCheck::String)),
             "Listing" => Some(("Int", TypeCheck::Int)),
             _ => None,
         };
@@ -173,9 +176,78 @@ impl Vm {
         let frame = self.frames.last_mut().unwrap();
         frame.pc = self.program.blocks[frame.block].len() - 1;
     }
+    /// Typed.hasProperty is inherited from the actual Typed superclass. A
+    /// cached class published before failed superclass resolution does not yet
+    /// inherit that method merely because its storage is a typed object.
+    pub(super) fn typed_has_property_available(
+        &self,
+        receiver: ObjectId,
+    ) -> Result<bool, RuntimeError> {
+        let Some(class) = self.heap.object_class(receiver)? else {
+            return Ok(false);
+        };
+        Ok(self
+            .builtin_classes
+            .get(&classes::BuiltinClass::Typed)
+            .is_some_and(|typed| self.heap.is_subclass(class, *typed)))
+    }
+
+    fn typed_has_property(
+        &self,
+        receiver: ObjectId,
+        name: &PklString,
+    ) -> Result<bool, RuntimeError> {
+        let class = self
+            .heap
+            .object_class(receiver)?
+            .ok_or_else(|| invalid("Typed.hasProperty receiver class"))?;
+        let prototype = self.heap.get_class(class)?.prototype;
+        // VmClass.hasProperty deliberately accepts every name until this
+        // class finishes initialization, including after a failed declaration.
+        if self.heap.get(prototype)?.class_initializing {
+            return Ok(true);
+        }
+        let name = collection_conversions::property_identifier(name);
+        let mut ancestor = Some(class);
+        let mut visited = BTreeSet::new();
+        while let Some(class) = ancestor {
+            if !visited.insert(class) {
+                return Err(RuntimeError::new(
+                    ErrorKind::Cycle,
+                    "cyclic class parent chain",
+                ));
+            }
+            let metadata = self.heap.get_class(class)?;
+            let prototype = self.heap.get(metadata.prototype)?;
+            // ClassNode's imports/class/type-alias prototype members are not
+            // ClassProperty declarations. Object amendments and conversion
+            // delegate keys are likewise absent from this class-owned table.
+            if prototype.members.iter().any(|member| {
+                !member.local
+                    && !member.method
+                    && !member.entry
+                    && !member.import()
+                    && !member.definition()
+                    && member.name == name
+            }) {
+                return Ok(true);
+            }
+            ancestor = metadata.superclass;
+        }
+        Ok(false)
+    }
+
     pub(super) fn object_lookup(&mut self, operation: Lookup) -> Result<(), RuntimeError> {
         let receiver = self.conversion_receiver()?;
         let key = self.conversion_argument(0)?;
+        if operation == Lookup::TypedHasProperty {
+            let Value::String(name) = &key else {
+                return Err(invalid("checked Typed property name"));
+            };
+            let found = self.typed_has_property(receiver, name)?;
+            self.lookup_result(Value::Bool(found));
+            return Ok(());
+        }
         if self.heap.get(receiver)?.collection_kind == CollectionKind::Mapping
             && matches!(operation, Lookup::EntryOrNull | Lookup::EntryOrDefault)
         {
@@ -213,7 +285,9 @@ impl Vm {
                 }
             }
             let mut owner = Some(receiver);
-            let mut found = name.as_ref() == "default";
+            let typed = self.heap.get(receiver)?.is_module
+                || collections::typed_class(&self.heap, receiver)?.is_some();
+            let mut found = !typed && name.as_ref() == "default";
             while let Some(id) = owner {
                 let object = self.heap.get(id)?;
                 found |= object

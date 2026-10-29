@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot find property `reflect`.
+
+1 | (reflect.stringType.nullable.nullable == reflect.stringType.nullable).toString()
+     ^^^^^^^
+at  (repl:text)

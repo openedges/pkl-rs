@@ -1,0 +1,1745 @@
+{
+  "Reference_reach": "Legal exposed6 q0000/q0001/q0002 output restriction errors; q0003/q0004 value and q0005 ordinaryoutput paths succeed. Old exposed6 q0000 externalModule/q0001 nonopenChild failures retained; later q0003/q0004 value lookup errors also retained without claiming intended successful class initialization.",
+  "Rust_evaluations": 0,
+  "complete": true,
+  "constructor_reach": "Default constructor64 has46success18ordinaryerror per repeat; true18 allordinaryerrors. Bridge accesses reach actual mirror/type/arity operations, no original outcomes replaced.",
+  "exposed_alias_lookup_preemptions": 0,
+  "full_error_observations": [
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.Module(1)).toString()",
+      "full_stderr": {
+        "bytes": 388,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/046-q0046/result.stderr.bin",
+        "sha256": "07118e5719942d5da960cea317bfd5848b6356b05c6f2435a5ee6268c44d11c8"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 760,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/046-q0046/result.stderr.code-units.bin",
+        "sha256": "c76922bfde59f1aa70b7521a373c3566878d1b483c903fdff97e0938e3e52022"
+      },
+      "id": "q0046",
+      "program": "reflection-types-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.moduleOf(1)).toString()",
+      "full_stderr": {
+        "bytes": 398,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/047-q0047/result.stderr.bin",
+        "sha256": "239c1be5e5ac1c998d0c5be0c0bc0114d32d01dfc48115dff5381f6204686c1c"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 780,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/047-q0047/result.stderr.code-units.bin",
+        "sha256": "67ceb599dca8879fbe178dfcc69a84b02f6cc28ad3c50b84260cdd8de5ee4248"
+      },
+      "id": "q0047",
+      "program": "reflection-types-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.Class(1)).toString()",
+      "full_stderr": {
+        "bytes": 383,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/048-q0048/result.stderr.bin",
+        "sha256": "9ede4be77d7dc183046a5ff7d9feed0b5ae09c3d8e5f686a7479a8514d3220a2"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 750,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/048-q0048/result.stderr.code-units.bin",
+        "sha256": "72f9604541db0a0a358e3ea52916a59c3bd9de102eb5b974c7f552302196fc00"
+      },
+      "id": "q0048",
+      "program": "reflection-types-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.TypeAlias(Int)).toString()",
+      "full_stderr": {
+        "bytes": 435,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/049-q0049/result.stderr.bin",
+        "sha256": "2419a479c1d3da6829ea4e5b08ea1b08febd9353b43fcbe8ba7f794a75de0caa"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 854,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/049-q0049/result.stderr.code-units.bin",
+        "sha256": "cdbbf1d30383eabf0bebd1eacf235401f12d1055f373b8eeed6455f9523747d3"
+      },
+      "id": "q0049",
+      "program": "reflection-types-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.DeclaredType(1)).toString()",
+      "full_stderr": {
+        "bytes": 463,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/050-q0050/result.stderr.bin",
+        "sha256": "249c6e30cd830ae9b4893e1080ff348a997cde4b357d6db62c201fa947ebff3f"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 910,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/050-q0050/result.stderr.code-units.bin",
+        "sha256": "4ac29f379bf8cac8a1d9b5d08a1794a84c1e6fe439ae705af655825aacf14e72"
+      },
+      "id": "q0050",
+      "program": "reflection-types-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.StringLiteralType(1)).toString()",
+      "full_stderr": {
+        "bytes": 448,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/051-q0051/result.stderr.bin",
+        "sha256": "1c7a844dd2cef8abe089317cd9f16941c3b50a10b5ef54feb676a666d0a01b48"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 880,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/051-q0051/result.stderr.code-units.bin",
+        "sha256": "21983eacf3b2f5707c59197ae263a95b19d34e0fc9bba7c1fb4060df9b74e94f"
+      },
+      "id": "q0051",
+      "program": "reflection-types-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.FunctionType(List(1),exposedReflection.intType)).toString()",
+      "full_stderr": {
+        "bytes": 535,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/052-q0052/result.stderr.bin",
+        "sha256": "a66123a3224dddb14d694628303a4135b517dbba5d838e92ddd4e1d25a44d36e"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1054,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/052-q0052/result.stderr.code-units.bin",
+        "sha256": "ea72cd02a1e012622aa219e7ca6367c2bcf81df316cab24a1db0e1f3500d82e4"
+      },
+      "id": "q0052",
+      "program": "reflection-types-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.FunctionType(List(),1)).toString()",
+      "full_stderr": {
+        "bytes": 504,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/053-q0053/result.stderr.bin",
+        "sha256": "d6719e3d44e22dc2b5e3c7c0e7ea7ef3ad6e2182d37d11b019d59b680ba1ed52"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 992,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/053-q0053/result.stderr.code-units.bin",
+        "sha256": "c4a699bc882057daa6208af1eea0b87eab0db5ec21af637a8d0f00433cecf19e"
+      },
+      "id": "q0053",
+      "program": "reflection-types-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.UnionType(List(1))).toString()",
+      "full_stderr": {
+        "bytes": 441,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/054-q0054/result.stderr.bin",
+        "sha256": "e7055f22278282a13e4199357ed85ae8da7b3bd0deab6555b2ab9f38cf330c6b"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 866,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/054-q0054/result.stderr.code-units.bin",
+        "sha256": "42d6ddadeee2b34be3f5679109900c7595490a6e630cefbf195789211bcf4cce"
+      },
+      "id": "q0054",
+      "program": "reflection-types-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.TypeVariable(1)).toString()",
+      "full_stderr": {
+        "bytes": 457,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/055-q0055/result.stderr.bin",
+        "sha256": "19c05075c5ad45b281641d2fca9ddb5c5965ea52da17bd41f38d893bef130224"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 898,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/055-q0055/result.stderr.code-units.bin",
+        "sha256": "0e9c489f56786890328ef6d5f335a96ffedfa9fe971e7ca4c573721e0027e066"
+      },
+      "id": "q0055",
+      "program": "reflection-types-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.listType.withTypeArguments(List())).toString()",
+      "full_stderr": {
+        "bytes": 208,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/056-q0056/result.stderr.bin",
+        "sha256": "70c818239d55c332bc905b6f45a6496e98981adf2aa9d109a9488e66421c1664"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 400,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/056-q0056/result.stderr.code-units.bin",
+        "sha256": "2e86719cc82fe1ee57c588f191481236a2ae6b552262710d2388359b877bcf44"
+      },
+      "id": "q0056",
+      "program": "reflection-types-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.listType.withTypeArguments(List(exposedReflection.intType,exposedReflection.stringType))).toString()",
+      "full_stderr": {
+        "bytes": 316,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/057-q0057/result.stderr.bin",
+        "sha256": "96a77a8d1a8329bceb227871185a7675c3ee4bd1a797f0cc21734e3eabcc29f7"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 616,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/057-q0057/result.stderr.code-units.bin",
+        "sha256": "b44014a8e1530d6793bb7da2fdb672c9dba3528b80ed1b55831ab17a71f30bff"
+      },
+      "id": "q0057",
+      "program": "reflection-types-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.intType.withTypeArgument(exposedReflection.stringType)).toString()",
+      "full_stderr": {
+        "bytes": 248,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/058-q0058/result.stderr.bin",
+        "sha256": "f5ff9d9cf2d7a018be56679568996b83bcec2284117a00f3e867a29bd62216ed"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 480,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/058-q0058/result.stderr.code-units.bin",
+        "sha256": "dbef412e9d546a025442d0a46379a0a1a0f9159dce6209d82501809265973653"
+      },
+      "id": "q0058",
+      "program": "reflection-types-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.listType.withTypeArgument(1)).toString()",
+      "full_stderr": {
+        "bytes": 477,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/059-q0059/result.stderr.bin",
+        "sha256": "30d47684e0e432fb62d2ee39130111b476f14ef0f65444af3f5f1b65304f8bb2"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 938,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/059-q0059/result.stderr.code-units.bin",
+        "sha256": "716d0391e9e84801a3ef898536ec68ccaf33454a80645c475d25c046515335d1"
+      },
+      "id": "q0059",
+      "program": "reflection-types-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.Class()).toString()",
+      "full_stderr": {
+        "bytes": 369,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/060-q0060/result.stderr.bin",
+        "sha256": "01d8cf324dd8c9440e5f8e7a2786c128a7444c13e0e0cbb856f2164c63bc9edb"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 722,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/060-q0060/result.stderr.code-units.bin",
+        "sha256": "a299c06cd2cf175b6121f88d3ff509c0e995b19486852f83736b12b9003ef661"
+      },
+      "id": "q0060",
+      "program": "reflection-types-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.Class(Int,Int)).toString()",
+      "full_stderr": {
+        "bytes": 383,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/061-q0061/result.stderr.bin",
+        "sha256": "5fbbc55dd25966a8411d54c4b683d3c6198a1cf1aa473ca1a823407cd4b132c7"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 750,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/061-q0061/result.stderr.code-units.bin",
+        "sha256": "f9672bacd5abb5de346102111221acd327ae08a55da280a000bd9509179d767f"
+      },
+      "id": "q0061",
+      "program": "reflection-types-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.FunctionType(List())).toString()",
+      "full_stderr": {
+        "bytes": 484,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/062-q0062/result.stderr.bin",
+        "sha256": "b134e50ccc0f96c569231c115ab97ea82baa473c94eceb7af0c76f46d1159532"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 952,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/062-q0062/result.stderr.code-units.bin",
+        "sha256": "57458e7f23565b1bcaeca6251b794dd81a3abd8a0dc6c7af3ec1f5cfbfcdc680"
+      },
+      "id": "q0062",
+      "program": "reflection-types-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.UnionType(trace(List(1)),trace(2))).toString()",
+      "full_stderr": {
+        "bytes": 455,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/063-q0063/result.stderr.bin",
+        "sha256": "49958e8a6aa26fb42e7e932035571c5e9b2eedb3d3ebdb754f37ae0d50e4d813"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 894,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-0/063-q0063/result.stderr.code-units.bin",
+        "sha256": "411ba1f4eb95f4db8ff1ff66b70f4ccc2cc7d97686085f1176dccb1535406fd4"
+      },
+      "id": "q0063",
+      "program": "reflection-types-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.Module(1)).toString()",
+      "full_stderr": {
+        "bytes": 388,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/046-q0046/result.stderr.bin",
+        "sha256": "07118e5719942d5da960cea317bfd5848b6356b05c6f2435a5ee6268c44d11c8"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 760,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/046-q0046/result.stderr.code-units.bin",
+        "sha256": "c76922bfde59f1aa70b7521a373c3566878d1b483c903fdff97e0938e3e52022"
+      },
+      "id": "q0046",
+      "program": "reflection-types-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.moduleOf(1)).toString()",
+      "full_stderr": {
+        "bytes": 398,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/047-q0047/result.stderr.bin",
+        "sha256": "239c1be5e5ac1c998d0c5be0c0bc0114d32d01dfc48115dff5381f6204686c1c"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 780,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/047-q0047/result.stderr.code-units.bin",
+        "sha256": "67ceb599dca8879fbe178dfcc69a84b02f6cc28ad3c50b84260cdd8de5ee4248"
+      },
+      "id": "q0047",
+      "program": "reflection-types-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.Class(1)).toString()",
+      "full_stderr": {
+        "bytes": 383,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/048-q0048/result.stderr.bin",
+        "sha256": "9ede4be77d7dc183046a5ff7d9feed0b5ae09c3d8e5f686a7479a8514d3220a2"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 750,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/048-q0048/result.stderr.code-units.bin",
+        "sha256": "72f9604541db0a0a358e3ea52916a59c3bd9de102eb5b974c7f552302196fc00"
+      },
+      "id": "q0048",
+      "program": "reflection-types-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.TypeAlias(Int)).toString()",
+      "full_stderr": {
+        "bytes": 435,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/049-q0049/result.stderr.bin",
+        "sha256": "2419a479c1d3da6829ea4e5b08ea1b08febd9353b43fcbe8ba7f794a75de0caa"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 854,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/049-q0049/result.stderr.code-units.bin",
+        "sha256": "cdbbf1d30383eabf0bebd1eacf235401f12d1055f373b8eeed6455f9523747d3"
+      },
+      "id": "q0049",
+      "program": "reflection-types-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.DeclaredType(1)).toString()",
+      "full_stderr": {
+        "bytes": 463,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/050-q0050/result.stderr.bin",
+        "sha256": "249c6e30cd830ae9b4893e1080ff348a997cde4b357d6db62c201fa947ebff3f"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 910,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/050-q0050/result.stderr.code-units.bin",
+        "sha256": "4ac29f379bf8cac8a1d9b5d08a1794a84c1e6fe439ae705af655825aacf14e72"
+      },
+      "id": "q0050",
+      "program": "reflection-types-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.StringLiteralType(1)).toString()",
+      "full_stderr": {
+        "bytes": 448,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/051-q0051/result.stderr.bin",
+        "sha256": "1c7a844dd2cef8abe089317cd9f16941c3b50a10b5ef54feb676a666d0a01b48"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 880,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/051-q0051/result.stderr.code-units.bin",
+        "sha256": "21983eacf3b2f5707c59197ae263a95b19d34e0fc9bba7c1fb4060df9b74e94f"
+      },
+      "id": "q0051",
+      "program": "reflection-types-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.FunctionType(List(1),exposedReflection.intType)).toString()",
+      "full_stderr": {
+        "bytes": 535,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/052-q0052/result.stderr.bin",
+        "sha256": "a66123a3224dddb14d694628303a4135b517dbba5d838e92ddd4e1d25a44d36e"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1054,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/052-q0052/result.stderr.code-units.bin",
+        "sha256": "ea72cd02a1e012622aa219e7ca6367c2bcf81df316cab24a1db0e1f3500d82e4"
+      },
+      "id": "q0052",
+      "program": "reflection-types-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.FunctionType(List(),1)).toString()",
+      "full_stderr": {
+        "bytes": 504,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/053-q0053/result.stderr.bin",
+        "sha256": "d6719e3d44e22dc2b5e3c7c0e7ea7ef3ad6e2182d37d11b019d59b680ba1ed52"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 992,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/053-q0053/result.stderr.code-units.bin",
+        "sha256": "c4a699bc882057daa6208af1eea0b87eab0db5ec21af637a8d0f00433cecf19e"
+      },
+      "id": "q0053",
+      "program": "reflection-types-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.UnionType(List(1))).toString()",
+      "full_stderr": {
+        "bytes": 441,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/054-q0054/result.stderr.bin",
+        "sha256": "e7055f22278282a13e4199357ed85ae8da7b3bd0deab6555b2ab9f38cf330c6b"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 866,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/054-q0054/result.stderr.code-units.bin",
+        "sha256": "42d6ddadeee2b34be3f5679109900c7595490a6e630cefbf195789211bcf4cce"
+      },
+      "id": "q0054",
+      "program": "reflection-types-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.TypeVariable(1)).toString()",
+      "full_stderr": {
+        "bytes": 457,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/055-q0055/result.stderr.bin",
+        "sha256": "19c05075c5ad45b281641d2fca9ddb5c5965ea52da17bd41f38d893bef130224"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 898,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/055-q0055/result.stderr.code-units.bin",
+        "sha256": "0e9c489f56786890328ef6d5f335a96ffedfa9fe971e7ca4c573721e0027e066"
+      },
+      "id": "q0055",
+      "program": "reflection-types-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.listType.withTypeArguments(List())).toString()",
+      "full_stderr": {
+        "bytes": 208,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/056-q0056/result.stderr.bin",
+        "sha256": "70c818239d55c332bc905b6f45a6496e98981adf2aa9d109a9488e66421c1664"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 400,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/056-q0056/result.stderr.code-units.bin",
+        "sha256": "2e86719cc82fe1ee57c588f191481236a2ae6b552262710d2388359b877bcf44"
+      },
+      "id": "q0056",
+      "program": "reflection-types-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.listType.withTypeArguments(List(exposedReflection.intType,exposedReflection.stringType))).toString()",
+      "full_stderr": {
+        "bytes": 316,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/057-q0057/result.stderr.bin",
+        "sha256": "96a77a8d1a8329bceb227871185a7675c3ee4bd1a797f0cc21734e3eabcc29f7"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 616,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/057-q0057/result.stderr.code-units.bin",
+        "sha256": "b44014a8e1530d6793bb7da2fdb672c9dba3528b80ed1b55831ab17a71f30bff"
+      },
+      "id": "q0057",
+      "program": "reflection-types-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.intType.withTypeArgument(exposedReflection.stringType)).toString()",
+      "full_stderr": {
+        "bytes": 248,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/058-q0058/result.stderr.bin",
+        "sha256": "f5ff9d9cf2d7a018be56679568996b83bcec2284117a00f3e867a29bd62216ed"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 480,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/058-q0058/result.stderr.code-units.bin",
+        "sha256": "dbef412e9d546a025442d0a46379a0a1a0f9159dce6209d82501809265973653"
+      },
+      "id": "q0058",
+      "program": "reflection-types-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.listType.withTypeArgument(1)).toString()",
+      "full_stderr": {
+        "bytes": 477,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/059-q0059/result.stderr.bin",
+        "sha256": "30d47684e0e432fb62d2ee39130111b476f14ef0f65444af3f5f1b65304f8bb2"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 938,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/059-q0059/result.stderr.code-units.bin",
+        "sha256": "716d0391e9e84801a3ef898536ec68ccaf33454a80645c475d25c046515335d1"
+      },
+      "id": "q0059",
+      "program": "reflection-types-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.Class()).toString()",
+      "full_stderr": {
+        "bytes": 369,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/060-q0060/result.stderr.bin",
+        "sha256": "01d8cf324dd8c9440e5f8e7a2786c128a7444c13e0e0cbb856f2164c63bc9edb"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 722,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/060-q0060/result.stderr.code-units.bin",
+        "sha256": "a299c06cd2cf175b6121f88d3ff509c0e995b19486852f83736b12b9003ef661"
+      },
+      "id": "q0060",
+      "program": "reflection-types-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.Class(Int,Int)).toString()",
+      "full_stderr": {
+        "bytes": 383,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/061-q0061/result.stderr.bin",
+        "sha256": "5fbbc55dd25966a8411d54c4b683d3c6198a1cf1aa473ca1a823407cd4b132c7"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 750,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/061-q0061/result.stderr.code-units.bin",
+        "sha256": "f9672bacd5abb5de346102111221acd327ae08a55da280a000bd9509179d767f"
+      },
+      "id": "q0061",
+      "program": "reflection-types-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.FunctionType(List())).toString()",
+      "full_stderr": {
+        "bytes": 484,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/062-q0062/result.stderr.bin",
+        "sha256": "b134e50ccc0f96c569231c115ab97ea82baa473c94eceb7af0c76f46d1159532"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 952,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/062-q0062/result.stderr.code-units.bin",
+        "sha256": "57458e7f23565b1bcaeca6251b794dd81a3abd8a0dc6c7af3ec1f5cfbfcdc680"
+      },
+      "id": "q0062",
+      "program": "reflection-types-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.UnionType(trace(List(1)),trace(2))).toString()",
+      "full_stderr": {
+        "bytes": 455,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/063-q0063/result.stderr.bin",
+        "sha256": "49958e8a6aa26fb42e7e932035571c5e9b2eedb3d3ebdb754f37ae0d50e4d813"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 894,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-exposed/repeat-1/063-q0063/result.stderr.code-units.bin",
+        "sha256": "411ba1f4eb95f4db8ff1ff66b70f4ccc2cc7d97686085f1176dccb1535406fd4"
+      },
+      "id": "q0063",
+      "program": "reflection-types-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.Module(1)).toString()",
+      "full_stderr": {
+        "bytes": 388,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/000-q0000/result.stderr.bin",
+        "sha256": "07118e5719942d5da960cea317bfd5848b6356b05c6f2435a5ee6268c44d11c8"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 760,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/000-q0000/result.stderr.code-units.bin",
+        "sha256": "c76922bfde59f1aa70b7521a373c3566878d1b483c903fdff97e0938e3e52022"
+      },
+      "id": "q0000",
+      "program": "reflection-types-power-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.moduleOf(1)).toString()",
+      "full_stderr": {
+        "bytes": 398,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/001-q0001/result.stderr.bin",
+        "sha256": "239c1be5e5ac1c998d0c5be0c0bc0114d32d01dfc48115dff5381f6204686c1c"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 780,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/001-q0001/result.stderr.code-units.bin",
+        "sha256": "67ceb599dca8879fbe178dfcc69a84b02f6cc28ad3c50b84260cdd8de5ee4248"
+      },
+      "id": "q0001",
+      "program": "reflection-types-power-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.Class(1)).toString()",
+      "full_stderr": {
+        "bytes": 383,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/002-q0002/result.stderr.bin",
+        "sha256": "9ede4be77d7dc183046a5ff7d9feed0b5ae09c3d8e5f686a7479a8514d3220a2"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 750,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/002-q0002/result.stderr.code-units.bin",
+        "sha256": "72f9604541db0a0a358e3ea52916a59c3bd9de102eb5b974c7f552302196fc00"
+      },
+      "id": "q0002",
+      "program": "reflection-types-power-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.TypeAlias(Int)).toString()",
+      "full_stderr": {
+        "bytes": 435,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/003-q0003/result.stderr.bin",
+        "sha256": "2419a479c1d3da6829ea4e5b08ea1b08febd9353b43fcbe8ba7f794a75de0caa"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 854,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/003-q0003/result.stderr.code-units.bin",
+        "sha256": "cdbbf1d30383eabf0bebd1eacf235401f12d1055f373b8eeed6455f9523747d3"
+      },
+      "id": "q0003",
+      "program": "reflection-types-power-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.DeclaredType(1)).toString()",
+      "full_stderr": {
+        "bytes": 463,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/004-q0004/result.stderr.bin",
+        "sha256": "249c6e30cd830ae9b4893e1080ff348a997cde4b357d6db62c201fa947ebff3f"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 910,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/004-q0004/result.stderr.code-units.bin",
+        "sha256": "4ac29f379bf8cac8a1d9b5d08a1794a84c1e6fe439ae705af655825aacf14e72"
+      },
+      "id": "q0004",
+      "program": "reflection-types-power-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.StringLiteralType(1)).toString()",
+      "full_stderr": {
+        "bytes": 448,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/005-q0005/result.stderr.bin",
+        "sha256": "1c7a844dd2cef8abe089317cd9f16941c3b50a10b5ef54feb676a666d0a01b48"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 880,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/005-q0005/result.stderr.code-units.bin",
+        "sha256": "21983eacf3b2f5707c59197ae263a95b19d34e0fc9bba7c1fb4060df9b74e94f"
+      },
+      "id": "q0005",
+      "program": "reflection-types-power-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.FunctionType(List(1),exposedReflection.intType)).toString()",
+      "full_stderr": {
+        "bytes": 535,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/006-q0006/result.stderr.bin",
+        "sha256": "a66123a3224dddb14d694628303a4135b517dbba5d838e92ddd4e1d25a44d36e"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1054,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/006-q0006/result.stderr.code-units.bin",
+        "sha256": "ea72cd02a1e012622aa219e7ca6367c2bcf81df316cab24a1db0e1f3500d82e4"
+      },
+      "id": "q0006",
+      "program": "reflection-types-power-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.FunctionType(List(),1)).toString()",
+      "full_stderr": {
+        "bytes": 504,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/007-q0007/result.stderr.bin",
+        "sha256": "d6719e3d44e22dc2b5e3c7c0e7ea7ef3ad6e2182d37d11b019d59b680ba1ed52"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 992,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/007-q0007/result.stderr.code-units.bin",
+        "sha256": "c4a699bc882057daa6208af1eea0b87eab0db5ec21af637a8d0f00433cecf19e"
+      },
+      "id": "q0007",
+      "program": "reflection-types-power-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.UnionType(List(1))).toString()",
+      "full_stderr": {
+        "bytes": 441,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/008-q0008/result.stderr.bin",
+        "sha256": "e7055f22278282a13e4199357ed85ae8da7b3bd0deab6555b2ab9f38cf330c6b"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 866,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/008-q0008/result.stderr.code-units.bin",
+        "sha256": "42d6ddadeee2b34be3f5679109900c7595490a6e630cefbf195789211bcf4cce"
+      },
+      "id": "q0008",
+      "program": "reflection-types-power-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.TypeVariable(1)).toString()",
+      "full_stderr": {
+        "bytes": 457,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/009-q0009/result.stderr.bin",
+        "sha256": "19c05075c5ad45b281641d2fca9ddb5c5965ea52da17bd41f38d893bef130224"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 898,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/009-q0009/result.stderr.code-units.bin",
+        "sha256": "0e9c489f56786890328ef6d5f335a96ffedfa9fe971e7ca4c573721e0027e066"
+      },
+      "id": "q0009",
+      "program": "reflection-types-power-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.listType.withTypeArguments(List())).toString()",
+      "full_stderr": {
+        "bytes": 208,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/010-q0010/result.stderr.bin",
+        "sha256": "70c818239d55c332bc905b6f45a6496e98981adf2aa9d109a9488e66421c1664"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 400,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/010-q0010/result.stderr.code-units.bin",
+        "sha256": "2e86719cc82fe1ee57c588f191481236a2ae6b552262710d2388359b877bcf44"
+      },
+      "id": "q0010",
+      "program": "reflection-types-power-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.listType.withTypeArguments(List(exposedReflection.intType,exposedReflection.stringType))).toString()",
+      "full_stderr": {
+        "bytes": 316,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/011-q0011/result.stderr.bin",
+        "sha256": "96a77a8d1a8329bceb227871185a7675c3ee4bd1a797f0cc21734e3eabcc29f7"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 616,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/011-q0011/result.stderr.code-units.bin",
+        "sha256": "b44014a8e1530d6793bb7da2fdb672c9dba3528b80ed1b55831ab17a71f30bff"
+      },
+      "id": "q0011",
+      "program": "reflection-types-power-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.intType.withTypeArgument(exposedReflection.stringType)).toString()",
+      "full_stderr": {
+        "bytes": 248,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/012-q0012/result.stderr.bin",
+        "sha256": "f5ff9d9cf2d7a018be56679568996b83bcec2284117a00f3e867a29bd62216ed"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 480,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/012-q0012/result.stderr.code-units.bin",
+        "sha256": "dbef412e9d546a025442d0a46379a0a1a0f9159dce6209d82501809265973653"
+      },
+      "id": "q0012",
+      "program": "reflection-types-power-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.listType.withTypeArgument(1)).toString()",
+      "full_stderr": {
+        "bytes": 477,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/013-q0013/result.stderr.bin",
+        "sha256": "30d47684e0e432fb62d2ee39130111b476f14ef0f65444af3f5f1b65304f8bb2"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 938,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/013-q0013/result.stderr.code-units.bin",
+        "sha256": "716d0391e9e84801a3ef898536ec68ccaf33454a80645c475d25c046515335d1"
+      },
+      "id": "q0013",
+      "program": "reflection-types-power-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.Class()).toString()",
+      "full_stderr": {
+        "bytes": 369,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/014-q0014/result.stderr.bin",
+        "sha256": "01d8cf324dd8c9440e5f8e7a2786c128a7444c13e0e0cbb856f2164c63bc9edb"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 722,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/014-q0014/result.stderr.code-units.bin",
+        "sha256": "a299c06cd2cf175b6121f88d3ff509c0e995b19486852f83736b12b9003ef661"
+      },
+      "id": "q0014",
+      "program": "reflection-types-power-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.Class(Int,Int)).toString()",
+      "full_stderr": {
+        "bytes": 383,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/015-q0015/result.stderr.bin",
+        "sha256": "5fbbc55dd25966a8411d54c4b683d3c6198a1cf1aa473ca1a823407cd4b132c7"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 750,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/015-q0015/result.stderr.code-units.bin",
+        "sha256": "f9672bacd5abb5de346102111221acd327ae08a55da280a000bd9509179d767f"
+      },
+      "id": "q0015",
+      "program": "reflection-types-power-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.FunctionType(List())).toString()",
+      "full_stderr": {
+        "bytes": 484,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/016-q0016/result.stderr.bin",
+        "sha256": "b134e50ccc0f96c569231c115ab97ea82baa473c94eceb7af0c76f46d1159532"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 952,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/016-q0016/result.stderr.code-units.bin",
+        "sha256": "57458e7f23565b1bcaeca6251b794dd81a3abd8a0dc6c7af3ec1f5cfbfcdc680"
+      },
+      "id": "q0016",
+      "program": "reflection-types-power-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.UnionType(trace(List(1)),trace(2))).toString()",
+      "full_stderr": {
+        "bytes": 455,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/017-q0017/result.stderr.bin",
+        "sha256": "49958e8a6aa26fb42e7e932035571c5e9b2eedb3d3ebdb754f37ae0d50e4d813"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 894,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-0/017-q0017/result.stderr.code-units.bin",
+        "sha256": "411ba1f4eb95f4db8ff1ff66b70f4ccc2cc7d97686085f1176dccb1535406fd4"
+      },
+      "id": "q0017",
+      "program": "reflection-types-power-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.Module(1)).toString()",
+      "full_stderr": {
+        "bytes": 388,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/000-q0000/result.stderr.bin",
+        "sha256": "07118e5719942d5da960cea317bfd5848b6356b05c6f2435a5ee6268c44d11c8"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 760,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/000-q0000/result.stderr.code-units.bin",
+        "sha256": "c76922bfde59f1aa70b7521a373c3566878d1b483c903fdff97e0938e3e52022"
+      },
+      "id": "q0000",
+      "program": "reflection-types-power-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.moduleOf(1)).toString()",
+      "full_stderr": {
+        "bytes": 398,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/001-q0001/result.stderr.bin",
+        "sha256": "239c1be5e5ac1c998d0c5be0c0bc0114d32d01dfc48115dff5381f6204686c1c"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 780,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/001-q0001/result.stderr.code-units.bin",
+        "sha256": "67ceb599dca8879fbe178dfcc69a84b02f6cc28ad3c50b84260cdd8de5ee4248"
+      },
+      "id": "q0001",
+      "program": "reflection-types-power-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.Class(1)).toString()",
+      "full_stderr": {
+        "bytes": 383,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/002-q0002/result.stderr.bin",
+        "sha256": "9ede4be77d7dc183046a5ff7d9feed0b5ae09c3d8e5f686a7479a8514d3220a2"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 750,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/002-q0002/result.stderr.code-units.bin",
+        "sha256": "72f9604541db0a0a358e3ea52916a59c3bd9de102eb5b974c7f552302196fc00"
+      },
+      "id": "q0002",
+      "program": "reflection-types-power-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.TypeAlias(Int)).toString()",
+      "full_stderr": {
+        "bytes": 435,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/003-q0003/result.stderr.bin",
+        "sha256": "2419a479c1d3da6829ea4e5b08ea1b08febd9353b43fcbe8ba7f794a75de0caa"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 854,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/003-q0003/result.stderr.code-units.bin",
+        "sha256": "cdbbf1d30383eabf0bebd1eacf235401f12d1055f373b8eeed6455f9523747d3"
+      },
+      "id": "q0003",
+      "program": "reflection-types-power-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.DeclaredType(1)).toString()",
+      "full_stderr": {
+        "bytes": 463,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/004-q0004/result.stderr.bin",
+        "sha256": "249c6e30cd830ae9b4893e1080ff348a997cde4b357d6db62c201fa947ebff3f"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 910,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/004-q0004/result.stderr.code-units.bin",
+        "sha256": "4ac29f379bf8cac8a1d9b5d08a1794a84c1e6fe439ae705af655825aacf14e72"
+      },
+      "id": "q0004",
+      "program": "reflection-types-power-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.StringLiteralType(1)).toString()",
+      "full_stderr": {
+        "bytes": 448,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/005-q0005/result.stderr.bin",
+        "sha256": "1c7a844dd2cef8abe089317cd9f16941c3b50a10b5ef54feb676a666d0a01b48"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 880,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/005-q0005/result.stderr.code-units.bin",
+        "sha256": "21983eacf3b2f5707c59197ae263a95b19d34e0fc9bba7c1fb4060df9b74e94f"
+      },
+      "id": "q0005",
+      "program": "reflection-types-power-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.FunctionType(List(1),exposedReflection.intType)).toString()",
+      "full_stderr": {
+        "bytes": 535,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/006-q0006/result.stderr.bin",
+        "sha256": "a66123a3224dddb14d694628303a4135b517dbba5d838e92ddd4e1d25a44d36e"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1054,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/006-q0006/result.stderr.code-units.bin",
+        "sha256": "ea72cd02a1e012622aa219e7ca6367c2bcf81df316cab24a1db0e1f3500d82e4"
+      },
+      "id": "q0006",
+      "program": "reflection-types-power-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.FunctionType(List(),1)).toString()",
+      "full_stderr": {
+        "bytes": 504,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/007-q0007/result.stderr.bin",
+        "sha256": "d6719e3d44e22dc2b5e3c7c0e7ea7ef3ad6e2182d37d11b019d59b680ba1ed52"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 992,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/007-q0007/result.stderr.code-units.bin",
+        "sha256": "c4a699bc882057daa6208af1eea0b87eab0db5ec21af637a8d0f00433cecf19e"
+      },
+      "id": "q0007",
+      "program": "reflection-types-power-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.UnionType(List(1))).toString()",
+      "full_stderr": {
+        "bytes": 441,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/008-q0008/result.stderr.bin",
+        "sha256": "e7055f22278282a13e4199357ed85ae8da7b3bd0deab6555b2ab9f38cf330c6b"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 866,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/008-q0008/result.stderr.code-units.bin",
+        "sha256": "42d6ddadeee2b34be3f5679109900c7595490a6e630cefbf195789211bcf4cce"
+      },
+      "id": "q0008",
+      "program": "reflection-types-power-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.TypeVariable(1)).toString()",
+      "full_stderr": {
+        "bytes": 457,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/009-q0009/result.stderr.bin",
+        "sha256": "19c05075c5ad45b281641d2fca9ddb5c5965ea52da17bd41f38d893bef130224"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 898,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/009-q0009/result.stderr.code-units.bin",
+        "sha256": "0e9c489f56786890328ef6d5f335a96ffedfa9fe971e7ca4c573721e0027e066"
+      },
+      "id": "q0009",
+      "program": "reflection-types-power-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.listType.withTypeArguments(List())).toString()",
+      "full_stderr": {
+        "bytes": 208,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/010-q0010/result.stderr.bin",
+        "sha256": "70c818239d55c332bc905b6f45a6496e98981adf2aa9d109a9488e66421c1664"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 400,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/010-q0010/result.stderr.code-units.bin",
+        "sha256": "2e86719cc82fe1ee57c588f191481236a2ae6b552262710d2388359b877bcf44"
+      },
+      "id": "q0010",
+      "program": "reflection-types-power-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.listType.withTypeArguments(List(exposedReflection.intType,exposedReflection.stringType))).toString()",
+      "full_stderr": {
+        "bytes": 316,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/011-q0011/result.stderr.bin",
+        "sha256": "96a77a8d1a8329bceb227871185a7675c3ee4bd1a797f0cc21734e3eabcc29f7"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 616,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/011-q0011/result.stderr.code-units.bin",
+        "sha256": "b44014a8e1530d6793bb7da2fdb672c9dba3528b80ed1b55831ab17a71f30bff"
+      },
+      "id": "q0011",
+      "program": "reflection-types-power-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.intType.withTypeArgument(exposedReflection.stringType)).toString()",
+      "full_stderr": {
+        "bytes": 248,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/012-q0012/result.stderr.bin",
+        "sha256": "f5ff9d9cf2d7a018be56679568996b83bcec2284117a00f3e867a29bd62216ed"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 480,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/012-q0012/result.stderr.code-units.bin",
+        "sha256": "dbef412e9d546a025442d0a46379a0a1a0f9159dce6209d82501809265973653"
+      },
+      "id": "q0012",
+      "program": "reflection-types-power-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.listType.withTypeArgument(1)).toString()",
+      "full_stderr": {
+        "bytes": 477,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/013-q0013/result.stderr.bin",
+        "sha256": "30d47684e0e432fb62d2ee39130111b476f14ef0f65444af3f5f1b65304f8bb2"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 938,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/013-q0013/result.stderr.code-units.bin",
+        "sha256": "716d0391e9e84801a3ef898536ec68ccaf33454a80645c475d25c046515335d1"
+      },
+      "id": "q0013",
+      "program": "reflection-types-power-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.Class()).toString()",
+      "full_stderr": {
+        "bytes": 369,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/014-q0014/result.stderr.bin",
+        "sha256": "01d8cf324dd8c9440e5f8e7a2786c128a7444c13e0e0cbb856f2164c63bc9edb"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 722,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/014-q0014/result.stderr.code-units.bin",
+        "sha256": "a299c06cd2cf175b6121f88d3ff509c0e995b19486852f83736b12b9003ef661"
+      },
+      "id": "q0014",
+      "program": "reflection-types-power-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.Class(Int,Int)).toString()",
+      "full_stderr": {
+        "bytes": 383,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/015-q0015/result.stderr.bin",
+        "sha256": "5fbbc55dd25966a8411d54c4b683d3c6198a1cf1aa473ca1a823407cd4b132c7"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 750,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/015-q0015/result.stderr.code-units.bin",
+        "sha256": "f9672bacd5abb5de346102111221acd327ae08a55da280a000bd9509179d767f"
+      },
+      "id": "q0015",
+      "program": "reflection-types-power-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.FunctionType(List())).toString()",
+      "full_stderr": {
+        "bytes": 484,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/016-q0016/result.stderr.bin",
+        "sha256": "b134e50ccc0f96c569231c115ab97ea82baa473c94eceb7af0c76f46d1159532"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 952,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/016-q0016/result.stderr.code-units.bin",
+        "sha256": "57458e7f23565b1bcaeca6251b794dd81a3abd8a0dc6c7af3ec1f5cfbfcdc680"
+      },
+      "id": "q0016",
+      "program": "reflection-types-power-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "constructor82",
+      "expression": "(exposedReflection.UnionType(trace(List(1)),trace(2))).toString()",
+      "full_stderr": {
+        "bytes": 455,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/017-q0017/result.stderr.bin",
+        "sha256": "49958e8a6aa26fb42e7e932035571c5e9b2eedb3d3ebdb754f37ae0d50e4d813"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 894,
+        "path": "target/m2/stage103-reflection-constructor82-oracle-01/programs/reflection-types-power-exposed/repeat-1/017-q0017/result.stderr.code-units.bin",
+        "sha256": "411ba1f4eb95f4db8ff1ff66b70f4ccc2cc7d97686085f1176dccb1535406fd4"
+      },
+      "id": "q0017",
+      "program": "reflection-types-power-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,module.getClass(),\"\").output.getPath().toString()",
+      "full_stderr": {
+        "bytes": 414,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-declaration-origin-exposed/repeat-0/001-q0001/result.stderr.bin",
+        "sha256": "554cc2add61ef9f46c8f898b6742e041867e16f4772cb8a343d7feb44d27b1fe"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 812,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-declaration-origin-exposed/repeat-0/001-q0001/result.stderr.code-units.bin",
+        "sha256": "dab6aea2810b5b8dc87495839016a25d2c25f86d95e761a360a066703cd73f01"
+      },
+      "id": "q0001",
+      "program": "reference-declaration-origin-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,Module,\"\").output.getPath().toString()",
+      "full_stderr": {
+        "bytes": 374,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-declaration-origin-exposed/repeat-0/002-q0002/result.stderr.bin",
+        "sha256": "e29fcda3a8036b89ce583ddca5fe9c30beb4f7bca794fe85875a6cd85cfd4273"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 732,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-declaration-origin-exposed/repeat-0/002-q0002/result.stderr.code-units.bin",
+        "sha256": "56192b72dd5f67a7fee6b1d8e1425ddda33b535f95af64a0b1a9214a8fde63ce"
+      },
+      "id": "q0002",
+      "program": "reference-declaration-origin-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,module.getClass(),\"\").missing.getPath().toString()",
+      "full_stderr": {
+        "bytes": 395,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-declaration-origin-exposed/repeat-0/003-q0003/result.stderr.bin",
+        "sha256": "4700f0e4c5d92bde09054ca9b3b9b4073f9541915c95acad6001db6b4f55044f"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 774,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-declaration-origin-exposed/repeat-0/003-q0003/result.stderr.code-units.bin",
+        "sha256": "77aeaddad5fe467691e42ffe1d6b57e1b6db97752cdce64e56a74df6a784da99"
+      },
+      "id": "q0003",
+      "program": "reference-declaration-origin-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,module.getClass(),\"\").output.getPath().toString()",
+      "full_stderr": {
+        "bytes": 414,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-declaration-origin-exposed/repeat-1/001-q0001/result.stderr.bin",
+        "sha256": "554cc2add61ef9f46c8f898b6742e041867e16f4772cb8a343d7feb44d27b1fe"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 812,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-declaration-origin-exposed/repeat-1/001-q0001/result.stderr.code-units.bin",
+        "sha256": "dab6aea2810b5b8dc87495839016a25d2c25f86d95e761a360a066703cd73f01"
+      },
+      "id": "q0001",
+      "program": "reference-declaration-origin-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,Module,\"\").output.getPath().toString()",
+      "full_stderr": {
+        "bytes": 374,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-declaration-origin-exposed/repeat-1/002-q0002/result.stderr.bin",
+        "sha256": "e29fcda3a8036b89ce583ddca5fe9c30beb4f7bca794fe85875a6cd85cfd4273"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 732,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-declaration-origin-exposed/repeat-1/002-q0002/result.stderr.code-units.bin",
+        "sha256": "56192b72dd5f67a7fee6b1d8e1425ddda33b535f95af64a0b1a9214a8fde63ce"
+      },
+      "id": "q0002",
+      "program": "reference-declaration-origin-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,module.getClass(),\"\").missing.getPath().toString()",
+      "full_stderr": {
+        "bytes": 395,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-declaration-origin-exposed/repeat-1/003-q0003/result.stderr.bin",
+        "sha256": "4700f0e4c5d92bde09054ca9b3b9b4073f9541915c95acad6001db6b4f55044f"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 774,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-declaration-origin-exposed/repeat-1/003-q0003/result.stderr.code-units.bin",
+        "sha256": "77aeaddad5fe467691e42ffe1d6b57e1b6db97752cdce64e56a74df6a784da99"
+      },
+      "id": "q0003",
+      "program": "reference-declaration-origin-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "retained dangling documentation source diagnostic",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReflection.Class(C).docComment.toString()",
+      "full_stderr": {
+        "bytes": 266,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/doc-separated-docs-exposed/repeat-0/000-q0000/result.stderr.bin",
+        "sha256": "bd9907af62474b2597c1e4feef4afd208b107e78c069e0777287f2eeaf42a456"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 516,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/doc-separated-docs-exposed/repeat-0/000-q0000/result.stderr.code-units.bin",
+        "sha256": "b9d743adf3e67f78e5a3a03179937758d20260ea65754e9fef9f36ad55f59e66"
+      },
+      "id": "q0000",
+      "program": "doc-separated-docs-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "retained dangling documentation source diagnostic",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReflection.Class(C).docComment.toString()",
+      "full_stderr": {
+        "bytes": 266,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/doc-separated-docs-exposed/repeat-1/000-q0000/result.stderr.bin",
+        "sha256": "bd9907af62474b2597c1e4feef4afd208b107e78c069e0777287f2eeaf42a456"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 516,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/doc-separated-docs-exposed/repeat-1/000-q0000/result.stderr.code-units.bin",
+        "sha256": "b9d743adf3e67f78e5a3a03179937758d20260ea65754e9fef9f36ad55f59e66"
+      },
+      "id": "q0000",
+      "program": "doc-separated-docs-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "retained original class declaration failure",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,Child,\"\").output.getPath().toString()",
+      "full_stderr": {
+        "bytes": 496,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/repeat-0/000-q0000/result.stderr.bin",
+        "sha256": "005870b7c86e35ea6b6f5fd05ef9145cdd421c2edcc24e979e5fcc8f6acd40e5"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 976,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/repeat-0/000-q0000/result.stderr.code-units.bin",
+        "sha256": "354c666e919e90cafe82606a81d30d7a640cc51d25aa4851ae8270730adbb5c7"
+      },
+      "id": "q0000",
+      "program": "reference-module-subclass-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "retained original class declaration failure",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,Grandchild,\"\").output.getPath().toString()",
+      "full_stderr": {
+        "bytes": 542,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/repeat-0/001-q0001/result.stderr.bin",
+        "sha256": "dd95629440769992d606e1fda5567b6784b5bac0d13ba8ba825cd825c76ca1a3"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1068,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/repeat-0/001-q0001/result.stderr.code-units.bin",
+        "sha256": "437ee9c05c0625db384496766cbd1df4bfb7cc520d79bc288dbbaf81f50d16dc"
+      },
+      "id": "q0001",
+      "program": "reference-module-subclass-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,Module,\"\").output.getPath().toString()",
+      "full_stderr": {
+        "bytes": 379,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/repeat-0/002-q0002/result.stderr.bin",
+        "sha256": "c2039cdfe7e308ebf1b2599c6e17130226c178cdca3ab9c390a57d9ed316e0a0"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 742,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/repeat-0/002-q0002/result.stderr.code-units.bin",
+        "sha256": "e59c26fcbc39b1bd9d475e07ddcab51e94d4e3eb608bb3a2329889b7e6b9c2b4"
+      },
+      "id": "q0002",
+      "program": "reference-module-subclass-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,Child,\"\").value.getPath().toString()",
+      "full_stderr": {
+        "bytes": 390,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/repeat-0/003-q0003/result.stderr.bin",
+        "sha256": "e4f7fde0a90c8a07c970c7bbaa5c75f5ad244248138a1c11b25b3e7d4b6ef911"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 764,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/repeat-0/003-q0003/result.stderr.code-units.bin",
+        "sha256": "eb7d74e7971b0a4a1c14a80f0f79651b51bdcd7e0f566fb202893e3f39f4dca4"
+      },
+      "id": "q0003",
+      "program": "reference-module-subclass-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,Grandchild,\"\").value.getPath().toString()",
+      "full_stderr": {
+        "bytes": 410,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/repeat-0/004-q0004/result.stderr.bin",
+        "sha256": "26e3469b16a666eec58c2b020dc6029eb1180d2d2e1aeffe199f5373e3be8dcc"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 804,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/repeat-0/004-q0004/result.stderr.code-units.bin",
+        "sha256": "24ab5c39348d6437bd806489ff0c772f601ab3774d902ffdca3197745fb97314"
+      },
+      "id": "q0004",
+      "program": "reference-module-subclass-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "retained original class declaration failure",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,Child,\"\").output.getPath().toString()",
+      "full_stderr": {
+        "bytes": 496,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/repeat-1/000-q0000/result.stderr.bin",
+        "sha256": "005870b7c86e35ea6b6f5fd05ef9145cdd421c2edcc24e979e5fcc8f6acd40e5"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 976,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/repeat-1/000-q0000/result.stderr.code-units.bin",
+        "sha256": "354c666e919e90cafe82606a81d30d7a640cc51d25aa4851ae8270730adbb5c7"
+      },
+      "id": "q0000",
+      "program": "reference-module-subclass-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "retained original class declaration failure",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,Grandchild,\"\").output.getPath().toString()",
+      "full_stderr": {
+        "bytes": 542,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/repeat-1/001-q0001/result.stderr.bin",
+        "sha256": "dd95629440769992d606e1fda5567b6784b5bac0d13ba8ba825cd825c76ca1a3"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 1068,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/repeat-1/001-q0001/result.stderr.code-units.bin",
+        "sha256": "437ee9c05c0625db384496766cbd1df4bfb7cc520d79bc288dbbaf81f50d16dc"
+      },
+      "id": "q0001",
+      "program": "reference-module-subclass-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,Module,\"\").output.getPath().toString()",
+      "full_stderr": {
+        "bytes": 379,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/repeat-1/002-q0002/result.stderr.bin",
+        "sha256": "c2039cdfe7e308ebf1b2599c6e17130226c178cdca3ab9c390a57d9ed316e0a0"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 742,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/repeat-1/002-q0002/result.stderr.code-units.bin",
+        "sha256": "e59c26fcbc39b1bd9d475e07ddcab51e94d4e3eb608bb3a2329889b7e6b9c2b4"
+      },
+      "id": "q0002",
+      "program": "reference-module-subclass-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,Child,\"\").value.getPath().toString()",
+      "full_stderr": {
+        "bytes": 390,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/repeat-1/003-q0003/result.stderr.bin",
+        "sha256": "e4f7fde0a90c8a07c970c7bbaa5c75f5ad244248138a1c11b25b3e7d4b6ef911"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 764,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/repeat-1/003-q0003/result.stderr.code-units.bin",
+        "sha256": "eb7d74e7971b0a4a1c14a80f0f79651b51bdcd7e0f566fb202893e3f39f4dca4"
+      },
+      "id": "q0003",
+      "program": "reference-module-subclass-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,Grandchild,\"\").value.getPath().toString()",
+      "full_stderr": {
+        "bytes": 410,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/repeat-1/004-q0004/result.stderr.bin",
+        "sha256": "26e3469b16a666eec58c2b020dc6029eb1180d2d2e1aeffe199f5373e3be8dcc"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 804,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-exposed/repeat-1/004-q0004/result.stderr.code-units.bin",
+        "sha256": "24ab5c39348d6437bd806489ff0c772f601ab3774d902ffdca3197745fb97314"
+      },
+      "id": "q0004",
+      "program": "reference-module-subclass-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,Child,\"\").output.getPath().toString()",
+      "full_stderr": {
+        "bytes": 414,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-legal-exposed/repeat-0/000-q0000/result.stderr.bin",
+        "sha256": "ca58f7a616c17b51e1f8014999a4d0157fcd3427af0ced1db49087c543ba4426"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 812,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-legal-exposed/repeat-0/000-q0000/result.stderr.code-units.bin",
+        "sha256": "3dabdb20a09f03785dcf9a99380e8f7965a990624b5d1f110f5be43908a4ab45"
+      },
+      "id": "q0000",
+      "program": "reference-module-subclass-legal-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,Grandchild,\"\").output.getPath().toString()",
+      "full_stderr": {
+        "bytes": 429,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-legal-exposed/repeat-0/001-q0001/result.stderr.bin",
+        "sha256": "3718b86144a18bdc0982cb8222c54ac317444746177327474bff6e1813666f8a"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 842,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-legal-exposed/repeat-0/001-q0001/result.stderr.code-units.bin",
+        "sha256": "afb4097fdd10fd057116309862ec54bd9d9753b4868fd07fcf786404f59cffc3"
+      },
+      "id": "q0001",
+      "program": "reference-module-subclass-legal-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,Module,\"\").output.getPath().toString()",
+      "full_stderr": {
+        "bytes": 383,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-legal-exposed/repeat-0/002-q0002/result.stderr.bin",
+        "sha256": "6f8e14febfc6e4befacb74bf143b28cc4c8d50de53194304fe7479a34e32cfd6"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 750,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-legal-exposed/repeat-0/002-q0002/result.stderr.code-units.bin",
+        "sha256": "945b87373a16a13800baa1fb3b1ccff8b78855b035112e83743bd3efdcf79a8b"
+      },
+      "id": "q0002",
+      "program": "reference-module-subclass-legal-exposed",
+      "repeat": 0
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,Child,\"\").output.getPath().toString()",
+      "full_stderr": {
+        "bytes": 414,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-legal-exposed/repeat-1/000-q0000/result.stderr.bin",
+        "sha256": "ca58f7a616c17b51e1f8014999a4d0157fcd3427af0ced1db49087c543ba4426"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 812,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-legal-exposed/repeat-1/000-q0000/result.stderr.code-units.bin",
+        "sha256": "3dabdb20a09f03785dcf9a99380e8f7965a990624b5d1f110f5be43908a4ab45"
+      },
+      "id": "q0000",
+      "program": "reference-module-subclass-legal-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,Grandchild,\"\").output.getPath().toString()",
+      "full_stderr": {
+        "bytes": 429,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-legal-exposed/repeat-1/001-q0001/result.stderr.bin",
+        "sha256": "3718b86144a18bdc0982cb8222c54ac317444746177327474bff6e1813666f8a"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 842,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-legal-exposed/repeat-1/001-q0001/result.stderr.code-units.bin",
+        "sha256": "afb4097fdd10fd057116309862ec54bd9d9753b4868fd07fcf786404f59cffc3"
+      },
+      "id": "q0001",
+      "program": "reference-module-subclass-legal-exposed",
+      "repeat": 1
+    },
+    {
+      "classification": "ordinary complete runtime/query diagnostic",
+      "cohort": "metadata-reference96",
+      "expression": "exposedReference.Reference(domain,Module,\"\").output.getPath().toString()",
+      "full_stderr": {
+        "bytes": 383,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-legal-exposed/repeat-1/002-q0002/result.stderr.bin",
+        "sha256": "6f8e14febfc6e4befacb74bf143b28cc4c8d50de53194304fe7479a34e32cfd6"
+      },
+      "full_stderr_UTF16": {
+        "bytes": 750,
+        "path": "target/m2/stage103-reflection-metadata-reference96-oracle-01/programs/reference-module-subclass-legal-exposed/repeat-1/002-q0002/result.stderr.code-units.bin",
+        "sha256": "945b87373a16a13800baa1fb3b1ccff8b78855b035112e83743bd3efdcf79a8b"
+      },
+      "id": "q0002",
+      "program": "reference-module-subclass-legal-exposed",
+      "repeat": 1
+    }
+  ],
+  "metadata_reach": "Most docs/location queries succeed; original separateddocs dangling diagnostic remains required. Full mirror/GC/Host/identity not established by this bounded cohort.",
+  "observed_error_classes": {
+    "ordinary complete runtime/query diagnostic": 90,
+    "retained dangling documentation source diagnostic": 2,
+    "retained original class declaration failure": 4
+  },
+  "partial_error_match_used": false,
+  "source_qualification": "New sourceURI/query token width/bridge module declaration differ deliberately; new Java expectedbytes only. Original225/preemptions/failure and all14wholeoriginals remain required."
+}

@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `reflect`.
+
+1 | reflect.Module(module).location.column.toString()
+    ^^^^^^^
+at  (repl:text)

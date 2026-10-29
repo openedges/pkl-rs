@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 1 type argument(s) but got 0.
+
+1 | (exposedReflection.listType.withTypeArguments(List())).toString()
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

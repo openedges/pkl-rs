@@ -217,6 +217,12 @@ impl Vm {
             } else {
                 return Ok(false);
             };
+        if class.as_ref() == "Typed"
+            && matches!(name, "hasProperty" | "getPropertyOrNull")
+            && !self.typed_has_property_available(source)?
+        {
+            return Ok(false);
+        }
         let Some(&(block, arity)) = self.program.conversion_blocks.get(&(class, name.into()))
         else {
             return Ok(false);

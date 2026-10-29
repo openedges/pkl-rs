@@ -1,0 +1,62 @@
+{
+  "actual_guest_or_compiler_executions": 0,
+  "capture": {
+    "bytes": 18072,
+    "path": "target/m2/stage103-reflection-oracle-prep-03/capture.py",
+    "sha256": "ee3c8ced386777459a82223124f4fcf02214d7e60669fc7c85ec47b19f7446b4"
+  },
+  "complete": true,
+  "controls": [
+    {
+      "case": "existing-file-counted",
+      "logical_bytes": 17,
+      "passed": true,
+      "raised": null,
+      "transient_events": 0
+    },
+    {
+      "case": "vanished-cache-recorded",
+      "logical_bytes": 0,
+      "passed": true,
+      "raised": null,
+      "transient_events": 1
+    },
+    {
+      "case": "transient-tmp-reappears-counted",
+      "logical_bytes": 17,
+      "passed": true,
+      "raised": null,
+      "transient_events": 0
+    },
+    {
+      "case": "missing-output-authority-fails",
+      "logical_bytes": null,
+      "passed": true,
+      "raised": "FileNotFoundError",
+      "transient_events": 0
+    },
+    {
+      "case": "missing-bound-helper-fails",
+      "logical_bytes": null,
+      "passed": true,
+      "raised": "FileNotFoundError",
+      "transient_events": 0
+    },
+    {
+      "case": "cache-permission-error-fails",
+      "logical_bytes": null,
+      "passed": true,
+      "raised": "PermissionError",
+      "transient_events": 0
+    }
+  ],
+  "created_epoch": 1793101423.2963352,
+  "kind": "Narrow disappearing owned cache accounting source review",
+  "preparation": {
+    "bytes": 6549,
+    "path": "target/m2/stage103-reflection-oracle-prep-03/preparation.json",
+    "sha256": "b8b1b5de970c095a2ee24aba9d9778f67abc1cb9a08cddf00993646c776b6b70"
+  },
+  "review": "Only missing paths below exact owned home/Library/Caches or tmp receive a second lstat; existing/reappearing files count toward resource cap. Output authority and sealed helper input disappearance, and all other exceptions, still fail. Transient absence is recorded. Readback retains original prep02 main166 authority; only metadata output changes to fresh02. Resource/profile limits unchanged.",
+  "success": true
+}

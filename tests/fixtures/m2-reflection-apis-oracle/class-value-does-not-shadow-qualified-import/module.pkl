@@ -1,0 +1,8 @@
+module stage103.review.qualifiedShadow
+import "pkl:reflect"
+import "pkl:base" as b
+class C {
+  b: Int = throw("class value must remain lazy")
+  x: b.String
+}
+hidden mirror = reflect.Class(C)
