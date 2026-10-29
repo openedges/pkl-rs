@@ -1,0 +1,1 @@
+module.relativePathTo(import("bad scheme:child")).toString()

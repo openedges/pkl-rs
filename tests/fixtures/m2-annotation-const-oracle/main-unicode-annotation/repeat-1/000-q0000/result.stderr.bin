@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot reference `module` within an annotation body.
+
+3 | @Ann { v = new { `한글😀` = module } }
+                              ^^^^^^
+at stage108.unicode_annotation#C.v.`한글😀` (file:///stage108/annotation-const/unicode-annotation.pkl)

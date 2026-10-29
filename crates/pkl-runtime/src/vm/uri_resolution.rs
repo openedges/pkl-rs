@@ -192,6 +192,23 @@ impl Vm {
                             PklString::from("#").concat(member)
                         },
                     };
+                    if let Some(source) = &mut origin.source
+                        && source.uri.as_ref() == "repl:text"
+                        && source.module_name.is_empty()
+                    {
+                        // AstBuilder.resolveImport reports its lexical ModuleInfo
+                        // scope, not the expression SimpleRootNode's empty name.
+                        // Keep this provenance local to the preparation frame.
+                        let lexical_module = source.uri.clone();
+                        Arc::make_mut(source).module_name = lexical_module;
+                        origin.member = if member.is_empty()
+                            || matches!(member.encode_utf16().next(), Some(46 | 91))
+                        {
+                            member.clone()
+                        } else {
+                            PklString::from(".").concat(member)
+                        };
+                    }
                     if let Some(caller) = self.frames.len().checked_sub(2).map(|i| &self.frames[i])
                         && caller
                             .module_load
@@ -240,7 +257,10 @@ impl Vm {
                         .concat(&diagnostic.member.as_ref().map_or_else(
                             PklString::default,
                             |suffix| {
-                                if source.uri.as_ref() == "repl:text"
+                                if suffix.encode_utf16().next() == Some(46) {
+                                    // Explicit AnnotationScope root boundary.
+                                    suffix.as_ref().clone()
+                                } else if source.uri.as_ref() == "repl:text"
                                     && source.module_name.is_empty()
                                 {
                                     // Expression AST scopes descend from
@@ -735,4 +755,82 @@ pub(super) fn module_import_order(
         steps.push(PreparationStep::Failure(error.clone()));
     }
     steps
+}
+
+impl Vm {
+    pub(super) fn module_relative_path_to(&mut self) -> Result<(), RuntimeError> {
+        let other = self.pop()?.as_object()?;
+        let receiver = self.conversion_receiver()?;
+        let error = |message: String| {
+            let mut error = RuntimeError::new(ErrorKind::Type, message);
+            // External method bodies have an unavailable source section.
+            error.unavailable_origin = true;
+            error
+        };
+        if self.heap.get(receiver)?.module_unit.is_none() {
+            return Err(error(
+                "Expected a module as the receiver, but got an object that amends a module.".into(),
+            ));
+        }
+        if self.heap.get(other)?.module_unit.is_none() {
+            return Err(error(
+                "Expected a module as argument, but got an object that amends a module.".into(),
+            ));
+        }
+        let key_uri = |id| -> Result<Arc<str>, RuntimeError> {
+            let unit = self.heap.get(id)?.module_unit.expect("actual module owner");
+            let unit = self
+                .program
+                .units
+                .get(unit.0 as usize)
+                .ok_or_else(|| invalid("module path unit"))?;
+            unit.key
+                .as_ref()
+                .map(|key| key.uri.clone())
+                .or_else(|| {
+                    unit.identity
+                        .as_ref()
+                        .map(|identity| identity.original_uri.clone())
+                })
+                .ok_or_else(|| {
+                    invalid("Module.relativePathTo requires original ModuleKey URI metadata")
+                })
+        };
+        let receiver_uri = key_uri(receiver)?;
+        let other_uri = key_uri(other)?;
+        let Some(elements) =
+            crate::host::resources::module_relative_path_elements(&receiver_uri, &other_uri)?
+        else {
+            return Err(error(format!(
+                "No descendent path exists between modules `{receiver_uri}` and `{other_uri}`."
+            )));
+        };
+        if elements.is_empty() {
+            let empty = self.empty_strict_collection(crate::heap::CollectionKind::List);
+            self.stack.push(Value::Object(empty));
+            return Ok(());
+        }
+        // VmList.create(elements, elements.length - 1) makes a fresh List when
+        // the split array is nonempty, even when the resulting List is empty.
+        let builder = self.heap.allocate(Object {
+            collection_kind: crate::heap::CollectionKind::List,
+            ..Default::default()
+        });
+        self.frames
+            .last_mut()
+            .expect("module path frame")
+            .builders
+            .push(builder);
+        for element in elements.iter().take(elements.len() - 1) {
+            self.stack.push(Value::string(element.clone()));
+            self.append_strict_element()?;
+        }
+        self.frames
+            .last_mut()
+            .expect("module path frame")
+            .builders
+            .pop();
+        self.stack.push(Value::Object(builder));
+        Ok(())
+    }
 }

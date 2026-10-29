@@ -1,0 +1,54 @@
+{
+  "complete": true,
+  "success": true,
+  "Java_authority_acquisition_only": true,
+  "Rust_compatibility_executed": false,
+  "canonical_edits": false,
+  "contracts": 48,
+  "observations": 96,
+  "statuses": {
+    "success": 42,
+    "error": 54
+  },
+  "Logger_events": 0,
+  "rows": [
+    {
+      "report": {
+        "path": "target/m2/stage106-module-relativepath-oracle-01/report.json",
+        "bytes": 962117,
+        "mode": 420,
+        "sha256": "5524f6ba88d0e67c33a4b4a0a32399919867698d6767bf8a513cc186e6b36ab4"
+      },
+      "contracts": 46,
+      "observations": 92,
+      "statuses": {
+        "error": 50,
+        "success": 42
+      },
+      "sessions": 18,
+      "logger_events": 0,
+      "owned_closed": true,
+      "source_and_runtime_stable": true
+    },
+    {
+      "report": {
+        "path": "target/m2/stage106-module-relativepath-amend-oracle-01/report.json",
+        "bytes": 79892,
+        "mode": 420,
+        "sha256": "8c2d51590725a5b17264b8ff96f54ed089b3743e222cfc4c978ee38251fdd986"
+      },
+      "contracts": 2,
+      "observations": 4,
+      "statuses": {
+        "error": 4
+      },
+      "sessions": 2,
+      "logger_events": 0,
+      "owned_closed": true,
+      "source_and_runtime_stable": true
+    }
+  ],
+  "empty_amendments_preserved": "Main common q0005/q0006 List() reflect actual empty-amendment identity optimization.",
+  "nonempty_amendments": "Distinct marker override produces receiver/argument ordinary errors in separate4obs.",
+  "module_factory_profile": "Finite pinned synthetic ModuleKey map, default allowed modules plus exact listed URI patterns; original/resolved URIs explicitly separate, no performance claim."
+}

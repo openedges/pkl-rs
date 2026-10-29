@@ -1,0 +1,5 @@
+module stage108.annotation_qualified
+class Ann extends Annotation { v: Any }
+const stableValue = 7
+@Ann { v = module.stableValue }
+class C {}

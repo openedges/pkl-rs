@@ -1,0 +1,14 @@
+# Reference source revisions for the Pkl 0.32.0 compatibility baseline.
+# Format: one UTF-8 key=value per line; blank lines and full-line # comments
+# are allowed. Keys must occur exactly once. Values are literal, unquoted.
+# Changing a pin also requires updating the corresponding submodule gitlink.
+schema=1
+baseline.pkl=0.32.0
+pkl.path=external/pkl
+pkl.url=https://github.com/apple/pkl.git
+pkl.revision=e51fb2f91774265666f94980ec630db794a4db2d
+pkl.version=0.32.0
+pkl-pantry.path=external/pkl-pantry
+pkl-pantry.url=https://github.com/apple/pkl-pantry.git
+pkl-pantry.revision=904a68184e54da378b0a0e8a911a3fab3956f693
+pkl-pantry.pkl-version=0.32.0

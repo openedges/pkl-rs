@@ -1,0 +1,167 @@
+{
+  "complete": true,
+  "contracts": 32,
+  "rows": [
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "original-constannotation3"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "original-constclassbody"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "annotation-direct"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "annotation-object"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "annotation-lambda"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "annotation-let"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "annotation-class-property"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "annotation-class-method"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "annotation-qualified"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "annotation-qualified-nonconst"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "annotation-class-definition"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "class-direct"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "class-object"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "class-lambda"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "class-let"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "class-qualified"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "class-super-constraint"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "class-property-constraint"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "annotation-constraint"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "const-direct"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "const-object"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "const-lambda"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "const-let"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "const-qualified"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "const-qualified-nonconst"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "sibling-owner-restoration"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "sibling-annotations"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "unicode-annotation"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "module-annotation"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "query-synthetic"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0001",
+      "program": "query-synthetic"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0002",
+      "program": "query-synthetic"
+    }
+  ],
+  "success": true
+}

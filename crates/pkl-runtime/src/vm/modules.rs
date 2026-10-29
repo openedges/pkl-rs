@@ -1204,7 +1204,11 @@ pub(super) fn imported_diagnostic(
             .member
             .clone()
             .map_or_else(PklString::default, |suffix| {
-                PklString::from("#").concat(&suffix)
+                if suffix.encode_utf16().next() == Some(46) {
+                    suffix.as_ref().clone()
+                } else {
+                    PklString::from("#").concat(&suffix)
+                }
             }),
     });
     error.frontend = Some(Arc::new(crate::modules::ModuleDiagnostic {

@@ -1,0 +1,116 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "contracts": 6,
+  "kind": "Stage108 six corrected invocation/annotation-forcing supplementary controls",
+  "main_capture_unchanged": {
+    "bytes": 929883,
+    "mode": 420,
+    "path": "target/m2/stage108-annotation-const-oracle-01/report.json",
+    "sha256": "7bb86f6d3c79d2c7c32d6c1e18871a0c119360f46212c7c64307583bd67f9c0d"
+  },
+  "programs": [
+    {
+      "id": "annotation-lambda",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Supported Function.apply invocation; original direct-call syntaxerror retained separately",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.annotation_lambda\nclass Ann extends Annotation { v: Any }\n@Ann { v = ((x) -> module).apply(0) }\nclass C {}\n",
+      "source_uri": "file:///stage108/annotation-const-supplement/annotation-lambda.pkl"
+    },
+    {
+      "id": "class-lambda",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Supported Function.apply invocation; original direct-call syntaxerror retained separately",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.class_lambda\nclass C { value = ((x) -> module).apply(0) }\n",
+      "source_uri": "file:///stage108/annotation-const-supplement/class-lambda.pkl"
+    },
+    {
+      "id": "const-lambda",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Supported Function.apply invocation; original direct-call syntaxerror retained separately",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.const_lambda\nconst value = ((x) -> module).apply(0)\n",
+      "source_uri": "file:///stage108/annotation-const-supplement/const-lambda.pkl"
+    },
+    {
+      "id": "query-typed-lambda",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Supported Function.apply typedlambda syntheticquery; no guessed firsterror",
+          "executed": false,
+          "expected": null,
+          "expression": "((x: Int(module)) -> x).apply(1).toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.query_synthetic\nconst stableValue = 7\n",
+      "source_uri": "file:///stage108/annotation-const-supplement/query-typed-lambda.pkl"
+    },
+    {
+      "id": "annotation-qualified-value",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Force actual annotation property after reflection exposes it; earlier classmetadata-only/nonforcing success retained",
+          "executed": false,
+          "expected": null,
+          "expression": "reflect.Class(C).annotations[0].v.toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.annotation_qualified\nimport \"pkl:reflect\"\nclass Ann extends Annotation { v: Any }\nconst stableValue = 7\n@Ann { v = module.stableValue }\nclass C {}\n",
+      "source_uri": "file:///stage108/annotation-const-supplement/annotation-qualified-value.pkl"
+    },
+    {
+      "id": "annotation-qualified-nonconst-value",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Force actual annotation property after reflection exposes it; earlier classmetadata-only/nonforcing success retained",
+          "executed": false,
+          "expected": null,
+          "expression": "reflect.Class(C).annotations[0].v.toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.annotation_qualified_nonconst\nimport \"pkl:reflect\"\nclass Ann extends Annotation { v: Any }\nmutable = 7\n@Ann { v = module.mutable }\nclass C {}\n",
+      "source_uri": "file:///stage108/annotation-const-supplement/annotation-qualified-nonconst-value.pkl"
+    }
+  ],
+  "schema": 1
+}

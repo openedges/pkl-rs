@@ -360,6 +360,57 @@ pub(crate) fn import_triple_path(authored: &str) -> Result<Option<String>, Runti
     triple_path(&parsed, authored, "Module")
 }
 
+/// ModuleClassNodes.relativePathTo uses URI.relativize after cutting the
+/// original receiver URI string at its final slash, including query/fragment.
+/// Return Java getPath().split("/") elements; the caller drops the last element.
+pub(crate) fn module_relative_path_elements(
+    receiver: &str,
+    other: &str,
+) -> Result<Option<Vec<String>>, RuntimeError> {
+    let Some(slash) = receiver.rfind('/') else {
+        return Ok(None);
+    };
+    let base = ResourceUri::parse(&receiver[..slash + 1])
+        .map_err(|_| unsupported("Invalid original module key URI."))?;
+    let child =
+        ResourceUri::parse(other).map_err(|_| unsupported("Invalid other module key URI."))?;
+    // java.net.URI.relativize compares raw authority spelling (with percent
+    // hex case folded), rather than URI.equals server-host case folding.
+    let authority = |value: Option<&str>| value.filter(|value| !value.is_empty()).map(fold_escapes);
+    let same_scheme = match (&base.scheme, &child.scheme) {
+        (Some(left), Some(right)) => left.eq_ignore_ascii_case(right),
+        (None, None) => true,
+        _ => false,
+    };
+    if base.opaque
+        || child.opaque
+        || !same_scheme
+        || authority(base.authority.as_deref()) != authority(child.authority.as_deref())
+    {
+        return Ok(None);
+    }
+    let mut base_path = normalize_path(&base.path);
+    let child_path = normalize_path(&child.path);
+    if base_path != child_path {
+        if !base_path.ends_with('/') {
+            base_path.push('/');
+        }
+        if !child_path.starts_with(&base_path) {
+            return Ok(None);
+        }
+    }
+    let decoded = decode_escapes(&child_path[base_path.len()..]);
+    // Java String.split keeps one empty element for the empty String, but
+    // discards all trailing empty fields for a nonempty String.
+    let mut elements = decoded.split('/').map(str::to_owned).collect::<Vec<_>>();
+    if !decoded.is_empty() {
+        while elements.last().is_some_and(String::is_empty) {
+            elements.pop();
+        }
+    }
+    Ok(Some(elements))
+}
+
 fn decode_escapes(text: &str) -> String {
     let mut bytes = Vec::new();
     let mut index = 0;

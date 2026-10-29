@@ -1,0 +1,9 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `absent` in object of type `stage105.failedClass#C`.
+
+1 | new C {}.getProperty("absent").toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Available properties:
+early

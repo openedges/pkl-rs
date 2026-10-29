@@ -1,0 +1,770 @@
+[
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/root/a/b/child.pkl\")).toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "common",
+    "program": "main-common",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/root/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/root/peer.pkl\")).toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "common",
+    "program": "main-common",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/root/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(module).toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "common",
+    "program": "main-common",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/root/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/outside.pkl\")).toString()",
+    "id": "q0003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "common",
+    "program": "main-common",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/root/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "import(\"file:///stage106/root/a/b/child.pkl\").relativePathTo(module).toString()",
+    "id": "q0004",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 4,
+    "original_program": "common",
+    "program": "main-common",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/root/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "(module) {}.relativePathTo(module).toString()",
+    "id": "q0005",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 5,
+    "original_program": "common",
+    "program": "main-common",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/root/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo((module) {}).toString()",
+    "id": "q0006",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 6,
+    "original_program": "common",
+    "program": "main-common",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/root/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(new Dynamic {}).toString()",
+    "id": "q0007",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 7,
+    "original_program": "common",
+    "program": "main-common",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/root/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(42).toString()",
+    "id": "q0008",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 8,
+    "original_program": "common",
+    "program": "main-common",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/root/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo().toString()",
+    "id": "q0009",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 9,
+    "original_program": "common",
+    "program": "main-common",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/root/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(module, module).toString()",
+    "id": "q0010",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 10,
+    "original_program": "common",
+    "program": "main-common",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/root/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo.toString()",
+    "id": "q0011",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 11,
+    "original_program": "common",
+    "program": "main-common",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/root/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"pkl:base\")).toString()",
+    "id": "q0012",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 12,
+    "original_program": "common",
+    "program": "main-common",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/root/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "import(\"pkl:base\").relativePathTo(module).toString()",
+    "id": "q0013",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 13,
+    "original_program": "common",
+    "program": "main-common",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/root/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"bad scheme:child\")).toString()",
+    "id": "q0014",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 14,
+    "original_program": "common",
+    "program": "main-common",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/root/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/bad%Q0.pkl\")).toString()",
+    "id": "q0015",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 15,
+    "original_program": "common",
+    "program": "main-common",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/root/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/child.pkl#bad{\")).toString()",
+    "id": "q0016",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 16,
+    "original_program": "common",
+    "program": "main-common",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/root/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/encoded/space%20name/child.pkl\")).toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "encoded",
+    "program": "main-encoded",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/encoded/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/encoded/a%2Fb/child.pkl\")).toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "encoded",
+    "program": "main-encoded",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/encoded/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/encoded/%252F/child.pkl\")).toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "encoded",
+    "program": "main-encoded",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/encoded/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/encoded/caf%C3%A9/child.pkl\")).toString()",
+    "id": "q0003",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 3,
+    "original_program": "encoded",
+    "program": "main-encoded",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/encoded/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/encoded/%FF/child.pkl\")).toString()",
+    "id": "q0004",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 4,
+    "original_program": "encoded",
+    "program": "main-encoded",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/encoded/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/encoded/a//b/child.pkl\")).toString()",
+    "id": "q0005",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 5,
+    "original_program": "encoded",
+    "program": "main-encoded",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/encoded/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/encoded/dir/\")).toString()",
+    "id": "q0006",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 6,
+    "original_program": "encoded",
+    "program": "main-encoded",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/encoded/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/encoded/\")).toString()",
+    "id": "q0007",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 7,
+    "original_program": "encoded",
+    "program": "main-encoded",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/encoded/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"https://USER@example.com:443/base/sub/child.pkl\")).toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "authority",
+    "program": "main-authority",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "https://USER@Example.COM:443/base/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"https://user@Example.COM:443/base/sub/child.pkl\")).toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "authority",
+    "program": "main-authority",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "https://USER@Example.COM:443/base/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"https://USER@Example.COM/base/sub/child.pkl\")).toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "authority",
+    "program": "main-authority",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "https://USER@Example.COM:443/base/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"https://elsewhere.test/base/sub/child.pkl\")).toString()",
+    "id": "q0003",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 3,
+    "original_program": "authority",
+    "program": "main-authority",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "https://USER@Example.COM:443/base/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"HTTPS://USER@Example.COM:443/base/sub/child.pkl\")).toString()",
+    "id": "q0004",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 4,
+    "original_program": "authority",
+    "program": "main-authority",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "https://USER@Example.COM:443/base/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/norm/sub/../sub/child.pkl\")).toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "normalization",
+    "program": "main-normalization",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/norm/a/../root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/normx/child.pkl\")).toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "normalization",
+    "program": "main-normalization",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/norm/a/../root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/norm/\")).toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "normalization",
+    "program": "main-normalization",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/norm/a/../root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(module).toString()",
+    "id": "q0003",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 3,
+    "original_program": "normalization",
+    "program": "main-normalization",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/norm/a/../root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/raw/%2F/sub/child.pkl\")).toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "escaped-prefix",
+    "program": "main-escaped-prefix",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/raw/%2F/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/raw/%2f/sub/child.pkl\")).toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "escaped-prefix",
+    "program": "main-escaped-prefix",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/raw/%2F/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/raw///sub/child.pkl\")).toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "escaped-prefix",
+    "program": "main-escaped-prefix",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/raw/%2F/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(module).toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "query-fragment",
+    "program": "main-query-fragment",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/query/root.pkl?folder=/more/#slash/"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/query/root.pkl?other=x#f\")).toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 1,
+    "original_program": "query-fragment",
+    "program": "main-query-fragment",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/query/root.pkl?folder=/more/#slash/"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/query/sub/child.pkl\")).toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 2,
+    "original_program": "query-fragment",
+    "program": "main-query-fragment",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/query/root.pkl?folder=/more/#slash/"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(module).toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "opaque",
+    "program": "main-opaque",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "repl:stage106"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"pkl:base\")).toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "opaque",
+    "program": "main-opaque",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "repl:stage106"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(module).toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "opaque-slash",
+    "program": "main-opaque-slash",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "repl:stage106/dir/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"pkl:base\")).toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "opaque-slash",
+    "program": "main-opaque-slash",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "repl:stage106/dir/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.relativePathTo(import(\"file:///stage106/identity/sub/child.pkl\")).toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "key-identity",
+    "program": "main-key-identity",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/identity/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "import(\"file:///stage106/identity/sub/child.pkl\").relativePathTo(module).toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "key-identity",
+    "program": "main-key-identity",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/identity/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "amend",
+    "expression": "(module) { marker = true }.relativePathTo(module).toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "nonempty-amendment",
+    "program": "amend-nonempty-amendment",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/amendment/root.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "amend",
+    "expression": "module.relativePathTo((module) { marker = true }).toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "nonempty-amendment",
+    "program": "amend-nonempty-amendment",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/amendment/root.pkl"
+  }
+]

@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+selected initializer
+
+2 | class Data { value = trace("stored"); explosive = throw("selected initializer"); resource = read("env:STAGE105_TYPED_LOOKUP_UNSET") }
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage105.lazy#Data.explosive (file:///stage105/typed-required/lazy.pkl)
+
+1 | subject.getProperty("explosive").toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

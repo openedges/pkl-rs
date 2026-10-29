@@ -1,5 +1,29 @@
 # M2 language evidence
 
+## Stage109 Typed property lookup, module paths and annotation/const diagnostics
+
+The [Stage109 descriptor](stage109-typed-module-annotation-checkpoint.json) records the
+implementation, raw evidence and restoration dependencies. Targeted validation passes
+152 tests with one required placeholder ignored. Current native readbacks match 276
+new ordinary observations and 1,138 existing Typed/reflection observations. Each
+Native02, NAPI03 and Chromium03 capture matches 276 ordinary observations, 2,288
+portable fields and eight Logger events; two Java internal observations remain
+unresolved per target. Native01 and NAPI02 acquisition failures remain unchanged.
+
+The workspace passes **1,658 tests, zero failures and five ignored**, with complete
+target/example/doctest coverage. Formatting, xtask, all-target Clippy with warnings
+denied, Wasm and eight freshness commands pass. M1 matches 6,078 checks per target.
+The full 4,442-case ready replay records **4,332 passes, 26 mismatches, 82 unsupported
+cases and two oracle errors**, with zero historical-pass regressions and all 88
+metamorphic checks passing. The function-based full gate retains 1,780 overlapping
+unmet conditions. Full M2/API, release-platform and performance gates remain open.
+
+New Stage105/106/108 Java authorities and current validation records have explicit
+payload/alias catalogs. Earlier authorities retain their published Stage104 archive
+identities and restoration dependencies. All listed archive parts and dependencies
+are required. Isolated Stage110/111/113 candidates are outside this checkpoint.
+
+
 ## Stage103/104 reflection and Typed checkpoint
 
 The [Stage104 descriptor](stage104-reflection-typed-checkpoint.json) records the

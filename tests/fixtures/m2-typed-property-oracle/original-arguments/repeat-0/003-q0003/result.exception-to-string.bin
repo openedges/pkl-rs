@@ -1,0 +1,9 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `getPropertyOrNull` in object of type `stage105.arguments#Data`.
+
+1 | subject.getPropertyOrNull.toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+getProperty(name)

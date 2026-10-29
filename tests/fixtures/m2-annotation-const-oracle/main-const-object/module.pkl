@@ -1,0 +1,2 @@
+module stage108.const_object
+const value = new { nested = module }

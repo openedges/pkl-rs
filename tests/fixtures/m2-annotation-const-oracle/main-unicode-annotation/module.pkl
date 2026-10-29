@@ -1,0 +1,4 @@
+module stage108.unicode_annotation
+class Ann extends Annotation { v: Any }
+@Ann { v = new { `한글😀` = module } }
+class C {}

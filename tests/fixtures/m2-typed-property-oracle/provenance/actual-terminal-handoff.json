@@ -1,0 +1,34 @@
+{
+  "complete": true,
+  "started_epoch": 1793249640.169716,
+  "argv": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "target/m2/stage105-typed-property-oracle-prep-02/capture.py",
+    "--cohort",
+    "typed",
+    "--root-window-authorized"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+  "scope": "One root-authorized pinned Java acquisition; root old scalar replay may overlap, no performance claim",
+  "canonical_edits": false,
+  "Rust_compiler_executed": false,
+  "exit_code": 0,
+  "finished_epoch": 1793249681.997608,
+  "actual_capture_complete": true,
+  "report": {
+    "path": "target/m2/stage105-typed-property-oracle-01/report.json",
+    "bytes": 1127633,
+    "sha256": "295730b3217f881f3973ef3c9967fd85a197b35efbeb66fa0141403e6056ac18"
+  },
+  "stdout": {
+    "path": "target/m2/stage105-typed-property-oracle-execution-01/stdout.bin",
+    "bytes": 2146,
+    "sha256": "7aa4360036e9de1ddc4f7ff946987350d9eb40da7ffd6cc936aeb3f7673867fc"
+  },
+  "stderr": {
+    "path": "target/m2/stage105-typed-property-oracle-execution-01/stderr.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

@@ -926,6 +926,11 @@ impl<'a> Parser<'a> {
                     Kind::Name(_) | Kind::QuotedName(_) | Kind::DocComment
                 )
             {
+                if context == MemberContext::Class {
+                    // ParserImpl.parseClassBody falls through to
+                    // parseClassProperty, whose next token is an identifier.
+                    return Err(self.unexpected(Some("identifier")));
+                }
                 return Err(Diagnostic::language(
                     DiagnosticOrigin::Parser,
                     DiagnosticKind::Syntax,

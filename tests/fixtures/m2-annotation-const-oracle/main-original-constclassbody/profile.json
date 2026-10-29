@@ -1,0 +1,22 @@
+{
+  "Java_authority": {
+    "bytes": 929883,
+    "mode": 420,
+    "path": "target/m2/stage108-annotation-const-oracle-01/report.json",
+    "sha256": "7bb86f6d3c79d2c7c32d6c1e18871a0c119360f46212c7c64307583bd67f9c0d"
+  },
+  "Rust_execution": "unexecuted",
+  "Rust_query_input": "Exact corresponding repeat expression.bin; original UTF8/UTF16 preserved, never Base64.",
+  "cohort": "main",
+  "evaluator_environment": {},
+  "evaluator_external_properties": {},
+  "oracle_internal": false,
+  "original_program": "original-constclassbody",
+  "power_assertions": false,
+  "program": "main-original-constclassbody",
+  "queries": 1,
+  "repetitions": 2,
+  "required": true,
+  "required_unresolved": false,
+  "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/const/constClassBody.pkl"
+}

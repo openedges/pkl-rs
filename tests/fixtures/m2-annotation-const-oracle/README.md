@@ -1,0 +1,3 @@
+# Annotation and const diagnostic Java fixtures
+
+Pinned Pkl 0.32.0:40 contracts/80 observations,12 success,66 ordinary errors,2 oracle errors;0 Logger events. One const-lambda contract is a Java PklBugException/NullPointerException and remains required/unresolved. Four main direct-call lambda syntax controls and two supplementary local-import lookup controls remain exact actual outcomes; they do not establish their originally intended scopes. Corrected lambda and source-owned forced-annotation controls are separate inputs. The two original upstream sources and historical CLI authorities are preserved independently from the new API captures. No Rust comparison has executed.

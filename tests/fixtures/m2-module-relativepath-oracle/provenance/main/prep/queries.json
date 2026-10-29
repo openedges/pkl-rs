@@ -1,0 +1,458 @@
+{
+  "schema": 1,
+  "baseline": "Pkl0.32.0",
+  "kind": "Stage106 Module.relativePathTo bounded expected-free Java authority",
+  "contracts": 46,
+  "coverage_note": "Finite synthetic ModuleKey map; default allowed modules plus exact listed URIs; no network/filesystem source fetch for admitted virtual entries. Not a performance or full Module API claim.",
+  "programs": [
+    {
+      "id": "common",
+      "source": "module stage106.common\nunforced = throw(\"unselected module value\")\n",
+      "source_uri": "file:///stage106/root/root.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "module.relativePathTo(import(\"file:///stage106/root/a/b/child.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0001",
+          "expression": "module.relativePathTo(import(\"file:///stage106/root/peer.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0002",
+          "expression": "module.relativePathTo(module).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0003",
+          "expression": "module.relativePathTo(import(\"file:///stage106/outside.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0004",
+          "expression": "import(\"file:///stage106/root/a/b/child.pkl\").relativePathTo(module).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0005",
+          "expression": "(module) {}.relativePathTo(module).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0006",
+          "expression": "module.relativePathTo((module) {}).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0007",
+          "expression": "module.relativePathTo(new Dynamic {}).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0008",
+          "expression": "module.relativePathTo(42).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0009",
+          "expression": "module.relativePathTo().toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0010",
+          "expression": "module.relativePathTo(module, module).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0011",
+          "expression": "module.relativePathTo.toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0012",
+          "expression": "module.relativePathTo(import(\"pkl:base\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0013",
+          "expression": "import(\"pkl:base\").relativePathTo(module).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0014",
+          "expression": "module.relativePathTo(import(\"bad scheme:child\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0015",
+          "expression": "module.relativePathTo(import(\"file:///stage106/bad%Q0.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0016",
+          "expression": "module.relativePathTo(import(\"file:///stage106/child.pkl#bad{\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    },
+    {
+      "id": "encoded",
+      "source": "module stage106.encoded\nunforced = throw(\"unselected module value\")\n",
+      "source_uri": "file:///stage106/encoded/root.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "module.relativePathTo(import(\"file:///stage106/encoded/space%20name/child.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0001",
+          "expression": "module.relativePathTo(import(\"file:///stage106/encoded/a%2Fb/child.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0002",
+          "expression": "module.relativePathTo(import(\"file:///stage106/encoded/%252F/child.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0003",
+          "expression": "module.relativePathTo(import(\"file:///stage106/encoded/caf%C3%A9/child.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0004",
+          "expression": "module.relativePathTo(import(\"file:///stage106/encoded/%FF/child.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0005",
+          "expression": "module.relativePathTo(import(\"file:///stage106/encoded/a//b/child.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0006",
+          "expression": "module.relativePathTo(import(\"file:///stage106/encoded/dir/\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0007",
+          "expression": "module.relativePathTo(import(\"file:///stage106/encoded/\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    },
+    {
+      "id": "authority",
+      "source": "module stage106.authority\nunforced = throw(\"unselected module value\")\n",
+      "source_uri": "https://USER@Example.COM:443/base/root.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "module.relativePathTo(import(\"https://USER@example.com:443/base/sub/child.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0001",
+          "expression": "module.relativePathTo(import(\"https://user@Example.COM:443/base/sub/child.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0002",
+          "expression": "module.relativePathTo(import(\"https://USER@Example.COM/base/sub/child.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0003",
+          "expression": "module.relativePathTo(import(\"https://elsewhere.test/base/sub/child.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0004",
+          "expression": "module.relativePathTo(import(\"HTTPS://USER@Example.COM:443/base/sub/child.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    },
+    {
+      "id": "normalization",
+      "source": "module stage106.normalization\nunforced = throw(\"unselected module value\")\n",
+      "source_uri": "file:///stage106/norm/a/../root.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "module.relativePathTo(import(\"file:///stage106/norm/sub/../sub/child.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0001",
+          "expression": "module.relativePathTo(import(\"file:///stage106/normx/child.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0002",
+          "expression": "module.relativePathTo(import(\"file:///stage106/norm/\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0003",
+          "expression": "module.relativePathTo(module).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    },
+    {
+      "id": "escaped-prefix",
+      "source": "module stage106.escaped_prefix\nunforced = throw(\"unselected module value\")\n",
+      "source_uri": "file:///stage106/raw/%2F/root.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "module.relativePathTo(import(\"file:///stage106/raw/%2F/sub/child.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0001",
+          "expression": "module.relativePathTo(import(\"file:///stage106/raw/%2f/sub/child.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0002",
+          "expression": "module.relativePathTo(import(\"file:///stage106/raw///sub/child.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    },
+    {
+      "id": "query-fragment",
+      "source": "module stage106.query_fragment\nunforced = throw(\"unselected module value\")\n",
+      "source_uri": "file:///stage106/query/root.pkl?folder=/more/#slash/",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "module.relativePathTo(module).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0001",
+          "expression": "module.relativePathTo(import(\"file:///stage106/query/root.pkl?other=x#f\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0002",
+          "expression": "module.relativePathTo(import(\"file:///stage106/query/sub/child.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    },
+    {
+      "id": "opaque",
+      "source": "module stage106.opaque\nunforced = throw(\"unselected module value\")\n",
+      "source_uri": "repl:stage106",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "module.relativePathTo(module).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0001",
+          "expression": "module.relativePathTo(import(\"pkl:base\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    },
+    {
+      "id": "opaque-slash",
+      "source": "module stage106.opaque_slash\nunforced = throw(\"unselected module value\")\n",
+      "source_uri": "repl:stage106/dir/root.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "module.relativePathTo(module).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0001",
+          "expression": "module.relativePathTo(import(\"pkl:base\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    },
+    {
+      "id": "key-identity",
+      "source": "module stage106.key_identity\nunforced = throw(\"unselected module value\")\n",
+      "source_uri": "file:///stage106/identity/root.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "module.relativePathTo(import(\"file:///stage106/identity/sub/child.pkl\")).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0001",
+          "expression": "import(\"file:///stage106/identity/sub/child.pkl\").relativePathTo(module).toString()",
+          "edge": "ModuleInfo identity and original ModuleKey URI; actual whole result/error bytes, no Rust expectation",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    }
+  ]
+}

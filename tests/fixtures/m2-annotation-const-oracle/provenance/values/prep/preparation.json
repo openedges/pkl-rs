@@ -1,0 +1,30 @@
+{
+  "actual_Java_executed": false,
+  "capture": {
+    "bytes": 17526,
+    "mode": 420,
+    "path": "target/m2/stage108-annotation-const-oracle-prep-04/capture.py",
+    "sha256": "44656fa40273a3099f49a4bbd607abf7702dd34b3fa665866314e6943ca81c01"
+  },
+  "complete": true,
+  "contracts": 2,
+  "expected_results_generated": false,
+  "matrix": {
+    "bytes": 2040,
+    "mode": 420,
+    "path": "target/m2/stage108-annotation-const-oracle-prep-04/queries.json",
+    "sha256": "d25fd3f1d547a24405bb33201f3c3bdf57ac27407b92cb5773162e1a9711bf47"
+  },
+  "planned_observations": 4,
+  "planned_sessions": 4,
+  "preserved_supplement": {
+    "bytes": 220273,
+    "mode": 420,
+    "path": "target/m2/stage108-annotation-const-supplement-oracle-01/report.json",
+    "sha256": "3abcb24d1c865e9e25d36e9700f4cdd22c3f57c9998fd09863a2350ff0686d6e"
+  },
+  "programs": 2,
+  "root_window_granted": true,
+  "same_resource_profile": true,
+  "source_only": true
+}

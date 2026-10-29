@@ -1,0 +1,13 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `dependency` in module `stage105.members`.
+
+1 | module.getProperty("dependency").getClass().toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Available properties in module `stage105.members`:
+Alias
+Data
+Parent
+output
+subject

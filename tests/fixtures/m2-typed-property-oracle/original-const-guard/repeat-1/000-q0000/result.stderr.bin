@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot call method `getPropertyOrNull` from here because it is not `const`.
+
+2 | @Deprecated { message = module.getPropertyOrNull("value")?.toString() ?? "absent" }
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage105.constGuard#f.message (file:///stage105/typed-nullable/const-guard.pkl)
+
+To fix, do either of:
+1. Add modifier `const` to method `getPropertyOrNull`
+2. Self-import this module, and reference this method from the import.

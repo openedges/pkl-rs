@@ -1,0 +1,3 @@
+module stage105.conversions
+class Data { value: String; hidden concealed = 9 }
+class WithDefault { default = 7 }

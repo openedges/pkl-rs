@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot call method `getProperty` from here because it is not `const`.
+
+2 | @Deprecated { message = module.getProperty("value")?.toString() ?? "absent" }
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage105.constGuard#f.message (file:///stage105/typed-required/const-guard.pkl)
+
+To fix, do either of:
+1. Add modifier `const` to method `getProperty`
+2. Self-import this module, and reference this method from the import.

@@ -1,0 +1,535 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "contracts": 32,
+  "kind": "Stage108 expected-free nearest annotation/class/const lexical diagnostic matrix",
+  "programs": [
+    {
+      "id": "original-constannotation3",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Exact original source bytes/URI; API output.text capture distinct from historical CLI",
+          "executed": false,
+          "expected": null,
+          "expression": "output.text",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "import \"pkl:reflect\"\n\nclass Ann extends Annotation {\n  foo: Int\n}\n\n@Ann { foo = module }\nclass Foo {}\n\nann = reflect.Class(Foo).annotations[0]\n",
+      "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/const/constAnnotation3.pkl"
+    },
+    {
+      "id": "original-constclassbody",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Exact original source bytes/URI; API output.text capture distinct from historical CLI",
+          "executed": false,
+          "expected": null,
+          "expression": "output.text",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "notConst = 1\n\nclass Foo {\n  foo = notConst\n}\n\nfoo = new Foo {}\n",
+      "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/const/constClassBody.pkl"
+    },
+    {
+      "id": "annotation-direct",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Class annotation is visited before entering annotated ClassScope",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.annotation_direct\nclass Ann extends Annotation { v: Any }\n@Ann { v = module }\nclass C {}\n",
+      "source_uri": "file:///stage108/annotation-const/annotation-direct.pkl"
+    },
+    {
+      "id": "annotation-object",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Ordinary object scope must preserve nearest annotation owner",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.annotation_object\nclass Ann extends Annotation { v: Any }\n@Ann { v = new { nested = module } }\nclass C {}\n",
+      "source_uri": "file:///stage108/annotation-const/annotation-object.pkl"
+    },
+    {
+      "id": "annotation-lambda",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Lambda scope must preserve nearest annotation owner",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.annotation_lambda\nclass Ann extends Annotation { v: Any }\n@Ann { v = ((x) -> module)(0) }\nclass C {}\n",
+      "source_uri": "file:///stage108/annotation-const/annotation-lambda.pkl"
+    },
+    {
+      "id": "annotation-let",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Let initializer scope retains nearest annotation owner",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.annotation_let\nclass Ann extends Annotation { v: Any }\n@Ann { v = let (m = module) m }\nclass C {}\n",
+      "source_uri": "file:///stage108/annotation-const/annotation-let.pkl"
+    },
+    {
+      "id": "annotation-class-property",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Property annotation within class has nearer AnnotationScope",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.annotation_class_property\nclass Ann extends Annotation { v: Any }\nclass C {\n  @Ann { v = module }\n  value = 0\n}\n",
+      "source_uri": "file:///stage108/annotation-const/annotation-class-property.pkl"
+    },
+    {
+      "id": "annotation-class-method",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Method annotation within class has nearer AnnotationScope",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.annotation_class_method\nclass Ann extends Annotation { v: Any }\nclass C {\n  @Ann { v = module }\n  function f() = 0\n}\n",
+      "source_uri": "file:///stage108/annotation-const/annotation-class-method.pkl"
+    },
+    {
+      "id": "annotation-qualified",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Qualified module property access uses const target check, not unqualified module error",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.annotation_qualified\nclass Ann extends Annotation { v: Any }\nconst stableValue = 7\n@Ann { v = module.stableValue }\nclass C {}\n",
+      "source_uri": "file:///stage108/annotation-const/annotation-qualified.pkl"
+    },
+    {
+      "id": "annotation-qualified-nonconst",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Qualified nonconst target produces its own actual diagnostic",
+          "executed": false,
+          "expected": null,
+          "expression": "C.toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.annotation_qualified_nonconst\nclass Ann extends Annotation { v: Any }\nmutable = 7\n@Ann { v = module.mutable }\nclass C {}\n",
+      "source_uri": "file:///stage108/annotation-const/annotation-qualified-nonconst.pkl"
+    },
+    {
+      "id": "annotation-class-definition",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Annotation-derived class definition body is a ClassScope, not AnnotationScope",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.annotation_class_definition\nclass Ann extends Annotation { v = module }\n",
+      "source_uri": "file:///stage108/annotation-const/annotation-class-definition.pkl"
+    },
+    {
+      "id": "class-direct",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Direct class body nearest ClassScope",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.class_direct\nclass C { value = module }\n",
+      "source_uri": "file:///stage108/annotation-const/class-direct.pkl"
+    },
+    {
+      "id": "class-object",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Ordinary object nested under class retains ClassScope",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.class_object\nclass C { value = new { nested = module } }\n",
+      "source_uri": "file:///stage108/annotation-const/class-object.pkl"
+    },
+    {
+      "id": "class-lambda",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Lambda under class retains ClassScope",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.class_lambda\nclass C { value = ((x) -> module)(0) }\n",
+      "source_uri": "file:///stage108/annotation-const/class-lambda.pkl"
+    },
+    {
+      "id": "class-let",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Let under class retains ClassScope",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.class_let\nclass C { value = let (m = module) m }\n",
+      "source_uri": "file:///stage108/annotation-const/class-let.pkl"
+    },
+    {
+      "id": "class-qualified",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Qualified module target in class is allowed for const property",
+          "executed": false,
+          "expected": null,
+          "expression": "(new C {}).value.toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.class_qualified\nconst stableValue = 7\nclass C { value = module.stableValue }\n",
+      "source_uri": "file:///stage108/annotation-const/class-qualified.pkl"
+    },
+    {
+      "id": "class-super-constraint",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Superclass constraint is visited after enterClass, before body",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.class_super_constraint\nopen class Base {}\nclass C extends Base(module) {}\n",
+      "source_uri": "file:///stage108/annotation-const/class-super-constraint.pkl"
+    },
+    {
+      "id": "class-property-constraint",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Class property type constraint retains ClassScope",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.class_property_constraint\nclass C { value: Int(module) = 1 }\n",
+      "source_uri": "file:///stage108/annotation-const/class-property-constraint.pkl"
+    },
+    {
+      "id": "annotation-constraint",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Type-constraint scope retains nearest AnnotationScope",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.annotation_constraint\nclass Ann extends Annotation { v: Any }\n@Ann { v = 1 as Int(module) }\nclass C {}\n",
+      "source_uri": "file:///stage108/annotation-const/annotation-constraint.pkl"
+    },
+    {
+      "id": "const-direct",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Const property without class/annotation owner",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.const_direct\nconst value = module\n",
+      "source_uri": "file:///stage108/annotation-const/const-direct.pkl"
+    },
+    {
+      "id": "const-object",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Ordinary object nested under const property has no annotation/class owner",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.const_object\nconst value = new { nested = module }\n",
+      "source_uri": "file:///stage108/annotation-const/const-object.pkl"
+    },
+    {
+      "id": "const-lambda",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Lambda nested under const property has no annotation/class owner",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.const_lambda\nconst value = ((x) -> module)(0)\n",
+      "source_uri": "file:///stage108/annotation-const/const-lambda.pkl"
+    },
+    {
+      "id": "const-let",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Let nested under const property has no annotation/class owner",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.const_let\nconst value = let (m = module) m\n",
+      "source_uri": "file:///stage108/annotation-const/const-let.pkl"
+    },
+    {
+      "id": "const-qualified",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Qualified const property access succeeds",
+          "executed": false,
+          "expected": null,
+          "expression": "value.toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.const_qualified\nconst stableValue = 7\nconst value = module.stableValue\n",
+      "source_uri": "file:///stage108/annotation-const/const-qualified.pkl"
+    },
+    {
+      "id": "const-qualified-nonconst",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Qualified access checks selected property constness",
+          "executed": false,
+          "expected": null,
+          "expression": "value.toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.const_qualified_nonconst\nmutable = 7\nconst value = module.mutable\n",
+      "source_uri": "file:///stage108/annotation-const/const-qualified-nonconst.pkl"
+    },
+    {
+      "id": "sibling-owner-restoration",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Exiting sibling class/annotation restores const-property owner",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.sibling_owner_restoration\nclass Ann extends Annotation { v: Any }\nconst stableValue = 7\n@Ann { v = module.stableValue }\nclass First {}\nconst value = module\n",
+      "source_uri": "file:///stage108/annotation-const/sibling-owner-restoration.pkl"
+    },
+    {
+      "id": "sibling-annotations",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Nearest annotation owner restored independently for sibling annotations",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.sibling_annotations\nclass Ann extends Annotation { v: Any }\nconst stableValue = 7\n@Ann { v = module.stableValue }\n@Ann { v = module }\nclass C {}\n",
+      "source_uri": "file:///stage108/annotation-const/sibling-annotations.pkl"
+    },
+    {
+      "id": "unicode-annotation",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Raw Unicode lexical owner frame, UTF8+UTF16, unchanged expression/source",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.unicode_annotation\nclass Ann extends Annotation { v: Any }\n@Ann { v = new { `한글😀` = module } }\nclass C {}\n",
+      "source_uri": "file:///stage108/annotation-const/unicode-annotation.pkl"
+    },
+    {
+      "id": "module-annotation",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Root module annotation before module scope body",
+          "executed": false,
+          "expected": null,
+          "expression": "\"ready\"",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "@Ann { v = module }\nmodule stage108.root_annotation\nclass Ann extends Annotation { v: Any }\n",
+      "source_uri": "file:///stage108/annotation-const/module-annotation.pkl"
+    },
+    {
+      "id": "query-synthetic",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Independent synthetic expression type-constraint root and qualified module access",
+          "executed": false,
+          "expected": null,
+          "expression": "((x: Int(module)) -> x)(1).toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Independent synthetic expression type-constraint root and qualified module access",
+          "executed": false,
+          "expected": null,
+          "expression": "(1 as Int(module)).toString()",
+          "id": "q0001",
+          "resource_class": "bounded"
+        },
+        {
+          "edge": "Independent synthetic expression type-constraint root and qualified module access",
+          "executed": false,
+          "expected": null,
+          "expression": "module.stableValue.toString()",
+          "id": "q0002",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.query_synthetic\nconst stableValue = 7\n",
+      "source_uri": "file:///stage108/annotation-const/query-synthetic.pkl"
+    }
+  ],
+  "schema": 1,
+  "scope": "Source-derived matrix; no Rust expected values; original Java CLI authority remains independently pinned."
+}

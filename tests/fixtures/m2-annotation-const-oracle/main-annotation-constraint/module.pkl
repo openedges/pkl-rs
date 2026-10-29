@@ -1,0 +1,4 @@
+module stage108.annotation_constraint
+class Ann extends Annotation { v: Any }
+@Ann { v = 1 as Int(module) }
+class C {}

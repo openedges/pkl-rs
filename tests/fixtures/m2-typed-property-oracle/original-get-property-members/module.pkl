@@ -1,0 +1,6 @@
+module stage105.members
+import "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage105-typed-property-oracle-prep-02/dependency.pkl"
+open class Parent { inherited = 2; hidden concealed = 3 }
+class Data extends Parent { own = 4; local scratch = throw("local initializer must stay lazy"); function method() = throw("method body must stay lazy") }
+typealias Alias = String
+hidden subject = new Data {}

@@ -1,0 +1,1 @@
+List(subject.getPropertyOrNull("absent"), subject.getPropertyOrNull("default"), subject.getPropertyOrNull("")).toString()

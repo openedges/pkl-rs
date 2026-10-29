@@ -1,0 +1,4 @@
+module stage108.annotation_direct
+class Ann extends Annotation { v: Any }
+@Ann { v = module }
+class C {}

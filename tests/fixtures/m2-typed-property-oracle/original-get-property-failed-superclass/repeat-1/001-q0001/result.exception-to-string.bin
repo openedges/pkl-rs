@@ -1,0 +1,9 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find method `getProperty` in class `stage105.failedSuperclass#C`.
+
+1 | new C {}.getProperty("own").toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Available methods in class `stage105.failedSuperclass#C`:
+

@@ -1,0 +1,4 @@
+module stage108.annotation_object
+class Ann extends Annotation { v: Any }
+@Ann { v = new { nested = module } }
+class C {}

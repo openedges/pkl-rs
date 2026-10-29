@@ -1,0 +1,2 @@
+module stage105.failedSuperclass
+class C extends Missing { own = 1 }

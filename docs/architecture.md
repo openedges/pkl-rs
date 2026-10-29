@@ -27,6 +27,16 @@ Incorporate Pkl 0.32 name resolution into compilation. Distinguish lexical bindi
 
 Represent lazy members with unevaluated, evaluating, and completed cache states. Keep a failed evaluation's result separate from the member cache so a later attempt can retry. Design inheritance, amendments, closures, type constraints, and memoization together. An evaluator-owned heap must support reclamation, including cyclic objects, in long-running REPL and server sessions.
 
+### Typed property lookup, module identity and bounded annotation/const diagnostics
+
+`Typed.getProperty` uses the existing String-checked property lookup continuation and actual Typed inheritance. It preserves lazy lookup, existing const-method restrictions, missing-member suggestions, receiver labels and UTF-16 property names. It shares the evaluator, diagnostic renderer and heap with native, Wasm and N-API.
+
+`Module.relativePathTo` works with original selected ModuleKey identities through the common URI/module machinery. Finite verification Hosts supply pinned synthetic/file sources, capabilities and exact resolution descriptors; they do not reinterpret module URIs as filesystem or network permissions. Java normalizes factory lookup keys without decoding percent escapes. The selected Host recognizes the three recorded normalized synthetic identities and the one normalized primary identity while preserving authored evaluation/source bytes. Supplied primary text remains owned by the shared cached/supplied-text path.
+
+Portable entry validation delegates the primary file/http/no-loader policy to the same finite Host validator before constructing a session. Unsupported configured `repl:` primaries receive a genuine no-loader completion. HTTP primaries retain nonlocal hierarchical capabilities. Unknown modules and unconfigured resource requests remain unavailable; only the recorded environment/property requests receive missing completions.
+
+Annotation/const diagnostics are verified against their exact authored Java outcomes. The required Java const-lambda internal failure remains unresolved. These bounded probes and their raw results do not imply complete diagnostic, language or API compatibility, and correctness acquisition profiles are not performance measurements.
+
 ## Compatibility Boundaries
 
 | Boundary | Design Requirement |

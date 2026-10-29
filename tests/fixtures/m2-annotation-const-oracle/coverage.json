@@ -1,0 +1,642 @@
+[
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "output.text",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "original-constannotation3",
+    "program": "main-original-constannotation3",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/const/constAnnotation3.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "output.text",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "original-constclassbody",
+    "program": "main-original-constclassbody",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/const/constClassBody.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "annotation-direct",
+    "program": "main-annotation-direct",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/annotation-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "annotation-object",
+    "program": "main-annotation-object",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/annotation-object.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "annotation-lambda",
+    "program": "main-annotation-lambda",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/annotation-lambda.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "annotation-let",
+    "program": "main-annotation-let",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/annotation-let.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "annotation-class-property",
+    "program": "main-annotation-class-property",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/annotation-class-property.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "annotation-class-method",
+    "program": "main-annotation-class-method",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/annotation-class-method.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "annotation-qualified",
+    "program": "main-annotation-qualified",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/annotation-qualified.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "C.toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "annotation-qualified-nonconst",
+    "program": "main-annotation-qualified-nonconst",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/annotation-qualified-nonconst.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "annotation-class-definition",
+    "program": "main-annotation-class-definition",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/annotation-class-definition.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "class-direct",
+    "program": "main-class-direct",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/class-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "class-object",
+    "program": "main-class-object",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/class-object.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "class-lambda",
+    "program": "main-class-lambda",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/class-lambda.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "class-let",
+    "program": "main-class-let",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/class-let.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "(new C {}).value.toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "class-qualified",
+    "program": "main-class-qualified",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/class-qualified.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "class-super-constraint",
+    "program": "main-class-super-constraint",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/class-super-constraint.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "class-property-constraint",
+    "program": "main-class-property-constraint",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/class-property-constraint.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "annotation-constraint",
+    "program": "main-annotation-constraint",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/annotation-constraint.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "const-direct",
+    "program": "main-const-direct",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/const-direct.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "const-object",
+    "program": "main-const-object",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/const-object.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "const-lambda",
+    "program": "main-const-lambda",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/const-lambda.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "const-let",
+    "program": "main-const-let",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/const-let.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "value.toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "const-qualified",
+    "program": "main-const-qualified",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/const-qualified.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "value.toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "const-qualified-nonconst",
+    "program": "main-const-qualified-nonconst",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/const-qualified-nonconst.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "sibling-owner-restoration",
+    "program": "main-sibling-owner-restoration",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/sibling-owner-restoration.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "sibling-annotations",
+    "program": "main-sibling-annotations",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/sibling-annotations.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "unicode-annotation",
+    "program": "main-unicode-annotation",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/unicode-annotation.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "module-annotation",
+    "program": "main-module-annotation",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/module-annotation.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "((x: Int(module)) -> x)(1).toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "query-synthetic",
+    "program": "main-query-synthetic",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/query-synthetic.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "(1 as Int(module)).toString()",
+    "id": "q0001",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 1,
+    "original_program": "query-synthetic",
+    "program": "main-query-synthetic",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/query-synthetic.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "main",
+    "expression": "module.stableValue.toString()",
+    "id": "q0002",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 2,
+    "original_program": "query-synthetic",
+    "program": "main-query-synthetic",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const/query-synthetic.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "annotation-lambda",
+    "program": "supplement-annotation-lambda",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const-supplement/annotation-lambda.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "class-lambda",
+    "program": "supplement-class-lambda",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const-supplement/class-lambda.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "\"ready\"",
+    "id": "q0000",
+    "oracle_statuses": [
+      "oracle-error",
+      "oracle-error"
+    ],
+    "ordinal": 0,
+    "original_program": "const-lambda",
+    "program": "supplement-const-lambda",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const-supplement/const-lambda.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "((x: Int(module)) -> x).apply(1).toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "query-typed-lambda",
+    "program": "supplement-query-typed-lambda",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const-supplement/query-typed-lambda.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "reflect.Class(C).annotations[0].v.toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "annotation-qualified-value",
+    "program": "supplement-annotation-qualified-value",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const-supplement/annotation-qualified-value.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "supplement",
+    "expression": "reflect.Class(C).annotations[0].v.toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "annotation-qualified-nonconst-value",
+    "program": "supplement-annotation-qualified-nonconst-value",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const-supplement/annotation-qualified-nonconst-value.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "values",
+    "expression": "annotationValue.toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "success",
+      "success"
+    ],
+    "ordinal": 0,
+    "original_program": "annotation-qualified-value-source",
+    "program": "values-annotation-qualified-value-source",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const-source-value/annotation-qualified-value-source.pkl"
+  },
+  {
+    "Rust_execution": "unexecuted",
+    "cohort": "values",
+    "expression": "annotationValue.toString()",
+    "id": "q0000",
+    "oracle_statuses": [
+      "error",
+      "error"
+    ],
+    "ordinal": 0,
+    "original_program": "annotation-qualified-nonconst-value-source",
+    "program": "values-annotation-qualified-nonconst-value-source",
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage108/annotation-const-source-value/annotation-qualified-nonconst-value-source.pkl"
+  }
+]

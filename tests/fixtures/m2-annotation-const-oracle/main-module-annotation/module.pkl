@@ -1,0 +1,3 @@
+@Ann { v = module }
+module stage108.root_annotation
+class Ann extends Annotation { v: Any }

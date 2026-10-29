@@ -1,0 +1,6 @@
+–– Pkl Error ––
+No descendent path exists between modules `file:///stage106/query/root.pkl?folder=/more/#slash/` and `file:///stage106/query/sub/child.pkl`.
+
+1 | module.relativePathTo(import("file:///stage106/query/sub/child.pkl")).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

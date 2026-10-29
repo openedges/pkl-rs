@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "baseline": "Pkl0.32.0",
+  "contracts": 2,
+  "kind": "Stage106 explicitly authorized nonempty amendment followup",
+  "programs": [
+    {
+      "id": "nonempty-amendment",
+      "source": "module stage106.amendment\nmarker = false\n",
+      "source_uri": "file:///stage106/amendment/root.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "(module) { marker = true }.relativePathTo(module).toString()",
+          "edge": "Nonempty marker amendment creates a distinct object; preserve earlier empty amendment identity observations",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        },
+        {
+          "id": "q0001",
+          "expression": "module.relativePathTo((module) { marker = true }).toString()",
+          "edge": "Nonempty marker amendment creates a distinct object; preserve earlier empty amendment identity observations",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded"
+        }
+      ]
+    }
+  ]
+}

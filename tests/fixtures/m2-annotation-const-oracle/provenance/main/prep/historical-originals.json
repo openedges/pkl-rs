@@ -1,0 +1,91 @@
+{
+  "complete": true,
+  "originals": [
+    {
+      "historical_Java_CLI": [
+        {
+          "bytes": 3182,
+          "mode": 420,
+          "path": "target/m2/stage94-originals-replay-01/cases/c595cfb5c6dd01cf40076ce1/java/process.json",
+          "sha256": "e275a0219c37a8a96ab5508f14e0e024ee2be474fe842d2ac1f29d1a9aebef4a"
+        },
+        {
+          "bytes": 294,
+          "mode": 420,
+          "path": "target/m2/stage94-originals-replay-01/cases/c595cfb5c6dd01cf40076ce1/java/result.json",
+          "sha256": "f1a93c56f733aa2c12dca06b3b1a5d0efe5ecb650a4b50e13f65b172cf21044a"
+        },
+        {
+          "bytes": 357,
+          "mode": 420,
+          "path": "target/m2/stage94-originals-replay-01/cases/c595cfb5c6dd01cf40076ce1/java/stderr.bin",
+          "sha256": "05840c254b88ee51747e0a819bcb80a09826af733d9afbe8475c7fe0ad26defd"
+        },
+        {
+          "bytes": 0,
+          "mode": 420,
+          "path": "target/m2/stage94-originals-replay-01/cases/c595cfb5c6dd01cf40076ce1/java/stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "name": "constAnnotation3.pkl",
+      "prior_Rust_capture": {
+        "bytes": 5619,
+        "mode": 420,
+        "path": "target/m2/stage104-full-ready-modules-01/c595cfb5c6dd01cf40076ce1/0/process.json",
+        "sha256": "42195eac59b0c01ae0ebecb98aed26a556a52de37c71e282261c06ca324c02cd"
+      },
+      "scope": "Historical CLI authority preserved independently; new API capture is separately identified.",
+      "source": {
+        "bytes": 143,
+        "mode": 420,
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/const/constAnnotation3.pkl",
+        "sha256": "f74c658e57912b91b05c46f738c856787b14731ffd3db19b173d2d8bc4df367f"
+      },
+      "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/const/constAnnotation3.pkl"
+    },
+    {
+      "historical_Java_CLI": [
+        {
+          "bytes": 3178,
+          "mode": 420,
+          "path": "target/m2/stage94-originals-replay-01/cases/5f822ca36d85925b4bf26851/java/process.json",
+          "sha256": "49856e76dfcd7b01b4ea280805df562665f21f2bc77b9c8720aea80eb5a3be7a"
+        },
+        {
+          "bytes": 294,
+          "mode": 420,
+          "path": "target/m2/stage94-originals-replay-01/cases/5f822ca36d85925b4bf26851/java/result.json",
+          "sha256": "248df986cb70218d22d8c7e166d14b6e338203b123501f3ac1c6384fe69a7dbc"
+        },
+        {
+          "bytes": 951,
+          "mode": 420,
+          "path": "target/m2/stage94-originals-replay-01/cases/5f822ca36d85925b4bf26851/java/stderr.bin",
+          "sha256": "45c0c8f0a3875d72a88add9a357a30e07f556cd88e907681ef062cb2dbf372f6"
+        },
+        {
+          "bytes": 0,
+          "mode": 420,
+          "path": "target/m2/stage94-originals-replay-01/cases/5f822ca36d85925b4bf26851/java/stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "name": "constClassBody.pkl",
+      "prior_Rust_capture": {
+        "bytes": 5584,
+        "mode": 420,
+        "path": "target/m2/stage104-full-ready-modules-01/5f822ca36d85925b4bf26851/0/process.json",
+        "sha256": "8f4479125c15c9282492c7bc2755c8ee07c96647d4641062e3c80706f9e727fa"
+      },
+      "scope": "Historical CLI authority preserved independently; new API capture is separately identified.",
+      "source": {
+        "bytes": 63,
+        "mode": 420,
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/const/constClassBody.pkl",
+        "sha256": "07e4f37b5cab25102c1bccf6e16a47761cf2624db34f15ffe5b1604662dffc7b"
+      },
+      "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/const/constClassBody.pkl"
+    }
+  ]
+}

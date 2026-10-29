@@ -1,0 +1,222 @@
+{
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/CollectionEveryOracle.java",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value",
+    "file:///stage108/annotation-const-supplement/annotation-qualified-value.pkl"
+  ],
+  "cleanup_events": [],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01",
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 0,
+  "finished_epoch": 1793255114.071968,
+  "helper": {
+    "bytes": 6329,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/CollectionEveryOracle.java",
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "owned_child_reaped": true,
+  "owned_processes": {
+    "root_observed": true,
+    "root_pid": 3374,
+    "terminal_live": [],
+    "tracked": [
+      {
+        "group_id_at_discovery": 3374,
+        "parent_pid_at_discovery": 3220,
+        "pid": 3374,
+        "started": "Thu Oct 29 15:25:13 2026"
+      }
+    ]
+  },
+  "owned_start": "Thu Oct 29 15:25:13 2026",
+  "pgid": 3374,
+  "pid": 3374,
+  "power_assertions": false,
+  "program": "annotation-qualified-value",
+  "repeat": 0,
+  "rows": [
+    {
+      "directory": "target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000",
+      "expression": "reflect.Class(C).annotations[0].v.toString()",
+      "id": "q0000",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 44,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/expression.bin",
+          "sha256": "3999225a5322ff2008e795c6edceae2e3d12cdaaad7f0673511866bf0f7fece5"
+        },
+        "expression.code-units.bin": {
+          "bytes": 88,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/expression.code-units.bin",
+          "sha256": "ae360433100a1c4dc949b70fe3c552bd457dcb2e436fa3416436993b2e4ce55b"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class.bin": {
+          "bytes": 25,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 50,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 161,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/result.exception-to-string.bin",
+          "sha256": "17ef5aefd9ad11d1a5fc9a6854c42c4a15b798ab491e15790869ed8d1c36ac50"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 306,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/result.exception-to-string.code-units.bin",
+          "sha256": "3ad5b427467c257517480ca927eb8e0a66301baaae43fa9c02ad46d116314bbf"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        "result.stderr.bin": {
+          "bytes": 134,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/result.stderr.bin",
+          "sha256": "ded8f1cfcca36b4ec6ee580743e04dac5d45771a4e343550751f017b1bd59462"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 252,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/result.stderr.code-units.bin",
+          "sha256": "66472b9fcd0bf2faca467438353b48e5743f4d0273bc1641c7db7b5997159a9e"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/000-q0000/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "error"
+    }
+  ],
+  "started_epoch": 1793255113.14737,
+  "stderr": {
+    "bytes": 0,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/process.stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 164,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/annotation-qualified-value/repeat-0/process.stdout.bin",
+    "sha256": "9b84c07ae5c1a282969fd1f5a71aa0c415c65ee73d62157882e166691232eb77"
+  }
+}

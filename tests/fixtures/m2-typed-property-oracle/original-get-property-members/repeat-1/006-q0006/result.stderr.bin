@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Cannot find property `?` in object of type `stage105.members#Data`.
+
+1 | subject.getProperty("\u{D800}").toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Available properties:
+concealed
+inherited
+own

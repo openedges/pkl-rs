@@ -1,0 +1,4 @@
+module stage105.constGuard
+@Deprecated { message = module.getPropertyOrNull("value")?.toString() ?? "absent" }
+function f() = 1
+value = 2

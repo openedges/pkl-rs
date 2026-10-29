@@ -1,0 +1,158 @@
+// Independent public Pkl 0.32.0 collection every() and raw logger authority.
+import java.io.DataOutputStream;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Base64;
+import java.util.Locale;
+import java.util.Map;
+import org.pkl.core.EvaluatorBuilder;
+import org.pkl.core.Logger;
+import org.pkl.core.ModuleSource;
+import org.pkl.core.PklBugException;
+import org.pkl.core.PklException;
+import org.pkl.core.StackFrame;
+
+public final class CollectionEveryOracle {
+  static int calls, successes, errors;
+
+  static void bytes(Path folder, String name, byte[] raw) throws Exception {
+    Files.write(folder.resolve(name + ".bin"), raw);
+  }
+
+  static void string(Path folder, String name, String value) throws Exception {
+    bytes(folder, name, value.getBytes(StandardCharsets.UTF_8));
+    try (var stream = new DataOutputStream(Files.newOutputStream(folder.resolve(name + ".code-units.bin")))) {
+      for (int i = 0; i < value.length(); i++) stream.writeChar(value.charAt(i));
+    }
+  }
+
+  static String status(Throwable error) {
+    if (error instanceof PklBugException) return "oracle-error\n";
+    if (error instanceof PklException) return "error\n";
+    return "api-exception\n";
+  }
+
+  static String message(Throwable error) {
+    return error.getMessage() == null ? error.toString() : error.getMessage();
+  }
+
+  static final class CaptureLogger implements Logger {
+    Path folder;
+    int count;
+
+    void begin(Path row) {
+      folder = row;
+      count = 0;
+    }
+
+    void end() throws Exception {
+      bytes(folder, "logs.count", (count + "\n").getBytes(StandardCharsets.UTF_8));
+      folder = null;
+    }
+
+    void record(String level, String message, StackFrame frame) {
+      if (folder == null) throw new IllegalStateException("logger outside a query row");
+      var prefix = String.format(Locale.ROOT, "log-%03d", count++);
+      try {
+        string(folder, prefix + ".level", level);
+        string(folder, prefix + ".message", message);
+        string(folder, prefix + ".module-uri", frame.getModuleUri());
+        string(folder, prefix + ".member", String.valueOf(frame.getMemberName()));
+        string(folder, prefix + ".position", frame.getStartLine() + ":" + frame.getStartColumn()
+            + "-" + frame.getEndLine() + ":" + frame.getEndColumn());
+      } catch (Exception error) {
+        throw new RuntimeException(error);
+      }
+    }
+
+    public void trace(String message, StackFrame frame) { record("trace", message, frame); }
+    public void warn(String message, StackFrame frame) { record("warn", message, frame); }
+  }
+
+  public static void main(String[] args) throws Exception {
+    if (args.length != 3) throw new IllegalArgumentException("OUTPUT INPUT URI");
+    Path output = Path.of(args[0]), input = Path.of(args[1]);
+    var virtualModules = new java.util.LinkedHashMap<URI, String[]>();
+    var allowed = new java.util.ArrayList<>(org.pkl.core.SecurityManagers.defaultAllowedModules);
+    allowed.add(java.util.regex.Pattern.compile(java.util.regex.Pattern.quote(args[2])));
+    for (var line : Files.readAllLines(Path.of(System.getProperty("stage106.moduleMap")), StandardCharsets.UTF_8)) {
+      var parts = line.split("\\t", -1);
+      if (parts.length != 3) throw new IllegalArgumentException("finite module map row");
+      var uri = URI.create(parts[0]);
+      var entry = new String[] {parts[1], new String(Base64.getDecoder().decode(parts[2]), StandardCharsets.UTF_8)};
+      var previous = virtualModules.put(uri.normalize(), entry);
+      if (previous != null && !java.util.Arrays.equals(previous, entry)) throw new IllegalArgumentException("conflicting module map");
+      allowed.add(java.util.regex.Pattern.compile(java.util.regex.Pattern.quote(parts[0])));
+    }
+    var source = ModuleSource.create(URI.create(args[2]), Files.readString(input.resolve("module.pkl"), StandardCharsets.UTF_8));
+    var lines = Files.readAllLines(input.resolve("queries.tsv"), StandardCharsets.UTF_8);
+    if (lines.isEmpty()) throw new IllegalArgumentException("empty query set");
+    String sessionMode = lines.get(0).split("\t", -1)[0];
+    if (!(sessionMode.equals("string") || sessionMode.equals("export"))) throw new IllegalArgumentException("bad mode");
+    System.out.println("session-open mode=" + sessionMode + " rows=" + lines.size());
+    var logger = new CaptureLogger();
+    var builder = EvaluatorBuilder.preconfigured().setModuleCacheDir(null).setColor(false)
+        .setLogger(logger)
+        .setPowerAssertionsEnabled(false).setEnvironmentVariables(Map.of()).setExternalProperties(Map.of());
+    builder.getModuleKeyFactories().add(0, uri -> {
+      var entry = virtualModules.get(uri);
+      if (entry == null) return java.util.Optional.empty();
+      var resolved = entry[0].equals("=") ? uri : URI.create(entry[0]);
+      return java.util.Optional.of(org.pkl.core.module.ModuleKeys.synthetic(uri, uri, resolved, entry[1], true));
+    });
+    builder.setAllowedModules(allowed);
+    try (var evaluator = builder.build()) {
+      for (int i = 0; i < lines.size(); i++) {
+        var columns = lines.get(i).split("\t", -1);
+        if (columns.length != 3 || !columns[0].equals(sessionMode)
+            || !columns[1].matches("[a-z0-9-]+")) throw new IllegalArgumentException("bad row " + i);
+        String mode = columns[0], id = columns[1], expression = new String(Base64.getDecoder().decode(columns[2]), StandardCharsets.UTF_8);
+        Path folder = output.resolve(String.format(Locale.ROOT, "%03d-%s", i, id));
+        Files.createDirectory(folder);
+        logger.begin(folder);
+        string(folder, "mode", mode);
+        string(folder, "expression", expression);
+        String call = mode + "-" + i + "-" + id;
+        System.out.println("call-enter=" + call);
+        calls++;
+        String stdout = "", stderr = "", errorClass = "", exceptionToString = "";
+        String causeClass = "", causeMessage = "", causeToString = "", javaType = "", result = "success\n";
+        try {
+          if (mode.equals("string")) stdout = evaluator.evaluateExpressionString(source, expression);
+          else {
+            Object value = evaluator.evaluateExpression(source, expression);
+            javaType = value == null ? "null" : value.getClass().getName();
+            stdout = String.valueOf(value);
+          }
+          successes++;
+        } catch (Throwable thrown) {
+          result = status(thrown);
+          stderr = message(thrown);
+          errorClass = thrown.getClass().getName();
+          exceptionToString = thrown.toString();
+          if (thrown.getCause() != null) {
+            causeClass = thrown.getCause().getClass().getName();
+            causeMessage = message(thrown.getCause());
+            causeToString = thrown.getCause().toString();
+          }
+          errors++;
+        }
+        bytes(folder, "result.status", result.getBytes(StandardCharsets.UTF_8));
+        logger.end();
+        string(folder, "result.stdout", stdout);
+        string(folder, "result.stderr", stderr);
+        string(folder, "result.error-class", errorClass);
+        string(folder, "result.exception-to-string", exceptionToString);
+        string(folder, "result.cause-class", causeClass);
+        string(folder, "result.cause-message", causeMessage);
+        string(folder, "result.cause-to-string", causeToString);
+        string(folder, "result.java-type", javaType);
+        System.out.println("call-exit=" + call + " status=" + result.strip());
+      }
+    }
+    System.out.println("session-closed mode=" + sessionMode + " rows=" + lines.size() + " public-calls=" + calls
+        + " success=" + successes + " errors=" + errors);
+  }
+}

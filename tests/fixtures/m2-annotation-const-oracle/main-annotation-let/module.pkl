@@ -1,0 +1,4 @@
+module stage108.annotation_let
+class Ann extends Annotation { v: Any }
+@Ann { v = let (m = module) m }
+class C {}

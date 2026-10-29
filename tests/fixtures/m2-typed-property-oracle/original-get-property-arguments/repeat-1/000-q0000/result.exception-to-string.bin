@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `String`, but got type `Int`.
+Value: 1
+
+1986 | external function getProperty(name: String): unknown
+                                           ^^^^^^
+at pkl.base#Typed.getProperty (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1986)
+
+1 | subject.getProperty(1).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

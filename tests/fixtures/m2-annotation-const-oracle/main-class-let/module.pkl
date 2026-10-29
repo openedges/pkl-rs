@@ -1,0 +1,2 @@
+module stage108.class_let
+class C { value = let (m = module) m }

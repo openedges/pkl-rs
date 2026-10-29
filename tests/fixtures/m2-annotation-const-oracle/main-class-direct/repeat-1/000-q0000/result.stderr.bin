@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot reference `module` within a class body.
+
+2 | class C { value = module }
+                      ^^^^^^
+at stage108.class_direct#C.value (file:///stage108/annotation-const/class-direct.pkl)

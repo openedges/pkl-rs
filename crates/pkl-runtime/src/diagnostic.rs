@@ -216,7 +216,8 @@ pub struct Diagnostic {
     pub span: Span,
     pub message: PklString,
     /// Authored member path for delayed AST validation (e.g. `result` or `C.x`).
-    /// The evaluation boundary inserts `#` between the module and this path.
+    /// The evaluation boundary inserts `#` between the module and this path,
+    /// unless it begins with an explicit `.` for a module annotation scope.
     /// Syntax errors retain a module frame and leave this unset.
     pub member: Option<Box<PklString>>,
     /// Explicit module identity for AST validation after its header was parsed.

@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot reference `module` from const property `value`.
+
+2 | const value = let (m = module) m
+                           ^^^^^^
+at stage108.const_let#value (file:///stage108/annotation-const/const-let.pkl)

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Expected a module as the receiver, but got an object that amends a module.
+
+1 | (module) { marker = true }.relativePathTo(module).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

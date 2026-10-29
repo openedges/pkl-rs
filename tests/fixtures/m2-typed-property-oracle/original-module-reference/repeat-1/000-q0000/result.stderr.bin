@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot find property `ref`.
+
+1 | ref.Reference(d, dependency.getClass(), "").output.toString()
+    ^^^
+at  (repl:text)

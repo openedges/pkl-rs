@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `absent` in object of type `stage105.members#Data`.
+
+1 | List(subject.getProperty("absent"), subject.getProperty("default"), subject.getProperty("")).toString()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Available properties:
+concealed
+inherited
+own

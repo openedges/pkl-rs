@@ -1,0 +1,1 @@
+List(subject.getPropertyOrNull("own"), subject.getPropertyOrNull("inherited"), subject.getPropertyOrNull("concealed")).toString()

@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Module URI `bad scheme:child` has invalid syntax.
+
+1 | module.relativePathTo(import("bad scheme:child")).toString()
+                                 ^^^^^^^^^^^^^^^^^^
+at repl:text (repl:text)
+
+Illegal character in scheme name

@@ -1,0 +1,202 @@
+[
+  {
+    "Java_authority": {
+      "bytes": 962117,
+      "mode": 420,
+      "path": "target/m2/stage106-module-relativepath-oracle-01/report.json",
+      "sha256": "5524f6ba88d0e67c33a4b4a0a32399919867698d6767bf8a513cc186e6b36ab4"
+    },
+    "Rust_execution": "unexecuted",
+    "Rust_query_input": "Exact corresponding repeat expression.bin; original UTF8/UTF16 preserved, never Base64.",
+    "cohort": "main",
+    "evaluator_environment": {},
+    "evaluator_external_properties": {},
+    "original_program": "common",
+    "power_assertions": false,
+    "program": "main-common",
+    "queries": 17,
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/root/root.pkl"
+  },
+  {
+    "Java_authority": {
+      "bytes": 962117,
+      "mode": 420,
+      "path": "target/m2/stage106-module-relativepath-oracle-01/report.json",
+      "sha256": "5524f6ba88d0e67c33a4b4a0a32399919867698d6767bf8a513cc186e6b36ab4"
+    },
+    "Rust_execution": "unexecuted",
+    "Rust_query_input": "Exact corresponding repeat expression.bin; original UTF8/UTF16 preserved, never Base64.",
+    "cohort": "main",
+    "evaluator_environment": {},
+    "evaluator_external_properties": {},
+    "original_program": "encoded",
+    "power_assertions": false,
+    "program": "main-encoded",
+    "queries": 8,
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/encoded/root.pkl"
+  },
+  {
+    "Java_authority": {
+      "bytes": 962117,
+      "mode": 420,
+      "path": "target/m2/stage106-module-relativepath-oracle-01/report.json",
+      "sha256": "5524f6ba88d0e67c33a4b4a0a32399919867698d6767bf8a513cc186e6b36ab4"
+    },
+    "Rust_execution": "unexecuted",
+    "Rust_query_input": "Exact corresponding repeat expression.bin; original UTF8/UTF16 preserved, never Base64.",
+    "cohort": "main",
+    "evaluator_environment": {},
+    "evaluator_external_properties": {},
+    "original_program": "authority",
+    "power_assertions": false,
+    "program": "main-authority",
+    "queries": 5,
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "https://USER@Example.COM:443/base/root.pkl"
+  },
+  {
+    "Java_authority": {
+      "bytes": 962117,
+      "mode": 420,
+      "path": "target/m2/stage106-module-relativepath-oracle-01/report.json",
+      "sha256": "5524f6ba88d0e67c33a4b4a0a32399919867698d6767bf8a513cc186e6b36ab4"
+    },
+    "Rust_execution": "unexecuted",
+    "Rust_query_input": "Exact corresponding repeat expression.bin; original UTF8/UTF16 preserved, never Base64.",
+    "cohort": "main",
+    "evaluator_environment": {},
+    "evaluator_external_properties": {},
+    "original_program": "normalization",
+    "power_assertions": false,
+    "program": "main-normalization",
+    "queries": 4,
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/norm/a/../root.pkl"
+  },
+  {
+    "Java_authority": {
+      "bytes": 962117,
+      "mode": 420,
+      "path": "target/m2/stage106-module-relativepath-oracle-01/report.json",
+      "sha256": "5524f6ba88d0e67c33a4b4a0a32399919867698d6767bf8a513cc186e6b36ab4"
+    },
+    "Rust_execution": "unexecuted",
+    "Rust_query_input": "Exact corresponding repeat expression.bin; original UTF8/UTF16 preserved, never Base64.",
+    "cohort": "main",
+    "evaluator_environment": {},
+    "evaluator_external_properties": {},
+    "original_program": "escaped-prefix",
+    "power_assertions": false,
+    "program": "main-escaped-prefix",
+    "queries": 3,
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/raw/%2F/root.pkl"
+  },
+  {
+    "Java_authority": {
+      "bytes": 962117,
+      "mode": 420,
+      "path": "target/m2/stage106-module-relativepath-oracle-01/report.json",
+      "sha256": "5524f6ba88d0e67c33a4b4a0a32399919867698d6767bf8a513cc186e6b36ab4"
+    },
+    "Rust_execution": "unexecuted",
+    "Rust_query_input": "Exact corresponding repeat expression.bin; original UTF8/UTF16 preserved, never Base64.",
+    "cohort": "main",
+    "evaluator_environment": {},
+    "evaluator_external_properties": {},
+    "original_program": "query-fragment",
+    "power_assertions": false,
+    "program": "main-query-fragment",
+    "queries": 3,
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/query/root.pkl?folder=/more/#slash/"
+  },
+  {
+    "Java_authority": {
+      "bytes": 962117,
+      "mode": 420,
+      "path": "target/m2/stage106-module-relativepath-oracle-01/report.json",
+      "sha256": "5524f6ba88d0e67c33a4b4a0a32399919867698d6767bf8a513cc186e6b36ab4"
+    },
+    "Rust_execution": "unexecuted",
+    "Rust_query_input": "Exact corresponding repeat expression.bin; original UTF8/UTF16 preserved, never Base64.",
+    "cohort": "main",
+    "evaluator_environment": {},
+    "evaluator_external_properties": {},
+    "original_program": "opaque",
+    "power_assertions": false,
+    "program": "main-opaque",
+    "queries": 2,
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "repl:stage106"
+  },
+  {
+    "Java_authority": {
+      "bytes": 962117,
+      "mode": 420,
+      "path": "target/m2/stage106-module-relativepath-oracle-01/report.json",
+      "sha256": "5524f6ba88d0e67c33a4b4a0a32399919867698d6767bf8a513cc186e6b36ab4"
+    },
+    "Rust_execution": "unexecuted",
+    "Rust_query_input": "Exact corresponding repeat expression.bin; original UTF8/UTF16 preserved, never Base64.",
+    "cohort": "main",
+    "evaluator_environment": {},
+    "evaluator_external_properties": {},
+    "original_program": "opaque-slash",
+    "power_assertions": false,
+    "program": "main-opaque-slash",
+    "queries": 2,
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "repl:stage106/dir/root.pkl"
+  },
+  {
+    "Java_authority": {
+      "bytes": 962117,
+      "mode": 420,
+      "path": "target/m2/stage106-module-relativepath-oracle-01/report.json",
+      "sha256": "5524f6ba88d0e67c33a4b4a0a32399919867698d6767bf8a513cc186e6b36ab4"
+    },
+    "Rust_execution": "unexecuted",
+    "Rust_query_input": "Exact corresponding repeat expression.bin; original UTF8/UTF16 preserved, never Base64.",
+    "cohort": "main",
+    "evaluator_environment": {},
+    "evaluator_external_properties": {},
+    "original_program": "key-identity",
+    "power_assertions": false,
+    "program": "main-key-identity",
+    "queries": 2,
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/identity/root.pkl"
+  },
+  {
+    "Java_authority": {
+      "bytes": 79892,
+      "mode": 420,
+      "path": "target/m2/stage106-module-relativepath-amend-oracle-01/report.json",
+      "sha256": "8c2d51590725a5b17264b8ff96f54ed089b3743e222cfc4c978ee38251fdd986"
+    },
+    "Rust_execution": "unexecuted",
+    "Rust_query_input": "Exact corresponding repeat expression.bin; original UTF8/UTF16 preserved, never Base64.",
+    "cohort": "amend",
+    "evaluator_environment": {},
+    "evaluator_external_properties": {},
+    "original_program": "nonempty-amendment",
+    "power_assertions": false,
+    "program": "amend-nonempty-amendment",
+    "queries": 2,
+    "repetitions": 2,
+    "required": true,
+    "source_uri": "file:///stage106/amendment/root.pkl"
+  }
+]

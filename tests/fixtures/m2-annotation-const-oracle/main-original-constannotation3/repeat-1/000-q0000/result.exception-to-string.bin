@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot reference `module` within an annotation body.
+
+7 | @Ann { foo = module }
+                 ^^^^^^
+at constAnnotation3#Foo.foo (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/const/constAnnotation3.pkl)

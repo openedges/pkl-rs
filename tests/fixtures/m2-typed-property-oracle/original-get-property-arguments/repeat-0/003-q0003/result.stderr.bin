@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find property `getProperty` in object of type `stage105.arguments#Data`.
+
+1 | subject.getProperty.toString()
+    ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+getPropertyOrNull(name)
+hasProperty(name)

@@ -1,0 +1,5 @@
+module stage108.annotation_qualified_nonconst
+class Ann extends Annotation { v: Any }
+mutable = 7
+@Ann { v = module.mutable }
+class C {}

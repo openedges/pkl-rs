@@ -291,6 +291,7 @@ struct Resolver<'a> {
     custom_functions: std::collections::BTreeSet<Span>,
     const_level: ConstLevel,
     object_levels: Vec<ConstLevel>,
+    module_const_owners: Vec<&'static str>,
     object_receiver_lambdas: Vec<bool>,
     receiver_is_lambda: bool,
     const_scopes: Vec<ConstScope>,
@@ -595,12 +596,16 @@ impl<'a> Resolver<'a> {
                 Work::AnnotationBody(members, class) => {
                     let previous = std::mem::replace(&mut self.const_level, ConstLevel::Module);
                     self.scopes.push(Scope::Annotation(class));
+                    self.diagnostic_owners.enter_annotation();
+                    self.module_const_owners.push("annotation");
                     work.push(Work::EndAnnotationBody(previous));
                     work.push(Work::ObjectMembers(members, &[]));
                 }
                 Work::EndAnnotations(previous) => self.const_level = previous,
                 Work::EndAnnotationBody(previous) => {
                     self.scopes.pop();
+                    self.diagnostic_owners.exit();
+                    self.module_const_owners.pop();
                     self.const_level = previous;
                 }
                 Work::EndMember(level) => {
@@ -638,7 +643,10 @@ impl<'a> Resolver<'a> {
                     self.const_scopes.pop();
                     self.scopes.pop();
                 }
-                Work::EndClass(level) => self.const_level = level,
+                Work::EndClass(level) => {
+                    self.module_const_owners.pop();
+                    self.const_level = level;
+                }
                 Work::EndAlias(level) => {
                     self.const_level = level;
                     self.scopes.pop();
@@ -1277,9 +1285,6 @@ impl<'a> Resolver<'a> {
                     work.push(Work::Expression(body, contextual_new));
                 }
                 Work::ClassMembers(members) => {
-                    let previous = self.const_level;
-                    self.const_level = self.const_level.max(ConstLevel::Module);
-                    work.push(Work::EndClass(previous));
                     work.push(Work::Members(members, false));
                 }
                 Work::Constraints(constraints) => {
@@ -1611,6 +1616,13 @@ impl<'a> Resolver<'a> {
                             self.scopes.push(Scope::TypeParameters(type_parameters));
                             work.push(Work::EndTypeParameters);
                         }
+                        // Member annotations have already been visited. Java enters
+                        // ClassScope before visiting the superclass (including its
+                        // constraints), not only when it reaches the class body.
+                        let previous = self.const_level;
+                        self.const_level = self.const_level.max(ConstLevel::Module);
+                        self.module_const_owners.push("class");
+                        work.push(Work::EndClass(previous));
                         work.push(Work::ClassMembers(members));
                         if let Some(ty) = superclass {
                             if self.evaluation_preparation {
@@ -2055,9 +2067,15 @@ impl<'a> Resolver<'a> {
             expression.span,
             message.into(),
         );
-        if !self.diagnostic_path.is_empty() {
-            error.member = Some(crate::value::PklString::join(&self.diagnostic_path, ".").into());
-        }
+        error.member = self
+            .diagnostic_owners
+            .name()
+            .filter(|name| !name.is_empty())
+            .or_else(|| {
+                (!self.diagnostic_path.is_empty())
+                    .then(|| crate::value::PklString::join(&self.diagnostic_path, "."))
+            })
+            .map(Into::into);
         error
     }
 
@@ -2113,6 +2131,7 @@ impl<'a> Resolver<'a> {
                 if self.is_custom_this_scope() {
                     self.custom_this.insert(expression.span);
                 } else if self.const_level == ConstLevel::All && self.const_scope_count() == 0 {
+                    self.diagnostic_owner_requested = true;
                     return Err(self.const_error(
                         expression,
                         "Cannot reference `this` from here because it is not `const`.",
@@ -2121,8 +2140,10 @@ impl<'a> Resolver<'a> {
             }
             ExprKind::Module => {
                 if self.const_level != ConstLevel::None {
-                    let message = if self.object_levels.contains(&ConstLevel::Module) {
-                        "Cannot reference `module` within a class body.".to_owned()
+                    self.diagnostic_owner_requested = true;
+                    let message = if let Some(owner) = self.module_const_owners.last() {
+                        let article = if *owner == "annotation" { "an" } else { "a" };
+                        format!("Cannot reference `module` within {article} {owner} body.")
                     } else {
                         format!(
                             "Cannot reference `module` from const property `{}`.",
@@ -2137,6 +2158,7 @@ impl<'a> Resolver<'a> {
                     .parent_const_scope()
                     .is_some_and(|(_, scope)| self.const_level > scope.level)
                 {
+                    self.diagnostic_owner_requested = true;
                     return Err(self.const_error(
                         expression,
                         "Cannot reference `outer` from here because it's not `const`.",
@@ -2291,6 +2313,7 @@ fn resolve_module_inner(
         custom_functions: std::collections::BTreeSet::new(),
         const_level: ConstLevel::None,
         object_levels: Vec::new(),
+        module_const_owners: Vec::new(),
         object_receiver_lambdas: Vec::new(),
         receiver_is_lambda: false,
         const_scopes: Vec::new(),
@@ -2446,6 +2469,7 @@ pub(crate) fn resolve_session_expression(
         custom_functions: Default::default(),
         const_level: ConstLevel::None,
         object_levels: Vec::new(),
+        module_const_owners: Vec::new(),
         object_receiver_lambdas: Vec::new(),
         receiver_is_lambda: false,
         const_scopes: Vec::new(),

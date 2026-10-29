@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find property `relativePathTo` in module `stage106.common`.
+
+1 | module.relativePathTo.toString()
+    ^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Available properties in module `stage106.common`:
+output
+unforced

@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `scratch` in object of type `stage105.members#Data`.
+
+1 | List(subject.getProperty("scratch"), subject.getProperty("method")).toString()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Available properties:
+concealed
+inherited
+own

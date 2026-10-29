@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+No descendent path exists between modules `file:///stage106/root/a/b/child.pkl` and `file:///stage106/root/root.pkl`.
+
+1 | import("file:///stage106/root/a/b/child.pkl").relativePathTo(module).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

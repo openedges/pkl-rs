@@ -1,0 +1,19 @@
+{
+  "typed": {
+    "contracts": 51,
+    "dependencies": [
+      {
+        "path": "target/m2/stage105-typed-property-oracle-prep-02/dependency.pkl",
+        "bytes": 38,
+        "mode": 420,
+        "sha256": "baf67b149aa90cabde10a2973e3abe1d1893c9a933c665c43d5d0892235cd08b",
+        "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage105-typed-property-oracle-prep-02/dependency.pkl"
+      }
+    ],
+    "matrix": "target/m2/stage105-typed-property-oracle-prep-02/queries.json",
+    "matrix_sha256": "c1a2c31d95be0af50d99d111ab8593973bee9718a60dde355f15da5268e135c3",
+    "output": "target/m2/stage105-typed-property-oracle-01",
+    "power_true": 0,
+    "programs": 13
+  }
+}

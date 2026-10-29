@@ -1,0 +1,48 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "contracts": 2,
+  "kind": "Stage108 source-owned forced qualified annotation values",
+  "prior_capture_unchanged": {
+    "bytes": 220273,
+    "mode": 420,
+    "path": "target/m2/stage108-annotation-const-supplement-oracle-01/report.json",
+    "sha256": "3abcb24d1c865e9e25d36e9700f4cdd22c3f57c9998fd09863a2350ff0686d6e"
+  },
+  "programs": [
+    {
+      "id": "annotation-qualified-value-source",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Source property owns local reflect import; actual selected annotation value forced via exposed property",
+          "executed": false,
+          "expected": null,
+          "expression": "annotationValue.toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.annotation_qualified\nimport \"pkl:reflect\"\nclass Ann extends Annotation { v: Any }\nconst stableValue = 7\n@Ann { v = module.stableValue }\nclass C {}\nannotationValue = reflect.Class(C).annotations[0].v\n",
+      "source_uri": "file:///stage108/annotation-const-source-value/annotation-qualified-value-source.pkl"
+    },
+    {
+      "id": "annotation-qualified-nonconst-value-source",
+      "power_assertions": false,
+      "queries": [
+        {
+          "edge": "Source property owns local reflect import; actual selected annotation value forced via exposed property",
+          "executed": false,
+          "expected": null,
+          "expression": "annotationValue.toString()",
+          "id": "q0000",
+          "resource_class": "bounded"
+        }
+      ],
+      "repetitions": 2,
+      "source": "module stage108.annotation_qualified_nonconst\nimport \"pkl:reflect\"\nclass Ann extends Annotation { v: Any }\nmutable = 7\n@Ann { v = module.mutable }\nclass C {}\nannotationValue = reflect.Class(C).annotations[0].v\n",
+      "source_uri": "file:///stage108/annotation-const-source-value/annotation-qualified-nonconst-value-source.pkl"
+    }
+  ],
+  "schema": 1
+}

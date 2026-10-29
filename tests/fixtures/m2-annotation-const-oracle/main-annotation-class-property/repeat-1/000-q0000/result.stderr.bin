@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot reference `module` within an annotation body.
+
+4 | @Ann { v = module }
+               ^^^^^^
+at stage108.annotation_class_property#C.value.v (file:///stage108/annotation-const/annotation-class-property.pkl)

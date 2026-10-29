@@ -680,8 +680,45 @@ pub(super) fn builtin_members(
         &d.blocks[directive_bytes.code],
         &["text", "text.encodeToBytes(\"UTF-8\")", "Bytes", ""],
     );
+    let relative_path = d.method(
+        "Module",
+        "relativePathTo",
+        Instruction::ModuleRelativePathTo,
+    );
+    let Instruction::MakeFunction {
+        block: relative_body,
+        ..
+    } = d.blocks[relative_path.code][0]
+    else {
+        unreachable!("ordinary external method wrapper")
+    };
+    let parameter_start = d
+        .source
+        .text
+        .find("relativePathTo(other: Module)")
+        .expect("pinned Module method")
+        + "relativePathTo(other: ".len();
+    d.blocks[relative_body] = vec![
+        Instruction::LoadLocal(0),
+        Instruction::CheckType(builtins::ty(MODULE)),
+        Instruction::Pop,
+        Instruction::LoadLocal(0),
+        Instruction::ModuleRelativePathTo,
+        Instruction::Return,
+    ];
+    d.metadata[relative_body].spans = vec![
+        None,
+        Some(Span::new(parameter_start, parameter_start + "Module".len())),
+        None,
+        None,
+        None,
+        None,
+    ];
+    for block in [relative_path.code, relative_body] {
+        d.metadata[block].method_signature = Some(("relativePathTo(other)".into(), 1));
+    }
     BTreeMap::from([
-        (MODULE, vec![output_value]),
+        (MODULE, vec![output_value, relative_path]),
         (CONVERT_PROPERTY, vec![render]),
         (FILE_OUTPUT, vec![value, renderer, text, bytes]),
         (MODULE_OUTPUT, vec![files]),

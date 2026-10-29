@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Tried to read property `value` but its value is undefined.
+
+2 | class Data { value: String; hidden concealed = 9 }
+                 ^^^^^
+at stage105.conversions#Data.value (file:///stage105/typed-required/conversions.pkl)
+
+1 | new Data {}.getProperty("value").toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

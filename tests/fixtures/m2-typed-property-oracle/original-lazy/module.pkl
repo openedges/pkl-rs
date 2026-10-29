@@ -1,0 +1,3 @@
+module stage105.lazy
+class Data { value = trace("stored"); explosive = throw("selected initializer"); resource = read("env:STAGE105_TYPED_LOOKUP_UNSET") }
+hidden subject = new Data {}

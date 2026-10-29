@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot reference `module` within an annotation body.
+
+3 | @Ann { v = let (m = module) m }
+                        ^^^^^^
+at stage108.annotation_let#C.v (file:///stage108/annotation-const/annotation-let.pkl)

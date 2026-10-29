@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Boolean` or `Function`, but got type `stage108.query_synthetic`.
+Value: new ModuleClass { stableValue = ? }
+
+1 | ((x: Int(module)) -> x).apply(1).toString()
+             ^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | ((x: Int(module)) -> x).apply(1).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find type `Missing`.
+
+2 | class C { early = 1; broken: Missing; late = 2; function method() = 3 }
+                                 ^^^^^^^
+at stage105.failedClass#C (file:///stage105/typed-required/get-property-failed-class.pkl)
+
+Searched in the following places:
+* Module `stage105.failedClass` and any supermodules
+* Module `pkl#base`
+
+1 | C.toString()
+    ^
+at  (repl:text)

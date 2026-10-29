@@ -1,0 +1,222 @@
+{
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/CollectionEveryOracle.java",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda",
+    "file:///stage108/annotation-const-supplement/const-lambda.pkl"
+  ],
+  "cleanup_events": [],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01",
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/tmp",
+    "TZ": "UTC"
+  },
+  "exit_code": 0,
+  "finished_epoch": 1793255110.280148,
+  "helper": {
+    "bytes": 6329,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/CollectionEveryOracle.java",
+    "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+  },
+  "owned_child_reaped": true,
+  "owned_processes": {
+    "root_observed": true,
+    "root_pid": 3314,
+    "terminal_live": [],
+    "tracked": [
+      {
+        "group_id_at_discovery": 3314,
+        "parent_pid_at_discovery": 3220,
+        "pid": 3314,
+        "started": "Thu Oct 29 15:25:09 2026"
+      }
+    ]
+  },
+  "owned_start": "Thu Oct 29 15:25:09 2026",
+  "pgid": 3314,
+  "pid": 3314,
+  "power_assertions": false,
+  "program": "const-lambda",
+  "repeat": 0,
+  "rows": [
+    {
+      "directory": "target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000",
+      "expression": "\"ready\"",
+      "id": "q0000",
+      "logger_events": 0,
+      "raw_files": {
+        "expression.bin": {
+          "bytes": 7,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/expression.bin",
+          "sha256": "40ec7f71ea684c8b976e79e8e425f87779e6de57f4821dcfc8066dbcad2defe0"
+        },
+        "expression.code-units.bin": {
+          "bytes": 14,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/expression.code-units.bin",
+          "sha256": "710204e91667eeaefd4871d40b57482b89b3dac50404d40854a3bf5d2f386c55"
+        },
+        "logs.count.bin": {
+          "bytes": 2,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "mode.bin": {
+          "bytes": 6,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        "mode.code-units.bin": {
+          "bytes": 12,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        "result.cause-class.bin": {
+          "bytes": 30,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/result.cause-class.bin",
+          "sha256": "0580e6836107c406c3b3a0cac1d8b48bc16b5e41599889bf5350ceeae81ba214"
+        },
+        "result.cause-class.code-units.bin": {
+          "bytes": 60,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/result.cause-class.code-units.bin",
+          "sha256": "c9b5f93ebd5512cb9556cdf9ea5643cf84ce62688d7bfc65bb3e3c951c618d90"
+        },
+        "result.cause-message.bin": {
+          "bytes": 149,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/result.cause-message.bin",
+          "sha256": "9b6218777ecd5e2d9891fe283e4251823b600586766108c196cddc6a49378109"
+        },
+        "result.cause-message.code-units.bin": {
+          "bytes": 298,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/result.cause-message.code-units.bin",
+          "sha256": "4332d86137452f8c968962eadc33e5135eb8cf74f8c964d3f36c78d026fc21bc"
+        },
+        "result.cause-to-string.bin": {
+          "bytes": 181,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/result.cause-to-string.bin",
+          "sha256": "4bf4cef23f11a54394e20443b6e56251f1a35fb7a4789a42da21dbf043e51dc3"
+        },
+        "result.cause-to-string.code-units.bin": {
+          "bytes": 362,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/result.cause-to-string.code-units.bin",
+          "sha256": "2bd85e3f298d6fcf4da72929eff91e3dfdc14abd158289fa612d8299ceb5cae3"
+        },
+        "result.error-class.bin": {
+          "bytes": 28,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/result.error-class.bin",
+          "sha256": "29d67798b7711928a2a39c578687f2ca163c801882665290a7490a7a1ca76407"
+        },
+        "result.error-class.code-units.bin": {
+          "bytes": 56,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/result.error-class.code-units.bin",
+          "sha256": "e6329aaeecae5beb90032377222209af928f65f0357959186111ffd417ca3ab7"
+        },
+        "result.exception-to-string.bin": {
+          "bytes": 99,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/result.exception-to-string.bin",
+          "sha256": "acad791baa5805983310a61293ccfae1365b2d547d47a32abfc44c3b7946aad8"
+        },
+        "result.exception-to-string.code-units.bin": {
+          "bytes": 198,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/result.exception-to-string.code-units.bin",
+          "sha256": "2e59886c82f5f15af84f63db74dbeafdd64dc4e5c6b0293c1537f8abdfc0a21b"
+        },
+        "result.java-type.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.java-type.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.status.bin": {
+          "bytes": 13,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/result.status.bin",
+          "sha256": "55e542bfc1361639df4550ae3f87b20be611a044d8a4f3a6c4f46d494297deae"
+        },
+        "result.stderr.bin": {
+          "bytes": 69,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/result.stderr.bin",
+          "sha256": "8c522f408a5e2fa64c4816fe7b7f5f3157db9c186a5f41ea6b0d03be6c8c09ca"
+        },
+        "result.stderr.code-units.bin": {
+          "bytes": 138,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/result.stderr.code-units.bin",
+          "sha256": "a94545776acc86f8c1bc8db99c3f09208315caccf07cf46c0244e8f6afbedd9d"
+        },
+        "result.stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.stdout.code-units.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/000-q0000/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "status": "oracle-error"
+    }
+  ],
+  "started_epoch": 1793255109.38349,
+  "stderr": {
+    "bytes": 0,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/process.stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 171,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage108-annotation-const-supplement-oracle-01/programs/const-lambda/repeat-0/process.stdout.bin",
+    "sha256": "6b8d4f4f59979e060803a27e1a150c1f60c850c9e1e158f4cf6d3fd57cb4634c"
+  }
+}

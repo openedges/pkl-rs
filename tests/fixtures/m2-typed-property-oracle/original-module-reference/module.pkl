@@ -1,0 +1,5 @@
+module stage105.moduleReference
+import "pkl:ref"
+import "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage105-typed-property-oracle-prep-02/dependency.pkl"
+class D extends ref.Domain { function renderReference(reference: ref.Reference<D, Any>): String = throw("not supported") }
+local d: D = new {}

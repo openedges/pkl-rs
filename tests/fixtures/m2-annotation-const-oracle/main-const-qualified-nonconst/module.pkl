@@ -1,0 +1,3 @@
+module stage108.const_qualified_nonconst
+mutable = 7
+const value = module.mutable

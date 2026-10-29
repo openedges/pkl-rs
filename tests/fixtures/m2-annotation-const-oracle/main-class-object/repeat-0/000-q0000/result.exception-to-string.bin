@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot reference `module` within a class body.
+
+2 | class C { value = new { nested = module } }
+                                     ^^^^^^
+at stage108.class_object#C.value.nested (file:///stage108/annotation-const/class-object.pkl)

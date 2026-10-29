@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `reflect`.
+
+1 | reflect.Class(C).annotations[0].v.toString()
+    ^^^^^^^
+at  (repl:text)

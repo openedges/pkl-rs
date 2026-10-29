@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Object members must be separated by whitespace, newline, or semicolon.
+Object entries must be separated by newline or semicolon.
+
+3 | @Ann { v = ((x) -> module)(0) }
+                              ^^^
+at stage108.annotation_lambda#C (file:///stage108/annotation-const/annotation-lambda.pkl)

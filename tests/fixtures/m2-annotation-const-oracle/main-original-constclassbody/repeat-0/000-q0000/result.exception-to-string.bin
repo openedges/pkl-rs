@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot reference property `notConst` from here because it is not `const`.
+
+4 | foo = notConst
+          ^^^^^^^^
+at constClassBody#Foo.foo (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/const/constClassBody.pkl)
+
+To fix, do either of:
+1. Add modifier `const` to property `notConst`
+2. Self-import this module, and reference this property from the import.
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

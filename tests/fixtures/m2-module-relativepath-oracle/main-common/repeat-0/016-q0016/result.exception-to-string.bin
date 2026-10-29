@@ -1,0 +1,8 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Module URI `file:///stage106/child.pkl#bad{` has invalid syntax.
+
+1 | module.relativePathTo(import("file:///stage106/child.pkl#bad{")).toString()
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at repl:text (repl:text)
+
+Illegal character in fragment

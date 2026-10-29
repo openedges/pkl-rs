@@ -1,0 +1,2 @@
+module stage105.failedClass
+class C { early = 1; broken: Missing; late = 2; function method() = 3 }

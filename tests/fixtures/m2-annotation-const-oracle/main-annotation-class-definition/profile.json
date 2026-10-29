@@ -1,0 +1,22 @@
+{
+  "Java_authority": {
+    "bytes": 929883,
+    "mode": 420,
+    "path": "target/m2/stage108-annotation-const-oracle-01/report.json",
+    "sha256": "7bb86f6d3c79d2c7c32d6c1e18871a0c119360f46212c7c64307583bd67f9c0d"
+  },
+  "Rust_execution": "unexecuted",
+  "Rust_query_input": "Exact corresponding repeat expression.bin; original UTF8/UTF16 preserved, never Base64.",
+  "cohort": "main",
+  "evaluator_environment": {},
+  "evaluator_external_properties": {},
+  "oracle_internal": false,
+  "original_program": "annotation-class-definition",
+  "power_assertions": false,
+  "program": "main-annotation-class-definition",
+  "queries": 1,
+  "repetitions": 2,
+  "required": true,
+  "required_unresolved": false,
+  "source_uri": "file:///stage108/annotation-const/annotation-class-definition.pkl"
+}

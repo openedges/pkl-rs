@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot reference `module` within an annotation body.
+
+3 | @Ann { v = 1 as Int(module) }
+                        ^^^^^^
+at stage108.annotation_constraint#C.v (file:///stage108/annotation-const/annotation-constraint.pkl)

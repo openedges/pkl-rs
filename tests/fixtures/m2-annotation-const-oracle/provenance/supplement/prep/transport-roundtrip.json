@@ -1,0 +1,37 @@
+{
+  "complete": true,
+  "contracts": 6,
+  "rows": [
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "annotation-lambda"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "class-lambda"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "const-lambda"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "query-typed-lambda"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "annotation-qualified-value"
+    },
+    {
+      "exact_UTF8_roundtrip": true,
+      "id": "q0000",
+      "program": "annotation-qualified-nonconst-value"
+    }
+  ],
+  "success": true
+}

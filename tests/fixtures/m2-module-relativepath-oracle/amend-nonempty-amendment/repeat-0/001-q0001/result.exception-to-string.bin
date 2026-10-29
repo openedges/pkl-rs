@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected a module as argument, but got an object that amends a module.
+
+1 | module.relativePathTo((module) { marker = true }).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

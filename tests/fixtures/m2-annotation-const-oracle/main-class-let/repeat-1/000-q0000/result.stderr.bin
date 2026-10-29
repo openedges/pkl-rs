@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot reference `module` within a class body.
+
+2 | class C { value = let (m = module) m }
+                               ^^^^^^
+at stage108.class_let#C.value (file:///stage108/annotation-const/class-let.pkl)

@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Cannot find property `absent` in object of type `stage105.lazy#Data`.
+
+1 | subject.getProperty("absent").toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Available properties:
+explosive
+resource
+value

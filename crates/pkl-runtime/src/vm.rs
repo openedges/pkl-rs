@@ -252,6 +252,7 @@ pub enum Instruction {
     CollectionJoin,
     BeginConversion(collection_conversions::Operation),
     ObjectLookup(object_lookups::Lookup),
+    ModuleRelativePathTo,
     ObjectDefault,
     ObjectDefaultProperty,
     ConversionNext {
@@ -3407,7 +3408,7 @@ impl Vm {
         }
         if method
             && (matches!(name, "toString" | "ifNonNull")
-                || matches!(name, "hasProperty" | "getPropertyOrNull")
+                || matches!(name, "hasProperty" | "getProperty" | "getPropertyOrNull")
                     && self.typed_has_property_available(initial)?)
         {
             return Err(Self::non_const_method_error(name));
@@ -4989,6 +4990,7 @@ impl Vm {
             Instruction::StringRepeat => self.repeat_string()?,
             Instruction::CollectionJoin => self.begin_collection_join()?,
             Instruction::ObjectLookup(operation) => self.object_lookup(operation)?,
+            Instruction::ModuleRelativePathTo => self.module_relative_path_to()?,
             Instruction::ObjectDefault => self.object_default()?,
             Instruction::EmptyDynamic => {
                 let empty = self.empty_object(crate::heap::CollectionKind::Dynamic);

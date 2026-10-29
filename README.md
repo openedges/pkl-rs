@@ -24,15 +24,9 @@ and standard-library frames. The [latest checkpoint](reports/m2/README.md)
 records the accepted local verification scope, known failures, and unexecuted
 environments.
 
-The Stage103/104 checkpoint adds source-backed reflection, lazy Reference metadata
-and non-forcing `Typed.hasProperty` to the shared engine. Byte-preserving readbacks
-of the selected poll64 captures match **1,138 observations per native, N-API and
-Chromium target** against pinned Java. The original portable comparator failures
-remain recorded; the corrected readbacks reused those captures without a guest
-rerun. Formatting, xtask, Clippy and Wasm checks pass, and the workspace suite passes
-**1,596 tests with four ignored**. The complete ready-corpus replay records **4,325 passes out of 4,442 cases**,
-with 33 mismatches, 82 unsupported cases, two oracle errors and no regressions
-from the historical passing baseline. Full M2, API and performance gates remain open. See the [M2 evidence index](reports/m2/README.md).
+The [Stage109 checkpoint](reports/m2/stage109-typed-module-annotation-checkpoint.json) adds `Typed.getProperty`, `Module.relativePathTo` and annotation/const diagnostic coverage to the shared engine. Targeted validation records **152 passed tests and one ignored required placeholder**. Independent current-source native readbacks match **276 ordinary new observations** and **1,138 existing Typed/reflection observations**. The new portable matrix matches **276 ordinary observations per Native, N-API and Chromium target**, retaining two required Java internal observations unresolved on each target.
+
+The complete ready replay records **4,332 passes out of 4,442 cases**, with 26 mismatches, 82 unsupported cases, two oracle errors, no historical-pass regression and all 88 metamorphic checks passing. One bounded M1 acquisition separately matches 6,078 checks per target. Eight freshness commands pass; exact current strict-gate accounting still reports 1,780 overlapping unmet conditions. Formatting, xtask verification, all-target Clippy with warnings denied, and the Wasm check pass on the recorded current source. The complete workspace passes **1,658 tests with five ignored**, with test-target, example and doctest coverage verified. Full M2/API, release-platform and performance completion are not claimed.
 
 The [Stage102 collection checkpoint](reports/m2/stage102-collection-apis-checkpoint.json)
 is retained as historical evidence: 3,718 ordinary observations match Java in its

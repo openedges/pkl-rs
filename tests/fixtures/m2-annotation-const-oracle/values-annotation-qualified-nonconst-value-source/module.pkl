@@ -1,0 +1,7 @@
+module stage108.annotation_qualified_nonconst
+import "pkl:reflect"
+class Ann extends Annotation { v: Any }
+mutable = 7
+@Ann { v = module.mutable }
+class C {}
+annotationValue = reflect.Class(C).annotations[0].v

@@ -322,7 +322,14 @@ fn render_failure_text(
     let name = error.module_name.as_deref().unwrap_or(input.inferred_name);
     let member = error.member.as_ref().map_or_else(
         || PklString::from(name),
-        |suffix| PklString::from(format!("{name}#")).concat(suffix),
+        |suffix| {
+            let separator = if suffix.encode_utf16().next() == Some(46) {
+                ""
+            } else {
+                "#"
+            };
+            PklString::from(format!("{name}{separator}")).concat(suffix)
+        },
     );
     // Pinned bundled settings use `%{url}, line %{line}` for file URLs.
     // Transform the logical frame before rendering; never edit rendered bytes.

@@ -1,0 +1,3 @@
+module stage105.arguments
+class Data { value = 1 }
+hidden subject = new Data {}

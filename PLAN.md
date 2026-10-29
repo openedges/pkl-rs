@@ -3576,3 +3576,18 @@ M1 단일 취득은 세 target 각각 6,078개가 일치하고 같은 capture의
 실행 결과, 원시 기록의 복구 경로를 연결한다. compile04 preimage 9개, 이전 manifest와
 실패 기록은 원래 판정으로 보존한다. Stage105 이후의 고립 후보는 이 구현·검증 범위에
 포함하지 않고 별도 통합과 검증을 진행한다.
+
+
+### Stage109 — Typed 속성 조회·모듈 상대 경로·annotation 진단 체크포인트
+
+Stage104 `257be85deeb3ee65ca19660338710d6f93542918` 이후 공통 엔진에 `Typed.getProperty`, `Module.relativePathTo`, annotation·class const 오류의 소유자와 호출 위치 수정을 통합했습니다. 소스·도구 18개, 고정 Java fixture 6,996개, 생성 metadata 2개가 범위이며 새 테스트 대상은 5개입니다. [Stage109 체크포인트](reports/m2/stage109-typed-module-annotation-checkpoint.json)에 실행 조건, 원시 결과와 복구 경로를 기록합니다.
+
+실제 targeted 검사는 152개 통과·0개 실패·필수 placeholder 1개 무시입니다. 새 일반 관측 276건·공유 원시 필드 1,736개·Logger 이벤트 8개와 기존 Typed/reflection 관측 1,138건이 현재 native runtime에서 일치합니다. Native02·NAPI03·Chromium03은 각각 61개 프로그램·122개 세션에서 일반 관측 276건·portable 필드 2,288개·Logger 이벤트 8개가 일치합니다. Java 내부 오류 관측 2건은 각 target에서 미해결이며 `all_required_pass=false`입니다. 앞선 Native01·NAPI02 실패와 원래 Java·소스 실패 기록을 보존합니다.
+
+전체 workspace의 실제 단일 실행은 **1,658개 통과·0개 실패·5개 무시**입니다. 실행 대상 262개, compile-only 예제 25개, doctest library 2개의 누락이 없고 filtered child summary 13개는 별도입니다. formatting·xtask·warnings-denied all-target Clippy·Wasm 및 freshness 8명령이 통과했습니다. M1의 같은 실제 capture에서 target별 6,078개 비교와 strict·architecture gate가 통과했습니다. 로컬 macOS 결과이며 hosted CI나 다른 운영체제 실행으로 표시하지 않습니다.
+
+전체 ready 4,442개 결과는 **4,332개 통과·26개 불일치·82개 미지원·oracle 오류 2개**입니다. 이전 통과의 회귀는 없으며 metamorphic 88개가 모두 통과했습니다. 별도 original 11개 중 8개 일치·진단 불일치 3개를 유지합니다. 최신 manifest와 실제 결과에 exact full-gate 함수를 적용한 중복 미충족 조건은 1,780개(구현 472·mapping 472·case 836)입니다. 새 `--verify-full` CLI 실행이나 완료율로 해석하지 않습니다. 전체 목록 4,545개·ready 4,442개·미구현 71개·미연결 32개와 요구사항 475개를 유지하며 M2의 9개 영역은 계속 진행 중입니다.
+
+다음 순서는 이미 독립 검토한 Stage114 통합안의 적용과 현재 소스 검증입니다. 이는 Regex PCF, TODO/Undefined 진단, 원래 constraint/lambda 소유자 오류 수정과 Java 회귀 사례를 포함합니다. 그와 병렬로 glob의 공통 탐색·지연 값·Host·Native/N-API/Wasm 전달을 구현하며 14개 원본 사례 전체를 목표로 합니다. 격리 후보의 성공을 canonical 통과로 대체하지 않습니다. 이후 전체 언어 목록의 나머지 미지원·불일치·미연결 의무를 계속 처리합니다.
+
+normal `.rlib`·`.rmeta`·dep-info와 실행 artifact는 취득 당시 identity로 보존하며, 기존 Java authority는 published Stage104 의존성으로 연결합니다. 필수 내부 오류·무시된 검사·원본 List의 512 MiB Java heap 실패는 미해결입니다. M2 전체·API·릴리스 플랫폼·성능 목표의 완료는 주장하지 않습니다.

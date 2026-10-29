@@ -1,0 +1,4 @@
+module stage108.annotation_lambda
+class Ann extends Annotation { v: Any }
+@Ann { v = ((x) -> module)(0) }
+class C {}

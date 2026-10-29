@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Invalid token at position. Expected a class, typealias, method, or property.
+
+2 | const value = ((x) -> module)(0)
+                                 ^
+at const-lambda (file:///stage108/annotation-const/const-lambda.pkl)

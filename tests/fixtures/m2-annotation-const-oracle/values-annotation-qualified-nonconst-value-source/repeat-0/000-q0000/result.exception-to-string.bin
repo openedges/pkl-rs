@@ -1,0 +1,18 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot reference property `mutable` from here because it is not `const`.
+
+5 | @Ann { v = module.mutable }
+               ^^^^^^^^^^^^^^
+at stage108.annotation_qualified_nonconst#C.v (file:///stage108/annotation-const-source-value/annotation-qualified-nonconst-value-source.pkl)
+
+To fix, do either of:
+1. Add modifier `const` to property `mutable`
+2. Self-import this module, and reference this property from the import.
+
+7 | annotationValue = reflect.Class(C).annotations[0].v
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at stage108.annotation_qualified_nonconst#annotationValue (file:///stage108/annotation-const-source-value/annotation-qualified-nonconst-value-source.pkl)
+
+1 | annotationValue.toString()
+    ^^^^^^^^^^^^^^^
+at  (repl:text)

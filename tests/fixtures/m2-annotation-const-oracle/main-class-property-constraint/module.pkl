@@ -1,0 +1,2 @@
+module stage108.class_property_constraint
+class C { value: Int(module) = 1 }

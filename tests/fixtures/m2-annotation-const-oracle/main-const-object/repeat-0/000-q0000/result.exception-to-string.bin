@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot reference `module` from const property `nested`.
+
+2 | const value = new { nested = module }
+                                 ^^^^^^
+at stage108.const_object#value.nested (file:///stage108/annotation-const/const-object.pkl)

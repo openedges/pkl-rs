@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+97 | external function relativePathTo(other: Module): List<String>
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.relativePathTo (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L97)
+
+1 | module.relativePathTo().toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

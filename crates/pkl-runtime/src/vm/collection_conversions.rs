@@ -218,7 +218,7 @@ impl Vm {
                 return Ok(false);
             };
         if class.as_ref() == "Typed"
-            && matches!(name, "hasProperty" | "getPropertyOrNull")
+            && matches!(name, "hasProperty" | "getProperty" | "getPropertyOrNull")
             && !self.typed_has_property_available(source)?
         {
             return Ok(false);

@@ -1,0 +1,50 @@
+{
+  "actual_Java_executed": false,
+  "capture": {
+    "bytes": 17526,
+    "mode": 420,
+    "path": "target/m2/stage108-annotation-const-oracle-prep-03/capture.py",
+    "sha256": "61a39057302f08053ed7ed806f0b3a158b18809362749295720c807cc484ee16"
+  },
+  "complete": true,
+  "contracts": 6,
+  "deltas": {
+    "bytes": 1181,
+    "mode": 420,
+    "path": "target/m2/stage108-annotation-const-oracle-prep-03/explicit-deltas.json",
+    "sha256": "2a8f54e277bb2987479fe87a96e37e062582c6ccf9a001b5a6b1efe7a7abd687"
+  },
+  "expected_results_generated": false,
+  "main_report": {
+    "bytes": 929883,
+    "mode": 420,
+    "path": "target/m2/stage108-annotation-const-oracle-01/report.json",
+    "sha256": "7bb86f6d3c79d2c7c32d6c1e18871a0c119360f46212c7c64307583bd67f9c0d"
+  },
+  "matrix": {
+    "bytes": 4413,
+    "mode": 420,
+    "path": "target/m2/stage108-annotation-const-oracle-prep-03/queries.json",
+    "sha256": "4107100e0cd338a757bef020757b48305d92227a960a784ed6cc258ea1ddc371"
+  },
+  "pinned_invocation_sources": [
+    {
+      "bytes": 233,
+      "mode": 420,
+      "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/lambdas/lambda1.pkl",
+      "sha256": "2bb2bf4f938574f3f92e30b359647cbc84a93ed4b40d984fed10a89139ef105a"
+    },
+    {
+      "bytes": 822,
+      "mode": 420,
+      "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+      "sha256": "9a037e753e348abac16c43b00a606ed8fe9ae35e6c88d74996d6c92287a0891f"
+    }
+  ],
+  "planned_observations": 12,
+  "planned_sessions": 12,
+  "programs": 6,
+  "root_window_granted": true,
+  "same_resource_profile": true,
+  "source_only": true
+}

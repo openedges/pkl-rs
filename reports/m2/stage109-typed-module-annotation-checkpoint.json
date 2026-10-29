@@ -1,0 +1,889 @@
+{
+  "schema_version": 1,
+  "kind": "Stage109 shared Typed property lookup, module paths and annotation/const checkpoint",
+  "compatibility_baseline": "Pkl 0.32.0",
+  "complete": true,
+  "publication_ready": true,
+  "source_parent": "257be85deeb3ee65ca19660338710d6f93542918",
+  "containing_commit_hash_claimed": false,
+  "canonical_scope": {
+    "source_tool_paths": 18,
+    "source_plan": {
+      "path": "target/m2/stage109-combined-integration-prep-01/copy-plan.json",
+      "bytes": 10475,
+      "sha256": "3e218e0880fa09f2dca5f7c83caad4a0fbf257c7bff9317ed8e736bb29c66d75"
+    },
+    "sources": [
+      "crates/pkl-runtime/src/diagnostic.rs",
+      "crates/pkl-runtime/src/evaluation/frontend.rs",
+      "crates/pkl-runtime/src/host/resources.rs",
+      "crates/pkl-runtime/src/parser.rs",
+      "crates/pkl-runtime/src/resolver.rs",
+      "crates/pkl-runtime/src/resolver/diagnostic_owner.rs",
+      "crates/pkl-runtime/src/vm.rs",
+      "crates/pkl-runtime/src/vm/collection_conversions.rs",
+      "crates/pkl-runtime/src/vm/modules.rs",
+      "crates/pkl-runtime/src/vm/object_lookups.rs",
+      "crates/pkl-runtime/src/vm/output.rs",
+      "crates/pkl-runtime/src/vm/uri_resolution.rs",
+      "crates/pkl-runtime/tests/m2_annotation_const_oracle.rs",
+      "crates/pkl-runtime/tests/m2_module_relativepath_lifecycle.rs",
+      "crates/pkl-runtime/tests/m2_module_relativepath_oracle.rs",
+      "crates/pkl-runtime/tests/m2_typed_getproperty_lifecycle.rs",
+      "crates/pkl-runtime/tests/m2_typed_property_oracle.rs",
+      "tools/m2_source_inputs.py"
+    ],
+    "Java_fixture_paths": 6996,
+    "fixture_plan": {
+      "path": "target/m2/stage109-combined-integration-prep-01/fixture-copy-plan.json",
+      "bytes": 3106608,
+      "sha256": "7b07684170518851045fdacd6d2cef3ff595aa990d3c29b157e31b49bcb6f177"
+    },
+    "generated_metadata_paths": [
+      "compatibility/inventory.json",
+      "compatibility/m2-language.json"
+    ],
+    "metadata_identities_are_recorded_not_new_current_rehash": false,
+    "generated_metadata_identities": [
+      {
+        "path": "compatibility/inventory.json",
+        "bytes": 8631536,
+        "mode": 420,
+        "sha256": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070"
+      },
+      {
+        "path": "compatibility/m2-language.json",
+        "bytes": 6791702,
+        "mode": 420,
+        "sha256": "ce819d2fc8221fd099bef5120bb9590c9cf439afc4457c618977a52e637b60c3"
+      }
+    ]
+  },
+  "targeted": {
+    "passed": 152,
+    "failed": 0,
+    "ignored": 1,
+    "ignored_required_placeholder_is_not_pass": true
+  },
+  "new_native": {
+    "ordinary_observations": 276,
+    "successes": 102,
+    "ordinary_errors": 174,
+    "shared_harness_fields": 1736,
+    "Logger_events": 8,
+    "required_unresolved_observations": 2,
+    "all_required_pass": false
+  },
+  "existing_native": {
+    "observations": 1138,
+    "shared_harness_fields": 6988,
+    "Logger_events": 16
+  },
+  "selected_platforms": {
+    "native": {
+      "capture": {
+        "path": "target/m2/stage109-selected-native-02/report.json",
+        "bytes": 324002,
+        "sha256": "0510c0b52aa434c751e2465f60998574fe329fefb61c5fa7647b1cf52ce4d4d9"
+      },
+      "comparison": {
+        "path": "target/m2/stage109-selected-native-02/comparison.json",
+        "bytes": 160302,
+        "sha256": "2e8d2375ac73ce2f84a3823801646eaedc843fa13ed0950c3c75ea984e1d184a"
+      },
+      "programs": 61,
+      "contracts": 139,
+      "sessions": 122,
+      "attempts": 278,
+      "ordinary_observations": 276,
+      "portable_raw_fields": 2288,
+      "ordered_Logger_events": 8,
+      "required_unresolved_observations": 2,
+      "all_required_pass": false,
+      "source_stable": true,
+      "tracked_stable": true
+    },
+    "napi": {
+      "capture": {
+        "path": "target/m2/stage109-selected-napi-03/report.json",
+        "bytes": 64018,
+        "sha256": "6a7bddc087c8ab6e3a61fd7b40b70bc6b6c81aacc8328828d7675aca5cb86104"
+      },
+      "comparison": {
+        "path": "target/m2/stage109-selected-napi-03/comparison.json",
+        "bytes": 160298,
+        "sha256": "f3570046e1f20519e9e17b16360c0255aba2185297d8969e062c31d676deec1f"
+      },
+      "programs": 61,
+      "contracts": 139,
+      "sessions": 122,
+      "attempts": 278,
+      "ordinary_observations": 276,
+      "portable_raw_fields": 2288,
+      "ordered_Logger_events": 8,
+      "required_unresolved_observations": 2,
+      "all_required_pass": false,
+      "source_stable": true,
+      "tracked_stable": true,
+      "portable_harness_stable": true
+    },
+    "chromium": {
+      "capture": {
+        "path": "target/m2/stage109-selected-chromium-03/report.json",
+        "bytes": 103376,
+        "sha256": "d4633b06e04cce9c4062ebc13306b1d2224d27e6f665f54893e8cdf704ace897"
+      },
+      "comparison": {
+        "path": "target/m2/stage109-selected-chromium-03/comparison.json",
+        "bytes": 160306,
+        "sha256": "c6cd87a6ba4735cb58bc1ecb8abef8ecfd6bfca76af356a0a5e8747dbc120b59"
+      },
+      "programs": 61,
+      "contracts": 139,
+      "sessions": 122,
+      "attempts": 278,
+      "ordinary_observations": 276,
+      "portable_raw_fields": 2288,
+      "ordered_Logger_events": 8,
+      "required_unresolved_observations": 2,
+      "all_required_pass": false,
+      "source_stable": true,
+      "tracked_stable": true,
+      "portable_harness_stable": true,
+      "browser_stable": true
+    }
+  },
+  "actual_full_ready": {
+    "selected_count": 4442,
+    "passes": 4332,
+    "mismatches": 26,
+    "unsupported": 82,
+    "oracle_errors": 2,
+    "candidate_internal_errors": 0,
+    "old_pass_regressions": 0,
+    "metamorphic_pass": 88,
+    "metamorphic_total": 88,
+    "integrity_valid": true,
+    "all_required_compatibility_pass": false
+  },
+  "actual_m1": {
+    "total_per_target": 6078,
+    "targets": [
+      "native",
+      "node",
+      "chromium"
+    ],
+    "strict_pass": true,
+    "architecture_pass": true,
+    "one_actual_acquisition": true
+  },
+  "freshness": {
+    "actual_commands": 8,
+    "all_exit_zero": true,
+    "source_stable": true,
+    "scope": "Eight recorded local read-only freshness commands. Recorder source bookends cover its Rust/build inputs; this does not assert a full transitive Python/input freeze."
+  },
+  "strict_full_gate": {
+    "complete": false,
+    "overlapping_unmet_conditions": 1780,
+    "categories": {
+      "implementation incomplete": 472,
+      "test mapping incomplete": 472,
+      "required case incomplete": 836
+    },
+    "method": "Exact current full_gate_failures function extracted via AST and applied to the freshly checked current manifest and complete Stage109 composite results. Not a new --verify-full CLI invocation or new evaluator acquisition.",
+    "new_verify_full_CLI_invocation": false
+  },
+  "actual_evidence_available": {
+    "targeted_native": {
+      "path": "target/m2/stage109-normal-tests-01/report.json",
+      "bytes": 18836,
+      "sha256": "46c8f675eac943eeae351622b9f3dcdfcb73e4177fcab3248e99ad8f6ec8a7cd"
+    },
+    "new_native_raw_readback": {
+      "path": "target/m2/stage109-new-family-raw-readback-01/report.json",
+      "bytes": 58935,
+      "sha256": "9d7a160713d9f1cc80c147ae3ebabac549ce7aed36b7241699e1fbf8dbaaa730"
+    },
+    "existing_native_raw_readback": {
+      "path": "target/m2/stage109-existing-raw-readback-01/report.json",
+      "bytes": 2553720,
+      "sha256": "29deb25879d329ef93e764c18f7989db4519ca6e6165cb456231ca8c3cd3f0c8"
+    },
+    "affected_python": {
+      "path": "target/m2/stage109-python-affected-01/report.json",
+      "bytes": 1478,
+      "sha256": "4f8d446870d8559420e8d67f4629009349fe35f560fa474d6e964a7fd5177dad"
+    },
+    "current_originals": {
+      "path": "target/m2/stage109-current-original-replay-01/report.json",
+      "bytes": 26130,
+      "sha256": "b16238f2b47d8d3f65867c4f80dc2978dc451b5be7b3259829c63bc13579b116"
+    },
+    "full_ready_native": {
+      "path": "target/m2/stage109-full-ready-native-01.json",
+      "bytes": 2641567,
+      "sha256": "523f1d0459398617302d055537c94145894e92c81b441fff0d47ece41840e23f"
+    },
+    "current_m1": {
+      "path": "target/m2/stage109-m1-platform-01/report.json",
+      "bytes": 3400372,
+      "sha256": "f53760ab4b0ee29c30d1beeee5a70466ce68f3252d6126c0a46c2973e3691125"
+    },
+    "m1_actual_command": {
+      "path": "target/m2/stage109-m1-platform-command-01/report.json",
+      "bytes": 4795,
+      "sha256": "1db115040e02ba93b0b5fc07b025302d23e7d4768bf351d8fcfdfb4b7b07149c"
+    },
+    "m1_offline_predicates": {
+      "path": "target/m2/stage109-m1-readback-01/report.json",
+      "bytes": 1218,
+      "sha256": "efc6652d13bc6f0ba9190c028e3627b64bc930a0bbc418c2bf84ba6daef70ee5"
+    },
+    "selected_terminal": {
+      "path": "target/m2/stage109-selected-execution-commands-03/terminal-summary.json",
+      "bytes": 19948,
+      "sha256": "bdff7150ebc9edaf1ad7996cb16eb3f368faa7e356c0cc2a2d05066ecdd890eb"
+    },
+    "freshness_and_strict_gate": {
+      "path": "target/m2/stage109-freshness-and-full-gate-01/report.json",
+      "bytes": 5057,
+      "sha256": "03e81734755aa117829e3ed02a18fa72e6ec5a47559c5c35b636186f3254e686"
+    },
+    "normal_artifact_retention": {
+      "path": "target/m2/stage109-normal-artifact-retention-01/report.json",
+      "bytes": 2052,
+      "sha256": "cefd9303701161c3123effa1d454d9575a81769b7ef503bbb63861bd4c056213"
+    },
+    "actual_defaults": {
+      "path": "target/m2/stage109-normal-defaults-01/report.json",
+      "bytes": 6533,
+      "sha256": "6fa068f64d66d9c110d5ea2878a423269d3c13421e1a57768627b267270c648f"
+    },
+    "format_prepare02": {
+      "path": "target/m2/stage109-normal-prepare-02/format-check-02/report.json",
+      "bytes": 1310,
+      "sha256": "3a99aee3a3fede09df1f700982cf02c70ad9f32183af6feaf083dd1171985456"
+    },
+    "manifest_refresh_audit": {
+      "path": "target/m2/stage109-manifest-refresh-audit-01/report.json",
+      "bytes": 723,
+      "sha256": "19f8758eccd7ea147946f923a86b445ea038b81b061b04a0038774abe39a5642"
+    },
+    "manifest_refresh_changes": {
+      "path": "target/m2/stage109-manifest-refresh-audit-01/changes.json",
+      "bytes": 31119,
+      "sha256": "d0cd0897827a4828da9e1b58a8078818847e05b31ea5f2a1fecb2ded9fd08c52"
+    },
+    "actual_workspace_command": {
+      "path": "target/m2/stage109-workspace-test-01/report.json",
+      "bytes": 1359,
+      "mode": 420,
+      "sha256": "6b5cf12f5f8d2d6d1b8422590ca006c9c1406ba19d1be30adcd530866c83f510"
+    },
+    "actual_workspace_readback": {
+      "path": "target/m2/stage109-workspace-readback-01/report.json",
+      "bytes": 6462,
+      "mode": 420,
+      "sha256": "173ec1e0f3a624c49eafd66e6cac2594472f6d211d18309fd3d57fa5036c1abc"
+    }
+  },
+  "actual_defaults": {
+    "status": "ACTUAL terminal pass",
+    "complete": true,
+    "success": true,
+    "roles": [
+      "prepare02 formatting",
+      "xtask verification",
+      "all-target Clippy -D warnings",
+      "wasm32 check"
+    ],
+    "explicit_inputs_stable": true,
+    "aggregate": {
+      "path": "target/m2/stage109-normal-defaults-01/report.json",
+      "bytes": 6533,
+      "sha256": "6fa068f64d66d9c110d5ea2878a423269d3c13421e1a57768627b267270c648f"
+    },
+    "format": {
+      "path": "target/m2/stage109-normal-prepare-02/format-check-02/report.json",
+      "bytes": 1310,
+      "sha256": "3a99aee3a3fede09df1f700982cf02c70ad9f32183af6feaf083dd1171985456"
+    },
+    "scope": "Recorded current-source bounded explicit input bookends; not full fixture/transitive Python freeze"
+  },
+  "actual_workspace": {
+    "command": {
+      "path": "target/m2/stage109-workspace-test-01/report.json",
+      "bytes": 1359,
+      "sha256": "6b5cf12f5f8d2d6d1b8422590ca006c9c1406ba19d1be30adcd530866c83f510",
+      "mode": 420
+    },
+    "readback": {
+      "path": "target/m2/stage109-workspace-readback-01/report.json",
+      "bytes": 6462,
+      "sha256": "173ec1e0f3a624c49eafd66e6cac2594472f6d211d18309fd3d57fa5036c1abc",
+      "mode": 420
+    },
+    "tests": {
+      "passed": 1658,
+      "failed": 0,
+      "ignored": 5
+    },
+    "executable_test_targets": 262,
+    "compile_only_examples": 25,
+    "doctest_libraries": 2,
+    "nested_summaries_separate": 13,
+    "all_coverage_checks_pass": true,
+    "one_actual_acquisition": true,
+    "ignored_tests": [
+      "test frontend_probe ... ignored, invoked explicitly by the M1 differential evidence runner",
+      "test java_supplement_const_lambda ... ignored, Required unresolved: pinned Java const-lambda PklBugException/NullPointerException; raw80obs preserved",
+      "test java_foreign_entry_renderer_protocol_remains_required ... ignored, pinned Java List(Map(...)).flatten renderer internal error; protocol unresolved",
+      "test java_foreign_entry_internal_protocol_remains_required ... ignored, three pinned Java foreign-Map.Entry internal errors; cross-runtime protocol unresolved",
+      "test java_glob_internal_error_protocol_is_unresolved ... ignored, three pinned Java glob internal errors; cross-runtime protocol unresolved"
+    ]
+  },
+  "archives": [
+    {
+      "path": "reports/m2/stage109-typed-module-annotation-evidence-01.tar.gz",
+      "bytes": 41853522,
+      "mode": 420,
+      "sha256": "f3209582e0e52de4ea6b9ba9d70b97672ba898a5c4290a848b0f92f5827846b1",
+      "part": 1,
+      "source_target_archive": {
+        "bytes": 41853522,
+        "mode": 420,
+        "path": "target/m2/stage109-evidence-archives-01/stage109-typed-module-annotation-evidence-01.tar.gz",
+        "sha256": "f3209582e0e52de4ea6b9ba9d70b97672ba898a5c4290a848b0f92f5827846b1"
+      },
+      "public_copy_verified": true,
+      "manifest": {
+        "bytes": 5009,
+        "sha256": "6ce339a1689b54f832f659274718cda8fe8dbee7a1788aaaf6bb03795802856a"
+      },
+      "logical_members_including_manifest": 64
+    },
+    {
+      "path": "reports/m2/stage109-typed-module-annotation-evidence-02.tar.gz",
+      "bytes": 41720682,
+      "mode": 420,
+      "sha256": "047564028688de80961cb5cc0371c2dc91497b2d127e9430789cf6b35c9eb186",
+      "part": 2,
+      "source_target_archive": {
+        "bytes": 41720682,
+        "mode": 420,
+        "path": "target/m2/stage109-evidence-archives-01/stage109-typed-module-annotation-evidence-02.tar.gz",
+        "sha256": "047564028688de80961cb5cc0371c2dc91497b2d127e9430789cf6b35c9eb186"
+      },
+      "public_copy_verified": true,
+      "manifest": {
+        "bytes": 10858,
+        "sha256": "a301fac9a4a39b40c2512bd0b07ac24677f3cf28a6f634905ef613b5300ebf99"
+      },
+      "logical_members_including_manifest": 132
+    },
+    {
+      "path": "reports/m2/stage109-typed-module-annotation-evidence-03.tar.gz",
+      "bytes": 23922298,
+      "mode": 420,
+      "sha256": "a435c70de01345f67412b4607599625a6858bccd407fc0d3e5dd5506f6a0fe37",
+      "part": 3,
+      "source_target_archive": {
+        "bytes": 23922298,
+        "mode": 420,
+        "path": "target/m2/stage109-evidence-archives-01/stage109-typed-module-annotation-evidence-03.tar.gz",
+        "sha256": "a435c70de01345f67412b4607599625a6858bccd407fc0d3e5dd5506f6a0fe37"
+      },
+      "public_copy_verified": true,
+      "manifest": {
+        "bytes": 875635,
+        "sha256": "0718e65d7063ddb14db0a49e5303616b796a87a115d6106d27a2b0095f8383cd"
+      },
+      "logical_members_including_manifest": 9204
+    },
+    {
+      "path": "reports/m2/stage109-typed-module-annotation-evidence-04.tar.gz",
+      "bytes": 12154135,
+      "mode": 420,
+      "sha256": "e811ae746777cae99c63450fda880179b08cf8fc89d3d35817a00d6c825e24fb",
+      "part": 4,
+      "source_target_archive": {
+        "bytes": 12154135,
+        "mode": 420,
+        "path": "target/m2/stage109-evidence-archives-01/stage109-typed-module-annotation-evidence-04.tar.gz",
+        "sha256": "e811ae746777cae99c63450fda880179b08cf8fc89d3d35817a00d6c825e24fb"
+      },
+      "public_copy_verified": true,
+      "manifest": {
+        "bytes": 891450,
+        "sha256": "4c814586a92db4048b676780f6f62a1c6e0279707f37a287d11b9c4cf7a3fbf6"
+      },
+      "logical_members_including_manifest": 8332
+    }
+  ],
+  "preserved_failures": {
+    "native01": {
+      "path": "target/m2/stage109-selected-native-01/report.json",
+      "bytes": 90096,
+      "sha256": "48a7d02618d135d747b1e4ceec4f3332bf81f0baee5515786ec118eea9c23b95"
+    },
+    "napi02": {
+      "path": "target/m2/stage109-selected-napi-02/report.json",
+      "bytes": 47259,
+      "sha256": "fb1c74c3be9a2cc916d865dfe3df9445bc35e8b32a8b041d1dc23af5143aff97"
+    },
+    "original_first_failure_summary": {
+      "path": "target/m2/stage109-selected-execution-commands-01/terminal-summary.json",
+      "bytes": 4299,
+      "sha256": "35539f7ed33875ad7aa2ff3c0313da78d6e017de752a9aa840d05029134e7be3"
+    },
+    "second_failure_summary": {
+      "path": "target/m2/stage109-selected-execution-commands-02/terminal-summary.json",
+      "bytes": 14512,
+      "sha256": "12742f6f7f5f5753c38e7f7445453e30301dcddb5f706cc9b7155e3643044cf0"
+    }
+  },
+  "excluded_isolated_candidates": [
+    "Stage110",
+    "Stage111",
+    "Stage113"
+  ],
+  "pending": [],
+  "full_m2_complete": false,
+  "full_API_complete": false,
+  "performance_targets_met": false,
+  "hosted_CI_result_claimed": false,
+  "manifest_refresh_provenance": {
+    "original_prepare01_failure_preserved": true,
+    "actual_prepare02_narrow_admission": "Exactly105 implementation link SHA changes anchored to original preimages/applied candidates; case order/status/count/mapping and raw comparison bytes unchanged",
+    "anchor": {
+      "original_manifest": {
+        "path": "target/m2/stage109-normal-prepare-01/preimages/compatibility/m2-language.json",
+        "bytes": 6791702,
+        "sha256": "4ab98a9c9e313549d65bd9c0a4f34205d473ca628831ee6fdccf51222dc0cd83",
+        "mode": 420
+      },
+      "failed_controller": {
+        "path": "target/m2/stage109-normal-prepare-01/report.json",
+        "bytes": 3698,
+        "sha256": "75afcb4fe589d8140f72a89b2c0e6e657b4a1fa49501b4bd4283abdb2e6ba58a",
+        "mode": 420
+      },
+      "audit_report": {
+        "path": "target/m2/stage109-manifest-refresh-audit-01/report.json",
+        "bytes": 723,
+        "sha256": "19f8758eccd7ea147946f923a86b445ea038b81b061b04a0038774abe39a5642",
+        "mode": 420
+      },
+      "audit_changes": {
+        "path": "target/m2/stage109-manifest-refresh-audit-01/changes.json",
+        "bytes": 31119,
+        "sha256": "d0cd0897827a4828da9e1b58a8078818847e05b31ea5f2a1fecb2ded9fd08c52",
+        "mode": 420
+      },
+      "allowed_sha_changes": 105
+    },
+    "archive_selection": "Two exact audit files mandatory; existing prepare01/02 roots retain failed controller/preimage and current validator proof"
+  },
+  "documents": {
+    "language_rule": "English standard documentation; Korean PLAN.md",
+    "files": [
+      {
+        "path": "README.md",
+        "bytes": 16571,
+        "mode": 420,
+        "sha256": "9d2bf089953152ca0e22bbbe2a68c7f5d0516bd2667eec16632ac97a83091d04"
+      },
+      {
+        "path": "TESTING.md",
+        "bytes": 110059,
+        "mode": 420,
+        "sha256": "89ee5f863fb510a539880345f266c53c84e3a5a38b8fe5abd6eb643921b5fadd"
+      },
+      {
+        "path": "docs/m2-language.md",
+        "bytes": 121596,
+        "mode": 420,
+        "sha256": "48fc17a83665d37d41de296522db8c809ca3f87a8464e3e44ebb427fb6ed673e"
+      },
+      {
+        "path": "docs/architecture.md",
+        "bytes": 112529,
+        "mode": 420,
+        "sha256": "3ba61e07492a7f6a34df22840cc6b51078f51f0b89520665e6b52695b23e380f"
+      },
+      {
+        "path": "reports/m2/README.md",
+        "bytes": 386080,
+        "mode": 420,
+        "sha256": "63590337a0ec9359c953a368dadcb1c42e36bb3003da0f9ee7eaaf0ba5c070b3"
+      },
+      {
+        "path": "PLAN.md",
+        "bytes": 484567,
+        "mode": 420,
+        "sha256": "ced10ef87a3a32b38cae709436292ba2851dacd742145261ed1c4c063429c007"
+      }
+    ],
+    "verification": "Exact reviewed candidates applied after terminal archive source bookends; documentation is stored in Git, not recursively in the evidence archives."
+  },
+  "evidence": {
+    "producer": {
+      "path": "target/m2/stage109-evidence-archives-01/report.json",
+      "bytes": 5128,
+      "sha256": "aeaa208dbbbc79f132cfb8f1b7e2d66f0a42c24f0a0a878a3841977638829904",
+      "mode": 420
+    },
+    "preflight": {
+      "path": "target/m2/stage109-archive-preflight-01/report.json",
+      "bytes": 3831,
+      "sha256": "339aa100b788f5f9a74c8af1853b92bb21b8aac9fb6eee3405861f54d58c6bb0",
+      "mode": 420
+    },
+    "actual_execution": {
+      "path": "target/m2/stage109-archive-prep-01/actual-execution.json",
+      "bytes": 1696,
+      "sha256": "7417f2e0643b02a34328f693ef0ea912a05eb95a5df050fc02940d65952e2492",
+      "mode": 420
+    },
+    "source_config": {
+      "path": "target/m2/stage109-archive-prep-01/config.json",
+      "bytes": 16263,
+      "sha256": "57135cbf9b18cfe5e72a63d4f62ba6f2854253abdd04fe39674437f3456ad6c4",
+      "mode": 420
+    },
+    "selection": {
+      "bytes": 14601692,
+      "mode": 420,
+      "path": "target/m2/stage109-archive-preflight-01/selection.json",
+      "sha256": "17d7f78e87bec6972b650b0fc4a13d43a3d87cb3de005b29c12304f4c7100266"
+    },
+    "archive_counts": {
+      "parts": 4,
+      "compressed_bytes": 119650637,
+      "compressed_cap_bytes_per_part": 47185920,
+      "selected_payloads": 17727,
+      "auxiliary_payloads": 1,
+      "part_manifest_members": 4,
+      "total_logical_regular_archive_members": 17732,
+      "direct_aliases": 38819,
+      "alias_mode_transformations": 2,
+      "acquisition_scoped_cache_aliases": 27
+    },
+    "producer_predicates": {
+      "every_member_raw_bytes_size_mode_order_SHA_verified": true,
+      "gzip_EOF": true,
+      "exact_global_disjoint_union": true,
+      "source_before_stream_after_equal": true
+    },
+    "independent_archive_readback": {
+      "path": "target/m2/stage109-archive-independent-readback-01/report.json",
+      "bytes": 5083,
+      "mode": 420,
+      "sha256": "464b96d451a721addecfe5bc0c2e3910858a0928455d2e06c9e91d9dc755de3f"
+    },
+    "independent_execution": {
+      "path": "target/m2/stage109-archive-independent-readback-01/execution.json",
+      "bytes": 626,
+      "mode": 420,
+      "sha256": "c5d637f6d74121da58937d304aa65825bac442288f1d81db12d2fe309cb549e9"
+    },
+    "public_copy": {
+      "path": "target/m2/stage109-public-copy-01/report.json",
+      "bytes": 3252,
+      "mode": 420,
+      "sha256": "512eb1b98e196cc0db8d0212680368f539f249511aceb1fc93da38953d616a9c"
+    },
+    "independent_member_and_EOF_verification_passed": true,
+    "public_copy_verified": true,
+    "original_producer_independent_field": "The original receipt retains pending; the separate later successful independent readback resolves that step without changing the producer record."
+  },
+  "source_restoration": {
+    "standalone_repository": false,
+    "scope": "Current finite raw/source payloads and direct aliases; explicit acquisition cache views use retained bytes. Prior published parts and pinned tools/references remain prerequisites; no standalone workspace or historical audit blob promise.",
+    "selection_member": "STAGE109-FULL-SELECTION.json",
+    "selection_identity": {
+      "bytes": 14601692,
+      "mode": 420,
+      "path": "target/m2/stage109-archive-preflight-01/selection.json",
+      "sha256": "17d7f78e87bec6972b650b0fc4a13d43a3d87cb3de005b29c12304f4c7100266"
+    },
+    "catalogs": [
+      {
+        "bytes": 16263,
+        "mode": 420,
+        "path": "target/m2/stage109-archive-prep-01/config.json",
+        "sha256": "57135cbf9b18cfe5e72a63d4f62ba6f2854253abdd04fe39674437f3456ad6c4"
+      },
+      {
+        "bytes": 9490905,
+        "mode": 420,
+        "path": "target/m2/stage109-archive-prep-01/members.final.json",
+        "sha256": "02f8ac9cd773ac3f55a3651560cf5659ccf46299b854f054b515f0646a75d80c"
+      },
+      {
+        "bytes": 31614152,
+        "mode": 420,
+        "path": "target/m2/stage109-archive-prep-01/aliases.final.json",
+        "sha256": "fbc8868430187f212fdba10c10f057c47d4000068cad94425996646d67fc80bb"
+      },
+      {
+        "bytes": 4915,
+        "mode": 420,
+        "path": "target/m2/stage109-evidence-catalog-independent-review-01/sealed-metadata-review.json",
+        "sha256": "33b7a5fa10162ba367deb0e9e4c72e08597fc8d208831baecb60e839981eec4d"
+      }
+    ],
+    "selected_payloads": 17727,
+    "direct_restoration_aliases": 38819,
+    "inherited_restoration_paths": 52727,
+    "canonical_source_tool_paths_verified": 18,
+    "canonical_Java_fixture_paths_verified": 6996,
+    "alias_mode_transformations": [
+      {
+        "destination": "target/m2/stage109-selected-all-artifacts-01/pkl_napi.node",
+        "destination_mode": 493,
+        "payload": "target/m2/stage109-m1-platform-01/pkl_napi.node",
+        "payload_mode": 420
+      },
+      {
+        "destination": "target/m2/stage109-selected-all-artifacts-02/pkl_napi.node",
+        "destination_mode": 493,
+        "payload": "target/m2/stage109-m1-platform-01/pkl_napi.node",
+        "payload_mode": 420
+      }
+    ],
+    "acquisition_scoped_cache_aliases": 27,
+    "alias_restoration": "Restore aliases as independent regular-file copies of direct payloads; verify raw size/SHA256, then apply destination mode. Never use hardlinks. Do not overwrite a different historical acquisition view or mutable current artifact with an unrelated acquisition identity.",
+    "inherited_source_archives": [
+      {
+        "bytes": 16381675,
+        "path": "reports/m2/stage104-reflection-typed-evidence-01.tar.gz",
+        "sha256": "81fddcb8b83b20a9a58822e35e0cd9a7dea1ed6083f16537c842cc2e05528e62"
+      },
+      {
+        "bytes": 10446634,
+        "path": "reports/m2/stage104-reflection-typed-evidence-02.tar.gz",
+        "sha256": "aae85a8eea8ce93fdb6c20c9c650632848b56607bb9bd499bfe9e144351f463c"
+      },
+      {
+        "bytes": 18623526,
+        "path": "reports/m2/stage104-reflection-typed-evidence-03.tar.gz",
+        "sha256": "c70bdf514e6fa3f6fc4a838c57e54b6eaad89b32b97822eafa79e2e535d92cd5"
+      },
+      {
+        "bytes": 11872022,
+        "path": "reports/m2/stage104-reflection-typed-evidence-04.tar.gz",
+        "sha256": "a29de6fc1c0f28abf38a82eb014a61f92511b9d38ce7c7c2fdea77ba5b7708bc"
+      },
+      {
+        "bytes": 13217143,
+        "path": "reports/m2/stage104-reflection-typed-evidence-05.tar.gz",
+        "sha256": "20e758beac89fa0a894701ae97175a837e440eaa87090c375a7157d96991905c"
+      },
+      {
+        "bytes": 19187410,
+        "path": "reports/m2/stage104-reflection-typed-evidence-06.tar.gz",
+        "sha256": "6534b2d051b12f6d96cfcc188f2f2d1bcd131533571d98653d3329729f78a8fd"
+      },
+      {
+        "bytes": 15471782,
+        "path": "reports/m2/stage104-reflection-typed-evidence-07.tar.gz",
+        "sha256": "6504cf3a9888c13426969f7afbd2b6f99f97f852643cc4c4e89ad404f0b99a69"
+      },
+      {
+        "bytes": 1904337,
+        "path": "reports/m2/stage104-reflection-typed-evidence-08.tar.gz",
+        "sha256": "6c14b5e1177eb0ae73cca987a68195128785775db8099591d68e5249b9068e75"
+      }
+    ],
+    "inherited_source_mappings": [
+      {
+        "catalog": "target/m2/stage109-evidence-catalog-02/inherited-restoration.json",
+        "identity": {
+          "bytes": 67742583,
+          "mode": 420,
+          "path": "target/m2/stage109-evidence-catalog-02/inherited-restoration.json",
+          "sha256": "e5b9805398e8b8b5a3e6fe688d53aa89f1428c9bf536ff4df13e64f63fb86053"
+        },
+        "scope": "Current fixture/source mappings to published exact byte/mode identities"
+      }
+    ],
+    "prior_checkpoint": {
+      "path": "reports/m2/stage104-reflection-typed-checkpoint.json",
+      "bytes": 131296,
+      "mode": 420,
+      "sha256": "9bb4efb550b4f1b8b30d6200267c8590bb4f0faf88097e5575ccf42dd4952b7e"
+    },
+    "external_prerequisites_and_limits": {
+      "all24_selected_cache_identities_retained": {
+        "bytes": 48134,
+        "mode": 420,
+        "path": "target/m2/stage109-artifact-closure-retention-01/report.json",
+        "sha256": "69ca9ab72c73868bc000b921fb233e1437ee53fcd471c08dd5184382e78c4716"
+      },
+      "canonical_final_documents_and_checkpoint": "Excluded to avoid cycles; root final copies live in Git, not recursively in their own evidence archives",
+      "external_rev1_inventory": {
+        "catalog": "target/m2/stage109-evidence-catalog-02/supplement-01/external-rev1-inventory-prerequisites.json",
+        "count": 32,
+        "status": "Required but unmapped/not-selected historical regression candidates; no current execution pass or canonical fixture omission"
+      },
+      "full_M2_API_or_performance_claimed": false,
+      "historical_PLAN_exact_view": "target/m2/stage109-artifact-closure-retention-01/historical-views/PLAN.md.stage109-applied",
+      "inherited_published_dependencies": "Exact published Stage104 eight parts and selection metadata; no old archive bodies rehashed/decompressed",
+      "kind": "Closed bounded payload scope with explicit non-payload historical/build prerequisites",
+      "normal3_preClippy_retained": {
+        "bytes": 2052,
+        "mode": 420,
+        "path": "target/m2/stage109-normal-artifact-retention-01/report.json",
+        "sha256": "cefd9303701161c3123effa1d454d9575a81769b7ef503bbb63861bd4c056213"
+      },
+      "standalone_repository": false,
+      "unrecovered_predecessor_manifest": {
+        "contract_check": "current ready-ID order and original case-contract equality, actual current manifest pinned per cohort",
+        "expected_bytes": 6791702,
+        "expected_sha256": "84d19bfbacc716fa1b7d04c2541b370556ca0d98b6318ae9e933c5184ef77829",
+        "launcher": "target/m2/stage103-current-replay-prep-02/common.py:61",
+        "lookup_receipt": "target/m2/stage109-artifact-closure-retention-01/historical-views/predecessor-manifest-lookup.json",
+        "origin": "target/m2/stage103-current-replay-prep-02/selection.json#/predecessor_manifest_identity",
+        "path": "compatibility/m2-language.json",
+        "raw_blob_recovery_claimed": false,
+        "role": "Context-only historical audit identity; NOT read by current launcher/admission/recovery"
+      },
+      "upstream_const_sources": {
+        "count": 2,
+        "live_reference_checkout_not_read": true,
+        "recovery_views": "target/m2/stage109-evidence-catalog-02/supplement-01/upstream-fixture-recovery-views.json"
+      },
+      "workspace": {
+        "bytes": 6462,
+        "mode": 420,
+        "path": "target/m2/stage109-workspace-readback-01/report.json",
+        "sha256": "173ec1e0f3a624c49eafd66e6cac2594472f6d211d18309fd3d57fa5036c1abc"
+      },
+      "workspace_artifact_scope": "Raw invocation/events/source bookends/readback and post-terminal artifact hash manifests; not all262 test executable bodies or standalone toolchain recovery",
+      "workspace_coverage": {
+        "doctests": true,
+        "examples": true,
+        "invoked_targets": true,
+        "outer_summaries": true,
+        "test_targets": true
+      },
+      "workspace_tests": {
+        "failed": 0,
+        "ignored": 5,
+        "passed": 1658
+      }
+    },
+    "procedure": [
+      "Use a fresh checkout of the containing implementation commit and the pinned references/toolchains.",
+      "Verify every listed current archive part and required Stage104 dependency against its exact size/SHA256.",
+      "Read STAGE109-FULL-SELECTION.json and validate part manifests, regular member identities and modes before restoration.",
+      "Restore recorded direct aliases using verified payload bytes and destination modes; preserve explicitly separate historical views.",
+      "Resolve inherited mappings only from their exact published dependency identities. Pinned external tools/references, all workspace executables and the explicitly unrecovered historical context manifest are outside this payload restoration promise."
+    ]
+  },
+  "embedded_publication_receipts": {
+    "target/m2/stage109-evidence-archives-01/report.json": {
+      "pin": {
+        "path": "target/m2/stage109-evidence-archives-01/report.json",
+        "bytes": 5128,
+        "mode": 420,
+        "sha256": "aeaa208dbbbc79f132cfb8f1b7e2d66f0a42c24f0a0a878a3841977638829904"
+      },
+      "raw_utf8": "{\"acquisition_scoped_aliases_verified_via_retained_payloads\":[\"target/debug/deps/libjava_regex-83c371413dd2bfa4.rlib\",\"target/debug/deps/libjava_regex-83c371413dd2bfa4.rmeta\",\"target/debug/deps/liblibm-0654d8277b0a6fa7.rlib\",\"target/debug/deps/liblibm-0654d8277b0a6fa7.rmeta\",\"target/debug/deps/libmd5-caacde9a9c87c644.rlib\",\"target/debug/deps/libmd5-caacde9a9c87c644.rmeta\",\"target/debug/deps/libpkl_runtime-a05378aa9daac775.rlib\",\"target/debug/deps/libpkl_runtime-a05378aa9daac775.rmeta\",\"target/debug/deps/libsha1-6768d35d37ca27b6.rlib\",\"target/debug/deps/libsha1-6768d35d37ca27b6.rmeta\",\"target/debug/deps/libsha2-80fa446f9983607b.rlib\",\"target/debug/deps/libsha2-80fa446f9983607b.rmeta\",\"target/debug/deps/m2_annotation_const_oracle-14a863e9cf81e2ee\",\"target/debug/deps/m2_module_relativepath_lifecycle-7fb014ce11b070e4\",\"target/debug/deps/m2_module_relativepath_oracle-ade9dde86df14b22\",\"target/debug/deps/m2_typed_getproperty_lifecycle-8bcc691fca87c68e\",\"target/debug/deps/m2_typed_property_oracle-903dcf55b1353bc0\",\"target/debug/deps/pkl_runtime-a05378aa9daac775.d\",\"target/debug/examples/jvm_snippet_probe\",\"target/debug/examples/jvm_snippet_probe-e3ccfb5f43ab5e60\",\"target/debug/examples/language_probe\",\"target/debug/examples/language_probe-2ede7bdcea722800\",\"target/debug/examples/module_eval_probe\",\"target/debug/examples/module_eval_probe-0c47c45013058d32\",\"target/release/deps/libpkl_runtime-5d43f2a3a69269a1.rlib\",\"target/wasm32-unknown-unknown/release/deps/libpkl_runtime-9572c76e160a7841.rlib\",\"target/wasm32-unknown-unknown/release/deps/pkl_wasm.wasm\"],\"alias_mode_transformations\":2,\"all_gzip_EOF_checked\":true,\"archives\":[{\"archive\":{\"bytes\":41853522,\"mode\":420,\"path\":\"target/m2/stage109-evidence-archives-01/stage109-typed-module-annotation-evidence-01.tar.gz\",\"sha256\":\"f3209582e0e52de4ea6b9ba9d70b97672ba898a5c4290a848b0f92f5827846b1\"},\"gzip_EOF_checked\":true,\"index\":1,\"logical_members_including_manifest\":64,\"manifest\":{\"bytes\":5009,\"sha256\":\"6ce339a1689b54f832f659274718cda8fe8dbee7a1788aaaf6bb03795802856a\"}},{\"archive\":{\"bytes\":41720682,\"mode\":420,\"path\":\"target/m2/stage109-evidence-archives-01/stage109-typed-module-annotation-evidence-02.tar.gz\",\"sha256\":\"047564028688de80961cb5cc0371c2dc91497b2d127e9430789cf6b35c9eb186\"},\"gzip_EOF_checked\":true,\"index\":2,\"logical_members_including_manifest\":132,\"manifest\":{\"bytes\":10858,\"sha256\":\"a301fac9a4a39b40c2512bd0b07ac24677f3cf28a6f634905ef613b5300ebf99\"}},{\"archive\":{\"bytes\":23922298,\"mode\":420,\"path\":\"target/m2/stage109-evidence-archives-01/stage109-typed-module-annotation-evidence-03.tar.gz\",\"sha256\":\"a435c70de01345f67412b4607599625a6858bccd407fc0d3e5dd5506f6a0fe37\"},\"gzip_EOF_checked\":true,\"index\":3,\"logical_members_including_manifest\":9204,\"manifest\":{\"bytes\":875635,\"sha256\":\"0718e65d7063ddb14db0a49e5303616b796a87a115d6106d27a2b0095f8383cd\"}},{\"archive\":{\"bytes\":12154135,\"mode\":420,\"path\":\"target/m2/stage109-evidence-archives-01/stage109-typed-module-annotation-evidence-04.tar.gz\",\"sha256\":\"e811ae746777cae99c63450fda880179b08cf8fc89d3d35817a00d6c825e24fb\"},\"gzip_EOF_checked\":true,\"index\":4,\"logical_members_including_manifest\":8332,\"manifest\":{\"bytes\":891450,\"sha256\":\"4c814586a92db4048b676780f6f62a1c6e0279707f37a287d11b9c4cf7a3fbf6\"}}],\"auxiliary_payloads\":1,\"canonical_publication_or_Git_writes\":false,\"catalogs\":[{\"bytes\":16263,\"mode\":420,\"path\":\"target/m2/stage109-archive-prep-01/config.json\",\"sha256\":\"57135cbf9b18cfe5e72a63d4f62ba6f2854253abdd04fe39674437f3456ad6c4\"},{\"bytes\":9490905,\"mode\":420,\"path\":\"target/m2/stage109-archive-prep-01/members.final.json\",\"sha256\":\"02f8ac9cd773ac3f55a3651560cf5659ccf46299b854f054b515f0646a75d80c\"},{\"bytes\":31614152,\"mode\":420,\"path\":\"target/m2/stage109-archive-prep-01/aliases.final.json\",\"sha256\":\"fbc8868430187f212fdba10c10f057c47d4000068cad94425996646d67fc80bb\"},{\"bytes\":4915,\"mode\":420,\"path\":\"target/m2/stage109-evidence-catalog-independent-review-01/sealed-metadata-review.json\",\"sha256\":\"33b7a5fa10162ba367deb0e9e4c72e08597fc8d208831baecb60e839981eec4d\"}],\"complete\":true,\"compressed_cap_bytes_per_part\":47185920,\"controller\":{\"bytes\":24045,\"mode\":420,\"path\":\"target/m2/stage109-archive-prep-01/produce.py\",\"sha256\":\"6cb945a9dcfc7dd2a84aa84bf6fb3aead663ebd40578f558a935092470fed25a\"},\"direct_restoration_aliases\":38819,\"errors\":[],\"every_member_bytes_size_mode_order_sha256_rechecked\":true,\"exact_global_disjoint_union\":true,\"finished_epoch\":1793272608.694409,\"floor_breaches\":[],\"independent_archive_readback\":\"pending\",\"kind\":\"Stage109 finite deterministic target archive producer\",\"live_source_before_stream_after_equal\":true,\"live_unscoped_alias_bytes_modes_before_after_equal\":true,\"minimum_free\":25358151680,\"preflight\":{\"bytes\":3831,\"mode\":420,\"path\":\"target/m2/stage109-archive-preflight-01/report.json\",\"sha256\":\"339aa100b788f5f9a74c8af1853b92bb21b8aac9fb6eee3405861f54d58c6bb0\"},\"selected_payloads\":17727,\"selection\":{\"bytes\":14601692,\"mode\":420,\"path\":\"target/m2/stage109-archive-preflight-01/selection.json\",\"sha256\":\"17d7f78e87bec6972b650b0fc4a13d43a3d87cb3de005b29c12304f4c7100266\"},\"standalone_repository\":false,\"started_epoch\":1793272516.013207,\"success\":true}\n"
+    },
+    "target/m2/stage109-archive-preflight-01/report.json": {
+      "pin": {
+        "path": "target/m2/stage109-archive-preflight-01/report.json",
+        "bytes": 3831,
+        "mode": 420,
+        "sha256": "339aa100b788f5f9a74c8af1853b92bb21b8aac9fb6eee3405861f54d58c6bb0"
+      },
+      "raw_utf8": "{\"acquisition_scoped_aliases_verified_via_retained_payloads\":[\"target/debug/deps/libjava_regex-83c371413dd2bfa4.rlib\",\"target/debug/deps/libjava_regex-83c371413dd2bfa4.rmeta\",\"target/debug/deps/liblibm-0654d8277b0a6fa7.rlib\",\"target/debug/deps/liblibm-0654d8277b0a6fa7.rmeta\",\"target/debug/deps/libmd5-caacde9a9c87c644.rlib\",\"target/debug/deps/libmd5-caacde9a9c87c644.rmeta\",\"target/debug/deps/libpkl_runtime-a05378aa9daac775.rlib\",\"target/debug/deps/libpkl_runtime-a05378aa9daac775.rmeta\",\"target/debug/deps/libsha1-6768d35d37ca27b6.rlib\",\"target/debug/deps/libsha1-6768d35d37ca27b6.rmeta\",\"target/debug/deps/libsha2-80fa446f9983607b.rlib\",\"target/debug/deps/libsha2-80fa446f9983607b.rmeta\",\"target/debug/deps/m2_annotation_const_oracle-14a863e9cf81e2ee\",\"target/debug/deps/m2_module_relativepath_lifecycle-7fb014ce11b070e4\",\"target/debug/deps/m2_module_relativepath_oracle-ade9dde86df14b22\",\"target/debug/deps/m2_typed_getproperty_lifecycle-8bcc691fca87c68e\",\"target/debug/deps/m2_typed_property_oracle-903dcf55b1353bc0\",\"target/debug/deps/pkl_runtime-a05378aa9daac775.d\",\"target/debug/examples/jvm_snippet_probe\",\"target/debug/examples/jvm_snippet_probe-e3ccfb5f43ab5e60\",\"target/debug/examples/language_probe\",\"target/debug/examples/language_probe-2ede7bdcea722800\",\"target/debug/examples/module_eval_probe\",\"target/debug/examples/module_eval_probe-0c47c45013058d32\",\"target/release/deps/libpkl_runtime-5d43f2a3a69269a1.rlib\",\"target/wasm32-unknown-unknown/release/deps/libpkl_runtime-9572c76e160a7841.rlib\",\"target/wasm32-unknown-unknown/release/deps/pkl_wasm.wasm\"],\"alias_mode_transformations\":2,\"all_aliases_direct\":true,\"canonical_publication_or_Git_writes\":false,\"catalogs\":[{\"bytes\":16263,\"mode\":420,\"path\":\"target/m2/stage109-archive-prep-01/config.json\",\"sha256\":\"57135cbf9b18cfe5e72a63d4f62ba6f2854253abdd04fe39674437f3456ad6c4\"},{\"bytes\":9490905,\"mode\":420,\"path\":\"target/m2/stage109-archive-prep-01/members.final.json\",\"sha256\":\"02f8ac9cd773ac3f55a3651560cf5659ccf46299b854f054b515f0646a75d80c\"},{\"bytes\":31614152,\"mode\":420,\"path\":\"target/m2/stage109-archive-prep-01/aliases.final.json\",\"sha256\":\"fbc8868430187f212fdba10c10f057c47d4000068cad94425996646d67fc80bb\"},{\"bytes\":4915,\"mode\":420,\"path\":\"target/m2/stage109-evidence-catalog-independent-review-01/sealed-metadata-review.json\",\"sha256\":\"33b7a5fa10162ba367deb0e9e4c72e08597fc8d208831baecb60e839981eec4d\"}],\"complete\":true,\"compression_performed\":false,\"config\":{\"bytes\":16263,\"mode\":420,\"path\":\"target/m2/stage109-archive-prep-01/config.json\",\"sha256\":\"57135cbf9b18cfe5e72a63d4f62ba6f2854253abdd04fe39674437f3456ad6c4\"},\"controller\":{\"bytes\":24045,\"mode\":420,\"path\":\"target/m2/stage109-archive-prep-01/produce.py\",\"sha256\":\"6cb945a9dcfc7dd2a84aa84bf6fb3aead663ebd40578f558a935092470fed25a\"},\"direct_restoration_aliases\":38819,\"errors\":[],\"every_live_payload_and_unscoped_alias_bytes_sha256_mode_verified\":true,\"finished_epoch\":1793272515.8927748,\"floor_breaches\":[],\"identity_error_receipt\":{\"bytes\":3,\"mode\":420,\"path\":\"target/m2/stage109-archive-preflight-01/identity-errors.json\",\"sha256\":\"37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570\"},\"identity_errors\":0,\"kind\":\"Stage109 finite archive live preflight\",\"logical_payload_bytes\":756404284,\"minimum_free\":25873846272,\"runtime\":{\"executable\":\"/opt/homebrew/opt/python@3.14/bin/python3.14\",\"python\":\"3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]\",\"zlib\":\"1.2.12\"},\"selected_payloads\":17727,\"selection\":{\"bytes\":14601692,\"mode\":420,\"path\":\"target/m2/stage109-archive-preflight-01/selection.json\",\"sha256\":\"17d7f78e87bec6972b650b0fc4a13d43a3d87cb3de005b29c12304f4c7100266\"},\"source_bookends_scope\":\"Live content/mode hashes; actual archive producer checks before/stream/after again.\",\"standalone_repository\":false,\"started_epoch\":1793272482.998523,\"success\":true}\n"
+    },
+    "target/m2/stage109-archive-prep-01/actual-execution.json": {
+      "pin": {
+        "path": "target/m2/stage109-archive-prep-01/actual-execution.json",
+        "bytes": 1696,
+        "mode": 420,
+        "sha256": "7417f2e0643b02a34328f693ef0ea912a05eb95a5df050fc02940d65952e2492"
+      },
+      "raw_utf8": "{\n  \"kind\": \"Actual root-granted Stage109 target-only archive command sequence\",\n  \"started_epoch\": 1793272482.939699,\n  \"commands\": [\n    {\n      \"argv\": [\n        \"/opt/homebrew/opt/python@3.14/bin/python3.14\",\n        \"-B\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage109-archive-prep-01/produce.py\",\n        \"preflight\",\n        \"--config\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage109-archive-prep-01/config.json\",\n        \"--config-sha256\",\n        \"57135cbf9b18cfe5e72a63d4f62ba6f2854253abdd04fe39674437f3456ad6c4\",\n        \"--output\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage109-archive-preflight-01\"\n      ],\n      \"exit_code\": 0,\n      \"started_epoch\": 1793272482.9397,\n      \"finished_epoch\": 1793272515.916847\n    },\n    {\n      \"argv\": [\n        \"/opt/homebrew/opt/python@3.14/bin/python3.14\",\n        \"-B\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage109-archive-prep-01/produce.py\",\n        \"build\",\n        \"--preflight\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage109-archive-preflight-01/report.json\",\n        \"--preflight-sha256\",\n        \"339aa100b788f5f9a74c8af1853b92bb21b8aac9fb6eee3405861f54d58c6bb0\",\n        \"--output\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage109-evidence-archives-01\",\n        \"--root-compression-window-authorized\"\n      ],\n      \"exit_code\": 0,\n      \"started_epoch\": 1793272515.9172359,\n      \"finished_epoch\": 1793272608.709435\n    }\n  ],\n  \"public_copy\": false,\n  \"canonical_Git_or_guest_actions\": false,\n  \"success\": true,\n  \"finished_epoch\": 1793272608.7094479,\n  \"complete\": true\n}\n"
+    },
+    "target/m2/stage109-archive-independent-readback-01/report.json": {
+      "pin": {
+        "path": "target/m2/stage109-archive-independent-readback-01/report.json",
+        "bytes": 5083,
+        "mode": 420,
+        "sha256": "464b96d451a721addecfe5bc0c2e3910858a0928455d2e06c9e91d9dc755de3f"
+      },
+      "raw_utf8": "{\n  \"alias_mode_transformations\": [\n    {\n      \"destination\": \"target/m2/stage109-selected-all-artifacts-01/pkl_napi.node\",\n      \"destination_mode\": 493,\n      \"payload\": \"target/m2/stage109-m1-platform-01/pkl_napi.node\",\n      \"payload_mode\": 420\n    },\n    {\n      \"destination\": \"target/m2/stage109-selected-all-artifacts-02/pkl_napi.node\",\n      \"destination_mode\": 493,\n      \"payload\": \"target/m2/stage109-m1-platform-01/pkl_napi.node\",\n      \"payload_mode\": 420\n    }\n  ],\n  \"alias_policy\": \"Direct regular-file recovery using explicit destination mode; graph and bytes verified against archived payloads. No live alias rehash in this independent readback.\",\n  \"all_archive_hashes_verified\": true,\n  \"all_member_raw_bytes_size_mode_verified\": true,\n  \"auxiliary_payloads\": 1,\n  \"binding\": {\n    \"bytes\": 5758,\n    \"mode\": 420,\n    \"path\": \"target/m2/stage109-archive-independent-readback-01/binding.json\",\n    \"sha256\": \"99daf2199f7b5e8bad01508a338987d78ee3ea26cebb8e6ad49ad47239f4fec4\"\n  },\n  \"canonical_fixtures_verified\": 6996,\n  \"complete\": true,\n  \"compressed_bytes\": 119650637,\n  \"config\": {\n    \"bytes\": 16263,\n    \"mode\": 420,\n    \"path\": \"target/m2/stage109-archive-prep-01/config.json\",\n    \"sha256\": \"57135cbf9b18cfe5e72a63d4f62ba6f2854253abdd04fe39674437f3456ad6c4\"\n  },\n  \"controller\": {\n    \"bytes\": 17085,\n    \"mode\": 420,\n    \"path\": \"target/m2/stage109-archive-independent-readback-01/verify.py\",\n    \"sha256\": \"e7cfb72488a6a68e2ac569bf9f171cf898d100ddb6a8eacf5cdd0a9cd4dbc31a\"\n  },\n  \"direct_restoration_aliases\": 38819,\n  \"errors\": [],\n  \"exact_global_disjoint_union\": true,\n  \"finished_epoch\": 1793272796.8652759,\n  \"full_API_complete\": false,\n  \"full_M2_complete\": false,\n  \"guest_compiler_Java_canonical_public_Git_writes\": false,\n  \"hosted_CI_result_claimed\": false,\n  \"independence\": \"Manual tar/PAX and zlib gzip streaming. No producer import/functions or tarfile reader; preserved parser functions from the reviewed Stage104 verifier.\",\n  \"kind\": \"Stage109 independent manual-tar/zlib streaming archive readback\",\n  \"known_limits\": [\n    \"No repository/toolchain or full workspace executable recovery claim.\",\n    \"Prior published archive dependencies retain their earlier independent provenance and are not decompressed here.\",\n    \"Unrecovered historical context and external prerequisites remain explicitly classified in the bound catalog.\"\n  ],\n  \"logical_payload_bytes\": 756404284,\n  \"mandatory_payload_or_alias_count\": 22,\n  \"part_manifest_members\": 4,\n  \"parts\": [\n    {\n      \"archive\": {\n        \"bytes\": 41853522,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage109-evidence-archives-01/stage109-typed-module-annotation-evidence-01.tar.gz\",\n        \"sha256\": \"f3209582e0e52de4ea6b9ba9d70b97672ba898a5c4290a848b0f92f5827846b1\"\n      },\n      \"gzip_EOF_CRC_single_member_no_trailing\": true,\n      \"index\": 1,\n      \"logical_members_including_manifest\": 64,\n      \"raw_hash_size_mode_order\": true\n    },\n    {\n      \"archive\": {\n        \"bytes\": 41720682,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage109-evidence-archives-01/stage109-typed-module-annotation-evidence-02.tar.gz\",\n        \"sha256\": \"047564028688de80961cb5cc0371c2dc91497b2d127e9430789cf6b35c9eb186\"\n      },\n      \"gzip_EOF_CRC_single_member_no_trailing\": true,\n      \"index\": 2,\n      \"logical_members_including_manifest\": 132,\n      \"raw_hash_size_mode_order\": true\n    },\n    {\n      \"archive\": {\n        \"bytes\": 23922298,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage109-evidence-archives-01/stage109-typed-module-annotation-evidence-03.tar.gz\",\n        \"sha256\": \"a435c70de01345f67412b4607599625a6858bccd407fc0d3e5dd5506f6a0fe37\"\n      },\n      \"gzip_EOF_CRC_single_member_no_trailing\": true,\n      \"index\": 3,\n      \"logical_members_including_manifest\": 9204,\n      \"raw_hash_size_mode_order\": true\n    },\n    {\n      \"archive\": {\n        \"bytes\": 12154135,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage109-evidence-archives-01/stage109-typed-module-annotation-evidence-04.tar.gz\",\n        \"sha256\": \"e811ae746777cae99c63450fda880179b08cf8fc89d3d35817a00d6c825e24fb\"\n      },\n      \"gzip_EOF_CRC_single_member_no_trailing\": true,\n      \"index\": 4,\n      \"logical_members_including_manifest\": 8332,\n      \"raw_hash_size_mode_order\": true\n    }\n  ],\n  \"performance_targets_met\": false,\n  \"preflight\": {\n    \"bytes\": 3831,\n    \"mode\": 420,\n    \"path\": \"target/m2/stage109-archive-preflight-01/report.json\",\n    \"sha256\": \"339aa100b788f5f9a74c8af1853b92bb21b8aac9fb6eee3405861f54d58c6bb0\"\n  },\n  \"producer\": {\n    \"bytes\": 5128,\n    \"mode\": 420,\n    \"path\": \"target/m2/stage109-evidence-archives-01/report.json\",\n    \"sha256\": \"aeaa208dbbbc79f132cfb8f1b7e2d66f0a42c24f0a0a878a3841977638829904\"\n  },\n  \"selected_payloads\": 17727,\n  \"selection\": {\n    \"bytes\": 14601692,\n    \"mode\": 420,\n    \"path\": \"target/m2/stage109-archive-preflight-01/selection.json\",\n    \"sha256\": \"17d7f78e87bec6972b650b0fc4a13d43a3d87cb3de005b29c12304f4c7100266\"\n  },\n  \"started_epoch\": 1793272795.0758898,\n  \"success\": true,\n  \"total_logical_regular_members\": 17732\n}\n"
+    },
+    "target/m2/stage109-archive-independent-readback-01/execution.json": {
+      "pin": {
+        "path": "target/m2/stage109-archive-independent-readback-01/execution.json",
+        "bytes": 626,
+        "mode": 420,
+        "sha256": "c5d637f6d74121da58937d304aa65825bac442288f1d81db12d2fe309cb549e9"
+      },
+      "raw_utf8": "{\n  \"kind\": \"Actual Stage109 independent archive reader command\",\n  \"argv\": [\n    \"/opt/homebrew/opt/python@3.14/bin/python3.14\",\n    \"-B\",\n    \"target/m2/stage109-archive-independent-readback-01/verify.py\",\n    \"--binding\",\n    \"target/m2/stage109-archive-independent-readback-01/binding.json\",\n    \"--binding-sha256\",\n    \"99daf2199f7b5e8bad01508a338987d78ee3ea26cebb8e6ad49ad47239f4fec4\"\n  ],\n  \"exit_code\": 0,\n  \"complete\": true,\n  \"started_epoch\": 1793272795.0758898,\n  \"finished_epoch\": 1793272796.8652759,\n  \"tool_session\": 48319,\n  \"report_sha256\": \"464b96d451a721addecfe5bc0c2e3910858a0928455d2e06c9e91d9dc755de3f\"\n}\n"
+    },
+    "target/m2/stage109-archive-independent-readback-01/binding.json": {
+      "pin": {
+        "path": "target/m2/stage109-archive-independent-readback-01/binding.json",
+        "bytes": 5758,
+        "mode": 420,
+        "sha256": "99daf2199f7b5e8bad01508a338987d78ee3ea26cebb8e6ad49ad47239f4fec4"
+      },
+      "raw_utf8": "{\n  \"producer\": {\n    \"path\": \"target/m2/stage109-evidence-archives-01/report.json\",\n    \"bytes\": 5128,\n    \"mode\": 420,\n    \"sha256\": \"aeaa208dbbbc79f132cfb8f1b7e2d66f0a42c24f0a0a878a3841977638829904\"\n  },\n  \"preflight_sha256\": \"339aa100b788f5f9a74c8af1853b92bb21b8aac9fb6eee3405861f54d58c6bb0\",\n  \"selection_sha256\": \"17d7f78e87bec6972b650b0fc4a13d43a3d87cb3de005b29c12304f4c7100266\",\n  \"config_sha256\": \"57135cbf9b18cfe5e72a63d4f62ba6f2854253abdd04fe39674437f3456ad6c4\",\n  \"selected_payloads\": 17727,\n  \"direct_restoration_aliases\": 38819,\n  \"logical_payload_bytes\": 756404284,\n  \"archive_parts\": 4,\n  \"alias_mode_transformations\": [\n    {\n      \"destination\": \"target/m2/stage109-selected-all-artifacts-01/pkl_napi.node\",\n      \"payload\": \"target/m2/stage109-m1-platform-01/pkl_napi.node\",\n      \"destination_mode\": 493,\n      \"payload_mode\": 420\n    },\n    {\n      \"destination\": \"target/m2/stage109-selected-all-artifacts-02/pkl_napi.node\",\n      \"payload\": \"target/m2/stage109-m1-platform-01/pkl_napi.node\",\n      \"destination_mode\": 493,\n      \"payload_mode\": 420\n    }\n  ],\n  \"mandatory_payloads\": [\n    {\n      \"path\": \"crates/pkl-runtime/src/diagnostic.rs\",\n      \"bytes\": 23205,\n      \"mode\": 420,\n      \"sha256\": \"fc59e0b36df98ceb5eb4b2962952cd1155f0470db196971e2167089fd6d0cd29\"\n    },\n    {\n      \"path\": \"crates/pkl-runtime/src/evaluation/frontend.rs\",\n      \"bytes\": 23060,\n      \"mode\": 420,\n      \"sha256\": \"a9de838dd3413c255ac0858937818d35ceec54dfdc6dfda70ed968314e9790a4\"\n    },\n    {\n      \"path\": \"crates/pkl-runtime/src/host/resources.rs\",\n      \"bytes\": 36057,\n      \"mode\": 420,\n      \"sha256\": \"d3f21b18f01a3c163c0de81a18251cc1c9a2a99af3919f98efcbb0f10f86c804\"\n    },\n    {\n      \"path\": \"crates/pkl-runtime/src/parser.rs\",\n      \"bytes\": 105364,\n      \"mode\": 420,\n      \"sha256\": \"645e49e5ee11680eff347708795a2a3e57e730ba00755675ae0c2d8408245121\"\n    },\n    {\n      \"path\": \"crates/pkl-runtime/src/resolver.rs\",\n      \"bytes\": 111758,\n      \"mode\": 420,\n      \"sha256\": \"5b06cdfd4bed3e1fa732c3f674524d8aaacffc661de702794c7390f813dab690\"\n    },\n    {\n      \"path\": \"crates/pkl-runtime/src/resolver/diagnostic_owner.rs\",\n      \"bytes\": 7721,\n      \"mode\": 420,\n      \"sha256\": \"711c5d604d252e8aacc378d53b4099c619bee4bac3ff9c97a70a15e6b9a12165\"\n    },\n    {\n      \"path\": \"crates/pkl-runtime/src/vm.rs\",\n      \"bytes\": 404420,\n      \"mode\": 420,\n      \"sha256\": \"1147f9e03b80ad507ff79d915a91f23aeeeb8fb1af8bc54f7b1b3b436e5a1331\"\n    },\n    {\n      \"path\": \"crates/pkl-runtime/src/vm/collection_conversions.rs\",\n      \"bytes\": 29163,\n      \"mode\": 420,\n      \"sha256\": \"c5ad51102ab3e644469b076b6ed432d59d10b16bb21d16180576f8028c267576\"\n    },\n    {\n      \"path\": \"crates/pkl-runtime/src/vm/modules.rs\",\n      \"bytes\": 48630,\n      \"mode\": 420,\n      \"sha256\": \"267d8b405a7206c49628558dbf150b8816766f73eff3722f6575ce6fda096c2c\"\n    },\n    {\n      \"path\": \"crates/pkl-runtime/src/vm/object_lookups.rs\",\n      \"bytes\": 20505,\n      \"mode\": 420,\n      \"sha256\": \"bc481f8c7cff32283637aaf3a8255dde3c313aaeba4ff61b881720771a93f13e\"\n    },\n    {\n      \"path\": \"crates/pkl-runtime/src/vm/output.rs\",\n      \"bytes\": 28233,\n      \"mode\": 420,\n      \"sha256\": \"bd0a674048a88f832e04484188332d32b76691891accadf6eb5397e3340a81e4\"\n    },\n    {\n      \"path\": \"crates/pkl-runtime/src/vm/uri_resolution.rs\",\n      \"bytes\": 35427,\n      \"mode\": 420,\n      \"sha256\": \"ab2e38c4c73a442ea1655b3a819d7e999e8c57d5e30c8758846349070dd5333f\"\n    },\n    {\n      \"path\": \"crates/pkl-runtime/tests/m2_annotation_const_oracle.rs\",\n      \"bytes\": 12460,\n      \"mode\": 420,\n      \"sha256\": \"27f3765558b6ef2c5c282d8958344fd8d617147c41cd2d7309c90a11f5f71e53\"\n    },\n    {\n      \"path\": \"crates/pkl-runtime/tests/m2_module_relativepath_lifecycle.rs\",\n      \"bytes\": 3594,\n      \"mode\": 420,\n      \"sha256\": \"ac3e522bb61659308dce977b66ddc8af1d6b683aae42548867f4ac17612f13db\"\n    },\n    {\n      \"path\": \"crates/pkl-runtime/tests/m2_module_relativepath_oracle.rs\",\n      \"bytes\": 12752,\n      \"mode\": 420,\n      \"sha256\": \"46c2aa2d781f9f33122d9a554a8f23ee5a26e59fb38884c824c824d726fec5a2\"\n    },\n    {\n      \"path\": \"crates/pkl-runtime/tests/m2_typed_getproperty_lifecycle.rs\",\n      \"bytes\": 3876,\n      \"mode\": 420,\n      \"sha256\": \"4b3f60636a2138cf7b7a925fd5de41dd6b2910c40455fb5e4f7de61f51477074\"\n    },\n    {\n      \"path\": \"crates/pkl-runtime/tests/m2_typed_property_oracle.rs\",\n      \"bytes\": 11671,\n      \"mode\": 420,\n      \"sha256\": \"51eecde3d8a3c1b4901ced3522cae93a029548969354a1368e4fd29c4adfeb62\"\n    },\n    {\n      \"path\": \"tools/m2_source_inputs.py\",\n      \"bytes\": 6277,\n      \"mode\": 420,\n      \"sha256\": \"25f2b13acd60d2e74d7e3d35acbadc3f7b81ac1858cbfb37c3a799a0c4878810\"\n    },\n    {\n      \"path\": \"compatibility/inventory.json\",\n      \"bytes\": 8631536,\n      \"mode\": 420,\n      \"sha256\": \"a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070\"\n    },\n    {\n      \"path\": \"compatibility/m2-language.json\",\n      \"bytes\": 6791702,\n      \"mode\": 420,\n      \"sha256\": \"ce819d2fc8221fd099bef5120bb9590c9cf439afc4457c618977a52e637b60c3\"\n    },\n    {\n      \"path\": \"target/m2/stage109-workspace-test-01/report.json\",\n      \"bytes\": 1359,\n      \"mode\": 420,\n      \"sha256\": \"6b5cf12f5f8d2d6d1b8422590ca006c9c1406ba19d1be30adcd530866c83f510\"\n    },\n    {\n      \"path\": \"target/m2/stage109-workspace-readback-01/report.json\",\n      \"bytes\": 6462,\n      \"mode\": 420,\n      \"sha256\": \"173ec1e0f3a624c49eafd66e6cac2594472f6d211d18309fd3d57fa5036c1abc\"\n    }\n  ],\n  \"fixture_plan\": {\n    \"path\": \"target/m2/stage109-combined-integration-prep-01/fixture-copy-plan.json\",\n    \"bytes\": 3106608,\n    \"mode\": 420,\n    \"sha256\": \"7b07684170518851045fdacd6d2cef3ff595aa990d3c29b157e31b49bcb6f177\"\n  },\n  \"canonical_fixture_count\": 6996,\n  \"full_m2_complete\": false\n}\n"
+    },
+    "target/m2/stage109-public-copy-01/report.json": {
+      "pin": {
+        "path": "target/m2/stage109-public-copy-01/report.json",
+        "bytes": 3252,
+        "mode": 420,
+        "sha256": "512eb1b98e196cc0db8d0212680368f539f249511aceb1fc93da38953d616a9c"
+      },
+      "raw_utf8": "{\n  \"kind\": \"Stage109 verified public archive copies\",\n  \"complete\": true,\n  \"success\": true,\n  \"archives\": [\n    {\n      \"path\": \"reports/m2/stage109-typed-module-annotation-evidence-01.tar.gz\",\n      \"bytes\": 41853522,\n      \"mode\": 420,\n      \"sha256\": \"f3209582e0e52de4ea6b9ba9d70b97672ba898a5c4290a848b0f92f5827846b1\",\n      \"part\": 1,\n      \"source_target_archive\": {\n        \"bytes\": 41853522,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage109-evidence-archives-01/stage109-typed-module-annotation-evidence-01.tar.gz\",\n        \"sha256\": \"f3209582e0e52de4ea6b9ba9d70b97672ba898a5c4290a848b0f92f5827846b1\"\n      },\n      \"public_copy_verified\": true,\n      \"manifest\": {\n        \"bytes\": 5009,\n        \"sha256\": \"6ce339a1689b54f832f659274718cda8fe8dbee7a1788aaaf6bb03795802856a\"\n      },\n      \"logical_members_including_manifest\": 64\n    },\n    {\n      \"path\": \"reports/m2/stage109-typed-module-annotation-evidence-02.tar.gz\",\n      \"bytes\": 41720682,\n      \"mode\": 420,\n      \"sha256\": \"047564028688de80961cb5cc0371c2dc91497b2d127e9430789cf6b35c9eb186\",\n      \"part\": 2,\n      \"source_target_archive\": {\n        \"bytes\": 41720682,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage109-evidence-archives-01/stage109-typed-module-annotation-evidence-02.tar.gz\",\n        \"sha256\": \"047564028688de80961cb5cc0371c2dc91497b2d127e9430789cf6b35c9eb186\"\n      },\n      \"public_copy_verified\": true,\n      \"manifest\": {\n        \"bytes\": 10858,\n        \"sha256\": \"a301fac9a4a39b40c2512bd0b07ac24677f3cf28a6f634905ef613b5300ebf99\"\n      },\n      \"logical_members_including_manifest\": 132\n    },\n    {\n      \"path\": \"reports/m2/stage109-typed-module-annotation-evidence-03.tar.gz\",\n      \"bytes\": 23922298,\n      \"mode\": 420,\n      \"sha256\": \"a435c70de01345f67412b4607599625a6858bccd407fc0d3e5dd5506f6a0fe37\",\n      \"part\": 3,\n      \"source_target_archive\": {\n        \"bytes\": 23922298,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage109-evidence-archives-01/stage109-typed-module-annotation-evidence-03.tar.gz\",\n        \"sha256\": \"a435c70de01345f67412b4607599625a6858bccd407fc0d3e5dd5506f6a0fe37\"\n      },\n      \"public_copy_verified\": true,\n      \"manifest\": {\n        \"bytes\": 875635,\n        \"sha256\": \"0718e65d7063ddb14db0a49e5303616b796a87a115d6106d27a2b0095f8383cd\"\n      },\n      \"logical_members_including_manifest\": 9204\n    },\n    {\n      \"path\": \"reports/m2/stage109-typed-module-annotation-evidence-04.tar.gz\",\n      \"bytes\": 12154135,\n      \"mode\": 420,\n      \"sha256\": \"e811ae746777cae99c63450fda880179b08cf8fc89d3d35817a00d6c825e24fb\",\n      \"part\": 4,\n      \"source_target_archive\": {\n        \"bytes\": 12154135,\n        \"mode\": 420,\n        \"path\": \"target/m2/stage109-evidence-archives-01/stage109-typed-module-annotation-evidence-04.tar.gz\",\n        \"sha256\": \"e811ae746777cae99c63450fda880179b08cf8fc89d3d35817a00d6c825e24fb\"\n      },\n      \"public_copy_verified\": true,\n      \"manifest\": {\n        \"bytes\": 891450,\n        \"sha256\": \"4c814586a92db4048b676780f6f62a1c6e0279707f37a287d11b9c4cf7a3fbf6\"\n      },\n      \"logical_members_including_manifest\": 8332\n    }\n  ],\n  \"compressed_bytes\": 119650637,\n  \"new_archive_production\": false,\n  \"source_or_expected_byte_changes\": false,\n  \"finished_epoch\": 1793272858.974186\n}\n"
+    },
+    "target/m2/stage109-closeout-draft-review-01/final-source-review.json": {
+      "pin": {
+        "path": "target/m2/stage109-closeout-draft-review-01/final-source-review.json",
+        "bytes": 5875,
+        "mode": 420,
+        "sha256": "97ebad76819c4b8b63e35188972af4da306b4e79059a3b6abd0bc43dcd0ed729"
+      },
+      "raw_utf8": "{\n  \"kind\": \"Independent Stage109 final documentation/readback and Stage114 application-helper source review\",\n  \"documentation_verdict\": \"GO for reviewed draft numeric scope; publication still requires actual archives/readback\",\n  \"document_pin_mismatches\": [],\n  \"document_pins_checked\": [\n    {\n      \"path\": \"README.md\",\n      \"bytes\": 16076,\n      \"sha256\": \"acdb3a9213834e24a523b1ed3bdcbd711d8bbbb3d0fe693be4740d2bba99760e\",\n      \"mode\": 420\n    },\n    {\n      \"path\": \"target/m2/stage109-closeout-final-prep-01/overlay/README.md\",\n      \"bytes\": 16571,\n      \"sha256\": \"9d2bf089953152ca0e22bbbe2a68c7f5d0516bd2667eec16632ac97a83091d04\",\n      \"mode\": 420\n    },\n    {\n      \"path\": \"TESTING.md\",\n      \"bytes\": 105040,\n      \"sha256\": \"4db49a5f7398ceb53a71e75a990920d541aadedae0812302ad2122a86e3a92aa\",\n      \"mode\": 420\n    },\n    {\n      \"path\": \"target/m2/stage109-closeout-final-prep-01/overlay/TESTING.md\",\n      \"bytes\": 110059,\n      \"sha256\": \"89ee5f863fb510a539880345f266c53c84e3a5a38b8fe5abd6eb643921b5fadd\",\n      \"mode\": 420\n    },\n    {\n      \"path\": \"docs/m2-language.md\",\n      \"bytes\": 116575,\n      \"sha256\": \"9532bc1bd571aa4c5c427f21105abf41de5c55a0c9c73fa84b3cca8250e66a79\",\n      \"mode\": 420\n    },\n    {\n      \"path\": \"target/m2/stage109-closeout-final-prep-01/overlay/docs/m2-language.md\",\n      \"bytes\": 121596,\n      \"sha256\": \"48fc17a83665d37d41de296522db8c809ca3f87a8464e3e44ebb427fb6ed673e\",\n      \"mode\": 420\n    },\n    {\n      \"path\": \"docs/architecture.md\",\n      \"bytes\": 110734,\n      \"sha256\": \"a14ff7573873ec6aed295b7b92efc3aaa07f46198f169c27fcfe4c0124af4e1f\",\n      \"mode\": 420\n    },\n    {\n      \"path\": \"target/m2/stage109-closeout-final-prep-01/overlay/docs/architecture.md\",\n      \"bytes\": 112529,\n      \"sha256\": \"3ba61e07492a7f6a34df22840cc6b51078f51f0b89520665e6b52695b23e380f\",\n      \"mode\": 420\n    },\n    {\n      \"path\": \"reports/m2/README.md\",\n      \"bytes\": 384498,\n      \"sha256\": \"af9719fb4f504a8b54fe473ad663b781f2ba240f404d14335067fe3be2228060\",\n      \"mode\": 420\n    },\n    {\n      \"path\": \"target/m2/stage109-closeout-final-prep-01/overlay/reports/m2/README.md\",\n      \"bytes\": 386080,\n      \"sha256\": \"63590337a0ec9359c953a368dadcb1c42e36bb3003da0f9ee7eaaf0ba5c070b3\",\n      \"mode\": 420\n    },\n    {\n      \"path\": \"PLAN.md\",\n      \"bytes\": 482739,\n      \"sha256\": \"961a43b71aaeecc991c9c8f2afbdac70097bc3b9350469cc59aff6042fa1b624\",\n      \"mode\": 420\n    },\n    {\n      \"path\": \"target/m2/stage109-closeout-final-prep-01/overlay/PLAN.md\",\n      \"bytes\": 484567,\n      \"sha256\": \"ced10ef87a3a32b38cae709436292ba2851dacd742145261ed1c4c063429c007\",\n      \"mode\": 420\n    }\n  ],\n  \"readback_verdict\": \"SOURCE GO; reviewer did not execute archive readback\",\n  \"source_helpers\": [\n    {\n      \"path\": \"target/m2/stage109-archive-independent-readback-01/verify.py\",\n      \"bytes\": 17085,\n      \"sha256\": \"e7cfb72488a6a68e2ac569bf9f171cf898d100ddb6a8eacf5cdd0a9cd4dbc31a\"\n    },\n    {\n      \"path\": \"target/m2/stage114-canonical-application-prep-01/apply.py\",\n      \"bytes\": 5683,\n      \"sha256\": \"855a0a259fb2d9f98654d9662a87ba69469e024e191b3f149ba6a896da4cab7f\"\n    }\n  ],\n  \"readback_AST_unchanged\": [\n    \"require\",\n    \"name_ok\",\n    \"opened\",\n    \"stable\",\n    \"load_pin\",\n    \"Inflated\",\n    \"octal\",\n    \"pax_path\",\n    \"read_part\",\n    \"write_receipt\"\n  ],\n  \"readback_main_review\": [\n    \"Binds actual producer/preflight/selection/config hashes and counts.\",\n    \"Verifies direct alias graph and explicit mode transformations.\",\n    \"Requires canonical18sources,metadata2,workspace receipts and6996fixture identities recoverable.\",\n    \"Retains exact raw member bytes/size/mode,part order/disjoint union,single gzip stream CRC/EOF/no trailing,tar checksum/PAX/EOF guards.\",\n    \"Keeps prior archived dependencies and external/historical limits explicit; makes no fullM2/API/performance/hostedCI claim.\"\n  ],\n  \"numeric_scope_confirmed\": {\n    \"targeted\": \"152pass/0fail/1ignored\",\n    \"new_native\": \"276ordinary/1736fields/8Logger+2unresolved\",\n    \"existing_native\": \"1138observations/6988fields/16Logger\",\n    \"selected_each\": \"276ordinary/2288fields/8Logger+2unresolved,false required gate\",\n    \"full_ready\": \"4442=4332pass+26mismatch+82unsupported+2oracleerrors;zero old-pass regressions;88metamorphic\",\n    \"M1_each\": 6078,\n    \"workspace\": \"1658pass/0fail/5ignored;262executabletargets25compile-only examples2doctestlibraries13separate nested summaries\",\n    \"freshness_commands\": 8,\n    \"strict_overlapping_unmet_conditions\": 1780\n  },\n  \"application_verdict\": \"One minimal input-pin fix requested before application; all other reviewed plan guards GO\",\n  \"application_guard_finding\": {\n    \"path\": \"target/m2/stage114-canonical-application-prep-01/apply.py\",\n    \"issue\": \"engine-basis.json is parsed with only a134-row count check, unlike hash-pinned source and fixture plans.\",\n    \"fix\": \"Check exact reviewed engine-basis SHA before parsing.\",\n    \"expected_path\": \"target/m2/stage114-integration-prep-01/engine-basis.json\",\n    \"expected_bytes\": 78517,\n    \"expected_sha256\": \"6622a0356366e6c6782d9b34121bffe30310ffe5b35853de38a5a61699230ece\"\n  },\n  \"application_positive_guards\": [\n    \"Explicit application flag;HEAD equals supplied actual Stage109 commit and remote main.\",\n    \"Empty index;complete published Stage109 checkpoint;fullM2 flag remainsfalse.\",\n    \"Pinned source/fixture plans;14626unique destinations;134runtime before/after identities.\",\n    \"All candidate/authority/passing-source identities,12preimages and new destination absence before mutation.\",\n    \"Per-row exclusive new writes or temporary replacement with immediate destination identity verification;partial failure receipt retained.\"\n  ],\n  \"reviewer_runs\": {\n    \"compiler_Java_guest_tests\": 0,\n    \"archive_payload_reads\": 0,\n    \"fixture_payload_rehashes\": 0,\n    \"canonical_writes\": 0,\n    \"Git_commands\": 0\n  }\n}\n"
+    }
+  },
+  "embedded_publication_helpers": {
+    "target/m2/stage109-archive-independent-readback-01/verify.py": {
+      "pin": {
+        "path": "target/m2/stage109-archive-independent-readback-01/verify.py",
+        "bytes": 17085,
+        "mode": 420,
+        "sha256": "e7cfb72488a6a68e2ac569bf9f171cf898d100ddb6a8eacf5cdd0a9cd4dbc31a"
+      },
+      "raw_utf8": "\"\"\"Independent Stage109 readback: manual tar records and zlib gzip streaming.\n\nNo producer imports, tarfile reader, extraction, source-tree hashing or status promotion.\n\"\"\"\nimport hashlib\nimport json\nimport os\nfrom pathlib import Path, PurePosixPath\nimport stat\nimport sys\nimport time\nimport traceback\nimport zlib\n\nROOT = Path(__file__).absolute().parents[3]\nOUT = Path(__file__).absolute().parent\nAUX = 'STAGE109-FULL-SELECTION.json'\n\n\ndef require(ok, message):\n    if not ok:\n        raise ValueError(message)\n\n\ndef name_ok(name):\n    require(isinstance(name, str) and name and '\\x00' not in name and '\\\\' not in name, 'bad path')\n    p = PurePosixPath(name)\n    require(not p.is_absolute() and str(p) == name and not any(c in ('.', '..') for c in p.parts), 'noncanonical path')\n    require(not any(c.endswith('.partial') or c.startswith('stage86-') or 'private8' in c\n                    or c in ('.git', '.cache', 'external', 'node_modules', '__pycache__') for c in p.parts), 'protected/excluded path')\n    return p\n\n\ndef opened(name):\n    parts = name_ok(name).parts\n    fd = os.open(ROOT, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)\n    try:\n        for c in parts[:-1]:\n            child = os.open(c, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=fd)\n            os.close(fd)\n            fd = child\n        leaf = os.open(parts[-1], os.O_RDONLY | os.O_NOFOLLOW, dir_fd=fd)\n        try:\n            require(stat.S_ISREG(os.fstat(leaf).st_mode), 'nonregular input')\n        except BaseException:\n            os.close(leaf)\n            raise\n        return os.fdopen(leaf, 'rb')\n    finally:\n        os.close(fd)\n\n\ndef stable(a, b):\n    require(all(getattr(a, k) == getattr(b, k) for k in\n                ('st_dev', 'st_ino', 'st_mode', 'st_size', 'st_nlink', 'st_mtime_ns', 'st_ctime_ns')), 'input changed during read')\n\n\ndef load_pin(pin):\n    with opened(pin['path']) as f:\n        before = os.fstat(f.fileno())\n        raw = f.read()\n        stable(before, os.fstat(f.fileno()))\n    actual = dict(path=pin['path'], bytes=len(raw), mode=stat.S_IMODE(before.st_mode), sha256=hashlib.sha256(raw).hexdigest())\n    require(all(actual[k] == pin[k] for k in pin), 'input pin mismatch: ' + pin['path'])\n    return raw, actual\n\n\nclass Inflated:\n    \"\"\"One exact gzip member, bounded decompression, compressed identity bookends.\"\"\"\n    def __init__(self, f):\n        self.f, self.z = f, zlib.decompressobj(31)\n        self.pending, self.buffer = b'', bytearray()\n        self.sha, self.count, self.done = hashlib.sha256(), 0, False\n\n    def read(self, size):\n        while len(self.buffer) < size and not self.done:\n            data = self.pending\n            if not data:\n                data = self.f.read(65536)\n                if not data:\n                    raise ValueError('truncated gzip stream')\n                self.sha.update(data)\n                self.count += len(data)\n            block = self.z.decompress(data, 1024 * 1024)\n            self.buffer.extend(block)\n            self.pending = self.z.unconsumed_tail\n            if self.z.eof:\n                require(not self.z.unused_data and not self.pending, 'extra gzip member/trailing compressed bytes')\n                require(not self.f.read(1), 'trailing compressed bytes')\n                self.done = True\n        n = min(size, len(self.buffer))\n        answer = bytes(self.buffer[:n])\n        del self.buffer[:n]\n        return answer\n\n    def exact(self, size):\n        b = self.read(size)\n        require(len(b) == size, 'truncated tar record')\n        return b\n\n\ndef octal(raw):\n    value = raw.rstrip(b'\\0 ').lstrip(b' ')\n    require(not value or all(c in b'01234567' for c in value), 'non-octal tar integer')\n    return int(value or b'0', 8)\n\n\ndef pax_path(raw):\n    fields = {}\n    pos = 0\n    while pos < len(raw):\n        space = raw.find(b' ', pos)\n        require(space > pos and raw[pos:space].isdigit(), 'malformed PAX length')\n        n = int(raw[pos:space])\n        require(n > space - pos + 1 and pos + n <= len(raw), 'PAX extent')\n        row = raw[space + 1:pos + n]\n        require(row.endswith(b'\\n') and b'=' in row, 'malformed PAX row')\n        key, value = row[:-1].split(b'=', 1)\n        require(key not in fields, 'duplicate PAX field')\n        fields[key] = value\n        pos += n\n    require(set(fields) == {b'path'}, 'unexpected PAX fields')\n    return fields[b'path'].decode('utf-8')\n\n\ndef read_part(stream, expected, seen, archive_row, selection_pin, number, part_count):\n    actual_names = []\n    manifest = None\n    next_path = None\n    while True:\n        header = stream.exact(512)\n        if header == bytes(512):\n            require(next_path is None and stream.exact(512) == bytes(512), 'bad tar end markers')\n            while True:\n                tail = stream.read(1024 * 1024)\n                if not tail:\n                    break\n                require(not any(tail), 'nonzero bytes after tar EOF')\n            break\n        require(octal(header[148:156]) == sum(header[:148]) + 8 * 32 + sum(header[156:]), 'tar checksum mismatch')\n        require(header[257:263] == b'ustar\\0' and header[263:265] == b'00', 'unexpected tar format')\n        raw_name = header[:100].split(b'\\0', 1)[0]\n        prefix = header[345:500].split(b'\\0', 1)[0]\n        name = ((prefix + b'/') if prefix else b'') + raw_name\n        name = name.decode('utf-8')\n        mode, uid, gid, size, mtime = [octal(header[a:b]) for a, b in [(100,108),(108,116),(116,124),(124,136),(136,148)]]\n        kind = header[156:157]\n        require(not uid and not gid and not mtime and not header[265:329].strip(b'\\0'), 'unexpected tar owner/time')\n        require(not header[157:257].strip(b'\\0'), 'tar link target')\n        if kind == b'x':\n            require(next_path is None and size <= 1024 * 1024, 'invalid PAX record')\n            next_path = pax_path(stream.exact(size))\n            name_ok(next_path)\n        else:\n            require(kind in (b'0', b'\\0'), 'nonregular tar payload')\n            if next_path is not None:\n                name = next_path\n                next_path = None\n            name_ok(name)\n            if not actual_names:\n                require(name == 'MANIFEST.json' and size <= 10 * 1024 * 1024 and mode == 0o644, 'part manifest missing')\n                raw = stream.exact(size)\n                require((len(raw), hashlib.sha256(raw).hexdigest()) == (archive_row['manifest']['bytes'], archive_row['manifest']['sha256']), 'manifest pin mismatch')\n                manifest = json.loads(raw)\n                require(manifest['index'] == number and manifest['parts'] == part_count and manifest['all_parts_required'] is True,\n                        'manifest part metadata')\n                require(manifest['selection'] == selection_pin and manifest['standalone_repository'] is False, 'manifest selection/scope')\n                require(len(manifest['members']) == len(set(manifest['members'])), 'duplicate manifest member')\n            else:\n                require(name != 'MANIFEST.json' and name in expected and name not in seen, 'extra/duplicate payload: ' + name)\n                want = expected[name]\n                require((size, mode) == (want[0], want[1]), 'member size/mode mismatch: ' + name)\n                sha, remaining = hashlib.sha256(), size\n                while remaining:\n                    chunk = stream.exact(min(remaining, 1024 * 1024))\n                    sha.update(chunk)\n                    remaining -= len(chunk)\n                require(sha.hexdigest() == want[2], 'member raw hash mismatch: ' + name)\n                seen.add(name)\n            actual_names.append(name)\n        padding = (-size) % 512\n        require(not any(stream.exact(padding)), 'nonzero tar record padding')\n    require(manifest is not None and actual_names == ['MANIFEST.json', *manifest['members']], 'part manifest member order/set mismatch')\n    require(len(actual_names) == archive_row['logical_members_including_manifest'], 'part count mismatch')\n    return len(actual_names)\n\n\ndef write_receipt(report):\n    p = OUT / 'report.json'\n    with p.open('x') as f:\n        json.dump(report, f, ensure_ascii=True, indent=2, sort_keys=True)\n        f.write('\\n'); f.flush(); os.fsync(f.fileno())\n    fd = os.open(OUT, os.O_RDONLY | os.O_DIRECTORY)\n    try:\n        os.fsync(fd)\n    finally:\n        os.close(fd)\n\n\ndef main():\n    import argparse\n    parser = argparse.ArgumentParser()\n    parser.add_argument('--binding', required=True)\n    parser.add_argument('--binding-sha256', required=True)\n    args = parser.parse_args()\n    report = dict(kind='Stage109 independent manual-tar/zlib streaming archive readback',\n                  complete=False, success=False, started_epoch=time.time(), errors=[], parts=[],\n                  guest_compiler_Java_canonical_public_Git_writes=False)\n    try:\n        _, helper_pin = load_pin(dict(path=str(Path(__file__).relative_to(ROOT))))\n        raw, binding_pin = load_pin(dict(path=args.binding, sha256=args.binding_sha256))\n        binding = json.loads(raw)\n        raw, producer_pin = load_pin(binding['producer'])\n        producer = json.loads(raw)\n        require(producer['complete'] and producer['success'] and not producer['errors']\n                and not producer['floor_breaches'], 'producer not successful')\n        raw, preflight_pin = load_pin(producer['preflight'])\n        require(preflight_pin['sha256'] == binding['preflight_sha256'], 'preflight binding')\n        preflight = json.loads(raw)\n        require(preflight['complete'] and preflight['success'] and preflight['identity_errors'] == 0,\n                'preflight failed')\n        raw, selection_pin = load_pin(producer['selection'])\n        require(selection_pin['sha256'] == binding['selection_sha256'], 'selection binding')\n        selection = json.loads(raw)\n        require(selection['complete'] and selection['standalone_repository'] is False, 'selection status')\n        raw, config_pin = load_pin(selection['config'])\n        require(config_pin['sha256'] == binding['config_sha256'], 'config binding')\n        config = json.loads(raw)\n        require(binding['full_m2_complete'] is False and config['standalone_repository'] is False, 'scope binding changed')\n        expected = {}\n        for name, size, mode, sha in selection['members']:\n            name_ok(name)\n            require(name not in expected and type(size) is int and size >= 0 and type(mode) is int\n                    and 0 <= mode <= 0o777 and len(sha) == 64\n                    and all(c in '0123456789abcdef' for c in sha), 'invalid selection member')\n            expected[name] = (size, mode, sha)\n        require(len(expected) == producer['selected_payloads'] == preflight['selected_payloads']\n                == binding['selected_payloads'], 'selected count')\n        logical = sum(row[0] for row in expected.values())\n        require(logical == preflight['logical_payload_bytes'] == binding['logical_payload_bytes'],\n                'logical payload size')\n        aliases, transformations = {}, []\n        for dest, payload, size, mode, sha in selection['aliases']:\n            name_ok(dest); name_ok(payload)\n            require(dest not in expected and dest not in aliases and payload in expected,\n                    'alias collision/chain/missing payload')\n            require((size, sha) == (expected[payload][0], expected[payload][2]) and type(mode) is int\n                    and 0 <= mode <= 0o777, 'alias bytes/mode')\n            aliases[dest] = (size, mode, sha)\n            if mode != expected[payload][1]:\n                transformations.append(dict(destination=dest, payload=payload, destination_mode=mode,\n                                            payload_mode=expected[payload][1]))\n        require(len(aliases) == producer['direct_restoration_aliases'] == binding['direct_restoration_aliases'],\n                'alias count')\n        require(transformations == binding['alias_mode_transformations'], 'alias mode transformations')\n        for catalog in selection['catalogs']:\n            require(expected.get(catalog['path']) == (catalog['bytes'], catalog['mode'], catalog['sha256']),\n                    'catalog not preserved exactly')\n        for pin in binding.get('mandatory_payloads', []):\n            actual = expected.get(pin['path'], aliases.get(pin['path']))\n            require(actual == (pin['bytes'], pin['mode'], pin['sha256']), 'mandatory payload/alias missing')\n        fixture_count = 0\n        raw, fixture_plan_pin = load_pin(binding['fixture_plan'])\n        require(expected.get(fixture_plan_pin['path'], aliases.get(fixture_plan_pin['path'])) ==\n                (fixture_plan_pin['bytes'], fixture_plan_pin['mode'], fixture_plan_pin['sha256']),\n                'fixture plan not archived')\n        for row in json.loads(raw):\n            identity = row['source']\n            require(expected.get(row['destination'], aliases.get(row['destination'])) ==\n                    (identity['bytes'], identity['mode'], identity['sha256']), 'canonical fixture not recoverable')\n            fixture_count += 1\n        require(fixture_count == binding['canonical_fixture_count'] == 6996, 'fixture scope changed')\n        expected[AUX] = (selection_pin['bytes'], selection_pin['mode'], selection_pin['sha256'])\n        seen, compressed = set(), 0\n        count_parts = len(producer['archives'])\n        require(count_parts == binding['archive_parts'], 'part count')\n        for number, archive in enumerate(producer['archives'], 1):\n            pin = archive['archive']\n            require(archive['index'] == number and pin['bytes'] <= 45 * 1024**2, 'archive order/cap')\n            with opened(pin['path']) as stream:\n                before = os.fstat(stream.fileno())\n                require((before.st_size, stat.S_IMODE(before.st_mode)) == (pin['bytes'], pin['mode']),\n                        'archive live size/mode')\n                inflated = Inflated(stream)\n                count = read_part(inflated, expected, seen, archive, selection_pin, number, count_parts)\n                stable(before, os.fstat(stream.fileno()))\n                require(inflated.done and (inflated.count, inflated.sha.hexdigest()) ==\n                        (pin['bytes'], pin['sha256']), 'compressed archive identity')\n                compressed += inflated.count\n            report['parts'].append(dict(index=number, archive=pin, logical_members_including_manifest=count,\n                                        raw_hash_size_mode_order=True, gzip_EOF_CRC_single_member_no_trailing=True))\n            print(json.dumps(dict(part=number, parts=count_parts, verified_payloads=len(seen))), flush=True)\n        require(seen == set(expected), 'global payload union differs')\n        for pin in [binding_pin, producer_pin, preflight_pin, selection_pin, config_pin, helper_pin, fixture_plan_pin]:\n            load_pin(pin)\n        report.update(complete=True, success=True, binding=binding_pin, producer=producer_pin,\n                      preflight=preflight_pin, selection=selection_pin, config=config_pin, controller=helper_pin,\n                      selected_payloads=len(expected)-1, auxiliary_payloads=1, part_manifest_members=count_parts,\n                      total_logical_regular_members=len(expected)+count_parts, logical_payload_bytes=logical,\n                      compressed_bytes=compressed, exact_global_disjoint_union=True,\n                      all_member_raw_bytes_size_mode_verified=True, all_archive_hashes_verified=True,\n                      direct_restoration_aliases=len(aliases), alias_mode_transformations=transformations,\n                      mandatory_payload_or_alias_count=len(binding.get('mandatory_payloads', [])), canonical_fixtures_verified=fixture_count,\n                      alias_policy='Direct regular-file recovery using explicit destination mode; graph and bytes verified against archived payloads. No live alias rehash in this independent readback.',\n                      independence='Manual tar/PAX and zlib gzip streaming. No producer import/functions or tarfile reader; preserved parser functions from the reviewed Stage104 verifier.',\n                      known_limits=['No repository/toolchain or full workspace executable recovery claim.',\n                                    'Prior published archive dependencies retain their earlier independent provenance and are not decompressed here.',\n                                    'Unrecovered historical context and external prerequisites remain explicitly classified in the bound catalog.'],\n                      full_M2_complete=False, full_API_complete=False, performance_targets_met=False,\n                      hosted_CI_result_claimed=False)\n    except BaseException as error:\n        report['errors'].append(dict(error=repr(error), traceback=traceback.format_exc()))\n    report['finished_epoch'] = time.time()\n    write_receipt(report)\n    print(json.dumps(dict(complete=report['complete'], success=report['success'], errors=report['errors'])), flush=True)\n    return 0 if report['success'] else 1\n\n\nif __name__ == '__main__':\n    sys.exit(main())\n"
+    },
+    "target/m2/stage109-archive-independent-readback-01/preparation.json": {
+      "pin": {
+        "path": "target/m2/stage109-archive-independent-readback-01/preparation.json",
+        "bytes": 1031,
+        "mode": 420,
+        "sha256": "88fa339514f8be6cac2b5fdcaa2a8d8ea328874de4ec4203ae68b50cf7ff453e"
+      },
+      "raw_utf8": "{\n  \"kind\": \"Stage109 independent archive reader preparation\",\n  \"parser_and_opening_functions_unchanged\": true,\n  \"unchanged_functions_classes\": [\n    \"require\",\n    \"name_ok\",\n    \"opened\",\n    \"stable\",\n    \"load_pin\",\n    \"Inflated\",\n    \"octal\",\n    \"pax_path\",\n    \"read_part\",\n    \"write_receipt\"\n  ],\n  \"only_changed_logic\": \"Stage labels and new explicit producer/selection/config/count/mandatory payload binding instead of Stage104 constants; main preserves raw member, mode, alias and gzip checks. Current config has no legacy full-gate/mode-list fields; these use the independently bound scope and exact expected transformations. Mandatory canonical fixture coverage is checked against the pinned archived 6996-row fixture plan.\",\n  \"old_source_sha256\": \"97e62e9b61ebd485df1a9a1d36a6e876e922f67f6612187e3f62b410b7afcffa\",\n  \"new_source_sha256\": \"e7cfb72488a6a68e2ac569bf9f171cf898d100ddb6a8eacf5cdd0a9cd4dbc31a\",\n  \"syntax_pass\": true,\n  \"actual_archive_reads\": 0,\n  \"execution_pending_actual_producer_receipt\": true\n}\n"
+    }
+  },
+  "publication_status": {
+    "checkpoint_destination": "reports/m2/stage109-typed-module-annotation-checkpoint.json",
+    "public_archive_parts": 4,
+    "public_copies_verified": true,
+    "independent_archive_readback": "actual terminal PASS",
+    "containing_commit_hash_claimed": false,
+    "Git_commit_push": "Commit and push results are recorded separately in Git/remote state and target-only receipts; they are not asserted by this descriptor."
+  },
+  "publication_scope": "Complete bounded local Stage109 checkpoint. Strict whole-M2, API, release-platform, performance and memory gates remain incomplete. Earlier failures and ignored/unexecuted obligations retain their recorded status."
+}

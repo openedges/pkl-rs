@@ -20,6 +20,7 @@ pub(super) fn blocks(
     let mut result = BTreeMap::new();
     for (class, name, operation) in [
         ("Typed", "hasProperty", Lookup::TypedHasProperty),
+        ("Typed", "getProperty", Lookup::Property),
         ("Typed", "getPropertyOrNull", Lookup::PropertyOrNull),
         ("Dynamic", "hasProperty", Lookup::HasProperty),
         ("Dynamic", "getProperty", Lookup::Property),
@@ -350,6 +351,45 @@ impl Vm {
     ) -> Result<RuntimeError, RuntimeError> {
         let identifier = collection_conversions::property_identifier(name);
         let mut error = self.missing_member(receiver, &identifier, false)?;
+        let object = self.heap.get(receiver)?;
+        if object.is_module || collections::typed_class(&self.heap, receiver)?.is_some() {
+            let (kind, label) = if object.is_module {
+                (
+                    "module",
+                    PklString::from(
+                        object
+                            .class_definition
+                            .as_ref()
+                            .map_or(self.program.module_name.as_ref(), |class| {
+                                class.name.as_ref()
+                            }),
+                    ),
+                )
+            } else {
+                (
+                    "object of type",
+                    crate::diagnostic_values::type_name(
+                        &Value::Object(receiver),
+                        &self.heap,
+                        &self.program.module_name,
+                    )?
+                    .into(),
+                )
+            };
+            // Keep the original String's UTF-16, rather than the internal
+            // property identifier encoding used for unpaired surrogates.
+            error.message = PklString::join(
+                &[
+                    "Cannot find property `".into(),
+                    name.clone(),
+                    format!("` in {kind} `").into(),
+                    label,
+                    "`.".into(),
+                ],
+                "",
+            );
+            return Ok(error);
+        }
         error.message = PklString::join(
             &[
                 "Cannot find property `".into(),

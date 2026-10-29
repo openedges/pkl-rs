@@ -1,0 +1,76 @@
+{
+  "complete": true,
+  "source_only": true,
+  "actual_Java_executed": false,
+  "canonical_writes": 0,
+  "programs": 9,
+  "contracts": 46,
+  "observations": 92,
+  "sessions": 18,
+  "expected_results_generated": false,
+  "finite_module_factory": true,
+  "source_map_entries": 25,
+  "resource_profile": "Same512MiBheap/1.5GiBadmission/1GiBfloor/512MiBoutputcap/180ssession as reused captured controller",
+  "files": [
+    {
+      "path": "target/m2/stage106-module-relativepath-oracle-prep-01/CollectionEveryOracle.java",
+      "bytes": 7705,
+      "mode": 420,
+      "sha256": "52c6966087e39b122da50b9f8025e2731e44be08b4c71a0ab353309f7ba08f3b"
+    },
+    {
+      "path": "target/m2/stage106-module-relativepath-oracle-prep-01/PLAN.md",
+      "bytes": 1096,
+      "mode": 420,
+      "sha256": "8f3dd1a0da2534282a48a047ab2919a09a226fa055ab6bc60e61593c0f8a01e8"
+    },
+    {
+      "path": "target/m2/stage106-module-relativepath-oracle-prep-01/capture.py",
+      "bytes": 17548,
+      "mode": 420,
+      "sha256": "e0525be6aca500f525d1814a54a7f6769b5b473e48d3a61a4b72d9cd0b66a807"
+    },
+    {
+      "path": "target/m2/stage106-module-relativepath-oracle-prep-01/cohorts.json",
+      "bytes": 344,
+      "mode": 420,
+      "sha256": "57bf575da1b3a75ef724c67c127d2ee5527d4f811c6128fb2eb25e72e617df6d"
+    },
+    {
+      "path": "target/m2/stage106-module-relativepath-oracle-prep-01/commands.json",
+      "bytes": 426,
+      "mode": 420,
+      "sha256": "c0e4ea21c0fee6e7d48ae93f241ce8c0e9e82b1b5ffc7f6bee9f1bdb9734abcc"
+    },
+    {
+      "path": "target/m2/stage106-module-relativepath-oracle-prep-01/derivation.patch",
+      "bytes": 6232,
+      "mode": 420,
+      "sha256": "79979e8fca5b886a490a6caa5bd157284f56bb597e13e5a2d006306ab4018f76"
+    },
+    {
+      "path": "target/m2/stage106-module-relativepath-oracle-prep-01/helper-false/CollectionEveryOracle.java",
+      "bytes": 7706,
+      "mode": 420,
+      "sha256": "3429f640993c0540959897d363388cf56f3e5ef4c3e8fc7d840672b6e618d6d0"
+    },
+    {
+      "path": "target/m2/stage106-module-relativepath-oracle-prep-01/modules.tsv",
+      "bytes": 2484,
+      "mode": 420,
+      "sha256": "aac8211a7c255c67837800891239847451a7bf58816f53dddcd15a30f17f4386"
+    },
+    {
+      "path": "target/m2/stage106-module-relativepath-oracle-prep-01/queries.json",
+      "bytes": 19411,
+      "mode": 420,
+      "sha256": "832a112d8a03bacdc83e57d6d7a8f6ac40e09c864a73941a79f3d4dabf48ed0a"
+    },
+    {
+      "path": "target/m2/stage106-module-relativepath-oracle-prep-01/transport-roundtrip.json",
+      "bytes": 7735,
+      "mode": 420,
+      "sha256": "dcb93bd5e4b66292886d55733bff8b15920bacbef10235f7b41fa03238d18628"
+    }
+  ]
+}

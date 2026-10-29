@@ -1,0 +1,6 @@
+module stage108.annotation_class_method
+class Ann extends Annotation { v: Any }
+class C {
+  @Ann { v = module }
+  function f() = 0
+}

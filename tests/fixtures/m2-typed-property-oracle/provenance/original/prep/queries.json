@@ -1,0 +1,534 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "kind": "Stage105 Typed.getProperty and getPropertyOrNull expected-free bounded Java authority",
+  "contracts": 51,
+  "coverage_note": "Follow-up Stage105 only; Stage104569 selected matrix unchanged. No Rust expected results; each raw observation and ordinary/error/acquisition status retained.",
+  "programs": [
+    {
+      "id": "members",
+      "source": "module stage105.members\nimport \"file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage105-typed-property-oracle-prep-02/dependency.pkl\"\nopen class Parent { inherited = 2; hidden concealed = 3 }\nclass Data extends Parent { own = 4; local scratch = throw(\"local initializer must stay lazy\"); function method() = throw(\"method body must stay lazy\") }\ntypealias Alias = String\nhidden subject = new Data {}\n",
+      "source_uri": "file:///stage105/typed-nullable/members.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "List(subject.getPropertyOrNull(\"own\"), subject.getPropertyOrNull(\"inherited\"), subject.getPropertyOrNull(\"concealed\")).toString()",
+          "edge": "Typed inherited/hidden/own values; absent/default/empty/unpaired-surrogate names; local/method names stay lazy; module class/typealias/import name lookup.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0001",
+          "expression": "List(subject.getPropertyOrNull(\"absent\"), subject.getPropertyOrNull(\"default\"), subject.getPropertyOrNull(\"\")).toString()",
+          "edge": "Typed inherited/hidden/own values; absent/default/empty/unpaired-surrogate names; local/method names stay lazy; module class/typealias/import name lookup.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0002",
+          "expression": "List(subject.getPropertyOrNull(\"scratch\"), subject.getPropertyOrNull(\"method\")).toString()",
+          "edge": "Typed inherited/hidden/own values; absent/default/empty/unpaired-surrogate names; local/method names stay lazy; module class/typealias/import name lookup.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0003",
+          "expression": "module.getPropertyOrNull(\"Data\").toString()",
+          "edge": "Typed inherited/hidden/own values; absent/default/empty/unpaired-surrogate names; local/method names stay lazy; module class/typealias/import name lookup.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0004",
+          "expression": "module.getPropertyOrNull(\"Alias\").toString()",
+          "edge": "Typed inherited/hidden/own values; absent/default/empty/unpaired-surrogate names; local/method names stay lazy; module class/typealias/import name lookup.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0005",
+          "expression": "module.getPropertyOrNull(\"dependency\").getClass().toString()",
+          "edge": "Typed inherited/hidden/own values; absent/default/empty/unpaired-surrogate names; local/method names stay lazy; module class/typealias/import name lookup.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0006",
+          "expression": "subject.getPropertyOrNull(\"\\u{D800}\").toString()",
+          "edge": "Typed inherited/hidden/own values; absent/default/empty/unpaired-surrogate names; local/method names stay lazy; module class/typealias/import name lookup.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0007",
+          "expression": "subject.getPropertyOrNull(\"getPropertyOrNull\").toString()",
+          "edge": "Typed inherited/hidden/own values; absent/default/empty/unpaired-surrogate names; local/method names stay lazy; module class/typealias/import name lookup.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    },
+    {
+      "id": "lazy",
+      "source": "module stage105.lazy\nclass Data { value = trace(\"stored\"); explosive = throw(\"selected initializer\"); resource = read(\"env:STAGE105_TYPED_LOOKUP_UNSET\") }\nhidden subject = new Data {}\n",
+      "source_uri": "file:///stage105/typed-nullable/lazy.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "subject.getPropertyOrNull(\"absent\").toString()",
+          "edge": "Argument and selected initializer Logger order, no forcing unselected throw/read initializers, successful cache repeat and selected ordinary failures; empty evaluator environment.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0001",
+          "expression": "subject.getPropertyOrNull(trace(\"value\")).toString()",
+          "edge": "Argument and selected initializer Logger order, no forcing unselected throw/read initializers, successful cache repeat and selected ordinary failures; empty evaluator environment.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0002",
+          "expression": "subject.getPropertyOrNull(\"value\").toString()",
+          "edge": "Argument and selected initializer Logger order, no forcing unselected throw/read initializers, successful cache repeat and selected ordinary failures; empty evaluator environment.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0003",
+          "expression": "subject.getPropertyOrNull(\"explosive\").toString()",
+          "edge": "Argument and selected initializer Logger order, no forcing unselected throw/read initializers, successful cache repeat and selected ordinary failures; empty evaluator environment.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0004",
+          "expression": "subject.getPropertyOrNull(\"resource\").toString()",
+          "edge": "Argument and selected initializer Logger order, no forcing unselected throw/read initializers, successful cache repeat and selected ordinary failures; empty evaluator environment.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    },
+    {
+      "id": "conversions",
+      "source": "module stage105.conversions\nclass Data { value: String; hidden concealed = 9 }\nclass WithDefault { default = 7 }\n",
+      "source_uri": "file:///stage105/typed-nullable/conversions.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "Map(\"value\", \"map\").toTyped(Data).getPropertyOrNull(\"value\").toString()",
+          "edge": "Map/Dynamic.toTyped delegate values, hidden class default, unset required property error, explicitly declared default property.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0001",
+          "expression": "(new Dynamic { value = \"dynamic\" }).toTyped(Data).getPropertyOrNull(\"concealed\").toString()",
+          "edge": "Map/Dynamic.toTyped delegate values, hidden class default, unset required property error, explicitly declared default property.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0002",
+          "expression": "new Data {}.getPropertyOrNull(\"value\").toString()",
+          "edge": "Map/Dynamic.toTyped delegate values, hidden class default, unset required property error, explicitly declared default property.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0003",
+          "expression": "new WithDefault {}.getPropertyOrNull(\"default\").toString()",
+          "edge": "Map/Dynamic.toTyped delegate values, hidden class default, unset required property error, explicitly declared default property.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    },
+    {
+      "id": "arguments",
+      "source": "module stage105.arguments\nclass Data { value = 1 }\nhidden subject = new Data {}\n",
+      "source_uri": "file:///stage105/typed-nullable/arguments.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "subject.getPropertyOrNull(1).toString()",
+          "edge": "Wrong argument type, zero/two arity and method-as-property raw diagnostics; no guessed expected results.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0001",
+          "expression": "subject.getPropertyOrNull().toString()",
+          "edge": "Wrong argument type, zero/two arity and method-as-property raw diagnostics; no guessed expected results.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0002",
+          "expression": "subject.getPropertyOrNull(\"value\", \"extra\").toString()",
+          "edge": "Wrong argument type, zero/two arity and method-as-property raw diagnostics; no guessed expected results.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0003",
+          "expression": "subject.getPropertyOrNull.toString()",
+          "edge": "Wrong argument type, zero/two arity and method-as-property raw diagnostics; no guessed expected results.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    },
+    {
+      "id": "const-guard",
+      "source": "module stage105.constGuard\n@Deprecated { message = module.getPropertyOrNull(\"value\")?.toString() ?? \"absent\" }\nfunction f() = 1\nvalue = 2\n",
+      "source_uri": "file:///stage105/typed-nullable/const-guard.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "f().toString()",
+          "edge": "Non-const Typed native method in annotation body must follow pinned AstBuilder restrictions; record actual error and Logger fields.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    },
+    {
+      "id": "module-reference",
+      "source": "module stage105.moduleReference\nimport \"pkl:ref\"\nimport \"file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage105-typed-property-oracle-prep-02/dependency.pkl\"\nclass D extends ref.Domain { function renderReference(reference: ref.Reference<D, Any>): String = throw(\"not supported\") }\nlocal d: D = new {}\n",
+      "source_uri": "file:///stage105/typed-nullable/module-reference.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "ref.Reference(d, dependency.getClass(), \"\").output.toString()",
+          "edge": "Imported module-class display name in Reference type diagnostic; actual class identity retained, no caller-module prefix assumption.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    },
+    {
+      "id": "get-property-members",
+      "source": "module stage105.members\nimport \"file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage105-typed-property-oracle-prep-02/dependency.pkl\"\nopen class Parent { inherited = 2; hidden concealed = 3 }\nclass Data extends Parent { own = 4; local scratch = throw(\"local initializer must stay lazy\"); function method() = throw(\"method body must stay lazy\") }\ntypealias Alias = String\nhidden subject = new Data {}\n",
+      "source_uri": "file:///stage105/typed-required/members.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "List(subject.getProperty(\"own\"), subject.getProperty(\"inherited\"), subject.getProperty(\"concealed\")).toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Typed inherited/hidden/own values; absent/default/empty/unpaired-surrogate names; local/method names stay lazy; module class/typealias/import name lookup.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0001",
+          "expression": "List(subject.getProperty(\"absent\"), subject.getProperty(\"default\"), subject.getProperty(\"\")).toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Typed inherited/hidden/own values; absent/default/empty/unpaired-surrogate names; local/method names stay lazy; module class/typealias/import name lookup.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0002",
+          "expression": "List(subject.getProperty(\"scratch\"), subject.getProperty(\"method\")).toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Typed inherited/hidden/own values; absent/default/empty/unpaired-surrogate names; local/method names stay lazy; module class/typealias/import name lookup.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0003",
+          "expression": "module.getProperty(\"Data\").toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Typed inherited/hidden/own values; absent/default/empty/unpaired-surrogate names; local/method names stay lazy; module class/typealias/import name lookup.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0004",
+          "expression": "module.getProperty(\"Alias\").toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Typed inherited/hidden/own values; absent/default/empty/unpaired-surrogate names; local/method names stay lazy; module class/typealias/import name lookup.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0005",
+          "expression": "module.getProperty(\"dependency\").getClass().toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Typed inherited/hidden/own values; absent/default/empty/unpaired-surrogate names; local/method names stay lazy; module class/typealias/import name lookup.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0006",
+          "expression": "subject.getProperty(\"\\u{D800}\").toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Typed inherited/hidden/own values; absent/default/empty/unpaired-surrogate names; local/method names stay lazy; module class/typealias/import name lookup.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0007",
+          "expression": "subject.getProperty(\"getProperty\").toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Typed inherited/hidden/own values; absent/default/empty/unpaired-surrogate names; local/method names stay lazy; module class/typealias/import name lookup.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    },
+    {
+      "id": "get-property-lazy",
+      "source": "module stage105.lazy\nclass Data { value = trace(\"stored\"); explosive = throw(\"selected initializer\"); resource = read(\"env:STAGE105_TYPED_LOOKUP_UNSET\") }\nhidden subject = new Data {}\n",
+      "source_uri": "file:///stage105/typed-required/lazy.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "subject.getProperty(\"absent\").toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Argument and selected initializer Logger order, no forcing unselected throw/read initializers, successful cache repeat and selected ordinary failures; empty evaluator environment.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0001",
+          "expression": "subject.getProperty(trace(\"value\")).toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Argument and selected initializer Logger order, no forcing unselected throw/read initializers, successful cache repeat and selected ordinary failures; empty evaluator environment.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0002",
+          "expression": "subject.getProperty(\"value\").toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Argument and selected initializer Logger order, no forcing unselected throw/read initializers, successful cache repeat and selected ordinary failures; empty evaluator environment.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0003",
+          "expression": "subject.getProperty(\"explosive\").toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Argument and selected initializer Logger order, no forcing unselected throw/read initializers, successful cache repeat and selected ordinary failures; empty evaluator environment.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0004",
+          "expression": "subject.getProperty(\"resource\").toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Argument and selected initializer Logger order, no forcing unselected throw/read initializers, successful cache repeat and selected ordinary failures; empty evaluator environment.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    },
+    {
+      "id": "get-property-conversions",
+      "source": "module stage105.conversions\nclass Data { value: String; hidden concealed = 9 }\nclass WithDefault { default = 7 }\n",
+      "source_uri": "file:///stage105/typed-required/conversions.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "Map(\"value\", \"map\").toTyped(Data).getProperty(\"value\").toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Map/Dynamic.toTyped delegate values, hidden class default, unset required property error, explicitly declared default property.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0001",
+          "expression": "(new Dynamic { value = \"dynamic\" }).toTyped(Data).getProperty(\"concealed\").toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Map/Dynamic.toTyped delegate values, hidden class default, unset required property error, explicitly declared default property.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0002",
+          "expression": "new Data {}.getProperty(\"value\").toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Map/Dynamic.toTyped delegate values, hidden class default, unset required property error, explicitly declared default property.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0003",
+          "expression": "new WithDefault {}.getProperty(\"default\").toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Map/Dynamic.toTyped delegate values, hidden class default, unset required property error, explicitly declared default property.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    },
+    {
+      "id": "get-property-arguments",
+      "source": "module stage105.arguments\nclass Data { value = 1 }\nhidden subject = new Data {}\n",
+      "source_uri": "file:///stage105/typed-required/arguments.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "subject.getProperty(1).toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Wrong argument type, zero/two arity and method-as-property raw diagnostics; no guessed expected results.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0001",
+          "expression": "subject.getProperty().toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Wrong argument type, zero/two arity and method-as-property raw diagnostics; no guessed expected results.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0002",
+          "expression": "subject.getProperty(\"value\", \"extra\").toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Wrong argument type, zero/two arity and method-as-property raw diagnostics; no guessed expected results.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        },
+        {
+          "id": "q0003",
+          "expression": "subject.getProperty.toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Wrong argument type, zero/two arity and method-as-property raw diagnostics; no guessed expected results.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    },
+    {
+      "id": "get-property-const-guard",
+      "source": "module stage105.constGuard\n@Deprecated { message = module.getProperty(\"value\")?.toString() ?? \"absent\" }\nfunction f() = 1\nvalue = 2\n",
+      "source_uri": "file:///stage105/typed-required/const-guard.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "f().toString()",
+          "edge": "Required lookup counterpart, missing-name errors and lazy selected values. Non-const Typed native method in annotation body must follow pinned AstBuilder restrictions; record actual error and Logger fields.",
+          "resource_class": "bounded",
+          "expected": null,
+          "executed": false
+        }
+      ]
+    },
+    {
+      "id": "get-property-failed-class",
+      "source": "module stage105.failedClass\nclass C { early = 1; broken: Missing; late = 2; function method() = 3 }\n",
+      "source_uri": "file:///stage105/typed-required/get-property-failed-class.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "C.toString()",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded",
+          "edge": "Actual cached class publication after property type failure; preserve initialization, method availability and later selected-value/error ordering."
+        },
+        {
+          "id": "q0001",
+          "expression": "new C {}.getProperty(\"early\").toString()",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded",
+          "edge": "Actual cached class publication after property type failure; preserve initialization, method availability and later selected-value/error ordering."
+        },
+        {
+          "id": "q0002",
+          "expression": "new C {}.getProperty(\"absent\").toString()",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded",
+          "edge": "Actual cached class publication after property type failure; preserve initialization, method availability and later selected-value/error ordering."
+        },
+        {
+          "id": "q0003",
+          "expression": "new C {}.getPropertyOrNull(\"late\").toString()",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded",
+          "edge": "Actual cached class publication after property type failure; preserve initialization, method availability and later selected-value/error ordering."
+        }
+      ]
+    },
+    {
+      "id": "get-property-failed-superclass",
+      "source": "module stage105.failedSuperclass\nclass C extends Missing { own = 1 }\n",
+      "source_uri": "file:///stage105/typed-required/get-property-failed-superclass.pkl",
+      "power_assertions": false,
+      "repetitions": 2,
+      "queries": [
+        {
+          "id": "q0000",
+          "expression": "C.toString()",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded",
+          "edge": "A cached class whose Typed superclass was never linked must not acquire native method dispatch from storage shape alone."
+        },
+        {
+          "id": "q0001",
+          "expression": "new C {}.getProperty(\"own\").toString()",
+          "expected": null,
+          "executed": false,
+          "resource_class": "bounded",
+          "edge": "A cached class whose Typed superclass was never linked must not acquire native method dispatch from storage shape alone."
+        }
+      ]
+    }
+  ]
+}

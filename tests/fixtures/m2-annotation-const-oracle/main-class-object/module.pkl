@@ -1,0 +1,2 @@
+module stage108.class_object
+class C { value = new { nested = module } }

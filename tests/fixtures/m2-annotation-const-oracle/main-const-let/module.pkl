@@ -1,0 +1,2 @@
+module stage108.const_let
+const value = let (m = module) m

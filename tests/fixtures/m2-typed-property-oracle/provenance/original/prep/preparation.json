@@ -1,0 +1,97 @@
+{
+  "complete": true,
+  "source_only": true,
+  "actual_Java_executed": false,
+  "canonical_mutations": 0,
+  "programs": 13,
+  "contracts": 51,
+  "planned_sessions": 26,
+  "planned_observations": 102,
+  "expected_results_generated": false,
+  "Stage104_selected569_unchanged": true,
+  "prior_nullable_inputs_reviewed": {
+    "path": "target/m2/stage105-typed-getpropertyornull-oracle-prep-01/queries.json",
+    "bytes": 12029,
+    "mode": 420,
+    "sha256": "d31246569a59f8c603490a5f110a8070768ca726f3b7df491276a371eb989e8d"
+  },
+  "predecessor": {
+    "path": "target/m2/stage105-typed-getpropertyornull-oracle-prep-01/preparation.json",
+    "bytes": 3815,
+    "mode": 420,
+    "sha256": "0fcf4b4067e1e0f15f7b6be47089e93b3f92b7d8cb4d52b2607d1b590fe8520e"
+  },
+  "capture_helper_unchanged_except_cohort_pin_and_label": true,
+  "AST_and_exact_UTF8_transport_controls_pass": true,
+  "root_authorization": "One bounded fresh pinned Java acquisition granted; no canonical edit/Rust compiler",
+  "resource_policy": {
+    "Java_heap_MiB": 512,
+    "start_free_bytes": 1610612736,
+    "sticky_floor_bytes": 1073741824,
+    "owned_cap_bytes": 536870912,
+    "session_watchdog_seconds": 180,
+    "total_watchdog_seconds": 3600
+  },
+  "files": [
+    {
+      "path": "target/m2/stage105-typed-property-oracle-prep-02/CollectionEveryOracle.java",
+      "bytes": 6328,
+      "mode": 420,
+      "sha256": "56defcb9f990729eedc3a3b98854c07319859a683cae4a404fedaf821cc2a98f"
+    },
+    {
+      "path": "target/m2/stage105-typed-property-oracle-prep-02/PLAN.md",
+      "bytes": 1258,
+      "mode": 420,
+      "sha256": "d1bfdec0f7cd13d3ab4fc0acaecf3836fd0192ba68cc1bc25d1fd5e38427b4dd"
+    },
+    {
+      "path": "target/m2/stage105-typed-property-oracle-prep-02/capture.py",
+      "bytes": 17231,
+      "mode": 420,
+      "sha256": "15f75527dd61eb0f9d570e8168f8cb1a2b7b3c22549fc92c98c24bfc6886fed4"
+    },
+    {
+      "path": "target/m2/stage105-typed-property-oracle-prep-02/cohorts.json",
+      "bytes": 707,
+      "mode": 420,
+      "sha256": "a070f5bc0759ed93e4f017e89b6e7090ccab34a0ec205b5197e48e02dfa2751e"
+    },
+    {
+      "path": "target/m2/stage105-typed-property-oracle-prep-02/commands.json",
+      "bytes": 509,
+      "mode": 420,
+      "sha256": "11e1d5f0987cc812cd444d97f10b04e86dfd66f933464027b1dc2ea8201ef66b"
+    },
+    {
+      "path": "target/m2/stage105-typed-property-oracle-prep-02/dependency.pkl",
+      "bytes": 38,
+      "mode": 420,
+      "sha256": "baf67b149aa90cabde10a2973e3abe1d1893c9a933c665c43d5d0892235cd08b"
+    },
+    {
+      "path": "target/m2/stage105-typed-property-oracle-prep-02/derivation.patch",
+      "bytes": 2407,
+      "mode": 420,
+      "sha256": "28a911b4f254349f21b05086daf5ebc11c4c31fc2cb8fba2f5b80d22bf0dbe8b"
+    },
+    {
+      "path": "target/m2/stage105-typed-property-oracle-prep-02/helper-false/CollectionEveryOracle.java",
+      "bytes": 6329,
+      "mode": 420,
+      "sha256": "b01c67a9c5789abff436227a4dad632d6d1bb69a7af8506f3d7af2c632485399"
+    },
+    {
+      "path": "target/m2/stage105-typed-property-oracle-prep-02/queries.json",
+      "bytes": 27143,
+      "mode": 420,
+      "sha256": "c1a2c31d95be0af50d99d111ab8593973bee9718a60dde355f15da5268e135c3"
+    },
+    {
+      "path": "target/m2/stage105-typed-property-oracle-prep-02/transport-roundtrip.json",
+      "bytes": 9110,
+      "mode": 420,
+      "sha256": "78435f1414783ad30791e04219500fff04e353518522ba882e8dbced28bb13e2"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Unexpected token `(`. Expected `end of file`.
+
+1 | ((x: Int(module)) -> x)(1).toString()
+                           ^
+at repl:text (repl:text)

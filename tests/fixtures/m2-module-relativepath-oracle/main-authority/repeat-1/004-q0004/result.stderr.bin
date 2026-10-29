@@ -1,0 +1,6 @@
+–– Pkl Error ––
+No descendent path exists between modules `https://USER@Example.COM:443/base/root.pkl` and `https://USER@example.com:443/base/sub/child.pkl`.
+
+1 | module.relativePathTo(import("HTTPS://USER@Example.COM:443/base/sub/child.pkl")).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

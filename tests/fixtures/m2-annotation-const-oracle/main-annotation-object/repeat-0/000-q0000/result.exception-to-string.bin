@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot reference `module` within an annotation body.
+
+3 | @Ann { v = new { nested = module } }
+                              ^^^^^^
+at stage108.annotation_object#C.v.nested (file:///stage108/annotation-const/annotation-object.pkl)

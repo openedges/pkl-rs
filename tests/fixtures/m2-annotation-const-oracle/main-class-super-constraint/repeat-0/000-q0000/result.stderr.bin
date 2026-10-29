@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot reference `module` within a class body.
+
+3 | class C extends Base(module) {}
+                         ^^^^^^
+at stage108.class_super_constraint#C (file:///stage108/annotation-const/class-super-constraint.pkl)

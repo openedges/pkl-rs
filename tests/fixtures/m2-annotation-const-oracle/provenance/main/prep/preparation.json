@@ -1,0 +1,54 @@
+{
+  "AST_and_exact_UTF8_roundtrip": true,
+  "actual_Java_executed": false,
+  "authored_identifier_corrections": {
+    "bytes": 2404,
+    "mode": 420,
+    "path": "target/m2/stage108-annotation-const-oracle-prep-02/authored-identifier-corrections.json",
+    "sha256": "9c116fe20742ebf392f9fafad3f88f0374e639bd2599913403572f6b6e1c0460"
+  },
+  "canonical_mutations": 0,
+  "capture": {
+    "bytes": 17526,
+    "mode": 420,
+    "path": "target/m2/stage108-annotation-const-oracle-prep-02/capture.py",
+    "sha256": "83d525bccc1cf5cff215c78b36827ee8d6902940bb173f3057666ad5bd8a9758"
+  },
+  "complete": true,
+  "contracts": 32,
+  "expected_results_generated": false,
+  "helper_unchanged": true,
+  "historical_originals": {
+    "bytes": 4035,
+    "mode": 420,
+    "path": "target/m2/stage108-annotation-const-oracle-prep-02/historical-originals.json",
+    "sha256": "9a2b97be44ae7d6276ac8e05a51440d8cff9675982870483fd3776deb5a96f1d"
+  },
+  "matrix": {
+    "bytes": 18980,
+    "mode": 420,
+    "path": "target/m2/stage108-annotation-const-oracle-prep-02/queries.json",
+    "sha256": "9a0ae3c2f254a5ddef0a8a05fa345222aa3ae7d3cda392d9717b80fd431daecc"
+  },
+  "planned_observations": 64,
+  "planned_sessions": 60,
+  "predecessor": {
+    "bytes": 1365,
+    "mode": 420,
+    "path": "target/m2/stage108-annotation-const-oracle-prep-01/preparation.json",
+    "sha256": "30623baa2175ccbe08573de022bdfbb3a2a7fc145e3f769aa79b4943f5e541c2"
+  },
+  "programs": 30,
+  "resource_policy": {
+    "Java_heap_MiB": 512,
+    "floor_bytes": 1073741824,
+    "owned_cap_bytes": 536870912,
+    "session_watchdog_seconds": 180,
+    "start_free_bytes": 1610612736,
+    "total_watchdog_seconds": 3600
+  },
+  "root_authorization": "Exclusive corrected prep02 capture granted after matrix review; same512MiB and guards; source/compiler canonical unchanged; no performance claim",
+  "root_window_granted": true,
+  "scope": "New Stage108 API authority, original CLI controls separately preserved; no Rust compatibility/performance claim",
+  "source_only": true
+}

@@ -1,0 +1,2 @@
+module stage108.class_lambda
+class C { value = ((x) -> module)(0) }

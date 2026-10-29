@@ -10,6 +10,7 @@ use crate::value::PklString;
 #[derive(Clone, Copy, PartialEq, Eq)]
 enum Kind {
     Other,
+    Annotation,
     Lambda,
     Let,
     For,
@@ -43,13 +44,36 @@ impl OwnerScopes {
     pub(super) fn name(&self) -> Option<PklString> {
         self.0
             .as_ref()
-            .map(|scopes| scopes.last().unwrap().name.clone())
+            .map(|scopes| Self::qualified_name(scopes, scopes.len() - 1))
     }
 
     pub(super) fn enclosing_name(&self) -> Option<PklString> {
         self.0
             .as_ref()
-            .map(|scopes| scopes[scopes.len() - 2].name.clone())
+            .map(|scopes| Self::qualified_name(scopes, scopes.len() - 2))
+    }
+
+    fn qualified_name(scopes: &[Scope], index: usize) -> PklString {
+        let name = scopes[index].name.clone();
+        // A module annotation enters AnnotationScope without a target name.
+        // Java then joins its child properties with '.', not ModuleScope '#'.
+        // Keep that explicit root separator in the structured suffix.
+        if !name.is_empty()
+            && scopes[..=index]
+                .iter()
+                .any(|scope| scope.kind == Kind::Annotation && scope.name.is_empty())
+        {
+            PklString::from(".").concat(&name)
+        } else {
+            name
+        }
+    }
+
+    pub(super) fn enter_annotation(&mut self) {
+        if let Some(scopes) = &mut self.0 {
+            let name = scopes.last().unwrap().name.clone();
+            scopes.push(Scope::new(name, Kind::Annotation));
+        }
     }
 
     pub(super) fn is_enabled(&self) -> bool {

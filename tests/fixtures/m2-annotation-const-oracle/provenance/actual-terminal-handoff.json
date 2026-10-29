@@ -1,0 +1,100 @@
+{
+  "Java_authority_acquisition_only": true,
+  "Logger_events": 0,
+  "Rust_compatibility_executed": false,
+  "all_owned_Java_windows_closed": true,
+  "canonical_edits": false,
+  "complete": true,
+  "contracts": 40,
+  "decisive": [
+    "NearestAnnotation vsClass preserved through object/let/correctedlambda; Annotation-derivedclassbody isClass",
+    "Superclass constraint visited underClassScope",
+    "Sibling annotations/class scope restoration leavesconstproperty diagnostic",
+    "Unqualified module uses nearest owner; qualifiedstableValue succeeds whenforced andqualifiedmutable yieldsconstpropertyerror",
+    "Syntheticquery typeconstraint referencesmodule thenfailsBoolean/Function runtimecheck; do not inventconstguard",
+    "ExactupstreamoriginalconstAnnotation3/ClassBody sources+historicalURIs+CLIauthorities retained separately"
+  ],
+  "full_M2_complete": false,
+  "known_required_unresolved": {
+    "cause": "NullPointerException: Scope.getName() null in moduleIsNotConst diagnostic; never ordinary compatibility pass",
+    "classification": "JavaPklBugException",
+    "contracts": 1,
+    "observations": 2,
+    "program": "supplement/const-lambda"
+  },
+  "no_performance_claim": true,
+  "observations": 80,
+  "preserved_authored_controls": {
+    "main_direct_call_lambda_syntax_errors": {
+      "contracts": 4,
+      "intended_scope_exercised": false,
+      "observations": 8
+    },
+    "supplement_query_import_lookup_errors": {
+      "contracts": 2,
+      "observations": 4,
+      "qualified_value_forcing_exercised": false
+    }
+  },
+  "programs": 38,
+  "rows": [
+    {
+      "contracts": 32,
+      "observations": 64,
+      "owned_closed": true,
+      "report": {
+        "bytes": 929883,
+        "mode": 420,
+        "path": "target/m2/stage108-annotation-const-oracle-01/report.json",
+        "sha256": "7bb86f6d3c79d2c7c32d6c1e18871a0c119360f46212c7c64307583bd67f9c0d"
+      },
+      "sessions": 60,
+      "source_runtime_materialized_stable": true,
+      "statuses": {
+        "error": 54,
+        "success": 10
+      }
+    },
+    {
+      "contracts": 6,
+      "observations": 12,
+      "owned_closed": true,
+      "report": {
+        "bytes": 220273,
+        "mode": 420,
+        "path": "target/m2/stage108-annotation-const-supplement-oracle-01/report.json",
+        "sha256": "3abcb24d1c865e9e25d36e9700f4cdd22c3f57c9998fd09863a2350ff0686d6e"
+      },
+      "sessions": 12,
+      "source_runtime_materialized_stable": true,
+      "statuses": {
+        "error": 10,
+        "oracle-error": 2
+      }
+    },
+    {
+      "contracts": 2,
+      "observations": 4,
+      "owned_closed": true,
+      "report": {
+        "bytes": 105439,
+        "mode": 420,
+        "path": "target/m2/stage108-annotation-const-source-value-oracle-01/report.json",
+        "sha256": "fb315941f5da68562db8c3019e8dde167fc28e5b94d36ad7c2b8ec8cf6baf551"
+      },
+      "sessions": 4,
+      "source_runtime_materialized_stable": true,
+      "statuses": {
+        "error": 2,
+        "success": 2
+      }
+    }
+  ],
+  "sessions": 76,
+  "statuses": {
+    "error": 66,
+    "oracle-error": 2,
+    "success": 12
+  },
+  "success": true
+}
