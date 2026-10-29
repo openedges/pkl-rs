@@ -238,8 +238,8 @@ fn compile_program_text(
             || name.into(),
             |suffix| PklString::from(format!("{name}#")).concat(suffix),
         );
-        render_error_text(
-            &error.message,
+        crate::diagnostic::render_frontend_error_text(
+            &error,
             &[RenderFrame {
                 source,
                 uri,
@@ -247,7 +247,6 @@ fn compile_program_text(
                 span: error.span,
                 highlight_length_utf16: error.highlight_length_utf16,
             }],
-            error.hint(),
         )
     })?;
     let declared_name = module
@@ -510,5 +509,13 @@ pub(crate) fn prepare_runtime_error(
             highlight_length_utf16: None,
         });
     }
-    crate::diagnostic::PreparedDiagnostic::new(&error.message, &frames, error.hint.as_ref())
+    crate::diagnostic::PreparedDiagnostic::new_frontend(
+        &error.message,
+        &frames,
+        error.hint.as_ref(),
+        error
+            .frontend
+            .as_ref()
+            .map_or(0, |frontend| frontend.diagnostic.highlight_offset_utf16()),
+    )
 }

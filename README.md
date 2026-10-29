@@ -2,11 +2,15 @@
 
 This project reimplements [Pkl](https://pkl-lang.org/) 0.32.0 in Rust. It aims to share one engine across native Rust, WebAssembly, and Node.js N-API, with automated compatibility checks against the Java implementation.
 
-The latest [Stage114 checkpoint](reports/m2/stage114-diagnostics-regex-checkpoint.json) adds Regex PCF formatting,
-base failure semantics and diagnostic-owner fixes. Local workspace validation
-passes 1,700 tests, with five ignored. The full ready corpus records 4,336 matches,
-22 mismatches, 82 unsupported cases and two Java oracle errors across 4,442 cases;
-full M2 compatibility and the performance targets remain incomplete.
+The latest [Stage120 checkpoint](reports/m2/stage120-shebang-quoted-identifier-checkpoint.json)
+integrates shebang handling, quoted identifiers and diagnostic source ownership.
+The original local workspace acquisition records 1,711 passes, zero failures and
+five ignored tests. After two test-only Clippy repairs, the two affected tests
+pass again; the full workspace was not rerun. The full ready corpus records
+4,337 matches, 21 mismatches, 82 unsupported
+cases and two Java oracle errors across 4,442 cases; all 88 metamorphic checks pass.
+Each selected new Native, N-API and Chromium target matches 234 attempted observations; each retained target matches 902 ordinary observations with two required internal observations unresolved. Fresh affected tests, formatting, Clippy and the Wasm check pass after two test-only repairs. The bounded checkpoint is verified; `all_required_pass=false` remains explicit.
+Full M2/API, release-platform and performance requirements remain open.
 
 
 The project has completed its **M0 compatibility tooling and initial Java baselines** and **M1 architecture experiments**, including failed-lazy-retry, nested Host evaluation, cancellation, and the Graal compilation investigation. A bounded parser/resolver, lazy bytecode VM, tracing heap, numeric/regex probes, and resumable Host run through native Rust, Node N-API, and browser Wasm. These are prototypes; the complete language, CLI, REPL, server, and product APIs remain unimplemented. The [M0 report](reports/m0/README.md) and [M1 experiments](reports/m1/README.md) distinguish verified results, known differences, and performance limitations.
@@ -33,7 +37,7 @@ environments.
 
 The [Stage109 checkpoint](reports/m2/stage109-typed-module-annotation-checkpoint.json) adds `Typed.getProperty`, `Module.relativePathTo` and annotation/const diagnostic coverage to the shared engine. Targeted validation records **152 passed tests and one ignored required placeholder**. Independent current-source native readbacks match **276 ordinary new observations** and **1,138 existing Typed/reflection observations**. The new portable matrix matches **276 ordinary observations per Native, N-API and Chromium target**, retaining two required Java internal observations unresolved on each target.
 
-The complete ready replay records **4,332 passes out of 4,442 cases**, with 26 mismatches, 82 unsupported cases, two oracle errors, no historical-pass regression and all 88 metamorphic checks passing. One bounded M1 acquisition separately matches 6,078 checks per target. Eight freshness commands pass; exact current strict-gate accounting still reports 1,780 overlapping unmet conditions. Formatting, xtask verification, all-target Clippy with warnings denied, and the Wasm check pass on the recorded current source. The complete workspace passes **1,658 tests with five ignored**, with test-target, example and doctest coverage verified. Full M2/API, release-platform and performance completion are not claimed.
+For that historical Stage109 checkpoint, the complete ready replay records **4,332 passes out of 4,442 cases**, with 26 mismatches, 82 unsupported cases, two oracle errors, no historical-pass regression and all 88 metamorphic checks passing. One bounded M1 acquisition separately matches 6,078 checks per target. Eight freshness commands pass; exact current strict-gate accounting still reports 1,780 overlapping unmet conditions. Formatting, xtask verification, all-target Clippy with warnings denied, and the Wasm check pass on the recorded current source. The complete workspace passes **1,658 tests with five ignored**, with test-target, example and doctest coverage verified. Full M2/API, release-platform and performance completion are not claimed.
 
 The [Stage102 collection checkpoint](reports/m2/stage102-collection-apis-checkpoint.json)
 is retained as historical evidence: 3,718 ordinary observations match Java in its

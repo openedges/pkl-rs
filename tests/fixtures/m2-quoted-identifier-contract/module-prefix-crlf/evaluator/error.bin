@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Unexpected character ``. Did you mean `backquote`?
+
+1 | /* 😀 */ `name
+                  ^
+at module-prefix-crlf (file:///stage119/quoted-identifier/module-prefix-crlf.pkl)

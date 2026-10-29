@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Unexpected token `#! executable`. Expected `)`.
+
+1 | x = "\(#! executable
+           ^^^^^^^^^^^^^
+at reject-interpolation (file:///stage118/shebang/reject-interpolation.pkl)

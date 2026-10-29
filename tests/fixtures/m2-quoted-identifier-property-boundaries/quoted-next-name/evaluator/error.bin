@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Invalid property definition. Expected a type annotation, `=` or `{`.
+
+1 | `name` other = 1
+    ^^^^^^
+at quoted-next-name (file:///stage119/property-boundary/quoted-next-name.pkl)

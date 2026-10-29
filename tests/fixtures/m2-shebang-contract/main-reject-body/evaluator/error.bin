@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Unexpected token `#! executable`. Expected `}`.
+
+1 | x = new { #! executable
+              ^^^^^^^^^^^^^
+at reject-body (file:///stage118/shebang/reject-body.pkl)

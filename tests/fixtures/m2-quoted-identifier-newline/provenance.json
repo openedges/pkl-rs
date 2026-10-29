@@ -1,0 +1,40 @@
+{
+  "source_case": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/singleBacktick.pkl",
+  "input": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/singleBacktick.pkl",
+    "bytes": 2,
+    "sha256": "0c8ba0f0c16b077eb2110ff67bb3ea7e2c08d9494d21d2f7c468ea88250eb5b6"
+  },
+  "current_actual_process": {
+    "bytes": 5596,
+    "path": "target/m2/stage109-full-ready-modules-01/dc2c4cf2f18b37edbcdaa353/0/process.json",
+    "sha256": "b314077d42f7699d52f70def00264a686e564450e45d3a2564837cfe80fb8a5f"
+  },
+  "Java_expected_records": {
+    "process.json": {
+      "bytes": 3166,
+      "path": "target/m2/stage94-originals-replay-01/cases/dc2c4cf2f18b37edbcdaa353/java/process.json",
+      "sha256": "c205b619bbfe8ec979f5f23261be5866619c9e2792f2a61cbd0b8e243bf02712"
+    },
+    "result.json": {
+      "bytes": 294,
+      "path": "target/m2/stage94-originals-replay-01/cases/dc2c4cf2f18b37edbcdaa353/java/result.json",
+      "sha256": "ac596231dac6fd06b935864701d863630d3ec9b0c2c60f0f46e8294aa282cfcd"
+    },
+    "stderr.bin": {
+      "bytes": 301,
+      "path": "target/m2/stage94-originals-replay-01/cases/dc2c4cf2f18b37edbcdaa353/java/stderr.bin",
+      "sha256": "6298eeffa282fc5b8901f242ed2374de89d94f048cfc7124e91ac783003dca7b"
+    },
+    "stdout.bin": {
+      "bytes": 0,
+      "path": "target/m2/stage94-originals-replay-01/cases/dc2c4cf2f18b37edbcdaa353/java/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/singleBacktick.pkl",
+  "expected_exit": 1,
+  "baseline": "Pkl0.32.0",
+  "new_Java_execution": false,
+  "raw_expectations_from_Rust": false
+}

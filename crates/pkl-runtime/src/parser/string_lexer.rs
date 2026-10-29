@@ -217,18 +217,30 @@ impl Lexer<'_> {
                 return Err(Diagnostic::language(
                     DiagnosticOrigin::Lexer,
                     DiagnosticKind::Syntax,
-                    Span::new(self.cursor.saturating_sub(1), self.cursor),
+                    Span::new(start, self.cursor),
                     "Unexpected end of file.",
                 ));
             }
-            if self.advance() != Some('"') {
-                return Err(Diagnostic::language(
+            if self.peek() != Some('"') {
+                let character = self.peek().expect("visible raw string prefix character");
+                // lexStringStartPounds leaves this lookahead unconsumed and
+                // unexpectedChar observes one Java UTF-16 code unit.
+                let mut units = [0; 2];
+                let first = character.encode_utf16(&mut units)[0];
+                let mut message = PklStringBuilder::default();
+                message.push_str("Unexpected character `");
+                message.push_value(&PklString::from_utf16(vec![first]));
+                message.push_str("`. Did you mean `\"`?");
+                let mut error = Diagnostic::language(
                     DiagnosticOrigin::Lexer,
                     DiagnosticKind::Syntax,
-                    Span::new(start, self.cursor),
-                    "Expected string after `#`.",
-                ));
+                    Span::new(self.cursor, self.cursor + character.len_utf8()),
+                    message.finish(),
+                );
+                error.highlight_length_utf16 = Some(1);
+                return Err(error);
             }
+            self.advance();
         }
         let multiline = self.source[self.cursor..].starts_with("\"\"");
         if multiline {

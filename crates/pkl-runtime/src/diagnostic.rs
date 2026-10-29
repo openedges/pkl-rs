@@ -226,9 +226,14 @@ pub struct Diagnostic {
     details: Option<Box<DiagnosticDetails>>,
 }
 
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+struct Utf16ColumnOffset(usize);
+
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
 struct DiagnosticDetails {
-    hint: PklString,
+    hint: Option<PklString>,
+    /// Offset inside the anchored source scalar, not a byte or absolute index.
+    highlight_offset_utf16: Utf16ColumnOffset,
 }
 
 impl std::ops::Deref for Diagnostic {
@@ -300,12 +305,31 @@ impl Diagnostic {
     }
 
     pub fn with_hint(mut self, hint: impl Into<PklString>) -> Self {
-        self.details = Some(Box::new(DiagnosticDetails { hint: hint.into() }));
+        self.details.get_or_insert_with(Default::default).hint = Some(hint.into());
         self
     }
 
     pub fn hint(&self) -> Option<&PklString> {
-        self.details.as_ref().map(|details| &details.hint)
+        self.details
+            .as_ref()
+            .and_then(|details| details.hint.as_ref())
+    }
+
+    /// Java's section start can fall between a valid scalar's surrogate units.
+    /// `span` remains a valid UTF-8 anchor; this is the UTF-16 adjustment from it.
+    pub fn highlight_offset_utf16(&self) -> usize {
+        self.details
+            .as_ref()
+            .map_or(0, |details| details.highlight_offset_utf16.0)
+    }
+
+    pub(crate) fn with_highlight_offset_utf16(mut self, offset: usize) -> Self {
+        if offset != 0 {
+            self.details
+                .get_or_insert_with(Default::default)
+                .highlight_offset_utf16 = Utf16ColumnOffset(offset);
+        }
+        self
     }
 }
 
@@ -348,6 +372,20 @@ pub fn render_error_text(
     rendering.render()
 }
 
+pub(crate) fn render_frontend_error_text(
+    error: &Diagnostic,
+    frames: &[RenderFrame<'_>],
+) -> PklString {
+    let mut rendering = PreparedDiagnostic::new_frontend(
+        &error.message,
+        frames,
+        error.hint(),
+        error.highlight_offset_utf16(),
+    );
+    rendering.transform(crate::logging::FrameTransformer::Default);
+    rendering.render()
+}
+
 /// Detached rendering continuation. Frame compression precedes transformation,
 /// and replacements retain all Java string code units and source positions.
 #[derive(Clone, Debug)]
@@ -366,6 +404,21 @@ impl PreparedDiagnostic {
             message: message.clone(),
             hint: hint.cloned(),
             frames: frames::DiagnosticFrames::new(frames),
+        }
+    }
+    pub(crate) fn new_frontend(
+        message: &PklString,
+        frames: &[RenderFrame<'_>],
+        hint: Option<&PklString>,
+        first_offset_utf16: usize,
+    ) -> Self {
+        if first_offset_utf16 == 0 {
+            return Self::new(message, frames, hint);
+        }
+        Self {
+            message: message.clone(),
+            hint: hint.cloned(),
+            frames: frames::DiagnosticFrames::new_with_first_offset(frames, first_offset_utf16),
         }
     }
     pub(crate) fn next_frame(&self) -> Option<&crate::logging::LogFrame> {

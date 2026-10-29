@@ -349,8 +349,8 @@ fn render_failure_text(
         phase,
         disposition: error.provenance.disposition,
         reason: error.provenance.reason,
-        text: render_error_text(
-            &error.message,
+        text: crate::diagnostic::render_frontend_error_text(
+            &error,
             &[RenderFrame {
                 source,
                 uri: &display_uri,
@@ -358,7 +358,6 @@ fn render_failure_text(
                 span: error.span,
                 highlight_length_utf16: error.highlight_length_utf16,
             }],
-            error.hint(),
         ),
     }
 }

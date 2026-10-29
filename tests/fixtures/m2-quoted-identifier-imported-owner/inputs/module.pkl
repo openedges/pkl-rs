@@ -1,0 +1,3 @@
+module quotedOwner
+function nested() = import("file:///stage119/quoted-identifier/module-prefix-unicode-eof.pkl").value
+result = nested()

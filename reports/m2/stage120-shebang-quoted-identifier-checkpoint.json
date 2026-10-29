@@ -1,0 +1,770 @@
+{
+  "actual_M1": {
+    "architecture_pass": true,
+    "checks_per_target": 6078,
+    "not_performance_evidence": true,
+    "one_actual_acquisition": true,
+    "strict_pass": true
+  },
+  "actual_defaults": {
+    "report": {
+      "path": "target/m2/stage120-default-checks-commands-03/report.json",
+      "bytes": 30932,
+      "mode": 420,
+      "sha256": "09831b4fb7c3271f32e33fa190fef908f2e5055a6ee13e10c0a598ea8adba8f6"
+    },
+    "independent_readback": {
+      "path": "target/m2/stage120-default-checks-readback-03/report.json",
+      "bytes": 12437,
+      "mode": 420,
+      "sha256": "585f6cb25104f4f8e53844250f16e1909f22dd29390a8fe4696a466374dd6ff6"
+    },
+    "actual_commands_passed": 7,
+    "fresh_affected_test_results": 2,
+    "fresh_format_Clippy_Wasm_pass": true,
+    "xtask_reused_from_successful_defaults02_child": true,
+    "full_workspace_rerun_claimed": false,
+    "fresh_test_results_added_to_original_workspace_count": false,
+    "source_bridge": {
+      "bytes": 2403,
+      "mode": 420,
+      "path": "target/m2/stage120-clippy-test-repair-01/report.json",
+      "sha256": "98315807c9abdeb30f14b17d38ba123df628ac90f95166b4e0a3fd3259cbacf7"
+    },
+    "repair_admission": {
+      "path": "target/m2/stage120-repair-admission-01/repair-admission.json",
+      "bytes": 7856,
+      "mode": 420,
+      "sha256": "3478400bdf10fa30cfd225f1b755a764a3ecdcbce540441c747fb7f7a3e95d6d"
+    },
+    "commands": [
+      "inventory freshness",
+      "manifest freshness",
+      "exact shebang decoder regression",
+      "exact quoted-identifier decoder regression",
+      "cargo fmt --all -- --check",
+      "cargo clippy --workspace --all-targets --locked -- -D warnings",
+      "cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked"
+    ]
+  },
+  "actual_evidence": [
+    {
+      "bytes": 5884,
+      "mode": 420,
+      "path": "target/m2/stage120-workspace-acquisition-01/report.json",
+      "sha256": "2ef6d4458368fa6eed07b3d7f7ad1d34e303e160f019a57d8b6cce8fcef4f519"
+    },
+    {
+      "bytes": 7795,
+      "mode": 420,
+      "path": "target/m2/stage120-workspace-readback-01/report.json",
+      "sha256": "c5a83b5bf6870d0040a5c8add6457b7e54c3a06318d319965c80958987bf4736"
+    },
+    {
+      "bytes": 2641539,
+      "mode": 420,
+      "path": "target/m2/stage120-full-ready-native-01.json",
+      "sha256": "fa4ec6f70cb0d315b64ecb6ad319ad6d3b6bc36d9ac897818cdcfa231b2e2523"
+    },
+    {
+      "bytes": 18510,
+      "mode": 420,
+      "path": "target/m2/stage120-full-ready-readback-01/report.json",
+      "sha256": "a1f69fbb2bca944799ccf1d9be2e9d3ab5130a2be2dd099e047c39d526c0bf25"
+    },
+    {
+      "bytes": 3400632,
+      "mode": 420,
+      "path": "target/m2/stage120-m1-platform-01/report.json",
+      "sha256": "9d8b944f621dadf0426473b27cc2c4ed10ab71a16174200a0726c077079f1193"
+    },
+    {
+      "bytes": 8879,
+      "mode": 420,
+      "path": "target/m2/stage120-m1-commands-01/report.json",
+      "sha256": "873ab6a10d6144b8f282b9cdb4bb7bdcd3ab10b540c155adeaa4ee73920aa3e6"
+    },
+    {
+      "bytes": 16497,
+      "mode": 420,
+      "path": "target/m2/stage120-normal-prepare-02/report.json",
+      "sha256": "2603a5d3a4c13fc31ee9152152dba5db184714d50b049b40e3fd0cb4007bfbdc"
+    },
+    {
+      "bytes": 226598,
+      "mode": 420,
+      "path": "target/m2/stage120-full-gate-accounting-01/report.json",
+      "sha256": "d586c974165b9087e26543f17f98ff7eaa609fafb8a7573cf59f53ded27ab6df"
+    },
+    {
+      "bytes": 189076,
+      "mode": 420,
+      "path": "target/m2/stage120-portable-build-01/report.json",
+      "sha256": "c38455277fb91920f357d1532c57b99268d32bd9da389d3b172696c430572259"
+    },
+    {
+      "bytes": 236293,
+      "mode": 420,
+      "path": "target/m2/stage120-portable-build-02/report.json",
+      "sha256": "db330de36a5ed340e917c7ae249a102db1c5dcc1d880595bec1979cc4e17e01c"
+    },
+    {
+      "bytes": 218860,
+      "mode": 420,
+      "path": "target/m2/stage120-portable-capture-01/report.json",
+      "sha256": "776fec94bc6b3a9786cb6c9bdfc0979c7eae1973cab59e21b90811c1d1c626d9"
+    },
+    {
+      "bytes": 217386,
+      "mode": 420,
+      "path": "target/m2/stage120-portable-capture-01/new-native/report.json",
+      "sha256": "2b078030cfbed16f300f4b957702a056097617702bbb7f5f88fe521f7b9014c7"
+    },
+    {
+      "bytes": 65597,
+      "mode": 420,
+      "path": "target/m2/stage120-portable-capture-01/comparison-new-native/report.json",
+      "sha256": "a20dcf22991e856e3828969d86705c392b8cad824b9eb97fecbaa4654014c305"
+    },
+    {
+      "bytes": 4233,
+      "mode": 420,
+      "path": "target/m2/stage120-closeout-prep-01/handoff.json",
+      "sha256": "08ac164117244467a8bf4c91d6c18ab834bc4eca88fca3d270e66d967f782f22"
+    },
+    {
+      "path": "target/m2/stage120-portable-capture-02/report.json",
+      "bytes": 192311,
+      "mode": 420,
+      "sha256": "2f5e0790453971e6a303746c1e9f9228c6eac89c445f7a2e9d72e47f1c19afd3"
+    },
+    {
+      "path": "target/m2/stage120-default-checks-commands-03/report.json",
+      "bytes": 30932,
+      "mode": 420,
+      "sha256": "09831b4fb7c3271f32e33fa190fef908f2e5055a6ee13e10c0a598ea8adba8f6"
+    },
+    {
+      "path": "target/m2/stage120-default-checks-readback-03/report.json",
+      "bytes": 12437,
+      "mode": 420,
+      "sha256": "585f6cb25104f4f8e53844250f16e1909f22dd29390a8fe4696a466374dd6ff6"
+    },
+    {
+      "path": "target/m2/stage120-repair-admission-01/repair-admission.json",
+      "bytes": 7856,
+      "mode": 420,
+      "sha256": "3478400bdf10fa30cfd225f1b755a764a3ecdcbce540441c747fb7f7a3e95d6d"
+    },
+    {
+      "path": "target/m2/stage120-final-catalog-01/report.json",
+      "bytes": 17632,
+      "mode": 420,
+      "sha256": "3dcf99cfc8644b2c37af5cbd5101fb69922af1b78e2fa35e64da99299cfcbb93"
+    },
+    {
+      "path": "target/m2/stage120-independent-final-closure-review-01/report.json",
+      "bytes": 5699,
+      "mode": 420,
+      "sha256": "75ae8111a34dd5adb7984ba86a8c9084f6f3913c574a8c701b160c24a3b68c08"
+    },
+    {
+      "path": "target/m2/stage120-final-config-01/report.json",
+      "bytes": 921,
+      "mode": 420,
+      "sha256": "e85ca9deb689884e774f3acd0b1af03d2bb1c976e93de3d882e89bef161c0b77"
+    },
+    {
+      "path": "target/m2/stage120-publication-01/report.json",
+      "bytes": 5462,
+      "mode": 420,
+      "sha256": "c65a47ed8fa4998324829fbee9c890fbda24589ab78f8141bd6e54410987a463"
+    }
+  ],
+  "actual_full_ready": {
+    "candidate-unsupported": 82,
+    "metamorphic_pass": 88,
+    "mismatch": 21,
+    "old_pass_regressions": 0,
+    "oracle-error": 2,
+    "pass": 4337,
+    "total": 4442
+  },
+  "actual_new_native": {
+    "acquisition": "capture01",
+    "all_required_pass": false,
+    "api_full_match": true,
+    "attempted_observations": 234,
+    "authorities": 117,
+    "frontend_comparable_match": true
+  },
+  "actual_workspace": {
+    "compile_only_examples": 25,
+    "doctest_libraries": 2,
+    "executable_test_targets": 270,
+    "failed": 0,
+    "ignored": 5,
+    "nested_filtered_child_summaries": 13,
+    "passed": 1711,
+    "acquisition_scope": "Original complete workspace acquisition before the two cfg(test)-only Clippy repairs",
+    "full_workspace_rerun_after_test_repairs": false,
+    "original_source_retained": true
+  },
+  "archive_publication_executed": true,
+  "archive_verification": {
+    "producer": {
+      "path": "target/m2/stage120-evidence-archives-01/report.json",
+      "bytes": 3885,
+      "mode": 420,
+      "sha256": "9ca4a0331089653c23597f36b1e77a03c93d4219bd89b864aa5d5617d3320270"
+    },
+    "preflight": {
+      "path": "target/m2/stage120-archive-preflight-01/report.json",
+      "bytes": 3374,
+      "mode": 420,
+      "sha256": "d9e3bcc93c947bc0beefc711b05e596f0580f261a88c04987f6301d9829dd856"
+    },
+    "independent_readback": {
+      "path": "target/m2/stage120-archive-independent-readback-01/report.json",
+      "bytes": 3767,
+      "mode": 420,
+      "sha256": "51be28da87f88b05d8b3819f6f7eec4e6034014890c239eaf8eda7f870abd822"
+    },
+    "binding": {
+      "path": "target/m2/stage120-archive-binding-01/binding.json",
+      "bytes": 16543,
+      "mode": 420,
+      "sha256": "e79a69e27adbd290779bc816f265a64e4fbbaa59f6af4c2ec7594502149d676d"
+    },
+    "exact_publication": {
+      "path": "target/m2/stage120-publication-01/report.json",
+      "bytes": 5462,
+      "mode": 420,
+      "sha256": "c65a47ed8fa4998324829fbee9c890fbda24589ab78f8141bd6e54410987a463"
+    },
+    "archive_parts": 2,
+    "compressed_bytes": 77196066,
+    "selected_payloads": 21670,
+    "auxiliary_payloads": 1,
+    "part_manifest_members": 2,
+    "total_logical_regular_members": 21673,
+    "direct_restoration_aliases": 157942,
+    "alias_mode_transformations": 0,
+    "manual_tar_PAX_zlib_readback": true,
+    "all_member_raw_bytes_size_mode_verified": true,
+    "gzip_EOF_CRC_and_tar_EOF_verified": true,
+    "old_archive_bodies_accessed": false
+  },
+  "archives": [
+    {
+      "path": "reports/m2/stage120-shebang-quoted-identifier-evidence-01.tar.gz",
+      "bytes": 62914759,
+      "mode": 420,
+      "sha256": "34469f7af13db321bebd399a83d66137ceb129ab59588914e29aa08e4e8a9755"
+    },
+    {
+      "path": "reports/m2/stage120-shebang-quoted-identifier-evidence-02.tar.gz",
+      "bytes": 14281307,
+      "mode": 420,
+      "sha256": "1d5e20fe7f6d368d1b10f64309395f32e61bf838462e506757e23bd18e0929e1"
+    }
+  ],
+  "compatibility_baseline": "Pkl 0.32.0",
+  "complete": true,
+  "containing_commit_hash_claimed": false,
+  "excluded_isolated_candidates": [
+    "Stage116",
+    "Stage121",
+    "Stage122"
+  ],
+  "final_catalogs": {
+    "assembly": {
+      "path": "target/m2/stage120-final-catalog-01/report.json",
+      "bytes": 17632,
+      "mode": 420,
+      "sha256": "3dcf99cfc8644b2c37af5cbd5101fb69922af1b78e2fa35e64da99299cfcbb93"
+    },
+    "members": {
+      "bytes": 10061151,
+      "mode": 420,
+      "path": "target/m2/stage120-final-catalog-01/members.final.json",
+      "sha256": "098184e79d5c1d1dc99d965e70d40320913028883699eecf9b628c6f1dd41ac8"
+    },
+    "aliases": {
+      "bytes": 105166538,
+      "mode": 420,
+      "path": "target/m2/stage120-final-catalog-01/aliases.final.json",
+      "sha256": "aff1ad237e82c20c288ce743ee679cfa0425cb65115f865f1d7d28f6343ac721"
+    },
+    "independent_closure_review": {
+      "path": "target/m2/stage120-independent-final-closure-review-01/report.json",
+      "bytes": 5699,
+      "mode": 420,
+      "sha256": "75ae8111a34dd5adb7984ba86a8c9084f6f3913c574a8c701b160c24a3b68c08"
+    },
+    "seal": {
+      "path": "target/m2/stage120-final-config-01/report.json",
+      "bytes": 921,
+      "mode": 420,
+      "sha256": "e85ca9deb689884e774f3acd0b1af03d2bb1c976e93de3d882e89bef161c0b77"
+    },
+    "config": {
+      "bytes": 13134,
+      "mode": 420,
+      "path": "target/m2/stage120-final-config-01/config.json",
+      "sha256": "d13b26a3151ed33b94df77f17c49552de96b36185db5b2abfc6c10f40df5e41a"
+    },
+    "distinct_required_pin_identities": 24176,
+    "required_pin_gaps": 0,
+    "fresh_regular_paths_hashed": 62380,
+    "alias_count_qualification": "Declared direct exact-identity rows, not a claim of physical recovery or independent fresh hashing of every base alias destination. Producer preflight still verifies unscoped live aliases;17 retained cache destinations use exact retained payloads.",
+    "selected_payload_count_after_sealing": 21670
+  },
+  "final_documents_archived": false,
+  "full_API_complete": false,
+  "full_M2_complete": false,
+  "hosted_CI_result_claimed": false,
+  "implementation": {
+    "SHA_only_link_refreshes": 42,
+    "new_Java_fixture_destinations": 2489,
+    "new_test_functions": 11,
+    "separate_generated_metadata_paths": 2,
+    "source_tool_destinations": 13
+  },
+  "kind": "Stage120 bounded local shebang/quoted identifier checkpoint",
+  "native_reuse_join": {
+    "source_capture": {
+      "path": "target/m2/stage120-portable-capture-01/report.json",
+      "bytes": 218860,
+      "mode": 420,
+      "sha256": "776fec94bc6b3a9786cb6c9bdfc0979c7eae1973cab59e21b90811c1d1c626d9"
+    },
+    "qualification": {
+      "path": "target/m2/stage120-portable-qualification-08/report.json",
+      "bytes": 17116,
+      "mode": 420,
+      "sha256": "caf4019370e5eb1f26feed4aa0c5d4c58f16905ae4adeaaccf642f1693d1d67e"
+    },
+    "source_bridge": {
+      "path": "target/m2/stage120-portable-candidate-04/continuation-source-bridge.json",
+      "bytes": 9594,
+      "mode": 420,
+      "sha256": "0741362b2349157658899cf4c09f2cb81da44db58373022985ed1a944d7b04d4"
+    },
+    "imported_capture": {
+      "bytes": 217386,
+      "mode": 420,
+      "path": "target/m2/stage120-portable-capture-01/new-native/report.json",
+      "sha256": "2b078030cfbed16f300f4b957702a056097617702bbb7f5f88fe521f7b9014c7"
+    },
+    "imported_comparison": {
+      "bytes": 65597,
+      "mode": 420,
+      "path": "target/m2/stage120-portable-capture-01/comparison-new-native/report.json",
+      "sha256": "a20dcf22991e856e3828969d86705c392b8cad824b9eb97fecbaa4654014c305"
+    },
+    "imported_process_records": 2,
+    "fresh_process_records": 10,
+    "Native_rerun_claimed": false,
+    "five_product_identities_unchanged": true,
+    "original_capture01_failure_preserved": true,
+    "join_contract": "Only the complete new-native capture/comparison and its original raw/product bookends are imported; five other groups are freshly executed in capture02."
+  },
+  "pending": [],
+  "performance_targets_met": false,
+  "portable_composed_scope": {
+    "selected_groups": 6,
+    "newly_executed_groups": 5,
+    "imported_native_groups": 1,
+    "imported_prior_process_records": 2,
+    "fresh_process_records": 10,
+    "Rust_rebuild_runs": 0,
+    "unchanged_build02_products": 5,
+    "new_platforms": [
+      "native",
+      "NAPI",
+      "Chromium"
+    ],
+    "new_attempted_observations_per_platform": 234,
+    "Java_authorities": 117,
+    "api_full_match": true,
+    "frontend_comparable_match": true,
+    "all_required_pass": false,
+    "retained_ordinary_matches_per_platform": 902,
+    "retained_unresolved_internal_observations_per_platform": 2,
+    "verified_groups": [
+      {
+        "group": "new-native",
+        "capture": {
+          "path": "target/m2/stage120-portable-capture-01/new-native/report.json",
+          "bytes": 217386,
+          "sha256": "2b078030cfbed16f300f4b957702a056097617702bbb7f5f88fe521f7b9014c7"
+        },
+        "comparison": {
+          "path": "target/m2/stage120-portable-capture-01/comparison-new-native/report.json",
+          "bytes": 65597,
+          "sha256": "a20dcf22991e856e3828969d86705c392b8cad824b9eb97fecbaa4654014c305"
+        },
+        "provenance": "imported complete native acquisition, not rerun"
+      },
+      {
+        "group": "new-napi",
+        "capture": {
+          "path": "target/m2/stage120-portable-capture-02/new-napi/report.json",
+          "bytes": 288647,
+          "sha256": "baf725529704d0113a1349bfc669587dc77e585073699b71ebfdfc253429feda"
+        },
+        "comparison": {
+          "path": "target/m2/stage120-portable-capture-02/comparison-new-napi/report.json",
+          "bytes": 65593,
+          "sha256": "86eec103b7269875e3d72c40779e1946efe1f2b060ff49a6f1d7b17231193c46"
+        },
+        "provenance": "new continuation acquisition"
+      },
+      {
+        "group": "new-chromium",
+        "capture": {
+          "path": "target/m2/stage120-portable-capture-02/new-chromium/report.json",
+          "bytes": 115858,
+          "sha256": "904e85f75cb472cc98d5b26981bef32414337324f0a6230653c3a4b6e951240c"
+        },
+        "comparison": {
+          "path": "target/m2/stage120-portable-capture-02/comparison-new-chromium/report.json",
+          "bytes": 65601,
+          "sha256": "da2b01f6212b7b7fb98c8bfa7839d5fc964de177671885a8a879ee1ca4969eed"
+        },
+        "provenance": "new continuation acquisition"
+      },
+      {
+        "group": "old-native",
+        "capture": {
+          "path": "target/m2/stage120-portable-capture-02/old/report.json",
+          "bytes": 110921,
+          "sha256": "3b3b0eb49c8600bfa4eb5676c4e5788e72964788df374f6537ca542d5fa2ced5"
+        },
+        "comparison": {
+          "path": "target/m2/stage120-portable-capture-02/comparison-old-native.json",
+          "bytes": 753789,
+          "sha256": "9edbd096ddb5ec7770dcf89417febc34a2f68c298a8be462944d2658ba12a01e"
+        },
+        "provenance": "new continuation acquisition"
+      },
+      {
+        "group": "old-napi",
+        "capture": {
+          "path": "target/m2/stage120-portable-capture-02/old/napi/report.json",
+          "bytes": 337992,
+          "sha256": "3d94d745ce03f401190a8c995c05485c54fb62a8fbba5f29d2735216ad62d6f2"
+        },
+        "comparison": {
+          "path": "target/m2/stage120-portable-capture-02/comparison-old-napi.json",
+          "bytes": 753785,
+          "sha256": "460233349bdc11da3584516a0e3f8fdae06f93c6d53c63096aa5e44e796144e4"
+        },
+        "provenance": "new continuation acquisition"
+      },
+      {
+        "group": "old-chromium",
+        "capture": {
+          "path": "target/m2/stage120-portable-capture-02/old/chromium/report.json",
+          "bytes": 414915,
+          "sha256": "d3166f36c3a45bf38831bc55bd80ca48e7a95238f21c67ecda5e27b301d2b0d4"
+        },
+        "comparison": {
+          "path": "target/m2/stage120-portable-capture-02/comparison-old-chromium.json",
+          "bytes": 753793,
+          "sha256": "5d1465e376f24714d83bc20a840e0388e05770c8c8c91d1d4ec7a937401e4978"
+        },
+        "provenance": "new continuation acquisition"
+      }
+    ]
+  },
+  "portable_continuation_receipt": {
+    "path": "target/m2/stage120-portable-capture-02/report.json",
+    "bytes": 192311,
+    "mode": 420,
+    "sha256": "2f5e0790453971e6a303746c1e9f9228c6eac89c445f7a2e9d72e47f1c19afd3"
+  },
+  "preserved_failures": {
+    "portable_build01": "PklString conversion compile failure",
+    "portable_capture01": "NAPI supplied-text Host adapter failure; original capture remains complete=false",
+    "unexecuted_in_capture01": [
+      "new-chromium",
+      "old-native",
+      "old-napi",
+      "old-chromium"
+    ],
+    "defaults02": "xtask child0/source-stable; Clippy child101 for two cfg(test) decoder lints; Wasm unexecuted. Original aggregate failed and raw evidence retained.",
+    "defaults02_receipt": {
+      "path": "target/m2/stage120-default-checks-commands-02/report.json",
+      "bytes": 26617,
+      "mode": 420,
+      "sha256": "f05d04412c17eb18b4c3f9b23b3b5214ff545aa511d0a225783ce5738651fbac"
+    },
+    "original_default_preparations01_02_unexecuted": true
+  },
+  "public_verification_support": [
+    {
+      "public": {
+        "path": "reports/m2/stage120-shebang-quoted-identifier-archive-report.json",
+        "bytes": 3885,
+        "mode": 420,
+        "sha256": "9ca4a0331089653c23597f36b1e77a03c93d4219bd89b864aa5d5617d3320270"
+      },
+      "restore_destination": "target/m2/stage120-evidence-archives-01/report.json",
+      "role": "Restore exact support to its recorded source path for verifier replay"
+    },
+    {
+      "public": {
+        "path": "reports/m2/stage120-shebang-quoted-identifier-preflight.json",
+        "bytes": 3374,
+        "mode": 420,
+        "sha256": "d9e3bcc93c947bc0beefc711b05e596f0580f261a88c04987f6301d9829dd856"
+      },
+      "restore_destination": "target/m2/stage120-archive-preflight-01/report.json",
+      "role": "Restore exact support to its recorded source path for verifier replay"
+    },
+    {
+      "public": {
+        "path": "reports/m2/stage120-shebang-quoted-identifier-archive-readback.json",
+        "bytes": 3767,
+        "mode": 420,
+        "sha256": "51be28da87f88b05d8b3819f6f7eec4e6034014890c239eaf8eda7f870abd822"
+      },
+      "restore_destination": "target/m2/stage120-archive-independent-readback-01/report.json",
+      "role": "Restore exact support to its recorded source path for verifier replay"
+    },
+    {
+      "public": {
+        "path": "reports/m2/stage120-shebang-quoted-identifier-archive-verifier.py",
+        "bytes": 18737,
+        "mode": 420,
+        "sha256": "dcdd9c92b075b7da2468bcb2eaf5a4bc6955685dae41eda129cf1ca288335791"
+      },
+      "restore_destination": "target/m2/stage120-archive-independent-readback-01/verify.py",
+      "role": "Restore exact support to its recorded source path for verifier replay"
+    },
+    {
+      "public": {
+        "path": "reports/m2/stage120-shebang-quoted-identifier-archive-binding.json",
+        "bytes": 16543,
+        "mode": 420,
+        "sha256": "e79a69e27adbd290779bc816f265a64e4fbbaa59f6af4c2ec7594502149d676d"
+      },
+      "restore_destination": "target/m2/stage120-archive-binding-01/binding.json",
+      "role": "Restore exact support to its recorded source path for verifier replay"
+    }
+  ],
+  "publication_ready": true,
+  "restoration": {
+    "all_historical_or_workspace_executable_recovery_claimed": false,
+    "five_qualified_unrecovered_preexecution_planning_pins": {
+      "bytes": 4699,
+      "mode": 420,
+      "path": "target/m2/stage120-closeout-prep-01/failed-capture-01/five-unrecovered-preexecution-planning-identities.json",
+      "sha256": "cc8d191cad432424702a8806543e85adaf9ef455fd20c304bbd83575bbffce6f"
+    },
+    "inherited_dependencies": {
+      "current_archive_bodies_read_or_rehashed": false,
+      "descriptor": "reports/m2/stage114-diagnostics-regex-checkpoint.json",
+      "prior_archives": [
+        {
+          "bytes": 67654362,
+          "mode": 420,
+          "path": "reports/m2/stage114-diagnostics-regex-evidence-01.tar.gz",
+          "sha256": "0e91432420f33cff2b70c020bc47d0610b204e0ef5260cd4c5d631398ac0a12b"
+        },
+        {
+          "bytes": 27103713,
+          "mode": 420,
+          "path": "reports/m2/stage114-diagnostics-regex-evidence-02.tar.gz",
+          "sha256": "df1d3029b77f2a490785a8c85c83ce10017a2f4a8e5dd033f326a88c11e98ee7"
+        }
+      ],
+      "prior_inherited_archives": [
+        {
+          "bytes": 41853522,
+          "mode": 420,
+          "path": "reports/m2/stage109-typed-module-annotation-evidence-01.tar.gz",
+          "sha256": "f3209582e0e52de4ea6b9ba9d70b97672ba898a5c4290a848b0f92f5827846b1"
+        },
+        {
+          "bytes": 41720682,
+          "mode": 420,
+          "path": "reports/m2/stage109-typed-module-annotation-evidence-02.tar.gz",
+          "sha256": "047564028688de80961cb5cc0371c2dc91497b2d127e9430789cf6b35c9eb186"
+        },
+        {
+          "bytes": 23922298,
+          "mode": 420,
+          "path": "reports/m2/stage109-typed-module-annotation-evidence-03.tar.gz",
+          "sha256": "a435c70de01345f67412b4607599625a6858bccd407fc0d3e5dd5506f6a0fe37"
+        },
+        {
+          "bytes": 12154135,
+          "mode": 420,
+          "path": "reports/m2/stage109-typed-module-annotation-evidence-04.tar.gz",
+          "sha256": "e811ae746777cae99c63450fda880179b08cf8fc89d3d35817a00d6c825e24fb"
+        },
+        {
+          "bytes": 16381675,
+          "path": "reports/m2/stage104-reflection-typed-evidence-01.tar.gz",
+          "sha256": "81fddcb8b83b20a9a58822e35e0cd9a7dea1ed6083f16537c842cc2e05528e62"
+        },
+        {
+          "bytes": 10446634,
+          "path": "reports/m2/stage104-reflection-typed-evidence-02.tar.gz",
+          "sha256": "aae85a8eea8ce93fdb6c20c9c650632848b56607bb9bd499bfe9e144351f463c"
+        },
+        {
+          "bytes": 18623526,
+          "path": "reports/m2/stage104-reflection-typed-evidence-03.tar.gz",
+          "sha256": "c70bdf514e6fa3f6fc4a838c57e54b6eaad89b32b97822eafa79e2e535d92cd5"
+        },
+        {
+          "bytes": 11872022,
+          "path": "reports/m2/stage104-reflection-typed-evidence-04.tar.gz",
+          "sha256": "a29de6fc1c0f28abf38a82eb014a61f92511b9d38ce7c7c2fdea77ba5b7708bc"
+        },
+        {
+          "bytes": 13217143,
+          "path": "reports/m2/stage104-reflection-typed-evidence-05.tar.gz",
+          "sha256": "20e758beac89fa0a894701ae97175a837e440eaa87090c375a7157d96991905c"
+        },
+        {
+          "bytes": 19187410,
+          "path": "reports/m2/stage104-reflection-typed-evidence-06.tar.gz",
+          "sha256": "6534b2d051b12f6d96cfcc188f2f2d1bcd131533571d98653d3329729f78a8fd"
+        },
+        {
+          "bytes": 15471782,
+          "path": "reports/m2/stage104-reflection-typed-evidence-07.tar.gz",
+          "sha256": "6504cf3a9888c13426969f7afbd2b6f99f97f852643cc4c4e89ad404f0b99a69"
+        },
+        {
+          "bytes": 1904337,
+          "path": "reports/m2/stage104-reflection-typed-evidence-08.tar.gz",
+          "sha256": "6c14b5e1177eb0ae73cca987a68195128785775db8099591d68e5249b9068e75"
+        }
+      ],
+      "prior_prerequisites": {
+        "bytes": 1479876,
+        "mode": 420,
+        "path": "target/m2/stage114-closeout-prep-01/explicit-prerequisites-and-limits.json",
+        "sha256": "0f0f05cacdb45da4a0172a2c030f0189a1ce6e42b8f6890b29ff22e390ac07ad"
+      },
+      "prior_public_verification_support": [
+        {
+          "public": {
+            "bytes": 4152,
+            "mode": 420,
+            "path": "reports/m2/stage114-diagnostics-regex-archive-report.json",
+            "sha256": "d7660dc9fe0841003b608a8fe0ff8ee03b114ad098a394a88c340605751d860e"
+          },
+          "restore_destination": "target/m2/stage114-evidence-archives-01/report.json",
+          "role": "Exact verification support; restore to source path when replaying the recorded verifier"
+        },
+        {
+          "public": {
+            "bytes": 3657,
+            "mode": 420,
+            "path": "reports/m2/stage114-diagnostics-regex-preflight.json",
+            "sha256": "1b61338189b91483214a4f7248215281a53a6d94b52bfa5f3d51ec185ae67e2f"
+          },
+          "restore_destination": "target/m2/stage114-archive-preflight-01/report.json",
+          "role": "Exact verification support; restore to source path when replaying the recorded verifier"
+        },
+        {
+          "public": {
+            "bytes": 3760,
+            "mode": 420,
+            "path": "reports/m2/stage114-diagnostics-regex-archive-readback.json",
+            "sha256": "101f1cd49dfb181544ca248643111becc2499321f67e993986933cce0be5d64e"
+          },
+          "restore_destination": "target/m2/stage114-archive-independent-readback-01/report.json",
+          "role": "Exact verification support; restore to source path when replaying the recorded verifier"
+        },
+        {
+          "public": {
+            "bytes": 18687,
+            "mode": 420,
+            "path": "reports/m2/stage114-diagnostics-regex-archive-verifier.py",
+            "sha256": "659d15e47b4e0554dd62b63427035598ce5f2da8d9aa629ab041faa482400c4a"
+          },
+          "restore_destination": "target/m2/stage114-archive-independent-readback-01/verify.py",
+          "role": "Exact verification support; restore to source path when replaying the recorded verifier"
+        },
+        {
+          "public": {
+            "bytes": 8026,
+            "mode": 420,
+            "path": "reports/m2/stage114-diagnostics-regex-archive-binding.json",
+            "sha256": "d08a29fa98cf1c96261887244af7e40f3bd3c9d342e9e7173e97cd056296d19b"
+          },
+          "restore_destination": "target/m2/stage114-archive-independent-readback-01/binding.json",
+          "role": "Exact verification support; restore to source path when replaying the recorded verifier"
+        }
+      ],
+      "prior_restoration_instructions": "Use the pinned repository/toolchains and all named prior evidence prerequisites. Restore regular payloads and direct byte/mode-equal aliases from both parts. Restore the selection auxiliary to its recorded selection.path and public verification support to each restore_destination before replaying the recorded verifier. Never replace live caches while inspecting acquisition-specific aliases.",
+      "prior_selection": {
+        "bytes": 77286315,
+        "mode": 420,
+        "path": "target/m2/stage114-archive-preflight-01/selection.json",
+        "sha256": "05dd214ad1070b961ea6205fe1ab9dd9904f5acad8d7fb3487e533ebcb83ca26"
+      },
+      "prior_unrecovered_planning_pins": {
+        "bytes": 4340,
+        "mode": 420,
+        "path": "target/m2/stage114-closeout-prep-01/unresolved-closure.final.json",
+        "sha256": "9d912ccd2d10a02865c507fa9c7c32bb29cbde2c78e995223350b24373e459cd"
+      },
+      "scope": "Published descriptor metadata only; inherited dependencies remain mandatory and this is not standalone restoration"
+    },
+    "inherited_metadata": {
+      "bytes": 6560,
+      "mode": 420,
+      "path": "target/m2/stage120-closeout-prep-01/catalog-03/inherited-descriptors.json",
+      "sha256": "2b9749185ff231013c463f73b300fdb159f10ecdea9b65388d63d9bcb37668e5"
+    },
+    "retained_normal_paths": 3,
+    "retained_replay_paths": 15,
+    "retained_replay_unique_payloads": 12,
+    "standalone_repository": false,
+    "unique_acquisition_destination_aliases": 17,
+    "cfg_test_acquisition_source_views": {
+      "path": "target/m2/stage120-final-catalog-01/cfg-test-acquisition-source-views.json",
+      "bytes": 3583,
+      "mode": 420,
+      "sha256": "6ab7f0652eb521370fa76d3ff4433ab73dea855fb3e7d6a8ce852fab3f0f8271"
+    },
+    "isolated_original_test_source_views": 2,
+    "mutable_Cargo_acquisition_aliases": 17,
+    "global_original_test_path_restoration_claimed": false,
+    "original_workspace_is_current_exact_test_source_result": false,
+    "unarchived_scheduling_provenance": {
+      "path": "target/m2/stage120-final-catalog-01/unarchived-scheduling-provenance.json",
+      "bytes": 624,
+      "mode": 420,
+      "sha256": "842398aa6097757afd8ac45e36b4dc3ff03f91e9d3854a1fcf598828007937d2"
+    },
+    "scheduling_qualification": "The repair receipt retains one prior process-ordering pin outside Stage120. It is unarchived scheduling provenance, not a Stage120 comparator/runtime dependency; its metadata/body were not accessed.",
+    "physical_recovery_scope": "Selected regular payloads and exact direct aliases verified by producer/readback. Declared base alias counts do not assert fresh physical recovery of all historical bodies or workspace executables."
+  },
+  "schema_version": 1,
+  "source_only_draft": false,
+  "source_parent": "935e85cd32f60ac7fe1716c44cf35a6e71747c6e",
+  "strict_full_gate": {
+    "categories": {
+      "implementation incomplete": 472,
+      "required case incomplete": 836,
+      "test mapping incomplete": 472
+    },
+    "complete": false,
+    "new_verify_full_CLI_invocation": false,
+    "overlapping_unmet_conditions": 1780
+  },
+  "original_workspace_is_current_exact_test_source_result": false,
+  "git_commit_or_push_claimed": false,
+  "final_documentation_canonical_application_claimed": false,
+  "all_nine_M2_work_areas_closed": false
+}

@@ -14,6 +14,12 @@ mod type_parser;
 mod unicode_escape;
 mod unicode_identifier;
 
+#[cfg(test)]
+mod shebang_contract;
+
+#[cfg(test)]
+mod quoted_identifier_contract;
+
 fn identifier_contains(ranges: &[(u32, u32)], character: char) -> bool {
     use std::cmp::Ordering;
     let point = character as u32;
@@ -215,14 +221,33 @@ impl Lexer<'_> {
                 self.advance();
             }
             let end = self.cursor;
-            if self.advance() != Some('`') {
+            if let Some(terminator @ ('\n' | '\r')) = self.peek() {
+                // lexQuotedIdentifier reports its unconsumed lookahead.
                 return Err(Diagnostic::language(
                     DiagnosticOrigin::Lexer,
                     DiagnosticKind::Syntax,
-                    Span::new(start, self.cursor),
-                    "Missing backtick delimiter.",
+                    Span::new(end, end + terminator.len_utf8()),
+                    format!("Unexpected character `{terminator}`. Did you mean `backquote`?"),
                 ));
             }
+            if self.peek().is_none() {
+                // Java unexpectedChar(EOF) points at the last UTF-16 unit,
+                // with zero length. Keep a valid UTF-8 anchor and separately
+                // retain an inside-surrogate column when the last scalar is
+                // supplementary; never invent a UTF-8 continuation boundary.
+                let (anchor, last) = self.source[..end]
+                    .char_indices()
+                    .next_back()
+                    .expect("quoted identifier begins before EOF");
+                return Err(Diagnostic::language(
+                    DiagnosticOrigin::Lexer,
+                    DiagnosticKind::Syntax,
+                    Span::new(anchor, anchor),
+                    "Unexpected character `EOF`. Did you mean `backquote`?",
+                )
+                .with_highlight_offset_utf16(last.len_utf16() - 1));
+            }
+            self.advance(); // Closing backquote; quoted names have no escapes.
             Kind::QuotedName(self.source[begin..end].to_owned())
         } else if is_identifier_start(ch) {
             while self.peek().is_some_and(is_identifier_part) {
@@ -1186,7 +1211,18 @@ impl<'a> Parser<'a> {
                     value = self.object(Some(value))?;
                 }
                 value
-            } else if context != MemberContext::Object && ty.is_some() {
+            } else if context != MemberContext::Object {
+                if ty.is_none() {
+                    // parseClassProperty rejects an absent type/value/body at
+                    // the declared name, before consuming the next member.
+                    // Object properties use a different parser production.
+                    return Err(Diagnostic::language(
+                        DiagnosticOrigin::Parser,
+                        DiagnosticKind::Syntax,
+                        name_span,
+                        "Invalid property definition. Expected a type annotation, `=` or `{`.",
+                    ));
+                }
                 Expr {
                     kind: ExprKind::Uninitialized,
                     span: Span::new(name_span.start, self.previous_end),

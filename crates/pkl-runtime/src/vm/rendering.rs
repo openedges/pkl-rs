@@ -425,10 +425,22 @@ impl Vm {
             hint.push_str("The above error occurred when rendering path `");
             hint.push_value(&text.finish());
             hint.push('`');
-            if matches!(&run.root, Value::Object(id) if self.heap.get(*id).is_ok_and(|object| object.is_module))
+            if let Value::Object(id) = &run.root
+                && let Ok(module) = self.heap.get(*id)
+                && module.is_module
             {
-                let source = self.context.primary_source.as_ref()?;
-                hint.push_str(&format!(" of module `{}`", source.uri));
+                // Java uses the rendered module's ModuleInfo.getModuleKey(),
+                // including when a public evaluator has no global primary source
+                // or the rendered module differs from the evaluator's caller.
+                let unit = self.program.units.get(module.module_unit?.0 as usize)?;
+                let uri = unit.key.as_ref().map(|key| key.uri.as_ref()).or_else(|| {
+                    // Statically compiled modules register their original identity
+                    // before they have a selected Host key.
+                    unit.identity
+                        .as_ref()
+                        .map(|identity| identity.original_uri.as_ref())
+                })?;
+                hint.push_str(&format!(" of module `{uri}`"));
             }
             hint.push('.');
             return Some(hint.finish());

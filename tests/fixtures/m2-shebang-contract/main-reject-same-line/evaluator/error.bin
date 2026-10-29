@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Invalid token at position. Expected a class, typealias, method, or property.
+
+1 | x = 1; #! executable
+           ^^^^^^^^^^^^^
+at reject-same-line (file:///stage118/shebang/reject-same-line.pkl)

@@ -1,5 +1,80 @@
 # M2 language evidence
 
+## Stage120 shebang, quoted identifiers and diagnostic source ownership — bounded local checkpoint verified
+
+Stage120 integrates **13 source/test/tool paths and 2,489 new pinned Java fixture
+paths**. The original complete workspace acquisition records **1,711 passes,
+zero failures and five ignored**, including all **11 new test functions**.
+Terminal readback verifies 270 executable test targets, 25 compile-only examples,
+two doctest libraries and the complete outer summaries. Thirteen filtered child
+summaries are preserved separately. The earlier isolated 27-test result is a
+different acquisition and is not added to the workspace count. The original
+workspace acquisition predates two test-only Clippy repairs. Defaults03 passes
+the two affected tests on the repaired source; the full workspace was not rerun
+and those two results are not added to 1,711. The exact old test bodies have
+separate acquisition-specific isolation overlays, distinct from the seventeen
+mutable Cargo destination aliases.
+
+The full ready replay records **4,337 passes, 21 mismatches, 82 unsupported cases
+and two Java oracle errors across 4,442 cases**, with no historical-pass regressions
+and **88/88 metamorphic checks** passing. `errors/singleBacktick.pkl` changes from
+mismatch to match; the two selected original shebang controls remain matches.
+All remaining raw nonpasses remain required. The complete inventory remains
+4,545 cases, 4,442 ready, 71 unimplemented, 32 unmapped and 475 requirements. Exact
+function-based full-gate accounting retains **1,780 overlapping unmet conditions**
+(472 implementation, 472 mapping and 836 required-case conditions), not a completion
+percentage or new `--verify-full` CLI acquisition.
+
+The new Native acquisition records **234 attempted observations from 117 Java
+authorities**. Its `api_full_match` and `frontend_comparable_match` predicates are
+true while `all_required_pass=false` remains explicit.
+The composed capture02 records six selected groups: each new Native, N-API and Chromium target matches 234 attempted observations from 117 Java authorities; each retained target matches 902 ordinary observations and keeps two required internal observations unresolved. Comparable predicates pass; `all_required_pass=false` remains explicit.
+The exact receipt/source/product join imports the complete Native capture and comparison from capture01 (two prior process records), then records five fresh groups and ten new process records on the same five build02 products. No Rust rebuild or Native rerun is claimed.
+The repaired adapter is a source/Host change around the same five build02 products;
+it is not relabeled as a new Rust build or a historical compiled input. The first
+portable build's native `PklString` conversion failure and capture01's supplied-text
+N-API Host failure remain preserved with complete raw streams. Capture01 itself
+remains failed, and the Chromium/three retained groups it never invoked remain
+unexecuted in that original acquisition.
+
+Formatting, three affected Python suites and eight freshness commands pass in
+prepare02. Two regenerated metadata files and 42 SHA-only implementation-link
+refreshes preserve the inventory and selected development contract.
+Defaults02 preserves successful xtask and failed Clippy child101; its Wasm check was not run. After two cfg(test)-only decoder repairs, defaults03 freshly passes inventory and manifest freshness, the two exact affected tests, formatting, all-target Clippy with warnings denied and the Wasm runtime check: seven commands, stable source bookends. The prior successful xtask result is reused. The two fresh tests are separate from the original 1,711-pass workspace acquisition; the full workspace was not rerun.
+The original workspace result is reused with its original source identity;
+Defaults03 freshly runs formatting and the two affected tests. One actual M1
+acquisition separately matches **6,078
+checks per native, Node and Chromium target**, passing the strict comparison and
+the separate architecture predicate on that acquisition.
+
+The normal runtime's three acquisition products and replay's fifteen acquisition
+paths/twelve unique payloads remain retained. Their one shared identity yields
+seventeen distinct destination aliases; no later mutable Cargo cache body replaces
+an acquisition pin. Source closure includes the exact 211-path candidate02 source
+roster for failed build01 and 211-path candidate03 roster for successful build02,
+M1's six selected products, and build02's five portable products. The finite
+catalog proves recovery of all **23,625 required comparator identities**, with
+zero comparator gaps, before the separate continuation/default additions. Five
+stale unexecuted preparation identities remain explicitly unrecovered and are not
+dependencies of actual build02 or the admitted raw comparator.
+
+The final catalog and independent closure review include continuation/default raw evidence, original failed defaults02, exact repair preimages/current bodies, all recorded comparison dependencies, retained normal/replay products, M1’s six products and build02’s five products. All 24,176 distinct required pin identities are classified with zero required-pin gaps. Two original test-source isolation overlays remain separate from seventeen mutable Cargo acquisition aliases. Historical archives, external tools and qualified unrecovered records remain explicit prerequisites; the one excluded scheduling-only pin is not recovered or represented as a Stage120 comparison dependency.
+Two published evidence parts total **77,196,066 compressed bytes** (62,914,759 and 14,281,307 bytes), each below 85 MiB. Independent manual tar/PAX and zlib readback verifies 21,670 selected payloads, one auxiliary payload and two manifests (21,673 logical regular members), exact raw bytes/size/mode/order/SHA256, gzip CRC/termination and tar EOF, plus 157,942 direct restoration aliases with no mode transformations. Exact public copy readback covers both parts and five verification support files.
+The [checkpoint](stage120-shebang-quoted-identifier-checkpoint.json) records exact
+part identities, verification support and restoration destinations. Restoration
+requires the named Stage114 two-part, Stage109 four-part and Stage104 eight-part
+evidence dependencies, pinned references and tools. Current authority views whose
+historical capture omitted mode are separately qualified; no historical mode is
+inferred from a copied canonical file. This is a finite actual-source/raw/selected-
+product recovery boundary, with explicit prerequisites, rather than standalone or
+all-historical/workspace-executable restoration.
+
+The local macOS checkpoint does not establish hosted CI, Linux/Windows execution,
+full M2/API, release-platform or performance completion. Ignored required tests,
+known raw mismatches, unsupported/oracle-error cases, unresolved Java internal
+observations, unmapped requirements and the original whole-List 512 MiB Java heap
+failure remain required. Stage116/121/122 isolated implementation work is excluded.
+
 ## Stage114 diagnostics and Regex PCF integration
 
 Stage114 integrates the reviewed diagnostic, Regex PCF and original-error changes across **17 source/tool paths and 14,609 pinned Java fixture paths**. The final source is validated by one complete workspace acquisition: **1,700 tests pass, zero fail and five remain ignored**, including all **42 new tests across five new targets**. Terminal readback authenticates 267 executable test targets, 25 compile-only examples and two doctest libraries; filtered child summaries remain separate. Ignored required placeholders are not compatibility passes.

@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Tried to read property `name` but its value is undefined.
+
+1 | name: Int
+    ^^^^
+at typed-uninitialized#name (file:///stage119/property-boundary/typed-uninitialized.pkl)
+
+The above error occurred when rendering path `name` of module `file:///stage119/property-boundary/typed-uninitialized.pkl`.
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

@@ -4,7 +4,7 @@
 
 ## 현재 상태
 
-현재 M2는 [Stage114 체크포인트](reports/m2/stage114-diagnostics-regex-checkpoint.json)의 공통 진단·Regex PCF 통합을 검증했습니다. 전체 ready 코퍼스 4,442개 중 4,336개가 일치하며 불일치 22개·미지원 82개·Java 오류 2개가 남습니다. 전체 M2와 아홉 작업 영역의 종료 조건은 계속 열려 있습니다.
+현재 M2는 [Stage120 체크포인트](reports/m2/stage120-shebang-quoted-identifier-checkpoint.json)의 shebang·quoted identifier·진단 소유자 통합을 검증했습니다. 원래 workspace 취득은 1,711개 통과·실패 0·ignored 5개이며, 테스트 전용 Clippy 수정 후 영향받은 검사 2개를 새로 통과했습니다. 전체 workspace는 재실행하지 않았으며 두 수를 합산하지 않습니다.  전체 ready 4,442개 중 4,337개 일치·불일치 21개·미지원 82개·Java 오류 2개를 기록합니다. 선택 portable 6개 집합과 defaults03 명령 7개, archive 독립 readback·게시를 확인했습니다. 전체 M2와 아홉 작업 영역의 종료 조건은 계속 열려 있습니다.
 
 Git 저장소, Rust workspace, 참조 submodule, 개발 문서와 초기 구성 검증 도구가 준비되어 있습니다. M1에서 제한된 parser·resolver·lazy VM·heap·Host와 실제 Node·브라우저 호출 경로를 구현했습니다. 전체 Pkl 언어·표준 라이브러리·CLI·REPL·server·제품 API는 아직 구현되지 않았습니다.
 
@@ -21,7 +21,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: Stage114 진단·Regex PCF 구현, workspace 1,700개 통과·전체 ready 4,336/4,442 일치·선택 3개 플랫폼 각각 일반 관측 902개 일치와 필수 미해결 2개; 엄격한 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: Stage120 shebang·quoted identifier·진단 소유자 통합, 원래 workspace 1,711개 통과·수정된 검사 2개 별도 재통과·전체 ready 4,337/4,442 일치·새 3개 대상 각각 관측 234개 일치·기존 각 대상 일반 관측 902개 일치와 내부 미해결 2개; 엄격한 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
@@ -3611,3 +3611,53 @@ normal runtime과 replay example 3개는 실제 workspace의 non-Fresh compiler 
 증거 archive 두 개(94,758,075 compressed bytes)를 게시했습니다. 독립 tar/PAX·zlib readback에서 regular member 24,165개와 전체 bytes·size·mode·SHA256, gzip CRC·종료, tar EOF, 중복 없는 전체 payload와 직접 복원 alias 196,064개를 검증했습니다. 각 part는 85 MiB 미만입니다. 정확한 소스·문서·증거 경로만 Git에 기록합니다. 미실행 pre-review 계획의 과거 byte identity 5개는 복원하지 못한 한계로 명시합니다. 실제 config04·결과의 의존성이 아니며 없는 바이트를 만들거나 대체하지 않습니다. 현 소스 catalog 646개와 replay catalog 486개는 겹치며 합산하지 않습니다. 과거 published 증거와 고정 tool·reference는 복원 전제 조건으로 구분합니다.
 
 Stage116 glob·Stage118 hash·Stage119 quoted-name·Stage117 mapping은 별도 후보 작업으로 유지합니다. 기존 실패·ignored·Java 내부 protocol과 원본 List의 512 MiB Java heap 실패는 미해결입니다. 이 제한된 체크포인트의 마감은 M2 전체·API·릴리스 플랫폼·속도·메모리·hosted CI 완료 선언이 아닙니다.
+
+### Stage120 — shebang·quoted identifier·진단 소유자 통합 (제한된 로컬 체크포인트 검증 완료)
+
+검토한 Stage118/119의 공통 lexer/parser·진단 소스·프레임 수정과 회귀를 소스·검사·도구
+13개, 신규 고정 Java fixture 2,489개로 통합했습니다. 신규 Rust 함수 11개를 포함한
+원래 workspace 취득은 통과 1,711개·실패 0개·ignored 5개입니다. 종료 readback은
+실행 테스트 대상 270개·compile-only example 25개·doctest library 2개와 전체 outer
+summary를 확인합니다. 별도 filtered child summary 13개와 이전 격리 검사 27개의
+결과를 workspace 수에 더하지 않습니다. 이 취득은 테스트 전용 Clippy 수정 2개 이전의
+소스 결과입니다. defaults03에서 수정된 검사 2개를 새로 통과했지만 전체 workspace를
+재실행하지 않았고 1,711개에 더하지 않습니다. 원래 두 테스트 본문은 취득별 격리
+overlay로 복원하며 가변 Cargo destination alias 17개와 구분합니다.
+
+전체 ready 4,442개의 실제 결과는 **통과 4,337개·불일치 21개·미지원 82개·Java 오류
+2개**이며, 이전 통과의 회귀가 없고 metamorphic 88개가 모두 통과했습니다.
+`errors/singleBacktick.pkl`이 불일치에서 통과로 바뀌었고 기존 shebang 원본 2개는
+통과를 유지합니다. 목록 4,545개·ready 4,442개·미구현 71개·미연결 32개·요구사항
+475개와 전체 gate의 겹치는 미충족 조건 1,780개(구현 472·mapping 472·case 836)는
+남아 있습니다. 새 `--verify-full` CLI 실행이나 완료율로 해석하지 않습니다.
+
+새 Native는 Java authority 117개에서 234개 관측을 시도했고 `api_full_match=true`,
+`frontend_comparable_match=true`, `all_required_pass=false`를 기록합니다.
+capture02의 선택 6개 집합에서 새 Native·N-API·Chromium은 각각 Java authority 117개의 시도 관측 234개를 일치시켰고, 기존 각 대상은 일반 관측 902개를 일치시키며 필수 내부 관측 2개를 미해결로 유지합니다. 비교 가능 판정은 통과했지만 `all_required_pass=false`는 유지합니다.
+정확한 receipt·소스·product join으로 capture01의 완전한 Native capture·비교와 이전 process record 2개만 가져왔으며, 같은 build02 product 5개로 나머지 집합 5개·새 process record 10개를 취득했습니다. Rust 재빌드나 Native 재실행을 주장하지 않습니다.
+최초 build01의 `PklString` 변환 실패와 capture01의 N-API supplied-text Host 실패,
+capture01에서 미실행인 Chromium/기존 3개 집합은 원래 원시 기록으로 남깁니다.
+JS adapter 소스 변경을 새 Rust compile이나 과거 compile 입력으로 소급하지 않습니다.
+
+prepare02의 formatting·영향받은 Python suite 3개·freshness 명령 8개는 통과했습니다.
+별도 metadata 2개와 SHA-only link 42개만 갱신하며 목록·선택 계약은 유지했습니다.
+defaults02의 xtask 성공과 Clippy child101 실패를 보존하며 해당 취득의 Wasm은 미실행입니다. cfg(test) decoder 2개만 수정한 뒤 defaults03에서 inventory·manifest freshness, 영향받은 정확한 검사 2개, formatting, warnings denied 전체 대상 Clippy, Wasm runtime check의 명령 7개를 새로 통과했고 소스 bookend가 일치했습니다. 기존 성공한 xtask 결과는 재사용합니다. 새 검사 2개는 원래 workspace 1,711개 통과와 별도이며 전체 workspace는 재실행하지 않았습니다.
+원래 workspace 결과는 원래 소스 identity와 함께 재사용합니다. defaults03은 수정된
+소스의 formatting과 영향받은 검사 2개를 새로 실행했으며 전체 workspace 재실행은
+주장하지 않습니다.
+같은 실제 M1 취득의 대상별 6,078개 원시 일치와 별도 architecture 판정도 유지합니다.
+
+normal artifact 3개와 replay 경로 15개/고유 payload 12개는 취득 당시 바이트로
+보존합니다. 겹치는 identity 1개를 합친 복원 destination은 17개입니다. 실패/성공
+build의 isolated source roster는 각 211개이며 M1 product 6개·portable product
+5개와 연결합니다. 실제 comparator 의존성 23,625개의 복구 누락은 0개입니다.
+미실행 과거 계획 pin 5개는 기대/현재 identity를 분리한 미복구 한계로 유지합니다.
+최종 catalog와 독립 closure review에 continuation/default 원시 증거, 원래 실패한 defaults02, 정확한 수정 전·현재 테스트 본문, 실제 비교 의존성, normal/replay 보존 product, M1 product 6개와 build02 product 5개를 포함했습니다. 필수 고유 pin identity 24,176개를 분류했고 required-pin gap은 0개입니다. 원래 테스트 소스 격리 overlay 2개는 가변 Cargo 취득 alias 17개와 구분합니다. 과거 archive·외부 tool·조건부 미복구 기록은 명시적 전제 조건이며 제외된 scheduling 전용 pin 1개는 복구하거나 Stage120 비교 의존성으로 표시하지 않습니다.
+증거 part 2개를 총 **77,196,066 compressed bytes**(62,914,759·14,281,307 bytes)로 게시했으며 각각 85 MiB 미만입니다. 독립 manual tar/PAX·zlib readback에서 선택 payload 21,670개·보조 payload 1개·manifest 2개(논리 regular member 21,673개)의 원시 bytes·size·mode·order·SHA256, gzip CRC·종료와 tar EOF, mode 변환 없는 직접 복원 alias 157,942개를 검증했습니다. 정확한 public copy readback은 두 part와 검증 지원 파일 5개를 확인했습니다.
+
+로드맵과 다음 실행 순서: 이 제한된 체크포인트 이후 Stage116 glob, 별도 Stage121/122 후보와 전체 언어의 남은 불일치·미지원·
+미연결 요구사항을 검토된 현재 소스에 순차 통합합니다. 격리 결과는 canonical
+통과를 대체하지 않습니다. ignored 검사·Java 내부 관측·whole-List 512 MiB Java
+heap 실패와 모든 실제 nonpass를 보존합니다. Stage114/109/104 published 증거와
+고정 tool/reference는 복원 선행 조건이며 독립 저장소/전체 과거 executable 복구를
+주장하지 않습니다. M2 전체·API·릴리스 OS·성능·메모리·hosted CI는 미완료입니다.

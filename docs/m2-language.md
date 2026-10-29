@@ -1,5 +1,47 @@
 # M2 language verification
 
+## Stage120 shebang, quoted identifiers and diagnostic ownership — bounded local checkpoint verified
+
+The shared lexer/parser handles the selected hash-prefix and quoted-identifier
+boundaries against pinned Java 0.32.0 evidence. Diagnostics keep valid UTF-8 spans
+and explicit UTF-16 adjustments, preserve module/class property error ordering,
+adjust the origin before recursive frame compression, retain imported caller and
+query coordinates, and use the rendered module's URI for undefined-property
+context. Native, Wasm and N-API continue to use the common runtime; Java is an oracle.
+
+The integration contains **13 source/test/tool paths and 2,489 new Java fixture
+paths across five families**. Eleven new Rust test functions execute in the
+original workspace acquisition: **1,711 pass, zero fail and five remain ignored**.
+That acquisition predates two test-only Clippy repairs. The two affected tests
+pass again on the repaired source; the full workspace was not rerun and the
+counts are not combined. Exact old test bodies are retained in separate
+acquisition-specific isolation overlays.
+The complete ready replay records **4,337 matches, 21 mismatches, 82 unsupported
+cases and two Java oracle errors across 4,442 cases**, with no previous-pass
+regression and all **88 metamorphic checks** passing. `errors/singleBacktick.pkl`
+improves from mismatch to match. The original shebang controls remain matches.
+
+New Native records **234 attempted observations from 117 Java authorities**, with
+both the complete selected API predicate and frontend-comparable predicate true;
+`all_required_pass=false` is preserved. The composed capture02 records six selected groups: each new Native, N-API and Chromium target matches 234 attempted observations from 117 Java authorities; each retained target matches 902 ordinary observations and keeps two required internal observations unresolved. Comparable predicates pass; `all_required_pass=false` remains explicit.
+The exact receipt/source/product join imports the complete Native capture and comparison from capture01 (two prior process records), then records five fresh groups and ten new process records on the same five build02 products. No Rust rebuild or Native rerun is claimed.
+Capture01's N-API Host failure and unexecuted groups remain original failure
+evidence. The prior 902 ordinary/two unresolved observation boundary, lookup-
+unreached errors and const non-witness successes retain their original scope.
+The separate M1 acquisition matches **6,078 checks per target**, with strict and
+architecture predicates passing.
+
+Defaults02 preserves successful xtask and failed Clippy child101; its Wasm check was not run. After two cfg(test)-only decoder repairs, defaults03 freshly passes inventory and manifest freshness, the two exact affected tests, formatting, all-target Clippy with warnings denied and the Wasm runtime check: seven commands, stable source bookends. The prior successful xtask result is reused. The two fresh tests are separate from the original 1,711-pass workspace acquisition; the full workspace was not rerun.
+Two published evidence parts total **77,196,066 compressed bytes** (62,914,759 and 14,281,307 bytes), each below 85 MiB. Independent manual tar/PAX and zlib readback verifies 21,670 selected payloads, one auxiliary payload and two manifests (21,673 logical regular members), exact raw bytes/size/mode/order/SHA256, gzip CRC/termination and tar EOF, plus 157,942 direct restoration aliases with no mode transformations. Exact public copy readback covers both parts and five verification support files.
+The inventory remains **4,545 cases: 4,442 ready, 71 unimplemented and 32 unmapped**,
+with 475 requirements and **1,780 overlapping unmet full-gate conditions**: 472
+implementation, 472 mapping and 836 required-case conditions. This is function-
+based accounting, not a fresh `--verify-full` CLI acquisition or a completion
+percentage. Broader B3, full standalone span identity, unpaired Java source strings,
+glob, isolated Stage121/122 work and complete language/API/performance requirements
+remain separate. See the [checkpoint](../reports/m2/stage120-shebang-quoted-identifier-checkpoint.json)
+and [verification contract](../TESTING.md).
+
 ## Stage114 diagnostic and Regex compatibility
 
 The shared implementation now preserves single-line Regex formatting in PCF,

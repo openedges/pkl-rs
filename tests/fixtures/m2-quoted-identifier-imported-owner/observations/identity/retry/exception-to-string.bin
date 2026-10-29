@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Unexpected character `EOF`. Did you mean `backquote`?
+
+1 | /* 😀 */ `P😀
+                ^
+at quotedOwner#nested (file:///stage119/quoted-identifier/module-prefix-unicode-eof.pkl)
+
+3 | result = nested()
+             ^^^^^^^^
+at quotedOwner#result (file:///stage119/quoted-owner.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

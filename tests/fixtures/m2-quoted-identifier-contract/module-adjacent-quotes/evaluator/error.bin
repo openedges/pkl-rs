@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Invalid property definition. Expected a type annotation, `=` or `{`.
+
+1 | `a``b` = 1
+    ^^^
+at module-adjacent-quotes (file:///stage119/quoted-identifier/module-adjacent-quotes.pkl)

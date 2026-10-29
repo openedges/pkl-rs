@@ -21,7 +21,54 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
-### Stage114 current local verification
+### Stage120 shebang, quoted identifiers and diagnostic ownership — bounded local checkpoint verified
+
+The original complete workspace acquisition records **1,711 passed, zero failed
+and five ignored**, including all 11 new test functions. Terminal readback verifies
+270 executable test targets, 25 compile-only examples and two doctest libraries;
+13 filtered child summaries remain separate. These are actual workspace results,
+not the earlier isolated 27-test candidate run. This acquisition predates the two
+test-only Clippy repairs. The two affected tests pass on the repaired source; the
+full workspace was not rerun and those two results are not added to 1,711. Exact
+old test bodies remain available in acquisition-specific isolation overlays.
+Ignored tests remain required gaps.
+
+The full ordered ready replay records **4,337 matches, 21 mismatches, 82 unsupported
+cases and two Java oracle errors across 4,442 cases**, with no previous-pass
+regressions and **88/88 metamorphic checks** passing. The original
+`errors/singleBacktick.pkl` now matches; both selected original shebang cases remain
+matches. The exact current full-gate function retains **1,780 overlapping unmet
+conditions**. Inventory freshness, complete acquisition and whole-language
+compatibility are separate verdicts.
+
+The recorded new Native capture compares **234 attempted observations from 117
+Java authorities** and has `api_full_match=true` and
+`frontend_comparable_match=true`; `all_required_pass=false` remains explicit.
+The composed capture02 records six selected groups: each new Native, N-API and Chromium target matches 234 attempted observations from 117 Java authorities; each retained target matches 902 ordinary observations and keeps two required internal observations unresolved. Comparable predicates pass; `all_required_pass=false` remains explicit.
+The original capture01 remains failed: N-API's supplied-text Host adapter failed,
+and the controller did not execute Chromium or the three retained groups.
+The exact receipt/source/product join imports the complete Native capture and comparison from capture01 (two prior process records), then records five fresh groups and ten new process records on the same five build02 products. No Rust rebuild or Native rerun is claimed.
+New adapter source identities are separate from the unchanged compiled product
+identities. Saved comparison or restoration checks do not count as new execution.
+
+One actual M1 acquisition matches **6,078 checks per native, Node and Chromium
+target** and passes the strict comparison and separate architecture contract.
+Formatting, three affected Python suites and eight freshness commands pass in
+prepare02. Inventory/manifest regeneration refreshes two metadata files and 42
+SHA-only implementation links without changing the inventory or selected contract.
+Defaults02 preserves successful xtask and failed Clippy child101; its Wasm check was not run. After two cfg(test)-only decoder repairs, defaults03 freshly passes inventory and manifest freshness, the two exact affected tests, formatting, all-target Clippy with warnings denied and the Wasm runtime check: seven commands, stable source bookends. The prior successful xtask result is reused. The two fresh tests are separate from the original 1,711-pass workspace acquisition; the full workspace was not rerun.
+The original workspace acquisition is reused with its original source identity.
+Defaults03 freshly runs formatting and the two affected tests on the repaired
+source; no fresh complete workspace acquisition is claimed.
+
+The [checkpoint](reports/m2/stage120-shebang-quoted-identifier-checkpoint.json)
+binds exact sources, artifacts, raw channels, original failures and restoration
+prerequisites. Two published evidence parts total **77,196,066 compressed bytes** (62,914,759 and 14,281,307 bytes), each below 85 MiB. Independent manual tar/PAX and zlib readback verifies 21,670 selected payloads, one auxiliary payload and two manifests (21,673 logical regular members), exact raw bytes/size/mode/order/SHA256, gzip CRC/termination and tar EOF, plus 157,942 direct restoration aliases with no mode transformations. Exact public copy readback covers both parts and five verification support files.
+Local macOS evidence establishes no hosted CI, Linux/Windows, complete product API
+or performance result. Required ignored tests, raw nonpasses, Java internal
+observations and the whole-List 512 MiB Java heap failure remain open.
+
+### Stage114 recorded local verification
 
 The integrated source passes one complete workspace acquisition: **1,700 tests
 passed, zero failed and five ignored**, including all 42 new tests across five

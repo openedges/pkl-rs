@@ -32,7 +32,26 @@ struct FrameKey<'a> {
 }
 
 fn key<'a>(frame: &'a RenderFrame<'_>) -> Option<FrameKey<'a>> {
+    key_with_offset(frame, 0)
+}
+
+fn key_with_offset<'a>(frame: &'a RenderFrame<'_>, offset_utf16: usize) -> Option<FrameKey<'a>> {
     let mut start = frame.source.position(frame.span.start)?;
+    if offset_utf16 != 0 {
+        let scalar = frame
+            .source
+            .text()
+            .get(frame.span.start..)?
+            .chars()
+            .next()?;
+        // This override represents only an interior surrogate-unit boundary;
+        // ordinary source positions and newline handling retain their path.
+        if offset_utf16 >= scalar.len_utf16() {
+            return None;
+        }
+        start.utf16 += offset_utf16;
+        start.column_utf16 += offset_utf16;
+    }
     let (end_line, end_column) = if let Some(width) = frame.highlight_length_utf16 {
         let source_length = frame.source.position(frame.source.text().len())?.utf16;
         if source_length - start.utf16 < width {
@@ -173,10 +192,19 @@ pub(super) struct DiagnosticFrames {
 }
 impl DiagnosticFrames {
     pub(super) fn new(frames: &[RenderFrame<'_>]) -> Self {
+        Self::new_with_first_offset(frames, 0)
+    }
+    pub(super) fn new_with_first_offset(frames: &[RenderFrame<'_>], offset_utf16: usize) -> Self {
         let keys: Vec<_> = frames
             .iter()
             .enumerate()
-            .map(|(index, frame)| key(frame).ok_or(index))
+            .map(|(index, frame)| {
+                if index == 0 && offset_utf16 != 0 {
+                    key_with_offset(frame, offset_utf16).ok_or(index)
+                } else {
+                    key(frame).ok_or(index)
+                }
+            })
             .collect();
         let groups = compress(&keys);
         fn visit(groups: &[Group], order: &mut Vec<usize>) {

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Unexpected character `EOF`. Did you mean `backquote`?
+
+1 | /* 😀 */ `name
+                 ^
+at module-prefix-ascii-eof (file:///stage119/quoted-identifier/module-prefix-ascii-eof.pkl)
