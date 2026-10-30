@@ -1,5 +1,22 @@
 # M2 language evidence
 
+## Stage129 workspace validation and Java URI-catch evidence
+
+Stage129 completes the local `cargo test --workspace --locked` command with
+actual exit **0**. Independent raw accounting records **286 complete harnesses:
+1,786 passed, zero failed and five ignored**, excluding 13 nested child passes.
+All 284 test executables and both doctest crates complete; 26 examples are
+compile-only. The unchanged engine uses a separate cache clone and a 1 GiB
+free-space floor. All 310 executable byte identities match prior evidence,
+while 20 inherited compiler-receipt gaps and eight unavailable depfiles remain.
+
+The new Java-only URI-catch acquisition records 16 sessions and 32 queries.
+All eight between-round raw comparisons match; the uncaught URI control retains
+different first/second error bytes in both sessions. No Rust compatibility pass
+is inferred. Original readback failures and the corrected reader's provenance
+are preserved. See the [Stage129 report](stage129-workspace-validation/README.md) for exact inputs, outcomes and
+limitations. M2/API, release-platform and performance gates remain open.
+
 ## Stage128 workspace storage — bounded partial verification
 
 Stage128 adds an opt-in macOS compiler wrapper that checks raw executable byte
@@ -15,8 +32,9 @@ passed, zero failed and three ignored**, excluding seven nested child repeats.
 two doctest crates never start. All 284 test executables and 26 examples have
 compiler records; examples are not claimed executed. The earlier exit-101 copy
 headroom failure remains separate. See the [Stage128 report](stage128-workspace-storage/README.md) for storage
-conditions, artifact provenance and retained failures. Full workspace, M2/API,
-release-platform and performance requirements remain open.
+conditions, artifact provenance and retained failures. That acquisition did not
+complete workspace validation. M2/API, release-platform and performance
+requirements remain open.
 
 ## Stage127 opaque glob URI validation — bounded local checkpoint
 
@@ -31,7 +49,7 @@ Eight Rust tests, formatting, xtask, all-target Clippy, the Wasm check, manifest
 freshness and eight focused Python tests pass. A fresh M1 acquisition matches
 6,078 rows per native/Node/Chromium target and passes 92 Node and 92 browser
 scenarios. The actual full workspace command was stopped at its 1 GiB disk floor
-during compilation (exit -15); it remains unverified. The historical full
+during compilation (exit -15); that acquisition remains incomplete. The historical full
 language/glob results below are not new Stage127 executions.
 
 ## Stage122 lossless source, glob Host and runtime diagnostics

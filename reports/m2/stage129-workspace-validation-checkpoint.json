@@ -1,0 +1,214 @@
+{
+  "schema": 1,
+  "stage": 129,
+  "title": "Complete local workspace validation and Java URI-catch evidence",
+  "status": "workspace-command-verified; Java-observations-acquired; M2-open",
+  "compatibility_baseline": "Pkl 0.32.0",
+  "source_parent": "76ac2c376aed04a11a3df50e2b5634e6b5cc3be6",
+  "host": "macOS 27 arm64; Rust 1.98.1; Python 3.14.8; Temurin 21.0.12.1+1",
+  "runtime_semantics_changed": false,
+  "sources": [
+    {
+      "path": "README.md",
+      "bytes": 18908,
+      "mode": 420,
+      "sha256": "a8711c727c89ca845b65e4061998104c9670d3cf73f0c99906d49a753648fe41"
+    },
+    {
+      "path": "PLAN.md",
+      "bytes": 513664,
+      "mode": 420,
+      "sha256": "a8af9afc2d237066fc69ece0ccf11fbf00ee762cd25625b636401718b3c32950"
+    },
+    {
+      "path": "TESTING.md",
+      "bytes": 123623,
+      "mode": 420,
+      "sha256": "578193aa11dfcd7705b19ff15d4ad0cfbfadd92751b824b0034fd99717d0843f"
+    },
+    {
+      "path": "docs/m2-language.md",
+      "bytes": 135823,
+      "mode": 420,
+      "sha256": "44e9ddd50d99185778c016bb472cc0f8001a32b2dacc9184682d7140fab7c400"
+    },
+    {
+      "path": "reports/m2/README.md",
+      "bytes": 405106,
+      "mode": 420,
+      "sha256": "8053b316afc8e0b24e096fee7104d30c1fcdfc705da14b7bab34785b6226ca37"
+    },
+    {
+      "path": "reports/m2/stage129-workspace-validation/README.md",
+      "bytes": 8116,
+      "mode": 420,
+      "sha256": "f732e684ddac95e317095c7487d756a9a513afe927bdf56dfb7347c5bfff2d7a"
+    }
+  ],
+  "published_evidence": {
+    "path": "reports/m2/stage129-workspace-validation/stage129-evidence.tar.gz",
+    "bytes": 6428838,
+    "mode": 420,
+    "sha256": "8f0d0b5ac9bf8f26752ebbad674bc3eeb72426aa94403c55caf86ac00fe2868b"
+  },
+  "publication_receipt": {
+    "path": "reports/m2/stage129-workspace-validation/publication.json",
+    "bytes": 5315,
+    "mode": 420,
+    "sha256": "da94f2f0a8811118bc33ac6f6c8b4dc31dbad10ee0bbcd94a4ecf8589190ce4f"
+  },
+  "archive_readback": {
+    "path": "reports/m2/stage129-workspace-validation/archive-readback.json",
+    "bytes": 773,
+    "mode": 420,
+    "sha256": "6a79e568d7b0ad1c0a4dbf20af009eb2791ac420b6629d65d86487bdcf52219e"
+  },
+  "published_copy_receipt": {
+    "path": "reports/m2/stage129-workspace-validation/published-copy.json",
+    "bytes": 1754,
+    "mode": 420,
+    "sha256": "91ddae8b5dcf917c501b616c8ae49e6231cb897b8c215f3481bdfe05ac196999"
+  },
+  "archive_regular_members": 6630,
+  "archive_source_bytes": 54106972,
+  "full_workspace_test": {
+    "command": [
+      "cargo",
+      "test",
+      "--workspace",
+      "--locked",
+      "--message-format=json"
+    ],
+    "complete": true,
+    "cargo_exit_code": 0,
+    "completed_harnesses": 286,
+    "completed_tests": {
+      "passed": 1786,
+      "failed": 0,
+      "ignored": 5,
+      "measured": 0,
+      "filtered": 0
+    },
+    "nested_child_passes_excluded": 13,
+    "test_executables": 284,
+    "doctest_crates": [
+      "pkl_runtime",
+      "pkl_wasm"
+    ],
+    "doctest_test_count": 0,
+    "expected_integration_sources": 281,
+    "examples_compiled_not_executed": 26,
+    "missing_targets": [],
+    "all_required_pass": false,
+    "elapsed_seconds": 3883.817258083727,
+    "disk_floor_bytes": 1073741824,
+    "minimum_sampled_free_bytes": 5145874432,
+    "peak_sampled_owned_rss_bytes": 603701248,
+    "build_jobs": 1,
+    "test_threads": 2,
+    "test_opt_level": 1,
+    "debug_information": false,
+    "forced_teardown": false
+  },
+  "artifact_observation": {
+    "complete": true,
+    "current_byte_acquisitions": 310,
+    "previous_signature_observations_reused_by_equal_bytes": 310,
+    "new_signature_checks": 0,
+    "cargo_fresh_cache_products": 310,
+    "new_wrapper_receipts": 0,
+    "historical_wrapper_proven": 290,
+    "historical_compiler_receipt_gaps": 20,
+    "missing_test_proofs": 4,
+    "missing_example_proofs": 16,
+    "artifact_provenance_complete": false
+  },
+  "provenance": {
+    "selected_input_records": 6151,
+    "original_input_aliases": 4319,
+    "source_bookends_stable": true,
+    "prior_postbuild_dependencies_now_bookended": 1830,
+    "observed_dependency_rows_bookended": 9956,
+    "new_unbookended_dependency_paths": 0,
+    "unavailable_depfiles": 8,
+    "complete_transitive_source_closure": false
+  },
+  "java_uri_catch": {
+    "complete": true,
+    "commands": 18,
+    "java_sessions": 16,
+    "query_count": 32,
+    "helper_compilations": 1,
+    "java_heap_mib": 512,
+    "statuses": {
+      "success": 24,
+      "error": 4,
+      "oracle-error": 4
+    },
+    "between_round_cases_equal": 8,
+    "between_round_cases_total": 8,
+    "within_session_query_pairs_equal": 14,
+    "within_session_query_pairs_total": 16,
+    "within_session_differences": [
+      "uncaught-uri-read-control round0",
+      "uncaught-uri-read-control round1"
+    ],
+    "repeat_equality_required_for_admission": false,
+    "java_rust_comparison_performed": false,
+    "typed_value_export": false,
+    "runtime_snapshot_class_bookends_stable": true,
+    "oracle_alias_identity_during_acquisition_established": false,
+    "final_readback_attempt": 3,
+    "original_readback_failure_preserved": true,
+    "superseded_reader_source_race_preserved": true,
+    "final_reader_source": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage129-uri-catch-readback-prep03/readback.py",
+      "bytes": 16611,
+      "sha256": "1d92c553eb6a988cebdc16b5591d96c113bd1aa6319044bf409fcdaeb28f317e"
+    }
+  },
+  "reused_checks": {
+    "stage127": [
+      "xtask",
+      "all-target Clippy",
+      "Wasm check",
+      "bounded native/Node/browser M1"
+    ],
+    "stage128": [
+      "format",
+      "manifest freshness",
+      "storage-wrapper Python and compiler/self-spawn checks"
+    ],
+    "fresh_execution": false
+  },
+  "receipts_in_archive": {
+    "workspace": "target/m2/stage129-workspace-checks-01/report.json",
+    "workspace_readback": "target/m2/stage129-workspace-independent-readback-01/report.json",
+    "artifact_readback": "target/m2/stage129-artifact-independent-readback-01/report.json",
+    "java": "target/m2/stage129-uri-catch-java-01/report.json",
+    "java_readback": "target/m2/stage129-uri-catch-readback-03/report.json",
+    "structured_review": "target/m2/stage129-closeout-review-01/report.json",
+    "final_recipe_review": "target/m2/stage129-uri-publication-review-02/report.json"
+  },
+  "historical_dependencies": {
+    "stage128_archive_descriptor": "reports/m2/stage128-workspace-storage-checkpoint.json",
+    "stage128_archive_sha256": "4c01643e9b135b066e707e773c34f216554dfabc901751328c96146d3fefde4d",
+    "stage127_checkpoint": "reports/m2/stage127-opaque-glob-uri-checkpoint.json",
+    "archive_bodies_read": false
+  },
+  "preserved_stage128_cargo_exits": [
+    101,
+    -15
+  ],
+  "full_language_inventory_replayed": false,
+  "full_glob_inventory_replayed": false,
+  "full_M2_complete": false,
+  "performance_targets_evaluated": false,
+  "release_platforms_verified": false,
+  "remaining_required_scope": [
+    "Five ignored tests remain non-passes",
+    "Complete compiler/runtime/rustdoc input provenance",
+    "Java internal-error rendering and catch boundaries, including repeated-evaluation differences",
+    "Full language/API/release-platform/performance requirements"
+  ]
+}

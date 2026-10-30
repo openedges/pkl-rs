@@ -1,0 +1,135 @@
+{
+  "complete": true,
+  "errors": [],
+  "started_epoch": 1793370626.8536892,
+  "scope": "Finite Stage129 evidence and selected resolved source inputs; no Cargo cache binaries, host tools or old archive bodies.",
+  "floor_bytes": 1073741824,
+  "raw_limit_bytes": 536870912,
+  "compressed_limit_bytes": 134217728,
+  "java_report": {
+    "path": "target/m2/stage129-uri-catch-java-01/report.json",
+    "bytes": 383368,
+    "mode": 420,
+    "sha256": "ec654b1a112ee8c94b6ea35e6f827789128124c8238f4ac65cae0a535089a368",
+    "device": 16777229,
+    "inode": 241320232,
+    "mtime_ns": 1793369935838535015
+  },
+  "java_readback": {
+    "path": "target/m2/stage129-uri-catch-readback-03/report.json",
+    "bytes": 2966,
+    "mode": 420,
+    "sha256": "36b264df40abbdaee84ef055352beab0553a747af246ecd0f16bce0508ce54e0",
+    "device": 16777229,
+    "inode": 241320952,
+    "mtime_ns": 1793370238031591713
+  },
+  "uri_original_failed_readback": {
+    "path": "target/m2/stage129-uri-catch-readback-01/report.json",
+    "bytes": 1268,
+    "mode": 420,
+    "sha256": "dc834cd0a2456de2620c841c2e50e705a58a0d39d385318352d3e4b80c46fb74",
+    "device": 16777229,
+    "inode": 241320350,
+    "mtime_ns": 1793369961802398122
+  },
+  "uri_superseded_raced_readback": {
+    "path": "target/m2/stage129-uri-catch-readback-02/report.json",
+    "bytes": 2967,
+    "mode": 420,
+    "sha256": "a4f2ee43a028ad3bb1ac9eb7c0fd49387318888ae2bbde4ef02611cfbb3421e4",
+    "device": 16777229,
+    "inode": 241320714,
+    "mtime_ns": 1793370071060966006
+  },
+  "restored_prep02_reader": {
+    "path": "target/m2/stage129-uri-catch-readback-prep02/readback.py",
+    "bytes": 16493,
+    "mode": 420,
+    "sha256": "7a5612b20860bc0c101f3dfc5013952ce4c5f7fbb85b43d6582e1c666b5f1254",
+    "device": 16777229,
+    "inode": 241320450,
+    "mtime_ns": 1793370073761943447
+  },
+  "corrected_uri_reader": {
+    "path": "target/m2/stage129-uri-catch-readback-prep03/readback.py",
+    "bytes": 16611,
+    "mode": 420,
+    "sha256": "1d92c553eb6a988cebdc16b5591d96c113bd1aa6319044bf409fcdaeb28f317e",
+    "device": 16777229,
+    "inode": 241320913,
+    "mtime_ns": 1793370232163407812
+  },
+  "corrected_uri_reader_identity_scope": "readback03 reader self-bookend, independently checked before/after publication; readback02 source path subsequently restored",
+  "oracle_alias_identity_during_acquisition_established": false,
+  "java_compatibility_claim": false,
+  "java_repeat_equality_is_required": false,
+  "workspace_report": {
+    "path": "target/m2/stage129-workspace-checks-01/report.json",
+    "bytes": 346046,
+    "mode": 420,
+    "sha256": "dd0e7371ca519804ab9b25f0cdf2882b493d3395c1f545a70076f100ddaef233",
+    "device": 16777229,
+    "inode": 241319286,
+    "mtime_ns": 1793369846376180162
+  },
+  "workspace_git_head": "76ac2c376aed04a11a3df50e2b5634e6b5cc3be6",
+  "publication_git_head_before": "76ac2c376aed04a11a3df50e2b5634e6b5cc3be6",
+  "publication_head_matches_workspace": true,
+  "head_scope": "Publication docs and recipe are pinned separately; workspace retains its own HEAD and source bookends.",
+  "independent_qualification": {
+    "stage129-workspace-independent-readback-01": {
+      "path": "target/m2/stage129-workspace-independent-readback-01/report.json",
+      "bytes": 8339,
+      "mode": 420,
+      "sha256": "b42421c0db462c40e8c8a883856a4104d009058713c546f61ac8235e7f55ff90",
+      "device": 16777229,
+      "inode": 241319308,
+      "mtime_ns": 1793369868228488550
+    },
+    "stage129-uri-catch-readback-03": {
+      "path": "target/m2/stage129-uri-catch-readback-03/report.json",
+      "bytes": 2966,
+      "mode": 420,
+      "sha256": "36b264df40abbdaee84ef055352beab0553a747af246ecd0f16bce0508ce54e0",
+      "device": 16777229,
+      "inode": 241320952,
+      "mtime_ns": 1793370238031591713
+    },
+    "stage129-artifact-independent-readback-01": {
+      "path": "target/m2/stage129-artifact-independent-readback-01/report.json",
+      "bytes": 673662,
+      "mode": 420,
+      "sha256": "573b01c03aa89dcb6a714611a0a31958dd8a6c493b39f88e245182441f79a3bd",
+      "device": 16777229,
+      "inode": 241319329,
+      "mtime_ns": 1793369888872265795
+    }
+  },
+  "source_members": 6629,
+  "expected_regular_members": 6630,
+  "source_bytes": 54106972,
+  "performance_claim": false,
+  "complete_compiler_closure_claim": false,
+  "publication_copy_claim": false,
+  "prior_stage128_provenance_complete": false,
+  "prior_dependencies": {
+    "stage128_archive_descriptor": "reports/m2/stage128-workspace-storage-checkpoint.json",
+    "stage128_archive_sha256": "4c01643e9b135b066e707e773c34f216554dfabc901751328c96146d3fefde4d",
+    "stage127_checkpoint": "reports/m2/stage127-opaque-glob-uri-checkpoint.json",
+    "archive_bodies_read": false
+  },
+  "selected_input_aliases": 5740,
+  "excluded_source_input_count": 0,
+  "compressed_size_goal_bytes": 52428800,
+  "publication_git_head_after": "76ac2c376aed04a11a3df50e2b5634e6b5cc3be6",
+  "archive": {
+    "path": "target/m2/stage129-publication-01/stage129-evidence.tar.gz",
+    "bytes": 6428838,
+    "sha256": "8f0d0b5ac9bf8f26752ebbad674bc3eeb72426aa94403c55caf86ac00fe2868b"
+  },
+  "inventory_sha256": "0cbdca9f3999c8859ed0400eb7ddb2d37876d75ea6df70664b18472deafc4515",
+  "source_bookends_stable": true,
+  "compressed_size_goal_met": true,
+  "finished_epoch": 1793370636.900943
+}

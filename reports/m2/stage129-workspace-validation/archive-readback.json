@@ -1,0 +1,22 @@
+{
+  "complete": true,
+  "evidence_integrity_valid": true,
+  "started_epoch": 1793370643.6318989,
+  "errors": [],
+  "archive": {
+    "path": "target/m2/stage129-publication-01/stage129-evidence.tar.gz",
+    "bytes": 6428838,
+    "sha256": "8f0d0b5ac9bf8f26752ebbad674bc3eeb72426aa94403c55caf86ac00fe2868b"
+  },
+  "publication_report_sha256": "da94f2f0a8811118bc33ac6f6c8b4dc31dbad10ee0bbcd94a4ecf8589190ce4f",
+  "extracted_files": 0,
+  "full_compatibility_claim": false,
+  "performance_claim": false,
+  "regular_members": 6630,
+  "source_members": 6629,
+  "source_bytes": 54106972,
+  "inventory_sha256": "0cbdca9f3999c8859ed0400eb7ddb2d37876d75ea6df70664b18472deafc4515",
+  "gzip_decompressed_bytes": 68444160,
+  "alias_count": 5740,
+  "finished_epoch": 1793370643.950026
+}

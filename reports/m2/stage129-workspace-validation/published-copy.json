@@ -1,0 +1,54 @@
+{
+  "complete": true,
+  "errors": [],
+  "source_bookends_stable": true,
+  "copies": [
+    {
+      "source": {
+        "path": "target/m2/stage129-publication-01/stage129-evidence.tar.gz",
+        "bytes": 6428838,
+        "mode": 420,
+        "sha256": "8f0d0b5ac9bf8f26752ebbad674bc3eeb72426aa94403c55caf86ac00fe2868b"
+      },
+      "destination": {
+        "path": "reports/m2/stage129-workspace-validation/stage129-evidence.tar.gz",
+        "bytes": 6428838,
+        "mode": 420,
+        "sha256": "8f0d0b5ac9bf8f26752ebbad674bc3eeb72426aa94403c55caf86ac00fe2868b"
+      },
+      "raw_bytes_equal": true
+    },
+    {
+      "source": {
+        "path": "target/m2/stage129-publication-01/report.json",
+        "bytes": 5315,
+        "mode": 420,
+        "sha256": "da94f2f0a8811118bc33ac6f6c8b4dc31dbad10ee0bbcd94a4ecf8589190ce4f"
+      },
+      "destination": {
+        "path": "reports/m2/stage129-workspace-validation/publication.json",
+        "bytes": 5315,
+        "mode": 420,
+        "sha256": "da94f2f0a8811118bc33ac6f6c8b4dc31dbad10ee0bbcd94a4ecf8589190ce4f"
+      },
+      "raw_bytes_equal": true
+    },
+    {
+      "source": {
+        "path": "target/m2/stage129-publication-readback-01/report.json",
+        "bytes": 773,
+        "mode": 420,
+        "sha256": "6a79e568d7b0ad1c0a4dbf20af009eb2791ac420b6629d65d86487bdcf52219e"
+      },
+      "destination": {
+        "path": "reports/m2/stage129-workspace-validation/archive-readback.json",
+        "bytes": 773,
+        "mode": 420,
+        "sha256": "6a79e568d7b0ad1c0a4dbf20af009eb2791ac420b6629d65d86487bdcf52219e"
+      },
+      "raw_bytes_equal": true
+    }
+  ],
+  "scope": "Only newly produced Stage129 files; no old archive bodies read.",
+  "finished_epoch": 1793370720.8317282
+}

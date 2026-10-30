@@ -2,7 +2,15 @@
 
 This project reimplements [Pkl](https://pkl-lang.org/) 0.32.0 in Rust. It aims to share one engine across native Rust, WebAssembly, and Node.js N-API, with automated compatibility checks against the Java implementation.
 
-The latest [Stage128 report](reports/m2/stage128-workspace-storage/README.md)
+The latest [Stage129 report](reports/m2/stage129-workspace-validation/README.md)
+records a complete local workspace command with exit **0**: **1,786 passed,
+zero failed and five ignored across 286 harnesses**. All test targets and both
+doctest crates complete; 26 examples are compile-only. Java URI-catch evidence
+adds 32 query observations, including different repeated uncaught-error bytes.
+The engine is unchanged, and M2/API, artifact-provenance and performance gaps
+remain open.
+
+The preceding [Stage128 report](reports/m2/stage128-workspace-storage/README.md)
 adds an opt-in macOS executable-compression wrapper. Its 18 focused tests and
 compiler/self-spawn checks pass. The workspace retry completes 200 harnesses
 with **1,265 passes, zero failures and three ignored**, then stops at its disk
@@ -14,7 +22,7 @@ records opaque glob URI validation before reader enumeration. All 20 selected
 wrong-success sessions now stop with explicit unsupported diagnostics; Java's
 internal-error bytes remain unmatched. Eight Rust tests and the bounded M1
 native/Node/browser acquisition pass. The full workspace command stopped during
-compilation at its disk-space guard and remains unverified.
+compilation at its disk-space guard; that acquisition remains incomplete.
 
 The preceding [Stage122 report](reports/m2/stage122-lossless-source-runtime/README.md)
 records lossless UTF-16 source/URI handling, typed glob Host operations, selected
