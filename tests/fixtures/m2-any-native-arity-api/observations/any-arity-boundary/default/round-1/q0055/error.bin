@@ -1,0 +1,6 @@
+–– Pkl Error ––
+set-getClass-THROW
+
+1 | set.getClass(throw("set-getClass-THROW"))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

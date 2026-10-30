@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+typed-toString-THROW
+
+1 | typed.toString(throw("typed-toString-THROW"))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

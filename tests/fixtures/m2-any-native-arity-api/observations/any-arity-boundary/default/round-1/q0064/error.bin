@@ -1,0 +1,6 @@
+–– Pkl Error ––
+map-toString-THROW
+
+1 | map.toString(throw("map-toString-THROW"))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

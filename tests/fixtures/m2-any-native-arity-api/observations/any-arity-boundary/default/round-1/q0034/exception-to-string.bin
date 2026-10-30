@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+lambda-toString-THROW
+
+1 | lambda.toString(throw("lambda-toString-THROW"))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

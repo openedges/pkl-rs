@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+alias-getClass-THROW
+
+1 | alias.getClass(throw("alias-getClass-THROW"))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

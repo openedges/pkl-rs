@@ -1,0 +1,6 @@
+–– Pkl Error ––
+dynamic-toString-THROW
+
+1 | dynamic.toString(throw("dynamic-toString-THROW"))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -21,6 +21,32 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+### Stage121 Pair and superclass diagnostics — current local checks
+
+The fresh complete workspace records **1,717 passed, zero failed and five
+ignored**, excluding 13 filtered child repeats. All six recorded commands pass:
+xtask, formatting, all-target Clippy with warnings denied, workspace tests, the
+Wasm runtime check and manifest freshness. The workspace stderr retains 299
+`rust-objcopy` stripping failures; Cargo exited zero, but successful stripping
+and a complete compiler/example inventory are not claimed.
+
+The complete ready replay records **4,339 matches, 19 mismatches, 82 unsupported
+cases and two Java oracle errors across 4,442 cases**, with no previous-pass
+regressions and **88/88 metamorphic checks**. `extendTypeAlias.pkl` and
+`propertyNotFound2.pkl` now match their complete original Java contracts.
+
+Each selected Native, N-API and Chromium target matches **624 new observations**
+and **902 retained ordinary observations**. Two retained internal observations
+and 2,020 new JVM-only fields remain unresolved. One separate actual M1
+acquisition matches **6,078 checks per target**, passing both its strict and
+architecture predicates. Original wrapper, qualifier and browser-monitor
+failures remain preserved; successful reused processes are identified explicitly.
+
+See the [Stage121 report](reports/m2/stage121-pair-supertype/README.md) and its
+checkpoint descriptor for exact source, artifacts, raw outcomes and evidence
+publication status. These local checks do not close M2, the full API, release
+platform or performance requirements.
+
 ### Stage120 shebang, quoted identifiers and diagnostic ownership — bounded local checkpoint verified
 
 The original complete workspace acquisition records **1,711 passed, zero failed

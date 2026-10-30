@@ -1,0 +1,2 @@
+class Baz extends Listing<String>
+qux = new Baz {}

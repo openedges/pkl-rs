@@ -1,0 +1,6 @@
+–– Pkl Error ––
+dynamic-getClass-THROW
+
+1 | dynamic.getClass(throw("dynamic-getClass-THROW"))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

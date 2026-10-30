@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Only standard library members can have type parameters.
+
+1 | open class Foo<T> { x: T }
+                   ^
+at supertype-generic (file:///stage121/supertype-generic.pkl)

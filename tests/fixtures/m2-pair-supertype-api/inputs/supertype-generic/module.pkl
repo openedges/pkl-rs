@@ -1,0 +1,4 @@
+open class Foo<T> { x: T }
+typealias Bar = Foo<String>
+class Baz extends Bar
+qux = new Baz { x = "ok" }

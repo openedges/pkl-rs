@@ -1,0 +1,6 @@
+–– Pkl Error ––
+map-getClass-THROW
+
+1 | map.getClass(throw("map-getClass-THROW"))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

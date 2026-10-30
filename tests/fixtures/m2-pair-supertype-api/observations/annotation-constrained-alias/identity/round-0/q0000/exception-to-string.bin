@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected an annotation class.
+
+3 | @Bar {}
+     ^^^
+at annotation-constrained-alias#Baz (file:///stage121/annotation-constrained-alias.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (pkl:base)

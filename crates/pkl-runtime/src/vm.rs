@@ -359,6 +359,12 @@ pub enum Instruction {
         end: usize,
     },
     ResolvedClass(TypeCheck),
+    /// A superclass use retains its authored label through deferred alias lookup.
+    /// Annotation and default-instance class resolution use ResolvedClass instead.
+    ResolvedSupertype {
+        ty: TypeCheck,
+        label: Arc<str>,
+    },
     ResolvedDefault {
         ty: TypeCheck,
         origin: Option<RuntimeFrame>,
@@ -3654,6 +3660,11 @@ impl Vm {
         }
         let class = collections::typed_class(&self.heap, receiver)?;
         let object = self.heap.get(receiver)?;
+        if object.pair.is_some() {
+            // Pair stores its fields outside ordinary object members. Diagnostic
+            // candidates still come from its pinned class declarations.
+            return Ok(self.builtin_member_error("Pair", name, method));
+        }
         let dynamic = class.is_none()
             && object.collection_kind == crate::heap::CollectionKind::Dynamic
             && object.reference.is_none()
@@ -4573,6 +4584,7 @@ impl Vm {
                 | Instruction::ResolveType(_)
                 | Instruction::PrepareTypeArguments { .. }
                 | Instruction::ResolvedClass(_)
+                | Instruction::ResolvedSupertype { .. }
                 | Instruction::ResolvedDefault { .. }
                 | Instruction::ResolvedInferredParent { .. }
                 | Instruction::ResolveClassType { .. }
@@ -4605,6 +4617,7 @@ impl Vm {
             | Instruction::ResolveType(_)
             | Instruction::PrepareTypeArguments { .. }
             | Instruction::ResolvedClass(_)
+            | Instruction::ResolvedSupertype { .. }
             | Instruction::ResolvedDefault { .. }
             | Instruction::ResolvedInferredParent { .. }
             | Instruction::ResolveClassType { .. }
@@ -6586,6 +6599,13 @@ impl Vm {
         frame.pc = target;
         Ok(())
     }
+}
+
+fn invalid_supertype(label: &str) -> RuntimeError {
+    RuntimeError::new(
+        ErrorKind::Type,
+        format!("`{label}` is not a valid supertype."),
+    )
 }
 
 fn invalid(message: &str) -> RuntimeError {
@@ -9736,7 +9756,21 @@ impl Compiler<'_> {
         let check = self
             .compile_type_at(ty, limit, aliases, &BTreeMap::new())
             .map_err(|error| error.at(ty.span))?;
-        self.class_value(&check, output, ty.span)
+        let span = ty.unparenthesized_span.unwrap_or(ty.span);
+        let label: Arc<str> = Arc::from(&self.resolved.module.source[span.start..span.end]);
+        if check.has_declared() {
+            output.push_at(Instruction::ResolvedSupertype { ty: check, label }, span);
+            return Ok(());
+        }
+        if classes::BuiltinClass::from_type(&check).is_none()
+            && !matches!(check.unaliased(), TypeCheck::Class { .. })
+        {
+            // Keep this failure inside the lazy class body, at the superclass
+            // use site rather than an alias declaration or annotation context.
+            output.push_at(Instruction::Fail(invalid_supertype(&label).at(span)), span);
+            return Ok(());
+        }
+        self.class_value(&check, output, span)
     }
 
     fn class_value(

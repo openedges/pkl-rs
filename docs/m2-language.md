@@ -1,5 +1,25 @@
 # M2 language verification
 
+## Stage121 Pair and superclass diagnostics — current local results
+
+The shared runtime corrects Pair's Any inheritance boundary, inherited native
+Any arity frames and deferred invalid-superclass labels/spans. Fresh local
+validation records 1,717 workspace passes, zero failures and five ignored tests;
+all six development commands pass. The complete ready corpus now records
+**4,339 matches, 19 mismatches, 82 unsupported cases and two Java oracle errors**,
+with 88/88 metamorphic checks and no previous-pass regressions. The original
+`extendTypeAlias.pkl` and `propertyNotFound2.pkl` diagnostics now match Java.
+
+The selected new matrix matches 624 observations per Native, N-API and Chromium
+target. Each retained target matches 902 ordinary observations and keeps two
+required internal observations unresolved. The separate M1 acquisition matches
+6,078 checks per target. JVM-only fields, ignored tests, the 71 unimplemented
+and 32 unmapped contracts remain open. These counts are not a whole-M2 completion
+percentage. The strict gate remains at 1,768 overlapping unmet conditions
+(472 implementation, 472 mapping and 824 required-case conditions); these two
+runtime repairs do not reduce that accounting total. See the [Stage121 report](../reports/m2/stage121-pair-supertype/README.md)
+for raw-result boundaries, preserved acquisition failures and publication status.
+
 ## Stage117 original-case mappings — integrated after Stage120
 
 The [mapping checkpoint](../reports/m2/stage117-original-case-mapping/README.md)

@@ -1,0 +1,109 @@
+{
+  "programs": [
+    {
+      "id": "pair-object-boundary",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "expression",
+          "expression": "pair.hasProperty(\"first\")",
+          "rationale": "Typed-only lookup, no argument rewriting",
+          "label": "has-property"
+        },
+        {
+          "id": "q0001",
+          "operation": "expression",
+          "expression": "pair.getProperty(\"first\")",
+          "rationale": "Typed-only lookup",
+          "label": "get-property"
+        },
+        {
+          "id": "q0002",
+          "operation": "expression",
+          "expression": "pair.getPropertyOrNull(\"first\")",
+          "rationale": "Typed-only nullable lookup",
+          "label": "get-nullable-property"
+        },
+        {
+          "id": "q0003",
+          "operation": "expression",
+          "expression": "pair.toMap()",
+          "rationale": "Typed-only conversion",
+          "label": "to-map"
+        },
+        {
+          "id": "q0004",
+          "operation": "expression",
+          "expression": "pair.toDynamic(throw(\"MUST-NOT-FORCE\"))",
+          "rationale": "Missing method lookup before throwing argument",
+          "label": "to-dynamic-throw"
+        },
+        {
+          "id": "q0005",
+          "operation": "expression",
+          "expression": "pair.toDynamic(trace(\"MUST-NOT-LOG\"))",
+          "rationale": "Missing method lookup before Logger argument",
+          "label": "to-dynamic-trace"
+        },
+        {
+          "id": "q0006",
+          "operation": "expression",
+          "expression": "pair.hasProperty(throw(\"MUST-NOT-FORCE\"))",
+          "rationale": "Lookup before property argument",
+          "label": "has-property-throw"
+        },
+        {
+          "id": "q0007",
+          "operation": "expression",
+          "expression": "pair.getProperty(trace(\"MUST-NOT-LOG\"))",
+          "rationale": "Lookup before property Logger argument",
+          "label": "get-property-trace"
+        },
+        {
+          "id": "q0008",
+          "operation": "expression",
+          "expression": "pair.getPropertyOrNull(throw(\"MUST-NOT-FORCE\"))",
+          "rationale": "Lookup before nullable property argument",
+          "label": "get-nullable-throw"
+        },
+        {
+          "id": "q0009",
+          "operation": "expression",
+          "expression": "pair.toMap(trace(\"MUST-NOT-LOG\"))",
+          "rationale": "Lookup before extra conversion argument and arity checking",
+          "label": "to-map-trace"
+        },
+        {
+          "id": "q0010",
+          "operation": "expression",
+          "expression": "pair.toString(trace(\"FOUND-ARGUMENT\"))",
+          "rationale": "Found Any method forces Logger argument before method arity error",
+          "label": "found-any-trace-arity"
+        },
+        {
+          "id": "q0011",
+          "operation": "expression",
+          "expression": "pair.ifNonNull((p) -> trace(p.key))",
+          "rationale": "Found Any callback still executes and reports ordered Logger frame",
+          "label": "found-any-callback-trace"
+        },
+        {
+          "id": "q0012",
+          "operation": "expression",
+          "expression": "stable",
+          "rationale": "Same evaluator remains usable after preceding lookup/argument failures",
+          "label": "stable-after-errors"
+        }
+      ]
+    }
+  ],
+  "profiles": [
+    "default",
+    "identity"
+  ],
+  "rounds": 2,
+  "session_count": 2,
+  "observations": 52,
+  "expected_results_present": false,
+  "scope": "All five pinned Typed methods, source-backed lookup-before-argument boundary, ordered Logger and found-Any controls. No old168 API or originalCLI rerun."
+}

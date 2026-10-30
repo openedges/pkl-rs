@@ -1,0 +1,111 @@
+{
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/javac",
+    "-J-Xms64m",
+    "-J-Xmx512m",
+    "--release",
+    "21",
+    "-proc:none",
+    "-encoding",
+    "UTF-8",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "-d",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-01/classes",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-prep-01/PairLookupOracle.java"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-01/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-01/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-01/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-01/tmp",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "started_epoch": 1793295312.749706,
+  "timeout_seconds": 90,
+  "forced": false,
+  "errors": [],
+  "samples": [
+    {
+      "epoch": 1793295312.8209019,
+      "root_rss_bytes": 12681216,
+      "free_bytes": 12642738176,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793295312.962707,
+      "root_rss_bytes": 44400640,
+      "free_bytes": 12642680832,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793295313.1045618,
+      "root_rss_bytes": 76496896,
+      "free_bytes": 12642512896,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793295313.247307,
+      "root_rss_bytes": 116965376,
+      "free_bytes": 12642365440,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793295313.390851,
+      "root_rss_bytes": 125861888,
+      "free_bytes": 12642119680,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    }
+  ],
+  "pid": 83437,
+  "exit_code": 0,
+  "owned_processes": {
+    "root_pid": 83437,
+    "root_observed": true,
+    "tracked": [
+      {
+        "pid": 83437,
+        "started": "Fri Oct 30 02:35:12 2026",
+        "parent_pid_at_discovery": 83423,
+        "group_id_at_discovery": 83437
+      }
+    ],
+    "terminal_live": []
+  },
+  "finished_epoch": 1793295313.5506701,
+  "stdout": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-01/compile/stdout.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mode": 420
+  },
+  "stderr": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-01/compile/stderr.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mode": 420
+  },
+  "sampling_scope": "Owned root RSS samples; not a performance measurement or absolute peak bound."
+}

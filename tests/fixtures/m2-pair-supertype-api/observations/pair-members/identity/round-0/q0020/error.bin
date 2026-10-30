@@ -1,0 +1,6 @@
+–– Pkl Error ––
+pair-argument
+
+1 | Pair("left", throw("pair-argument")).toString()
+                 ^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

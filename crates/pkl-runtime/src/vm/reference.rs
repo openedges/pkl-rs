@@ -896,13 +896,20 @@ impl Vm {
             0
         };
         if args.len() != expected {
-            return Err(RuntimeError::new(
+            let mut error = RuntimeError::new(
                 ErrorKind::Type,
                 format!(
                     "Expected {expected} function arguments but got {}.",
                     args.len()
                 ),
-            ));
+            );
+            // Native inherited Any targets retain their declaration just like
+            // ordinary FunctionNode calls. The resolved target, not the receiver
+            // class or method spelling, determines this frame.
+            if let Some(declaration) = any::native_declaration(&native.name) {
+                error.frames.push(declaration);
+            }
+            return Err(error);
         }
         if native.name.as_ref() == "getClass" {
             let value = self.reference_get_class(&native.receiver)?;

@@ -1,0 +1,170 @@
+{
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "ParameterizedSupertypeOracle",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-01/observations"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-01/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-01/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-01/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-01/tmp",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "started_epoch": 1793293933.349131,
+  "timeout_seconds": 180,
+  "forced": false,
+  "errors": [],
+  "samples": [
+    {
+      "epoch": 1793293933.417557,
+      "root_rss_bytes": 44351488,
+      "free_bytes": 13384925184,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793293933.5610769,
+      "root_rss_bytes": 66961408,
+      "free_bytes": 13384916992,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793293933.7017012,
+      "root_rss_bytes": 66961408,
+      "free_bytes": 13384863744,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793293933.8439019,
+      "root_rss_bytes": 66961408,
+      "free_bytes": 13384863744,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793293933.982836,
+      "root_rss_bytes": 66961408,
+      "free_bytes": 13384863744,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793293934.120568,
+      "root_rss_bytes": 66961408,
+      "free_bytes": 13384392704,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793293934.263593,
+      "root_rss_bytes": 88653824,
+      "free_bytes": 13383340032,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793293934.4106612,
+      "root_rss_bytes": 102088704,
+      "free_bytes": 13383327744,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793293934.551351,
+      "root_rss_bytes": 133677056,
+      "free_bytes": 13383327744,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793293934.733846,
+      "root_rss_bytes": 142114816,
+      "free_bytes": 13381570560,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793293934.918389,
+      "root_rss_bytes": 0,
+      "free_bytes": 13379182592,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": true
+    }
+  ],
+  "pid": 76587,
+  "exit_code": 0,
+  "owned_processes": {
+    "root_pid": 76587,
+    "root_observed": true,
+    "tracked": [
+      {
+        "pid": 76587,
+        "started": "Fri Oct 30 02:12:13 2026",
+        "parent_pid_at_discovery": 76558,
+        "group_id_at_discovery": 76587
+      }
+    ],
+    "terminal_live": []
+  },
+  "finished_epoch": 1793293935.106411,
+  "stdout": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-01/oracle/stdout.bin",
+    "bytes": 1368,
+    "sha256": "71815f0e3e7b119b970858237b8b88228303085e2b294fd012e4824e4f1d8883",
+    "mode": 420
+  },
+  "stderr": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-01/oracle/stderr.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mode": 420
+  },
+  "sampling_scope": "Owned root RSS samples; not a performance measurement or absolute peak bound."
+}

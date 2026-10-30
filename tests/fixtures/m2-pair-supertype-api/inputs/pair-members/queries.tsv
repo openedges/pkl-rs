@@ -1,0 +1,22 @@
+q0000	expression	pair.first
+q0001	expression	pair.key
+q0002	expression	pair.second
+q0003	expression	pair.value
+q0004	expression	pair.foo
+q0005	expression	pair.frist
+q0006	expression	pair.ke
+q0007	expression	pair.valu
+q0008	expression	pair.first()
+q0009	expression	pair.unknownMethod()
+q0010	expression	pair.toDynamic()
+q0011	expression	pair.toStrng()
+q0012	expression	pair.getClas()
+q0013	expression	pair.getClass().toString()
+q0014	expression	pair.toString()
+q0015	expression	pair.ifNonNull((p) -> p.first)
+q0016	expression	pair.ifNonNull()
+q0017	expression	pair.toString(throw("arity-argument"))
+q0018	expression	Pair("only").toString()
+q0019	expression	Pair("left", "right", "extra").toString()
+q0020	expression	Pair("left", throw("pair-argument")).toString()
+q0021	expression	stable

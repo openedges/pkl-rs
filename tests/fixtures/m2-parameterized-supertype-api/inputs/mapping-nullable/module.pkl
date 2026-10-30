@@ -1,0 +1,3 @@
+typealias Bar = Mapping<String, String>?
+class Baz extends Bar
+qux = new Baz {}

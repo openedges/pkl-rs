@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Cannot find method `getProperty` in class `Pair`.
+
+1 | pair.getProperty("first")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Available methods in class `Pair`:
+getClass
+ifNonNull
+toString

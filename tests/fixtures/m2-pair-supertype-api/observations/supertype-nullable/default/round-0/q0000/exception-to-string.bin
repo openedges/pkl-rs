@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+`Bar` is not a valid supertype.
+
+3 | class Baz extends Bar
+                      ^^^
+at supertype-nullable#Baz (file:///stage121/supertype-nullable.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

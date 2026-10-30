@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+60 | external function ifNonNull<Result>(transform: (NonNull) -> Result): Result?
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Any.ifNonNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L60)
+
+1 | pair.ifNonNull()
+    ^^^^^^^^^^^^^^^^
+at  (repl:text)

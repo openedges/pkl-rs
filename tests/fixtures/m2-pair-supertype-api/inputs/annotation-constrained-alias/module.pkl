@@ -1,0 +1,5 @@
+class A extends Annotation
+typealias Bar = A(true)
+@Bar {}
+class Baz
+qux = new Baz {}

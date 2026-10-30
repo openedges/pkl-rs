@@ -1,0 +1,6 @@
+–– Pkl Error ––
+duration-toString-THROW
+
+1 | duration.toString(throw("duration-toString-THROW"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

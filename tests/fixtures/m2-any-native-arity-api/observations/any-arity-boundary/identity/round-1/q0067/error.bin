@@ -1,0 +1,6 @@
+–– Pkl Error ––
+nullable-getClass-THROW
+
+1 | nullable.getClass(throw("nullable-getClass-THROW"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,115 @@
+{
+  "kind": "Independent actual Java Any404 arity/order readback",
+  "utc": "2026-10-29T18:13:34.775713+00:00",
+  "complete": true,
+  "success": true,
+  "acquisition": {
+    "path": "target/m2/stage121-any-arity-oracle-01/report.json",
+    "bytes": 11974,
+    "mode": 420,
+    "sha256": "6f2f198528ce14bf72965f31c0385dbe1952ba1f70c98bfa73ae7c18405826f6"
+  },
+  "root_source_admission": {
+    "path": "target/m2/stage121-any-arity-root-review-01/source-admission.json",
+    "bytes": 1032,
+    "mode": 420,
+    "sha256": "f46ac7897b2e5cb976eea47cff8b9b04ae365b2d4b7e148874d02ec2bdbe6e99"
+  },
+  "programs": 1,
+  "sessions": 2,
+  "profiles": [
+    "default",
+    "identity"
+  ],
+  "rounds_per_same_evaluator": 2,
+  "queries_per_round": 101,
+  "observations": 404,
+  "status_counts": {
+    "error": 268,
+    "success": 136
+  },
+  "frame_callback_observations": 544,
+  "logger_observations": 140,
+  "raw_files": 15613,
+  "raw_bytes": 766347,
+  "UTF16_and_JavaUTF8_pairs_checked": 5292,
+  "input_pins_verified": 25,
+  "class_pins_verified": 3,
+  "authority_pins_verified": 2,
+  "input_class_authority_raw_bookends_and_current_hashes_verified": true,
+  "exact_process_receipts_argv_env_streams_verified": true,
+  "javac_and_JVM_exit0_unforced_root_observed_owned_empty": true,
+  "heap_bytes": 536870912,
+  "exact404_completion_protocol_and_namespaces_verified": true,
+  "same_session_rounds_full_raw_equal": true,
+  "changed_frame_input_output_pairs_by_profile": {
+    "default": 68
+  },
+  "exception_class_counts": {
+    "org.pkl.core.PklException": 268
+  },
+  "cause_present_counts": {
+    "false": 268
+  },
+  "receivers": [
+    "pair",
+    "dynamic",
+    "typed",
+    "klass",
+    "alias",
+    "lambda",
+    "duration",
+    "datasize",
+    "list",
+    "set",
+    "map",
+    "nullable",
+    "regex",
+    "sequence",
+    "boolean",
+    "string"
+  ],
+  "observed_order": {
+    "traced_extra_arg_then_Any_declaration_arity_error": 128,
+    "throwing_arg_precedes_arity_error": 128,
+    "following_valid_getClass_toString_successes": 128,
+    "ifNonNull_zero_arg_declaration_error": 4,
+    "ifNonNull_two_logged_arguments_in_order_then_arity_error": 4,
+    "ifNonNull_callback_success_with_logger": 4,
+    "missing_method_skips_argument_logger": 4,
+    "final_stable_same_session_success": 4
+  },
+  "raw_manifest": {
+    "path": "target/m2/stage121-any-arity-independent-readback-01/raw-manifest.json",
+    "bytes": 4136801,
+    "mode": 420,
+    "sha256": "e2245d5c7f4911cf6d9982f006abf5eb313374db11b6b0ea94f0d36a6e29dacb"
+  },
+  "observations_manifest": {
+    "path": "target/m2/stage121-any-arity-independent-readback-01/observations.json",
+    "bytes": 619797,
+    "mode": 420,
+    "sha256": "2364263363ef314260817df608619c0a848ba29f489ea24cf727a3fc0fa469e4"
+  },
+  "verifier": {
+    "path": "target/m2/stage121-any-arity-independent-readback-01/readback.py",
+    "bytes": 17271,
+    "mode": 420,
+    "sha256": "80e3ed6b752d12c4484fa1934145b4167ea67d3e4bf62d2dca0fb8d671187aa3"
+  },
+  "preserved_checker_failure": {
+    "path": "target/m2/stage121-any-arity-independent-readback-01/attempt-01.json",
+    "bytes": 274,
+    "mode": 420,
+    "sha256": "11891e31472282686e9eee05d66915523b2d8610a8b5aa200bdd9c5cb91af47d"
+  },
+  "Java_reruns": 0,
+  "Rust_execution": false,
+  "compatibility_or_performance_claim": false,
+  "unexposed_scope": [
+    "Java exception class/toString and nullable causes remain raw oracle provenance outside SourceProbe equality.",
+    "Default pkl:base frame URI transformation differs from identity and must remain observable.",
+    "Bounded Any arity/order authority does not establish full Any/API/platform/performance compatibility."
+  ],
+  "safety": "Only finite pinned inputs/classes/process artifacts and404declared observations read; no cache search, old archives, canonical writes, Stage86/private8 or protected-basename access."
+}

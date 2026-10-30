@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+regex-getClass-THROW
+
+1 | regex.getClass(throw("regex-getClass-THROW"))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

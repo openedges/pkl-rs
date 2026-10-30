@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+nullable-toString-THROW
+
+1 | nullable.toString(throw("nullable-toString-THROW"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

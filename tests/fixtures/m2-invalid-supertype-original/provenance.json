@@ -1,0 +1,88 @@
+{
+  "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/extendTypeAlias.pkl",
+  "actual_Java_process": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-replay-01/cases/adb3b224ba9b02590c208204/java/process.json",
+    "bytes": 3168,
+    "sha256": "800e20b1117eca064d4c62b113656925e3809812267ae842b86064fc28dc4035",
+    "mode": 420
+  },
+  "source_uri_from_original_process": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/extendTypeAlias.pkl",
+  "aliases": [
+    {
+      "destination": "tests/fixtures/m2-invalid-supertype-original/input.pkl",
+      "authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/extendTypeAlias.pkl",
+        "bytes": 80,
+        "sha256": "35fba834397ae16479c51f38227835371643f4f2fd3f8057ecd8a9d8340c2a64",
+        "mode": 420
+      },
+      "copied": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-candidate-03/overlay/tests/fixtures/m2-invalid-supertype-original/input.pkl",
+        "bytes": 80,
+        "sha256": "35fba834397ae16479c51f38227835371643f4f2fd3f8057ecd8a9d8340c2a64",
+        "mode": 420
+      }
+    },
+    {
+      "destination": "tests/fixtures/m2-invalid-supertype-original/stdout.bin",
+      "authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-replay-01/cases/adb3b224ba9b02590c208204/java/stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copied": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-candidate-03/overlay/tests/fixtures/m2-invalid-supertype-original/stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      }
+    },
+    {
+      "destination": "tests/fixtures/m2-invalid-supertype-original/stderr.bin",
+      "authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-replay-01/cases/adb3b224ba9b02590c208204/java/stderr.bin",
+        "bytes": 772,
+        "sha256": "1299c3a4b46bc8c4d8abc2d9c2abf03cfc6183929f9b8749c807eaba29a626d1",
+        "mode": 420
+      },
+      "copied": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-candidate-03/overlay/tests/fixtures/m2-invalid-supertype-original/stderr.bin",
+        "bytes": 772,
+        "sha256": "1299c3a4b46bc8c4d8abc2d9c2abf03cfc6183929f9b8749c807eaba29a626d1",
+        "mode": 420
+      }
+    },
+    {
+      "destination": "tests/fixtures/m2-invalid-supertype-original/java-process.json",
+      "authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-replay-01/cases/adb3b224ba9b02590c208204/java/process.json",
+        "bytes": 3168,
+        "sha256": "800e20b1117eca064d4c62b113656925e3809812267ae842b86064fc28dc4035",
+        "mode": 420
+      },
+      "copied": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-candidate-03/overlay/tests/fixtures/m2-invalid-supertype-original/java-process.json",
+        "bytes": 3168,
+        "sha256": "800e20b1117eca064d4c62b113656925e3809812267ae842b86064fc28dc4035",
+        "mode": 420
+      }
+    },
+    {
+      "destination": "tests/fixtures/m2-invalid-supertype-original/java-result.json",
+      "authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-replay-01/cases/adb3b224ba9b02590c208204/java/result.json",
+        "bytes": 294,
+        "sha256": "c0ef99fa028e7a70b9cfd83dbb4543c2f061def44bf341ab0d31782c56ce677d",
+        "mode": 420
+      },
+      "copied": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-candidate-03/overlay/tests/fixtures/m2-invalid-supertype-original/java-result.json",
+        "bytes": 294,
+        "sha256": "c0ef99fa028e7a70b9cfd83dbb4543c2f061def44bf341ab0d31782c56ce677d",
+        "mode": 420
+      }
+    }
+  ],
+  "expected_results_generated_from_Rust": false
+}

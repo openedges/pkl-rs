@@ -1,0 +1,9 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `frist` in object of type `Pair`.
+
+1 | pair.frist
+    ^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+first

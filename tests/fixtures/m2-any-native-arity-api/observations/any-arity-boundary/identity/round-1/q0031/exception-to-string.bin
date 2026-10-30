@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+lambda-getClass-THROW
+
+1 | lambda.getClass(throw("lambda-getClass-THROW"))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

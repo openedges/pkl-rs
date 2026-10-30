@@ -1,0 +1,6 @@
+–– Pkl Error ––
+pair-toString-THROW
+
+1 | pair.toString(throw("pair-toString-THROW"))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

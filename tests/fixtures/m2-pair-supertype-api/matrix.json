@@ -1,0 +1,480 @@
+{
+  "programs": [
+    {
+      "id": "pair-members",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/pair-members/module.pkl",
+      "uri": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/pair-members/uri.txt",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "expression",
+          "expression": "pair.first"
+        },
+        {
+          "id": "q0001",
+          "operation": "expression",
+          "expression": "pair.key"
+        },
+        {
+          "id": "q0002",
+          "operation": "expression",
+          "expression": "pair.second"
+        },
+        {
+          "id": "q0003",
+          "operation": "expression",
+          "expression": "pair.value"
+        },
+        {
+          "id": "q0004",
+          "operation": "expression",
+          "expression": "pair.foo"
+        },
+        {
+          "id": "q0005",
+          "operation": "expression",
+          "expression": "pair.frist"
+        },
+        {
+          "id": "q0006",
+          "operation": "expression",
+          "expression": "pair.ke"
+        },
+        {
+          "id": "q0007",
+          "operation": "expression",
+          "expression": "pair.valu"
+        },
+        {
+          "id": "q0008",
+          "operation": "expression",
+          "expression": "pair.first()"
+        },
+        {
+          "id": "q0009",
+          "operation": "expression",
+          "expression": "pair.unknownMethod()"
+        },
+        {
+          "id": "q0010",
+          "operation": "expression",
+          "expression": "pair.toDynamic()"
+        },
+        {
+          "id": "q0011",
+          "operation": "expression",
+          "expression": "pair.toStrng()"
+        },
+        {
+          "id": "q0012",
+          "operation": "expression",
+          "expression": "pair.getClas()"
+        },
+        {
+          "id": "q0013",
+          "operation": "expression",
+          "expression": "pair.getClass().toString()"
+        },
+        {
+          "id": "q0014",
+          "operation": "expression",
+          "expression": "pair.toString()"
+        },
+        {
+          "id": "q0015",
+          "operation": "expression",
+          "expression": "pair.ifNonNull((p) -> p.first)"
+        },
+        {
+          "id": "q0016",
+          "operation": "expression",
+          "expression": "pair.ifNonNull()"
+        },
+        {
+          "id": "q0017",
+          "operation": "expression",
+          "expression": "pair.toString(throw(\"arity-argument\"))"
+        },
+        {
+          "id": "q0018",
+          "operation": "expression",
+          "expression": "Pair(\"only\").toString()"
+        },
+        {
+          "id": "q0019",
+          "operation": "expression",
+          "expression": "Pair(\"left\", \"right\", \"extra\").toString()"
+        },
+        {
+          "id": "q0020",
+          "operation": "expression",
+          "expression": "Pair(\"left\", throw(\"pair-argument\")).toString()"
+        },
+        {
+          "id": "q0021",
+          "operation": "expression",
+          "expression": "stable"
+        }
+      ],
+      "rationale": "Pair declared properties, Any-only methods, suggestions, arity/error ordering; full query list twice in one evaluator per explicit profile",
+      "original": null,
+      "query_rationale": [
+        {
+          "id": "q0000",
+          "label": "first",
+          "rationale": "declared accessor"
+        },
+        {
+          "id": "q0001",
+          "label": "key",
+          "rationale": "declared alias accessor"
+        },
+        {
+          "id": "q0002",
+          "label": "second",
+          "rationale": "declared accessor"
+        },
+        {
+          "id": "q0003",
+          "label": "value",
+          "rationale": "declared alias accessor"
+        },
+        {
+          "id": "q0004",
+          "label": "missing-property",
+          "rationale": "complete declared-property inventory"
+        },
+        {
+          "id": "q0005",
+          "label": "property-transposition",
+          "rationale": "property similarity and ordering"
+        },
+        {
+          "id": "q0006",
+          "label": "property-short",
+          "rationale": "short property typo"
+        },
+        {
+          "id": "q0007",
+          "label": "property-prefix",
+          "rationale": "property prefix typo"
+        },
+        {
+          "id": "q0008",
+          "label": "property-as-method",
+          "rationale": "property/method distinction"
+        },
+        {
+          "id": "q0009",
+          "label": "missing-method",
+          "rationale": "Any-only method inventory"
+        },
+        {
+          "id": "q0010",
+          "label": "object-only-method",
+          "rationale": "Pair does not inherit Object methods"
+        },
+        {
+          "id": "q0011",
+          "label": "method-typo",
+          "rationale": "Any method similarity"
+        },
+        {
+          "id": "q0012",
+          "label": "class-method-typo",
+          "rationale": "Any getClass suggestion"
+        },
+        {
+          "id": "q0013",
+          "label": "inherited-class",
+          "rationale": "inherited Any class method"
+        },
+        {
+          "id": "q0014",
+          "label": "inherited-string",
+          "rationale": "inherited Any string method"
+        },
+        {
+          "id": "q0015",
+          "label": "inherited-callback",
+          "rationale": "inherited Any callback dispatch"
+        },
+        {
+          "id": "q0016",
+          "label": "callback-arity",
+          "rationale": "inherited method arity"
+        },
+        {
+          "id": "q0017",
+          "label": "method-arity-error-order",
+          "rationale": "arity versus argument forcing"
+        },
+        {
+          "id": "q0018",
+          "label": "constructor-short",
+          "rationale": "Pair constructor too few arguments"
+        },
+        {
+          "id": "q0019",
+          "label": "constructor-long",
+          "rationale": "Pair constructor too many arguments"
+        },
+        {
+          "id": "q0020",
+          "label": "constructor-argument-error",
+          "rationale": "constructor argument error provenance"
+        },
+        {
+          "id": "q0021",
+          "label": "stable-after-errors",
+          "rationale": "same evaluator remains usable after failures"
+        }
+      ]
+    },
+    {
+      "id": "pair-original",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/pair-original/module.pkl",
+      "uri": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/pair-original/uri.txt",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "output-text",
+          "expression": ""
+        }
+      ],
+      "rationale": "Exact original source and URI, fresh public API profiles; historical CLI bytes remain separate authority",
+      "original": {
+        "id": "pair-original",
+        "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/propertyNotFound2.pkl",
+        "source": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/propertyNotFound2.pkl",
+          "bytes": 22,
+          "sha256": "601a078f7d86a8b983c734f2a9b38bc5b5aeeb56772991cb0f8c3265ea97b803",
+          "mode": 420
+        },
+        "process": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-replay-01/cases/14fb1400057b2cfd0aa80f26/java/process.json",
+          "bytes": 3172,
+          "sha256": "e2af673e8324e011c84c90040d87d1e6ce250f2f42041f4b968cb9d3e147cf90",
+          "mode": 420
+        },
+        "result": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-replay-01/cases/14fb1400057b2cfd0aa80f26/java/result.json",
+          "bytes": 294,
+          "sha256": "85d526aa642d27a24761d00e57faded92182fbe21823cf894c5affe9d4671744",
+          "mode": 420
+        },
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-replay-01/cases/14fb1400057b2cfd0aa80f26/java/stdout.bin",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "mode": 420
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-replay-01/cases/14fb1400057b2cfd0aa80f26/java/stderr.bin",
+          "bytes": 844,
+          "sha256": "9f70f5c43e674dc1400497d0a680420502c1b240fa068cbb668990ac578ff69d",
+          "mode": 420
+        },
+        "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/propertyNotFound2.pkl"
+      }
+    },
+    {
+      "id": "supertype-original",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/supertype-original/module.pkl",
+      "uri": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/supertype-original/uri.txt",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "output-text",
+          "expression": ""
+        }
+      ],
+      "rationale": "Exact original source and URI, fresh public API profiles; historical CLI bytes remain separate authority",
+      "original": {
+        "id": "supertype-original",
+        "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/extendTypeAlias.pkl",
+        "source": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/extendTypeAlias.pkl",
+          "bytes": 80,
+          "sha256": "35fba834397ae16479c51f38227835371643f4f2fd3f8057ecd8a9d8340c2a64",
+          "mode": 420
+        },
+        "process": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-replay-01/cases/adb3b224ba9b02590c208204/java/process.json",
+          "bytes": 3168,
+          "sha256": "800e20b1117eca064d4c62b113656925e3809812267ae842b86064fc28dc4035",
+          "mode": 420
+        },
+        "result": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-replay-01/cases/adb3b224ba9b02590c208204/java/result.json",
+          "bytes": 294,
+          "sha256": "c0ef99fa028e7a70b9cfd83dbb4543c2f061def44bf341ab0d31782c56ce677d",
+          "mode": 420
+        },
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-replay-01/cases/adb3b224ba9b02590c208204/java/stdout.bin",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "mode": 420
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-replay-01/cases/adb3b224ba9b02590c208204/java/stderr.bin",
+          "bytes": 772,
+          "sha256": "1299c3a4b46bc8c4d8abc2d9c2abf03cfc6183929f9b8749c807eaba29a626d1",
+          "mode": 420
+        },
+        "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/extendTypeAlias.pkl"
+      }
+    },
+    {
+      "id": "supertype-direct",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/supertype-direct/module.pkl",
+      "uri": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/supertype-direct/uri.txt",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "output-text",
+          "expression": ""
+        }
+      ],
+      "rationale": "direct class positive boundary",
+      "original": null
+    },
+    {
+      "id": "supertype-alias",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/supertype-alias/module.pkl",
+      "uri": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/supertype-alias/uri.txt",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "output-text",
+          "expression": ""
+        }
+      ],
+      "rationale": "plain class alias delegates getVmClass",
+      "original": null
+    },
+    {
+      "id": "supertype-alias-chain",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/supertype-alias-chain/module.pkl",
+      "uri": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/supertype-alias-chain/uri.txt",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "output-text",
+          "expression": ""
+        }
+      ],
+      "rationale": "class alias chain",
+      "original": null
+    },
+    {
+      "id": "supertype-nullable",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/supertype-nullable/module.pkl",
+      "uri": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/supertype-nullable/uri.txt",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "output-text",
+          "expression": ""
+        }
+      ],
+      "rationale": "named alias resolves to nullable type, not class",
+      "original": null
+    },
+    {
+      "id": "supertype-union",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/supertype-union/module.pkl",
+      "uri": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/supertype-union/uri.txt",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "output-text",
+          "expression": ""
+        }
+      ],
+      "rationale": "named alias resolves to union type",
+      "original": null
+    },
+    {
+      "id": "supertype-quoted",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/supertype-quoted/module.pkl",
+      "uri": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/supertype-quoted/uri.txt",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "output-text",
+          "expression": ""
+        }
+      ],
+      "rationale": "authored quoted Unicode alias label and UTF16 diagnostic coordinates",
+      "original": null
+    },
+    {
+      "id": "supertype-final",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/supertype-final/module.pkl",
+      "uri": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/supertype-final/uri.txt",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "output-text",
+          "expression": ""
+        }
+      ],
+      "rationale": "valid class resolution then closed-class error ordering",
+      "original": null
+    },
+    {
+      "id": "supertype-generic",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/supertype-generic/module.pkl",
+      "uri": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/supertype-generic/uri.txt",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "output-text",
+          "expression": ""
+        }
+      ],
+      "rationale": "parameterized class alias positive boundary",
+      "original": null
+    },
+    {
+      "id": "default-constrained-alias",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/default-constrained-alias/module.pkl",
+      "uri": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/default-constrained-alias/uri.txt",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "output-text",
+          "expression": ""
+        }
+      ],
+      "rationale": "non-supertype default instance context must retain its own behavior",
+      "original": null
+    },
+    {
+      "id": "annotation-constrained-alias",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/annotation-constrained-alias/module.pkl",
+      "uri": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/inputs/annotation-constrained-alias/uri.txt",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "output-text",
+          "expression": ""
+        }
+      ],
+      "rationale": "non-supertype annotation class context must retain its own behavior",
+      "original": null
+    }
+  ],
+  "profiles": [
+    "default",
+    "identity"
+  ],
+  "rounds": 2,
+  "session_count": 26,
+  "observations": 136,
+  "expected_results_present": false,
+  "query_protocol": "exact API expression or evaluateOutputText; no source or result rewriting"
+}

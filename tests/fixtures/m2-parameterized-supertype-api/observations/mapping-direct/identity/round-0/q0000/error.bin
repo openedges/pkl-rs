@@ -1,0 +1,13 @@
+–– Pkl Error ––
+Cannot extend non-open class `Mapping`.
+
+1 | class Baz extends Mapping<String, String>
+                      ^^^^^^^^^^^^^^^^^^^^^^^
+at mapping-direct#Baz (file:///stage121/parameterized/mapping-direct.pkl)
+
+By default, classes are closed for extension.
+To make a class extensible, add an `open` modifier: `open class MyClass { ... }`
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (pkl:base)

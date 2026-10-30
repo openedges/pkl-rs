@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+sequence-getClass-THROW
+
+1 | sequence.getClass(throw("sequence-getClass-THROW"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

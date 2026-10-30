@@ -1,0 +1,210 @@
+{
+  "serial_JVM_limit": 1,
+  "heap_bytes": 536870912,
+  "javac_heap_bytes": 536870912,
+  "disk_floor_bytes": 1073741824,
+  "raw_stream_cap_bytes": 8388608,
+  "payload_cap_bytes": 134217728,
+  "javac_timeout_seconds": 90,
+  "oracle_timeout_seconds": 180,
+  "kind": "Stage121 expected-free inherited Any arity supplement",
+  "programs": 1,
+  "profiles": [
+    "default",
+    "identity"
+  ],
+  "sessions": 2,
+  "observations": 404,
+  "rounds_per_same_evaluator": 2,
+  "helper_compilations": 1,
+  "JVM_processes": 1,
+  "old_authority_reruns": 0,
+  "output": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-01",
+  "inputs": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-prep-01/prepare.py",
+      "bytes": 9769,
+      "sha256": "09a923eb6c79cd0bd66af6bf4924e3d340141c23ea2c0a72b9ad7fd80beb8946",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-prep-01/AnyArityOracle.java",
+      "bytes": 9259,
+      "sha256": "0422db38b45b258d633197761300f9cf0dcfc4021c1cdbae57b41357fb17dd31",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-prep-01/acquire.py",
+      "bytes": 12559,
+      "sha256": "a84234f675c2f572d53ba81ea759563748368cc49a1fd0b8cec4e6c2dffd29c2",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-prep-01/matrix.json",
+      "bytes": 26078,
+      "sha256": "caebffe7d7b88f1446224c0312f04964780837606dacd74f3e89dbb96b19f121",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-prep-01/PairLookupOracle.java",
+      "bytes": 9258,
+      "sha256": "ada39e20c33b2bccb32a8091f50a259bc34d60ba5e08ceb9e50645dcf4a62b8f",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-prep-01/acquire.py",
+      "bytes": 12488,
+      "sha256": "2abaadcee36a3e5da0020cf3a2122f032b26661f01c7b45393bceb373aa7e280",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage98-platform-prep-01/owned_processes.py",
+      "bytes": 3681,
+      "sha256": "304d8aaead76ab89ff824f4b2fff5ca3270084c5d532bafc0d8407fc3fe1b7f0",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-candidate-07/report.json",
+      "bytes": 2327,
+      "sha256": "ba62e0389027aaba15ad4fd1ad8c9f0a5f69db9c94cb23dd48a3594577402983",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-private-validation-02/report.json",
+      "bytes": 106557,
+      "sha256": "bbe78e222a33169d549f152f13121784dc9d549e0bb34f8aa2d695b0c0284f3f",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/stdlib/base.pkl",
+      "bytes": 126112,
+      "sha256": "fddb53666b6e37bc5b70e2d7a2864730c1eab2a4edd90b5c2defefcfdd0b57fb",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/member/FunctionNode.java",
+      "bytes": 6311,
+      "sha256": "de9a84f768dffce0c2f36889528a8256e15cea356c34ae58a867d1df2f2736eb",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/expression/member/InvokeMethodVirtualNode.java",
+      "bytes": 6885,
+      "sha256": "fe72e39739e4a6ed0ccf61bfe3c3e0e7fb659323ccc5b84b87d3e75709e7ca5d",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/AnyNodes.java",
+      "bytes": 2289,
+      "sha256": "ae7eca306a117684e9a19b0f105ec335944dbfb2b11623905f3f2e93da5720bf",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/references.lock",
+      "bytes": 648,
+      "sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-prep-01/inputs/programs.tsv",
+      "bytes": 19,
+      "sha256": "140ba08a9dfbccf4a0473eec019c034d7345f193b0cc161e646d6f5616e8a9a4",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-prep-01/inputs/profiles.tsv",
+      "bytes": 17,
+      "sha256": "48ac84cc72efc8f560287f9da58274909783083243e1f4245a5fe9594496b8a4",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-prep-01/inputs/any-arity-boundary/module.pkl",
+      "bytes": 401,
+      "sha256": "2b5697a34d0c32aa3f0171ed15fb8138ac4bad24939035c7f761bc4aad1cc2ba",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-prep-01/inputs/any-arity-boundary/module.code-units.bin",
+      "bytes": 802,
+      "sha256": "61111dc9e4de0c3417d473fa1be44d0da398cce657845ad99dc4dd09a3411a1d",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-prep-01/inputs/any-arity-boundary/uri.txt",
+      "bytes": 39,
+      "sha256": "bc8f89d470ee399fd3c1c88b28a33783c5770a9ff4b91098e3b7e8aab96e9fa0",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-prep-01/inputs/any-arity-boundary/queries.tsv",
+      "bytes": 5592,
+      "sha256": "3e71fad540dcdb3416cc3b1a786e90fef7dd7b01a08c87c6aff59d5f16d586aa",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+      "bytes": 26877190,
+      "sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+      "mode": 420
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+      "bytes": 70432,
+      "sha256": "9be1d0a740ff6502df1a762145e62860f5de4b7e17658d9cb9498da3acf9d16c",
+      "mode": 493
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/javac",
+      "bytes": 70464,
+      "sha256": "20ce8ae6a5771801267af082a573e02758e5004a25ef3cba71d14fc95897bb2f",
+      "mode": 493
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/modules",
+      "bytes": 140714013,
+      "sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+      "mode": 420
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/release",
+      "bytes": 1628,
+      "sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+      "mode": 420
+    }
+  ],
+  "javac_argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/javac",
+    "-J-Xms64m",
+    "-J-Xmx512m",
+    "--release",
+    "21",
+    "-proc:none",
+    "-encoding",
+    "UTF-8",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "-d",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-01/classes",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-prep-01/AnyArityOracle.java"
+  ],
+  "java_argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "AnyArityOracle",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-prep-01/inputs",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-01/observations"
+  ]
+}

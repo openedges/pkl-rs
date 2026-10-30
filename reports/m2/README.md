@@ -1,5 +1,21 @@
 # M2 language evidence
 
+## Stage121 Pair and superclass diagnostics
+
+The [Stage121 report](stage121-pair-supertype/README.md) records six shared runtime
+changes and their Java regressions. Fresh workspace validation passes 1,717
+tests with zero failures and five ignored. All six development checks pass.
+The complete ready corpus records **4,339 matches, 19 mismatches, 82 unsupported
+cases and two Java oracle errors across 4,442 cases**; two prior mismatches are
+repaired, 88 metamorphic checks pass, and no previous pass regresses.
+
+Native, N-API and Chromium each match 624 new selected observations and 902
+retained ordinary observations. Required internal/JVM-only observations remain
+outside those passing boundaries. A separate M1 acquisition matches 6,078 checks
+per target. The report preserves original build-qualification, wrapper and
+browser-monitor failures and distinguishes reused results from fresh execution.
+Full M2/API, release-platform and performance requirements remain open.
+
 ## Stage120 shebang, quoted identifiers and diagnostic source ownership — bounded local checkpoint verified
 
 Stage120 integrates **13 source/test/tool paths and 2,489 new pinned Java fixture

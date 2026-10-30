@@ -1,0 +1,2 @@
+class Baz extends Mapping<String, String>
+qux = new Baz {}

@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+`Bar` is not a valid supertype.
+
+3 | class Baz extends Bar
+                      ^^^
+at extendTypeAlias#Baz (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/extendTypeAlias.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (pkl:base)

@@ -1,0 +1,206 @@
+{
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "AnyArityOracle",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-prep-01/inputs",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-01/observations"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-01/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-01/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-01/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-01/tmp",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "started_epoch": 1793297268.679536,
+  "timeout_seconds": 180,
+  "forced": false,
+  "errors": [],
+  "samples": [
+    {
+      "epoch": 1793297268.761912,
+      "root_rss_bytes": 15892480,
+      "free_bytes": 15341109248,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793297268.900703,
+      "root_rss_bytes": 61669376,
+      "free_bytes": 15341068288,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793297269.0403469,
+      "root_rss_bytes": 66830336,
+      "free_bytes": 15341010944,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793297269.1770601,
+      "root_rss_bytes": 66830336,
+      "free_bytes": 15341010944,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793297269.322402,
+      "root_rss_bytes": 66830336,
+      "free_bytes": 15341010944,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793297269.463446,
+      "root_rss_bytes": 88686592,
+      "free_bytes": 15341006848,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793297269.6078541,
+      "root_rss_bytes": 103366656,
+      "free_bytes": 15341658112,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793297269.749203,
+      "root_rss_bytes": 140361728,
+      "free_bytes": 15338848256,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793297269.914291,
+      "root_rss_bytes": 142065664,
+      "free_bytes": 15336497152,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793297270.128542,
+      "root_rss_bytes": 142622720,
+      "free_bytes": 15332466688,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793297270.3910441,
+      "root_rss_bytes": 143179776,
+      "free_bytes": 15327399936,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793297270.7157388,
+      "root_rss_bytes": 143605760,
+      "free_bytes": 15320657920,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793297271.1366751,
+      "root_rss_bytes": 144277504,
+      "free_bytes": 15312273408,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793297271.679635,
+      "root_rss_bytes": 145244160,
+      "free_bytes": 15301586944,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793297272.372133,
+      "root_rss_bytes": 146227200,
+      "free_bytes": 15287091200,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    }
+  ],
+  "pid": 97800,
+  "exit_code": 0,
+  "owned_processes": {
+    "root_pid": 97800,
+    "root_observed": true,
+    "tracked": [
+      {
+        "pid": 97800,
+        "started": "Fri Oct 30 03:07:48 2026",
+        "parent_pid_at_discovery": 97767,
+        "group_id_at_discovery": 97800
+      }
+    ],
+    "terminal_live": []
+  },
+  "finished_epoch": 1793297272.9376378,
+  "stdout": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-01/oracle/stdout.bin",
+    "bytes": 17978,
+    "sha256": "070848040d2d97aa4d8eb8b4881bacfeaed4653603e2ec0db4ded902f47acab4",
+    "mode": 420
+  },
+  "stderr": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-any-arity-oracle-01/oracle/stderr.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mode": 420
+  },
+  "sampling_scope": "Owned root RSS samples; not a performance measurement or absolute peak bound."
+}

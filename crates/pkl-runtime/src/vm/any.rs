@@ -38,6 +38,23 @@ pub(super) fn blocks(
     BTreeMap::from([(("Any".into(), "ifNonNull".into()), block)])
 }
 
+/// Declaration owned by an inherited Any call target implemented natively.
+/// Arity is checked after authored arguments, before entering the method body.
+pub(super) fn native_declaration(name: &str) -> Option<RuntimeFrame> {
+    let (method, signature) = match name {
+        "getClass" => ("getClass", "external function getClass(): Class"),
+        "objectToString" | "scalarToString" => ("toString", "external function toString(): String"),
+        _ => return None,
+    };
+    let source = crate::stdlib_sources::base();
+    let start = source.text.find(signature).unwrap();
+    Some(RuntimeFrame {
+        source: Some(source),
+        span: Span::new(start, start + signature.len()),
+        member: format!("#Any.{method}").into(),
+    })
+}
+
 impl Vm {
     pub(super) fn non_const_method_error(name: &str) -> RuntimeError {
         let mut error = RuntimeError::new(

@@ -4,9 +4,11 @@
 
 ## 현재 상태
 
+Stage121에서 Pair의 Any 상속 경계, native Any 메서드의 인자 수 오류 프레임, 지연 superclass 해석의 원본 이름·위치를 통합했습니다. 새 전체 workspace는 **1,717개 통과·실패 0·ignored 5개**이고 기본 개발 검사 6개가 통과했습니다. 전체 ready 4,442개는 **4,339개 일치·불일치 19개·미지원 82개·Java 오류 2개**이며, `extendTypeAlias.pkl`과 `propertyNotFound2.pkl`이 새로 일치했습니다. 기존 통과 회귀는 없고 metamorphic 88개가 통과했습니다. 선택 Native·N-API·Chromium은 새 관측 각각 624개와 기존 일반 관측 각각 902개가 일치하며, 기존 내부 관측 2개는 대상별 미해결로 유지합니다. [Stage121 보고서](reports/m2/stage121-pair-supertype/README.md)에 증거 게시 상태와 제한을 기록합니다. 전체 M2와 아홉 작업 영역은 계속 진행 중입니다.
+
 Stage120 이후 [Stage117 원본 사례 연결 보완](reports/m2/stage117-original-case-mapping/README.md)을 통합했습니다. 기존 원본 14개의 요구사항 연결 94개와 의미론 영역 9개의 명시적 소스 연결을 추가했습니다. Stage120의 보존된 원시 관측을 다시 읽어 성공 평가 13개·일치하는 오류 1개를 확인했고, Python 검사 42개와 목록 최신성 검사가 통과했습니다. 새 evaluator 실행은 아닙니다. 기존 4,545개 실행 계약과 요구사항 475개의 상태는 유지하며, 이전에 연결이 없던 12개 사례의 목록상 미충족 사유만 해소했습니다. 엄격한 전체 gate의 중복 가능한 미충족 조건은 1,780개에서 1,768개가 됐고, 런타임 불일치와 아홉 작업 영역은 계속 남아 있습니다.
 
-현재 M2는 [Stage120 체크포인트](reports/m2/stage120-shebang-quoted-identifier-checkpoint.json)의 shebang·quoted identifier·진단 소유자 통합을 검증했습니다. 원래 workspace 취득은 1,711개 통과·실패 0·ignored 5개이며, 테스트 전용 Clippy 수정 후 영향받은 검사 2개를 새로 통과했습니다. 전체 workspace는 재실행하지 않았으며 두 수를 합산하지 않습니다.  전체 ready 4,442개 중 4,337개 일치·불일치 21개·미지원 82개·Java 오류 2개를 기록합니다. 선택 portable 6개 집합과 defaults03 명령 7개, archive 독립 readback·게시를 확인했습니다. 전체 M2와 아홉 작업 영역의 종료 조건은 계속 열려 있습니다.
+이전 [Stage120 체크포인트](reports/m2/stage120-shebang-quoted-identifier-checkpoint.json)의 shebang·quoted identifier·진단 소유자 통합을 검증했습니다. 원래 workspace 취득은 1,711개 통과·실패 0·ignored 5개이며, 테스트 전용 Clippy 수정 후 영향받은 검사 2개를 새로 통과했습니다. 전체 workspace는 재실행하지 않았으며 두 수를 합산하지 않습니다.  전체 ready 4,442개 중 4,337개 일치·불일치 21개·미지원 82개·Java 오류 2개를 기록합니다. 선택 portable 6개 집합과 defaults03 명령 7개, archive 독립 readback·게시를 확인했습니다. 전체 M2와 아홉 작업 영역의 종료 조건은 계속 열려 있습니다.
 
 Git 저장소, Rust workspace, 참조 submodule, 개발 문서와 초기 구성 검증 도구가 준비되어 있습니다. M1에서 제한된 parser·resolver·lazy VM·heap·Host와 실제 Node·브라우저 호출 경로를 구현했습니다. 전체 Pkl 언어·표준 라이브러리·CLI·REPL·server·제품 API는 아직 구현되지 않았습니다.
 
@@ -23,7 +25,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: Stage120 shebang·quoted identifier·진단 소유자 통합, 원래 workspace 1,711개 통과·수정된 검사 2개 별도 재통과·전체 ready 4,337/4,442 일치·새 3개 대상 각각 관측 234개 일치·기존 각 대상 일반 관측 902개 일치와 내부 미해결 2개; 엄격한 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: Stage121 Pair·Any 호출·superclass 진단 통합; workspace 1,717개 통과·ignored 5개·ready 4,339/4,442 일치; 선택 세 대상 각각 새 624개·기존 일반 902개 일치·내부 미해결 2개 유지; 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
@@ -3663,3 +3665,48 @@ build의 isolated source roster는 각 211개이며 M1 product 6개·portable pr
 heap 실패와 모든 실제 nonpass를 보존합니다. Stage114/109/104 published 증거와
 고정 tool/reference는 복원 선행 조건이며 독립 저장소/전체 과거 executable 복구를
 주장하지 않습니다. M2 전체·API·릴리스 OS·성능·메모리·hosted CI는 미완료입니다.
+
+### Stage121 — Pair·Any 호출·잘못된 superclass 진단
+
+공통 런타임 6개 파일, 회귀 검사 3개 파일과 고정 Java fixture 21,895개를 통합했습니다.
+Pair의 heap 표현이 Typed 변환·조회 메서드로 잘못 들어가지 않도록 하고, 원래 Pair/Any
+선언으로 누락 멤버를 제안합니다. native Any 메서드의 인자는 원래 순서로 평가한 뒤
+인자 수를 검사하며 실제 base 선언 프레임을 보존합니다. superclass를 지연 해석해도
+잘못된 별칭의 사용 위치와 작성된 타입 이름을 유지합니다.
+
+현재 소스의 전체 workspace는 1,717개 통과·실패 0개·ignored 5개입니다. 내부 filtered
+자식 검사 13개는 합산하지 않습니다. xtask·format·warnings-denied Clippy·workspace·
+Wasm runtime·manifest freshness의 6개 명령이 통과했습니다. Cargo가 0으로 종료했지만
+`rust-objcopy` 299건의 stripping 실패와 경고 요약 299건은 원시 stderr로 유지합니다.
+stripping 성공이나 완전한 example/compiler 목록을 주장하지 않습니다.
+
+엄격한 전체 gate는 1,768개 중복 가능한 미충족 조건(구현 472·mapping 472·case 824)을
+유지합니다. 이번 두 런타임 수정 자체가 gate 집계 조건을 해소하지는 않았습니다. 전체
+List의 Java oracle 오류는 그대로이며 새 native 시도도 60초 timeout으로 종료해 통과가
+아닙니다. 관측 RSS에 의한 종료로 표시하지 않습니다.
+
+전체 ready 실행은 4,442건 중 4,339개 일치·19개 불일치·82개 미지원·Java 오류 2개이며,
+원본 `errors/extendTypeAlias.pkl`과 `errors/propertyNotFound2.pkl`이 새로 일치했습니다.
+기존 통과의 회귀는 없고 metamorphic 88개가 통과했습니다. 전체 목록 4,545개와 미구현
+71개·미연결 32개는 유지하며 선택 실행 성공을 전체 기능 완료율로 해석하지 않습니다.
+
+새 Native·N-API·Chromium은 각각 관측 624개와 노출된 원시 필드 19,716개를 일치시켰습니다.
+JVM 전용 필드 2,020개는 미해결 범위입니다. 기존 대상별 일반 관측 902개는 일치하지만
+필수 내부 관측 2개는 남습니다. 별도 M1 실제 실행은 대상별 6,078개 일치와 strict 및
+architecture 판정 통과를 기록합니다. 최초 build qualifier 실패는 같은 산출물의
+read-only 보완으로 해결했습니다. 최초 browser 임시 symlink monitor 실패를 보존하고,
+기존 Native/N-API 성공 process 4개를 재사용해 나머지 process 8개를 새로 실행했습니다.
+실제 filesystem 제어 검사 9개와 원시 결과 독립 readback이 통과했습니다.
+
+이후 실행은 별도 Stage122의 UTF-16·glob·선언 소유자 후보에 Stage124 spread 오류 프레임과
+Stage125 Resource digest를 결합한 런타임의 회귀 검증입니다. 해당 normal runtime의 실제
+컴파일은 통과했지만 테스트와 binding/플랫폼 검증이 끝나기 전에는 정본 통과에 포함하지
+않습니다. Stage126 math는 별도 소스 검토와 Java 경계값 취득을 진행합니다. 새 수치 연산의
+IEEE 일치는 아직 검증되지 않았습니다. 각 후보의 검증 후 순차 통합·커밋·푸시하며 기존
+실패, ignored, 내부 오류, 전체 API·릴리스 OS·속도·메모리 종료 조건은 유지합니다.
+
+Stage121 증거는 10개 part, 총 185,526,489 compressed bytes로 게시했습니다. 독립 readback은
+고유 payload 13,514개·metadata 19개·alias 222,571개와 tar 순서·gzip CRC/EOF를 확인했습니다.
+원래 mode가 대표 object와 다른 alias 2개는 manifest의 개별 mode로 복원합니다. 게시한
+복사본도 원본과 일치합니다. Stage114/120의 이전 증거와 고정 runtime/toolchain은 명시적
+복원 선행 조건이며, 과거 archive body는 읽거나 복사하지 않았습니다.

@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 0 function arguments but got 1.
+
+49 | external function getClass(): Class
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Any.getClass (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L49)
+
+1 | boolean.getClass(trace("boolean-getClass-ARG"))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

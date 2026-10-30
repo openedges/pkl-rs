@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot find method `getClas` in class `Pair`.
+
+1 | pair.getClas()
+    ^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+getClass()

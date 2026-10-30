@@ -1,0 +1,4 @@
+class Foo
+typealias Bar = Foo
+class Baz extends Bar
+qux = new Baz {}

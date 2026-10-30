@@ -1,0 +1,111 @@
+{
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/javac",
+    "-J-Xms64m",
+    "-J-Xmx512m",
+    "--release",
+    "21",
+    "-proc:none",
+    "-encoding",
+    "UTF-8",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "-d",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-01/classes",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/DiagnosticsOracle.java"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-01/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-01/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-01/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-01/tmp",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "started_epoch": 1793293476.882119,
+  "timeout_seconds": 90,
+  "forced": false,
+  "errors": [],
+  "samples": [
+    {
+      "epoch": 1793293476.9407208,
+      "root_rss_bytes": 32768,
+      "free_bytes": 14011752448,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793293477.080825,
+      "root_rss_bytes": 35209216,
+      "free_bytes": 14011711488,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793293477.2199922,
+      "root_rss_bytes": 75759616,
+      "free_bytes": 14011711488,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793293477.362419,
+      "root_rss_bytes": 119898112,
+      "free_bytes": 14011711488,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    },
+    {
+      "epoch": 1793293477.50398,
+      "root_rss_bytes": 136118272,
+      "free_bytes": 14011711488,
+      "owned_live_count": 1,
+      "ps_exit_code": 0,
+      "ps_stderr_hex": "",
+      "root_terminal_during_sample": false
+    }
+  ],
+  "pid": 73930,
+  "exit_code": 0,
+  "owned_processes": {
+    "root_pid": 73930,
+    "root_observed": true,
+    "tracked": [
+      {
+        "pid": 73930,
+        "started": "Fri Oct 30 02:04:36 2026",
+        "parent_pid_at_discovery": 73917,
+        "group_id_at_discovery": 73930
+      }
+    ],
+    "terminal_live": []
+  },
+  "finished_epoch": 1793293477.654927,
+  "stdout": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-01/compile/stdout.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mode": 420
+  },
+  "stderr": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-01/compile/stderr.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mode": 420
+  },
+  "sampling_scope": "Owned root RSS samples; not a performance measurement or absolute peak bound."
+}

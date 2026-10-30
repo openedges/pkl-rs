@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 0 function arguments but got 1.
+
+54 | external function toString(): String
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Any.toString (pkl:base)
+
+1 | pair.toString(trace("pair-toString-ARG"))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

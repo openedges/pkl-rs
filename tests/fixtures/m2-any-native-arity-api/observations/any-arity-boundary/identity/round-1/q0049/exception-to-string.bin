@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+list-getClass-THROW
+
+1 | list.getClass(throw("list-getClass-THROW"))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

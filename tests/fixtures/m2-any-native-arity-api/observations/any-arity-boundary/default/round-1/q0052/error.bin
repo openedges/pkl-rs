@@ -1,0 +1,6 @@
+–– Pkl Error ––
+list-toString-THROW
+
+1 | list.toString(throw("list-toString-THROW"))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

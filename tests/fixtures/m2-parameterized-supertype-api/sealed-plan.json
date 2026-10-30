@@ -1,0 +1,366 @@
+{
+  "serial_JVM_limit": 1,
+  "heap_bytes": 536870912,
+  "javac_heap_bytes": 536870912,
+  "disk_floor_bytes": 1073741824,
+  "raw_stream_cap_bytes": 8388608,
+  "payload_cap_bytes": 134217728,
+  "javac_timeout_seconds": 90,
+  "oracle_timeout_seconds": 180,
+  "kind": "Stage121 expected-free stdlib parameterized superclass API supplement",
+  "programs": 8,
+  "profiles": [
+    "default",
+    "identity"
+  ],
+  "sessions": 16,
+  "observations": 32,
+  "rounds_per_same_evaluator": 2,
+  "helper_compilations": 1,
+  "JVM_processes": 1,
+  "old_authority_reruns": 0,
+  "output": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-01",
+  "inputs": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/prepare.py",
+      "bytes": 7303,
+      "sha256": "f2854e603a38a3fcf841bdd3df386774d021d092d3c9aeeefbf826876c2fefe5",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/ParameterizedSupertypeOracle.java",
+      "bytes": 9280,
+      "sha256": "3142ed785e535cadade67ca064df516b5d0923fd1f05a213c31780e70b839e41",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/acquire.py",
+      "bytes": 12528,
+      "sha256": "b457a4e5a1dc5f96945604b228036358cc9395f3857c4a18dc7d53f3edab34a2",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/matrix.json",
+      "bytes": 2540,
+      "sha256": "c69beef6100d236b558dc5d94fbf7d6e68e7d61e5368de6f1569759126bfea31",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/DiagnosticsOracle.java",
+      "bytes": 9300,
+      "sha256": "467a2f1d1ec0799da16270f088c2638e712f0ebf721e0f1ac352d71107335593",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/acquire.py",
+      "bytes": 12495,
+      "sha256": "eee93f0e7e00503265dfe44927261af31d167236ffc7ecd934ec06e02fae15b2",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage98-platform-prep-01/owned_processes.py",
+      "bytes": 3681,
+      "sha256": "304d8aaead76ab89ff824f4b2fff5ca3270084c5d532bafc0d8407fc3fe1b7f0",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-01/report.json",
+      "bytes": 10361,
+      "sha256": "c66f7334b09eedcc5f093ed8d8cb301438f83719952a550ae3757d5425c534b8",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/references.lock",
+      "bytes": 648,
+      "sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+      "bytes": 26877190,
+      "sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+      "mode": 420
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+      "bytes": 70432,
+      "sha256": "9be1d0a740ff6502df1a762145e62860f5de4b7e17658d9cb9498da3acf9d16c",
+      "mode": 493
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/javac",
+      "bytes": 70464,
+      "sha256": "20ce8ae6a5771801267af082a573e02758e5004a25ef3cba71d14fc95897bb2f",
+      "mode": 493
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/modules",
+      "bytes": 140714013,
+      "sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+      "mode": 420
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/release",
+      "bytes": 1628,
+      "sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/stdlib/base.pkl",
+      "bytes": 126112,
+      "sha256": "fddb53666b6e37bc5b70e2d7a2864730c1eab2a4edd90b5c2defefcfdd0b57fb",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/member/ClassNode.java",
+      "bytes": 8039,
+      "sha256": "4ab1314748adb166ed9a07bc3cd94f2d566d9f7e31fecb6626a54de6a3993bdf",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/type/TypeNode.java",
+      "bytes": 100483,
+      "sha256": "9c05775d80ecadafb618de8f06b91b410cfc9fa617ae0627826206a70ea57286",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/listing-alias/module.code-units.bin",
+      "bytes": 142,
+      "sha256": "625faf3d773d175c3b2543fedfdb51c5048af1845ec9efcae5cf3fff43263a88",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/listing-alias/module.pkl",
+      "bytes": 71,
+      "sha256": "2cb2d837e819650a8409b91c2c1a50255b52b01fbc21b882e21f4706f862b999",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/listing-alias/queries.tsv",
+      "bytes": 19,
+      "sha256": "82e9f998b7e769e97b6c05bc47cbcf73f73842964d92527b408e4fed6862223e",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/listing-alias/uri.txt",
+      "bytes": 48,
+      "sha256": "080c62f8303118c72846ab0c56fe7e3452405a6bd1d76d774dece3496aad03d7",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/listing-alias-chain/module.code-units.bin",
+      "bytes": 190,
+      "sha256": "77de2cf376f1b4af4b8919da516a29b2f659b964bb5ffa2fd50f77b07c84ef75",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/listing-alias-chain/module.pkl",
+      "bytes": 95,
+      "sha256": "34b4cae0e1485feba6964b0c3f4c6f34d5f4a7527c9a5f2f7f957dd9cb6bfba4",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/listing-alias-chain/queries.tsv",
+      "bytes": 19,
+      "sha256": "82e9f998b7e769e97b6c05bc47cbcf73f73842964d92527b408e4fed6862223e",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/listing-alias-chain/uri.txt",
+      "bytes": 54,
+      "sha256": "c7d58ddab70a93c88c9efa743f155caf9b52ce2dfbfe8e5c84e66d1536062e89",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/listing-constrained/module.code-units.bin",
+      "bytes": 154,
+      "sha256": "a3f1dab96e308c6f310491425947fad7b1aa1846f0a2ffaa5cfad88d081a65f7",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/listing-constrained/module.pkl",
+      "bytes": 77,
+      "sha256": "f17e341aae5f5f776ebe99470d08710797eabb5755ffc86bb442bc692ac5a278",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/listing-constrained/queries.tsv",
+      "bytes": 19,
+      "sha256": "82e9f998b7e769e97b6c05bc47cbcf73f73842964d92527b408e4fed6862223e",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/listing-constrained/uri.txt",
+      "bytes": 54,
+      "sha256": "3b12dce2c79c7aaaf1c07f17328235612d0a178de68c59854ab4550cdf65b076",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/listing-direct/module.code-units.bin",
+      "bytes": 102,
+      "sha256": "23903ea3a69e7f030284f249dfc89bc623bc60e63fc861e38bfd2292c787436a",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/listing-direct/module.pkl",
+      "bytes": 51,
+      "sha256": "01fadb923f72d5c14999dd474cbd957d7dcee777eb098fa66eb9654f5d1b8252",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/listing-direct/queries.tsv",
+      "bytes": 19,
+      "sha256": "82e9f998b7e769e97b6c05bc47cbcf73f73842964d92527b408e4fed6862223e",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/listing-direct/uri.txt",
+      "bytes": 49,
+      "sha256": "f11cbda716c57d42bcf0b00c27b506e1a8ab4f5d402872b3a6d1173b99419c9f",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/mapping-alias/module.code-units.bin",
+      "bytes": 158,
+      "sha256": "9fcbdf00621312f88572844c672c0c1a81fea189f3f19c123eea58fa4d49b4da",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/mapping-alias/module.pkl",
+      "bytes": 79,
+      "sha256": "4956d87a71ed6c5ff08b5baa275aa1654fada3a5317dcc1a8d6c76f64665d36a",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/mapping-alias/queries.tsv",
+      "bytes": 19,
+      "sha256": "82e9f998b7e769e97b6c05bc47cbcf73f73842964d92527b408e4fed6862223e",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/mapping-alias/uri.txt",
+      "bytes": 48,
+      "sha256": "8031cdd41a9dc3584bade8fa66ca010770e281c1070254556b54a76dc4437121",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/mapping-argument-arity/module.code-units.bin",
+      "bytes": 142,
+      "sha256": "3cba28d2bf6a3b0ffe72fb0a1213bd8eed322162f1123908931395436fb1c135",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/mapping-argument-arity/module.pkl",
+      "bytes": 71,
+      "sha256": "91cf52903a2e53286347b02226d777197a04a6dc5803c9220978c05e0ec0fa8a",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/mapping-argument-arity/queries.tsv",
+      "bytes": 19,
+      "sha256": "82e9f998b7e769e97b6c05bc47cbcf73f73842964d92527b408e4fed6862223e",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/mapping-argument-arity/uri.txt",
+      "bytes": 57,
+      "sha256": "f23db0aeb9a303ed031636dfaa985ad018dc90865e2160479c21e69808396241",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/mapping-direct/module.code-units.bin",
+      "bytes": 118,
+      "sha256": "f40ee1e5a148302a9f2682452bcc64448006d98162e65e84199dc47242f9fe2c",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/mapping-direct/module.pkl",
+      "bytes": 59,
+      "sha256": "621d87da258fb96e314048a06f377e3a17252c262b8a77c10aae2ba991a35102",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/mapping-direct/queries.tsv",
+      "bytes": 19,
+      "sha256": "82e9f998b7e769e97b6c05bc47cbcf73f73842964d92527b408e4fed6862223e",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/mapping-direct/uri.txt",
+      "bytes": 49,
+      "sha256": "8bb5125d5427fa1562b995f3c765f70dfd7814d9e2a1868cb91e512fb13902a3",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/mapping-nullable/module.code-units.bin",
+      "bytes": 160,
+      "sha256": "5438f43255bbe3fde376783b6a4fe5d7b159b062f86646fbd2dcf333dbbd454a",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/mapping-nullable/module.pkl",
+      "bytes": 80,
+      "sha256": "8fe00fc461ee0d80ac7f2910e906c47b44a646d56c78df85431fde824f91f999",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/mapping-nullable/queries.tsv",
+      "bytes": 19,
+      "sha256": "82e9f998b7e769e97b6c05bc47cbcf73f73842964d92527b408e4fed6862223e",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/mapping-nullable/uri.txt",
+      "bytes": 51,
+      "sha256": "9ce25ff9f004d879738a5246ee932b3ba54df2e790ed5a5675431d3c26e620a8",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/profiles.tsv",
+      "bytes": 17,
+      "sha256": "48ac84cc72efc8f560287f9da58274909783083243e1f4245a5fe9594496b8a4",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs/programs.tsv",
+      "bytes": 138,
+      "sha256": "a1a63da5cfa53cfa92b073da72b3c537b8401d036cee9491b66c0e6dc84aafa3",
+      "mode": 420
+    }
+  ],
+  "javac_argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/javac",
+    "-J-Xms64m",
+    "-J-Xmx512m",
+    "--release",
+    "21",
+    "-proc:none",
+    "-encoding",
+    "UTF-8",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "-d",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-01/classes",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/ParameterizedSupertypeOracle.java"
+  ],
+  "java_argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "ParameterizedSupertypeOracle",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-prep-01/inputs",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-parameterized-supertype-oracle-01/observations"
+  ]
+}

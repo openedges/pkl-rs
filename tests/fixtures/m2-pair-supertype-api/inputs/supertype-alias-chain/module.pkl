@@ -1,0 +1,5 @@
+open class Foo
+typealias First = Foo
+typealias Bar = First
+class Baz extends Bar
+qux = new Baz {}

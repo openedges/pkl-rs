@@ -1,0 +1,13 @@
+–– Pkl Error ––
+Cannot extend non-open class `supertype-final#Foo`.
+
+3 | class Baz extends Bar
+                      ^^^
+at supertype-final#Baz (file:///stage121/supertype-final.pkl)
+
+By default, classes are closed for extension.
+To make a class extensible, add an `open` modifier: `open class MyClass { ... }`
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (pkl:base)

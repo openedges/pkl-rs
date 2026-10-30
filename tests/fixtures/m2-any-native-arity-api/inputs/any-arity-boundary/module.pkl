@@ -1,0 +1,20 @@
+module anyArityBoundary
+class Sample { value = 1 }
+typealias Alias = String
+pair = Pair("left", "right")
+dynamic = new Dynamic { value = 1 }
+typed = new Sample {}
+klass = Sample
+alias = Alias
+lambda = (x) -> x
+duration = 1.s
+datasize = 1.kb
+list = List("one")
+set = Set("one")
+map = Map("one", 1)
+nullable = null
+regex = Regex("x")
+sequence = IntSeq(1, 2)
+boolean = true
+string = "text"
+stable = "ok"

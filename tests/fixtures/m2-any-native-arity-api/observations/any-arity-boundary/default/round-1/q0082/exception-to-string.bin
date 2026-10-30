@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+sequence-toString-THROW
+
+1 | sequence.toString(throw("sequence-toString-THROW"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

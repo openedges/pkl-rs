@@ -1,0 +1,4 @@
+open class Foo
+typealias `Bär😀` = Foo(true)
+class Baz extends `Bär😀`
+qux = new Baz {}

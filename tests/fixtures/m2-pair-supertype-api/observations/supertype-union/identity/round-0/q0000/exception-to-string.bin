@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+`Bar` is not a valid supertype.
+
+3 | class Baz extends Bar
+                      ^^^
+at supertype-union#Baz (file:///stage121/supertype-union.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (pkl:base)

@@ -313,7 +313,7 @@ pub(crate) fn builtin_members(class: &str) -> (Vec<String>, Vec<(String, String,
     let parents: &[&str] = match class {
         "List" | "Set" => &["Any", "Collection"],
         "Int" | "Float" => &["Any", "Number"],
-        "String" | "Boolean" | "Null" => &["Any"],
+        "String" | "Boolean" | "Null" | "Pair" => &["Any"],
         "pkl.ref#Reference" | "Regex" => &["Any", "Object", "Typed"],
         _ => &["Any", "Object"],
     };

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+klass-toString-THROW
+
+1 | klass.toString(throw("klass-toString-THROW"))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

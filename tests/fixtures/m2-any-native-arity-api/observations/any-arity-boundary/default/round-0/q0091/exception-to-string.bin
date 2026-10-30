@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+string-getClass-THROW
+
+1 | string.getClass(throw("string-getClass-THROW"))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

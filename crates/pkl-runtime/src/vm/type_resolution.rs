@@ -737,6 +737,7 @@ impl Vm {
         let ty = match &mut instruction {
             Instruction::ResolveType(ty)
             | Instruction::ResolvedClass(ty)
+            | Instruction::ResolvedSupertype { ty, .. }
             | Instruction::BuiltinClass(ty)
             | Instruction::BindLocal { ty, .. }
             | Instruction::CheckType(ty)
@@ -1252,6 +1253,21 @@ impl Vm {
                 self.begin_type(ty, value, TypeDestination::Test, Vec::new())?;
             }
             Instruction::ResolveType(_) => {}
+            Instruction::ResolvedSupertype { ty, label } => {
+                if classes::BuiltinClass::from_type(&ty).is_some() {
+                    let value = self.builtin_class(ty);
+                    self.stack.push(value);
+                    return Ok(());
+                }
+                let TypeCheck::Class { id, .. } = ty.unaliased() else {
+                    return Err(invalid_supertype(&label));
+                };
+                let class = self
+                    .heap
+                    .find_class(*id)
+                    .ok_or_else(|| invalid("missing resolved class"))?;
+                self.stack.push(Value::Class(class));
+            }
             Instruction::ResolvedClass(ty) => {
                 if classes::BuiltinClass::from_type(&ty).is_some() {
                     let value = self.builtin_class(ty);

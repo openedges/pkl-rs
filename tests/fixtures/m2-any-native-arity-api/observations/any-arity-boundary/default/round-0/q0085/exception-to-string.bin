@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+boolean-getClass-THROW
+
+1 | boolean.getClass(throw("boolean-getClass-THROW"))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

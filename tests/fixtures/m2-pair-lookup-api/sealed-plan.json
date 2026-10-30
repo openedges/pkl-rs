@@ -1,0 +1,210 @@
+{
+  "serial_JVM_limit": 1,
+  "heap_bytes": 536870912,
+  "javac_heap_bytes": 536870912,
+  "disk_floor_bytes": 1073741824,
+  "raw_stream_cap_bytes": 8388608,
+  "payload_cap_bytes": 134217728,
+  "javac_timeout_seconds": 90,
+  "oracle_timeout_seconds": 180,
+  "kind": "Stage121 expected-free Pair lookup/order supplement",
+  "programs": 1,
+  "profiles": [
+    "default",
+    "identity"
+  ],
+  "sessions": 2,
+  "observations": 52,
+  "rounds_per_same_evaluator": 2,
+  "helper_compilations": 1,
+  "JVM_processes": 1,
+  "old_authority_reruns": 0,
+  "output": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-01",
+  "inputs": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-prep-01/prepare.py",
+      "bytes": 7039,
+      "sha256": "e23f8d6f21c5337bce175c8666f8937c09669cb7ff185f338cab4707d4f7d3f8",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-prep-01/PairLookupOracle.java",
+      "bytes": 9258,
+      "sha256": "ada39e20c33b2bccb32a8091f50a259bc34d60ba5e08ceb9e50645dcf4a62b8f",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-prep-01/acquire.py",
+      "bytes": 12488,
+      "sha256": "2abaadcee36a3e5da0020cf3a2122f032b26661f01c7b45393bceb373aa7e280",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-prep-01/matrix.json",
+      "bytes": 3695,
+      "sha256": "d60cb9ce9147f02ab3e14d91609f1ce35ca44aac2afb157bfc6bfc867d32c823",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/DiagnosticsOracle.java",
+      "bytes": 9300,
+      "sha256": "467a2f1d1ec0799da16270f088c2638e712f0ebf721e0f1ac352d71107335593",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-diagnostics-oracle-prep-01/acquire.py",
+      "bytes": 12495,
+      "sha256": "eee93f0e7e00503265dfe44927261af31d167236ffc7ecd934ec06e02fae15b2",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage98-platform-prep-01/owned_processes.py",
+      "bytes": 3681,
+      "sha256": "304d8aaead76ab89ff824f4b2fff5ca3270084c5d532bafc0d8407fc3fe1b7f0",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-private-validation-01/report.json",
+      "bytes": 106937,
+      "sha256": "a0ab7e387dcd0486fb4b34c1f7b4ec304d06affae1701c021ed5065591a76e30",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/stdlib/base.pkl",
+      "bytes": 126112,
+      "sha256": "fddb53666b6e37bc5b70e2d7a2864730c1eab2a4edd90b5c2defefcfdd0b57fb",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/expression/member/InvokeMethodVirtualNode.java",
+      "bytes": 6885,
+      "sha256": "fe72e39739e4a6ed0ccf61bfe3c3e0e7fb659323ccc5b84b87d3e75709e7ca5d",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/crates/pkl-runtime/src/vm/collection_conversions.rs",
+      "bytes": 29163,
+      "sha256": "c5ad51102ab3e644469b076b6ed432d59d10b16bb21d16180576f8028c267576",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/crates/pkl-runtime/src/vm/collections.rs",
+      "bytes": 133312,
+      "sha256": "f1872f450951d27a9af3ad26d63fa0a74c2d94c0ba29aabf1b13e6b43681a3ca",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/crates/pkl-runtime/src/vm/classes.rs",
+      "bytes": 18918,
+      "sha256": "d7c61b5ee5ca1197d118f546a78c4a8a67fdc5bd731a74ec92eb6550611a5d46",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/references.lock",
+      "bytes": 648,
+      "sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+      "bytes": 26877190,
+      "sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+      "mode": 420
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+      "bytes": 70432,
+      "sha256": "9be1d0a740ff6502df1a762145e62860f5de4b7e17658d9cb9498da3acf9d16c",
+      "mode": 493
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/javac",
+      "bytes": 70464,
+      "sha256": "20ce8ae6a5771801267af082a573e02758e5004a25ef3cba71d14fc95897bb2f",
+      "mode": 493
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/modules",
+      "bytes": 140714013,
+      "sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+      "mode": 420
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/release",
+      "bytes": 1628,
+      "sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-prep-01/inputs/pair-object-boundary/module.code-units.bin",
+      "bytes": 138,
+      "sha256": "7eb8becdc593599d3f44e7842030441d36cfc4ba8aa3bd7d7491949ee6a31977",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-prep-01/inputs/pair-object-boundary/module.pkl",
+      "bytes": 69,
+      "sha256": "f388c963a33caeb0bbd983815f313aa2567be75de4afe6d219d64cfd116263cc",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-prep-01/inputs/pair-object-boundary/queries.tsv",
+      "bytes": 642,
+      "sha256": "e797650cee054114b2c86fb98985f946d3c27e4a7a6a6d01c8e13745ba7a1b6a",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-prep-01/inputs/pair-object-boundary/uri.txt",
+      "bytes": 41,
+      "sha256": "95cd552252c7b38899cceb0f1d95af3fde4b808068ead27e2469dd66bc46ee01",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-prep-01/inputs/profiles.tsv",
+      "bytes": 17,
+      "sha256": "48ac84cc72efc8f560287f9da58274909783083243e1f4245a5fe9594496b8a4",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-prep-01/inputs/programs.tsv",
+      "bytes": 21,
+      "sha256": "a8043181df7f7af755442f97e2d578e51031c666a4f871bae26bdcae7b881f5d",
+      "mode": 420
+    }
+  ],
+  "javac_argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/javac",
+    "-J-Xms64m",
+    "-J-Xmx512m",
+    "--release",
+    "21",
+    "-proc:none",
+    "-encoding",
+    "UTF-8",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "-d",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-01/classes",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-prep-01/PairLookupOracle.java"
+  ],
+  "java_argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+    "PairLookupOracle",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-prep-01/inputs",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage121-pair-lookup-oracle-01/observations"
+  ]
+}

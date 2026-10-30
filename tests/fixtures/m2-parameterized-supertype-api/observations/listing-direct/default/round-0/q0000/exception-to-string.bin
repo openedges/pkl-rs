@@ -1,0 +1,13 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot extend non-open class `Listing`.
+
+1 | class Baz extends Listing<String>
+                      ^^^^^^^^^^^^^^^
+at listing-direct#Baz (file:///stage121/parameterized/listing-direct.pkl)
+
+By default, classes are closed for extension.
+To make a class extensible, add an `open` modifier: `open class MyClass { ... }`
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

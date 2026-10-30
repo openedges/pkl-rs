@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+alias-toString-THROW
+
+1 | alias.toString(throw("alias-toString-THROW"))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

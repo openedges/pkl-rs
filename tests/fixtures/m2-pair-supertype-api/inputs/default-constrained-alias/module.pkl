@@ -1,0 +1,3 @@
+open class Foo
+typealias Bar = Foo(true)
+qux: Bar = new {}

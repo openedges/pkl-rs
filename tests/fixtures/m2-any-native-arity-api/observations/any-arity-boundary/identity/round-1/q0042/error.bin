@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 0 function arguments but got 1.
+
+49 | external function getClass(): Class
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Any.getClass (pkl:base)
+
+1 | datasize.getClass(trace("datasize-getClass-ARG"))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

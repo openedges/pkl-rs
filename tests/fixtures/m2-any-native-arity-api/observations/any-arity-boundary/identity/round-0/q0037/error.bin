@@ -1,0 +1,6 @@
+–– Pkl Error ––
+duration-getClass-THROW
+
+1 | duration.getClass(throw("duration-getClass-THROW"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

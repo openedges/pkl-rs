@@ -1,0 +1,101 @@
+{
+  "programs": [
+    {
+      "id": "listing-direct",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "output-text",
+          "expression": ""
+        }
+      ],
+      "rationale": "Direct standard-library parameterized type resolution and subsequent inheritance restriction"
+    },
+    {
+      "id": "listing-alias",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "output-text",
+          "expression": ""
+        }
+      ],
+      "rationale": "Named alias delegates parameterized Listing class resolution"
+    },
+    {
+      "id": "mapping-direct",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "output-text",
+          "expression": ""
+        }
+      ],
+      "rationale": "Direct two-parameter standard-library class resolution"
+    },
+    {
+      "id": "mapping-alias",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "output-text",
+          "expression": ""
+        }
+      ],
+      "rationale": "Named alias delegates parameterized Mapping class resolution"
+    },
+    {
+      "id": "listing-alias-chain",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "output-text",
+          "expression": ""
+        }
+      ],
+      "rationale": "Alias chain preserves actual class and authored use-site diagnostic"
+    },
+    {
+      "id": "mapping-argument-arity",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "output-text",
+          "expression": ""
+        }
+      ],
+      "rationale": "Parameter arity error ordering before superclass classification"
+    },
+    {
+      "id": "listing-constrained",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "output-text",
+          "expression": ""
+        }
+      ],
+      "rationale": "Constrained parameterized alias remains distinct from its base class"
+    },
+    {
+      "id": "mapping-nullable",
+      "queries": [
+        {
+          "id": "q0000",
+          "operation": "output-text",
+          "expression": ""
+        }
+      ],
+      "rationale": "Nullable parameterized alias remains distinct from its base class"
+    }
+  ],
+  "profiles": [
+    "default",
+    "identity"
+  ],
+  "rounds": 2,
+  "session_count": 16,
+  "observations": 32,
+  "expected_results_present": false,
+  "scope": "Fresh stdlib parameterized supertype controls; no prior13programs/136observations rerun. User-defined Foo<T> rejection remains an earlier-error control in the predecessor acquisition."
+}

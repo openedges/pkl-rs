@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Cannot find method `hasProperty` in class `Pair`.
+
+1 | pair.hasProperty(throw("MUST-NOT-FORCE"))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Available methods in class `Pair`:
+getClass
+ifNonNull
+toString

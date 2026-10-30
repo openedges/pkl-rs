@@ -1,0 +1,3 @@
+open class Foo
+class Baz extends Foo
+qux = new Baz {}

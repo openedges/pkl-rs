@@ -1,0 +1,10 @@
+–– Pkl Error ––
+``Bär😀`` is not a valid supertype.
+
+3 | class Baz extends `Bär😀`
+                      ^^^^^^^
+at supertype-quoted#Baz (file:///stage121/supertype-quoted.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (pkl:base)

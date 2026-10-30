@@ -1,0 +1,23 @@
+{
+  "metadata": [
+    "reports/m2/stage114-diagnostics-regex-checkpoint.json",
+    "reports/m2/stage114-diagnostics-regex-archive-binding.json",
+    "reports/m2/stage114-diagnostics-regex-archive-report.json",
+    "reports/m2/stage114-diagnostics-regex-archive-readback.json",
+    "reports/m2/stage114-diagnostics-regex-preflight.json",
+    "reports/m2/stage114-diagnostics-regex-archive-verifier.py",
+    "reports/m2/stage120-shebang-quoted-identifier-checkpoint.json",
+    "reports/m2/stage120-shebang-quoted-identifier-archive-binding.json",
+    "reports/m2/stage120-shebang-quoted-identifier-archive-report.json",
+    "reports/m2/stage120-shebang-quoted-identifier-archive-readback.json",
+    "reports/m2/stage120-shebang-quoted-identifier-preflight.json",
+    "reports/m2/stage120-shebang-quoted-identifier-archive-verifier.py"
+  ],
+  "body_payloads_read": false,
+  "required_prior_checkpoints": [
+    "Stage114 diagnostics/regex checkpoint",
+    "Stage120 shebang/quoted identifier checkpoint"
+  ],
+  "external_runtime_and_toolchain_dependencies": "Exact immutable fingerprints remain in acquisition inputs. Installed Rust/JDK/Node/browser/toolchain bodies and historical published evidence are prerequisites, not copied here.",
+  "historical_authority_policy": "Existing Stage114/Stage120 acquisition aliases and selected Java authorities must be restored from their published prerequisites; no old archive body was inspected."
+}

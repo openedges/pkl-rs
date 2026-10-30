@@ -1,0 +1,20 @@
+–– Pkl Error ––
+Cannot find property `foo` in object of type `Pair`.
+
+1 | res0 = Pair(1, 2).foo
+           ^^^^^^^^^^^^^^
+at propertyNotFound2#res0 (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/propertyNotFound2.pkl, line 1)
+
+Available properties:
+first
+key
+second
+value
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)
+
+135 | if (renderer is BytesRenderer) renderer.renderDocument(value) else text.encodeToBytes("UTF-8")
+                                                                         ^^^^
+at pkl.base#Module.output.bytes (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L135)

@@ -1,0 +1,626 @@
+{
+  "programs": [
+    {
+      "id": "any-arity-boundary",
+      "queries": [
+        {
+          "expression": "pair.getClass(trace(\"pair-getClass-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0000",
+          "operation": "expression"
+        },
+        {
+          "expression": "pair.getClass(throw(\"pair-getClass-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0001",
+          "operation": "expression"
+        },
+        {
+          "expression": "pair.getClass().simpleName",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0002",
+          "operation": "expression"
+        },
+        {
+          "expression": "pair.toString(trace(\"pair-toString-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0003",
+          "operation": "expression"
+        },
+        {
+          "expression": "pair.toString(throw(\"pair-toString-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0004",
+          "operation": "expression"
+        },
+        {
+          "expression": "pair.toString()",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0005",
+          "operation": "expression"
+        },
+        {
+          "expression": "dynamic.getClass(trace(\"dynamic-getClass-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0006",
+          "operation": "expression"
+        },
+        {
+          "expression": "dynamic.getClass(throw(\"dynamic-getClass-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0007",
+          "operation": "expression"
+        },
+        {
+          "expression": "dynamic.getClass().simpleName",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0008",
+          "operation": "expression"
+        },
+        {
+          "expression": "dynamic.toString(trace(\"dynamic-toString-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0009",
+          "operation": "expression"
+        },
+        {
+          "expression": "dynamic.toString(throw(\"dynamic-toString-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0010",
+          "operation": "expression"
+        },
+        {
+          "expression": "dynamic.toString()",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0011",
+          "operation": "expression"
+        },
+        {
+          "expression": "typed.getClass(trace(\"typed-getClass-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0012",
+          "operation": "expression"
+        },
+        {
+          "expression": "typed.getClass(throw(\"typed-getClass-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0013",
+          "operation": "expression"
+        },
+        {
+          "expression": "typed.getClass().simpleName",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0014",
+          "operation": "expression"
+        },
+        {
+          "expression": "typed.toString(trace(\"typed-toString-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0015",
+          "operation": "expression"
+        },
+        {
+          "expression": "typed.toString(throw(\"typed-toString-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0016",
+          "operation": "expression"
+        },
+        {
+          "expression": "typed.toString()",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0017",
+          "operation": "expression"
+        },
+        {
+          "expression": "klass.getClass(trace(\"klass-getClass-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0018",
+          "operation": "expression"
+        },
+        {
+          "expression": "klass.getClass(throw(\"klass-getClass-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0019",
+          "operation": "expression"
+        },
+        {
+          "expression": "klass.getClass().simpleName",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0020",
+          "operation": "expression"
+        },
+        {
+          "expression": "klass.toString(trace(\"klass-toString-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0021",
+          "operation": "expression"
+        },
+        {
+          "expression": "klass.toString(throw(\"klass-toString-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0022",
+          "operation": "expression"
+        },
+        {
+          "expression": "klass.toString()",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0023",
+          "operation": "expression"
+        },
+        {
+          "expression": "alias.getClass(trace(\"alias-getClass-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0024",
+          "operation": "expression"
+        },
+        {
+          "expression": "alias.getClass(throw(\"alias-getClass-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0025",
+          "operation": "expression"
+        },
+        {
+          "expression": "alias.getClass().simpleName",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0026",
+          "operation": "expression"
+        },
+        {
+          "expression": "alias.toString(trace(\"alias-toString-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0027",
+          "operation": "expression"
+        },
+        {
+          "expression": "alias.toString(throw(\"alias-toString-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0028",
+          "operation": "expression"
+        },
+        {
+          "expression": "alias.toString()",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0029",
+          "operation": "expression"
+        },
+        {
+          "expression": "lambda.getClass(trace(\"lambda-getClass-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0030",
+          "operation": "expression"
+        },
+        {
+          "expression": "lambda.getClass(throw(\"lambda-getClass-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0031",
+          "operation": "expression"
+        },
+        {
+          "expression": "lambda.getClass().simpleName",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0032",
+          "operation": "expression"
+        },
+        {
+          "expression": "lambda.toString(trace(\"lambda-toString-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0033",
+          "operation": "expression"
+        },
+        {
+          "expression": "lambda.toString(throw(\"lambda-toString-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0034",
+          "operation": "expression"
+        },
+        {
+          "expression": "lambda.toString()",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0035",
+          "operation": "expression"
+        },
+        {
+          "expression": "duration.getClass(trace(\"duration-getClass-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0036",
+          "operation": "expression"
+        },
+        {
+          "expression": "duration.getClass(throw(\"duration-getClass-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0037",
+          "operation": "expression"
+        },
+        {
+          "expression": "duration.getClass().simpleName",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0038",
+          "operation": "expression"
+        },
+        {
+          "expression": "duration.toString(trace(\"duration-toString-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0039",
+          "operation": "expression"
+        },
+        {
+          "expression": "duration.toString(throw(\"duration-toString-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0040",
+          "operation": "expression"
+        },
+        {
+          "expression": "duration.toString()",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0041",
+          "operation": "expression"
+        },
+        {
+          "expression": "datasize.getClass(trace(\"datasize-getClass-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0042",
+          "operation": "expression"
+        },
+        {
+          "expression": "datasize.getClass(throw(\"datasize-getClass-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0043",
+          "operation": "expression"
+        },
+        {
+          "expression": "datasize.getClass().simpleName",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0044",
+          "operation": "expression"
+        },
+        {
+          "expression": "datasize.toString(trace(\"datasize-toString-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0045",
+          "operation": "expression"
+        },
+        {
+          "expression": "datasize.toString(throw(\"datasize-toString-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0046",
+          "operation": "expression"
+        },
+        {
+          "expression": "datasize.toString()",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0047",
+          "operation": "expression"
+        },
+        {
+          "expression": "list.getClass(trace(\"list-getClass-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0048",
+          "operation": "expression"
+        },
+        {
+          "expression": "list.getClass(throw(\"list-getClass-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0049",
+          "operation": "expression"
+        },
+        {
+          "expression": "list.getClass().simpleName",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0050",
+          "operation": "expression"
+        },
+        {
+          "expression": "list.toString(trace(\"list-toString-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0051",
+          "operation": "expression"
+        },
+        {
+          "expression": "list.toString(throw(\"list-toString-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0052",
+          "operation": "expression"
+        },
+        {
+          "expression": "list.toString()",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0053",
+          "operation": "expression"
+        },
+        {
+          "expression": "set.getClass(trace(\"set-getClass-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0054",
+          "operation": "expression"
+        },
+        {
+          "expression": "set.getClass(throw(\"set-getClass-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0055",
+          "operation": "expression"
+        },
+        {
+          "expression": "set.getClass().simpleName",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0056",
+          "operation": "expression"
+        },
+        {
+          "expression": "set.toString(trace(\"set-toString-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0057",
+          "operation": "expression"
+        },
+        {
+          "expression": "set.toString(throw(\"set-toString-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0058",
+          "operation": "expression"
+        },
+        {
+          "expression": "set.toString()",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0059",
+          "operation": "expression"
+        },
+        {
+          "expression": "map.getClass(trace(\"map-getClass-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0060",
+          "operation": "expression"
+        },
+        {
+          "expression": "map.getClass(throw(\"map-getClass-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0061",
+          "operation": "expression"
+        },
+        {
+          "expression": "map.getClass().simpleName",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0062",
+          "operation": "expression"
+        },
+        {
+          "expression": "map.toString(trace(\"map-toString-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0063",
+          "operation": "expression"
+        },
+        {
+          "expression": "map.toString(throw(\"map-toString-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0064",
+          "operation": "expression"
+        },
+        {
+          "expression": "map.toString()",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0065",
+          "operation": "expression"
+        },
+        {
+          "expression": "nullable.getClass(trace(\"nullable-getClass-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0066",
+          "operation": "expression"
+        },
+        {
+          "expression": "nullable.getClass(throw(\"nullable-getClass-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0067",
+          "operation": "expression"
+        },
+        {
+          "expression": "nullable.getClass().simpleName",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0068",
+          "operation": "expression"
+        },
+        {
+          "expression": "nullable.toString(trace(\"nullable-toString-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0069",
+          "operation": "expression"
+        },
+        {
+          "expression": "nullable.toString(throw(\"nullable-toString-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0070",
+          "operation": "expression"
+        },
+        {
+          "expression": "nullable.toString()",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0071",
+          "operation": "expression"
+        },
+        {
+          "expression": "regex.getClass(trace(\"regex-getClass-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0072",
+          "operation": "expression"
+        },
+        {
+          "expression": "regex.getClass(throw(\"regex-getClass-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0073",
+          "operation": "expression"
+        },
+        {
+          "expression": "regex.getClass().simpleName",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0074",
+          "operation": "expression"
+        },
+        {
+          "expression": "regex.toString(trace(\"regex-toString-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0075",
+          "operation": "expression"
+        },
+        {
+          "expression": "regex.toString(throw(\"regex-toString-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0076",
+          "operation": "expression"
+        },
+        {
+          "expression": "regex.toString()",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0077",
+          "operation": "expression"
+        },
+        {
+          "expression": "sequence.getClass(trace(\"sequence-getClass-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0078",
+          "operation": "expression"
+        },
+        {
+          "expression": "sequence.getClass(throw(\"sequence-getClass-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0079",
+          "operation": "expression"
+        },
+        {
+          "expression": "sequence.getClass().simpleName",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0080",
+          "operation": "expression"
+        },
+        {
+          "expression": "sequence.toString(trace(\"sequence-toString-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0081",
+          "operation": "expression"
+        },
+        {
+          "expression": "sequence.toString(throw(\"sequence-toString-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0082",
+          "operation": "expression"
+        },
+        {
+          "expression": "sequence.toString()",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0083",
+          "operation": "expression"
+        },
+        {
+          "expression": "boolean.getClass(trace(\"boolean-getClass-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0084",
+          "operation": "expression"
+        },
+        {
+          "expression": "boolean.getClass(throw(\"boolean-getClass-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0085",
+          "operation": "expression"
+        },
+        {
+          "expression": "boolean.getClass().simpleName",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0086",
+          "operation": "expression"
+        },
+        {
+          "expression": "boolean.toString(trace(\"boolean-toString-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0087",
+          "operation": "expression"
+        },
+        {
+          "expression": "boolean.toString(throw(\"boolean-toString-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0088",
+          "operation": "expression"
+        },
+        {
+          "expression": "boolean.toString()",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0089",
+          "operation": "expression"
+        },
+        {
+          "expression": "string.getClass(trace(\"string-getClass-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0090",
+          "operation": "expression"
+        },
+        {
+          "expression": "string.getClass(throw(\"string-getClass-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0091",
+          "operation": "expression"
+        },
+        {
+          "expression": "string.getClass().simpleName",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0092",
+          "operation": "expression"
+        },
+        {
+          "expression": "string.toString(trace(\"string-toString-ARG\"))",
+          "rationale": "Found method: Logger argument precedes wrong-arity declaration/caller frames.",
+          "id": "q0093",
+          "operation": "expression"
+        },
+        {
+          "expression": "string.toString(throw(\"string-toString-THROW\"))",
+          "rationale": "Argument error precedes callee arity checking; no callee declaration should be fabricated.",
+          "id": "q0094",
+          "operation": "expression"
+        },
+        {
+          "expression": "string.toString()",
+          "rationale": "Same evaluator valid-arity recovery and actual resolved method control.",
+          "id": "q0095",
+          "operation": "expression"
+        },
+        {
+          "expression": "pair.ifNonNull()",
+          "rationale": "Ordinary Any call-target missing-argument declaration control.",
+          "id": "q0096",
+          "operation": "expression"
+        },
+        {
+          "expression": "pair.ifNonNull(trace(\"FIRST\"), trace(\"SECOND\"))",
+          "rationale": "Ordinary Any wrong-arity control with ordered Logger arguments.",
+          "id": "q0097",
+          "operation": "expression"
+        },
+        {
+          "expression": "pair.ifNonNull((p) -> trace(p.first))",
+          "rationale": "Valid callback and ordered Logger control.",
+          "id": "q0098",
+          "operation": "expression"
+        },
+        {
+          "expression": "pair.missingAnyMethod(trace(\"MUST-NOT-LOG\"))",
+          "rationale": "Missing lookup must precede argument execution.",
+          "id": "q0099",
+          "operation": "expression"
+        },
+        {
+          "expression": "stable",
+          "rationale": "Terminal same-evaluator recovery.",
+          "id": "q0100",
+          "operation": "expression"
+        }
+      ]
+    }
+  ],
+  "profiles": [
+    "default",
+    "identity"
+  ],
+  "rounds": 2,
+  "session_count": 2,
+  "observations": 404,
+  "receiver_count": 16,
+  "expected_results_present": false,
+  "expected_statuses_present": false,
+  "scope": "Related native Any arity metadata, argument-error precedence, ordered Logger, ordinary Any and missing-lookup controls; all actual outcomes retained."
+}

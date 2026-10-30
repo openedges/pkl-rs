@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 2 function arguments but got 3.
+
+2383 | external const function Pair<First, Second>(first: First, second: Second): Pair<First, Second>
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Pair (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2383)
+
+1 | Pair("left", "right", "extra").toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

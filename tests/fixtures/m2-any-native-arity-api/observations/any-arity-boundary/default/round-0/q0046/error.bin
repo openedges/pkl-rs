@@ -1,0 +1,6 @@
+–– Pkl Error ––
+datasize-toString-THROW
+
+1 | datasize.toString(throw("datasize-toString-THROW"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

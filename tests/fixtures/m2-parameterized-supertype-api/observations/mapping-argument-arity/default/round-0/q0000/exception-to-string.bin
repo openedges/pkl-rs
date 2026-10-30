@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 2 type argument(s) but got 1.
+
+1 | typealias Bar = Mapping<String>
+                    ^^^^^^^^^^^^^^^
+at mapping-argument-arity#Bar (file:///stage121/parameterized/mapping-argument-arity.pkl)
+
+2 | class Baz extends Bar
+                      ^^^
+at mapping-argument-arity#Baz (file:///stage121/parameterized/mapping-argument-arity.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

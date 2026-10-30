@@ -1,0 +1,4 @@
+typealias First = Listing<String>
+typealias Bar = First
+class Baz extends Bar
+qux = new Baz {}

@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+datasize-getClass-THROW
+
+1 | datasize.getClass(throw("datasize-getClass-THROW"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

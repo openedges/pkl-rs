@@ -1,0 +1,9 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `valu` in object of type `Pair`.
+
+1 | pair.valu
+    ^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+value

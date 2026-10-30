@@ -1,0 +1,86 @@
+{
+  "complete": true,
+  "parts": [
+    {
+      "path": "target/m2/stage121-evidence-archives-01/stage121-pair-supertype-evidence-01.tar.gz",
+      "bytes": 25172802,
+      "mode": 420,
+      "sha256": "83041d5966f62874a087c71a3b7af0496a703f8fdd95651adb7a91c90fd27934"
+    },
+    {
+      "path": "target/m2/stage121-evidence-archives-01/stage121-pair-supertype-evidence-02.tar.gz",
+      "bytes": 18321803,
+      "mode": 420,
+      "sha256": "aeccb569761699da5186edfac247071e12a1aaf9268f99800d175236dfe2e050"
+    },
+    {
+      "path": "target/m2/stage121-evidence-archives-01/stage121-pair-supertype-evidence-03.tar.gz",
+      "bytes": 12191807,
+      "mode": 420,
+      "sha256": "7b9866f77fabcff7528b130e2bc9a3c46f774e9ab7714820948b61b00fea00fa"
+    },
+    {
+      "path": "target/m2/stage121-evidence-archives-01/stage121-pair-supertype-evidence-04.tar.gz",
+      "bytes": 20279756,
+      "mode": 420,
+      "sha256": "912af793083b12fe2336ee04ae99da5e1cab274f0b1a268326eb2907db9de76e"
+    },
+    {
+      "path": "target/m2/stage121-evidence-archives-01/stage121-pair-supertype-evidence-05.tar.gz",
+      "bytes": 20031695,
+      "mode": 420,
+      "sha256": "0ad670019b13c8426df48386c93b6d610758d65ed5be51801092e6f519793536"
+    },
+    {
+      "path": "target/m2/stage121-evidence-archives-01/stage121-pair-supertype-evidence-06.tar.gz",
+      "bytes": 13794255,
+      "mode": 420,
+      "sha256": "9c0b22d25c87cbe73d6a73bfa6854be0568fef8553a6749a15abb80d2df42d6c"
+    },
+    {
+      "path": "target/m2/stage121-evidence-archives-01/stage121-pair-supertype-evidence-07.tar.gz",
+      "bytes": 18599833,
+      "mode": 420,
+      "sha256": "717b7a6f854f0299cbdf55020181b33ee260b59130ae5e5f2b01558130de36d1"
+    },
+    {
+      "path": "target/m2/stage121-evidence-archives-01/stage121-pair-supertype-evidence-08.tar.gz",
+      "bytes": 12162932,
+      "mode": 420,
+      "sha256": "3f5de7c1074fcc35ba22806543aa7af5fed6493bb45dd8159287a5c0d0cd57cc"
+    },
+    {
+      "path": "target/m2/stage121-evidence-archives-01/stage121-pair-supertype-evidence-09.tar.gz",
+      "bytes": 19578950,
+      "mode": 420,
+      "sha256": "f755009f77c9ebc418a18fd483fbc16200a3ee1a8a70512e73a187f8e82c00b4"
+    },
+    {
+      "path": "target/m2/stage121-evidence-archives-01/stage121-pair-supertype-evidence-10.tar.gz",
+      "bytes": 25392656,
+      "mode": 420,
+      "sha256": "a6a2d4a1a32892937a4f667e9bda9b16060f46d78e2c9fec72a728a128dcd47e"
+    }
+  ],
+  "logical_aliases": 222571,
+  "unique_objects": 13514,
+  "metadata_members": 19,
+  "old_archive_bodies_read": false,
+  "source_alias_modes_preserved": true,
+  "aliases_freshly_rehashed": false,
+  "final_documents_archived": false,
+  "compressed_bytes": 185526489,
+  "catalog": {
+    "path": "target/m2/stage121-publication-catalog-prep-01/readiness.json",
+    "bytes": 4225,
+    "mode": 420,
+    "sha256": "07c215e4ad02514be6573d48e62bdace77f4a888c461b7dd8853c4ca2c236218"
+  },
+  "producer": {
+    "path": "target/m2/stage121-checkpoint-preparation-01/archive.py",
+    "bytes": 6051,
+    "mode": 420,
+    "sha256": "dde6de8913b59382991e44814d14612add6647e98c77905c5445304a2b8a1038"
+  },
+  "elapsed_seconds": 23.09318899968639
+}

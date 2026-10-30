@@ -1,0 +1,12 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `foo` in object of type `Pair`.
+
+1 | pair.foo
+    ^^^^^^^^
+at  (repl:text)
+
+Available properties:
+first
+key
+second
+value

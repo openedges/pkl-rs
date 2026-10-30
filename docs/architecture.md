@@ -59,6 +59,21 @@ formatting options do not change the Regex pattern representation. These rules
 live in the shared engine used by native, Wasm and N-API; their bounded evidence
 is recorded in the Stage114 checkpoint.
 
+### Pair dispatch and superclass use sites
+
+`Pair` stores its fields in a specialized heap representation but inherits from
+`Any`, not `Typed`. Method selection excludes Pair from Typed conversion and
+lookup dispatch before evaluating arguments. Missing-member suggestions use
+the pinned Pair and Any declarations. Native inherited Any calls record the
+resolved base declaration for arity errors after evaluating authored arguments.
+
+Superclass resolution uses a dedicated deferred instruction carrying the
+authored type label. It retains the use-site span when an alias resolves to an
+invalid superclass, without changing annotation or default-instance class
+resolution. These behaviors are shared across native, Wasm and N-API; the
+[Stage121 evidence](../reports/m2/stage121-pair-supertype/README.md) describes
+their tested boundary.
+
 ## Compatibility Boundaries
 
 | Boundary | Design Requirement |

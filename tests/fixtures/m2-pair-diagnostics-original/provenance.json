@@ -1,0 +1,49 @@
+{
+  "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/propertyNotFound2.pkl",
+  "original_input": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/propertyNotFound2.pkl",
+  "original_input_sha256": "601a078f7d86a8b983c734f2a9b38bc5b5aeeb56772991cb0f8c3265ea97b803",
+  "actual_Java_process": {
+    "bytes": 3172,
+    "path": "target/m2/stage94-originals-replay-01/cases/14fb1400057b2cfd0aa80f26/java/process.json",
+    "sha256": "e2af673e8324e011c84c90040d87d1e6ce250f2f42041f4b968cb9d3e147cf90"
+  },
+  "Java_result": {
+    "bytes": 294,
+    "path": "target/m2/stage94-originals-replay-01/cases/14fb1400057b2cfd0aa80f26/java/result.json",
+    "sha256": "85d526aa642d27a24761d00e57faded92182fbe21823cf894c5affe9d4671744"
+  },
+  "source_uri_from_original_process": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/propertyNotFound2.pkl",
+  "aliases": [
+    {
+      "destination": "tests/fixtures/m2-pair-diagnostics-original/input.pkl",
+      "authority_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/propertyNotFound2.pkl",
+      "bytes": 22,
+      "sha256": "601a078f7d86a8b983c734f2a9b38bc5b5aeeb56772991cb0f8c3265ea97b803"
+    },
+    {
+      "destination": "tests/fixtures/m2-pair-diagnostics-original/stdout.bin",
+      "authority_path": "target/m2/stage94-originals-replay-01/cases/14fb1400057b2cfd0aa80f26/java/stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "destination": "tests/fixtures/m2-pair-diagnostics-original/stderr.bin",
+      "authority_path": "target/m2/stage94-originals-replay-01/cases/14fb1400057b2cfd0aa80f26/java/stderr.bin",
+      "bytes": 844,
+      "sha256": "9f70f5c43e674dc1400497d0a680420502c1b240fa068cbb668990ac578ff69d"
+    },
+    {
+      "destination": "tests/fixtures/m2-pair-diagnostics-original/java-process.json",
+      "authority_path": "target/m2/stage94-originals-replay-01/cases/14fb1400057b2cfd0aa80f26/java/process.json",
+      "bytes": 3172,
+      "sha256": "e2af673e8324e011c84c90040d87d1e6ce250f2f42041f4b968cb9d3e147cf90"
+    },
+    {
+      "destination": "tests/fixtures/m2-pair-diagnostics-original/java-result.json",
+      "authority_path": "target/m2/stage94-originals-replay-01/cases/14fb1400057b2cfd0aa80f26/java/result.json",
+      "bytes": 294,
+      "sha256": "85d526aa642d27a24761d00e57faded92182fbe21823cf894c5affe9d4671744"
+    }
+  ],
+  "expected_results_generated_from_Rust": false
+}

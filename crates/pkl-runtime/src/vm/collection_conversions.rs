@@ -209,6 +209,11 @@ impl Vm {
             return Ok(false);
         };
         let object = self.heap.get(source)?;
+        // Pair's heap prototype has a class definition, but VmPair extends Any,
+        // not Typed. Reject its conversion/lookup dispatch before arguments run.
+        if object.pair.is_some() {
+            return Ok(false);
+        }
         let class: Arc<str> =
             if object.is_module || collections::typed_class(&self.heap, source)?.is_some() {
                 "Typed".into()

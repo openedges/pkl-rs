@@ -1,0 +1,13 @@
+–– Pkl Error ––
+Cannot extend non-open class `Mapping`.
+
+2 | class Baz extends Bar
+                      ^^^
+at mapping-alias#Baz (file:///stage121/parameterized/mapping-alias.pkl)
+
+By default, classes are closed for extension.
+To make a class extensible, add an `open` modifier: `open class MyClass { ... }`
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

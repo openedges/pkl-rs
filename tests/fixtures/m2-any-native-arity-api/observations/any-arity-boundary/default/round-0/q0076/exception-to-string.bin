@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+regex-toString-THROW
+
+1 | regex.toString(throw("regex-toString-THROW"))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

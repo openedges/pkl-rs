@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+pair-getClass-THROW
+
+1 | pair.getClass(throw("pair-getClass-THROW"))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

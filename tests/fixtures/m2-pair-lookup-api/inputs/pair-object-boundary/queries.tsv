@@ -1,0 +1,13 @@
+q0000	expression	pair.hasProperty("first")
+q0001	expression	pair.getProperty("first")
+q0002	expression	pair.getPropertyOrNull("first")
+q0003	expression	pair.toMap()
+q0004	expression	pair.toDynamic(throw("MUST-NOT-FORCE"))
+q0005	expression	pair.toDynamic(trace("MUST-NOT-LOG"))
+q0006	expression	pair.hasProperty(throw("MUST-NOT-FORCE"))
+q0007	expression	pair.getProperty(trace("MUST-NOT-LOG"))
+q0008	expression	pair.getPropertyOrNull(throw("MUST-NOT-FORCE"))
+q0009	expression	pair.toMap(trace("MUST-NOT-LOG"))
+q0010	expression	pair.toString(trace("FOUND-ARGUMENT"))
+q0011	expression	pair.ifNonNull((p) -> trace(p.key))
+q0012	expression	stable
