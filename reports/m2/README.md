@@ -1,5 +1,21 @@
 # M2 language evidence
 
+## Stage127 opaque glob URI validation — bounded local checkpoint
+
+The shared traversal now validates the raw opaque reader URI after glob regex
+compilation and before listing. The selected 20 previously wrong-success sessions
+now stop with `Unsupported`; their Java internal-error diagnostics remain
+unmatched. Of 36 control sessions, 32 match the common raw channels and four
+retain their prior relative-space mismatches. See the [Stage127 report](stage127-opaque-glob-uri/README.md)
+for the 56-session/128-query evidence and unimplemented frame/catch behavior.
+
+Eight Rust tests, formatting, xtask, all-target Clippy, the Wasm check, manifest
+freshness and eight focused Python tests pass. A fresh M1 acquisition matches
+6,078 rows per native/Node/Chromium target and passes 92 Node and 92 browser
+scenarios. The actual full workspace command was stopped at its 1 GiB disk floor
+during compilation (exit -15); it remains unverified. The historical full
+language/glob results below are not new Stage127 executions.
+
 ## Stage122 lossless source, glob Host and runtime diagnostics
 
 The [Stage122 report](stage122-lossless-source-runtime/README.md) records authored UTF-16 source/URI transport, typed glob Host operations, selected declaration/version/spread diagnostics, Resource digest defaults and math bindings. Local evidence joins **285 complete test harnesses: 1,779 passes, zero failures and five ignored**, with all seven checks06 commands exiting zero. The original Cargo exit during reflection remains unobserved/inconclusive; the functional harness result, original incomplete producer and failed observer stay distinct.

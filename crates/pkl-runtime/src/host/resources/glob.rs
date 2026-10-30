@@ -11,6 +11,26 @@ pub(crate) fn parse_base(text: &PklString) -> Result<PklString, RuntimeError> {
     })
 }
 
+/// Validate the URI passed to the opaque reader after regex compilation.
+/// This is the raw absolute pattern or the constructed relative dummy URI.
+pub(crate) fn validate_opaque_list_uri(pattern: &PklString) -> Result<(), RuntimeError> {
+    match ResourceUri::parse(pattern) {
+        Ok(_) => Ok(()),
+        Err(ParseError::Syntax(reason)) => {
+            let index_utf16 = lossless_uri::opaque_syntax_index(pattern, reason);
+            let mut error =
+                unsupported("Java URI.create internal diagnostic rendering is not supported.");
+            error.uri_create_cause = Some(crate::value::UriCreateCause {
+                input: pattern.clone(),
+                reason,
+                index_utf16,
+            });
+            Err(error)
+        }
+        Err(ParseError::Unsupported(reason)) => Err(unsupported(reason)),
+    }
+}
+
 pub(crate) fn normalize(uri: &PklString) -> Result<PklString, RuntimeError> {
     Ok(ResourceUri::parse(uri)
         .map_err(|_| unsupported("Invalid glob result URI."))?

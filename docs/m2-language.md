@@ -1,6 +1,22 @@
 # M2 language verification
 
-## Stage122 lossless source and runtime integration — current local results
+## Stage127 opaque glob URI validation — bounded local checkpoint
+
+The shared traversal now validates the raw opaque reader URI after glob regex
+compilation and before listing. The selected 20 previously wrong-success sessions
+now stop with `Unsupported`; their Java internal-error diagnostics remain
+unmatched. Of 36 control sessions, 32 match the common raw channels and four
+retain their prior relative-space mismatches. See the [Stage127 report](../reports/m2/stage127-opaque-glob-uri/README.md)
+for the 56-session/128-query evidence and unimplemented frame/catch behavior.
+
+Eight Rust tests, formatting, xtask, all-target Clippy, the Wasm check, manifest
+freshness and eight focused Python tests pass. A fresh M1 acquisition matches
+6,078 rows per native/Node/Chromium target and passes 92 Node and 92 browser
+scenarios. The actual full workspace command was stopped at its 1 GiB disk floor
+during compilation (exit -15); it remains unverified. The historical full
+language/glob results below are not new Stage127 executions.
+
+## Stage122 lossless source and runtime integration — previous local results
 
 The shared engine adds authored UTF-16 source/URI handling, typed glob Host requests/completions, version/declaration/spread diagnostics, Resource digest defaults and 18 math external bindings. Bounded lossless session and string transport does not establish full typed value export or the public evaluator API.
 

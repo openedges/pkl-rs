@@ -125,6 +125,18 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def cargo_products():
+    # Cargo commands below run with cwd=ROOT; relative target directories must
+    # be interpreted against that same directory, not the caller's cwd.
+    target = ROOT / os.environ.get('CARGO_TARGET_DIR', 'target')
+    libraries = {'Darwin': 'libpkl_napi.dylib', 'Linux': 'libpkl_napi.so', 'Windows': 'pkl_napi.dll'}
+    return {
+        'wasm': target/'wasm32-unknown-unknown/release/pkl_wasm.wasm',
+        'napi': target/'release'/libraries[platform.system()],
+        'native': target/'debug/examples'/('semantics_probe.exe' if os.name == 'nt' else 'semantics_probe'),
+    }
+
+
 def compare(cases, captures):
     if not cases or len({case['id'] for case in cases}) != len(cases):
         raise ValueError('empty or duplicate case inventory')
@@ -201,12 +213,12 @@ def run(output, bindgen, verify_contract):
     execute('native-build', ['cargo', 'build', '-p', 'pkl-runtime', '--example', 'semantics_probe', '--locked'])
     execute('napi-build', ['cargo', 'build', '-p', 'pkl-napi', '--release', '--locked'])
     execute('wasm-build', ['cargo', 'build', '-p', 'pkl-wasm', '--target', 'wasm32-unknown-unknown', '--release', '--locked'])
+    products = cargo_products()
     wasm_dir = output/'wasm'
-    execute('wasm-bindgen', [str(bindgen), '--target', 'web', '--out-dir', str(wasm_dir), str(ROOT/'target/wasm32-unknown-unknown/release/pkl_wasm.wasm')])
-    libraries = {'Darwin': 'libpkl_napi.dylib', 'Linux': 'libpkl_napi.so', 'Windows': 'pkl_napi.dll'}
+    execute('wasm-bindgen', [str(bindgen), '--target', 'web', '--out-dir', str(wasm_dir), str(products['wasm'])])
     addon = output/'pkl_napi.node'
-    shutil.copyfile(ROOT/'target/release'/libraries[platform.system()], addon)
-    native = ROOT/'target/debug/examples'/('semantics_probe.exe' if os.name == 'nt' else 'semantics_probe')
+    shutil.copyfile(products['napi'], addon)
+    native = products['native']
     copied_native = output/native.name
     shutil.copy2(native, copied_native)
     native = copied_native

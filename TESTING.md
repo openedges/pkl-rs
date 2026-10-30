@@ -21,6 +21,22 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+### Stage127 opaque glob URI validation — bounded local checkpoint
+
+The shared traversal now validates the raw opaque reader URI after glob regex
+compilation and before listing. The selected 20 previously wrong-success sessions
+now stop with `Unsupported`; their Java internal-error diagnostics remain
+unmatched. Of 36 control sessions, 32 match the common raw channels and four
+retain their prior relative-space mismatches. See the [Stage127 report](reports/m2/stage127-opaque-glob-uri/README.md)
+for the 56-session/128-query evidence and unimplemented frame/catch behavior.
+
+Eight Rust tests, formatting, xtask, all-target Clippy, the Wasm check, manifest
+freshness and eight focused Python tests pass. A fresh M1 acquisition matches
+6,078 rows per native/Node/Chromium target and passes 92 Node and 92 browser
+scenarios. The actual full workspace command was stopped at its 1 GiB disk floor
+during compilation (exit -15); it remains unverified. The historical full
+language/glob results below are not new Stage127 executions.
+
 ### Stage122 lossless source and runtime integration — verified local checkpoint
 
 Independent readback records **1,779 passing tests, zero failures and five ignored across 285 harnesses**, composed from 198 checks04, 85 checks05 and two repaired checks06 harnesses. Nested child repeats are excluded and ignored tests remain gaps. This is functional harness coverage, not a successful fresh full-workspace Cargo command. Reflection's actual test process exited zero with five raw passes; its original Cargo exit was not captured and remains null/inconclusive. The original incomplete producer, failed observer and monitoring gap are preserved.

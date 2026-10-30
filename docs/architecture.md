@@ -99,6 +99,14 @@ shared state machine. Malformed URI/internal-error behavior and missing Host
 fixture prerequisites remain required gaps; typed transport alone does not
 establish complete glob or external-I/O compatibility.
 
+Opaque glob traversal compiles the pattern before validating the URI passed to
+the reader. Absolute patterns use the authored URI; relative patterns use the
+enclosing scheme's dummy URI. A failed validation prevents `list-elements` from
+being requested. The error retains the original UTF-16 input, syntax reason and
+known UTF-16 index in rare diagnostic metadata. Java's internal exception
+rendering and catch behavior remain unimplemented, so this path reports
+`Unsupported` rather than claiming matching Java diagnostics.
+
 ### Shared math and Resource defaults
 
 The `pkl:math` bindings use shared Rust kernels with explicit fdlibm operation

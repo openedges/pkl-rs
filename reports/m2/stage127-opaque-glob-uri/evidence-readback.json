@@ -1,0 +1,62 @@
+{
+  "complete": true,
+  "errors": [],
+  "started_epoch": 1793353148.7334,
+  "performance_claim": false,
+  "archive": {
+    "path": "target/m2/stage127-opaque-glob-uri-evidence-01.tar.gz",
+    "bytes": 20812219,
+    "mode": 420,
+    "sha256": "e9959ce1f18fed1c0ba4e0544289a0795d85cf0a1e135f87b6017921c9d12c2b"
+  },
+  "receipt": {
+    "path": "target/m2/stage127-opaque-glob-uri-evidence-01.tar.gz.receipt.json",
+    "bytes": 1912,
+    "mode": 420,
+    "sha256": "b0954bf667d1bb9f4451d06bd56988738b1c28c468e13f85aaec74b8267065c5"
+  },
+  "regular_members": 6615,
+  "source_members": 6613,
+  "source_bytes": 91818514,
+  "selected_sessions": 56,
+  "inventory_sha256": "1daff8dc1dd7d9622a6480b95a7fe7d4ab401df5cea15ccf5a0c4f4593f912f1",
+  "terminal_outcomes": {
+    "canonical_m1_tool_pins": {
+      "tools/m1_platforms.py": {
+        "current": {
+          "path": "tools/m1_platforms.py",
+          "bytes": 13473,
+          "mode": 420,
+          "sha256": "71165cd99acf4edf203855ea814fdbe4a0668d2160617ea1fea12cf3a8747fd3"
+        },
+        "supplemental_present": true,
+        "m1_source_before_present": true
+      },
+      "tools/tests/test_m1_platforms.py": {
+        "current": {
+          "path": "tools/tests/test_m1_platforms.py",
+          "bytes": 12797,
+          "mode": 420,
+          "sha256": "67a23ae3d9f4e82f4380122718c4db566dd26e4691eccd50bfe18fcd5ee2eea1"
+        },
+        "supplemental_present": true,
+        "m1_source_before_present": false
+      }
+    },
+    "regex_order_sessions": 8,
+    "regex_order_queries": 16,
+    "regex_order_matching_sessions": 8,
+    "early_pass": true,
+    "workspace_full_pass": false,
+    "workspace_exit": -15,
+    "workspace_stop_reason": "1 GiB disk floor",
+    "native_sessions": 56,
+    "native_common_raw_all_match": false,
+    "independent_complete": true,
+    "java_repeat_raw_bytes_equal": true,
+    "m1_compatibility_status": "pass",
+    "m1_experiment_contract_status": "pass",
+    "supplemental_pass": true
+  },
+  "finished_epoch": 1793353149.6218839
+}

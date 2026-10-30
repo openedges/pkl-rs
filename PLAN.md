@@ -4,6 +4,10 @@
 
 ## 현재 상태
 
+Stage127에서 opaque glob의 정규식 검증 다음에 원래 reader URI를 검증하도록 수정했습니다. 잘못 성공하던 선택20개 세션·40개 query가 목록 조회 전에 `Unsupported`로 종료됩니다. Java 내부 오류의 전체 바이트·frame·catch 의미론은 미구현이므로 새 호환 통과로 집계하지 않습니다. 대조군36개 중32개 세션·80개 query는 일치하고 상대경로 공백4개 세션·8개 query의 기존 불일치는 유지됩니다.
+
+새 로컬 검증은 Rust8개·Python8개, format·xtask·Clippy·Wasm·목록 최신성 검사를 통과했습니다. 실제 M1은 세 대상 각각6,078개와 Node·브라우저 각각92개 시나리오가 통과했습니다. 전체 workspace 명령은 컴파일 도중 디스크1 GiB 하한으로 중단됐고 실제 exit는-15입니다. 새 미실행 테스트 실행파일146개만 정리해 약1.56 GB를 확보했으며 원본 증거를 보존했습니다. 전체 workspace 재검증은 미완료입니다. [Stage127 보고서](reports/m2/stage127-opaque-glob-uri/README.md)를 기준으로 후속 작업을 진행하며 아래 Stage122 전체 언어·glob 수치는 과거 취득 결과로 유지합니다.
+
 Stage122에서 UTF-16 source·URI 보존, typed glob Host, version·declaration owner·fixed/typed spread 진단, Resource digest와 math external binding 18개를 공통 엔진에 통합했습니다. 실제 원시 증거의 exact union은 test harness **285개·통과 1,779개·실패 0·ignored 5개**입니다. checks04 통과 harness198개, checks05 통과85개, checks06 새 수정 후 통과2개를 연결하며 nested child repeat를 합산하지 않습니다. checks06의 workspace 이외 검사 다섯 개와 수정한 두 전체 test target, 총 일곱 명령은 실제 exit0입니다. reflection harness는 실제 process exit0·원시5개 통과지만 원래 Cargo 종료 status는 관측하지 못했으므로 null·inconclusive로 유지합니다. 원래 producer incomplete·observer 실패·monitoring gap을 보존하며 새 전체 workspace Cargo 명령 성공으로 표현하지 않습니다.
 
 전체 ready4,442개는 **일치4,351개·불일치15개·미지원74개·Java 오류2개**이며 Stage121 통과의 회귀가 없고 metamorphic88개가 통과했습니다. 원래 Resource·math·URI/glob·fixed/version/spread 사례12개가 새로 일치합니다. 이12개는 현재 manifest에서 required·ready이지만 `requirements`가 빈 목록입니다. 구현·test mapping 상태도 바꾸지 않았으므로 linkage를 별도 검사하는 정확한 전체 gate는 **중복 가능한 미충족1,768개(구현472·mapping472·required case824)**를 유지합니다. 목록4,545개·요구사항475개·미구현71개·미연결 실행 계약32개와 아홉 M2 작업 영역은 필수 미완료입니다. ready이지만 요구사항 연결이 없는 사례와 execution 자체가 unmapped인 계약을 구분합니다.
@@ -29,7 +33,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: Stage122 UTF-16·glob Host·진단·Resource·math 통합; harness285개·1,779통과·ignored5개; ready4,351/4,442일치·metamorphic88통과·회귀0; Cargo 종료 관측 누락·전체 gate1,768조건·Chromium 조합 검증·archive 게시 완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: Stage127 opaque URI 검증·선택20개 잘못된 성공 제거; Java 내부 오류 호환·전체 workspace 재검증 미완료; Stage122 전체 ready4,351/4,442는 과거 결과 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
@@ -3729,3 +3733,11 @@ harness exact union과 실제 command exit를 분리합니다. 원래 checks04 �
 M1 actual03과 Native20/static4, Native·N-API lossless/full744 및 glob576은 각각 별도 계약입니다. N-API03이 이전 adapter 회귀4개를 해결했지만52개 원시 nonmatch·내부 lossless4개는 미해결입니다. 기존 nonpass8개 관측에서 Native/N-API channel presence 차이72개·필드 비교 분류 차이40개도 보존합니다. Chromium의 기존701개와 새63개를 연결한 독립 원시 판독, transport-19 전체 Native/N-API/Chromium 비교가 통과했습니다. 대형10개에는 별도3 GiB sampled owned-process RSS 한도를 적용했고 최대2,370,224,128 bytes를 관측했습니다. 나머지52개 glob과 transport는 기존2 GiB를 유지합니다. 원래04의2 GiB 한도 중단·정확한 peak 미관측,52개 glob 미일치와 대상별 내부4개를 보존하며 메모리 성능 목표 달성으로 계산하지 않습니다.
 
 source epoch별 catalog와 복원 선행 조건을 확정하고 archive18개·총67,637,208 compressed bytes를 게시했습니다. 독립 판독은 payload18,686개·logical alias155,089개·필수 historical alias633개와 최종 구현1,888개를 확인했고 게시 사본의 전체 바이트·해시·mode가 일치했습니다. 원래 preparation의 pending 문구는 봉인한 채 final descriptor의 실제 완료 receipt와 addendum으로 구분합니다. Git 게시 후 원래 glob Host·API/internal·전체 언어의 미지원·불일치·미연결 의무를 계속 처리합니다. 전체 API·M2·릴리스 OS·속도·메모리 gate는 유지합니다.
+
+### Stage127 — opaque glob URI 검증 순서
+
+- 구현: glob regex 다음에 absolute 원문 URI 또는 relative dummy URI를 검증합니다. 원문 UTF-16·오류 원인·확인 가능한 UTF-16 위치를 드문 진단 metadata에 보존하고 실패 뒤 listing을 막습니다.
+- 도구: `tools/m1_platforms.py`가 `CARGO_TARGET_DIR`의 절대·상대 경로를 따르도록 보완했습니다. Native·N-API·Wasm 제품 모두 같은 빌드 경로에서 검증합니다.
+- 증거: 선택 Native56개 세션·128개 query, Java 직접 URI30개를 두 번, 새 Pkl regex-first4개 프로그램을 두 번 실행했습니다. 새 Native8개 세션·16개 query도 Java의 공통 원시8개 채널과 logs가 일치합니다. 실제 M1·기본 검사 결과와 중단 기록은 [보고서](reports/m2/stage127-opaque-glob-uri/README.md)에 구분합니다.
+- 미완료: 디스크 공간을 확보한 전체 workspace 재실행, 내부 오류의 전체 진단·frame·catch 호환, 전체 언어와 glob 및 대상별 기능 비교 확대가 필요합니다. 이 변경으로 전체 M2 완료율이나 required mapping 상태를 올리지 않습니다.
+- 다음 순서: 먼저 전체 workspace 검증 공간을 확보하고, opaque URI 내부 오류의 공통 진단·catch 경로를 구현한 뒤 원래 Java 사례 전체 바이트와 비교합니다. 이후 남은 regex·decoded URI·fragment 및 Host fixture 차이를 처리합니다.

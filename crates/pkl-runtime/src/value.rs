@@ -175,6 +175,8 @@ pub struct RuntimeErrorDetails {
     pub(crate) frame_transformer: crate::logging::FrameTransformer,
     /// Completed Host diagnostic rendering, retaining the original UTF-16 units.
     pub(crate) rendered_diagnostic: Option<PklString>,
+    /// An uncaught Java URI.create failure whose JVM rendering is not implemented.
+    pub uri_create_cause: Option<UriCreateCause>,
     /// Optional rendered hint; retained with rare provenance, outside the common error.
     pub hint: Option<PklString>,
     /// External ErrorMessages template paragraphs have priority over dynamic hints.
@@ -195,6 +197,15 @@ pub struct RuntimeErrorDetails {
     pub spread_hint: Option<Box<Span>>,
     pub type_diagnostic: Option<Box<crate::diagnostic::TypeDiagnostic>>,
 }
+
+/// Lossless provenance for URI.create's IllegalArgumentException and its
+/// URISyntaxException cause; the index is in Java UTF-16 code units.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct UriCreateCause {
+    pub input: PklString,
+    pub reason: &'static str,
+    pub index_utf16: Option<usize>,
+}
 // Executable identities are evaluator-local bookkeeping, not error payload.
 // Complete diagnostic frames and all existing provenance still compare exactly.
 impl PartialEq for RuntimeErrorDetails {
@@ -202,6 +213,7 @@ impl PartialEq for RuntimeErrorDetails {
         self.callback_origin == other.callback_origin
             && self.frame_transformer == other.frame_transformer
             && self.rendered_diagnostic == other.rendered_diagnostic
+            && self.uri_create_cause == other.uri_create_cause
             && self.hint == other.hint
             && self.hint_from_template == other.hint_from_template
             && self.type_lookup_module == other.type_lookup_module
@@ -222,6 +234,7 @@ static EMPTY_ERROR_DETAILS: RuntimeErrorDetails = RuntimeErrorDetails {
     callback_origin: None,
     frame_transformer: crate::logging::FrameTransformer::Default,
     rendered_diagnostic: None,
+    uri_create_cause: None,
     hint: None,
     hint_from_template: false,
     type_lookup_module: None,

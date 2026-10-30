@@ -5,6 +5,54 @@ use crate::pkl_string::PklStringBuilder;
 use crate::source::{SourceSlice, SourceText};
 use crate::value::PklString;
 
+/// URI.Parser reports positions in Java UTF-16 code units, not source bytes.
+pub(super) fn opaque_syntax_index(text: &PklString, reason: &str) -> Option<usize> {
+    let source = SourceText::from(text.clone());
+    let view = source.entire();
+    let (scheme, rest) = view.split_once(":")?;
+    if reason == "Illegal character in scheme name" {
+        return scheme.characters().enumerate().find_map(|(index, (_, c))| {
+            let valid = c.scalar().is_some_and(|c| {
+                if index == 0 {
+                    c.is_ascii_alphabetic()
+                } else {
+                    c.is_ascii_alphanumeric() || "+-.".contains(c)
+                }
+            });
+            (!valid).then_some(index)
+        });
+    }
+    if reason == "Expected scheme-specific part" {
+        return Some(scheme.to_pkl_string().encode_utf16().count() + 1);
+    }
+    if rest.starts_with("/") {
+        return None;
+    }
+    let mut index = scheme.to_pkl_string().encode_utf16().count() + 1;
+    let mut component = Component::Opaque;
+    let mut characters = rest.characters().peekable();
+    while let Some((_, c)) = characters.next() {
+        if c == SourceCharacter::Scalar('#') && matches!(component, Component::Opaque) {
+            component = Component::Fragment;
+        } else if c == SourceCharacter::Scalar('%') {
+            let mut lookahead = characters.clone();
+            if !(0..2).all(|_| {
+                lookahead
+                    .next()
+                    .is_some_and(|(_, c)| c.scalar().is_some_and(|c| c.is_ascii_hexdigit()))
+            }) {
+                return (reason == "Malformed escape pair").then_some(index);
+            }
+        } else if let SourceCharacter::Scalar(c) = c
+            && !component.permits(c)
+        {
+            return (reason == component.illegal()).then_some(index);
+        }
+        index += c.len_utf16();
+    }
+    None
+}
+
 #[derive(Clone, Debug)]
 pub(super) struct ResourceUri {
     pub(super) text: PklString,

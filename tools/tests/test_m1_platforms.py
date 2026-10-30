@@ -10,6 +10,24 @@ import m1_platforms
 
 
 class PlatformEvidenceTests(unittest.TestCase):
+    def test_cargo_products_respect_target_directory_for_all_artifacts(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / 'workspace'
+            external = Path(temporary) / 'external cache'
+            for setting, target in [(None, root / 'target'),
+                                    ('custom/cache', root / 'custom/cache'),
+                                    (str(external), external)]:
+                with self.subTest(setting=setting), patch.object(m1_platforms, 'ROOT', root), \
+                     patch.dict(m1_platforms.os.environ, {}, clear=True), \
+                     patch.object(m1_platforms.platform, 'system', return_value='Linux'):
+                    if setting is not None:
+                        m1_platforms.os.environ['CARGO_TARGET_DIR'] = setting
+                    products = m1_platforms.cargo_products()
+                    self.assertEqual(products['wasm'], target / 'wasm32-unknown-unknown/release/pkl_wasm.wasm')
+                    self.assertEqual(products['napi'], target / 'release/libpkl_napi.so')
+                    native = 'semantics_probe.exe' if m1_platforms.os.name == 'nt' else 'semantics_probe'
+                    self.assertEqual(products['native'], target / 'debug/examples' / native)
+
     def test_source_snapshot_prunes_caches_before_traversal_and_hashing(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

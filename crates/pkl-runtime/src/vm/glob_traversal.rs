@@ -148,6 +148,7 @@ impl Traversal {
 
     pub(super) fn opaque(authored: PklString, list_uri: PklString) -> Result<Self, RuntimeError> {
         let pattern = super::glob_pattern::Pattern::compile(&authored, &authored)?;
+        uri::validate_opaque_list_uri(&list_uri)?;
         Ok(Self {
             authored,
             parts: Vec::new(),
@@ -448,5 +449,70 @@ impl Traversal {
             Pending::Has(_) | Pending::Resolve(_) => unreachable!(),
         }
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn opaque_raw_uri_failure_precedes_listing_and_preserves_cause() {
+        // Captured Java 0.32.0 oracle: Illegal character in opaque part at
+        // index 6: gdata:\*. Repeating construction must not leave a request.
+        for _ in 0..2 {
+            let error = match Traversal::opaque("gdata:\\*".into(), "gdata:\\*".into()) {
+                Ok(_) => panic!("invalid URI reached traversal"),
+                Err(error) => error,
+            };
+            assert_eq!(error.kind, ErrorKind::Unsupported);
+            let cause = error.uri_create_cause.as_ref().unwrap();
+            assert_eq!(cause.input, "gdata:\\*");
+            assert_eq!(cause.reason, "Illegal character in opaque part");
+            assert_eq!(cause.index_utf16, Some(6));
+        }
+    }
+
+    #[test]
+    fn opaque_regex_failure_precedes_raw_uri_validation() {
+        let error = match Traversal::opaque("gdata:\\".into(), "gdata:\\".into()) {
+            Ok(_) => panic!("invalid glob reached traversal"),
+            Err(error) => error,
+        };
+        assert!(error.uri_create_cause.is_none());
+        assert_eq!(error.kind, ErrorKind::Type);
+    }
+
+    #[test]
+    fn opaque_uri_cause_keeps_utf16_input_and_index() {
+        let pattern = PklString::from_utf16(vec![
+            103, 100, 97, 116, 97, 58, 0xd83d, 0xde00, 0xd800, 92, 42,
+        ]);
+        let error = match Traversal::opaque(pattern.clone(), pattern.clone()) {
+            Ok(_) => panic!("invalid URI reached traversal"),
+            Err(error) => error,
+        };
+        let cause = error.uri_create_cause.as_ref().unwrap();
+        assert_eq!(
+            cause.input.encode_utf16().collect::<Vec<_>>(),
+            pattern.encode_utf16().collect::<Vec<_>>()
+        );
+        assert_eq!(cause.reason, "Illegal character in opaque part");
+        assert_eq!(cause.index_utf16, Some(9));
+    }
+
+    #[test]
+    fn opaque_relative_dummy_and_lossless_valid_patterns_reach_listing() {
+        let lone_surrogate = PklString::from_utf16(vec![103, 100, 97, 116, 97, 58, 0xd800, 42]);
+        for (pattern, list_uri) in [
+            (PklString::from("\\*"), PklString::from("gdata:dummy")),
+            (PklString::from("gdata:é*"), PklString::from("gdata:é*")),
+            (lone_surrogate.clone(), lone_surrogate),
+        ] {
+            let mut traversal = Traversal::opaque(pattern, list_uri.clone()).unwrap();
+            assert!(
+                matches!(traversal.poll().unwrap(), Poll::ListElements(uri) if uri == list_uri)
+            );
+        }
     }
 }

@@ -2,7 +2,14 @@
 
 This project reimplements [Pkl](https://pkl-lang.org/) 0.32.0 in Rust. It aims to share one engine across native Rust, WebAssembly, and Node.js N-API, with automated compatibility checks against the Java implementation.
 
-The latest [Stage122 report](reports/m2/stage122-lossless-source-runtime/README.md)
+The latest [Stage127 report](reports/m2/stage127-opaque-glob-uri/README.md)
+records opaque glob URI validation before reader enumeration. All 20 selected
+wrong-success sessions now stop with explicit unsupported diagnostics; Java's
+internal-error bytes remain unmatched. Eight Rust tests and the bounded M1
+native/Node/browser acquisition pass. The full workspace command stopped during
+compilation at its disk-space guard and remains unverified.
+
+The preceding [Stage122 report](reports/m2/stage122-lossless-source-runtime/README.md)
 records lossless UTF-16 source/URI handling, typed glob Host operations, selected
 diagnostics, Resource digests and math bindings. Local verification joins 285
 complete test harnesses with **1,779 passes, zero failures and five ignored**;

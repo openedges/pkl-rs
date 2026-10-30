@@ -1,0 +1,51 @@
+{
+  "complete": true,
+  "copies": [
+    {
+      "source": {
+        "path": "target/m2/stage127-opaque-glob-uri-evidence-01.tar.gz",
+        "bytes": 20812219,
+        "mode": 420,
+        "sha256": "e9959ce1f18fed1c0ba4e0544289a0795d85cf0a1e135f87b6017921c9d12c2b"
+      },
+      "published": {
+        "path": "reports/m2/stage127-opaque-glob-uri/evidence.tar.gz",
+        "bytes": 20812219,
+        "mode": 420,
+        "sha256": "e9959ce1f18fed1c0ba4e0544289a0795d85cf0a1e135f87b6017921c9d12c2b"
+      }
+    },
+    {
+      "source": {
+        "path": "target/m2/stage127-opaque-glob-uri-evidence-01.tar.gz.receipt.json",
+        "bytes": 1912,
+        "mode": 420,
+        "sha256": "b0954bf667d1bb9f4451d06bd56988738b1c28c468e13f85aaec74b8267065c5"
+      },
+      "published": {
+        "path": "reports/m2/stage127-opaque-glob-uri/evidence-receipt.json",
+        "bytes": 1912,
+        "mode": 420,
+        "sha256": "b0954bf667d1bb9f4451d06bd56988738b1c28c468e13f85aaec74b8267065c5"
+      }
+    },
+    {
+      "source": {
+        "path": "target/m2/stage127-archive-readback-01/report.json",
+        "bytes": 2021,
+        "mode": 420,
+        "sha256": "d0162503cd416217f59c574864138a83ddbbbbe3b088046d93fb5fbf7336dcbd"
+      },
+      "published": {
+        "path": "reports/m2/stage127-opaque-glob-uri/evidence-readback.json",
+        "bytes": 2021,
+        "mode": 420,
+        "sha256": "d0162503cd416217f59c574864138a83ddbbbbe3b088046d93fb5fbf7336dcbd"
+      }
+    }
+  ],
+  "archive_members_verified": 6615,
+  "archive_source_members_verified": 6613,
+  "archive_source_bytes_verified": 91818514,
+  "full_workspace_pass": false
+}

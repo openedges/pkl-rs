@@ -1,0 +1,496 @@
+{
+  "schema": 1,
+  "stage": 127,
+  "title": "Opaque glob URI validation before listing",
+  "status": "bounded implementation checkpoint with required workspace validation gap",
+  "compatibility_baseline": "Pkl 0.32.0",
+  "source_parent": "e383697d5748bfed087fe6d9924089043e8bb428",
+  "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "sources": [
+    {
+      "path": "crates/pkl-runtime/src/host/resources/glob.rs",
+      "bytes": 7061,
+      "mode": 420,
+      "sha256": "3c7332abcbfd15912a6fe6db5f7e4f07c3449e8035a23e2f06d95bae869abf1d"
+    },
+    {
+      "path": "crates/pkl-runtime/src/host/resources/lossless_uri.rs",
+      "bytes": 13013,
+      "mode": 420,
+      "sha256": "330fa05144d8f6fb223f62fa1e3fdc94ae9eeebeaf7a2c0f0d8d8dc0183635da"
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/glob_traversal.rs",
+      "bytes": 17889,
+      "mode": 420,
+      "sha256": "f4b439851710338ee4efdd5bbc8617350fafc9161f101930dfd566fde2798e2a"
+    },
+    {
+      "path": "crates/pkl-runtime/src/value.rs",
+      "bytes": 16348,
+      "mode": 420,
+      "sha256": "3c60d87710d755bfe1b1d54df89b369605bf42ae76b840399021c24fca19d9df"
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_glob_opaque_uri.rs",
+      "bytes": 4956,
+      "mode": 420,
+      "sha256": "f23c5a5631703dfc51ef14e3e02cdcd91f7d33c59b6c495fe1170cf87ba30837"
+    },
+    {
+      "path": "compatibility/m2-language.json",
+      "bytes": 6833023,
+      "mode": 420,
+      "sha256": "dd2c9f607cb67bb76277a6c8804ce4f35d8a041a467f49e09843cdd5dde0051a"
+    },
+    {
+      "path": "tools/m1_platforms.py",
+      "bytes": 13473,
+      "mode": 420,
+      "sha256": "71165cd99acf4edf203855ea814fdbe4a0668d2160617ea1fea12cf3a8747fd3"
+    },
+    {
+      "path": "tools/tests/test_m1_platforms.py",
+      "bytes": 12797,
+      "mode": 420,
+      "sha256": "67a23ae3d9f4e82f4380122718c4db566dd26e4691eccd50bfe18fcd5ee2eea1"
+    }
+  ],
+  "receipts_in_archive": {
+    "stage127-early-checks-01": {
+      "path": "target/m2/stage127-early-checks-01/report.json",
+      "bytes": 285629,
+      "mode": 420,
+      "sha256": "01f4d5c5e81f1992cb7f9dad0d7fea2601dcca6882c2658ec02c9f290391c8b0"
+    },
+    "stage127-full-checks-01": {
+      "path": "target/m2/stage127-full-checks-01/report.json",
+      "bytes": 434479,
+      "mode": 420,
+      "sha256": "e652e30ba65a19a5944d9d48f60d7e105d7749d157ee0d719295e60bedcb2f7d"
+    },
+    "stage127-known20-controls-capture-01": {
+      "path": "target/m2/stage127-known20-controls-capture-01/report.json",
+      "bytes": 539988,
+      "mode": 420,
+      "sha256": "4542824663f10e0d55d7177bccb8bcb971c5f4c48bdbd358c5a51a570585f0c4"
+    },
+    "stage127-independent-native-readback-01": {
+      "path": "target/m2/stage127-independent-native-readback-01/report.json",
+      "bytes": 931336,
+      "mode": 420,
+      "sha256": "177fef0a15ec55fd9a989bed6b3a35563c9069975e26e13a6ca8c82ee8ea3609"
+    },
+    "stage127-m1-command-01": {
+      "path": "target/m2/stage127-m1-command-01/report.json",
+      "bytes": 218701,
+      "mode": 420,
+      "sha256": "abf9f2c7f5731407297a9f0fb0d99b368a5a44cb2d14fb1d6215677ceb178b93"
+    },
+    "stage127-m1-independent-review-01": {
+      "path": "target/m2/stage127-m1-independent-review-01/report.json",
+      "bytes": 1717,
+      "mode": 420,
+      "sha256": "4307b55224939288fe2bde38e2608a0d1d054c0bc4498eecb3498861b352f2c4"
+    },
+    "stage127-uri-java-capture-01": {
+      "path": "target/m2/stage127-uri-java-capture-01/report.json",
+      "bytes": 694534,
+      "mode": 420,
+      "sha256": "e795fcf98b2e5815672aa6fca8ea8022e29e6d2daaa7f8f80aa7e9e6f1666c3e"
+    },
+    "stage127-regex-order-native-capture-01": {
+      "path": "target/m2/stage127-regex-order-native-capture-01/report.json",
+      "bytes": 176184,
+      "mode": 420,
+      "sha256": "774779af4e009c59d69a540e8efa809df8f49dbf6dda9b7db20e1ff8f661bc92"
+    },
+    "stage127-regex-order-independent-review-01": {
+      "path": "target/m2/stage127-regex-order-independent-review-01/report.json",
+      "bytes": 623751,
+      "mode": 420,
+      "sha256": "8515e4794d1be1a099bc4ff29fe269ab2fd7ba924d3ea2790898623f97c0dc2e"
+    },
+    "stage127-supplemental-checks-01": {
+      "path": "target/m2/stage127-supplemental-checks-01/report.json",
+      "bytes": 278401,
+      "mode": 420,
+      "sha256": "e5ad00904dc04e72af9c8f364202e09cc94cda04d55263b209dbf1aafc207f38"
+    },
+    "stage127-final-review-01": {
+      "path": "target/m2/stage127-final-review-01/report.json",
+      "bytes": 2450,
+      "mode": 420,
+      "sha256": "f7299f63b1dd177988031c3b720f318976ca55ccb6fb9e652ea29932525f2a8b"
+    }
+  },
+  "published_evidence": {
+    "path": "reports/m2/stage127-opaque-glob-uri/evidence.tar.gz",
+    "bytes": 20812219,
+    "mode": 420,
+    "sha256": "e9959ce1f18fed1c0ba4e0544289a0795d85cf0a1e135f87b6017921c9d12c2b"
+  },
+  "publication_receipt": {
+    "path": "reports/m2/stage127-opaque-glob-uri/publication.json",
+    "bytes": 1641,
+    "mode": 420,
+    "sha256": "5d12d9aed3c7f95d2dccc01b7b80a10f68a5a2a2e340f8eda119d432888ad8dc"
+  },
+  "archive_readback": {
+    "path": "reports/m2/stage127-opaque-glob-uri/evidence-readback.json",
+    "bytes": 2021,
+    "mode": 420,
+    "sha256": "d0162503cd416217f59c574864138a83ddbbbbe3b088046d93fb5fbf7336dcbd"
+  },
+  "checks": [
+    {
+      "name": "format",
+      "argv": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "complete": true,
+      "exit_code": 0,
+      "stop_reason": null,
+      "elapsed_seconds": 2.2371905422769487,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage127-early-checks-01/format/stdout.bin",
+        "bytes": 0,
+        "mode": 420,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage127-early-checks-01/format/stderr.bin",
+        "bytes": 0,
+        "mode": 420,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "opaque-unit",
+      "argv": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "test",
+        "-p",
+        "pkl-runtime",
+        "--lib",
+        "--locked",
+        "--message-format=json",
+        "opaque"
+      ],
+      "complete": true,
+      "exit_code": 0,
+      "stop_reason": null,
+      "elapsed_seconds": 47.736572082620114,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage127-early-checks-01/opaque-unit/stdout.bin",
+        "bytes": 20106,
+        "mode": 420,
+        "sha256": "0d3ee7b2b4478618707286e58da6052e78c0c66a8fd047cfb3e136421f93192c"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage127-early-checks-01/opaque-unit/stderr.bin",
+        "bytes": 262,
+        "mode": 420,
+        "sha256": "dcab8cafcb475317bfd7c6547dafb3462c6aae7cb3bae429628ee32efc10097b"
+      }
+    },
+    {
+      "name": "opaque-integration",
+      "argv": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "test",
+        "-p",
+        "pkl-runtime",
+        "--test",
+        "m2_glob_opaque_uri",
+        "--locked",
+        "--message-format=json"
+      ],
+      "complete": true,
+      "exit_code": 0,
+      "stop_reason": null,
+      "elapsed_seconds": 41.284933832939714,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage127-early-checks-01/opaque-integration/stdout.bin",
+        "bytes": 20711,
+        "mode": 420,
+        "sha256": "6e9d16d9e2db9234935fc5bc502a01edd4c8b5f16ed2371c44e56a6c387c3799"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage127-early-checks-01/opaque-integration/stderr.bin",
+        "bytes": 276,
+        "mode": 420,
+        "sha256": "437b4d58cbe7298e429d752dbec83c65bec2dae6f930f00ecfa5bfde9930d1d9"
+      }
+    },
+    {
+      "name": "probe-build",
+      "argv": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "build",
+        "-p",
+        "pkl-runtime",
+        "--example",
+        "glob_fixture_probe",
+        "--locked",
+        "--message-format=json"
+      ],
+      "complete": true,
+      "exit_code": 0,
+      "stop_reason": null,
+      "elapsed_seconds": 11.686818041838706,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage127-early-checks-01/probe-build/stdout.bin",
+        "bytes": 20404,
+        "mode": 420,
+        "sha256": "3bbb044e735a89acd4877f4e455f155b344848ef56682d1bf8cdedcac9c68acd"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage127-early-checks-01/probe-build/stderr.bin",
+        "bytes": 759,
+        "mode": 420,
+        "sha256": "626b9abe1cf431835dedeb43e1cc57566a8e366a75b762e86f3320c11ac961db"
+      }
+    },
+    {
+      "name": "xtask",
+      "argv": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "xtask",
+        "verify"
+      ],
+      "complete": true,
+      "exit_code": 0,
+      "stop_reason": null,
+      "elapsed_seconds": 1.327348125167191,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage127-full-checks-01/xtask/stdout.bin",
+        "bytes": 40,
+        "mode": 420,
+        "sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage127-full-checks-01/xtask/stderr.bin",
+        "bytes": 122,
+        "mode": 420,
+        "sha256": "8cf6c6d469375dc70b4006dc3ddc4f99c041161a0d0e93d96362ae0f422da457"
+      }
+    },
+    {
+      "name": "clippy",
+      "argv": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--message-format=json",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "complete": true,
+      "exit_code": 0,
+      "stop_reason": null,
+      "elapsed_seconds": 22.109132332727313,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage127-full-checks-01/clippy/stdout.bin",
+        "bytes": 298448,
+        "mode": 420,
+        "sha256": "e6cc9e9d8b3e55c80714b25deb425c46b627f185dcad3ed72e946fd595879446"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage127-full-checks-01/clippy/stderr.bin",
+        "bytes": 343,
+        "mode": 420,
+        "sha256": "8c3be326d684c5ba3623aef4ca1528d9a9df1cb8fd85f9fb8452bf13d12f5e84"
+      }
+    },
+    {
+      "name": "workspace",
+      "argv": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--message-format=json"
+      ],
+      "complete": true,
+      "exit_code": -15,
+      "stop_reason": "1 GiB disk floor",
+      "elapsed_seconds": 79.06897283298895,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage127-full-checks-01/workspace/stdout.bin",
+        "bytes": 183438,
+        "mode": 420,
+        "sha256": "5b1d5b8fd782ee2ed9f8bc4dbfcdb285a26d49187af951053c3883f0f6d7cbe4"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage127-full-checks-01/workspace/stderr.bin",
+        "bytes": 190,
+        "mode": 420,
+        "sha256": "dc6a61afc3a6361c1eea034ca0e45059644763aa8a7ed1b76f9542880b1c0e1e"
+      }
+    },
+    {
+      "name": "wasm",
+      "argv": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked",
+        "--message-format=json"
+      ],
+      "complete": true,
+      "exit_code": 0,
+      "stop_reason": null,
+      "elapsed_seconds": 4.147707083262503,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage127-supplemental-checks-01/wasm/stdout.bin",
+        "bytes": 15040,
+        "mode": 420,
+        "sha256": "bf0782f5c0f551ffa15ed7298853d0ca8d5f7107e71d7722b9eaae053ad7cd9a"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage127-supplemental-checks-01/wasm/stderr.bin",
+        "bytes": 158,
+        "mode": 420,
+        "sha256": "a2fadefa13f0e7f227fad07398499eadd14227a38f71dd81eee9936e25584733"
+      }
+    },
+    {
+      "name": "manifest-freshness",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "tools/m2_manifest.py",
+        "--check"
+      ],
+      "complete": true,
+      "exit_code": 0,
+      "stop_reason": null,
+      "elapsed_seconds": 4.731783083174378,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage127-supplemental-checks-01/manifest-freshness/stdout.bin",
+        "bytes": 231,
+        "mode": 420,
+        "sha256": "57fbf5ee36a3d98dc2cf9a1844344cf6661df94b97a1f449b4243a52776918df"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage127-supplemental-checks-01/manifest-freshness/stderr.bin",
+        "bytes": 0,
+        "mode": 420,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "m1-python",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/tests",
+        "-p",
+        "test_m1_platforms.py"
+      ],
+      "complete": true,
+      "exit_code": 0,
+      "stop_reason": null,
+      "elapsed_seconds": 0.30052208295091987,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage127-supplemental-checks-01/m1-python/stdout.bin",
+        "bytes": 0,
+        "mode": 420,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage127-supplemental-checks-01/m1-python/stderr.bin",
+        "bytes": 106,
+        "mode": 420,
+        "sha256": "5df683edb1fe34bcd13fad4f7cece04b1dc88f256e76a8f9ef2c11322cd4b577"
+      }
+    }
+  ],
+  "rust_unit_tests_passed": 5,
+  "rust_integration_tests_passed": 3,
+  "python_tests_passed": 8,
+  "default_checks_all_pass": false,
+  "full_workspace_test": {
+    "status": "stopped_during_compilation",
+    "actual_exit_code": -15,
+    "reason": "1 GiB disk floor",
+    "tests_executed": 0,
+    "required_rerun": true
+  },
+  "selected_native": {
+    "sessions": 56,
+    "known20_queries": 40,
+    "known20_success_to_unsupported_queries": 40,
+    "known20_no_list_request_conclusive_queries": 40,
+    "known20_common_raw_matches": 0,
+    "control_sessions": 36,
+    "control_session_matches": 32,
+    "control_session_mismatches": 4,
+    "control_queries": 88,
+    "control_common_raw_matches": 80,
+    "control_common_raw_mismatches": 8
+  },
+  "new_regex_order_native": {
+    "sessions": 8,
+    "queries": 16,
+    "common_raw_fields": 128,
+    "matching_fields": 128,
+    "all_common_raw_bytes_equal": true,
+    "all_sessions_no_listing_and_closed": true,
+    "Java_only_fields_not_compared": 128
+  },
+  "java": {
+    "runtime": "Temurin 21.0.12.1+1-LTS",
+    "heap": "512 MiB",
+    "direct_URI_vectors": 30,
+    "direct_repeats": 2,
+    "Pkl_programs": 4,
+    "Pkl_sessions": 8,
+    "Pkl_queries": 16,
+    "processes": 12,
+    "all_processes_exit_zero": true,
+    "all_repeat_raw_bytes_equal": true,
+    "direct_URI_does_not_prove_Pkl_reachability": true
+  },
+  "m1": {
+    "total": 6078,
+    "oracle_passed": {
+      "rust": 6078,
+      "node": 6078,
+      "browser": 6078
+    },
+    "shared_engine_passed": 6078,
+    "strict_status": "pass",
+    "contract_status": "pass",
+    "node_scenarios": 92,
+    "browser_scenarios": 92,
+    "exit_code": 0
+  },
+  "source_provenance_limit": "Eight of 159 probe .d dependencies were absent from the early source bookend. The later HEAD blob join records their current identities; complete transitive compilation-source provenance is not asserted.",
+  "full_language_inventory_replayed": false,
+  "full_glob_inventory_replayed": false,
+  "full_M2_complete": false,
+  "performance_targets_evaluated": false,
+  "remaining_required_scope": [
+    "Full workspace rerun with adequate disk space",
+    "Java internal URI error rendering, frames and catch behavior",
+    "Full language/glob and product boundary comparisons",
+    "Full APIs, release operating systems and per-workload performance targets"
+  ],
+  "historical_evidence_dependency": "Stage122 native capture remains separately retained; this archive includes the selected Java input/output bytes and new Stage127 acquisitions."
+}
