@@ -21,6 +21,24 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+### Stage128 workspace storage — bounded partial verification
+
+Stage128 adds an opt-in macOS compiler wrapper that checks raw executable byte
+identity and signatures before transparent compression. Eighteen focused Python
+tests, actual compiler/self-spawn checks, fresh manifest checking and formatting
+pass. The Pkl engine is unchanged from Stage127; its xtask, Clippy, Wasm and
+bounded M1 results are reused as historical evidence, not new executions.
+
+The full workspace retry ends with Cargo **-15** after the 768 MiB disk floor is
+crossed. Independent raw readback qualifies **200 completed harnesses: 1,265
+passed, zero failed and three ignored**, excluding seven nested child repeats.
+`m2_reflection_apis_lifecycle` is interrupted; 83 compiled executable targets and
+two doctest crates never start. All 284 test executables and 26 examples have
+compiler records; examples are not claimed executed. The earlier exit-101 copy
+headroom failure remains separate. See the [Stage128 report](reports/m2/stage128-workspace-storage/README.md) for storage
+conditions, artifact provenance and retained failures. Full workspace, M2/API,
+release-platform and performance requirements remain open.
+
 ### Stage127 opaque glob URI validation — bounded local checkpoint
 
 The shared traversal now validates the raw opaque reader URI after glob regex

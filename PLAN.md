@@ -4,6 +4,12 @@
 
 ## 현재 상태
 
+Stage128에서 macOS 실행 파일의 원래 바이트와 서명을 보존하는 선택적 압축 wrapper를 추가했습니다. Python 회귀 검사18개·실제 compiler/self-spawn 검사·목록 최신성·format 검사가 통과했습니다. Pkl 공통 엔진은 Stage127과 같으며, 이번 단계에서 새 언어 호환 통과를 추가하지 않았습니다.
+
+전체 workspace 재시도는 **완료 harness200개·통과1,265개·실패0·ignored3개**를 독립 집계한 뒤 reflection에서 디스크768 MiB 하한으로 중단됐습니다. Cargo 실제 exit는-15이며 자식 반복7개는 제외합니다. 실행 파일83개와 doctest crate2개는 시작하지 않았습니다. 실행 파일284개와 example26개의 컴파일 기록을 실행 완료로 세지 않습니다. 앞선1 GiB 하한의 복사 실패(exit101)도 그대로 보존합니다. [Stage128 보고서](reports/m2/stage128-workspace-storage/README.md)를 기준으로 검증 도구와 부분 결과를 정리하며 전체 workspace·M2·API·성능 목표는 미완료입니다.
+
+다음 실행 순서는 충분한 디스크 여유 확보, 중단된 reflection과 미실행 대상의 검증, 실제 전체 workspace 명령의 완료 확인입니다. 그 뒤 Java 내부 오류의 렌더링·catch 의미론과 남은 언어 불일치를 진행합니다. 기존 통과 수와 이번 부분 실행 수는 합산하지 않습니다.
+
 Stage127에서 opaque glob의 정규식 검증 다음에 원래 reader URI를 검증하도록 수정했습니다. 잘못 성공하던 선택20개 세션·40개 query가 목록 조회 전에 `Unsupported`로 종료됩니다. Java 내부 오류의 전체 바이트·frame·catch 의미론은 미구현이므로 새 호환 통과로 집계하지 않습니다. 대조군36개 중32개 세션·80개 query는 일치하고 상대경로 공백4개 세션·8개 query의 기존 불일치는 유지됩니다.
 
 새 로컬 검증은 Rust8개·Python8개, format·xtask·Clippy·Wasm·목록 최신성 검사를 통과했습니다. 실제 M1은 세 대상 각각6,078개와 Node·브라우저 각각92개 시나리오가 통과했습니다. 전체 workspace 명령은 컴파일 도중 디스크1 GiB 하한으로 중단됐고 실제 exit는-15입니다. 새 미실행 테스트 실행파일146개만 정리해 약1.56 GB를 확보했으며 원본 증거를 보존했습니다. 전체 workspace 재검증은 미완료입니다. [Stage127 보고서](reports/m2/stage127-opaque-glob-uri/README.md)를 기준으로 후속 작업을 진행하며 아래 Stage122 전체 언어·glob 수치는 과거 취득 결과로 유지합니다.
@@ -33,7 +39,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: Stage127 opaque URI 검증·선택20개 잘못된 성공 제거; Java 내부 오류 호환·전체 workspace 재검증 미완료; Stage122 전체 ready4,351/4,442는 과거 결과 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: Stage128 저장 도구·부분 workspace1,265개 통과; 디스크 중단으로 전체 재검증 미완료; Stage127 opaque URI 검증 유지; Stage122 전체 ready4,351/4,442는 과거 결과 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |

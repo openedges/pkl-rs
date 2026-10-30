@@ -1,0 +1,193 @@
+{
+  "schema": 1,
+  "stage": 128,
+  "title": "Workspace executable storage and partial local verification",
+  "status": "tooling-verified; workspace-interrupted; M2-open",
+  "compatibility_baseline": "Pkl 0.32.0",
+  "source_parent": "ae46e7a995ea70058090eac225c3a5e7fc3988ee",
+  "host": "macOS 27 arm64; Rust 1.98.1; Python 3.14.8",
+  "runtime_semantics_changed": false,
+  "sources": [
+    {
+      "path": "README.md",
+      "bytes": 18405,
+      "mode": 420,
+      "sha256": "6cb3f601b947b89eadd5bd43c6a51deb3ae357bc80c5b239a757d944c33ee007"
+    },
+    {
+      "path": "PLAN.md",
+      "bytes": 512212,
+      "mode": 420,
+      "sha256": "48501765a4213e84c705d93800a5347ca3c9f5bd5f15178ab2969a5deda04711"
+    },
+    {
+      "path": "TESTING.md",
+      "bytes": 122468,
+      "mode": 420,
+      "sha256": "d9efdddf44224dd341e9df8fcd926bd1d130a379ac5477b0b184a97a61d6efa4"
+    },
+    {
+      "path": "docs/m2-language.md",
+      "bytes": 134666,
+      "mode": 420,
+      "sha256": "f35507c1ca7a22712597b114207fbedffbfd33c6f1ef70dbaaaacc8f828a99d5"
+    },
+    {
+      "path": "docs/workspace-storage.md",
+      "bytes": 3623,
+      "mode": 420,
+      "sha256": "43c70c6c4993cddb326777696d02e9063d921057d72b322cd5cfaafdccd15ac6"
+    },
+    {
+      "path": "reports/m2/README.md",
+      "bytes": 403947,
+      "mode": 420,
+      "sha256": "90835f56f02dd0fc74e9142876d1afac5872e6c1a588c0108b7bad94559720e6"
+    },
+    {
+      "path": "reports/m2/stage128-workspace-storage/README.md",
+      "bytes": 8279,
+      "mode": 420,
+      "sha256": "058d94561eb115e8209694fa21bc2f680c6e35ec040282e458f49105a9ee22f9"
+    },
+    {
+      "path": "tools/workspace_storage.py",
+      "bytes": 13851,
+      "mode": 493,
+      "sha256": "3ad03a92aeca232344f1d666060e0b25197100e6cc4cad5bb7963c78cff7cf9b"
+    },
+    {
+      "path": "tools/tests/test_workspace_storage.py",
+      "bytes": 21123,
+      "mode": 420,
+      "sha256": "d6d89e3b04876aba98647ce5a0079d258435d641f61dcea628fab70a29a2305f"
+    }
+  ],
+  "published_evidence": {
+    "path": "reports/m2/stage128-workspace-storage/stage128-partial-evidence.tar.gz",
+    "bytes": 11987854,
+    "mode": 420,
+    "sha256": "4c01643e9b135b066e707e773c34f216554dfabc901751328c96146d3fefde4d"
+  },
+  "publication_receipt": {
+    "path": "reports/m2/stage128-workspace-storage/publication.json",
+    "bytes": 4791,
+    "mode": 420,
+    "sha256": "336bdd7b887fc8a888e0a97975d05f9174134b1f70f4c921c04cc32ac287a041"
+  },
+  "archive_readback": {
+    "path": "reports/m2/stage128-workspace-storage/archive-readback.json",
+    "bytes": 3347,
+    "mode": 420,
+    "sha256": "551a8d85d0868b1b7e4582294b125699976923eadfeef83ce9a3488dd48ca304"
+  },
+  "published_copy_receipt": {
+    "path": "reports/m2/stage128-workspace-storage/published-copy.json",
+    "bytes": 1148,
+    "mode": 420,
+    "sha256": "27e207648b0e332d067fe76871e6c7eda00b8b49594756c7c1d80f216814b9f7"
+  },
+  "archive_regular_members": 2822,
+  "archive_source_bytes": 81606281,
+  "fresh_checks": {
+    "wrapper_python_tests": 18,
+    "compiler_self_spawn_pass": true,
+    "format_exit": 0,
+    "manifest_freshness_exit": 0
+  },
+  "full_workspace_test": {
+    "command": [
+      "cargo",
+      "test",
+      "--workspace",
+      "--locked",
+      "--message-format=json"
+    ],
+    "complete": false,
+    "cargo_exit_code": -15,
+    "stop_reason": "configured disk floor",
+    "disk_floor_bytes": 805306368,
+    "triggering_free_bytes": null,
+    "build_jobs": 1,
+    "test_threads": 2,
+    "completed_harnesses": 200,
+    "completed_tests": {
+      "passed": 1265,
+      "failed": 0,
+      "ignored": 3,
+      "measured": 0,
+      "filtered": 0
+    },
+    "nested_child_passes_excluded": 7,
+    "interrupted_target": "m2_reflection_apis_lifecycle",
+    "unstarted_executable_targets": 83,
+    "unstarted_doctest_crates": [
+      "pkl_runtime",
+      "pkl_wasm"
+    ],
+    "examples_compiled_not_executed": 26,
+    "workspace_complete": false,
+    "all_required_pass": false
+  },
+  "preserved_workspace01": {
+    "cargo_exit_code": 101,
+    "test_targets_started": 0,
+    "cause": "wrapper copy headroom above 1 GiB floor",
+    "compiler_test_executable_records": 269
+  },
+  "artifact_observation": {
+    "complete": true,
+    "acquisition_errors": [],
+    "test_executables": 284,
+    "examples": 26,
+    "signature_checks_passed": 310,
+    "matching_compression_receipts": 290,
+    "fresh_clone_matches_without_new_wrapper_receipt": 20,
+    "missing_test_proofs": 4,
+    "missing_example_proofs": 16,
+    "artifact_provenance_complete": false,
+    "strict_artifact_evidence_integrity_valid": false
+  },
+  "provenance": {
+    "selected_input_records": 4319,
+    "source_bookends_stable": true,
+    "prior_probe_dependencies_now_bookended": 159,
+    "prior_early_omissions_now_bookended": 8,
+    "unbookended_postbuild_dependency_paths": 1830,
+    "unavailable_depfiles": 8,
+    "complete_transitive_source_closure": false
+  },
+  "reused_checks": {
+    "source": "reports/m2/stage127-opaque-glob-uri-checkpoint.json",
+    "checks": [
+      "xtask",
+      "all-target Clippy",
+      "Wasm check",
+      "bounded native/Node/browser M1"
+    ],
+    "fresh_execution": false
+  },
+  "receipts_in_archive": {
+    "workspace01": "target/m2/stage128-workspace-checks-01/report.json",
+    "workspace02": "target/m2/stage128-workspace-checks-02/report.json",
+    "partial_workspace_readback": "target/m2/stage128-workspace-partial-readback-01/report.json",
+    "artifact_attempt01": "target/m2/stage128-artifact-partial-readback-01/report.json",
+    "artifact_attempt02": "target/m2/stage128-artifact-partial-readback-02/report.json",
+    "python": "target/m2/stage128-python-checks-03/report.json",
+    "fresh_tooling": "target/m2/stage128-final-tooling-checks-01/report.json",
+    "review": "target/m2/stage128-partial-publication-review-02/report.json"
+  },
+  "full_language_inventory_replayed": false,
+  "full_glob_inventory_replayed": false,
+  "full_M2_complete": false,
+  "performance_targets_evaluated": false,
+  "release_platforms_verified": false,
+  "remaining_required_scope": [
+    "Sustained disk headroom and one terminal successful full workspace command",
+    "Interrupted reflection target, 83 unstarted executable targets and two doctest crates",
+    "Ignored requirements remain; partial three ignored does not reduce historical five-gap inventory",
+    "Complete compiler/runtime input provenance",
+    "Java internal-error rendering and catch semantics",
+    "Full language/API/release-platform/performance requirements"
+  ]
+}

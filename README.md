@@ -2,7 +2,14 @@
 
 This project reimplements [Pkl](https://pkl-lang.org/) 0.32.0 in Rust. It aims to share one engine across native Rust, WebAssembly, and Node.js N-API, with automated compatibility checks against the Java implementation.
 
-The latest [Stage127 report](reports/m2/stage127-opaque-glob-uri/README.md)
+The latest [Stage128 report](reports/m2/stage128-workspace-storage/README.md)
+adds an opt-in macOS executable-compression wrapper. Its 18 focused tests and
+compiler/self-spawn checks pass. The workspace retry completes 200 harnesses
+with **1,265 passes, zero failures and three ignored**, then stops at its disk
+floor during reflection. Another 83 executable targets and both doctest crates
+remain unstarted; this is not a full-workspace pass.
+
+The preceding [Stage127 report](reports/m2/stage127-opaque-glob-uri/README.md)
 records opaque glob URI validation before reader enumeration. All 20 selected
 wrong-success sessions now stop with explicit unsupported diagnostics; Java's
 internal-error bytes remain unmatched. Eight Rust tests and the bounded M1

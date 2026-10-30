@@ -1,0 +1,85 @@
+{
+  "complete": true,
+  "errors": [],
+  "started_epoch": 1793358974.9231172,
+  "scope": "PARTIAL Stage128 evidence; workspace02 was stopped at the configured disk floor with exit -15. No complete workspace test pass is claimed. Cargo caches, test binaries except three explicit witnesses, host tool bodies, and old archives are excluded.",
+  "floor_bytes": 805306368,
+  "raw_limit_bytes": 536870912,
+  "compressed_limit_bytes": 134217728,
+  "workspace_report": {
+    "path": "target/m2/stage128-workspace-checks-02/report.json",
+    "bytes": 583351,
+    "mode": 420,
+    "sha256": "5f8fd29a6fdb745c00bbb32899139f53e9f96c73fd9e052e6eea88f88e33306c",
+    "device": 16777229,
+    "inode": 241284683,
+    "mtime_ns": 1793358244851366142
+  },
+  "independent_qualification": {
+    "stage128-workspace-partial-readback-01": {
+      "path": "target/m2/stage128-workspace-partial-readback-01/report.json",
+      "bytes": 306701,
+      "mode": 420,
+      "sha256": "2555af2263efc579b7486bf4a04f95570e7ee61807258f3588d73147f03ec031",
+      "device": 16777229,
+      "inode": 241285036,
+      "mtime_ns": 1793358435045115813
+    },
+    "stage128-artifact-partial-readback-02": {
+      "path": "target/m2/stage128-artifact-partial-readback-02/report.json",
+      "bytes": 1595157,
+      "mode": 420,
+      "sha256": "2ff9f7570f304585113f785d7bb9ebca0c219dd456d060b708cf1d08d5adaf97",
+      "device": 16777229,
+      "inode": 241287070,
+      "mtime_ns": 1793358734697413740
+    }
+  },
+  "source_members": 2821,
+  "expected_regular_members": 2822,
+  "source_bytes": 81606281,
+  "performance_claim": false,
+  "complete_compiler_closure_claim": false,
+  "publication_copy_claim": false,
+  "full_workspace_pass": false,
+  "interrupted_workspace_exit_code": -15,
+  "artifact_provenance_gap": {
+    "observed_artifacts": 310,
+    "receipt_proven": 290,
+    "provenance_missing": 20,
+    "missing_tests": 4,
+    "missing_examples": 16,
+    "evidence_integrity_valid": false,
+    "artifact_provenance_complete": false,
+    "missing_paths": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/deps/m2_glob_opaque_uri-d423b60f1f61349d",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/deps/pkl_runtime-a743a0aea2dfd51b",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/deps/pkl_wasm-22875383ef3f3a1c",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/deps/xtask-1627471670fafdf4",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/data_size_fixture_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/deprecation_fixture_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/every_logger_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/expression_fixture_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/frame_transformer_fixture_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/glob_fixture_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/jvm_snippet_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/module_eval_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/runtime_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/semantics_bench",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/stage46_file_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/stage47_renderer_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/stage48_policy_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/stage49_modulekey_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/stage51_collection_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/string_session_probe"
+    ]
+  },
+  "archive": {
+    "path": "target/m2/stage128-partial-publication-01/stage128-partial-evidence.tar.gz",
+    "bytes": 11987854,
+    "sha256": "4c01643e9b135b066e707e773c34f216554dfabc901751328c96146d3fefde4d"
+  },
+  "inventory_sha256": "4d78dc75460715090694890d70486d083014f7e19f22c24a02c68afec69f5c4d",
+  "source_bookends_stable": true,
+  "finished_epoch": 1793358981.128978
+}

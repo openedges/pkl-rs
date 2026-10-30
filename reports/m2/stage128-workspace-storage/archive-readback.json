@@ -1,0 +1,52 @@
+{
+  "complete": true,
+  "evidence_integrity_valid": true,
+  "started_epoch": 1793359001.003767,
+  "errors": [],
+  "archive": {
+    "path": "target/m2/stage128-partial-publication-01/stage128-partial-evidence.tar.gz",
+    "bytes": 11987854,
+    "sha256": "4c01643e9b135b066e707e773c34f216554dfabc901751328c96146d3fefde4d"
+  },
+  "extracted_files": 0,
+  "partial": true,
+  "full_workspace_pass": false,
+  "artifact_provenance_gap": {
+    "observed_artifacts": 310,
+    "receipt_proven": 290,
+    "provenance_missing": 20,
+    "missing_tests": 4,
+    "missing_examples": 16,
+    "evidence_integrity_valid": false,
+    "artifact_provenance_complete": false,
+    "missing_paths": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/deps/m2_glob_opaque_uri-d423b60f1f61349d",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/deps/pkl_runtime-a743a0aea2dfd51b",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/deps/pkl_wasm-22875383ef3f3a1c",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/deps/xtask-1627471670fafdf4",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/data_size_fixture_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/deprecation_fixture_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/every_logger_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/expression_fixture_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/frame_transformer_fixture_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/glob_fixture_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/jvm_snippet_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/module_eval_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/runtime_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/semantics_bench",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/stage46_file_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/stage47_renderer_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/stage48_policy_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/stage49_modulekey_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/stage51_collection_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-cargo-01/debug/examples/string_session_probe"
+    ]
+  },
+  "full_compatibility_claim": false,
+  "performance_claim": false,
+  "regular_members": 2822,
+  "source_members": 2821,
+  "source_bytes": 81606281,
+  "inventory_sha256": "4d78dc75460715090694890d70486d083014f7e19f22c24a02c68afec69f5c4d",
+  "finished_epoch": 1793359001.180435
+}

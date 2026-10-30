@@ -1,0 +1,31 @@
+{
+  "complete": true,
+  "source_archive": {
+    "path": "target/m2/stage128-partial-publication-01/stage128-partial-evidence.tar.gz",
+    "bytes": 11987854,
+    "sha256": "4c01643e9b135b066e707e773c34f216554dfabc901751328c96146d3fefde4d"
+  },
+  "published_archive": {
+    "path": "reports/m2/stage128-workspace-storage/stage128-partial-evidence.tar.gz",
+    "bytes": 11987854,
+    "mode": 420,
+    "sha256": "4c01643e9b135b066e707e773c34f216554dfabc901751328c96146d3fefde4d"
+  },
+  "raw_bytes_match": true,
+  "method": "APFS clone copy; destination raw SHA256 and length independently checked",
+  "publication_receipt": {
+    "path": "reports/m2/stage128-workspace-storage/publication.json",
+    "bytes": 4791,
+    "mode": 420,
+    "sha256": "336bdd7b887fc8a888e0a97975d05f9174134b1f70f4c921c04cc32ac287a041"
+  },
+  "archive_readback": {
+    "path": "reports/m2/stage128-workspace-storage/archive-readback.json",
+    "bytes": 3347,
+    "mode": 420,
+    "sha256": "551a8d85d0868b1b7e4582294b125699976923eadfeef83ce9a3488dd48ca304"
+  },
+  "recorded_epoch": 1793359049.194989,
+  "full_workspace_pass": false,
+  "artifact_provenance_complete": false
+}
