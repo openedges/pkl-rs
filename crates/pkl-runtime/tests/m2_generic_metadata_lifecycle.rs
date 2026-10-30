@@ -101,7 +101,7 @@ fn member(vm: &mut Vm, module: &Value, name: &str) -> Result<Value, RuntimeError
 fn read(vm: &mut Vm, uri: &str) -> u64 {
     match event(vm) {
         VmPoll::Pending(request) => {
-            assert_eq!(&*request.uri, uri);
+            assert_eq!(request.uri, uri);
             vm.collect(&[]);
             request.id
         }
@@ -341,7 +341,7 @@ fn advance(session: &mut HostSession, now: u64, count: usize) -> String {
     for index in 0..=count {
         match host_event(session, now) {
             HostPoll::Read { token, uri } => {
-                assert_eq!(&*uri, "mem:step");
+                assert_eq!(uri, "mem:step");
                 if index == count {
                     return token;
                 }

@@ -241,7 +241,7 @@ fn event(session: &mut HostSession, now: u64) -> HostPoll {
 fn read(session: &mut HostSession, now: u64, uri: &str) -> String {
     match event(session, now) {
         HostPoll::Read { token, uri: actual } => {
-            assert_eq!(&*actual, uri);
+            assert_eq!(actual, uri);
             session.collect(&[]);
             token
         }

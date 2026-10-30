@@ -1,0 +1,10 @@
+–– Pkl Error ––
+stage116 exact resolve-uri security
+
+1 | entries = read*("gdata:/tree/*")
+              ^^^^^^^^^^^^^^^^^^^^^^
+at failure-resolve-uri-security-read#entries (gmain:/tree/failure-resolve-uri-security-read.pkl)
+
+1 | entries.keys.toList().join("|")
+    ^^^^^^^
+at  (repl:text)

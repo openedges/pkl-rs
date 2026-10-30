@@ -1,8 +1,8 @@
 //! Development-only parsed-source Host session. Entries are fixed before execution;
 //! this is not a general REPL. Module I/O is supplied through typed Host effects.
 use super::frontend::{
-    DiagnosticProfile, FailureDisposition, FrontendPhase, ModuleEvalOptions, ModuleFrontendFailure,
-    ModuleFrontendResult, ModuleSourceInput, prepare_module_text,
+    DiagnosticProfile, FailureDisposition, FrontendPhase, LosslessModuleSourceInput,
+    ModuleEvalOptions, ModuleFrontendFailure, ModuleFrontendResult, prepare_module_text,
     render_module_runtime_failure_text,
 };
 use super::{EvaluationOptions, compile_program_text, runtime_error_text};
@@ -11,7 +11,7 @@ use crate::{
     host::{HostPoll, HostSession},
     logging::{EvaluationContext, LogDelivery, LoggerFailure, TraceMode},
     modules::{ModuleCompletion, ModuleIdentity},
-    source::{Source, SourceMap, Span},
+    source::{Source, SourceMap, SourceText, Span},
     value::{ErrorKind, PklString, RuntimeError, RuntimeSource, Value},
     vm::{BlockMetadata, Instruction, Program},
 };
@@ -52,9 +52,9 @@ pub struct SourceSession {
     public_lifecycle: bool,
     public_queries: Vec<Option<usize>>,
     source: Source,
-    uri: String,
-    name: String,
-    paths: Vec<String>,
+    uri: PklString,
+    name: PklString,
+    paths: Vec<SourceText>,
     entries: Vec<usize>,
     output_text_entries: Vec<bool>,
     output_entry: Option<usize>,
@@ -110,10 +110,11 @@ impl SourceSession {
     pub fn start_evaluation(
         &mut self,
         source: crate::modules::ModuleSourceSpec,
-        expression: &str,
+        expression: impl Into<SourceText>,
         now_ms: u64,
         timeout_ms: Option<u64>,
     ) -> Result<(), RuntimeError> {
+        let expression = expression.into();
         self.open()?;
         if !self.public_lifecycle {
             return Err(error(
@@ -122,20 +123,20 @@ impl SourceSession {
         }
         let entry = self
             .host
-            .append_public_operation(source.clone(), expression.into())?;
+            .append_public_operation(source.clone(), expression.clone())?;
         self.host.start(entry, Vec::new(), now_ms, timeout_ms)?;
         self.retain_active_query_text();
         let mut sources = SourceMap::default();
         let id = sources.add(
-            source.uri.as_ref(),
-            source.contents.as_deref().unwrap_or(""),
+            source.uri.clone(),
+            source.contents.clone().unwrap_or_else(|| "".into()),
         );
         self.source = sources.get(id).unwrap().clone();
-        self.uri = source.uri.to_string();
-        self.name.clear();
+        self.uri = source.uri.clone();
+        self.name = PklString::default();
         let index = self.paths.len();
-        self.paths.push(expression.into());
-        self.calls.push(if expression == "output.text" {
+        self.paths.push(expression.clone());
+        self.calls.push(if expression.original() == "output.text" {
             Call::OutputText
         } else {
             Call::Path(index)
@@ -149,21 +150,22 @@ impl SourceSession {
         &mut self,
         token: &str,
         source: crate::modules::ModuleSourceSpec,
-        expression: &str,
+        expression: impl Into<SourceText>,
         now: u64,
         timeout: Option<u64>,
     ) -> Result<(), RuntimeError> {
+        let expression = expression.into();
         if !self.public_lifecycle {
             return Err(error(
                 "ModuleSource operations require the public lifecycle profile",
             ));
         }
         self.host
-            .reenter_public_operation(token, source, expression.into(), now, timeout)?;
+            .reenter_public_operation(token, source, expression.clone(), now, timeout)?;
         self.retain_active_query_text();
         let index = self.paths.len();
-        self.paths.push(expression.into());
-        self.calls.push(if expression == "output.text" {
+        self.paths.push(expression.clone());
+        self.calls.push(if expression.original() == "output.text" {
             Call::OutputText
         } else {
             Call::Path(index)
@@ -196,19 +198,22 @@ impl SourceSession {
     }
 
     pub fn compile_text(
-        text: &str,
-        uri: &str,
-        module_name: &str,
+        text: impl Into<SourceText>,
+        uri: impl Into<PklString>,
+        module_name: impl Into<PklString>,
         property_paths: &[String],
         options: SourceSessionOptions,
     ) -> Result<Self, PklString> {
+        let text = text.into();
+        let uri = uri.into();
+        let module_name = module_name.into();
         let mut sources = SourceMap::default();
-        let id = sources.add(uri, text);
+        let id = sources.add(uri.clone(), text.clone());
         let source = sources.get(id).expect("inserted source").clone();
         let (program, name) = compile_program_text(
             &source,
-            uri,
-            module_name,
+            &uri,
+            &module_name,
             property_paths.first().map_or("", String::as_str),
             options.evaluation,
         )?;
@@ -217,7 +222,10 @@ impl SourceSession {
             source,
             uri,
             name,
-            property_paths,
+            &property_paths
+                .iter()
+                .map(SourceText::from)
+                .collect::<Vec<_>>(),
             options,
             None,
             false,
@@ -238,24 +246,54 @@ impl SourceSession {
     }
 
     pub fn compile_expressions_text(
-        text: &str,
-        uri: &str,
-        module_name: &str,
+        text: impl Into<SourceText>,
+        uri: impl Into<PklString>,
+        module_name: impl Into<PklString>,
         expressions: &[String],
         options: SourceSessionOptions,
     ) -> Result<Self, PklString> {
+        let text = text.into();
+        let uri = uri.into();
+        let module_name = module_name.into();
         let mut sources = SourceMap::default();
-        let id = sources.add(uri, text);
+        let id = sources.add(uri.clone(), text.clone());
         let source = sources.get(id).expect("inserted source").clone();
         let (program, name) =
-            compile_program_text(&source, uri, module_name, "", options.evaluation)?;
+            compile_program_text(&source, &uri, &module_name, "", options.evaluation)?;
+        Self::from_program(
+            program,
+            source,
+            uri,
+            name,
+            &expressions.iter().map(SourceText::from).collect::<Vec<_>>(),
+            options,
+            None,
+            true,
+        )
+    }
+
+    pub fn compile_expressions_source(
+        text: impl Into<SourceText>,
+        uri: impl Into<PklString>,
+        module_name: impl Into<PklString>,
+        expressions: &[SourceText],
+        options: SourceSessionOptions,
+    ) -> Result<Self, PklString> {
+        let text = text.into();
+        let uri = uri.into();
+        let module_name = module_name.into();
+        let mut sources = SourceMap::default();
+        let id = sources.add(uri.clone(), text);
+        let source = sources.get(id).expect("inserted source").clone();
+        let (program, name) =
+            compile_program_text(&source, &uri, &module_name, "", options.evaluation)?;
         Self::from_program(program, source, uri, name, expressions, options, None, true)
     }
 
     /// Prepare real module output and optional callback property paths on one
     /// Program, receiver and Host. Output does not use expression-string ToString.
     pub fn compile_output(
-        input: ModuleSourceInput<'_>,
+        input: impl Into<LosslessModuleSourceInput>,
         property_paths: &[String],
         module_options: &ModuleEvalOptions,
         options: SourceSessionOptions,
@@ -267,18 +305,22 @@ impl SourceSession {
     /// Canonical output preparation preserves diagnostic text until its caller
     /// chooses a byte-oriented result or an API UTF-16 transport.
     pub fn compile_output_text(
-        input: ModuleSourceInput<'_>,
+        input: impl Into<LosslessModuleSourceInput>,
         property_paths: &[String],
         module_options: &ModuleEvalOptions,
         options: SourceSessionOptions,
     ) -> Result<Self, ModuleFrontendFailure> {
-        let prepared = prepare_module_text(input, module_options)?;
+        let input = input.into();
+        let prepared = prepare_module_text(input.clone(), module_options)?;
         Self::from_program(
             prepared.program,
             prepared.source,
             input.uri,
             prepared.name,
-            property_paths,
+            &property_paths
+                .iter()
+                .map(SourceText::from)
+                .collect::<Vec<_>>(),
             options,
             Some(module_options.diagnostic_profile),
             false,
@@ -295,19 +337,24 @@ impl SourceSession {
     fn from_program(
         mut program: Arc<Program>,
         source: Source,
-        uri: &str,
-        name: String,
-        property_paths: &[String],
+        uri: impl Into<PklString>,
+        name: PklString,
+        property_paths: &[SourceText],
         options: SourceSessionOptions,
         output_profile: Option<DiagnosticProfile>,
         parsed_expressions: bool,
     ) -> Result<Self, PklString> {
+        let uri = uri.into();
+
         let module_entry = program.entry;
         let program_mut = Arc::make_mut(&mut program);
         let expression_owner = if parsed_expressions {
             Some(
-                crate::parser::parse_module_for_evaluation(source.text())
-                    .map_err(|error| error.message)?,
+                crate::parser::parse_module_for_evaluation(source.text()).map_err(|failure| {
+                    failure
+                        .minimum_version_error(&name)
+                        .map_or(failure.diagnostic.message, |error| error.message)
+                })?,
             )
         } else {
             None
@@ -317,7 +364,7 @@ impl SourceSession {
         for expression in property_paths {
             // EvaluatorImpl.evaluateExpressionString routes this exact API
             // expression to evaluateOutputText before creating a REPL root.
-            let output_text = expression == "output.text";
+            let output_text = expression.original() == "output.text";
             output_text_entries.push(output_text);
             if output_text {
                 entries
@@ -340,7 +387,7 @@ impl SourceSession {
                         // call's expression. A rejected fixed entry must not
                         // prevent earlier calls or move ahead of setup failure.
                         let source = Arc::new(RuntimeSource {
-                            text: expression.clone().into(),
+                            text: expression.clone(),
                             uri: "repl:text".into(),
                             module_name: "".into(),
                         });
@@ -361,8 +408,9 @@ impl SourceSession {
                         };
                         if error.frames.is_empty() {
                             error.frames.push(crate::value::RuntimeFrame {
+                                anonymous: false,
                                 source: Some(source.clone()),
-                                span: error.span.unwrap_or(Span::new(0, expression.len())),
+                                span: error.span.unwrap_or(Span::new(0, expression.len_bytes())),
                                 member: "repl:text".into(),
                             });
                         }
@@ -385,16 +433,20 @@ impl SourceSession {
             let mut block = Vec::new();
             let mut spans = Vec::new();
             let mut prefix_end = 0;
-            for (index, member) in expression.split('.').enumerate() {
-                if member.is_empty() || !member.chars().all(|ch| ch.is_alphanumeric() || ch == '_')
+            for (index, member) in expression.entire().split(".").enumerate() {
+                if member.is_empty()
+                    || !member.characters().all(|(_, ch)| {
+                        ch.scalar()
+                            .is_some_and(|ch| ch.is_alphanumeric() || ch == '_')
+                    })
                 {
                     return Err(
                         "the M2 source session currently accepts property paths only".into(),
                     );
                 }
-                prefix_end += usize::from(prefix_end > 0) + member.len();
+                prefix_end += usize::from(prefix_end > 0) + member.len_bytes();
                 block.push(if index == 0 {
-                    Instruction::GetImplicitProperty(member.into())
+                    Instruction::GetImplicitProperty(member.to_pkl_string())
                 } else {
                     Instruction::GetMember(member.into())
                 });
@@ -409,7 +461,7 @@ impl SourceSession {
             spans.push(None);
             let metadata = BlockMetadata {
                 source: Some(Arc::new(RuntimeSource {
-                    text: expression.clone().into(),
+                    text: expression.clone(),
                     uri: "repl:text".into(),
                     module_name: "".into(),
                 })),
@@ -431,8 +483,8 @@ impl SourceSession {
         let context = EvaluationContext {
             primary_source: Some(Arc::new(RuntimeSource {
                 text: text.into(),
-                uri: uri.into(),
-                module_name: name.clone().into(),
+                uri: uri.clone(),
+                module_name: name.clone(),
             })),
             trace_mode: options.trace_mode,
             log_delivery: options.log_delivery,
@@ -446,11 +498,11 @@ impl SourceSession {
                     .expect("primary source")
                     .clone(),
                 ModuleIdentity {
-                    original_uri: uri.into(),
-                    resolved_uri: uri.into(),
+                    original_uri: uri.clone(),
+                    resolved_uri: uri.clone(),
                 },
             )
-            .map_err(|failure| runtime_error_text(&source, uri, &name, "", failure, None))?;
+            .map_err(|failure| runtime_error_text(&source, &uri, &name, "", failure, None))?;
         let mut host = HostSession::with_context(program, context);
         host.set_power_assertions(options.evaluation.power_assertions);
         Ok(Self {
@@ -625,10 +677,10 @@ impl SourceSession {
         if self.public_lifecycle {
             if let Some(source) = self.host.public_primary_source() {
                 let mut sources = SourceMap::default();
-                let id = sources.add(source.uri.as_ref(), source.text.as_ref());
+                let id = sources.add(source.uri.clone(), source.text.clone());
                 self.source = sources.get(id).unwrap().clone();
-                self.uri = source.uri.to_string();
-                self.name = source.module_name.to_string();
+                self.uri = source.uri.clone();
+                self.name = source.module_name.clone();
             }
             if matches!(&event, HostPoll::Module { request, .. } if matches!(request.kind,
                 crate::modules::ModuleRequestKind::ResolveKey { phase: crate::modules::ResolutionPhase::Query, .. }))
@@ -801,6 +853,33 @@ impl SourceSession {
     pub fn drain_cancelled_reads(&mut self) -> Vec<String> {
         self.host.drain_cancelled_reads()
     }
+    pub fn set_glob_test_mode(&mut self, enabled: bool) -> Result<(), RuntimeError> {
+        self.host.set_glob_test_mode(enabled)
+    }
+    pub fn glob_request(&self, token: &str) -> Result<crate::glob::GlobRequest, RuntimeError> {
+        self.host.glob_request(token)
+    }
+    pub fn complete_glob(
+        &mut self,
+        token: &str,
+        completion: crate::glob::GlobCompletion,
+        now_ms: u64,
+    ) -> Result<(), RuntimeError> {
+        self.host.complete_glob(token, completion, now_ms)
+    }
+    pub fn complete_default_glob(
+        &mut self,
+        token: &str,
+        properties: &[(String, String)],
+        environment: &[(String, String)],
+        now_ms: u64,
+    ) -> Result<bool, RuntimeError> {
+        self.host
+            .complete_default_glob(token, properties, environment, now_ms)
+    }
+    pub fn drain_cancelled_globs(&mut self) -> Vec<String> {
+        self.host.drain_cancelled_globs()
+    }
     pub fn complete_module(
         &mut self,
         token: &str,
@@ -838,7 +917,8 @@ impl SourceSession {
         let expression = self
             .last_expression
             .and_then(|index| self.paths.get(index))
-            .map_or("", String::as_str);
+            .cloned()
+            .unwrap_or_else(|| "".into());
         runtime_error_text(&self.source, &self.uri, &self.name, expression, error, None)
     }
     /// Legacy byte-oriented diagnostic convenience wrapper.

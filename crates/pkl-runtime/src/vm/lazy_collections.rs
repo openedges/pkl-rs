@@ -98,7 +98,10 @@ pub(super) fn blocks(
             .find(&format!("class {class}<"))
             .expect("pinned lazy class");
         let start = class_start
-            + source.text[class_start..]
+            + source
+                .text
+                .entire()
+                .range(class_start..)
                 .find(declaration)
                 .expect("pinned lazy member");
         let arity = if operation == Operation::Fold {

@@ -1,0 +1,58 @@
+{
+  "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/mathModule.pkl",
+  "full_ready_row": {
+    "adapter": "language-module-eval",
+    "historical_status": "candidate-unsupported",
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/mathModule.pkl",
+    "observations": [
+      {
+        "process": {
+          "bytes": 5642,
+          "path": "target/m2/stage120-full-ready-modules-01/443b971d21a4a81814d4ce37/0/process.json",
+          "sha256": "d1dc4ad0d57b573b1cb038135d6cbedaee2693e05f3a54224c02b697f7bc17b4"
+        },
+        "repeat": 0,
+        "status": "candidate-unsupported"
+      }
+    ],
+    "old_pass_regression": false,
+    "status": "candidate-unsupported"
+  },
+  "retained_process": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage120-full-ready-modules-01/443b971d21a4a81814d4ce37/0/process.json",
+    "bytes": 5642,
+    "sha256": "d1dc4ad0d57b573b1cb038135d6cbedaee2693e05f3a54224c02b697f7bc17b4"
+  },
+  "expected_records": {
+    "process.json": {
+      "bytes": 3152,
+      "path": "target/m2/stage94-originals-replay-01/cases/443b971d21a4a81814d4ce37/java/process.json",
+      "sha256": "b0de3b7536bb8fc2745c8de6b53f600883f238a472a5d3d2deddc601f001c8bd"
+    },
+    "result.json": {
+      "bytes": 294,
+      "path": "target/m2/stage94-originals-replay-01/cases/443b971d21a4a81814d4ce37/java/result.json",
+      "sha256": "994315a69eb85e9a53556048c8514085a53f5cc6893b993a9881ae102ac45f86"
+    },
+    "stderr.bin": {
+      "bytes": 0,
+      "path": "target/m2/stage94-originals-replay-01/cases/443b971d21a4a81814d4ce37/java/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout.bin": {
+      "bytes": 2559,
+      "path": "target/m2/stage94-originals-replay-01/cases/443b971d21a4a81814d4ce37/java/stdout.bin",
+      "sha256": "9d2cc7040b016e75d0acfcbe5e48c2eeab1bca6e8fd9b95adbc1d93b3e0939bf"
+    }
+  },
+  "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/mathModule.pkl",
+  "parent_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/snippetTest.pkl",
+  "inputs_unchanged_from_retained_workspace": true,
+  "expected_exit": 0,
+  "raw_expected_bytes_generated_from_Rust": false,
+  "existing_primitive_edges": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage126-math-bindings-source-prep-01/primitive-edge-provenance.json",
+    "bytes": 17238,
+    "sha256": "090d3ea1669e301483ef8dc6a404e7b048f726d5c7ddb6ced96e46401981c030"
+  }
+}

@@ -27,7 +27,7 @@ fn ready(session: &mut HostSession, roots: &[Value]) -> Result<Value, RuntimeErr
 fn read(session: &mut HostSession, module: &Value, uri: &str) -> String {
     match event(session, std::slice::from_ref(module)) {
         HostPoll::Read { token, uri: actual } => {
-            assert_eq!(&*actual, uri);
+            assert_eq!(actual, uri);
             token
         }
         other => panic!("expected {uri}: {other:?}"),

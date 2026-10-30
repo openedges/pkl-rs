@@ -18,7 +18,7 @@ fn setup(
             compile_session_expression(
                 Arc::make_mut(&mut program),
                 &syntax,
-                expression,
+                *expression,
                 CompileOptions::default(),
                 false,
             )
@@ -298,7 +298,7 @@ fn diagnostic_transform_can_reenter_and_rejection_does_not_repeat_formatter() {
 #[test]
 fn raw_stdlib_sources_default_and_identity_frames_have_distinct_boundaries() {
     let source = crate::stdlib_sources::reference();
-    assert_eq!(&*source.uri, "pkl:ref");
+    assert_eq!(source.uri, "pkl:ref");
     let offset = source.text.find("renderReference(this)").unwrap();
     let raw = tracing::source_frame(
         &source,
@@ -437,7 +437,7 @@ fn identity_policy_preserves_raw_stdlib_uri_for_logs_and_diagnostics() {
     };
     let mut sources = crate::source::SourceMap::default();
     let source = host.vm_for_test().context.primary_source.as_ref().unwrap();
-    let id = sources.add(source.uri.as_ref(), source.text.as_ref());
+    let id = sources.add(&source.uri, &source.text);
     let rendered = crate::evaluation::runtime_error_text(
         sources.get(id).unwrap(),
         &source.uri,

@@ -12,11 +12,23 @@ pub enum Operation {
 pub(super) fn unit_type() -> (TypeCheck, Span) {
     let source = crate::stdlib_sources::base();
     let declaration = source.text.find("typealias DurationUnit =").unwrap();
-    let start = declaration + source.text[declaration..].find('"').unwrap();
-    let end = start + source.text[start..].find('\n').unwrap();
+    let start = declaration
+        + source
+            .text
+            .entire()
+            .range(declaration..)
+            .find("\"")
+            .unwrap();
+    let end = start + source.text.entire().range(start..).find("\n").unwrap();
     let spans = DurationUnit::ALL.map(|unit| {
         let literal = format!("\"{}\"", unit.symbol());
-        let offset = start + source.text[start..end].find(&literal).unwrap();
+        let offset = start
+            + source
+                .text
+                .entire()
+                .range(start..end)
+                .find(&literal)
+                .unwrap();
         Span::new(offset, offset + literal.len())
     });
     (
@@ -70,7 +82,13 @@ pub(super) fn blocks(
         ),
     ] {
         let class_start = source.text.find(&format!("class {class} ")).unwrap();
-        let start = class_start + source.text[class_start..].find(signature).unwrap();
+        let start = class_start
+            + source
+                .text
+                .entire()
+                .range(class_start..)
+                .find(signature)
+                .unwrap();
         let mut code = Vec::new();
         let mut spans = Vec::new();
         for argument in 0..arity {
@@ -149,7 +167,12 @@ impl Vm {
         Ok(())
     }
 
-    pub(super) fn duration_member_error(&self, name: &str, method: bool) -> RuntimeError {
+    pub(super) fn duration_member_error(
+        &self,
+        name: impl Into<PklString>,
+        method: bool,
+    ) -> RuntimeError {
+        let name = name.into();
         let properties = ["value", "unit", "isPositive", "isoString"].map(str::to_owned);
         let methods = [
             ("isBetween", "isBetween(start, inclusiveEnd)", 2),
@@ -175,12 +198,16 @@ impl Vm {
         let mut error = RuntimeError::new(
             ErrorKind::MissingMember,
             if method {
-                format!("Cannot find method `{name}` in class `Duration`.")
+                PklString::from("Cannot find method `")
+                    .concat(&name)
+                    .concat(&"` in class `Duration`.".into())
             } else {
-                format!("Cannot find property `{name}` in object of type `Duration`.")
+                PklString::from("Cannot find property `")
+                    .concat(&name)
+                    .concat(&"` in object of type `Duration`.".into())
             },
         );
-        error.hint = crate::diagnostic::member_suggestions(name, arity, &properties, &methods)
+        error.hint = crate::diagnostic::member_suggestions(&name, arity, &properties, &methods)
             .or_else(|| {
                 let mut names = if method {
                     methods

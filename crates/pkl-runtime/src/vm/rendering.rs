@@ -359,11 +359,11 @@ impl Vm {
                     // VmUndefinedValueException.fillInHint appends the missing
                     // member key even when the receiver is a RenderDirective.
                     let mut path = path.clone();
-                    path.push(PathPart::Property(force.name.as_ref().into()));
+                    path.push(PathPart::Property(force.name.clone()));
                     path
                 }
                 Some(Await::PlistKey { receiver, .. }) if *receiver == force.receiver => {
-                    vec![PathPart::Property(force.name.as_ref().into())]
+                    vec![PathPart::Property(force.name.clone())]
                 }
                 Some(Await::Shallow) => {
                     let Some(Task::OpenObject { receiver, path, .. }) = run.tasks.last() else {
@@ -376,7 +376,7 @@ impl Vm {
                     if force.entry {
                         path.push(PathPart::Entry(force.entry_probe.clone()?));
                     } else {
-                        path.push(PathPart::Property(force.name.as_ref().into()));
+                        path.push(PathPart::Property(force.name.clone()));
                     }
                     path
                 }
@@ -433,14 +433,16 @@ impl Vm {
                 // including when a public evaluator has no global primary source
                 // or the rendered module differs from the evaluator's caller.
                 let unit = self.program.units.get(module.module_unit?.0 as usize)?;
-                let uri = unit.key.as_ref().map(|key| key.uri.as_ref()).or_else(|| {
+                let uri = unit.key.as_ref().map(|key| &key.uri).or_else(|| {
                     // Statically compiled modules register their original identity
                     // before they have a selected Host key.
                     unit.identity
                         .as_ref()
-                        .map(|identity| identity.original_uri.as_ref())
+                        .map(|identity| &identity.original_uri)
                 })?;
-                hint.push_str(&format!(" of module `{uri}`"));
+                hint.push_str(" of module `");
+                hint.push_value(uri);
+                hint.push('`');
             }
             hint.push('.');
             return Some(hint.finish());
@@ -1364,6 +1366,7 @@ impl Vm {
                             })
                         });
                     run.source = Some(RuntimeFrame {
+                        anonymous: false,
                         source,
                         span,
                         member: renderer.member.clone(),
@@ -1791,7 +1794,7 @@ impl Vm {
     fn pcf_property_annotations(
         &self,
         receiver: ObjectId,
-        name: &str,
+        name: &PklString,
     ) -> Result<Vec<ObjectId>, RuntimeError> {
         let mut definitions = Vec::new();
         let mut owner = Some(receiver);
@@ -1808,7 +1811,7 @@ impl Vm {
                 && let Some(member) = object
                     .members
                     .iter()
-                    .find(|m| !m.local && !m.method && !m.entry && m.name.as_ref() == name)
+                    .find(|m| !m.local && !m.method && !m.entry && &m.name == name)
             {
                 definitions.push((id, member));
             }

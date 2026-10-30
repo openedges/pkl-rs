@@ -52,7 +52,7 @@ fn nested(prefix: &str, leaf: &str, suffix: &str, depth: usize) -> String {
 fn recover() {
     let expression = nested("\"\\(", "42", ")\"", 31);
     assert_eq!(
-        pkl_runtime::probe::evaluate_member(&format!("result = {expression}\n"), "result"),
+        pkl_runtime::probe::evaluate_member(format!("result = {expression}\n"), "result"),
         Ok(Value::String("42".into()))
     );
 }

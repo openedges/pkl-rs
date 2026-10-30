@@ -289,10 +289,10 @@ enum Task {
     AfterDefault(declarations::Declaration),
     Make(Payload),
     ImportReflect,
-    Read(ObjectId, Arc<str>),
+    Read(ObjectId, PklString),
     FactoryClass(Payload),
     Allocate(Payload),
-    Field(Payload, Arc<str>),
+    Field(Payload, PklString),
     BuildList(usize),
     BuildFields(Kind, Vec<&'static str>),
     ReplaceArguments {
@@ -311,21 +311,21 @@ enum Task {
     },
     ResolveSimpleBase {
         module: ObjectId,
-        name: Arc<str>,
+        name: PklString,
         span: Span,
     },
     ResolveQualifiedType {
-        name: Arc<str>,
+        name: PklString,
         span: Span,
         name_span: Span,
     },
     ReadDeclared {
         owner: ObjectId,
-        name: Arc<str>,
+        name: PklString,
         local: bool,
     },
     ReadPath {
-        rest: Vec<String>,
+        rest: Vec<PklString>,
     },
     AsMirror(Span),
     TypeArguments {
@@ -337,7 +337,7 @@ enum Task {
         context: declarations::Context,
     },
     DefaultArguments,
-    ImportModule(Arc<str>),
+    ImportModule(PklString),
     AsModuleMirror,
 }
 #[derive(Clone, Debug)]
@@ -428,7 +428,7 @@ impl Vm {
         Ok(())
     }
 
-    pub(super) fn begin_mirror_property(&mut self, name: Arc<str>) -> Result<(), RuntimeError> {
+    pub(super) fn begin_mirror_property(&mut self, name: PklString) -> Result<(), RuntimeError> {
         let owner = self
             .frames
             .last()
@@ -795,7 +795,7 @@ impl Vm {
                 if run.values.pop() == Some(Value::Bool(true)) {
                     run.tasks.push(Task::Read(
                         declaration.owner,
-                        declaration.syntax.name.as_str().into(),
+                        declaration.syntax.name.clone(),
                     ));
                 } else {
                     run.values.push(Value::Null);
@@ -896,7 +896,7 @@ impl Vm {
             Operation::Nullable => {
                 run.tasks.push(Task::NullableClass(receiver));
                 run.tasks.push(Task::ReadPath {
-                    rest: vec!["NullableType".to_owned()],
+                    rest: vec!["NullableType".into()],
                 });
                 run.tasks.push(Task::ImportReflect);
             }

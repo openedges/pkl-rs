@@ -1,11 +1,12 @@
 //! Fixture objects and getter snapshots. No evaluation or module cache lives here.
 use pkl_runtime::modules::*;
+use pkl_runtime::value::PklString;
 use std::{collections::BTreeMap, fs, path::Path, sync::Arc};
 
 struct Config {
-    requested: String,
-    selected: Arc<str>,
-    resolved: Arc<str>,
+    requested: PklString,
+    selected: PklString,
+    resolved: PklString,
     source: String,
     cached: String,
     fragments: bool,
@@ -26,10 +27,10 @@ pub struct Factory {
     configs: Vec<Config>,
     sources: BTreeMap<String, Result<Arc<str>, ModuleHostError>>,
     profiles: BTreeMap<String, Profile>,
-    overrides: BTreeMap<(String, String), Arc<str>>,
-    capabilities: BTreeMap<String, ModuleCapabilities>,
-    elements: BTreeMap<(String, String), bool>,
-    element_defaults: BTreeMap<String, bool>,
+    overrides: BTreeMap<(PklString, PklString), PklString>,
+    capabilities: BTreeMap<PklString, ModuleCapabilities>,
+    elements: BTreeMap<(PklString, PklString), bool>,
+    element_defaults: BTreeMap<PklString, bool>,
     keys: BTreeMap<ModuleKeyId, Selected>,
     resolved: BTreeMap<ResolvedKeyId, ModuleKeyId>,
     pub cached: bool,
@@ -212,7 +213,7 @@ impl Factory {
     fn selected(&self, key: &ModuleKey) -> Option<&Selected> {
         let selected = self.keys.get(&key.id)?;
         let config = &self.configs[selected.config];
-        assert_eq!(key.handle.as_ref(), format!("custom-key-{}", key.id.0));
+        assert_eq!(key.handle, format!("custom-key-{}", key.id.0).as_str());
         assert_eq!(key.uri, config.selected);
         assert_eq!(key.kind, config.kind);
         Some(selected)
@@ -231,7 +232,7 @@ impl Factory {
                 let index = self
                     .configs
                     .iter()
-                    .position(|config| config.requested == uri.as_ref())?;
+                    .position(|config| config.requested == *uri)?;
                 let config = &self.configs[index];
                 let cached = match config.cached.as_str() {
                     "true" => true,
@@ -275,12 +276,12 @@ impl Factory {
                 self.selected(key)?;
                 ModuleCompletion::ImportUri(Ok(self
                     .overrides
-                    .get(&(key.uri.to_string(), authored_uri.to_string()))?
+                    .get(&(key.uri.clone(), authored_uri.clone()))?
                     .clone()))
             }
             ModuleRequestKind::Capabilities { key: Some(key), .. } => {
                 self.selected(key)?;
-                ModuleCompletion::Capabilities(Ok(*self.capabilities.get(key.uri.as_ref())?))
+                ModuleCompletion::Capabilities(Ok(*self.capabilities.get(&key.uri)?))
             }
             ModuleRequestKind::HasElement {
                 key: Some(key),
@@ -290,8 +291,8 @@ impl Factory {
                 self.selected(key)?;
                 ModuleCompletion::HasElement(Ok(*self
                     .elements
-                    .get(&(key.uri.to_string(), element_uri.to_string()))
-                    .or_else(|| self.element_defaults.get(key.uri.as_ref()))?))
+                    .get(&(key.uri.clone(), element_uri.clone()))
+                    .or_else(|| self.element_defaults.get(&key.uri))?))
             }
             ModuleRequestKind::Resolve {
                 key,
@@ -320,7 +321,7 @@ impl Factory {
             ModuleRequestKind::LoadSource { key, .. } => {
                 let id = self.resolved.get(&key.id)?;
                 assert_eq!(*id, key.key.id);
-                assert_eq!(key.handle.as_ref(), format!("custom-resolved-{}", key.id.0));
+                assert_eq!(key.handle, format!("custom-resolved-{}", key.id.0).as_str());
                 let selected = self.selected(&key.key).expect("resolved original key");
                 let config = &self.configs[selected.config];
                 let source = if config.source_mode == "state-at-load" {
@@ -334,7 +335,7 @@ impl Factory {
                         .expect("source state")
                         .clone()
                         .map(|text| ModuleSource {
-                            text,
+                            text: text.into(),
                             inferred_name: "ignored-selected-key-infers-name".into(),
                         }),
                 )

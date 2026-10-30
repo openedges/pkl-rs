@@ -4,6 +4,7 @@ use crate::modules::{
     ModuleRequestKind, ModuleSource, ResolvedKeyId, ResolvedModule, ResolvedModuleKey,
     SelectionPhase, UnitId,
 };
+use crate::source::SourceText;
 use crate::value::RuntimeSource;
 
 mod inheritance;
@@ -25,7 +26,7 @@ pub(crate) struct ModuleUnit {
     pub build: Option<ModuleBuild>,
     pub syntax: Option<Arc<crate::syntax::Module>>,
     pub source: Option<Arc<RuntimeSource>>,
-    pub name: Arc<str>,
+    pub name: PklString,
     pub template: usize,
     pub entry: usize,
     pub initial_members: Vec<Member>,
@@ -40,7 +41,7 @@ pub(crate) struct ModuleBuild {
     pub module: crate::syntax::Module,
     pub options: CompileOptions,
     pub instrument: bool,
-    pub prepared: BTreeMap<Span, (Arc<str>, Arc<str>)>,
+    pub prepared: BTreeMap<Span, (PklString, PklString)>,
 }
 
 impl ModuleUnit {
@@ -57,33 +58,33 @@ impl ModuleUnit {
 
 #[derive(Clone, Debug)]
 pub struct ImportSpec {
-    pub authored: Arc<str>,
+    pub authored: PklString,
     pub span: Span,
     pub unit: UnitId,
-    pub absolute_uri: Arc<str>,
-    pub original_uri: Arc<str>,
+    pub absolute_uri: PklString,
+    pub original_uri: PklString,
 }
 impl ImportSpec {
     pub(super) fn new(
-        authored: Arc<str>,
+        authored: PklString,
         span: Span,
         unit: UnitId,
         identity: Option<&ModuleIdentity>,
     ) -> Result<Self, RuntimeError> {
         let (absolute, original) = crate::host::resources::prepare_module_uri(
             &authored,
-            identity.map(|m| m.original_uri.as_ref()),
+            identity.map(|m| &m.original_uri),
         )
         .map_err(|e| e.at(span))?;
         Ok(Self {
             authored,
             span,
             unit,
-            absolute_uri: absolute.into(),
-            original_uri: original.into(),
+            absolute_uri: absolute,
+            original_uri: original,
         })
     }
-    pub(super) fn authored(authored: Arc<str>, span: Span, unit: UnitId) -> Self {
+    pub(super) fn authored(authored: PklString, span: Span, unit: UnitId) -> Self {
         Self {
             absolute_uri: authored.clone(),
             original_uri: authored.clone(),
@@ -123,10 +124,10 @@ pub(super) enum CachedModule {
 #[derive(Default)]
 pub(super) struct ModuleCache(BTreeMap<crate::host::resources::CacheKey, CachedModule>);
 impl ModuleCache {
-    pub fn get(&self, uri: &str) -> Option<&CachedModule> {
-        self.0.get(&crate::host::resources::cache_key(uri))
+    pub fn get(&self, uri: impl Into<PklString>) -> Option<&CachedModule> {
+        self.0.get(&crate::host::resources::cache_key(&uri.into()))
     }
-    pub fn insert(&mut self, uri: Arc<str>, value: CachedModule) {
+    pub fn insert(&mut self, uri: PklString, value: CachedModule) {
         self.0
             .insert(crate::host::resources::cache_key(&uri), value);
     }
@@ -157,13 +158,13 @@ pub(super) fn next_failure_id() -> u64 {
 }
 
 type ParsedModule =
-    Result<crate::syntax::Module, Box<(crate::diagnostic::Diagnostic, Option<PklString>)>>;
+    Result<crate::syntax::Module, Box<(crate::parser::ModuleParseFailure, Option<PklString>)>>;
 
 pub(super) struct ModuleRun {
     pub spec: ImportSpec,
     site: Option<(ExecutableOwnerId, usize, usize)>,
     purpose: ModulePurpose,
-    supplied: Option<Arc<str>>,
+    supplied: Option<SourceText>,
     internal_key: bool,
     phase: ModulePhase,
     key: Option<ModuleKey>,
@@ -185,6 +186,10 @@ enum ModulePurpose {
 }
 
 impl ModuleRun {
+    pub(super) fn is_import_initializing(&self) -> bool {
+        self.initializing && self.purpose == ModulePurpose::Import
+    }
+
     pub(super) fn is_singleton(&self) -> bool {
         self.key.as_ref().is_some_and(|key| {
             key.kind == ModuleKeyKind::StandardLibrary
@@ -211,13 +216,13 @@ impl Vm {
     pub(crate) fn append_public_operation(
         &mut self,
         source: crate::modules::ModuleSourceSpec,
-        expression: Arc<str>,
+        expression: SourceText,
     ) -> Result<usize, RuntimeError> {
         crate::host::resources::validate_module_key_uri(&source.uri)?;
         let program = Arc::make_mut(&mut self.program);
         program.seal_code_segment();
         let mut code = vec![Instruction::LoadPrimary(Arc::new(source))];
-        if expression.as_ref() == "output.text" {
+        if expression.original() == "output.text" {
             code.extend([
                 Instruction::GetMember("output".into()),
                 Instruction::CheckModuleOutput,
@@ -234,9 +239,9 @@ impl Vm {
     }
     fn fresh_module_run(
         &self,
-        uri: Arc<str>,
+        uri: PklString,
         purpose: ModulePurpose,
-        supplied: Option<Arc<str>>,
+        supplied: Option<SourceText>,
     ) -> ModuleRun {
         ModuleRun {
             spec: ImportSpec {
@@ -273,10 +278,10 @@ impl Vm {
             ModulePurpose::Primary,
             source.contents.clone(),
         );
-        run.spec.original_uri = normalized.clone().into();
+        run.spec.original_uri = normalized.clone();
         self.frames.last_mut().unwrap().module_load = Some(run);
         let id = ModuleKeyId(next_key_id()?);
-        if source.uri.as_ref() == "repl:text" && source.contents.is_some() {
+        if source.uri == "repl:text" && source.contents.is_some() {
             self.frames
                 .last_mut()
                 .unwrap()
@@ -293,11 +298,11 @@ impl Vm {
         }
         self.wait_module(ModuleRequestKind::SelectKey {
             id,
-            uri: normalized.into(),
+            uri: normalized,
             phase: SelectionPhase::Primary,
         })
     }
-    pub(super) fn begin_query(&mut self, expression: Arc<str>) -> Result<(), RuntimeError> {
+    pub(super) fn begin_query(&mut self, expression: SourceText) -> Result<(), RuntimeError> {
         let receiver = self.pop()?.as_object()?;
         let mut run =
             self.fresh_module_run("repl:text".into(), ModulePurpose::Query, Some(expression));
@@ -344,7 +349,9 @@ impl Vm {
                 || crate::parser::parse_module_for_evaluation(&source.text),
                 |syntax| Ok((*syntax).clone()),
             )
-            .map_err(|error| imported_diagnostic(error, source.clone(), "".into()))?;
+            .map_err(|failure| {
+                self.module_parse_error(*failure, source.clone(), Some("".into()))
+            })?;
         let expression = run
             .supplied
             .ok_or_else(|| invalid("missing query source"))?;
@@ -399,7 +406,7 @@ impl Vm {
             .and_then(|object| object.module_unit)
             .and_then(|unit| self.program.units[unit.0 as usize].source.clone())
     }
-    pub(super) fn current_module_name(&self) -> &str {
+    pub(super) fn current_module_name(&self) -> &PklString {
         self.frames
             .last()
             .and_then(|frame| self.program.metadata.get(frame.block))
@@ -421,10 +428,23 @@ impl Vm {
     }
 
     pub(super) fn begin_import(&mut self, spec: ImportSpec) -> Result<(), RuntimeError> {
+        self.begin_import_node(spec, true)
+    }
+    pub(super) fn begin_glob_member_import(
+        &mut self,
+        spec: ImportSpec,
+    ) -> Result<(), RuntimeError> {
+        self.begin_import_node(spec, false)
+    }
+    fn begin_import_node(
+        &mut self,
+        spec: ImportSpec,
+        cache_node: bool,
+    ) -> Result<(), RuntimeError> {
         let owner = self.current_executable()?;
         let frame = self.frames.last().expect("import frame");
         let site = (frame.block, frame.pc - 1);
-        if let Some(receiver) = self.heap.imported_module(owner, site)? {
+        if cache_node && let Some(receiver) = self.heap.imported_module(owner, site)? {
             self.stack.push(Value::Object(receiver));
             return Ok(());
         }
@@ -444,7 +464,7 @@ impl Vm {
             import_uri: spec.absolute_uri.clone(),
         };
         self.frames.last_mut().expect("import frame").module_load = Some(ModuleRun {
-            site: Some((owner, site.0, site.1)),
+            site: cache_node.then_some((owner, site.0, site.1)),
             purpose: ModulePurpose::Import,
             supplied: None,
             internal_key: false,
@@ -737,9 +757,7 @@ impl Vm {
                     | Failure::ExternalReaderProcess { .. }))
                 | ModuleCompletion::Capabilities(Err(Failure::NoLoader))
                 | ModuleCompletion::HasElement(Err(Failure::NoLoader))
-                | ModuleCompletion::ImportUri(Err(Failure::NoLoader
-                    | Failure::NotFound
-                    | Failure::SecurityManagerException { .. }))
+                | ModuleCompletion::ImportUri(Err(Failure::NoLoader | Failure::NotFound))
         ) {
             return Err(invalid(
                 "Module Host failure does not belong to this phase.",
@@ -805,6 +823,13 @@ impl Vm {
                 ErrorKind::Host,
                 "SecurityManagerException is not supported for ModuleKey capability getters.",
             ));
+        }
+        if self.frames.last().is_some_and(|frame| frame.glob.is_some()) {
+            let result = self.complete_glob_module(completion);
+            if let Err(error) = result {
+                self.fail(error);
+            }
+            return Ok(());
         }
         let result = match completion {
             ModuleCompletion::ImportChecked(result) => self.checked_import(result),
@@ -955,23 +980,21 @@ impl Vm {
                     metadata
                         .source
                         .as_ref()
-                        .map_or(self.program.module_name.as_ref(), |source| {
-                            source.module_name.as_ref()
-                        }),
+                        .map_or(&self.program.module_name, |source| &source.module_name),
                 )
                 .concat(frame.diagnostic_member.as_ref().unwrap_or(&metadata.member))
             });
         // VmLanguage infers the selected key's module name even when parsing
         // fails. Keep the original diagnostic while its name getter suspends.
         let parsed = crate::parser::parse_module_for_evaluation(&input.text)
-            .map_err(|error| Box::new((error, import_member)));
+            .map_err(|failure| Box::new((*failure, import_member)));
         if let Some(name) = parsed
             .as_ref()
             .ok()
             .and_then(|parsed| parsed.declaration.as_ref())
             .and_then(|d| d.name.as_ref())
         {
-            Arc::make_mut(&mut source).module_name = name.join(".").into();
+            Arc::make_mut(&mut source).module_name = PklString::join(name, ".");
             return self.finish_loaded_parse(parsed, source, receiver);
         }
         let run = self
@@ -987,7 +1010,7 @@ impl Vm {
             .ok_or_else(|| invalid("missing loaded ModuleKey"))?;
         if !crate::host::resources::module_name_needs_fragment_paths(&key.uri) {
             Arc::make_mut(&mut source).module_name =
-                crate::host::resources::infer_module_name(&key.uri, false)?.into();
+                crate::host::resources::infer_module_name(&key.uri, false)?;
             return self.finish_loaded_parse(parsed, source, receiver);
         }
         run.parsed = Some(parsed);
@@ -1015,7 +1038,7 @@ impl Vm {
             .source
             .take()
             .ok_or_else(|| invalid("missing module name source"))?;
-        Arc::make_mut(&mut source).module_name = name.into();
+        Arc::make_mut(&mut source).module_name = name;
         let parsed = run
             .parsed
             .take()
@@ -1035,11 +1058,50 @@ impl Vm {
         match parsed {
             Ok(parsed) => self.compile_loaded_module(parsed, source, receiver),
             Err(error) => {
-                let (diagnostic, member) = *error;
-                let member = member.unwrap_or_else(|| PklString::from(source.module_name.as_ref()));
-                Err(imported_diagnostic(diagnostic, source, member))
+                let (failure, member) = *error;
+                Err(self.module_parse_error(failure, source, member))
             }
         }
+    }
+
+    fn module_parse_error(
+        &self,
+        failure: crate::parser::ModuleParseFailure,
+        source: Arc<RuntimeSource>,
+        member: Option<PklString>,
+    ) -> RuntimeError {
+        if let Some(mut error) = failure.minimum_version_error(&source.module_name) {
+            if error.kind == ErrorKind::Type
+                && let Some(caller) =
+                    self.frames.iter().rev().find(|frame| {
+                        frame.module_load.as_ref().is_some_and(|run| {
+                            run.initializing && run.purpose == ModulePurpose::Import
+                        }) && matches!(
+                            self.program.blocks[frame.block].get(frame.pc.saturating_sub(1)),
+                            Some(Instruction::ImportModule(_))
+                        )
+                    })
+            {
+                // Initialization hides this ImportNode's ordinary callsite.
+                // The checker explicitly supplies it, with no child parser
+                // location; outer authored frames unwind on the existing path.
+                let metadata = &self.program.metadata[caller.block];
+                if let Some(span) = metadata.spans[caller.pc.saturating_sub(1)] {
+                    error.frames.push(RuntimeFrame {
+                        source: metadata.source.clone(),
+                        span,
+                        member: caller
+                            .diagnostic_member
+                            .clone()
+                            .unwrap_or_else(|| metadata.member.clone()),
+                        anonymous: false,
+                    });
+                }
+            }
+            return error;
+        }
+        let member = member.unwrap_or_else(|| source.module_name.clone());
+        imported_diagnostic(failure.diagnostic, source, member)
     }
 
     fn compile_loaded_module(
@@ -1081,6 +1143,7 @@ impl Vm {
                     error.insert_frame(
                         0,
                         RuntimeFrame {
+                            anonymous: false,
                             span,
                             source: Some(source),
                             member: PklString::default(),
@@ -1152,6 +1215,7 @@ impl Vm {
             generator_scopes: Vec::new(),
             module_load: None,
             uri_resolution: None,
+            glob: None,
             module_receiver: receiver,
         });
     }
@@ -1198,6 +1262,7 @@ pub(super) fn imported_diagnostic(
     error.span = Some(diagnostic.span);
     error.hint = diagnostic.hint().cloned();
     error.frames.push(RuntimeFrame {
+        anonymous: false,
         span: diagnostic.span,
         source: Some(source.clone()),
         member: diagnostic
@@ -1226,7 +1291,7 @@ pub(super) struct ArenaCheckpoint {
     metadata: usize,
     objects: usize,
     units: CodeStorage<ModuleUnit>,
-    module_name: Arc<str>,
+    module_name: PklString,
     module_template: Option<usize>,
     entry: usize,
     initial_members: Vec<Member>,

@@ -1,0 +1,66 @@
+{
+  "name": "types-stage18-const-generator-spread",
+  "adapter": "scalar",
+  "scalar_row": {
+    "Java_actual_process_exit_code": 0,
+    "authority_kind": "original-scalar-Java-process",
+    "expected_exit": 0,
+    "expected_stderr": {
+      "bytes": 0,
+      "mode": 420,
+      "path": "target/m2/stage94-recovered-scalars-01/cases/types-stage18-const-generator-spread/java.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "expected_stdout": {
+      "bytes": 1,
+      "mode": 420,
+      "path": "target/m2/stage94-recovered-scalars-01/cases/types-stage18-const-generator-spread/java.stdout.bin",
+      "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+    },
+    "historical_status": "pass",
+    "id": "types-stage18-const-generator-spread",
+    "input": {
+      "bytes": 118,
+      "path": "tests/fixtures/m2/types-stage18-const-generator-spread.pkl",
+      "sha256": "518574dc663265626b390d4ca32e76458be1e39104a70e5fa60f2dc2941a7331"
+    },
+    "old_failure_now_pass": false,
+    "old_pass_regression": false,
+    "power_assertions": false,
+    "process": {
+      "bytes": 1790,
+      "path": "target/m2/stage120-full-ready-scalars-01/cases/types-stage18-const-generator-spread/process.json",
+      "sha256": "50d9e7f2a34f8027ae0340e2b088de7059345208a980e8192e826999777a66f0"
+    },
+    "raw_channels_match": true,
+    "raw_payload_comparison_performed": true,
+    "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/tests/fixtures/m2/types-stage18-const-generator-spread.pkl",
+    "status": "pass",
+    "whole_expression": "result"
+  },
+  "process": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage120-full-ready-scalars-01/cases/types-stage18-const-generator-spread/process.json",
+    "bytes": 1790,
+    "sha256": "50d9e7f2a34f8027ae0340e2b088de7059345208a980e8192e826999777a66f0"
+  },
+  "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/tests/fixtures/m2/types-stage18-const-generator-spread.pkl",
+  "input": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/tests/fixtures/m2/types-stage18-const-generator-spread.pkl",
+    "bytes": 118,
+    "sha256": "518574dc663265626b390d4ca32e76458be1e39104a70e5fa60f2dc2941a7331"
+  },
+  "parent": null,
+  "expected_exit": 0,
+  "expected_stdout": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-recovered-scalars-01/cases/types-stage18-const-generator-spread/java.stdout.bin",
+    "bytes": 1,
+    "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+  },
+  "expected_stderr": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-recovered-scalars-01/cases/types-stage18-const-generator-spread/java.stderr.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "expression": "result",
+  "retained_status": "pass"
+}

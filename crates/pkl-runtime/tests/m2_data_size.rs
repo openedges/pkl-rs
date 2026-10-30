@@ -568,7 +568,7 @@ fn callback_values_survive_suspension_collection_and_close() {
         let VmPoll::Pending(request) = event(&mut vm) else {
             panic!("read")
         };
-        assert_eq!(&*request.uri, format!("size:{index}"));
+        assert_eq!(request.uri, format!("size:{index}"));
         vm.resume(request.id, Ok(Value::DataSize(DataSize::new(1.5, unit))))
             .unwrap();
     }

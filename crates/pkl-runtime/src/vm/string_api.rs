@@ -231,11 +231,14 @@ pub(super) fn blocks(
     for &(name, operation, parameters) in specifications {
         let anchor = format!("external function {name}(");
         let start = class_start
-            + source.text[class_start..]
+            + source
+                .text
+                .entire()
+                .range(class_start..)
                 .find(&anchor)
                 .expect("pinned String API");
-        let end = start + source.text[start..].find('\n').unwrap();
-        let declaration = &source.text[start..end];
+        let end = start + source.text.entire().range(start..).find("\n").unwrap();
+        let declaration = &source.text.entire().range(start..end);
         let member = format!("#String.{name}");
         let mut code = Vec::new();
         let mut spans = Vec::new();

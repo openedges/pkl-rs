@@ -54,17 +54,11 @@ fn captured_module_keeps_exactly_one_real_parent_until_terminal_release() {
             .class_definition
             .as_ref()
             .unwrap()
-            .name
-            .as_ref(),
+            .name,
         "Typed"
     );
     assert!(builtin.cache.is_empty());
-    assert!(
-        builtin
-            .members
-            .iter()
-            .any(|member| member.name.as_ref() == "output")
-    );
+    assert!(builtin.members.iter().any(|member| member.name == "output"));
     assert_eq!(
         vm.member_state(module, "output").unwrap(),
         LazyState::Unevaluated
@@ -81,12 +75,12 @@ fn captured_module_keeps_exactly_one_real_parent_until_terminal_release() {
     let base = classes
         .iter()
         .copied()
-        .find(|id| vm.heap.class_definition(*id).unwrap().name.as_ref() == "Base")
+        .find(|id| vm.heap.class_definition(*id).unwrap().name == "Base")
         .unwrap();
     let child = classes
         .iter()
         .copied()
-        .find(|id| vm.heap.class_definition(*id).unwrap().name.as_ref() == "Child")
+        .find(|id| vm.heap.class_definition(*id).unwrap().name == "Child")
         .unwrap();
     let typed = vm.canonical_builtin_class(classes::BuiltinClass::Typed);
     assert_eq!(vm.heap.get_class(base).unwrap().superclass, Some(typed));

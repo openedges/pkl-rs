@@ -146,7 +146,7 @@ fn ready(session: &mut HostSession, module: &Value, now: u64) -> Result<Value, R
 fn read(session: &mut HostSession, module: &Value, now: u64, expected: &str) -> String {
     match event(session, module, now) {
         HostPoll::Read { token, uri } => {
-            assert_eq!(&*uri, expected);
+            assert_eq!(uri, expected);
             token
         }
         event => panic!("expected Host read, got {event:?}"),

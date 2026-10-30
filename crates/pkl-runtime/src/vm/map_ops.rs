@@ -16,9 +16,15 @@ pub(super) fn blocks(
 ) -> BTreeMap<(Arc<str>, Arc<str>), usize> {
     let source = crate::stdlib_sources::base();
     let class = source.text.find("external class Map<").unwrap();
-    let start = class + source.text[class..].find("external function put<").unwrap();
-    let close = start + source.text[start..].find("): Map<").unwrap();
-    let end = close + source.text[close..].find('\n').unwrap();
+    let start = class
+        + source
+            .text
+            .entire()
+            .range(class..)
+            .find("external function put<")
+            .unwrap();
+    let close = start + source.text.entire().range(start..).find("): Map<").unwrap();
+    let end = close + source.text.entire().range(close..).find("\n").unwrap();
     let block = blocks.len();
     blocks.push(vec![
         Instruction::Primitive(primitives::Operation::MapOps(Operation::PutContains)),
@@ -34,11 +40,23 @@ pub(super) fn blocks(
         ..Default::default()
     });
     let remove_start = class
-        + metadata[block].source.as_ref().unwrap().text[class..]
+        + metadata[block]
+            .source
+            .as_ref()
+            .unwrap()
+            .text
+            .entire()
+            .range(class..)
             .find("external function remove(")
             .unwrap();
     let source = metadata[block].source.as_ref().unwrap().clone();
-    let remove_end = remove_start + source.text[remove_start..].find('\n').unwrap();
+    let remove_end = remove_start
+        + source
+            .text
+            .entire()
+            .range(remove_start..)
+            .find("\n")
+            .unwrap();
     let remove_block = blocks.len();
     blocks.push(vec![
         Instruction::Primitive(primitives::Operation::MapOps(Operation::Remove)),
@@ -147,7 +165,7 @@ impl Vm {
         order.remove(order_position);
         let old = self.heap.get(source)?;
         let removed_name = removed.map(|(slot, _)| old.collection_members[slot].name.clone());
-        let keep = |name: &Arc<str>| removed_name.as_ref() != Some(name);
+        let keep = |name: &PklString| removed_name.as_ref() != Some(name);
         let map_index = match removed {
             Some((slot, hash)) => old.map_index().without_matched(hash, slot),
             None => old.map_index().clone(),

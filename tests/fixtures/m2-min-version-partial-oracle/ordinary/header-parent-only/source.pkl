@@ -1,0 +1,4 @@
+@ModuleInfo { minPklVersion = "99.9.9" }
+extends "base-child.pkl"
+result = "ok"
+value = (

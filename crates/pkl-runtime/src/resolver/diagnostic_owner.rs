@@ -87,14 +87,14 @@ impl OwnerScopes {
         }
     }
 
-    pub(super) fn enter_member(&mut self, name: &str) {
+    pub(super) fn enter_member(&mut self, name: &PklString) {
         if let Some(scopes) = &mut self.0 {
             let name = crate::diagnostic_names::quote_identifier(name);
             let parent = &scopes.last().unwrap().name;
             let name = if parent.is_empty() {
-                name.into()
+                name
             } else {
-                parent.concat(&format!(".{name}").into())
+                parent.concat(&PklString::from(".")).concat(&name)
             };
             scopes.push(Scope::new(name, Kind::Other));
         }
@@ -169,23 +169,25 @@ fn literal_label(expression: &Expr) -> Option<PklString> {
         ExprKind::Member(receiver, unit)
             if matches!(
                 unit.as_str(),
-                "ns" | "us"
-                    | "ms"
-                    | "s"
-                    | "min"
-                    | "h"
-                    | "d"
-                    | "b"
-                    | "kb"
-                    | "kib"
-                    | "mb"
-                    | "mib"
-                    | "gb"
-                    | "gib"
-                    | "tb"
-                    | "tib"
-                    | "pb"
-                    | "pib"
+                Some(
+                    "ns" | "us"
+                        | "ms"
+                        | "s"
+                        | "min"
+                        | "h"
+                        | "d"
+                        | "b"
+                        | "kb"
+                        | "kib"
+                        | "mb"
+                        | "mib"
+                        | "gb"
+                        | "gib"
+                        | "tb"
+                        | "tib"
+                        | "pb"
+                        | "pib"
+                )
             ) =>
         {
             let number = match &receiver.unparenthesized().kind {

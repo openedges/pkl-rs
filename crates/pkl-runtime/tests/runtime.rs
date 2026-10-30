@@ -10,6 +10,9 @@ use pkl_runtime::vm::{Instruction as I, Program, Vm, VmPoll, compile_module};
 fn done(vm: &mut Vm) -> Result<Value, RuntimeError> {
     for _ in 0..1000 {
         match vm.poll(97) {
+            pkl_runtime::vm::VmPoll::Glob(_) => {
+                panic!("unexpected glob request in non-glob regression")
+            }
             VmPoll::Ready(value) => return value,
             VmPoll::Yielded => {}
             VmPoll::Log(_) | VmPoll::TransformFrame(_) => panic!("unexpected logger request"),
@@ -105,7 +108,7 @@ fn tracing_collects_cycles_reuses_slots_and_rejects_stale_or_foreign_handles() {
     let key = CacheKey {
         entry: false,
         owner: None,
-        name: Arc::from("self"),
+        name: "self".into(),
         method: false,
     };
     heap.get_mut(stale)
@@ -157,7 +160,7 @@ fn resource_program() -> Arc<Program> {
     program.objects.push(vec![Member {
         flags: 0,
         entry: false,
-        name: Arc::from("answer"),
+        name: "answer".into(),
         code: 1,
         local: false,
         method: false,
@@ -279,7 +282,7 @@ fn malformed_bytecode_is_an_error_and_cannot_leak_a_running_thunk() {
     program.objects.push(vec![Member {
         flags: 0,
         entry: false,
-        name: Arc::from("bad"),
+        name: "bad".into(),
         code: 1,
         local: false,
         method: false,
@@ -327,8 +330,8 @@ fn super_reads_preserve_receiver_but_do_not_memoize_parent_body() {
             I::Return,
         ],
         vec![
-            I::GetSuperMember(Arc::from("answer")),
-            I::GetSuperMember(Arc::from("answer")),
+            I::GetSuperMember("answer".into()),
+            I::GetSuperMember("answer".into()),
             I::Add,
             I::Return,
         ],
@@ -336,7 +339,7 @@ fn super_reads_preserve_receiver_but_do_not_memoize_parent_body() {
     program.objects.push(vec![Member {
         flags: 0,
         entry: false,
-        name: Arc::from("answer"),
+        name: "answer".into(),
         code: 1,
         local: false,
         method: false,
@@ -348,7 +351,7 @@ fn super_reads_preserve_receiver_but_do_not_memoize_parent_body() {
     program.objects.push(vec![Member {
         flags: 0,
         entry: false,
-        name: Arc::from("result"),
+        name: "result".into(),
         code: 2,
         local: false,
         method: false,
@@ -441,12 +444,12 @@ fn transient_failures_retry_in_order_while_successful_dependencies_stay_cached()
         ],
         vec![
             I::GetProperty {
-                name: Arc::from("first"),
+                name: "first".into(),
                 owner_depth: 0,
                 local: false,
             },
             I::GetProperty {
-                name: Arc::from("second"),
+                name: "second".into(),
                 owner_depth: 0,
                 local: false,
             },
@@ -459,7 +462,7 @@ fn transient_failures_retry_in_order_while_successful_dependencies_stay_cached()
             .map(|(name, code)| Member {
                 flags: 0,
                 entry: false,
-                name: Arc::from(name),
+                name: name.into(),
                 code,
                 local: false,
                 method: false,
@@ -477,7 +480,7 @@ fn transient_failures_retry_in_order_while_successful_dependencies_stay_cached()
         let VmPoll::Pending(request) = vm.poll(100) else {
             panic!("expected read")
         };
-        assert_eq!(&*request.uri, uri);
+        assert_eq!(request.uri, uri);
         request.id
     };
     let failure = RuntimeError::new(ErrorKind::Host, "transient\0failure\r\n🙂");

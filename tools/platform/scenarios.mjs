@@ -554,7 +554,8 @@ export async function scenarios(api, { legacyUtf8Observations = [] } = {}) {
   });
   await check('utf8-utf16-string-boundary', () => {
     for (const value of ['', '한글🙂e\u0301\0\r\n', '𐐀漢字']) eq(api.roundtripString(value), value);
-    for (const value of ['\ud800', '\udfff', 'a\ud800b']) throws(() => api.roundtripString(value), 'unpaired UTF-16 surrogate is unsupported');
+    // Preserve each UTF-16 code unit across the shared engine and JS boundary.
+    for (const value of ['\ud800', '\udfff', 'a\ud800b']) eq(api.roundtripString(value), value);
     for (const value of [123, null, undefined, {}]) throws(() => api.roundtripString(value));
   });
   await check('lossless-i64-bigint-range', () => {

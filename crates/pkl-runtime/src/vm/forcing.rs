@@ -15,7 +15,7 @@ enum Task {
 struct ReadBoundary {
     receiver: ObjectId,
     owner: ObjectId,
-    name: Arc<str>,
+    name: PklString,
     entry: bool,
     stack: usize,
 }
@@ -77,13 +77,13 @@ impl ForceRun {
         &self,
         receiver: ObjectId,
         owner: ObjectId,
-        name: &str,
+        name: &PklString,
         entry: bool,
     ) -> bool {
         self.awaiting.as_ref().is_some_and(|read| {
             read.receiver == receiver
                 && read.owner == owner
-                && read.name.as_ref() == name
+                && &read.name == name
                 && read.entry == entry
         })
     }
@@ -210,6 +210,7 @@ impl Vm {
             generator_scopes: Vec::new(),
             module_load: None,
             uri_resolution: None,
+            glob: None,
             module_receiver: None,
         });
         Ok(())

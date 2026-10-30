@@ -1,0 +1,18 @@
+–– Pkl Error ––
+Cannot spread object because the enclosing object already has a declaration of property `foo`.
+
+7 | ...source
+    ^^^^^^^^^
+at spreadSyntaxDuplicateProperty2#res (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/spreadSyntaxDuplicateProperty2.pkl, line 7)
+
+2 | foo = 1
+    ^^^
+at spreadSyntaxDuplicateProperty2#source.foo (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/spreadSyntaxDuplicateProperty2.pkl, line 2)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)
+
+135 | if (renderer is BytesRenderer) renderer.renderDocument(value) else text.encodeToBytes("UTF-8")
+                                                                         ^^^^
+at pkl.base#Module.output.bytes (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L135)

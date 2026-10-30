@@ -184,7 +184,7 @@ result = let (held = (new B {}).items) let (unused = read("mem:resume")) held[0]
     let VmPoll::Pending(read) = event(&mut vm) else {
         panic!("expected Host suspension")
     };
-    assert_eq!(&*read.uri, "mem:resume");
+    assert_eq!(read.uri, "mem:resume");
     vm.collect(std::slice::from_ref(&module));
     vm.resume(read.id, Ok(Value::Null)).unwrap();
     let error = ready(&mut vm).unwrap_err();
@@ -250,7 +250,7 @@ result = (new Factory {}).make(2)[0].value
         let VmPoll::Pending(read) = event(&mut vm) else {
             panic!("expected default Host read")
         };
-        assert_eq!(&*read.uri, "mem:default");
+        assert_eq!(read.uri, "mem:default");
         vm.collect(std::slice::from_ref(&module));
         if cancel {
             vm.cancel();

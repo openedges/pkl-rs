@@ -93,7 +93,7 @@ impl Vm {
     pub(super) fn retire_saturated_method_cache(
         &mut self,
         receiver: &Value,
-        name: &str,
+        name: &PklString,
     ) -> Result<(), RuntimeError> {
         if name == "apply" && matches!(receiver, Value::Function(_)) {
             return Ok(());
@@ -320,14 +320,14 @@ impl Vm {
         let module = metadata
             .source
             .as_ref()
-            .map(|source| source.module_name.as_ref())
+            .map(|source| &source.module_name)
             .or_else(|| {
                 metadata
                     .unit
                     .and_then(|unit| self.program.units.get(unit.0 as usize))
-                    .map(|unit| unit.name.as_ref())
+                    .map(|unit| &unit.name)
             })
-            .unwrap_or(self.program.module_name.as_ref());
+            .unwrap_or(&self.program.module_name);
         let message = PklString::from("Method `")
             .concat(&PklString::from(module))
             .concat(&metadata.member)

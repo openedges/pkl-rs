@@ -39,7 +39,7 @@ fn ready(s: &mut HostSession, roots: &[Value]) -> Result<Value, RuntimeError> {
 fn read(s: &mut HostSession, roots: &[Value], expected: &str) -> String {
     match event(s, roots) {
         HostPoll::Read { token, uri } => {
-            assert_eq!(&*uri, expected);
+            assert_eq!(uri, expected);
             token
         }
         event => panic!("unexpected {event:?}"),

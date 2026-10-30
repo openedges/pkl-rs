@@ -3,7 +3,7 @@
 pub mod frontend;
 pub mod session;
 use crate::diagnostic::{RenderFrame, render_error_text};
-use crate::source::{Source, SourceMap, Span};
+use crate::source::{Source, SourceMap, SourceText, Span};
 use crate::value::{ErrorKind, PklString, RuntimeError, Value};
 use crate::vm::{BlockMetadata, Instruction, Vm, VmPoll};
 
@@ -46,15 +46,21 @@ pub fn scalar_expression_with_options(
 
 /// Evaluate the same bounded property path while retaining value and error units.
 pub fn scalar_expression_text_with_options(
-    source_text: &str,
-    uri: &str,
-    name: &str,
-    expression: &str,
+    source_text: impl Into<SourceText>,
+    uri: impl Into<PklString>,
+    name: impl Into<PklString>,
+    expression: impl Into<SourceText>,
     options: EvaluationOptions,
 ) -> Result<PklString, PklString> {
-    scalar_expressions_text_with_options(source_text, uri, name, &[expression.to_owned()], options)?
-        .pop()
-        .expect("one expression supplied")
+    scalar_expressions_source_with_options(
+        source_text.into(),
+        uri.into(),
+        name.into(),
+        &[expression.into()],
+        options,
+    )?
+    .pop()
+    .expect("one expression supplied")
 }
 
 /// Bounded development sequence boundary. Setup errors abort the sequence; call
@@ -85,18 +91,39 @@ pub fn scalar_expressions_with_options(
 /// Canonical sequence text; encoding is chosen by the consuming adapter.
 /// Evaluation, GC and property-path restrictions match the legacy byte wrapper.
 pub fn scalar_expressions_text_with_options(
-    source_text: &str,
-    uri: &str,
-    name: &str,
+    source_text: impl Into<SourceText>,
+    uri: impl Into<PklString>,
+    name: impl Into<PklString>,
     expressions: &[String],
     options: EvaluationOptions,
 ) -> Result<Vec<Result<PklString, PklString>>, PklString> {
-    let expression = expressions.first().map_or("", String::as_str);
+    let expressions = expressions.iter().map(SourceText::from).collect::<Vec<_>>();
+    scalar_expressions_source_with_options(
+        source_text.into(),
+        uri.into(),
+        name.into(),
+        &expressions,
+        options,
+    )
+}
+
+pub fn scalar_expressions_source_with_options(
+    source_text: SourceText,
+    uri: PklString,
+    name: PklString,
+    expressions: &[SourceText],
+    options: EvaluationOptions,
+) -> Result<Vec<Result<PklString, PklString>>, PklString> {
+    let uri = &uri;
+    let name = &name;
+    let source_text = &source_text;
+    let empty = SourceText::from("");
+    let expression = expressions.first().unwrap_or(&empty);
     let mut sources = SourceMap::default();
     let source_id = sources.add(uri, source_text);
     let source = sources.get(source_id).expect("source inserted");
     let (mut program, name) = compile_program_text(source, uri, name, expression, options)?;
-    let name = name.as_str();
+    let name = &name;
     let program_mut = std::sync::Arc::make_mut(&mut program);
     // The Java expression-string boundary converts a returned Reference through
     // its domain renderer and a strict Map/Set through its non-forcing value renderer.
@@ -112,7 +139,7 @@ pub fn scalar_expressions_text_with_options(
         .map_err(|error| error.message)?;
     let output_text = expressions
         .iter()
-        .any(|expression| expression == "output.text")
+        .any(|expression| expression.original() == "output.text")
         .then(|| session::append_output_entry(program_mut, "text"))
         .transpose()
         .map_err(|error| error.message)?;
@@ -148,7 +175,7 @@ pub fn scalar_expressions_text_with_options(
         .map_err(|error| runtime_error_text(source, uri, name, expression, error, None))?;
     let mut results = Vec::with_capacity(expressions.len());
     for expression in expressions {
-        if expression == "output.text" {
+        if expression.original() == "output.text" {
             // Same real output operation as the session API, without ToString
             // or a synthetic REPL frame (EvaluatorImpl.evaluateExpressionString).
             let result = vm
@@ -167,19 +194,23 @@ pub fn scalar_expressions_text_with_options(
         let mut evaluate = || -> Result<Value, RuntimeError> {
             let mut value = module_value.clone();
             // The bounded adapter accepts property paths, not arbitrary REPL expressions.
-            for member in expression.split('.') {
+            for member in expression.entire().split(".") {
                 if expression_end > 0 {
                     expression_end += 1; // The property separator is part of the prefix.
                 }
-                expression_end += member.len();
-                if member.is_empty() || !member.chars().all(|ch| ch.is_alphanumeric() || ch == '_')
+                expression_end += member.len_bytes();
+                if member.is_empty()
+                    || !member.characters().all(|(_, ch)| {
+                        ch.scalar()
+                            .is_some_and(|ch| ch.is_alphanumeric() || ch == '_')
+                    })
                 {
                     return Err(RuntimeError::new(
                         ErrorKind::Unsupported,
                         "the M2 probe currently accepts property paths only",
                     ));
                 }
-                vm.start_member(value.as_object()?, member)?;
+                vm.start_member(value.as_object()?, member.to_pkl_string())?;
                 value = poll(&mut vm)?;
             }
             Ok(value)
@@ -227,22 +258,33 @@ pub fn scalar_expressions_text_with_options(
 /// Preserve diagnostic code units until the caller selects a transport encoding.
 fn compile_program_text(
     source: &Source,
-    uri: &str,
-    name: &str,
-    expression: &str,
+    uri: impl Into<PklString>,
+    name: impl Into<PklString>,
+    expression: impl Into<SourceText>,
     options: EvaluationOptions,
-) -> Result<(std::sync::Arc<crate::vm::Program>, String), PklString> {
-    let module = crate::parser::parse_module_for_evaluation(source.text()).map_err(|error| {
+) -> Result<(std::sync::Arc<crate::vm::Program>, PklString), PklString> {
+    let uri = uri.into();
+    let uri = &uri;
+    let name = name.into();
+    let name = &name;
+    let expression = expression.into();
+    let expression = &expression;
+
+    let module = crate::parser::parse_module_for_evaluation(source.text()).map_err(|failure| {
+        if let Some(error) = failure.minimum_version_error(name) {
+            return render_error_text(&error.message, &[], None);
+        }
+        let error = failure.diagnostic;
         let name = error.module_name.as_deref().unwrap_or(name);
         let member = error.member.as_ref().map_or_else(
             || name.into(),
-            |suffix| PklString::from(format!("{name}#")).concat(suffix),
+            |suffix| name.concat(&"#".into()).concat(suffix),
         );
         crate::diagnostic::render_frontend_error_text(
             &error,
             &[RenderFrame {
                 source,
-                uri,
+                uri: uri.clone(),
                 member: &member,
                 span: error.span,
                 highlight_length_utf16: error.highlight_length_utf16,
@@ -253,8 +295,8 @@ fn compile_program_text(
         .declaration
         .as_ref()
         .and_then(|header| header.name.as_ref())
-        .map(|parts| parts.join("."));
-    let name = declared_name.as_deref().unwrap_or(name);
+        .map(|parts| PklString::join(parts, "."));
+    let name = declared_name.as_ref().unwrap_or(name);
     let resolved = crate::resolver::resolve_module_for_evaluation(&module);
     let mut program = if options.power_assertions {
         crate::vm::compile_module_with_power_assertions(&resolved)
@@ -285,6 +327,10 @@ fn poll(vm: &mut Vm) -> Result<Value, RuntimeError> {
                 request.id,
                 crate::modules::default_or_unsupported_completion(&request),
             )?,
+            VmPoll::Glob(request) => vm.complete_glob(
+                request.id,
+                crate::glob::configured_or_unsupported_completion(&request, &[], &[]),
+            )?,
             VmPoll::Yielded => {}
         }
     }
@@ -299,24 +345,38 @@ fn poll(vm: &mut Vm) -> Result<Value, RuntimeError> {
 /// This helper is not a complete product evaluation API.
 pub fn runtime_error(
     source: &Source,
-    uri: &str,
-    module: &str,
-    expression: &str,
+    uri: impl Into<PklString>,
+    module: impl Into<PklString>,
+    expression: impl Into<SourceText>,
     error: RuntimeError,
     expression_end: Option<usize>,
 ) -> String {
+    let uri = uri.into();
+    let uri = &uri;
+    let module = module.into();
+    let module = &module;
+    let expression = expression.into();
+    let expression = &expression;
+
     runtime_error_text(source, uri, module, expression, error, expression_end).to_java_utf8()
 }
 
 /// Render a source diagnostic without losing unmatched Java UTF-16 code units.
 pub fn runtime_error_text(
     source: &Source,
-    uri: &str,
-    module: &str,
-    expression: &str,
+    uri: impl Into<PklString>,
+    module: impl Into<PklString>,
+    expression: impl Into<SourceText>,
     error: RuntimeError,
     expression_end: Option<usize>,
 ) -> PklString {
+    let uri = uri.into();
+    let uri = &uri;
+    let module = module.into();
+    let module = &module;
+    let expression = expression.into();
+    let expression = &expression;
+
     runtime_error_text_with_profile(
         source,
         uri,
@@ -330,13 +390,20 @@ pub fn runtime_error_text(
 
 pub(crate) fn runtime_error_text_with_profile(
     source: &Source,
-    uri: &str,
-    module: &str,
-    expression: &str,
+    uri: impl Into<PklString>,
+    module: impl Into<PklString>,
+    expression: impl Into<SourceText>,
     error: RuntimeError,
     expression_end: Option<usize>,
     profile: frontend::DiagnosticProfile,
 ) -> PklString {
+    let uri = uri.into();
+    let uri = &uri;
+    let module = module.into();
+    let module = &module;
+    let expression = expression.into();
+    let expression = &expression;
+
     if let Some(rendered) = &error.rendered_diagnostic {
         return rendered.clone();
     }
@@ -356,13 +423,20 @@ pub(crate) fn runtime_error_text_with_profile(
 
 pub(crate) fn prepare_runtime_error(
     source: &Source,
-    uri: &str,
-    module: &str,
-    expression: &str,
+    uri: impl Into<PklString>,
+    module: impl Into<PklString>,
+    expression: impl Into<SourceText>,
     mut error: RuntimeError,
     expression_end: Option<usize>,
     profile: frontend::DiagnosticProfile,
 ) -> crate::diagnostic::PreparedDiagnostic {
+    let uri = uri.into();
+    let uri = &uri;
+    let module = module.into();
+    let module = &module;
+    let expression = expression.into();
+    let expression = &expression;
+
     let mut sources = SourceMap::default();
     let repl_id = sources.add("repl:text", expression);
     let mut foreign_sources = Vec::new();
@@ -377,7 +451,7 @@ pub(crate) fn prepare_runtime_error(
                 {
                     return *id;
                 }
-                let id = sources.add(foreign.uri.to_string(), foreign.text.to_string());
+                let id = sources.add(foreign.uri.clone(), foreign.text.clone());
                 foreign_sources.push((foreign.clone(), id));
                 id
             })
@@ -392,9 +466,13 @@ pub(crate) fn prepare_runtime_error(
     if let Some(span) = error.spread_hint.as_deref()
         && let Some(operand) = diagnostic_source.slice(*span)
     {
-        error.hint = Some(format!(
-            "To guard against a nullable value, use `...?` instead of `...`.\nTry: `...?{operand}`"
-        ).into());
+        error.hint = Some(
+            PklString::from(
+                "To guard against a nullable value, use `...?` instead of `...`.\nTry: `...?",
+            )
+            .concat(&operand.to_pkl_string())
+            .concat(&"`".into()),
+        );
     }
     if let Some(diagnostic) = &error.type_diagnostic {
         let (message, hint) = diagnostic.render(diagnostic_source);
@@ -402,22 +480,27 @@ pub(crate) fn prepare_runtime_error(
         error.hint = hint;
     }
     if error.kind == ErrorKind::MissingType {
-        let module = error.type_lookup_module.as_deref().unwrap_or_else(|| {
+        let module = error.type_lookup_module.as_ref().unwrap_or_else(|| {
             error
                 .frames
                 .first()
                 .and_then(|frame| frame.source.as_ref())
-                .map_or(module, |source| source.module_name.as_ref())
+                .map_or(module, |source| &source.module_name)
         });
-        error.hint = Some(format!(
-            "Searched in the following places:\n* Module `{module}` and any supermodules\n* Module `pkl#base`"
-        ).into());
+        error.hint = Some(
+            PklString::from("Searched in the following places:\n* Module `")
+                .concat(module)
+                .concat(&"` and any supermodules\n* Module `pkl#base`".into()),
+        );
     }
     let names: Vec<_> = error
         .frames
         .iter()
         .enumerate()
         .map(|(index, frame)| {
+            if frame.anonymous {
+                return PklString::default();
+            }
             if index == 0
                 && let Some(frontend) = &error.frontend
             {
@@ -426,7 +509,7 @@ pub(crate) fn prepare_runtime_error(
             let module = frame
                 .source
                 .as_ref()
-                .map_or(module, |source| source.module_name.as_ref());
+                .map_or(module, |source| &source.module_name);
             PklString::from(module).concat(&frame.member)
         })
         .collect();
@@ -436,7 +519,7 @@ pub(crate) fn prepare_runtime_error(
         .zip(&source_ids)
         .map(|(frame, id)| {
             let location = if let Some(foreign) = &frame.source {
-                foreign.uri.to_string()
+                foreign.uri.clone()
             } else {
                 uri.to_owned()
             };
@@ -448,7 +531,7 @@ pub(crate) fn prepare_runtime_error(
                     .unwrap_or(source)
                     .position(frame.span.start)
                     .map_or(1, |position| position.line);
-                format!("{location}, line {line}")
+                location.concat(&format!(", line {line}").into())
             } else {
                 location
             }
@@ -464,7 +547,7 @@ pub(crate) fn prepare_runtime_error(
         .enumerate()
         .map(|(index, ((frame, name), (uri, id)))| RenderFrame {
             source: id.and_then(|id| sources.get(id)).unwrap_or(source),
-            uri,
+            uri: uri.clone(),
             member: name,
             span: frame.span,
             highlight_length_utf16: if index == 0 {
@@ -479,12 +562,15 @@ pub(crate) fn prepare_runtime_error(
         .collect();
     let fallback_uri =
         if profile == frontend::DiagnosticProfile::CliBundledSettings && uri.starts_with("file:") {
-            format!(
-                "{uri}, line {}",
-                error
-                    .span
-                    .and_then(|span| source.position(span.start))
-                    .map_or(1, |position| position.line)
+            uri.concat(
+                &format!(
+                    ", line {}",
+                    error
+                        .span
+                        .and_then(|span| source.position(span.start))
+                        .map_or(1, |position| position.line)
+                )
+                .into(),
             )
         } else {
             uri.to_owned()
@@ -494,7 +580,7 @@ pub(crate) fn prepare_runtime_error(
     {
         frames.push(RenderFrame {
             source,
-            uri: &fallback_uri,
+            uri: fallback_uri,
             member: &module_member,
             span,
             highlight_length_utf16: None,
@@ -503,7 +589,7 @@ pub(crate) fn prepare_runtime_error(
     if let Some(end) = expression_end {
         frames.push(RenderFrame {
             source: sources.get(repl_id).expect("expression source inserted"),
-            uri: "repl:text",
+            uri: "repl:text".into(),
             member: &expression_member,
             span: Span::new(0, end),
             highlight_length_utf16: None,

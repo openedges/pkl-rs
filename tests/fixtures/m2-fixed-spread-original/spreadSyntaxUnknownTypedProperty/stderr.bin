@@ -1,0 +1,21 @@
+–– Pkl Error ––
+Cannot find property `age` in object of type `spreadSyntaxUnknownTypedProperty#Person`.
+
+8 | res1: Person = new { ...personDynamic }
+                         ^^^^^^^^^^^^^^^^
+at spreadSyntaxUnknownTypedProperty#res1 (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/spreadSyntaxUnknownTypedProperty.pkl, line 8)
+
+Available properties:
+name
+
+5 | age = 34
+    ^^^
+at spreadSyntaxUnknownTypedProperty#personDynamic.age (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/spreadSyntaxUnknownTypedProperty.pkl, line 5)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)
+
+135 | if (renderer is BytesRenderer) renderer.renderDocument(value) else text.encodeToBytes("UTF-8")
+                                                                         ^^^^
+at pkl.base#Module.output.bytes (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L135)

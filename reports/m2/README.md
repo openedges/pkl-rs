@@ -1,5 +1,13 @@
 # M2 language evidence
 
+## Stage122 lossless source, glob Host and runtime diagnostics
+
+The [Stage122 report](stage122-lossless-source-runtime/README.md) records authored UTF-16 source/URI transport, typed glob Host operations, selected declaration/version/spread diagnostics, Resource digest defaults and math bindings. Local evidence joins **285 complete test harnesses: 1,779 passes, zero failures and five ignored**, with all seven checks06 commands exiting zero. The original Cargo exit during reflection remains unobserved/inconclusive; the functional harness result, original incomplete producer and failed observer stay distinct.
+
+The ordered ready replay records **4,351 matches, 15 mismatches, 74 unsupported and two Java oracle errors across 4,442 cases**. Twelve originals newly match; no Stage121 passing case regresses and all 88 metamorphic checks pass. The unchanged function-based full gate retains **1,768 overlapping unmet conditions** because requirement implementation/mapping states are unchanged and the twelve newly matching cases still lack requirement links.
+
+M1 matches 6,078 comparisons per target and 92 scenarios each for Node/browser. Native transport qualifies 20 runtime plus four compiler counterparts. N-API's full744/186 subset remains qualified and its fresh glob576 capture records 524 matches / 52 preserved nonmatches, fixing four earlier adapter regressions. Chromium independently verifies the same ordinary/callback/glob outcomes through 701 reused and 63 new processes, and the full three-target transport-19 raw join passes. Ten large cases use a separate 3 GiB sampled owned-process RSS cap, preserving the original 2 GiB failure. All 18 evidence archive parts and their published copies are verified. Full typed binding/API, M2, release-platform and performance completion are not claimed.
+
 ## Stage121 Pair and superclass diagnostics
 
 The [Stage121 report](stage121-pair-supertype/README.md) records six shared runtime

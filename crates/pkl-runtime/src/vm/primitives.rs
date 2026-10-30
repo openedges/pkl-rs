@@ -2,6 +2,8 @@
 use super::*;
 #[path = "function_apply.rs"]
 mod function_apply;
+#[path = "math_module.rs"]
+pub(super) mod math_module;
 #[path = "numeric_apis.rs"]
 mod numeric_apis;
 #[path = "remaining_apis.rs"]
@@ -17,6 +19,7 @@ pub enum Operation {
     MappingOps(mapping_ops::Operation),
     SetOrder(set_order::Operation),
     NumericApi(numeric_apis::Operation),
+    Math(math_module::Operation),
     StringApi(string_api::Operation),
     FunctionApplyToList,
     Remaining(remaining_apis::Operation),
@@ -227,7 +230,10 @@ pub(super) fn blocks(
             .find(&format!("class {class} "))
             .expect("primitive class source");
         let start = class_start
-            + source.text[class_start..]
+            + source
+                .text
+                .entire()
+                .range(class_start..)
                 .find(signature)
                 .expect("primitive method source");
         let mut code = Vec::new();
@@ -322,7 +328,7 @@ pub(super) fn blocks(
 fn string_pattern_type_error(
     pattern: &Value,
     heap: &Heap,
-    module: &str,
+    module: &PklString,
 ) -> Result<RuntimeError, RuntimeError> {
     let name = crate::diagnostic_values::type_name(pattern, heap, module)?;
     let rendered = crate::diagnostic_values::render(pattern, heap, module, 80)?;
@@ -344,9 +350,10 @@ impl Vm {
     pub(super) fn scalar_member_error(
         &self,
         receiver: &Value,
-        name: &str,
+        name: impl Into<PklString>,
         method: bool,
     ) -> Option<RuntimeError> {
+        let name = name.into();
         let class = match receiver {
             Value::String(_) => "String",
             Value::Regex(_) => "Regex",
@@ -356,15 +363,16 @@ impl Vm {
             Value::Null | Value::NullWithDefault(_) => "Null",
             _ => return None,
         };
-        Some(self.builtin_member_error(class, name, method))
+        Some(self.builtin_member_error(class, &name, method))
     }
 
     pub(super) fn builtin_member_error(
         &self,
         class: &str,
-        name: &str,
+        name: impl Into<PklString>,
         method: bool,
     ) -> RuntimeError {
+        let name = name.into();
         let (properties, methods) = crate::diagnostic_names::builtin_members(class);
         let arity = if method {
             self.frames
@@ -384,9 +392,13 @@ impl Vm {
         let mut error = RuntimeError::new(
             ErrorKind::MissingMember,
             if method {
-                format!("Cannot find method `{name}` in class `{class}`.")
+                PklString::from("Cannot find method `")
+                    .concat(&name)
+                    .concat(&format!("` in class `{class}`.").into())
             } else {
-                format!("Cannot find property `{name}` in object of type `{class}`.")
+                PklString::from("Cannot find property `")
+                    .concat(&name)
+                    .concat(&format!("` in object of type `{class}`.").into())
             },
         );
         error.hint = crate::diagnostic::member_suggestions(name, arity, &properties, &methods)
@@ -423,9 +435,10 @@ impl Vm {
     pub(super) fn function_member_error(
         &self,
         receiver: &Value,
-        name: &str,
+        name: impl Into<PklString>,
         method: bool,
     ) -> Result<RuntimeError, RuntimeError> {
+        let name = name.into();
         let Value::Function(id) = receiver else {
             return Err(invalid("function member receiver"));
         };
@@ -466,9 +479,13 @@ impl Vm {
         let mut error = RuntimeError::new(
             ErrorKind::MissingMember,
             if method {
-                format!("Cannot find method `{name}` in class `{class}`.")
+                PklString::from("Cannot find method `")
+                    .concat(&name)
+                    .concat(&format!("` in class `{class}`.").into())
             } else {
-                format!("Cannot find property `{name}` in object of type `{class}`.")
+                PklString::from("Cannot find property `")
+                    .concat(&name)
+                    .concat(&format!("` in object of type `{class}`.").into())
             },
         );
         error.hint = crate::diagnostic::member_suggestions(name, requested_arity, &[], &methods)
@@ -491,9 +508,12 @@ impl Vm {
     pub(super) fn primitive_member(
         &mut self,
         receiver: &Value,
-        name: &str,
+        name: &PklString,
         method: bool,
     ) -> Result<bool, RuntimeError> {
+        let Some(name) = name.as_str() else {
+            return Ok(false);
+        };
         if method && name == "every" && self.collection_every_method(receiver.clone())? {
             return Ok(true);
         }
@@ -772,7 +792,9 @@ impl Vm {
         {
             let mut error = RuntimeError::new(
                 ErrorKind::MissingMember,
-                format!("Cannot find method `{name}` in class `{class}`."),
+                PklString::from("Cannot find method `")
+                    .concat(&PklString::from(name))
+                    .concat(&format!("` in class `{class}`.").into()),
             );
             let arity = self
                 .frames
@@ -945,6 +967,7 @@ impl Vm {
             Operation::MappingOps(operation) => self.mapping_ops(receiver, operation)?,
             Operation::SetOrder(operation) => self.set_order(receiver, operation)?,
             Operation::NumericApi(operation) => self.numeric_api_operation(receiver, operation)?,
+            Operation::Math(operation) => self.math_module_operation(operation)?,
             Operation::StringApi(operation) => self.string_api_operation(receiver, operation)?,
             Operation::FunctionApplyToList => self.function_apply_to_list(receiver)?,
             Operation::Remaining(operation) => self.remaining_api(receiver, operation)?,

@@ -222,7 +222,7 @@ fn pending_directive_render_releases_all_state_on_cancel_close_and_deadline() {
             match event {
                 HostPoll::Yielded => (),
                 HostPoll::Read { token, uri } => {
-                    assert_eq!(uri.as_ref(), "life:pending");
+                    assert_eq!(uri, "life:pending");
                     pending = Some(token);
                     break;
                 }
@@ -289,7 +289,7 @@ fn document_hint_keeps_both_objects_across_host_suspension_and_gc() {
             match event {
                 HostPoll::Yielded => (),
                 HostPoll::Read { token, uri } => {
-                    assert_eq!(uri.as_ref(), "hint:pending");
+                    assert_eq!(uri, "hint:pending");
                     if typed {
                         session
                             .reject_read(

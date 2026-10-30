@@ -60,7 +60,10 @@ pub(super) fn join_blocks(
             .expect("pinned collection class");
         let declaration = "external function join(separator: String): String";
         let start = class_start
-            + source.text[class_start..]
+            + source
+                .text
+                .entire()
+                .range(class_start..)
                 .find(declaration)
                 .expect("pinned collection join");
         let parameter = start + "external function join(separator: ".len();
@@ -403,10 +406,7 @@ pub fn ordered_members(
             &object.collection_members
         };
         for member in members {
-            if !typed
-                && member.kind == CollectionMemberKind::Property
-                && member.name.as_ref() == "default"
-            {
+            if !typed && member.kind == CollectionMemberKind::Property && member.name == "default" {
                 continue;
             }
             if let Some(old) = result.iter_mut().find(|old| same_member(heap, old, member)) {
@@ -529,7 +529,7 @@ pub(super) fn forcing_members(
 pub(crate) fn hidden_property(
     heap: &Heap,
     receiver: ObjectId,
-    name: &str,
+    name: &PklString,
     entry: bool,
 ) -> Result<bool, RuntimeError> {
     if entry {
@@ -547,9 +547,11 @@ pub(crate) fn hidden_property(
             return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
         }
         let object = heap.get(id)?;
-        if object.members.iter().any(|member| {
-            !member.entry && !member.local && member.name.as_ref() == name && member.hidden()
-        }) {
+        if object
+            .members
+            .iter()
+            .any(|member| !member.entry && !member.local && &member.name == name && member.hidden())
+        {
             return Ok(true);
         }
         owner = object.parent;
@@ -609,7 +611,7 @@ pub(crate) fn render_members(
                 skip: member.hidden()
                     || member.external()
                     || member.definition()
-                    || (!typed && !member.entry && member.name.as_ref() == "default"),
+                    || (!typed && !member.entry && member.name == "default"),
             });
         }
     }
@@ -646,10 +648,13 @@ fn predicate_members(
     Ok(result)
 }
 
-pub(super) fn external_amendment_error(name: &str) -> RuntimeError {
+pub(super) fn external_amendment_error(name: impl Into<PklString>) -> RuntimeError {
+    let name = name.into();
     let mut error = RuntimeError::new(
         ErrorKind::Type,
-        format!("Cannot instantiate, or amend an instance of, external class `{name}`."),
+        PklString::from("Cannot instantiate, or amend an instance of, external class `")
+            .concat(&name)
+            .concat(&"`.".into()),
     );
     error.hint = Some("To create an instance of an external class, use its literal syntax or constructor method.\nExamples:\n* `123` uses literal syntax to create an instance of class `Int`.\n* `Pair(1, 2)` uses the `Pair()` constructor method to create an instance of class `Pair`.".into());
     error
@@ -714,7 +719,10 @@ impl Vm {
                 .expect("pinned Set class");
             let fragment = "external function contains(element: Any): Boolean";
             let start = declaration
-                + source.text[declaration..]
+                + source
+                    .text
+                    .entire()
+                    .range(declaration..)
                     .find(fragment)
                     .expect("pinned Set.contains");
             let span = Span::new(start, start + fragment.len());
@@ -723,6 +731,7 @@ impl Vm {
                 format!("Expected 1 function arguments but got {}.", arguments.len()),
             );
             error.frames.push(RuntimeFrame {
+                anonymous: false,
                 span,
                 member: "#Set.contains".into(),
                 source: Some(source),
@@ -959,7 +968,7 @@ impl Vm {
         let name = replacing
             .map(|index| object.collection_members[index].name.clone())
             .unwrap_or_else(|| {
-                Arc::from(format!(
+                PklString::from(format!(
                     "\0{}:{}",
                     id.index,
                     object.collection_members.len()
@@ -1163,19 +1172,34 @@ impl Vm {
             return Ok(());
         }
         let label = class.map_or_else(
-            || format!("{kind:?}"),
+            || PklString::from(format!("{kind:?}")),
             |class| {
-                format!(
-                    "{}#{}",
-                    class.module.as_deref().unwrap_or(&self.program.module_name),
-                    class.name
-                )
+                class
+                    .module
+                    .as_ref()
+                    .unwrap_or(&self.program.module_name)
+                    .concat(&"#".into())
+                    .concat(&class.name)
             },
         );
         let mut error = RuntimeError::new(
             ErrorKind::Type,
-            PklString::join(&[format!("Cannot spread value of type `{source_label}` into object of type `{label}`.\nValue: ").into(),
-crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 80)?], ""),
+            PklString::join(
+                &[
+                    PklString::from(format!(
+                        "Cannot spread value of type `{source_label}` into object of type `"
+                    ))
+                    .concat(&label)
+                    .concat(&"`.\nValue: ".into()),
+                    crate::diagnostic_values::render(
+                        value,
+                        &self.heap,
+                        &self.program.module_name,
+                        80,
+                    )?,
+                ],
+                "",
+            ),
         );
         error.hint = Some(hint.into());
         Err(error)
@@ -1192,8 +1216,11 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
     pub(super) fn collection_builtin(
         &mut self,
         receiver: ObjectId,
-        name: &str,
+        name: &PklString,
     ) -> Result<bool, RuntimeError> {
+        let Some(name) = name.as_str() else {
+            return Ok(false);
+        };
         let object = self.heap.get(receiver)?;
         if let Some(pair) = &object.pair
             && matches!(name, "first" | "key" | "second" | "value")
@@ -1400,12 +1427,12 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                     80,
                 )?
             } else {
-                format!(
-                    "{}#{}",
-                    class.module.as_deref().unwrap_or(&self.program.module_name),
-                    class.name
-                )
-                .into()
+                class
+                    .module
+                    .as_ref()
+                    .unwrap_or(&self.program.module_name)
+                    .concat(&"#".into())
+                    .concat(&class.name)
             };
             let mut error = RuntimeError::new(
                 ErrorKind::Type,
@@ -1435,7 +1462,7 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
         }
         if kind == CollectionMemberKind::Property
             && !member.local
-            && member.name.as_ref() != "default"
+            && member.name != "default"
             && collection_kind != CollectionKind::Dynamic
         {
             let mut error = RuntimeError::new(
@@ -1485,7 +1512,9 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
         {
             return Err(RuntimeError::new(
                 ErrorKind::Type,
-                format!("Duplicate definition of member `{}`.", member.name),
+                PklString::from("Duplicate definition of member `")
+                    .concat(&member.name)
+                    .concat(&"`.".into()),
             ));
         }
         let mut descriptor = CollectionMember {
@@ -1537,7 +1566,7 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                         .map(|old| old.name)
                 })
                 .unwrap_or_else(|| {
-                    Arc::from(format!("\0{}:{}", target.index, object.members.len()))
+                    PklString::from(format!("\0{}:{}", target.index, object.members.len()))
                 });
             member.name = descriptor.name.clone();
             member.entry = true;
@@ -1620,13 +1649,17 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
     }
 
     fn spread_error(&mut self, message: impl Into<PklString>, member: &Member) -> RuntimeError {
-        let mut error = RuntimeError::new(ErrorKind::Type, message);
+        self.spread_member_error(RuntimeError::new(ErrorKind::Type, message), member)
+    }
+
+    fn spread_member_error(&mut self, mut error: RuntimeError, member: &Member) -> RuntimeError {
         let frame = self.frames.last_mut().expect("active frame");
         if let Some(metadata) = self.program.metadata.get(frame.block)
             && let Some(Some(span)) = metadata.spans.get(frame.pc - 1)
         {
             error.frames.push(RuntimeFrame {
-                source: None,
+                anonymous: false,
+                source: metadata.source.clone(),
                 span: *span,
                 member: frame
                     .diagnostic_member
@@ -1638,7 +1671,8 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
             && let Some(span) = metadata.declaration
         {
             error.frames.push(RuntimeFrame {
-                source: None,
+                anonymous: false,
+                source: metadata.source.clone(),
                 span,
                 member: metadata.member.clone(),
             });
@@ -1729,7 +1763,7 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                         object.collection_kind,
                         CollectionKind::List | CollectionKind::Map | CollectionKind::Set
                     ) {
-                        return Err(external_amendment_error(&format!(
+                        return Err(external_amendment_error(format!(
                             "{:?}",
                             object.collection_kind
                         )));
@@ -1801,13 +1835,14 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                     .copied()
                     .flatten()
                     .map(|span| RuntimeFrame {
+                        anonymous: false,
                         source: metadata.source.clone(),
                         span,
                         member: if metadata.member.is_empty() {
                             metadata
                                 .source
                                 .as_ref()
-                                .map(|source| PklString::from(source.uri.clone()))
+                                .map(|source| source.uri.clone())
                                 .unwrap_or_default()
                         } else {
                             metadata.member.clone()
@@ -1952,8 +1987,7 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                                     &key,
                                     &self.heap,
                                     &self.program.module_name,
-                                )?)
-                                .into(),
+                                )?),
                                 "`.\nLeft operand : ".into(),
                                 crate::diagnostic_values::render(
                                     &Value::Object(receiver),
@@ -2257,7 +2291,7 @@ crate::diagnostic_values::render(
                             PklString::join(
                                 &[
                                     "Cannot iterate over value of type `".into(),
-                                    self.program.module_name.clone().into(),
+                                    self.program.module_name.clone(),
                                     "`.\nValue: ".into(),
                                     crate::diagnostic_values::render(
                                         &value,
@@ -2291,8 +2325,7 @@ crate::diagnostic_values::render(
                                             name: class.name,
                                         },
                                         &self.program.module_name,
-                                    ))
-                                    .into(),
+                                    )),
                                     "`.\nValue: ".into(),
                                     crate::diagnostic_values::render(
                                         &value,
@@ -2496,16 +2529,24 @@ crate::diagnostic_values::render(
                         CollectionMemberKind::Element => "elements",
                     };
                     let type_label = typed_target.map_or_else(
-                        || format!("{target_kind:?}"),
+                        || PklString::from(format!("{target_kind:?}")),
                         |class| {
-                            format!(
-                                "{}#{}",
-                                class.module.as_deref().unwrap_or(&self.program.module_name),
-                                class.name
-                            )
+                            class
+                                .module
+                                .as_ref()
+                                .unwrap_or(&self.program.module_name)
+                                .concat(&"#".into())
+                                .concat(&class.name)
                         },
                     );
-                    return Err(self.spread_error(format!("Cannot spread object containing {kind} into object of type `{type_label}`."), &member));
+                    return Err(self.spread_error(
+                        PklString::from(format!(
+                            "Cannot spread object containing {kind} into object of type `"
+                        ))
+                        .concat(&type_label)
+                        .concat(&"`.".into()),
+                        &member,
+                    ));
                 }
                 if source_member.kind == CollectionMemberKind::Entry {
                     if self.heap.get(target)?.members.len() > 4
@@ -2552,7 +2593,14 @@ crate::diagnostic_values::render(
                 }
                 member.constant = false;
                 let key = (source_member.kind != CollectionMemberKind::Element).then_some(key);
-                self.add_collection_member(member, key, source_member.kind, Some(value))?;
+                // GeneratorSpreadNode retains the throwing spread node and
+                // inserts the source member's header under its qualified name.
+                // Keep the validation error's message, hint and provenance.
+                if let Err(error) =
+                    self.add_collection_member(member.clone(), key, source_member.kind, Some(value))
+                {
+                    return Err(self.spread_member_error(error, &member));
+                }
             }
             Instruction::OpenPredicate => {
                 let target = self.builder()?;
@@ -2565,22 +2613,25 @@ crate::diagnostic_values::render(
                     let label = class.map_or_else(
                         || {
                             if object.is_module {
-                                self.program.module_name.to_string()
+                                self.program.module_name.clone()
                             } else {
-                                format!("{:?}", object.collection_kind)
+                                PklString::from(format!("{:?}", object.collection_kind))
                             }
                         },
                         |class| {
-                            format!(
-                                "{}#{}",
-                                class.module.as_deref().unwrap_or(&self.program.module_name),
-                                class.name
-                            )
+                            class
+                                .module
+                                .as_ref()
+                                .unwrap_or(&self.program.module_name)
+                                .concat(&"#".into())
+                                .concat(&class.name)
                         },
                     );
                     return Err(RuntimeError::new(
                         ErrorKind::Type,
-                        format!("Object of type `{label}` cannot have a predicate member."),
+                        PklString::from("Object of type `")
+                            .concat(&label)
+                            .concat(&"` cannot have a predicate member.".into()),
                     ));
                 }
                 let source = object.parent.unwrap_or(target);
@@ -2776,7 +2827,7 @@ crate::diagnostic_values::render(
                     let member = Member {
                         flags: 0,
                         entry: true,
-                        name: Arc::from(""),
+                        name: PklString::default(),
                         code: usize::MAX,
                         local: false,
                         method: false,
@@ -3104,7 +3155,7 @@ impl Compiler<'_> {
         Ok(Member {
             flags: 0,
             entry: true,
-            name: Arc::from(""),
+            name: PklString::default(),
             code: block,
             local: false,
             method: false,

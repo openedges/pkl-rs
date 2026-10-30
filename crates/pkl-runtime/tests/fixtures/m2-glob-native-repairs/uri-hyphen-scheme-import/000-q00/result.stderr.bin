@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Cannot expand glob pattern `x-y:/tree/*` because scheme `x-y` is not globbable.
+
+1 | import* "x-y:/tree/*" as imported_entries
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at uri-hyphen-scheme-import#imported_entries (gmain:/tree/uri-hyphen-scheme-import.pkl)
+
+2 | entries = imported_entries
+              ^^^^^^^^^^^^^^^^
+at uri-hyphen-scheme-import#entries (gmain:/tree/uri-hyphen-scheme-import.pkl)
+
+1 | entries.keys.toList().join("|")
+    ^^^^^^^
+at  (repl:text)

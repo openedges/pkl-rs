@@ -11,6 +11,9 @@ fn finish(vm: &mut Vm) -> Result<Value, RuntimeError> {
         let poll = vm.poll(1);
         vm.collect(&[]);
         match poll {
+            pkl_runtime::vm::VmPoll::Glob(_) => {
+                panic!("unexpected glob request in non-glob regression")
+            }
             VmPoll::Ready(result) => return result,
             VmPoll::Yielded => {}
             VmPoll::Log(_) | VmPoll::TransformFrame(_) => panic!("unexpected logger request"),

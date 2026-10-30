@@ -115,6 +115,9 @@ fn a_dynamic_key_or_generator_defers_constant_duplicate_detection() {
 fn complete(vm: &mut Vm) -> Result<Value, RuntimeError> {
     loop {
         match vm.poll(100) {
+            pkl_runtime::vm::VmPoll::Glob(_) => {
+                panic!("unexpected glob request in non-glob regression")
+            }
             VmPoll::Ready(value) => return value,
             VmPoll::Yielded => {}
             VmPoll::Log(_) | VmPoll::TransformFrame(_) => panic!("unexpected logger request"),

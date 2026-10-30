@@ -82,7 +82,7 @@ fn actual_pcf_output_matches_java_for_host_utf16_strings() {
             session.collect(&roots);
             match event {
                 HostPoll::Yielded => {}
-                HostPoll::Read { token, uri } if uri.as_ref() == "life:value" => {
+                HostPoll::Read { token, uri } if uri == "life:value" => {
                     value_reads += 1;
                     session
                         .resume(

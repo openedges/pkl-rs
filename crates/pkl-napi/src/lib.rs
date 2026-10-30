@@ -6,6 +6,7 @@ use napi::{
 use napi_derive::napi;
 use pkl_runtime::{
     probe,
+    source::SourceText,
     value::{PklString, Value},
 };
 
@@ -35,6 +36,15 @@ fn unsigned(value: f64) -> Result<u32> {
 fn string(value: &Utf16String) -> Result<String> {
     String::from_utf16(value).map_err(|_| error("unpaired UTF-16 surrogate is unsupported"))
 }
+fn pkl_text(value: &Utf16String) -> PklString {
+    PklString::from_utf16(value.to_vec())
+}
+fn source_text(value: &Utf16String) -> SourceText {
+    SourceText::from(pkl_text(value))
+}
+fn js_text<'env>(env: &'env Env, text: &PklString) -> Result<napi::JsString<'env>> {
+    env.create_string_utf16(text.encode_utf16().collect::<Vec<_>>())
+}
 fn integer(value: BigInt) -> Result<i64> {
     if value.words.len() > 1 {
         return Err(error("BigInt is outside signed 64-bit range"));
@@ -57,10 +67,10 @@ pub fn primitive(family: Utf16String, input: Utf16String) -> Result<String> {
     probe::primitive(&string(&family)?, &string(&input)?).map_err(error)
 }
 #[napi]
-pub fn evaluate(source: Utf16String, member: Utf16String) -> Result<String> {
-    probe::evaluate_member(&string(&source)?, &string(&member)?)
+pub fn evaluate(env: Env, source: Utf16String, member: Utf16String) -> Result<String> {
+    probe::evaluate_member_text(source_text(&source), pkl_text(&member))
         .map(probe::encode_value)
-        .map_err(error)
+        .map_err(|text| text_error(&env, text))
 }
 /// Development-only scalar boundary with shared Pkl diagnostic rendering.
 #[napi]
@@ -73,10 +83,10 @@ pub fn evaluate_language<'env>(
     power_assertions: Option<bool>,
 ) -> Result<napi::JsString<'env>> {
     pkl_runtime::evaluation::scalar_expression_text_with_options(
-        &string(&source)?,
-        &string(&uri)?,
-        &string(&module_name)?,
-        &string(&expression)?,
+        source_text(&source),
+        pkl_text(&uri),
+        pkl_text(&module_name),
+        source_text(&expression),
         pkl_runtime::evaluation::EvaluationOptions {
             power_assertions: power_assertions.unwrap_or(false),
         },
@@ -102,17 +112,19 @@ pub fn evaluate_module_frontend(
     module_name: Utf16String,
     arguments: Vec<Utf16String>,
 ) -> Result<ModuleFrontendOutcome> {
-    use pkl_runtime::evaluation::frontend::{ModuleSourceInput, arguments::parse_module_eval_args};
+    use pkl_runtime::evaluation::frontend::{
+        LosslessModuleSourceInput, arguments::parse_module_eval_args,
+    };
     let arguments = arguments.iter().map(string).collect::<Result<Vec<_>>>()?;
     let invocation = parse_module_eval_args(&arguments).map_err(error)?;
-    let source = string(&source)?;
-    let uri = string(&uri)?;
-    let module_name = string(&module_name)?;
+    let source = source_text(&source);
+    let uri = pkl_text(&uri);
+    let module_name = pkl_text(&module_name);
     let result = pkl_runtime::evaluation::frontend::evaluate_module_frontend(
-        ModuleSourceInput {
-            text: &source,
-            uri: &uri,
-            inferred_name: &module_name,
+        LosslessModuleSourceInput {
+            text: source,
+            uri,
+            inferred_name: module_name,
         },
         &invocation.options,
     );
@@ -145,17 +157,19 @@ pub fn evaluate_module_output(
     module_name: Utf16String,
     arguments: Vec<Utf16String>,
 ) -> Result<ModuleOutputOutcome> {
-    use pkl_runtime::evaluation::frontend::{ModuleSourceInput, arguments::parse_module_eval_args};
+    use pkl_runtime::evaluation::frontend::{
+        LosslessModuleSourceInput, arguments::parse_module_eval_args,
+    };
     let arguments = arguments.iter().map(string).collect::<Result<Vec<_>>>()?;
     let invocation = parse_module_eval_args(&arguments).map_err(error)?;
-    let source = string(&source)?;
-    let uri = string(&uri)?;
-    let module_name = string(&module_name)?;
+    let source = source_text(&source);
+    let uri = pkl_text(&uri);
+    let module_name = pkl_text(&module_name);
     let result = pkl_runtime::evaluation::frontend::evaluate_module_output(
-        ModuleSourceInput {
-            text: &source,
-            uri: &uri,
-            inferred_name: &module_name,
+        LosslessModuleSourceInput {
+            text: source,
+            uri,
+            inferred_name: module_name,
         },
         &invocation.options,
     );
@@ -179,11 +193,11 @@ pub fn evaluate_language_sequence<'env>(
     expressions: Vec<Utf16String>,
     power_assertions: Option<bool>,
 ) -> Result<Vec<napi::JsString<'env>>> {
-    let expressions = expressions.iter().map(string).collect::<Result<Vec<_>>>()?;
-    pkl_runtime::evaluation::scalar_expressions_text_with_options(
-        &string(&source)?,
-        &string(&uri)?,
-        &string(&module_name)?,
+    let expressions = expressions.iter().map(source_text).collect::<Vec<_>>();
+    pkl_runtime::evaluation::scalar_expressions_source_with_options(
+        source_text(&source),
+        pkl_text(&uri),
+        pkl_text(&module_name),
         &expressions,
         pkl_runtime::evaluation::EvaluationOptions {
             power_assertions: power_assertions.unwrap_or(false),
@@ -206,9 +220,9 @@ pub fn evaluate_language_sequence<'env>(
     .collect()
 }
 #[napi]
-pub fn roundtrip_string(input: Utf16String) -> Result<String> {
-    match probe::identity(Value::string(string(&input)?)).map_err(error)? {
-        Value::String(value) => Ok(value.to_java_utf8()),
+pub fn roundtrip_string<'env>(env: &'env Env, input: Utf16String) -> Result<napi::JsString<'env>> {
+    match probe::identity(Value::String(pkl_text(&input))).map_err(error)? {
+        Value::String(value) => js_text(env, &value),
         _ => Err(error("invalid engine result")),
     }
 }
@@ -351,75 +365,171 @@ impl TryFrom<SourceFrame> for probe::SourceFrame {
         })
     }
 }
+/// Apply the existing shared frame policy without creating an evaluator session.
+#[napi(js_name = "transformFrameForPolicy")]
+pub fn transform_frame_for_policy(
+    env: Env,
+    frame: SourceFrame,
+    policy: Utf16String,
+) -> Result<SourceFrame> {
+    use pkl_runtime::logging::FrameTransformer;
+    let policy = match string(&policy)?.as_str() {
+        "default" => FrameTransformer::Default,
+        "identity" => FrameTransformer::Identity,
+        _ => return Err(error("expected default or identity frame policy")),
+    };
+    let frame: probe::SourceFrame = frame.try_into()?;
+    let transformed = policy.transform(frame.into());
+    probe::SourceFrame::try_from(&transformed)
+        .map(SourceFrame::from)
+        .map_err(|failure| text_error(&env, failure.message))
+}
+
 #[napi(object)]
-pub struct SourceModuleRequest {
+pub struct SourceModuleRequest<'env> {
     pub id: String,
     pub kind: String,
-    pub importer_original_uri: Option<String>,
-    pub importer_resolved_uri: Option<String>,
-    pub import_uri: Option<String>,
-    pub original_uri: String,
-    pub resolved_uri: Option<String>,
-    pub source_uri: Option<String>,
+    pub importer_original_uri: Option<napi::JsString<'env>>,
+    pub importer_resolved_uri: Option<napi::JsString<'env>>,
+    pub import_uri: Option<napi::JsString<'env>>,
+    pub original_uri: napi::JsString<'env>,
+    pub resolved_uri: Option<napi::JsString<'env>>,
+    pub source_uri: Option<napi::JsString<'env>>,
     pub key_id: Option<String>,
     pub key_kind: Option<String>,
-    pub key_handle: Option<String>,
+    pub key_handle: Option<napi::JsString<'env>>,
     pub resolved_key_id: Option<String>,
-    pub resolved_key_handle: Option<String>,
+    pub resolved_key_handle: Option<napi::JsString<'env>>,
     pub selection_phase: Option<String>,
     pub resolution_phase: Option<String>,
 }
-impl From<probe::SourceModuleRequest> for SourceModuleRequest {
-    fn from(request: probe::SourceModuleRequest) -> Self {
-        Self {
+impl<'env> SourceModuleRequest<'env> {
+    fn from_runtime(env: &'env Env, request: probe::SourceTextModuleRequest) -> Result<Self> {
+        Ok(Self {
             id: request.id,
             kind: request.kind.into(),
-            importer_original_uri: request.importer_original_uri,
-            importer_resolved_uri: request.importer_resolved_uri,
-            import_uri: request.import_uri,
-            original_uri: request.original_uri,
-            resolved_uri: request.resolved_uri,
-            source_uri: request.source_uri,
+            importer_original_uri: request
+                .importer_original_uri
+                .map(|s| js_text(env, &s))
+                .transpose()?,
+            importer_resolved_uri: request
+                .importer_resolved_uri
+                .map(|s| js_text(env, &s))
+                .transpose()?,
+            import_uri: request.import_uri.map(|s| js_text(env, &s)).transpose()?,
+            original_uri: js_text(env, &request.original_uri)?,
+            resolved_uri: request.resolved_uri.map(|s| js_text(env, &s)).transpose()?,
+            source_uri: request.source_uri.map(|s| js_text(env, &s)).transpose()?,
             key_id: request.key_id,
             key_kind: request.key_kind.map(Into::into),
-            key_handle: request.key_handle,
+            key_handle: request.key_handle.map(|s| js_text(env, &s)).transpose()?,
             resolved_key_id: request.resolved_key_id,
-            resolved_key_handle: request.resolved_key_handle,
+            resolved_key_handle: request
+                .resolved_key_handle
+                .map(|s| js_text(env, &s))
+                .transpose()?,
             selection_phase: request.selection_phase.map(Into::into),
             resolution_phase: request.resolution_phase.map(Into::into),
-        }
+        })
     }
 }
 #[napi(object)]
-pub struct SourceEvent {
+pub struct SourcePathElement {
+    pub name: napi::bindgen_prelude::Uint16Array,
+    pub is_directory: bool,
+}
+fn glob_elements(elements: Vec<SourcePathElement>) -> Vec<pkl_runtime::glob::PathElement> {
+    elements
+        .into_iter()
+        .map(|element| pkl_runtime::glob::PathElement {
+            name: PklString::from_utf16(element.name.to_vec()),
+            is_directory: element.is_directory,
+        })
+        .collect()
+}
+/// Codec-only control through the same decoder and event encoder as completions.
+#[napi]
+pub fn glob_transport_codec<'env>(
+    env: &'env Env,
+    elements: Vec<SourcePathElement>,
+) -> Result<Vec<SourceEvent<'env>>> {
+    probe::glob_transport_records(glob_elements(elements))
+        .into_iter()
+        .map(|event| SourceEvent::from_runtime(env, event))
+        .collect()
+}
+
+#[napi(object)]
+pub struct SourceGlobRequest<'env> {
+    pub id: String,
+    pub kind: String,
+    pub uri: Option<napi::JsString<'env>>,
+    pub reader_kind: String,
+    pub reader_id: String,
+    pub reader_uri: Option<napi::JsString<'env>>,
+    pub reader_scheme: Option<napi::JsString<'env>>,
+    pub reader_handle: Option<napi::JsString<'env>>,
+    pub key_kind: Option<String>,
+}
+impl<'env> SourceGlobRequest<'env> {
+    fn from_runtime(env: &'env Env, request: probe::SourceGlobRequest) -> Result<Self> {
+        Ok(Self {
+            id: request.id,
+            kind: request.kind.into(),
+            uri: request.uri.map(|s| js_text(env, &s)).transpose()?,
+            reader_kind: request.reader_kind.into(),
+            reader_id: request.reader_id,
+            reader_uri: request.reader_uri.map(|s| js_text(env, &s)).transpose()?,
+            reader_scheme: request
+                .reader_scheme
+                .map(|s| js_text(env, &s))
+                .transpose()?,
+            reader_handle: request
+                .reader_handle
+                .map(|s| js_text(env, &s))
+                .transpose()?,
+            key_kind: request.key_kind.map(Into::into),
+        })
+    }
+}
+#[napi(object)]
+pub struct SourceEvent<'env> {
     pub kind: String,
     pub token: Option<String>,
-    pub uri: Option<String>,
+    pub uri: Option<napi::JsString<'env>>,
     pub value: Option<napi::bindgen_prelude::Uint16Array>,
     pub bytes: Option<Uint8Array>,
     pub error: Option<napi::bindgen_prelude::Uint16Array>,
     pub error_bytes: Option<Uint8Array>,
     pub log: Option<SourceLog>,
     pub frame: Option<SourceFrame>,
-    pub module: Option<SourceModuleRequest>,
+    pub module: Option<SourceModuleRequest<'env>>,
+    pub glob: Option<SourceGlobRequest<'env>>,
     pub exit_code: Option<i32>,
     pub phase: Option<String>,
     pub disposition: Option<String>,
     pub reason: Option<String>,
     pub callback_origin: Option<String>,
 }
-impl From<probe::SourceEvent> for SourceEvent {
-    fn from(event: probe::SourceEvent) -> Self {
+impl<'env> SourceEvent<'env> {
+    fn from_runtime(env: &'env Env, event: probe::SourceTextEvent) -> Result<Self> {
         use napi::bindgen_prelude::Uint16Array;
-        Self {
+        Ok(Self {
             kind: event.kind.into(),
             token: event.token,
-            uri: event.uri,
+            uri: event.uri.map(|s| js_text(env, &s)).transpose()?,
             value: event.value.map(Uint16Array::new),
             bytes: event.bytes.map(Uint8Array::new),
             error: event.error.map(Uint16Array::new),
             error_bytes: event.error_bytes.map(Uint8Array::new),
-            module: event.module.map(Into::into),
+            module: event
+                .module
+                .map(|r| SourceModuleRequest::from_runtime(env, r))
+                .transpose()?,
+            glob: event
+                .glob
+                .map(|r| SourceGlobRequest::from_runtime(env, r))
+                .transpose()?,
             frame: event.frame.map(Into::into),
             exit_code: event.exit_code,
             phase: event.phase.map(Into::into),
@@ -437,7 +547,7 @@ impl From<probe::SourceEvent> for SourceEvent {
                 end_line: log.end_line,
                 end_column: log.end_column,
             }),
-        }
+        })
     }
 }
 
@@ -466,7 +576,7 @@ impl SourceSession {
         power_assertions: Option<bool>,
     ) -> Result<Self> {
         use pkl_runtime::evaluation::frontend::{
-            DiagnosticProfile, ModuleSourceInput, arguments::parse_module_eval_args,
+            DiagnosticProfile, LosslessModuleSourceInput, arguments::parse_module_eval_args,
         };
         let arguments = arguments.iter().map(string).collect::<Result<Vec<_>>>()?;
         let mut invocation = parse_module_eval_args(&arguments).map_err(error)?;
@@ -484,15 +594,15 @@ impl SourceSession {
             power_assertions.unwrap_or(false),
         )
         .map_err(error)?;
-        let source = string(&source)?;
-        let uri = string(&uri)?;
-        let name = string(&module_name)?;
+        let source = source_text(&source);
+        let uri = pkl_text(&uri);
+        let name = pkl_text(&module_name);
         Ok(Self {
             inner: probe::SourceProbe::new_output_text(
-                ModuleSourceInput {
-                    text: &source,
-                    uri: &uri,
-                    inferred_name: &name,
+                LosslessModuleSourceInput {
+                    text: source,
+                    uri,
+                    inferred_name: name,
                 },
                 &paths,
                 &invocation.options,
@@ -535,12 +645,12 @@ impl SourceSession {
         now: f64,
         timeout: Option<f64>,
     ) -> Result<()> {
-        let contents = contents.as_ref().map(string).transpose()?;
+        let contents = contents.as_ref().map(source_text);
         self.inner
-            .evaluate_module_source(
-                &string(&uri)?,
-                contents.as_deref(),
-                &string(&expression)?,
+            .evaluate_module_source_text(
+                pkl_text(&uri),
+                contents,
+                source_text(&expression),
                 unsigned(now)?,
                 timeout.map(unsigned).transpose()?,
             )
@@ -559,17 +669,17 @@ impl SourceSession {
         host_frame_transformer: Option<bool>,
         power_assertions: Option<bool>,
     ) -> Result<Self> {
-        let paths = paths.iter().map(string).collect::<Result<Vec<_>>>()?;
+        let paths = paths.iter().map(source_text).collect::<Vec<_>>();
         let mode = trace_mode
             .as_ref()
             .map(string)
             .transpose()?
             .unwrap_or_else(|| "compact".into());
         Ok(Self {
-            inner: probe::SourceProbe::new_expressions_text(
-                &string(&source)?,
-                &string(&uri)?,
-                &string(&module_name)?,
+            inner: probe::SourceProbe::new_expressions_source(
+                source_text(&source),
+                pkl_text(&uri),
+                pkl_text(&module_name),
                 &paths,
                 &mode,
                 host_logger.unwrap_or(false),
@@ -600,9 +710,9 @@ impl SourceSession {
             .unwrap_or_else(|| "compact".into());
         Ok(Self {
             inner: probe::SourceProbe::new_text(
-                &string(&source)?,
-                &string(&uri)?,
-                &string(&module_name)?,
+                source_text(&source),
+                pkl_text(&uri),
+                pkl_text(&module_name),
                 &paths,
                 &mode,
                 host_logger.unwrap_or(false),
@@ -611,6 +721,136 @@ impl SourceSession {
             )
             .map_err(|text| text_error(&env, text))?,
         })
+    }
+    #[napi]
+    pub fn set_glob_test_mode(&mut self, env: Env, enabled: bool) -> Result<()> {
+        self.inner
+            .set_glob_test_mode(enabled)
+            .map_err(|e| text_error(&env, e.message))
+    }
+    #[napi]
+    pub fn complete_glob_reader(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        reader_id: Utf16String,
+        scheme: Utf16String,
+        handle: Utf16String,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .complete_glob_reader(
+                &string(&token)?,
+                &string(&reader_id)?,
+                pkl_text(&scheme),
+                pkl_text(&handle),
+                unsigned(now)?,
+            )
+            .map_err(|e| text_error(&env, e.message))
+    }
+    #[napi]
+    pub fn complete_glob_boolean(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        kind: Utf16String,
+        value: bool,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .complete_glob_boolean(&string(&token)?, &string(&kind)?, value, unsigned(now)?)
+            .map_err(|e| text_error(&env, e.message))
+    }
+    #[napi]
+    pub fn complete_glob_elements(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        elements: Vec<SourcePathElement>,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .complete_glob_elements(&string(&token)?, glob_elements(elements), unsigned(now)?)
+            .map_err(|e| text_error(&env, e.message))
+    }
+    #[napi]
+    pub fn reject_glob(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        kind: Utf16String,
+        message: Option<Utf16String>,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .reject_glob(
+                &string(&token)?,
+                &string(&kind)?,
+                message.as_ref().map(pkl_text),
+                unsigned(now)?,
+            )
+            .map_err(|e| text_error(&env, e.message))
+    }
+    #[napi]
+    pub fn complete_default_glob(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        now: f64,
+    ) -> Result<bool> {
+        self.inner
+            .complete_default_glob(&string(&token)?, unsigned(now)?)
+            .map_err(|e| text_error(&env, e.message))
+    }
+    #[napi]
+    pub fn drain_cancelled_globs(&mut self) -> Vec<String> {
+        self.inner.drain_cancelled_globs()
+    }
+    #[napi]
+    pub fn resolve_glob_host_uri<'env>(
+        &self,
+        env: &'env Env,
+        base: Utf16String,
+        relative: Utf16String,
+        fragment_paths: bool,
+    ) -> Result<napi::JsString<'env>> {
+        let uri = probe::SourceProbe::resolve_glob_host_uri(
+            &pkl_text(&base),
+            &pkl_text(&relative),
+            fragment_paths,
+        )
+        .map_err(|e| text_error(env, e.message))?;
+        js_text(env, &uri)
+    }
+    #[napi]
+    pub fn normalize_glob_host_uri<'env>(
+        &self,
+        env: &'env Env,
+        uri: Utf16String,
+    ) -> Result<napi::JsString<'env>> {
+        let uri = probe::SourceProbe::normalize_glob_host_uri(&pkl_text(&uri))
+            .map_err(|e| text_error(env, e.message))?;
+        js_text(env, &uri)
+    }
+    #[napi]
+    pub fn reject_import_uri(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        key_id: Utf16String,
+        kind: Utf16String,
+        message: Option<Utf16String>,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .reject_import_uri(
+                &string(&token)?,
+                &string(&key_id)?,
+                &string(&kind)?,
+                message.as_ref().map(pkl_text),
+                unsigned(now)?,
+            )
+            .map_err(|e| text_error(&env, e.message))
     }
     #[napi]
     pub fn start_module(&mut self, env: Env, now: f64, timeout: Option<f64>) -> Result<()> {
@@ -696,9 +936,9 @@ impl SourceSession {
             .complete_module_key(
                 &string(&token)?,
                 &string(&key_id)?,
-                &string(&uri)?,
+                pkl_text(&uri),
                 &string(&kind)?,
-                &string(&handle)?,
+                pkl_text(&handle),
                 unsigned(now)?,
             )
             .map_err(|failure| text_error(&env, failure.message))
@@ -735,7 +975,7 @@ impl SourceSession {
             .complete_import_uri(
                 &string(&token)?,
                 &string(&key_id)?,
-                &string(&uri)?,
+                pkl_text(&uri),
                 unsigned(now)?,
             )
             .map_err(|failure| text_error(&env, failure.message))
@@ -752,13 +992,13 @@ impl SourceSession {
         now: f64,
         timeout: Option<f64>,
     ) -> Result<()> {
-        let contents = contents.as_ref().map(string).transpose()?;
+        let contents = contents.as_ref().map(source_text);
         self.inner
-            .reenter_module_source(
+            .reenter_module_source_text(
                 &string(&token)?,
-                &string(&uri)?,
-                contents.as_deref(),
-                &string(&expression)?,
+                pkl_text(&uri),
+                contents,
+                source_text(&expression),
                 unsigned(now)?,
                 timeout.map(unsigned).transpose()?,
             )
@@ -802,10 +1042,10 @@ impl SourceSession {
                 &string(&token)?,
                 &string(&key_id)?,
                 &string(&resolved_key_id)?,
-                &string(&handle)?,
-                &string(&original_uri)?,
-                &string(&resolved_uri)?,
-                &string(&source_uri)?,
+                pkl_text(&handle),
+                pkl_text(&original_uri),
+                pkl_text(&resolved_uri),
+                pkl_text(&source_uri),
                 unsigned(now)?,
             )
             .map_err(|failure| text_error(&env, failure.message))
@@ -876,9 +1116,9 @@ impl SourceSession {
         self.inner
             .complete_module_resolution(
                 &string(&token)?,
-                &string(&original_uri)?,
-                &string(&resolved_uri)?,
-                &string(&source_uri)?,
+                pkl_text(&original_uri),
+                pkl_text(&resolved_uri),
+                pkl_text(&source_uri),
                 unsigned(now)?,
             )
             .map_err(|failure| text_error(&env, failure.message))
@@ -895,8 +1135,8 @@ impl SourceSession {
         self.inner
             .complete_module_source(
                 &string(&token)?,
-                &string(&text)?,
-                &string(&inferred_name)?,
+                source_text(&text),
+                pkl_text(&inferred_name),
                 unsigned(now)?,
             )
             .map_err(|failure| text_error(&env, failure.message))
@@ -960,10 +1200,16 @@ impl SourceSession {
             .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
-    pub fn resolved_read_uri(&self, env: Env, token: Utf16String) -> Result<String> {
-        self.inner
-            .resolved_read_uri(&string(&token)?)
-            .map_err(|failure| text_error(&env, failure.message))
+    pub fn resolved_read_uri<'env>(
+        &self,
+        env: &'env Env,
+        token: Utf16String,
+    ) -> Result<napi::JsString<'env>> {
+        let uri = self
+            .inner
+            .resolved_read_uri_text(&string(&token)?)
+            .map_err(|failure| text_error(env, failure.message))?;
+        js_text(env, &uri)
     }
     #[napi]
     pub fn complete_read_missing(&mut self, env: Env, token: Utf16String, now: f64) -> Result<()> {
@@ -1066,11 +1312,17 @@ impl SourceSession {
             .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
-    pub fn poll(&mut self, env: Env, now: f64, budget: f64) -> Result<SourceEvent> {
-        self.inner
-            .poll(unsigned(now)?, unsigned(budget)?)
-            .map(Into::into)
-            .map_err(|failure| text_error(&env, failure.message))
+    pub fn poll<'env>(
+        &mut self,
+        env: &'env Env,
+        now: f64,
+        budget: f64,
+    ) -> Result<SourceEvent<'env>> {
+        let event = self
+            .inner
+            .poll_text(unsigned(now)?, unsigned(budget)?)
+            .map_err(|failure| text_error(env, failure.message))?;
+        SourceEvent::from_runtime(env, event)
     }
     #[napi]
     pub fn set_frame_transformer(&mut self, env: Env, mode: Utf16String) -> Result<()> {

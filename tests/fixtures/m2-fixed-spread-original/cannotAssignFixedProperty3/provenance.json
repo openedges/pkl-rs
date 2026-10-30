@@ -1,0 +1,76 @@
+{
+  "name": "cannotAssignFixedProperty3",
+  "adapter": "module",
+  "union_row": {
+    "adapter": "language-module-eval",
+    "historical_status": "mismatch",
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/cannotAssignFixedProperty3.pkl",
+    "observations": [
+      {
+        "process": {
+          "bytes": 5629,
+          "path": "target/m2/stage120-full-ready-modules-01/31684b11f46107084d3c4170/0/process.json",
+          "sha256": "cbd0b108e70322473e20dce7b1d9004f979d649210b968951a2d7c3b37bad42f"
+        },
+        "repeat": 0,
+        "status": "mismatch"
+      }
+    ],
+    "old_pass_regression": false,
+    "status": "mismatch"
+  },
+  "process": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage120-full-ready-modules-01/31684b11f46107084d3c4170/0/process.json",
+    "bytes": 5629,
+    "sha256": "cbd0b108e70322473e20dce7b1d9004f979d649210b968951a2d7c3b37bad42f"
+  },
+  "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/cannotAssignFixedProperty3.pkl",
+  "input": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/cannotAssignFixedProperty3.pkl",
+    "bytes": 87,
+    "sha256": "f9c760c9b5d11f9ea40a00b11f1781f46ca933bdfbffe8fba09f84bf8e7cd3b6"
+  },
+  "parent": {
+    "input": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/fixedProperty2.pkl",
+      "bytes": 73,
+      "sha256": "e029653d81bbb9a5c0de3ba3ff2f66f2f1b3c3304e3068344a1281401b6621f5"
+    },
+    "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/fixedProperty2.pkl",
+    "name": "fixedProperty2"
+  },
+  "expected_exit": 1,
+  "expected_stdout": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-replay-01/cases/31684b11f46107084d3c4170/java/stdout.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "expected_stderr": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-replay-01/cases/31684b11f46107084d3c4170/java/stderr.bin",
+    "bytes": 1134,
+    "sha256": "ba1afd4b95fb1e81d256799df18e8fe2b3bf1efd22fcf749864b4a64da19dcd6"
+  },
+  "retained_status": "mismatch",
+  "expected_records": {
+    "process.json": {
+      "bytes": 3190,
+      "path": "target/m2/stage94-originals-replay-01/cases/31684b11f46107084d3c4170/java/process.json",
+      "sha256": "fcfc4a1aa693ab51312b53df03690afb3330df514ff7cb8173bef97611073516"
+    },
+    "result.json": {
+      "bytes": 295,
+      "path": "target/m2/stage94-originals-replay-01/cases/31684b11f46107084d3c4170/java/result.json",
+      "sha256": "d1173a9ecd5c50eea956f2a3d5ffab0c037c95c0a79c7f34dce558af01f71029"
+    },
+    "stderr.bin": {
+      "bytes": 1134,
+      "path": "target/m2/stage94-originals-replay-01/cases/31684b11f46107084d3c4170/java/stderr.bin",
+      "sha256": "ba1afd4b95fb1e81d256799df18e8fe2b3bf1efd22fcf749864b4a64da19dcd6"
+    },
+    "stdout.bin": {
+      "bytes": 0,
+      "path": "target/m2/stage94-originals-replay-01/cases/31684b11f46107084d3c4170/java/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

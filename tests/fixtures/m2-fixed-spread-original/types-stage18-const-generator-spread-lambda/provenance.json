@@ -1,0 +1,66 @@
+{
+  "name": "types-stage18-const-generator-spread-lambda",
+  "adapter": "scalar",
+  "scalar_row": {
+    "Java_actual_process_exit_code": 1,
+    "authority_kind": "original-scalar-Java-process",
+    "expected_exit": 1,
+    "expected_stderr": {
+      "bytes": 983,
+      "mode": 420,
+      "path": "target/m2/stage94-recovered-scalars-01/cases/types-stage18-const-generator-spread-lambda/java.stderr.bin",
+      "sha256": "518b9f00caf0786988dd73c22f1548098d0585abb9fa109be51f9dcf63159210"
+    },
+    "expected_stdout": {
+      "bytes": 0,
+      "mode": 420,
+      "path": "target/m2/stage94-recovered-scalars-01/cases/types-stage18-const-generator-spread-lambda/java.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "historical_status": "pass",
+    "id": "types-stage18-const-generator-spread-lambda",
+    "input": {
+      "bytes": 132,
+      "path": "tests/fixtures/m2/types-stage18-const-generator-spread-lambda.pkl",
+      "sha256": "29f69b01931fdcca9b2b6aae952e427449d225e512f7bfea7a0d3997e6492756"
+    },
+    "old_failure_now_pass": false,
+    "old_pass_regression": false,
+    "power_assertions": false,
+    "process": {
+      "bytes": 1815,
+      "path": "target/m2/stage120-full-ready-scalars-01/cases/types-stage18-const-generator-spread-lambda/process.json",
+      "sha256": "5e7e464ed1d409b8a2f0f2cd6791925e9ae938ae3d86f2e6031df2ec0da7e0a6"
+    },
+    "raw_channels_match": true,
+    "raw_payload_comparison_performed": true,
+    "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/tests/fixtures/m2/types-stage18-const-generator-spread-lambda.pkl",
+    "status": "pass",
+    "whole_expression": "result"
+  },
+  "process": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage120-full-ready-scalars-01/cases/types-stage18-const-generator-spread-lambda/process.json",
+    "bytes": 1815,
+    "sha256": "5e7e464ed1d409b8a2f0f2cd6791925e9ae938ae3d86f2e6031df2ec0da7e0a6"
+  },
+  "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/tests/fixtures/m2/types-stage18-const-generator-spread-lambda.pkl",
+  "input": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/tests/fixtures/m2/types-stage18-const-generator-spread-lambda.pkl",
+    "bytes": 132,
+    "sha256": "29f69b01931fdcca9b2b6aae952e427449d225e512f7bfea7a0d3997e6492756"
+  },
+  "parent": null,
+  "expected_exit": 1,
+  "expected_stdout": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-recovered-scalars-01/cases/types-stage18-const-generator-spread-lambda/java.stdout.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "expected_stderr": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-recovered-scalars-01/cases/types-stage18-const-generator-spread-lambda/java.stderr.bin",
+    "bytes": 983,
+    "sha256": "518b9f00caf0786988dd73c22f1548098d0585abb9fa109be51f9dcf63159210"
+  },
+  "expression": "result",
+  "retained_status": "pass"
+}

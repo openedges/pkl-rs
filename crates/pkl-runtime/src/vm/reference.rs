@@ -29,7 +29,7 @@ pub struct NativeFunction {
 
 pub(crate) fn base_type(name: &str) -> Option<TypeCheck> {
     Some(match name {
-        "Class" | "TypeAlias" => TypeCheck::MetaClass(Arc::from(name)),
+        "Class" | "TypeAlias" => TypeCheck::MetaClass(name.into()),
         "Function" | "Function0" | "Function1" | "Function2" | "Function3" | "Function4"
         | "Function5" => TypeCheck::Function {
             parameters: name
@@ -64,11 +64,11 @@ pub(crate) fn base_type(name: &str) -> Option<TypeCheck> {
     })
 }
 
-pub(crate) fn type_name(ty: &TypeCheck, module: &str) -> String {
-    type_name_value(ty, module).to_java_utf8()
+pub(crate) fn type_name(ty: &TypeCheck, module: &PklString) -> PklString {
+    type_name_value(ty, module)
 }
 
-pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &str) -> PklString {
+pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &PklString) -> PklString {
     enum Part<'a> {
         Type(&'a TypeCheck),
         Text(String),
@@ -103,8 +103,10 @@ pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &str) -> PklString 
                 let module = default_origin
                     .as_ref()
                     .and_then(|frame| frame.source.as_ref())
-                    .map_or(module, |source| source.module_name.as_ref());
-                output.push_str(&format!("{module}#{name}"));
+                    .map_or(module, |source| &source.module_name);
+                output.push_value(module);
+                output.push('#');
+                output.push_value(name);
                 if !arguments.is_empty() {
                     output.push('<');
                     list(arguments.iter().collect(), ", ");
@@ -142,7 +144,7 @@ pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &str) -> PklString 
                 sequence.push(Part::Text(">".into()));
             }
             TypeCheck::Class { id: MODULE_ID, .. } => {
-                output.push_str(&crate::heap::display_class_name(module, "ModuleClass"));
+                output.push_value(&crate::heap::display_class_name(module, "ModuleClass"));
             }
             TypeCheck::Class { id: ACCESS_ID, .. } => output.push_str("pkl.ref#Access"),
             TypeCheck::Class {
@@ -153,10 +155,10 @@ pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &str) -> PklString 
                 if super::builtins::name(*id).is_some()
                     || super::classes::base_class_name(*id).is_some()
                 {
-                    output.push_str(name);
+                    output.push_value(name);
                 } else {
-                    output.push_str(&crate::heap::display_class_name(
-                        declaring_module.as_deref().unwrap_or(module),
+                    output.push_value(&crate::heap::display_class_name(
+                        declaring_module.as_ref().unwrap_or(module),
                         name,
                     ));
                 }
@@ -236,7 +238,7 @@ fn fold_metadata<T: Clone>(
 }
 
 /// Java exports nullable types as flattened unions and erases constraints.
-pub(crate) fn normalize(ty: &TypeCheck, module: &str) -> TypeCheck {
+pub(crate) fn normalize(ty: &TypeCheck, module: &PklString) -> TypeCheck {
     fold_metadata(
         ty,
         |ty| match ty {
@@ -342,7 +344,7 @@ pub(crate) fn normalize(ty: &TypeCheck, module: &str) -> TypeCheck {
         },
     )
 }
-fn union(types: Vec<TypeCheck>, module: &str) -> TypeCheck {
+fn union(types: Vec<TypeCheck>, module: &PklString) -> TypeCheck {
     let mut result = Vec::new();
     for ty in types {
         if let TypeCheck::Union { types, .. } = ty.resolved() {
@@ -428,7 +430,7 @@ pub(crate) fn metadata_key(ty: &TypeCheck) -> String {
                     args[0],
                     constraints
                         .iter()
-                        .map(|c| c.source.as_ref())
+                        .map(|c| c.source.original().encode_utf16().collect::<Vec<_>>())
                         .collect::<Vec<_>>()
                 ),
                 TypeCheck::Nullable(_) => format!("nullable:{}", args[0]),
@@ -638,14 +640,17 @@ fn subtype(a: &TypeCheck, b: &TypeCheck, heap: &Heap) -> bool {
                     (
                         TypeCheck::IntegerAlias { name: a, .. },
                         TypeCheck::IntegerAlias { name: b, .. },
-                    ) => match a.as_ref() {
-                        "Int8" => matches!(b.as_ref(), "Int16" | "Int32"),
-                        "Int16" => b.as_ref() == "Int32",
-                        "UInt8" => {
-                            matches!(b.as_ref(), "Int16" | "Int32" | "UInt16" | "UInt32" | "UInt")
+                    ) => match a.as_str() {
+                        Some("Int8") => matches!(b.as_str(), Some("Int16" | "Int32")),
+                        Some("Int16") => b.as_str() == Some("Int32"),
+                        Some("UInt8") => {
+                            matches!(
+                                b.as_str(),
+                                Some("Int16" | "Int32" | "UInt16" | "UInt32" | "UInt")
+                            )
                         }
-                        "UInt16" => matches!(b.as_ref(), "Int32" | "UInt32" | "UInt"),
-                        "UInt32" => b.as_ref() == "UInt",
+                        Some("UInt16") => matches!(b.as_str(), Some("Int32" | "UInt32" | "UInt")),
+                        Some("UInt32") => b.as_str() == Some("UInt"),
                         _ => false,
                     },
                     (
@@ -815,7 +820,7 @@ impl Vm {
         let object = self.heap.allocate(Object {
             native_function: Some(NativeFunction {
                 receiver,
-                name: Arc::from(name),
+                name: name.into(),
             }),
             ..Object::default()
         });
@@ -825,7 +830,7 @@ impl Vm {
     pub(super) fn reference_member(
         &mut self,
         id: ObjectId,
-        name: &str,
+        name: &PklString,
         method: bool,
     ) -> Result<bool, RuntimeError> {
         if method && name == "ifNonNull" {
@@ -833,25 +838,29 @@ impl Vm {
             return Ok(false);
         }
         if self.heap.get(id)?.ref_module {
-            let value = match (name, method) {
-                ("Reference", true) => self.native_reference_method(Value::Object(id), "Reference"),
-                ("Reference", false) => self.builtin_class(TypeCheck::Reference {
+            let value = match (name.as_str(), method) {
+                (Some("Reference"), true) => {
+                    self.native_reference_method(Value::Object(id), "Reference")
+                }
+                (Some("Reference"), false) => self.builtin_class(TypeCheck::Reference {
                     domain: Box::new(TypeCheck::Any),
                     referent: Box::new(TypeCheck::Any),
                 }),
-                ("Domain", false) => self.builtin_class(TypeCheck::RefDomain),
-                ("Access", false) => self.builtin_class(TypeCheck::Class {
+                (Some("Domain"), false) => self.builtin_class(TypeCheck::RefDomain),
+                (Some("Access"), false) => self.builtin_class(TypeCheck::Class {
                     module: None,
                     id: ACCESS_ID,
-                    name: Arc::from("Access"),
+                    name: "Access".into(),
                 }),
                 // The module still inherits ordinary Module methods. Ref's
                 // specialized members must not intercept Typed.toString.
-                ("toString", true) => return Ok(false),
+                (Some("toString"), true) => return Ok(false),
                 _ => {
                     return Err(RuntimeError::new(
                         ErrorKind::Unsupported,
-                        format!("pkl:ref member `{name}` is not implemented"),
+                        PklString::from("pkl:ref member `")
+                            .concat(name)
+                            .concat(&"` is not implemented".into()),
                     ));
                 }
             };
@@ -862,10 +871,12 @@ impl Vm {
             return Ok(false);
         }
         let value = if method {
-            match name {
-                "getDomain" | "getData" | "getPath" | "toString" => {
-                    self.native_reference_method(Value::Object(id), name)
-                }
+            match name.as_str() {
+                Some("getDomain" | "getData" | "getPath" | "toString") => self
+                    .native_reference_method(
+                        Value::Object(id),
+                        name.as_str().expect("recognized Reference method"),
+                    ),
                 _ => {
                     return Err(self.builtin_member_error("pkl.ref#Reference", name, true));
                 }
@@ -1080,7 +1091,7 @@ impl Vm {
             ..Object::default()
         };
         for (index, value) in values.into_iter().enumerate() {
-            let name: Arc<str> = Arc::from(format!("\0{index}"));
+            let name: PklString = format!("\0{index}").into();
             object.members.push(Member {
                 flags: 0,
                 entry: true,
@@ -1111,11 +1122,15 @@ impl Vm {
         Value::Object(self.heap.allocate(object))
     }
 
-    fn reference_access_value(&mut self, property: Option<&str>, key: Option<Value>) -> Value {
+    fn reference_access_value(
+        &mut self,
+        property: Option<&PklString>,
+        key: Option<Value>,
+    ) -> Value {
         let Value::Class(parent) = self.builtin_class(TypeCheck::Class {
             module: None,
             id: ACCESS_ID,
-            name: Arc::from("Access"),
+            name: "Access".into(),
         }) else {
             unreachable!()
         };
@@ -1130,7 +1145,7 @@ impl Vm {
             ("property", property.map_or(Value::Null, Value::string)),
             ("key", key.unwrap_or(Value::Null)),
         ] {
-            let name: Arc<str> = Arc::from(name);
+            let name = PklString::from(name);
             object.members.push(Member {
                 flags: 0,
                 entry: false,
@@ -1162,7 +1177,7 @@ impl Vm {
     pub(super) fn reference_access(
         &mut self,
         id: ObjectId,
-        property: Option<&str>,
+        property: Option<&PklString>,
         key: Option<Value>,
     ) -> Result<Option<Value>, RuntimeError> {
         let mut reference = self
@@ -1212,7 +1227,7 @@ impl Vm {
         id: ObjectId,
         reference: &Reference,
         failed: &TypeCheck,
-        property: Option<&str>,
+        property: Option<&PklString>,
         key: Option<&Value>,
     ) -> Result<RuntimeError, RuntimeError> {
         let failed = failed.resolved();
@@ -1226,7 +1241,9 @@ impl Vm {
                 ErrorKind::MissingMember,
                 PklString::join(
                     &[
-                        format!("Cannot find property `{property}` in object of type `").into(),
+                        PklString::from("Cannot find property `")
+                            .concat(property)
+                            .concat(&"` in object of type `".into()),
                         actual.clone(),
                         "`.".into(),
                     ],
@@ -1255,9 +1272,13 @@ impl Vm {
                 } else if union {
                     PklString::join(
                         &[
-                            format!("Cannot find property `{property}` in type `").into(),
+                            PklString::from("Cannot find property `")
+                                .concat(property)
+                                .concat(&"` in type `".into()),
                             referent,
-                            format!("`.\n\t└─ Cannot find property `{property}` in type `").into(),
+                            PklString::from("`.\n\t└─ Cannot find property `")
+                                .concat(property)
+                                .concat(&"` in type `".into()),
                             failed_type,
                             "`.".into(),
                         ],
@@ -1266,7 +1287,9 @@ impl Vm {
                 } else {
                     PklString::join(
                         &[
-                            format!("Cannot find property `{property}` in type `").into(),
+                            PklString::from("Cannot find property `")
+                                .concat(property)
+                                .concat(&"` in type `".into()),
                             referent,
                             "`.".into(),
                         ],
@@ -1287,7 +1310,9 @@ impl Vm {
                     &[
                         "Operator `[]` is not defined for operand types `".into(),
                         actual,
-                        format!("` and `{key_type}`.\nLeft operand : ").into(),
+                        PklString::from("` and `")
+                            .concat(&key_type)
+                            .concat(&"`.\nLeft operand : ".into()),
                         left,
                         "\nRight operand: ".into(),
                         right,
@@ -1296,13 +1321,28 @@ impl Vm {
                 ),
             );
             error.hint = Some(if union {
-                PklString::join(&["Operator `[]` is not defined for operand types `".into(), referent, format!("` and `{key_type}`.\n\t└─ Operator `[]` is not defined for operand types `").into(), failed_type, format!("` and `{key_type}`.").into()], "")
+                PklString::join(
+                    &[
+                        "Operator `[]` is not defined for operand types `".into(),
+                        referent,
+                        PklString::from("` and `").concat(&key_type).concat(
+                            &"`.\n\t└─ Operator `[]` is not defined for operand types `".into(),
+                        ),
+                        failed_type,
+                        PklString::from("` and `")
+                            .concat(&key_type)
+                            .concat(&"`.".into()),
+                    ],
+                    "",
+                )
             } else {
                 PklString::join(
                     &[
                         "Operator `[]` is not defined for operand types `".into(),
                         referent,
-                        format!("` and `{key_type}`.").into(),
+                        PklString::from("` and `")
+                            .concat(&key_type)
+                            .concat(&"`.".into()),
                     ],
                     "",
                 )
@@ -1331,21 +1371,22 @@ impl Vm {
     fn reference_candidate(
         &mut self,
         ty: &TypeCheck,
-        property: Option<&str>,
+        property: Option<&PklString>,
         key: Option<&Value>,
     ) -> Result<Candidate, RuntimeError> {
+        let scalar_property = property.and_then(PklString::as_str);
         let ty = ty.resolved();
         let candidate = match ty {
             TypeCheck::Unknown => TypeCheck::Unknown,
             TypeCheck::Null => TypeCheck::Null,
             TypeCheck::Collection(CollectionKind::Dynamic) => {
-                if property == Some("default") {
+                if scalar_property == Some("default") {
                     return Ok(Candidate::Unavailable);
                 }
                 TypeCheck::Unknown
             }
             TypeCheck::Class { .. }
-                if property == Some("output") && self.reference_module_class(ty) =>
+                if scalar_property == Some("output") && self.reference_module_class(ty) =>
             {
                 return Ok(Candidate::Unavailable);
             }
@@ -1365,7 +1406,7 @@ impl Vm {
                     if let Some(member) = object
                         .members
                         .iter()
-                        .find(|m| !m.local && !m.method && m.name.as_ref() == name)
+                        .find(|m| !m.local && !m.method && &m.name == name)
                     {
                         found = true;
                         if let Some(ty) = &member.ty {
@@ -1421,20 +1462,28 @@ impl Vm {
             | TypeCheck::ParameterizedCollection {
                 kind: CollectionKind::List | CollectionKind::Set | CollectionKind::Map,
                 ..
-            } if property == Some("isNotEmpty") => TypeCheck::Boolean,
-            TypeCheck::String if matches!(property, Some("length" | "lastIndex")) => TypeCheck::Int,
-            TypeCheck::Int if matches!(property, Some("sign" | "abs" | "ceil" | "floor")) => {
+            } if scalar_property == Some("isNotEmpty") => TypeCheck::Boolean,
+            TypeCheck::String if matches!(scalar_property, Some("length" | "lastIndex")) => {
                 TypeCheck::Int
             }
-            TypeCheck::Float if matches!(property, Some("sign" | "abs" | "ceil" | "floor")) => {
+            TypeCheck::Int
+                if matches!(scalar_property, Some("sign" | "abs" | "ceil" | "floor")) =>
+            {
+                TypeCheck::Int
+            }
+            TypeCheck::Float
+                if matches!(scalar_property, Some("sign" | "abs" | "ceil" | "floor")) =>
+            {
                 TypeCheck::Float
             }
-            TypeCheck::Number if matches!(property, Some("sign" | "abs" | "ceil" | "floor")) => {
+            TypeCheck::Number
+                if matches!(scalar_property, Some("sign" | "abs" | "ceil" | "floor")) =>
+            {
                 TypeCheck::Number
             }
             TypeCheck::String
                 if matches!(
-                    property,
+                    scalar_property,
                     Some(
                         "isEmpty"
                             | "isNotEmpty"
@@ -1447,10 +1496,10 @@ impl Vm {
             {
                 TypeCheck::Boolean
             }
-            TypeCheck::String if matches!(property, Some("base64" | "base64Decoded")) => {
+            TypeCheck::String if matches!(scalar_property, Some("base64" | "base64Decoded")) => {
                 TypeCheck::String
             }
-            TypeCheck::String if property == Some("base64DecodedBytes") => TypeCheck::Bytes,
+            TypeCheck::String if scalar_property == Some("base64DecodedBytes") => TypeCheck::Bytes,
             _ => return Ok(Candidate::Unavailable),
         };
         Ok(Candidate::Type(candidate))
@@ -1485,12 +1534,14 @@ fn reference_key_matches(ty: &TypeCheck, key: &Value, heap: &Heap) -> bool {
 pub(crate) fn export_type_name_value(
     reference: &Reference,
     heap: &Heap,
-    module: &str,
+    module: &PklString,
 ) -> Result<PklString, RuntimeError> {
     let domain = crate::diagnostic_values::type_name(&reference.domain, heap, module)?;
     Ok(PklString::join(
         &[
-            format!("pkl.ref#Reference<{domain}, ").into(),
+            PklString::from("pkl.ref#Reference<")
+                .concat(&domain)
+                .concat(&", ".into()),
             type_name_value(&reference.referent, module),
             ">".into(),
         ],
@@ -1505,12 +1556,16 @@ fn constructor_error(message: impl Into<PklString>, fragment: &str) -> RuntimeEr
         .find("external const function Reference")
         .expect("reference declaration");
     let start = declaration
-        + source.text[declaration..]
+        + source
+            .text
+            .entire()
+            .range(declaration..)
             .find(fragment)
             .expect("constructor type");
     let span = Span::new(start, start + fragment.len());
     let mut error = RuntimeError::new(ErrorKind::Type, message).at(span);
     error.frames.push(RuntimeFrame {
+        anonymous: false,
         span,
         member: "#Reference".into(),
         source: Some(source),
@@ -1531,7 +1586,7 @@ pub(super) fn access_members(
     let constraint = blocks.len();
     blocks.push(vec![
         Instruction::GetProperty {
-            name: Arc::from("key"),
+            name: "key".into(),
             owner_depth: 0,
             local: false,
         },
@@ -1560,7 +1615,7 @@ pub(super) fn access_members(
             argument_sources: BTreeMap::new(),
             span: predicate_span,
             module_environment: false,
-            source: Arc::from("key == null"),
+            source: "key == null".into(),
         }],
     }));
     let mut members = Vec::new();
@@ -1571,7 +1626,7 @@ pub(super) fn access_members(
             "property != null",
             vec![
                 Instruction::LoadThis,
-                Instruction::GetMember(Arc::from("property")),
+                Instruction::GetMember("property".into()),
                 Instruction::Constant(Value::Null),
                 Instruction::NotEqual,
                 Instruction::Return,
@@ -1583,7 +1638,7 @@ pub(super) fn access_members(
             "property == null",
             vec![
                 Instruction::LoadThis,
-                Instruction::GetMember(Arc::from("property")),
+                Instruction::GetMember("property".into()),
                 Instruction::Constant(Value::Null),
                 Instruction::Equal,
                 Instruction::Return,
@@ -1599,10 +1654,7 @@ pub(super) fn access_members(
             "key",
             TypeCheck::Any,
             "key: Any",
-            vec![
-                Instruction::Undefined(Arc::from("key")),
-                Instruction::Return,
-            ],
+            vec![Instruction::Undefined("key".into()), Instruction::Return],
         ),
     ] {
         let index = blocks.len();
@@ -1625,7 +1677,7 @@ pub(super) fn access_members(
         members.push(Member {
             flags: 0,
             entry: false,
-            name: Arc::from(name),
+            name: name.into(),
             code: index,
             local: false,
             method: false,
@@ -1666,7 +1718,7 @@ mod generic_metadata_tests {
             let prototype = vm.heap.allocate(Object {
                 is_module,
                 class_definition: Some(Class {
-                    module: module.map(Arc::from),
+                    module: module.map(PklString::from),
                     origin_uri: None,
                     id: if is_module { 700 } else { 701 },
                     name: name.into(),
@@ -1687,7 +1739,7 @@ mod generic_metadata_tests {
             let reference = vm.stack.pop().unwrap().as_object().unwrap();
             let reference = vm.heap.get(reference).unwrap().reference.as_ref().unwrap();
             assert_eq!(
-                export_type_name_value(reference, &vm.heap, "caller").unwrap(),
+                export_type_name_value(reference, &vm.heap, &"caller".into()).unwrap(),
                 PklString::from(format!("pkl.ref#Reference<pkl.ref#Domain, {expected}>"))
             );
         }
@@ -1726,7 +1778,7 @@ mod generic_metadata_tests {
     #[test]
     fn reference_access_fields_stay_lazy_and_computed_flags_use_normal_caches() {
         let mut vm = Vm::new(Arc::new(Program::new(vec![vec![Instruction::Return]])));
-        let access = vm.reference_access_value(Some("name"), None);
+        let access = vm.reference_access_value(Some(&"name".into()), None);
         let id = access.as_object().unwrap();
         assert!(vm.heap.get(id).unwrap().cache.is_empty());
         assert_eq!(
@@ -1739,7 +1791,7 @@ mod generic_metadata_tests {
             .unwrap()
             .completed_cache_order
             .iter()
-            .map(|key| key.name.as_ref())
+            .map(|key| key.name.clone())
             .collect();
         assert_eq!(cached, ["property", "isProperty"]);
         assert_eq!(
@@ -1758,7 +1810,7 @@ mod generic_metadata_tests {
     #[test]
     fn diagnostics_render_unforced_reference_path_constants_after_gc() {
         let mut vm = Vm::new(Arc::new(Program::new(vec![vec![Instruction::Return]])));
-        let property = vm.reference_access_value(Some("name"), None);
+        let property = vm.reference_access_value(Some(&"name".into()), None);
         let key = vm.heap.allocate(Object::default());
         let subscript = vm.reference_access_value(None, Some(Value::Object(key)));
         let reference = Value::Object(vm.heap.allocate(Object {
@@ -1862,12 +1914,12 @@ mod generic_metadata_tests {
                 let integer = nested_list(TypeCheck::Int, depth);
                 let same = nested_list(TypeCheck::Int, depth);
                 let number = nested_list(TypeCheck::Number, depth);
-                let normalized = normalize(&integer, "test");
+                let normalized = normalize(&integer, &"test".into());
                 assert_eq!(metadata_key(&integer), metadata_key(&normalized));
                 assert_eq!(metadata_key(&integer), metadata_key(&same));
                 assert_ne!(metadata_key(&integer), metadata_key(&number));
                 assert_eq!(
-                    type_name(&normalized, "test"),
+                    type_name(&normalized, &"test".into()),
                     format!("{}Int{}", "List<".repeat(depth), ">".repeat(depth))
                 );
                 let heap = Heap::default();
@@ -1890,7 +1942,7 @@ mod generic_metadata_tests {
             key.len() < 32 * 1024,
             "metadata encoding must not expand the shared tree"
         );
-        assert_eq!(key, metadata_key(&normalize(&branching, "test")));
+        assert_eq!(key, metadata_key(&normalize(&branching, &"test".into())));
         let shared = collection(CollectionKind::List, vec![TypeCheck::Int]);
         let shared_twice = collection(CollectionKind::Mapping, vec![shared.clone(), shared]);
         let independent = collection(
@@ -1917,7 +1969,7 @@ mod generic_metadata_tests {
             &TypeCheck::Class {
                 module: None,
                 id: DOMAIN_ID,
-                name: Arc::from("Domain")
+                name: "Domain".into()
             }
             .shared(),
             &TypeCheck::RefDomain,
@@ -1927,7 +1979,7 @@ mod generic_metadata_tests {
             TypeCheck::NamedAlias {
                 declaration,
                 default_origin: None,
-                name: Arc::from("Alias"),
+                name: "Alias".into(),
                 arguments: vec![TypeCheck::String],
                 expanded: Box::new(TypeCheck::Int),
             }
@@ -1944,10 +1996,13 @@ mod generic_metadata_tests {
         let a = arrow(alias(1));
         let b = arrow(alias(2));
         assert_ne!(
-            metadata_key(&normalize(&a, "test")),
-            metadata_key(&normalize(&b, "test"))
+            metadata_key(&normalize(&a, &"test".into())),
+            metadata_key(&normalize(&b, &"test".into()))
         );
-        assert_eq!(type_name(&a, "test"), "(test#Alias<String>) -> Boolean");
+        assert_eq!(
+            type_name(&a, &"test".into()),
+            "(test#Alias<String>) -> Boolean"
+        );
         assert!(!is_subtype(&a, &a, &Heap::default()));
         let constrained = |source: &str| {
             TypeCheck::Constrained {
@@ -1957,7 +2012,7 @@ mod generic_metadata_tests {
                     block: 0,
                     arguments: BTreeMap::new(),
                     argument_sources: BTreeMap::new(),
-                    source: Arc::from(source),
+                    source: source.into(),
                     span: Span::new(0, 0),
                     module_environment: false,
                 }],
@@ -1968,7 +2023,7 @@ mod generic_metadata_tests {
         let b = arrow(constrained("this>0"));
         assert_ne!(metadata_key(&a), metadata_key(&b));
         assert_eq!(
-            metadata_key(&normalize(&constrained("this > 0"), "test")),
+            metadata_key(&normalize(&constrained("this > 0"), &"test".into())),
             metadata_key(&TypeCheck::Int)
         );
     }

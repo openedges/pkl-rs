@@ -8,6 +8,9 @@ use pkl_runtime::vm::{Vm, VmPoll, compile_module};
 fn done(vm: &mut Vm) -> Result<Value, RuntimeError> {
     loop {
         match vm.poll(31) {
+            pkl_runtime::vm::VmPoll::Glob(_) => {
+                panic!("unexpected glob request in non-glob regression")
+            }
             VmPoll::Ready(value) => return value,
             VmPoll::Yielded => {}
             VmPoll::Log(_) | VmPoll::TransformFrame(_) => panic!("unexpected logger request"),
@@ -149,7 +152,7 @@ fn suspended_source_and_condition_keep_nested_predicate_state_live() {
                 event => panic!("unexpected {event:?}"),
             }
         };
-        assert_eq!(&*request.uri, uri);
+        assert_eq!(request.uri, uri);
         vm.collect(std::slice::from_ref(&root));
         vm.resume(request.id, Ok(Value::string("yes"))).unwrap();
     }
@@ -166,11 +169,14 @@ fn failed_predicate_retries_using_completed_source_cache() {
             .unwrap();
         loop {
             match vm.poll(11) {
+                VmPoll::Glob(_) => {
+                    panic!("unexpected glob request in non-glob predicate regression")
+                }
                 VmPoll::Log(_) | VmPoll::TransformFrame(_) => panic!("unexpected logger request"),
                 VmPoll::Module(_) => panic!("unexpected module request"),
                 VmPoll::Pending(request) => {
                     vm.collect(std::slice::from_ref(&root));
-                    if request.uri.as_ref() == "mem:source" {
+                    if request.uri == "mem:source" {
                         assert!(
                             !success,
                             "completed source cache must survive failed condition"

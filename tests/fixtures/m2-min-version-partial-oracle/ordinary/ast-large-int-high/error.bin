@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Int literal `99999999999999999999999999999999999999` is too large.
+
+4 | value = 99999999999999999999999999999999999999
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at declared.primaryName#value (file:///stage122/min-version/inferred-primary-name.pkl)

@@ -36,12 +36,21 @@ pub(super) fn blocks(
             format!("class {class}<")
         };
         let class_start = source.text.find(&anchor).unwrap();
-        let class_end = class_start + source.text[class_start..].find("\n}").unwrap();
+        let class_end = class_start
+            + source
+                .text
+                .entire()
+                .range(class_start..)
+                .find("\n}")
+                .unwrap();
         let start = class_start
-            + source.text[class_start..class_end]
+            + source
+                .text
+                .entire()
+                .range(class_start..class_end)
                 .find(&format!("external function {name}("))
                 .unwrap();
-        let end = start + source.text[start..].find('\n').unwrap();
+        let end = start + source.text.entire().range(start..).find("\n").unwrap();
         let mut code = Vec::new();
         let mut spans = Vec::new();
         let ty = match class {
@@ -50,7 +59,14 @@ pub(super) fn blocks(
             _ => None,
         };
         if let Some((text, ty)) = ty {
-            let position = start + source.text[start..end].find(&format!(": {text}")).unwrap() + 2;
+            let position = start
+                + source
+                    .text
+                    .entire()
+                    .range(start..end)
+                    .find(&format!(": {text}"))
+                    .unwrap()
+                + 2;
             code.extend([
                 Instruction::LoadLocal(0),
                 Instruction::CheckType(ty),
@@ -154,7 +170,7 @@ impl Vm {
             .get(owner)?
             .members
             .iter()
-            .any(|m| m.name.as_ref() == "default" && !m.entry)
+            .any(|m| m.name == "default" && !m.entry)
         {
             self.heap.get_mut(owner)?.members.push(Member {
                 flags: crate::syntax::ModifierKind::Hidden.flag(),
@@ -288,7 +304,7 @@ impl Vm {
             let mut owner = Some(receiver);
             let typed = self.heap.get(receiver)?.is_module
                 || collections::typed_class(&self.heap, receiver)?.is_some();
-            let mut found = !typed && name.as_ref() == "default";
+            let mut found = !typed && name == "default";
             while let Some(id) = owner {
                 let object = self.heap.get(id)?;
                 found |= object
@@ -360,9 +376,7 @@ impl Vm {
                         object
                             .class_definition
                             .as_ref()
-                            .map_or(self.program.module_name.as_ref(), |class| {
-                                class.name.as_ref()
-                            }),
+                            .map_or(&self.program.module_name, |class| &class.name),
                     ),
                 )
             } else {
@@ -372,8 +386,7 @@ impl Vm {
                         &Value::Object(receiver),
                         &self.heap,
                         &self.program.module_name,
-                    )?
-                    .into(),
+                    )?,
                 )
             };
             // Keep the original String's UTF-16, rather than the internal
@@ -423,7 +436,7 @@ impl Vm {
                                 None
                             }
                         })
-                        .unwrap_or_else(|| PklString::from(member.name.clone()));
+                        .unwrap_or_else(|| member.name.clone());
                     names.insert(text);
                 }
                 owner = object.parent;

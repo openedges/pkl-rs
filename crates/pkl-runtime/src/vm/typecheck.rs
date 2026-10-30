@@ -27,7 +27,7 @@ impl ObservedValue {
             Self::NativeLiteral(_) => None,
         }
     }
-    fn render(&self, heap: &Heap, module: &str) -> Result<PklString, RuntimeError> {
+    fn render(&self, heap: &Heap, module: &PklString) -> Result<PklString, RuntimeError> {
         match self {
             Self::Runtime(value) => {
                 crate::diagnostic_values::render_string(value, heap, module, 100)
@@ -76,7 +76,7 @@ impl Mismatch {
     fn diagnostic(
         &self,
         heap: &Heap,
-        module: &str,
+        module: &PklString,
         indent: usize,
     ) -> Result<TypeDiagnostic, RuntimeError> {
         use crate::diagnostic_values::{render_string as render, type_name as actual_type};
@@ -158,7 +158,7 @@ struct CollectionState {
     items: Vec<CollectionItem>,
     index: usize,
     eager: bool,
-    replacements: Vec<(Arc<str>, Value)>,
+    replacements: Vec<(PklString, Value)>,
 }
 #[derive(Clone)]
 struct PairState {
@@ -587,16 +587,16 @@ impl Vm {
                 {
                     environment
                         .type_argument_sources
-                        .insert((constraint.block, Arc::from(name.as_str())), source);
+                        .insert((constraint.block, name.clone()), source);
                 } else {
                     environment
                         .type_argument_sources
-                        .remove(&(constraint.block, Arc::from(name.as_str())));
+                        .remove(&(constraint.block, name.clone()));
                 }
             } else {
                 environment
                     .type_argument_sources
-                    .remove(&(constraint.block, Arc::from(name.as_str())));
+                    .remove(&(constraint.block, name.clone()));
             }
             // VmTypeAlias.instantiate visits the cloned child tree, but a let
             // expression's call target is outside that tree. Its type variables
@@ -606,10 +606,9 @@ impl Vm {
             } else {
                 argument.substituted(&run.environment)?
             };
-            environment.type_arguments.insert(
-                (constraint.block, Arc::from(name.as_str())),
-                argument.shared(),
-            );
+            environment
+                .type_arguments
+                .insert((constraint.block, name.clone()), argument.shared());
         }
         // Local-writing constraints execute in a fresh Java root frame. Inline
         // constraints use the checking frame's slot, including during replay.
@@ -700,6 +699,7 @@ impl Vm {
             generator_scopes: Vec::new(),
             module_load: None,
             uri_resolution: None,
+            glob: None,
             module_receiver: None,
         });
         Ok(())
@@ -738,6 +738,7 @@ impl Vm {
                 // Inherited checks execute at a source-less Return instruction.
                 // Ordinary property checks already have this authored VM frame.
                 error.frames.push(RuntimeFrame {
+                    anonymous: false,
                     source: declaration.source.clone(),
                     span,
                     member: declaration.member.clone(),
@@ -827,6 +828,7 @@ impl Vm {
                             frame.source = Some(source);
                         } else {
                             error.frames.push(RuntimeFrame {
+                                anonymous: false,
                                 source: Some(source),
                                 span: diagnostic.span(),
                                 member: run.member.clone(),
@@ -837,6 +839,7 @@ impl Vm {
                     if let Mismatch::InsertedFrame { frame, .. } = &mismatch {
                         if error.frames.is_empty() {
                             error.frames.push(RuntimeFrame {
+                                anonymous: false,
                                 source: self
                                     .program
                                     .metadata
@@ -1116,7 +1119,14 @@ impl Vm {
                         let declaration = "typealias NonNull = Any(";
                         let start = source.text.find(declaration).expect("pinned NonNull alias")
                             + declaration.len();
-                        let end = start + source.text[start..].find('\n').expect("alias line") - 1;
+                        let end = start
+                            + source
+                                .text
+                                .entire()
+                                .range(start..)
+                                .find("\n")
+                                .expect("alias line")
+                            - 1;
                         let predicate = Span::new(start, end);
                         let mut observations = Trace::new();
                         observations.insert(
@@ -1145,7 +1155,7 @@ impl Vm {
                         .find(&format!("typealias {name} = Int("))
                         .expect("pinned integer alias");
                     let start = declaration + format!("typealias {name} = ").len();
-                    let end = start + source.text[start..].find('\n').unwrap();
+                    let end = start + source.text.entire().range(start..).find("\n").unwrap();
                     let accepted = matches!(&run.value, Value::Int(value) if (min..=max).contains(&value.get()));
                     run.outcome = Some(if accepted {
                         Ok(run.value.clone())
@@ -1250,6 +1260,7 @@ impl Vm {
                         .and_then(|member| self.program.metadata.get(member.code))
                         .and_then(|metadata| {
                             metadata.declaration.map(|span| RuntimeFrame {
+                                anonymous: false,
                                 source: metadata.source.clone(),
                                 span,
                                 member: metadata.member.clone(),
@@ -1391,7 +1402,7 @@ impl Vm {
                                             &value,
                                             &self.heap,
                                             &self.program.module_name
-                                        )?).into(),
+                                        )?),
 "`.\nValue: ".into(),
 crate::diagnostic_values::render(
                                             &value,

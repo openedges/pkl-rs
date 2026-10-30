@@ -11,14 +11,14 @@ fn uncolored_error_layout_preserves_unicode_columns_and_hint_position() {
     let frames = [
         RenderFrame {
             source,
-            uri: "file:///module.pkl",
+            uri: "file:///module.pkl".into(),
             member: &"module#result".into(),
             span: Span::new(start, start + 7),
             highlight_length_utf16: None,
         },
         RenderFrame {
             source: sources.get(expression).unwrap(),
-            uri: "repl:text",
+            uri: "repl:text".into(),
             member: &"".into(),
             span: Span::new(0, 6),
             highlight_length_utf16: None,
@@ -39,7 +39,7 @@ fn multiline_frames_underline_only_the_first_source_line() {
             "failure",
             &[RenderFrame {
                 source: sources.get(id).unwrap(),
-                uri: "file:///module.pkl",
+                uri: "file:///module.pkl".into(),
                 member: &"module#result".into(),
                 span: Span::new(11, 33),
                 highlight_length_utf16: None,

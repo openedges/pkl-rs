@@ -1,0 +1,6 @@
+–– Pkl Error ––
+ANNOTATION-MUST-NOT-EVALUATE
+
+1 | @ModuleInfo { minPklVersion = throw("ANNOTATION-MUST-NOT-EVALUATE") }
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at declared.primaryName.minPklVersion (file:///stage122/min-version/inferred-primary-name.pkl)

@@ -95,6 +95,12 @@ impl Probe<'_> {
                 HostPoll::Log { .. } | HostPoll::TransformFrame { .. } => {
                     unreachable!("default annotation adapter uses the no-op logger")
                 }
+                HostPoll::Glob { .. } => {
+                    return Err(RuntimeError::new(
+                        pkl_runtime::value::ErrorKind::Unsupported,
+                        "The fixed annotation adapter has no glob Host capability.",
+                    ));
+                }
                 HostPoll::Module { .. } => {
                     unreachable!("fixed annotation adapter has no module Host capability")
                 }

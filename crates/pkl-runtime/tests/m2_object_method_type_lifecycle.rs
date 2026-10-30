@@ -27,7 +27,7 @@ fn ready(session: &mut HostSession, roots: &[Value]) -> Result<Value, RuntimeErr
 fn read(session: &mut HostSession, roots: &[Value]) -> String {
     match event(session, roots) {
         HostPoll::Read { token, uri } => {
-            assert_eq!(&*uri, "mem:argument");
+            assert_eq!(uri, "mem:argument");
             token
         }
         other => panic!("signature resolved before its argument: {other:?}"),

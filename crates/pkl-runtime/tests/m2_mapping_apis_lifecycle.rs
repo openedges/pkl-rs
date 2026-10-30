@@ -49,10 +49,15 @@ fn setup(source: &str, names: &[&str]) -> (HostSession, Value, Vec<usize>) {
     let module = ready(&mut session, &[]).unwrap();
     (session, module, entries)
 }
-fn read(session: &mut HostSession, module: &Value, uri: &str) -> String {
+fn read(
+    session: &mut HostSession,
+    module: &Value,
+    uri: impl Into<pkl_runtime::value::PklString>,
+) -> String {
+    let uri = uri.into();
     match event(session, std::slice::from_ref(module), 0) {
         HostPoll::Read { token, uri: actual } => {
-            assert_eq!(&*actual, uri);
+            assert_eq!(actual, uri);
             token
         }
         other => panic!("expected {uri}: {other:?}"),
@@ -64,7 +69,7 @@ fn pending_read(
     module: &Value,
     method: &str,
     phase: &str,
-) -> (String, Arc<str>) {
+) -> (String, pkl_runtime::value::PklString) {
     match event(session, std::slice::from_ref(module), 0) {
         HostPoll::Read { token, uri } => (token, uri),
         other => panic!("{method} {phase}: expected a pending Host read, got {other:?}"),
@@ -222,7 +227,7 @@ fn callback_and_nested_builder_roots_survive_host_failure_retry_and_reentry() {
             .reenter(&parent, entries[1], vec![module.clone()], 0, None)
             .unwrap();
         let (failed, uri) = pending_read(&mut session, &module, method, "first callback");
-        assert_eq!(&*uri, expected_reads[0]);
+        assert_eq!(uri, expected_reads[0]);
         let failure = RuntimeError::new(ErrorKind::Host, "Mapping operation retry\0\r\n🙂");
         session.resume(&failed, Err(failure.clone()), 0).unwrap();
         let actual = ready(&mut session, std::slice::from_ref(&module)).unwrap_err();

@@ -204,6 +204,8 @@ fn original_super_method_failure_describes_the_parent_lookup_module() {
             ModuleRequestKind::LoadSource { resolved, .. } => {
                 let name = resolved
                     .original_uri
+                    .as_str()
+                    .expect("fixture URI must contain Unicode scalar values")
                     .rsplit('/')
                     .next()
                     .unwrap()

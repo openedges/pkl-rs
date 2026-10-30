@@ -231,7 +231,7 @@ child = x["\u{d800}"][0]
             let HostPoll::Read { token, uri } = event(&mut session, &module, now) else {
                 panic!("expected inner read");
             };
-            assert_eq!(&*uri, "mem:inner");
+            assert_eq!(uri, "mem:inner");
             assert_ne!(previous_token.as_ref(), Some(&token));
             previous_token = Some(token.clone());
             session

@@ -77,6 +77,9 @@ fn drive(
 ) -> Result<Value, RuntimeError> {
     for _ in 0..10_000 {
         match session.poll(0, 16) {
+            pkl_runtime::host::HostPoll::Glob { .. } => {
+                panic!("unexpected glob request in non-glob regression")
+            }
             HostPoll::Ready(result) => return result,
             HostPoll::Module { token, request } => {
                 let completion = match request.kind {

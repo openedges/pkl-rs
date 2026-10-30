@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot expand glob pattern `gmod:/tree/*` because scheme `gmod` is not globbable.
+
+1 | import* "gmod:/tree/*" as imported_entries
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at capability-missing-reader-import#imported_entries (gmain:/tree/capability-missing-reader-import.pkl)
+
+2 | entries = imported_entries
+              ^^^^^^^^^^^^^^^^
+at capability-missing-reader-import#entries (gmain:/tree/capability-missing-reader-import.pkl)
+
+1 | entries.keys.toList().join("|")
+    ^^^^^^^
+at  (repl:text)

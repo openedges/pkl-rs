@@ -50,9 +50,9 @@ fn check(label: &str, source: &str, uri: &str, exit: i32, stdout: &[u8], stderr:
                 }
                 match &request.kind {
                 ModuleRequestKind::Capabilities { .. } => ModuleCompletion::Capabilities(Ok(ModuleCapabilities { local: true, hierarchical: true, fragment_paths: false })),
-                ModuleRequestKind::HasElement { element_uri, .. } => ModuleCompletion::HasElement(Ok(element_uri.as_ref() == helper_uri)),
-                ModuleRequestKind::Resolve { original_uri, .. } if original_uri.as_ref() == helper_uri => ModuleCompletion::Resolved(Ok(ResolvedModule { original_uri: original_uri.clone(), resolved_uri: original_uri.clone(), source_uri: original_uri.clone() })),
-                ModuleRequestKind::LoadSource { resolved, .. } if resolved.original_uri.as_ref() == helper_uri => ModuleCompletion::Source(Ok(ModuleSource { text: include_str!("../../../tests/fixtures/m2-properties-renderer-originals/annotationConverter.pkl").into(), inferred_name: "annotationConverter".into() })),
+                ModuleRequestKind::HasElement { element_uri, .. } => ModuleCompletion::HasElement(Ok(element_uri == helper_uri)),
+                ModuleRequestKind::Resolve { original_uri, .. } if original_uri == helper_uri => ModuleCompletion::Resolved(Ok(ResolvedModule { original_uri: original_uri.clone(), resolved_uri: original_uri.clone(), source_uri: original_uri.clone() })),
+                ModuleRequestKind::LoadSource { resolved, .. } if resolved.original_uri == helper_uri => ModuleCompletion::Source(Ok(ModuleSource { text: include_str!("../../../tests/fixtures/m2-properties-renderer-originals/annotationConverter.pkl").into(), inferred_name: "annotationConverter".into() })),
                 other => panic!("unexpected original dependency {other:?}"),
             }
             },

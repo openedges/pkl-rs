@@ -141,7 +141,7 @@ fn duration_callbacks_survive_collection_at_every_poll_boundary() {
         let VmPoll::Pending(request) = event(&mut vm) else {
             panic!("read")
         };
-        assert_eq!(&*request.uri, format!("duration:{index}"));
+        assert_eq!(request.uri, format!("duration:{index}"));
         vm.resume(request.id, Ok(Value::Duration(Duration::new(1.5, unit))))
             .unwrap();
     }

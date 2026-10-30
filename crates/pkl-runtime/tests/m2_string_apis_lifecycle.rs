@@ -56,7 +56,7 @@ fn member(session: &mut HostSession, module: &Value, entry: usize) -> Value {
 fn read(session: &mut HostSession, module: &Value, uri: &str) -> String {
     match event(session, std::slice::from_ref(module), 0) {
         HostPoll::Read { token, uri: actual } => {
-            assert_eq!(&*actual, uri);
+            assert_eq!(actual, uri);
             token
         }
         other => panic!("expected {uri}: {other:?}"),

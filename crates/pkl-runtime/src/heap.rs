@@ -4,7 +4,7 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::sync::Arc;
 use std::sync::atomic::{AtomicU64, Ordering};
 
-use crate::value::{ErrorKind, ObjectId, RuntimeError, Value};
+use crate::value::{ErrorKind, ObjectId, PklString, RuntimeError, Value};
 
 static NEXT_HEAP: AtomicU64 = AtomicU64::new(1);
 
@@ -38,9 +38,9 @@ pub struct Environment {
     pub code_owner: Option<ExecutableOwnerId>,
     /// Lexical substitutions captured by reusable generic constraint bodies.
     /// Runtime values are immutable shared type DAGs; environment clones copy handles.
-    pub type_arguments: BTreeMap<(usize, Arc<str>), crate::vm::TypeCheck>,
+    pub type_arguments: BTreeMap<(usize, PklString), crate::vm::TypeCheck>,
     /// Source sections follow actual arguments without participating in type identity.
-    pub type_argument_sources: BTreeMap<(usize, Arc<str>), crate::vm::TypeArgumentSource>,
+    pub type_argument_sources: BTreeMap<(usize, PklString), crate::vm::TypeArgumentSource>,
     /// Innermost first; immutable captured lexical object scopes.
     pub scopes: Vec<Scope>,
 }
@@ -50,7 +50,7 @@ pub struct Member {
     /// Authored modifier arithmetic and the pinned internal declaration bits.
     pub flags: u32,
     pub entry: bool,
-    pub name: Arc<str>,
+    pub name: PklString,
     pub code: usize,
     pub local: bool,
     pub method: bool,
@@ -65,13 +65,15 @@ impl Member {
     const CLASS: u32 = 0x100;
     const TYPE_ALIAS: u32 = 0x200;
     const IMPORT: u32 = 0x80;
+    const GLOB: u32 = 0x1000;
     pub(crate) fn declaration_flags(member: &crate::syntax::Member) -> u32 {
         crate::syntax::modifier_flags(&member.modifiers)
             | match member.expr.kind {
                 crate::syntax::ExprKind::Import {
                     clause_alias: Some(_),
+                    glob,
                     ..
-                } => Self::IMPORT,
+                } => Self::IMPORT | if glob { Self::GLOB } else { 0 },
                 crate::syntax::ExprKind::Class { .. } => Self::CLASS,
                 crate::syntax::ExprKind::TypeAlias { .. } => Self::TYPE_ALIAS,
                 _ => 0,
@@ -88,6 +90,9 @@ impl Member {
     }
     pub(crate) fn import(&self) -> bool {
         self.flags & Self::IMPORT != 0
+    }
+    pub(crate) fn glob(&self) -> bool {
+        self.flags & Self::GLOB != 0
     }
     pub(crate) fn definition(&self) -> bool {
         self.flags & (Self::CLASS | Self::TYPE_ALIAS) != 0
@@ -106,7 +111,7 @@ pub enum LazyState {
 pub struct CacheKey {
     pub entry: bool,
     pub owner: Option<ObjectId>,
-    pub name: Arc<str>,
+    pub name: PklString,
     pub method: bool,
 }
 
@@ -120,23 +125,28 @@ pub struct Function {
 }
 
 /// Class labels follow PClassInfo.getDisplayName, independently of identity or URI.
-pub(crate) fn display_class_name(module: &str, simple_name: &str) -> String {
+pub(crate) fn display_class_name(
+    module: impl Into<PklString>,
+    simple_name: impl Into<PklString>,
+) -> PklString {
+    let module = module.into();
+    let simple_name = simple_name.into();
     if module == "pkl.base" {
-        simple_name.to_owned()
+        simple_name
     } else if simple_name == "ModuleClass" {
-        module.to_owned()
+        module
     } else {
-        format!("{module}#{simple_name}")
+        module.concat(&"#".into()).concat(&simple_name)
     }
 }
 
 #[derive(Clone, Debug)]
 pub struct Class {
-    pub module: Option<Arc<str>>,
+    pub module: Option<PklString>,
     /// Original declaration ModuleKey URI, independent of the displayed module name.
-    pub origin_uri: Option<Arc<str>>,
+    pub origin_uri: Option<PklString>,
     pub id: usize,
-    pub name: Arc<str>,
+    pub name: PklString,
     pub open: bool,
     pub abstract_: bool,
 }
@@ -171,7 +181,7 @@ pub enum CollectionMemberKind {
 #[derive(Clone, Debug)]
 pub struct CollectionMember {
     pub key: Value,
-    pub name: Arc<str>,
+    pub name: PklString,
     pub kind: CollectionMemberKind,
 }
 
@@ -221,6 +231,7 @@ pub struct Object {
     /// Reader payload has no heap edges. Factory property nodes read their
     /// declaration owner's payload, including when inherited by an amendment.
     pub resource: Option<Arc<crate::resources::Resource>>,
+    pub(crate) glob: Option<Arc<crate::vm::glob::Payload>>,
     /// Immutable match result has no heap edges; factory reads declaration owner.
     pub regex_match: Option<Arc<crate::pkl_regex::RegexMatchData>>,
     /// Recursive force publishes this mark before traversing children.
@@ -248,7 +259,7 @@ pub struct Object {
     pub function: Option<Function>,
     pub reference: Option<crate::vm::reference::Reference>,
     pub native_function: Option<crate::vm::reference::NativeFunction>,
-    pub type_alias: Option<Arc<str>>,
+    pub type_alias: Option<PklString>,
     pub type_alias_declaration: Option<usize>,
     /// Compiled declaration identity, separate from resolved type identity.
     /// The environment below retains the owning executable arena.
@@ -395,6 +406,7 @@ struct ExecutableState {
     // ImportNode caches its successful result, not the importing receiver or
     // activation. Distinct executable clones retain distinct node state.
     imported_modules: BTreeMap<(usize, usize), ObjectId>,
+    glob_mappings: BTreeMap<(usize, usize, crate::value::PklString), ObjectId>,
     method_calls: BTreeMap<(usize, usize), crate::vm::deprecation::CallCache>,
     regex_constructor: crate::pkl_regex::ConstructorCache,
 }
@@ -524,32 +536,34 @@ impl Heap {
             })
     }
 
-    pub(crate) fn class_simple_name(&self, id: ObjectId) -> Result<&str, RuntimeError> {
+    pub(crate) fn class_simple_name(&self, id: ObjectId) -> Result<PklString, RuntimeError> {
         let prototype = self.get(self.get_class(id)?.prototype)?;
         if prototype.is_module {
-            return Ok("ModuleClass");
+            return Ok("ModuleClass".into());
         }
-        Ok(&self.class_definition(id)?.name)
+        Ok(self.class_definition(id)?.name.clone())
     }
 
-    pub(crate) fn class_qualified_name(&self, id: ObjectId) -> Result<String, RuntimeError> {
+    pub(crate) fn class_qualified_name(&self, id: ObjectId) -> Result<PklString, RuntimeError> {
         let prototype = self.get(self.get_class(id)?.prototype)?;
         let definition = self.class_definition(id)?;
         let module = if prototype.is_module {
-            definition.name.as_ref()
+            definition.name.clone()
         } else {
-            definition.module.as_deref().unwrap_or("")
+            definition.module.clone().unwrap_or_default()
         };
-        Ok(format!("{module}#{}", self.class_simple_name(id)?))
+        Ok(module
+            .concat(&"#".into())
+            .concat(&self.class_simple_name(id)?))
     }
 
-    pub(crate) fn class_display_name(&self, id: ObjectId) -> Result<String, RuntimeError> {
+    pub(crate) fn class_display_name(&self, id: ObjectId) -> Result<PklString, RuntimeError> {
         let prototype = self.get(self.get_class(id)?.prototype)?;
         let definition = self.class_definition(id)?;
         let module = if prototype.is_module {
-            definition.name.as_ref()
+            definition.name.clone()
         } else {
-            definition.module.as_deref().unwrap_or("")
+            definition.module.clone().unwrap_or_default()
         };
         Ok(display_class_name(module, self.class_simple_name(id)?))
     }
@@ -733,6 +747,33 @@ impl Heap {
         Ok(self.executable(owner)?.local_kinds.get(&slot).copied())
     }
 
+    pub(crate) fn glob_mapping(
+        &self,
+        owner: ExecutableOwnerId,
+        site: (usize, usize),
+        pattern: &crate::value::PklString,
+    ) -> Result<Option<ObjectId>, RuntimeError> {
+        Ok(self
+            .executable(owner)?
+            .glob_mappings
+            .get(&(site.0, site.1, pattern.clone()))
+            .copied())
+    }
+
+    pub(crate) fn publish_glob_mapping(
+        &mut self,
+        owner: ExecutableOwnerId,
+        site: (usize, usize),
+        pattern: crate::value::PklString,
+        mapping: ObjectId,
+    ) -> Result<(), RuntimeError> {
+        self.get(mapping)?;
+        self.executable_mut(owner)?
+            .glob_mappings
+            .insert((site.0, site.1, pattern), mapping);
+        Ok(())
+    }
+
     pub(crate) fn imported_module(
         &self,
         owner: ExecutableOwnerId,
@@ -829,10 +870,10 @@ impl Heap {
         }
     }
 
-    pub(crate) fn find_type_alias(&self, name: &str) -> Option<ObjectId> {
+    pub(crate) fn find_type_alias(&self, name: &PklString) -> Option<ObjectId> {
         self.slots.iter().enumerate().find_map(|(index, slot)| {
             slot.object()
-                .filter(|o| o.type_alias.as_deref() == Some(name))
+                .filter(|o| o.type_alias.as_ref() == Some(name))
                 .map(|_| ObjectId {
                     heap: self.identity,
                     index,
@@ -955,6 +996,7 @@ impl Heap {
                     );
                     pending.extend(state.children.values().map(|owner| owner.0));
                     pending.extend(state.imported_modules.values().copied());
+                    pending.extend(state.glob_mappings.values().copied());
                     for cache in state.method_calls.values() {
                         cache.trace(&mut pending);
                     }

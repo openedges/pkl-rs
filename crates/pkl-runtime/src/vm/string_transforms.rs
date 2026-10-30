@@ -59,9 +59,21 @@ pub(super) fn blocks(
             .text
             .find(&format!("external function {name}("))
             .expect("String declaration");
-        let closing = start + source.text[start..].find("): ").expect("method result");
-        let end = closing + source.text[closing..].find('\n').expect("declaration end");
-        let declaration = &source.text[start..end];
+        let closing = start
+            + source
+                .text
+                .entire()
+                .range(start..)
+                .find("): ")
+                .expect("method result");
+        let end = closing
+            + source
+                .text
+                .entire()
+                .range(closing..)
+                .find("\n")
+                .expect("declaration end");
+        let declaration = &source.text.entire().range(start..end);
         let pattern = start + declaration.find("String | Regex").expect("pattern type");
         let arity = if matches!(operation, Operation::Split { limited: false }) {
             1

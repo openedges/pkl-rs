@@ -1,5 +1,6 @@
 //! Typed module Host effects. Resolution and source loading have different
 //! cache boundaries; neither is a resource read or an evaluation in another VM.
+use crate::source::SourceText;
 use std::sync::Arc;
 
 use crate::{
@@ -27,17 +28,17 @@ pub enum ModuleKeyKind {
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct ModuleKey {
     pub id: ModuleKeyId,
-    pub uri: Arc<str>,
+    pub uri: PklString,
     pub kind: ModuleKeyKind,
     /// The Host owns the object behind this handle. It is not a source or a cache.
-    pub handle: Arc<str>,
+    pub handle: PklString,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct ResolvedModuleKey {
     pub id: ResolvedKeyId,
     pub key: ModuleKey,
-    pub handle: Arc<str>,
+    pub handle: PklString,
     pub module: ResolvedModule,
 }
 
@@ -51,8 +52,8 @@ pub enum SelectionPhase {
 /// A public evaluation input. Construction performs no factory lookup or I/O.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct ModuleSourceSpec {
-    pub uri: Arc<str>,
-    pub contents: Option<Arc<str>>,
+    pub uri: PklString,
+    pub contents: Option<SourceText>,
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum ResolutionPhase {
@@ -62,38 +63,35 @@ pub enum ResolutionPhase {
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct ModuleIdentity {
-    pub original_uri: Arc<str>,
-    pub resolved_uri: Arc<str>,
+    pub original_uri: PklString,
+    pub resolved_uri: PklString,
 }
 
 /// Construct the original file ModuleKey from an absolute slash-separated path.
 /// This follows `IoUtils.toUri` path quoting: Unicode remains Unicode, while
 /// reserved path characters are escaped. It performs no I/O, normalization, or
 /// canonicalization. A Host's canonical resolved key is a separate identity.
-pub fn original_file_uri(path: &str) -> Result<String, ModuleHostError> {
+pub fn original_file_uri(path: &str) -> Result<PklString, ModuleHostError> {
     if !path.starts_with('/') {
         return Err(ModuleHostError::Unsupported(
             "Original file URI construction requires an absolute slash-separated path.".into(),
         ));
     }
-    Ok(format!(
-        "file://{}",
-        crate::host::resources::quote_path(path)
-    ))
+    Ok(PklString::from("file://").concat(&crate::host::resources::quote_path(&path.into())))
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct ResolvedModule {
-    pub original_uri: Arc<str>,
-    pub resolved_uri: Arc<str>,
+    pub original_uri: PklString,
+    pub resolved_uri: PklString,
     /// Diagnostic source URI; independent from both cache keys.
-    pub source_uri: Arc<str>,
+    pub source_uri: PklString,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct ModuleSource {
-    pub text: Arc<str>,
-    pub inferred_name: Arc<str>,
+    pub text: SourceText,
+    pub inferred_name: PklString,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -116,11 +114,11 @@ pub enum ModuleRequestKind {
     /// distinct from the key's resolve/allowlist check.
     CheckImport {
         importer: ModuleIdentity,
-        import_uri: Arc<str>,
+        import_uri: PklString,
     },
     SelectKey {
         id: ModuleKeyId,
-        uri: Arc<str>,
+        uri: PklString,
         phase: SelectionPhase,
     },
     QueryCachePolicy {
@@ -131,7 +129,7 @@ pub enum ModuleRequestKind {
     },
     ResolveImportUri {
         key: ModuleKey,
-        authored_uri: Arc<str>,
+        authored_uri: PklString,
     },
     Capabilities {
         key: Option<ModuleKey>,
@@ -140,14 +138,14 @@ pub enum ModuleRequestKind {
     HasElement {
         key: Option<ModuleKey>,
         module: ModuleIdentity,
-        element_uri: Arc<str>,
+        element_uri: PklString,
     },
     Resolve {
         key: ModuleKey,
         resolved_key_id: ResolvedKeyId,
         importer: ModuleIdentity,
-        import_uri: Arc<str>,
-        original_uri: Arc<str>,
+        import_uri: PklString,
+        original_uri: PklString,
     },
     ResolveKey {
         key: ModuleKey,
@@ -175,7 +173,7 @@ pub enum ModuleHostError {
     /// An already constructed Host rejection; arbitrary text has no guest provenance.
     Denied(PklString),
     /// Typed `org.pkl.core.SecurityManagerException` from import admission,
-    /// module resolution or ModuleKey.hasElement.
+    /// module resolution, ModuleKey.resolveUri or ModuleKey.hasElement.
     /// The message is the Java exception message, not a formatted diagnostic.
     /// Source loading does not support this completion variant.
     SecurityManagerException {
@@ -185,22 +183,33 @@ pub enum ModuleHostError {
 }
 
 impl ModuleHostError {
-    pub(crate) fn into_factory_runtime(self, uri: &str) -> RuntimeError {
+    pub(crate) fn into_factory_runtime(self, uri: impl Into<PklString>) -> RuntimeError {
+        let uri = uri.into();
         match self {
             // The pinned ModuleResolver passes no message argument for this template.
             Self::Io(cause) => cause.into_runtime("loading module", "{0}"),
-            other => other.into_runtime(uri),
+            other => other.into_runtime(&uri),
         }
     }
-    pub(crate) fn into_runtime(self, uri: &str) -> RuntimeError {
+    pub(crate) fn into_runtime(self, uri: impl Into<PklString>) -> RuntimeError {
+        let uri = uri.into();
         match self {
-            Self::NotFound => RuntimeError::host_language(format!("Cannot find module `{uri}`.")),
-            Self::NoLoader => RuntimeError::host_language(format!(
-                "No module loader is registered for module `{uri}`."
-            )),
+            Self::NotFound => RuntimeError::host_language(
+                PklString::from("Cannot find module `")
+                    .concat(&uri)
+                    .concat(&"`.".into()),
+            ),
+            Self::NoLoader => RuntimeError::host_language(
+                PklString::from("No module loader is registered for module `")
+                    .concat(&uri)
+                    .concat(&"`.".into()),
+            ),
             Self::UriSyntax { reason } => {
-                let mut error =
-                    RuntimeError::host_language(format!("Module URI `{uri}` has invalid syntax."));
+                let mut error = RuntimeError::host_language(
+                    PklString::from("Module URI `")
+                        .concat(&uri)
+                        .concat(&"` has invalid syntax.".into()),
+                );
                 error.hint = Some(reason);
                 error
             }
@@ -231,7 +240,7 @@ pub enum ModuleCompletion {
     KeySelected(Result<ModuleKey, ModuleHostError>),
     CachePolicy(Result<bool, ModuleHostError>),
     FragmentPaths(Result<bool, ModuleHostError>),
-    ImportUri(Result<Arc<str>, ModuleHostError>),
+    ImportUri(Result<PklString, ModuleHostError>),
     Capabilities(Result<ModuleCapabilities, ModuleHostError>),
     HasElement(Result<bool, ModuleHostError>),
     Resolved(Result<ResolvedModule, ModuleHostError>),
@@ -278,8 +287,10 @@ pub(crate) enum StdlibKind {
 
 /// This classification follows ModuleCache's exact switch, independently of
 /// the available source catalog and of which external bindings are implemented.
-pub(crate) fn stdlib_kind(uri: &str) -> Option<StdlibKind> {
-    uri.strip_prefix("pkl:")?;
+pub(crate) fn stdlib_kind(uri: &PklString) -> Option<StdlibKind> {
+    if !uri.starts_with("pkl:") {
+        return None;
+    }
     let name = crate::host::resources::decoded_scheme_specific_part(uri);
     let canonical = [
         "pkl:analyze",
@@ -305,7 +316,7 @@ pub(crate) fn stdlib_kind(uri: &str) -> Option<StdlibKind> {
         StdlibKind::Singleton(canonical)
     } else if include_str!("stdlib/modules.txt")
         .lines()
-        .any(|candidate| candidate == uri)
+        .any(|candidate| uri == candidate)
     {
         StdlibKind::Cached
     } else {
@@ -323,7 +334,7 @@ pub fn default_completion(request: &ModuleRequest) -> Option<ModuleCompletion> {
                 id: *id,
                 uri: uri.clone(),
                 kind: ModuleKeyKind::StandardLibrary,
-                handle: Arc::from(""),
+                handle: PklString::default(),
             })))
         }
         ModuleRequestKind::QueryCachePolicy { key }
@@ -334,7 +345,6 @@ pub fn default_completion(request: &ModuleRequest) -> Option<ModuleCompletion> {
         ModuleRequestKind::ResolveImportUri { key, authored_uri } => {
             Some(ModuleCompletion::ImportUri(
                 crate::host::resources::resolve_module_key_uri(authored_uri, &key.uri)
-                    .map(Into::into)
                     .map_err(|error| ModuleHostError::Unsupported(error.message)),
             ))
         }
@@ -349,9 +359,15 @@ pub fn default_completion(request: &ModuleRequest) -> Option<ModuleCompletion> {
                 let from = crate::host::resources::module_trust_level(&importer.resolved_uri)?;
                 let to = crate::host::resources::module_trust_level(import_uri)?;
                 if from < to {
-                    return Err(ModuleHostError::SecurityManagerException { message: Some(format!(
-                        "Refusing to import module `{import_uri}` because importing module `{}` has an insufficient trust level.",
-                        importer.resolved_uri).into()) });
+                    return Err(ModuleHostError::SecurityManagerException {
+                        message: Some(
+                            PklString::from("Refusing to import module `")
+                                .concat(import_uri)
+                                .concat(&"` because importing module `".into())
+                                .concat(&importer.resolved_uri)
+                                .concat(&"` has an insufficient trust level.".into()),
+                        ),
+                    });
                 }
                 Ok(())
             })();

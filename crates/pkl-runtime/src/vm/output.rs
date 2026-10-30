@@ -85,15 +85,33 @@ impl Definitions<'_> {
             .find(&format!("class {class}"))
             .expect("builtin class source");
         let start = class_start
-            + self.source.text[class_start..]
+            + self
+                .source
+                .text
+                .entire()
+                .range(class_start..)
                 .find(&format!("{name}:"))
                 .expect("builtin property source");
         let name_span = Span::new(start, start + name.len());
         let type_start = name_span.end + 2;
-        let type_end = self.source.text[type_start..]
+        let type_end = self
+            .source
+            .text
+            .entire()
+            .range(type_start..)
+            .as_str()
+            .expect("pinned builtin source is scalar")
             .find(['=', '\n'])
-            .map_or(self.source.text.len(), |i| type_start + i);
-        let type_end = self.source.text[..type_end].trim_end().len();
+            .map_or(self.source.text.len_bytes(), |i| type_start + i);
+        let type_end = self
+            .source
+            .text
+            .entire()
+            .range(..type_end)
+            .as_str()
+            .expect("pinned builtin source is scalar")
+            .trim_end()
+            .len();
         let type_span = Span::new(type_start, type_end);
         let check = code.len();
         code.extend([Instruction::CheckType(ty.clone()), Instruction::Return]);
@@ -136,7 +154,11 @@ impl Definitions<'_> {
                     None
                 } else {
                     let offset = start
-                        + self.source.text[start..]
+                        + self
+                            .source
+                            .text
+                            .entire()
+                            .range(start..)
                             .find(name)
                             .expect("builtin expression source");
                     Some(Span::new(offset, offset + name.len()))
@@ -151,10 +173,14 @@ impl Definitions<'_> {
             .find(&format!("class {class}"))
             .expect("class");
         let start = start
-            + self.source.text[start..]
+            + self
+                .source
+                .text
+                .entire()
+                .range(start..)
                 .find(&format!("external function {name}("))
                 .expect("method");
-        let end = start + self.source.text[start..].find('\n').unwrap();
+        let end = start + self.source.text.entire().range(start..).find("\n").unwrap();
         let body_block = self.blocks.len();
         self.blocks.push(vec![
             Instruction::LoadLocal(0),
@@ -170,7 +196,7 @@ impl Definitions<'_> {
             source: Some(self.source.clone()),
             member: format!("#{class}.{name}").into(),
             declaration: Some(Span::new(start, end)),
-            method_signature: Some((format!("{name}(value)"), 1)),
+            method_signature: Some((format!("{name}(value)").into(), 1)),
             spans: vec![None; 5],
             ..Default::default()
         });
@@ -188,7 +214,7 @@ impl Definitions<'_> {
             source: Some(self.source.clone()),
             member: format!("#{class}.{name}").into(),
             declaration: Some(Span::new(start, end)),
-            method_signature: Some((format!("{name}(value)"), 1)),
+            method_signature: Some((format!("{name}(value)").into(), 1)),
             spans: vec![None; 2],
             ..Default::default()
         });
@@ -395,11 +421,24 @@ pub(super) fn builtin_members(
         ),
         ..Default::default()
     });
-    let let_start = module_start + d.source.text[module_start..].find("let (format =").unwrap();
-    let let_end = let_start + d.source.text[let_start..].find("\n    text =").unwrap();
+    let let_start = module_start
+        + d.source
+            .text
+            .entire()
+            .range(module_start..)
+            .find("let (format =")
+            .unwrap();
+    let let_end = let_start
+        + d.source
+            .text
+            .entire()
+            .range(let_start..)
+            .find("\n    text =")
+            .unwrap();
     d.metadata[rblock].let_scopes.push(LetScope {
         body: 2..3,
         frame: RuntimeFrame {
+            anonymous: false,
             source: Some(d.source.clone()),
             span: Span::new(let_start, let_end),
             member: "#Module.output.renderer.<let expr>".into(),
@@ -417,7 +456,13 @@ pub(super) fn builtin_members(
     d.blocks.push(tc);
     let mut tm = d.metadata[text.code].clone();
     tm.member = "#Module.output.text".into();
-    let text_start = module_start + d.source.text[module_start..].find("text =").unwrap();
+    let text_start = module_start
+        + d.source
+            .text
+            .entire()
+            .range(module_start..)
+            .find("text =")
+            .unwrap();
     tm.spans = d.expression_spans(
         text_start,
         &d.blocks[tblock],
@@ -444,7 +489,13 @@ pub(super) fn builtin_members(
     d.blocks.push(d.blocks[bytes.code].clone());
     let mut bm = d.metadata[bytes.code].clone();
     bm.member = "#Module.output.bytes".into();
-    let bytes_start = text_start + d.source.text[text_start..].find("bytes =").unwrap();
+    let bytes_start = text_start
+        + d.source
+            .text
+            .entire()
+            .range(text_start..)
+            .find("bytes =")
+            .unwrap();
     bm.spans = d.expression_spans(
         bytes_start,
         &d.blocks[b.code],
@@ -482,7 +533,13 @@ pub(super) fn builtin_members(
         .find("converters: Mapping<Class | String, (unknown) -> Any>")
         .unwrap();
     let part = |text: &str| {
-        let start = converter_start + d.source.text[converter_start..].find(text).unwrap();
+        let start = converter_start
+            + d.source
+                .text
+                .entire()
+                .range(converter_start..)
+                .find(text)
+                .unwrap();
         Span::new(start, start + text.len())
     };
     let class_span = part("Class");
@@ -515,9 +572,18 @@ pub(super) fn builtin_members(
         .text
         .find("convertPropertyTransformers: Mapping<Class, Mixin<ConvertProperty>>")
         .unwrap();
-    let class_start = transformer_start + d.source.text[transformer_start..].find("Class").unwrap();
+    let class_start = transformer_start
+        + d.source
+            .text
+            .entire()
+            .range(transformer_start..)
+            .find("Class")
+            .unwrap();
     let mixin_start = class_start
-        + d.source.text[class_start..]
+        + d.source
+            .text
+            .entire()
+            .range(class_start..)
             .find("Mixin<ConvertProperty>")
             .unwrap();
     let mixin = amendment::mixin_type(builtins::ty(CONVERT_PROPERTY));
@@ -546,6 +612,7 @@ pub(super) fn builtin_members(
             Instruction::SetCollectionTypeDefault {
                 ty: mixin,
                 origin: Some(RuntimeFrame {
+                    anonymous: false,
                     source: Some(d.source.clone()),
                     span: Span::new(mixin_start, mixin_start + "Mixin<ConvertProperty>".len()),
                     member: "#BaseValueRenderer.convertPropertyTransformers.default".into(),
@@ -638,8 +705,13 @@ pub(super) fn builtin_members(
         Instruction::Return,
     ]);
     let json_class = d.source.text.find("class JsonRenderer extends").unwrap();
-    let json_extension_start =
-        json_class + d.source.text[json_class..].find("extension =").unwrap();
+    let json_extension_start = json_class
+        + d.source
+            .text
+            .entire()
+            .range(json_class..)
+            .find("extension =")
+            .unwrap();
     let json_literal = json_extension_start + "extension = ".len();
     let json_value_span = Span::new(json_literal, json_literal + "\"json\"".len());
     d.metadata.push(BlockMetadata {
@@ -758,14 +830,16 @@ impl Vm {
             .context
             .primary_source
             .as_ref()
-            .map_or("", |s| s.uri.as_ref());
+            .map_or_else(PklString::default, |s| s.uri.clone());
         let name =
             crate::diagnostic_values::type_name(value, &self.heap, &self.program.module_name)?;
         let mut error = RuntimeError::new(
             ErrorKind::Type,
-            format!(
-                "Expected `output` of module `{uri}` to be of type `ModuleOutput`, but got type `{name}`."
-            ),
+            PklString::from("Expected `output` of module `")
+                .concat(&uri)
+                .concat(&"` to be of type `ModuleOutput`, but got type `".into())
+                .concat(&name)
+                .concat(&"`.".into()),
         );
         if let Some(Value::Object(module)) = self.inputs.first()
             && let Some(member) = self
@@ -773,11 +847,12 @@ impl Vm {
                 .get(*module)?
                 .members
                 .iter()
-                .find(|m| m.name.as_ref() == "output")
+                .find(|m| m.name == "output")
         {
             let metadata = &self.program.metadata[member.code];
             if let Some(span) = metadata.value_span {
                 error.frames.push(RuntimeFrame {
+                    anonymous: false,
                     span,
                     member: "output".into(),
                     source: metadata

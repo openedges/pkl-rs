@@ -22,7 +22,7 @@ fn start(session: &mut HostSession, now: u64, timeout: u64) {
 fn request(session: &mut HostSession, now: u64) -> String {
     match session.poll(now, 100) {
         HostPoll::Read { token, uri } => {
-            assert_eq!(&*uri, "test:/resource");
+            assert_eq!(uri, "test:/resource");
             token
         }
         event => panic!("{event:?}"),
@@ -216,13 +216,13 @@ fn shared_session() -> (HostSession, Value) {
             },
             I::Return,
         ],
-        vec![I::Input(0), I::GetMember(Arc::from("outer")), I::Return],
-        vec![I::Input(0), I::GetMember(Arc::from("shared")), I::Return],
+        vec![I::Input(0), I::GetMember("outer".into()), I::Return],
+        vec![I::Input(0), I::GetMember("shared".into()), I::Return],
         vec![
             I::Constant(Value::string("test:/resource")),
             I::ReadResource,
             I::GetProperty {
-                name: Arc::from("shared"),
+                name: "shared".into(),
                 owner_depth: 0,
                 local: false,
             },
@@ -239,7 +239,7 @@ fn shared_session() -> (HostSession, Value) {
         Member {
             flags: 0,
             entry: false,
-            name: Arc::from("outer"),
+            name: "outer".into(),
             code: 3,
             local: false,
             method: false,
@@ -251,7 +251,7 @@ fn shared_session() -> (HostSession, Value) {
         Member {
             flags: 0,
             entry: false,
-            name: Arc::from("shared"),
+            name: "shared".into(),
             code: 4,
             local: false,
             method: false,

@@ -4,7 +4,7 @@
 //! expressions with display positions; it never evaluates the source.
 use crate::diagnostic::PowerAssertionValue;
 use crate::pkl_string::{PklString, PklStringBuilder};
-use crate::source::{Source, Span};
+use crate::source::{Source, SourceCharacter, SourceSlice, Span};
 use crate::syntax::{Expr, ExprKind, ObjectMember};
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
 
@@ -34,9 +34,11 @@ pub(crate) fn render(
     observations: &[PowerAssertionValue],
     indent: &str,
 ) -> PklString {
-    let text = source.slice(body).unwrap_or("");
+    let text = source
+        .slice(body)
+        .unwrap_or_else(|| SourceSlice::from_utf8(""));
     let mut anchors = BTreeMap::new();
-    if let Ok(expression) = crate::parser::parse_expression(text) {
+    if let Ok(expression) = crate::parser::parse_expression_source(text) {
         expression_anchors(&expression, text, true, &mut anchors);
     }
     let entries: BTreeSet<_> = observations
@@ -64,8 +66,8 @@ pub(crate) fn render(
             .iter()
             .skip(1)
             .map(|(_, text)| {
-                text.chars()
-                    .take_while(|ch| matches!(ch, ' ' | '\t'))
+                text.characters()
+                    .take_while(|(_, ch)| matches!(ch, SourceCharacter::Scalar(' ' | '\t')))
                     .count()
             })
             .min()
@@ -86,13 +88,18 @@ pub(crate) fn render(
             indentation
         };
         let trim_bytes: usize = text
-            .chars()
+            .characters()
             .take(trim)
-            .take_while(|ch| crate::diagnostic::java_whitespace(*ch))
-            .map(char::len_utf8)
+            .take_while(|(_, ch)| ch.scalar().is_some_and(crate::diagnostic::java_whitespace))
+            .map(|(_, ch)| ch.len_bytes())
             .sum();
         output.push_str(indent);
-        output.push_str(&text[trim_bytes..]);
+        output.push_value(
+            &text
+                .get(trim_bytes..)
+                .expect("whitespace boundary")
+                .to_pkl_string(),
+        );
         output.push('\n');
         let layers = layers(
             entries
@@ -119,30 +126,33 @@ pub(crate) fn render(
     output.finish()
 }
 
-fn source_lines(source: &Source, span: Span) -> Vec<(usize, &str)> {
+fn source_lines(source: &Source, span: Span) -> Vec<(usize, SourceSlice<'_>)> {
     let mut lines = Vec::new();
-    let text = source.text();
+    let text = source.text().entire();
     let mut start = span.start;
     let mut position = span.start;
     while position < span.end {
-        let Some(ch) = text[position..].chars().next() else {
+        let Some(ch) = text.get(position..).and_then(SourceSlice::first) else {
             break;
         };
-        if matches!(ch, '\r' | '\n') {
+        if matches!(ch, SourceCharacter::Scalar('\r' | '\n')) {
             if position > start {
-                lines.push((start, &text[start..position]));
+                lines.push((start, text.get(start..position).expect("line boundaries")));
             }
-            position += ch.len_utf8();
-            if ch == '\r' && text.as_bytes().get(position) == Some(&b'\n') {
+            position += ch.len_bytes();
+            if ch == SourceCharacter::Scalar('\r') && text.as_bytes().get(position) == Some(&b'\n')
+            {
                 position += 1;
             }
             start = position;
         } else {
-            position += ch.len_utf8();
+            position += ch.len_bytes();
         }
     }
-    if start < span.end {
-        lines.push((start, &text[start..span.end]));
+    if start < span.end
+        && let Some(line) = text.get(start..span.end)
+    {
+        lines.push((start, line));
     }
     lines
 }
@@ -184,7 +194,7 @@ fn layers(mut remaining: Vec<Entry>) -> Vec<Vec<Entry>> {
 
 fn expression_anchors(
     expression: &Expr,
-    text: &str,
+    text: SourceSlice<'_>,
     root: bool,
     anchors: &mut BTreeMap<Span, Option<usize>>,
 ) {
@@ -322,41 +332,46 @@ fn member_expressions<'a>(members: &'a [ObjectMember], expressions: &mut Vec<&'a
 
 // The operator can follow whitespace and comments. Source spans are byte
 // offsets; conversion to the pinned UTF-16 columns happens only at rendering.
-fn next_token(text: &str, mut offset: usize, after_dot: bool) -> usize {
+fn next_token(text: SourceSlice<'_>, mut offset: usize, after_dot: bool) -> usize {
     loop {
-        while let Some(ch) = text[offset..]
-            .chars()
-            .next()
-            .filter(|ch| ch.is_whitespace())
+        while let Some(ch) = text
+            .get(offset..)
+            .and_then(SourceSlice::first)
+            .filter(|ch| ch.scalar().is_some_and(char::is_whitespace))
         {
-            offset += ch.len_utf8();
+            offset += ch.len_bytes();
         }
-        if text[offset..].starts_with("//") {
-            offset = text[offset..]
-                .find(['\r', '\n'])
-                .map_or(text.len(), |end| offset + end);
-        } else if text[offset..].starts_with("/*") {
+        let Some(rest) = text.get(offset..) else {
+            return offset;
+        };
+        if rest.starts_with("//") {
+            offset = rest
+                .characters()
+                .find(|(_, ch)| matches!(ch, SourceCharacter::Scalar('\r' | '\n')))
+                .map_or(text.len_bytes(), |(end, _)| offset + end);
+        } else if rest.starts_with("/*") {
             let mut depth = 1;
             offset += 2;
-            while offset < text.len() && depth > 0 {
-                if text[offset..].starts_with("/*") {
+            while offset < text.len_bytes() && depth > 0 {
+                let rest = text.get(offset..).expect("comment character boundary");
+                if rest.starts_with("/*") {
                     depth += 1;
                     offset += 2;
-                } else if text[offset..].starts_with("*/") {
+                } else if rest.starts_with("*/") {
                     depth -= 1;
                     offset += 2;
                 } else {
-                    offset += text[offset..].chars().next().unwrap().len_utf8();
+                    offset += rest.first().expect("nonempty comment").len_bytes();
                 }
             }
         } else {
             break;
         }
     }
-    if after_dot {
-        if text[offset..].starts_with("?.") {
+    if after_dot && let Some(rest) = text.get(offset..) {
+        if rest.starts_with("?.") {
             offset += 2;
-        } else if text[offset..].starts_with('.') {
+        } else if rest.starts_with(".") {
             offset += 1;
         }
     }

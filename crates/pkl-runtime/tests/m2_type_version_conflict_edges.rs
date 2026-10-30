@@ -82,7 +82,7 @@ fn run(id: &str) {
                 let request = probe.module_request(token).unwrap();
                 match request.kind {
                     ModuleRequestKind::Resolve { original_uri, .. }
-                        if helper.is_file() && original_uri.as_ref() == helper_uri.as_str() =>
+                        if helper.is_file() && original_uri == helper_uri.as_str() =>
                     {
                         probe
                             .complete_module_resolution(
@@ -95,13 +95,12 @@ fn run(id: &str) {
                             .unwrap();
                     }
                     ModuleRequestKind::LoadSource { resolved, .. }
-                        if helper.is_file()
-                            && resolved.original_uri.as_ref() == helper_uri.as_str() =>
+                        if helper.is_file() && resolved.original_uri == helper_uri.as_str() =>
                     {
                         probe
                             .complete_module_source(
                                 token,
-                                &fs::read_to_string(&helper).unwrap(),
+                                fs::read_to_string(&helper).unwrap(),
                                 "helper",
                                 0,
                             )

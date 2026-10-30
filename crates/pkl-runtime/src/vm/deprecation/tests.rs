@@ -14,7 +14,7 @@ fn prepared(source: &str, expressions: &[&str]) -> (HostSession, usize, Vec<usiz
             compile_session_expression(
                 Arc::make_mut(&mut program),
                 &syntax,
-                expression,
+                *expression,
                 CompileOptions::default(),
                 false,
             )
@@ -352,7 +352,7 @@ fn fresh_public_queries_release_warning_sites_while_retained_method_site_stays_b
     assert!(host.vm_for_test().program.units.iter().all(|unit| {
         unit.source
             .as_ref()
-            .is_none_or(|source| source.uri.as_ref() != "file:///deprecation.pkl")
+            .is_none_or(|source| source.uri != "file:///deprecation.pkl")
     }));
     assert!(host.vm_for_test().executable_roots.is_empty());
 }

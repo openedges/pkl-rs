@@ -74,6 +74,40 @@ resolution. These behaviors are shared across native, Wasm and N-API; the
 [Stage121 evidence](../reports/m2/stage121-pair-supertype/README.md) describes
 their tested boundary.
 
+### Lossless source, identities and glob suspension
+
+`SourceText` retains authored UTF-16 units in `PklString`. Scalar text uses its
+existing UTF-8 storage; a source containing unpaired surrogates also has a WTF-8
+byte address space for the lexer. Surrogate encodings cannot collide with valid
+Unicode scalars. `SourceSlice` and the source index preserve the relationship
+between lexer spans, original code units and Java UTF-16 columns. Conversion to
+scalar-only text is explicit and may fail; diagnostic rendering uses the
+retained original units.
+
+Module/resource URIs, source names and diagnostic metadata use the same lossless
+representation across the runtime and both bindings. Development adapters that
+require scalar filesystem paths reject unrepresentable inputs explicitly.
+Java UTF-8 output and raw UTF-16 channels remain separate comparison surfaces.
+Partial-module minimum-version errors retain the declarations available before
+a later parse failure, and imported errors retain their authored source owner.
+
+Glob expansion runs in the common engine and suspends through `HostPoll::Glob`.
+Typed provider requests and completions share the session's cancellation,
+reentry and close handling. Provider input order is retained, while expansion
+ordering follows the Java UTF-16 contract. Native, N-API and Wasm transport this
+shared state machine. Malformed URI/internal-error behavior and missing Host
+fixture prerequisites remain required gaps; typed transport alone does not
+establish complete glob or external-I/O compatibility.
+
+### Shared math and Resource defaults
+
+The `pkl:math` bindings use shared Rust kernels with explicit fdlibm operation
+order where required by the pinned Java behavior. Raw floating-point bits,
+decimal rendering and complete errors are verified separately. Resource digest
+defaults delegate to the existing shared Bytes operations through `toBytes`.
+These paths contain no Java evaluation fallback. Bounded correctness results
+do not establish the execution-time or memory targets.
+
 ## Compatibility Boundaries
 
 | Boundary | Design Requirement |

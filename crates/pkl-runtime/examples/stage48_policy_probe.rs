@@ -85,22 +85,28 @@ fn denial(request: &ModuleRequest, mode: &str, inputs: &[Cause]) -> Option<Modul
             import_uri,
         } => (
             "import",
-            format!("{} -> {import_uri}", importer.resolved_uri),
+            importer
+                .resolved_uri
+                .concat(&PklString::from(" -> "))
+                .concat(import_uri),
             match mode {
-                "trust-base" => import_uri.as_ref() == "pkl:base",
-                "trust-ref" => import_uri.as_ref() == "pkl:ref",
-                "trust-json" => import_uri.as_ref() == "pkl:json",
+                "trust-base" => import_uri == "pkl:base",
+                "trust-ref" => import_uri == "pkl:ref",
+                "trust-json" => import_uri == "pkl:json",
                 "allow" | "deny-json" | "deny-singletons" => false,
                 _ => panic!("unknown policy"),
             },
         ),
         ModuleRequestKind::Resolve { import_uri, .. } => (
             "module",
-            import_uri.to_string(),
+            import_uri.clone(),
             match mode {
-                "deny-json" => import_uri.as_ref() == "pkl:json",
+                "deny-json" => import_uri == "pkl:json",
                 "deny-singletons" => {
-                    matches!(import_uri.as_ref(), "pkl:base" | "pkl:ref" | "pkl:test")
+                    matches!(
+                        import_uri.as_str(),
+                        Some("pkl:base" | "pkl:ref" | "pkl:test")
+                    )
                 }
                 "allow" | "trust-base" | "trust-ref" | "trust-json" => false,
                 _ => panic!("unknown policy"),
@@ -113,7 +119,7 @@ fn denial(request: &ModuleRequest, mode: &str, inputs: &[Cause]) -> Option<Modul
     }
     let found = inputs
         .iter()
-        .find(|c| c.mode == mode && c.kind == kind && c.context == context);
+        .find(|c| c.mode == mode && c.kind == kind && context == c.context.as_str());
     let error = if let Some(cause) = found {
         ModuleHostError::SecurityManagerException {
             message: cause.message.clone(),
@@ -288,14 +294,18 @@ fn capture(out: &Path, input: &CaptureInput<'_>) {
                                 write(
                                     out,
                                     &format!("{req}.importer-original-uri.bin"),
-                                    importer.original_uri.as_ref(),
+                                    scalar_uri(&importer.original_uri),
                                 );
                                 write(
                                     out,
                                     &format!("{req}.importer-resolved-uri.bin"),
-                                    importer.resolved_uri.as_ref(),
+                                    scalar_uri(&importer.resolved_uri),
                                 );
-                                write(out, &format!("{req}.import-uri.bin"), import_uri.as_ref());
+                                write(
+                                    out,
+                                    &format!("{req}.import-uri.bin"),
+                                    scalar_uri(import_uri),
+                                );
                                 event(
                                     out,
                                     &mut events,
@@ -316,18 +326,22 @@ fn capture(out: &Path, input: &CaptureInput<'_>) {
                                 write(
                                     out,
                                     &format!("{req}.importer-original-uri.bin"),
-                                    importer.original_uri.as_ref(),
+                                    scalar_uri(&importer.original_uri),
                                 );
                                 write(
                                     out,
                                     &format!("{req}.importer-resolved-uri.bin"),
-                                    importer.resolved_uri.as_ref(),
+                                    scalar_uri(&importer.resolved_uri),
                                 );
-                                write(out, &format!("{req}.import-uri.bin"), import_uri.as_ref());
+                                write(
+                                    out,
+                                    &format!("{req}.import-uri.bin"),
+                                    scalar_uri(import_uri),
+                                );
                                 write(
                                     out,
                                     &format!("{req}.original-uri.bin"),
-                                    original_uri.as_ref(),
+                                    scalar_uri(original_uri),
                                 );
                                 event(
                                     out,
@@ -340,17 +354,17 @@ fn capture(out: &Path, input: &CaptureInput<'_>) {
                                 write(
                                     out,
                                     &format!("{req}.original-uri.bin"),
-                                    resolved.original_uri.as_ref(),
+                                    scalar_uri(&resolved.original_uri),
                                 );
                                 write(
                                     out,
                                     &format!("{req}.resolved-uri.bin"),
-                                    resolved.resolved_uri.as_ref(),
+                                    scalar_uri(&resolved.resolved_uri),
                                 );
                                 write(
                                     out,
                                     &format!("{req}.source-uri.bin"),
-                                    resolved.source_uri.as_ref(),
+                                    scalar_uri(&resolved.source_uri),
                                 );
                             }
                             ModuleRequestKind::Capabilities { .. } => {
@@ -469,4 +483,13 @@ fn main() {
             },
         );
     }
+}
+
+// This historical trace schema has scalar UTF-8 URI fields only. Reject an
+// unrepresentable URI explicitly; never replace its raw UTF-16 code units.
+fn scalar_uri(uri: &PklString) -> &str {
+    uri.as_str().unwrap_or_else(|| {
+        eprintln!("Unsupported: this legacy trace adapter cannot represent an unpaired UTF-16 URI surrogate.");
+        std::process::exit(2)
+    })
 }

@@ -75,7 +75,7 @@ impl Capture {
             .module_request(token)
             .map_err(|error| format!("module request: {error:?}"))?;
         let completed = match &request.kind {
-            ModuleRequestKind::SelectKey { id, uri, .. } if uri.as_ref() == self.uri => {
+            ModuleRequestKind::SelectKey { id, uri, .. } if uri == self.uri.as_str() => {
                 let handle = format!("frame-transformer-primary:{}", id.0);
                 if self.primary_keys.insert(id.0, handle.clone()).is_some() {
                     return Err("reused primary ModuleKey identity".into());
@@ -84,9 +84,12 @@ impl Capture {
             }
             ModuleRequestKind::QueryCachePolicy { key }
             | ModuleRequestKind::QueryFragmentPaths { key }
-                if key.uri.as_ref() == self.uri && key.kind == ModuleKeyKind::Host =>
+                if key.uri == self.uri.as_str() && key.kind == ModuleKeyKind::Host =>
             {
-                if self.primary_keys.get(&key.id.0).map(String::as_str) != Some(key.handle.as_ref())
+                if !self
+                    .primary_keys
+                    .get(&key.id.0)
+                    .is_some_and(|handle| key.handle == handle.as_str())
                 {
                     return Err("unowned primary ModuleKey descriptor".into());
                 }

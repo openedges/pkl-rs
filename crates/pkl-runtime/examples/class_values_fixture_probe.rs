@@ -50,7 +50,7 @@ struct Capture {
     action: String,
     throw_used: bool,
     close_used: bool,
-    support: HashMap<String, String>,
+    support: HashMap<Vec<u16>, String>,
     callback: String,
     callback_after: usize,
     callback_used: bool,
@@ -60,17 +60,18 @@ struct Capture {
     polls: usize,
     collections: usize,
     closed: bool,
-    keys: HashMap<u64, (String, String)>,
-    resolved_keys: HashMap<u64, (u64, String, String)>,
+    keys: HashMap<u64, (PklString, PklString)>,
+    resolved_keys: HashMap<u64, (u64, PklString, PklString)>,
     trace: fs::File,
 }
 
 impl Capture {
     fn owns_key(&self, key: &pkl_runtime::modules::ModuleKey) -> bool {
         key.kind == ModuleKeyKind::Host
-            && self.keys.get(&key.id.0).is_some_and(|(uri, handle)| {
-                uri == key.uri.as_ref() && handle == key.handle.as_ref()
-            })
+            && self
+                .keys
+                .get(&key.id.0)
+                .is_some_and(|(uri, handle)| uri == &key.uri && handle == &key.handle)
     }
 
     fn module(&mut self, probe: &mut SourceProbe, token: &str) -> CaptureResult<()> {
@@ -94,15 +95,17 @@ impl Capture {
         }
         let completed = match &request.kind {
             ModuleRequestKind::SelectKey { id, uri, phase }
-                if self.support.contains_key(uri.as_ref())
+                if self
+                    .support
+                    .contains_key(&uri.encode_utf16().collect::<Vec<_>>())
                     || (*phase == SelectionPhase::Primary
-                        && uri.as_ref() == self.uri
+                        && uri == self.uri.as_str()
                         && uri.starts_with("file:")) =>
             {
                 let handle = format!("class-values-key:{}", id.0);
                 if self
                     .keys
-                    .insert(id.0, (uri.to_string(), handle.clone()))
+                    .insert(id.0, (uri.clone(), handle.clone().into()))
                     .is_some()
                 {
                     return Err("reused ModuleKey identity".into());
@@ -118,7 +121,9 @@ impl Capture {
             ModuleRequestKind::Capabilities { key: Some(key), .. } if self.owns_key(key) => probe
                 .complete_module_capabilities(
                     token,
-                    !self.support.contains_key(key.uri.as_ref()),
+                    !self
+                        .support
+                        .contains_key(&key.uri.encode_utf16().collect::<Vec<_>>()),
                     true,
                     false,
                     0,
@@ -132,13 +137,17 @@ impl Capture {
                 key,
                 resolved_key_id,
                 ..
-            } if self.owns_key(key) && self.support.contains_key(key.uri.as_ref()) => {
+            } if self.owns_key(key)
+                && self
+                    .support
+                    .contains_key(&key.uri.encode_utf16().collect::<Vec<_>>()) =>
+            {
                 let handle = format!("class-values-resolved:{}", resolved_key_id.0);
                 if self
                     .resolved_keys
                     .insert(
                         resolved_key_id.0,
-                        (key.id.0, key.uri.to_string(), handle.clone()),
+                        (key.id.0, key.uri.clone(), handle.clone().into()),
                     )
                     .is_some()
                 {
@@ -156,13 +165,12 @@ impl Capture {
                 )
             }
             ModuleRequestKind::LoadSource { key, resolved }
-                if self.owns_key(&key.key) && self.support.contains_key(key.key.uri.as_ref()) =>
+                if self.owns_key(&key.key)
+                    && self
+                        .support
+                        .contains_key(&key.key.uri.encode_utf16().collect::<Vec<_>>()) =>
             {
-                let expected = (
-                    key.key.id.0,
-                    key.key.uri.to_string(),
-                    key.handle.to_string(),
-                );
+                let expected = (key.key.id.0, key.key.uri.clone(), key.handle.clone());
                 if self.resolved_keys.get(&key.id.0) != Some(&expected)
                     || resolved != &key.module
                     || resolved.original_uri != key.key.uri
@@ -173,12 +181,21 @@ impl Capture {
                 }
                 let source = self
                     .support
-                    .get(key.key.uri.as_ref())
+                    .get(&key.key.uri.encode_utf16().collect::<Vec<_>>())
                     .ok_or("missing support source")?;
                 // Shared module loading replaces this fallback with the declared
                 // name or its own original-key URI inference before compilation.
-                let segment = key.key.uri.rsplit('/').next().unwrap_or("");
-                let name = segment.rsplit_once('.').map_or(segment, |(name, _)| name);
+                let units = key.key.uri.encode_utf16().collect::<Vec<_>>();
+                let start = units
+                    .iter()
+                    .rposition(|unit| *unit == u16::from(b'/'))
+                    .map_or(0, |index| index + 1);
+                let segment = &units[start..];
+                let end = segment
+                    .iter()
+                    .rposition(|unit| *unit == u16::from(b'.'))
+                    .unwrap_or(segment.len());
+                let name = PklString::from_utf16(segment[..end].to_vec());
                 probe.complete_module_source(token, source, name, 0)
             }
             _ => {
@@ -433,7 +450,10 @@ fn run() -> CaptureResult<()> {
             return Err("invalid support source path/URI".into());
         }
         let text = fs::read_to_string(out.join(name)).map_err(|e| e.to_string())?;
-        if support.insert(uri.to_owned(), text).is_some() {
+        if support
+            .insert(uri.encode_utf16().collect::<Vec<_>>(), text)
+            .is_some()
+        {
             return Err("duplicate support URI".into());
         }
     }

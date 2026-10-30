@@ -115,11 +115,11 @@ fn pending_logger_keeps_value_roots_and_callback_errors_do_not_finish_parent() {
     assert_eq!(error.message, "callback");
     assert_eq!(error.frames.len(), 3);
     assert_eq!(
-        error.frames[1].source.as_ref().unwrap().text.as_ref(),
+        error.frames[1].source.as_ref().unwrap().text.original(),
         "callback"
     );
     assert_eq!(
-        error.frames[2].source.as_ref().unwrap().text.as_ref(),
+        error.frames[2].source.as_ref().unwrap().text.original(),
         "result"
     );
     assert_eq!(host.context_depth(), 1);

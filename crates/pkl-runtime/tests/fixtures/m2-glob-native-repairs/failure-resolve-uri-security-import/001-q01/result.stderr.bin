@@ -1,0 +1,6 @@
+–– Pkl Error ––
+stage116 exact resolve-uri security
+
+1 | import* "gmod:/tree/*" as imported_entries
+            ^^^^^^^^^^^^^^
+at failure-resolve-uri-security-import (gmain:/tree/failure-resolve-uri-security-import.pkl)

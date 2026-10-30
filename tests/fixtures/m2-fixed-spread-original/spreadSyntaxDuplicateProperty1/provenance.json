@@ -1,0 +1,68 @@
+{
+  "name": "spreadSyntaxDuplicateProperty1",
+  "adapter": "module",
+  "union_row": {
+    "adapter": "language-module-eval",
+    "historical_status": "pass",
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/spreadSyntaxDuplicateProperty1.pkl",
+    "observations": [
+      {
+        "process": {
+          "bytes": 5615,
+          "path": "target/m2/stage120-full-ready-modules-01/5ba14df0f671eee57209d47d/0/process.json",
+          "sha256": "1df4da858d140f55c4bde3523c4e28916c3189aa0b386d062f39db673f194c2f"
+        },
+        "repeat": 0,
+        "status": "pass"
+      }
+    ],
+    "old_pass_regression": false,
+    "status": "pass"
+  },
+  "process": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage120-full-ready-modules-01/5ba14df0f671eee57209d47d/0/process.json",
+    "bytes": 5615,
+    "sha256": "1df4da858d140f55c4bde3523c4e28916c3189aa0b386d062f39db673f194c2f"
+  },
+  "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/spreadSyntaxDuplicateProperty1.pkl",
+  "input": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/spreadSyntaxDuplicateProperty1.pkl",
+    "bytes": 58,
+    "sha256": "fbc2975636ff61617ce06d76853b45459e420893974a7d48fbcf30beb23c75d4"
+  },
+  "parent": null,
+  "expected_exit": 1,
+  "expected_stdout": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-replay-01/cases/5ba14df0f671eee57209d47d/java/stdout.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "expected_stderr": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-replay-01/cases/5ba14df0f671eee57209d47d/java/stderr.bin",
+    "bytes": 776,
+    "sha256": "fb5d58363388586501bf3857114242894991005114f0efa7f043f9785961dc98"
+  },
+  "retained_status": "pass",
+  "expected_records": {
+    "process.json": {
+      "bytes": 3198,
+      "path": "target/m2/stage94-originals-replay-01/cases/5ba14df0f671eee57209d47d/java/process.json",
+      "sha256": "f20a3bdfdedf987e549e20b23f1bb926ef142b6992a1542a8e52d7d0f087318d"
+    },
+    "result.json": {
+      "bytes": 294,
+      "path": "target/m2/stage94-originals-replay-01/cases/5ba14df0f671eee57209d47d/java/result.json",
+      "sha256": "053043b39aef107506cf3b42a462c6ba3af838fcb558b96619579ca46380cb54"
+    },
+    "stderr.bin": {
+      "bytes": 776,
+      "path": "target/m2/stage94-originals-replay-01/cases/5ba14df0f671eee57209d47d/java/stderr.bin",
+      "sha256": "fb5d58363388586501bf3857114242894991005114f0efa7f043f9785961dc98"
+    },
+    "stdout.bin": {
+      "bytes": 0,
+      "path": "target/m2/stage94-originals-replay-01/cases/5ba14df0f671eee57209d47d/java/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+–– Pkl Error ––
+Invalid glob pattern `gmod:@(x)`.
+
+1 | import* "gmod:@(x)" as imported_entries
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pattern-13-import#imported_entries (gmain:/tree/pattern-13-import.pkl)
+
+Extended globbing features are not supported.
+
+2 | entries = imported_entries
+              ^^^^^^^^^^^^^^^^
+at pattern-13-import#entries (gmain:/tree/pattern-13-import.pkl)
+
+1 | entries.keys.toList().join("|")
+    ^^^^^^^
+at  (repl:text)

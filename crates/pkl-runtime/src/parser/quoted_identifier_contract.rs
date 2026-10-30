@@ -26,7 +26,7 @@ fn actual_java_quoted_tokens_and_terminator_coordinates() {
         let source_id = sources.add(id, text.clone());
         let source = sources.get(source_id).unwrap();
         let mut lexer = Lexer {
-            source: &text,
+            source: text.as_str().into(),
             cursor: 0,
             string_errors: Default::default(),
         };
@@ -135,7 +135,7 @@ fn origin_offset_precedes_compression_and_preserves_caller_coordinates_and_hint(
     let member: PklString = "caller#nested".into();
     let frame = || RenderFrame {
         source,
-        uri: "file:///same.pkl",
+        uri: "file:///same.pkl".into(),
         member: &member,
         span: error.span,
         highlight_length_utf16: None,

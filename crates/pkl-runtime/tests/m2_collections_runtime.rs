@@ -8,6 +8,9 @@ use pkl_runtime::vm::{Vm, VmPoll, compile_module};
 fn done(vm: &mut Vm) -> Result<Value, RuntimeError> {
     loop {
         match vm.poll(101) {
+            pkl_runtime::vm::VmPoll::Glob(_) => {
+                panic!("unexpected glob request in non-glob regression")
+            }
             VmPoll::Ready(value) => return value,
             VmPoll::Yielded => {}
             VmPoll::Log(_) | VmPoll::TransformFrame(_) => panic!("unexpected logger request"),
@@ -106,7 +109,7 @@ fn generator_builders_and_iterators_survive_host_suspension_and_gc() {
                 other => panic!("unexpected {other:?}"),
             }
         };
-        assert_eq!(&*request.uri, uri);
+        assert_eq!(request.uri, uri);
         assert!(vm.collect(std::slice::from_ref(&root)).live > 0);
         vm.resume(request.id, Ok(Value::string(value))).unwrap();
     }

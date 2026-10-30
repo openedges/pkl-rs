@@ -64,7 +64,7 @@ fn vm_ready(vm: &mut Vm) -> Result<Value, RuntimeError> {
 fn vm_read(vm: &mut Vm, expected: &str) -> u64 {
     match vm_event(vm) {
         VmPoll::Pending(read) => {
-            assert_eq!(&*read.uri, expected);
+            assert_eq!(read.uri, expected);
             vm.collect(&[]);
             read.id
         }
@@ -94,7 +94,7 @@ fn host_ready(session: &mut HostSession, now: u64) -> Result<Value, RuntimeError
 fn host_read(session: &mut HostSession, now: u64, expected: &str) -> String {
     match host_event(session, now) {
         HostPoll::Read { token, uri } => {
-            assert_eq!(&*uri, expected);
+            assert_eq!(uri, expected);
             session.collect(&[]);
             token
         }
@@ -574,7 +574,7 @@ fn deep_nested_set_hash_yields_suspends_and_releases_on_small_stack() {
                     .unwrap();
                 let token = match event(&mut vm) {
                     VmPoll::Pending(read) => {
-                        assert_eq!(&*read.uri, "mem:leaf");
+                        assert_eq!(read.uri, "mem:leaf");
                         read.id
                     }
                     result => panic!("expected stress read, got {result:?}"),

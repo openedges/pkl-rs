@@ -17,7 +17,7 @@ struct Union {
 
 struct Named {
     start: usize,
-    path: Vec<String>,
+    path: Vec<crate::value::PklString>,
     name_spans: Vec<Span>,
     arguments: Vec<Type>,
     height: usize,
@@ -248,14 +248,20 @@ impl Parser<'_> {
                         return Ok(None);
                     }
                     _ => {
-                        let token = &self.lexer.source[self.token.span.start..self.token.span.end];
+                        let token = self
+                            .lexer
+                            .source
+                            .range(self.token.span.start..self.token.span.end)
+                            .to_pkl_string();
                         let suffix = expectation
                             .map_or_else(|| ".".into(), |expected| format!(" or `{expected}`."));
                         return Err(Diagnostic::language(
                             DiagnosticOrigin::Parser,
                             super::DiagnosticKind::Syntax,
                             self.token.span,
-                            format!("Unexpected token `{token}`. Expected a type{suffix}"),
+                            crate::value::PklString::from("Unexpected token `")
+                                .concat(&token)
+                                .concat(&format!("`. Expected a type{suffix}").into()),
                         ));
                     }
                 };

@@ -1,5 +1,6 @@
 //! Eager string tokens with heap-backed nested string/interpolation scanning.
 use crate::pkl_string::PklStringBuilder;
+use crate::source::{SourceCharacter, SourceSlice};
 use crate::value::PklString;
 use std::collections::BTreeMap;
 use std::sync::Arc;
@@ -21,7 +22,8 @@ struct StringScan {
     delimiter: String,
     escape: String,
     parts: Vec<SpannedStringPart>,
-    text: String,
+    text: PklStringBuilder,
+    text_bytes: usize,
     pending_unicode: Option<usize>,
     interpolation: Option<InterpolationScan>,
 }
@@ -35,9 +37,10 @@ impl StringScan {
     fn flush_text(&mut self, end: usize, include_empty: bool) {
         if include_empty || !self.text.is_empty() {
             self.parts.push(SpannedStringPart {
-                span: Span::new(end - self.text.len(), end),
-                part: StringPart::Text(std::mem::take(&mut self.text)),
+                span: Span::new(end - self.text_bytes, end),
+                part: StringPart::Text(std::mem::take(&mut self.text).finish()),
             });
+            self.text_bytes = 0;
         }
     }
 }
@@ -135,7 +138,7 @@ impl Lexer<'_> {
                         error.highlight_length_utf16 = Some(1);
                         error
                     });
-                    if error.span.start == self.source.len()
+                    if error.span.start == self.source.len_bytes()
                         && error.highlight_length_utf16 == Some(1)
                     {
                         // ParserImpl expects a one-unit span after the final
@@ -174,7 +177,7 @@ impl Lexer<'_> {
     }
 
     pub(super) fn cached_string_error(&self, start: usize) -> Option<(usize, Diagnostic)> {
-        let visible_end = self.source.len();
+        let visible_end = self.source.len_bytes();
         self.string_errors
             .range((start, visible_end)..=(start, usize::MAX))
             .find_map(|(_, (end, error))| {
@@ -203,7 +206,7 @@ impl Lexer<'_> {
         error: Diagnostic,
     ) {
         Arc::make_mut(&mut self.string_errors)
-            .insert((start, self.source.len()), (consumed_end, error));
+            .insert((start, self.source.len_bytes()), (consumed_end, error));
     }
 
     fn start_string(&mut self, start: usize, first: char) -> Result<StringScan, Diagnostic> {
@@ -213,7 +216,7 @@ impl Lexer<'_> {
                 hashes += 1;
                 self.advance();
             }
-            if self.peek().is_none() {
+            if self.peek_character().is_none() {
                 return Err(Diagnostic::language(
                     DiagnosticOrigin::Lexer,
                     DiagnosticKind::Syntax,
@@ -222,11 +225,12 @@ impl Lexer<'_> {
                 ));
             }
             if self.peek() != Some('"') {
-                let character = self.peek().expect("visible raw string prefix character");
+                let character = self
+                    .peek_character()
+                    .expect("visible raw string prefix character");
                 // lexStringStartPounds leaves this lookahead unconsumed and
                 // unexpectedChar observes one Java UTF-16 code unit.
-                let mut units = [0; 2];
-                let first = character.encode_utf16(&mut units)[0];
+                let first = character.first_utf16();
                 let mut message = PklStringBuilder::default();
                 message.push_str("Unexpected character `");
                 message.push_value(&PklString::from_utf16(vec![first]));
@@ -234,7 +238,7 @@ impl Lexer<'_> {
                 let mut error = Diagnostic::language(
                     DiagnosticOrigin::Lexer,
                     DiagnosticKind::Syntax,
-                    Span::new(self.cursor, self.cursor + character.len_utf8()),
+                    Span::new(self.cursor, self.cursor + character.len_bytes()),
                     message.finish(),
                 );
                 error.highlight_length_utf16 = Some(1);
@@ -242,7 +246,7 @@ impl Lexer<'_> {
             }
             self.advance();
         }
-        let multiline = self.source[self.cursor..].starts_with("\"\"");
+        let multiline = self.source.range(self.cursor..).starts_with("\"\"");
         if multiline {
             self.cursor += 2;
         }
@@ -256,7 +260,8 @@ impl Lexer<'_> {
             ),
             escape: format!("\\{}", "#".repeat(hashes)),
             parts: Vec::new(),
-            text: String::new(),
+            text: PklStringBuilder::default(),
+            text_bytes: 0,
             pending_unicode: None,
             interpolation: None,
         })
@@ -298,7 +303,11 @@ impl Lexer<'_> {
             }
             return Ok(StringFlow::Continue);
         }
-        if self.source[self.cursor..].starts_with(&frame.delimiter) {
+        if self
+            .source
+            .range(self.cursor..)
+            .starts_with(&frame.delimiter)
+        {
             // Java emits an empty text token before delimiters and escapes.
             // Its location participates in multiline validation and indentation.
             frame.flush_text(self.cursor, true);
@@ -307,6 +316,12 @@ impl Lexer<'_> {
             return Ok(StringFlow::Done);
         }
         let position = self.cursor;
+        if let Some(SourceCharacter::Surrogate(unit)) = self.peek_character() {
+            self.advance_character();
+            frame.text.push_value(&PklString::from_utf16(vec![unit]));
+            frame.text_bytes += self.cursor - position;
+            return Ok(StringFlow::Continue);
+        }
         let Some(ch) = self.advance() else {
             self.validate_pending_unicode(frame)?;
             return Err(Diagnostic::language(
@@ -333,12 +348,18 @@ impl Lexer<'_> {
                 part: StringPart::Newline,
                 span: Span::new(position, self.cursor),
             });
-        } else if ch == '\\' && self.source[position..].starts_with(&frame.escape) {
+        } else if ch == '\\' && self.source.range(position..).starts_with(&frame.escape) {
             self.cursor = position;
             frame.flush_text(position, true);
             self.validate_pending_unicode(frame)?;
             self.cursor += frame.escape.len();
             let escaped_start = self.cursor;
+            if let Some(SourceCharacter::Surrogate(unit)) = self.peek_character() {
+                self.advance_character();
+                return Err(
+                    self.invalid_character_escape(Span::new(escaped_start - 1, self.cursor), unit)
+                );
+            }
             let escaped = self.advance().ok_or_else(|| {
                 Diagnostic::language(
                     DiagnosticOrigin::Lexer,
@@ -355,12 +376,11 @@ impl Lexer<'_> {
                 '\\' => "\\".to_owned(),
                 'u' => {
                     if self.peek() != Some('{') {
-                        let got = match self.peek() {
-                            Some(character) if character as u32 > 0xffff => "?".to_owned(),
-                            Some(character) => character.to_string(),
-                            None => "EOF".into(),
-                        };
-                        return Err(self.unexpected_unicode_character(&got, "{"));
+                        let got = self.peek_character().map_or_else(
+                            || PklString::from("EOF"),
+                            |character| PklString::from_utf16(vec![character.first_utf16()]),
+                        );
+                        return Err(self.unexpected_character_value(&got, "{"));
                     }
                     self.advance();
                     while self.peek().is_some_and(|character| {
@@ -376,10 +396,11 @@ impl Lexer<'_> {
                             DiagnosticOrigin::Lexer,
                             DiagnosticKind::Syntax,
                             Span::new(position, self.cursor),
-                            format!(
-                                "Unterminated Unicode escape sequence `{}`.\n\nUnicode escape sequences must end with `}}`.",
-                                &self.source[position..self.cursor]
-                            ),
+                            PklString::from("Unterminated Unicode escape sequence `")
+                                .concat(&self.source.range(position..self.cursor).to_pkl_string())
+                                .concat(
+                                    &"`.\n\nUnicode escape sequences must end with `}`.".into(),
+                                ),
                         ));
                     }
                     self.advance();
@@ -412,7 +433,7 @@ impl Lexer<'_> {
                             "Invalid line continuation escape sequence.\n\nLine continuations are only allowed in multi-line strings.",
                         );
                         error.highlight_length_utf16 =
-                            Some(self.source[position..self.cursor].encode_utf16().count());
+                            Some(self.source.range(position..self.cursor).utf16_len());
                         return Err(error);
                     }
                     frame.parts.push(SpannedStringPart {
@@ -437,21 +458,16 @@ impl Lexer<'_> {
                             // Java keeps the whitespace/newline token width
                             // even when rendering strips trailing whitespace.
                             error.highlight_length_utf16 = Some(
-                                self.source[escaped_start - 1..self.cursor]
-                                    .encode_utf16()
-                                    .count(),
+                                self.source
+                                    .range(escaped_start - 1..self.cursor)
+                                    .utf16_len(),
                             );
                             return Err(error);
                         }
                     }
-                    return Err(Diagnostic::language(
-                        DiagnosticOrigin::Lexer,
-                        DiagnosticKind::Syntax, // Java uses the last hash rather than the backslash
-                        // when an active raw-string escape is invalid.
+                    return Err(self.invalid_character_escape(
                         Span::new(escaped_start - 1, end),
-                        format!(
-                            "Invalid character escape sequence `\\{escaped}`.\n\nValid character escape sequences are:  \\n  \\r  \\t  \\\"  \\\\ \\<newline>"
-                        ),
+                        SourceCharacter::Scalar(escaped).first_utf16(),
                     ));
                 }
             };
@@ -461,8 +477,29 @@ impl Lexer<'_> {
             });
         } else {
             frame.text.push(ch);
+            frame.text_bytes += self.cursor - position;
         }
         Ok(StringFlow::Continue)
+    }
+
+    // Lexer.lexEscape consumes and reports one Java char even when the source
+    // view stores a valid surrogate pair as one scalar. Keep the unit and its
+    // two-unit escape underline separate from the indivisible byte span.
+    fn invalid_character_escape(&self, span: Span, unit: u16) -> Diagnostic {
+        let mut message = PklStringBuilder::default();
+        message.push_str("Invalid character escape sequence `\\");
+        message.push_value(&PklString::from_utf16(vec![unit]));
+        message.push_str(
+            "`.\n\nValid character escape sequences are:  \\n  \\r  \\t  \\\"  \\\\ \\<newline>",
+        );
+        let mut error = Diagnostic::language(
+            DiagnosticOrigin::Lexer,
+            DiagnosticKind::Syntax,
+            span,
+            message.finish(),
+        );
+        error.highlight_length_utf16 = Some(2);
+        error
     }
 
     fn validate_pending_unicode(&self, frame: &mut StringScan) -> Result<(), Diagnostic> {
@@ -477,18 +514,24 @@ impl Lexer<'_> {
     }
 
     pub(super) fn unexpected_unicode_character(&self, got: &str, expected: &str) -> Diagnostic {
-        let span = self.peek().map_or_else(
+        self.unexpected_character_value(&got.into(), expected)
+    }
+
+    fn unexpected_character_value(&self, got: &PklString, expected: &str) -> Diagnostic {
+        let span = self.peek_character().map_or_else(
             || Span::new(self.cursor - 1, self.cursor - 1),
-            |character| Span::new(self.cursor, self.cursor + character.len_utf8()),
+            |character| Span::new(self.cursor, self.cursor + character.len_bytes()),
         );
+        let mut message = PklStringBuilder::default();
+        message.push_str("Unexpected character `");
+        message.push_value(got);
+        message.push_str(&format!("`. Did you mean `{expected}`?"));
         let mut error = Diagnostic::language(
             DiagnosticOrigin::Lexer,
             DiagnosticKind::Syntax,
             span,
-            format!("Unexpected character `{got}`. Did you mean `{expected}`?"),
+            message.finish(),
         );
-        // The Java lexer tests one UTF-16 code unit, including the first
-        // surrogate of a supplementary character. EOF has an empty span.
         error.highlight_length_utf16 = Some(1);
         error
     }
@@ -500,11 +543,11 @@ impl Lexer<'_> {
         self.string_errors = Default::default();
         loop {
             let token = self.next_token(true).map_err(|error| {
-                match &self.source[error.span.start..error.span.end] {
-                    "&" if error.provenance.origin == DiagnosticOrigin::Lexer => {
+                match self.source.range(error.span.start..error.span.end).as_str() {
+                    Some("&") if error.provenance.origin == DiagnosticOrigin::Lexer => {
                         self.unexpected_unicode_character("&", "&&")
                     }
-                    "~" if error.provenance.origin == DiagnosticOrigin::Lexer => {
+                    Some("~") if error.provenance.origin == DiagnosticOrigin::Lexer => {
                         self.unexpected_unicode_character("~", "~/")
                     }
                     _ => error,
@@ -518,15 +561,18 @@ impl Lexer<'_> {
             };
             if first == '#' {
                 if self.peek() == Some('!') {
-                    while self.peek().is_some_and(|ch| ch != '\n' && ch != '\r') {
-                        self.advance();
+                    while self
+                        .peek_character()
+                        .is_some_and(|ch| !matches!(ch, SourceCharacter::Scalar('\n' | '\r')))
+                    {
+                        self.advance_character();
                     }
                     return Ok(());
                 }
                 while self.peek() == Some('#') {
                     self.advance();
                 }
-                if self.peek().is_none() {
+                if self.peek_character().is_none() {
                     return Err(Diagnostic::language(
                         DiagnosticOrigin::Lexer,
                         DiagnosticKind::Syntax,
@@ -535,17 +581,17 @@ impl Lexer<'_> {
                     ));
                 }
                 if self.peek() != Some('"') {
-                    let character = self.peek().expect("visible string prefix character");
-                    let got = if character as u32 > 0xffff {
-                        "?".to_owned()
-                    } else {
-                        character.to_string()
-                    };
-                    return Err(self.unexpected_unicode_character(&got, "\""));
+                    let character = self
+                        .peek_character()
+                        .expect("visible string prefix character");
+                    return Err(self.unexpected_character_value(
+                        &PklString::from_utf16(vec![character.first_utf16()]),
+                        "\"",
+                    ));
                 }
                 self.advance();
             }
-            if self.source[self.cursor..].starts_with("\"\"") {
+            if self.source.range(self.cursor..).starts_with("\"\"") {
                 self.cursor += 2;
             }
             return Ok(());
@@ -589,7 +635,7 @@ impl Lexer<'_> {
         let mut text = PklStringBuilder::default();
         for part in parts {
             match part.part {
-                StringPart::Text(value) => text.push_str(&value),
+                StringPart::Text(value) => text.push_value(&value),
                 StringPart::Escape(value) => text.push_value(&value),
                 StringPart::Value(_) => unreachable!("string parts have not been rendered"),
                 StringPart::Unicode => unreachable!("Unicode tokens have been decoded"),
@@ -625,7 +671,7 @@ fn expression_ranges(parts: &[SpannedStringPart]) -> impl Iterator<Item = Span> 
 // interpolation expressions. Preserve token spans, including empty text parts,
 // because an opening-line or indentation diagnostic can point at those tokens.
 fn multiline_parts(
-    source: &str,
+    source: SourceSlice<'_>,
     mut parts: Vec<SpannedStringPart>,
     span: Span,
 ) -> Result<Vec<SpannedStringPart>, Diagnostic> {
@@ -644,9 +690,9 @@ fn multiline_parts(
         return Ok(Vec::new());
     }
     let indent = match parts.last().map(|part| &part.part) {
-        Some(StringPart::Newline) => String::new(),
+        Some(StringPart::Newline) => PklString::default(),
         Some(StringPart::Text(text))
-            if text.chars().all(|ch| ch == ' ' || ch == '\t')
+            if text.encode_utf16().all(|unit| unit == 32 || unit == 9)
                 && matches!(
                     parts.get(parts.len() - 2).map(|part| &part.part),
                     Some(StringPart::Newline)
@@ -675,10 +721,12 @@ fn multiline_parts(
         match &mut part.part {
             StringPart::Text(text) => {
                 if line_start {
-                    let Some(stripped) = text.strip_prefix(&indent) else {
-                        let leading = text
-                            .bytes()
-                            .take_while(|ch| matches!(ch, b' ' | b'\t'))
+                    let units: Vec<_> = text.encode_utf16().collect();
+                    let prefix: Vec<_> = indent.encode_utf16().collect();
+                    let Some(stripped) = units.strip_prefix(prefix.as_slice()) else {
+                        let leading = units
+                            .iter()
+                            .take_while(|unit| matches!(**unit, 32 | 9))
                             .count();
                         return Err(Diagnostic::language(
                             DiagnosticOrigin::Lexer,
@@ -687,7 +735,7 @@ fn multiline_parts(
                             "Line must match or exceed indentation of the String's last line.",
                         ));
                     };
-                    *text = stripped.to_owned();
+                    *text = PklString::from_utf16(stripped.to_vec());
                 }
                 line_start = false;
             }
@@ -713,8 +761,11 @@ fn multiline_parts(
     Ok(parts)
 }
 
-fn decode_unicode(source: &str, span: Span) -> Result<PklString, Diagnostic> {
-    let text = &source[span.start..span.end];
+fn decode_unicode(source: SourceSlice<'_>, span: Span) -> Result<PklString, Diagnostic> {
+    let text = source
+        .range(span.start..span.end)
+        .as_str()
+        .expect("lexed scalar Unicode escape");
     let brace = text.find('{').expect("lexed Unicode opening brace");
     let digits = &text[brace + 1..text.len() - 1];
     // Integer.parseInt accepts Java Character.digit values and arbitrary

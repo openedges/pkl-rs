@@ -4,7 +4,7 @@ use super::*;
 #[derive(Clone, Debug)]
 pub(super) struct TypeRecipe {
     pub unit: crate::modules::UnitId,
-    pub path: Vec<Arc<str>>,
+    pub path: Vec<PklString>,
     pub names: Vec<Span>,
     pub span: Span,
     pub argument_spans: Vec<Span>,
@@ -18,7 +18,7 @@ pub(super) struct TypeRecipe {
 
 #[derive(Clone, Debug)]
 pub(super) struct AliasDefinition {
-    pub parameters: Vec<Arc<str>>,
+    pub parameters: Vec<PklString>,
     pub body: TypeCheck,
     pub origin: RuntimeFrame,
 }
@@ -295,7 +295,7 @@ impl Vm {
             Parameterized(classes::BuiltinClass, Vec<Span>, Span),
             ExpandedAlias {
                 declaration: usize,
-                name: Arc<str>,
+                name: PklString,
                 arguments: Vec<TypeCheck>,
                 origin: RuntimeFrame,
                 use_origin: Option<RuntimeFrame>,
@@ -401,7 +401,7 @@ impl Vm {
                                     .as_ref()
                                     .ok_or_else(|| invalid("resolved class metadata missing"))?;
                                 values.push((
-                                    classes::specialized_type(class.module.as_deref(), &class.name)
+                                    classes::specialized_type(class.module.as_ref(), &class.name)
                                         .unwrap_or_else(|| TypeCheck::Class {
                                             module: class.module.clone(),
                                             id: class.id,
@@ -416,10 +416,9 @@ impl Vm {
                                 if !arguments.is_empty() {
                                     return Err(RuntimeError::new(
                                         ErrorKind::Type,
-                                        format!(
-                                            "Class `{}` does not have type parameters.",
-                                            class.name
-                                        ),
+                                        PklString::from("Class `")
+                                            .concat(&class.name)
+                                            .concat(&"` does not have type parameters.".into()),
                                     )
                                     .at(definition.argument_spans[0])
                                     .into());
@@ -442,6 +441,7 @@ impl Vm {
                                             .get(definition.unit.0 as usize)
                                             .and_then(|unit| unit.source.clone())
                                             .map(|source| RuntimeFrame {
+                                                anonymous: false,
                                                 source: Some(source),
                                                 span: *span,
                                                 member: PklString::default(),
@@ -566,8 +566,9 @@ impl Vm {
                     if alias.type_alias_declaration.is_none() {
                         let name = alias
                             .type_alias
-                            .as_deref()
-                            .ok_or_else(|| invalid("builtin alias name missing"))?;
+                            .as_ref()
+                            .and_then(PklString::as_str)
+                            .ok_or_else(|| invalid("builtin alias name missing or not scalar"))?;
                         let ty = match name {
                             "NonNull" => TypeCheck::NonNull,
                             "Int8" | "Int16" | "Int32" | "UInt8" | "UInt16" | "UInt32" | "UInt" => {
@@ -774,7 +775,7 @@ impl Vm {
     pub(super) fn declared_type_member(
         &self,
         owner: ObjectId,
-        name: &Arc<str>,
+        name: &PklString,
         local: bool,
         allow_import: bool,
         span: Span,
@@ -787,11 +788,13 @@ impl Vm {
             .find(|member| member.local == local && !member.method && member.name == *name);
         if let Some(member) = member
             && !member.definition()
-            && !(allow_import && member.import())
+            && !(allow_import && member.import() && !member.glob())
         {
             return Err(RuntimeError::new(
                 ErrorKind::Type,
-                format!("Expected `{name}` to be a type, but it is not."),
+                PklString::from("Expected `")
+                    .concat(name)
+                    .concat(&"` to be a type, but it is not.".into()),
             )
             .at(span));
         }
@@ -801,7 +804,7 @@ impl Vm {
     pub(super) fn declared_type_import(
         &self,
         owner: ObjectId,
-        name: &Arc<str>,
+        name: &PklString,
         span: Span,
     ) -> Result<Member, RuntimeError> {
         let member = self
@@ -814,14 +817,27 @@ impl Vm {
             .ok_or_else(|| {
                 RuntimeError::new(
                     ErrorKind::Type,
-                    format!("Cannot find module import `{name}`."),
+                    PklString::from("Cannot find module import `")
+                        .concat(name)
+                        .concat(&"`.".into()),
                 )
                 .at(span)
             })?;
         if !member.import() {
             return Err(RuntimeError::new(
                 ErrorKind::Type,
-                format!("Expected `{name}` to be a module import, but it is not."),
+                PklString::from("Expected `")
+                    .concat(name)
+                    .concat(&"` to be a module import, but it is not.".into()),
+            )
+            .at(span));
+        }
+        if member.glob() {
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                PklString::from("Expected `")
+                    .concat(name)
+                    .concat(&"` to be a type, but it is not.".into()),
             )
             .at(span));
         }
@@ -843,8 +859,14 @@ impl Vm {
             .ok_or_else(|| invalid("module type has no class"))?;
         if !object.is_module || object.class_definition.is_none() {
             let name = &self.heap.class_definition(class)?.name;
-            return Err(RuntimeError::new(ErrorKind::Type,
-                format!("Module `{name}` cannot be extended or used as type because it amends another module.")).at(span));
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                PklString::from("Module `").concat(name).concat(
+                    &"` cannot be extended or used as type because it amends another module."
+                        .into(),
+                ),
+            )
+            .at(span));
         }
         Ok(class)
     }
@@ -929,14 +951,16 @@ impl Vm {
             // declaration after lexical/user parents, preserving its union's
             // source section instead of constructing a source-less substitute.
             if matches!(
-                name.as_ref(),
-                "DataSizeUnit"
-                    | "DurationUnit"
-                    | "Charset"
-                    | "Comparable"
-                    | "Char"
-                    | "Uri"
-                    | "Mixin"
+                name.as_str(),
+                Some(
+                    "DataSizeUnit"
+                        | "DurationUnit"
+                        | "Charset"
+                        | "Comparable"
+                        | "Char"
+                        | "Uri"
+                        | "Mixin"
+                )
             ) && let Some(modules::CachedModule::Value(base)) =
                 self.modules_stdlib.get("pkl:base")
             {
@@ -954,7 +978,9 @@ impl Vm {
             }
             return Err(RuntimeError::new(
                 ErrorKind::MissingType,
-                format!("Cannot find type `{name}`."),
+                PklString::from("Cannot find type `")
+                    .concat(&name)
+                    .concat(&"`.".into()),
             )
             .at(recipe.span));
         }
@@ -1037,10 +1063,14 @@ impl Vm {
                     .get(module)?
                     .module_unit
                     .and_then(|id| self.program.units.get(id.0 as usize))
-                    .map_or(self.program.module_name.as_ref(), |unit| unit.name.as_ref());
+                    .map_or(&self.program.module_name, |unit| &unit.name);
                 return Err(RuntimeError::new(
                     ErrorKind::Type,
-                    format!("Cannot find type `{name}` in module `{module_name}`."),
+                    PklString::from("Cannot find type `")
+                        .concat(&name)
+                        .concat(&"` in module `".into())
+                        .concat(module_name)
+                        .concat(&"`.".into()),
                 )
                 .at(recipe.names[1]));
             }
@@ -1132,18 +1162,14 @@ impl Compiler<'_> {
             .find(|(_, recipe)| {
                 recipe.unit == self.unit
                     && recipe.span == ty.span
-                    && recipe
-                        .path
-                        .iter()
-                        .map(AsRef::as_ref)
-                        .eq(path.iter().map(String::as_str))
+                    && recipe.path.iter().eq(path.iter())
             })
             .map(|(id, _)| id);
         let recipe = match recipe {
             Some(id) => id,
             None => self.program.type_recipes.try_push(TypeRecipe {
                 unit: self.unit,
-                path: path.iter().map(|name| Arc::from(name.as_str())).collect(),
+                path: path.clone(),
                 names: name_spans.clone(),
                 span: ty.span,
                 argument_spans: actuals.iter().map(|argument| argument.span).collect(),
@@ -1207,7 +1233,9 @@ impl Vm {
                     .ok_or_else(|| invalid("module type has no class"))?;
                 return Err(RuntimeError::new(
                     ErrorKind::Type,
-                    format!("Class `{}` does not have type parameters.", class.name),
+                    PklString::from("Class `")
+                        .concat(&class.name)
+                        .concat(&"` does not have type parameters.".into()),
                 )
                 .at(definition.argument_spans[0]));
             }

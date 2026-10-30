@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot find property `99.9.9`.
+
+1 | @ModuleInfo { minPklVersion = `99.9.9` }
+                                  ^^^^^^^^
+at declared.primaryName.minPklVersion (file:///stage122/min-version/inferred-primary-name.pkl)

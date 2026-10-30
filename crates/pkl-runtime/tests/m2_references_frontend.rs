@@ -22,6 +22,9 @@ fn initialize_error(source: &str) -> pkl_runtime::value::RuntimeError {
     vm.start(program.entry, vec![]).unwrap();
     for _ in 0..1000 {
         match vm.poll(100) {
+            pkl_runtime::vm::VmPoll::Glob(_) => {
+                panic!("unexpected glob request in non-glob regression")
+            }
             VmPoll::Ready(result) => return result.unwrap_err(),
             VmPoll::Yielded => {}
             VmPoll::Log(_) | VmPoll::TransformFrame(_) => panic!("unexpected logger request"),
@@ -169,7 +172,54 @@ fn imports_share_the_property_namespace_but_keep_methods_separate() {
         "Keyword `import` is not allowed here.\n\nIf you must use this name as identifier, enclose it in backticks."
     );
     assert_eq!(error.span, span(misplaced, "import"));
-    assert!(parse_module("import* \"pkl:ref\"").is_err());
+    // Pkl 0.32 parses glob clauses into the same local-const property namespace.
+    let source = "import* \"pkl:ref\"";
+    let module = parse_module(source).unwrap();
+    assert_eq!(module.members.len(), 1);
+    let import = &module.members[0];
+    assert_eq!(import.name, "ref");
+    assert!(import.local);
+    assert_eq!(
+        modifier_flags(&import.modifiers),
+        ModifierKind::Local.flag() | ModifierKind::Const.flag()
+    );
+    assert!(matches!(
+        &import.expr.kind,
+        ExprKind::Import { uri, glob: true, clause_alias: Some(None), .. }
+            if uri == "pkl:ref"
+    ));
+    assert_eq!(import.expr.span, span(source, source));
+    let module = parse_module("import* \"pkl:ref\" as refs").unwrap();
+    assert_eq!(module.members[0].name, "refs");
+    assert!(matches!(
+        &module.members[0].expr.kind,
+        ExprKind::Import { uri, glob: true, clause_alias: Some(Some(alias)), .. }
+            if uri == "pkl:ref" && alias == "refs"
+    ));
+    for source in [
+        "import* \"pkl:ref\"\nref = 1",
+        "import* \"pkl:ref\"\nlocal ref = 1",
+        "import* \"pkl:ref\"\nimport \"pkl:ref\"",
+        "import \"pkl:ref\"\nimport* \"pkl:ref\"",
+        "import* \"pkl:ref\"\nimport* \"pkl:ref\"",
+    ] {
+        assert_eq!(
+            resolve_module(&parse_module(source).unwrap())
+                .unwrap_err()
+                .message,
+            "Duplicate definition of member `ref`."
+        );
+    }
+    let source = "import* \"pkl:ref\"\nfunction ref() = 1\nresult = ref()\nproperty = ref";
+    let module = parse_module(source).unwrap();
+    let resolved = resolve_module(&module).unwrap();
+    assert_eq!(
+        resolved.names[&module.members[3].expr.span],
+        Binding::Property {
+            owner_depth: 0,
+            local: true
+        }
+    );
     let source = "import \"pkl:ref\"\nlocal ref = 1";
     assert_eq!(
         resolve_module(&parse_module(source).unwrap())

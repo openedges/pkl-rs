@@ -21,7 +21,17 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
-### Stage121 Pair and superclass diagnostics — current local checks
+### Stage122 lossless source and runtime integration — verified local checkpoint
+
+Independent readback records **1,779 passing tests, zero failures and five ignored across 285 harnesses**, composed from 198 checks04, 85 checks05 and two repaired checks06 harnesses. Nested child repeats are excluded and ignored tests remain gaps. This is functional harness coverage, not a successful fresh full-workspace Cargo command. Reflection's actual test process exited zero with five raw passes; its original Cargo exit was not captured and remains null/inconclusive. The original incomplete producer, failed observer and monitoring gap are preserved.
+
+All seven checks06 commands have actual exit zero: five fresh non-workspace checks (xtask, formatting, all-target Clippy with warnings denied, Wasm runtime check and manifest freshness) plus both complete repaired test targets. Exact source deltas and inherited Cargo-cache provenance remain separate from fresh compilation claims.
+
+The complete ordered 4,442-case replay records **4,351 matches, 15 mismatches, 74 unsupported and two Java oracle errors**, with no Stage121 previous-pass regressions and **88/88 metamorphic checks**. List's native 60-second timeout remains explicit; complete result coverage includes stopped evaluations. The exact current full-gate function retains **1,768 overlapping unmet conditions (472 implementation, 472 mapping, 824 required-case)**. All twelve newly matching originals still have empty requirement links, so their runtime improvement does not resolve linkage conditions. No full-gate CLI invocation or new Java execution is claimed for the readback.
+
+M1 actual03 matches 6,078 comparisons on each target, with 92 Node and 92 browser scenarios and separate strict/architecture passes. Native transport qualifies 20 runtime controls plus four compiler counterparts. N-API's qualified full744/186 subset is reused; its fresh glob576 subset matches 524 and preserves 52 nonmatches, repairing four previous adapter regressions. Chromium reuses 701 independently qualified processes and completes 63 new processes: its combined results match 740 ordinary outcomes, 744 callbacks and 524/576 glob sessions, preserving 52 known nonmatches. The full Native/N-API/Chromium transport-19 raw join passes. Ten large Chromium cases use a separately recorded 3 GiB sampled owned-process RSS cap; the other processes retain 2 GiB, and the original cap failure remains recorded. All 18 evidence archive parts and their published copies are independently checked. Full typed binding/API, M2, release OS and performance requirements remain open. See the [Stage122 report](reports/m2/stage122-lossless-source-runtime/README.md) and its source-aware descriptor for exact local receipts and remaining requirements.
+
+### Stage121 Pair and superclass diagnostics — previous local checks
 
 The fresh complete workspace records **1,717 passed, zero failed and five
 ignored**, excluding 13 filtered child repeats. All six recorded commands pass:

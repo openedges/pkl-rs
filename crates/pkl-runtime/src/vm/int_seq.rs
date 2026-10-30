@@ -128,7 +128,7 @@ pub(super) fn blocks(
         let start = if inherited {
             source.text.find(signature).unwrap()
         } else {
-            class + source.text[class..].find(signature).unwrap()
+            class + source.text.entire().range(class..).find(signature).unwrap()
         };
         let mut code = Vec::new();
         let mut spans = Vec::new();
@@ -627,7 +627,12 @@ impl Vm {
 }
 
 impl Vm {
-    pub(super) fn int_seq_member_error(&self, name: &str, method: bool) -> RuntimeError {
+    pub(super) fn int_seq_member_error(
+        &self,
+        name: impl Into<PklString>,
+        method: bool,
+    ) -> RuntimeError {
+        let name = name.into();
         let properties = ["start", "end", "step"].map(str::to_owned);
         let methods = [
             ("step", "step(newValue)", 1),
@@ -656,12 +661,16 @@ impl Vm {
         let mut error = RuntimeError::new(
             ErrorKind::MissingMember,
             if method {
-                format!("Cannot find method `{name}` in class `IntSeq`.")
+                PklString::from("Cannot find method `")
+                    .concat(&name)
+                    .concat(&"` in class `IntSeq`.".into())
             } else {
-                format!("Cannot find property `{name}` in object of type `IntSeq`.")
+                PklString::from("Cannot find property `")
+                    .concat(&name)
+                    .concat(&"` in object of type `IntSeq`.".into())
             },
         );
-        error.hint = crate::diagnostic::member_suggestions(name, arity, &properties, &methods)
+        error.hint = crate::diagnostic::member_suggestions(&name, arity, &properties, &methods)
             .or_else(|| {
                 let mut names = if method {
                     methods

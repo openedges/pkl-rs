@@ -39,7 +39,13 @@ impl Vm {
     ) -> Result<Value, RuntimeError> {
         let Value::Int(index) = key else {
             let mut message = crate::pkl_string::PklStringBuilder::default();
-            message.push_str(&format!("Operator `[]` is not defined for operand types `String` and `{}`.\nLeft operand : ", crate::diagnostic_values::type_name(&key, &self.heap, &self.program.module_name)?));
+            message.push_str("Operator `[]` is not defined for operand types `String` and `");
+            message.push_value(&crate::diagnostic_values::type_name(
+                &key,
+                &self.heap,
+                &self.program.module_name,
+            )?);
+            message.push_str("`.\nLeft operand : ");
             message.push_value(&crate::diagnostic_values::render_string(
                 &Value::String(text.clone()),
                 &self.heap,
@@ -131,6 +137,7 @@ impl Vm {
                 };
                 error.span = Some(span);
                 error.frames.push(RuntimeFrame {
+                    anonymous: false,
                     source: Some(source),
                     span,
                     member: "#String.repeat".into(),

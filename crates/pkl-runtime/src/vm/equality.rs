@@ -100,7 +100,8 @@ fn atom(heap: &Heap, value: &Value) -> Result<Atom, RuntimeError> {
         ),
     })
 }
-fn string_hash(value: &str) -> i32 {
+fn string_hash(value: impl Into<PklString>) -> i32 {
+    let value = value.into();
     value.encode_utf16().fold(0i32, |hash, unit| {
         hash.wrapping_mul(31).wrapping_add(i32::from(unit))
     })
@@ -141,10 +142,10 @@ impl Vm {
             })),
             Value::Function(_) => None,
             Value::TypeAlias(id) => self.heap.get(*id)?.type_alias.as_ref().map(|name| {
-                if name.contains('#') {
+                if name.contains("#") {
                     string_hash(name)
                 } else {
-                    string_hash(&format!("pkl.base#{name}"))
+                    string_hash(PklString::from("pkl.base#").concat(name))
                 }
             }),
             Value::Class(id) => Some(string_hash(&self.heap.class_qualified_name(*id)?)),
@@ -206,7 +207,7 @@ struct SetRestLookup {
 struct CacheRead {
     receiver: ObjectId,
     owner: ObjectId,
-    name: Arc<str>,
+    name: PklString,
     local: bool,
     memoize: bool,
     method: bool,
@@ -472,7 +473,7 @@ impl Vm {
         &mut self,
         receiver: ObjectId,
         owner: ObjectId,
-        name: Arc<str>,
+        name: PklString,
         local: bool,
         memoize: bool,
         method: bool,

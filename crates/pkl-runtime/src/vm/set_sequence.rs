@@ -122,11 +122,14 @@ pub(super) fn blocks(
             }
             let name = kind.name();
             let start = class
-                + source.text[class..]
+                + source
+                    .text
+                    .entire()
+                    .range(class..)
                     .find(&format!("external function {name}"))
                     .unwrap();
-            let end = start + source.text[start..].find('\n').unwrap();
-            let declaration = &source.text[start..end];
+            let end = start + source.text.entire().range(start..).find("\n").unwrap();
+            let declaration = &source.text.entire().range(start..end);
             let mut code = vec![];
             let mut spans = vec![];
             if !matches!(kind, FilterNonNull | Flatten) {
@@ -154,13 +157,20 @@ pub(super) fn blocks(
                 };
                 let p = start + declaration.find(label).unwrap() + label.len();
                 let type_end = if kind.predicate() || matches!(kind, GroupBy) {
-                    let arrow = p + source.text[p..end].find(" -> ").unwrap();
-                    arrow + 4 + source.text[arrow + 4..end].find(')').unwrap()
+                    let arrow = p + source.text.entire().range(p..end).find(" -> ").unwrap();
+                    arrow
+                        + 4
+                        + source
+                            .text
+                            .entire()
+                            .range(arrow + 4..end)
+                            .find(")")
+                            .unwrap()
                 } else if matches!(
                     kind,
                     FilterIsInstance | StartsWith | EndsWith | Zip | Intersect | Difference
                 ) {
-                    p + source.text[p..end].find(')').unwrap()
+                    p + source.text.entire().range(p..end).find(")").unwrap()
                 } else {
                     p + 3
                 };
@@ -910,7 +920,11 @@ impl Vm {
     }
 }
 
-fn flatten_error(value: &Value, heap: &Heap, module: &str) -> Result<RuntimeError, RuntimeError> {
+fn flatten_error(
+    value: &Value,
+    heap: &Heap,
+    module: &PklString,
+) -> Result<RuntimeError, RuntimeError> {
     Ok(RuntimeError::new(
         ErrorKind::Type,
         PklString::join(

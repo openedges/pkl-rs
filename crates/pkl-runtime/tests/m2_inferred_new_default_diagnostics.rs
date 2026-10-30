@@ -37,7 +37,7 @@ fn matrix(uri: &str, source: &str, base: Option<&str>, rows: &[(&str, &str, &str
                         }
                         ModuleRequestKind::LoadSource { resolved, .. } => {
                             assert_eq!(
-                                resolved.source_uri.as_ref(),
+                                resolved.source_uri,
                                 uri.replace("/module.pkl", "/base.pkl")
                             );
                             ModuleCompletion::Source(Ok(ModuleSource {

@@ -32,8 +32,8 @@ fn shared_abstract_collection_metadata_traversals_and_release_are_stack_safe() {
             assert!(!typecheck::needs_custom_this(&left));
             left.validate_reference_arguments(span, &[], &BTreeMap::new())
                 .unwrap();
-            let left_metadata = reference::normalize(&left, "m2-collection");
-            let right_metadata = reference::normalize(&right, "m2-collection");
+            let left_metadata = reference::normalize(&left, &"m2-collection".into());
+            let right_metadata = reference::normalize(&right, &"m2-collection".into());
             assert_eq!(
                 reference::metadata_key(&left_metadata),
                 reference::metadata_key(&right_metadata)
@@ -49,10 +49,13 @@ fn shared_abstract_collection_metadata_traversals_and_release_are_stack_safe() {
                 &Heap::new()
             ));
             assert_eq!(
-                reference::type_name(&left_metadata, ""),
+                reference::type_name(&left_metadata, &"".into()),
                 format!("{}Int{}", "Collection<".repeat(20_000), ">".repeat(20_000))
             );
-            assert_eq!(type_name_value(&left, "").to_java_utf8(), "Collection");
+            assert_eq!(
+                type_name_value(&left, &"".into()).to_java_utf8(),
+                "Collection"
+            );
             drop(left);
             drop(right);
             assert!(released.upgrade().is_none());
@@ -97,16 +100,19 @@ fn shared_argument_dags_clone_compare_substitute_and_release_on_small_stack() {
             left.validate_reference_arguments(span, &[], &BTreeMap::new())
                 .unwrap();
             let mut environment = Environment::default();
-            environment.type_arguments.insert((7, Arc::from("T")), left);
+            environment.type_arguments.insert((7, "T".into()), left);
             let clone = environment.clone();
             let substituted = TypeCheck::Nullable(Box::new(TypeCheck::Parameter {
                 block: 7,
-                name: Arc::from("T"),
+                name: "T".into(),
             }))
             .substituted(&clone)
             .unwrap();
             assert!(substituted.accepts(&Value::Null, &Heap::new()));
-            assert_eq!(type_name_value(&substituted, "").to_java_utf8(), "Mapping?");
+            assert_eq!(
+                type_name_value(&substituted, &"".into()).to_java_utf8(),
+                "Mapping?"
+            );
             assert!(format!("{clone:?}").len() < 512);
             drop(environment);
             drop(clone);
@@ -136,7 +142,7 @@ fn shared_nullable_traversals_and_concurrent_last_release_are_stack_safe() {
             assert!(ty.accepts(&Value::Int(1.into()), &Heap::new()));
             assert!(!ty.accepts(&Value::Bool(false), &Heap::new()));
             assert_eq!(
-                type_name_value(&ty, "").to_java_utf8(),
+                type_name_value(&ty, &"".into()).to_java_utf8(),
                 format!("Int{}", "?".repeat(20_000))
             );
             let other = ty.clone();
@@ -235,7 +241,7 @@ fn varargs_metadata_retains_substituted_elements_without_value_checks() {
     assert!(ty.contains_parameter());
     let resolved = ty.substituted(&environment).unwrap();
     assert!(!resolved.contains_parameter());
-    let normalized = reference::normalize(&resolved, "module");
+    let normalized = reference::normalize(&resolved, &"module".into());
     assert!(normalized.equivalent(&resolved));
     assert!(!normalized.equivalent(&TypeCheck::VarArgs {
         element: Box::new(TypeCheck::String),
@@ -248,6 +254,9 @@ fn varargs_metadata_retains_substituted_elements_without_value_checks() {
             span: Span::new(0, 0)
         })
     );
-    assert_eq!(reference::type_name(&normalized, "module"), "VarArgs<Int>");
+    assert_eq!(
+        reference::type_name(&normalized, &"module".into()),
+        "VarArgs<Int>"
+    );
     assert!(!resolved.noop());
 }

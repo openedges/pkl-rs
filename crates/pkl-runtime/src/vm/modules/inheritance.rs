@@ -17,17 +17,20 @@ impl Vm {
                 .is_ok_and(|object| object.is_module)
         });
         let name = if is_module || builtins::name(class.id).is_some() {
-            class.name.to_string()
+            class.name.clone()
         } else {
-            format!(
-                "{}#{}",
-                class.module.as_deref().unwrap_or(&self.program.module_name),
-                class.name
-            )
+            class
+                .module
+                .as_ref()
+                .unwrap_or(&self.program.module_name)
+                .concat(&"#".into())
+                .concat(&class.name)
         };
         let mut error = RuntimeError::new(
             ErrorKind::Type,
-            format!("Cannot instantiate abstract class `{name}`."),
+            PklString::from("Cannot instantiate abstract class `")
+                .concat(&name)
+                .concat(&"`.".into()),
         );
         error.hint = Some(
             "Abstract classes cannot be instantiated.\nInstead, instantiate a concrete subclass."

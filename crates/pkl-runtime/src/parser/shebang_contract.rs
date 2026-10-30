@@ -29,7 +29,7 @@ fn java_shebang_tokens_and_raw_prefix_failures_preserve_utf16() {
         let source_id = map.add(id, source.clone());
         let mapped = map.get(source_id).unwrap();
         let mut lexer = Lexer {
-            source: &source,
+            source: source.as_str().into(),
             cursor: 0,
             string_errors: Default::default(),
         };

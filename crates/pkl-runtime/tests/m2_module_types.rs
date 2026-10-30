@@ -5,7 +5,6 @@ use pkl_runtime::evaluation::frontend::{
     ModuleEvalOptions, ModuleSourceInput, evaluate_module_output_with_host,
 };
 use pkl_runtime::modules::{ModuleCompletion, ModuleRequestKind, ModuleSource, ResolvedModule};
-use std::sync::Arc;
 
 const SOURCES: &[(&str, &str)] = &[
     (
@@ -75,6 +74,8 @@ fn evaluate_original(name: &str, expected: &[u8]) -> Vec<String> {
                 loads.push(resolved.original_uri.to_string());
                 let name = resolved
                     .original_uri
+                    .as_str()
+                    .expect("fixture URI must contain Unicode scalar values")
                     .rsplit('/')
                     .next()
                     .unwrap()
@@ -82,8 +83,8 @@ fn evaluate_original(name: &str, expected: &[u8]) -> Vec<String> {
                     .unwrap();
                 let text = SOURCES.iter().find(|(key, _)| *key == name).unwrap().1;
                 ModuleCompletion::Source(Ok(ModuleSource {
-                    text: Arc::from(text),
-                    inferred_name: Arc::from(name),
+                    text: text.into(),
+                    inferred_name: name.into(),
                 }))
             }
         },

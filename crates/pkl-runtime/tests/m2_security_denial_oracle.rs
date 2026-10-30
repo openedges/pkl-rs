@@ -101,8 +101,8 @@ fn actual_policy_denial_is_caught_and_retries_while_successful_caught_value_is_c
             .join(repeat.to_string())
             .join("calls");
         let mut probe = SourceProbe::new_expressions_text(
-            &text(&workspace, "main.pkl"),
-            &text(&r, "uri.txt"),
+            text(&workspace, "main.pkl"),
+            text(&r, "uri.txt"),
             "main",
             &expressions,
             "compact",

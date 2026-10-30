@@ -15,6 +15,9 @@ fn literal_value(expression: &Expr) -> Option<Value> {
 }
 
 #[derive(Clone)]
+// Keep declared parent recipes inline; boxing adds an allocation to each recipe
+// and clone. Revisit this layout with compiler memory measurements.
+#[allow(clippy::large_enum_variant)]
 enum InferredParent {
     DeclaredType(TypeCheck, RuntimeFrame, bool),
     Property,
@@ -56,7 +59,7 @@ enum Work<'a> {
     SuperSubscript,
     BinaryRight(BinaryOp, &'a Expr),
     LogicalEnd(BinaryOp, usize),
-    NullableMember(&'a Expr, &'a str),
+    NullableMember(&'a Expr, &'a PklString),
     Lookup(&'a Expr, &'a Expr, &'a [Expr], usize),
     CallEnd(usize, bool, Option<usize>, Option<(usize, Span)>),
     LocalMethodCall(&'a Expr, usize, Span),
@@ -108,8 +111,8 @@ impl Compiler<'_> {
             return false;
         }
         match name.as_str() {
-            "List" | "Set" | "Map" | "Bytes" => self.power_constant_node(expression),
-            "IntSeq" | "Pair" | "Regex" | "Null" => arguments
+            Some("List" | "Set" | "Map" | "Bytes") => self.power_constant_node(expression),
+            Some("IntSeq" | "Pair" | "Regex" | "Null") => arguments
                 .iter()
                 .all(|argument| self.power_parser_literal(argument)),
             _ => false,
@@ -149,8 +152,14 @@ impl Compiler<'_> {
                     operand,
                 } if matches!(operand.kind, ExprKind::Float(_)) => {}
                 ExprKind::Member(receiver, name)
-                    if (crate::duration::DurationUnit::parse(name).is_some()
-                        || crate::data_size::DataSizeUnit::parse(name).is_some())
+                    if (name
+                        .as_str()
+                        .and_then(crate::duration::DurationUnit::parse)
+                        .is_some()
+                        || name
+                            .as_str()
+                            .and_then(crate::data_size::DataSizeUnit::parse)
+                            .is_some())
                         && matches!(
                             &receiver.unparenthesized().kind,
                             ExprKind::Int(_) | ExprKind::Float(_)
@@ -162,8 +171,8 @@ impl Compiler<'_> {
                         return false;
                     };
                     match name.as_str() {
-                        "List" | "Set" | "Map" => pending.extend(arguments),
-                        "Bytes" if arguments.iter().all(|argument| {
+                        Some("List" | "Set" | "Map") => pending.extend(arguments),
+                        Some("Bytes") if arguments.iter().all(|argument| {
                             matches!(argument.kind, ExprKind::Int(value) if (0..=127).contains(&value))
                                 && !self.resolved.module.folded_integer_spans.contains_key(&argument.span)
                         }) => {},
@@ -190,6 +199,7 @@ impl Compiler<'_> {
             InferredParent::DeclaredType(
                 check,
                 RuntimeFrame {
+                    anonymous: false,
                     source: None,
                     span: self.type_source_span(ty),
                     member: self.member.concat(&".default".into()),
@@ -293,9 +303,9 @@ impl Compiler<'_> {
                         let branch = output.len();
                         output.push(Instruction::JumpIfNull(0));
                         output.push(if self.resolved.const_names.contains(&expression.span) {
-                            Instruction::GetConstMember(Arc::from(name))
+                            Instruction::GetConstMember(PklString::from(name))
                         } else {
-                            Instruction::GetMember(Arc::from(name))
+                            Instruction::GetMember(PklString::from(name))
                         });
                         output[branch] = Instruction::JumpIfNull(output.len());
                     }
@@ -375,14 +385,14 @@ impl Compiler<'_> {
                                 let constant = self.resolved.const_names.contains(&callee.span);
                                 let super_receiver = !nullable
                                     && matches!(receiver.unparenthesized().kind, ExprKind::Super);
-                                let name: Arc<str> = Arc::from(name.as_str());
+                                let name = name.clone();
                                 output.push(match (constant, super_receiver) {
                                     (true, true) => Instruction::GetConstSuperMethod(name.clone()),
                                     (false, true) => Instruction::GetSuperMethod(name.clone()),
                                     (true, false) => Instruction::GetConstMethod(name.clone()),
                                     (false, false) => Instruction::GetMethod(name.clone()),
                                 });
-                                name.as_ref() != "apply"
+                                name != "apply"
                             }
                             _ => {
                                 if matches!(callee.kind, ExprKind::Name(_))
@@ -457,7 +467,7 @@ impl Compiler<'_> {
                         let lookup = output.len();
                         output.push_at(
                             Instruction::GetMethodProperty {
-                                name: Arc::from(name.as_str()),
+                                name: name.clone(),
                                 owner_depth: *owner_depth,
                                 local: true,
                             },
@@ -548,6 +558,7 @@ impl Compiler<'_> {
                             body: start..output.len(),
                             writes_slot: name != "_",
                             frame: RuntimeFrame {
+                                anonymous: false,
                                 source: self.source.clone(),
                                 span: expression.span,
                                 member: self.member.clone(),
@@ -586,7 +597,7 @@ impl Compiler<'_> {
                                             owner.encode_utf16().next() == Some(u16::from(b'.'));
                                         let prefix =
                                             if self.identity.as_ref().is_some_and(|identity| {
-                                                identity.original_uri.as_ref() == "repl:text"
+                                                identity.original_uri == "repl:text"
                                             }) {
                                                 if nested_root {
                                                     "repl:text"
@@ -641,6 +652,7 @@ impl Compiler<'_> {
                                     InferredParent::DeclaredType(
                                         check,
                                         RuntimeFrame {
+                                            anonymous: false,
                                             source: None,
                                             span: *header_span,
                                             member: self.member.concat(&".default".into()),
@@ -863,9 +875,9 @@ impl Compiler<'_> {
                         let previous_member = self.member.clone();
                         let label = crate::diagnostic_names::quote_identifier(&member.name);
                         self.member = if previous_member.is_empty() {
-                            format!("#{label}").into()
+                            PklString::from("#").concat(&label)
                         } else {
-                            previous_member.concat(&format!(".{label}").into())
+                            previous_member.concat(&".".into()).concat(&label)
                         };
                         let mut initialization_error = None;
                         let compiled_type = member.ty.as_ref().map(|ty| {
@@ -997,15 +1009,17 @@ impl Compiler<'_> {
                         } = &member.expr.kind
                         {
                             self.program.metadata[code].method_signature = Some((
-                                format!(
-                                    "{}({})",
-                                    member.name,
-                                    parameters
-                                        .iter()
-                                        .map(|p| p.name.as_str())
-                                        .collect::<Vec<_>>()
-                                        .join(", ")
-                                ),
+                                member
+                                    .name
+                                    .concat(&"(".into())
+                                    .concat(&PklString::join(
+                                        &parameters
+                                            .iter()
+                                            .map(|p| p.name.clone())
+                                            .collect::<Vec<_>>(),
+                                        ", ",
+                                    ))
+                                    .concat(&")".into()),
                                 parameters.len(),
                             ));
                         }
@@ -1014,7 +1028,7 @@ impl Compiler<'_> {
                         let compiled = Member {
                             flags: Member::declaration_flags(member),
                             entry: false,
-                            name: Arc::from(member.name.as_str()),
+                            name: member.name.clone(),
                             code,
                             local: crate::syntax::modifier_flags(&member.modifiers)
                                 & crate::syntax::ModifierKind::Local.flag()
@@ -1282,8 +1296,13 @@ impl Compiler<'_> {
                         ty: check.clone(),
                         source: TypeArgumentSource {
                             span: ty.span,
-                            text: Arc::from(
-                                &self.resolved.module.source[ty.span.start..ty.span.end],
+                            text: crate::source::SourceText::from(
+                                self.resolved
+                                    .module
+                                    .source
+                                    .entire()
+                                    .range(ty.span.start..ty.span.end)
+                                    .to_pkl_string(),
                             ),
                         },
                     },
@@ -1385,13 +1404,8 @@ impl Compiler<'_> {
                 work.push(Work::Visit(value));
             }
             ExprKind::ReadResourceGlob(value) => {
-                work.push(Work::Emit(
-                    Instruction::Fail(RuntimeError::new(
-                        ErrorKind::Unsupported,
-                        "Glob resource expansion is not implemented.",
-                    )),
-                    None,
-                ));
+                let spec = self.glob_spec(expression, None)?;
+                work.push(Work::Emit(Instruction::ReadResourceGlob(spec), None));
                 work.push(Work::Visit(value));
             }
             ExprKind::TypeCheck { value, ty } | ExprKind::TypeCast { value, ty } => {
@@ -1430,7 +1444,7 @@ impl Compiler<'_> {
                 }
             }
             ExprKind::Member(receiver, name) | ExprKind::NullableMember(receiver, name) => {
-                if let Some(unit) = crate::duration::DurationUnit::parse(name) {
+                if let Some(unit) = name.as_str().and_then(crate::duration::DurationUnit::parse) {
                     let number = match &receiver.unparenthesized().kind {
                         ExprKind::Int(value) => Some(*value as f64),
                         ExprKind::Float(value) => Some(*value),
@@ -1453,7 +1467,10 @@ impl Compiler<'_> {
                         return Ok(());
                     }
                 }
-                if let Some(unit) = crate::data_size::DataSizeUnit::parse(name) {
+                if let Some(unit) = name
+                    .as_str()
+                    .and_then(crate::data_size::DataSizeUnit::parse)
+                {
                     let number = match &receiver.unparenthesized().kind {
                         ExprKind::Int(value) => Some(*value as f64),
                         ExprKind::Float(value) => Some(*value),
@@ -1483,7 +1500,7 @@ impl Compiler<'_> {
                 }
                 let constant = self.resolved.const_names.contains(&expression.span);
                 let super_receiver = matches!(receiver.unparenthesized().kind, ExprKind::Super);
-                let name = Arc::from(name.as_str());
+                let name = name.clone();
                 work.push(Work::Emit(
                     match (constant, super_receiver) {
                         (true, true) => Instruction::GetConstSuperMember(name),
@@ -1543,6 +1560,7 @@ impl Compiler<'_> {
                     )
                     .at(expression.span);
                     error.frames.push(RuntimeFrame {
+                        anonymous: false,
                         span: expression.span,
                         member: self.member.clone(),
                         source: None,
@@ -1553,7 +1571,7 @@ impl Compiler<'_> {
                     && self.resolved.names.get(&callee.span) == Some(&Binding::ImplicitMethod)
                 {
                     match name.as_str() {
-                        "Bytes" => {
+                        Some("Bytes") => {
                             if arguments.is_empty() {
                                 output.push(Instruction::Constant(Value::Bytes(
                                     crate::value::Bytes::empty(),
@@ -1565,9 +1583,13 @@ impl Compiler<'_> {
                                 .map(|argument| match argument.kind {
                                     ExprKind::Int(value)
                                         if (0..=127).contains(&value)
-                                            && !self.resolved.module.source
-                                                [argument.span.start..argument.span.end]
-                                                .starts_with('-') =>
+                                            && !self
+                                                .resolved
+                                                .module
+                                                .source
+                                                .entire()
+                                                .range(argument.span.start..argument.span.end)
+                                                .starts_with("-") =>
                                     {
                                         Some(value as u8)
                                     }
@@ -1593,12 +1615,13 @@ impl Compiler<'_> {
                             }
                             return Ok(());
                         }
-                        "Map" => {
+                        Some("Map") => {
                             if arguments.len() % 2 != 0 {
                                 let span = Span::new(expression.span.end - 1, expression.span.end);
                                 let mut error = RuntimeError::new(ErrorKind::Type,
                                     "Number of `Map()` arguments must be a multiple of two: `Map(key1, value1, key2, value2, ..., keyN, valueN)`").at(span);
                                 error.frames.push(RuntimeFrame {
+                                    anonymous: false,
                                     span,
                                     member: self.member.clone(),
                                     source: None,
@@ -1625,7 +1648,7 @@ impl Compiler<'_> {
                             }
                             return Ok(());
                         }
-                        "Set" => {
+                        Some("Set") => {
                             output.push(Instruction::BeginCollection {
                                 kind: crate::heap::CollectionKind::Set,
                                 has_parent: false,
@@ -1645,7 +1668,7 @@ impl Compiler<'_> {
                             }
                             return Ok(());
                         }
-                        "List" => {
+                        Some("List") => {
                             work.push(Work::Emit(
                                 Instruction::MakeList {
                                     length: arguments.len(),
@@ -1670,7 +1693,7 @@ impl Compiler<'_> {
                     if self.resolved.const_names.contains(&callee.span) {
                         output.push_at(
                             Instruction::RequireConstProperty {
-                                name: Arc::from(name.as_str()),
+                                name: name.clone(),
                                 owner_depth: *owner_depth,
                                 local: true,
                                 method: true,

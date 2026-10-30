@@ -88,7 +88,7 @@ pub enum TypeDiagnostic {
     Union {
         span: Span,
         value: PklString,
-        actual_type: String,
+        actual_type: PklString,
         is_null: bool,
         children: Vec<UnionTypeDiagnostic>,
     },
@@ -136,10 +136,14 @@ impl TypeDiagnostic {
                 body_span,
                 observations,
             } => {
-                let expression = source.slice(*span).unwrap_or("");
-                message_text.push_str(&format!(
-                    "{indent}Type constraint `{expression}` violated.\n{indent}Value: "
-                ));
+                let expression = source
+                    .slice(*span)
+                    .map(|text| text.to_pkl_string())
+                    .unwrap_or_default();
+                message_text.push_str(indent);
+                message_text.push_str("Type constraint `");
+                message_text.push_value(&expression);
+                message_text.push_str(&format!("` violated.\n{indent}Value: "));
                 message_text.push_value(value);
                 if power && let Some(observations) = observations {
                     message_text.push_str("\n\n");
@@ -159,29 +163,43 @@ impl TypeDiagnostic {
                 is_null,
                 children,
             } => {
-                let expected = source.slice(*span).unwrap_or("");
+                let expected = source
+                    .slice(*span)
+                    .map(|text| text.to_pkl_string())
+                    .unwrap_or_default();
                 let nontrivial: Vec<_> = children.iter().filter(|child| child.nontrivial).collect();
                 let actual = if !nontrivial.is_empty() {
-                    format!("a different `{actual_type}`")
+                    PklString::from("a different `")
+                        .concat(actual_type)
+                        .concat(&"`".into())
                 } else if *is_null {
-                    "`null`".to_owned()
+                    PklString::from("`null`")
                 } else {
-                    format!("type `{actual_type}`")
+                    PklString::from("type `")
+                        .concat(actual_type)
+                        .concat(&"`".into())
                 };
-                message_text.push_str(&format!("{indent}Expected value of type `{expected}`, but got {actual}.\n{indent}Value: "));
+                message_text.push_str(&format!("{indent}Expected value of type `"));
+                message_text.push_value(&expected);
+                message_text.push_str("`, but got ");
+                message_text.push_value(&actual);
+                message_text.push_str(&format!(".\n{indent}Value: "));
                 message_text.push_value(value);
                 let hints: Vec<_> = nontrivial
                     .into_iter()
                     .map(|child| {
-                        let expected = source.slice(child.type_span).unwrap_or("");
+                        let expected = source
+                            .slice(child.type_span)
+                            .map(|text| text.to_pkl_string())
+                            .unwrap_or_default();
                         let (message, hint) =
                             child
                                 .diagnostic
                                 .render_indented(source, &format!("{indent}  "), power);
                         let mut text = PklStringBuilder::default();
-                        text.push_str(&format!(
-                            "{indent}* Value is not of type `{expected}` because:\n"
-                        ));
+                        text.push_str(&format!("{indent}* Value is not of type `"));
+                        text.push_value(&expected);
+                        text.push_str("` because:\n");
                         text.push_value(&message);
                         if let Some(hint) = hint {
                             text.push_str("\n\n");
@@ -221,7 +239,7 @@ pub struct Diagnostic {
     /// Syntax errors retain a module frame and leave this unset.
     pub member: Option<Box<PklString>>,
     /// Explicit module identity for AST validation after its header was parsed.
-    pub module_name: Option<Box<str>>,
+    pub module_name: Option<Box<PklString>>,
     pub frames: Box<[LogicalFrame]>,
     details: Option<Box<DiagnosticDetails>>,
 }
@@ -347,7 +365,7 @@ impl std::error::Error for Diagnostic {}
 /// not infer frames from message text or from the Rust call stack.
 pub struct RenderFrame<'a> {
     pub source: &'a Source,
-    pub uri: &'a str,
+    pub uri: PklString,
     pub member: &'a PklString,
     pub span: Span,
     pub highlight_length_utf16: Option<usize>,
@@ -554,67 +572,66 @@ pub(crate) fn key_suggestions(
 /// Property candidates in lookup order, with stable similarity ranking.
 /// Method signatures require additional declaration metadata.
 pub(crate) fn property_suggestions(
-    name: &str,
-    candidates: impl IntoIterator<Item = String>,
+    name: impl Into<PklString>,
+    candidates: impl IntoIterator<Item = PklString>,
     include_base: bool,
 ) -> Option<PklString> {
+    let name = name.into();
     let mut seen = std::collections::BTreeSet::new();
     let base = crate::diagnostic_names::BASE_PROPERTIES
         .iter()
         .filter(move |_| include_base)
-        .map(|name| (*name).to_owned());
+        .map(|name| PklString::from(*name));
     let mut ranked = candidates
         .into_iter()
         .chain(base)
         .filter_map(|candidate| {
-            let similarity = string_similarity(&candidate, name);
+            let similarity = string_similarity_units(
+                &candidate.encode_utf16().collect::<Vec<_>>(),
+                &name.encode_utf16().collect::<Vec<_>>(),
+            );
             (candidate != name && similarity >= 0.77 && seen.insert(candidate.clone()))
                 .then_some((candidate, similarity))
         })
         .collect::<Vec<_>>();
     ranked.sort_by(|left, right| right.1.total_cmp(&left.1));
     (!ranked.is_empty()).then(|| {
-        format!(
-            "Did you mean any of the following?\n{}",
-            ranked
-                .into_iter()
-                .map(|(name, _)| name)
-                .collect::<Vec<_>>()
-                .join("\n")
-        )
-        .into()
+        PklString::from("Did you mean any of the following?\n").concat(&PklString::join(
+            &ranked.into_iter().map(|(name, _)| name).collect::<Vec<_>>(),
+            "\n",
+        ))
     })
 }
 
 /// A candidate in member lookup order, before stable similarity ranking.
-pub(crate) enum MemberSuggestion<'a> {
-    Property(&'a str),
+pub(crate) enum MemberSuggestion {
+    Property(PklString),
     Method {
-        name: &'a str,
-        signature: &'a str,
+        name: PklString,
+        signature: PklString,
         arity: usize,
     },
 }
 
 /// Explicit receivers search all properties before methods.
-pub(crate) fn member_suggestions(
-    name: &str,
+pub(crate) fn member_suggestions<T: Clone + Into<PklString>>(
+    name: impl Into<PklString>,
     arity: isize,
-    properties: &[String],
-    methods: &[(String, String, usize)],
+    properties: &[T],
+    methods: &[(T, T, usize)],
 ) -> Option<PklString> {
     ordered_member_suggestions(
         name,
         arity,
         properties
             .iter()
-            .map(|name| MemberSuggestion::Property(name))
+            .map(|name| MemberSuggestion::Property(name.clone().into()))
             .chain(
                 methods
                     .iter()
                     .map(|(name, signature, arity)| MemberSuggestion::Method {
-                        name,
-                        signature,
+                        name: name.clone().into(),
+                        signature: signature.clone().into(),
                         arity: *arity,
                     }),
             ),
@@ -622,30 +639,34 @@ pub(crate) fn member_suggestions(
 }
 
 /// Match MemberLookupSuggestions without losing scope order across namespaces.
-pub(crate) fn ordered_member_suggestions<'a>(
-    name: &str,
+pub(crate) fn ordered_member_suggestions(
+    name: impl Into<PklString>,
     arity: isize,
-    candidates: impl IntoIterator<Item = MemberSuggestion<'a>>,
+    candidates: impl IntoIterator<Item = MemberSuggestion>,
 ) -> Option<PklString> {
+    let name = name.into();
     let mut seen = std::collections::BTreeSet::new();
     let mut ranked = Vec::new();
     for candidate in candidates {
         let (candidate, signature, count) = match candidate {
-            MemberSuggestion::Property(name) => (name, name, -1),
+            MemberSuggestion::Property(name) => (name.clone(), name, -1),
             MemberSuggestion::Method {
                 name,
                 signature,
                 arity,
             } => (name, signature, arity as isize),
         };
-        let similarity = string_similarity(candidate, name);
+        let similarity = string_similarity_units(
+            &candidate.encode_utf16().collect::<Vec<_>>(),
+            &name.encode_utf16().collect::<Vec<_>>(),
+        );
         if similarity < 0.77 || !seen.insert((count >= 0, candidate)) {
             continue;
         }
         let signature = if similarity < 1.0 || arity == 0 {
             signature.to_owned()
         } else if arity >= 0 {
-            format!("{signature}.apply(...)")
+            signature.concat(&".apply(...)".into())
         } else {
             continue;
         };
@@ -653,26 +674,18 @@ pub(crate) fn ordered_member_suggestions<'a>(
     }
     ranked.sort_by(|a, b| b.1.total_cmp(&a.1).then(a.2.cmp(&b.2)));
     (!ranked.is_empty()).then(|| {
-        format!(
-            "Did you mean any of the following?\n{}",
-            ranked
+        PklString::from("Did you mean any of the following?\n").concat(&PklString::join(
+            &ranked
                 .into_iter()
                 .map(|(signature, _, _)| signature)
-                .collect::<Vec<_>>()
-                .join("\n")
-        )
-        .into()
+                .collect::<Vec<_>>(),
+            "\n",
+        ))
     })
 }
 
 // Jaro-Winkler using UTF-16 units and the pinned StringSimilarity's integer
 // transposition count and uncapped prefix rule.
-fn string_similarity(first: &str, second: &str) -> f64 {
-    let first = first.encode_utf16().collect::<Vec<_>>();
-    let second = second.encode_utf16().collect::<Vec<_>>();
-    string_similarity_units(&first, &second)
-}
-
 fn string_similarity_units(first: &[u16], second: &[u16]) -> f64 {
     if first == second {
         return 1.0;

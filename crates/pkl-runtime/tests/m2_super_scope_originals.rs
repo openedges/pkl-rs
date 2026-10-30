@@ -99,7 +99,13 @@ fn original_super_scope_modules_match_complete_java_cli_bytes_twice() {
                             }))
                         }
                         ModuleRequestKind::LoadSource { resolved, .. } => {
-                            let name = resolved.original_uri.rsplit('/').next().unwrap();
+                            let name = resolved
+                                .original_uri
+                                .as_str()
+                                .expect("fixture URI must contain Unicode scalar values")
+                                .rsplit('/')
+                                .next()
+                                .unwrap();
                             let source = originals
                                 .iter()
                                 .find(|row| row.uri.ends_with(name))

@@ -1,6 +1,6 @@
 //! Non-forcing value snapshots for diagnostics and selected collection strings.
 use crate::heap::{CacheKey, CollectionKind, CollectionMemberKind, Heap, LazyState};
-use crate::value::{ErrorKind, ObjectId, RuntimeError, Value};
+use crate::value::{ErrorKind, ObjectId, PklString, RuntimeError, Value};
 use std::collections::BTreeSet;
 
 fn ancestry(id: ObjectId, heap: &Heap) -> Result<Vec<ObjectId>, RuntimeError> {
@@ -17,16 +17,16 @@ fn ancestry(id: ObjectId, heap: &Heap) -> Result<Vec<ObjectId>, RuntimeError> {
     Ok(result)
 }
 
-fn class_name(id: ObjectId, heap: &Heap) -> Result<Option<String>, RuntimeError> {
+fn class_name(id: ObjectId, heap: &Heap) -> Result<Option<PklString>, RuntimeError> {
     for id in ancestry(id, heap)? {
         if let Some(class) = &heap.get(id)?.class_definition {
-            return Ok(Some(class.name.to_string()));
+            return Ok(Some(class.name.clone()));
         }
     }
     Ok(None)
 }
 
-fn object_name(id: ObjectId, heap: &Heap) -> Result<String, RuntimeError> {
+fn object_name(id: ObjectId, heap: &Heap) -> Result<PklString, RuntimeError> {
     if heap.get(id)?.is_module {
         return Ok("ModuleClass".into());
     }
@@ -40,8 +40,8 @@ fn object_name(id: ObjectId, heap: &Heap) -> Result<String, RuntimeError> {
     })
 }
 
-fn function_name(id: ObjectId, heap: &Heap) -> Result<String, RuntimeError> {
-    Ok(format!("Function{}", function_arity(id, heap)?))
+fn function_name(id: ObjectId, heap: &Heap) -> Result<PklString, RuntimeError> {
+    Ok(format!("Function{}", function_arity(id, heap)?).into())
 }
 
 pub(crate) fn function_arity(id: ObjectId, heap: &Heap) -> Result<usize, RuntimeError> {
@@ -63,7 +63,13 @@ pub(crate) fn function_arity(id: ObjectId, heap: &Heap) -> Result<usize, Runtime
         .ok_or_else(|| RuntimeError::new(ErrorKind::InvalidBytecode, "function has no definition"))
 }
 
-pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<String, RuntimeError> {
+pub(crate) fn type_name(
+    value: &Value,
+    heap: &Heap,
+    module: impl Into<PklString>,
+) -> Result<PklString, RuntimeError> {
+    let module = module.into();
+    let module = &module;
     Ok(match value {
         Value::Null | Value::NullWithDefault(_) => "Null".into(),
         Value::Bool(_) => "Boolean".into(),
@@ -91,21 +97,21 @@ pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<Stri
                     .transpose()?
                     .unwrap_or_else(|| module.into())
             } else if heap.get(*id)?.collection_kind == CollectionKind::Dynamic {
-                let mut name = "Dynamic".to_owned();
+                let mut name = PklString::from("Dynamic");
                 for owner in ancestry(*id, heap)? {
                     if let Some(class) = &heap.get(owner)?.class_definition {
                         let defining_module = if matches!(
                             class.id,
                             crate::vm::reference::DOMAIN_ID | crate::vm::reference::ACCESS_ID
                         ) {
-                            "pkl.ref"
+                            PklString::from("pkl.ref")
                         } else {
-                            class.module.as_deref().unwrap_or(module)
+                            class.module.as_ref().unwrap_or(module).clone()
                         };
                         name = if crate::vm::builtins::name(class.id).is_some()
                             || crate::vm::classes::base_class_name(class.id).is_some()
                         {
-                            class.name.to_string()
+                            class.name.clone()
                         } else {
                             crate::heap::display_class_name(defining_module, &class.name)
                         };
@@ -123,18 +129,22 @@ pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<Stri
 pub(crate) fn render(
     value: &Value,
     heap: &Heap,
-    module: &str,
+    module: impl Into<PklString>,
     limit: usize,
 ) -> Result<crate::value::PklString, RuntimeError> {
+    let module = module.into();
+    let module = &module;
     render_string(value, heap, module, limit)
 }
 
 pub(crate) fn render_string(
     value: &Value,
     heap: &Heap,
-    module: &str,
+    module: impl Into<PklString>,
     limit: usize,
 ) -> Result<crate::value::PklString, RuntimeError> {
+    let module = module.into();
+    let module = &module;
     render_with_layout(value, heap, module, limit, false)
 }
 
@@ -143,18 +153,22 @@ pub(crate) fn render_string(
 pub(crate) fn render_multiline(
     value: &Value,
     heap: &Heap,
-    module: &str,
+    module: impl Into<PklString>,
 ) -> Result<crate::value::PklString, RuntimeError> {
+    let module = module.into();
+    let module = &module;
     render_with_layout(value, heap, module, i32::MAX as usize, true)
 }
 
 fn render_with_layout(
     value: &Value,
     heap: &Heap,
-    module: &str,
+    module: impl Into<PklString>,
     limit: usize,
     multiline: bool,
 ) -> Result<crate::value::PklString, RuntimeError> {
+    let module = module.into();
+    let module = &module;
     let mut run = RenderRun::new(value.clone(), limit, multiline);
     while !run.step(heap, module)? {}
     Ok(run.finish())
@@ -284,7 +298,13 @@ impl RenderRun {
             *duplicate = true;
         }
     }
-    pub(crate) fn step(&mut self, heap: &Heap, module: &str) -> Result<bool, RuntimeError> {
+    pub(crate) fn step(
+        &mut self,
+        heap: &Heap,
+        module: impl Into<PklString>,
+    ) -> Result<bool, RuntimeError> {
+        let module = module.into();
+        let module = &module;
         if self.stopped {
             return Ok(true);
         }
@@ -331,7 +351,7 @@ impl RenderRun {
 }
 struct Renderer<'a> {
     heap: &'a Heap,
-    module: &'a str,
+    module: &'a PklString,
     state: &'a mut RenderRun,
 }
 impl std::ops::Deref for Renderer<'_> {
@@ -418,7 +438,7 @@ impl Renderer<'_> {
                 let name = function_name(*id, self.heap)?;
                 if !implicit {
                     self.append("new ");
-                    self.append(&name);
+                    self.append_units(name.encode_utf16());
                     self.append(" ");
                 }
                 self.append("{}");
@@ -428,10 +448,17 @@ impl Renderer<'_> {
                     RuntimeError::new(ErrorKind::InvalidBytecode, "type alias has no definition")
                 })?;
                 // VmTypeAlias.toString uses the simple name for pkl.base.
-                self.append(name.strip_prefix("pkl.base#").unwrap_or(name));
+                let source = crate::source::SourceText::from(name.clone());
+                let view = source.entire();
+                self.append_units(
+                    view.strip_prefix("pkl.base#")
+                        .unwrap_or(view)
+                        .to_pkl_string()
+                        .encode_utf16(),
+                );
             }
             Value::Class(id) => {
-                self.append(&self.heap.class_display_name(*id)?);
+                self.append_units(self.heap.class_display_name(*id)?.encode_utf16());
             }
             Value::Object(id) => self.object(*id, implicit, depth)?,
         }
@@ -545,7 +572,7 @@ impl Renderer<'_> {
         } else {
             if !implicit {
                 self.append("new ");
-                self.append(&object_name(id, self.heap)?);
+                self.append_units(object_name(id, self.heap)?.encode_utf16());
                 self.append(" ");
             }
             self.append("{");

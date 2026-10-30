@@ -3,11 +3,19 @@
 
 /// SymbolTable.toQualifiedName uses Lexer.maybeQuoteIdentifier for each named
 /// scope. Keep metadata labels separate from raw member lookup/class names.
-pub(crate) fn quote_identifier(name: &str) -> String {
-    if crate::parser::is_regular_identifier(name) {
-        name.to_owned()
+pub(crate) fn quote_identifier(
+    name: impl Into<crate::value::PklString>,
+) -> crate::value::PklString {
+    let name = name.into();
+    if name
+        .as_str()
+        .is_some_and(crate::parser::is_regular_identifier)
+    {
+        name
     } else {
-        format!("`{name}`")
+        crate::value::PklString::from("`")
+            .concat(&name)
+            .concat(&"`".into())
     }
 }
 
@@ -291,13 +299,27 @@ pub(crate) fn builtin_members(class: &str) -> (Vec<String>, Vec<(String, String,
                             member.name,
                             parameters
                                 .iter()
-                                .map(|p| p.name.as_str())
+                                .map(|p| p.name.as_str().expect("pinned builtin parameter name"))
                                 .collect::<Vec<_>>()
                                 .join(", ")
                         );
-                        methods.push((member.name.clone(), signature, parameters.len()));
+                        methods.push((
+                            member
+                                .name
+                                .as_str()
+                                .expect("pinned builtin method name")
+                                .to_owned(),
+                            signature,
+                            parameters.len(),
+                        ));
                     } else {
-                        properties.push(member.name.clone());
+                        properties.push(
+                            member
+                                .name
+                                .as_str()
+                                .expect("pinned builtin property name")
+                                .to_owned(),
+                        );
                     }
                 }
                 catalog.insert(

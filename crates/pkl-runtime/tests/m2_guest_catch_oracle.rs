@@ -61,8 +61,8 @@ fn new_probe(root: &Path) -> Result<SourceProbe, PklString> {
     let mut expressions = lines(root, "expressions.txt");
     expressions.extend(lines(root, "callbacks.txt"));
     SourceProbe::new_expressions_text(
-        &text(root, "main.pkl"),
-        &text(root, "uri.txt"),
+        text(root, "main.pkl"),
+        text(root, "uri.txt"),
         "main",
         &expressions,
         "compact",

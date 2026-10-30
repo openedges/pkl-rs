@@ -176,7 +176,7 @@ result = source.restOrNull
 fn read(session: &mut HostSession, module: &Value, uri: &str) -> String {
     match event(session, std::slice::from_ref(module), 0) {
         HostPoll::Read { token, uri: actual } => {
-            assert_eq!(&*actual, uri);
+            assert_eq!(actual, uri);
             token
         }
         other => panic!("expected {uri}: {other:?}"),

@@ -37,7 +37,13 @@ fn matrix(uri: &str, source: &str, rows: &[(&str, &str, &str, &str)]) {
                             }))
                         }
                         ModuleRequestKind::LoadSource { resolved, .. } => {
-                            let name = resolved.source_uri.rsplit('/').next().unwrap();
+                            let name = resolved
+                                .source_uri
+                                .as_str()
+                                .expect("fixture URI must contain Unicode scalar values")
+                                .rsplit('/')
+                                .next()
+                                .unwrap();
                             let (text, inferred_name) = match name {
                                 "alpha.pkl" => (
                                     include_str!(

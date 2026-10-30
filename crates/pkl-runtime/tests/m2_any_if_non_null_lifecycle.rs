@@ -54,7 +54,7 @@ fn vm_ready(vm: &mut Vm) -> Result<Value, RuntimeError> {
 fn vm_read(vm: &mut Vm, uri: &str) -> u64 {
     match vm_event(vm) {
         VmPoll::Pending(read) => {
-            assert_eq!(&*read.uri, uri);
+            assert_eq!(read.uri, uri);
             vm.collect(&[]);
             read.id
         }
@@ -84,7 +84,7 @@ fn host_ready(session: &mut HostSession, now: u64) -> Result<Value, RuntimeError
 fn host_read(session: &mut HostSession, now: u64, uri: &str) -> String {
     match host_event(session, now) {
         HostPoll::Read { token, uri: actual } => {
-            assert_eq!(&*actual, uri);
+            assert_eq!(actual, uri);
             session.collect(&[]);
             token
         }

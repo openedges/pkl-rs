@@ -36,15 +36,16 @@ impl Declaration {
     }
 }
 fn pinned_module(
-    uri: &str,
+    uri: impl Into<PklString>,
 ) -> Result<(&'static crate::syntax::Module, Arc<RuntimeSource>), RuntimeError> {
     static BASE: OnceLock<crate::syntax::Module> = OnceLock::new();
     static REF: OnceLock<crate::syntax::Module> = OnceLock::new();
     static REFLECT: OnceLock<crate::syntax::Module> = OnceLock::new();
-    let (cell, source) = match uri {
-        "pkl:base" => (&BASE, crate::stdlib_sources::base()),
-        "pkl:ref" => (&REF, crate::stdlib_sources::reference()),
-        "pkl:reflect" => (&REFLECT, crate::stdlib_sources::reflect()),
+    let uri = uri.into();
+    let (cell, source) = match uri.as_str() {
+        Some("pkl:base") => (&BASE, crate::stdlib_sources::base()),
+        Some("pkl:ref") => (&REF, crate::stdlib_sources::reference()),
+        Some("pkl:reflect") => (&REFLECT, crate::stdlib_sources::reflect()),
         _ => return Err(invalid("unknown builtin declaration source")),
     };
     Ok((
@@ -81,7 +82,7 @@ fn type_parameter(parameter: &TypeParameter) -> Payload {
     Payload::fields(
         Kind::TypeParameter,
         vec![
-            ("name", Value::String(parameter.name.as_str().into())),
+            ("name", Value::String(parameter.name.clone())),
             (
                 "variance",
                 match parameter.variance {
@@ -174,12 +175,17 @@ impl Vm {
             return self.declaration(prototype, code);
         }
         let class = self.heap.class_definition(class)?;
-        let (parsed, source) = pinned_module(class.origin_uri.as_deref().unwrap_or("pkl:base"))?;
+        let (parsed, source) = pinned_module(
+            class
+                .origin_uri
+                .clone()
+                .unwrap_or_else(|| "pkl:base".into()),
+        )?;
         let member = parsed
             .members
             .iter()
             .find(|member| {
-                member.name.as_str() == class.name.as_ref()
+                member.name == class.name
                     && matches!(member.expr.kind, crate::syntax::ExprKind::Class { .. })
             })
             .ok_or_else(|| invalid("builtin class metadata not found"))?;
@@ -197,9 +203,13 @@ impl Vm {
         }
         let qualified = object
             .type_alias
-            .as_deref()
+            .as_ref()
             .ok_or_else(|| invalid("alias declaration name"))?;
-        let name = qualified.rsplit('#').next().unwrap_or(qualified);
+        let qualified_text = crate::source::SourceText::from(qualified);
+        let name = qualified_text
+            .entire()
+            .rsplit_once("#")
+            .map_or(qualified.clone(), |(_, name)| name.to_pkl_string());
         let (parsed, source) = pinned_module("pkl:base")?;
         let member = parsed
             .members
@@ -305,7 +315,7 @@ impl Vm {
                         rest: rest.to_vec(),
                     });
                 }
-                run.tasks.push(Task::Read(receiver, name.as_str().into()));
+                run.tasks.push(Task::Read(receiver, name.clone()));
             }
             Task::ResolveName { ty, context } => {
                 let object = self.heap.get(context.owner)?;
@@ -470,7 +480,7 @@ impl Vm {
         Ok(())
     }
 
-    fn reflection_type_module_name(&self, module: ObjectId) -> Result<Arc<str>, RuntimeError> {
+    fn reflection_type_module_name(&self, module: ObjectId) -> Result<PklString, RuntimeError> {
         Ok(self
             .heap
             .get(module)?
@@ -485,7 +495,7 @@ impl Vm {
     fn reflection_resolve_parent_type(
         &self,
         module: ObjectId,
-        name: Arc<str>,
+        name: PklString,
         span: Span,
         run: &mut Run,
     ) -> Result<(), RuntimeError> {
@@ -503,7 +513,9 @@ impl Vm {
         }
         let mut error = RuntimeError::new(
             ErrorKind::MissingType,
-            format!("Cannot find type `{name}`."),
+            PklString::from("Cannot find type `")
+                .concat(&name)
+                .concat(&"`.".into()),
         )
         .at(span);
         error.type_lookup_module = Some(self.reflection_type_module_name(module)?);
@@ -523,11 +535,10 @@ impl Vm {
         else {
             return Err(invalid("non-named declaration lookup"));
         };
-        let name: Arc<str> = path
+        let name: PklString = path
             .first()
             .ok_or_else(|| invalid("empty declared type path"))?
-            .as_str()
-            .into();
+            .clone();
         if path.len() == 1 {
             // ResolveSimpleDeclaredTypeNode: local declaration/import, own
             // regular declaration, canonical base, then parent modules.
@@ -543,7 +554,7 @@ impl Vm {
                     name,
                     local: member.local,
                 });
-            } else if context.source.uri.as_ref() == "pkl:base" {
+            } else if context.source.uri == "pkl:base" {
                 self.reflection_resolve_parent_type(module, name, ty.span, run)?;
             } else {
                 run.tasks.push(Task::ResolveSimpleBase {
@@ -560,7 +571,7 @@ impl Vm {
         }
         let member = self.declared_type_import(module, &name, name_spans[0])?;
         run.tasks.push(Task::ResolveQualifiedType {
-            name: path[1].as_str().into(),
+            name: path[1].clone(),
             span: Span::new(name_spans[0].start, name_spans[1].end),
             name_span: name_spans[1],
         });
@@ -621,9 +632,12 @@ impl Vm {
     pub(super) fn reflection_field(
         &mut self,
         payload: Payload,
-        name: &str,
+        name: &PklString,
         run: &mut Run,
     ) -> Result<(), RuntimeError> {
+        let name = name
+            .as_str()
+            .ok_or_else(|| invalid("non-scalar builtin mirror field"))?;
         match payload.data {
             Data::Fields(fields) => {
                 run.values.push(
@@ -641,7 +655,7 @@ impl Vm {
                     .as_ref()
                     .ok_or_else(|| invalid("location source"))?;
                 let mut sources = crate::source::SourceMap::default();
-                let id = sources.add(source.uri.as_ref(), source.text.as_ref());
+                let id = sources.add(source.uri.clone(), source.text.clone());
                 let position = sources
                     .get(id)
                     .unwrap()
@@ -706,7 +720,7 @@ impl Vm {
                     run.tasks.push(Task::BuildMap(
                         parameters
                             .iter()
-                            .map(|parameter| parameter.name.as_str().into())
+                            .map(|parameter| parameter.name.clone())
                             .collect(),
                     ));
                     for parameter in parameters.iter().rev() {
@@ -719,7 +733,7 @@ impl Vm {
                             self.reflection_type_context(&declaration)?,
                         ));
                         run.tasks
-                            .push(Task::Value(Value::String(parameter.name.as_str().into())));
+                            .push(Task::Value(Value::String(parameter.name.clone())));
                     }
                 }
                 "returnType" => {
@@ -763,7 +777,7 @@ impl Vm {
         match name {
             "name" => run
                 .values
-                .push(Value::String(declaration.syntax.name.as_str().into())),
+                .push(Value::String(declaration.syntax.name.clone())),
             "docComment" => run.values.push(
                 declaration
                     .syntax
@@ -775,6 +789,7 @@ impl Vm {
             "location" => run.tasks.push(Task::Make(Payload {
                 kind: Kind::SourceLocation,
                 data: Data::Location(RuntimeFrame {
+                    anonymous: false,
                     source: Some(declaration.source.clone()),
                     span: declaration.syntax.header_span,
                     member: PklString::default(),
@@ -872,13 +887,11 @@ impl Vm {
                     data: Data::Class(class),
                 }));
             }
-            "name" => run.values.push(Value::String(unit.name.as_ref().into())),
+            "name" => run.values.push(Value::String(unit.name.clone())),
             "uri" => run.values.push(Value::String(
                 unit.identity
                     .as_ref()
-                    .map_or(source.uri.as_ref(), |identity| {
-                        identity.original_uri.as_ref()
-                    })
+                    .map_or(&source.uri, |identity| &identity.original_uri)
                     .into(),
             )),
             "docComment" => run.values.push(
@@ -892,6 +905,7 @@ impl Vm {
             "location" => run.tasks.push(Task::Make(Payload {
                 kind: Kind::SourceLocation,
                 data: Data::Location(RuntimeFrame {
+                    anonymous: false,
                     source: Some(source),
                     span: syntax
                         .declaration
@@ -938,9 +952,7 @@ impl Vm {
                         let imported = object
                             .members
                             .iter()
-                            .find(|compiled| {
-                                compiled.name.as_ref() == member.name && compiled.import()
-                            })
+                            .find(|compiled| compiled.name == member.name && compiled.import())
                             .and_then(|compiled| self.program.blocks.get(compiled.code))
                             .and_then(|block| {
                                 block.iter().find_map(|instruction| match instruction {
@@ -951,8 +963,8 @@ impl Vm {
                                 })
                             })
                             .ok_or_else(|| invalid("prepared reflection import URI"))?;
-                        names.push(member.name.as_str().into());
-                        run.values.push(Value::String(imported.as_ref().into()));
+                        names.push(member.name.clone());
+                        run.values.push(Value::String(imported.clone()));
                     }
                 }
                 run.tasks.push(Task::BuildMap(names));
@@ -981,15 +993,11 @@ impl Vm {
                         .collect()
                 };
                 run.tasks.push(Task::BuildMap(
-                    members
-                        .iter()
-                        .map(|member| member.name.as_str().into())
-                        .collect(),
+                    members.iter().map(|member| member.name.clone()).collect(),
                 ));
                 for member in members.into_iter().rev() {
                     run.tasks.push(Task::AsMirror(member.span));
-                    run.tasks
-                        .push(Task::Read(module, member.name.as_str().into()));
+                    run.tasks.push(Task::Read(module, member.name.clone()));
                 }
             }
             _ => return Err(invalid("module mirror field")),
@@ -1019,7 +1027,7 @@ impl Vm {
                 .push(Value::String(if self.heap.get(prototype)?.is_module {
                     "ModuleClass".into()
                 } else {
-                    self.heap.class_definition(class)?.name.as_ref().into()
+                    self.heap.class_definition(class)?.name.clone()
                 })),
             "superclass" => {
                 if let Some(parent) = self.heap.get_class(class)?.superclass {
@@ -1066,7 +1074,7 @@ impl Vm {
                 run.tasks.push(Task::BuildMap(
                     declarations
                         .iter()
-                        .map(|declaration| declaration.syntax.name.as_str().into())
+                        .map(|declaration| declaration.syntax.name.clone())
                         .collect(),
                 ));
                 for declaration in declarations.into_iter().rev() {
@@ -1140,13 +1148,17 @@ impl Vm {
             let object = self.heap.get(owner)?;
             let declarations = if object.builtin_type.is_some() {
                 let class = self.heap.class_definition(class)?;
-                let (parsed, source) =
-                    pinned_module(class.origin_uri.as_deref().unwrap_or("pkl:base"))?;
+                let (parsed, source) = pinned_module(
+                    class
+                        .origin_uri
+                        .clone()
+                        .unwrap_or_else(|| "pkl:base".into()),
+                )?;
                 let member = parsed
                     .members
                     .iter()
                     .find(|member| {
-                        member.name.as_str() == class.name.as_ref()
+                        member.name == class.name
                             && matches!(member.expr.kind, crate::syntax::ExprKind::Class { .. })
                     })
                     .ok_or_else(|| invalid("builtin class members"))?;
@@ -1174,7 +1186,7 @@ impl Vm {
                             .members
                             .iter()
                             .find(|compiled| {
-                                compiled.name.as_ref() == member.name && compiled.method == methods
+                                compiled.name == member.name && compiled.method == methods
                             })
                             .map(|member| member.code),
                         source: source.clone(),
@@ -1257,7 +1269,7 @@ impl Vm {
         } else {
             run.tasks.push(Task::Read(
                 declaration.owner,
-                declaration.syntax.name.as_str().into(),
+                declaration.syntax.name.clone(),
             ));
         }
         Ok(())

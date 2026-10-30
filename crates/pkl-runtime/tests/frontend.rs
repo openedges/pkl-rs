@@ -16,7 +16,7 @@ fn unicode_coordinates_are_not_interchangeable() {
     let after_crlf = source.position(10).unwrap();
     assert_eq!((after_crlf.line, after_crlf.column_utf16), (2, 1));
     assert_eq!(source.utf16_span(Span::new(1, 8)), Some((1, 4)));
-    assert_eq!(source.slice(Span::new(1, 5)), Some("😀"));
+    assert_eq!(source.slice(Span::new(1, 5)), Some("😀".into()));
 }
 
 #[test]
@@ -254,6 +254,9 @@ fn frontend_probe() {
             vm.start(entry, vec![]).unwrap();
             let module = loop {
                 match vm.poll(1000) {
+                    pkl_runtime::vm::VmPoll::Glob(_) => {
+                        panic!("unexpected glob request in non-glob regression")
+                    }
                     VmPoll::Ready(result) => break result.unwrap().as_object().unwrap(),
                     VmPoll::Yielded => {}
                     VmPoll::Log(_) | VmPoll::TransformFrame(_) => {
@@ -266,6 +269,9 @@ fn frontend_probe() {
             vm.start_member(module, "result").unwrap();
             let result = loop {
                 match vm.poll(1000) {
+                    pkl_runtime::vm::VmPoll::Glob(_) => {
+                        panic!("unexpected glob request in non-glob regression")
+                    }
                     VmPoll::Ready(result) => break result.unwrap(),
                     VmPoll::Yielded => {}
                     VmPoll::Log(_) | VmPoll::TransformFrame(_) => {

@@ -82,17 +82,26 @@ pub(super) fn builtin_members(
         let mut members = Vec::new();
         for (property, mut ty) in properties {
             let start = class_start
-                + source.text[class_start..]
+                + source
+                    .text
+                    .entire()
+                    .range(class_start..)
                     .find(&format!("{property}:"))
                     .expect("pinned annotation property");
             let name_span = Span::new(start, start + property.len());
             let type_start = name_span.end + 2;
-            let mut type_end = source.text[type_start..]
-                .find('\n')
-                .map_or(source.text.len(), |end| type_start + end);
+            let mut type_end = source
+                .text
+                .entire()
+                .range(type_start..)
+                .find("\n")
+                .map_or(source.text.len_bytes(), |end| type_start + end);
             if *name == "SourceCode" && property == "language" {
                 type_end = type_start
-                    + source.text[type_start..]
+                    + source
+                        .text
+                        .entire()
+                        .range(type_start..)
                         .find("\n\n")
                         .expect("source code language type end");
                 let literals = [
@@ -114,7 +123,10 @@ pub(super) fn builtin_members(
                 for literal in literals {
                     let text = format!("\"{literal}\"");
                     let start = offset
-                        + source.text[offset..type_end]
+                        + source
+                            .text
+                            .entire()
+                            .range(offset..type_end)
                             .find(&text)
                             .expect("literal union type");
                     offset = start + text.len();
@@ -122,7 +134,10 @@ pub(super) fn builtin_members(
                     types.push(TypeCheck::StringLiteral(literal.into()));
                 }
                 let start = offset
-                    + source.text[offset..type_end]
+                    + source
+                        .text
+                        .entire()
+                        .range(offset..type_end)
                         .find("String")
                         .expect("string union type");
                 spans.push(Span::new(start, start + 6));
@@ -147,7 +162,11 @@ pub(super) fn builtin_members(
                     Instruction::LoadCustomThis,
                     Instruction::ObserveNativeLiteral {
                         span: regex_span,
-                        rendered: source.text[regex_span.start..regex_span.end].into(),
+                        rendered: source
+                            .text
+                            .entire()
+                            .range(regex_span.start..regex_span.end)
+                            .into(),
                     },
                     Instruction::MatchModuleVersion,
                     Instruction::Observe(span),
@@ -169,13 +188,16 @@ pub(super) fn builtin_members(
                         argument_sources: BTreeMap::new(),
                         span,
                         module_environment: false,
-                        source: source.text[span.start..span.end].into(),
+                        source: source.text.entire().range(span.start..span.end).into(),
                     }],
                 };
             }
             if let TypeCheck::ParameterizedCollection { arguments, .. } = &mut ty {
                 let start = type_start
-                    + source.text[type_start..type_end]
+                    + source
+                        .text
+                        .entire()
+                        .range(type_start..type_end)
                         .find("String")
                         .expect("annotation collection argument");
                 arguments[0].1 = Span::new(start, start + 6);
@@ -198,7 +220,7 @@ pub(super) fn builtin_members(
                     },
                     Instruction::EndCollection,
                 ],
-                _ => vec![Instruction::Undefined(Arc::from(property))],
+                _ => vec![Instruction::Undefined(property.into())],
             };
             instructions.push(Instruction::CheckType(ty.clone()));
             instructions.push(Instruction::Return);
@@ -225,7 +247,7 @@ pub(super) fn builtin_members(
             members.push(Member {
                 flags: 0,
                 entry: false,
-                name: Arc::from(property),
+                name: property.into(),
                 code,
                 local: false,
                 method: false,
@@ -325,6 +347,7 @@ impl Vm {
                 let metadata = &self.program.metadata[caller.block];
                 if let Some(span) = metadata.spans[caller.pc.saturating_sub(1)] {
                     error.frames.push(RuntimeFrame {
+                        anonymous: false,
                         source: metadata.source.clone(),
                         span,
                         member: caller
@@ -364,7 +387,7 @@ impl Vm {
         if let Some(id) = annotation {
             self.heap.get_mut(owner)?.deprecation = Some(PklString::default());
             let caller = self.frames.len() - 1;
-            self.force(id, id, Arc::from("message"), false, true, false)?;
+            self.force(id, id, "message".into(), false, true, false)?;
             if self.frames.len() > caller + 1 {
                 self.frames[caller].callsite_hidden = true;
             }

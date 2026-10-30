@@ -4,6 +4,7 @@ use pkl_runtime::modules::{
     ModuleCompletion, ModuleHostError, ModuleRequest, ModuleRequestKind, ModuleSource,
     ResolvedModule,
 };
+use pkl_runtime::value::PklString;
 use std::path::{Path, PathBuf};
 
 pub fn complete(request: &ModuleRequest) -> ModuleCompletion {
@@ -16,7 +17,13 @@ pub fn complete(request: &ModuleRequest) -> ModuleCompletion {
         }
         ModuleRequestKind::SelectKey { id, uri, .. } => ModuleCompletion::KeySelected(
             file_path(uri)
-                .map_err(|_| ModuleHostError::NoLoader)
+                .map_err(|error| {
+                    if uri.as_str().is_none() {
+                        error
+                    } else {
+                        ModuleHostError::NoLoader
+                    }
+                })
                 .map(|_| pkl_runtime::modules::ModuleKey {
                     id: *id,
                     uri: uri.clone(),
@@ -57,15 +64,20 @@ pub fn complete(request: &ModuleRequest) -> ModuleCompletion {
     }
 }
 
-fn resolve(import_uri: &str, original_uri: &str) -> Result<ResolvedModule, ModuleHostError> {
-    let path = file_path(import_uri)?.canonicalize().map_err(io_error)?;
+fn resolve(
+    import_uri: impl Into<PklString>,
+    original_uri: impl Into<PklString>,
+) -> Result<ResolvedModule, ModuleHostError> {
+    let import_uri = import_uri.into();
+    let original_uri = original_uri.into();
+    let path = file_path(&import_uri)?.canonicalize().map_err(io_error)?;
     let uri = file_uri(&path)?;
     Ok(ResolvedModule {
-        original_uri: original_uri.into(),
+        original_uri: original_uri.clone(),
         resolved_uri: uri.into(),
         // VmUtils.loadSource retains the original ModuleKey URI for source
         // diagnostics even when resolution canonicalizes a symlink alias.
-        source_uri: original_uri.into(),
+        source_uri: original_uri,
     })
 }
 
@@ -97,7 +109,11 @@ pub(super) fn io_error(error: std::io::Error) -> ModuleHostError {
     }
 }
 
-pub(super) fn file_path(uri: &str) -> Result<PathBuf, ModuleHostError> {
+pub(super) fn file_path(uri: impl Into<PklString>) -> Result<PathBuf, ModuleHostError> {
+    let uri = uri.into();
+    let uri = uri.as_str().ok_or_else(|| ModuleHostError::Unsupported(
+        "This development filesystem Host cannot represent an unpaired UTF-16 surrogate in a URI.".into(),
+    ))?;
     let unsupported = || {
         ModuleHostError::Unsupported(
             "This development module Host supports absolute local file URIs only.".into(),
@@ -190,6 +206,13 @@ mod tests {
 
     #[test]
     fn unsupported_uri_forms_do_not_turn_into_missing_files() {
+        for unit in [0xd800, 0xdfff] {
+            let uri = PklString::from("file:/").concat(&PklString::from_utf16(vec![unit]));
+            assert!(matches!(
+                file_path(&uri),
+                Err(ModuleHostError::Unsupported(_))
+            ));
+        }
         for uri in [
             "https://example.test/a.pkl",
             "file://server/a.pkl",

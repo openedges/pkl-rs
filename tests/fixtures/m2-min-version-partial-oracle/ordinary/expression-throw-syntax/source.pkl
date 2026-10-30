@@ -1,0 +1,4 @@
+@ModuleInfo { minPklVersion = throw("ANNOTATION-MUST-NOT-EVALUATE") }
+module declared.primaryName
+result = "ok"
+value = (

@@ -20,7 +20,7 @@ fn accessor(program: &mut Program, name: &str) -> usize {
     let entry = program.blocks.len();
     program
         .blocks
-        .push(vec![I::Input(0), I::GetMember(Arc::from(name)), I::Return]);
+        .push(vec![I::Input(0), I::GetMember(name.into()), I::Return]);
     entry
 }
 
@@ -72,9 +72,9 @@ fn program(mode: &str, source: &str) -> Arc<Program> {
                 ],
                 vec![
                     I::LoadThis,
-                    I::GetMember(Arc::from("first")),
+                    I::GetMember("first".into()),
                     I::LoadThis,
-                    I::GetMember(Arc::from("second")),
+                    I::GetMember("second".into()),
                     I::Add,
                     I::Return,
                 ],
@@ -98,7 +98,7 @@ fn program(mode: &str, source: &str) -> Arc<Program> {
                 ],
                 vec![
                     I::LoadThis,
-                    I::GetMember(Arc::from("seed")),
+                    I::GetMember("seed".into()),
                     I::Constant(Value::string("!")),
                     I::Add,
                     I::Return,
@@ -107,7 +107,7 @@ fn program(mode: &str, source: &str) -> Arc<Program> {
                     I::Constant(Value::string("life:outer")),
                     I::ReadResource,
                     I::LoadThis,
-                    I::GetMember(Arc::from("shared")),
+                    I::GetMember("shared".into()),
                     I::Add,
                     I::Return,
                 ],
@@ -126,7 +126,7 @@ fn program(mode: &str, source: &str) -> Arc<Program> {
             .map(|(name, code)| Member {
                 flags: 0,
                 entry: false,
-                name: Arc::from(name),
+                name: name.into(),
                 code,
                 local: false,
                 method: false,
@@ -157,10 +157,10 @@ fn main() {
             loop {
                 match vm.poll(1024) {
                     VmPoll::Pending(request) => {
-                        let (count, value, message) = match request.uri.as_ref() {
-                            "life:first" => (&mut first, "A", "transient first failure"),
-                            "life:second" => (&mut second, "B", "transient second failure"),
-                            other => panic!("unexpected read: {other}"),
+                        let (count, value, message) = match request.uri.as_str() {
+                            Some("life:first") => (&mut first, "A", "transient first failure"),
+                            Some("life:second") => (&mut second, "B", "transient second failure"),
+                            other => panic!("unexpected read: {other:?}"),
                         };
                         *count += 1;
                         let result = if *count == 1 {
@@ -189,6 +189,11 @@ fn main() {
                         panic!("bounded lifecycle probe has no logger callback")
                     }
                     VmPoll::Module(_) => panic!("bounded lifecycle probe has no module callback"),
+                    VmPoll::Glob(_) => {
+                        eprintln!("Unsupported: the bounded lifecycle probe has no glob callback.");
+                        vm.close();
+                        std::process::exit(2);
+                    }
                 }
             }
         }
@@ -211,7 +216,7 @@ fn main() {
         let HostPoll::Read { token, uri } = host.poll(0, 1024) else {
             panic!("seed callback missing");
         };
-        assert_eq!(&*uri, "life:shared");
+        assert_eq!(uri, "life:shared");
         host.resume(&token, Ok(Value::string("S")), 0).unwrap();
         println!(
             "warmup value={} reader_calls=1",
@@ -225,7 +230,7 @@ fn main() {
         else {
             panic!("outer callback missing");
         };
-        assert_eq!(&*uri, "life:outer");
+        assert_eq!(uri, "life:outer");
         let calls = 2;
         host.reenter(&outer_token, shared, vec![object.clone()], 0, None)
             .unwrap();
@@ -235,7 +240,7 @@ fn main() {
             panic!("outer callback was not restored");
         };
         assert_eq!(token, outer_token);
-        assert_eq!(&*uri, "life:outer");
+        assert_eq!(uri, "life:outer");
         host.resume(&outer_token, Ok(inner), 0).unwrap();
         println!(
             "outer value={} reader_calls={calls}",

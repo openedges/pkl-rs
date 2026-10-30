@@ -69,9 +69,9 @@ fn run(id: &str, java_internal_boundary: bool) {
             .join("calls")
             .join(id);
         let mut probe = SourceProbe::new_expressions_text(
-            &text(&fixture, "main.pkl"),
-            &text(&fixture, "uri.txt"),
-            &text(&fixture, "module-name.txt"),
+            text(&fixture, "main.pkl"),
+            text(&fixture, "uri.txt"),
+            text(&fixture, "module-name.txt"),
             &expressions,
             "compact",
             false,

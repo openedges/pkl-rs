@@ -95,9 +95,7 @@ fn custom_base_uses_its_source_and_builtin_singleton_keeps_its_own_receiver() {
                 ModuleRequestKind::ResolveKey { .. } => {
                     panic!("public lifecycle request in supplied-source test")
                 }
-                ModuleRequestKind::SelectKey { uri, .. }
-                    if uri.as_ref() == "pkl:base" && select_custom =>
-                {
+                ModuleRequestKind::SelectKey { uri, .. } if uri == "pkl:base" && select_custom => {
                     key(request, None)
                 }
                 ModuleRequestKind::QueryCachePolicy { key } if key.kind == ModuleKeyKind::Host => {
@@ -143,8 +141,8 @@ fn uncached_load_bypasses_lookups_but_publishes_for_later_cached_keys_and_sites(
                 }
                 ModuleRequestKind::Resolve { .. } => resolved(request, Some("memo:/resolved.pkl")),
                 ModuleRequestKind::LoadSource { key, .. } => {
-                    assert_eq!(key.handle.as_ref(), format!("resolved-{}", key.id.0));
-                    assert_eq!(key.key.handle.as_ref(), format!("key-{}", key.key.id.0));
+                    assert_eq!(key.handle, format!("resolved-{}", key.id.0));
+                    assert_eq!(key.key.handle, format!("key-{}", key.key.id.0));
                     loads += 1;
                     source(&format!(
                         "class C {{ value={loads} }}\ntypealias A=C\nx: A=new C {{}}\ntag=x.value\n"
@@ -187,7 +185,7 @@ fn clause_factory_selection_is_eager_and_selected_uri_infers_the_member_name() {
                     ModuleCompletion::CachePolicy(Ok(true))
                 }
                 ModuleRequestKind::Resolve { key, .. } => {
-                    assert_eq!(key.uri.as_ref(), "memo:/chosen.pkl");
+                    assert_eq!(key.uri, "memo:/chosen.pkl");
                     resolved(request, None)
                 }
                 ModuleRequestKind::LoadSource { .. } => source("tag=99\n"),
@@ -243,7 +241,7 @@ fn raw_factory_error_uri_is_distinct_from_normalized_factory_input() {
             panic!("public lifecycle request in supplied-source test")
         }
         ModuleRequestKind::SelectKey { uri, .. } => {
-            assert_eq!(uri.as_ref(), "memo:/missing.pkl");
+            assert_eq!(uri, "memo:/missing.pkl");
             Some(ModuleCompletion::KeySelected(Err(
                 ModuleHostError::NoLoader,
             )))
@@ -266,9 +264,7 @@ fn custom_ref_uri_uses_actual_declared_types_without_builtin_reference_rules() {
                 ModuleRequestKind::ResolveKey { .. } => {
                     panic!("public lifecycle request in supplied-source test")
                 }
-                ModuleRequestKind::SelectKey { uri, .. } if uri.as_ref() == "pkl:ref" => {
-                    key(request, None)
-                }
+                ModuleRequestKind::SelectKey { uri, .. } if uri == "pkl:ref" => key(request, None),
                 ModuleRequestKind::QueryCachePolicy { key } if key.kind == ModuleKeyKind::Host => {
                     ModuleCompletion::CachePolicy(Ok(true))
                 }
@@ -320,9 +316,7 @@ fn rethrowing_a_cached_parent_does_not_replace_a_new_failure_at_the_same_uri() {
                     ModuleCompletion::CachePolicy(Ok(index != 1))
                 }
                 ModuleRequestKind::Resolve { .. } => resolved(request, None),
-                ModuleRequestKind::LoadSource { key, .. }
-                    if key.key.uri.as_ref() == "memo:/parent.pkl" =>
-                {
+                ModuleRequestKind::LoadSource { key, .. } if key.key.uri == "memo:/parent.pkl" => {
                     source("import \"memo:/u.pkl\" as u\np: u.Absent? = null\ntag=\"parent\"\n")
                 }
                 ModuleRequestKind::LoadSource { .. } => {

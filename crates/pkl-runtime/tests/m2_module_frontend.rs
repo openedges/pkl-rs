@@ -857,7 +857,7 @@ fn grouped_keywords_and_actual_lambda_parameters_remain_distinct() {
         assert_eq!(
             parameters
                 .iter()
-                .map(|parameter| parameter.name.as_str())
+                .map(|parameter| parameter.name.clone())
                 .collect::<Vec<_>>(),
             names
         );

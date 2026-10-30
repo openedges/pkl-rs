@@ -148,14 +148,27 @@ pub(super) fn blocks(
             } else {
                 format!("external function {name}")
             };
-            let start = class + source.text[class..].find(&needle).expect("pinned Set API");
+            let start = class
+                + source
+                    .text
+                    .entire()
+                    .range(class..)
+                    .find(&needle)
+                    .expect("pinned Set API");
             let end = if property {
-                start + source.text[start..].find('\n').unwrap()
+                start + source.text.entire().range(start..).find("\n").unwrap()
             } else {
-                let open = start + source.text[start..].find('(').unwrap();
+                let open = start + source.text.entire().range(start..).find("(").unwrap();
                 let mut depth = 0;
                 let mut closing = open;
-                for (i, c) in source.text[open..].char_indices() {
+                for (i, c) in source
+                    .text
+                    .entire()
+                    .range(open..)
+                    .as_str()
+                    .expect("pinned builtin source is scalar")
+                    .char_indices()
+                {
                     if c == '(' {
                         depth += 1;
                     }
@@ -167,7 +180,7 @@ pub(super) fn blocks(
                         }
                     }
                 }
-                closing + source.text[closing..].find('\n').unwrap()
+                closing + source.text.entire().range(closing..).find("\n").unwrap()
             };
             let mut code = vec![];
             let mut spans = vec![];
@@ -183,11 +196,36 @@ pub(super) fn blocks(
                 } else {
                     "comparator: "
                 };
-                let parameter = start + source.text[start..end].find(label).unwrap() + label.len();
-                let arrow = parameter + source.text[parameter..end].find(" -> ").unwrap();
-                let type_end = arrow + 4 + source.text[arrow + 4..end].find([')', '\n']).unwrap();
-                let type_end =
-                    arrow + 4 + source.text[arrow + 4..type_end].trim_end_matches(',').len();
+                let parameter = start
+                    + source.text.entire().range(start..end).find(label).unwrap()
+                    + label.len();
+                let arrow = parameter
+                    + source
+                        .text
+                        .entire()
+                        .range(parameter..end)
+                        .find(" -> ")
+                        .unwrap();
+                let type_end = arrow
+                    + 4
+                    + source
+                        .text
+                        .entire()
+                        .range(arrow + 4..end)
+                        .as_str()
+                        .expect("pinned builtin source is scalar")
+                        .find([')', '\n'])
+                        .unwrap();
+                let type_end = arrow
+                    + 4
+                    + source
+                        .text
+                        .entire()
+                        .range(arrow + 4..type_end)
+                        .as_str()
+                        .expect("pinned builtin source is scalar")
+                        .trim_end_matches(',')
+                        .len();
                 code.extend([
                     Instruction::LoadLocal(0),
                     Instruction::CheckType(TypeCheck::Function {
@@ -777,7 +815,7 @@ fn order(
     left: &Value,
     right: &Value,
     heap: &Heap,
-    module: &str,
+    module: &PklString,
 ) -> Result<bool, RuntimeError> {
     let Value::Bool(result) = binary(
         if kind.maximum() {
@@ -795,7 +833,7 @@ fn order(
     };
     Ok(result)
 }
-fn comparator(value: Value, heap: &Heap, module: &str) -> Result<bool, RuntimeError> {
+fn comparator(value: Value, heap: &Heap, module: &PklString) -> Result<bool, RuntimeError> {
     match value {
         Value::Bool(value) => Ok(value),
         Value::Int(value) => Ok(value.get() < 0),
@@ -807,7 +845,7 @@ fn comparator(value: Value, heap: &Heap, module: &str) -> Result<bool, RuntimeEr
                 PklString::join(
                     &[
                         "Expected value of type `Boolean` or `Int`, but got type `".into(),
-                        crate::diagnostic_values::type_name(&value, heap, module)?.into(),
+                        crate::diagnostic_values::type_name(&value, heap, module)?,
                         "`.\nValue: ".into(),
                         crate::diagnostic_values::render_string(&value, heap, module, 80)?,
                     ],

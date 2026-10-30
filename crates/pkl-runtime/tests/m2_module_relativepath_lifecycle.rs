@@ -25,8 +25,8 @@ fn next(probe: &mut SourceProbe) -> SourceEvent {
             }
             let request = probe.module_request(token).unwrap();
             let original = match &request.kind {
-                ModuleRequestKind::Resolve { original_uri, .. } => Some(original_uri.as_ref()),
-                ModuleRequestKind::ResolveKey { key, .. } => Some(key.uri.as_ref()),
+                ModuleRequestKind::Resolve { original_uri, .. } => Some(original_uri),
+                ModuleRequestKind::ResolveKey { key, .. } => Some(&key.uri),
                 _ => None,
             };
             if let Some(original) = original {
@@ -55,7 +55,7 @@ fn argument_module_loader_suspends_reenters_and_uses_original_key_without_forcin
         .evaluate_module_source(
             URI,
             Some(SOURCE),
-            &format!("module.relativePathTo(import(\"{CHILD}\")).toString()"),
+            format!("module.relativePathTo(import(\"{CHILD}\")).toString()"),
             0,
             None,
         )

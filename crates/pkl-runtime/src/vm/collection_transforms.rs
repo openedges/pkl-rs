@@ -141,7 +141,10 @@ pub(super) fn blocks(
         let selector = matches!(operation, DistinctBy | IsDistinctBy);
         let delimiter = if predicate || selector { '(' } else { '<' };
         let start = class_start
-            + source.text[class_start..]
+            + source
+                .text
+                .entire()
+                .range(class_start..)
                 .find(&format!(
                     "external function {}{delimiter}",
                     operation.name()
@@ -157,28 +160,56 @@ pub(super) fn blocks(
             "transform: "
         };
         let parameter = start
-            + source.text[start..]
+            + source
+                .text
+                .entire()
+                .range(start..)
                 .find(parameter_name)
                 .expect("callback parameter")
             + parameter_name.len();
         // The function type includes the argument tuple and the result type;
         // delimit it at the method parameter's closing delimiter, not the tuple.
         let arrow = parameter
-            + source.text[parameter..]
+            + source
+                .text
+                .entire()
+                .range(parameter..)
                 .find(" -> ")
                 .expect("function arrow");
         let result_end = arrow
             + 4
-            + source.text[arrow + 4..]
+            + source
+                .text
+                .entire()
+                .range(arrow + 4..)
+                .as_str()
+                .expect("pinned builtin source is scalar")
                 .find([')', '\n'])
                 .expect("function result end");
-        let type_end = source.text[arrow + 4..result_end]
+        let type_end = source
+            .text
+            .entire()
+            .range(arrow + 4..result_end)
+            .as_str()
+            .expect("pinned builtin source is scalar")
             .trim_end_matches(',')
             .len()
             + arrow
             + 4;
-        let closing = arrow + source.text[arrow..].find("):").expect("method return type");
-        let declaration_end = closing + source.text[closing..].find('\n').unwrap_or(0);
+        let closing = arrow
+            + source
+                .text
+                .entire()
+                .range(arrow..)
+                .find("):")
+                .expect("method return type");
+        let declaration_end = closing
+            + source
+                .text
+                .entire()
+                .range(closing..)
+                .find("\n")
+                .unwrap_or(0);
         let arity = if matches!(operation, Fold) {
             3
         } else if class == "Map" || operation.indexed() {
@@ -297,10 +328,13 @@ pub(super) fn projection_blocks(
             format!("external function {name}():")
         };
         let start = class_start
-            + source.text[class_start..]
+            + source
+                .text
+                .entire()
+                .range(class_start..)
                 .find(&signature)
                 .expect("collection projection");
-        let end = start + source.text[start..].find('\n').unwrap();
+        let end = start + source.text.entire().range(start..).find("\n").unwrap();
         let mut code = match operation {
             None => vec![Instruction::LoadThis, Instruction::Return],
             Some(Projection::KeysHash) => vec![
@@ -422,9 +456,12 @@ impl Vm {
     pub(super) fn collection_projection_member(
         &mut self,
         receiver: Value,
-        name: &str,
+        name: &PklString,
         method: bool,
     ) -> Result<bool, RuntimeError> {
+        let Some(name) = name.as_str() else {
+            return Ok(false);
+        };
         let index = match (method, name) {
             (true, "toList") if self.is_list(&receiver) => 0,
             (true, "toSet") if self.is_list(&receiver) => 1,
@@ -458,7 +495,14 @@ impl Vm {
         Ok(true)
     }
 
-    pub(super) fn collection_transform_method(&mut self, receiver: Value, name: &str) -> bool {
+    pub(super) fn collection_transform_method(
+        &mut self,
+        receiver: Value,
+        name: &PklString,
+    ) -> bool {
+        let Some(name) = name.as_str() else {
+            return false;
+        };
         let offset = if self.is_list(&receiver) {
             0
         } else if self.is_set(&receiver) {
@@ -988,7 +1032,7 @@ impl Vm {
             Member {
                 flags: 0,
                 entry: true,
-                name: Arc::from(""),
+                name: PklString::default(),
                 code: usize::MAX,
                 local: false,
                 method: false,
@@ -1117,8 +1161,14 @@ pub(super) fn endpoint_blocks(
             "singleOrNull",
         ] {
             let signature = format!("external {name}:");
-            let start = class + source.text[class..].find(&signature).unwrap();
-            let end = start + source.text[start..].find('\n').unwrap();
+            let start = class
+                + source
+                    .text
+                    .entire()
+                    .range(class..)
+                    .find(&signature)
+                    .unwrap();
+            let end = start + source.text.entire().range(start..).find("\n").unwrap();
             let block = blocks.len();
             blocks.push(vec![
                 Instruction::Primitive(primitives::Operation::CollectionEndpoint {
@@ -1241,12 +1291,21 @@ pub(super) fn every_blocks(
             .find(&format!("class {class}<"))
             .expect("pinned collection class");
         let start = class_start
-            + source.text[class_start..]
+            + source
+                .text
+                .entire()
+                .range(class_start..)
                 .find("external function every(")
                 .expect("pinned every");
-        let end = start + source.text[start..].find('\n').unwrap();
-        let parameter = start + source.text[start..end].find(": ").unwrap() + 2;
-        let type_end = start + source.text[start..end].rfind("): Boolean").unwrap();
+        let end = start + source.text.entire().range(start..).find("\n").unwrap();
+        let parameter = start + source.text.entire().range(start..end).find(": ").unwrap() + 2;
+        let type_end = start
+            + source
+                .text
+                .entire()
+                .range(start..end)
+                .rfind("): Boolean")
+                .unwrap();
         let arity = if matches!(class, "Map" | "Mapping") {
             2
         } else {
@@ -1763,8 +1822,11 @@ impl Vm {
     pub(super) fn collection_cached_property(
         &self,
         receiver: ObjectId,
-        name: &str,
+        name: &PklString,
     ) -> Result<Option<Member>, RuntimeError> {
+        let Some(name) = name.as_str() else {
+            return Ok(None);
+        };
         let code = match (self.heap.get(receiver)?.collection_kind, name) {
             (CollectionKind::List, "distinct") => self.program.collection_projection_blocks[10],
             (CollectionKind::List, "isDistinct") => self.program.collection_projection_blocks[13],
@@ -1796,8 +1858,11 @@ impl Vm {
     pub(super) fn steal_collection_property(
         &mut self,
         receiver: ObjectId,
-        name: &str,
+        name: &PklString,
     ) -> Result<bool, RuntimeError> {
+        let Some(name) = name.as_str() else {
+            return Ok(false);
+        };
         let kind = self.heap.get(receiver)?.collection_kind;
         let listing_cached = kind == CollectionKind::Listing
             && (matches!(name, "isDistinct" | "distinct") || listing_endpoint(name));

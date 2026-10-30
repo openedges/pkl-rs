@@ -143,15 +143,12 @@ fn imported_eof_origin_is_adjusted_once_and_nested_callers_keep_their_coordinate
                                     resolved_key_id,
                                     ..
                                 } => {
-                                    let source_uri = if key.uri.as_ref() == child_uri
-                                        || key.uri.as_ref() == child_key_uri
+                                    let source_uri = if key.uri == child_uri
+                                        || key.uri == child_key_uri
                                     {
                                         child_uri.as_str()
                                     } else {
-                                        assert!(
-                                            key.uri.as_ref() == owner_uri
-                                                || key.uri.as_ref() == owner_key_uri
-                                        );
+                                        assert!(key.uri == owner_uri || key.uri == owner_key_uri);
                                         owner_uri.as_str()
                                     };
                                     ModuleCompletion::KeyResolved(Ok(ResolvedModuleKey {
@@ -172,7 +169,7 @@ fn imported_eof_origin_is_adjusted_once_and_nested_callers_keep_their_coordinate
                                     }))
                                 }
                                 ModuleRequestKind::LoadSource { resolved, .. } => {
-                                    assert_eq!(resolved.source_uri.as_ref(), child_uri.as_str());
+                                    assert_eq!(resolved.source_uri, child_uri.as_str());
                                     ModuleCompletion::Source(Ok(ModuleSource {
                                         text: child.clone().into(),
                                         inferred_name: "ignoredWrongOwner".into(),
@@ -182,8 +179,7 @@ fn imported_eof_origin_is_adjusted_once_and_nested_callers_keep_their_coordinate
                                     // Java's explicit child synthetic key is local and nonhierarchical;
                                     // the supplied primary retains the normal file factory profile.
                                     let child_key = key.as_ref().is_some_and(|key| {
-                                        key.uri.as_ref() == child_uri
-                                            || key.uri.as_ref() == child_key_uri
+                                        key.uri == child_uri || key.uri == child_key_uri
                                     });
                                     ModuleCompletion::Capabilities(Ok(ModuleCapabilities {
                                         local: true,

@@ -52,16 +52,14 @@ pub(super) fn resolve(expression: &Expr, names: &BTreeMap<Span, Binding>) -> Opt
 }
 
 impl ConstantKey {
-    pub(super) fn render(&self) -> String {
+    pub(super) fn render(&self) -> PklString {
         let text = self.text();
         let mut units: Vec<_> = text.encode_utf16().collect();
         if units.len() >= 80 {
             units.truncate(77);
             units.extend("...".encode_utf16());
         }
-        char::decode_utf16(units)
-            .map(|unit| unit.unwrap_or('?'))
-            .collect()
+        PklString::from_utf16(units)
     }
 
     fn text(&self) -> PklString {

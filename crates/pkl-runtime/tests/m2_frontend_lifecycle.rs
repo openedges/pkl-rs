@@ -405,7 +405,7 @@ fn host_event(session: &mut HostSession, now: u64) -> HostPoll {
 fn host_read(session: &mut HostSession, now: u64, uri: &str) -> String {
     match host_event(session, now) {
         HostPoll::Read { token, uri: actual } => {
-            assert_eq!(&*actual, uri);
+            assert_eq!(actual, uri);
             session.collect(&[]);
             token
         }

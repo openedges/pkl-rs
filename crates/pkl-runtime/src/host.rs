@@ -19,7 +19,7 @@ pub enum HostPoll {
     Ready(Result<Value, RuntimeError>),
     Read {
         token: String,
-        uri: Arc<str>,
+        uri: crate::value::PklString,
     },
     Log {
         token: String,
@@ -32,6 +32,10 @@ pub enum HostPoll {
     Module {
         token: String,
         request: crate::modules::ModuleRequest,
+    },
+    Glob {
+        token: String,
+        request: crate::glob::GlobRequest,
     },
     Yielded,
 }
@@ -51,6 +55,7 @@ pub struct HostSession {
     next_context: u64,
     cancelled_reads: Vec<String>,
     cancelled_modules: Vec<String>,
+    cancelled_globs: Vec<String>,
     terminal: Option<RuntimeError>,
     active: bool,
     intermediate_result: Option<Result<Value, RuntimeError>>,
@@ -73,6 +78,7 @@ impl HostSession {
             next_context: 1,
             cancelled_reads: Vec::new(),
             cancelled_modules: Vec::new(),
+            cancelled_globs: Vec::new(),
             terminal: None,
             active: false,
             intermediate_result: None,
@@ -82,7 +88,7 @@ impl HostSession {
     pub(crate) fn append_public_operation(
         &mut self,
         source: crate::modules::ModuleSourceSpec,
-        expression: Arc<str>,
+        expression: crate::source::SourceText,
     ) -> Result<usize, RuntimeError> {
         self.open()?;
         if self.active {
@@ -94,7 +100,7 @@ impl HostSession {
         &mut self,
         token: &str,
         source: crate::modules::ModuleSourceSpec,
-        expression: Arc<str>,
+        expression: crate::source::SourceText,
         now: u64,
         timeout: Option<u64>,
     ) -> Result<(), RuntimeError> {
@@ -268,6 +274,10 @@ impl HostSession {
                 token: self.token(self.contexts.last().expect("active context").id, request.id),
                 request,
             },
+            VmPoll::Glob(request) => HostPoll::Glob {
+                token: self.token(self.contexts.last().expect("active context").id, request.id),
+                request,
+            },
             VmPoll::Yielded => HostPoll::Yielded,
         }
     }
@@ -366,6 +376,70 @@ impl HostSession {
             Err(error) => error,
         };
         self.vm.resume(id, Err(error))
+    }
+
+    /// Explicit org.pkl.testMode counterpart for glob enumeration limits.
+    /// Production mode remains the default; no environment or case-name lookup.
+    pub fn set_glob_test_mode(&mut self, enabled: bool) -> Result<(), RuntimeError> {
+        self.open()?;
+        if self.active {
+            return Err(error(ErrorKind::Busy, "evaluation is already active"));
+        }
+        self.vm.set_glob_test_mode(enabled)
+    }
+
+    pub fn glob_request(&self, token: &str) -> Result<crate::glob::GlobRequest, RuntimeError> {
+        self.open()?;
+        let id = self.request_id(token)?;
+        match self.vm.pending_requests().pop() {
+            Some(Some(PendingRequest::Glob(request))) if request.id == id => Ok(request),
+            _ => Err(stale()),
+        }
+    }
+
+    /// Typed completion for the current context only. VM admission validates
+    /// request kind, reader identity and failure phase before consuming state.
+    pub fn complete_glob(
+        &mut self,
+        token: &str,
+        completion: crate::glob::GlobCompletion,
+        now_ms: u64,
+    ) -> Result<(), RuntimeError> {
+        self.open()?;
+        self.clock(now_ms)?;
+        if self.expire(now_ms) {
+            return Err(self.terminal.clone().unwrap());
+        }
+        let request = self.request_id(token)?;
+        self.vm.complete_glob(request, completion)
+    }
+
+    /// Delegate only to the explicit configured profile. Admission, clock and
+    /// deadline checks run even when that profile cannot complete the operation.
+    pub fn complete_default_glob(
+        &mut self,
+        token: &str,
+        properties: &[(String, String)],
+        environment: &[(String, String)],
+        now_ms: u64,
+    ) -> Result<bool, RuntimeError> {
+        self.open()?;
+        self.clock(now_ms)?;
+        if self.expire(now_ms) {
+            return Err(self.terminal.clone().unwrap());
+        }
+        let request = self.glob_request(token)?;
+        let Some(completion) =
+            crate::glob::configured_completion(&request, properties, environment)
+        else {
+            return Ok(false);
+        };
+        self.vm.complete_glob(request.id, completion)?;
+        Ok(true)
+    }
+
+    pub fn drain_cancelled_globs(&mut self) -> Vec<String> {
+        std::mem::take(&mut self.cancelled_globs)
     }
 
     pub fn module_request(
@@ -626,6 +700,18 @@ impl HostSession {
                     .zip(self.vm.pending_requests())
                     .filter_map(|(context, request)| match request {
                         Some(PendingRequest::Module(request)) => {
+                            Some(self.token(context.id, request.id))
+                        }
+                        _ => None,
+                    })
+                    .collect::<Vec<_>>(),
+            );
+            self.cancelled_globs.extend(
+                self.contexts
+                    .iter()
+                    .zip(self.vm.pending_requests())
+                    .filter_map(|(context, request)| match request {
+                        Some(PendingRequest::Glob(request)) => {
                             Some(self.token(context.id, request.id))
                         }
                         _ => None,

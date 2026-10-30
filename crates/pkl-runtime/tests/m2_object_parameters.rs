@@ -82,11 +82,9 @@ fn suspended_session() -> (HostSession, Value, usize, usize) {
     let module_entry = program.entry;
     let entries = ["outerResult", "innerResult"].map(|member| {
         let entry = program.blocks.len();
-        program.blocks.push(vec![
-            I::Input(0),
-            I::GetMember(Arc::from(member)),
-            I::Return,
-        ]);
+        program
+            .blocks
+            .push(vec![I::Input(0), I::GetMember(member.into()), I::Return]);
         entry
     });
     let mut session = HostSession::new(Arc::new(program));
@@ -110,7 +108,7 @@ fn event(session: &mut HostSession) -> HostPoll {
 fn read(session: &mut HostSession, expected: &str) -> String {
     match event(session) {
         HostPoll::Read { token, uri } => {
-            assert_eq!(&*uri, expected);
+            assert_eq!(uri, expected);
             token
         }
         other => panic!("expected {expected}, got {other:?}"),

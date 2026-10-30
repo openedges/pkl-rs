@@ -1,4 +1,10 @@
-//! Explicit UTF-8, UTF-16, and Unicode scalar coordinates. Spans use UTF-8 bytes.
+//! Explicit UTF-8, UTF-16, and Unicode scalar coordinates.
+//! Scalar sources retain UTF-8 byte spans; SourceText also represents lone surrogates.
+
+mod text;
+pub use text::{
+    SourceCharacter, SourceCharacters, SourceLines, SourceSlice, SourceText, SourceTextIndex,
+};
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct SourceId(pub usize);
@@ -27,40 +33,33 @@ pub struct Position {
 
 #[derive(Clone, Debug)]
 pub struct Source {
-    pub name: String,
-    text: String,
-    positions: Vec<Position>,
+    pub name: crate::value::PklString,
+    text: SourceText,
+    positions: SourceTextIndex,
 }
 
 impl Source {
-    pub fn text(&self) -> &str {
+    /// Retained authored UTF-16 and the shared lexer's byte address space.
+    pub fn text(&self) -> &SourceText {
         &self.text
     }
 
-    /// Rejects a UTF-8 continuation byte instead of rounding its position.
+    /// Reject continuation bytes; never round a position into another unit.
     pub fn position(&self, byte: usize) -> Option<Position> {
-        self.positions
-            .binary_search_by_key(&byte, |position| position.byte)
-            .ok()
-            .map(|index| self.positions[index])
+        self.positions.position(byte)
     }
 
-    /// A UTF-16 offset inside a surrogate pair has no UTF-8 scalar boundary.
+    /// An interior UTF-16 position in a scalar pair has no byte boundary.
     pub fn byte_from_utf16(&self, utf16: usize) -> Option<usize> {
-        self.positions
-            .binary_search_by_key(&utf16, |position| position.utf16)
-            .ok()
-            .map(|index| self.positions[index].byte)
+        self.positions.byte_from_utf16(utf16)
     }
 
     pub fn utf16_span(&self, span: Span) -> Option<(usize, usize)> {
-        let start = self.position(span.start)?.utf16;
-        let end = self.position(span.end)?.utf16;
-        (end >= start).then_some((start, end - start))
+        self.positions.utf16_span(span)
     }
 
-    pub fn slice(&self, span: Span) -> Option<&str> {
-        self.text.get(span.start..span.end)
+    pub fn slice(&self, span: Span) -> Option<SourceSlice<'_>> {
+        self.text.slice(span)
     }
 }
 
@@ -70,28 +69,13 @@ pub struct SourceMap {
 }
 
 impl SourceMap {
-    pub fn add(&mut self, name: impl Into<String>, text: impl Into<String>) -> SourceId {
+    pub fn add(
+        &mut self,
+        name: impl Into<crate::value::PklString>,
+        text: impl Into<SourceText>,
+    ) -> SourceId {
         let text = text.into();
-        let mut position = Position {
-            byte: 0,
-            utf16: 0,
-            codepoint: 0,
-            line: 1,
-            column_utf16: 1,
-        };
-        let mut positions = vec![position];
-        for ch in text.chars() {
-            position.byte += ch.len_utf8();
-            position.utf16 += ch.len_utf16();
-            position.codepoint += 1;
-            if ch == '\n' || (ch == '\r' && text.as_bytes().get(position.byte) != Some(&b'\n')) {
-                position.line += 1;
-                position.column_utf16 = 1;
-            } else {
-                position.column_utf16 += ch.len_utf16();
-            }
-            positions.push(position);
-        }
+        let positions = text.index();
         let id = SourceId(self.sources.len());
         self.sources.push(Source {
             name: name.into(),

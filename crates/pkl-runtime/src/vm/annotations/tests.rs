@@ -133,7 +133,7 @@ scalar = 0
         object
             .members
             .iter()
-            .map(|member| member.name.as_ref())
+            .map(|member| member.name.clone())
             .collect::<Vec<_>>(),
         ["early"]
     );
@@ -263,7 +263,7 @@ fn nonterminal_cancel_reclaims_pending_builder_but_preserves_annotation_prefix()
         .class_singletons
         .values()
         .copied()
-        .find(|id| vm.heap.class_definition(*id).unwrap().name.as_ref() == "Owner")
+        .find(|id| vm.heap.class_definition(*id).unwrap().name == "Owner")
         .unwrap();
     let retained = vm
         .heap
@@ -444,8 +444,15 @@ invalid = known.names[1]
     assert!(error.message.contains("Expected value of type `String`"));
     let origin = &error.frames[0];
     let source = origin.source.as_ref().unwrap();
-    assert_eq!(source.module_name.as_ref(), "pkl.base");
-    assert_eq!(&source.text[origin.span.start..origin.span.end], "String");
+    assert_eq!(source.module_name, "pkl.base");
+    assert_eq!(
+        source
+            .text
+            .entire()
+            .range(origin.span.start..origin.span.end)
+            .to_pkl_string(),
+        "String"
+    );
 }
 
 #[test]
@@ -465,9 +472,9 @@ fn inherited_collection_checks_preserve_primary_origin_in_foreign_value_frames()
     // Exercise the VM's cross-source contract without claiming module loading:
     // the override is foreign, but its inherited collection type is primary.
     metadata.source = Some(Arc::new(crate::value::RuntimeSource {
-        text: Arc::from(source),
-        uri: Arc::from("file:///foreign-value.pkl"),
-        module_name: Arc::from("foreign"),
+        text: source.into(),
+        uri: "file:///foreign-value.pkl".into(),
+        module_name: "foreign".into(),
     }));
     let mut vm = Vm::new(Arc::new(program));
     vm.start(vm.program.entry, vec![]).unwrap();

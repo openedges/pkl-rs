@@ -36,7 +36,7 @@ impl CodeArena {
                 || self.units.clone().all(|unit| program.units[unit]
                     .source
                     .as_ref()
-                    .is_some_and(|source| source.uri.as_ref() == "repl:text"))
+                    .is_some_and(|source| source.uri == "repl:text"))
         );
         if self.units.contains(&0) {
             program.initial_module_members = Vec::new();
@@ -224,11 +224,11 @@ mod tests {
             }
             ModuleRequestKind::LoadSource { key, .. } => {
                 ModuleCompletion::Source(Ok(ModuleSource {
-                    text: if key.key.uri.as_ref() == "memo:/broken.pkl" {
+                    text: if key.key.uri == "memo:/broken.pkl" {
                         "p: Missing=1\ntag=0"
-                    } else if key.key.uri.as_ref() == "memo:/rich.pkl" {
+                    } else if key.key.uri == "memo:/rich.pkl" {
                         "import \"memo:/dependency.pkl\" as dependency\n@Deprecated { message=\"stage50\" }\nclass C { value: Int(this > 0) = dependency.tag }\ntypealias A<T> = T\ntypealias Checked = Int(this > 7)\nx: A<dependency.D> = new dependency.D {}\ny:C=new C{}\ntag=x.value+y.value-9"
-                    } else if key.key.uri.as_ref() == "memo:/dependency.pkl" {
+                    } else if key.key.uri == "memo:/dependency.pkl" {
                         "class D { value: Int=9 }\ntag=9"
                     } else {
                         "class C { value=9 }\ntypealias A=C\nx: A=new C {}\ntag=x.value"
@@ -352,7 +352,7 @@ mod tests {
                             .cache
                             .iter()
                             .any(|(key, state)| {
-                                if key.name.as_ref() != "converters" {
+                                if key.name != "converters" {
                                     return false;
                                 }
                                 let LazyState::Completed(Value::Object(id)) = state else {
@@ -425,7 +425,7 @@ mod tests {
                     other => panic!("expected constructor body read: {other:?}"),
                 }
             };
-            assert_eq!(request.uri.as_ref(), "mem:body");
+            assert_eq!(request.uri, "mem:body");
             let cached: Vec<_> = vm
                 .type_parent_defaults
                 .iter()
@@ -586,7 +586,7 @@ mod tests {
                     other => panic!("expected body read: {other:?}"),
                 }
             };
-            assert_eq!(request.uri.as_ref(), "mem:body");
+            assert_eq!(request.uri, "mem:body");
             let cached = vm
                 .type_parent_defaults
                 .iter()
@@ -659,7 +659,7 @@ mod tests {
                     .filter_map(|metadata| metadata.source.as_ref()),
             )
         {
-            sources.insert(Arc::as_ptr(source), source.text.len());
+            sources.insert(Arc::as_ptr(source), source.text.len_bytes());
         }
         let heap = vm.heap.stats();
         ResidentStats {
@@ -755,16 +755,14 @@ mod tests {
                 VmPoll::Module(request) => {
                     let mut expression = false;
                     let completion = match &request.kind {
-                        ModuleRequestKind::LoadSource { key, .. }
-                            if key.key.uri.as_ref() == holder =>
-                        {
+                        ModuleRequestKind::LoadSource { key, .. } if key.key.uri == holder => {
                             ModuleCompletion::Source(Ok(ModuleSource {
                                 text: source.into(),
                                 inferred_name: "ignored".into(),
                             }))
                         }
                         ModuleRequestKind::ResolveImportUri { key, authored_uri }
-                            if key.uri.as_ref() == holder =>
+                            if key.uri == holder =>
                         {
                             assert!(!triple);
                             expression = authored_uri.ends_with("expression.pkl");
@@ -786,8 +784,8 @@ mod tests {
                         ModuleRequestKind::HasElement { element_uri, .. } => {
                             assert!(triple);
                             elements += 1;
-                            let exists = element_uri.as_ref() == expected("clause")
-                                || element_uri.as_ref() == expected("expression");
+                            let exists = element_uri == &PklString::from(expected("clause"))
+                                || element_uri == &PklString::from(expected("expression"));
                             expression = exists && element_uri.ends_with("expression.pkl");
                             ModuleCompletion::HasElement(Ok(exists))
                         }
@@ -797,7 +795,7 @@ mod tests {
                             ..
                         } => {
                             clause_selections += 1;
-                            assert_eq!(uri.as_ref(), expected("clause"));
+                            assert_eq!(uri, &PklString::from(expected("clause")));
                             complete(&request)
                         }
                         _ => complete(&request),
@@ -812,7 +810,7 @@ mod tests {
                                     matches!(instruction, Instruction::ImportModule(spec)
                                         if spec.authored.ends_with("expression.pkl")
                                             && old.units[spec.unit.0 as usize].identity.as_ref()
-                                                .is_some_and(|identity| identity.original_uri.as_ref() == holder))
+                                                .is_some_and(|identity| identity.original_uri == holder))
                                 }).then_some(id)
                             })
                             .expect("unprepared expression instruction");
@@ -840,7 +838,7 @@ mod tests {
                         assert!(old.blocks[block].iter().any(|instruction| {
                             matches!(instruction, Instruction::ImportModule(spec)
                                 if spec.authored.ends_with("expression.pkl")
-                                    && spec.original_uri.as_ref() != expected("expression"))
+                                    && spec.original_uri != expected("expression"))
                         }));
                     }
                 }
@@ -872,7 +870,7 @@ mod tests {
             .find(|unit| {
                 unit.identity
                     .as_ref()
-                    .is_some_and(|identity| identity.original_uri.as_ref() == holder)
+                    .is_some_and(|identity| identity.original_uri == holder)
             })
             .unwrap();
         assert!(unit.build.is_none(), "clause body must have been built");
@@ -894,8 +892,7 @@ mod tests {
                 .collect();
             assert!(!specs.is_empty());
             assert!(specs.iter().all(|spec| {
-                spec.absolute_uri.as_ref() == expected(name)
-                    && spec.original_uri.as_ref() == expected(name)
+                spec.absolute_uri == expected(name) && spec.original_uri == expected(name)
             }));
         }
     }
@@ -1237,7 +1234,7 @@ mod tests {
                     error.frames.iter().any(|frame| frame
                         .source
                         .as_ref()
-                        .is_some_and(|source| source.text.as_ref() == expression)),
+                        .is_some_and(|source| source.text.original() == expression)),
                     "{error:?}"
                 );
                 failures.push((expression, error));
@@ -1252,7 +1249,7 @@ mod tests {
                 frame
                     .source
                     .as_ref()
-                    .is_some_and(|source| source.text.as_ref() == expression)
+                    .is_some_and(|source| source.text.original() == expression)
             }));
         }
     }
@@ -1267,12 +1264,12 @@ mod tests {
             frame
                 .source
                 .as_ref()
-                .is_some_and(|source| source.text.as_ref() == "p: Missing=1\ntag=0")
+                .is_some_and(|source| source.text.original() == "p: Missing=1\ntag=0")
         }));
         assert!(!vm.program.units.iter().any(|unit| {
             unit.source
                 .as_ref()
-                .is_some_and(|source| source.uri.as_ref() == "memo:/broken.pkl")
+                .is_some_and(|source| source.uri == "memo:/broken.pkl")
         }));
         start(&mut vm, "import(\"memo:/broken.pkl\").tag + 1");
         let second = loop {
@@ -1299,7 +1296,7 @@ mod tests {
             frame
                 .source
                 .as_ref()
-                .is_some_and(|source| source.text.as_ref() == "p: Missing=1\ntag=0")
+                .is_some_and(|source| source.text.original() == "p: Missing=1\ntag=0")
         }));
     }
     #[test]

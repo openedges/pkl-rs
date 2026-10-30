@@ -74,12 +74,21 @@ pub(super) fn blocks(
             _ => format!("class {class}<"),
         };
         let class_start = source.text.find(&class_marker).unwrap();
-        let class_end = class_start + source.text[class_start..].find("\n}").unwrap();
+        let class_end = class_start
+            + source
+                .text
+                .entire()
+                .range(class_start..)
+                .find("\n}")
+                .unwrap();
         let start = class_start
-            + source.text[class_start..class_end]
+            + source
+                .text
+                .entire()
+                .range(class_start..class_end)
                 .find(&format!("external function {name}"))
                 .unwrap();
-        let end = start + source.text[start..].find('\n').unwrap();
+        let end = start + source.text.entire().range(start..).find("\n").unwrap();
         let mut code = Vec::new();
         let mut spans = Vec::new();
         if operation == SelectMap {
@@ -87,7 +96,8 @@ pub(super) fn blocks(
                 (1, "keyExtractor: ", "(Element) -> Key"),
                 (0, "valueExtractor: ", "(Element) -> Value"),
             ] {
-                let position = start + source.text[start..].find(label).unwrap() + label.len();
+                let position =
+                    start + source.text.entire().range(start..).find(label).unwrap() + label.len();
                 code.extend([
                     Instruction::LoadLocal(local),
                     Instruction::CheckType(TypeCheck::Function {
@@ -101,7 +111,13 @@ pub(super) fn blocks(
             }
         }
         if operation == ToTyped {
-            let position = start + source.text[start..].find("Class<Type>").unwrap();
+            let position = start
+                + source
+                    .text
+                    .entire()
+                    .range(start..)
+                    .find("Class<Type>")
+                    .unwrap();
             code.extend([
                 Instruction::LoadLocal(0),
                 Instruction::CheckType(TypeCheck::MetaClass("Class".into())),
@@ -203,8 +219,11 @@ impl Vm {
     pub(super) fn conversion_method(
         &mut self,
         receiver: Value,
-        name: &str,
+        name: &PklString,
     ) -> Result<bool, RuntimeError> {
+        let Some(name) = name.as_str() else {
+            return Ok(false);
+        };
         let Value::Object(source) = receiver else {
             return Ok(false);
         };
@@ -468,7 +487,7 @@ impl Vm {
             };
             property_identifier(name)
         } else {
-            Arc::from("")
+            PklString::default()
         };
         let member = Member {
             flags: 0,
@@ -676,9 +695,9 @@ impl Vm {
 /// Quoted authored identifiers allow NUL, but their lexer forbids LF. Reserve
 /// an LF-prefixed namespace for arbitrary UTF-16 strings, escaping LF-bearing
 /// strings too. The original descriptor key remains the public property name.
-pub(super) fn property_identifier(name: &PklString) -> Arc<str> {
-    if let Some(name) = name.as_str().filter(|name| !name.contains('\n')) {
-        return Arc::from(name);
+pub(super) fn property_identifier(name: &PklString) -> PklString {
+    if !name.encode_utf16().any(|unit| unit == u16::from(b'\n')) {
+        return name.clone();
     }
     format!("\nproperty:{:?}", name.encode_utf16().collect::<Vec<_>>()).into()
 }

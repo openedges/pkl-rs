@@ -52,10 +52,10 @@ fn check(name: &str, source: &str, uri: &str, stdout: &[u8], stderr: &[u8]) {
                         }))
                     }
                     ModuleRequestKind::HasElement { element_uri, .. } => {
-                        ModuleCompletion::HasElement(Ok(element_uri.as_ref() == snippet_uri))
+                        ModuleCompletion::HasElement(Ok(element_uri == snippet_uri))
                     }
                     ModuleRequestKind::Resolve { original_uri, .. }
-                        if original_uri.as_ref() == snippet_uri => {
+                        if original_uri == snippet_uri => {
                         ModuleCompletion::Resolved(Ok(ResolvedModule {
                             original_uri: original_uri.clone(),
                             resolved_uri: original_uri.clone(),
@@ -63,7 +63,7 @@ fn check(name: &str, source: &str, uri: &str, stdout: &[u8], stderr: &[u8]) {
                         }))
                     }
                     ModuleRequestKind::LoadSource { resolved, .. }
-                        if resolved.original_uri.as_ref() == snippet_uri => {
+                        if resolved.original_uri == snippet_uri => {
                         ModuleCompletion::Source(Ok(ModuleSource {
                             text: include_str!("../../../tests/fixtures/m2-list-search-transform-originals/snippetTest.pkl").into(),
                             inferred_name: "snippetTest".into(),

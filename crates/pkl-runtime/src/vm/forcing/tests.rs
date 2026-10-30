@@ -508,7 +508,13 @@ failure = throw("nested")
         .map(|frame| {
             frame.source.as_ref().map_or_else(
                 || frame.member.to_java_utf8(),
-                |source| format!("{}:{}", source.uri, source.text),
+                |source| {
+                    format!(
+                        "{}:{}",
+                        source.uri,
+                        source.text.original().as_str().expect("scalar test source")
+                    )
+                },
             )
         })
         .collect();

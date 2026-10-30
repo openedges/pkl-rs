@@ -37,7 +37,7 @@ fn ready_with_roots(session: &mut HostSession, roots: &[Value]) -> Result<Value,
 fn read(session: &mut HostSession, expected: &str) -> String {
     match event(session) {
         HostPoll::Read { token, uri } => {
-            assert_eq!(&*uri, expected);
+            assert_eq!(uri, expected);
             token
         }
         event => panic!("unexpected {event:?}"),

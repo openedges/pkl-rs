@@ -1,0 +1,76 @@
+{
+  "name": "constAssign",
+  "adapter": "module",
+  "union_row": {
+    "adapter": "language-module-eval",
+    "historical_status": "pass",
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/const/constAssign.pkl",
+    "observations": [
+      {
+        "process": {
+          "bytes": 5572,
+          "path": "target/m2/stage120-full-ready-modules-01/e546cf72947a76cb06bab03e/0/process.json",
+          "sha256": "dcae516cc821824c402c99e90f637328fb3df8a549932b96609126d2845225f6"
+        },
+        "repeat": 0,
+        "status": "pass"
+      }
+    ],
+    "old_pass_regression": false,
+    "status": "pass"
+  },
+  "process": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage120-full-ready-modules-01/e546cf72947a76cb06bab03e/0/process.json",
+    "bytes": 5572,
+    "sha256": "dcae516cc821824c402c99e90f637328fb3df8a549932b96609126d2845225f6"
+  },
+  "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/const/constAssign.pkl",
+  "input": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/const/constAssign.pkl",
+    "bytes": 66,
+    "sha256": "c36c70ce1b016fd0fb9647e2d288835f298c25aee29b427092de491247b6b6f2"
+  },
+  "parent": {
+    "input": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/constModifier.pkl",
+      "bytes": 1438,
+      "sha256": "943e876166a0ee6ad0594f5e26e759a1eea713143e2cedd8452bae18a066a496"
+    },
+    "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/constModifier.pkl",
+    "name": "constModifier"
+  },
+  "expected_exit": 1,
+  "expected_stdout": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-replay-01/cases/e546cf72947a76cb06bab03e/java/stdout.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "expected_stderr": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-replay-01/cases/e546cf72947a76cb06bab03e/java/stderr.bin",
+    "bytes": 345,
+    "sha256": "0b31f38212b7e91ac741759f16aecbde0903b43702104ddbc444770fecdc6817"
+  },
+  "retained_status": "pass",
+  "expected_records": {
+    "process.json": {
+      "bytes": 3172,
+      "path": "target/m2/stage94-originals-replay-01/cases/e546cf72947a76cb06bab03e/java/process.json",
+      "sha256": "907a2655892f3defa446d8dd4c7d3bb4bd19b783ee8bbd63eb7c0e6177537538"
+    },
+    "result.json": {
+      "bytes": 294,
+      "path": "target/m2/stage94-originals-replay-01/cases/e546cf72947a76cb06bab03e/java/result.json",
+      "sha256": "a451236ac473bb718d71833d09d0077c89453f9066ed27901cf1b8efb65005db"
+    },
+    "stderr.bin": {
+      "bytes": 345,
+      "path": "target/m2/stage94-originals-replay-01/cases/e546cf72947a76cb06bab03e/java/stderr.bin",
+      "sha256": "0b31f38212b7e91ac741759f16aecbde0903b43702104ddbc444770fecdc6817"
+    },
+    "stdout.bin": {
+      "bytes": 0,
+      "path": "target/m2/stage94-originals-replay-01/cases/e546cf72947a76cb06bab03e/java/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

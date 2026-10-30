@@ -175,31 +175,34 @@ fn imported_parser_error_preserves_child_source_and_first_call_cache() {
 
 #[test]
 fn request_identifier_transport_preserves_all_u64_bits() {
-    let request = SourceModuleRequest::from(ModuleRequest {
-        id: u64::MAX,
-        kind: ModuleRequestKind::LoadSource {
-            key: pkl_runtime::modules::ResolvedModuleKey {
-                id: pkl_runtime::modules::ResolvedKeyId(u64::MAX),
-                key: pkl_runtime::modules::ModuleKey {
-                    id: pkl_runtime::modules::ModuleKeyId(u64::MAX - 1),
-                    uri: "life:/original".into(),
-                    kind: pkl_runtime::modules::ModuleKeyKind::Host,
-                    handle: "opaque".into(),
+    let request = SourceModuleRequest::try_from(pkl_runtime::probe::SourceTextModuleRequest::from(
+        ModuleRequest {
+            id: u64::MAX,
+            kind: ModuleRequestKind::LoadSource {
+                key: pkl_runtime::modules::ResolvedModuleKey {
+                    id: pkl_runtime::modules::ResolvedKeyId(u64::MAX),
+                    key: pkl_runtime::modules::ModuleKey {
+                        id: pkl_runtime::modules::ModuleKeyId(u64::MAX - 1),
+                        uri: "life:/original".into(),
+                        kind: pkl_runtime::modules::ModuleKeyKind::Host,
+                        handle: "opaque".into(),
+                    },
+                    handle: "resolved-opaque".into(),
+                    module: pkl_runtime::modules::ResolvedModule {
+                        original_uri: "life:/original".into(),
+                        resolved_uri: "life:/resolved".into(),
+                        source_uri: "life:/display".into(),
+                    },
                 },
-                handle: "resolved-opaque".into(),
-                module: pkl_runtime::modules::ResolvedModule {
+                resolved: pkl_runtime::modules::ResolvedModule {
                     original_uri: "life:/original".into(),
                     resolved_uri: "life:/resolved".into(),
                     source_uri: "life:/display".into(),
                 },
             },
-            resolved: pkl_runtime::modules::ResolvedModule {
-                original_uri: "life:/original".into(),
-                resolved_uri: "life:/resolved".into(),
-                source_uri: "life:/display".into(),
-            },
         },
-    });
+    ))
+    .unwrap();
     assert_eq!(request.id, "18446744073709551615");
     assert_eq!(request.id.parse::<u64>().unwrap(), u64::MAX);
 }

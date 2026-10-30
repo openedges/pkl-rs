@@ -11,7 +11,7 @@ fn classes_and_typealiases_keep_declaration_order_and_type_bindings() {
         module
             .members
             .iter()
-            .map(|member| member.name.as_str())
+            .map(|member| member.name.clone())
             .collect::<Vec<_>>(),
         vec!["Count", "Item", "Container", "result"]
     );
@@ -252,7 +252,10 @@ fn const_requirements_are_recorded_on_reads_across_scope_barriers() {
 #[test]
 fn semantic_diagnostics_preserve_declared_module_and_identifier_spans() {
     let error = parse_module("module example.named\nresult = 9223372036854775808").unwrap_err();
-    assert_eq!(error.module_name.as_deref(), Some("example.named"));
+    assert_eq!(
+        error.module_name.as_deref(),
+        Some(&pkl_runtime::value::PklString::from("example.named"))
+    );
     assert_eq!(
         error
             .member
@@ -265,7 +268,10 @@ fn semantic_diagnostics_preserve_declared_module_and_identifier_spans() {
     assert_eq!(error.message, "Duplicate definition of member `result`.");
     // Pinned Java checks the full property header, including `local`.
     assert_eq!(&source[error.span.start..error.span.end], "local result");
-    assert_eq!(error.module_name.as_deref(), Some("example.named"));
+    assert_eq!(
+        error.module_name.as_deref(),
+        Some(&pkl_runtime::value::PklString::from("example.named"))
+    );
 }
 
 #[test]

@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Int literal `99999999999999999999999999999999999999` is too large.
+
+4 | value = 99999999999999999999999999999999999999
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at parent.declared#result (file:///stage122/min-version/child-inferred-name.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

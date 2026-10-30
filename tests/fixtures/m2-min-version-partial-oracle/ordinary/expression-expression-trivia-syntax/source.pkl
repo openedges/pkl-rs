@@ -1,0 +1,4 @@
+@ModuleInfo { minPklVersion = /*before*/ "99.9.9" /*after*/ }
+module declared.primaryName
+result = "ok"
+value = (

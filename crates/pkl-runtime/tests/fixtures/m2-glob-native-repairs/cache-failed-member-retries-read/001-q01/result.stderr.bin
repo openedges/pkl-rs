@@ -1,0 +1,11 @@
+–– Pkl Error ––
+I/O error reading resource `gdata:/b`.
+IOException: stage116 value failed once
+
+1 | function files() = read*("gdata:**")
+                       ^^^^^^^^^^^^^^^^^
+at  (gmain:/tree/cache-failed-member-retries-read.pkl)
+
+1 | entries["gdata:/a/../b"].toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

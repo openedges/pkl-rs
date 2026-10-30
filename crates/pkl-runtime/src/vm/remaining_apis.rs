@@ -61,7 +61,10 @@ pub(super) fn blocks(
         };
         let class_start = source.text.find(&anchor).expect("pinned class");
         let start = class_start
-            + source.text[class_start..]
+            + source
+                .text
+                .entire()
+                .range(class_start..)
                 .find(declaration)
                 .expect("pinned API");
         let mut code = Vec::new();

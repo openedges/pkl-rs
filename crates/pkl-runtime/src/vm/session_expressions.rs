@@ -13,7 +13,7 @@ pub enum SessionExpressionError {
 pub fn compile_session_expression(
     program: &mut Program,
     module: &crate::syntax::Module,
-    expression_source: &str,
+    expression_source: impl Into<crate::source::SourceText>,
     options: CompileOptions,
     power_assertions: bool,
 ) -> Result<usize, SessionExpressionError> {
@@ -30,15 +30,17 @@ pub fn compile_session_expression(
 pub(super) fn compile_session_expression_for_unit(
     program: &mut Program,
     module: &crate::syntax::Module,
-    expression_source: &str,
+    expression_source: impl Into<crate::source::SourceText>,
     options: CompileOptions,
     power_assertions: bool,
     primary: crate::modules::UnitId,
 ) -> Result<usize, SessionExpressionError> {
-    let parsed = crate::parser::parse_expression_for_evaluation(expression_source)
+    let expression_source = expression_source.into();
+    let parsed = crate::parser::parse_expression_for_evaluation(&expression_source)
         .map_err(|error| SessionExpressionError::Frontend(Box::new(error)))?;
-    let resolved = crate::resolver::resolve_session_expression(module, expression_source, &parsed)
-        .map_err(|error| SessionExpressionError::Frontend(Box::new(error)))?;
+    let resolved =
+        crate::resolver::resolve_session_expression(module, expression_source.entire(), &parsed)
+            .map_err(|error| SessionExpressionError::Frontend(Box::new(error)))?;
     let identity = crate::modules::ModuleIdentity {
         original_uri: "repl:text".into(),
         resolved_uri: "repl:text".into(),
@@ -108,7 +110,7 @@ fn append(
     });
     let declaration_base = program.next_declaration;
     program.next_declaration = declaration_base
-        .checked_add(resolved.module.source.len() + 2)
+        .checked_add(resolved.module.source.len_bytes() + 2)
         .ok_or_else(|| invalid("declaration identity limit"))?;
     let mut compiler = Compiler {
         resolved,

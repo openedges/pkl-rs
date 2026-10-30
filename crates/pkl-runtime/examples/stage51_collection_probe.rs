@@ -60,8 +60,8 @@ struct Input {
 }
 #[derive(Default)]
 struct Provider {
-    keys: HashMap<u64, String>,
-    resolved: HashMap<u64, (u64, String)>,
+    keys: HashMap<u64, PklString>,
+    resolved: HashMap<u64, (u64, PklString)>,
     attempts: HashMap<String, usize>,
     requests: usize,
     resource_policy_requests: usize,
@@ -82,9 +82,9 @@ impl Provider {
         write(out, &format!("module-{}.token.bin", self.requests), token);
         self.requests += 1;
         match &request.kind {
-            ModuleRequestKind::SelectKey { id, uri, .. } if uri.as_ref() == input.uri => {
+            ModuleRequestKind::SelectKey { id, uri, .. } if uri == input.uri.as_str() => {
                 let handle = format!("fixture-key:{}", id.0);
-                assert!(self.keys.insert(id.0, handle.clone()).is_none());
+                assert!(self.keys.insert(id.0, handle.clone().into()).is_none());
                 probe
                     .complete_module_key(token, &id.0.to_string(), uri, "host", &handle, 0)
                     .expect("primary key completion");
@@ -92,12 +92,9 @@ impl Provider {
             }
             ModuleRequestKind::QueryCachePolicy { key }
             | ModuleRequestKind::QueryFragmentPaths { key }
-                if key.uri.as_ref() == input.uri && key.kind == ModuleKeyKind::Host =>
+                if key.uri == input.uri.as_str() && key.kind == ModuleKeyKind::Host =>
             {
-                assert_eq!(
-                    self.keys.get(&key.id.0).map(String::as_str),
-                    Some(key.handle.as_ref())
-                );
+                assert_eq!(self.keys.get(&key.id.0), Some(&key.handle));
                 if matches!(&request.kind, ModuleRequestKind::QueryCachePolicy { .. }) {
                     probe
                         .complete_module_cache_policy(token, &key.id.0.to_string(), true, 0)
@@ -118,15 +115,12 @@ impl Provider {
                 key,
                 resolved_key_id,
                 ..
-            } if key.uri.as_ref() == input.uri && key.kind == ModuleKeyKind::Host => {
-                assert_eq!(
-                    self.keys.get(&key.id.0).map(String::as_str),
-                    Some(key.handle.as_ref())
-                );
+            } if key.uri == input.uri.as_str() && key.kind == ModuleKeyKind::Host => {
+                assert_eq!(self.keys.get(&key.id.0), Some(&key.handle));
                 let handle = format!("collection-resolved:{}", resolved_key_id.0);
                 assert!(
                     self.resolved
-                        .insert(resolved_key_id.0, (key.id.0, handle.clone()))
+                        .insert(resolved_key_id.0, (key.id.0, handle.clone().into()))
                         .is_none()
                 );
                 probe
@@ -144,31 +138,25 @@ impl Provider {
                 return;
             }
             ModuleRequestKind::LoadSource { key, resolved }
-                if key.key.uri.as_ref() == input.uri && key.key.kind == ModuleKeyKind::Host =>
+                if key.key.uri == input.uri.as_str() && key.key.kind == ModuleKeyKind::Host =>
             {
-                assert_eq!(
-                    self.keys.get(&key.key.id.0).map(String::as_str),
-                    Some(key.key.handle.as_ref())
-                );
+                assert_eq!(self.keys.get(&key.key.id.0), Some(&key.key.handle));
                 assert_eq!(
                     self.resolved.get(&key.id.0),
-                    Some(&(key.key.id.0, key.handle.to_string()))
+                    Some(&(key.key.id.0, key.handle.clone()))
                 );
-                assert_eq!(resolved.original_uri.as_ref(), input.uri);
-                assert_eq!(resolved.resolved_uri.as_ref(), input.uri);
-                assert_eq!(resolved.source_uri.as_ref(), input.uri);
+                assert_eq!(resolved.original_uri, input.uri.as_str());
+                assert_eq!(resolved.resolved_uri, input.uri.as_str());
+                assert_eq!(resolved.source_uri, input.uri.as_str());
                 probe
                     .complete_module_source(token, &input.source, &input.name, 0)
                     .expect("primary source");
                 return;
             }
             ModuleRequestKind::Capabilities { key: Some(key), .. }
-                if key.uri.as_ref() == input.uri && key.kind == ModuleKeyKind::Host =>
+                if key.uri == input.uri.as_str() && key.kind == ModuleKeyKind::Host =>
             {
-                assert_eq!(
-                    self.keys.get(&key.id.0).map(String::as_str),
-                    Some(key.handle.as_ref())
-                );
+                assert_eq!(self.keys.get(&key.id.0), Some(&key.handle));
                 probe
                     .complete_module_capabilities(token, true, true, false, 0)
                     .expect("primary capabilities");
@@ -641,7 +629,6 @@ mod tests {
         .expect_err("unconfigured allowed reader must fail acquisition");
         let message = failure
             .downcast_ref::<String>()
-            .map(String::as_str)
             .or_else(|| failure.downcast_ref::<&str>().copied());
         assert_eq!(message, Some("unconfigured reader URI"));
         assert_eq!(host.resource_policy_requests, 1);

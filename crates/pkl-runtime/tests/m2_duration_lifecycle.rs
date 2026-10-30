@@ -28,7 +28,7 @@ fn read(vm: &mut Vm, uri: &str, retained: &[Value]) -> u64 {
     let VmPoll::Pending(request) = event(vm, retained) else {
         panic!("expected Host read {uri}")
     };
-    assert_eq!(&*request.uri, uri);
+    assert_eq!(request.uri, uri);
     request.id
 }
 

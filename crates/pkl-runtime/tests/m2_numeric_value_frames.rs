@@ -228,7 +228,7 @@ fn suspended_numeric_constraint_frames_survive_reentry_retry_gc_and_close() {
         let HostPoll::Read { token: outer, uri } = event(&mut session, &module, 1) else {
             panic!("expected outer read");
         };
-        assert_eq!(&*uri, "mem:outer");
+        assert_eq!(uri, "mem:outer");
         let mut detached = None;
         let mut previous_token = None;
         for now in [2, 3] {
@@ -238,7 +238,7 @@ fn suspended_numeric_constraint_frames_survive_reentry_retry_gc_and_close() {
             let HostPoll::Read { token, uri } = event(&mut session, &module, now) else {
                 panic!("expected constraint read");
             };
-            assert_eq!(&*uri, "mem:check");
+            assert_eq!(uri, "mem:check");
             assert_ne!(previous_token.as_ref(), Some(&token));
             previous_token = Some(token.clone());
             session

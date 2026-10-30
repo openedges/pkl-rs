@@ -211,7 +211,7 @@ hidden mirror = reflect.Class(Declaration)
             .evaluate_module_source(
                 URI,
                 Some(SOURCE),
-                &format!("mirror.properties[\"{property}\"].type.referent.name"),
+                format!("mirror.properties[\"{property}\"].type.referent.name"),
                 0,
                 None,
             )

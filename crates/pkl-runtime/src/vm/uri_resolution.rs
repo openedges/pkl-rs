@@ -11,13 +11,17 @@ struct Import {
     spec: modules::ImportSpec,
     origin: RuntimeFrame,
     clause: bool,
-    prepared_uri: Option<Arc<str>>,
+    glob: bool,
+    node_span: Span,
+    prepared_uri: Option<PklString>,
 }
 #[derive(Clone, Debug)]
 pub(super) enum PreparationStep {
     Import {
         clause: bool,
-        uri: String,
+        glob: bool,
+        node_span: Span,
+        uri: PklString,
         span: Span,
         member: PklString,
     },
@@ -38,8 +42,8 @@ enum Target {
 }
 pub(super) struct Resolution {
     module: ModuleIdentity,
-    path: String,
-    candidates: VecDeque<String>,
+    path: PklString,
+    candidates: VecDeque<PklString>,
     selected: Option<crate::modules::ModuleKey>,
     declaration_key: Option<crate::modules::ModuleKey>,
     wrapper_fragment_paths: bool,
@@ -62,10 +66,11 @@ impl Resolution {
             Target::Read(request) => match failure {
                 ModuleHostError::NotFound => crate::host::resources::missing(&request.uri),
                 ModuleHostError::Io(cause) => {
-                    let mut error = RuntimeError::host_language(format!(
-                        "I/O error reading resource `{}`.",
-                        request.uri
-                    ));
+                    let mut error = RuntimeError::host_language(
+                        PklString::from("I/O error reading resource `")
+                            .concat(&request.uri)
+                            .concat(&"`.".into()),
+                    );
                     error.hint = cause.message;
                     error
                 }
@@ -79,7 +84,7 @@ impl Program {
     fn update_import_uris<'a>(
         &mut self,
         unit: UnitId,
-        prepared: impl Fn(Span) -> Option<&'a (Arc<str>, Arc<str>)>,
+        prepared: impl Fn(Span) -> Option<&'a (PklString, PklString)>,
     ) {
         // Preparation can update earlier shell/body instructions. Find those
         // logical IDs read-only before requesting any segment's mutable COW
@@ -90,17 +95,29 @@ impl Program {
             .filter_map(|(id, code)| {
                 code.iter()
                     .any(|instruction| {
-                        matches!(instruction, Instruction::ImportModule(spec)
-                            if spec.unit == unit
-                                && prepared(spec.span).is_some_and(|(absolute, original)|
-                                    spec.absolute_uri != *absolute || spec.original_uri != *original))
+                        let spec = match instruction {
+                            Instruction::ImportModule(spec) => Some(spec),
+                            Instruction::ImportGlob(glob) => glob.import.as_ref(),
+                            _ => None,
+                        };
+                        spec.is_some_and(|spec| {
+                            spec.unit == unit
+                                && prepared(spec.span).is_some_and(|(absolute, original)| {
+                                    spec.absolute_uri != *absolute || spec.original_uri != *original
+                                })
+                        })
                     })
                     .then_some(id)
             })
             .collect();
         for id in blocks {
             for instruction in self.blocks.get_mut(id).expect("selected import block") {
-                if let Instruction::ImportModule(spec) = instruction
+                let spec = match instruction {
+                    Instruction::ImportModule(spec) => Some(spec),
+                    Instruction::ImportGlob(glob) => glob.import.as_mut(),
+                    _ => None,
+                };
+                if let Some(spec) = spec
                     && spec.unit == unit
                     && let Some((absolute, original)) = prepared(spec.span)
                 {
@@ -149,7 +166,7 @@ impl Vm {
         })
     }
 
-    fn publish_read(&mut self, request: ReadRequest) -> Result<(), RuntimeError> {
+    pub(super) fn publish_read(&mut self, request: ReadRequest) -> Result<(), RuntimeError> {
         if let Ok(uri) = crate::host::resources::resolved_uri(&request)
             && let Some(value) = self.resources.get(&crate::host::resources::cache_key(&uri))
         {
@@ -179,8 +196,11 @@ impl Vm {
                     span,
                     member,
                     clause,
+                    glob,
+                    node_span,
                 } => {
                     let mut origin = RuntimeFrame {
+                        anonymous: false,
                         source: declaration
                             .source
                             .clone()
@@ -193,7 +213,7 @@ impl Vm {
                         },
                     };
                     if let Some(source) = &mut origin.source
-                        && source.uri.as_ref() == "repl:text"
+                        && source.uri == "repl:text"
                         && source.module_name.is_empty()
                     {
                         // AstBuilder.resolveImport reports its lexical ModuleInfo
@@ -220,7 +240,7 @@ impl Vm {
                             Arc::make_mut(source).module_name = metadata
                                 .source
                                 .as_ref()
-                                .map_or(self.program.module_name.as_ref(), |s| &s.module_name)
+                                .map_or(&self.program.module_name, |s| &s.module_name)
                                 .into();
                         }
                         origin.member = caller
@@ -230,14 +250,16 @@ impl Vm {
                     }
                     remaining.push_back(Preparation::Import(Import {
                         spec: modules::ImportSpec {
-                            authored: uri.as_str().into(),
+                            authored: uri.clone(),
                             span: *span,
                             unit,
-                            absolute_uri: uri.as_str().into(),
-                            original_uri: uri.as_str().into(),
+                            absolute_uri: uri.clone(),
+                            original_uri: uri.clone(),
                         },
                         origin,
                         clause: *clause,
+                        glob: *glob,
+                        node_span: *node_span,
                         prepared_uri: None,
                     }));
                 }
@@ -260,8 +282,7 @@ impl Vm {
                                 if suffix.encode_utf16().next() == Some(46) {
                                     // Explicit AnnotationScope root boundary.
                                     suffix.as_ref().clone()
-                                } else if source.uri.as_ref() == "repl:text"
-                                    && source.module_name.is_empty()
+                                } else if source.uri == "repl:text" && source.module_name.is_empty()
                                 {
                                     // Expression AST scopes descend from
                                     // the synthetic repl root. Real module
@@ -279,38 +300,42 @@ impl Vm {
                             },
                         ))
                     };
-                    let member =
-                        if diagnostic.member.is_some() || diagnostic.module_name.is_some() {
-                            // Delayed AST validation already knows its lexical
-                            // declaration owner; the module initializer is only
-                            // executing preparation on that declaration's behalf.
-                            declared_member()
-                        } else {
-                            self.frames
-                                .len()
-                                .checked_sub(2)
-                                .and_then(|index| {
-                                    let caller = &self.frames[index];
-                                    caller
-                                        .module_load
+                    let initializing_caller = self.frames.len().checked_sub(2).and_then(|index| {
+                        let caller = &self.frames[index];
+                        caller
+                            .module_load
+                            .as_ref()
+                            .filter(|run| run.initializing)
+                            .map(|run| {
+                                let metadata = &self.program.metadata[caller.block];
+                                let member = PklString::from(
+                                    metadata
+                                        .source
                                         .as_ref()
-                                        .filter(|run| run.initializing)
-                                        .map(|_| {
-                                            let metadata = &self.program.metadata[caller.block];
-                                            PklString::from(metadata.source.as_ref().map_or(
-                                                self.program.module_name.as_ref(),
-                                                |source| &source.module_name,
-                                            ))
-                                            .concat(
-                                                caller
-                                                    .diagnostic_member
-                                                    .as_ref()
-                                                    .unwrap_or(&metadata.member),
-                                            )
-                                        })
-                                })
-                                .unwrap_or_else(declared_member)
-                        };
+                                        .map_or(&self.program.module_name, |source| {
+                                            &source.module_name
+                                        }),
+                                )
+                                .concat(
+                                    caller
+                                        .diagnostic_member
+                                        .as_ref()
+                                        .unwrap_or(&metadata.member),
+                                );
+                                (member, run.is_import_initializing())
+                            })
+                    });
+                    let member = match initializing_caller {
+                        // AstBuilder has not entered the child's call target.
+                        // StackTraceGenerator keeps the exception's child
+                        // source section but names the active importing root.
+                        Some((member, true)) => member,
+                        _ if diagnostic.member.is_some() || diagnostic.module_name.is_some() => {
+                            declared_member()
+                        }
+                        Some((member, false)) => member,
+                        None => declared_member(),
+                    };
                     remaining.push_back(Preparation::Failure(modules::imported_diagnostic(
                         diagnostic.clone(),
                         source,
@@ -331,6 +356,19 @@ impl Vm {
             match step {
                 Preparation::Failure(error) => return Err(error),
                 Preparation::Import(mut current) => {
+                    // AstBuilder.doVisitImport rejects glob triple dots before
+                    // resolveImport or module factory selection, even unforced.
+                    if current.glob && current.spec.authored.starts_with("...") {
+                        let mut error = RuntimeError::new(
+                            ErrorKind::Type,
+                            "Cannot combine glob imports with triple-dot module URIs.",
+                        );
+                        let mut origin = current.origin.clone();
+                        origin.span = current.node_span;
+                        error.span = Some(current.node_span);
+                        error.insert_frame(0, origin);
+                        return Err(error);
+                    }
                     // AstBuilder creates the operand URI before calling the
                     // declaration key's resolver, including for custom keys.
                     let (parsed_authored, _) =
@@ -348,12 +386,12 @@ impl Vm {
                         && key.kind == crate::modules::ModuleKeyKind::Host
                     {
                         let key = key.clone();
-                        let authored_uri = parsed_authored.clone().into();
+                        let authored_uri = parsed_authored.clone();
                         self.frames.last_mut().unwrap().uri_resolution = Some(Resolution {
                             module: module
                                 .clone()
                                 .ok_or_else(|| invalid("missing declaration identity"))?,
-                            path: String::new(),
+                            path: PklString::default(),
                             candidates: VecDeque::new(),
                             selected: None,
                             declaration_key: None,
@@ -368,12 +406,12 @@ impl Vm {
                     let (absolute, original) = crate::host::resources::prepare_module_uri(
                         current
                             .prepared_uri
-                            .as_deref()
+                            .as_ref()
                             .unwrap_or(&current.spec.authored),
                         if current.prepared_uri.is_some() {
                             None
                         } else {
-                            module.as_ref().map(|m| m.original_uri.as_ref())
+                            module.as_ref().map(|m| &m.original_uri)
                         },
                     )
                     .map_err(|mut error| {
@@ -381,11 +419,11 @@ impl Vm {
                         error.span = Some(current.spec.span);
                         error
                     })?;
-                    current.spec.absolute_uri = absolute.clone().into();
-                    current.spec.original_uri = original.clone().into();
+                    current.spec.absolute_uri = absolute.clone();
+                    current.spec.original_uri = original.clone();
                     let Some(path) = crate::host::resources::import_triple_path(&parsed_authored)?
                     else {
-                        let prepared = (absolute.into(), original.into());
+                        let prepared = (absolute, original);
                         Arc::make_mut(&mut self.program)
                             .update_import_uris(current.spec.unit, |span| {
                                 (span == current.spec.span).then_some(&prepared)
@@ -420,7 +458,7 @@ impl Vm {
 
     pub(super) fn resolved_import_uri(
         &mut self,
-        result: Result<Arc<str>, ModuleHostError>,
+        result: Result<PklString, ModuleHostError>,
     ) -> Result<(), RuntimeError> {
         let run = self
             .frames
@@ -450,7 +488,7 @@ impl Vm {
             module.ok_or_else(|| invalid("import clause requires a declaration ModuleKey"))?;
         self.frames.last_mut().unwrap().uri_resolution = Some(Resolution {
             module,
-            path: String::new(),
+            path: PklString::default(),
             candidates: VecDeque::new(),
             selected: None,
             declaration_key: None,
@@ -529,7 +567,7 @@ impl Vm {
         let name = crate::host::resources::infer_module_name(&key.uri, fragment_paths)?;
         self.finish_clause_name(run, name)
     }
-    fn finish_clause_name(&mut self, run: Resolution, name: String) -> Result<(), RuntimeError> {
+    fn finish_clause_name(&mut self, run: Resolution, name: PklString) -> Result<(), RuntimeError> {
         let Target::Import { current, remaining } = run.target else {
             return Err(invalid("missing name inference clause"));
         };
@@ -682,7 +720,7 @@ impl Vm {
         let request = ModuleRequestKind::HasElement {
             key: run.declaration_key.clone(),
             module: run.module.clone(),
-            element_uri: uri.into(),
+            element_uri: uri,
         };
         self.frames.last_mut().unwrap().uri_resolution = Some(run);
         self.wait_module(request)
@@ -713,14 +751,14 @@ impl Vm {
             }
             Target::Import { current, remaining } => {
                 let (absolute, original) = crate::host::resources::prepare_module_uri(&uri, None)?;
-                let prepared = (absolute.clone().into(), original.clone().into());
+                let prepared = (absolute.clone(), original.clone());
                 Arc::make_mut(&mut self.program).update_import_uris(current.spec.unit, |span| {
                     (span == current.spec.span).then_some(&prepared)
                 });
                 if current.clause {
                     let mut current = current;
-                    current.spec.absolute_uri = absolute.into();
-                    current.spec.original_uri = original.into();
+                    current.spec.absolute_uri = absolute;
+                    current.spec.original_uri = original;
                     self.start_clause_selection(Some(run.module), current, remaining)
                 } else {
                     self.next_import_preparation(Some(run.module), remaining)
@@ -743,8 +781,12 @@ pub(super) fn module_import_order(
                 span,
                 member,
                 clause,
+                glob,
+                node_span,
             } => PreparationStep::Import {
                 clause: *clause,
+                glob: *glob,
+                node_span: *node_span,
                 uri: uri.clone(),
                 span: *span,
                 member: member.clone(),
@@ -761,7 +803,7 @@ impl Vm {
     pub(super) fn module_relative_path_to(&mut self) -> Result<(), RuntimeError> {
         let other = self.pop()?.as_object()?;
         let receiver = self.conversion_receiver()?;
-        let error = |message: String| {
+        let error = |message: PklString| {
             let mut error = RuntimeError::new(ErrorKind::Type, message);
             // External method bodies have an unavailable source section.
             error.unavailable_origin = true;
@@ -777,7 +819,7 @@ impl Vm {
                 "Expected a module as argument, but got an object that amends a module.".into(),
             ));
         }
-        let key_uri = |id| -> Result<Arc<str>, RuntimeError> {
+        let key_uri = |id| -> Result<PklString, RuntimeError> {
             let unit = self.heap.get(id)?.module_unit.expect("actual module owner");
             let unit = self
                 .program
@@ -801,9 +843,13 @@ impl Vm {
         let Some(elements) =
             crate::host::resources::module_relative_path_elements(&receiver_uri, &other_uri)?
         else {
-            return Err(error(format!(
-                "No descendent path exists between modules `{receiver_uri}` and `{other_uri}`."
-            )));
+            return Err(error(
+                PklString::from("No descendent path exists between modules `")
+                    .concat(&receiver_uri)
+                    .concat(&"` and `".into())
+                    .concat(&other_uri)
+                    .concat(&"`.".into()),
+            ));
         };
         if elements.is_empty() {
             let empty = self.empty_strict_collection(crate::heap::CollectionKind::List);

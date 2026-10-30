@@ -35,7 +35,10 @@ pub(super) fn builtin_members(
                 continue;
             }
             let start = class_start
-                + source.text[class_start..]
+                + source
+                    .text
+                    .entire()
+                    .range(class_start..)
                     .find(&format!("{name}:"))
                     .unwrap();
             let span = Span::new(start, start + name.len());
@@ -80,10 +83,13 @@ pub(super) fn builtin_members(
                     Instruction::GetMember("base64DecodedBytes".into()),
                 ]
             } else {
-                vec![Instruction::Fail(RuntimeError::new(
-                    ErrorKind::Unsupported,
-                    format!("Resource.{name} default binding is not implemented."),
-                ))]
+                // The pinned Resource digest defaults delegate to the effective
+                // receiver's bytes, including reader and base64-backed values.
+                vec![
+                    Instruction::LoadThis,
+                    Instruction::GetMember("bytes".into()),
+                    Instruction::GetMember(name.into()),
+                ]
             };
             code.push(Instruction::CheckType(ty.clone()));
             code.push(Instruction::Return);

@@ -1,0 +1,22 @@
+–– Pkl Error ––
+Cannot reference property `threshold` from here because it is not `const`.
+
+5 | const xs=new Listing {...List((()->threshold).apply())}
+                                       ^^^^^^^^^
+at stage18.scopes#xs.<function#1> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/tests/fixtures/m2/types-stage18-const-generator-spread-lambda.pkl)
+
+To fix, do either of:
+1. Add modifier `const` to property `threshold`
+2. Self-import this module, and reference this property from the import.
+
+5 | const xs=new Listing {...List((()->threshold).apply())}
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+at stage18.scopes#xs (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/tests/fixtures/m2/types-stage18-const-generator-spread-lambda.pkl)
+
+6 | result=xs[0]
+           ^^
+at stage18.scopes#result (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/tests/fixtures/m2/types-stage18-const-generator-spread-lambda.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

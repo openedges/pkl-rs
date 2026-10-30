@@ -143,7 +143,7 @@ fn successful_site_cache_precedes_admission_and_uri_cache_does_not_skip_other_si
     assert_eq!(requests.len(), 9);
     assert_eq!(&phases(&requests)[7..], ["check-import", "select-runtime"]);
     assert!(
-        matches!(&requests[7].kind, ModuleRequestKind::CheckImport { import_uri, .. } if import_uri.as_ref()=="pkl:base")
+        matches!(&requests[7].kind, ModuleRequestKind::CheckImport { import_uri, .. } if import_uri=="pkl:base")
     );
     probe.close();
     assert_eq!(probe.collect().slots, 0);
@@ -180,7 +180,7 @@ fn singleton_aliases_share_canonical_receivers_but_keep_authored_edge_spelling()
         .iter()
         .filter_map(|request| {
             if let ModuleRequestKind::CheckImport { import_uri, .. } = &request.kind {
-                Some(import_uri.as_ref())
+                Some(import_uri)
             } else {
                 assert_eq!(phase(request), "select-runtime", "{request:?}");
                 None
@@ -261,7 +261,7 @@ fn reference_singleton_aliases_use_the_same_external_type_binding_after_admissio
             ["select-clause", "check-import", "select-runtime"]
         );
         assert!(
-            matches!(&requests[1].kind, ModuleRequestKind::CheckImport { import_uri, .. } if import_uri.as_ref() == uri)
+            matches!(&requests[1].kind, ModuleRequestKind::CheckImport { import_uri, .. } if import_uri == uri)
         );
         probe.close();
         assert_eq!(probe.collect().slots, 0);
@@ -314,7 +314,7 @@ fn qualified_reference_type_forces_the_authored_import_before_applying_its_bindi
                     continue;
                 }
                 assert!(
-                    matches!(&request.kind, ModuleRequestKind::CheckImport { import_uri, .. } if import_uri.as_ref() == "pkl:ref")
+                    matches!(&request.kind, ModuleRequestKind::CheckImport { import_uri, .. } if import_uri == "pkl:ref")
                 );
                 checks += 1;
                 if denied {
@@ -375,7 +375,7 @@ fn typed_edge_denial_is_catchable_retryable_and_never_a_successful_site() {
             }
             let token = event.token.unwrap();
             let request = probe.module_request(&token).unwrap();
-            if matches!(&request.kind, ModuleRequestKind::CheckImport { import_uri, .. } if import_uri.as_ref()=="pkl:json")
+            if matches!(&request.kind, ModuleRequestKind::CheckImport { import_uri, .. } if import_uri=="pkl:json")
                 && denied < 2
             {
                 probe
@@ -434,7 +434,7 @@ fn edge_security_cause_preserves_null_and_utf16_while_raw_denied_bypasses_guest_
                 break;
             }
             let token = event.token.unwrap();
-            if matches!(&probe.module_request(&token).unwrap().kind, ModuleRequestKind::CheckImport { import_uri, .. } if import_uri.as_ref()=="pkl:json")
+            if matches!(&probe.module_request(&token).unwrap().kind, ModuleRequestKind::CheckImport { import_uri, .. } if import_uri=="pkl:json")
             {
                 probe
                     .reject_module_import_check(&token, kind, message.clone(), 0)
@@ -575,8 +575,8 @@ fn resolved_importer_trust_is_independent_of_original_and_diagnostic_uri() {
                 assert!(module_keys::complete_probe(&mut probe, &token, 0).unwrap());
             }
             ModuleRequestKind::ResolveImportUri { key, authored_uri } => {
-                assert_eq!(key.uri.as_ref(), "file:///admission/child.pkl");
-                assert_eq!(authored_uri.as_ref(), "file:///secret.pkl");
+                assert_eq!(key.uri, "file:///admission/child.pkl");
+                assert_eq!(authored_uri, "file:///secret.pkl");
                 assert!(
                     !observed_inner,
                     "AST URI preparation precedes the denied runtime edge"
@@ -588,15 +588,9 @@ fn resolved_importer_trust_is_independent_of_original_and_diagnostic_uri() {
                 importer,
                 import_uri,
             } => {
-                if import_uri.as_ref() == "file:///secret.pkl" {
-                    assert_eq!(
-                        importer.original_uri.as_ref(),
-                        "file:///admission/child.pkl"
-                    );
-                    assert_eq!(
-                        importer.resolved_uri.as_ref(),
-                        "https://example.test/child.pkl"
-                    );
+                if import_uri == "file:///secret.pkl" {
+                    assert_eq!(importer.original_uri, "file:///admission/child.pkl");
+                    assert_eq!(importer.resolved_uri, "https://example.test/child.pkl");
                     observed_inner = true;
                 }
                 assert!(probe.complete_default_module(&token, 0).unwrap());
@@ -747,7 +741,11 @@ fn successful_cycle_site_keeps_its_partial_receiver_after_module_initialization_
                     }))
                 }
                 ModuleRequestKind::LoadSource { resolved, .. } => {
-                    let (name, text) = match resolved.original_uri.as_ref() {
+                    let (name, text) = match resolved
+                        .original_uri
+                        .as_str()
+                        .expect("fixture URI must be scalar")
+                    {
                         "file:///admission/a.pkl" => (
                             "a",
                             "import \"./b.pkl\" as b\nopen class Good {}\np: b.B? = null\nq: b.Missing? = null\n",

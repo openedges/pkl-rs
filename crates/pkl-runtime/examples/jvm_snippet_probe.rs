@@ -52,7 +52,9 @@ fn run(arguments: &[String]) -> Result<i32, String> {
     let result = evaluate_module_output_with_host(
         ModuleSourceInput {
             text: &text,
-            uri: &uri,
+            uri: uri.as_str().ok_or(
+                "The scalar JVM snippet adapter cannot represent an unpaired UTF-16 URI surrogate.",
+            )?,
             inferred_name,
         },
         &options,

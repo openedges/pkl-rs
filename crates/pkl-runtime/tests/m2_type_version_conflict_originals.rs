@@ -57,7 +57,7 @@ fn check(original: Original<'_>) {
             }
             match &request.kind {
                 ModuleRequestKind::Resolve { original_uri, .. }
-                    if original_uri.as_ref() == helper_uri.as_str() =>
+                    if original_uri == helper_uri.as_str() =>
                 {
                     ModuleCompletion::Resolved(Ok(ResolvedModule {
                         original_uri: original_uri.clone(),
@@ -66,7 +66,7 @@ fn check(original: Original<'_>) {
                     }))
                 }
                 ModuleRequestKind::LoadSource { resolved, .. }
-                    if resolved.original_uri.as_ref() == helper_uri.as_str() =>
+                    if resolved.original_uri == helper_uri.as_str() =>
                 {
                     ModuleCompletion::Source(Ok(ModuleSource {
                         text: include_str!(

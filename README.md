@@ -2,16 +2,17 @@
 
 This project reimplements [Pkl](https://pkl-lang.org/) 0.32.0 in Rust. It aims to share one engine across native Rust, WebAssembly, and Node.js N-API, with automated compatibility checks against the Java implementation.
 
-The latest [Stage120 checkpoint](reports/m2/stage120-shebang-quoted-identifier-checkpoint.json)
-integrates shebang handling, quoted identifiers and diagnostic source ownership.
-The original local workspace acquisition records 1,711 passes, zero failures and
-five ignored tests. After two test-only Clippy repairs, the two affected tests
-pass again; the full workspace was not rerun. The full ready corpus records
-4,337 matches, 21 mismatches, 82 unsupported
-cases and two Java oracle errors across 4,442 cases; all 88 metamorphic checks pass.
-Each selected new Native, N-API and Chromium target matches 234 attempted observations; each retained target matches 902 ordinary observations with two required internal observations unresolved. Fresh affected tests, formatting, Clippy and the Wasm check pass after two test-only repairs. The bounded checkpoint is verified; `all_required_pass=false` remains explicit.
-Full M2/API, release-platform and performance requirements remain open.
-
+The latest [Stage122 report](reports/m2/stage122-lossless-source-runtime/README.md)
+records lossless UTF-16 source/URI handling, typed glob Host operations, selected
+diagnostics, Resource digests and math bindings. Local verification joins 285
+complete test harnesses with **1,779 passes, zero failures and five ignored**;
+the original reflection Cargo exit remains unobserved, so this is not a fresh
+full-workspace command pass. Seven final development commands pass. The complete
+ready replay records **4,351 matches out of 4,442 cases**, with 15 mismatches,
+74 unsupported cases and two Java oracle errors. All 88 metamorphic checks pass
+and no previous passing case regresses. Selected portable comparisons and the three-target raw transport check are
+verified, and their evidence archives are published and checked. Full M2/API, release-platform and performance
+requirements remain open.
 
 The project has completed its **M0 compatibility tooling and initial Java baselines** and **M1 architecture experiments**, including failed-lazy-retry, nested Host evaluation, cancellation, and the Graal compilation investigation. A bounded parser/resolver, lazy bytecode VM, tracing heap, numeric/regex probes, and resumable Host run through native Rust, Node N-API, and browser Wasm. These are prototypes; the complete language, CLI, REPL, server, and product APIs remain unimplemented. The [M0 report](reports/m0/README.md) and [M1 experiments](reports/m1/README.md) distinguish verified results, known differences, and performance limitations.
 

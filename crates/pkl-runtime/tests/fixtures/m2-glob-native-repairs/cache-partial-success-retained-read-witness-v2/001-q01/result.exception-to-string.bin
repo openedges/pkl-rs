@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+I/O error reading resource `gdata:b`.
+IOException: stage116 second member failed once
+
+1 | entries = read*("gdata:**")
+              ^^^^^^^^^^^^^^^^^
+at  (gmain:/tree/cache-partial-success-retained-read.pkl)
+
+1 | entries["gdata:b"].toString()
+    ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

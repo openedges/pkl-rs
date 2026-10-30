@@ -7,20 +7,27 @@ use crate::syntax::ExprKind;
 use crate::value::RuntimeSource;
 
 impl Vm {
-    pub(super) fn stdlib_source(&self, uri: &str) -> Result<Arc<RuntimeSource>, RuntimeError> {
-        Ok(match uri {
-            "pkl:base" => crate::stdlib_sources::base(),
-            "pkl:test" => crate::stdlib_sources::test(),
-            "pkl:ref" => crate::stdlib_sources::reference(),
-            "pkl:reflect" => crate::stdlib_sources::reflect(),
-            "pkl:json" => crate::stdlib_sources::json(),
-            "pkl:yaml" => crate::stdlib_sources::yaml(),
-            "pkl:math" => crate::stdlib_sources::math(),
+    pub(super) fn stdlib_source(
+        &self,
+        uri: impl Into<PklString>,
+    ) -> Result<Arc<RuntimeSource>, RuntimeError> {
+        let uri = uri.into();
+        let uri = &uri;
+        Ok(match uri.as_str() {
+            Some("pkl:base") => crate::stdlib_sources::base(),
+            Some("pkl:test") => crate::stdlib_sources::test(),
+            Some("pkl:ref") => crate::stdlib_sources::reference(),
+            Some("pkl:reflect") => crate::stdlib_sources::reflect(),
+            Some("pkl:json") => crate::stdlib_sources::json(),
+            Some("pkl:yaml") => crate::stdlib_sources::yaml(),
+            Some("pkl:math") => crate::stdlib_sources::math(),
             _ if uri.starts_with("pkl:") => {
                 if crate::modules::stdlib_kind(uri) != Some(crate::modules::StdlibKind::Missing) {
                     return Err(RuntimeError::new(
                         ErrorKind::Unsupported,
-                        format!("Standard-library module `{uri}` is not implemented."),
+                        PklString::from("Standard-library module `")
+                            .concat(uri)
+                            .concat(&"` is not implemented.".into()),
                     ));
                 }
                 let mut error = RuntimeError::new(
@@ -28,7 +35,13 @@ impl Vm {
                     PklString::from("Cannot find standard library module `pkl:")
                         .concat(
                             &crate::host::resources::decoded_scheme_specific_part(uri)
-                                .unwrap_or_else(|| uri.strip_prefix("pkl:").unwrap_or(uri).into()),
+                                .unwrap_or_else(|| {
+                                    crate::source::SourceText::from(uri)
+                                        .entire()
+                                        .strip_prefix("pkl:")
+                                        .expect("pkl URI prefix")
+                                        .to_pkl_string()
+                                }),
                         )
                         .concat(&"`.".into()),
                 );
@@ -47,16 +60,30 @@ impl Vm {
         })
     }
 
-    pub(super) fn stdlib_entry(&mut self, uri: &str) -> Result<usize, RuntimeError> {
+    pub(super) fn stdlib_entry(
+        &mut self,
+        uri: impl Into<PklString>,
+    ) -> Result<usize, RuntimeError> {
+        let uri = uri.into();
+        let uri = &uri;
         let source = self.stdlib_source(uri)?;
         let program = Arc::make_mut(&mut self.program);
-        let unit = append_definition(program, uri, source)?;
+        let unit = append_definition(
+            program,
+            uri.as_str().expect("selected pinned builtin URI"),
+            source,
+        )?;
         Ok(program.units[unit.0 as usize].entry)
     }
 
     // Implicit prelude bindings are not authored ImportNodes and have no import
     // edge. Explicit imports go through ModuleRun before reaching this source.
-    pub(super) fn import_stdlib(&mut self, uri: &str) -> Result<bool, RuntimeError> {
+    pub(super) fn import_stdlib(
+        &mut self,
+        uri: impl Into<PklString>,
+    ) -> Result<bool, RuntimeError> {
+        let uri = uri.into();
+        let uri = &uri;
         let cache = if matches!(
             crate::modules::stdlib_kind(uri),
             Some(crate::modules::StdlibKind::Singleton(_))
@@ -102,7 +129,7 @@ fn append_definition(
             && unit
                 .identity
                 .as_ref()
-                .is_some_and(|identity| identity.original_uri.as_ref() == uri)
+                .is_some_and(|identity| identity.original_uri == uri)
     }) {
         return Ok(unit.id);
     }
@@ -158,10 +185,19 @@ fn append_members(
     // and source owners. The JSON parser's external binding remains explicit.
     header.members.retain(|member| {
         (matches!(uri, "pkl:json" | "pkl:yaml")
-            && matches!(member.name.as_str(), "Property" | "Value"))
+            && matches!(
+                member
+                    .name
+                    .as_str()
+                    .expect("pinned bundled declaration name"),
+                "Property" | "Value"
+            ))
             || (uri == "pkl:base"
                 && matches!(
-                    member.name.as_str(),
+                    member
+                        .name
+                        .as_str()
+                        .expect("pinned bundled declaration name"),
                     "DataSizeUnit"
                         | "DurationUnit"
                         | "Charset"
@@ -195,7 +231,7 @@ fn append_members(
     for declaration in &parsed.members {
         if let Some(member) = compiled_members
             .iter()
-            .find(|member| member.name.as_ref() == declaration.name)
+            .find(|member| member.name == declaration.name)
         {
             members.push(member.clone());
             continue;
@@ -209,11 +245,18 @@ fn append_members(
         let mut body = if uri == "pkl:base" {
             base_binding(declaration)
         } else if uri == "pkl:math" {
-            math_binding(declaration)
+            match primitives::math_module::binding(program, unit, source.clone(), declaration)? {
+                Some(body) => body,
+                None => math_binding(declaration),
+            }
         } else if matches!(uri, "pkl:json" | "pkl:yaml") {
             unsupported_binding(uri, declaration)
         } else if uri == "pkl:ref" {
-            match declaration.name.as_str() {
+            match declaration
+                .name
+                .as_str()
+                .expect("pinned bundled declaration name")
+            {
                 "Reference" if !method => vec![Instruction::BuiltinClass(TypeCheck::Reference {
                     domain: Box::new(TypeCheck::Any),
                     referent: Box::new(TypeCheck::Any),
@@ -227,7 +270,11 @@ fn append_members(
                 _ => unsupported_binding(uri, declaration),
             }
         } else {
-            match declaration.name.as_str() {
+            match declaration
+                .name
+                .as_str()
+                .expect("pinned bundled declaration name")
+            {
                 "facts" | "examples" if !method => {
                     let value_type = if declaration.name == "facts" {
                         TypeCheck::Boolean
@@ -252,6 +299,7 @@ fn append_members(
                     vec![Instruction::ResolvedDefault {
                         ty: check,
                         origin: Some(RuntimeFrame {
+                            anonymous: false,
                             source: Some(source.clone()),
                             span: type_span.unwrap(),
                             member: format!("#{}", declaration.name).into(),
@@ -323,7 +371,7 @@ fn append_members(
         members.push(Member {
             flags: Member::declaration_flags(declaration),
             entry: false,
-            name: declaration.name.clone().into(),
+            name: declaration.name.clone(),
             code: block,
             local: declaration.local,
             method,
@@ -376,7 +424,10 @@ fn append_bootstrap(program: &mut Program, unit: UnitId, uri: &str) {
 }
 
 fn base_binding(declaration: &crate::syntax::Member) -> Vec<Instruction> {
-    let name = declaration.name.as_str();
+    let name = declaration
+        .name
+        .as_str()
+        .expect("pinned bundled declaration name");
     match &declaration.expr.kind {
         ExprKind::Function { method: true, .. } if name == "Regex" => {
             return vec![Instruction::RegexConstructor];
@@ -417,10 +468,13 @@ fn base_binding(declaration: &crate::syntax::Member) -> Vec<Instruction> {
     unsupported_binding("pkl:base", declaration)
 }
 
-// Every property constant declared by pinned MathNodes. Transcendental and
-// arithmetic functions retain explicit unsupported bindings.
+// Every property constant declared by pinned MathNodes. External methods are
+// bound separately through the shared math_module primitive.
 fn math_binding(declaration: &crate::syntax::Member) -> Vec<Instruction> {
-    let name = declaration.name.as_str();
+    let name = declaration
+        .name
+        .as_str()
+        .expect("pinned bundled declaration name");
     let integer = match name {
         "minInt" => Some(i64::MIN),
         "maxInt" | "maxUInt" => Some(i64::MAX),
@@ -477,7 +531,7 @@ fn compile_reflection_annotations(
         .map_err(|error| RuntimeError::new(ErrorKind::Unsupported, error.message))?;
     let declaration_base = program.next_declaration;
     program.next_declaration = declaration_base
-        .checked_add(source.text.len() + 2)
+        .checked_add(source.text.len_bytes() + 2)
         .ok_or_else(|| invalid("annotation declaration identity limit"))?;
     let mut compiler = Compiler {
         resolved: &resolved,
@@ -518,11 +572,11 @@ fn compile_reflection_annotations(
         .members
         .iter()
         .rev()
-        .map(|member| (format!("#{}", member.name), member))
+        .map(|member| (PklString::from("#").concat(&member.name), member))
         .collect();
     while let Some((name, member)) = pending.pop() {
         if !member.annotations.is_empty() {
-            compiler.member = name.as_str().into();
+            compiler.member = name.clone();
             let mut code = Code::default();
             code.push(Instruction::BeginMemberAnnotations);
             compiler.annotations(&member.annotations, &mut code)?;
@@ -538,7 +592,7 @@ fn compile_reflection_annotations(
                 members
                     .iter()
                     .rev()
-                    .map(|member| (format!("{name}.{}", member.name), member)),
+                    .map(|member| (name.concat(&".".into()).concat(&member.name), member)),
             );
         }
     }
@@ -736,8 +790,8 @@ userLocation = reflect.Class(User).location.displayUri
                     panic!("Char was not a type alias")
                 };
                 assert_eq!(
-                    vm.heap.get(char_alias).unwrap().type_alias.as_deref(),
-                    Some("pkl.base#Char")
+                    vm.heap.get(char_alias).unwrap().type_alias,
+                    Some("pkl.base#Char".into())
                 );
                 assert!(vm.heap.get(char_alias).unwrap().type_alias_initialized);
                 vm.collect(&[]);

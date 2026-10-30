@@ -43,11 +43,9 @@ fn session() -> (HostSession, Value, usize, usize) {
     let mut entries = Vec::new();
     for member in ["outerResult", "innerResult"] {
         entries.push(program.blocks.len());
-        program.blocks.push(vec![
-            I::Input(0),
-            I::GetMember(Arc::from(member)),
-            I::Return,
-        ]);
+        program
+            .blocks
+            .push(vec![I::Input(0), I::GetMember(member.into()), I::Return]);
     }
     let mut session = HostSession::new(Arc::new(program));
     session.start(module_entry, vec![], 0, None).unwrap();
@@ -69,7 +67,7 @@ fn next_event(session: &mut HostSession, now: u64) -> HostPoll {
 fn request(session: &mut HostSession, now: u64, expected_uri: &str) -> String {
     match next_event(session, now) {
         HostPoll::Read { token, uri } => {
-            assert_eq!(&*uri, expected_uri);
+            assert_eq!(uri, expected_uri);
             token
         }
         event => panic!("expected {expected_uri}, got {event:?}"),
@@ -102,11 +100,9 @@ fn suspended_parent_constraint_keeps_reentry_eager_until_it_finishes() {
     let mut entries = Vec::new();
     for member in ["parentResult", "childResult"] {
         entries.push(program.blocks.len());
-        program.blocks.push(vec![
-            I::Input(0),
-            I::GetMember(Arc::from(member)),
-            I::Return,
-        ]);
+        program
+            .blocks
+            .push(vec![I::Input(0), I::GetMember(member.into()), I::Return]);
     }
     let mut session = HostSession::new(Arc::new(program));
     session.start(module_entry, vec![], 0, None).unwrap();
@@ -172,7 +168,7 @@ fn parameter_and_let_bindings_publish_checked_wrappers_before_the_body_runs() {
         let result_entry = program.blocks.len();
         program.blocks.push(vec![
             I::Input(0),
-            I::GetMember(Arc::from("result")),
+            I::GetMember("result".into()),
             I::Return,
         ]);
         let mut session = HostSession::new(Arc::new(program));
@@ -215,11 +211,9 @@ fn failed_cast_of_cached_source_retries_and_successful_wrapper_cache_is_shared()
     let mut entries = Vec::new();
     for member in ["prime", "result", "again"] {
         entries.push(program.blocks.len());
-        program.blocks.push(vec![
-            I::Input(0),
-            I::GetMember(Arc::from(member)),
-            I::Return,
-        ]);
+        program
+            .blocks
+            .push(vec![I::Input(0), I::GetMember(member.into()), I::Return]);
     }
     let mut session = HostSession::new(Arc::new(program));
     session.start(module_entry, vec![], 0, None).unwrap();

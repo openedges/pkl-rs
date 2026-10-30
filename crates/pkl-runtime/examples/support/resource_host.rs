@@ -13,7 +13,7 @@ pub fn complete(request: &ReadRequest) -> Option<Result<ReadResult, ReadFailure>
     let path = super::module_host::file_path(&uri).ok()?;
     Some(match std::fs::read(path) {
         Ok(bytes) => Ok(ReadResult::Resource(Resource {
-            uri: uri.into(),
+            uri,
             bytes: bytes.into(),
         })),
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(ReadResult::Missing),

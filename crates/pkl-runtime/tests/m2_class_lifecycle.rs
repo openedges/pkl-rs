@@ -226,7 +226,7 @@ fn host_ready(session: &mut HostSession, now: u64) -> Result<Value, RuntimeError
 fn request(session: &mut HostSession, now: u64, expected_uri: &str) -> String {
     match host_event(session, now) {
         HostPoll::Read { token, uri } => {
-            assert_eq!(&*uri, expected_uri);
+            assert_eq!(uri, expected_uri);
             token
         }
         event => panic!("expected read, got {event:?}"),
@@ -454,7 +454,7 @@ fn inject_initialization_read(program: &mut Program) {
         .find(|block| {
             block.iter().any(|instruction| {
                 matches!(instruction,
-            I::BeginClass { class, .. } if &*class.name == "Child")
+            I::BeginClass { class, .. } if class.name == "Child")
             })
         })
         .unwrap();
@@ -494,7 +494,7 @@ fn development_cancel_during_injected_initialization_preserves_only_published_pr
     loop {
         match vm.poll(1) {
             VmPoll::Pending(read) => {
-                assert_eq!(&*read.uri, "mem:initialization");
+                assert_eq!(read.uri, "mem:initialization");
                 break;
             }
             VmPoll::Yielded => {

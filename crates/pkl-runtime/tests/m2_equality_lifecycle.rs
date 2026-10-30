@@ -30,11 +30,9 @@ fn session_source(source: &str) -> (HostSession, Value, usize, usize) {
     let module_entry = program.entry;
     let entries = ["parent", "child"].map(|member| {
         let entry = program.blocks.len();
-        program.blocks.push(vec![
-            I::Input(0),
-            I::GetMember(Arc::from(member)),
-            I::Return,
-        ]);
+        program
+            .blocks
+            .push(vec![I::Input(0), I::GetMember(member.into()), I::Return]);
         entry
     });
     let mut session = HostSession::new(Arc::new(program));
@@ -64,7 +62,7 @@ fn ready(session: &mut HostSession, now: u64) -> Result<Value, RuntimeError> {
 fn request(session: &mut HostSession, now: u64, expected: &str) -> String {
     match event(session, now) {
         HostPoll::Read { token, uri } => {
-            assert_eq!(&*uri, expected);
+            assert_eq!(uri, expected);
             token
         }
         event => panic!("expected read {expected}, got {event:?}"),
@@ -366,11 +364,9 @@ fn completed_left_forcing_survives_a_failed_right_and_is_reused_on_retry() {
             .clone();
     let module_entry = program.entry;
     let parent = program.blocks.len();
-    program.blocks.push(vec![
-        I::Input(0),
-        I::GetMember(Arc::from("parent")),
-        I::Return,
-    ]);
+    program
+        .blocks
+        .push(vec![I::Input(0), I::GetMember("parent".into()), I::Return]);
     let mut session = HostSession::new(Arc::new(program));
     session.start(module_entry, vec![], 0, None).unwrap();
     let root = ready(&mut session, 0).unwrap();

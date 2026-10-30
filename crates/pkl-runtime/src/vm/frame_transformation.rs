@@ -47,14 +47,14 @@ impl Vm {
             .ok_or_else(|| invalid("reflection location source"))?;
         let mut raw = if frame.span.start == frame.span.end {
             let mut sources = crate::source::SourceMap::default();
-            let id = sources.add(source.uri.as_ref(), source.text.as_ref());
+            let id = sources.add(source.uri.clone(), source.text.clone());
             let position = sources
                 .get(id)
                 .unwrap()
                 .position(frame.span.start)
                 .ok_or_else(|| invalid("empty declaration location"))?;
             LogFrame {
-                module_uri: source.uri.as_ref().into(),
+                module_uri: source.uri.clone(),
                 member_name: None,
                 source_lines: Arc::from([]),
                 start_line: position.line,
@@ -251,17 +251,19 @@ impl Vm {
             .public_primary_source()
             .or_else(|| self.context.primary_source.clone())
             .or_else(|| error.frames.iter().find_map(|frame| frame.source.clone()));
-        let text = source.as_ref().map_or("", |source| source.text.as_ref());
+        let text = source.as_ref().map_or_else(
+            || crate::source::SourceText::from(""),
+            |source| source.text.clone(),
+        );
         let uri = source
             .as_ref()
-            .map_or("repl:text", |source| source.uri.as_ref());
-        let module = source
-            .as_ref()
-            .map_or(self.program.module_name.as_ref(), |source| {
-                source.module_name.as_ref()
-            });
+            .map_or_else(|| PklString::from("repl:text"), |source| source.uri.clone());
+        let module = source.as_ref().map_or_else(
+            || self.program.module_name.clone(),
+            |source| source.module_name.clone(),
+        );
         let mut sources = crate::source::SourceMap::default();
-        let source_id = sources.add(uri, text);
+        let source_id = sources.add(uri.clone(), text);
         let rendering = Box::new(crate::evaluation::prepare_runtime_error(
             sources.get(source_id).expect("diagnostic source"),
             uri,

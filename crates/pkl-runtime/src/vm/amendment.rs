@@ -68,14 +68,10 @@ impl Vm {
     fn amended_function_member(&self, block: usize) -> PklString {
         let metadata = &self.program.metadata[block];
         let member: PklString = if metadata.member.is_empty() {
-            metadata
-                .source
-                .as_ref()
-                .map_or_else(
-                    || self.program.module_name.to_string(),
-                    |source| source.uri.to_string(),
-                )
-                .into()
+            metadata.source.as_ref().map_or_else(
+                || self.program.module_name.clone(),
+                |source| source.uri.clone(),
+            )
         } else {
             metadata.member.clone()
         };
@@ -325,6 +321,7 @@ impl Vm {
                     .copied()
                     .flatten()
                     .map(|span| RuntimeFrame {
+                        anonymous: false,
                         source: metadata.source.clone(),
                         span,
                         member: self.amended_function_member(frame.block),

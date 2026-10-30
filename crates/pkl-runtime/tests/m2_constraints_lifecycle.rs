@@ -10,7 +10,7 @@ use pkl_runtime::vm::{Instruction as I, compile_module};
 fn request(session: &mut HostSession, now: u64, expected_uri: &str) -> String {
     match session.poll(now, 1_000) {
         HostPoll::Read { token, uri } => {
-            assert_eq!(&*uri, expected_uri);
+            assert_eq!(uri, expected_uri);
             token
         }
         event => panic!("expected pending constraint read, got {event:?}"),
@@ -52,11 +52,9 @@ fn pending_constraint_contexts_abort_together_and_reject_late_completions() {
         let mut entries = Vec::new();
         for member in ["checked", "nested"] {
             entries.push(program.blocks.len());
-            program.blocks.push(vec![
-                I::Input(0),
-                I::GetMember(Arc::from(member)),
-                I::Return,
-            ]);
+            program
+                .blocks
+                .push(vec![I::Input(0), I::GetMember(member.into()), I::Return]);
         }
         let [outer_entry, inner_entry] = entries[..] else {
             unreachable!()

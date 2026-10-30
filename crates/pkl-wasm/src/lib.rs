@@ -2,6 +2,7 @@
 use js_sys::{BigInt, JsString, Uint8Array};
 use pkl_runtime::{
     probe,
+    source::SourceText,
     value::{PklString, Value},
 };
 use wasm_bindgen::prelude::*;
@@ -51,6 +52,9 @@ fn pkl_text(value: &JsString) -> Result<PklString, JsValue> {
             .collect::<Vec<_>>(),
     ))
 }
+fn source_text(value: &JsString) -> Result<SourceText, JsValue> {
+    pkl_text(value).map(SourceText::from)
+}
 fn integer(value: JsValue) -> Result<i64, JsValue> {
     if !value.is_bigint() {
         return Err(error("expected BigInt"));
@@ -67,9 +71,9 @@ pub fn primitive(family: JsString, input: JsString) -> Result<String, JsValue> {
 }
 #[wasm_bindgen(js_name = evaluate)]
 pub fn evaluate(source: JsString, member: JsString) -> Result<String, JsValue> {
-    probe::evaluate_member(&string(&source)?, &string(&member)?)
+    probe::evaluate_member_text(source_text(&source)?, pkl_text(&member)?)
         .map(probe::encode_value)
-        .map_err(error)
+        .map_err(text_error)
 }
 /// Development-only scalar boundary with shared Pkl diagnostic rendering.
 #[wasm_bindgen(js_name = evaluateLanguage)]
@@ -81,10 +85,10 @@ pub fn evaluate_language(
     power_assertions: Option<bool>,
 ) -> Result<JsString, JsValue> {
     pkl_runtime::evaluation::scalar_expression_text_with_options(
-        &string(&source)?,
-        &string(&uri)?,
-        &string(&module_name)?,
-        &string(&expression)?,
+        source_text(&source)?,
+        pkl_text(&uri)?,
+        pkl_text(&module_name)?,
+        source_text(&expression)?,
         pkl_runtime::evaluation::EvaluationOptions {
             power_assertions: power_assertions.unwrap_or(false),
         },
@@ -100,20 +104,22 @@ pub fn evaluate_module_frontend(
     module_name: JsString,
     arguments: js_sys::Array,
 ) -> Result<js_sys::Object, JsValue> {
-    use pkl_runtime::evaluation::frontend::{ModuleSourceInput, arguments::parse_module_eval_args};
+    use pkl_runtime::evaluation::frontend::{
+        LosslessModuleSourceInput, arguments::parse_module_eval_args,
+    };
     let arguments = arguments
         .iter()
         .map(|value| string(&JsString::from(value)))
         .collect::<Result<Vec<_>, _>>()?;
     let invocation = parse_module_eval_args(&arguments).map_err(error)?;
-    let source = string(&source)?;
-    let uri = string(&uri)?;
-    let module_name = string(&module_name)?;
+    let source = source_text(&source)?;
+    let uri = pkl_text(&uri)?;
+    let module_name = pkl_text(&module_name)?;
     let result = pkl_runtime::evaluation::frontend::evaluate_module_frontend(
-        ModuleSourceInput {
-            text: &source,
-            uri: &uri,
-            inferred_name: &module_name,
+        LosslessModuleSourceInput {
+            text: source,
+            uri,
+            inferred_name: module_name,
         },
         &invocation.options,
     );
@@ -145,20 +151,22 @@ pub fn evaluate_module_output(
     module_name: JsString,
     arguments: js_sys::Array,
 ) -> Result<js_sys::Object, JsValue> {
-    use pkl_runtime::evaluation::frontend::{ModuleSourceInput, arguments::parse_module_eval_args};
+    use pkl_runtime::evaluation::frontend::{
+        LosslessModuleSourceInput, arguments::parse_module_eval_args,
+    };
     let arguments = arguments
         .iter()
         .map(|value| string(&JsString::from(value)))
         .collect::<Result<Vec<_>, _>>()?;
     let invocation = parse_module_eval_args(&arguments).map_err(error)?;
-    let source = string(&source)?;
-    let uri = string(&uri)?;
-    let module_name = string(&module_name)?;
+    let source = source_text(&source)?;
+    let uri = pkl_text(&uri)?;
+    let module_name = pkl_text(&module_name)?;
     let result = pkl_runtime::evaluation::frontend::evaluate_module_output(
-        ModuleSourceInput {
-            text: &source,
-            uri: &uri,
-            inferred_name: &module_name,
+        LosslessModuleSourceInput {
+            text: source,
+            uri,
+            inferred_name: module_name,
         },
         &invocation.options,
     );
@@ -195,13 +203,13 @@ pub fn evaluate_language_sequence(
 ) -> Result<js_sys::Array, JsValue> {
     let expressions = expressions
         .iter()
-        .map(|value| string(&JsString::from(value)))
+        .map(|value| source_text(&JsString::from(value)))
         .collect::<Result<Vec<_>, _>>()?;
     Ok(
-        pkl_runtime::evaluation::scalar_expressions_text_with_options(
-            &string(&source)?,
-            &string(&uri)?,
-            &string(&module_name)?,
+        pkl_runtime::evaluation::scalar_expressions_source_with_options(
+            source_text(&source)?,
+            pkl_text(&uri)?,
+            pkl_text(&module_name)?,
             &expressions,
             pkl_runtime::evaluation::EvaluationOptions {
                 power_assertions: power_assertions.unwrap_or(false),
@@ -224,9 +232,9 @@ pub fn evaluate_language_sequence(
     )
 }
 #[wasm_bindgen(js_name = roundtripString)]
-pub fn roundtrip_string(input: JsString) -> Result<String, JsValue> {
-    match probe::identity(Value::string(string(&input)?)).map_err(error)? {
-        Value::String(value) => Ok(value.to_java_utf8()),
+pub fn roundtrip_string(input: JsString) -> Result<JsString, JsValue> {
+    match probe::identity(Value::String(pkl_text(&input)?)).map_err(error)? {
+        Value::String(value) => Ok(js_text(&value)),
         _ => Err(error("invalid engine result")),
     }
 }
@@ -392,7 +400,57 @@ fn completed_frame(value: JsValue) -> Result<probe::SourceFrame, JsValue> {
     })
 }
 
-fn source_event(event: probe::SourceEvent) -> Result<JsValue, JsValue> {
+/// Apply the existing shared frame policy without creating an evaluator session.
+#[wasm_bindgen(js_name = transformFrameForPolicy)]
+pub fn transform_frame_for_policy(frame: JsValue, policy: JsString) -> Result<JsValue, JsValue> {
+    use pkl_runtime::logging::FrameTransformer;
+    let policy = match string(&policy)?.as_str() {
+        "default" => FrameTransformer::Default,
+        "identity" => FrameTransformer::Identity,
+        _ => return Err(error("expected default or identity frame policy")),
+    };
+    let frame = completed_frame(frame)?;
+    let transformed = policy.transform(frame.into());
+    source_frame(
+        probe::SourceFrame::try_from(&transformed)
+            .map_err(|failure| text_error(failure.message))?,
+    )
+}
+
+fn strict_boolean(value: JsValue) -> Result<bool, JsValue> {
+    value.as_bool().ok_or_else(|| error("expected boolean"))
+}
+fn glob_elements(elements: JsValue) -> Result<Vec<pkl_runtime::glob::PathElement>, JsValue> {
+    if !js_sys::Array::is_array(&elements) {
+        return Err(error("expected an array of glob path elements"));
+    }
+    js_sys::Array::from(&elements)
+        .iter()
+        .map(|element| {
+            let name = js_sys::Reflect::get(&element, &JsValue::from_str("name"))?;
+            if !JsValue::is_instance_of::<js_sys::Uint16Array>(&name) {
+                return Err(error("glob path element name must be Uint16Array"));
+            }
+            let is_directory = js_sys::Reflect::get(&element, &JsValue::from_str("isDirectory"))?
+                .as_bool()
+                .ok_or_else(|| error("glob isDirectory must be a boolean"))?;
+            Ok(pkl_runtime::glob::PathElement {
+                name: PklString::from_utf16(js_sys::Uint16Array::new(&name).to_vec()),
+                is_directory,
+            })
+        })
+        .collect()
+}
+/// Codec-only control through the same decoder and event encoder as completions.
+#[wasm_bindgen(js_name = globTransportCodec)]
+pub fn glob_transport_codec(elements: JsValue) -> Result<js_sys::Array, JsValue> {
+    probe::glob_transport_records(glob_elements(elements)?)
+        .into_iter()
+        .map(source_event)
+        .collect()
+}
+
+fn source_event(event: probe::SourceTextEvent) -> Result<JsValue, JsValue> {
     use js_sys::{Array, Object, Reflect, Uint16Array};
     let object = Object::new();
     let set = |object: &Object, key: &str, value: JsValue| {
@@ -416,7 +474,7 @@ fn source_event(event: probe::SourceEvent) -> Result<JsValue, JsValue> {
         set(&object, "token", JsValue::from_str(&token))?;
     }
     if let Some(uri) = event.uri {
-        set(&object, "uri", JsValue::from_str(&uri))?;
+        set(&object, "uri", js_text(&uri).into())?;
     }
     if let Some(value) = event.value {
         set(&object, "value", Uint16Array::from(value.as_slice()).into())?;
@@ -437,11 +495,11 @@ fn source_event(event: probe::SourceEvent) -> Result<JsValue, JsValue> {
     if let Some(module) = event.module {
         let record = Object::new();
         for (key, value) in [
-            ("id", module.id),
+            ("id", PklString::from(module.id)),
             ("kind", module.kind.into()),
             ("originalUri", module.original_uri),
         ] {
-            set(&record, key, JsValue::from_str(&value))?;
+            set(&record, key, js_text(&value).into())?;
         }
         for (key, value) in [
             ("importerOriginalUri", module.importer_original_uri),
@@ -449,19 +507,48 @@ fn source_event(event: probe::SourceEvent) -> Result<JsValue, JsValue> {
             ("importUri", module.import_uri),
             ("resolvedUri", module.resolved_uri),
             ("sourceUri", module.source_uri),
-            ("keyId", module.key_id),
-            ("keyKind", module.key_kind.map(Into::into)),
+            ("keyId", module.key_id.map(PklString::from)),
+            ("keyKind", module.key_kind.map(PklString::from)),
             ("keyHandle", module.key_handle),
-            ("resolvedKeyId", module.resolved_key_id),
+            ("resolvedKeyId", module.resolved_key_id.map(PklString::from)),
             ("resolvedKeyHandle", module.resolved_key_handle),
-            ("selectionPhase", module.selection_phase.map(Into::into)),
-            ("resolutionPhase", module.resolution_phase.map(Into::into)),
+            (
+                "selectionPhase",
+                module.selection_phase.map(PklString::from),
+            ),
+            (
+                "resolutionPhase",
+                module.resolution_phase.map(PklString::from),
+            ),
         ] {
             if let Some(value) = value {
-                set(&record, key, JsValue::from_str(&value))?;
+                set(&record, key, js_text(&value).into())?;
             }
         }
         set(&object, "module", record.into())?;
+    }
+    if let Some(glob) = event.glob {
+        let record = Object::new();
+        for (key, value) in [
+            ("id", glob.id),
+            ("kind", glob.kind.into()),
+            ("readerKind", glob.reader_kind.into()),
+            ("readerId", glob.reader_id),
+        ] {
+            set(&record, key, JsValue::from_str(&value))?;
+        }
+        for (key, value) in [
+            ("uri", glob.uri),
+            ("readerUri", glob.reader_uri),
+            ("readerScheme", glob.reader_scheme),
+            ("readerHandle", glob.reader_handle),
+            ("keyKind", glob.key_kind.map(PklString::from)),
+        ] {
+            if let Some(value) = value {
+                set(&record, key, js_text(&value).into())?;
+            }
+        }
+        set(&object, "glob", record.into())?;
     }
     if let Some(log) = event.log {
         let record = Object::new();
@@ -526,7 +613,7 @@ impl SourceSession {
         power_assertions: Option<bool>,
     ) -> Result<SourceSession, JsValue> {
         use pkl_runtime::evaluation::frontend::{
-            DiagnosticProfile, ModuleSourceInput, arguments::parse_module_eval_args,
+            DiagnosticProfile, LosslessModuleSourceInput, arguments::parse_module_eval_args,
         };
         let arguments = arguments
             .iter()
@@ -550,15 +637,15 @@ impl SourceSession {
             power_assertions.unwrap_or(false),
         )
         .map_err(error)?;
-        let source = string(&source)?;
-        let uri = string(&uri)?;
-        let name = string(&module_name)?;
+        let source = source_text(&source)?;
+        let uri = pkl_text(&uri)?;
+        let name = pkl_text(&module_name)?;
         Ok(Self {
             inner: probe::SourceProbe::new_output_text(
-                ModuleSourceInput {
-                    text: &source,
-                    uri: &uri,
-                    inferred_name: &name,
+                LosslessModuleSourceInput {
+                    text: source,
+                    uri,
+                    inferred_name: name,
                 },
                 &paths,
                 &invocation.options,
@@ -599,12 +686,12 @@ impl SourceSession {
         now: f64,
         timeout: Option<f64>,
     ) -> Result<(), JsValue> {
-        let contents = contents.as_ref().map(string).transpose()?;
+        let contents = contents.as_ref().map(source_text).transpose()?;
         self.inner
-            .evaluate_module_source(
-                &string(&uri)?,
-                contents.as_deref(),
-                &string(&expression)?,
+            .evaluate_module_source_text(
+                pkl_text(&uri)?,
+                contents,
+                source_text(&expression)?,
                 unsigned(now)?,
                 timeout.map(unsigned).transpose()?,
             )
@@ -624,7 +711,7 @@ impl SourceSession {
     ) -> Result<SourceSession, JsValue> {
         let paths = paths
             .iter()
-            .map(|value| string(&JsString::from(value)))
+            .map(|value| source_text(&JsString::from(value)))
             .collect::<Result<Vec<_>, _>>()?;
         let mode = trace_mode
             .as_ref()
@@ -632,10 +719,10 @@ impl SourceSession {
             .transpose()?
             .unwrap_or_else(|| "compact".into());
         Ok(Self {
-            inner: probe::SourceProbe::new_expressions_text(
-                &string(&source)?,
-                &string(&uri)?,
-                &string(&module_name)?,
+            inner: probe::SourceProbe::new_expressions_source(
+                source_text(&source)?,
+                pkl_text(&uri)?,
+                pkl_text(&module_name)?,
                 &paths,
                 &mode,
                 host_logger.unwrap_or(false),
@@ -668,9 +755,9 @@ impl SourceSession {
             .unwrap_or_else(|| "compact".into());
         Ok(Self {
             inner: probe::SourceProbe::new_text(
-                &string(&source)?,
-                &string(&uri)?,
-                &string(&module_name)?,
+                source_text(&source)?,
+                pkl_text(&uri)?,
+                pkl_text(&module_name)?,
                 &paths,
                 &mode,
                 host_logger.unwrap_or(false),
@@ -679,6 +766,130 @@ impl SourceSession {
             )
             .map_err(text_error)?,
         })
+    }
+    #[wasm_bindgen(js_name = setGlobTestMode)]
+    pub fn set_glob_test_mode(&mut self, enabled: JsValue) -> Result<(), JsValue> {
+        self.inner
+            .set_glob_test_mode(strict_boolean(enabled)?)
+            .map_err(|e| text_error(e.message))
+    }
+    #[wasm_bindgen(js_name = completeGlobReader)]
+    pub fn complete_glob_reader(
+        &mut self,
+        token: JsString,
+        reader_id: JsString,
+        scheme: JsString,
+        handle: JsString,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .complete_glob_reader(
+                &string(&token)?,
+                &string(&reader_id)?,
+                pkl_text(&scheme)?,
+                pkl_text(&handle)?,
+                unsigned(now)?,
+            )
+            .map_err(|e| text_error(e.message))
+    }
+    #[wasm_bindgen(js_name = completeGlobBoolean)]
+    pub fn complete_glob_boolean(
+        &mut self,
+        token: JsString,
+        kind: JsString,
+        value: JsValue,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .complete_glob_boolean(
+                &string(&token)?,
+                &string(&kind)?,
+                strict_boolean(value)?,
+                unsigned(now)?,
+            )
+            .map_err(|e| text_error(e.message))
+    }
+    #[wasm_bindgen(js_name = completeGlobElements)]
+    pub fn complete_glob_elements(
+        &mut self,
+        token: JsString,
+        elements: JsValue,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .complete_glob_elements(&string(&token)?, glob_elements(elements)?, unsigned(now)?)
+            .map_err(|e| text_error(e.message))
+    }
+    #[wasm_bindgen(js_name = rejectGlob)]
+    pub fn reject_glob(
+        &mut self,
+        token: JsString,
+        kind: JsString,
+        message: Option<JsString>,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .reject_glob(
+                &string(&token)?,
+                &string(&kind)?,
+                message.as_ref().map(pkl_text).transpose()?,
+                unsigned(now)?,
+            )
+            .map_err(|e| text_error(e.message))
+    }
+    #[wasm_bindgen(js_name = completeDefaultGlob)]
+    pub fn complete_default_glob(&mut self, token: JsString, now: f64) -> Result<bool, JsValue> {
+        self.inner
+            .complete_default_glob(&string(&token)?, unsigned(now)?)
+            .map_err(|e| text_error(e.message))
+    }
+    #[wasm_bindgen(js_name = drainCancelledGlobs)]
+    pub fn drain_cancelled_globs(&mut self) -> js_sys::Array {
+        self.inner
+            .drain_cancelled_globs()
+            .into_iter()
+            .map(JsValue::from)
+            .collect()
+    }
+    #[wasm_bindgen(js_name = resolveGlobHostUri)]
+    pub fn resolve_glob_host_uri(
+        &self,
+        base: JsString,
+        relative: JsString,
+        fragment_paths: JsValue,
+    ) -> Result<JsString, JsValue> {
+        probe::SourceProbe::resolve_glob_host_uri(
+            &pkl_text(&base)?,
+            &pkl_text(&relative)?,
+            strict_boolean(fragment_paths)?,
+        )
+        .map(|uri| js_text(&uri))
+        .map_err(|e| text_error(e.message))
+    }
+    #[wasm_bindgen(js_name = normalizeGlobHostUri)]
+    pub fn normalize_glob_host_uri(&self, uri: JsString) -> Result<JsString, JsValue> {
+        probe::SourceProbe::normalize_glob_host_uri(&pkl_text(&uri)?)
+            .map(|uri| js_text(&uri))
+            .map_err(|e| text_error(e.message))
+    }
+    #[wasm_bindgen(js_name = rejectImportUri)]
+    pub fn reject_import_uri(
+        &mut self,
+        token: JsString,
+        key_id: JsString,
+        kind: JsString,
+        message: Option<JsString>,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .reject_import_uri(
+                &string(&token)?,
+                &string(&key_id)?,
+                &string(&kind)?,
+                message.as_ref().map(pkl_text).transpose()?,
+                unsigned(now)?,
+            )
+            .map_err(|e| text_error(e.message))
     }
     #[wasm_bindgen(js_name = startModule)]
     pub fn start_module(&mut self, now: f64, timeout: Option<f64>) -> Result<(), JsValue> {
@@ -755,9 +966,9 @@ impl SourceSession {
             .complete_module_key(
                 &string(&token)?,
                 &string(&key_id)?,
-                &string(&uri)?,
+                pkl_text(&uri)?,
                 &string(&kind)?,
-                &string(&handle)?,
+                pkl_text(&handle)?,
                 unsigned(now)?,
             )
             .map_err(|failure| text_error(failure.message))
@@ -792,7 +1003,7 @@ impl SourceSession {
             .complete_import_uri(
                 &string(&token)?,
                 &string(&key_id)?,
-                &string(&uri)?,
+                pkl_text(&uri)?,
                 unsigned(now)?,
             )
             .map_err(|failure| text_error(failure.message))
@@ -808,13 +1019,13 @@ impl SourceSession {
         now: f64,
         timeout: Option<f64>,
     ) -> Result<(), JsValue> {
-        let contents = contents.as_ref().map(string).transpose()?;
+        let contents = contents.as_ref().map(source_text).transpose()?;
         self.inner
-            .reenter_module_source(
+            .reenter_module_source_text(
                 &string(&token)?,
-                &string(&uri)?,
-                contents.as_deref(),
-                &string(&expression)?,
+                pkl_text(&uri)?,
+                contents,
+                source_text(&expression)?,
                 unsigned(now)?,
                 timeout.map(unsigned).transpose()?,
             )
@@ -856,10 +1067,10 @@ impl SourceSession {
                 &string(&token)?,
                 &string(&key_id)?,
                 &string(&resolved_key_id)?,
-                &string(&handle)?,
-                &string(&original_uri)?,
-                &string(&resolved_uri)?,
-                &string(&source_uri)?,
+                pkl_text(&handle)?,
+                pkl_text(&original_uri)?,
+                pkl_text(&resolved_uri)?,
+                pkl_text(&source_uri)?,
                 unsigned(now)?,
             )
             .map_err(|failure| text_error(failure.message))
@@ -926,9 +1137,9 @@ impl SourceSession {
         self.inner
             .complete_module_resolution(
                 &string(&token)?,
-                &string(&original_uri)?,
-                &string(&resolved_uri)?,
-                &string(&source_uri)?,
+                pkl_text(&original_uri)?,
+                pkl_text(&resolved_uri)?,
+                pkl_text(&source_uri)?,
                 unsigned(now)?,
             )
             .map_err(|failure| text_error(failure.message))
@@ -944,8 +1155,8 @@ impl SourceSession {
         self.inner
             .complete_module_source(
                 &string(&token)?,
-                &string(&text)?,
-                &string(&inferred_name)?,
+                source_text(&text)?,
+                pkl_text(&inferred_name)?,
                 unsigned(now)?,
             )
             .map_err(|failure| text_error(failure.message))
@@ -1006,9 +1217,10 @@ impl SourceSession {
             .map_err(|failure| text_error(failure.message))
     }
     #[wasm_bindgen(js_name = resolvedReadUri)]
-    pub fn resolved_read_uri(&self, token: JsString) -> Result<String, JsValue> {
+    pub fn resolved_read_uri(&self, token: JsString) -> Result<JsString, JsValue> {
         self.inner
-            .resolved_read_uri(&string(&token)?)
+            .resolved_read_uri_text(&string(&token)?)
+            .map(|uri| js_text(&uri))
             .map_err(|failure| text_error(failure.message))
     }
     #[wasm_bindgen(js_name = completeReadMissing)]
@@ -1115,7 +1327,7 @@ impl SourceSession {
     pub fn poll(&mut self, now: f64, budget: f64) -> Result<JsValue, JsValue> {
         source_event(
             self.inner
-                .poll(unsigned(now)?, unsigned(budget)?)
+                .poll_text(unsigned(now)?, unsigned(budget)?)
                 .map_err(|failure| text_error(failure.message))?,
         )
     }

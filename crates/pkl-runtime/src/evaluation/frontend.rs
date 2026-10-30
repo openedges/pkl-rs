@@ -6,7 +6,7 @@ pub use crate::diagnostic::FailureDisposition;
 pub mod arguments;
 
 use crate::diagnostic::{Diagnostic, DiagnosticOrigin, RenderFrame, render_error_text};
-use crate::source::SourceMap;
+use crate::source::{SourceMap, SourceText};
 use crate::value::PklString;
 use std::sync::Arc;
 
@@ -14,7 +14,7 @@ use std::sync::Arc;
 pub struct PreparedModule {
     pub program: Arc<crate::vm::Program>,
     pub source: crate::source::Source,
-    pub name: String,
+    pub name: PklString,
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -22,6 +22,26 @@ pub struct ModuleSourceInput<'a> {
     pub text: &'a str,
     pub uri: &'a str,
     pub inferred_name: &'a str,
+}
+
+/// Lossless source boundary used by native and JavaScript adapters. The scalar
+/// ModuleSourceInput remains an ergonomic wrapper for existing UTF-8 callers;
+/// both enter the same parser, resolver and VM implementation.
+#[derive(Clone, Debug)]
+pub struct LosslessModuleSourceInput {
+    pub text: SourceText,
+    pub uri: PklString,
+    pub inferred_name: PklString,
+}
+
+impl From<ModuleSourceInput<'_>> for LosslessModuleSourceInput {
+    fn from(input: ModuleSourceInput<'_>) -> Self {
+        Self {
+            text: input.text.into(),
+            uri: input.uri.into(),
+            inferred_name: input.inferred_name.into(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -133,9 +153,10 @@ fn unsupported(phase: FrontendPhase, reason: &'static str, message: &str) -> Mod
 /// Ordered option maps belong to the evaluation request; the frontend prefix
 /// does not resolve resources or evaluate declarations that consume those maps.
 pub fn evaluate_module_frontend(
-    input: ModuleSourceInput<'_>,
+    input: impl Into<LosslessModuleSourceInput>,
     options: &ModuleEvalOptions,
 ) -> ModuleFrontendResult {
+    let input = input.into();
     if let Err(error) = resolve_input(input, options, false) {
         return error.into();
     }
@@ -148,10 +169,11 @@ pub fn evaluate_module_frontend(
 }
 
 fn resolve_input(
-    input: ModuleSourceInput<'_>,
+    input: impl Into<LosslessModuleSourceInput>,
     options: &ModuleEvalOptions,
     defer_ast: bool,
-) -> Result<(crate::resolver::ResolvedModule, String), ModuleFrontendFailure> {
+) -> Result<(crate::resolver::ResolvedModule, PklString), ModuleFrontendFailure> {
+    let input = input.into();
     if !options.no_cache || !options.no_project || options.settings != "pkl:settings" {
         return Err(unsupported(
             FrontendPhase::Configuration,
@@ -159,35 +181,37 @@ fn resolve_input(
             "This module-evaluation adapter requires --no-cache --no-project --settings pkl:settings.",
         ));
     }
-    let parsed = if defer_ast {
-        crate::parser::parse_module_for_evaluation(input.text)
-    } else {
-        crate::parser::parse_module(input.text)
-    };
-    let module = match parsed {
+    let module = match crate::parser::parse_module_for_evaluation(&input.text) {
         Ok(module) => module,
-        Err(error) => {
-            return Err(render_failure_text(
+        Err(failure) => {
+            return Err(render_module_parse_failure_text(
                 input,
                 options.diagnostic_profile,
-                error,
+                *failure,
             ));
         }
     };
+    if !defer_ast && let Some(error) = module.deferred_diagnostics.first() {
+        return Err(render_failure_text(
+            input,
+            options.diagnostic_profile,
+            error.clone(),
+        ));
+    }
     let declared_name = module
         .declaration
         .as_ref()
         .and_then(|header| header.name.as_ref())
-        .map(|parts| parts.join("."));
-    let resolved_input = ModuleSourceInput {
-        inferred_name: declared_name.as_deref().unwrap_or(input.inferred_name),
-        ..input
+        .map(|parts| PklString::join(parts, "."));
+    let resolved_input = LosslessModuleSourceInput {
+        inferred_name: declared_name.unwrap_or_else(|| input.inferred_name.clone()),
+        ..input.clone()
     };
     let resolved = if defer_ast {
         crate::resolver::resolve_module_for_evaluation(&module)
     } else {
         crate::resolver::resolve_module(&module).map_err(|error| {
-            render_failure_text(resolved_input, options.diagnostic_profile, error)
+            render_failure_text(resolved_input.clone(), options.diagnostic_profile, error)
         })?
     };
     Ok((resolved, resolved_input.inferred_name.to_owned()))
@@ -195,26 +219,28 @@ fn resolve_input(
 
 /// Prepare actual execution without discarding structured frontend failures.
 pub fn prepare_module(
-    input: ModuleSourceInput<'_>,
+    input: impl Into<LosslessModuleSourceInput>,
     options: &ModuleEvalOptions,
 ) -> Result<PreparedModule, ModuleFrontendResult> {
+    let input = input.into();
     prepare_module_text(input, options).map_err(Into::into)
 }
 
 /// Prepare execution with lossless diagnostic text and structured failure meaning.
 pub fn prepare_module_text(
-    input: ModuleSourceInput<'_>,
+    input: impl Into<LosslessModuleSourceInput>,
     options: &ModuleEvalOptions,
 ) -> Result<PreparedModule, ModuleFrontendFailure> {
-    let (resolved, name) = resolve_input(input, options, true)?;
+    let input = input.into();
+    let (resolved, name) = resolve_input(input.clone(), options, true)?;
     let mut sources = SourceMap::default();
-    let id = sources.add(input.uri, input.text);
+    let id = sources.add(input.uri.clone(), input.text.clone());
     let source = sources.get(id).expect("source inserted").clone();
     let mut program =
         crate::vm::compile_module_with_power_assertions(&resolved).map_err(|error| {
             let mut result = render_module_runtime_failure_text(
                 &source,
-                input.uri,
+                &input.uri,
                 &name,
                 options.diagnostic_profile,
                 error,
@@ -225,19 +251,19 @@ pub fn prepare_module_text(
     Arc::make_mut(&mut program)
         .register_primary_source(
             Arc::new(crate::value::RuntimeSource {
-                text: input.text.into(),
-                uri: input.uri.into(),
-                module_name: name.clone().into(),
+                text: input.text.clone(),
+                uri: input.uri.clone(),
+                module_name: name.clone(),
             }),
             crate::modules::ModuleIdentity {
-                original_uri: input.uri.into(),
-                resolved_uri: input.uri.into(),
+                original_uri: input.uri.clone(),
+                resolved_uri: input.uri.clone(),
             },
         )
         .map_err(|error| {
             render_module_runtime_failure_text(
                 &source,
-                input.uri,
+                &input.uri,
                 &name,
                 options.diagnostic_profile,
                 error,
@@ -253,22 +279,28 @@ pub fn prepare_module_text(
 /// Render an actual module-operation failure with no synthetic expression frame.
 pub fn render_module_runtime_failure(
     source: &crate::source::Source,
-    uri: &str,
-    name: &str,
+    uri: impl Into<PklString>,
+    name: impl Into<PklString>,
     profile: DiagnosticProfile,
     error: crate::value::RuntimeError,
 ) -> ModuleFrontendResult {
+    let uri = uri.into();
+    let name = name.into();
+
     render_module_runtime_failure_text(source, uri, name, profile, error).into()
 }
 
 /// Retain diagnostic code units and metadata for an actual module-operation failure.
 pub fn render_module_runtime_failure_text(
     source: &crate::source::Source,
-    uri: &str,
-    name: &str,
+    uri: impl Into<PklString>,
+    name: impl Into<PklString>,
     profile: DiagnosticProfile,
     error: crate::value::RuntimeError,
 ) -> ModuleFrontendFailure {
+    let uri = uri.into();
+    let name = name.into();
+
     use crate::value::ErrorKind;
     if let Some(frontend) = &error.frontend {
         let disposition = frontend.diagnostic.provenance.disposition;
@@ -284,7 +316,7 @@ pub fn render_module_runtime_failure_text(
             disposition,
             reason: frontend.diagnostic.provenance.reason,
             text: super::runtime_error_text_with_profile(
-                source, uri, name, "", error, None, profile,
+                source, &uri, &name, "", error, None, profile,
             ),
         };
     }
@@ -300,15 +332,36 @@ pub fn render_module_runtime_failure_text(
         phase: FrontendPhase::ModuleOutput,
         disposition,
         reason,
-        text: super::runtime_error_text_with_profile(source, uri, name, "", error, None, profile),
+        text: super::runtime_error_text_with_profile(source, &uri, &name, "", error, None, profile),
     }
 }
 
+fn render_module_parse_failure_text(
+    input: LosslessModuleSourceInput,
+    profile: DiagnosticProfile,
+    failure: crate::parser::ModuleParseFailure,
+) -> ModuleFrontendFailure {
+    if let Some(error) = failure.minimum_version_error(&input.inferred_name) {
+        let mut sources = SourceMap::default();
+        let id = sources.add(input.uri.clone(), input.text);
+        let source = sources.get(id).expect("source inserted");
+        return render_module_runtime_failure_text(
+            source,
+            input.uri,
+            input.inferred_name,
+            profile,
+            error,
+        );
+    }
+    render_failure_text(input, profile, failure.diagnostic)
+}
+
 fn render_failure_text(
-    input: ModuleSourceInput<'_>,
+    input: impl Into<LosslessModuleSourceInput>,
     profile: DiagnosticProfile,
     error: Diagnostic,
 ) -> ModuleFrontendFailure {
+    let input = input.into();
     let phase = match error.provenance.origin {
         DiagnosticOrigin::Lexer => FrontendPhase::Lexing,
         DiagnosticOrigin::Parser => FrontendPhase::Parsing,
@@ -317,9 +370,9 @@ fn render_failure_text(
         DiagnosticOrigin::Unclassified => FrontendPhase::Unclassified,
     };
     let mut sources = SourceMap::default();
-    let id = sources.add(input.uri, input.text);
+    let id = sources.add(input.uri.clone(), input.text.clone());
     let source = sources.get(id).expect("source inserted");
-    let name = error.module_name.as_deref().unwrap_or(input.inferred_name);
+    let name = error.module_name.as_deref().unwrap_or(&input.inferred_name);
     let member = error.member.as_ref().map_or_else(
         || PklString::from(name),
         |suffix| {
@@ -328,22 +381,24 @@ fn render_failure_text(
             } else {
                 "#"
             };
-            PklString::from(format!("{name}{separator}")).concat(suffix)
+            name.concat(&separator.into()).concat(suffix)
         },
     );
     // Pinned bundled settings use `%{url}, line %{line}` for file URLs.
     // Transform the logical frame before rendering; never edit rendered bytes.
     let display_uri = match profile {
         DiagnosticProfile::CliBundledSettings if input.uri.starts_with("file:") => {
-            format!(
-                "{}, line {}",
-                input.uri,
-                source
-                    .position(error.span.start)
-                    .map_or(1, |position| position.line)
+            input.uri.concat(
+                &format!(
+                    ", line {}",
+                    source
+                        .position(error.span.start)
+                        .map_or(1, |position| position.line)
+                )
+                .into(),
             )
         }
-        _ => input.uri.to_owned(),
+        _ => input.uri.clone(),
     };
     ModuleFrontendFailure {
         phase,
@@ -353,7 +408,7 @@ fn render_failure_text(
             &error,
             &[RenderFrame {
                 source,
-                uri: &display_uri,
+                uri: display_uri,
                 member: &member,
                 span: error.span,
                 highlight_length_utf16: error.highlight_length_utf16,
@@ -388,9 +443,10 @@ impl From<ModuleFrontendResult> for ModuleOutputResult {
 /// Single-source development output evaluator. Resource effects use the shared
 /// configured policy; unavailable module/resource capabilities remain explicit.
 pub fn evaluate_module_output(
-    input: ModuleSourceInput<'_>,
+    input: impl Into<LosslessModuleSourceInput>,
     options: &ModuleEvalOptions,
 ) -> ModuleOutputResult {
+    let input = input.into();
     evaluate_module_output_with_host(
         input,
         options,
@@ -401,17 +457,18 @@ pub fn evaluate_module_output(
 /// Evaluate actual output with module resolution/source I/O supplied by the Host.
 /// Parsing, code installation, identity, caching and initialization stay in the VM.
 pub fn evaluate_module_output_with_host(
-    input: ModuleSourceInput<'_>,
+    input: impl Into<LosslessModuleSourceInput>,
     options: &ModuleEvalOptions,
     module_host: impl FnMut(&crate::modules::ModuleRequest) -> crate::modules::ModuleCompletion,
 ) -> ModuleOutputResult {
+    let input = input.into();
     evaluate_module_output_with_hosts(input, options, module_host, |_| None)
 }
 
 /// Evaluate with typed external resource reads in addition to module I/O.
 /// Returning None delegates to the shared configured property/environment policy.
 pub fn evaluate_module_output_with_hosts(
-    input: ModuleSourceInput<'_>,
+    input: impl Into<LosslessModuleSourceInput>,
     options: &ModuleEvalOptions,
     module_host: impl FnMut(&crate::modules::ModuleRequest) -> crate::modules::ModuleCompletion,
     resource_host: impl FnMut(
@@ -419,32 +476,52 @@ pub fn evaluate_module_output_with_hosts(
     )
         -> Option<Result<crate::resources::ReadResult, crate::host::ReadFailure>>,
 ) -> ModuleOutputResult {
+    let input = input.into();
+    evaluate_module_output_with_glob_host(input, options, module_host, resource_host, |_| None)
+}
+
+/// Evaluate with explicit typed glob enumeration in addition to module and read
+/// effects. `None` delegates to configured env/prop readers or typed Unsupported.
+pub fn evaluate_module_output_with_glob_host(
+    input: impl Into<LosslessModuleSourceInput>,
+    options: &ModuleEvalOptions,
+    module_host: impl FnMut(&crate::modules::ModuleRequest) -> crate::modules::ModuleCompletion,
+    resource_host: impl FnMut(
+        &crate::vm::ReadRequest,
+    )
+        -> Option<Result<crate::resources::ReadResult, crate::host::ReadFailure>>,
+    glob_host: impl FnMut(&crate::glob::GlobRequest) -> Option<crate::glob::GlobCompletion>,
+) -> ModuleOutputResult {
+    let input = input.into();
     evaluate_module_output_with_budget_and_hosts(
         input,
         options,
         1_048_576,
         module_host,
         resource_host,
+        glob_host,
     )
 }
 
 #[cfg(test)]
 fn evaluate_module_output_with_budget(
-    input: ModuleSourceInput<'_>,
+    input: impl Into<LosslessModuleSourceInput>,
     options: &ModuleEvalOptions,
     poll_budget: usize,
 ) -> ModuleOutputResult {
+    let input = input.into();
     evaluate_module_output_with_budget_and_hosts(
         input,
         options,
         poll_budget,
         crate::modules::default_or_unsupported_completion,
         |_| None,
+        |_| None,
     )
 }
 
 fn evaluate_module_output_with_budget_and_hosts(
-    input: ModuleSourceInput<'_>,
+    input: impl Into<LosslessModuleSourceInput>,
     options: &ModuleEvalOptions,
     poll_budget: usize,
     mut module_host: impl FnMut(&crate::modules::ModuleRequest) -> crate::modules::ModuleCompletion,
@@ -453,7 +530,9 @@ fn evaluate_module_output_with_budget_and_hosts(
     ) -> Option<
         Result<crate::resources::ReadResult, crate::host::ReadFailure>,
     >,
+    mut glob_host: impl FnMut(&crate::glob::GlobRequest) -> Option<crate::glob::GlobCompletion>,
 ) -> ModuleOutputResult {
+    let input = input.into();
     use super::session::{SourceSession, SourceSessionOptions};
     use crate::host::HostPoll;
     let mut session = match SourceSession::compile_output(
@@ -490,6 +569,16 @@ fn evaluate_module_output_with_budget_and_hosts(
                 HostPoll::Yielded => {}
                 HostPoll::Module { token, request } => {
                     session.complete_module(&token, module_host(&request), 0)?
+                }
+                HostPoll::Glob { token, request } => {
+                    let completion = glob_host(&request).unwrap_or_else(|| {
+                        crate::glob::configured_or_unsupported_completion(
+                            &request,
+                            &options.properties,
+                            &options.environment,
+                        )
+                    });
+                    session.complete_glob(&token, completion, 0)?;
                 }
                 HostPoll::Read { token, .. } => {
                     let request = session.read_request(&token)?;

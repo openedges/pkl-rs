@@ -12,14 +12,18 @@ use pkl_runtime::vm::{Instruction, Program, Vm, VmPoll, compile_module};
 
 const URI: &str = "file:///stage37-trace.pkl";
 
-fn program(text: &str) -> Arc<Program> {
-    let module = parse_module(text).unwrap();
+fn program(text: impl Into<pkl_runtime::source::SourceText>) -> Arc<Program> {
+    let text = text.into();
+    let module = parse_module(&text).unwrap();
     compile_module(&resolve_module(&module).unwrap()).unwrap()
 }
 
 fn ready(vm: &mut Vm, logs: &mut Vec<Arc<LogEvent>>, reads: &mut Vec<String>) -> Value {
     for _ in 0..10_000 {
         match vm.poll(32) {
+            pkl_runtime::vm::VmPoll::Glob(_) => {
+                panic!("unexpected glob request in non-glob regression")
+            }
             VmPoll::Ready(result) => return result.unwrap(),
             VmPoll::Log(request) => {
                 logs.push(request.event);
@@ -110,7 +114,7 @@ fn trace_compiler_uses_executable_operand_spans_and_keeps_source_bytes() {
                     let start = source.position(operand_span.start).unwrap();
                     let end = source.position(operand_span.end).unwrap();
                     actual.push((
-                        source.slice(*operand_span).unwrap(),
+                        source.slice(*operand_span).unwrap().to_pkl_string(),
                         (
                             start.line,
                             start.column_utf16,
@@ -119,10 +123,14 @@ fn trace_compiler_uses_executable_operand_spans_and_keeps_source_bytes() {
                         ),
                     ));
                     let execution = source.slice(metadata.spans[index].unwrap()).unwrap();
-                    assert!(execution.starts_with("trace(") && execution.ends_with(')'));
+                    assert!(execution.starts_with("trace(") && execution.ends_with(")"));
                 }
             }
         }
+        let expected = expected
+            .into_iter()
+            .map(|(text, position)| (pkl_runtime::value::PklString::from(text), position))
+            .collect::<Vec<_>>();
         assert_eq!(actual, expected, "{text}");
     }
 }

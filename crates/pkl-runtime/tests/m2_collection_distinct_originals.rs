@@ -16,7 +16,7 @@ fn check(name: &str, source: &str, uri: &str, stdout: &[u8], stderr: &[u8]) {
     let helper_uri = include_str!(
         "../../../tests/fixtures/m2-collection-distinct-originals/cacheStealingTypeCheck.uri.txt"
     );
-    let module_source = |uri: &str| {
+    let module_source = |uri: &pkl_runtime::value::PklString| {
         if uri == snippet_uri {
             Some((
                 "snippetTest",

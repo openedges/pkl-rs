@@ -1,0 +1,80 @@
+{
+  "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/Resource.pkl",
+  "full_ready_row": {
+    "adapter": "language-module-eval",
+    "historical_status": "candidate-unsupported",
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/Resource.pkl",
+    "observations": [
+      {
+        "process": {
+          "bytes": 5640,
+          "path": "target/m2/stage120-full-ready-modules-01/bbfd2a09ee7d84a2ab06b22f/0/process.json",
+          "sha256": "789d66fc6fe7a9d29460af70955654f41a361ffc4c40bf7d8c64b361ad1a76c4"
+        },
+        "repeat": 0,
+        "status": "candidate-unsupported"
+      }
+    ],
+    "old_pass_regression": false,
+    "status": "candidate-unsupported"
+  },
+  "retained_process": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage120-full-ready-modules-01/bbfd2a09ee7d84a2ab06b22f/0/process.json",
+    "bytes": 5640,
+    "sha256": "789d66fc6fe7a9d29460af70955654f41a361ffc4c40bf7d8c64b361ad1a76c4"
+  },
+  "expected_records": {
+    "process.json": {
+      "bytes": 3148,
+      "path": "target/m2/stage94-originals-replay-01/cases/bbfd2a09ee7d84a2ab06b22f/java/process.json",
+      "sha256": "e9d958809cab3a9b94d43ac6a513165dfca9bf2b91ae694f469378908146c704"
+    },
+    "result.json": {
+      "bytes": 294,
+      "path": "target/m2/stage94-originals-replay-01/cases/bbfd2a09ee7d84a2ab06b22f/java/result.json",
+      "sha256": "08f422faefa4eeefe54758bc8daa8b3a474300c217aca928416f05e4eef5373d"
+    },
+    "stderr.bin": {
+      "bytes": 0,
+      "path": "target/m2/stage94-originals-replay-01/cases/bbfd2a09ee7d84a2ab06b22f/java/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout.bin": {
+      "bytes": 1195,
+      "path": "target/m2/stage94-originals-replay-01/cases/bbfd2a09ee7d84a2ab06b22f/java/stdout.bin",
+      "sha256": "6821e9fb81a6c3e0e2ad59f23375a00166d44365025f4208367b00883ed058a7"
+    }
+  },
+  "expected_exit": 0,
+  "source_inputs": {
+    "input.pkl": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/Resource.pkl",
+      "bytes": 1010,
+      "sha256": "c90d4246d38f3dada6a0c5b87a5b2d15826e7ef2e425955348aec3fb120f3e20"
+    },
+    "parent.pkl": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/snippetTest.pkl",
+      "bytes": 121,
+      "sha256": "54e9850766ccbab3997cf121d3cd54d9da2a0e99c19bb8441acf8ad437f00074"
+    },
+    "empty.bin": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/empty.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "fox.bin": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/fox.txt",
+      "bytes": 44,
+      "sha256": "ef537f25c895bfa782526529a9b63d97aa631564d5d789c2b765448c8635fb6c"
+    }
+  },
+  "retained_workspace_inputs_byte_identical": true,
+  "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/Resource.pkl",
+  "parent_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/snippetTest.pkl",
+  "resource_host_mapping": {
+    "empty.txt": "empty.bin",
+    "fox.txt": "fox.bin",
+    "foo+bar///?baz=buz": "ReadResult::Missing; preserve authored URI"
+  },
+  "no_new_Java_expected_bytes": true
+}

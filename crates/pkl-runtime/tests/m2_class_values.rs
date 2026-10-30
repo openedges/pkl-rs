@@ -170,7 +170,12 @@ fn every_pinned_base_class_has_one_default_scope_and_module_export_identity() {
                 pkl_runtime::syntax::ExprKind::Class { .. }
             )
         })
-        .map(|member| member.name.as_str())
+        .map(|member| {
+            member
+                .name
+                .as_str()
+                .expect("pkl:base declaration name is scalar")
+        })
         .collect();
     let expressions: Vec<_> = names
         .iter()

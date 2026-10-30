@@ -49,10 +49,15 @@ fn setup(source: &str, names: &[&str]) -> (HostSession, Value, Vec<usize>) {
     let module = ready(&mut session, &[]).unwrap();
     (session, module, entries)
 }
-fn read(session: &mut HostSession, module: &Value, uri: &str) -> String {
+fn read(
+    session: &mut HostSession,
+    module: &Value,
+    uri: impl Into<pkl_runtime::value::PklString>,
+) -> String {
+    let uri = uri.into();
     match event(session, std::slice::from_ref(module), 0) {
         HostPoll::Read { token, uri: actual } => {
-            assert_eq!(&*actual, uri);
+            assert_eq!(actual, uri);
             token
         }
         other => panic!("expected {uri}: {other:?}"),
@@ -138,7 +143,7 @@ fn callback_and_nested_builder_roots_survive_host_failure_retry_and_reentry() {
         else {
             panic!("callback must suspend")
         };
-        assert_eq!(&*uri, expected_reads[0]);
+        assert_eq!(uri, expected_reads[0]);
         let failure = RuntimeError::new(ErrorKind::Host, "Map update operation retry\0\r\n🙂");
         session.resume(&failed, Err(failure.clone()), 0).unwrap();
         let actual = ready(&mut session, std::slice::from_ref(&module)).unwrap_err();

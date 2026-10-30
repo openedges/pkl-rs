@@ -22,9 +22,9 @@ enum Group {
 /// and highlighting. Neither Rust source identity nor formatted output is a key.
 #[derive(PartialEq, Eq)]
 struct FrameKey<'a> {
-    uri: &'a str,
+    uri: &'a PklString,
     member: &'a crate::value::PklString,
-    source_lines: Vec<&'a str>,
+    source_lines: Vec<PklString>,
     start_line: usize,
     start_column: usize,
     end_line: usize,
@@ -41,9 +41,9 @@ fn key_with_offset<'a>(frame: &'a RenderFrame<'_>, offset_utf16: usize) -> Optio
         let scalar = frame
             .source
             .text()
+            .entire()
             .get(frame.span.start..)?
-            .chars()
-            .next()?;
+            .first()?;
         // This override represents only an interior surrogate-unit boundary;
         // ordinary source positions and newline handling retain their path.
         if offset_utf16 >= scalar.len_utf16() {
@@ -53,7 +53,10 @@ fn key_with_offset<'a>(frame: &'a RenderFrame<'_>, offset_utf16: usize) -> Optio
         start.column_utf16 += offset_utf16;
     }
     let (end_line, end_column) = if let Some(width) = frame.highlight_length_utf16 {
-        let source_length = frame.source.position(frame.source.text().len())?.utf16;
+        let source_length = frame
+            .source
+            .position(frame.source.text().len_bytes())?
+            .utf16;
         if source_length - start.utf16 < width {
             // Pinned Truffle SourceSectionLoaded exposes 1:1 coordinates for
             // an invalid section. A parser insertion at exact EOF has width
@@ -65,34 +68,25 @@ fn key_with_offset<'a>(frame: &'a RenderFrame<'_>, offset_utf16: usize) -> Optio
         } else {
             (start.line, start.column_utf16 + width.saturating_sub(1))
         }
-    } else if let Some((offset, ch)) = frame.source.slice(frame.span)?.char_indices().next_back() {
+    } else if let Some((offset, ch)) = frame.source.slice(frame.span)?.characters().next_back() {
         let end = frame.source.position(frame.span.start + offset)?;
         (end.line, end.column_utf16 + ch.len_utf16() - 1)
     } else {
         (start.line, start.column_utf16)
     };
-    let text = frame.source.text();
-    let mut source_lines = Vec::new();
-    let mut line = 1;
-    let mut beginning = 0;
-    for (offset, ch) in text.char_indices() {
-        if ch == '\n' || ch == '\r' && text.as_bytes().get(offset + 1) != Some(&b'\n') {
-            if line >= start.line && line <= end_line {
-                source_lines.push(
-                    text[beginning..offset]
-                        .strip_suffix('\r')
-                        .unwrap_or(&text[beginning..offset]),
-                );
-            }
-            beginning = offset + 1;
-            line += 1;
-        }
-    }
-    if line >= start.line && line <= end_line {
-        source_lines.push(&text[beginning..]);
+    let source_lines = frame
+        .source
+        .text()
+        .lines()
+        .skip(start.line - 1)
+        .take(end_line - start.line + 1)
+        .map(crate::source::SourceSlice::to_pkl_string)
+        .collect::<Vec<_>>();
+    if source_lines.len() != end_line - start.line + 1 {
+        return None;
     }
     Some(FrameKey {
-        uri: frame.uri,
+        uri: &frame.uri,
         member: frame.member,
         source_lines,
         start_line: start.line,
@@ -219,14 +213,9 @@ impl DiagnosticFrames {
             .into_iter()
             .map(|key| {
                 key.ok().map(|key| crate::logging::LogFrame {
-                    module_uri: key.uri.into(),
+                    module_uri: key.uri.clone(),
                     member_name: Some(key.member.clone()),
-                    source_lines: key
-                        .source_lines
-                        .into_iter()
-                        .map(PklString::from)
-                        .collect::<Vec<_>>()
-                        .into(),
+                    source_lines: key.source_lines.into(),
                     start_line: key.start_line,
                     start_column: key.start_column,
                     end_line: key.end_line,
@@ -366,7 +355,7 @@ mod tests {
         let frames: Vec<_> = (0..3)
             .map(|_| RenderFrame {
                 source: sources.get(id).unwrap(),
-                uri: "repl:text",
+                uri: "repl:text".into(),
                 member: &member,
                 span: Span::new(0, 3),
                 highlight_length_utf16: None,
@@ -388,7 +377,7 @@ mod tests {
             .iter()
             .map(|member| RenderFrame {
                 source: sources.get(id).unwrap(),
-                uri: "repl:text",
+                uri: "repl:text".into(),
                 member,
                 span: Span::new(0, 3),
                 highlight_length_utf16: None,
@@ -410,7 +399,7 @@ mod tests {
         let member = "f".into();
         let frame = |id, end| RenderFrame {
             source: sources.get(id).unwrap(),
-            uri: "repl:text",
+            uri: "repl:text".into(),
             member: &member,
             span: Span::new(0, end),
             highlight_length_utf16: None,
@@ -418,8 +407,82 @@ mod tests {
         assert!(key(&frame(first, 7)) == key(&frame(same, 8)));
         assert!(key(&frame(first, 7)) != key(&frame(different, 7)));
         let mut other_uri = frame(first, 7);
-        other_uri.uri = "repl:other";
+        other_uri.uri = "repl:other".into();
         assert!(key(&frame(first, 7)) != key(&other_uri));
+    }
+
+    #[test]
+    fn authored_surrogate_source_lines_are_distinct_before_writer_and_compression() {
+        use crate::source::{SourceMap, Span};
+        let mut sources = SourceMap::default();
+        let high = sources.add("high", PklString::from_utf16(vec![0xd800]));
+        let low = sources.add("low", PklString::from_utf16(vec![0xdc00]));
+        let question = sources.add("question", "?");
+        let member = PklString::from("f");
+        let frames = [(high, 3), (low, 3), (question, 1)].map(|(id, end)| RenderFrame {
+            source: sources.get(id).unwrap(),
+            uri: "repl:text".into(),
+            member: &member,
+            span: Span::new(0, end),
+            highlight_length_utf16: None,
+        });
+        assert_eq!(
+            compress(&frames.iter().map(key).collect::<Vec<_>>()),
+            vec![Group::Frame(0), Group::Frame(1), Group::Frame(2)]
+        );
+        for (frame, unit) in frames.iter().zip([0xd800, 0xdc00, 0x3f]) {
+            let key = key(frame).unwrap();
+            assert_eq!(
+                key.source_lines[0].encode_utf16().collect::<Vec<_>>(),
+                vec![unit]
+            );
+            assert_eq!((key.start_column, key.end_column), (1, 1));
+            let text = super::super::render_error_text(
+                &"failure".into(),
+                std::slice::from_ref(frame),
+                None,
+            );
+            let mut expected: Vec<_> = "–– Pkl Error ––\nfailure\n\n1 | ".encode_utf16().collect();
+            expected.push(unit);
+            expected.extend("\n    ^\nat f (repl:text)\n".encode_utf16());
+            assert_eq!(text.encode_utf16().collect::<Vec<_>>(), expected);
+        }
+    }
+
+    #[test]
+    fn stage120_interior_pair_offset_and_lone_unit_positions_remain_distinct() {
+        use crate::source::{SourceMap, Span};
+        let mut sources = SourceMap::default();
+        let id = sources.add(
+            "mixed",
+            PklString::from_utf16(vec![0xd800, 0xd83d, 0xde00, 13, 10, 0xdc00]),
+        );
+        let member = PklString::from("f");
+        let mut frame = RenderFrame {
+            source: sources.get(id).unwrap(),
+            uri: "repl:text".into(),
+            member: &member,
+            span: Span::new(3, 3),
+            highlight_length_utf16: Some(1),
+        };
+        let paired = key_with_offset(&frame, 1).unwrap();
+        assert_eq!(
+            (paired.start_line, paired.start_column, paired.end_column),
+            (1, 3, 3)
+        );
+        frame.span = Span::new(0, 3);
+        frame.highlight_length_utf16 = None;
+        assert!(key_with_offset(&frame, 1).is_none());
+        frame.span = Span::new(9, 12);
+        let lone = key(&frame).unwrap();
+        assert_eq!(
+            (lone.start_line, lone.start_column, lone.end_column),
+            (2, 1, 1)
+        );
+        assert_eq!(
+            lone.source_lines[0].encode_utf16().collect::<Vec<_>>(),
+            vec![0xdc00]
+        );
     }
 
     #[test]
@@ -439,7 +502,7 @@ mod tests {
             .iter()
             .map(|member| RenderFrame {
                 source: sources.get(id).unwrap(),
-                uri: "repl:text",
+                uri: "repl:text".into(),
                 member,
                 span: Span::new(0, 3),
                 highlight_length_utf16: None,

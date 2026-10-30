@@ -283,7 +283,7 @@ fn host_ready(session: &mut HostSession, now: u64) -> Result<Value, RuntimeError
 fn host_read(session: &mut HostSession, now: u64, uri: &str) -> String {
     match host_event(session, now) {
         HostPoll::Read { token, uri: actual } => {
-            assert_eq!(&*actual, uri);
+            assert_eq!(actual, uri);
             token
         }
         event => panic!("expected {uri}, got {event:?}"),
@@ -419,7 +419,7 @@ fn nonterminal_cancel_keeps_alias_roots_and_retries_nested_bindings() {
         let pending = loop {
             match vm.poll(1) {
                 VmPoll::Pending(read) => {
-                    assert_eq!(&*read.uri, "mem:outer");
+                    assert_eq!(read.uri, "mem:outer");
                     break read.id;
                 }
                 VmPoll::Yielded => {

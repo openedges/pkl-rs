@@ -62,6 +62,7 @@ impl Vm {
             .map_or(&self.program.module_name, |source| &source.module_name);
         error.span = Some(span);
         error.frames.push(RuntimeFrame {
+            anonymous: false,
             span,
             member: frame
                 .diagnostic_member
@@ -90,11 +91,17 @@ pub enum Operation {
 pub(super) fn charset_type() -> (TypeCheck, Span) {
     let source = crate::stdlib_sources::base();
     let start = source.text.find("typealias Charset = ").unwrap() + "typealias Charset = ".len();
-    let end = start + source.text[start..].find('\n').unwrap();
+    let end = start + source.text.entire().range(start..).find("\n").unwrap();
     let names = ["UTF-8", "UTF-16", "ISO-8859-1"];
     let spans = names.map(|name| {
         let literal = format!("\"{name}\"");
-        let offset = start + source.text[start..end].find(&literal).unwrap();
+        let offset = start
+            + source
+                .text
+                .entire()
+                .range(start..end)
+                .find(&literal)
+                .unwrap();
         Span::new(offset, offset + literal.len())
     });
     (
@@ -152,7 +159,7 @@ pub(super) fn blocks(
         let start = if inherited {
             source.text.find(signature).unwrap()
         } else {
-            class + source.text[class..].find(signature).unwrap()
+            class + source.text.entire().range(class..).find(signature).unwrap()
         };
         let mut code = Vec::new();
         let mut spans = Vec::new();
@@ -349,7 +356,12 @@ impl Vm {
         ))
     }
 
-    pub(super) fn bytes_member_error(&self, name: &str, method: bool) -> RuntimeError {
+    pub(super) fn bytes_member_error(
+        &self,
+        name: impl Into<PklString>,
+        method: bool,
+    ) -> RuntimeError {
+        let name = name.into();
         let properties = [
             "length",
             "size",
@@ -386,12 +398,16 @@ impl Vm {
         let mut error = RuntimeError::new(
             ErrorKind::MissingMember,
             if method {
-                format!("Cannot find method `{name}` in class `Bytes`.")
+                PklString::from("Cannot find method `")
+                    .concat(&name)
+                    .concat(&"` in class `Bytes`.".into())
             } else {
-                format!("Cannot find property `{name}` in object of type `Bytes`.")
+                PklString::from("Cannot find property `")
+                    .concat(&name)
+                    .concat(&"` in object of type `Bytes`.".into())
             },
         );
-        error.hint = crate::diagnostic::member_suggestions(name, arity, &properties, &methods)
+        error.hint = crate::diagnostic::member_suggestions(&name, arity, &properties, &methods)
             .or_else(|| {
                 let mut names = if method {
                     methods

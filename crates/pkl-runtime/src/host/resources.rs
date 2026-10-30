@@ -1,19 +1,24 @@
 //! Bounded preconfigured resource policy shared by the scalar development adapters.
 //! Parsing, resolution, and authorization are separate from platform I/O. The
 //! current profile has empty environment/property maps and no allowed-I/O reader.
-use crate::value::{ErrorKind, RuntimeError, Value};
+use crate::pkl_string::PklStringBuilder;
+use crate::source::{SourceCharacter, SourceSlice, SourceText};
+use crate::value::{ErrorKind, PklString, RuntimeError, Value};
+mod lossless_uri;
 use crate::vm::ReadRequest;
+use lossless_uri::ResourceUri;
+pub(crate) mod glob;
 
 pub(crate) fn default_result(request: &ReadRequest) -> Result<Value, RuntimeError> {
     configured_result(request, &[], &[])
 }
 
-pub(crate) fn resolved_uri(request: &ReadRequest) -> Result<String, RuntimeError> {
+pub(crate) fn resolved_uri(request: &ReadRequest) -> Result<PklString, RuntimeError> {
     if let Some(uri) = &request.resolved_uri {
-        return Ok(uri.to_string());
+        return Ok(uri.clone());
     }
     Ok(ResourceUri::from_authored(&request.uri)?
-        .resolve(request.module_uri.as_deref())?
+        .resolve(request.module_uri.as_ref())?
         .normalize()
         .text)
 }
@@ -31,8 +36,12 @@ pub(crate) fn configured_result(
     }
 }
 
-pub(crate) fn missing(authored: &str) -> RuntimeError {
-    RuntimeError::host_language(format!("Cannot find resource `{authored}`."))
+pub(crate) fn missing(authored: impl Into<PklString>) -> RuntimeError {
+    RuntimeError::host_language(
+        PklString::from("Cannot find resource `")
+            .concat(&authored.into())
+            .concat(&"`.".into()),
+    )
 }
 
 pub(crate) fn configured_read(
@@ -43,8 +52,6 @@ pub(crate) fn configured_read(
     let uri = ResourceUri::parse(&resolved_uri(request)?).expect("resolved resource URI");
     let scheme = uri.scheme.as_deref().expect("resolved URI is absolute");
     if matches!(scheme, "http" | "https") && !uri.has_supported_http_authority() {
-        // These registered readers construct HttpRequest before checking policy.
-        // Registry authorities and opaque HTTP URIs can fail at that earlier step.
         return Err(unsupported(
             "HTTP resource request construction for this URI form is not implemented.",
         ));
@@ -53,54 +60,28 @@ pub(crate) fn configured_read(
         scheme,
         "prop" | "env" | "file" | "modulepath" | "package" | "projectpackage" | "https"
     ) {
-        return Err(RuntimeError::host_language(format!(
-            "Refusing to read resource `{}` because it does not match any entry in the resource allowlist (`--allowed-resources`).",
-            uri.text
-        )));
+        return Err(RuntimeError::host_language(PklString::from("Refusing to read resource `")
+            .concat(&uri.text).concat(&"` because it does not match any entry in the resource allowlist (`--allowed-resources`).".into())));
     }
     if matches!(scheme, "env" | "prop") {
-        // URI.getSchemeSpecificPart decodes escapes; property/environment maps
-        // are explicit evaluator inputs, never process environment lookups.
-        let raw = uri
-            .text
-            .split_once(':')
-            .expect("absolute URI")
-            .1
-            .split('#')
-            .next()
-            .unwrap();
-        let mut bytes = Vec::with_capacity(raw.len());
-        let mut index = 0;
-        while index < raw.len() {
-            if raw.as_bytes()[index] == b'%' {
-                bytes.push(
-                    u8::from_str_radix(&raw[index + 1..index + 3], 16).expect("validated escape"),
-                );
-                index += 3;
-            } else {
-                bytes.push(raw.as_bytes()[index]);
-                index += 1;
-            }
-        }
-        let key = crate::resources::decode_utf8(&bytes);
+        let key = decoded_scheme_specific_part(&uri.text).expect("absolute URI");
         let entries = if scheme == "prop" {
             properties
         } else {
             environment
         };
-        if let Some((_, value)) = entries
-            .iter()
-            .rev()
-            .find(|(name, _)| Some(name.as_str()) == key.as_str())
-        {
+        if let Some((_, value)) = entries.iter().rev().find(|(name, _)| key == name.as_str()) {
             return Ok(crate::resources::ReadResult::Text(value.as_str().into()));
         }
         return Ok(crate::resources::ReadResult::Missing);
     }
-    Err(unsupported(format!(
-        "The default resource Host does not yet implement allowed `{scheme}` reads (`{}`).",
-        uri.text
-    )))
+    Err(unsupported(
+        PklString::from(format!(
+            "The default resource Host does not yet implement allowed `{scheme}` reads (`"
+        ))
+        .concat(&uri.text)
+        .concat(&"`).".into()),
+    ))
 }
 
 /// Java URI equality is distinct from the spelling passed to a resource reader.
@@ -109,21 +90,21 @@ pub(crate) struct CacheKey {
     scheme: Option<String>,
     opaque: bool,
     authority: Option<AuthorityKey>,
-    path: String,
-    query: Option<String>,
-    fragment: Option<String>,
+    path: PklString,
+    query: Option<PklString>,
+    fragment: Option<PklString>,
 }
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 enum AuthorityKey {
-    Registry(String),
+    Registry(PklString),
     Server {
-        user_info: Option<String>,
+        user_info: Option<PklString>,
         host: String,
         port: Option<i32>,
     },
 }
 
-pub(crate) fn cache_key(uri: &str) -> CacheKey {
+pub(crate) fn cache_key(uri: &PklString) -> CacheKey {
     let parsed = ResourceUri::parse(uri).expect("resolved resource URI was parsed");
     CacheKey {
         scheme: parsed.scheme.map(|scheme| scheme.to_ascii_lowercase()),
@@ -138,71 +119,79 @@ pub(crate) fn cache_key(uri: &str) -> CacheKey {
     }
 }
 
-pub(crate) fn module_name_needs_fragment_paths(uri: &str) -> bool {
-    !uri.split_once(':')
-        .is_some_and(|(scheme, _)| scheme.eq_ignore_ascii_case("jar"))
+pub(crate) fn module_name_needs_fragment_paths(uri: &PklString) -> bool {
+    let text = SourceText::from(uri.clone());
+    !text
+        .entire()
+        .split_once(":")
+        .and_then(|(scheme, _)| scheme.as_str())
+        .is_some_and(|scheme| scheme.eq_ignore_ascii_case("jar"))
 }
-pub(crate) fn infer_module_name(uri: &str, fragment_paths: bool) -> Result<String, RuntimeError> {
-    fn basename(path: &str) -> String {
-        let leaf = path.rsplit('/').next().unwrap_or(path);
-        leaf.rsplit_once('.')
+
+pub(crate) fn infer_module_name(
+    uri: &PklString,
+    fragment_paths: bool,
+) -> Result<PklString, RuntimeError> {
+    fn basename(path: &PklString) -> PklString {
+        let text = SourceText::from(path.clone());
+        let path = text.entire();
+        let leaf = path.rsplit_once("/").map_or(path, |(_, leaf)| leaf);
+        leaf.rsplit_once(".")
             .map_or(leaf, |(base, _)| base)
-            .to_owned()
+            .to_pkl_string()
     }
-    let parsed = ResourceUri::parse(uri).map_err(|_| {
-        RuntimeError::new(
-            crate::value::ErrorKind::Host,
-            "Invalid selected ModuleKey URI.",
-        )
-    })?;
+    let parsed = ResourceUri::parse(uri)
+        .map_err(|_| RuntimeError::new(ErrorKind::Host, "Invalid selected ModuleKey URI."))?;
     if parsed
         .scheme
-        .as_ref()
+        .as_deref()
         .is_some_and(|scheme| scheme.eq_ignore_ascii_case("jar"))
     {
-        return Ok(basename(uri.rsplit_once('!').map_or(uri, |(_, path)| path)));
+        let text = SourceText::from(uri.clone());
+        return Ok(basename(
+            &text
+                .entire()
+                .rsplit_once("!")
+                .map_or(text.entire(), |(_, path)| path)
+                .to_pkl_string(),
+        ));
     }
     if fragment_paths {
         let fragment = parsed
             .fragment
-            .as_deref()
+            .as_ref()
             .ok_or_else(|| unsupported("ModuleKey fragment paths require a URI fragment."))?;
-        return Ok(basename(&decode_escapes(fragment)));
+        return Ok(basename(&decode_uri_component(fragment, false)));
     }
     if parsed.opaque {
-        let text = decoded_scheme_specific_part(uri)
-            .ok_or_else(|| unsupported("Missing ModuleKey scheme specific part."))?
-            .to_java_utf8();
-        let unversioned = text
-            .rsplit_once(':')
-            .map_or(text.as_str(), |(name, _)| name);
+        let decoded = decoded_scheme_specific_part(uri)
+            .ok_or_else(|| unsupported("Missing ModuleKey scheme specific part."))?;
+        let text = SourceText::from(decoded);
+        let view = text.entire();
+        let unversioned = view.rsplit_once(":").map_or(view, |(name, _)| name);
         return Ok(unversioned
-            .rsplit('.')
-            .next()
-            .unwrap_or(unversioned)
-            .to_owned());
+            .rsplit_once(".")
+            .map_or(unversioned, |(_, name)| name)
+            .to_pkl_string());
     }
     Ok(basename(&decode_escapes(&parsed.path)))
 }
 
-pub(crate) fn validate_module_key_uri(uri: &str) -> Result<(), RuntimeError> {
+pub(crate) fn validate_module_key_uri(uri: &PklString) -> Result<(), RuntimeError> {
     if ResourceUri::parse(uri).is_ok_and(|parsed| parsed.scheme.is_some()) {
         Ok(())
     } else {
         Err(RuntimeError::new(
-            crate::value::ErrorKind::Host,
+            ErrorKind::Host,
             "ModuleKey requires a valid absolute URI.",
         ))
     }
 }
 
-/// SecurityManagers.getDefaultTrustLevel uses the resolved module URI, not a
-/// diagnostic URI or resource-reader key. The nested marker uses decoded SSP;
-/// other jar URLs are peeled without recursion or rewriting the embedded URI.
-pub(crate) fn module_trust_level(uri: &str) -> Result<i32, crate::modules::ModuleHostError> {
-    let mut text = uri;
+pub(crate) fn module_trust_level(uri: &PklString) -> Result<i32, crate::modules::ModuleHostError> {
+    let mut text = uri.clone();
     loop {
-        let parsed = ResourceUri::parse(text).map_err(|_| {
+        let parsed = ResourceUri::parse(&text).map_err(|_| {
             crate::modules::ModuleHostError::Unsupported(
                 "Default module trust requires a valid absolute URI.".into(),
             )
@@ -210,7 +199,7 @@ pub(crate) fn module_trust_level(uri: &str) -> Result<i32, crate::modules::Modul
         return Ok(match parsed.scheme.as_deref() {
             Some("repl") => 40,
             Some("file") => {
-                if parsed.authority.as_deref().is_some_and(|authority| {
+                if parsed.authority.as_ref().is_some_and(|authority| {
                     !authority.is_empty() && server_authority(authority).is_some()
                 }) {
                     10
@@ -219,10 +208,9 @@ pub(crate) fn module_trust_level(uri: &str) -> Result<i32, crate::modules::Modul
                 }
             }
             Some("jar") => {
-                let nested = decoded_scheme_specific_part(text)
-                    .and_then(|part| part.as_str().map(|part| part.starts_with("nested:")))
-                    .unwrap_or(false);
-                text = &text[4..];
+                let nested = decoded_scheme_specific_part(&text)
+                    .is_some_and(|part| part.starts_with("nested:"));
+                text = SourceText::from(text).entire().range(4..).to_pkl_string();
                 if nested {
                     20
                 } else {
@@ -241,46 +229,54 @@ pub(crate) fn module_trust_level(uri: &str) -> Result<i32, crate::modules::Modul
     }
 }
 
-/// URI.getSchemeSpecificPart decodes escapes and excludes the fragment. The
-/// original URI spelling remains separate for trust events and cache keys.
-pub(crate) fn decoded_scheme_specific_part(uri: &str) -> Option<crate::value::PklString> {
+/// URI.getSchemeSpecificPart decodes escapes and excludes the fragment, while
+/// the original spelling remains independent for trust operations and cache keys.
+pub(crate) fn decoded_scheme_specific_part(uri: &PklString) -> Option<PklString> {
     ResourceUri::parse(uri).ok()?;
-    let raw = uri.split_once(':')?.1.split('#').next()?;
-    let mut bytes = Vec::with_capacity(raw.len());
-    let mut index = 0;
-    while index < raw.len() {
-        if raw.as_bytes()[index] == b'%' {
-            bytes.push(u8::from_str_radix(&raw[index + 1..index + 3], 16).ok()?);
-            index += 3;
-        } else {
-            bytes.push(raw.as_bytes()[index]);
-            index += 1;
-        }
-    }
-    Some(crate::resources::decode_utf8(&bytes))
+    let text = SourceText::from(uri.clone());
+    let raw = text.entire().split_once(":")?.1;
+    let raw = raw.split_once("#").map_or(raw, |(before, _)| before);
+    Some(decode_escapes(&raw.to_pkl_string()))
 }
 
-fn fold_escapes(text: &str) -> String {
-    let mut bytes = text.as_bytes().to_vec();
-    let mut index = 0;
-    while index < bytes.len() {
-        if bytes[index] == b'%' {
-            bytes[index + 1].make_ascii_uppercase();
-            bytes[index + 2].make_ascii_uppercase();
-            index += 3;
-        } else {
-            index += 1;
+fn fold_escapes(text: &PklString) -> PklString {
+    let source = SourceText::from(text.clone());
+    let mut output = PklStringBuilder::default();
+    let mut chars = source.characters();
+    while let Some((_, c)) = chars.next() {
+        match c {
+            SourceCharacter::Scalar('%') => {
+                output.push('%');
+                for _ in 0..2 {
+                    let (_, digit) = chars.next().expect("validated URI escape");
+                    output.push(
+                        digit
+                            .scalar()
+                            .expect("ASCII escape digit")
+                            .to_ascii_uppercase(),
+                    );
+                }
+            }
+            SourceCharacter::Scalar(c) => output.push(c),
+            SourceCharacter::Surrogate(unit) => output.push_unit(unit),
         }
     }
-    String::from_utf8(bytes).expect("ASCII case folding preserves UTF-8")
+    output.finish()
 }
 
-fn server_authority(authority: &str) -> Option<AuthorityKey> {
-    let (user_info, host_port) = match authority.split_once('@') {
-        Some((user, host)) if !host.contains('@') => (Some(fold_escapes(user)), host),
+fn server_authority(authority: &PklString) -> Option<AuthorityKey> {
+    let source = SourceText::from(authority.clone());
+    let authority = source.entire();
+    let (user_info, host_port) = match authority.split_once("@") {
+        Some((user, host)) if host.find("@").is_none() => {
+            (Some(fold_escapes(&user.to_pkl_string())), host)
+        }
         Some(_) => return None,
         None => (None, authority),
     };
+    // A server host is ASCII/IPv6. Non-scalar authority data remains a registry
+    // authority (and its complete units remain in the Registry cache key).
+    let host_port = host_port.as_str()?;
     let (host, port) = if host_port.starts_with('[') {
         let end = host_port.find(']')?;
         let host = &host_port[..=end];
@@ -345,13 +341,13 @@ fn server_hostname(host: &str) -> bool {
 }
 
 /// Return an authored triple-dot path. Parsing happens before ModuleKey I/O.
-pub(crate) fn read_triple_path(authored: &str) -> Result<Option<String>, RuntimeError> {
+pub(crate) fn read_triple_path(authored: &PklString) -> Result<Option<PklString>, RuntimeError> {
     triple_path(&ResourceUri::from_authored(authored)?, authored, "Resource")
 }
 
-pub(crate) fn import_triple_path(authored: &str) -> Result<Option<String>, RuntimeError> {
+pub(crate) fn import_triple_path(authored: &PklString) -> Result<Option<PklString>, RuntimeError> {
     let text = if is_uri_like(authored) {
-        authored.to_owned()
+        authored.clone()
     } else {
         quote_path(authored)
     };
@@ -360,23 +356,22 @@ pub(crate) fn import_triple_path(authored: &str) -> Result<Option<String>, Runti
     triple_path(&parsed, authored, "Module")
 }
 
-/// ModuleClassNodes.relativePathTo uses URI.relativize after cutting the
-/// original receiver URI string at its final slash, including query/fragment.
-/// Return Java getPath().split("/") elements; the caller drops the last element.
+/// URI.relativize is applied after cutting the original receiver URI at its
+/// final slash, including any query or fragment. Keep that ordering unchanged.
 pub(crate) fn module_relative_path_elements(
-    receiver: &str,
-    other: &str,
-) -> Result<Option<Vec<String>>, RuntimeError> {
-    let Some(slash) = receiver.rfind('/') else {
+    receiver: &PklString,
+    other: &PklString,
+) -> Result<Option<Vec<PklString>>, RuntimeError> {
+    let receiver_text = SourceText::from(receiver.clone());
+    let Some(slash) = receiver_text.entire().rfind("/") else {
         return Ok(None);
     };
-    let base = ResourceUri::parse(&receiver[..slash + 1])
+    let base = ResourceUri::parse(&receiver_text.entire().range(..slash + 1).to_pkl_string())
         .map_err(|_| unsupported("Invalid original module key URI."))?;
     let child =
         ResourceUri::parse(other).map_err(|_| unsupported("Invalid other module key URI."))?;
-    // java.net.URI.relativize compares raw authority spelling (with percent
-    // hex case folded), rather than URI.equals server-host case folding.
-    let authority = |value: Option<&str>| value.filter(|value| !value.is_empty()).map(fold_escapes);
+    let authority =
+        |value: Option<&PklString>| value.filter(|value| !value.is_empty()).map(fold_escapes);
     let same_scheme = match (&base.scheme, &child.scheme) {
         (Some(left), Some(right)) => left.eq_ignore_ascii_case(right),
         (None, None) => true,
@@ -385,115 +380,163 @@ pub(crate) fn module_relative_path_elements(
     if base.opaque
         || child.opaque
         || !same_scheme
-        || authority(base.authority.as_deref()) != authority(child.authority.as_deref())
+        || authority(base.authority.as_ref()) != authority(child.authority.as_ref())
     {
         return Ok(None);
     }
     let mut base_path = normalize_path(&base.path);
     let child_path = normalize_path(&child.path);
-    if base_path != child_path {
-        if !base_path.ends_with('/') {
-            base_path.push('/');
-        }
-        if !child_path.starts_with(&base_path) {
-            return Ok(None);
-        }
+    if base_path != child_path && !base_path.ends_with("/") {
+        base_path = base_path.concat(&"/".into());
     }
-    let decoded = decode_escapes(&child_path[base_path.len()..]);
-    // Java String.split keeps one empty element for the empty String, but
-    // discards all trailing empty fields for a nonempty String.
-    let mut elements = decoded.split('/').map(str::to_owned).collect::<Vec<_>>();
+    let base_text = SourceText::from(base_path);
+    let child_text = SourceText::from(child_path);
+    if !child_text.as_bytes().starts_with(base_text.as_bytes()) {
+        return Ok(None);
+    }
+    let remainder = child_text
+        .entire()
+        .range(base_text.len_bytes()..)
+        .to_pkl_string();
+    let decoded = SourceText::from(decode_escapes(&remainder));
+    let mut elements = decoded
+        .entire()
+        .split("/")
+        .map(SourceSlice::to_pkl_string)
+        .collect::<Vec<_>>();
     if !decoded.is_empty() {
-        while elements.last().is_some_and(String::is_empty) {
+        while elements.last().is_some_and(PklString::is_empty) {
             elements.pop();
         }
     }
     Ok(Some(elements))
 }
 
-fn decode_escapes(text: &str) -> String {
-    let mut bytes = Vec::new();
-    let mut index = 0;
-    while index < text.len() {
-        if text.as_bytes()[index] == b'%' {
-            bytes.push(
-                u8::from_str_radix(&text[index + 1..index + 3], 16).expect("validated escape"),
-            );
-            index += 3;
+fn decode_escapes(text: &PklString) -> PklString {
+    decode_uri_component(text, true)
+}
+
+// java.net.URI.decode copies literal Java chars unchanged and decodes each
+// adjacent percent-byte run separately. SSP/path retain escapes in brackets;
+// query/fragment getters explicitly pass false. Internal WTF-8 is never input
+// to the UTF-8 decoder.
+fn decode_uri_component(text: &PklString, ignore_percent_in_brackets: bool) -> PklString {
+    let source = SourceText::from(text.clone());
+    let view = source.entire();
+    let mut output = PklStringBuilder::default();
+    let mut offset = 0;
+    let mut between_brackets = false;
+    while offset < view.len_bytes() {
+        let ch = view.range(offset..).first().expect("component character");
+        match ch {
+            SourceCharacter::Scalar('[') => between_brackets = true,
+            SourceCharacter::Scalar(']') => between_brackets = false,
+            _ => {}
+        }
+        if ch == SourceCharacter::Scalar('%') && !(between_brackets && ignore_percent_in_brackets) {
+            let mut bytes = Vec::new();
+            while view.as_bytes().get(offset) == Some(&b'%') {
+                let pair = view
+                    .range(offset + 1..offset + 3)
+                    .as_str()
+                    .expect("ASCII URI escape");
+                bytes.push(u8::from_str_radix(pair, 16).expect("validated URI escape"));
+                offset += 3;
+            }
+            output.push_value(&crate::resources::decode_utf8(&bytes));
         } else {
-            bytes.push(text.as_bytes()[index]);
-            index += 1;
+            match ch {
+                SourceCharacter::Scalar(c) => output.push(c),
+                SourceCharacter::Surrogate(unit) => output.push_unit(unit),
+            }
+            offset += ch.len_bytes();
         }
     }
-    crate::resources::decode_utf8(&bytes)
-        .as_str()
-        .expect("UTF8 decoder produces scalars")
-        .to_owned()
+    output.finish()
 }
 
 fn triple_path(
     uri: &ResourceUri,
-    authored: &str,
+    authored: &PklString,
     kind: &str,
-) -> Result<Option<String>, RuntimeError> {
+) -> Result<Option<PklString>, RuntimeError> {
     if uri.scheme.is_some() {
         return Ok(None);
     }
-    let ssp = decode_escapes(uri.text.split('#').next().unwrap());
+    let text = SourceText::from(uri.text.clone());
+    let raw = text
+        .entire()
+        .split_once("#")
+        .map_or(text.entire(), |(raw, _)| raw);
+    let ssp = decode_escapes(&raw.to_pkl_string());
     if !ssp.starts_with("...") {
         return Ok(None);
     }
     if ssp == "..." {
-        return Ok(Some(String::new()));
+        return Ok(Some(PklString::default()));
     }
-    if let Some(path) = ssp.strip_prefix(".../").filter(|path| !path.is_empty()) {
-        return Ok(Some(path.to_owned()));
+    let ssp_text = SourceText::from(ssp);
+    if let Some(path) = ssp_text
+        .entire()
+        .strip_prefix(".../")
+        .filter(|path| !path.is_empty())
+    {
+        return Ok(Some(path.to_pkl_string()));
     }
-    let mut error =
-        RuntimeError::host_language(format!("{kind} URI `{authored}` has invalid syntax."));
+    let mut error = RuntimeError::host_language(
+        PklString::from(format!("{kind} URI `"))
+            .concat(authored)
+            .concat(&"` has invalid syntax.".into()),
+    );
     error.hint = Some("expected `...` or `.../path/to/my_module.pkl`".into());
     Err(error)
 }
 
-/// Candidate order belongs to the shared engine. The Host performs only the
-/// original ModuleKey's `hasElement`/security operation for each candidate.
 pub(crate) fn triple_candidates(
-    module: &str,
-    path: &str,
+    module: &PklString,
+    path: &PklString,
     capabilities: crate::modules::ModuleCapabilities,
-) -> Result<Vec<String>, RuntimeError> {
+) -> Result<Vec<PklString>, RuntimeError> {
     if !capabilities.local || !capabilities.hierarchical {
-        let mut error = RuntimeError::host_language(format!(
-            "Cannot resolve a triple-dot import from module URI `{module}`."
-        ));
+        let mut error = RuntimeError::host_language(
+            PklString::from("Cannot resolve a triple-dot import from module URI `")
+                .concat(module)
+                .concat(&"`.".into()),
+        );
         error.hint = Some("Triple-dot imports may only be resolved by module schemes that are considered local, and have hierarchical URIs.".into());
-        // IoUtils constructs this VmException without a node/source section.
         error.unavailable_origin = true;
         return Err(error);
     }
     let base = ResourceUri::parse(module)
         .map_err(|_| unsupported("Unsupported triple-dot declaration URI."))?;
-    let current = decode_escapes(if capabilities.fragment_paths {
-        base.fragment
-            .as_deref()
-            .ok_or_else(|| unsupported("Fragment-path ModuleKey has no fragment."))?
+    let current = if capabilities.fragment_paths {
+        decode_uri_component(
+            base.fragment
+                .as_ref()
+                .ok_or_else(|| unsupported("Fragment-path ModuleKey has no fragment."))?,
+            false,
+        )
     } else {
-        &base.path
-    });
-    let effective = if path.is_empty() {
-        current.rsplit('/').next().unwrap()
-    } else {
-        path
+        decode_escapes(&base.path)
     };
-    let mut index = current
-        .rfind('/')
-        .and_then(|last| current[..last].rfind('/'));
+    let current_text = SourceText::from(current.clone());
+    let view = current_text.entire();
+    let effective = if path.is_empty() {
+        view.rsplit_once("/")
+            .map_or(view, |(_, leaf)| leaf)
+            .to_pkl_string()
+    } else {
+        path.clone()
+    };
+    let mut index = view
+        .rfind("/")
+        .and_then(|last| view.range(..last).rfind("/"));
     let mut paths = Vec::new();
     while let Some(at) = index.filter(|at| *at > 0) {
-        paths.push(format!("{}{effective}", &current[..=at]));
-        index = current[..at].rfind('/');
+        paths.push(view.range(..at + 1).to_pkl_string().concat(&effective));
+        index = view.range(..at).rfind("/");
     }
-    paths.push(format!("/{effective}"));
+    paths.push(PklString::from("/").concat(&effective));
     let mut result = Vec::new();
     for candidate in paths.into_iter().filter(|candidate| candidate != &current) {
         let mut uri = base.clone();
@@ -510,38 +553,35 @@ pub(crate) fn triple_candidates(
     Ok(result)
 }
 
-/// Shared URI grammar for module imports. Preparation is eager; Host resolution
-/// and source loading remain lazy operations with separate cache boundaries.
 pub(crate) fn prepare_module_uri(
-    authored: &str,
-    base: Option<&str>,
-) -> Result<(String, String), RuntimeError> {
+    authored: &PklString,
+    base: Option<&PklString>,
+) -> Result<(PklString, PklString), RuntimeError> {
     let text = if is_uri_like(authored) {
-        authored.to_owned()
+        authored.clone()
     } else {
         quote_path(authored)
     };
     let parsed = ResourceUri::parse(&text).map_err(|error| match error {
         ParseError::Syntax(reason) => {
-            let mut error =
-                RuntimeError::host_language(format!("Module URI `{authored}` has invalid syntax."));
+            let mut error = RuntimeError::host_language(
+                PklString::from("Module URI `")
+                    .concat(authored)
+                    .concat(&"` has invalid syntax.".into()),
+            );
             error.hint = Some(reason.into());
             error
         }
         ParseError::Unsupported(reason) => unsupported(reason),
     })?;
     if triple_path(&parsed, authored, "Module")?.is_some() {
-        // Module AST preparation resolves these with the original ModuleKey
-        // before guest initialization, including unforced import expressions.
         return Ok((parsed.text.clone(), parsed.text));
     }
-    if parsed.path.starts_with('@') {
+    if parsed.scheme.is_none() && parsed.path.starts_with("@") {
         return Err(unsupported(
             "Module dependency and triple-dot resolution is not implemented.",
         ));
     }
-    // A source-less compiler can retain a relative import until its primary
-    // ModuleKey is registered, while still rejecting malformed URI syntax now.
     let parsed = if parsed.scheme.is_none() && base.is_none() {
         parsed
     } else {
@@ -551,296 +591,14 @@ pub(crate) fn prepare_module_uri(
     Ok((absolute, parsed.normalize().text))
 }
 
-/// ModuleKey.resolveUri receives an already parsed URI, not an authored path.
-/// In particular, its percent escapes must not be quoted a second time.
-pub(crate) fn resolve_module_key_uri(uri: &str, base: &str) -> Result<String, RuntimeError> {
+pub(crate) fn resolve_module_key_uri(
+    uri: &PklString,
+    base: &PklString,
+) -> Result<PklString, RuntimeError> {
     ResourceUri::parse(uri)
         .map_err(|_| unsupported("Invalid parsed module URI."))?
         .resolve_module(Some(base))
         .map(|uri| uri.text)
-}
-
-#[derive(Clone, Debug)]
-struct ResourceUri {
-    text: String,
-    scheme: Option<String>,
-    authority: Option<String>,
-    path: String,
-    query: Option<String>,
-    fragment: Option<String>,
-    opaque: bool,
-}
-
-impl ResourceUri {
-    fn from_authored(authored: &str) -> Result<Self, RuntimeError> {
-        let text = if is_uri_like(authored) {
-            authored.to_owned()
-        } else {
-            quote_path(authored)
-        };
-        let uri = Self::parse(&text).map_err(|error| match error {
-            ParseError::Syntax(reason) => {
-                let mut error = RuntimeError::host_language(format!(
-                    "Resource URI `{authored}` has invalid syntax."
-                ));
-                error.hint = Some(reason.into());
-                error
-            }
-            ParseError::Unsupported(reason) => unsupported(reason),
-        })?;
-        if !is_uri_like(authored)
-            && uri
-                .authority
-                .as_ref()
-                .is_some_and(|authority| !authority.is_empty())
-        {
-            // The path constructor requests server-authority validation, unlike
-            // the URI-string constructor's registry-authority fallback.
-            return Err(unsupported(
-                "Network-path resource authority parsing is not implemented.",
-            ));
-        }
-        Ok(uri)
-    }
-
-    fn has_supported_http_authority(&self) -> bool {
-        if self.opaque {
-            return false;
-        }
-        let Some(authority) = &self.authority else {
-            return false;
-        };
-        let (host, port) = authority
-            .split_once(':')
-            .map_or((authority.as_str(), None), |(host, port)| {
-                (host, Some(port))
-            });
-        if port.is_some_and(|port| {
-            !port.is_empty()
-                && (!port.bytes().all(|c| c.is_ascii_digit()) || port.parse::<i32>().is_err())
-        }) {
-            return false;
-        }
-        // URI.getHost must be non-null before HttpRequest can be constructed.
-        // IPv6, user info and non-ASCII hosts remain separate parsing work.
-        let host = host.strip_suffix('.').unwrap_or(host);
-        if host.contains('.')
-            && host
-                .rsplit('.')
-                .next()
-                .is_some_and(|label| label.starts_with(|c: char| c.is_ascii_digit()))
-        {
-            return host.parse::<std::net::Ipv4Addr>().is_ok();
-        }
-        !host.is_empty()
-            && host.split('.').all(|label| {
-                !label.is_empty()
-                    && label.as_bytes()[0].is_ascii_alphanumeric()
-                    && label.as_bytes()[label.len() - 1].is_ascii_alphanumeric()
-                    && label
-                        .bytes()
-                        .all(|c| c.is_ascii_alphanumeric() || c == b'-')
-            })
-    }
-
-    fn parse(text: &str) -> Result<Self, ParseError> {
-        let (body, fragment) = text
-            .split_once('#')
-            .map_or((text, None), |(a, b)| (a, Some(b)));
-        // java.net.URI recognizes a scheme only before the first /, ? or #.
-        let colon = body.find(':').filter(|colon| {
-            body.find(['/', '?'])
-                .is_none_or(|delimiter| *colon < delimiter)
-        });
-        let (scheme, rest) = if let Some(colon) = colon {
-            let scheme = &body[..colon];
-            if scheme.is_empty() {
-                return Err(ParseError::Syntax("Expected scheme name"));
-            }
-            if !scheme.as_bytes()[0].is_ascii_alphabetic()
-                || !scheme
-                    .bytes()
-                    .all(|c| c.is_ascii_alphanumeric() || b"+-.".contains(&c))
-            {
-                return Err(ParseError::Syntax("Illegal character in scheme name"));
-            }
-            let rest = &body[colon + 1..];
-            if rest.is_empty() {
-                return Err(ParseError::Syntax("Expected scheme-specific part"));
-            }
-            (Some(scheme.to_owned()), rest)
-        } else {
-            (None, body)
-        };
-        let opaque = scheme.is_some() && !rest.starts_with('/');
-        let (authority, path, query) = if opaque {
-            validate(rest, Component::Opaque)?;
-            (None, rest, None)
-        } else {
-            let (hierarchy, query) = rest
-                .split_once('?')
-                .map_or((rest, None), |(a, b)| (a, Some(b)));
-            let (authority, path) = if let Some(without_prefix) = hierarchy.strip_prefix("//") {
-                let (authority, path) = without_prefix
-                    .find('/')
-                    .map_or((without_prefix, ""), |slash| {
-                        (&without_prefix[..slash], &without_prefix[slash..])
-                    });
-                if authority.is_empty() && path.is_empty() && query.is_none() && fragment.is_none()
-                {
-                    return Err(ParseError::Syntax("Expected authority"));
-                }
-                validate_authority(authority)?;
-                (Some(authority.to_owned()), path)
-            } else {
-                (None, hierarchy)
-            };
-            validate(path, Component::Path)?;
-            if let Some(query) = query {
-                validate(query, Component::Query)?;
-            }
-            (authority, path, query)
-        };
-        if let Some(fragment) = fragment {
-            validate(fragment, Component::Fragment)?;
-        }
-        Ok(Self {
-            text: text.into(),
-            scheme,
-            authority,
-            path: path.into(),
-            query: query.map(str::to_owned),
-            fragment: fragment.map(str::to_owned),
-            opaque,
-        })
-    }
-
-    fn resolve_module(mut self, module_uri: Option<&str>) -> Result<Self, RuntimeError> {
-        if self.scheme.is_some() {
-            return Ok(self);
-        }
-        let base_text = module_uri.ok_or_else(|| {
-            unsupported("Relative module imports require declaration module URI metadata.")
-        })?;
-        let base =
-            Self::parse(base_text).map_err(|_| unsupported("Invalid declaration module URI."))?;
-        // IoUtils.resolve handles jar paths before java.net.URI.resolve, which
-        // otherwise treats an opaque base as unable to resolve relative paths.
-        if base
-            .scheme
-            .as_deref()
-            .is_some_and(|scheme| scheme.eq_ignore_ascii_case("jar"))
-        {
-            let bang = base_text
-                .find('!')
-                .ok_or_else(|| unsupported("Invalid jar module URI (missing `!`)."))?;
-            let path = self.resolve_module(Some(&base_text[bang + 1..]))?;
-            return Self::parse(&format!("{}{}", &base_text[..=bang], path.text))
-                .map_err(|_| unsupported("Invalid resolved jar module URI."));
-        }
-        if base.opaque {
-            return Ok(self);
-        }
-        if self.authority.is_none() {
-            self.authority = base.authority;
-            if self.path.is_empty() && self.fragment.is_some() && self.query.is_none() {
-                self.path = base.path;
-                self.query = base.query;
-            } else if !self.path.starts_with('/') {
-                let directory = base
-                    .path
-                    .rfind('/')
-                    .map_or("", |slash| &base.path[..=slash]);
-                let separator = if directory.is_empty() && self.authority.is_some() {
-                    "/"
-                } else {
-                    ""
-                };
-                self.path = normalize_path(&format!("{directory}{separator}{}", self.path));
-            }
-        }
-        self.scheme = base.scheme;
-        self.rebuild();
-        Ok(self)
-    }
-
-    fn resolve(mut self, module_uri: Option<&str>) -> Result<Self, RuntimeError> {
-        if self.scheme.is_some() {
-            return Ok(self);
-        }
-        if self.path == "..." || self.path.starts_with(".../") || self.path.starts_with('@') {
-            return Err(unsupported(
-                "Resource dependency and triple-dot resolution is not implemented.",
-            ));
-        }
-        let base = module_uri.ok_or_else(|| {
-            unsupported("Relative resource reads require declaration module URI metadata.")
-        })?;
-        let base = Self::parse(base).map_err(|_| {
-            unsupported(
-                "The declaration module URI is not supported for relative resource resolution.",
-            )
-        })?;
-        if base.opaque || base.scheme.as_deref() != Some("file") {
-            return Err(unsupported(
-                "Relative resource resolution currently requires a hierarchical file module URI.",
-            ));
-        }
-        if self.authority.is_none() {
-            self.authority.clone_from(&base.authority);
-            if !self.path.starts_with('/') {
-                let directory = base
-                    .path
-                    .rfind('/')
-                    .map_or("", |slash| &base.path[..=slash]);
-                self.path = format!("{directory}{}", self.path);
-            }
-        }
-        self.scheme = base.scheme;
-        self.path = normalize_path(&self.path);
-        // IoUtils.fixTripleSlashUri preserves a file module's empty authority.
-        self.rebuild();
-        Ok(self)
-    }
-
-    fn normalize(mut self) -> Self {
-        if self.opaque {
-            return self;
-        }
-        let path = normalize_path(&self.path);
-        if path != self.path {
-            self.path = path;
-            // URI.normalize reconstructs the URI. An empty parsed authority is
-            // absent in java.net.URI, even when the original text used ///.
-            if self.authority.as_deref() == Some("") {
-                self.authority = None;
-            }
-            self.rebuild();
-        }
-        self
-    }
-
-    fn rebuild(&mut self) {
-        let mut text = String::new();
-        if let Some(scheme) = &self.scheme {
-            text.push_str(scheme);
-            text.push(':');
-        }
-        if let Some(authority) = &self.authority {
-            text.push_str("//");
-            text.push_str(authority);
-        }
-        text.push_str(&self.path);
-        if let Some(query) = &self.query {
-            text.push('?');
-            text.push_str(query);
-        }
-        if let Some(fragment) = &self.fragment {
-            text.push('#');
-            text.push_str(fragment);
-        }
-        self.text = text;
-    }
 }
 
 #[derive(Debug)]
@@ -879,78 +637,87 @@ impl Component {
     }
 }
 
-fn validate(text: &str, component: Component) -> Result<(), ParseError> {
-    let mut chars = text.chars();
-    while let Some(c) = chars.next() {
-        if c == '%' {
-            if !chars.next().is_some_and(|c| c.is_ascii_hexdigit())
-                || !chars.next().is_some_and(|c| c.is_ascii_hexdigit())
+fn validate(text: SourceSlice<'_>, component: Component) -> Result<(), ParseError> {
+    let mut chars = text.characters();
+    while let Some((_, character)) = chars.next() {
+        if character == SourceCharacter::Scalar('%') {
+            if !chars
+                .next()
+                .is_some_and(|(_, c)| c.scalar().is_some_and(|c| c.is_ascii_hexdigit()))
+                || !chars
+                    .next()
+                    .is_some_and(|(_, c)| c.scalar().is_some_and(|c| c.is_ascii_hexdigit()))
             {
                 return Err(ParseError::Syntax("Malformed escape pair"));
             }
-        } else if !component.permits(c) {
+        } else if let SourceCharacter::Scalar(c) = character
+            && !component.permits(c)
+        {
             return Err(ParseError::Syntax(component.illegal()));
         }
+        // URI.Parser.scanEscape admits a surrogate Java char: >128, neither
+        // Character.isSpaceChar nor Character.isISOControl. Do not encode it.
     }
     Ok(())
 }
 
-fn validate_authority(text: &str) -> Result<(), ParseError> {
-    if text.contains('[') {
-        // Validate user-info before parsing an authority key. Escape folding
-        // assumes syntactically complete percent pairs, including on failures.
-        if let Some((user_info, _)) = text.split_once('@') {
+fn validate_authority(text: SourceSlice<'_>) -> Result<(), ParseError> {
+    if let Some(start) = text.find("[") {
+        if let Some((user_info, _)) = text.split_once("@") {
             validate(user_info, Component::Authority)?;
         }
-        if !text.contains(']') {
+        if text.find("]").is_none() {
             return Err(ParseError::Syntax(
                 "Expected closing bracket for IPv6 address",
             ));
         }
-        // Scoped IPv6 address grammar has separate Java compatibility rules.
-        // Keep it explicit until those rules are supported, rather than treating
-        // a bracketed address as a case-sensitive registry authority.
-        if server_authority(text).is_none() {
+        if server_authority(&text.to_pkl_string()).is_none() {
             return Err(ParseError::Unsupported(
                 "This IPv6 resource URI authority is not implemented.",
             ));
         }
-        let start = text.find('[').unwrap();
-        validate(&text[..start], Component::Authority)?;
+        validate(text.range(..start), Component::Authority)?;
         return Ok(());
     }
     validate(text, Component::Authority)
 }
 
-fn is_uri_like(text: &str) -> bool {
-    let Some((scheme, rest)) = text.split_once(':') else {
+fn is_uri_like(text: &PklString) -> bool {
+    let source = SourceText::from(text.clone());
+    let Some((scheme, rest)) = source.entire().split_once(":") else {
         return false;
     };
     !scheme.is_empty()
         && scheme
             .bytes()
             .all(|c| c.is_ascii_alphanumeric() || b"_+.-".contains(&c))
-        && rest.chars().next().is_some_and(|c| c != '\\')
-        && !rest
-            .chars()
-            .skip(1)
-            .any(|c| matches!(c, '\n' | '\r' | '\u{85}' | '\u{2028}' | '\u{2029}'))
+        && rest
+            .first()
+            .is_some_and(|c| c != SourceCharacter::Scalar('\\'))
+        && !rest.characters().skip(1).any(|(_, c)| {
+            matches!(
+                c,
+                SourceCharacter::Scalar('\n' | '\r' | '\u{85}' | '\u{2028}' | '\u{2029}')
+            )
+        })
 }
 
-pub(crate) fn quote_path(text: &str) -> String {
-    let mut result = String::new();
-    for c in text.chars() {
-        if Component::Path.permits(c) {
-            result.push(c);
-        } else {
-            let mut buffer = [0; 4];
-            for byte in c.encode_utf8(&mut buffer).bytes() {
-                use std::fmt::Write;
-                write!(result, "%{byte:02X}").expect("writing a String");
+pub(crate) fn quote_path(text: &PklString) -> PklString {
+    let source = SourceText::from(text.clone());
+    let mut result = PklStringBuilder::default();
+    for (_, c) in source.characters() {
+        match c {
+            SourceCharacter::Surrogate(unit) => result.push_unit(unit),
+            SourceCharacter::Scalar(c) if Component::Path.permits(c) => result.push(c),
+            SourceCharacter::Scalar(c) => {
+                let mut buffer = [0; 4];
+                for byte in c.encode_utf8(&mut buffer).bytes() {
+                    result.push_str(&format!("%{byte:02X}"));
+                }
             }
         }
     }
-    result
+    result.finish()
 }
 
 fn java_space(c: char) -> bool {
@@ -961,44 +728,60 @@ fn java_space(c: char) -> bool {
     )
 }
 
-fn normalize_path(path: &str) -> String {
-    let absolute = path.starts_with('/');
-    let mut segments = Vec::new();
-    let mut trailing = path.ends_with('/');
-    for segment in path.split('/') {
-        match segment {
-            "" => {}
-            "." => trailing = true,
-            ".." if segments.last().is_some_and(|segment| *segment != "..") => {
+fn normalize_path(path: &PklString) -> PklString {
+    let source = SourceText::from(path.clone());
+    let path = source.entire();
+    let absolute = path.starts_with("/");
+    let mut segments: Vec<SourceSlice<'_>> = Vec::new();
+    let mut trailing = path.ends_with("/");
+    for segment in path.split("/") {
+        match segment.as_str() {
+            Some("") => {}
+            Some(".") => trailing = true,
+            Some("..")
+                if segments
+                    .last()
+                    .is_some_and(|segment| segment.as_str() != Some("..")) =>
+            {
                 segments.pop();
                 trailing = true;
             }
-            segment => {
+            _ => {
                 segments.push(segment);
                 trailing = false;
             }
         }
     }
-    trailing |= path.ends_with('/');
-    let mut result = if absolute { "/".into() } else { String::new() };
-    result.push_str(&segments.join("/"));
-    if trailing && !result.is_empty() && !result.ends_with('/') {
-        result.push('/');
-    }
-    // Preserve a relative first segment containing ':' as a path, not a scheme.
+    trailing |= path.ends_with("/");
+    let mut result = PklStringBuilder::default();
     if !absolute
         && segments
             .first()
-            .is_some_and(|segment| segment.contains(':'))
+            .is_some_and(|segment| segment.find(":").is_some())
     {
-        result.insert_str(0, "./");
+        result.push_str("./");
     }
-    result
+    if absolute {
+        result.push('/');
+    }
+    for (index, segment) in segments.iter().enumerate() {
+        if index > 0 {
+            result.push('/');
+        }
+        segment.append_to(&mut result);
+    }
+    if trailing && !segments.is_empty() {
+        result.push('/');
+    }
+    result.finish()
 }
 
-fn unsupported(message: impl Into<String>) -> RuntimeError {
+fn unsupported(message: impl Into<PklString>) -> RuntimeError {
     RuntimeError::new(ErrorKind::Unsupported, message.into())
 }
 
 #[cfg(test)]
 mod tests;
+
+#[cfg(test)]
+mod lossless_contract;

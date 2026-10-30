@@ -52,7 +52,7 @@ fn next(probe: &mut SourceProbe) -> SourceEvent {
         }
         match probe.module_request(token).unwrap().kind {
             ModuleRequestKind::Resolve { original_uri, .. } => {
-                assert_eq!(original_uri.as_ref(), PARENT_URI);
+                assert_eq!(original_uri, PARENT_URI);
                 probe
                     .complete_module_resolution(
                         token,
@@ -64,7 +64,7 @@ fn next(probe: &mut SourceProbe) -> SourceEvent {
                     .unwrap();
             }
             ModuleRequestKind::LoadSource { resolved, .. } => {
-                assert_eq!(resolved.source_uri.as_ref(), PARENT_URI);
+                assert_eq!(resolved.source_uri, PARENT_URI);
                 return event;
             }
             other => panic!("unexpected module request {other:?}"),

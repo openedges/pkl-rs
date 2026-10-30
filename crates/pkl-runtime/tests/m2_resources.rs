@@ -4,7 +4,7 @@
 mod module_keys;
 use pkl_runtime::{
     host::ReadFailure,
-    probe::{SourceEvent, SourceProbe},
+    probe::{SourceEvent, SourceProbe, SourceTextEvent},
     resources::{ReadResult, Resource},
 };
 
@@ -35,6 +35,21 @@ fn next(probe: &mut SourceProbe) -> SourceEvent {
         }
     }
     panic!("resource operation did not settle");
+}
+fn next_text(probe: &mut SourceProbe) -> SourceTextEvent {
+    for _ in 0..100_000 {
+        let event = probe.poll_text(0, 1).unwrap();
+        probe.collect();
+        if event.kind == "module-request"
+            && module_keys::complete_probe(probe, event.token.as_deref().unwrap(), 0).unwrap()
+        {
+            continue;
+        }
+        if event.kind != "yield" {
+            return event;
+        }
+    }
+    panic!("typed resource operation did not settle");
 }
 fn text(event: SourceEvent) -> String {
     assert_eq!(event.kind, "value", "{event:?}");
@@ -257,11 +272,51 @@ fn unused_glob_helper_is_lazy_and_forcing_retains_explicit_obligation() {
         &["stable", "glob()"],
     );
     p.start_path(0, 0, None).unwrap();
-    assert_eq!(text(next(&mut p)), "7");
+    let stable = next_text(&mut p);
+    assert_eq!(stable.kind, "value");
+    assert_eq!(stable.value, Some("7".encode_utf16().collect()));
+    assert!(stable.glob.is_none());
     p.start_path(1, 0, None).unwrap();
-    let event = next(&mut p);
-    assert_eq!(event.kind, "error");
-    assert_eq!(event.reason, Some("runtime-capability"));
+    let selected = next_text(&mut p);
+    assert_eq!(selected.kind, "glob-request");
+    let descriptor = selected.glob.as_ref().unwrap();
+    assert_eq!(descriptor.kind, "select-resource");
+    assert_eq!(descriptor.reader_kind, "resource");
+    let reader = descriptor.reader_id.clone();
+    let token = selected.token.unwrap();
+    // A wrong-phase completion cannot consume the pending typed request.
+    assert!(
+        p.complete_glob_boolean(&token, "is-globbable", true, 0)
+            .is_err()
+    );
+    assert_eq!(next_text(&mut p).token, Some(token.clone()));
+    p.complete_glob_reader(&token, &reader, "file", "resource-test", 0)
+        .unwrap();
+    let capability = next_text(&mut p);
+    assert_eq!(capability.kind, "glob-request");
+    let descriptor = capability.glob.as_ref().unwrap();
+    assert_eq!(descriptor.kind, "is-globbable");
+    assert_eq!(descriptor.reader_id, reader);
+    assert_eq!(descriptor.reader_scheme, Some("file".into()));
+    assert_eq!(descriptor.reader_handle, Some("resource-test".into()));
+    p.complete_glob_boolean(
+        capability.token.as_deref().unwrap(),
+        "is-globbable",
+        true,
+        0,
+    )
+    .unwrap();
+    let hierarchical = next_text(&mut p);
+    assert_eq!(hierarchical.kind, "glob-request");
+    assert_eq!(hierarchical.glob.as_ref().unwrap().kind, "is-hierarchical");
+    assert_eq!(hierarchical.glob.as_ref().unwrap().reader_id, reader);
+    let token = hierarchical.token.unwrap();
+    assert_eq!(next_text(&mut p).token, Some(token.clone()));
+    // The Host obligation remains explicit until completed or closed, with no I/O here.
+    p.close();
+    assert_eq!(p.drain_cancelled_globs(), vec![token]);
+    assert!(p.drain_cancelled_globs().is_empty());
+    assert_eq!(p.collect().slots, 0);
 }
 
 #[test]

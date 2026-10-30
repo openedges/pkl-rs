@@ -132,14 +132,17 @@ pub enum ErrorKind {
 /// Detached source provenance for frames outside the primary module.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct RuntimeSource {
-    pub text: Arc<str>,
-    pub uri: Arc<str>,
-    pub module_name: Arc<str>,
+    pub text: crate::source::SourceText,
+    pub uri: PklString,
+    pub module_name: PklString,
 }
 
 /// A logical language frame, independent of Rust call-stack layout.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct RuntimeFrame {
+    /// Anonymous shared member root: render no module/member name, while retaining
+    /// the original source, module identity and authored span.
+    pub anonymous: bool,
     pub span: Span,
     pub member: PklString,
     /// None denotes the caller-provided module source at the public boundary.
@@ -178,7 +181,7 @@ pub struct RuntimeErrorDetails {
     pub(crate) hint_from_template: bool,
     /// The lexical module searched for a type can differ from its diagnostic
     /// source (for example an external expression uses the synthetic repl URI).
-    pub(crate) type_lookup_module: Option<Arc<str>>,
+    pub(crate) type_lookup_module: Option<PklString>,
     /// A typed Host SPI mapping produced an ordinary guest exception.
     pub(crate) host_language_exception: bool,
     /// Undefined() has no receiver; renderer paths belong only to undefined properties.

@@ -301,10 +301,12 @@ impl Vm {
                         .frames
                         .last()
                         .and_then(|frame| frame.force.as_ref())
-                        .map_or("", |force| force.name.as_ref());
+                        .map_or_else(PklString::default, |force| force.name.clone());
                     let mut error = RuntimeError::new(
                         ErrorKind::MissingMember,
-                        format!("Tried to read property `{name}` but its value is undefined."),
+                        PklString::from("Tried to read property `")
+                            .concat(&name)
+                            .concat(&"` but its value is undefined.".into()),
                     )
                     .undefined();
                     // DefaultPropertyBodyNode reports the property name after
@@ -350,10 +352,9 @@ impl Vm {
                     if declaration.abstract_ {
                         let mut error = RuntimeError::new(
                             ErrorKind::Type,
-                            format!(
-                                "Cannot instantiate abstract class `{}`.",
-                                self.heap.class_display_name(class)?
-                            ),
+                            PklString::from("Cannot instantiate abstract class `")
+                                .concat(&self.heap.class_display_name(class)?)
+                                .concat(&"`.".into()),
                         );
                         error.hint = Some("Abstract classes cannot be instantiated.\nInstead, instantiate a concrete subclass.".into());
                         return Err(error.at(source.span));
@@ -367,7 +368,9 @@ impl Vm {
                 }
                 return Err(RuntimeError::new(
                     ErrorKind::Type,
-                    format!("Cannot instantiate type `{}`.", source.text),
+                    PklString::from("Cannot instantiate type `")
+                        .concat(source.text.original())
+                        .concat(&"`.".into()),
                 ));
             }
             DefaultTask::Nullable => {
@@ -405,17 +408,19 @@ impl Vm {
                 {
                     let mut origin = default_origin.or_else(|| run.origin.clone());
                     if let (Some(origin), Some(caller)) = (&mut origin, &run.origin) {
-                        let caller_name = caller.member.as_str().unwrap_or("");
+                        let caller_name = crate::source::SourceText::from(&caller.member);
                         origin.member = caller_name
+                            .entire()
                             .strip_suffix(".default")
-                            .unwrap_or(caller_name)
-                            .into();
+                            .unwrap_or(caller_name.entire())
+                            .to_pkl_string();
                     }
                     let construction_origin = run.tasks.iter().rev().find_map(|task| {
                         let DefaultTask::Constructor(_, source, _) = task else {
                             return None;
                         };
                         origin.as_ref().map(|origin| RuntimeFrame {
+                            anonymous: origin.anonymous,
                             source: origin.source.clone(),
                             span: source.span,
                             member: origin.member.clone(),

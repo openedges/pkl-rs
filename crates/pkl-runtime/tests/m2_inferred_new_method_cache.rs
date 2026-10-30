@@ -37,7 +37,13 @@ fn matrix(uri: &str, source: &str, siblings: &[(&str, &str)], rows: &[(&str, &st
                             }))
                         }
                         ModuleRequestKind::LoadSource { resolved, .. } => {
-                            let name = resolved.source_uri.rsplit('/').next().unwrap();
+                            let name = resolved
+                                .source_uri
+                                .as_str()
+                                .expect("fixture URI must contain Unicode scalar values")
+                                .rsplit('/')
+                                .next()
+                                .unwrap();
                             let text = siblings
                                 .iter()
                                 .find(|(file, _)| *file == name)

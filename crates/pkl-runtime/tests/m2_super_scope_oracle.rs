@@ -43,7 +43,15 @@ fn check(id: &str, source: &str, base: Option<&str>, repeats: &[Expected<'_>; 2]
                         }))
                     }
                     ModuleRequestKind::LoadSource { resolved, .. } => {
-                        assert_eq!(resolved.original_uri.rsplit('/').next(), Some("base.pkl"));
+                        assert_eq!(
+                            resolved
+                                .original_uri
+                                .as_str()
+                                .expect("fixture URI must contain Unicode scalar values")
+                                .rsplit('/')
+                                .next(),
+                            Some("base.pkl")
+                        );
                         ModuleCompletion::Source(Ok(ModuleSource {
                             text: base.expect("authored base module").into(),
                             inferred_name: "base".into(),

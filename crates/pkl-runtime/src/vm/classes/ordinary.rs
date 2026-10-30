@@ -21,11 +21,14 @@ fn literal(
     let member = d.member(class, name, ty, vec![Instruction::Constant(value)], false);
     let declaration = d.metadata[member.code].declaration.unwrap();
     let start = declaration.end
-        + d.source.text[declaration.end..]
-            .find('=')
+        + d.source
+            .text
+            .entire()
+            .range(declaration.end..)
+            .find("=")
             .expect("initializer")
         + 2;
-    let end = start + d.source.text[start..].find('\n').unwrap();
+    let end = start + d.source.text.entire().range(start..).find("\n").unwrap();
     let span = Span::new(start, end);
     d.metadata[member.code].value_span = Some(span);
     d.metadata[member.code].spans[0] = Some(span);
@@ -39,7 +42,10 @@ fn extension(d: &mut Definitions<'_>, class: &str, value: &str) -> Member {
         .find(&format!("class {class} "))
         .expect("renderer class");
     let start = start
-        + d.source.text[start..]
+        + d.source
+            .text
+            .entire()
+            .range(start..)
             .find("extension =")
             .expect("extension");
     let literal_start = start + "extension = ".len();
@@ -84,7 +90,13 @@ fn yaml_mode(d: &Definitions<'_>) -> TypeCheck {
         .iter()
         .map(|literal| {
             let quoted = format!("\"{literal}\"");
-            let start = offset + d.source.text[offset..].find(&quoted).unwrap();
+            let start = offset
+                + d.source
+                    .text
+                    .entire()
+                    .range(offset..)
+                    .find(&quoted)
+                    .unwrap();
             offset = start + quoted.len();
             Span::new(start, offset)
         })
@@ -137,7 +149,7 @@ fn yaml_indent(d: &mut Definitions<'_>) -> TypeCheck {
             argument_sources: BTreeMap::new(),
             span,
             module_environment: false,
-            source: d.source.text[span.start..span.end].into(),
+            source: d.source.text.entire().range(span.start..span.end).into(),
         }],
     }
 }
@@ -145,7 +157,10 @@ fn yaml_indent(d: &mut Definitions<'_>) -> TypeCheck {
 fn regex_to_string(d: &mut Definitions<'_>) -> Member {
     let class = d.source.text.find("class RegexMatch {").unwrap();
     let start = class
-        + d.source.text[class..]
+        + d.source
+            .text
+            .entire()
+            .range(class..)
             .find("function toString(): String = value")
             .unwrap();
     let header_end = start + "function toString(): String".len();

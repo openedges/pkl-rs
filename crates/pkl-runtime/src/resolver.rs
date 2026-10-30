@@ -4,18 +4,22 @@
 //! An absent lexical declaration resolves to the current receiver, rather than
 //! searching enclosing objects dynamically. See Pkl 0.32 SymbolTable.resolveVariable.
 use crate::diagnostic::{Diagnostic, DiagnosticKind, DiagnosticOrigin};
-use crate::source::Span;
+use crate::source::{SourceSlice, SourceText, Span};
 use crate::syntax::{
     Expr, ExprKind, Member, Modifier, ModifierKind, Module, ModuleParentKind, ObjectMember,
     Parameter, Type, TypeKind, TypeParameter, modifier_flags,
 };
+use crate::value::PklString;
 use std::collections::BTreeMap;
 mod constant_keys;
 mod diagnostic_owner;
 
 // Nonlocal properties/classes/type aliases in the pinned stdlib/base.pkl,
 // following BaseModuleMembersGenerator. Base semantics are outside this prototype.
-fn is_base_property(name: &str) -> bool {
+fn is_base_property(name: &PklString) -> bool {
+    let Some(name) = name.as_str() else {
+        return false;
+    };
     matches!(
         name,
         "AlsoKnownAs"
@@ -95,7 +99,10 @@ fn is_base_property(name: &str) -> bool {
 }
 
 // Top-level nonlocal methods from the pinned stdlib/base.pkl.
-fn is_base_method(name: &str) -> bool {
+fn is_base_method(name: &PklString) -> bool {
+    let Some(name) = name.as_str() else {
+        return false;
+    };
     matches!(
         name,
         "Regex"
@@ -111,7 +118,10 @@ fn is_base_method(name: &str) -> bool {
     )
 }
 
-fn is_base_class(name: &str) -> bool {
+fn is_base_class(name: &PklString) -> bool {
+    let Some(name) = name.as_str() else {
+        return false;
+    };
     matches!(
         name,
         "Module"
@@ -216,7 +226,9 @@ pub enum Binding {
 pub(crate) enum AstPreparation {
     Import {
         clause: bool,
-        uri: String,
+        glob: bool,
+        node_span: Span,
+        uri: PklString,
         span: Span,
         member: crate::value::PklString,
     },
@@ -244,7 +256,7 @@ fn is_method(member: &Member) -> bool {
 
 enum Scope<'a> {
     Object(Vec<&'a Member>),
-    Let(&'a str),
+    Let(&'a PklString),
     Parameters(&'a [Parameter]),
     ObjectParameters(&'a [Parameter], bool),
     GeneratorParameters(&'a [Parameter]),
@@ -278,7 +290,7 @@ struct ConstScope {
 
 struct Resolver<'a> {
     function_owners: BTreeMap<Span, crate::value::PklString>,
-    source: &'a str,
+    source: SourceSlice<'a>,
     preparation: Vec<AstPreparation>,
     deferred_diagnostics: &'a [Diagnostic],
     evaluation_preparation: bool,
@@ -296,7 +308,7 @@ struct Resolver<'a> {
     receiver_is_lambda: bool,
     const_scopes: Vec<ConstScope>,
     entry_counts: BTreeMap<crate::value::PklString, usize>,
-    member_path: Vec<String>,
+    member_path: Vec<PklString>,
     diagnostic_path: Vec<crate::value::PklString>,
     diagnostic_owners: diagnostic_owner::OwnerScopes,
     diagnostic_owner_requested: bool,
@@ -358,7 +370,7 @@ enum Work<'a> {
     MembersNext {
         members: Vec<&'a Member>,
         index: usize,
-        seen: std::collections::BTreeSet<(&'a str, bool)>,
+        seen: std::collections::BTreeSet<(&'a PklString, bool)>,
         object: bool,
     },
     Member(&'a Member, bool),
@@ -370,7 +382,7 @@ enum Work<'a> {
     SpecializedBody {
         members: &'a [ObjectMember],
         index: usize,
-        seen: std::collections::BTreeSet<(&'a str, bool)>,
+        seen: std::collections::BTreeSet<(&'a PklString, bool)>,
     },
     ObjectMember(&'a ObjectMember, Option<Span>),
     ConstantEntries(&'a [ObjectMember]),
@@ -387,10 +399,14 @@ enum Work<'a> {
     EntryValue(&'a Expr, &'a Expr),
     PredicateValue(&'a Expr, &'a Expr),
     EndPredicate(crate::value::PklString),
-    ForHeader(&'a ObjectMember, usize, std::collections::BTreeSet<&'a str>),
+    ForHeader(
+        &'a ObjectMember,
+        usize,
+        std::collections::BTreeSet<&'a PklString>,
+    ),
     ForBody(&'a [Parameter], &'a [ObjectMember], Span),
     EndFor,
-    LetBody(&'a str, &'a Expr, bool),
+    LetBody(&'a PklString, &'a Expr, bool),
     EndLet(bool),
     ClassMembers(&'a [Member]),
     EndClass(ConstLevel),
@@ -405,7 +421,7 @@ enum Work<'a> {
 }
 
 impl<'a> Resolver<'a> {
-    fn binding(&self, name: &str, method: bool) -> Binding {
+    fn binding(&self, name: &PklString, method: bool) -> Binding {
         let mut owner_depth: isize = 0;
         let mut let_depth = 0;
         for scope in self.scopes.iter().rev() {
@@ -427,7 +443,7 @@ impl<'a> Resolver<'a> {
                         && name != "_"
                         && let Some(index) = parameters
                             .iter()
-                            .position(|parameter| parameter.name == name)
+                            .position(|parameter| &parameter.name == name)
                     {
                         return Binding::Lexical {
                             depth: let_depth + parameters.len() - 1 - index,
@@ -445,7 +461,7 @@ impl<'a> Resolver<'a> {
                 Scope::Object(members) => {
                     if let Some(member) = members
                         .iter()
-                        .find(|member| member.name == name && is_method(member) == method)
+                        .find(|member| &member.name == name && is_method(member) == method)
                     {
                         return if method {
                             Binding::Method {
@@ -453,7 +469,7 @@ impl<'a> Resolver<'a> {
                                 local: member.local,
                             }
                         } else if members.iter().any(|other| {
-                            other.name == name && !is_method(other) && other.local != member.local
+                            &other.name == name && !is_method(other) && other.local != member.local
                         }) {
                             Binding::AmbiguousProperty {
                                 owner_depth: owner_depth.max(0) as usize,
@@ -516,7 +532,9 @@ impl<'a> Resolver<'a> {
                         DiagnosticOrigin::Resolver,
                         DiagnosticKind::DuplicateMember,
                         header,
-                        format!("Duplicate definition of member `{}`.", member.name),
+                        PklString::from("Duplicate definition of member `")
+                            .concat(&member.name)
+                            .concat(&"`.".into()),
                     ));
                 }
             }
@@ -765,7 +783,7 @@ impl<'a> Resolver<'a> {
                                 member_header_span(member), format!("{label} needs a `local` modifier."))
                                 .with_hint(format!("To define a non-local {target}, extend rather than amend the parent module (which must be `open` for extension).")));
                         }
-                        if !seen.insert((member.name.as_str(), is_method(member))) {
+                        if !seen.insert((&member.name, is_method(member))) {
                             // The member visitor has exited; Java reports this
                             // duplicate from the enclosing declaration scope.
                             self.diagnostic_owner_requested = true;
@@ -773,7 +791,9 @@ impl<'a> Resolver<'a> {
                                 DiagnosticOrigin::Resolver,
                                 DiagnosticKind::DuplicateMember,
                                 member_header_span(member),
-                                format!("Duplicate definition of member `{}`.", member.name),
+                                PklString::from("Duplicate definition of member `")
+                                    .concat(&member.name)
+                                    .concat(&"`.".into()),
                             );
                             error.member = self
                                 .diagnostic_owners
@@ -796,7 +816,7 @@ impl<'a> Resolver<'a> {
                 Work::Member(member, object) => {
                     self.diagnostic_owners.enter_member(&member.name);
                     self.member_path.push(member.name.clone());
-                    self.diagnostic_path.push(member.name.clone().into());
+                    self.diagnostic_path.push(member.name.clone());
                     let previous = self.const_level;
                     if modifier_flags(&member.modifiers) & ModifierKind::Const.flag() != 0 {
                         self.const_level = ConstLevel::All;
@@ -837,7 +857,9 @@ impl<'a> Resolver<'a> {
                                     DiagnosticOrigin::Resolver,
                                     DiagnosticKind::DuplicateMember,
                                     parameter.span,
-                                    format!("Duplicate type parameter `{}`.", parameter.name),
+                                    PklString::from("Duplicate type parameter `")
+                                        .concat(&parameter.name)
+                                        .concat(&"`.".into()),
                                 );
                                 error.member = self
                                     .diagnostic_owners
@@ -967,7 +989,9 @@ impl<'a> Resolver<'a> {
                                     DiagnosticOrigin::Resolver,
                                     DiagnosticKind::DuplicateMember,
                                     member.name_span,
-                                    format!("Duplicate definition of member `{}`.", member.name),
+                                    PklString::from("Duplicate definition of member `")
+                                        .concat(&member.name)
+                                        .concat(&"`.".into()),
                                 );
                                 if self
                                     .scopes
@@ -1038,7 +1062,9 @@ impl<'a> Resolver<'a> {
                             DiagnosticOrigin::Resolver,
                             DiagnosticKind::DuplicateMember,
                             member.name_span,
-                            format!("Duplicate definition of member `{}`.", member.name),
+                            PklString::from("Duplicate definition of member `")
+                                .concat(&member.name)
+                                .concat(&"`.".into()),
                         );
                         error.member = self
                             .diagnostic_owners
@@ -1172,7 +1198,9 @@ impl<'a> Resolver<'a> {
                                     DiagnosticOrigin::Resolver,
                                     DiagnosticKind::DuplicateMember,
                                     parameter.span,
-                                    format!("Duplicate definition of member `{}`.", parameter.name),
+                                    PklString::from("Duplicate definition of member `")
+                                        .concat(&parameter.name)
+                                        .concat(&"`.".into()),
                                 );
                                 error.member = self
                                     .diagnostic_owners
@@ -1192,7 +1220,9 @@ impl<'a> Resolver<'a> {
                                 DiagnosticOrigin::Resolver,
                                 DiagnosticKind::DuplicateMember,
                                 parameter.span,
-                                format!("Duplicate definition of member `{}`.", parameter.name),
+                                PklString::from("Duplicate definition of member `")
+                                    .concat(&parameter.name)
+                                    .concat(&"`.".into()),
                             );
                             if !self.diagnostic_path.is_empty() {
                                 error.member = Some(
@@ -1305,10 +1335,9 @@ impl<'a> Resolver<'a> {
                             DiagnosticOrigin::Resolver,
                             DiagnosticKind::Syntax,
                             span,
-                            format!(
-                                "`{}` is not a valid supertype.",
-                                &self.source[span.start..span.end]
-                            ),
+                            PklString::from("`")
+                                .concat(&self.source.range(span.start..span.end).to_pkl_string())
+                                .concat(&"` is not a valid supertype.".into()),
                         );
                         error.member = self
                             .diagnostic_owners
@@ -1342,7 +1371,7 @@ impl<'a> Resolver<'a> {
                                 DiagnosticOrigin::Resolver,
                                 DiagnosticKind::Syntax,
                                 identifier_span,
-                                format!("Invalid type name `{}`.", &self.source[identifier_span.start..identifier_span.end]),
+                                PklString::from("Invalid type name `").concat(&self.source.range(identifier_span.start..identifier_span.end).to_pkl_string()).concat(&"`.".into()),
                             ).with_hint("A qualified type name consists of a module import name and a type name.\nExample: `importedModule.SomeClass`");
                         error.member = self.diagnostic_owners.name().map(Into::into);
                         return Err(error);
@@ -1408,9 +1437,16 @@ impl<'a> Resolver<'a> {
                     }
                 }
                 Work::Expression(expression, contextual_new) => match &expression.kind {
-                    ExprKind::Import { uri, uri_span, .. } => {
+                    ExprKind::Import {
+                        uri,
+                        uri_span,
+                        glob,
+                        ..
+                    } => {
                         self.preparation.push(AstPreparation::Import {
                             clause: false,
+                            glob: *glob,
+                            node_span: expression.span,
                             uri: uri.clone(),
                             span: *uri_span,
                             member: self.diagnostic_owners.name().unwrap_or_default(),
@@ -1459,16 +1495,18 @@ impl<'a> Resolver<'a> {
                                     // intrinsics on their ordinary lowering path.
                                     if !matches!(
                                         name.as_str(),
-                                        "List"
-                                            | "Set"
-                                            | "Map"
-                                            | "Bytes"
-                                            | "Pair"
-                                            | "IntSeq"
-                                            | "Regex"
-                                            | "Null"
-                                            | "TODO"
-                                            | "Undefined"
+                                        Some(
+                                            "List"
+                                                | "Set"
+                                                | "Map"
+                                                | "Bytes"
+                                                | "Pair"
+                                                | "IntSeq"
+                                                | "Regex"
+                                                | "Null"
+                                                | "TODO"
+                                                | "Undefined"
+                                        )
                                     ) {
                                         return Err(Diagnostic::unsupported(
                                             DiagnosticOrigin::Resolver,
@@ -1563,7 +1601,9 @@ impl<'a> Resolver<'a> {
                                     DiagnosticOrigin::Resolver,
                                     DiagnosticKind::DuplicateMember,
                                     parameter.span,
-                                    format!("Duplicate parameter `{}`.", parameter.name),
+                                    PklString::from("Duplicate parameter `")
+                                        .concat(&parameter.name)
+                                        .concat(&"`.".into()),
                                 ));
                             }
                         }
@@ -1655,7 +1695,9 @@ impl<'a> Resolver<'a> {
                                     DiagnosticOrigin::Resolver,
                                     DiagnosticKind::DuplicateMember,
                                     parameter.span,
-                                    format!("Duplicate type parameter `{}`.", parameter.name),
+                                    PklString::from("Duplicate type parameter `")
+                                        .concat(&parameter.name)
+                                        .concat(&"`.".into()),
                                 ));
                             }
                         }
@@ -1725,7 +1767,9 @@ impl<'a> Resolver<'a> {
             if keys[..index].iter().any(|(_, previous)| previous == value) {
                 let mut error = self.const_error(
                     key.unparenthesized(),
-                    format!("Duplicate definition of member `{}`.", value.render()),
+                    PklString::from("Duplicate definition of member `")
+                        .concat(&value.render())
+                        .concat(&"`.".into()),
                 );
                 let key = key.unparenthesized();
                 if let Some(span) = self.folded_integer_spans.get(&key.span) {
@@ -1788,7 +1832,9 @@ impl<'a> Resolver<'a> {
                     DiagnosticOrigin::Resolver,
                     DiagnosticKind::DuplicateMember,
                     parameter.span,
-                    format!("Duplicate type parameter `{}`.", parameter.name),
+                    PklString::from("Duplicate type parameter `")
+                        .concat(&parameter.name)
+                        .concat(&"`.".into()),
                 ));
             }
         }
@@ -1935,7 +1981,9 @@ impl<'a> Resolver<'a> {
                 DiagnosticOrigin::Resolver,
                 DiagnosticKind::Syntax,
                 *header_span,
-                format!("Method `{}` is missing a body.", member.name),
+                PklString::from("Method `")
+                    .concat(&member.name)
+                    .concat(&"` is missing a body.".into()),
             );
             error.member = Some(crate::value::PklString::join(&self.diagnostic_path, ".").into());
             return Err(error);
@@ -2072,7 +2120,7 @@ impl<'a> Resolver<'a> {
         Some((index, &self.const_scopes[index]))
     }
 
-    fn const_error(&self, expression: &Expr, message: impl Into<String>) -> Diagnostic {
+    fn const_error(&self, expression: &Expr, message: impl Into<PklString>) -> Diagnostic {
         let mut error = Diagnostic::language(
             DiagnosticOrigin::Resolver,
             DiagnosticKind::Syntax,
@@ -2095,7 +2143,9 @@ impl<'a> Resolver<'a> {
         match &expression.kind {
             ExprKind::Name(name) => {
                 let mut binding = self.binding(name, false);
-                if binding == Binding::ImplicitThis && matches!(name.as_str(), "NaN" | "Infinity") {
+                if binding == Binding::ImplicitThis
+                    && matches!(name.as_str(), Some("NaN" | "Infinity"))
+                {
                     binding = Binding::BaseConstant;
                 }
                 if binding == Binding::ImplicitThis && is_base_class(name) {
@@ -2104,21 +2154,23 @@ impl<'a> Resolver<'a> {
                 if binding == Binding::ImplicitThis
                     && matches!(
                         name.as_str(),
-                        "NonNull"
-                            | "Int8"
-                            | "Int16"
-                            | "Int32"
-                            | "UInt8"
-                            | "UInt16"
-                            | "UInt32"
-                            | "UInt"
-                            | "DataSizeUnit"
-                            | "DurationUnit"
-                            | "Charset"
-                            | "Comparable"
-                            | "Char"
-                            | "Uri"
-                            | "Mixin"
+                        Some(
+                            "NonNull"
+                                | "Int8"
+                                | "Int16"
+                                | "Int32"
+                                | "UInt8"
+                                | "UInt16"
+                                | "UInt32"
+                                | "UInt"
+                                | "DataSizeUnit"
+                                | "DurationUnit"
+                                | "Charset"
+                                | "Comparable"
+                                | "Char"
+                                | "Uri"
+                                | "Mixin"
+                        )
                     )
                 {
                     binding = Binding::BaseTypeAlias;
@@ -2155,12 +2207,13 @@ impl<'a> Resolver<'a> {
                     self.diagnostic_owner_requested = true;
                     let message = if let Some(owner) = self.module_const_owners.last() {
                         let article = if *owner == "annotation" { "an" } else { "a" };
-                        format!("Cannot reference `module` within {article} {owner} body.")
+                        PklString::from(format!(
+                            "Cannot reference `module` within {article} {owner} body."
+                        ))
                     } else {
-                        format!(
-                            "Cannot reference `module` from const property `{}`.",
-                            self.member_path.last().map(String::as_str).unwrap_or("")
-                        )
+                        PklString::from("Cannot reference `module` from const property `")
+                            .concat(&self.member_path.last().cloned().unwrap_or_default())
+                            .concat(&"`.".into())
                     };
                     return Err(self.const_error(expression, message));
                 }
@@ -2314,7 +2367,7 @@ fn resolve_module_inner(
         function_owners: BTreeMap::new(),
         preparation: Vec::new(),
         deferred_diagnostics: &module.deferred_diagnostics,
-        source: &module.source,
+        source: module.source.entire(),
         evaluation_preparation,
         standard_library,
         scopes: Vec::new(),
@@ -2364,11 +2417,19 @@ fn resolve_module_inner(
         if evaluation_preparation {
             let previous = resolver.enter_object(module.members.iter().collect());
             for member in module.members.iter().filter(|m| member_category(m) == 0) {
-                let ExprKind::Import { uri, uri_span, .. } = &member.expr.kind else {
+                let ExprKind::Import {
+                    uri,
+                    uri_span,
+                    glob,
+                    ..
+                } = &member.expr.kind
+                else {
                     unreachable!()
                 };
                 resolver.preparation.push(AstPreparation::Import {
                     clause: true,
+                    glob: *glob,
+                    node_span: member.expr.span,
                     uri: uri.clone(),
                     span: *uri_span,
                     member: Default::default(),
@@ -2383,6 +2444,8 @@ fn resolve_module_inner(
                 if let Some(parent) = &declaration.parent {
                     resolver.preparation.push(AstPreparation::Import {
                         clause: false,
+                        glob: false,
+                        node_span: parent.span,
                         uri: parent.uri.clone(),
                         span: parent.span,
                         member: Default::default(),
@@ -2399,12 +2462,14 @@ fn resolve_module_inner(
                 .collect();
             let mut seen = std::collections::BTreeSet::new();
             for member in module.members.iter().filter(|m| member_category(m) == 0) {
-                if !seen.insert((member.name.as_str(), false)) {
+                if !seen.insert((&member.name, false)) {
                     return Err(Diagnostic::language(
                         DiagnosticOrigin::Resolver,
                         DiagnosticKind::DuplicateMember,
                         member_header_span(member),
-                        format!("Duplicate definition of member `{}`.", member.name),
+                        PklString::from("Duplicate definition of member `")
+                            .concat(&member.name)
+                            .concat(&"`.".into()),
                     ));
                 }
             }
@@ -2439,7 +2504,7 @@ fn resolve_module_inner(
             .declaration
             .as_ref()
             .and_then(|d| d.name.as_ref())
-            .map(|name| name.join(".").into_boxed_str());
+            .map(|name| Box::new(PklString::join(name, ".")));
         error
     });
     let resolved = ResolvedModule {
@@ -2461,11 +2526,12 @@ fn resolve_module_inner(
 /// actual module is the runtime receiver, not this expression's lexical owner.
 /// Original local/import variables therefore stay invisible to the expression.
 /// Declared types are resolved separately through the actual runtime owner.
-pub(crate) fn resolve_session_expression(
+pub(crate) fn resolve_session_expression<'a>(
     _module: &Module,
-    text: &str,
+    text: impl Into<SourceSlice<'a>>,
     parsed: &crate::parser::ParsedExpression,
 ) -> Result<ResolvedModule, Diagnostic> {
+    let text = text.into();
     let mut resolver = Resolver {
         function_owners: BTreeMap::new(),
         preparation: Vec::new(),
@@ -2499,7 +2565,7 @@ pub(crate) fn resolve_session_expression(
         .map(|mut error| {
             // AstBuilder diagnostics use the synthetic ModuleInfo name. The
             // expression's runtime SimpleRootNode still has an empty name.
-            error.module_name = Some("repl:text".into());
+            error.module_name = Some(Box::new("repl:text".into()));
             error
         });
     Ok(ResolvedModule {
@@ -2510,7 +2576,7 @@ pub(crate) fn resolve_session_expression(
         preparation_failure,
         module: Module {
             deferred_diagnostics: Vec::new(),
-            source: text.into(),
+            source: SourceText::from(text.to_pkl_string()),
             declaration: None,
             members: Vec::new(),
             folded_integer_spans: parsed.folded_integer_spans.clone(),
@@ -2588,7 +2654,7 @@ mod tests {
             assert_eq!(error.message.to_java_utf8(), message);
             assert_eq!(deferred.message, error.message);
             assert_eq!(deferred.span, error.span);
-            assert_eq!(parsed.source.as_ref(), source);
+            assert_eq!(parsed.source.as_str(), Some(source));
         }
         let alias = parse_module("typealias Values<T> = List<T>").unwrap();
         assert!(resolve_module(&alias).is_ok());

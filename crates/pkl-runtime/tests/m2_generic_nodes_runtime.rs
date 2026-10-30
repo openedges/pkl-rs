@@ -9,6 +9,9 @@ use pkl_runtime::vm::{Vm, VmPoll, compile_module};
 fn finish(vm: &mut Vm) -> Result<Value, RuntimeError> {
     for _ in 0..1_000 {
         match vm.poll(100) {
+            pkl_runtime::vm::VmPoll::Glob(_) => {
+                panic!("unexpected glob request in non-glob regression")
+            }
             VmPoll::Ready(result) => return result,
             VmPoll::Yielded => {}
             VmPoll::Log(_) | VmPoll::TransformFrame(_) => panic!("unexpected logger request"),

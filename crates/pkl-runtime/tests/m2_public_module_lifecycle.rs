@@ -122,7 +122,7 @@ fn parse_failure_infers_selected_key_name_before_caching_the_diagnostic() {
                     }
                     ModuleRequestKind::QueryFragmentPaths { key } => {
                         names += 1;
-                        assert_eq!(key.uri.as_ref(), selected);
+                        assert_eq!(key.uri, selected);
                         ModuleCompletion::FragmentPaths(Ok(fragment_paths))
                     }
                     _ => return None,
@@ -192,12 +192,12 @@ fn primary_selection_runs_each_call_and_queries_have_fresh_keys_and_sites() {
                 ModuleRequestKind::Resolve { .. } => resolve(request, None),
                 ModuleRequestKind::CheckImport { importer, .. } => {
                     edges += 1;
-                    assert_eq!(importer.resolved_uri.as_ref(), "repl:text");
+                    assert_eq!(importer.resolved_uri, "repl:text");
                     return None;
                 }
                 ModuleRequestKind::LoadSource { resolved, .. } => {
                     ModuleCompletion::Source(Ok(ModuleSource {
-                        text: if resolved.original_uri.as_ref() == "memo:/main.pkl" {
+                        text: if resolved.original_uri == "memo:/main.pkl" {
                             primary_load += 1;
                             "stable=7\noutput { text=\"OUT\" }\n"
                         } else {
@@ -331,8 +331,8 @@ fn declaration_resolve_uri_override_runs_for_absolute_authored_imports() {
             } => resolve(request, Some("file:///canonical/main.pkl")),
             ModuleRequestKind::Resolve { .. } => resolve(request, None),
             ModuleRequestKind::ResolveImportUri { key, authored_uri } => {
-                assert_eq!(key.uri.as_ref(), "memo:/main.pkl");
-                assert_eq!(authored_uri.as_ref(), "file:///authored.pkl");
+                assert_eq!(key.uri, "memo:/main.pkl");
+                assert_eq!(authored_uri, "file:///authored.pkl");
                 overrides += 1;
                 ModuleCompletion::ImportUri(Ok("memo:/redirected.pkl".into()))
             }
@@ -340,13 +340,13 @@ fn declaration_resolve_uri_override_runs_for_absolute_authored_imports() {
                 importer,
                 import_uri,
             } => {
-                assert_eq!(importer.resolved_uri.as_ref(), "file:///canonical/main.pkl");
-                assert_eq!(import_uri.as_ref(), "memo:/redirected.pkl");
+                assert_eq!(importer.resolved_uri, "file:///canonical/main.pkl");
+                assert_eq!(import_uri, "memo:/redirected.pkl");
                 return None;
             }
             ModuleRequestKind::LoadSource { resolved, .. } => {
                 ModuleCompletion::Source(Ok(ModuleSource {
-                    text: if resolved.original_uri.as_ref() == "memo:/main.pkl" {
+                    text: if resolved.original_uri == "memo:/main.pkl" {
                         "function child()=import(\"file:///authored.pkl\")\n"
                     } else {
                         "tag=99\n"
@@ -608,7 +608,7 @@ fn supplied_wrapper_uses_selected_memo_uri_and_skips_delegate_overrides() {
                 ModuleRequestKind::SelectKey { id, uri, .. } => {
                     ModuleCompletion::KeySelected(Ok(ModuleKey {
                         id: *id,
-                        uri: if uri.as_ref() == "memo:/holder-request.pkl" {
+                        uri: if uri == "memo:/holder-request.pkl" {
                             "memo:/selected/holder.pkl".into()
                         } else {
                             uri.clone()
@@ -627,7 +627,11 @@ fn supplied_wrapper_uses_selected_memo_uri_and_skips_delegate_overrides() {
                 ModuleRequestKind::LoadSource { resolved, .. } => {
                     loads.push(resolved.original_uri.to_string());
                     ModuleCompletion::Source(Ok(ModuleSource {
-                        text: match resolved.original_uri.as_ref() {
+                        text: match resolved
+                            .original_uri
+                            .as_str()
+                            .expect("fixture URI must be scalar")
+                        {
                             "memo:/selected/child.pkl" => "tag=\"default-relative\"",
                             "memo:/authored-absolute.pkl" => "tag=\"default-absolute\"",
                             uri => panic!("wrong wrapper resolution {uri}"),

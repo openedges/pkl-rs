@@ -1,6 +1,16 @@
 # M2 language verification
 
-## Stage121 Pair and superclass diagnostics — current local results
+## Stage122 lossless source and runtime integration — current local results
+
+The shared engine adds authored UTF-16 source/URI handling, typed glob Host requests/completions, version/declaration/spread diagnostics, Resource digest defaults and 18 math external bindings. Bounded lossless session and string transport does not establish full typed value export or the public evaluator API.
+
+The exact 285-harness union records **1,779 passes, zero failures and five ignored**; all seven fresh checks06 commands exit zero. The original reflection harness completed with actual exit zero, while the original Cargo exit remains unobserved/inconclusive. The incomplete producer, failed observer, monitoring gap and original failed/interrupted targets remain preserved; no fresh full-workspace Cargo pass is claimed.
+
+The complete ready replay records **4,351 matches, 15 mismatches, 74 unsupported and two Java errors across 4,442 cases**, with **88/88 metamorphic checks** and no previous-pass regressions. Twelve original cases newly match, including Resource, math, selected invalid URI/glob diagnostics and fixed/version/spread errors. List's bounded native timeout remains a nonpass. The exact function-based strict gate stays at **1,768 overlapping conditions (472/472/824)**: all twelve newly matching ready cases still have empty requirement links, and implementation/test-mapping states have not changed. The 4,545 contracts, 475 requirements, 71 unimplemented and 32 unmapped execution contracts remain required.
+
+Actual M1 records 6,078 raw matches per target and 92 scenarios each for Node/browser. Native transport has 20 runtime and four compiler-qualified counterparts. N-API retains 740 ordinary / 744 callback matches over 186 sessions and freshly matches 524/576 glob sessions, preserving the same 52 nonmatching cases and repairing four adapter regressions. The independently verified Chromium union of 701 reused and 63 new processes records the same 740 ordinary / 744 callback / 524 glob matches and 52 known glob nonmatches. The full three-target transport-19 raw comparison passes. Ten large Chromium cases use a separate 3 GiB sampled owned-process RSS cap; other processes retain 2 GiB and the original cap failure remains recorded. See the [Stage122 report](../reports/m2/stage122-lossless-source-runtime/README.md) for source epochs, exact raw receipts, unresolved API/internal fields and verified archive publication. None of these bounded results closes the nine M2 work areas, full API, release OS or performance gates.
+
+## Stage121 Pair and superclass diagnostics — previous local results
 
 The shared runtime corrects Pair's Any inheritance boundary, inherited native
 Any arity frames and deferred invalid-superclass labels/spans. Fresh local

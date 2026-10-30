@@ -1,4 +1,5 @@
 //! Explicitly experimental M1 adapter entry points, not the final public Pkl API.
+use crate::source::SourceText;
 use crate::{
     host::{HostPoll, HostSession},
     value::{ErrorKind, PklString, RuntimeError, Value},
@@ -42,15 +43,28 @@ pub fn identity(value: Value) -> Result<Value, RuntimeError> {
     finish(&mut vm)
 }
 
-pub fn evaluate_member(source: &str, member: &str) -> Result<Value, String> {
-    let syntax = crate::parser::parse_module(source).map_err(|e| e.to_string())?;
-    let resolved = crate::resolver::resolve_module(&syntax).map_err(|e| e.to_string())?;
-    let mut program = crate::vm::compile_module(&resolved).map_err(|e| e.to_string())?;
+/// Legacy diagnostic byte boundary: Java UTF8 encoding is explicit here.
+pub fn evaluate_member(
+    source: impl Into<SourceText>,
+    member: impl Into<PklString>,
+) -> Result<Value, String> {
+    evaluate_member_text(source, member).map_err(|text| text.to_java_utf8())
+}
+
+/// Keep complete diagnostic units for JavaScript and native text callers.
+pub fn evaluate_member_text(
+    source: impl Into<SourceText>,
+    member: impl Into<PklString>,
+) -> Result<Value, PklString> {
+    let source = source.into();
+    let syntax = crate::parser::parse_module(&source).map_err(|e| e.message)?;
+    let resolved = crate::resolver::resolve_module(&syntax).map_err(|e| e.message)?;
+    let mut program = crate::vm::compile_module(&resolved).map_err(|e| e.message)?;
     let module_name = program.module_name.clone();
     Arc::make_mut(&mut program)
         .register_primary_source(
             Arc::new(crate::value::RuntimeSource {
-                text: source.into(),
+                text: source,
                 uri: "repl:text".into(),
                 module_name,
             }),
@@ -59,15 +73,15 @@ pub fn evaluate_member(source: &str, member: &str) -> Result<Value, String> {
                 resolved_uri: "repl:text".into(),
             },
         )
-        .map_err(|e| e.to_string())?;
+        .map_err(|e| e.message)?;
     let entry = program.entry;
     let mut vm = Vm::new(program);
-    vm.start(entry, vec![]).map_err(|e| e.to_string())?;
+    vm.start(entry, vec![]).map_err(|e| e.message)?;
     let object = finish(&mut vm)
         .and_then(|v| v.as_object())
-        .map_err(|e| e.to_string())?;
-    vm.start_member(object, member).map_err(|e| e.to_string())?;
-    let value = finish(&mut vm).map_err(|e| e.to_string())?;
+        .map_err(|e| e.message)?;
+    vm.start_member(object, member).map_err(|e| e.message)?;
+    let value = finish(&mut vm).map_err(|e| e.message)?;
     if matches!(
         value,
         Value::Object(_) | Value::Function(_) | Value::Class(_) | Value::TypeAlias(_)
@@ -93,6 +107,10 @@ fn finish(vm: &mut Vm) -> Result<Value, RuntimeError> {
                     .ok_or_else(|| unsupported("use HostSession for asynchronous evaluation"))?;
                 vm.complete_module(request.id, completion)?;
             }
+            VmPoll::Glob(request) => vm.complete_glob(
+                request.id,
+                crate::glob::configured_or_unsupported_completion(&request, &[], &[]),
+            )?,
             VmPoll::Pending(_) | VmPoll::Log(_) | VmPoll::TransformFrame(_) => {
                 return Err(unsupported("use HostSession for asynchronous evaluation"));
             }
@@ -175,11 +193,17 @@ impl HostProbe {
     pub fn poll(&mut self, now: u32, budget: u32) -> String {
         match self.session.poll(now.into(), budget as usize) {
             HostPoll::Yielded => "yield".into(),
-            HostPoll::Read { token, uri } => format!("read\t{token}\t{}", hex(uri.as_bytes())),
+            HostPoll::Read { token, uri } => format!(
+                "read\t{token}\t{}",
+                hex(uri
+                    .as_str()
+                    .expect("fixed-bytecode probe URI is scalar")
+                    .as_bytes())
+            ),
             HostPoll::Log { .. } | HostPoll::TransformFrame { .. } => {
                 unreachable!("fixed-bytecode Host probe has no trace instructions")
             }
-            HostPoll::Module { .. } => {
+            HostPoll::Module { .. } | HostPoll::Glob { .. } => {
                 unreachable!("fixed-bytecode Host probe has no module instructions")
             }
             HostPoll::Ready(Ok(v)) => format!("ready\t{}", encode_value(v)),
@@ -311,8 +335,6 @@ pub struct SourceEvent {
     pub callback_origin: Option<&'static str>,
 }
 
-/// Module URIs are validated UTF-8 identities. The decimal request ID avoids
-/// narrowing the shared u64 counter through a JavaScript Number.
 #[derive(Clone, Debug, Default)]
 pub struct SourceModuleRequest {
     pub id: String,
@@ -331,7 +353,207 @@ pub struct SourceModuleRequest {
     pub selection_phase: Option<&'static str>,
     pub resolution_phase: Option<&'static str>,
 }
-impl From<crate::modules::ModuleRequest> for SourceModuleRequest {
+
+/// Scalar native conveniences retain their established field types. Lossless
+/// callers and JavaScript adapters use SourceTextEvent / poll_text instead.
+fn scalar_probe_text(value: PklString) -> Result<String, RuntimeError> {
+    value.as_str().map(str::to_owned).ok_or_else(|| unsupported(
+        "This scalar String API cannot represent unpaired UTF-16; use its lossless text counterpart.",
+    ))
+}
+/// Codec-only observation through the production request conversion. This
+/// does not validate URI acceptance or establish Java evaluator parity.
+pub fn glob_transport_records(elements: Vec<crate::glob::PathElement>) -> Vec<SourceTextEvent> {
+    use crate::glob::{GlobReader, GlobRequest, GlobRequestKind, ResourceReader, ResourceReaderId};
+    elements
+        .into_iter()
+        .enumerate()
+        .map(|(index, element)| {
+            let request = GlobRequest {
+                id: u64::MAX,
+                kind: GlobRequestKind::ListElements {
+                    reader: GlobReader::Resource(ResourceReader {
+                        id: ResourceReaderId(9_007_199_254_740_993),
+                        scheme: "codec".into(),
+                        handle: "codec-reader".into(),
+                    }),
+                    uri: "codec:**".into(),
+                },
+            };
+            SourceTextEvent {
+                kind: "glob-request",
+                token: Some(format!("codec:{index}")),
+                glob: Some(request.into()),
+                value: Some(element.name.encode_utf16().collect()),
+                reason: Some(if element.is_directory {
+                    "directory"
+                } else {
+                    "file"
+                }),
+                ..Default::default()
+            }
+        })
+        .collect()
+}
+
+impl TryFrom<SourceTextModuleRequest> for SourceModuleRequest {
+    type Error = RuntimeError;
+    fn try_from(r: SourceTextModuleRequest) -> Result<Self, Self::Error> {
+        Ok(Self {
+            id: r.id,
+            kind: r.kind,
+            importer_original_uri: r.importer_original_uri.map(scalar_probe_text).transpose()?,
+            importer_resolved_uri: r.importer_resolved_uri.map(scalar_probe_text).transpose()?,
+            import_uri: r.import_uri.map(scalar_probe_text).transpose()?,
+            original_uri: scalar_probe_text(r.original_uri)?,
+            resolved_uri: r.resolved_uri.map(scalar_probe_text).transpose()?,
+            source_uri: r.source_uri.map(scalar_probe_text).transpose()?,
+            key_id: r.key_id,
+            key_kind: r.key_kind,
+            key_handle: r.key_handle.map(scalar_probe_text).transpose()?,
+            resolved_key_id: r.resolved_key_id,
+            resolved_key_handle: r.resolved_key_handle.map(scalar_probe_text).transpose()?,
+            selection_phase: r.selection_phase,
+            resolution_phase: r.resolution_phase,
+        })
+    }
+}
+impl TryFrom<SourceTextEvent> for SourceEvent {
+    type Error = RuntimeError;
+    fn try_from(e: SourceTextEvent) -> Result<Self, Self::Error> {
+        if e.glob.is_some() {
+            return Err(unsupported(
+                "Typed glob events require the lossless poll_text API.",
+            ));
+        }
+        Ok(Self {
+            kind: e.kind,
+            token: e.token,
+            uri: e.uri.map(scalar_probe_text).transpose()?,
+            value: e.value,
+            bytes: e.bytes,
+            error: e.error,
+            error_bytes: e.error_bytes,
+            log: e.log,
+            frame: e.frame,
+            module: e.module.map(SourceModuleRequest::try_from).transpose()?,
+            exit_code: e.exit_code,
+            phase: e.phase,
+            disposition: e.disposition,
+            reason: e.reason,
+            callback_origin: e.callback_origin,
+        })
+    }
+}
+
+#[derive(Clone, Debug, Default)]
+pub struct SourceTextEvent {
+    pub kind: &'static str,
+    pub token: Option<String>,
+    pub uri: Option<PklString>,
+    pub value: Option<Vec<u16>>,
+    pub bytes: Option<Vec<u8>>,
+    pub error: Option<Vec<u16>>,
+    pub error_bytes: Option<Vec<u8>>,
+    pub log: Option<SourceLog>,
+    pub frame: Option<SourceFrame>,
+    pub module: Option<SourceTextModuleRequest>,
+    pub glob: Option<SourceGlobRequest>,
+    pub exit_code: Option<i32>,
+    pub phase: Option<&'static str>,
+    pub disposition: Option<&'static str>,
+    pub reason: Option<&'static str>,
+    pub callback_origin: Option<&'static str>,
+}
+
+/// Lossless decimal identities for typed reader effects; path names arrive only
+/// in completion payloads and retain their UTF-16 units.
+#[derive(Clone, Debug, Default)]
+pub struct SourceGlobRequest {
+    pub id: String,
+    pub kind: &'static str,
+    pub uri: Option<PklString>,
+    pub reader_kind: &'static str,
+    pub reader_id: String,
+    pub reader_uri: Option<PklString>,
+    pub reader_scheme: Option<PklString>,
+    pub reader_handle: Option<PklString>,
+    pub key_kind: Option<&'static str>,
+}
+impl From<crate::glob::GlobRequest> for SourceGlobRequest {
+    fn from(request: crate::glob::GlobRequest) -> Self {
+        use crate::glob::{GlobReader, GlobRequestKind};
+        let (kind, reader, uri) = match &request.kind {
+            GlobRequestKind::SelectResource { id, uri } => {
+                return Self {
+                    id: request.id.to_string(),
+                    kind: "select-resource",
+                    uri: Some(uri.clone()),
+                    reader_kind: "resource",
+                    reader_id: id.0.to_string(),
+                    ..Default::default()
+                };
+            }
+            GlobRequestKind::IsGlobbable { reader } => ("is-globbable", reader.clone(), None),
+            GlobRequestKind::IsHierarchical { reader } => ("is-hierarchical", reader.clone(), None),
+            GlobRequestKind::FragmentPaths { reader } => {
+                ("fragment-paths", GlobReader::Resource(reader.clone()), None)
+            }
+            GlobRequestKind::HasElement { reader, uri } => (
+                "has-element",
+                GlobReader::Resource(reader.clone()),
+                Some(uri.clone()),
+            ),
+            GlobRequestKind::ListElements { reader, uri } => {
+                ("list-elements", reader.clone(), Some(uri.clone()))
+            }
+        };
+        let mut result = Self {
+            id: request.id.to_string(),
+            kind,
+            uri,
+            ..Default::default()
+        };
+        match reader {
+            GlobReader::Module(key) => {
+                result.reader_kind = "module";
+                result.reader_id = key.id.0.to_string();
+                result.reader_uri = Some(key.uri.clone());
+                result.reader_handle = Some(key.handle.clone());
+                result.key_kind = Some(key_kind_name(key.kind));
+            }
+            GlobReader::Resource(reader) => {
+                result.reader_kind = "resource";
+                result.reader_id = reader.id.0.to_string();
+                result.reader_scheme = Some(reader.scheme.clone());
+                result.reader_handle = Some(reader.handle.clone());
+            }
+        }
+        result
+    }
+}
+
+/// Module URI and opaque handle fields retain all UTF-16 units. Decimal IDs avoid
+/// narrowing the shared u64 counter through a JavaScript Number.
+#[derive(Clone, Debug, Default)]
+pub struct SourceTextModuleRequest {
+    pub id: String,
+    pub kind: &'static str,
+    pub importer_original_uri: Option<PklString>,
+    pub importer_resolved_uri: Option<PklString>,
+    pub import_uri: Option<PklString>,
+    pub original_uri: PklString,
+    pub resolved_uri: Option<PklString>,
+    pub source_uri: Option<PklString>,
+    pub key_id: Option<String>,
+    pub key_kind: Option<&'static str>,
+    pub key_handle: Option<PklString>,
+    pub resolved_key_id: Option<String>,
+    pub resolved_key_handle: Option<PklString>,
+    pub selection_phase: Option<&'static str>,
+    pub resolution_phase: Option<&'static str>,
+}
+impl From<crate::modules::ModuleRequest> for SourceTextModuleRequest {
     fn from(request: crate::modules::ModuleRequest) -> Self {
         use crate::modules::ModuleRequestKind;
         match request.kind {
@@ -341,12 +563,12 @@ impl From<crate::modules::ModuleRequest> for SourceModuleRequest {
             } => Self {
                 id: request.id.to_string(),
                 kind: "check-import",
-                importer_original_uri: Some(importer.original_uri.to_string()),
-                importer_resolved_uri: Some(importer.resolved_uri.to_string()),
-                import_uri: Some(import_uri.to_string()),
+                importer_original_uri: Some(importer.original_uri.clone()),
+                importer_resolved_uri: Some(importer.resolved_uri.clone()),
+                import_uri: Some(import_uri.clone()),
                 // No ModuleKey has been selected yet. Keep the transport's
                 // required target field equal to the prepared edge URI.
-                original_uri: import_uri.to_string(),
+                original_uri: import_uri.clone(),
                 resolved_uri: None,
                 source_uri: None,
                 ..Default::default()
@@ -354,7 +576,7 @@ impl From<crate::modules::ModuleRequest> for SourceModuleRequest {
             ModuleRequestKind::SelectKey { id, uri, phase } => Self {
                 id: request.id.to_string(),
                 kind: "select-key",
-                original_uri: uri.to_string(),
+                original_uri: uri.clone(),
                 key_id: Some(id.0.to_string()),
                 selection_phase: Some(match phase {
                     crate::modules::SelectionPhase::RuntimeImport => "runtime-import",
@@ -366,29 +588,29 @@ impl From<crate::modules::ModuleRequest> for SourceModuleRequest {
             ModuleRequestKind::ResolveImportUri { key, authored_uri } => Self {
                 id: request.id.to_string(),
                 kind: "resolve-import-uri",
-                original_uri: key.uri.to_string(),
-                import_uri: Some(authored_uri.to_string()),
+                original_uri: key.uri.clone(),
+                import_uri: Some(authored_uri.clone()),
                 key_id: Some(key.id.0.to_string()),
                 key_kind: Some(key_kind_name(key.kind)),
-                key_handle: Some(key.handle.to_string()),
+                key_handle: Some(key.handle.clone()),
                 ..Default::default()
             },
             ModuleRequestKind::QueryFragmentPaths { key } => Self {
                 id: request.id.to_string(),
                 kind: "query-fragment-paths",
-                original_uri: key.uri.to_string(),
+                original_uri: key.uri.clone(),
                 key_id: Some(key.id.0.to_string()),
                 key_kind: Some(key_kind_name(key.kind)),
-                key_handle: Some(key.handle.to_string()),
+                key_handle: Some(key.handle.clone()),
                 ..Default::default()
             },
             ModuleRequestKind::QueryCachePolicy { key } => Self {
                 id: request.id.to_string(),
                 kind: "query-cache-policy",
-                original_uri: key.uri.to_string(),
+                original_uri: key.uri.clone(),
                 key_id: Some(key.id.0.to_string()),
                 key_kind: Some(key_kind_name(key.kind)),
-                key_handle: Some(key.handle.to_string()),
+                key_handle: Some(key.handle.clone()),
                 ..Default::default()
             },
             ModuleRequestKind::Capabilities { module, key } => Self {
@@ -396,11 +618,11 @@ impl From<crate::modules::ModuleRequest> for SourceModuleRequest {
                 kind: "capabilities",
                 key_id: key.as_ref().map(|key| key.id.0.to_string()),
                 key_kind: key.as_ref().map(|key| key_kind_name(key.kind)),
-                key_handle: key.as_ref().map(|key| key.handle.to_string()),
-                importer_original_uri: Some(module.original_uri.to_string()),
-                importer_resolved_uri: Some(module.resolved_uri.to_string()),
+                key_handle: key.as_ref().map(|key| key.handle.clone()),
+                importer_original_uri: Some(module.original_uri.clone()),
+                importer_resolved_uri: Some(module.resolved_uri.clone()),
                 import_uri: None,
-                original_uri: module.original_uri.to_string(),
+                original_uri: module.original_uri.clone(),
                 resolved_uri: None,
                 source_uri: None,
                 ..Default::default()
@@ -414,11 +636,11 @@ impl From<crate::modules::ModuleRequest> for SourceModuleRequest {
                 kind: "has-element",
                 key_id: key.as_ref().map(|key| key.id.0.to_string()),
                 key_kind: key.as_ref().map(|key| key_kind_name(key.kind)),
-                key_handle: key.as_ref().map(|key| key.handle.to_string()),
-                importer_original_uri: Some(module.original_uri.to_string()),
-                importer_resolved_uri: Some(module.resolved_uri.to_string()),
+                key_handle: key.as_ref().map(|key| key.handle.clone()),
+                importer_original_uri: Some(module.original_uri.clone()),
+                importer_resolved_uri: Some(module.resolved_uri.clone()),
                 import_uri: None,
-                original_uri: element_uri.to_string(),
+                original_uri: element_uri.clone(),
                 resolved_uri: None,
                 source_uri: None,
                 ..Default::default()
@@ -434,12 +656,12 @@ impl From<crate::modules::ModuleRequest> for SourceModuleRequest {
                 kind: "resolve",
                 key_id: Some(key.id.0.to_string()),
                 key_kind: Some(key_kind_name(key.kind)),
-                key_handle: Some(key.handle.to_string()),
+                key_handle: Some(key.handle.clone()),
                 resolved_key_id: Some(resolved_key_id.0.to_string()),
-                importer_original_uri: Some(importer.original_uri.to_string()),
-                importer_resolved_uri: Some(importer.resolved_uri.to_string()),
-                import_uri: Some(import_uri.to_string()),
-                original_uri: original_uri.to_string(),
+                importer_original_uri: Some(importer.original_uri.clone()),
+                importer_resolved_uri: Some(importer.resolved_uri.clone()),
+                import_uri: Some(import_uri.clone()),
+                original_uri: original_uri.clone(),
                 resolved_uri: None,
                 source_uri: None,
                 ..Default::default()
@@ -451,10 +673,10 @@ impl From<crate::modules::ModuleRequest> for SourceModuleRequest {
             } => Self {
                 id: request.id.to_string(),
                 kind: "resolve-key",
-                original_uri: key.uri.to_string(),
+                original_uri: key.uri.clone(),
                 key_id: Some(key.id.0.to_string()),
                 key_kind: Some(key_kind_name(key.kind)),
-                key_handle: Some(key.handle.to_string()),
+                key_handle: Some(key.handle.clone()),
                 resolved_key_id: Some(resolved_key_id.0.to_string()),
                 resolution_phase: Some(match phase {
                     crate::modules::ResolutionPhase::Primary => "primary",
@@ -468,14 +690,14 @@ impl From<crate::modules::ModuleRequest> for SourceModuleRequest {
                 importer_original_uri: None,
                 importer_resolved_uri: None,
                 import_uri: None,
-                original_uri: resolved.original_uri.to_string(),
-                resolved_uri: Some(resolved.resolved_uri.to_string()),
-                source_uri: Some(resolved.source_uri.to_string()),
+                original_uri: resolved.original_uri.clone(),
+                resolved_uri: Some(resolved.resolved_uri.clone()),
+                source_uri: Some(resolved.source_uri.clone()),
                 key_id: Some(key.key.id.0.to_string()),
                 key_kind: Some(key_kind_name(key.key.kind)),
-                key_handle: Some(key.key.handle.to_string()),
+                key_handle: Some(key.key.handle.clone()),
                 resolved_key_id: Some(key.id.0.to_string()),
-                resolved_key_handle: Some(key.handle.to_string()),
+                resolved_key_handle: Some(key.handle.clone()),
                 ..Default::default()
             },
         }
@@ -491,7 +713,7 @@ fn key_kind_name(kind: crate::modules::ModuleKeyKind) -> &'static str {
     }
 }
 
-impl SourceEvent {
+impl SourceTextEvent {
     fn new(kind: &'static str) -> Self {
         Self {
             kind,
@@ -504,6 +726,7 @@ impl SourceEvent {
             log: None,
             frame: None,
             module: None,
+            glob: None,
             exit_code: None,
             phase: None,
             disposition: None,
@@ -523,6 +746,21 @@ pub struct SourceProbe {
     environment: Vec<(String, String)>,
 }
 impl SourceProbe {
+    /// Development custom-Host helper. URI semantics are exactly the same
+    /// production operations used by glob traversal; this performs no I/O and
+    /// does not manufacture Java SPI callback observations.
+    pub fn resolve_glob_host_uri(
+        base: &PklString,
+        relative: &PklString,
+        fragment_paths: bool,
+    ) -> Result<PklString, RuntimeError> {
+        crate::host::resources::glob::resolve(base, relative, fragment_paths)
+    }
+    /// A Host's resolved key may normalize its own URI while retaining the
+    /// original key identity. Raw mapping keys remain evaluator-owned.
+    pub fn normalize_glob_host_uri(uri: &PklString) -> Result<PklString, RuntimeError> {
+        crate::host::resources::glob::normalize(uri)
+    }
     pub fn new_module_evaluator(
         trace_mode: &str,
         host_logger: bool,
@@ -544,18 +782,35 @@ impl SourceProbe {
             environment: Vec::new(),
         })
     }
+    /// Existing scalar source convenience; no UTF-16 conversion is performed.
     pub fn evaluate_module_source(
         &mut self,
-        uri: &str,
+        uri: impl Into<PklString>,
         contents: Option<&str>,
-        expression: &str,
+        expression: impl Into<SourceText>,
+        now: u32,
+        timeout: Option<u32>,
+    ) -> Result<(), RuntimeError> {
+        self.evaluate_module_source_text(
+            uri,
+            contents.map(SourceText::from),
+            expression,
+            now,
+            timeout,
+        )
+    }
+    pub fn evaluate_module_source_text(
+        &mut self,
+        uri: impl Into<PklString>,
+        contents: Option<SourceText>,
+        expression: impl Into<SourceText>,
         now: u32,
         timeout: Option<u32>,
     ) -> Result<(), RuntimeError> {
         self.session.start_evaluation(
             crate::modules::ModuleSourceSpec {
                 uri: uri.into(),
-                contents: contents.map(Into::into),
+                contents,
             },
             expression,
             now.into(),
@@ -563,12 +818,32 @@ impl SourceProbe {
         )
     }
     #[allow(clippy::too_many_arguments)]
+    /// Existing scalar reentry convenience; use _text for retained code units.
     pub fn reenter_module_source(
         &mut self,
         token: &str,
-        uri: &str,
+        uri: impl Into<PklString>,
         contents: Option<&str>,
-        expression: &str,
+        expression: impl Into<SourceText>,
+        now: u32,
+        timeout: Option<u32>,
+    ) -> Result<(), RuntimeError> {
+        self.reenter_module_source_text(
+            token,
+            uri,
+            contents.map(SourceText::from),
+            expression,
+            now,
+            timeout,
+        )
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn reenter_module_source_text(
+        &mut self,
+        token: &str,
+        uri: impl Into<PklString>,
+        contents: Option<SourceText>,
+        expression: impl Into<SourceText>,
         now: u32,
         timeout: Option<u32>,
     ) -> Result<(), RuntimeError> {
@@ -576,7 +851,7 @@ impl SourceProbe {
             token,
             crate::modules::ModuleSourceSpec {
                 uri: uri.into(),
-                contents: contents.map(Into::into),
+                contents,
             },
             expression,
             now.into(),
@@ -609,9 +884,9 @@ impl SourceProbe {
     }
     #[allow(clippy::too_many_arguments)]
     pub fn new_text(
-        source: &str,
-        uri: &str,
-        module_name: &str,
+        source: impl Into<SourceText>,
+        uri: impl Into<PklString>,
+        module_name: impl Into<PklString>,
         paths: &[String],
         trace_mode: &str,
         host_logger: bool,
@@ -662,9 +937,9 @@ impl SourceProbe {
     }
     #[allow(clippy::too_many_arguments)]
     pub fn new_expressions_text(
-        source: &str,
-        uri: &str,
-        module_name: &str,
+        source: impl Into<SourceText>,
+        uri: impl Into<PklString>,
+        module_name: impl Into<PklString>,
         expressions: &[String],
         trace_mode: &str,
         host_logger: bool,
@@ -673,6 +948,36 @@ impl SourceProbe {
     ) -> Result<Self, PklString> {
         Ok(Self {
             session: crate::evaluation::session::SourceSession::compile_expressions_text(
+                source,
+                uri,
+                module_name,
+                expressions,
+                Self::options(
+                    trace_mode,
+                    host_logger,
+                    host_frame_transformer,
+                    power_assertions,
+                )
+                .map_err(PklString::from)?,
+            )?,
+            output: false,
+            properties: Vec::new(),
+            environment: Vec::new(),
+        })
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn new_expressions_source(
+        source: impl Into<SourceText>,
+        uri: impl Into<PklString>,
+        module_name: impl Into<PklString>,
+        expressions: &[SourceText],
+        trace_mode: &str,
+        host_logger: bool,
+        host_frame_transformer: bool,
+        power_assertions: bool,
+    ) -> Result<Self, PklString> {
+        Ok(Self {
+            session: crate::evaluation::session::SourceSession::compile_expressions_source(
                 source,
                 uri,
                 module_name,
@@ -717,7 +1022,7 @@ impl SourceProbe {
         })
     }
     pub fn new_output(
-        input: crate::evaluation::frontend::ModuleSourceInput<'_>,
+        input: impl Into<crate::evaluation::frontend::LosslessModuleSourceInput>,
         paths: &[String],
         module_options: &crate::evaluation::frontend::ModuleEvalOptions,
         session_options: crate::evaluation::session::SourceSessionOptions,
@@ -725,7 +1030,7 @@ impl SourceProbe {
         Self::new_output_text(input, paths, module_options, session_options).map_err(Into::into)
     }
     pub fn new_output_text(
-        input: crate::evaluation::frontend::ModuleSourceInput<'_>,
+        input: impl Into<crate::evaluation::frontend::LosslessModuleSourceInput>,
         paths: &[String],
         module_options: &crate::evaluation::frontend::ModuleEvalOptions,
         session_options: crate::evaluation::session::SourceSessionOptions,
@@ -785,31 +1090,42 @@ impl SourceProbe {
         self.session
             .reenter_path(token, index as usize, now.into(), timeout.map(Into::into))
     }
+    /// Scalar native transport retained for existing callers.
     pub fn poll(&mut self, now: u32, budget: u32) -> Result<SourceEvent, RuntimeError> {
+        SourceEvent::try_from(self.poll_text(now, budget)?)
+    }
+    /// Complete UTF-16 identities for native and JavaScript Host callbacks.
+    pub fn poll_text(&mut self, now: u32, budget: u32) -> Result<SourceTextEvent, RuntimeError> {
         use crate::logging::LogLevel;
         let previous_depth = self.session.context_depth();
         let event = match self.session.poll(now.into(), budget as usize) {
-            HostPoll::Yielded => SourceEvent::new("yield"),
+            HostPoll::Yielded => SourceTextEvent::new("yield"),
             HostPoll::Read { token, uri } => {
-                let mut event = SourceEvent::new("read");
+                let mut event = SourceTextEvent::new("read");
                 event.token = Some(token);
-                event.uri = Some(uri.to_string());
+                event.uri = Some(uri.clone());
+                event
+            }
+            HostPoll::Glob { token, request } => {
+                let mut event = SourceTextEvent::new("glob-request");
+                event.token = Some(token);
+                event.glob = Some(request.into());
                 event
             }
             HostPoll::Module { token, request } => {
-                let mut event = SourceEvent::new("module-request");
+                let mut event = SourceTextEvent::new("module-request");
                 event.token = Some(token);
                 event.module = Some(request.into());
                 event
             }
             HostPoll::TransformFrame { token, frame } => {
-                let mut event = SourceEvent::new("transform-frame");
+                let mut event = SourceTextEvent::new("transform-frame");
                 event.token = Some(token);
                 event.frame = Some(SourceFrame::try_from(frame.as_ref())?);
                 event
             }
             HostPoll::Log { token, event: log } => {
-                let mut event = SourceEvent::new("log");
+                let mut event = SourceTextEvent::new("log");
                 event.token = Some(token);
                 let position = |n| {
                     u32::try_from(n).map_err(|_| {
@@ -841,9 +1157,9 @@ impl SourceProbe {
                 });
                 event
             }
-            HostPoll::Ready(Ok(Value::Object(_))) => SourceEvent::new("module"),
+            HostPoll::Ready(Ok(Value::Object(_))) => SourceTextEvent::new("module"),
             HostPoll::Ready(Ok(Value::Bytes(bytes))) => {
-                let mut event = SourceEvent::new("bytes");
+                let mut event = SourceTextEvent::new("bytes");
                 event.bytes = Some(bytes.to_vec());
                 event.exit_code = Some(0);
                 event.phase =
@@ -852,7 +1168,7 @@ impl SourceProbe {
             }
             HostPoll::Ready(Ok(value)) => {
                 let value = crate::evaluation::session::SourceSession::result_string(value)?;
-                let mut event = SourceEvent::new("value");
+                let mut event = SourceTextEvent::new("value");
                 event.value = Some(value.encode_utf16().collect());
                 event
             }
@@ -860,7 +1176,7 @@ impl SourceProbe {
                 if previous_depth > 0 && self.session.context_depth() == previous_depth {
                     return Err(error);
                 }
-                let mut event = SourceEvent::new("error");
+                let mut event = SourceTextEvent::new("error");
                 event.callback_origin = error
                     .callback_origin()
                     .map(crate::logging::CallbackOrigin::as_str);
@@ -948,7 +1264,114 @@ impl SourceProbe {
     /// URI delivered to a typed reader, distinct from the legacy event's
     /// authored operand. Parsing and resolution stay in the shared runtime.
     pub fn resolved_read_uri(&self, token: &str) -> Result<String, RuntimeError> {
+        scalar_probe_text(self.resolved_read_uri_text(token)?)
+    }
+    pub fn resolved_read_uri_text(&self, token: &str) -> Result<PklString, RuntimeError> {
         crate::host::resources::resolved_uri(&self.session.read_request(token)?)
+    }
+    pub fn set_glob_test_mode(&mut self, enabled: bool) -> Result<(), RuntimeError> {
+        self.session.set_glob_test_mode(enabled)
+    }
+    pub fn glob_request(&self, token: &str) -> Result<crate::glob::GlobRequest, RuntimeError> {
+        self.session.glob_request(token)
+    }
+    pub fn complete_glob(
+        &mut self,
+        token: &str,
+        completion: crate::glob::GlobCompletion,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        self.session.complete_glob(token, completion, now.into())
+    }
+    /// Decimal IDs must echo the VM-issued reader identity, never a JS Number.
+    pub fn complete_glob_reader(
+        &mut self,
+        token: &str,
+        reader_id: &str,
+        scheme: impl Into<PklString>,
+        handle: impl Into<PklString>,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        let id = reader_id
+            .parse::<u64>()
+            .map_err(|_| RuntimeError::new(ErrorKind::Host, "invalid resource reader ID"))?;
+        self.complete_glob(
+            token,
+            crate::glob::GlobCompletion::Resource(Ok(crate::glob::ResourceReader {
+                id: crate::glob::ResourceReaderId(id),
+                scheme: scheme.into(),
+                handle: handle.into(),
+            })),
+            now,
+        )
+    }
+    pub fn complete_glob_boolean(
+        &mut self,
+        token: &str,
+        kind: &str,
+        value: bool,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        use crate::glob::GlobCompletion;
+        let completion = match kind {
+            "is-globbable" => GlobCompletion::Globbable(Ok(value)),
+            "is-hierarchical" => GlobCompletion::Hierarchical(Ok(value)),
+            "fragment-paths" => GlobCompletion::FragmentPaths(Ok(value)),
+            "has-element" => GlobCompletion::HasElement(Ok(value)),
+            _ => {
+                return Err(RuntimeError::new(
+                    ErrorKind::Host,
+                    "unknown glob boolean completion kind",
+                ));
+            }
+        };
+        self.complete_glob(token, completion, now)
+    }
+    pub fn complete_glob_elements(
+        &mut self,
+        token: &str,
+        elements: Vec<crate::glob::PathElement>,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        self.complete_glob(
+            token,
+            crate::glob::GlobCompletion::Elements(Ok(elements)),
+            now,
+        )
+    }
+    pub fn reject_glob(
+        &mut self,
+        token: &str,
+        kind: &str,
+        message: Option<PklString>,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        let request = self.glob_request(token)?;
+        let failure = if kind == "reader-not-found" {
+            if message.is_some() {
+                return Err(RuntimeError::new(
+                    ErrorKind::Host,
+                    "reader-not-found has no message",
+                ));
+            }
+            crate::glob::GlobHostError::ReaderNotFound
+        } else {
+            crate::glob::GlobHostError::Failure(Self::module_failure(kind, message)?)
+        };
+        self.complete_glob(
+            token,
+            crate::glob::failure_completion(&request, failure),
+            now,
+        )
+    }
+    /// Complete only effects supported by the explicit configured profile.
+    /// Unavailable I/O returns false with the request intact.
+    pub fn complete_default_glob(&mut self, token: &str, now: u32) -> Result<bool, RuntimeError> {
+        self.session
+            .complete_default_glob(token, &self.properties, &self.environment, now.into())
+    }
+    pub fn drain_cancelled_globs(&mut self) -> Vec<String> {
+        self.session.drain_cancelled_globs()
     }
     pub fn module_request(
         &self,
@@ -972,9 +1395,9 @@ impl SourceProbe {
         &mut self,
         token: &str,
         key_id: &str,
-        uri: &str,
+        uri: impl Into<PklString>,
         kind: &str,
-        handle: &str,
+        handle: impl Into<PklString>,
         now: u32,
     ) -> Result<(), RuntimeError> {
         use crate::modules::{ModuleCompletion, ModuleKey, ModuleKeyId, ModuleKeyKind};
@@ -1024,7 +1447,7 @@ impl SourceProbe {
         &mut self,
         token: &str,
         key_id: &str,
-        uri: &str,
+        uri: impl Into<PklString>,
         now: u32,
     ) -> Result<(), RuntimeError> {
         let request = self.module_request(token)?;
@@ -1038,6 +1461,32 @@ impl SourceProbe {
         self.complete_module(
             token,
             crate::modules::ModuleCompletion::ImportUri(Ok(uri.into())),
+            now,
+        )
+    }
+    /// ModuleKey.resolveUri failure, with the exact pending key identity.
+    /// The VM retains phase-specific failure admission before consuming state.
+    pub fn reject_import_uri(
+        &mut self,
+        token: &str,
+        key_id: &str,
+        kind: &str,
+        message: Option<PklString>,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        let request = self.module_request(token)?;
+        if !matches!(&request.kind, crate::modules::ModuleRequestKind::ResolveImportUri { key, .. }
+            if key.id.0.to_string() == key_id)
+        {
+            return Err(RuntimeError::new(
+                ErrorKind::Host,
+                "stale or unexpected ModuleKey completion",
+            ));
+        }
+        let failure = Self::module_failure(kind, message)?;
+        self.complete_module(
+            token,
+            crate::modules::ModuleCompletion::ImportUri(Err(failure)),
             now,
         )
     }
@@ -1068,10 +1517,10 @@ impl SourceProbe {
         token: &str,
         key_id: &str,
         resolved_key_id: &str,
-        handle: &str,
-        original_uri: &str,
-        resolved_uri: &str,
-        source_uri: &str,
+        handle: impl Into<PklString>,
+        original_uri: impl Into<PklString>,
+        resolved_uri: impl Into<PklString>,
+        source_uri: impl Into<PklString>,
         now: u32,
     ) -> Result<(), RuntimeError> {
         use crate::modules::{
@@ -1200,9 +1649,9 @@ impl SourceProbe {
     pub fn complete_module_resolution(
         &mut self,
         token: &str,
-        original_uri: &str,
-        resolved_uri: &str,
-        source_uri: &str,
+        original_uri: impl Into<PklString>,
+        resolved_uri: impl Into<PklString>,
+        source_uri: impl Into<PklString>,
         now: u32,
     ) -> Result<(), RuntimeError> {
         self.complete_module(
@@ -1218,8 +1667,8 @@ impl SourceProbe {
     pub fn complete_module_source(
         &mut self,
         token: &str,
-        text: &str,
-        inferred_name: &str,
+        text: impl Into<SourceText>,
+        inferred_name: impl Into<PklString>,
         now: u32,
     ) -> Result<(), RuntimeError> {
         self.complete_module(

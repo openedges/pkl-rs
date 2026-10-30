@@ -28,6 +28,9 @@ fn authored_blocks(program: &Program) -> impl Iterator<Item = (&Vec<Instruction>
 fn settle(vm: &mut Vm, requests: &mut Vec<ReadRequest>) -> Value {
     for _ in 0..10_000 {
         match vm.poll(32) {
+            pkl_runtime::vm::VmPoll::Glob(_) => {
+                panic!("unexpected glob request in non-glob regression")
+            }
             VmPoll::Ready(result) => return result.unwrap(),
             VmPoll::Pending(request) => {
                 requests.push(request.clone());
@@ -134,8 +137,8 @@ fn ordinary_and_nullable_read_opcodes_preserve_their_request_flags() {
     assert_eq!(requests.len(), 2);
     assert!(!requests[0].nullable);
     assert!(requests[1].nullable);
-    assert_eq!(requests[0].uri.as_ref(), "life:normal");
-    assert_eq!(requests[1].uri.as_ref(), "life:nullable");
+    assert_eq!(requests[0].uri, "life:normal");
+    assert_eq!(requests[1].uri, "life:nullable");
 }
 
 #[test]
@@ -150,7 +153,7 @@ fn nullable_read_operand_uses_the_enclosing_lexical_scope() {
     assert_eq!(settle(&mut vm, &mut requests), Value::Null);
     assert_eq!(requests.len(), 1);
     assert!(requests[0].nullable);
-    assert_eq!(requests[0].uri.as_ref(), "life:scoped");
+    assert_eq!(requests[0].uri, "life:scoped");
 }
 
 #[test]
@@ -227,7 +230,7 @@ fn unquoted_read_keywords_cannot_be_shadowed_by_quoted_methods() {
         assert_eq!(settle(&mut vm, &mut requests), Value::Null);
         assert_eq!(requests.len(), 1);
         assert_eq!(requests[0].nullable, nullable);
-        assert_eq!(requests[0].uri.as_ref(), "life:keyword");
+        assert_eq!(requests[0].uri, "life:keyword");
     }
 }
 

@@ -61,15 +61,11 @@ fn typed_module_constraint_short_circuits_before_an_in_progress_later_cache_slot
                         fragment_paths: false,
                     }))
                 }
-                ModuleRequestKind::HasElement { element_uri, .. } => {
-                    ModuleCompletion::HasElement(Ok(element_uri.as_ref() == MY_CLASS_URI
-                        || element_uri.as_ref() == MY_CLASS_ONE_URI))
-                }
+                ModuleRequestKind::HasElement { element_uri, .. } => ModuleCompletion::HasElement(
+                    Ok(element_uri == MY_CLASS_URI || element_uri == MY_CLASS_ONE_URI),
+                ),
                 ModuleRequestKind::Resolve { original_uri, .. } => {
-                    assert!(
-                        original_uri.as_ref() == MY_CLASS_URI
-                            || original_uri.as_ref() == MY_CLASS_ONE_URI
-                    );
+                    assert!(original_uri == MY_CLASS_URI || original_uri == MY_CLASS_ONE_URI);
                     ModuleCompletion::Resolved(Ok(ResolvedModule {
                         original_uri: original_uri.clone(),
                         resolved_uri: original_uri.clone(),
@@ -77,7 +73,11 @@ fn typed_module_constraint_short_circuits_before_an_in_progress_later_cache_slot
                     }))
                 }
                 ModuleRequestKind::LoadSource { resolved, .. } => {
-                    let (text, name) = match resolved.original_uri.as_ref() {
+                    let (text, name) = match resolved
+                        .original_uri
+                        .as_str()
+                        .expect("fixture URI must be scalar")
+                    {
                         uri if uri == MY_CLASS_URI => (MY_CLASS, "MyClass"),
                         uri if uri == MY_CLASS_ONE_URI => (MY_CLASS_ONE, "myClass1"),
                         other => panic!("unexpected fixture URI: {other}"),

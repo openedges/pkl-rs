@@ -51,19 +51,28 @@ pub(super) fn native_declaration(name: &str) -> Option<RuntimeFrame> {
     Some(RuntimeFrame {
         source: Some(source),
         span: Span::new(start, start + signature.len()),
-        member: format!("#Any.{method}").into(),
+        member: PklString::from("#Any.").concat(&PklString::from(method)),
+        anonymous: false,
     })
 }
 
 impl Vm {
-    pub(super) fn non_const_method_error(name: &str) -> RuntimeError {
+    pub(super) fn non_const_method_error(name: impl Into<PklString>) -> RuntimeError {
+        let name = name.into();
         let mut error = RuntimeError::new(
             ErrorKind::Type,
-            format!("Cannot call method `{name}` from here because it is not `const`."),
+            PklString::from("Cannot call method `")
+                .concat(&name)
+                .concat(&"` from here because it is not `const`.".into()),
         );
-        error.hint = Some(format!(
-            "To fix, do either of:\n1. Add modifier `const` to method `{name}`\n2. Self-import this module, and reference this method from the import."
-        ).into());
+        error.hint = Some(
+            PklString::from("To fix, do either of:\n1. Add modifier `const` to method `")
+                .concat(&name)
+                .concat(
+                    &"`\n2. Self-import this module, and reference this method from the import."
+                        .into(),
+                ),
+        );
         error
     }
 
@@ -81,7 +90,7 @@ impl Vm {
         self.stack.push(Value::Function(id));
     }
 
-    pub(super) fn any_member(&mut self, receiver: &Value, name: &str, method: bool) -> bool {
+    pub(super) fn any_member(&mut self, receiver: &Value, name: &PklString, method: bool) -> bool {
         // Objects must search their ordinary method ancestry first. This also
         // preserves the distinct lookup origins of local and super calls.
         if method && name == "getClass" && !matches!(receiver, Value::Object(_) | Value::Class(_)) {

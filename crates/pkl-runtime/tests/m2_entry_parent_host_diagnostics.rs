@@ -30,7 +30,7 @@ fn next_import_or_terminal(probe: &mut SourceProbe) -> SourceEvent {
         }
         match probe.module_request(token).unwrap().kind {
             ModuleRequestKind::Resolve { original_uri, .. } => {
-                assert!(matches!(original_uri.as_ref(), MAIN_URI | ALIAS_URI));
+                assert!(original_uri == MAIN_URI || original_uri == ALIAS_URI);
                 probe
                     .complete_module_resolution(
                         token,
@@ -42,7 +42,7 @@ fn next_import_or_terminal(probe: &mut SourceProbe) -> SourceEvent {
                     .unwrap();
             }
             ModuleRequestKind::LoadSource { resolved, .. } => {
-                assert_eq!(resolved.source_uri.as_ref(), ALIAS_URI);
+                assert_eq!(resolved.source_uri, ALIAS_URI);
                 return event;
             }
             other => panic!("unexpected module request: {other:?}"),
@@ -64,7 +64,7 @@ fn keep_suspended(probe: &mut SourceProbe, token: &str) {
         else {
             panic!("suspended source request changed kind")
         };
-        assert_eq!(resolved.source_uri.as_ref(), ALIAS_URI);
+        assert_eq!(resolved.source_uri, ALIAS_URI);
         probe.collect();
     }
 }
@@ -124,7 +124,7 @@ fn imported_parent_resume_preserves_all_three_java_diagnostics_and_retry() {
         // The second checks Rust error retry and cache ownership with GC.
         for (index, (expression, expected)) in rows.iter().enumerate() {
             probe
-                .evaluate_module_source(MAIN_URI, Some(MAIN), expression, 0, None)
+                .evaluate_module_source(MAIN_URI, Some(MAIN), *expression, 0, None)
                 .unwrap();
             let delayed_loads = complete_error(&mut probe, expected);
             if repetition == 0 && index == 0 {

@@ -114,10 +114,13 @@ pub(super) fn blocks(
             .find(&format!("class {class} "))
             .expect("pinned class");
         let start = class_start
-            + source.text[class_start..]
+            + source
+                .text
+                .entire()
+                .range(class_start..)
                 .find(declaration)
                 .expect("pinned numeric API");
-        let member: Arc<str> = format!("#{class}.{name}").into();
+        let member: PklString = format!("#{class}.{name}").into();
         let mut code = Vec::new();
         let mut spans = Vec::new();
         if let Some(parameter) = parameter {
@@ -144,7 +147,7 @@ pub(super) fn blocks(
                 ]);
                 metadata.push(BlockMetadata {
                     source: Some(source.clone()),
-                    member: member.clone().into(),
+                    member: member.clone(),
                     inline_constraint: true,
                     spans: vec![
                         Some(this_span),
@@ -185,7 +188,7 @@ pub(super) fn blocks(
         blocks.push(code);
         metadata.push(BlockMetadata {
             source: Some(source.clone()),
-            member: member.into(),
+            member,
             declaration: Some(Span::new(start, start + declaration.len())),
             spans,
             ..Default::default()

@@ -273,6 +273,24 @@ impl Default for PklString {
     }
 }
 
+impl From<&PklString> for PklString {
+    fn from(text: &PklString) -> Self {
+        text.clone()
+    }
+}
+
+impl From<&String> for PklString {
+    fn from(text: &String) -> Self {
+        Self::from(text.as_str())
+    }
+}
+
+impl From<&Arc<str>> for PklString {
+    fn from(text: &Arc<str>) -> Self {
+        Self::from(text.clone())
+    }
+}
+
 impl From<&str> for PklString {
     fn from(text: &str) -> Self {
         Self(
@@ -373,6 +391,16 @@ impl PklStringBuilder {
 
     pub(crate) fn push(&mut self, character: char) {
         self.push_str(character.encode_utf8(&mut [0; 4]));
+    }
+
+    /// Append one authored Java char without passing through a UTF-8 writer.
+    pub(crate) fn push_unit(&mut self, unit: u16) {
+        let units = self.units.get_or_insert_with(|| {
+            let units = self.text.encode_utf16().collect();
+            self.text.clear();
+            units
+        });
+        units.push(unit);
     }
 
     pub(crate) fn push_value(&mut self, value: &PklString) {

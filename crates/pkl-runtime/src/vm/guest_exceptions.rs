@@ -71,7 +71,13 @@ impl Vm {
                 .and_then(|frame| frame.source.as_ref())
                 .or(self.context.primary_source.as_ref());
             let mut sources = crate::source::SourceMap::default();
-            let id = sources.add("caught", source.map_or("", |source| source.text.as_ref()));
+            let id = sources.add(
+                "caught",
+                source.map_or_else(
+                    || crate::source::SourceText::from(""),
+                    |source| source.text.clone(),
+                ),
+            );
             diagnostic.render_without_power(sources.get(id).expect("caught source"))
         } else {
             error.message.clone()

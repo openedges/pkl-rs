@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find resource `gdata:/b`.
+
+1 | function files() = read*("gdata:**")
+                       ^^^^^^^^^^^^^^^^^
+at  (gmain:/tree/cache-missing-value-cache-read.pkl)
+
+1 | entries["gdata:/a/../b"].toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

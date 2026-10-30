@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find module `gmod:/b`.
+
+1 | import* "gmod:**" as imported
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (gmain:/tree/cache-missing-value-cache-import.pkl)
+
+1 | entries["gmod:/a/../b"].name
+    ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

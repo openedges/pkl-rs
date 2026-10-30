@@ -9,7 +9,7 @@ fn canonical_message_hint_and_frame_preserve_distinct_utf16_units() {
     let id = sources.add("file:///test.pkl", "value");
     let frames = [RenderFrame {
         source: sources.get(id).unwrap(),
-        uri: "file:///test.pkl",
+        uri: "file:///test.pkl".into(),
         member: &payload,
         span: Span::new(0, 5),
         highlight_length_utf16: None,

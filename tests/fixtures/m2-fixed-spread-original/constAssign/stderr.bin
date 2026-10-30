@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot assign to const property `constantSimpleValue`.
+
+3 | constantSimpleValue = "1"
+    ^^^^^^^^^^^^^^^^^^^
+at constAssign (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage94-originals-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/const/constAssign.pkl, line 3)

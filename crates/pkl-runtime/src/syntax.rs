@@ -5,7 +5,7 @@ use crate::value::PklString;
 #[derive(Clone, Debug, PartialEq)]
 pub struct Module {
     /// Exact source retained for exported constraint metadata and declaration names.
-    pub source: std::sync::Arc<str>,
+    pub source: crate::source::SourceText,
     pub declaration: Option<ModuleDeclaration>,
     pub members: Vec<Member>,
     /// AST construction failures retained for ordered Host-aware preparation.
@@ -28,23 +28,24 @@ impl DocComment {
     /// Export the parser's single-line sections using VmUtils.exportDocComment's
     /// prefix rule. At most one ASCII space, tab, or formfeed follows `///`.
     /// Invalid source/section associations return None instead of slicing panic.
-    pub fn text(&self, source: &str) -> Option<PklString> {
-        let mut result = String::new();
+    pub fn text<'a>(&self, source: impl Into<crate::source::SourceSlice<'a>>) -> Option<PklString> {
+        let source = source.into();
+        let mut result = crate::pkl_string::PklStringBuilder::default();
         for (index, section) in self.sections.iter().enumerate() {
             let text = source
                 .get(section.start..section.end)?
                 .strip_prefix("///")?;
             let text = if matches!(text.as_bytes().first(), Some(b' ' | b'\t' | b'\x0c')) {
-                &text[1..]
+                text.get(1..)?
             } else {
                 text
             };
             if index != 0 {
                 result.push('\n');
             }
-            result.push_str(text);
+            result.push_value(&text.to_pkl_string());
         }
-        Some(result.into())
+        Some(result.finish())
     }
 }
 
@@ -53,7 +54,7 @@ impl DocComment {
 /// owner/prototype objects are separate and must be retained by the heap.
 #[derive(Clone, Debug, PartialEq)]
 pub struct DeclarationSource {
-    pub name: String,
+    pub name: PklString,
     pub name_span: Span,
     pub header_span: Span,
     pub declaration_span: Span,
@@ -85,7 +86,7 @@ pub enum DeclarationRecipe {
         referent: Type,
     },
     Import {
-        uri: String,
+        uri: PklString,
     },
 }
 
@@ -93,7 +94,7 @@ pub enum DeclarationRecipe {
 pub struct Member {
     pub doc_comment: Option<DocComment>,
     pub annotations: Vec<Expr>,
-    pub name: String,
+    pub name: PklString,
     pub name_span: Span,
     /// The first authored `{ ... }` body, excluding the property header and
     /// any later bodies. Retained separately from the synthetic super read.
@@ -254,7 +255,7 @@ impl ObjectMember {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Parameter {
-    pub name: String,
+    pub name: PklString,
     pub ty: Option<Type>,
     pub span: Span,
 }
@@ -263,7 +264,7 @@ pub struct Parameter {
 pub struct ModuleDeclaration {
     pub doc_comment: Option<DocComment>,
     pub annotations: Vec<Expr>,
-    pub name: Option<Vec<String>>,
+    pub name: Option<Vec<PklString>>,
     pub parent: Option<ModuleParent>,
     pub modifiers: Vec<Modifier>,
     pub span: Span,
@@ -272,7 +273,7 @@ pub struct ModuleDeclaration {
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModuleParent {
     pub kind: ModuleParentKind,
-    pub uri: String,
+    pub uri: PklString,
     pub span: Span,
 }
 
@@ -284,7 +285,7 @@ pub enum ModuleParentKind {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct TypeParameter {
-    pub name: String,
+    pub name: PklString,
     pub variance: Variance,
     pub span: Span,
 }
@@ -360,7 +361,7 @@ pub struct Type {
 #[derive(Clone, Debug, PartialEq)]
 pub enum TypeKind {
     Named {
-        path: Vec<String>,
+        path: Vec<PklString>,
         name_spans: Vec<Span>,
         arguments: Vec<Type>,
     },
@@ -813,10 +814,11 @@ pub enum ExprKind {
     /// A module import declaration, lowered to a local const module member.
     /// Loading unsupported module schemes remains an explicit runtime error.
     Import {
-        uri: String,
+        uri: PklString,
+        glob: bool,
         uri_span: Span,
         /// None denotes an expression; Some(None) is a clause requiring key-based inference.
-        clause_alias: Option<Option<String>>,
+        clause_alias: Option<Option<PklString>>,
     },
     Int(i64),
     Float(f64),
@@ -824,7 +826,7 @@ pub enum ExprKind {
     String(PklString),
     InterpolatedString(Vec<Expr>),
     Bool(bool),
-    Name(String),
+    Name(PklString),
     This,
     Outer,
     Module,
@@ -846,8 +848,8 @@ pub enum ExprKind {
         value: Box<Expr>,
         ty: Type,
     },
-    NullableMember(Box<Expr>, String),
-    Member(Box<Expr>, String),
+    NullableMember(Box<Expr>, PklString),
+    Member(Box<Expr>, PklString),
     Subscript {
         receiver: Box<Expr>,
         key: Box<Expr>,
@@ -880,7 +882,7 @@ pub enum ExprKind {
         arguments: Vec<Expr>,
     },
     Let {
-        name: String,
+        name: PklString,
         ty: Option<Type>,
         value: Box<Expr>,
         body: Box<Expr>,

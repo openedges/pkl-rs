@@ -88,14 +88,18 @@ impl<'a> Observer<'a> {
                 importer,
                 import_uri,
             } => {
+                let import_uri = scalar_uri(import_uri);
                 self.event(format!(
                     "module-check-import {} -> {import_uri}",
-                    importer.resolved_uri
+                    scalar_uri(&importer.resolved_uri)
                 ));
                 super::module_host::complete(request)
             }
             ModuleRequestKind::Capabilities { module, .. } => {
-                self.event(format!("module-capabilities {}", module.original_uri));
+                self.event(format!(
+                    "module-capabilities {}",
+                    scalar_uri(&module.original_uri)
+                ));
                 if self.mode == "cap-nonlocal" || self.mode == "cap-nonhierarchical" {
                     ModuleCompletion::Capabilities(Ok(ModuleCapabilities {
                         local: self.mode != "cap-nonlocal",
@@ -111,9 +115,10 @@ impl<'a> Observer<'a> {
                 element_uri,
                 ..
             } => {
+                let element_uri = scalar_uri(element_uri);
                 self.event(format!(
                     "module-has-element {} -> {element_uri}",
-                    module.original_uri
+                    scalar_uri(&module.original_uri)
                 ));
                 match self.module_policy(element_uri) {
                     Ok(()) => super::module_host::complete(request),
@@ -126,13 +131,15 @@ impl<'a> Observer<'a> {
                 original_uri,
                 ..
             } => {
+                let import_uri = scalar_uri(import_uri);
+                let original_uri = scalar_uri(original_uri);
                 self.event(format!(
                     "module-resolve {} -> {import_uri}",
-                    importer.original_uri
+                    scalar_uri(&importer.original_uri)
                 ));
                 self.event(format!(
                     "policy-import {} -> {original_uri}",
-                    importer.original_uri
+                    scalar_uri(&importer.original_uri)
                 ));
                 match self.module_policy(original_uri) {
                     Ok(()) => {
@@ -143,8 +150,11 @@ impl<'a> Observer<'a> {
                 }
             }
             ModuleRequestKind::LoadSource { resolved, .. } => {
-                self.event(format!("module-source {}", resolved.original_uri));
-                match self.module_policy(&resolved.original_uri) {
+                self.event(format!(
+                    "module-source {}",
+                    scalar_uri(&resolved.original_uri)
+                ));
+                match self.module_policy(scalar_uri(&resolved.original_uri)) {
                     Ok(()) => super::module_host::complete(request),
                     Err(_) => ModuleCompletion::Source(Err(ModuleHostError::Unsupported("Source-stage security denial is outside this captured resolution-only contract.".into()))),
                 }
@@ -153,6 +163,7 @@ impl<'a> Observer<'a> {
     }
     pub fn read(&mut self, request: &ReadRequest) -> Option<Result<ReadResult, ReadFailure>> {
         let uri = request.resolved_uri().expect("shared resolved reader URI");
+        let uri = scalar_uri(&uri);
         self.event(format!("reader-request {uri}"));
         // This graph has file resources. Other schemes retain configured-runtime behavior.
         if !uri.starts_with("file:") {
@@ -175,4 +186,13 @@ impl<'a> Observer<'a> {
         self.event(format!("secure-path {uri} resource=true"));
         super::resource_host::complete(request)
     }
+}
+
+// This historical trace schema has scalar UTF-8 URI fields only. Reject an
+// unrepresentable URI explicitly; never replace its raw UTF-16 code units.
+fn scalar_uri(uri: &PklString) -> &str {
+    uri.as_str().unwrap_or_else(|| {
+        eprintln!("Unsupported: this legacy trace adapter cannot represent an unpaired UTF-16 URI surrogate.");
+        std::process::exit(2)
+    })
 }

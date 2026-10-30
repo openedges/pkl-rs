@@ -11,6 +11,9 @@ use pkl_runtime::vm::{Instruction as I, Program, Vm, VmPoll, compile_module};
 fn done(vm: &mut Vm) -> Result<Value, RuntimeError> {
     for _ in 0..10_000 {
         match vm.poll(101) {
+            pkl_runtime::vm::VmPoll::Glob(_) => {
+                panic!("unexpected glob request in non-glob regression")
+            }
             VmPoll::Ready(value) => return value,
             VmPoll::Yielded => {}
             VmPoll::Log(_) | VmPoll::TransformFrame(_) => panic!("unexpected logger request"),
@@ -176,20 +179,19 @@ fn scalar_operators_preserve_types_and_overflow() {
 fn gc_traces_closure_cycles_and_invalidates_reclaimed_function_handles() {
     let mut heap = Heap::new();
     let parent = heap.allocate(Object::default());
-    let closure = heap.allocate(Object {
-        function: Some(Function {
-            block: 0,
-            arity: 0,
-            method: false,
-            captured_this: None,
-        }),
-        environment: Environment {
-            locals: vec![Value::Object(parent)],
-            scopes: vec![],
-            ..Environment::default()
-        },
-        ..Object::default()
+    let mut object = Object::default();
+    object.function = Some(Function {
+        block: 0,
+        arity: 0,
+        method: false,
+        captured_this: None,
     });
+    object.environment = Environment {
+        locals: vec![Value::Object(parent)],
+        scopes: vec![],
+        ..Environment::default()
+    };
+    let closure = heap.allocate(object);
     heap.get_mut(parent).unwrap().environment.locals = vec![Value::Function(closure)];
     assert_eq!(heap.collect(&[Value::Function(closure)]).live, 2);
     assert_eq!(heap.collect(&[]).live, 0);
@@ -207,7 +209,7 @@ fn suspended_closure_keeps_captures_and_resumes_the_same_call_frame() {
         VmPoll::Pending(request) => request,
         result => panic!("expected suspension, got {result:?}"),
     };
-    assert_eq!(request.uri.as_ref(), "mem:test");
+    assert_eq!(request.uri, "mem:test");
     let stats = vm.collect(&[]);
     assert!(stats.live >= 2);
     vm.resume(request.id, Ok(Value::string("body"))).unwrap();
@@ -244,17 +246,13 @@ fn nested_host_contexts_share_closure_captures_and_survive_collection() {
     ).unwrap();
     let mut program = (*compile_module(&resolve_module(&parsed).unwrap()).unwrap()).clone();
     let result_entry = program.blocks.len();
-    program.blocks.push(vec![
-        I::Input(0),
-        I::GetMember(Arc::from("result")),
-        I::Return,
-    ]);
+    program
+        .blocks
+        .push(vec![I::Input(0), I::GetMember("result".into()), I::Return]);
     let nested_entry = program.blocks.len();
-    program.blocks.push(vec![
-        I::Input(0),
-        I::GetMember(Arc::from("nested")),
-        I::Return,
-    ]);
+    program
+        .blocks
+        .push(vec![I::Input(0), I::GetMember("nested".into()), I::Return]);
     let entry = program.entry;
     let mut session = HostSession::new(Arc::new(program));
     session.start(entry, vec![], 0, None).unwrap();
@@ -960,16 +958,14 @@ fn constraint_host_reentry_roots_both_continuations() {
     let outer_entry = program.blocks.len();
     program.blocks.push(vec![
         I::Input(0),
-        I::GetMember(Arc::from("result")),
-        I::GetMember(Arc::from("value")),
+        I::GetMember("result".into()),
+        I::GetMember("value".into()),
         I::Return,
     ]);
     let inner_entry = program.blocks.len();
-    program.blocks.push(vec![
-        I::Input(0),
-        I::GetMember(Arc::from("nested")),
-        I::Return,
-    ]);
+    program
+        .blocks
+        .push(vec![I::Input(0), I::GetMember("nested".into()), I::Return]);
     let mut session = HostSession::new(Arc::new(program));
     session.start(root_entry, vec![], 0, None).unwrap();
     let object = initialized_module(&mut session);
@@ -978,7 +974,7 @@ fn constraint_host_reentry_roots_both_continuations() {
         .unwrap();
     let outer = match session.poll(0, 1000) {
         HostPoll::Read { token, uri } => {
-            assert_eq!(&*uri, "mem:outer");
+            assert_eq!(uri, "mem:outer");
             token
         }
         other => panic!("{other:?}"),
@@ -988,7 +984,7 @@ fn constraint_host_reentry_roots_both_continuations() {
         .unwrap();
     let inner = match session.poll(0, 1000) {
         HostPoll::Read { token, uri } => {
-            assert_eq!(&*uri, "mem:inner");
+            assert_eq!(uri, "mem:inner");
             token
         }
         other => panic!("{other:?}"),
@@ -1028,7 +1024,7 @@ fn power_constraint_replay_resumes_and_gc_traces_observed_values() {
             VmPoll::Pending(request) => request,
             other => panic!("{other:?}"),
         };
-        assert_eq!(&*request.uri, "mem:check");
+        assert_eq!(request.uri, "mem:check");
         // The retained receiver may be its class prototype; the observations
         // below must still render that receiver after each collection.
         vm.collect(&[]);
@@ -1074,6 +1070,9 @@ fn enabled_union_replays_only_after_all_alternatives_fail_and_type_tests_do_not_
         let mut requests = Vec::new();
         let outcome = loop {
             match vm.poll(1000) {
+                pkl_runtime::vm::VmPoll::Glob(_) => {
+                    panic!("unexpected glob request in non-glob regression")
+                }
                 VmPoll::Log(_) | VmPoll::TransformFrame(_) => panic!("unexpected logger request"),
                 VmPoll::Module(_) => panic!("unexpected module request"),
                 VmPoll::Yielded => {}

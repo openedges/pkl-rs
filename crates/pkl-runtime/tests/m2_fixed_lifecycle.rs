@@ -48,11 +48,9 @@ fn setup() -> (HostSession, Value, [usize; 4]) {
     let module_entry = program.entry;
     let entries = ["parent", "value", "rendered", "inspect"].map(|member| {
         let entry = program.blocks.len();
-        program.blocks.push(vec![
-            I::Input(0),
-            I::GetMember(Arc::from(member)),
-            I::Return,
-        ]);
+        program
+            .blocks
+            .push(vec![I::Input(0), I::GetMember(member.into()), I::Return]);
         entry
     });
     let mut session = HostSession::new(Arc::new(program));
@@ -91,7 +89,7 @@ fn ready(session: &mut HostSession, now: u64) -> Result<Value, RuntimeError> {
 fn request(session: &mut HostSession, now: u64, uri: &str) -> String {
     match event(session, now) {
         HostPoll::Read { token, uri: actual } => {
-            assert_eq!(&*actual, uri);
+            assert_eq!(actual, uri);
             token
         }
         result => panic!("expected {uri}, got {result:?}"),

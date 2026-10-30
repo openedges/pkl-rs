@@ -43,18 +43,24 @@ fn module_key_resolution_is_generic_and_preserves_already_parsed_escapes() {
         ),
         ("pkl:base", "child.pkl", "child.pkl"),
     ] {
-        assert_eq!(resolve_module_key_uri(operand, base).unwrap(), expected);
+        assert_eq!(
+            resolve_module_key_uri(&operand.into(), &base.into()).unwrap(),
+            expected
+        );
     }
     assert_eq!(
-        prepare_module_uri("./a b.pkl", Some("memo:/selected/holder.pkl"))
-            .unwrap()
-            .0,
+        prepare_module_uri(
+            &"./a b.pkl".into(),
+            Some(&"memo:/selected/holder.pkl".into())
+        )
+        .unwrap()
+        .0,
         "memo:/selected/a%20b.pkl"
     );
     assert!(
-        ResourceUri::from_authored("child.pkl")
+        ResourceUri::from_authored(&"child.pkl".into())
             .unwrap()
-            .resolve(Some("memo:/selected/holder.pkl"))
+            .resolve(Some(&"memo:/selected/holder.pkl".into()))
             .is_err()
     );
 }
@@ -83,9 +89,9 @@ fn authored_uri_path_escaping_and_normalization_are_separate() {
         ("life:/a//b/../c", "life:/a/c"),
         ("life:/../x", "life:/../x"),
     ] {
-        let actual = ResourceUri::from_authored(authored)
+        let actual = ResourceUri::from_authored(&authored.into())
             .unwrap()
-            .resolve(Some(base))
+            .resolve(Some(&base.into()))
             .unwrap()
             .normalize();
         assert_eq!(actual.text, expected, "{authored}");
@@ -212,8 +218,8 @@ fn denied_forcing_retries_after_gc_and_custom_host_can_still_complete() {
         };
         assert!(request.id > last_request);
         last_request = request.id;
-        assert_eq!(request.uri.as_ref(), "unknown:resource");
-        assert_eq!(request.module_uri.as_deref(), Some("file:///primary.pkl"));
+        assert_eq!(request.uri, "unknown:resource");
+        assert_eq!(request.module_uri, Some("file:///primary.pkl".into()));
         vm.collect(&roots);
         if attempt == 2 {
             vm.resume(request.id, Ok(Value::string("custom Host")))
@@ -285,10 +291,10 @@ fn pending_read_uses_declaration_source_and_keeps_custom_host_operand_raw() {
     let VmPoll::Pending(request) = event(&mut vm, &[module]) else {
         panic!("missing read")
     };
-    assert_eq!(request.uri.as_ref(), "../data/a%20b.txt");
+    assert_eq!(request.uri, "../data/a%20b.txt");
     assert_eq!(
-        request.module_uri.as_deref(),
-        Some("file:///foreign/module.pkl")
+        request.module_uri,
+        Some("file:///foreign/module.pkl".into())
     );
     vm.close();
 }

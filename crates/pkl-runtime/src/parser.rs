@@ -1,6 +1,7 @@
 //! Shared incremental parser, following the pinned Pkl 0.32 grammar.
 use crate::diagnostic::{Diagnostic, DiagnosticKind, DiagnosticOrigin};
-use crate::source::Span;
+use crate::pkl_string::PklStringBuilder;
+use crate::source::{SourceCharacter, SourceSlice, SourceText, Span};
 use crate::syntax::{
     BinaryOp, DocComment, Expr, ExprKind, Member, Modifier, ModifierKind, Module,
     ModuleDeclaration, ModuleParent, ModuleParentKind, ObjectMember, Parameter, Type, TypeKind,
@@ -8,17 +9,26 @@ use crate::syntax::{
 };
 use crate::value::PklString;
 
+mod min_version;
 mod string_lexer;
 mod string_parser;
 mod type_parser;
 mod unicode_escape;
 mod unicode_identifier;
 
+pub(crate) use min_version::ModuleParseFailure;
+
 #[cfg(test)]
 mod shebang_contract;
 
 #[cfg(test)]
 mod quoted_identifier_contract;
+
+#[cfg(test)]
+mod lossless_source_contract;
+
+#[cfg(test)]
+mod min_version_contract;
 
 fn identifier_contains(ranges: &[(u32, u32)], character: char) -> bool {
     use std::cmp::Ordering;
@@ -110,7 +120,7 @@ enum Kind {
     Name(String),
     Int(String),
     Float(String),
-    QuotedName(String),
+    QuotedName(PklString),
     Operator(&'static str),
     String(crate::value::PklString),
     StringTemplate(Vec<StringPart>),
@@ -125,7 +135,7 @@ enum Kind {
 
 #[derive(Clone, Debug, PartialEq)]
 enum StringPart {
-    Text(String),
+    Text(PklString),
     Escape(crate::value::PklString),
     Value(crate::value::PklString),
     Unicode,
@@ -142,7 +152,7 @@ struct Token {
 
 #[derive(Clone)]
 struct Lexer<'a> {
-    source: &'a str,
+    source: SourceSlice<'a>,
     cursor: usize,
     string_errors: string_lexer::StringErrors,
 }
@@ -164,11 +174,14 @@ impl Lexer<'_> {
             {
                 self.advance();
             }
-            if self.source[self.cursor..].starts_with("//") {
+            if self.source.range(self.cursor..).starts_with("//") {
                 let start = self.cursor;
-                let doc = self.source[start..].starts_with("///");
-                while self.peek().is_some_and(|ch| ch != '\n' && ch != '\r') {
-                    self.advance();
+                let doc = self.source.range(start..).starts_with("///");
+                while self
+                    .peek_character()
+                    .is_some_and(|ch| !matches!(ch, SourceCharacter::Scalar('\n' | '\r')))
+                {
+                    self.advance_character();
                 }
                 if doc || comments {
                     return Ok(Token {
@@ -180,14 +193,14 @@ impl Lexer<'_> {
                         span: Span::new(start, self.cursor),
                     });
                 }
-            } else if self.source[self.cursor..].starts_with("/*") {
+            } else if self.source.range(self.cursor..).starts_with("/*") {
                 let start = self.cursor;
                 self.cursor += 2;
-                let end = self.source[self.cursor..].find("*/");
-                self.cursor = end.map_or(self.source.len(), |end| self.cursor + end + 2);
+                let end = self.source.range(self.cursor..).find("*/");
+                self.cursor = end.map_or(self.source.len_bytes(), |end| self.cursor + end + 2);
                 // The pinned lexer reports EOF even when a block comment's
                 // closing delimiter is the final source token.
-                if self.cursor == self.source.len() {
+                if self.cursor == self.source.len_bytes() {
                     return Err(Diagnostic::language(
                         DiagnosticOrigin::Lexer,
                         DiagnosticKind::Syntax,
@@ -206,19 +219,23 @@ impl Lexer<'_> {
             }
         }
         let start = self.cursor;
-        let Some(ch) = self.advance() else {
+        let Some(character) = self.advance_character() else {
             return Ok(Token {
                 kind: Kind::Eof,
                 span: Span::new(start, start),
             });
         };
+        let ch = match character {
+            SourceCharacter::Scalar(ch) => ch,
+            SourceCharacter::Surrogate(_) => return Err(self.invalid_identifier(start, character)),
+        };
         let kind = if ch == '`' {
             let begin = self.cursor;
             while self
-                .peek()
-                .is_some_and(|ch| ch != '`' && ch != '\n' && ch != '\r')
+                .peek_character()
+                .is_some_and(|ch| !matches!(ch, SourceCharacter::Scalar('`' | '\n' | '\r')))
             {
-                self.advance();
+                self.advance_character();
             }
             let end = self.cursor;
             if let Some(terminator @ ('\n' | '\r')) = self.peek() {
@@ -230,13 +247,15 @@ impl Lexer<'_> {
                     format!("Unexpected character `{terminator}`. Did you mean `backquote`?"),
                 ));
             }
-            if self.peek().is_none() {
+            if self.peek_character().is_none() {
                 // Java unexpectedChar(EOF) points at the last UTF-16 unit,
                 // with zero length. Keep a valid UTF-8 anchor and separately
                 // retain an inside-surrogate column when the last scalar is
                 // supplementary; never invent a UTF-8 continuation boundary.
-                let (anchor, last) = self.source[..end]
-                    .char_indices()
+                let (anchor, last) = self
+                    .source
+                    .range(..end)
+                    .characters()
                     .next_back()
                     .expect("quoted identifier begins before EOF");
                 return Err(Diagnostic::language(
@@ -248,17 +267,25 @@ impl Lexer<'_> {
                 .with_highlight_offset_utf16(last.len_utf16() - 1));
             }
             self.advance(); // Closing backquote; quoted names have no escapes.
-            Kind::QuotedName(self.source[begin..end].to_owned())
+            Kind::QuotedName(self.source.range(begin..end).to_pkl_string())
         } else if is_identifier_start(ch) {
             while self.peek().is_some_and(is_identifier_part) {
                 self.advance();
             }
             // The pinned lexer makes `read?` one keyword only when adjacent.
             // A quoted name or a separated `?` retains its ordinary grammar.
-            if &self.source[start..self.cursor] == "read" && self.peek() == Some('?') {
+            if self.source.range(start..self.cursor).as_str() == Some("read")
+                && self.peek() == Some('?')
+            {
                 self.advance();
             }
-            Kind::Name(self.source[start..self.cursor].to_owned())
+            Kind::Name(
+                self.source
+                    .range(start..self.cursor)
+                    .as_str()
+                    .expect("identifier or numeric scalar token")
+                    .to_owned(),
+            )
         } else if ch.is_ascii_digit()
             || (ch == '.' && self.peek().is_some_and(|ch| ch.is_ascii_digit()))
         {
@@ -267,8 +294,11 @@ impl Lexer<'_> {
             // SHEBANG is a grammar token, not a comment: only parseModule
             // consumes a leading occurrence. Retain later occurrences so the
             // ordinary declaration/expression error owns the complete span.
-            while self.peek().is_some_and(|ch| ch != '\n' && ch != '\r') {
-                self.advance();
+            while self
+                .peek_character()
+                .is_some_and(|ch| !matches!(ch, SourceCharacter::Scalar('\n' | '\r')))
+            {
+                self.advance_character();
             }
             Kind::Shebang
         } else if ch == '"' || ch == '#' {
@@ -286,28 +316,14 @@ impl Lexer<'_> {
             "?.", "|>",
         ]
         .into_iter()
-        .find(|operator| self.source[start..].starts_with(operator))
+        .find(|operator| self.source.range(start..).starts_with(operator))
         {
             self.cursor = start + operator.len();
             Kind::Operator(operator)
         } else if "=(){};.,+-*/%<>!:?|[]@".contains(ch) {
             Kind::Symbol(ch)
         } else if !ch.is_ascii() {
-            let mut diagnostic = Diagnostic::language(
-                DiagnosticOrigin::Lexer,
-                DiagnosticKind::Syntax,
-                Span::new(start, self.cursor),
-                format!(
-                    "Invalid identifier `{}`.",
-                    if ch as u32 > 0xffff {
-                        '?'.to_string()
-                    } else {
-                        ch.to_string()
-                    }
-                ),
-            );
-            diagnostic.highlight_length_utf16 = Some(1);
-            return Err(diagnostic);
+            return Err(self.invalid_identifier(start, character));
         } else {
             if ch == '&' || ch == '~' {
                 return Err(self.unexpected_unicode_character(
@@ -364,7 +380,13 @@ impl Lexer<'_> {
                 {
                     self.advance();
                 }
-                return Ok(Kind::Int(self.source[start..self.cursor].to_owned()));
+                return Ok(Kind::Int(
+                    self.source
+                        .range(start..self.cursor)
+                        .as_str()
+                        .expect("identifier or numeric scalar token")
+                        .to_owned(),
+                ));
             }
         }
         while self
@@ -375,7 +397,11 @@ impl Lexer<'_> {
         }
         let mut float = first == '.';
         if !float && self.peek() == Some('.') {
-            let next = self.source[self.cursor + 1..].chars().next();
+            let next = self
+                .source
+                .range(self.cursor + 1..)
+                .first()
+                .and_then(SourceCharacter::scalar);
             if next == Some('_') {
                 return Err(self.numeric_separator(self.cursor + 1));
             }
@@ -414,7 +440,12 @@ impl Lexer<'_> {
                 self.advance();
             }
         }
-        let text = self.source[start..self.cursor].to_owned();
+        let text = self
+            .source
+            .range(start..self.cursor)
+            .as_str()
+            .expect("identifier or numeric scalar token")
+            .to_owned();
         Ok(if float {
             Kind::Float(text)
         } else {
@@ -422,14 +453,41 @@ impl Lexer<'_> {
         })
     }
 
+    fn peek_character(&self) -> Option<SourceCharacter> {
+        self.source.range(self.cursor..).first()
+    }
+
+    fn advance_character(&mut self) -> Option<SourceCharacter> {
+        let ch = self.peek_character()?;
+        self.cursor += ch.len_bytes();
+        Some(ch)
+    }
+
+    // Scalar grammar lookahead. Callers which distinguish EOF from a lone
+    // surrogate use peek_character; text/comment paths consume characters.
     fn peek(&self) -> Option<char> {
-        self.source[self.cursor..].chars().next()
+        self.peek_character().and_then(SourceCharacter::scalar)
     }
 
     fn advance(&mut self) -> Option<char> {
         let ch = self.peek()?;
         self.cursor += ch.len_utf8();
         Some(ch)
+    }
+
+    fn invalid_identifier(&self, start: usize, character: SourceCharacter) -> Diagnostic {
+        let mut message = PklStringBuilder::default();
+        message.push_str("Invalid identifier `");
+        message.push_value(&PklString::from_utf16(vec![character.first_utf16()]));
+        message.push_str("`.");
+        let mut error = Diagnostic::language(
+            DiagnosticOrigin::Lexer,
+            DiagnosticKind::Syntax,
+            Span::new(start, self.cursor),
+            message.finish(),
+        );
+        error.highlight_length_utf16 = Some(1);
+        error
     }
 }
 
@@ -451,7 +509,7 @@ struct ObjectBuild {
 
 struct PropertyHead {
     start: usize,
-    name: String,
+    name: PklString,
     name_span: Span,
     amendment_body_start: Option<usize>,
     local: bool,
@@ -489,8 +547,8 @@ enum ExpressionFrame {
     IfCondition(usize),
     IfThen(usize, Expr),
     IfElse(usize, Expr, Expr),
-    LetValue(usize, String, Option<Type>),
-    LetBody(usize, String, Option<Type>, Expr),
+    LetValue(usize, PklString, Option<Type>),
+    LetBody(usize, PklString, Option<Type>, Expr),
     Function(usize, Span, Vec<Parameter>),
     ObjectValue(Box<ObjectBuild>, ObjectValue),
     ObjectKey(Box<ObjectBuild>, usize, bool),
@@ -559,7 +617,9 @@ impl<'a> Parser<'a> {
             // inter-token newline in the pinned Java lexer; CR alone is not
             // counted either. The string scanner retains its raw token path.
             let token = lexer.next_with_comments(string_start_only, true)?;
-            let newlines = lexer.source[start..token.span.start]
+            let newlines = lexer
+                .source
+                .range(start..token.span.start)
                 .bytes()
                 .filter(|&byte| byte == b'\n')
                 .count();
@@ -578,7 +638,8 @@ impl<'a> Parser<'a> {
         }
     }
 
-    fn new(source: &'a str) -> Result<Self, Diagnostic> {
+    fn new(source: impl Into<SourceSlice<'a>>) -> Result<Self, Diagnostic> {
+        let source = source.into();
         let mut lexer = Lexer {
             source,
             cursor: 0,
@@ -602,12 +663,12 @@ impl<'a> Parser<'a> {
     }
 
     fn interpolation_with_errors(
-        source: &'a str,
+        source: SourceSlice<'a>,
         span: Span,
         string_errors: string_lexer::StringErrors,
     ) -> Result<Self, Diagnostic> {
         let mut lexer = Lexer {
-            source: &source[..(span.end + 1).min(source.len())],
+            source: source.range(..(span.end + 1).min(source.len_bytes())),
             cursor: span.start,
             string_errors,
         };
@@ -653,9 +714,12 @@ impl<'a> Parser<'a> {
 
     fn diagnostic_token_span(&self) -> Span {
         if matches!(self.token.kind, Kind::String(_) | Kind::StringTemplate(_)) {
-            let text = &self.lexer.source[self.token.span.start..self.token.span.end];
+            let text = &self
+                .lexer
+                .source
+                .range(self.token.span.start..self.token.span.end);
             let hashes = text.bytes().take_while(|&b| b == b'#').count();
-            let quotes = if text[hashes..].starts_with("\"\"\"") {
+            let quotes = if text.range(hashes..).starts_with("\"\"\"") {
                 3
             } else {
                 1
@@ -670,22 +734,37 @@ impl<'a> Parser<'a> {
     }
 
     fn unexpected(&self, expected: Option<&str>) -> Diagnostic {
+        self.unexpected_at(expected, true)
+    }
+
+    fn unexpected_at(&self, expected: Option<&str>, insertion_position: bool) -> Diagnostic {
         let eof = self.token.kind == Kind::Eof;
         // Pinned Lexer emits STRING_START/STRING_MULTI_START before content.
         // Our lexer coalesces strings, so grammar errors must recover the
         // opening-delimiter token rather than display/highlight the full value.
         let token_span = self.diagnostic_token_span();
-        let token = if eof {
-            "EOF"
+        let token = if eof && insertion_position {
+            PklString::from("EOF")
         } else {
-            &self.lexer.source[token_span.start..token_span.end]
+            self.lexer
+                .source
+                .range(token_span.start..token_span.end)
+                .to_pkl_string()
         };
-        let message = match expected {
-            Some(expected) => format!("Unexpected token `{token}`. Expected `{expected}`."),
-            None if eof => "Unexpected end of file.".to_owned(),
-            None => format!("Unexpected token `{token}`."),
-        };
-        let synthetic = eof || (expected.is_some() && self.gap.newlines > 0);
+        let mut message = PklStringBuilder::default();
+        if eof && expected.is_none() {
+            message.push_str("Unexpected end of file.");
+        } else {
+            message.push_str("Unexpected token `");
+            message.push_value(&token);
+            message.push_str("`.");
+            if let Some(expected) = expected {
+                message.push_str(&format!(" Expected `{expected}`."));
+            }
+        }
+        let message = message.finish();
+        let synthetic =
+            insertion_position && (eof || (expected.is_some() && self.gap.newlines > 0));
         let mut diagnostic = Diagnostic::language(
             DiagnosticOrigin::Parser,
             DiagnosticKind::Syntax,
@@ -709,29 +788,30 @@ impl<'a> Parser<'a> {
         self.advance()
     }
 
-    fn identifier(&mut self) -> Result<(String, Span), Diagnostic> {
-        let (Kind::Name(name) | Kind::QuotedName(name)) = &self.token.kind else {
-            return Err(self.unexpected(Some("identifier")));
-        };
-        if matches!(self.token.kind, Kind::Name(_)) && (is_keyword(name) || name == "_") {
-            if name == "read?" {
+    fn identifier(&mut self) -> Result<(PklString, Span), Diagnostic> {
+        let name = match &self.token.kind {
+            Kind::QuotedName(name) => name.clone(),
+            Kind::Name(name) if is_keyword(name) || name == "_" => {
+                let name = if name == "read?" {
+                    "read_question"
+                } else {
+                    name.as_str()
+                };
                 return Err(Diagnostic::language(
                     DiagnosticOrigin::Parser,
                     DiagnosticKind::Syntax,
                     self.token.span,
-                    "Keyword `read_question` is not allowed here.\n\nIf you must use this name as identifier, enclose it in backticks.",
+                    format!(
+                        "Keyword `{name}` is not allowed here.\n\nIf you must use this name as identifier, enclose it in backticks."
+                    ),
                 ));
             }
-            return Err(Diagnostic::language(
-                DiagnosticOrigin::Parser,
-                DiagnosticKind::Syntax,
-                self.token.span,
-                format!(
-                    "Keyword `{name}` is not allowed here.\n\nIf you must use this name as identifier, enclose it in backticks."
-                ),
-            ));
-        }
-        let name = name.clone();
+            Kind::Name(name) => name.clone().into(),
+            // ParserImpl.parseIdentifier uses parserError with the raw current
+            // FullToken text/span. Only expect() substitutes EOF and inserts a
+            // location after the previous token across EOF or a line boundary.
+            _ => return Err(self.unexpected_at(Some("identifier"), false)),
+        };
         let token = self.advance()?;
         Ok((name, token.span))
     }
@@ -804,7 +884,7 @@ impl<'a> Parser<'a> {
                         _ => None,
                     })
                     .unwrap_or(self.token.span);
-                let prefix = &self.lexer.source[span.start..span.end];
+                let prefix = &self.lexer.source.range(span.start..span.end);
                 let width = 2 + prefix.bytes().skip(1).take_while(|&b| b == b'#').count();
                 Err(Diagnostic::language(
                     DiagnosticOrigin::Parser,
@@ -898,17 +978,9 @@ impl<'a> Parser<'a> {
             let begin = self.advance_constant()?.span.start;
             let (uri, uri_span) = self.string_constant()?;
             let end = uri_span.end;
-            let Some(uri) = uri.as_str() else {
-                return Err(Diagnostic::unsupported(
-                    DiagnosticOrigin::Parser,
-                    "module-uri-utf16",
-                    Span::new(begin, end),
-                    "Module URIs containing unmatched UTF-16 surrogates are not implemented.",
-                ));
-            };
             Some(ModuleParent {
                 kind,
-                uri: uri.to_owned(),
+                uri,
                 span: Span::new(begin, end),
             })
         } else {
@@ -969,25 +1041,13 @@ impl<'a> Parser<'a> {
     }
 
     fn import(&mut self) -> Result<Member, Diagnostic> {
-        let start = self.advance_constant()?.span.start;
-        if self.is_symbol('*') {
-            return Err(Diagnostic::unsupported(
-                DiagnosticOrigin::Parser,
-                "glob-module-import",
-                Span::new(start, self.token.span.end),
-                "Glob module imports are not implemented.",
-            ));
+        let keyword = self.advance_constant()?;
+        let start = keyword.span.start;
+        let glob = self.is_symbol('*') && self.token.span.start == keyword.span.end;
+        if glob {
+            self.advance_constant()?;
         }
         let (uri, uri_span) = self.string_constant()?;
-        let Some(uri) = uri.as_str() else {
-            return Err(Diagnostic::unsupported(
-                DiagnosticOrigin::Parser,
-                "module-uri-utf16",
-                uri_span,
-                "Module URIs containing unmatched UTF-16 surrogates are not implemented.",
-            ));
-        };
-        let uri = uri.to_owned();
         let explicit_alias = self.is_name("as");
         let (name, _) = if explicit_alias {
             self.advance()?;
@@ -996,14 +1056,16 @@ impl<'a> Parser<'a> {
             // Module URI loading is deliberately bounded separately from parsing.
             // Pkl's opaque standard-library URIs use the last dotted segment;
             // hierarchical module URIs use the filename without its extension.
-            let name = if let Some(opaque) = uri.strip_prefix("pkl:") {
-                opaque.rsplit('.').next().unwrap_or(opaque)
+            let source = SourceText::from(uri.clone());
+            let view = source.entire();
+            let name = if let Some(opaque) = view.strip_prefix("pkl:") {
+                opaque.rsplit_once(".").map_or(opaque, |(_, name)| name)
             } else {
-                let path = uri.rsplit('#').next().unwrap_or(&uri);
-                let filename = path.rsplit('/').next().unwrap_or(path);
-                filename.rsplit_once('.').map_or(filename, |(name, _)| name)
+                let path = view.rsplit_once("#").map_or(view, |(_, path)| path);
+                let filename = path.rsplit_once("/").map_or(path, |(_, filename)| filename);
+                filename.rsplit_once(".").map_or(filename, |(name, _)| name)
             };
-            (name.to_owned(), uri_span)
+            (name.to_pkl_string(), uri_span)
         };
         let clause_alias = Some(explicit_alias.then(|| name.clone()));
         let span = Span::new(start, self.previous_end);
@@ -1016,6 +1078,7 @@ impl<'a> Parser<'a> {
             expr: Expr {
                 kind: ExprKind::Import {
                     uri,
+                    glob,
                     uri_span,
                     clause_alias,
                 },
@@ -1092,7 +1155,7 @@ impl<'a> Parser<'a> {
             return Err(self.unexpected(Some("}")));
         }
         let (name, name_span) = self.identifier()?;
-        self.member_path.push(name.clone().into());
+        self.member_path.push(name.clone());
         let mut amendment_body_span = None;
         let (expr, ty) = if class {
             let type_parameters = self.type_parameters()?;
@@ -1237,25 +1300,27 @@ impl<'a> Parser<'a> {
         let header_end = ty.as_ref().map_or(name_span.end, |ty| ty.span.end);
         let override_modifier_span = |word: &str| {
             let source = self.lexer.source;
-            let begin = source[start..header_end]
+            let begin = source
+                .range(start..header_end)
                 .find(word)
                 .map(|offset| start + offset)
                 // String.indexOf returns -1 when repeated flags carry into a
                 // modifier absent from the authored header.
                 .or_else(|| {
-                    source[..start]
-                        .char_indices()
+                    source
+                        .range(..start)
+                        .characters()
                         .next_back()
                         .map(|(index, _)| index)
                 })?;
             let mut end = begin;
             let mut units = 0;
-            for character in source[begin..].chars() {
+            for (_, character) in source.range(begin..).characters() {
                 if units >= word.len() {
                     break;
                 }
                 units += character.len_utf16();
-                end += character.len_utf8();
+                end += character.len_bytes();
             }
             Some(Span::new(begin, end))
         };
@@ -1619,7 +1684,7 @@ impl<'a> Parser<'a> {
                 self.expect('(')?;
                 let name = if self.is_name("_") {
                     self.advance()?;
-                    "_".to_owned()
+                    PklString::from("_")
                 } else {
                     self.identifier()?.0
                 };
@@ -1786,14 +1851,20 @@ impl<'a> Parser<'a> {
                     left.kind,
                     ExprKind::Parenthesized(_) | ExprKind::New { .. } | ExprKind::Object { .. }
                 ) {
-                    let parent = &self.lexer.source[left.span.start..left.span.end];
+                    let parent = self
+                        .lexer
+                        .source
+                        .range(left.span.start..left.span.end)
+                        .to_pkl_string();
+                    let mut message = PklStringBuilder::default();
+                    message.push_str("Unexpected token: `{`.\n\nIf you meant to write an amends expression, wrap the parent in parentheses. Try: `(");
+                    message.push_value(&parent);
+                    message.push_str(") { ... }`");
                     return Err(Diagnostic::language(
                         DiagnosticOrigin::Parser,
                         DiagnosticKind::Syntax,
                         self.token.span,
-                        format!(
-                            "Unexpected token: `{{`.\n\nIf you meant to write an amends expression, wrap the parent in parentheses. Try: `({parent}) {{ ... }}`"
-                        ),
+                        message.finish(),
                     ));
                 }
                 let start = left.span.start;
@@ -1805,7 +1876,11 @@ impl<'a> Parser<'a> {
                     left.kind,
                     ExprKind::Name(_) | ExprKind::Member(_, _) | ExprKind::NullableMember(_, _)
                 ) || (matches!(left.kind, ExprKind::Name(_))
-                    && self.lexer.source[left.span.start..left.span.end].starts_with('('))
+                    && self
+                        .lexer
+                        .source
+                        .range(left.span.start..left.span.end)
+                        .starts_with("("))
                 {
                     // Calls are only postfix syntax on unqualified or qualified
                     // names. Let the enclosing grammar report its own delimiter.
@@ -2081,10 +2156,15 @@ impl<'a> Parser<'a> {
                             DiagnosticOrigin::Parser,
                             DiagnosticKind::Syntax,
                             close.span,
-                            format!(
-                                "Unexpected token `{}`. Expected `]]`.",
-                                &self.lexer.source[close.span.start..self.token.span.end]
-                            ),
+                            PklString::from("Unexpected token `")
+                                .concat(
+                                    &self
+                                        .lexer
+                                        .source
+                                        .range(close.span.start..self.token.span.end)
+                                        .to_pkl_string(),
+                                )
+                                .concat(&"`. Expected `]]`.".into()),
                         ));
                     }
                     self.advance()?;
@@ -2341,7 +2421,7 @@ impl<'a> Parser<'a> {
             self.advance()?;
         }
         let (name, name_span) = self.identifier()?;
-        self.member_path.push(name.clone().into());
+        self.member_path.push(name.clone());
         let (ty, method) = if method {
             let type_parameters_start = self.token.span.start;
             let type_parameters = self.type_parameters()?;
@@ -2426,23 +2506,25 @@ impl<'a> Parser<'a> {
         let header_end = ty.as_ref().map_or(name_span.end, |ty| ty.span.end);
         let modifier_span = |word: &str| {
             let source = self.lexer.source;
-            let begin = source[start..header_end]
+            let begin = source
+                .range(start..header_end)
                 .find(word)
                 .map(|offset| start + offset)
                 .or_else(|| {
-                    source[..start]
-                        .char_indices()
+                    source
+                        .range(..start)
+                        .characters()
                         .next_back()
                         .map(|(index, _)| index)
                 })?;
             let mut end = begin;
             let mut units = 0;
-            for character in source[begin..].chars() {
+            for (_, character) in source.range(begin..).characters() {
                 if units >= word.len() {
                     break;
                 }
                 units += character.len_utf16();
-                end += character.len_utf8();
+                end += character.len_bytes();
             }
             Some(Span::new(begin, end))
         };
@@ -2473,7 +2555,7 @@ impl<'a> Parser<'a> {
     fn parameter(&mut self) -> Result<Parameter, Diagnostic> {
         let (name, span) = if self.is_name("_") {
             let token = self.advance()?;
-            ("_".to_owned(), token.span)
+            (PklString::from("_"), token.span)
         } else {
             self.identifier()?
         };
@@ -2634,22 +2716,18 @@ impl<'a> Parser<'a> {
                 }
             }
             Kind::Name(name) if name == "import" => {
-                self.advance_constant()?;
+                let keyword = self.advance_constant()?;
+                let glob = self.is_symbol('*') && self.token.span.start == keyword.span.end;
+                if glob {
+                    self.advance_constant()?;
+                }
                 self.expect('(')?;
                 let (uri, uri_span) = self.string_constant()?;
-                let Some(uri) = uri.as_str() else {
-                    return Err(Diagnostic::unsupported(
-                        DiagnosticOrigin::Parser,
-                        "module-uri-utf16",
-                        uri_span,
-                        "Module URIs containing unmatched UTF-16 surrogates are not implemented.",
-                    ));
-                };
-                let uri = uri.to_owned();
                 let end = self.expect(')')?.span.end;
                 return Ok(Expr {
                     kind: ExprKind::Import {
                         uri,
+                        glob,
                         uri_span,
                         clause_alias: None,
                     },
@@ -2684,7 +2762,7 @@ impl<'a> Parser<'a> {
                     return Err(self.unexpected(self.expectation.as_deref()));
                 }
                 self.advance()?;
-                ExprKind::Name(name)
+                ExprKind::Name(name.into())
             }
             Kind::Symbol('[') => {
                 return Err(self.unexpected(self.expectation.as_deref()));
@@ -2724,8 +2802,8 @@ fn integer(text: &str, negative: bool, span: Span) -> Result<i64, Diagnostic> {
     })
 }
 
-pub fn parse_module(source: &str) -> Result<Module, Diagnostic> {
-    let module = parse_module_for_evaluation(source)?;
+pub fn parse_module<'a>(source: impl Into<SourceSlice<'a>>) -> Result<Module, Diagnostic> {
+    let module = parse_module_for_evaluation(source).map_err(|failure| failure.diagnostic)?;
     if let Some(error) = module.deferred_diagnostics.first() {
         return Err(error.clone());
     }
@@ -2735,63 +2813,81 @@ pub fn parse_module(source: &str) -> Result<Module, Diagnostic> {
 /// Syntax errors still precede every AST-building effect. Evaluation preserves
 /// deferred AST failures so the shared preparation plan can interleave them
 /// with ModuleKey operations in the upstream visitor's order.
-pub(crate) fn parse_module_for_evaluation(source: &str) -> Result<Module, Diagnostic> {
-    let mut parser = Parser::new(source)?;
-    if parser.token.kind == Kind::Shebang {
-        parser.advance()?;
-    }
-    let documented = parser.doc_comment()?;
-    let annotations = parser.annotations()?;
-    let modifiers = parser.modifiers()?;
-    let has_declaration =
-        parser.is_name("module") || parser.is_name("extends") || parser.is_name("amends");
-    let (declaration, initial) = if has_declaration {
-        (
-            parser.module_declaration(modifiers, annotations, documented)?,
-            None,
-        )
-    } else {
-        (None, Some((modifiers, annotations, documented)))
-    };
-    let mut members = Vec::new();
-    let mut initial = initial;
-    let has_header = initial
-        .as_ref()
-        .is_some_and(|(modifiers, annotations, documented)| {
-            documented.is_some() || !modifiers.is_empty() || !annotations.is_empty()
-        });
-    if has_header && parser.is_name("import") {
-        return Err(Diagnostic::language(
-            DiagnosticOrigin::Parser,
-            DiagnosticKind::Syntax,
-            parser.token.span,
-            "Imports cannot have doc comments, annotations or modifiers.",
-        ));
-    }
-    if has_header && parser.token.kind == Kind::Eof {
-        return Err(Diagnostic::language(
-            DiagnosticOrigin::Parser,
-            DiagnosticKind::Syntax,
-            parser.token.span,
-            "Unexpected end of file.",
-        ));
-    }
-    if !has_header {
-        while parser.is_name("import") {
-            members.push(parser.import()?);
-            initial = None;
+pub(crate) fn parse_module_for_evaluation<'a>(
+    source: impl Into<SourceSlice<'a>>,
+) -> Result<Module, Box<ModuleParseFailure>> {
+    let source = source.into();
+    // The Java parser commits its partial declaration only after this entire
+    // production returns, including lexical lookahead requested by its tokens.
+    let prefix: Result<_, Diagnostic> = (|| {
+        let mut parser = Parser::new(source)?;
+        if parser.token.kind == Kind::Shebang {
+            parser.advance()?;
         }
-    }
-    members.extend(parser.member_list(MemberContext::Module, initial)?);
+        let documented = parser.doc_comment()?;
+        let annotations = parser.annotations()?;
+        let modifiers = parser.modifiers()?;
+        let has_declaration =
+            parser.is_name("module") || parser.is_name("extends") || parser.is_name("amends");
+        let (declaration, initial) = if has_declaration {
+            (
+                parser.module_declaration(modifiers, annotations, documented)?,
+                None,
+            )
+        } else {
+            (None, Some((modifiers, annotations, documented)))
+        };
+        Ok((parser, declaration, initial))
+    })();
+    let (mut parser, declaration, mut initial) =
+        prefix.map_err(|diagnostic| ModuleParseFailure::new(diagnostic, source, None))?;
+    let members: Result<_, Diagnostic> = (|| {
+        let mut members = Vec::new();
+        let has_header = initial
+            .as_ref()
+            .is_some_and(|(modifiers, annotations, documented)| {
+                documented.is_some() || !modifiers.is_empty() || !annotations.is_empty()
+            });
+        if has_header && parser.is_name("import") {
+            return Err(Diagnostic::language(
+                DiagnosticOrigin::Parser,
+                DiagnosticKind::Syntax,
+                parser.token.span,
+                "Imports cannot have doc comments, annotations or modifiers.",
+            ));
+        }
+        if has_header && parser.token.kind == Kind::Eof {
+            return Err(Diagnostic::language(
+                DiagnosticOrigin::Parser,
+                DiagnosticKind::Syntax,
+                parser.token.span,
+                "Unexpected end of file.",
+            ));
+        }
+        if !has_header {
+            while parser.is_name("import") {
+                members.push(parser.import()?);
+                initial = None;
+            }
+        }
+        members.extend(parser.member_list(MemberContext::Module, initial)?);
+        Ok(members)
+    })();
+    let members = match members {
+        Ok(members) => members,
+        Err(diagnostic) => {
+            return Err(ModuleParseFailure::new(diagnostic, source, declaration));
+        }
+    };
     for error in &mut parser.pending {
         error.module_name = declaration
             .as_ref()
             .and_then(|declaration| declaration.name.as_ref())
-            .map(|name| name.join(".").into_boxed_str());
+            .map(|name| Box::new(PklString::join(name, ".")));
     }
     Ok(Module {
         deferred_diagnostics: parser.pending,
-        source: std::sync::Arc::from(source),
+        source: SourceText::from(source.to_pkl_string()),
         declaration,
         members,
         folded_integer_spans: parser.folded_integer_spans,
@@ -2812,6 +2908,14 @@ pub fn parse_expression(source: &str) -> Result<Expr, Diagnostic> {
     parse_expression_with_metadata(source).map(|parsed| parsed.expression)
 }
 
+pub(crate) fn parse_expression_source(source: SourceSlice<'_>) -> Result<Expr, Diagnostic> {
+    let parsed = parse_expression_for_evaluation(source)?;
+    if let Some(error) = parsed.deferred_diagnostics.first() {
+        return Err(error.clone());
+    }
+    Ok(parsed.expression)
+}
+
 pub(crate) fn parse_expression_with_metadata(source: &str) -> Result<ParsedExpression, Diagnostic> {
     let parsed = parse_expression_for_evaluation(source)?;
     if let Some(error) = parsed.deferred_diagnostics.first() {
@@ -2820,8 +2924,8 @@ pub(crate) fn parse_expression_with_metadata(source: &str) -> Result<ParsedExpre
     Ok(parsed)
 }
 
-pub(crate) fn parse_expression_for_evaluation(
-    source: &str,
+pub(crate) fn parse_expression_for_evaluation<'a>(
+    source: impl Into<SourceSlice<'a>>,
 ) -> Result<ParsedExpression, Diagnostic> {
     let mut parser = Parser::new(source)?;
     let expression = parser.expression(0)?;
@@ -2850,6 +2954,27 @@ mod tests {
         }
         assert!(parse_module("`\u{10400}` = 1").is_ok());
         let error = parse_module("\u{10400} = 1").unwrap_err();
-        assert_eq!(error.message, "Invalid identifier `?`.");
+        // The same Java message has a replacement byte in UTF8 and retains
+        // D801 in UTF16. Compare both complete channels from the actual oracle.
+        assert_eq!(
+            error.message.to_java_utf8().as_bytes(),
+            b"Invalid identifier `?`."
+        );
+        assert_eq!(
+            error.message.to_java_utf8().as_bytes(),
+            include_bytes!(
+                "../tests/fixtures/m2-supplementary-identifier/parser/error.message.bin"
+            )
+        );
+        assert_eq!(
+            error
+                .message
+                .encode_utf16()
+                .flat_map(u16::to_be_bytes)
+                .collect::<Vec<_>>(),
+            include_bytes!(
+                "../tests/fixtures/m2-supplementary-identifier/parser/error.message.code-units.bin"
+            )
+        );
     }
 }

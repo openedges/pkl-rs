@@ -36,6 +36,14 @@ fn file_uri(path: &Path) -> Result<String, ProbeError> {
     })?;
     pkl_runtime::modules::original_file_uri(path)
         .map_err(|error| ProbeError::Unsupported(format!("{error:?}")))
+        .and_then(|uri| {
+            uri.as_str().map(str::to_owned).ok_or_else(|| {
+                ProbeError::Unsupported(
+                    "The scalar module probe cannot represent an unpaired UTF-16 URI surrogate."
+                        .into(),
+                )
+            })
+        })
 }
 
 fn run(arguments: &[String]) -> Result<i32, ProbeError> {

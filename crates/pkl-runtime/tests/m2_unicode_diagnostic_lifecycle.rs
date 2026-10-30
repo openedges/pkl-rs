@@ -59,7 +59,7 @@ fn recover() {
     ] {
         let expression = nested(prefix, "42", suffix, depth);
         assert_eq!(
-            pkl_runtime::probe::evaluate_member(&format!("result = {expression}\n"), "result"),
+            pkl_runtime::probe::evaluate_member(format!("result = {expression}\n"), "result"),
             Ok(Value::String("42".into()))
         );
     }
@@ -78,9 +78,27 @@ fn unterminated_unicode(text: &str) -> String {
 }
 
 fn rejected(expression: &str, message: &str, span: Span) {
+    rejected_utf16(
+        expression,
+        message,
+        &message.encode_utf16().collect::<Vec<_>>(),
+        span,
+    );
+}
+
+fn rejected_utf16(expression: &str, message: &str, message_utf16: &[u16], span: Span) {
     let error = parse_expression(expression).unwrap_err();
     assert_eq!(error.kind, DiagnosticKind::Syntax, "{expression:?}");
-    assert_eq!(error.message, message, "{expression:?}");
+    assert_eq!(
+        error.message.to_java_utf8().as_bytes(),
+        message.as_bytes(),
+        "{expression:?}"
+    );
+    assert_eq!(
+        error.message.encode_utf16().collect::<Vec<_>>(),
+        message_utf16,
+        "{expression:?}"
+    );
     assert_eq!(error.span, span, "{expression:?}");
     drop(error);
     // A complete depth31 sibling and Unicode source prefix must be dropped
@@ -91,7 +109,16 @@ fn rejected(expression: &str, message: &str, span: Span) {
     );
     let error = parse_module(&format!("{header}{expression}")).unwrap_err();
     assert_eq!(error.kind, DiagnosticKind::Syntax, "{expression:?}");
-    assert_eq!(error.message, message, "{expression:?}");
+    assert_eq!(
+        error.message.to_java_utf8().as_bytes(),
+        message.as_bytes(),
+        "{expression:?}"
+    );
+    assert_eq!(
+        error.message.encode_utf16().collect::<Vec<_>>(),
+        message_utf16,
+        "{expression:?}"
+    );
     assert_eq!(
         error.span,
         Span::new(header.len() + span.start, header.len() + span.end)
@@ -233,11 +260,6 @@ fn unicode_lexical_boundaries_byte_spans_and_guard_cleanup_on_small_stack() {
                     Span::new(3, 4),
                 ),
                 (
-                    "\"\\u😀\"",
-                    "Unexpected character `?`. Did you mean `{`?".into(),
-                    Span::new(3, 7),
-                ),
-                (
                     "##\"\\##u!\"##",
                     "Unexpected character `!`. Did you mean `{`?".into(),
                     Span::new(7, 8),
@@ -267,6 +289,21 @@ fn unicode_lexical_boundaries_byte_spans_and_guard_cleanup_on_small_stack() {
             ] {
                 rejected(expression, &message, span);
             }
+            // Java Lexer reads char[] and unexpectedChar passes the first char
+            // (D83D) to MessageFormat. Its UTF8 display is `?`; its String retains
+            // that raw code unit. The full UTF8 message is also retained in the
+            // string-stage28-missing-brace-supplementary Java fixture.
+            let message_utf16 = "Unexpected character `"
+                .encode_utf16()
+                .chain([0xd83d])
+                .chain("`. Did you mean `{`?".encode_utf16())
+                .collect::<Vec<_>>();
+            rejected_utf16(
+                "\"\\u😀\"",
+                "Unexpected character `?`. Did you mean `{`?",
+                &message_utf16,
+                Span::new(3, 7),
+            );
             let error = parse_expression("\"\\u😀\"").unwrap_err();
             assert_eq!(error.highlight_length_utf16, Some(1));
             drop(error);

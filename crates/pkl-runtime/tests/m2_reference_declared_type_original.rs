@@ -49,7 +49,7 @@ fn original_reference_full_output_matches_java() {
                 const SNIPPET_URI: &str = "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/snippetTest.pkl";
                 let completion = match &request.kind {
                     ModuleRequestKind::Resolve { original_uri, .. }
-                        if original_uri.as_ref() == SNIPPET_URI =>
+                        if original_uri == SNIPPET_URI =>
                     {
                         ModuleCompletion::Resolved(Ok(ResolvedModule {
                             original_uri: original_uri.clone(),
@@ -58,7 +58,7 @@ fn original_reference_full_output_matches_java() {
                         }))
                     }
                     ModuleRequestKind::LoadSource { resolved, .. }
-                        if resolved.original_uri.as_ref() == SNIPPET_URI =>
+                        if resolved.original_uri == SNIPPET_URI =>
                     {
                         ModuleCompletion::Source(Ok(ModuleSource {
                             text: include_str!("../../../tests/fixtures/m2-reference-declared-type/original-output/snippetTest.pkl").into(),

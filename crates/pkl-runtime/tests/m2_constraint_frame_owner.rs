@@ -79,13 +79,13 @@ fn inherited_primary_declaration_remains_primary_with_a_foreign_value_body() {
         let first = &error.frames[0];
         assert_eq!(first.member.as_str(), Some("#Base.value"));
         let source = first.source.as_ref().unwrap();
-        assert_eq!(&*source.module_name, "primary");
-        assert_eq!(&*source.uri, "file:///declarations.pkl");
+        assert_eq!(source.module_name, "primary");
+        assert_eq!(source.uri, "file:///declarations.pkl");
         assert!(error.frames.iter().any(|frame| {
             frame
                 .source
                 .as_ref()
-                .is_some_and(|source| &*source.module_name == "foreign")
+                .is_some_and(|source| source.module_name == "foreign")
         }));
     }
     vm.close();

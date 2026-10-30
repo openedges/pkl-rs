@@ -198,7 +198,7 @@ fn ready(session: &mut HostSession, now: u64) -> Result<Value, RuntimeError> {
 fn request(session: &mut HostSession, now: u64, expected_uri: &str) -> String {
     match event(session, now) {
         HostPoll::Read { token, uri } => {
-            assert_eq!(&*uri, expected_uri);
+            assert_eq!(uri, expected_uri);
             token
         }
         event => panic!("expected {expected_uri}, got {event:?}"),

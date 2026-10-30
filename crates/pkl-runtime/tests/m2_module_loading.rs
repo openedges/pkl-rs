@@ -1,6 +1,5 @@
 #[path = "support/module_keys.rs"]
 mod module_keys;
-use std::sync::Arc;
 
 use pkl_runtime::evaluation::frontend::{
     ModuleEvalOptions, ModuleSourceInput, evaluate_module_output_with_host,
@@ -17,7 +16,8 @@ fn resolve(request: &ModuleRequest, canonical: Option<&str>) -> ModuleCompletion
     let ModuleRequestKind::Resolve { original_uri, .. } = &request.kind else {
         panic!("resolve request");
     };
-    let resolved_uri: Arc<str> = canonical.map_or_else(|| original_uri.clone(), Arc::from);
+    let resolved_uri: pkl_runtime::value::PklString =
+        canonical.map_or_else(|| original_uri.clone(), Into::into);
     ModuleCompletion::Resolved(Ok(ResolvedModule {
         original_uri: original_uri.clone(),
         source_uri: resolved_uri.clone(),
@@ -69,7 +69,7 @@ fn original_three_import_sources_use_actual_output_and_shared_imported_scope() {
                     panic!("unexpected ModuleKey preparation in this fixture")
                 }
                 ModuleRequestKind::Resolve { original_uri, .. } => {
-                    assert_eq!(original_uri.as_ref(), "file:///corpus/basic/imported.pkl");
+                    assert_eq!(original_uri, "file:///corpus/basic/imported.pkl");
                     resolves += 1;
                     resolve(request, None)
                 }
@@ -111,6 +111,9 @@ fn settle(
 ) -> Result<Value, RuntimeError> {
     for _ in 0..100_000 {
         match session.poll(0, 16) {
+            pkl_runtime::host::HostPoll::Glob { .. } => {
+                panic!("unexpected glob request in non-glob regression")
+            }
             HostPoll::Ready(value) => return value,
             HostPoll::Module { token, request } => {
                 let completion = module_keys::defaults(&request).unwrap_or_else(|| host(&request));
@@ -586,8 +589,8 @@ fn imported_error_keeps_declared_module_and_original_display_source() {
         .source
         .as_ref()
         .expect("foreign error source");
-    assert_eq!(source.module_name.as_ref(), "declared.child");
-    assert_eq!(source.uri.as_ref(), "file:///loader/alias.pkl");
+    assert_eq!(source.module_name, "declared.child");
+    assert_eq!(source.uri, "file:///loader/alias.pkl");
     assert_eq!(error.frames[0].member.to_java_utf8(), "#C.x");
     assert!(
         error
@@ -610,7 +613,7 @@ fn original_unicode_primary_uri_keeps_the_complete_java_output_error() {
             text: include_str!(
                 "../../../external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語_error.pkl"
             ),
-            uri: &uri,
+            uri: uri.as_str().expect("original_file_uri fixture is scalar"),
             inferred_name: "日本語_error",
         },
         &ModuleEvalOptions::default(),
@@ -765,7 +768,7 @@ fn imported_resource_read_keeps_module_key_separate_from_display_and_resolved_ur
                     .unwrap();
             }
             HostPoll::Read { token, uri } => {
-                assert_eq!(uri.as_ref(), "../data/value.txt");
+                assert_eq!(uri, "../data/value.txt");
                 break token;
             }
             HostPoll::Yielded => {
@@ -784,7 +787,7 @@ fn imported_resource_read_keeps_module_key_separate_from_display_and_resolved_ur
         "The default resource Host does not yet implement allowed `file` reads (`file:///data/value.txt`)."
     );
     assert_eq!(
-        error.frames[0].source.as_ref().unwrap().uri.as_ref(),
+        error.frames[0].source.as_ref().unwrap().uri,
         "https://display.invalid/dep.pkl"
     );
     session.close();

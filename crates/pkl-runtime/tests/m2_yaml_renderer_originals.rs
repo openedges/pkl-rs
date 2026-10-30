@@ -64,10 +64,10 @@ fn check(label: &str, source: &str, uri: &str, exit: i32, stdout: &[u8], stderr:
                     ModuleRequestKind::HasElement { element_uri, .. } => {
                         ModuleCompletion::HasElement(Ok(modules
                             .iter()
-                            .any(|row| row[0] == element_uri.as_ref())))
+                            .any(|row| element_uri == row[0])))
                     }
                     ModuleRequestKind::Resolve { original_uri, .. }
-                        if modules.iter().any(|row| row[0] == original_uri.as_ref()) =>
+                        if modules.iter().any(|row| original_uri == row[0]) =>
                     {
                         ModuleCompletion::Resolved(Ok(ResolvedModule {
                             original_uri: original_uri.clone(),
@@ -76,13 +76,11 @@ fn check(label: &str, source: &str, uri: &str, exit: i32, stdout: &[u8], stderr:
                         }))
                     }
                     ModuleRequestKind::LoadSource { resolved, .. }
-                        if modules
-                            .iter()
-                            .any(|row| row[0] == resolved.original_uri.as_ref()) =>
+                        if modules.iter().any(|row| resolved.original_uri == row[0]) =>
                     {
                         let row = modules
                             .iter()
-                            .find(|row| row[0] == resolved.original_uri.as_ref())
+                            .find(|row| resolved.original_uri == row[0])
                             .unwrap();
                         ModuleCompletion::Source(Ok(ModuleSource {
                             text: fs::read_to_string(root.join(row[1])).unwrap().into(),

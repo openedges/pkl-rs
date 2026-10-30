@@ -37,7 +37,7 @@ pub(super) struct LookupRun {
     phase: Phase,
     empty_wrappers: Vec<ObjectId>,
     seen: BTreeSet<ObjectId>,
-    steal: Option<(Arc<str>, Vec<ObjectId>, usize, bool)>,
+    steal: Option<(PklString, Vec<ObjectId>, usize, bool)>,
     value: Option<Value>,
     repeated_cache: bool,
 }
@@ -96,7 +96,7 @@ pub(super) fn blocks(
             ],
         ),
     ] {
-        let start = class + source.text[class..].find(signature).unwrap();
+        let start = class + source.text.entire().range(class..).find(signature).unwrap();
         let block = blocks.len();
         let len = code.len();
         blocks.push(code);
@@ -343,7 +343,7 @@ impl Vm {
             return Ok(());
         }
         let object = self.heap.get(owner)?;
-        let candidates: Vec<(Value, Arc<str>, Option<Value>)> = match phase {
+        let candidates: Vec<(Value, PklString, Option<Value>)> = match phase {
             Phase::Cache(_) => {
                 let indices = if object.cache_index.has_hash() {
                     object
@@ -816,6 +816,7 @@ impl Vm {
                     .value_span
                     .or(metadata.declaration)
                     .map(|span| RuntimeFrame {
+                        anonymous: false,
                         source: metadata.source.clone(),
                         span,
                         member: metadata.member.clone(),

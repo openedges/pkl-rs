@@ -100,7 +100,7 @@ fn run(program: &str, count: usize, power_assertions: bool) {
                     let request = probe.module_request(token).unwrap();
                     match request.kind {
                         ModuleRequestKind::Resolve { original_uri, .. } => {
-                            assert_eq!(original_uri.as_ref(), auxiliary_uri);
+                            assert_eq!(original_uri, auxiliary_uri);
                             probe
                                 .complete_module_resolution(
                                     token,
@@ -112,7 +112,7 @@ fn run(program: &str, count: usize, power_assertions: bool) {
                                 .unwrap();
                         }
                         ModuleRequestKind::LoadSource { resolved, .. } => {
-                            assert_eq!(resolved.original_uri.as_ref(), auxiliary_uri);
+                            assert_eq!(resolved.original_uri, auxiliary_uri);
                             let text = fs::read_to_string(
                                 root().join("provenance/review99-auxiliary/cached-failure.pkl"),
                             )

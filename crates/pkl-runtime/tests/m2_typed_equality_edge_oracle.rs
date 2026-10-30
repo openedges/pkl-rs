@@ -97,12 +97,11 @@ fn run(program: &str) {
                     let request = probe.module_request(token).unwrap();
                     match request.kind {
                         ModuleRequestKind::Resolve { original_uri, .. } => {
-                            assert!(
-                                modules
-                                    .lines()
-                                    .any(|line| line.split('\t').next()
-                                        == Some(original_uri.as_ref()))
-                            );
+                            assert!(modules.lines().any(|line| {
+                                line.split('\t')
+                                    .next()
+                                    .is_some_and(|value| original_uri == value)
+                            }));
                             probe
                                 .complete_module_resolution(
                                     token,
@@ -117,7 +116,7 @@ fn run(program: &str) {
                             let entry = modules
                                 .lines()
                                 .map(|line| line.split('\t').collect::<Vec<_>>())
-                                .find(|row| row[0] == resolved.original_uri.as_ref())
+                                .find(|row| resolved.original_uri == row[0])
                                 .expect("pinned sibling module");
                             let text = fs::read_to_string(root().join(entry[1])).unwrap();
                             probe

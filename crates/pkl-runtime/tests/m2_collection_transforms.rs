@@ -403,7 +403,7 @@ fn ready_rooted(vm: &mut Vm, external_roots: &[Value]) -> Result<Value, RuntimeE
 fn read(vm: &mut Vm, uri: &str) -> u64 {
     match event(vm) {
         VmPoll::Pending(request) => {
-            assert_eq!(&*request.uri, uri);
+            assert_eq!(request.uri, uri);
             request.id
         }
         other => panic!("expected {uri}: {other:?}"),
@@ -492,7 +492,7 @@ fn host_ready_rooted(
 fn host_read(session: &mut HostSession, uri: &str) -> String {
     match host_event(session) {
         HostPoll::Read { token, uri: actual } => {
-            assert_eq!(&*actual, uri);
+            assert_eq!(actual, uri);
             token
         }
         other => panic!("expected {uri}: {other:?}"),
@@ -962,9 +962,7 @@ fn public_event(probe: &mut pkl_runtime::probe::SourceProbe) -> pkl_runtime::pro
             let token = event.token.as_deref().unwrap();
             let request = probe.module_request(token).unwrap();
             let completion = match &request.kind {
-                ModuleRequestKind::QueryCachePolicy { key }
-                    if key.uri.as_ref() == "memo:/child.pkl" =>
-                {
+                ModuleRequestKind::QueryCachePolicy { key } if key.uri == "memo:/child.pkl" => {
                     Some(ModuleCompletion::CachePolicy(Ok(false)))
                 }
                 ModuleRequestKind::Resolve {

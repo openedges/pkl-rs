@@ -50,7 +50,7 @@ fn ready(session: &mut HostSession, roots: &[Value]) -> Result<Value, RuntimeErr
 fn read(session: &mut HostSession, roots: &[Value], expected: &str) -> String {
     match event(session, roots) {
         HostPoll::Read { token, uri } => {
-            assert_eq!(&*uri, expected);
+            assert_eq!(uri, expected);
             token
         }
         event => panic!("unexpected {event:?}"),
@@ -201,7 +201,7 @@ fn flat_map_inner_result_survives_every_instruction_gc_and_cancelled_builder_is_
                 assert!(yielded_prefixes < 2_000, "bounded inner-drain interval");
             }
             VmPoll::Pending(request) => {
-                assert_eq!(&*request.uri, "mem:second");
+                assert_eq!(request.uri, "mem:second");
                 break request.id;
             }
             other => panic!("unexpected before second callback: {other:?}"),
@@ -224,7 +224,7 @@ fn flat_map_inner_result_survives_every_instruction_gc_and_cancelled_builder_is_
             match vm.poll(1) {
                 VmPoll::Yielded => {}
                 VmPoll::Pending(request) => {
-                    assert_eq!(&*request.uri, "mem:second");
+                    assert_eq!(request.uri, "mem:second");
                     pending = Some(request.id);
                     break;
                 }
@@ -249,7 +249,7 @@ fn flat_map_inner_result_survives_every_instruction_gc_and_cancelled_builder_is_
         vm.start(result, vec![module.clone()]).unwrap();
         let token = match vm_event(&mut vm, &roots) {
             VmPoll::Pending(request) => {
-                assert_eq!(&*request.uri, "mem:second");
+                assert_eq!(request.uri, "mem:second");
                 request.id
             }
             other => panic!("{other:?}"),

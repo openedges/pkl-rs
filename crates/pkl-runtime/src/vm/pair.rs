@@ -7,7 +7,7 @@ pub(super) fn constructor_block(
     let source = crate::stdlib_sources::base();
     let declaration = "external const function Pair";
     let start = source.text.find(declaration).expect("Pair constructor");
-    let end = start + source.text[start..].find('\n').unwrap();
+    let end = start + source.text.entire().range(start..).find("\n").unwrap();
     let block = blocks.len();
     blocks.push(vec![
         Instruction::LoadLocal(1),

@@ -1,0 +1,1102 @@
+{
+  "schema": 1,
+  "stage": "Stage122",
+  "baseline": "Pkl 0.32.0",
+  "status": "bounded local implementation checkpoint verified; whole M2 remains incomplete",
+  "local_environment": {
+    "host_recorded": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "rust_toolchain": "1.98.1",
+    "recorded_source_parent": "c5cb95c0431fb8255d42edab79befe5af96dfd1f",
+    "recorded_source_parent_is_final_source_commit": false,
+    "Linux_execution_claimed": false,
+    "Windows_execution_claimed": false,
+    "hosted_CI_claimed": false
+  },
+  "reference_and_contract_pins": {
+    "references.lock": {
+      "path": "references.lock",
+      "bytes": 648,
+      "mode": 420,
+      "sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b"
+    },
+    "oracle.lock.json": {
+      "path": "oracle.lock.json",
+      "bytes": 4421,
+      "mode": 420,
+      "sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b"
+    },
+    "rust-toolchain.toml": {
+      "path": "rust-toolchain.toml",
+      "bytes": 123,
+      "mode": 420,
+      "sha256": "04ab0c8ee214f246c7c53bdfba7ba80a93dad65da5b8455edf17c5ec226d5b20"
+    },
+    "Cargo.lock": {
+      "path": "Cargo.lock",
+      "bytes": 10810,
+      "mode": 420,
+      "sha256": "dea899bd2f72bdcb392165a4f3aac11ce9dcd7482ad95e526ea66acf1bcf589b"
+    },
+    "compatibility/m2-language.json": {
+      "path": "compatibility/m2-language.json",
+      "bytes": 6833023,
+      "mode": 420,
+      "sha256": "defd742589b86cc9d208169d80c60a8033f6d6be5eadf5c0303f35915666381a"
+    },
+    "compatibility/m2-mappings.json": {
+      "path": "compatibility/m2-mappings.json",
+      "bytes": 514660,
+      "mode": 420,
+      "sha256": "e8fdf2e336f093e034c4d31c287267271b477cbd783f1cc69136604877b00ed4"
+    },
+    "tools/m2_manifest.py": {
+      "path": "tools/m2_manifest.py",
+      "bytes": 20690,
+      "mode": 420,
+      "sha256": "3e055682dd412c4c5d22c2dac93ec785b7daf8197996b9a0c69fe9348f02bc39"
+    }
+  },
+  "source_provenance": {
+    "runtime_files_frozen": 150,
+    "core_runtime_and_binding_files_frozen": 152,
+    "checks06_declared_inputs": 2083,
+    "checks06_scope": "All crate/xtask Rust, bundled Pkl, selected binary source inputs and exact new Stage122 fixture rows. Not a complete transitive Python or old runtime fixture freeze; exact three reviewed test/driver repairs refreshed; original inventory omissions preserved.",
+    "source_epochs_preserved": true,
+    "continuation_delta_is_full_implementation_roster": false,
+    "final_implementation_roster": {
+      "path": "target/m2/stage122-final-implementation-roster-02/implementation.json",
+      "bytes": 442726,
+      "mode": 420,
+      "sha256": "0d2aca74395b1720bd64f2b276e7c4a551ab4f823911b191becbb6313c4e154b"
+    },
+    "final_source_catalog": {
+      "path": "target/m2/stage122-publication-catalog-prep-03/archive-interface-metadata-pins.json",
+      "bytes": 3205,
+      "mode": 420,
+      "sha256": "be43759e4bc66bdac09b9779500714355da162be54f5000b4908caa65502ca5d"
+    },
+    "root_catalog_finalization_pending": false,
+    "cargo_cache_reused_in_place": "target/m2/stage122-canonical-cargo-05",
+    "fresh_complete_compiler_inventory_claimed": false,
+    "fresh_native_compile_claimed": false,
+    "index_source_bindings": {
+      "path": "target/m2/stage122-index-implementation-readback-01/source-bindings.json",
+      "bytes": 605094,
+      "mode": 420,
+      "sha256": "1605f11dce3474407ba6095eb68396f159b81ef8f46b19457b782e74b24f199b"
+    },
+    "indexed_implementation_changed_paths": 1835,
+    "catalog_annotation_addenda": [
+      {
+        "path": "target/m2/stage122-publication-catalog-prep-03/source-epochs.json",
+        "field": "portable_capture03",
+        "retained_annotation": "Chromium capture04 and its final readback remain pending.",
+        "final_state": "Capture04 remains an incomplete 2 GiB failure; its 701 qualified processes plus capture05 fresh63 complete the independently verified Chromium scope.",
+        "authority": {
+          "path": "target/m2/stage122-portable-composed05-independent-readback-01/report.json",
+          "bytes": 7769,
+          "mode": 420,
+          "sha256": "4f8afccdbaff8927c983bc32a19384dc063f3f8631ea8f84d13c656f517576f1"
+        }
+      }
+    ]
+  },
+  "harness_coverage": {
+    "composed_harnesses_pass": true,
+    "composed_workspace_command_pass": null,
+    "harnesses": 285,
+    "reused04": 198,
+    "passed05": 85,
+    "fresh_repaired06": 2,
+    "outer_totals": {
+      "passed": 1779,
+      "failed": 0,
+      "ignored": 5,
+      "measured": 0,
+      "filtered_out": 0
+    },
+    "ignored_counted_as_pass": false,
+    "nested_child_repeats_excluded": true,
+    "original_checks04_forced_exit": -15,
+    "original_checks05_cargo_exit_code": null,
+    "original_checks05_cargo_exit_status_observed": false,
+    "original_checks05_cargo_command_outcome": "inconclusive",
+    "reflection_actual_test_harness_exit_code": 0,
+    "reflection_actual_raw_passes": 5,
+    "reflection_actual_raw_elapsed_seconds": 3151.57,
+    "original_producer_incomplete_preserved": true,
+    "failed_observer_preserved": true,
+    "observer_failure_cause": "live-process identity assertion; defunct-process explanation unproven",
+    "monitoring_gap_preserved": true,
+    "continuous_original_resource_bounds_claimed": false,
+    "fresh_full_workspace_cargo_pass": false
+  },
+  "checks06": {
+    "actual_complete": true,
+    "all_seven_commands_exit_zero": true,
+    "whole_repaired_test_targets": 2,
+    "commands": [
+      {
+        "name": "xtask",
+        "argv": [
+          "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+          "xtask",
+          "verify"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "format",
+        "argv": [
+          "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "clippy",
+        "argv": [
+          "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--keep-going",
+          "--message-format=json",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "target-15-m2_resources-test",
+        "argv": [
+          "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+          "test",
+          "-p",
+          "pkl-runtime",
+          "--test",
+          "m2_resources",
+          "--locked"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "target-76-m2_unicode_diagnostic_lifecycle-test",
+        "argv": [
+          "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+          "test",
+          "-p",
+          "pkl-runtime",
+          "--test",
+          "m2_unicode_diagnostic_lifecycle",
+          "--locked"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "wasm",
+        "argv": [
+          "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+          "check",
+          "-p",
+          "pkl-runtime",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--locked"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "manifest-freshness",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-B",
+          "tools/m2_manifest.py",
+          "--check"
+        ],
+        "exit_code": 0
+      }
+    ],
+    "non_workspace_checks": 5
+  },
+  "ready_replay": {
+    "ordered_case_results": 4442,
+    "status_counts": {
+      "candidate-unsupported": 74,
+      "mismatch": 15,
+      "oracle-error": 2,
+      "pass": 4351
+    },
+    "Stage121_previous_pass_regressions": [],
+    "metamorphic_required": 88,
+    "metamorphic_pass": 88,
+    "new_raw_matching_originals": [
+      {
+        "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/Resource.pkl",
+        "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/Resource.pkl",
+        "source": {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/Resource.pkl",
+          "bytes": 1010,
+          "mode": 420,
+          "sha256": "c90d4246d38f3dada6a0c5b87a5b2d15826e7ef2e425955348aec3fb120f3e20"
+        },
+        "prior_status": "candidate-unsupported",
+        "actual_status": "pass",
+        "required": true,
+        "execution_state": "ready",
+        "current_requirement_links": []
+      },
+      {
+        "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/mathModule.pkl",
+        "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/mathModule.pkl",
+        "source": {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/mathModule.pkl",
+          "bytes": 3483,
+          "mode": 420,
+          "sha256": "019c0af43ab803f63713c9dc0ad07bda76a09a38b587a7dfdd07887b0c103450"
+        },
+        "prior_status": "candidate-unsupported",
+        "actual_status": "pass",
+        "required": true,
+        "execution_state": "ready",
+        "current_requirement_links": []
+      },
+      {
+        "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/cannotAssignFixedProperty3.pkl",
+        "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/cannotAssignFixedProperty3.pkl",
+        "source": {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/cannotAssignFixedProperty3.pkl",
+          "bytes": 87,
+          "mode": 420,
+          "sha256": "f9c760c9b5d11f9ea40a00b11f1781f46ca933bdfbffe8fba09f84bf8e7cd3b6"
+        },
+        "prior_status": "mismatch",
+        "actual_status": "pass",
+        "required": true,
+        "execution_state": "ready",
+        "current_requirement_links": []
+      },
+      {
+        "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidFileUri2.pkl",
+        "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidFileUri2.pkl",
+        "source": {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidFileUri2.pkl",
+          "bytes": 36,
+          "mode": 420,
+          "sha256": "d72396387dc860b678ec9036c6a301853bdd321d2ad56b5bfb3dd7fecb7919e5"
+        },
+        "prior_status": "candidate-unsupported",
+        "actual_status": "pass",
+        "required": true,
+        "execution_state": "ready",
+        "current_requirement_links": []
+      },
+      {
+        "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidGlobImport4.pkl",
+        "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidGlobImport4.pkl",
+        "source": {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidGlobImport4.pkl",
+          "bytes": 71,
+          "mode": 420,
+          "sha256": "27be6ae2b09690746cb43a1ae3c462991717ac143b6cfb7dbdaf4d4ec4257ca1"
+        },
+        "prior_status": "candidate-unsupported",
+        "actual_status": "pass",
+        "required": true,
+        "execution_state": "ready",
+        "current_requirement_links": []
+      },
+      {
+        "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidGlobImport7.pkl",
+        "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidGlobImport7.pkl",
+        "source": {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidGlobImport7.pkl",
+          "bytes": 84,
+          "mode": 420,
+          "sha256": "4c2b7d963637fe455bea1c1eb2d1b7431862da5a1fe9003973901420fce2503b"
+        },
+        "prior_status": "candidate-unsupported",
+        "actual_status": "pass",
+        "required": true,
+        "execution_state": "ready",
+        "current_requirement_links": []
+      },
+      {
+        "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidGlobImport8.pkl",
+        "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidGlobImport8.pkl",
+        "source": {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidGlobImport8.pkl",
+          "bytes": 133,
+          "mode": 420,
+          "sha256": "f4bf315e8b560dcc59206fb715753279942f6b9a543167a8db1a8ce6a02b993e"
+        },
+        "prior_status": "candidate-unsupported",
+        "actual_status": "pass",
+        "required": true,
+        "execution_state": "ready",
+        "current_requirement_links": []
+      },
+      {
+        "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidGlobRead1.pkl",
+        "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidGlobRead1.pkl",
+        "source": {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidGlobRead1.pkl",
+          "bytes": 30,
+          "mode": 420,
+          "sha256": "9c85ab3133d2a1c486c6107458629b442f045ed758238027fcb882ad674eaf29"
+        },
+        "prior_status": "candidate-unsupported",
+        "actual_status": "pass",
+        "required": true,
+        "execution_state": "ready",
+        "current_requirement_links": []
+      },
+      {
+        "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidGlobRead2.pkl",
+        "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidGlobRead2.pkl",
+        "source": {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidGlobRead2.pkl",
+          "bytes": 31,
+          "mode": 420,
+          "sha256": "6d685ab198cf6aff01bb96224eb5d5eb7dca121d740fb63b23d03aeff0781525"
+        },
+        "prior_status": "candidate-unsupported",
+        "actual_status": "pass",
+        "required": true,
+        "execution_state": "ready",
+        "current_requirement_links": []
+      },
+      {
+        "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidGlobRead3.pkl",
+        "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidGlobRead3.pkl",
+        "source": {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidGlobRead3.pkl",
+          "bytes": 45,
+          "mode": 420,
+          "sha256": "c02b15eed9f9de3db8212a667216961b6eafe9ea9ac0ee975fc27fc7a82e809e"
+        },
+        "prior_status": "candidate-unsupported",
+        "actual_status": "pass",
+        "required": true,
+        "execution_state": "ready",
+        "current_requirement_links": []
+      },
+      {
+        "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/moduleWithHighMinPklVersionAndParseErrors.pkl",
+        "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/moduleWithHighMinPklVersionAndParseErrors.pkl",
+        "source": {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/moduleWithHighMinPklVersionAndParseErrors.pkl",
+          "bytes": 189,
+          "mode": 420,
+          "sha256": "962243ee0285544d8de6510cbbe6b68e8b5829c4a183c81655d37e6fd30447dc"
+        },
+        "prior_status": "mismatch",
+        "actual_status": "pass",
+        "required": true,
+        "execution_state": "ready",
+        "current_requirement_links": []
+      },
+      {
+        "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/spreadSyntaxUnknownTypedProperty.pkl",
+        "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/spreadSyntaxUnknownTypedProperty.pkl",
+        "source": {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/spreadSyntaxUnknownTypedProperty.pkl",
+          "bytes": 127,
+          "mode": 420,
+          "sha256": "bdc7dec2fccdab785391f18ead8fa594370c812832f49f34af73ca6b883686fa"
+        },
+        "prior_status": "mismatch",
+        "actual_status": "pass",
+        "required": true,
+        "execution_state": "ready",
+        "current_requirement_links": []
+      }
+    ],
+    "retained_nonpass_status_transitions": [
+      {
+        "actual": "mismatch",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidGlobImport5.pkl",
+        "prior": "candidate-unsupported"
+      },
+      {
+        "actual": "candidate-unsupported",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidGlobImport6.pkl",
+        "prior": "mismatch"
+      },
+      {
+        "actual": "candidate-unsupported",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+        "prior": "mismatch"
+      }
+    ],
+    "recorded_native_observations": 4443,
+    "actual_complete_native_observations": 4442,
+    "stopped_native_observations": 1,
+    "all_native_observations_completed_without_stop": false,
+    "List_disposition": "Historical Java oracle-error; native60second timeout, not RSS stop; preserved as nonpass"
+  },
+  "strict_full_gate": {
+    "pass": false,
+    "overlapping_unmet_conditions": 1768,
+    "categories": {
+      "implementation incomplete": 472,
+      "required case incomplete": 824,
+      "test mapping incomplete": 472
+    },
+    "method": "Exact current AST-extracted m2_manifest.full_gate_failures(current_manifest,actual_composed_results); no CLI invocation",
+    "function_sha256": "975b7859d26dabf33ff11971fdf6c52883a145ad89e12b0160c470398c14905b",
+    "unchanged_since_Stage121": true,
+    "reason_no_reduction_after12_new_matches": "All twelve are required+ready with empty requirements lists. Runtime pass does not satisfy the separate required-case linkage condition. Requirement implementation and test-mapping states are unchanged.",
+    "inventory_contracts": 4545,
+    "requirements": 475,
+    "ready": 4442,
+    "unimplemented": 71,
+    "unmapped_execution_contracts": 32,
+    "completion_percentage_claimed": false
+  },
+  "M1_actual03": {
+    "matches": {
+      "rust": 6078,
+      "node": 6078,
+      "browser": 6078
+    },
+    "platform_scenarios": {
+      "nodeChecks": 92,
+      "browserChecks": 92
+    },
+    "strict_raw_comparison": "pass",
+    "architecture_contract": "pass",
+    "same_actual_acquisition": true
+  },
+  "Native_transport": {
+    "runtime_controls_pass": 20,
+    "compiler_counterparts_qualified": [
+      {
+        "id": "transport-09",
+        "expected_code": "E0308",
+        "actual_error_codes": [
+          "E0308"
+        ]
+      },
+      {
+        "id": "transport-20",
+        "expected_code": "E0308",
+        "actual_error_codes": [
+          "E0308"
+        ]
+      },
+      {
+        "id": "transport-21",
+        "expected_code": "E0061",
+        "actual_error_codes": [
+          "E0061"
+        ]
+      },
+      {
+        "id": "transport-22",
+        "expected_code": "E0599",
+        "actual_error_codes": [
+          "E0599"
+        ]
+      }
+    ],
+    "full_dynamic_API24_parity_claimed": false,
+    "full_Java_parity_claimed": false,
+    "transport19_three_target_full_raw_join_complete": true
+  },
+  "Native_lossless": {
+    "ordinary_matches": 740,
+    "callback_matches": 744,
+    "lifecycle_sessions": 186,
+    "required_internal_unresolved": 4
+  },
+  "Native_glob": {
+    "sessions": 576,
+    "queries": 1204,
+    "raw_matches": 524,
+    "raw_nonmatches": 52,
+    "full_feature_compatibility": false
+  },
+  "NAPI": {
+    "reused_capture02_process_records": 188,
+    "reused_full744_ordinary_matches": 740,
+    "reused_full744_callback_matches": 744,
+    "reused_lifecycle_sessions": 186,
+    "reused_frame_policy_controls": 8,
+    "reused_transport_controls": 24,
+    "reused_full744_required_internal_unresolved": 4,
+    "fresh_glob03_sessions": 576,
+    "fresh_glob03_queries": 1204,
+    "fresh_glob03_raw_field_comparisons": 9632,
+    "fresh_glob03_matches": 524,
+    "fresh_glob03_nonmatches": 52,
+    "same_failed_case_set_and_oracle_classifications_as_Native": true,
+    "previous_additional_adapter_regressions_fixed": 4,
+    "new_failing_cases": 0,
+    "known_nonpass_Native_NAPI_presence_field_differences": 72,
+    "known_nonpass_Native_NAPI_field_match_classification_differences": 40,
+    "known_nonpass_presence_difference_sessions": 8,
+    "all_common_fields_equal_Native_claimed": false,
+    "original_full_portable02_and03_incomplete_preserved": true,
+    "full_feature_compatibility": false
+  },
+  "Chromium_portable04": {
+    "state": "terminal incomplete; 701 completed processes independently qualified and reused",
+    "expected_report_path": "target/m2/stage122-composed-lossless-portable-capture-04/report.json",
+    "terminal_report_pin": {
+      "path": "target/m2/stage122-composed-lossless-portable-capture-04/report.json",
+      "bytes": 10085771,
+      "mode": 420,
+      "sha256": "891b1eecc943ec12280c5a0981294cd7b2fe603faa0bc0cf7f7501022419898e"
+    },
+    "independent_readback_pin": {
+      "path": "target/m2/stage122-portable-chromium04-partial-independent-readback-01/report.json",
+      "bytes": 7536,
+      "mode": 420,
+      "sha256": "3a33bb789fc5323fbd226bb861279211c20339726aeed94f80fb2f334df0ef4a"
+    },
+    "expected_glob_sessions": 576,
+    "admitted_terminal_observations": null,
+    "raw_matches": null,
+    "raw_nonmatches": null,
+    "M1_browser_success_substitutes_for_this_capture": false,
+    "original_failure_preserved": true,
+    "forced_case_exact_peak_unrecorded": true,
+    "completion_claim": false
+  },
+  "transport19_three_target_join": {
+    "state": "complete raw comparison passed",
+    "complete": true,
+    "joined_raw_receipt": {
+      "path": "target/m2/stage122-transport19-three-target-readback-01/report.json",
+      "bytes": 23541,
+      "mode": 420,
+      "sha256": "15c8f123d38bb0e94518e889855e47989a19145631aa12730bebcf5a2952f01a"
+    },
+    "input_units": 4,
+    "error_units": 167,
+    "Java_oracle_parity_claimed": false
+  },
+  "publication": {
+    "state": "evidence published and raw-verified in repository worktree",
+    "final_catalog": {
+      "path": "target/m2/stage122-publication-catalog-prep-03/archive-interface-metadata-pins.json",
+      "bytes": 3205,
+      "mode": 420,
+      "sha256": "be43759e4bc66bdac09b9779500714355da162be54f5000b4908caa65502ca5d"
+    },
+    "source_alias_and_restoration_prerequisites_finalized": true,
+    "archive_parts": [
+      {
+        "path": "reports/m2/stage122-lossless-source-runtime-evidence-01.tar.gz",
+        "bytes": 4281206,
+        "mode": 420,
+        "sha256": "f3699554710326beab572346cd2aa099dadc77f212f4a38849bc688bf193deba"
+      },
+      {
+        "path": "reports/m2/stage122-lossless-source-runtime-evidence-02.tar.gz",
+        "bytes": 1688492,
+        "mode": 420,
+        "sha256": "5cb28b3b40f6d1142582c9397235cdb93e5480bdaca26265e70321e9e39638a1"
+      },
+      {
+        "path": "reports/m2/stage122-lossless-source-runtime-evidence-03.tar.gz",
+        "bytes": 1690461,
+        "mode": 420,
+        "sha256": "31241ea34a0e4cffd29a16a9020d4b41ad64f28e1e35dcf6bf5708e96424af2f"
+      },
+      {
+        "path": "reports/m2/stage122-lossless-source-runtime-evidence-04.tar.gz",
+        "bytes": 1721453,
+        "mode": 420,
+        "sha256": "bbce9dd220618698330b53247e1eecf1ef13c516c07ca14b36878d510791c9c5"
+      },
+      {
+        "path": "reports/m2/stage122-lossless-source-runtime-evidence-05.tar.gz",
+        "bytes": 6515636,
+        "mode": 420,
+        "sha256": "5309aad93edb5fa6e0a4357f19a2c7848bc795acb3191f5ecbc70cc3875377eb"
+      },
+      {
+        "path": "reports/m2/stage122-lossless-source-runtime-evidence-06.tar.gz",
+        "bytes": 1999573,
+        "mode": 420,
+        "sha256": "772a023c2bf8a7c433edd0f413fbc51e21c2f749b9fe28d24b9e71021338bf4f"
+      },
+      {
+        "path": "reports/m2/stage122-lossless-source-runtime-evidence-07.tar.gz",
+        "bytes": 4744314,
+        "mode": 420,
+        "sha256": "a9c8eb88083361aed1b9b6b5da7763afd7a7d0d54287e169d31823a0d925cc12"
+      },
+      {
+        "path": "reports/m2/stage122-lossless-source-runtime-evidence-08.tar.gz",
+        "bytes": 1832360,
+        "mode": 420,
+        "sha256": "bade2b39920baf93ec18754c09dbb5b0bfd1d2a0bbf4b6c644b2af885fa01ff5"
+      },
+      {
+        "path": "reports/m2/stage122-lossless-source-runtime-evidence-09.tar.gz",
+        "bytes": 1928137,
+        "mode": 420,
+        "sha256": "41edefcc4b21eeab0d81630641a134fbc10ddd9ce7d930171e4fb5dce06f4870"
+      },
+      {
+        "path": "reports/m2/stage122-lossless-source-runtime-evidence-10.tar.gz",
+        "bytes": 1920954,
+        "mode": 420,
+        "sha256": "ee8cc1c867075938dbf5d71d201287a7059eb8ab0acdfa74802910ac4f2489ee"
+      },
+      {
+        "path": "reports/m2/stage122-lossless-source-runtime-evidence-11.tar.gz",
+        "bytes": 1915679,
+        "mode": 420,
+        "sha256": "ae8edc245fe1a45a3065d3b8d2baadbcfd8f7b3207745450054c9bb40681cfc0"
+      },
+      {
+        "path": "reports/m2/stage122-lossless-source-runtime-evidence-12.tar.gz",
+        "bytes": 2861849,
+        "mode": 420,
+        "sha256": "ca69908511d3b57ea9d13bd9e70362440ff862b8119d766caeb3a9e89ad60d41"
+      },
+      {
+        "path": "reports/m2/stage122-lossless-source-runtime-evidence-13.tar.gz",
+        "bytes": 2820334,
+        "mode": 420,
+        "sha256": "db0486f8cc15dfec5b4c6a146ec6e5c5092a2e457310fd0bc634326ea368e658"
+      },
+      {
+        "path": "reports/m2/stage122-lossless-source-runtime-evidence-14.tar.gz",
+        "bytes": 8442818,
+        "mode": 420,
+        "sha256": "a1cf3c8a0fbf6f17d0d150a0e2c8b7d31d994ef04aec68a55198b1826de3dacb"
+      },
+      {
+        "path": "reports/m2/stage122-lossless-source-runtime-evidence-15.tar.gz",
+        "bytes": 4420927,
+        "mode": 420,
+        "sha256": "76f90c95fdb412657d8cf95d6044993d332371818a7c37a298074cf29ff045ce"
+      },
+      {
+        "path": "reports/m2/stage122-lossless-source-runtime-evidence-16.tar.gz",
+        "bytes": 6999879,
+        "mode": 420,
+        "sha256": "fd01f4616f99303fe6b7d9c5568d7b12d1e708633d3b5f96b1fad9c2e15a1263"
+      },
+      {
+        "path": "reports/m2/stage122-lossless-source-runtime-evidence-17.tar.gz",
+        "bytes": 7678843,
+        "mode": 420,
+        "sha256": "d38f6ace6dc0da8e95497ec9259542528bc19a5d8ad546e00adcaebcb8d3a912"
+      },
+      {
+        "path": "reports/m2/stage122-lossless-source-runtime-evidence-18.tar.gz",
+        "bytes": 4174293,
+        "mode": 420,
+        "sha256": "f6ee955253e6609ea5a3c9bffe9d9bb711b1b488fde74db0b5f47e03ac06774d"
+      }
+    ],
+    "archive_compressed_bytes": 67637208,
+    "producer_report": {
+      "path": "target/m2/stage122-evidence-archives-01/report.json",
+      "bytes": 10450,
+      "mode": 420,
+      "sha256": "1ddb3b8fcf2e06eedb506dbc019d84d14c7c2b3e7372a2533010c81a1fbe207c"
+    },
+    "independent_archive_readback": {
+      "path": "target/m2/stage122-evidence-archives-independent-readback-01/report.json",
+      "bytes": 7720,
+      "mode": 420,
+      "sha256": "a759c97ad381ab5b1a70693ec7f2f8092423f9e7f4c6ecde14956e7ed413d5e8"
+    },
+    "public_copy_readback": {
+      "path": "target/m2/stage122-publication-install-01/report.json",
+      "bytes": 17370,
+      "mode": 420,
+      "sha256": "0752effa4e1de0c5748b029c06c46b3434f87198eb8d410507f77ca6ed9d8187"
+    },
+    "selected_physical_aliases": 155162,
+    "authenticated_unique_physical_files": 155178,
+    "unique_payload_objects": 18686,
+    "logical_aliases": 155089,
+    "required_historical_aliases": 633,
+    "identity_only_ancestry": 1,
+    "unresolved_required_historical_payloads": 0,
+    "implementation_aliases": 1888,
+    "final_documents_archived": false,
+    "git_commit_locator": "git log -1 --format=%H -- reports/m2/stage122-lossless-source-runtime-checkpoint.json",
+    "git_transport_note": "Commit and push occur after this descriptor is written; the actual remote-head verification is recorded in the publication session."
+  },
+  "full_completion_claims": {
+    "typed_value_export": false,
+    "public_evaluator_API": false,
+    "whole_M2": false,
+    "release_platforms": false,
+    "speed_target": false,
+    "memory_target": false
+  },
+  "actual_receipts": {
+    "harness_aggregate": {
+      "path": "target/m2/stage122-workspace-aggregate-independent-readback-03/report.json",
+      "bytes": 10267,
+      "mode": 420,
+      "sha256": "1b3d7da27909817b306599fcedfe7891b47dc06b4efa97b2ae4220abac13842c"
+    },
+    "fresh_checks06": {
+      "path": "target/m2/stage122-canonical-checks-06/report.json",
+      "bytes": 19906,
+      "mode": 420,
+      "sha256": "da288a27d2a0edf575372121834f6db6c46211c40fcf6412a0e2401d210d7900"
+    },
+    "original_checks05_incomplete": {
+      "path": "target/m2/stage122-canonical-checks-05/report.json",
+      "bytes": 163027,
+      "mode": 420,
+      "sha256": "071ee6ba7a071cbe26eff58d134481f8ce35482c868d99738b60694113eda067"
+    },
+    "failed_observer01": {
+      "path": "target/m2/stage122-checks05-terminal-observer-01/report.json",
+      "bytes": 3836,
+      "mode": 420,
+      "sha256": "ecdc096df52a23844c1104291ab3d80eb0d2fcdcfd89a744f3a55bbe3e94be90"
+    },
+    "independent_harness05_qualification": {
+      "path": "target/m2/stage122-checks05-independent-terminal-qualification-02/report.json",
+      "bytes": 163167,
+      "mode": 420,
+      "sha256": "786848ba1c96ae38a57e562d7be9849a1d22af817027c3fc0860ccc2b99d21e7"
+    },
+    "harness_qualification_root_review": {
+      "path": "target/m2/stage122-checks05-harness-qualification-independent-review-01/report.json",
+      "bytes": 715,
+      "mode": 420,
+      "sha256": "b28622ab7c698f793a61773c5282d007754209f21925c1abab1d4e94fe8cc0d9"
+    },
+    "approved_test_driver_application": {
+      "path": "target/m2/stage122-canonical-final-test-driver-application-01/report.json",
+      "bytes": 6606,
+      "mode": 420,
+      "sha256": "8b515f5f06ca9530e0bffb86385b36fd71c717888a1005dfa5efe09613213041"
+    },
+    "runtime_and_bindings_freeze02": {
+      "path": "target/m2/stage122-core-freeze-02/runtime-and-bindings.json",
+      "bytes": 40020,
+      "mode": 420,
+      "sha256": "d9d2163040ef562a293c512d10ce939bcbad6c0f01f162946046b1d071d472f4"
+    },
+    "verification_source_delta": {
+      "path": "target/m2/stage122-workspace-aggregate-independent-readback-03/source-delta.json",
+      "bytes": 10399,
+      "mode": 420,
+      "sha256": "07ab798d624278c9d3ee79a8330172b7f1f50116476415d904e9667a1768882a"
+    },
+    "checks06_source_inputs": {
+      "path": "target/m2/stage122-canonical-checks-06/inputs.json",
+      "bytes": 573885,
+      "mode": 420,
+      "sha256": "085d6b00fa3962139454067c83572ae8b96277a65c0fccc2d7a484853a3fca0f"
+    },
+    "normal_native_product_qualification": {
+      "path": "target/m2/stage122-workspace-replay-qualification-01/report.json",
+      "bytes": 138500,
+      "mode": 420,
+      "sha256": "b5f01b9443b6c607912afa25b5da8513dbc74b48f6e399ed513edafd5885a20f"
+    },
+    "complete_ready_composition": {
+      "path": "target/m2/stage122-full-ready-native-01.json",
+      "bytes": 2789482,
+      "mode": 420,
+      "sha256": "714e3131ce1976ee9aebcc2469affe56683086edbbdd60b6296ec0c8f54ce1af"
+    },
+    "complete_ready_independent_readback": {
+      "path": "target/m2/stage122-full-ready-independent-readback-01/report.json",
+      "bytes": 18167,
+      "mode": 420,
+      "sha256": "365050ebdb552d1483f64a9bcc8c0297f935ea936531ff86a158bf4efb8d1df0"
+    },
+    "ready_acquisition_scope": {
+      "path": "target/m2/stage122-full-ready-independent-readback-01/acquisition-scope.json",
+      "bytes": 3398,
+      "mode": 420,
+      "sha256": "7198685c8a51ae5141d46649b67ad669d1bb410792f0cb951a87e8bb54159b12"
+    },
+    "exact_current_full_gate_failures": {
+      "path": "target/m2/stage122-full-ready-independent-readback-01/full-gate-failures.json",
+      "bytes": 220035,
+      "mode": 420,
+      "sha256": "be52ca9793dc11570e92a520762b732f71ca1f5dbb69e308ba44d88ba5653a54"
+    },
+    "ready_status_transitions": {
+      "path": "target/m2/stage122-full-ready-independent-readback-01/transitions.json",
+      "bytes": 2734,
+      "mode": 420,
+      "sha256": "926fac85ab0021364925a9c6b033840859b19d074df6fab710b45e48f11677cc"
+    },
+    "complete_ready_readback_seal": {
+      "path": "target/m2/stage122-full-ready-independent-readback-prep-01/actual-readback-seal.json",
+      "bytes": 1419,
+      "mode": 420,
+      "sha256": "a0ba0564938f86da489adb27dea392d34e700c5419b41f0d8e5adac175e73f1a"
+    },
+    "completed_module_historical_jvm_readback": {
+      "path": "target/m2/stage122-full-ready-completed-cohorts-independent-readback-01/report.json",
+      "bytes": 53591,
+      "mode": 420,
+      "sha256": "61ad3502bd034b073d53c03052622fd69d3c9792d624555a38c412b0e7311d6c"
+    },
+    "m1_actual03": {
+      "path": "target/m2/stage122-m1-command-03/report.json",
+      "bytes": 7864,
+      "mode": 420,
+      "sha256": "90c17522a52edac30509d21cc71e4042aa154eaf658b6477e88ff1696462005b"
+    },
+    "m1_independent_readback": {
+      "path": "target/m2/stage122-m1-independent-readback-01/report.json",
+      "bytes": 236662,
+      "mode": 420,
+      "sha256": "52cbf8b4d19be9effc497fe8ae41d38c0375a73dd2d00bf475e82e2bb55065d2"
+    },
+    "native_transport20_static4_readback": {
+      "path": "target/m2/stage122-native-transport-independent-readback-01/report.json",
+      "bytes": 5851,
+      "mode": 420,
+      "sha256": "bd945e982d7c8f1d0dcf1714a43fab89e2724a8a24cca58d3a16b608fe39e3b3"
+    },
+    "native_lossless744": {
+      "path": "target/m2/stage122-composed-lossless-native744-capture-01/report.json",
+      "bytes": 13810328,
+      "mode": 420,
+      "sha256": "e5537b5482a423d076b2f4f608a98438484a85ae26d14066d9c92e571c84593c"
+    },
+    "native_glob576": {
+      "path": "target/m2/stage122-composed-lossless-glob576-capture-01/report.json",
+      "bytes": 37862697,
+      "mode": 420,
+      "sha256": "53ea4e84725f2149a8565b995a832b2949c4b208cc4a1734812c5853efc41ed4"
+    },
+    "portable_products_bridge05": {
+      "path": "target/m2/stage122-portable-products-independent-readback-05/report.json",
+      "bytes": 4681,
+      "mode": 420,
+      "sha256": "0ef33e4775e01e41c90b788e8a27c30584c1868cbddc9b73c5ccfda8bd42b80e"
+    },
+    "qualified_napi_capture02_subset": {
+      "path": "target/m2/stage122-portable-napi-partial-independent-readback-01/report.json",
+      "bytes": 8582,
+      "mode": 420,
+      "sha256": "650b2ad418eaa24b6ceb97ee981dfc11fb2cea326ad1d37ebb5aa33cb14ae1af"
+    },
+    "qualified_fresh_napi_glob03": {
+      "path": "target/m2/stage122-portable-napi-glob03-independent-readback-03/report.json",
+      "bytes": 7407,
+      "mode": 420,
+      "sha256": "90dfd3b3aac10dad4ae76bf901d99b01963acaa3def39f5399c2d8c2d1728802"
+    },
+    "napi_glob03_readback_seal": {
+      "path": "target/m2/stage122-portable-napi-glob03-readback-prep-03/actual-readback-seal.json",
+      "bytes": 1692,
+      "mode": 420,
+      "sha256": "8faf61844b60b5452028b7bb7933718a6176f276924e96e0159d6b2dcd9ff0a3"
+    },
+    "napi_native_known_nonpass_field_differences": {
+      "path": "target/m2/stage122-portable-napi-glob03-independent-readback-03/native-vs-NAPI-known-nonpass-field-differences.json",
+      "bytes": 50494,
+      "mode": 420,
+      "sha256": "4d37c0d7712cdfcc53f5aaadc6ec77e9df0179414a891aa624d6b5d680980369"
+    },
+    "original_portable02_failed_whole_capture": {
+      "path": "target/m2/stage122-composed-lossless-portable-capture-02/report.json",
+      "bytes": 3849959,
+      "mode": 420,
+      "sha256": "4748ef71b62b5560029d2b81833b7b59cc1a8b6bc4c8ba5ff638a0c55b279653"
+    },
+    "original_portable03_failed_whole_capture": {
+      "path": "target/m2/stage122-composed-lossless-portable-capture-03/report.json",
+      "bytes": 3854572,
+      "mode": 420,
+      "sha256": "06886ef4409bf7934cf51c6584dfa41252a4e69b734879573d4b1be93eb3fe69"
+    },
+    "final_roster_independent_review": {
+      "path": "target/m2/stage122-final-implementation-roster-independent-review-01/report.json",
+      "bytes": 2707,
+      "mode": 420,
+      "sha256": "92dbbd4437d4e7699555650e8c430b59fad457a8a057e0479a91badc0c6aa132"
+    },
+    "index_implementation_readback": {
+      "path": "target/m2/stage122-index-implementation-readback-01/report.json",
+      "bytes": 273,
+      "mode": 420,
+      "sha256": "c8b314130db822a733bc628f5905d9c98da28fff01d3cd450803453ba5402c5f"
+    },
+    "large_listing_resource_audit": {
+      "path": "target/m2/stage122-chromium-large-listing-resource-audit-01/report.json",
+      "bytes": 10551,
+      "mode": 420,
+      "sha256": "6116eade480bd334cb74859f3660c0d8f00ce16e01228fead95e0cba8e1930bd"
+    },
+    "composed_portable_independent_readback": {
+      "path": "target/m2/stage122-portable-composed05-independent-readback-01/report.json",
+      "bytes": 7769,
+      "mode": 420,
+      "sha256": "4f8afccdbaff8927c983bc32a19384dc063f3f8631ea8f84d13c656f517576f1"
+    },
+    "transport19_three_target_join": {
+      "path": "target/m2/stage122-transport19-three-target-readback-01/report.json",
+      "bytes": 23541,
+      "mode": 420,
+      "sha256": "15c8f123d38bb0e94518e889855e47989a19145631aa12730bebcf5a2952f01a"
+    },
+    "archive_producer": {
+      "path": "target/m2/stage122-evidence-archives-01/report.json",
+      "bytes": 10450,
+      "mode": 420,
+      "sha256": "1ddb3b8fcf2e06eedb506dbc019d84d14c7c2b3e7372a2533010c81a1fbe207c"
+    },
+    "independent_archive_readback": {
+      "path": "target/m2/stage122-evidence-archives-independent-readback-01/report.json",
+      "bytes": 7720,
+      "mode": 420,
+      "sha256": "a759c97ad381ab5b1a70693ec7f2f8092423f9e7f4c6ecde14956e7ed413d5e8"
+    },
+    "publication_copy_readback": {
+      "path": "target/m2/stage122-publication-install-01/report.json",
+      "bytes": 17370,
+      "mode": 420,
+      "sha256": "0752effa4e1de0c5748b029c06c46b3434f87198eb8d410507f77ca6ed9d8187"
+    }
+  },
+  "draft_origin": {
+    "path": "target/m2/stage122-publication-docs-prep-03/README.draft.md",
+    "bytes": 6890,
+    "mode": 420,
+    "sha256": "ea3bcc734eb66b8ebad3841688eadc3aa7130155afdf2fc1d7e24a44466af17a"
+  },
+  "report": "reports/m2/stage122-lossless-source-runtime/README.md",
+  "Chromium_continuation05": {
+    "state": "complete, independently verified composed acquisition; strict compatibility wrapper exit one retains 52 known nonmatches",
+    "fresh_glob_sessions": 62,
+    "fresh_transport_processes": 1,
+    "qualified_completed_processes_to_reuse": 701,
+    "experimental_owned_rss_cap_bytes": 3221225472,
+    "experimental_case_count": 10,
+    "unchanged_owned_rss_cap_for_other_processes_bytes": 2147483648,
+    "engine_heap_or_GC_changes": false,
+    "performance_parity_claim": false,
+    "actual_report": {
+      "path": "target/m2/stage122-composed-lossless-portable-capture-05/report.json",
+      "bytes": 10909734,
+      "mode": 420,
+      "sha256": "0998008baadca2ef5e20b9f43ececa4ae87a15ba0b7f1c1add657aef0ff0deb5"
+    },
+    "independent_readback": {
+      "path": "target/m2/stage122-portable-composed05-independent-readback-01/report.json",
+      "bytes": 7769,
+      "mode": 420,
+      "sha256": "4f8afccdbaff8927c983bc32a19384dc063f3f8631ea8f84d13c656f517576f1"
+    },
+    "fresh_processes_all_exit_zero": true,
+    "bookends_stable": true,
+    "ordinary_matches": 740,
+    "callback_matches": 744,
+    "lifecycle_sessions": 186,
+    "glob_matches": 524,
+    "glob_nonmatches": 52,
+    "required_internal_unresolved": 4,
+    "transport_controls": 24,
+    "resource_experiment": {
+      "path": "target/m2/stage122-composed-lossless-portable-capture-05/resource-experiment/report.json",
+      "bytes": 6387,
+      "mode": 420,
+      "sha256": "11b2ec4155634d3d1c1a54dafaa589c4c39e3a340b10f590311d67703b740a06"
+    },
+    "maximum_sampled_owned_RSS_bytes": 2370224128,
+    "original_failure_preserved": true
+  },
+  "math_binding_observations": {
+    "typed_and_rendered_matches": 824,
+    "repeat_pairs": 412,
+    "value_observations": 778,
+    "error_observations": 46,
+    "compared_fields": 9032,
+    "uncovered_Java_implementation_class_fields": 92,
+    "full_module_API_coverage_claimed": false
+  },
+  "descriptor_draft_origin": {
+    "path": "target/m2/stage122-publication-docs-prep-04/checkpoint.descriptor.draft.json",
+    "bytes": 28973,
+    "mode": 420,
+    "sha256": "8e875d63aabca77b0fab5e9e697566a477e5a4749286e52a1a77a96515bd06f7"
+  },
+  "embedded_post_archive_receipts": {
+    "archive_producer": {
+      "identity": {
+        "path": "target/m2/stage122-evidence-archives-01/report.json",
+        "bytes": 10450,
+        "mode": 420,
+        "sha256": "1ddb3b8fcf2e06eedb506dbc019d84d14c7c2b3e7372a2533010c81a1fbe207c"
+      },
+      "utf8": "{\n  \"complete\": true,\n  \"success\": true,\n  \"archives\": [\n    {\n      \"part\": 1,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-01.tar.gz\",\n        \"bytes\": 4281206,\n        \"mode\": 420,\n        \"sha256\": \"f3699554710326beab572346cd2aa099dadc77f212f4a38849bc688bf193deba\"\n      },\n      \"member_count\": 14,\n      \"body_bytes\": 46542544\n    },\n    {\n      \"part\": 2,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-02.tar.gz\",\n        \"bytes\": 1688492,\n        \"mode\": 420,\n        \"sha256\": \"5cb28b3b40f6d1142582c9397235cdb93e5480bdaca26265e70321e9e39638a1\"\n      },\n      \"member_count\": 6,\n      \"body_bytes\": 78643200\n    },\n    {\n      \"part\": 3,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-03.tar.gz\",\n        \"bytes\": 1690461,\n        \"mode\": 420,\n        \"sha256\": \"31241ea34a0e4cffd29a16a9020d4b41ad64f28e1e35dcf6bf5708e96424af2f\"\n      },\n      \"member_count\": 5,\n      \"body_bytes\": 78643200\n    },\n    {\n      \"part\": 4,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-04.tar.gz\",\n        \"bytes\": 1721453,\n        \"mode\": 420,\n        \"sha256\": \"bbce9dd220618698330b53247e1eecf1ef13c516c07ca14b36878d510791c9c5\"\n      },\n      \"member_count\": 5,\n      \"body_bytes\": 78643200\n    },\n    {\n      \"part\": 5,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-05.tar.gz\",\n        \"bytes\": 6515636,\n        \"mode\": 420,\n        \"sha256\": \"5309aad93edb5fa6e0a4357f19a2c7848bc795acb3191f5ecbc70cc3875377eb\"\n      },\n      \"member_count\": 5,\n      \"body_bytes\": 78643200\n    },\n    {\n      \"part\": 6,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-06.tar.gz\",\n        \"bytes\": 1999573,\n        \"mode\": 420,\n        \"sha256\": \"772a023c2bf8a7c433edd0f413fbc51e21c2f749b9fe28d24b9e71021338bf4f\"\n      },\n      \"member_count\": 6,\n      \"body_bytes\": 78643200\n    },\n    {\n      \"part\": 7,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-07.tar.gz\",\n        \"bytes\": 4744314,\n        \"mode\": 420,\n        \"sha256\": \"a9c8eb88083361aed1b9b6b5da7763afd7a7d0d54287e169d31823a0d925cc12\"\n      },\n      \"member_count\": 5,\n      \"body_bytes\": 78643200\n    },\n    {\n      \"part\": 8,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-08.tar.gz\",\n        \"bytes\": 1832360,\n        \"mode\": 420,\n        \"sha256\": \"bade2b39920baf93ec18754c09dbb5b0bfd1d2a0bbf4b6c644b2af885fa01ff5\"\n      },\n      \"member_count\": 6,\n      \"body_bytes\": 78643200\n    },\n    {\n      \"part\": 9,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-09.tar.gz\",\n        \"bytes\": 1928137,\n        \"mode\": 420,\n        \"sha256\": \"41edefcc4b21eeab0d81630641a134fbc10ddd9ce7d930171e4fb5dce06f4870\"\n      },\n      \"member_count\": 6,\n      \"body_bytes\": 78643200\n    },\n    {\n      \"part\": 10,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-10.tar.gz\",\n        \"bytes\": 1920954,\n        \"mode\": 420,\n        \"sha256\": \"ee8cc1c867075938dbf5d71d201287a7059eb8ab0acdfa74802910ac4f2489ee\"\n      },\n      \"member_count\": 7,\n      \"body_bytes\": 78643200\n    },\n    {\n      \"part\": 11,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-11.tar.gz\",\n        \"bytes\": 1915679,\n        \"mode\": 420,\n        \"sha256\": \"ae8edc245fe1a45a3065d3b8d2baadbcfd8f7b3207745450054c9bb40681cfc0\"\n      },\n      \"member_count\": 6,\n      \"body_bytes\": 78643200\n    },\n    {\n      \"part\": 12,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-12.tar.gz\",\n        \"bytes\": 2861849,\n        \"mode\": 420,\n        \"sha256\": \"ca69908511d3b57ea9d13bd9e70362440ff862b8119d766caeb3a9e89ad60d41\"\n      },\n      \"member_count\": 4,\n      \"body_bytes\": 78643200\n    },\n    {\n      \"part\": 13,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-13.tar.gz\",\n        \"bytes\": 2820334,\n        \"mode\": 420,\n        \"sha256\": \"db0486f8cc15dfec5b4c6a146ec6e5c5092a2e457310fd0bc634326ea368e658\"\n      },\n      \"member_count\": 7,\n      \"body_bytes\": 78643200\n    },\n    {\n      \"part\": 14,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-14.tar.gz\",\n        \"bytes\": 8442818,\n        \"mode\": 420,\n        \"sha256\": \"a1cf3c8a0fbf6f17d0d150a0e2c8b7d31d994ef04aec68a55198b1826de3dacb\"\n      },\n      \"member_count\": 11,\n      \"body_bytes\": 78643200\n    },\n    {\n      \"part\": 15,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-15.tar.gz\",\n        \"bytes\": 4420927,\n        \"mode\": 420,\n        \"sha256\": \"76f90c95fdb412657d8cf95d6044993d332371818a7c37a298074cf29ff045ce\"\n      },\n      \"member_count\": 21,\n      \"body_bytes\": 78643200\n    },\n    {\n      \"part\": 16,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-16.tar.gz\",\n        \"bytes\": 6999879,\n        \"mode\": 420,\n        \"sha256\": \"fd01f4616f99303fe6b7d9c5568d7b12d1e708633d3b5f96b1fad9c2e15a1263\"\n      },\n      \"member_count\": 272,\n      \"body_bytes\": 78643200\n    },\n    {\n      \"part\": 17,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-17.tar.gz\",\n        \"bytes\": 7678843,\n        \"mode\": 420,\n        \"sha256\": \"d38f6ace6dc0da8e95497ec9259542528bc19a5d8ad546e00adcaebcb8d3a912\"\n      },\n      \"member_count\": 4311,\n      \"body_bytes\": 78643200\n    },\n    {\n      \"part\": 18,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-18.tar.gz\",\n        \"bytes\": 4174293,\n        \"mode\": 420,\n        \"sha256\": \"f6ee955253e6609ea5a3c9bffe9d9bb711b1b488fde74db0b5f47e03ac06774d\"\n      },\n      \"member_count\": 14003,\n      \"body_bytes\": 22700334\n    }\n  ],\n  \"errors\": [],\n  \"source_seal\": {\n    \"path\": \"target/m2/stage122-archive-producer-prep-01/seal.json\",\n    \"bytes\": 1424,\n    \"mode\": 420,\n    \"sha256\": \"de83e2ff65f1832307381abca1168c7062fe53f693f27c9ab007d218b55f3f16\"\n  },\n  \"interface_seal\": {\n    \"path\": \"target/m2/stage122-publication-catalog-prep-03/archive-interface-metadata-pins.json\",\n    \"bytes\": 3205,\n    \"mode\": 420,\n    \"sha256\": \"be43759e4bc66bdac09b9779500714355da162be54f5000b4908caa65502ca5d\"\n  },\n  \"implementation_roster\": {\n    \"path\": \"target/m2/stage122-final-implementation-roster-02/implementation.json\",\n    \"bytes\": 442726,\n    \"mode\": 420,\n    \"sha256\": \"0d2aca74395b1720bd64f2b276e7c4a551ab4f823911b191becbb6313c4e154b\"\n  },\n  \"implementation_files\": 1888,\n  \"selected_physical_aliases\": 155162,\n  \"fresh_alias_authentication_complete\": true,\n  \"alias_coverage\": {\n    \"logical_aliases\": 155089,\n    \"required_historical_aliases\": 633\n  },\n  \"old_archive_bodies_read\": false,\n  \"new_workloads_executed\": 0,\n  \"compatibility_or_performance_claimed\": false,\n  \"started_utc\": \"2026-10-30T07:03:27.640578+00:00\",\n  \"authenticated_unique_physical_files\": 155178,\n  \"fresh_authentication_bytes\": 2521811515,\n  \"metadata_members\": [\n    {\n      \"member\": \"catalog/payload-objects.jsonl\",\n      \"bytes\": 7521237,\n      \"sha256\": \"af5bc4af6322468573bcd44003c38be3b46729f0ee30f7683079c6b3b5b4f689\",\n      \"mode\": 420\n    },\n    {\n      \"member\": \"catalog/logical-alias-map.tsv\",\n      \"bytes\": 36668408,\n      \"sha256\": \"f58fcf4777073e5cf20419eca302e455c8a0865a55c6f3e5aa03567af1041ff4\",\n      \"mode\": 420\n    },\n    {\n      \"member\": \"catalog/historical-alias-map.jsonl\",\n      \"bytes\": 296348,\n      \"sha256\": \"f74cf5130a4a6a246d363b455c612f376f4005e5eb611f75fb185fca6d32e89f\",\n      \"mode\": 420\n    },\n    {\n      \"member\": \"catalog/final-implementation-alias-map.jsonl\",\n      \"bytes\": 559779,\n      \"sha256\": \"9aff8dc573edc29e69dffff2050523179491bd60d6ce148cb325f1ffa45a4e3b\",\n      \"mode\": 420\n    },\n    {\n      \"member\": \"catalog/identity-only-ancestry.jsonl\",\n      \"bytes\": 364,\n      \"sha256\": \"2b1265adc5b3ecfb9934581b6ee4857c132184c5bf5c153421bc980667af8b82\",\n      \"mode\": 420\n    },\n    {\n      \"member\": \"catalog/archive-interface-readiness.json\",\n      \"bytes\": 1923,\n      \"sha256\": \"fcb3d8bfe17adadf14b203d54113afa9c511c4a25d7e4d90818d35bf736f0176\",\n      \"mode\": 420\n    },\n    {\n      \"member\": \"catalog/prepare_archive_interface.py\",\n      \"bytes\": 13566,\n      \"sha256\": \"43abdb5d5681b85f3326b3b8239eb2bf0634d2df1317743ed9c05138b4033bbd\",\n      \"mode\": 420\n    },\n    {\n      \"member\": \"catalog/resolve_historical_aliases.py\",\n      \"bytes\": 13266,\n      \"sha256\": \"d02a27107502ee8fc14ef1dafab69ff39e00c7104db6dd9d238963b9143072e7\",\n      \"mode\": 420\n    },\n    {\n      \"member\": \"catalog/build_catalog.py\",\n      \"bytes\": 34203,\n      \"sha256\": \"6939c125c8d13e04ffd07d31854c6c74205b1eb6580127a38707e8bcef67e09e\",\n      \"mode\": 420\n    },\n    {\n      \"member\": \"catalog/historical-alias-resolution.json\",\n      \"bytes\": 868,\n      \"sha256\": \"8080fd6567934bbfe41d4bfcaae2db1d7d255c3a650bda221072f7256da75320\",\n      \"mode\": 420\n    },\n    {\n      \"member\": \"catalog/source-epochs.json\",\n      \"bytes\": 1624,\n      \"sha256\": \"d09b536c53c569e6bde47b75f8b04e976ed94b9ea052ff6675cc5a33f5094c34\",\n      \"mode\": 420\n    },\n    {\n      \"member\": \"catalog/README.md\",\n      \"bytes\": 2886,\n      \"sha256\": \"cdd3688faccb1cadf167a035b2f9bf2f70b89dd7f86a861333093371d06f7063\",\n      \"mode\": 420\n    },\n    {\n      \"member\": \"catalog/readiness-files.json\",\n      \"bytes\": 2579,\n      \"sha256\": \"ec81690a04fb54eea3792457f760f9220fa87240ad4a287c6af514c110fc0a2a\",\n      \"mode\": 420\n    },\n    {\n      \"member\": \"catalog/parts.json\",\n      \"bytes\": 1425493,\n      \"sha256\": \"0e941b4fe5b720dbf44297de60d5d28f42ee923b7133a6fb28f4d04c1b6c4fa4\",\n      \"mode\": 420\n    }\n  ],\n  \"source_bookends_stable\": true,\n  \"elapsed_seconds\": 394.7048624996096,\n  \"finished_utc\": \"2026-10-30T07:10:00.551233+00:00\"\n}\n"
+    },
+    "independent_archive_readback": {
+      "identity": {
+        "path": "target/m2/stage122-evidence-archives-independent-readback-01/report.json",
+        "bytes": 7720,
+        "mode": 420,
+        "sha256": "a759c97ad381ab5b1a70693ec7f2f8092423f9e7f4c6ecde14956e7ed413d5e8"
+      },
+      "utf8": "{\n  \"complete\": true,\n  \"integrity_valid\": true,\n  \"success\": true,\n  \"archives\": [\n    {\n      \"part\": 1,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-01.tar.gz\",\n        \"bytes\": 4281206,\n        \"mode\": 420,\n        \"sha256\": \"f3699554710326beab572346cd2aa099dadc77f212f4a38849bc688bf193deba\"\n      },\n      \"body_bytes\": 46542544,\n      \"member_count\": 14,\n      \"full_raw_match\": true\n    },\n    {\n      \"part\": 2,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-02.tar.gz\",\n        \"bytes\": 1688492,\n        \"mode\": 420,\n        \"sha256\": \"5cb28b3b40f6d1142582c9397235cdb93e5480bdaca26265e70321e9e39638a1\"\n      },\n      \"body_bytes\": 78643200,\n      \"member_count\": 6,\n      \"full_raw_match\": true\n    },\n    {\n      \"part\": 3,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-03.tar.gz\",\n        \"bytes\": 1690461,\n        \"mode\": 420,\n        \"sha256\": \"31241ea34a0e4cffd29a16a9020d4b41ad64f28e1e35dcf6bf5708e96424af2f\"\n      },\n      \"body_bytes\": 78643200,\n      \"member_count\": 5,\n      \"full_raw_match\": true\n    },\n    {\n      \"part\": 4,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-04.tar.gz\",\n        \"bytes\": 1721453,\n        \"mode\": 420,\n        \"sha256\": \"bbce9dd220618698330b53247e1eecf1ef13c516c07ca14b36878d510791c9c5\"\n      },\n      \"body_bytes\": 78643200,\n      \"member_count\": 5,\n      \"full_raw_match\": true\n    },\n    {\n      \"part\": 5,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-05.tar.gz\",\n        \"bytes\": 6515636,\n        \"mode\": 420,\n        \"sha256\": \"5309aad93edb5fa6e0a4357f19a2c7848bc795acb3191f5ecbc70cc3875377eb\"\n      },\n      \"body_bytes\": 78643200,\n      \"member_count\": 5,\n      \"full_raw_match\": true\n    },\n    {\n      \"part\": 6,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-06.tar.gz\",\n        \"bytes\": 1999573,\n        \"mode\": 420,\n        \"sha256\": \"772a023c2bf8a7c433edd0f413fbc51e21c2f749b9fe28d24b9e71021338bf4f\"\n      },\n      \"body_bytes\": 78643200,\n      \"member_count\": 6,\n      \"full_raw_match\": true\n    },\n    {\n      \"part\": 7,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-07.tar.gz\",\n        \"bytes\": 4744314,\n        \"mode\": 420,\n        \"sha256\": \"a9c8eb88083361aed1b9b6b5da7763afd7a7d0d54287e169d31823a0d925cc12\"\n      },\n      \"body_bytes\": 78643200,\n      \"member_count\": 5,\n      \"full_raw_match\": true\n    },\n    {\n      \"part\": 8,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-08.tar.gz\",\n        \"bytes\": 1832360,\n        \"mode\": 420,\n        \"sha256\": \"bade2b39920baf93ec18754c09dbb5b0bfd1d2a0bbf4b6c644b2af885fa01ff5\"\n      },\n      \"body_bytes\": 78643200,\n      \"member_count\": 6,\n      \"full_raw_match\": true\n    },\n    {\n      \"part\": 9,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-09.tar.gz\",\n        \"bytes\": 1928137,\n        \"mode\": 420,\n        \"sha256\": \"41edefcc4b21eeab0d81630641a134fbc10ddd9ce7d930171e4fb5dce06f4870\"\n      },\n      \"body_bytes\": 78643200,\n      \"member_count\": 6,\n      \"full_raw_match\": true\n    },\n    {\n      \"part\": 10,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-10.tar.gz\",\n        \"bytes\": 1920954,\n        \"mode\": 420,\n        \"sha256\": \"ee8cc1c867075938dbf5d71d201287a7059eb8ab0acdfa74802910ac4f2489ee\"\n      },\n      \"body_bytes\": 78643200,\n      \"member_count\": 7,\n      \"full_raw_match\": true\n    },\n    {\n      \"part\": 11,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-11.tar.gz\",\n        \"bytes\": 1915679,\n        \"mode\": 420,\n        \"sha256\": \"ae8edc245fe1a45a3065d3b8d2baadbcfd8f7b3207745450054c9bb40681cfc0\"\n      },\n      \"body_bytes\": 78643200,\n      \"member_count\": 6,\n      \"full_raw_match\": true\n    },\n    {\n      \"part\": 12,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-12.tar.gz\",\n        \"bytes\": 2861849,\n        \"mode\": 420,\n        \"sha256\": \"ca69908511d3b57ea9d13bd9e70362440ff862b8119d766caeb3a9e89ad60d41\"\n      },\n      \"body_bytes\": 78643200,\n      \"member_count\": 4,\n      \"full_raw_match\": true\n    },\n    {\n      \"part\": 13,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-13.tar.gz\",\n        \"bytes\": 2820334,\n        \"mode\": 420,\n        \"sha256\": \"db0486f8cc15dfec5b4c6a146ec6e5c5092a2e457310fd0bc634326ea368e658\"\n      },\n      \"body_bytes\": 78643200,\n      \"member_count\": 7,\n      \"full_raw_match\": true\n    },\n    {\n      \"part\": 14,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-14.tar.gz\",\n        \"bytes\": 8442818,\n        \"mode\": 420,\n        \"sha256\": \"a1cf3c8a0fbf6f17d0d150a0e2c8b7d31d994ef04aec68a55198b1826de3dacb\"\n      },\n      \"body_bytes\": 78643200,\n      \"member_count\": 11,\n      \"full_raw_match\": true\n    },\n    {\n      \"part\": 15,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-15.tar.gz\",\n        \"bytes\": 4420927,\n        \"mode\": 420,\n        \"sha256\": \"76f90c95fdb412657d8cf95d6044993d332371818a7c37a298074cf29ff045ce\"\n      },\n      \"body_bytes\": 78643200,\n      \"member_count\": 21,\n      \"full_raw_match\": true\n    },\n    {\n      \"part\": 16,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-16.tar.gz\",\n        \"bytes\": 6999879,\n        \"mode\": 420,\n        \"sha256\": \"fd01f4616f99303fe6b7d9c5568d7b12d1e708633d3b5f96b1fad9c2e15a1263\"\n      },\n      \"body_bytes\": 78643200,\n      \"member_count\": 272,\n      \"full_raw_match\": true\n    },\n    {\n      \"part\": 17,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-17.tar.gz\",\n        \"bytes\": 7678843,\n        \"mode\": 420,\n        \"sha256\": \"d38f6ace6dc0da8e95497ec9259542528bc19a5d8ad546e00adcaebcb8d3a912\"\n      },\n      \"body_bytes\": 78643200,\n      \"member_count\": 4311,\n      \"full_raw_match\": true\n    },\n    {\n      \"part\": 18,\n      \"archive\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-18.tar.gz\",\n        \"bytes\": 4174293,\n        \"mode\": 420,\n        \"sha256\": \"f6ee955253e6609ea5a3c9bffe9d9bb711b1b488fde74db0b5f47e03ac06774d\"\n      },\n      \"body_bytes\": 22700334,\n      \"member_count\": 14003,\n      \"full_raw_match\": true\n    }\n  ],\n  \"unique_payload_objects\": 18686,\n  \"physical_alias_roster_rows\": 155162,\n  \"alias_coverage\": {\n    \"logical_aliases\": 155089,\n    \"required_historical_aliases\": 633,\n    \"identity_only_ancestry\": 1\n  },\n  \"full_bytes_checked\": true,\n  \"old_archive_bodies_read\": false,\n  \"final_implementation_aliases\": 1888,\n  \"source_files_rehashed_by_readback\": false,\n  \"new_workloads_executed\": 0,\n  \"scope\": \"Independent full byte readback of newly generated archives, normalized headers, complete object/part/alias coverage and modes. Compatibility and performance gaps remain independent.\",\n  \"producer_report_sha256\": \"1ddb3b8fcf2e06eedb506dbc019d84d14c7c2b3e7372a2533010c81a1fbe207c\"\n}\n"
+    },
+    "publication_copy_readback": {
+      "identity": {
+        "path": "target/m2/stage122-publication-install-01/report.json",
+        "bytes": 17370,
+        "mode": 420,
+        "sha256": "0752effa4e1de0c5748b029c06c46b3434f87198eb8d410507f77ca6ed9d8187"
+      },
+      "utf8": "{\n  \"complete\": true,\n  \"all_public_raw_bytes_match\": true,\n  \"source_producer\": {\n    \"path\": \"target/m2/stage122-evidence-archives-01/report.json\",\n    \"bytes\": 10450,\n    \"mode\": 420,\n    \"sha256\": \"1ddb3b8fcf2e06eedb506dbc019d84d14c7c2b3e7372a2533010c81a1fbe207c\"\n  },\n  \"source_independent_readback\": {\n    \"path\": \"target/m2/stage122-evidence-archives-independent-readback-01/report.json\",\n    \"bytes\": 7720,\n    \"mode\": 420,\n    \"sha256\": \"a759c97ad381ab5b1a70693ec7f2f8092423f9e7f4c6ecde14956e7ed413d5e8\"\n  },\n  \"copies\": [\n    {\n      \"source\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-01.tar.gz\",\n        \"bytes\": 4281206,\n        \"mode\": 420,\n        \"sha256\": \"f3699554710326beab572346cd2aa099dadc77f212f4a38849bc688bf193deba\"\n      },\n      \"published\": {\n        \"path\": \"reports/m2/stage122-lossless-source-runtime-evidence-01.tar.gz\",\n        \"bytes\": 4281206,\n        \"mode\": 420,\n        \"sha256\": \"f3699554710326beab572346cd2aa099dadc77f212f4a38849bc688bf193deba\"\n      },\n      \"copy_argv\": [\n        \"/bin/cp\",\n        \"-c\",\n        \"-p\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-01.tar.gz\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage122-lossless-source-runtime-evidence-01.tar.gz\"\n      ],\n      \"copy_exit_code\": 0,\n      \"full_raw_match\": true\n    },\n    {\n      \"source\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-02.tar.gz\",\n        \"bytes\": 1688492,\n        \"mode\": 420,\n        \"sha256\": \"5cb28b3b40f6d1142582c9397235cdb93e5480bdaca26265e70321e9e39638a1\"\n      },\n      \"published\": {\n        \"path\": \"reports/m2/stage122-lossless-source-runtime-evidence-02.tar.gz\",\n        \"bytes\": 1688492,\n        \"mode\": 420,\n        \"sha256\": \"5cb28b3b40f6d1142582c9397235cdb93e5480bdaca26265e70321e9e39638a1\"\n      },\n      \"copy_argv\": [\n        \"/bin/cp\",\n        \"-c\",\n        \"-p\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-02.tar.gz\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage122-lossless-source-runtime-evidence-02.tar.gz\"\n      ],\n      \"copy_exit_code\": 0,\n      \"full_raw_match\": true\n    },\n    {\n      \"source\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-03.tar.gz\",\n        \"bytes\": 1690461,\n        \"mode\": 420,\n        \"sha256\": \"31241ea34a0e4cffd29a16a9020d4b41ad64f28e1e35dcf6bf5708e96424af2f\"\n      },\n      \"published\": {\n        \"path\": \"reports/m2/stage122-lossless-source-runtime-evidence-03.tar.gz\",\n        \"bytes\": 1690461,\n        \"mode\": 420,\n        \"sha256\": \"31241ea34a0e4cffd29a16a9020d4b41ad64f28e1e35dcf6bf5708e96424af2f\"\n      },\n      \"copy_argv\": [\n        \"/bin/cp\",\n        \"-c\",\n        \"-p\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-03.tar.gz\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage122-lossless-source-runtime-evidence-03.tar.gz\"\n      ],\n      \"copy_exit_code\": 0,\n      \"full_raw_match\": true\n    },\n    {\n      \"source\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-04.tar.gz\",\n        \"bytes\": 1721453,\n        \"mode\": 420,\n        \"sha256\": \"bbce9dd220618698330b53247e1eecf1ef13c516c07ca14b36878d510791c9c5\"\n      },\n      \"published\": {\n        \"path\": \"reports/m2/stage122-lossless-source-runtime-evidence-04.tar.gz\",\n        \"bytes\": 1721453,\n        \"mode\": 420,\n        \"sha256\": \"bbce9dd220618698330b53247e1eecf1ef13c516c07ca14b36878d510791c9c5\"\n      },\n      \"copy_argv\": [\n        \"/bin/cp\",\n        \"-c\",\n        \"-p\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-04.tar.gz\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage122-lossless-source-runtime-evidence-04.tar.gz\"\n      ],\n      \"copy_exit_code\": 0,\n      \"full_raw_match\": true\n    },\n    {\n      \"source\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-05.tar.gz\",\n        \"bytes\": 6515636,\n        \"mode\": 420,\n        \"sha256\": \"5309aad93edb5fa6e0a4357f19a2c7848bc795acb3191f5ecbc70cc3875377eb\"\n      },\n      \"published\": {\n        \"path\": \"reports/m2/stage122-lossless-source-runtime-evidence-05.tar.gz\",\n        \"bytes\": 6515636,\n        \"mode\": 420,\n        \"sha256\": \"5309aad93edb5fa6e0a4357f19a2c7848bc795acb3191f5ecbc70cc3875377eb\"\n      },\n      \"copy_argv\": [\n        \"/bin/cp\",\n        \"-c\",\n        \"-p\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-05.tar.gz\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage122-lossless-source-runtime-evidence-05.tar.gz\"\n      ],\n      \"copy_exit_code\": 0,\n      \"full_raw_match\": true\n    },\n    {\n      \"source\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-06.tar.gz\",\n        \"bytes\": 1999573,\n        \"mode\": 420,\n        \"sha256\": \"772a023c2bf8a7c433edd0f413fbc51e21c2f749b9fe28d24b9e71021338bf4f\"\n      },\n      \"published\": {\n        \"path\": \"reports/m2/stage122-lossless-source-runtime-evidence-06.tar.gz\",\n        \"bytes\": 1999573,\n        \"mode\": 420,\n        \"sha256\": \"772a023c2bf8a7c433edd0f413fbc51e21c2f749b9fe28d24b9e71021338bf4f\"\n      },\n      \"copy_argv\": [\n        \"/bin/cp\",\n        \"-c\",\n        \"-p\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-06.tar.gz\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage122-lossless-source-runtime-evidence-06.tar.gz\"\n      ],\n      \"copy_exit_code\": 0,\n      \"full_raw_match\": true\n    },\n    {\n      \"source\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-07.tar.gz\",\n        \"bytes\": 4744314,\n        \"mode\": 420,\n        \"sha256\": \"a9c8eb88083361aed1b9b6b5da7763afd7a7d0d54287e169d31823a0d925cc12\"\n      },\n      \"published\": {\n        \"path\": \"reports/m2/stage122-lossless-source-runtime-evidence-07.tar.gz\",\n        \"bytes\": 4744314,\n        \"mode\": 420,\n        \"sha256\": \"a9c8eb88083361aed1b9b6b5da7763afd7a7d0d54287e169d31823a0d925cc12\"\n      },\n      \"copy_argv\": [\n        \"/bin/cp\",\n        \"-c\",\n        \"-p\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-07.tar.gz\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage122-lossless-source-runtime-evidence-07.tar.gz\"\n      ],\n      \"copy_exit_code\": 0,\n      \"full_raw_match\": true\n    },\n    {\n      \"source\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-08.tar.gz\",\n        \"bytes\": 1832360,\n        \"mode\": 420,\n        \"sha256\": \"bade2b39920baf93ec18754c09dbb5b0bfd1d2a0bbf4b6c644b2af885fa01ff5\"\n      },\n      \"published\": {\n        \"path\": \"reports/m2/stage122-lossless-source-runtime-evidence-08.tar.gz\",\n        \"bytes\": 1832360,\n        \"mode\": 420,\n        \"sha256\": \"bade2b39920baf93ec18754c09dbb5b0bfd1d2a0bbf4b6c644b2af885fa01ff5\"\n      },\n      \"copy_argv\": [\n        \"/bin/cp\",\n        \"-c\",\n        \"-p\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-08.tar.gz\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage122-lossless-source-runtime-evidence-08.tar.gz\"\n      ],\n      \"copy_exit_code\": 0,\n      \"full_raw_match\": true\n    },\n    {\n      \"source\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-09.tar.gz\",\n        \"bytes\": 1928137,\n        \"mode\": 420,\n        \"sha256\": \"41edefcc4b21eeab0d81630641a134fbc10ddd9ce7d930171e4fb5dce06f4870\"\n      },\n      \"published\": {\n        \"path\": \"reports/m2/stage122-lossless-source-runtime-evidence-09.tar.gz\",\n        \"bytes\": 1928137,\n        \"mode\": 420,\n        \"sha256\": \"41edefcc4b21eeab0d81630641a134fbc10ddd9ce7d930171e4fb5dce06f4870\"\n      },\n      \"copy_argv\": [\n        \"/bin/cp\",\n        \"-c\",\n        \"-p\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-09.tar.gz\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage122-lossless-source-runtime-evidence-09.tar.gz\"\n      ],\n      \"copy_exit_code\": 0,\n      \"full_raw_match\": true\n    },\n    {\n      \"source\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-10.tar.gz\",\n        \"bytes\": 1920954,\n        \"mode\": 420,\n        \"sha256\": \"ee8cc1c867075938dbf5d71d201287a7059eb8ab0acdfa74802910ac4f2489ee\"\n      },\n      \"published\": {\n        \"path\": \"reports/m2/stage122-lossless-source-runtime-evidence-10.tar.gz\",\n        \"bytes\": 1920954,\n        \"mode\": 420,\n        \"sha256\": \"ee8cc1c867075938dbf5d71d201287a7059eb8ab0acdfa74802910ac4f2489ee\"\n      },\n      \"copy_argv\": [\n        \"/bin/cp\",\n        \"-c\",\n        \"-p\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-10.tar.gz\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage122-lossless-source-runtime-evidence-10.tar.gz\"\n      ],\n      \"copy_exit_code\": 0,\n      \"full_raw_match\": true\n    },\n    {\n      \"source\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-11.tar.gz\",\n        \"bytes\": 1915679,\n        \"mode\": 420,\n        \"sha256\": \"ae8edc245fe1a45a3065d3b8d2baadbcfd8f7b3207745450054c9bb40681cfc0\"\n      },\n      \"published\": {\n        \"path\": \"reports/m2/stage122-lossless-source-runtime-evidence-11.tar.gz\",\n        \"bytes\": 1915679,\n        \"mode\": 420,\n        \"sha256\": \"ae8edc245fe1a45a3065d3b8d2baadbcfd8f7b3207745450054c9bb40681cfc0\"\n      },\n      \"copy_argv\": [\n        \"/bin/cp\",\n        \"-c\",\n        \"-p\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-11.tar.gz\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage122-lossless-source-runtime-evidence-11.tar.gz\"\n      ],\n      \"copy_exit_code\": 0,\n      \"full_raw_match\": true\n    },\n    {\n      \"source\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-12.tar.gz\",\n        \"bytes\": 2861849,\n        \"mode\": 420,\n        \"sha256\": \"ca69908511d3b57ea9d13bd9e70362440ff862b8119d766caeb3a9e89ad60d41\"\n      },\n      \"published\": {\n        \"path\": \"reports/m2/stage122-lossless-source-runtime-evidence-12.tar.gz\",\n        \"bytes\": 2861849,\n        \"mode\": 420,\n        \"sha256\": \"ca69908511d3b57ea9d13bd9e70362440ff862b8119d766caeb3a9e89ad60d41\"\n      },\n      \"copy_argv\": [\n        \"/bin/cp\",\n        \"-c\",\n        \"-p\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-12.tar.gz\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage122-lossless-source-runtime-evidence-12.tar.gz\"\n      ],\n      \"copy_exit_code\": 0,\n      \"full_raw_match\": true\n    },\n    {\n      \"source\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-13.tar.gz\",\n        \"bytes\": 2820334,\n        \"mode\": 420,\n        \"sha256\": \"db0486f8cc15dfec5b4c6a146ec6e5c5092a2e457310fd0bc634326ea368e658\"\n      },\n      \"published\": {\n        \"path\": \"reports/m2/stage122-lossless-source-runtime-evidence-13.tar.gz\",\n        \"bytes\": 2820334,\n        \"mode\": 420,\n        \"sha256\": \"db0486f8cc15dfec5b4c6a146ec6e5c5092a2e457310fd0bc634326ea368e658\"\n      },\n      \"copy_argv\": [\n        \"/bin/cp\",\n        \"-c\",\n        \"-p\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-13.tar.gz\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage122-lossless-source-runtime-evidence-13.tar.gz\"\n      ],\n      \"copy_exit_code\": 0,\n      \"full_raw_match\": true\n    },\n    {\n      \"source\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-14.tar.gz\",\n        \"bytes\": 8442818,\n        \"mode\": 420,\n        \"sha256\": \"a1cf3c8a0fbf6f17d0d150a0e2c8b7d31d994ef04aec68a55198b1826de3dacb\"\n      },\n      \"published\": {\n        \"path\": \"reports/m2/stage122-lossless-source-runtime-evidence-14.tar.gz\",\n        \"bytes\": 8442818,\n        \"mode\": 420,\n        \"sha256\": \"a1cf3c8a0fbf6f17d0d150a0e2c8b7d31d994ef04aec68a55198b1826de3dacb\"\n      },\n      \"copy_argv\": [\n        \"/bin/cp\",\n        \"-c\",\n        \"-p\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-14.tar.gz\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage122-lossless-source-runtime-evidence-14.tar.gz\"\n      ],\n      \"copy_exit_code\": 0,\n      \"full_raw_match\": true\n    },\n    {\n      \"source\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-15.tar.gz\",\n        \"bytes\": 4420927,\n        \"mode\": 420,\n        \"sha256\": \"76f90c95fdb412657d8cf95d6044993d332371818a7c37a298074cf29ff045ce\"\n      },\n      \"published\": {\n        \"path\": \"reports/m2/stage122-lossless-source-runtime-evidence-15.tar.gz\",\n        \"bytes\": 4420927,\n        \"mode\": 420,\n        \"sha256\": \"76f90c95fdb412657d8cf95d6044993d332371818a7c37a298074cf29ff045ce\"\n      },\n      \"copy_argv\": [\n        \"/bin/cp\",\n        \"-c\",\n        \"-p\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-15.tar.gz\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage122-lossless-source-runtime-evidence-15.tar.gz\"\n      ],\n      \"copy_exit_code\": 0,\n      \"full_raw_match\": true\n    },\n    {\n      \"source\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-16.tar.gz\",\n        \"bytes\": 6999879,\n        \"mode\": 420,\n        \"sha256\": \"fd01f4616f99303fe6b7d9c5568d7b12d1e708633d3b5f96b1fad9c2e15a1263\"\n      },\n      \"published\": {\n        \"path\": \"reports/m2/stage122-lossless-source-runtime-evidence-16.tar.gz\",\n        \"bytes\": 6999879,\n        \"mode\": 420,\n        \"sha256\": \"fd01f4616f99303fe6b7d9c5568d7b12d1e708633d3b5f96b1fad9c2e15a1263\"\n      },\n      \"copy_argv\": [\n        \"/bin/cp\",\n        \"-c\",\n        \"-p\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-16.tar.gz\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage122-lossless-source-runtime-evidence-16.tar.gz\"\n      ],\n      \"copy_exit_code\": 0,\n      \"full_raw_match\": true\n    },\n    {\n      \"source\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-17.tar.gz\",\n        \"bytes\": 7678843,\n        \"mode\": 420,\n        \"sha256\": \"d38f6ace6dc0da8e95497ec9259542528bc19a5d8ad546e00adcaebcb8d3a912\"\n      },\n      \"published\": {\n        \"path\": \"reports/m2/stage122-lossless-source-runtime-evidence-17.tar.gz\",\n        \"bytes\": 7678843,\n        \"mode\": 420,\n        \"sha256\": \"d38f6ace6dc0da8e95497ec9259542528bc19a5d8ad546e00adcaebcb8d3a912\"\n      },\n      \"copy_argv\": [\n        \"/bin/cp\",\n        \"-c\",\n        \"-p\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-17.tar.gz\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage122-lossless-source-runtime-evidence-17.tar.gz\"\n      ],\n      \"copy_exit_code\": 0,\n      \"full_raw_match\": true\n    },\n    {\n      \"source\": {\n        \"path\": \"target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-18.tar.gz\",\n        \"bytes\": 4174293,\n        \"mode\": 420,\n        \"sha256\": \"f6ee955253e6609ea5a3c9bffe9d9bb711b1b488fde74db0b5f47e03ac06774d\"\n      },\n      \"published\": {\n        \"path\": \"reports/m2/stage122-lossless-source-runtime-evidence-18.tar.gz\",\n        \"bytes\": 4174293,\n        \"mode\": 420,\n        \"sha256\": \"f6ee955253e6609ea5a3c9bffe9d9bb711b1b488fde74db0b5f47e03ac06774d\"\n      },\n      \"copy_argv\": [\n        \"/bin/cp\",\n        \"-c\",\n        \"-p\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-evidence-archives-01/stage122-lossless-source-runtime-evidence-18.tar.gz\",\n        \"/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage122-lossless-source-runtime-evidence-18.tar.gz\"\n      ],\n      \"copy_exit_code\": 0,\n      \"full_raw_match\": true\n    }\n  ],\n  \"old_archive_bodies_read\": false,\n  \"clone_physical_extent_savings_claimed\": false,\n  \"total_compressed_bytes\": 67637208,\n  \"elapsed_seconds\": 0.1975450413301587\n}\n"
+    }
+  },
+  "final_document_pins": [
+    {
+      "path": "README.md",
+      "bytes": 17506,
+      "mode": 420,
+      "sha256": "0a506d0eb287748f35a41a0761228df8d80b47b7ea1c58a857bd100d1bf9dd0d"
+    },
+    {
+      "path": "TESTING.md",
+      "bytes": 120242,
+      "mode": 420,
+      "sha256": "f52424fc294bed789fd6085753e8b15a5c57befeb9d6e4e30f451e637191c2df"
+    },
+    {
+      "path": "docs/m2-language.md",
+      "bytes": 132435,
+      "mode": 420,
+      "sha256": "8b001e95757ad577c5e0d2be0398b41e9c009a006dbca218e73671eecf896b69"
+    },
+    {
+      "path": "reports/m2/README.md",
+      "bytes": 401745,
+      "mode": 420,
+      "sha256": "04929463ce4e734d4610acdfe10f85b071a680f9e1e7b2a34b4f8ea89434abf5"
+    },
+    {
+      "path": "PLAN.md",
+      "bytes": 508195,
+      "mode": 420,
+      "sha256": "9ee8e1cf1ee304e9e5aeff87effe8a85d257e4e6d1a7dab1b3878d2741faa54c"
+    },
+    {
+      "path": "reports/m2/stage122-lossless-source-runtime/README.md",
+      "bytes": 12240,
+      "mode": 420,
+      "sha256": "efc4b8b5fd504bb15cb4ba998c56df1cd4d68153c7274416a9bf794ad61c2deb"
+    }
+  ]
+}

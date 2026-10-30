@@ -27,7 +27,7 @@ fn ready(session: &mut HostSession) -> Result<Value, RuntimeError> {
 fn read(session: &mut HostSession, expected: &str) -> String {
     match event(session) {
         HostPoll::Read { token, uri } => {
-            assert_eq!(uri.as_ref(), expected);
+            assert_eq!(uri, expected);
             token
         }
         other => panic!("unexpected {other:?}"),

@@ -15,8 +15,10 @@ impl IoFailure {
         Self { message }
     }
 
-    pub(crate) fn into_runtime(self, operation: &str, uri: &str) -> RuntimeError {
-        let headline: PklString = format!("I/O error {operation} `{uri}`.").into();
+    pub(crate) fn into_runtime(self, operation: &str, uri: impl Into<PklString>) -> RuntimeError {
+        let headline = PklString::from(format!("I/O error {operation} `"))
+            .concat(&uri.into())
+            .concat(&"`.".into());
         let message = match self.message {
             Some(cause) if cause != headline => {
                 headline.concat(&"\nIOException: ".into()).concat(&cause)
@@ -60,7 +62,7 @@ pub enum ReadFailure {
 }
 
 impl ReadFailure {
-    pub(crate) fn into_runtime(self, uri: &str) -> RuntimeError {
+    pub(crate) fn into_runtime(self, uri: impl Into<PklString>) -> RuntimeError {
         match self {
             Self::Io(failure) => failure.into_runtime("reading resource", uri),
             Self::SecurityManagerException { message } => RuntimeError::host_language(

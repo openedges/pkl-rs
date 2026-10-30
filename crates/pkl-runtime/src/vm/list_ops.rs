@@ -127,14 +127,21 @@ pub(super) fn blocks(
         } else {
             format!("external function {name}")
         };
-        let start = class + source.text[class..].find(&needle).unwrap();
+        let start = class + source.text.entire().range(class..).find(&needle).unwrap();
         let end = if kind.arity() == 0 {
-            start + source.text[start..].find('\n').unwrap()
+            start + source.text.entire().range(start..).find("\n").unwrap()
         } else {
-            let open = start + source.text[start..].find('(').unwrap();
+            let open = start + source.text.entire().range(start..).find("(").unwrap();
             let mut depth = 0;
             let mut close = open;
-            for (i, c) in source.text[open..].char_indices() {
+            for (i, c) in source
+                .text
+                .entire()
+                .range(open..)
+                .as_str()
+                .expect("pinned builtin source is scalar")
+                .char_indices()
+            {
                 if c == '(' {
                     depth += 1;
                 } else if c == ')' {
@@ -145,7 +152,7 @@ pub(super) fn blocks(
                     }
                 }
             }
-            close + source.text[close..].find('\n').unwrap()
+            close + source.text.entire().range(close..).find("\n").unwrap()
         };
         let parameters: Vec<(&str, Option<TypeCheck>)> = if kind.predicate() {
             vec![(
@@ -183,7 +190,9 @@ pub(super) fn blocks(
             code.push(Instruction::LoadLocal(parameters.len() - index - 1));
             spans.push(None);
             if let Some(ty) = ty {
-                let from = start + source.text[start..end].find(label).unwrap() + label.len();
+                let from = start
+                    + source.text.entire().range(start..end).find(label).unwrap()
+                    + label.len();
                 let to = if kind.predicate() {
                     from + "(Element) -> Boolean".len()
                 } else if matches!(ty, TypeCheck::Int) {

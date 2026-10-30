@@ -30,7 +30,7 @@ fn ready(session: &mut HostSession) -> Result<Value, RuntimeError> {
 fn read(session: &mut HostSession, expected: &str) -> String {
     match event(session) {
         HostPoll::Read { token, uri } => {
-            assert_eq!(uri.as_ref(), expected);
+            assert_eq!(uri, expected);
             session.collect(&[]);
             token
         }
@@ -87,7 +87,7 @@ fn has_base_frame(error: &RuntimeError, builtin: &str) -> bool {
             && frame
                 .source
                 .as_ref()
-                .is_some_and(|source| source.uri.as_ref() == "pkl:base")
+                .is_some_and(|source| source.uri == "pkl:base")
     })
 }
 

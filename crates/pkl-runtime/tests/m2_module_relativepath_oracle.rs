@@ -99,18 +99,28 @@ fn run(program: &str, count: usize, power_assertions: bool) {
                         ..
                     } = &request.kind
                     {
-                        let mapped = modules
-                            .lines()
-                            .any(|line| line.split('\t').next() == Some(selected.as_ref()));
+                        let mapped = modules.lines().any(|line| {
+                            line.split('\t')
+                                .next()
+                                .is_some_and(|value| selected == value)
+                        });
                         let supported_primary = *phase
                             == pkl_runtime::modules::SelectionPhase::Primary
-                            && selected.split_once(':').is_some_and(|(scheme, _)| {
-                                matches!(scheme, "file" | "http" | "https")
-                            });
+                            && selected
+                                .as_str()
+                                .expect("fixture URI must contain Unicode scalar values")
+                                .split_once(':')
+                                .is_some_and(|(scheme, _)| {
+                                    matches!(scheme, "file" | "http" | "https")
+                                });
                         if !selected.starts_with("pkl:") && !mapped && !supported_primary {
                             // The Java preconfigured factory chain has no loader
                             // for an unsupported primary URI, even with text.
-                            assert_eq!(selected.as_ref(), uri, "unmapped imported module");
+                            assert_eq!(
+                                selected,
+                                &pkl_runtime::value::PklString::from(&uri),
+                                "unmapped imported module"
+                            );
                             probe
                                 .complete_module(
                                     token,
@@ -135,10 +145,10 @@ fn run(program: &str, count: usize, power_assertions: bool) {
                         ModuleRequestKind::Resolve { original_uri, .. } => {
                             let entry = rows
                                 .iter()
-                                .find(|row| row[0] == original_uri.as_ref())
+                                .find(|row| original_uri == row[0])
                                 .expect("pinned Java ModuleKey URI");
                             let resolved = if entry[1] == "=" {
-                                original_uri.as_ref()
+                                original_uri.as_str().expect("fixture URI must be scalar")
                             } else {
                                 entry[1]
                             };
@@ -155,10 +165,10 @@ fn run(program: &str, count: usize, power_assertions: bool) {
                         ModuleRequestKind::ResolveKey { key, .. } => {
                             let entry = rows
                                 .iter()
-                                .find(|row| row[0] == key.uri.as_ref())
+                                .find(|row| key.uri == row[0])
                                 .expect("pinned Java ModuleKey URI");
                             let resolved = if entry[1] == "=" {
-                                key.uri.as_ref()
+                                key.uri.as_str().expect("fixture URI must be scalar")
                             } else {
                                 entry[1]
                             };
@@ -169,7 +179,7 @@ fn run(program: &str, count: usize, power_assertions: bool) {
                         ModuleRequestKind::LoadSource { resolved, .. } => {
                             let entry = rows
                                 .iter()
-                                .find(|row| row[0] == resolved.original_uri.as_ref())
+                                .find(|row| resolved.original_uri == row[0])
                                 .expect("pinned Java synthetic module");
                             let source = fs::read_to_string(root().join(entry[2])).unwrap();
                             probe

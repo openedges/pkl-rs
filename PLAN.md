@@ -4,7 +4,11 @@
 
 ## 현재 상태
 
-Stage121에서 Pair의 Any 상속 경계, native Any 메서드의 인자 수 오류 프레임, 지연 superclass 해석의 원본 이름·위치를 통합했습니다. 새 전체 workspace는 **1,717개 통과·실패 0·ignored 5개**이고 기본 개발 검사 6개가 통과했습니다. 전체 ready 4,442개는 **4,339개 일치·불일치 19개·미지원 82개·Java 오류 2개**이며, `extendTypeAlias.pkl`과 `propertyNotFound2.pkl`이 새로 일치했습니다. 기존 통과 회귀는 없고 metamorphic 88개가 통과했습니다. 선택 Native·N-API·Chromium은 새 관측 각각 624개와 기존 일반 관측 각각 902개가 일치하며, 기존 내부 관측 2개는 대상별 미해결로 유지합니다. [Stage121 보고서](reports/m2/stage121-pair-supertype/README.md)에 증거 게시 상태와 제한을 기록합니다. 전체 M2와 아홉 작업 영역은 계속 진행 중입니다.
+Stage122에서 UTF-16 source·URI 보존, typed glob Host, version·declaration owner·fixed/typed spread 진단, Resource digest와 math external binding 18개를 공통 엔진에 통합했습니다. 실제 원시 증거의 exact union은 test harness **285개·통과 1,779개·실패 0·ignored 5개**입니다. checks04 통과 harness198개, checks05 통과85개, checks06 새 수정 후 통과2개를 연결하며 nested child repeat를 합산하지 않습니다. checks06의 workspace 이외 검사 다섯 개와 수정한 두 전체 test target, 총 일곱 명령은 실제 exit0입니다. reflection harness는 실제 process exit0·원시5개 통과지만 원래 Cargo 종료 status는 관측하지 못했으므로 null·inconclusive로 유지합니다. 원래 producer incomplete·observer 실패·monitoring gap을 보존하며 새 전체 workspace Cargo 명령 성공으로 표현하지 않습니다.
+
+전체 ready4,442개는 **일치4,351개·불일치15개·미지원74개·Java 오류2개**이며 Stage121 통과의 회귀가 없고 metamorphic88개가 통과했습니다. 원래 Resource·math·URI/glob·fixed/version/spread 사례12개가 새로 일치합니다. 이12개는 현재 manifest에서 required·ready이지만 `requirements`가 빈 목록입니다. 구현·test mapping 상태도 바꾸지 않았으므로 linkage를 별도 검사하는 정확한 전체 gate는 **중복 가능한 미충족1,768개(구현472·mapping472·required case824)**를 유지합니다. 목록4,545개·요구사항475개·미구현71개·미연결 실행 계약32개와 아홉 M2 작업 영역은 필수 미완료입니다. ready이지만 요구사항 연결이 없는 사례와 execution 자체가 unmapped인 계약을 구분합니다.
+
+M1 actual03은 Native·N-API·Chromium 각각6,078개 원시 비교가 일치하고 Node·브라우저 각각92개 시나리오와 strict·architecture 판정이 통과했습니다. Native transport는 runtime20개와 compiler counterpart4개를 검증했으며 dynamic API24개 완료가 아닙니다. N-API의 기존 full744/186 subset은 일반740개·callback744개 일치를 유지하고, 새 glob576은524개 일치·기존52개 미일치로 adapter 회귀4개를 해결했습니다. Chromium은 검증한 기존701개 process와 새63개를 연결해 같은 일반740개·callback744개·glob524개 일치와52개 미일치를 확인했습니다. transport-19 전체 세 대상 원시 비교도 통과했습니다. 대형10개만 별도3 GiB sampled owned-process RSS 한도 실험으로 실행하고 기존2 GiB 실패를 보존합니다. 증거 archive18개·총67,637,208 compressed bytes의 독립 판독과 게시 사본의 전체 바이트 일치를 확인했습니다. binding의 bounded lossless session/roundtrip을 전체 typed value export·공개 API 완료로 표시하지 않습니다. 현재 결과와 게시 상태는 [Stage122 보고서](reports/m2/stage122-lossless-source-runtime/README.md)에 연결합니다. 전체 M2·릴리스 OS·속도·메모리 목표는 미완료입니다.
 
 Stage120 이후 [Stage117 원본 사례 연결 보완](reports/m2/stage117-original-case-mapping/README.md)을 통합했습니다. 기존 원본 14개의 요구사항 연결 94개와 의미론 영역 9개의 명시적 소스 연결을 추가했습니다. Stage120의 보존된 원시 관측을 다시 읽어 성공 평가 13개·일치하는 오류 1개를 확인했고, Python 검사 42개와 목록 최신성 검사가 통과했습니다. 새 evaluator 실행은 아닙니다. 기존 4,545개 실행 계약과 요구사항 475개의 상태는 유지하며, 이전에 연결이 없던 12개 사례의 목록상 미충족 사유만 해소했습니다. 엄격한 전체 gate의 중복 가능한 미충족 조건은 1,780개에서 1,768개가 됐고, 런타임 불일치와 아홉 작업 영역은 계속 남아 있습니다.
 
@@ -25,7 +29,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: Stage121 Pair·Any 호출·superclass 진단 통합; workspace 1,717개 통과·ignored 5개·ready 4,339/4,442 일치; 선택 세 대상 각각 새 624개·기존 일반 902개 일치·내부 미해결 2개 유지; 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: Stage122 UTF-16·glob Host·진단·Resource·math 통합; harness285개·1,779통과·ignored5개; ready4,351/4,442일치·metamorphic88통과·회귀0; Cargo 종료 관측 누락·전체 gate1,768조건·Chromium 조합 검증·archive 게시 완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
@@ -3710,3 +3714,18 @@ Stage121 증거는 10개 part, 총 185,526,489 compressed bytes로 게시했습�
 원래 mode가 대표 object와 다른 alias 2개는 manifest의 개별 mode로 복원합니다. 게시한
 복사본도 원본과 일치합니다. Stage114/120의 이전 증거와 고정 runtime/toolchain은 명시적
 복원 선행 조건이며, 과거 archive body는 읽거나 복사하지 않았습니다.
+
+
+### Stage122 — UTF-16 source·glob Host·선언 진단·Resource·math 통합
+
+공통 engine과 Native·N-API·Wasm의 bounded lossless source/session 경로를 연결했습니다. `SourceText`의 authored code unit과 내부 lexer byte 공간을 구분하고, platform I/O는 Host 뒤에 둡니다. `evaluate`의 probe scalar wire·complex-value unsupported 한계와 전체 typed API 미완료를 명시합니다.
+
+새 원본 일치12개는 `external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/` 아래 `api/Resource.pkl`, `api/mathModule.pkl`, `errors/cannotAssignFixedProperty3.pkl`, `errors/invalidFileUri2.pkl`, `errors/invalidGlobImport4.pkl`, `errors/invalidGlobImport7.pkl`, `errors/invalidGlobImport8.pkl`, `errors/invalidGlobRead1.pkl`, `errors/invalidGlobRead2.pkl`, `errors/invalidGlobRead3.pkl`, `errors/moduleWithHighMinPklVersionAndParseErrors.pkl`, `errors/spreadSyntaxUnknownTypedProperty.pkl`입니다. 원래 module888개는 일치793개에서805개로 늘었고 historical8개·JVM 두 관측은 일치를 유지합니다. scalar3,545개는 일치3,537개·불일치7개·oracle 오류1개입니다. 기존 nonpass의 세 상태 이동도 원시 결과로 보존합니다.
+
+harness exact union과 실제 command exit를 분리합니다. 원래 checks04 강제 중단과 checks05 controller 유실·observer identity assertion 실패를 보존합니다. reflection test process의 실제 exit0와3151.57초 원시5개 통과만 확인됐으며 Cargo exit를 만들지 않습니다. 최종 checks06은 xtask·format·warnings-denied all-target Clippy·수정한 resources/Unicode 전체 target·Wasm·freshness의 일곱 명령을 새로 성공했습니다. Cargo cache 재사용과 새 compiler provenance도 구분합니다. 이전 source inventory의 누락 범위와 complete compiler/example inventory 미확인을 유지합니다.
+
+전체 ready 취득은4,443개 관측 중4,442개 실제 완료와 List timeout1개를 포함합니다. 원래 `api/list.pkl`의 Java oracle 오류는 남고 새 Native도60초 watchdog timeout입니다. sampled RSS82,771,968 bytes·`resource_stop=null`이므로 RSS 한도 종료나 성능 우위로 바꾸지 않습니다. 모든 원시 재비교·88개 metamorphic과 Stage121 이전 통과 회귀0을 확인했습니다. 정확한 현재 `full_gate_failures` 함수를 실제 manifest·결과에 적용한1,768개 조건은 새 CLI 취득이나 완료율이 아닙니다. 새 일치12개의 빈 requirement link를 그대로 보존했습니다.
+
+M1 actual03과 Native20/static4, Native·N-API lossless/full744 및 glob576은 각각 별도 계약입니다. N-API03이 이전 adapter 회귀4개를 해결했지만52개 원시 nonmatch·내부 lossless4개는 미해결입니다. 기존 nonpass8개 관측에서 Native/N-API channel presence 차이72개·필드 비교 분류 차이40개도 보존합니다. Chromium의 기존701개와 새63개를 연결한 독립 원시 판독, transport-19 전체 Native/N-API/Chromium 비교가 통과했습니다. 대형10개에는 별도3 GiB sampled owned-process RSS 한도를 적용했고 최대2,370,224,128 bytes를 관측했습니다. 나머지52개 glob과 transport는 기존2 GiB를 유지합니다. 원래04의2 GiB 한도 중단·정확한 peak 미관측,52개 glob 미일치와 대상별 내부4개를 보존하며 메모리 성능 목표 달성으로 계산하지 않습니다.
+
+source epoch별 catalog와 복원 선행 조건을 확정하고 archive18개·총67,637,208 compressed bytes를 게시했습니다. 독립 판독은 payload18,686개·logical alias155,089개·필수 historical alias633개와 최종 구현1,888개를 확인했고 게시 사본의 전체 바이트·해시·mode가 일치했습니다. 원래 preparation의 pending 문구는 봉인한 채 final descriptor의 실제 완료 receipt와 addendum으로 구분합니다. Git 게시 후 원래 glob Host·API/internal·전체 언어의 미지원·불일치·미연결 의무를 계속 처리합니다. 전체 API·M2·릴리스 OS·속도·메모리 gate는 유지합니다.

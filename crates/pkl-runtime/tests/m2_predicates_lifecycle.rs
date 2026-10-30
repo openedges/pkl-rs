@@ -33,11 +33,9 @@ fn session() -> (HostSession, Value, usize, usize) {
     let module_entry = program.entry;
     let entries = ["parent", "child"].map(|member| {
         let entry = program.blocks.len();
-        program.blocks.push(vec![
-            I::Input(0),
-            I::GetMember(Arc::from(member)),
-            I::Return,
-        ]);
+        program
+            .blocks
+            .push(vec![I::Input(0), I::GetMember(member.into()), I::Return]);
         entry
     });
     let mut session = HostSession::new(Arc::new(program));
@@ -67,7 +65,7 @@ fn ready(session: &mut HostSession, now: u64) -> Result<Value, RuntimeError> {
 fn request(session: &mut HostSession, now: u64, expected: &str) -> String {
     match event(session, now) {
         HostPoll::Read { token, uri } => {
-            assert_eq!(&*uri, expected);
+            assert_eq!(uri, expected);
             token
         }
         event => panic!("expected read, got {event:?}"),

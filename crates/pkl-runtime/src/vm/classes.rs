@@ -133,13 +133,14 @@ pub(super) fn accepts_nominal(id: usize, value: &Value, heap: &Heap) -> bool {
     }
 }
 
-pub(super) fn specialized_type(module: Option<&str>, name: &str) -> Option<TypeCheck> {
+pub(super) fn specialized_type(module: Option<&PklString>, name: &PklString) -> Option<TypeCheck> {
     // UnresolvedTypeNode.Declared selects these intrinsic type nodes by name.
     // This must not merge the identity of a user-declared pkl.base class with
     // the canonical builtin Class value used by the selected type node.
-    if module != Some("pkl.base") {
+    if !module.is_some_and(|module| module == "pkl.base") {
         return None;
     }
+    let name = name.as_str()?;
     match name {
         "String" | "Boolean" | "Int" | "Float" | "Number" | "Any" | "Typed" | "Dynamic" => {
             reference::base_type(name)
@@ -281,8 +282,8 @@ impl BuiltinClass {
             TypeCheck::String => Self::String,
             TypeCheck::Bytes => Self::Bytes,
             TypeCheck::Duration => Self::Duration,
-            TypeCheck::MetaClass(name) if name.as_ref() == "Class" => Self::Class,
-            TypeCheck::MetaClass(name) if name.as_ref() == "TypeAlias" => Self::TypeAlias,
+            TypeCheck::MetaClass(name) if name == "Class" => Self::Class,
+            TypeCheck::MetaClass(name) if name == "TypeAlias" => Self::TypeAlias,
             TypeCheck::Function { parameters, .. } => {
                 Self::Function(parameters.as_ref().map(Vec::len))
             }
@@ -436,7 +437,7 @@ impl Vm {
     pub(super) fn class_member(
         &mut self,
         receiver: &Value,
-        name: &str,
+        name: &PklString,
         method: bool,
     ) -> Result<bool, RuntimeError> {
         let Value::Class(class) = receiver else {
@@ -446,13 +447,13 @@ impl Vm {
         if !method && name == "simpleName" {
             self.stack
                 .push(Value::string(self.heap.class_simple_name(*class)?));
-        } else if method && matches!(name, "getClass" | "toString") {
+        } else if method && matches!(name.as_str(), Some("getClass" | "toString")) {
             let function = self.native_reference_method(
                 receiver.clone(),
                 if name == "toString" {
                     "scalarToString"
                 } else {
-                    name
+                    name.as_str().expect("recognized Class method")
                 },
             );
             self.stack.push(function);

@@ -4,6 +4,7 @@ use pkl_runtime::modules::{
     ModuleCompletion, ModuleHostError, ModuleRequest, ModuleRequestKind, ModuleSource,
     ResolvedModule,
 };
+use pkl_runtime::value::PklString;
 use std::path::{Component, Path, PathBuf};
 
 pub struct DirectoryClassPath {
@@ -47,7 +48,11 @@ impl DirectoryClassPath {
         }
     }
 
-    fn resource_path(uri: &str) -> Result<PathBuf, ModuleHostError> {
+    fn resource_path(uri: impl Into<PklString>) -> Result<PathBuf, ModuleHostError> {
+        let uri = uri.into();
+        let uri = uri.as_str().ok_or_else(|| ModuleHostError::Unsupported(
+            "The directory classpath Host cannot represent an unpaired UTF-16 surrogate in a URI.".into(),
+        ))?;
         let unsupported = || {
             ModuleHostError::Unsupported(
                 "The directory classpath Host requires a hierarchical modulepath URI without authority, query, fragment or dot segments.".into(),
@@ -57,7 +62,7 @@ impl DirectoryClassPath {
         if !tail.starts_with('/') || tail.starts_with("//") || tail.contains(['?', '#']) {
             return Err(unsupported());
         }
-        let decoded = super::module_host::file_path(&format!("file:{tail}"))?;
+        let decoded = super::module_host::file_path(format!("file:{tail}"))?;
         let path = decoded.strip_prefix("/").map_err(|_| unsupported())?;
         if path.as_os_str().is_empty()
             || path
@@ -72,9 +77,10 @@ impl DirectoryClassPath {
 
     fn resolve(
         &self,
-        import_uri: &str,
-        original_uri: &str,
+        import_uri: impl Into<PklString>,
+        original_uri: impl Into<PklString>,
     ) -> Result<ResolvedModule, ModuleHostError> {
+        let original_uri = original_uri.into();
         let relative = Self::resource_path(import_uri)?;
         let path = self.root.join(relative);
         // ClassLoader.getResource returns a URL retaining a symlink's spelling.
@@ -88,9 +94,9 @@ impl DirectoryClassPath {
         let uri = super::module_host::file_uri(&path)?;
         let uri = format!("file:{}", uri.strip_prefix("file://").expect("file URI"));
         Ok(ResolvedModule {
-            original_uri: original_uri.into(),
+            original_uri: original_uri.clone(),
             resolved_uri: uri.into(),
-            source_uri: original_uri.into(),
+            source_uri: original_uri,
         })
     }
 
@@ -155,10 +161,10 @@ mod tests {
         assert!(alias.resolved_uri.ends_with("/alias.pkl"));
         assert!(alias.resolved_uri.starts_with("file:/"));
         assert!(!alias.resolved_uri.starts_with("file://"));
-        assert_eq!(&*alias.source_uri, "modulepath:/alias.pkl");
+        assert_eq!(alias.source_uri, "modulepath:/alias.pkl");
         let source = host.load(&alias).unwrap();
-        assert_eq!(&*source.inferred_name, "alias");
-        assert_eq!(&*source.text, "value = 7\n");
+        assert_eq!(source.inferred_name, "alias");
+        assert_eq!(source.text.as_str(), Some("value = 7\n"));
         assert_eq!(
             host.resolve("modulepath:/missing.pkl", "modulepath:/missing.pkl"),
             Err(ModuleHostError::NotFound)
