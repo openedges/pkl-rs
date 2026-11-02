@@ -1,5 +1,23 @@
 # M2 language evidence
 
+## Stage130 shared exception rendering and local checks
+
+Stage130 adds a shared throwable-graph renderer with full UTF-8/UTF-16 Java
+comparisons for 54 graphs under LF and CRLF. The complete local workspace exits
+zero with **1,789 passed, zero failed and five ignored across 287 harnesses**;
+13 nested child passes are excluded. All 285 executable targets and two doctest
+crates complete; 26 examples are compile-only. The focused Rust and Python
+counts are not added to the workspace count.
+
+Formatting, xtask, all-target Clippy, Wasm checking and manifest freshness pass.
+The separate actual Native/Node/Chromium experiment matches **6,078 results per
+target**, with **92 Node and 92 browser scenarios** and both strict and
+architecture predicates passing. Preserved setup/linker failures, raw evidence
+and provenance limits are detailed in [the Stage130 report](stage130-java-exception-renderer/README.md). Runtime stack capture and
+internal-error catch integration remain open. This is not full M2/API,
+release-platform or performance completion, and no full language replay is
+claimed.
+
 ## Stage129 workspace validation and Java URI-catch evidence
 
 Stage129 completes the local `cargo test --workspace --locked` command with

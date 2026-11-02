@@ -32,6 +32,105 @@ def fake_copy(source, destination, timeout, target, floor):
 
 
 class WorkspaceStorageTests(unittest.TestCase):
+    @unittest.skipUnless(os.name == 'posix', 'POSIX jobserver descriptors')
+    def test_jobserver_pipe_reaches_real_compiler_only(self):
+        class Stream:
+            def __init__(self): self.buffer = io.BytesIO()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            target = root/'target'; target.mkdir()
+            receipts = root/'receipts'; receipts.mkdir()
+            read_fd, write_fd = os.pipe()
+            other_read, other_write = os.pipe()
+            try:
+                # pass_fds must forward these even when Python marked them CLOEXEC,
+                # while still closing an unrelated explicitly inheritable descriptor.
+                os.set_inheritable(other_read, True)
+                os.write(write_fd, b'T')
+                flags = f'-j --jobserver-fds={read_fd},{write_fd} --jobserver-auth={read_fd},{write_fd}'
+                env = dict(os.environ, PKL_STORAGE_TARGET=str(target),
+                           PKL_STORAGE_RECEIPTS=str(receipts), CARGO_MAKEFLAGS=flags)
+                script = ("import os,sys\n"
+                          "r,w,other=map(int,sys.argv[1:4])\n"
+                          "assert os.read(r,1)==b'T'\n"
+                          "os.write(w,b'R')\n"
+                          "try: os.fstat(other)\n"
+                          "except OSError: pass\n"
+                          "else: raise AssertionError('unrelated descriptor inherited')\n"
+                          "assert os.environ['CARGO_MAKEFLAGS']==sys.argv[4]\n"
+                          "sys.stdout.buffer.write(b'raw\\x00out')\n"
+                          "sys.stderr.buffer.write(b'raw\\x00err')\n"
+                          "sys.exit(23)\n")
+                out, err = Stream(), Stream()
+                with patch.object(storage.sys, 'stdout', out), patch.object(storage.sys, 'stderr', err), \
+                     patch.object(storage, 'digest', side_effect=lambda path: hashlib.sha256(path.read_bytes()).hexdigest() if path.exists() else 'mock-tool'):
+                    result = storage.run(['wrapper', sys.executable, '-c', script,
+                                          str(read_fd), str(write_fd), str(other_read), flags], env)
+                self.assertEqual(result, 23)
+                self.assertEqual(os.read(read_fd, 1), b'R')
+                self.assertEqual(out.buffer.getvalue(), b'raw\x00out')
+                self.assertEqual(err.buffer.getvalue(), b'raw\x00err')
+                receipt = json.loads(next(receipts.glob('*.json')).read_bytes())
+                self.assertEqual(receipt['compiler_exit_code'], 23)
+                self.assertTrue(receipt['complete'])
+                self.assertEqual(receipt['jobserver']['kind'], 'pipe')
+                self.assertEqual(receipt['jobserver']['fds'], [read_fd, write_fd])
+                self.assertEqual(Path(receipt['stdout']['path']).read_bytes(), b'raw\x00out')
+                self.assertEqual(Path(receipt['stderr']['path']).read_bytes(), b'raw\x00err')
+            finally:
+                for fd in (read_fd, write_fd, other_read, other_write):
+                    os.close(fd)
+
+    @unittest.skipUnless(os.name == 'posix', 'POSIX jobserver descriptors')
+    def test_jobserver_authorization_validation(self):
+        self.assertEqual(storage.jobserver_fds({}), ({'kind': 'absent', 'fds': []}, ()))
+        fifo = {'CARGO_MAKEFLAGS': '--jobserver-auth=fifo:/tmp/jobserver'}
+        self.assertEqual(storage.jobserver_fds(fifo), ({'kind': 'fifo', 'fds': []}, ()))
+        read_fd, write_fd = os.pipe()
+        try:
+            for key in ('--jobserver-auth', '--jobserver-fds'):
+                report, fds = storage.jobserver_fds({'CARGO_MAKEFLAGS': f'{key}={read_fd},{write_fd}'})
+                self.assertEqual(fds, (read_fd, write_fd))
+                self.assertEqual(report['fds'], [read_fd, write_fd])
+            invalid = [
+                '--jobserver-auth', '--jobserver-auth=', '--jobserver-auth=fifo:',
+                '--jobserver-fds=fifo:/tmp/x', '--jobserver-auth=1,2',
+                f'--jobserver-auth={read_fd},{read_fd}', '--jobserver-auth=3,x',
+                f'--jobserver-auth={read_fd},{write_fd} --jobserver-fds={write_fd},{read_fd}',
+                f'--jobserver-auth=fifo:/tmp/x --jobserver-fds={read_fd},{write_fd}',
+                '--jobserver-auth="unterminated',
+            ]
+            for flags in invalid:
+                with self.subTest(flags=flags), self.assertRaises(ValueError):
+                    storage.jobserver_fds({'CARGO_MAKEFLAGS': flags})
+            closed = os.dup(read_fd)
+            os.close(closed)
+            with self.assertRaisesRegex(ValueError, 'closed or invalid'):
+                storage.jobserver_fds({'CARGO_MAKEFLAGS': f'--jobserver-auth={closed},{write_fd}'})
+            with tempfile.TemporaryFile() as regular:
+                with self.assertRaisesRegex(ValueError, 'not a pipe'):
+                    storage.jobserver_fds({'CARGO_MAKEFLAGS': f'--jobserver-auth={regular.fileno()},{write_fd}'})
+        finally:
+            os.close(read_fd); os.close(write_fd)
+
+    @unittest.skipUnless(os.name == 'posix', 'POSIX jobserver descriptors')
+    def test_invalid_jobserver_fails_before_compiler_and_records_reason(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            target = root/'target'; target.mkdir()
+            receipts = root/'receipts'; receipts.mkdir()
+            env = {'PKL_STORAGE_TARGET': str(target), 'PKL_STORAGE_RECEIPTS': str(receipts),
+                   'CARGO_MAKEFLAGS': '--jobserver-auth=3,bad'}
+            with patch.object(storage.shutil, 'which', return_value=sys.executable), \
+                 patch.object(storage, 'digest', return_value='mock-tool'), \
+                 patch.object(storage.subprocess, 'Popen') as popen:
+                self.assertEqual(storage.run(['wrapper', 'rustc', '--print=cfg'], env), 1)
+                popen.assert_not_called()
+            receipt = json.loads(next(receipts.glob('*.json')).read_bytes())
+            self.assertIsNone(receipt['compiler_exit_code'])
+            self.assertFalse(receipt['complete'])
+            self.assertIn('invalid numeric jobserver authorization', receipt['errors'][0])
+
     def test_storage_floor_validation_and_default(self):
         self.assertEqual(storage.storage_floor({}), 1024*1024**2)
         self.assertEqual(storage.storage_floor({'PKL_STORAGE_MIN_FREE_MIB': '768'}), 768*1024**2)

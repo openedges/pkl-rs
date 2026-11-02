@@ -1,0 +1,68 @@
+{
+  "complete": true,
+  "raw_bytes_equal": true,
+  "source_bookends_stable": true,
+  "copies": [
+    {
+      "source_before": {
+        "path": "target/m2/stage130-publication-01/stage130-evidence.tar.gz",
+        "bytes": 25068173,
+        "mode": 420,
+        "sha256": "8288f3e9e40695732a92f525af2fc4e58094a6a9b31bf067ad99073e6761bde3"
+      },
+      "published_copy": {
+        "path": "reports/m2/stage130-java-exception-renderer/stage130-evidence.tar.gz",
+        "bytes": 25068173,
+        "mode": 420,
+        "sha256": "8288f3e9e40695732a92f525af2fc4e58094a6a9b31bf067ad99073e6761bde3"
+      },
+      "source_after": {
+        "path": "target/m2/stage130-publication-01/stage130-evidence.tar.gz",
+        "bytes": 25068173,
+        "mode": 420,
+        "sha256": "8288f3e9e40695732a92f525af2fc4e58094a6a9b31bf067ad99073e6761bde3"
+      }
+    },
+    {
+      "source_before": {
+        "path": "target/m2/stage130-publication-01/report.json",
+        "bytes": 883,
+        "mode": 420,
+        "sha256": "222a29135e6c4df797f33de88f974eed69425fab20b0d788ef7f27d12cf9b327"
+      },
+      "published_copy": {
+        "path": "reports/m2/stage130-java-exception-renderer/publication.json",
+        "bytes": 883,
+        "mode": 420,
+        "sha256": "222a29135e6c4df797f33de88f974eed69425fab20b0d788ef7f27d12cf9b327"
+      },
+      "source_after": {
+        "path": "target/m2/stage130-publication-01/report.json",
+        "bytes": 883,
+        "mode": 420,
+        "sha256": "222a29135e6c4df797f33de88f974eed69425fab20b0d788ef7f27d12cf9b327"
+      }
+    },
+    {
+      "source_before": {
+        "path": "target/m2/stage130-archive-readback-01/report.json",
+        "bytes": 478,
+        "mode": 420,
+        "sha256": "8906b45392a071906b57394a4b229fe294bea7e547c9eb36c7f2eac84b325608"
+      },
+      "published_copy": {
+        "path": "reports/m2/stage130-java-exception-renderer/archive-readback.json",
+        "bytes": 478,
+        "mode": 420,
+        "sha256": "8906b45392a071906b57394a4b229fe294bea7e547c9eb36c7f2eac84b325608"
+      },
+      "source_after": {
+        "path": "target/m2/stage130-archive-readback-01/report.json",
+        "bytes": 478,
+        "mode": 420,
+        "sha256": "8906b45392a071906b57394a4b229fe294bea7e547c9eb36c7f2eac84b325608"
+      }
+    }
+  ],
+  "scope": "Exact copied files; archive validity is established by the separate reader. No compatibility or full source closure claim."
+}

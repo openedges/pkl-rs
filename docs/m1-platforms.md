@@ -20,7 +20,7 @@ scenarios.mjs` runs identical assertions in Node and inside a Chromium page:
 actual frontend evaluation, Unicode strings, i64 endpoints and overflow, owned
 bytes, delayed resource callbacks, suspended arithmetic, reentry, duplicate and
 cross-session completions, error bytes, cancellation, close, and real timer
-expiry. Fourteen required scenarios include nested reads in one evaluator and
+expiry. The required scenarios include nested reads in one evaluator and
 live-operation cleanup. `host-adapter.mjs` gives each fake read an AbortController,
 a real timer, and a Promise; it consumes the engine's cancellation queue to abort
 the operation, remove its timer/listener and active-map entry, and reject its
@@ -57,14 +57,17 @@ raw bytes through a lossless hex-line transport; missing output is a failure.
 
 The strict command returns nonzero for any Java mismatch. The separate
 `--verify-contract` mode verifies that all four targets ran, all shared-engine
-results agree, all platform scenarios passed, and the exact two documented
-regex backend gaps remain accounted for. Its report still says compatibility
-`fail` and counts those inputs as mismatches. It also fails when an expected
-gap disappears, requiring review and an explicit contract update. CI uses this
-architecture-experiment gate; it is not a language conformance gate.
+results agree, all required platform scenarios passed, and the observed
+mismatch set equals the reviewed known-gap set. The current runner's known-gap
+set is empty, following the Stage76–78 raw comparisons. Both predicates are
+recorded from the same acquisition; `--verify-contract` starts an acquisition
+in a fresh output directory and is not an existing-report verifier. This
+architecture experiment is not a whole-language conformance gate.
 
-The regex gaps are Unicode database version selection and zero-width matching
-inside supplementary UTF-16 pairs. See [semantic decisions](m1-semantics.md)
-for the rejected backend and the shared replacement strategy. A prototype
-passing this platform contract establishes execution and transport evidence,
-not complete language, API, performance, browser support, or npm packaging.
+Earlier acquisitions retained two regex gaps involving Unicode database
+selection and supplementary UTF-16 zero-width matching. Those historical
+outcomes remain unchanged. See [semantic decisions](m1-semantics.md) for the
+backend decisions. Report actual new mismatches without removing or
+normalizing them. Passing this platform contract establishes execution and
+transport evidence, not complete language, API, performance, browser support,
+or npm packaging.

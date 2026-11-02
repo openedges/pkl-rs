@@ -1,0 +1,6 @@
+org.pkl.core.runtime.VmBugException: renderer failure
+Caused by: java.lang.IllegalArgumentException: illegal input
+	at example.Owner.evaluate(Owner.java:17)
+Caused by: M2JavaExceptionOracle$ModelException: cycle
+	... 1 more
+Caused by: [CIRCULAR REFERENCE: java.lang.IllegalArgumentException: illegal input]

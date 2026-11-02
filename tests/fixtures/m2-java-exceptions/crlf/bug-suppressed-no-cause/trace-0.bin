@@ -1,0 +1,6 @@
+org.pkl.core.runtime.VmBugException: renderer failure
+	Suppressed: M2JavaExceptionOracle$ModelException: one
+		at example.Owner.evaluate(Owner.java:17)
+	Suppressed: M2JavaExceptionOracle$ModelException: two
+		at example.Owner.evaluate(Owner.java:17)
+	Caused by: [CIRCULAR REFERENCE: M2JavaExceptionOracle$ModelException: one]

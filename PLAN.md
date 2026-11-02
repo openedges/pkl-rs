@@ -4,6 +4,10 @@
 
 ## 현재 상태
 
+Stage130에서 Java throwable graph 렌더러와 Cargo jobserver FD 전달 수정을 통합했습니다. Java **54개 모델 × LF/CRLF**의 UTF-8·UTF-16 전체 결과를 비교했습니다. 전체 workspace는 실제 exit **0**, 독립 집계 **harness 287개·통과 1,789개·실패 0개·ignored 5개**이며 자식 반복 통과 13개는 제외합니다. Native·Node·Chromium은 각각 6,078개가 일치하고 Node·브라우저 시나리오는 각각 92개가 통과했습니다. [Stage130 보고서](reports/m2/stage130-java-exception-renderer/README.md)에 실패한 초기 시도, 원시 증거, 집계·소스 출처의 한계를 함께 보존합니다.
+
+실제 평가 노드 상태에 따른 Java 스택 생성, 호출자 프로필, typed bug payload와 내부 오류 catch 연결은 남아 있습니다. 기존 ignored·미구현·미연결 요구사항과 전체 M2·API·릴리스 플랫폼·성능 조건은 완료로 바꾸지 않습니다. 다음에는 별도 복사본에서 재현·검증 중인 power assertion의 생성기·람다·멤버 조건 표시 차이를 원본 계약으로 검증해 반영하고, 실행 노드별 상태를 사용하는 내부 오류 스택·catch 구현을 이어갑니다. 별도 복사본의 후속 결과는 Stage130의 workspace 수에 합산하지 않습니다.
+
 Stage129에서 디스크 정리 후 전체 workspace 명령을 실제 Cargo exit **0**으로 완료했습니다. 독립 원시 집계는 **harness 286개·통과 1,786개·실패 0개·ignored 5개**이며 자식 반복 통과 13개는 제외합니다. 테스트 실행 파일 284개와 doctest crate 2개가 모두 완료됐고 example 26개는 컴파일만 확인했습니다. 엔진은 바꾸지 않았으며 1 GiB 디스크 하한과 별도 캐시 clone에서 검증했습니다. 기존 compiler receipt가 없는 산출물 20개와 unavailable depfile 8개는 그대로 남습니다.
 
 Java URI-catch 기준은 16개 세션·32개 쿼리를 새로 수집했습니다. 독립 JVM 회차 사이의 원시 결과 8개는 일치하지만, 같은 evaluator의 uncaught URI 오류는 첫 번째·두 번째 쿼리의 전체 문자열이 다릅니다. 이 차이와 초기 독립 판독의 실패·검증기 버전 정정 기록을 보존했습니다. Java 관측이며 Rust 호환 통과를 추가한 것은 아닙니다. [Stage129 보고서](reports/m2/stage129-workspace-validation/README.md)를 기준으로 전체 workspace 재검증의 중단을 해소하고, 전체 M2·API·릴리스 플랫폼·성능 조건은 미완료로 유지합니다.

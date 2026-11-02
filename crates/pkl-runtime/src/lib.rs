@@ -14,6 +14,7 @@ pub mod glob;
 pub mod heap;
 pub mod host;
 pub mod int_seq;
+pub mod java_exception;
 pub mod logging;
 pub mod modules;
 pub mod numeric;

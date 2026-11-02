@@ -1,0 +1,5 @@
+java.lang.IllegalArgumentException: illegal input
+	at example.Owner.evaluate(Owner.java:17)
+	at example.Owner.evaluate(Owner.java:2)
+Caused by: M2JavaExceptionOracle$ModelException: cause
+	... 2 more

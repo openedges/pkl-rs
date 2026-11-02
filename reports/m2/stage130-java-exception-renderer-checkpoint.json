@@ -1,0 +1,319 @@
+{
+  "schema": 1,
+  "stage": 130,
+  "title": "Shared Java throwable renderer and Cargo jobserver forwarding",
+  "status": "local-checkpoint-verified; runtime-stack-integration-and-M2-open",
+  "compatibility_baseline": "Pkl 0.32.0",
+  "source_parent": "008e48c260122842d270d4d6c2310baa41aeaf19",
+  "host": "macOS 27 arm64; Rust 1.98.1; Python 3.14.8; Temurin 21.0.12.1+1",
+  "implementation_changes": [
+    "Add lossless throwable graphs, Java stack rendering, bug envelopes and URL encoding",
+    "Extract existing caught-error text transformation without changing its behavior",
+    "Forward validated numeric Cargo jobserver file descriptors to compiler children"
+  ],
+  "sources": [
+    {
+      "path": "crates/pkl-runtime/src/java_exception.rs",
+      "bytes": 11513,
+      "sha256": "a2936fb430cff19a954ebb5ea275cb16594a5adede8c322e0ecdbe8c4b9c6f02",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/lib.rs",
+      "bytes": 771,
+      "sha256": "fcbe2c5bed6b13fcecbb50a31dddf9b7683bdbe1593b41d4afee10dd4ddd289f",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/guest_exceptions.rs",
+      "bytes": 4339,
+      "sha256": "5ce9967dff6912885e73c919fbe42ba6ba5a5a1d9a6a04dba806f5c4563b3290",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_java_exception_renderer.rs",
+      "bytes": 7482,
+      "sha256": "15ed2cdc45cda02b88d0bedd5672f687790add3f808496f212df65f7d321ac5b",
+      "mode": 420
+    },
+    {
+      "path": "tools/M2JavaExceptionOracle.java",
+      "bytes": 10648,
+      "sha256": "bef241f2bead32c7fd589fd55dd8c3aa66971e899249e00f3200f865ad8b121f",
+      "mode": 420
+    },
+    {
+      "path": "tools/workspace_storage.py",
+      "bytes": 16511,
+      "sha256": "521b2ba23140a86430b276448afeb829aba7c55ada7e8b93e1b1e4bd66773304",
+      "mode": 493
+    },
+    {
+      "path": "tools/tests/test_workspace_storage.py",
+      "bytes": 27401,
+      "sha256": "49fdf5970a1b0a0445d2195e3ff24128eeb051f0515702d57d1a1125ace7cda1",
+      "mode": 420
+    },
+    {
+      "path": "README.md",
+      "bytes": 19415,
+      "sha256": "0f011cc010546c92828954b30142c5a88c960913c644cc81d88add7a081b44e8",
+      "mode": 420
+    },
+    {
+      "path": "PLAN.md",
+      "bytes": 514985,
+      "sha256": "277f095cbaba90e8d036db3038bb6c050ac53f183c22c9fa7274f8182e7326ca",
+      "mode": 420
+    },
+    {
+      "path": "TESTING.md",
+      "bytes": 124731,
+      "sha256": "38655edfc4b5fdd13e9e10b8383ffa8cd2652f1d29d2faef2c163cc75e3488a8",
+      "mode": 420
+    },
+    {
+      "path": "docs/architecture.md",
+      "bytes": 118231,
+      "sha256": "c5559e74fe46e7304eba2d07bedbaa0785ed38b6dc0766291daa1f382b77f966",
+      "mode": 420
+    },
+    {
+      "path": "docs/m1-platforms.md",
+      "bytes": 4503,
+      "sha256": "ebf63322c45dc84fca9831c3e4a3c34652919ad24e8bd4e0547503dc48f14e20",
+      "mode": 420
+    },
+    {
+      "path": "docs/m2-language.md",
+      "bytes": 136912,
+      "sha256": "bc39c02d3c181c6158783f95812937f3cda8e1f200be7ee802b26f0cdb726903",
+      "mode": 420
+    },
+    {
+      "path": "reports/m2/README.md",
+      "bytes": 406198,
+      "sha256": "175c9e33b8c86ad542bf21821bfe791e7ad1c565119f77996bff1fa73b1d674d",
+      "mode": 420
+    },
+    {
+      "path": "reports/m2/stage130-java-exception-renderer/README.md",
+      "bytes": 8115,
+      "sha256": "3d84394df5b8ff3c9538bed664eb61ae131ebfcf3572508e9e84bda6e7494b64",
+      "mode": 420
+    }
+  ],
+  "fixture_inventory": {
+    "path_prefix": "tests/fixtures/m2-java-exceptions/",
+    "files": 4852,
+    "raw_field_files": 4796,
+    "model_inputs_and_case_roster": 55,
+    "readme_files": 1,
+    "exact_identities_in_archive": "STAGE130_INVENTORY.json",
+    "archive_inventory_sha256": "3dcc35692e699cb4c5743d036710c879523093c6f054495e5248c14853c8027b"
+  },
+  "published_evidence": {
+    "path": "reports/m2/stage130-java-exception-renderer/stage130-evidence.tar.gz",
+    "bytes": 25068173,
+    "mode": 420,
+    "sha256": "8288f3e9e40695732a92f525af2fc4e58094a6a9b31bf067ad99073e6761bde3"
+  },
+  "publication_receipt": {
+    "path": "reports/m2/stage130-java-exception-renderer/publication.json",
+    "bytes": 883,
+    "mode": 420,
+    "sha256": "222a29135e6c4df797f33de88f974eed69425fab20b0d788ef7f27d12cf9b327"
+  },
+  "archive_readback": {
+    "path": "reports/m2/stage130-java-exception-renderer/archive-readback.json",
+    "bytes": 478,
+    "mode": 420,
+    "sha256": "8906b45392a071906b57394a4b229fe294bea7e547c9eb36c7f2eac84b325608"
+  },
+  "published_copy_receipt": {
+    "path": "reports/m2/stage130-java-exception-renderer/published-copy.json",
+    "bytes": 2427,
+    "mode": 420,
+    "sha256": "612fef3c12e588bc31096165f6c85bbcd86b50a453a94eb0ff35c303aa3daaac"
+  },
+  "archive_logical_members": 18277,
+  "archive_source_members": 18276,
+  "archive_source_bytes": 156884527,
+  "archive_excludes": [
+    "Cargo caches and test executable bodies",
+    "JDK/JAR and browser installations",
+    "Old evidence archive bodies",
+    "Duplicate superseded canonical fixture copy"
+  ],
+  "full_workspace_test": {
+    "command": [
+      "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+      "test",
+      "--workspace",
+      "--locked",
+      "--message-format=json"
+    ],
+    "complete": true,
+    "cargo_exit_code": 0,
+    "completed_harnesses": 287,
+    "completed_tests": {
+      "passed": 1789,
+      "failed": 0,
+      "ignored": 5,
+      "measured": 0,
+      "filtered": 0
+    },
+    "nested_child_passes_excluded": 13,
+    "test_executables": 285,
+    "doctest_crates": [
+      "pkl_runtime",
+      "pkl_wasm"
+    ],
+    "doctest_test_count": 0,
+    "examples_compiled_not_executed": 26,
+    "all_required_pass": false,
+    "elapsed_seconds": 4154.2679018341005,
+    "disk_floor_bytes": 1073741824,
+    "minimum_sampled_free_bytes": 12965552128,
+    "peak_sampled_owned_rss_bytes": 1194557440,
+    "build_jobs": 1,
+    "test_threads": 2,
+    "test_opt_level": 1,
+    "debug_information": false,
+    "stop_reason": null,
+    "source_bookends_stable": true,
+    "aggregate_qualification": "aggregate counts under pinned child-source and marker assumptions",
+    "exact_per_test_identity_proven": false,
+    "absence_of_interleaving_proven": false
+  },
+  "artifact_observation": {
+    "products": 311,
+    "cargo_rebuilt_products": 307,
+    "cargo_cached_products": 4,
+    "current_wrapper_signature_matches": 310,
+    "current_wrapper_gaps": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage130-cargo-01/debug/deps/xtask-1627471670fafdf4"
+    ],
+    "new_signature_commands_run": false,
+    "atomic_snapshot": false,
+    "complete_inherited_cache_provenance": false
+  },
+  "java_component_comparison": {
+    "graphs": 54,
+    "line_separator_profiles": [
+      "LF",
+      "CRLF"
+    ],
+    "whole_utf8_and_utf16_compared": true,
+    "raw_field_files": 4796,
+    "production_runtime_stack_capture": false,
+    "production_internal_error_catch_integration": false,
+    "java_heap_mib": 512,
+    "oracle_jar_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "focused_rust_tests": 26,
+    "focused_counts_added_to_workspace": false
+  },
+  "python_regressions": {
+    "tests": 21,
+    "exit_code": 0,
+    "definitive_receipt": "target/m2/stage130-wrapper-tests-02/report.json",
+    "earlier_run_summed": false
+  },
+  "fresh_other_checks": {
+    "xtask": {
+      "complete": true,
+      "exit_code": 0,
+      "receipt_in_archive": "target/m2/stage130-xtask-01/report.json"
+    },
+    "format": {
+      "complete": true,
+      "exit_code": 0,
+      "receipt_in_archive": "target/m2/stage130-format-01/report.json"
+    },
+    "clippy": {
+      "complete": true,
+      "exit_code": 0,
+      "receipt_in_archive": "target/m2/stage130-clippy-01/report.json"
+    },
+    "wasm_runtime_check": {
+      "complete": true,
+      "exit_code": 0,
+      "receipt_in_archive": "target/m2/stage130-wasm-check-01/report.json"
+    },
+    "manifest_freshness": {
+      "complete": true,
+      "exit_code": 0,
+      "receipt_in_archive": "target/m2/stage130-manifest-02/report.json"
+    }
+  },
+  "platform_experiment": {
+    "complete": true,
+    "commands": 8,
+    "command_failures": 0,
+    "strict_status": "pass",
+    "contract_status": "pass",
+    "oracle_matches": {
+      "rust": 6078,
+      "node": 6078,
+      "browser": 6078
+    },
+    "scenario_counts": {
+      "node": 92,
+      "browser": 92
+    },
+    "known_gaps": [],
+    "node": "26.10.0",
+    "playwright": "1.64.1",
+    "chromium": "156.0.8078.4",
+    "wasm_bindgen": "0.2.108",
+    "sources_missing_independent_supervisor_bookends": 138,
+    "producer_source_snapshot_stability_distinct_from_supervisor_bookends": true,
+    "oracle_alias_acquisition_identity_established": false,
+    "overlaps_workspace_execution": true,
+    "performance_evidence": false,
+    "new_throwable_matrix_executed_through_public_bindings": false
+  },
+  "preserved_attempts": {
+    "java01": "Identity gate failed before Java start",
+    "java02": "Superseded default-description synthesis; Java03 uses Throwable.toString()",
+    "targeted01": "Cargo exit 101: nonexistent requested target",
+    "targeted02": "Cargo exit 101: missing receipt directory",
+    "targeted03": "Cargo exit 101: type inference and jobserver warnings, subsequently fixed",
+    "manifest01": "Gate execve rejected non-absolute Python executable before start",
+    "platforms01": "Missing target directory before rustc version command",
+    "platforms02": "Wasm rust-lld could not load libLLVM.dylib with optional storage wrapper; original logs retained",
+    "wrapper_tests01": "21 passes; minimal receipt lacked test-source/Python-executable before pins"
+  },
+  "receipts_in_archive": {
+    "java": "target/m2/stage130-java-03/report.json",
+    "targeted_rust": "target/m2/stage130-targeted-04/report.json",
+    "python": "target/m2/stage130-wrapper-tests-02/report.json",
+    "workspace": "target/m2/stage130-workspace-01/report.json",
+    "workspace_readback": "target/m2/stage130-workspace-readback-01/report.json",
+    "artifact_readback": "target/m2/stage130-artifacts-01/report.json",
+    "platforms": "target/m2/stage130-platforms-03/report.json",
+    "platform_readback": "target/m2/stage130-platforms-readback-01/report.json",
+    "archive_reader_controls": "target/m2/stage130-archive-controls-01/report.json",
+    "structured_review": "target/m2/stage130-reviews-01/report.json"
+  },
+  "provenance": {
+    "source_bookends_stable": true,
+    "complete_compiler_runtime_rustdoc_dependency_closure": false,
+    "archive_integrity_is_not_execution_verification": true,
+    "reader_controls": 13
+  },
+  "full_language_inventory_replayed": false,
+  "full_glob_inventory_replayed": false,
+  "full_M2_complete": false,
+  "performance_targets_evaluated": false,
+  "release_platforms_verified": false,
+  "hosted_ci_claimed": false,
+  "stage131_isolated_work_included": false,
+  "remaining_required_scope": [
+    "Five ignored tests remain non-passes",
+    "Actual execution-node stack projection, caller profiles, typed bug payloads and internal-error catch integration",
+    "Complete source/compiler/runtime/rustdoc provenance and remaining platform evidence",
+    "Existing full language/API inventories, unmapped and unimplemented requirements",
+    "Release-platform execution and performance targets"
+  ]
+}

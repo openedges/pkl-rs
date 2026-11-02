@@ -1,0 +1,25 @@
+{
+  "complete": true,
+  "errors": [],
+  "started_epoch": 1793607105.3947158,
+  "source_members": 18276,
+  "source_bytes": 156884527,
+  "excludes": [
+    "Cargo caches and test executable bodies",
+    "JDK/JAR and browser installations",
+    "Old evidence archive bodies",
+    "Duplicate superseded canonical fixture copy"
+  ],
+  "full_source_dependency_closure": false,
+  "compatibility_claim": false,
+  "scope": "Archive integrity and publication only; execution results remain acquisition-specific.",
+  "archive": {
+    "path": "target/m2/stage130-publication-01/stage130-evidence.tar.gz",
+    "bytes": 25068173,
+    "sha256": "8288f3e9e40695732a92f525af2fc4e58094a6a9b31bf067ad99073e6761bde3",
+    "mode": 420
+  },
+  "inventory_sha256": "3dcc35692e699cb4c5743d036710c879523093c6f054495e5248c14853c8027b",
+  "source_bookends_stable": true,
+  "finished_epoch": 1793607118.1568158
+}

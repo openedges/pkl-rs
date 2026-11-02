@@ -1,0 +1,16 @@
+An unexpected error has occurred. Would you mind filing a bug report?
+Cmd+Double-click the link below to open an issue.
+Please copy and paste the entire error output into the issue's description.
+
+https://github.com/apple/pkl/issues/new
+
+java.lang.IllegalArgumentException%3A%20%F0%9F%98%80
+
+[31m–– Pkl Error ––[0m
+[1;31mrenderer failure[0m
+IllegalArgumentException: 😀
+
+Pkl 0.32.0 (macOS 27.0, Java 21.0.12.1)
+
+java.lang.IllegalArgumentException: 😀
+	at example.Owner.evaluate(Owner.java:17)

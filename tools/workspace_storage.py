@@ -11,6 +11,7 @@ when an explicit test or binary link produces none. It does not change which tes
 import hashlib
 import json
 import os
+import shlex
 from pathlib import Path
 import shutil
 import stat
@@ -216,6 +217,57 @@ def storage_floor(environment):
     return mib * 1024**2
 
 
+def jobserver_fds(environment):
+    """Validate Cargo's POSIX jobserver authorization without changing it.
+
+    Numeric descriptors are passed only after checking that both pipe ends are
+    open. FIFO authorization is path-based and requires no inherited descriptor.
+    Conflicting or malformed authorizations fail before starting the compiler.
+    """
+    flags = environment.get('CARGO_MAKEFLAGS', '')
+    try:
+        words = shlex.split(flags)
+    except ValueError as error:
+        raise ValueError('invalid CARGO_MAKEFLAGS quoting') from error
+    authorizations = []
+    for word in words:
+        for option in ('--jobserver-auth', '--jobserver-fds'):
+            if word == option or word.startswith(option+'='):
+                if word == option:
+                    raise ValueError('jobserver authorization requires =value')
+                value = word[len(option)+1:]
+                if option == '--jobserver-auth' and value.startswith('fifo:'):
+                    if not value[5:]:
+                        raise ValueError('empty jobserver FIFO path')
+                    authorizations.append(('fifo', value[5:]))
+                else:
+                    parts = value.split(',')
+                    if (len(parts) != 2 or any(not part.isascii() or not part.isdigit()
+                                               for part in parts)):
+                        raise ValueError('invalid numeric jobserver authorization')
+                    read_fd, write_fd = map(int, parts)
+                    if read_fd < 3 or write_fd < 3 or read_fd == write_fd:
+                        raise ValueError('invalid jobserver descriptor pair')
+                    authorizations.append(('pipe', (read_fd, write_fd)))
+                break
+    if not authorizations:
+        return {'kind': 'absent', 'fds': []}, ()
+    if any(item != authorizations[0] for item in authorizations[1:]):
+        raise ValueError('conflicting jobserver authorizations')
+    kind, value = authorizations[0]
+    if kind == 'fifo':
+        return {'kind': 'fifo', 'fds': []}, ()
+    for fd in value:
+        try:
+            mode = os.fstat(fd).st_mode
+        except (OSError, OverflowError) as error:
+            raise ValueError('closed or invalid jobserver descriptor '+str(fd)) from error
+        if not stat.S_ISFIFO(mode):
+            raise ValueError('jobserver descriptor is not a pipe: '+str(fd))
+    return {'kind': 'pipe', 'fds': list(value),
+            'inheritable': [os.get_inheritable(fd) for fd in value]}, value
+
+
 def run(argv, environment):
     if len(argv) < 2:
         raise ValueError('expected rustc executable and arguments')
@@ -242,8 +294,10 @@ def run(argv, environment):
             raise ValueError('rustc executable not found')
         report['tools'] = {name: {'path': str(Path(path).resolve()), 'sha256': digest(Path(path).resolve())}
                            for name, path in [('rustc', rustc_path), ('ditto', DITTO), ('codesign', CODESIGN)]}
+        report['jobserver'], fds = jobserver_fds(environment)
         with stdout_path.open('xb') as stdout_file, stderr_path.open('xb') as stderr_file:
-            child = subprocess.Popen(argv[1:], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            child = subprocess.Popen(argv[1:], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                     env=environment, pass_fds=fds)
             failures = []
             def pump(source, sink, destination):
                 try:

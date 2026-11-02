@@ -107,6 +107,24 @@ known UTF-16 index in rare diagnostic metadata. Java's internal exception
 rendering and catch behavior remain unimplemented, so this path reports
 `Unsupported` rather than claiming matching Java diagnostics.
 
+### Java exception rendering component
+
+`java_exception` renders an explicit throwable graph using shared `PklString`
+values. Throwable identities preserve cause cycles and repeated suppressed
+references; frame equality retains Java metadata distinctions while ignoring
+display-only flags. Iterative traversal renders shared suffixes, descriptions,
+URL encoding, and the Pkl bug envelope. Release information and line separators
+are supplied by the caller. Ordinary guest catch uses the same extracted
+single-line transformation as before.
+
+The Stage130 component tests compare 54 synthetic graphs under LF and CRLF
+against the pinned Java renderer in both Java UTF-8 and original UTF-16. They
+do not establish runtime stack capture. The evaluator still needs typed bug
+payloads, compiler-node ancestry, execution-state-aware frame projection and
+explicit invocation profiles before recognized internal errors can use this
+path. Unsupported URI failures remain outside ordinary guest catch. No Java
+fallback is added to evaluation.
+
 ### Shared math and Resource defaults
 
 The `pkl:math` bindings use shared Rust kernels with explicit fdlibm operation

@@ -1,0 +1,5 @@
+M2JavaExceptionOracle$ModelException: cycle
+	at example.Owner.evaluate(Owner.java:17)
+Caused by: java.lang.IllegalArgumentException: illegal input
+	... 1 more
+Caused by: [CIRCULAR REFERENCE: M2JavaExceptionOracle$ModelException: cycle]

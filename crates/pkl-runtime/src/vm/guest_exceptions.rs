@@ -85,46 +85,8 @@ impl Vm {
         // VmExceptionRenderer(null, false, false) omits stack frames AND hints.
         // TestNodes then applies Java String.lines(), skip(1), join(" "), strip().
         let rendered = crate::diagnostic::render_error_text(&message, &[], None);
-        single_line(&rendered)
+        crate::java_exception::flatten_caught(&rendered)
     }
-}
-
-fn single_line(rendered: &PklString) -> PklString {
-    let units: Vec<_> = rendered.encode_utf16().collect();
-    let mut lines = Vec::new();
-    let mut start = 0;
-    let mut index = 0;
-    while index < units.len() {
-        if matches!(units[index], 10 | 13) {
-            lines.push(&units[start..index]);
-            if units[index] == 13 && units.get(index + 1) == Some(&10) {
-                index += 1;
-            }
-            start = index + 1;
-        }
-        index += 1;
-    }
-    if start < units.len() {
-        lines.push(&units[start..]);
-    }
-    let mut output = Vec::new();
-    for (index, line) in lines.into_iter().skip(1).enumerate() {
-        if index != 0 {
-            output.push(32);
-        }
-        output.extend_from_slice(line);
-    }
-    let whitespace = |unit: &u16| {
-        char::from_u32(u32::from(*unit)).is_some_and(crate::diagnostic::java_whitespace)
-    };
-    let start = output.iter().take_while(|unit| whitespace(unit)).count();
-    let end = output.len()
-        - output[start..]
-            .iter()
-            .rev()
-            .take_while(|unit| whitespace(unit))
-            .count();
-    PklString::from_utf16(output[start..end].to_vec())
 }
 
 /// Ordinary VmException provenance, shared by handlers and renderer unwinding.

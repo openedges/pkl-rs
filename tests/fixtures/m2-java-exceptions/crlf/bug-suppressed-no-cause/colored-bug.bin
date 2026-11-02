@@ -1,0 +1,19 @@
+An unexpected error has occurred. Would you mind filing a bug report?
+Cmd+Double-click the link below to open an issue.
+Please copy and paste the entire error output into the issue's description.
+
+https://github.com/apple/pkl/issues/new
+
+org.pkl.core.runtime.VmBugException%3A%20renderer%20failure
+
+[31m–– Pkl Error ––[0m
+[1;31mrenderer failure[0m
+
+Pkl 0.32.0 (macOS 27.0, Java 21.0.12.1)
+
+org.pkl.core.runtime.VmBugException: renderer failure
+	Suppressed: M2JavaExceptionOracle$ModelException: one
+		at example.Owner.evaluate(Owner.java:17)
+	Suppressed: M2JavaExceptionOracle$ModelException: two
+		at example.Owner.evaluate(Owner.java:17)
+	Caused by: [CIRCULAR REFERENCE: M2JavaExceptionOracle$ModelException: one]
