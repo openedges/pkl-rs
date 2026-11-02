@@ -1,5 +1,10 @@
 # M2 language evidence
 
+## Stage137 module diagnostics and authored semver
+
+Focused native checks passed 69 tests and matched 48 Java observations; six original CLI contracts matched. Nineteen mocked JavaScript transport tests and the bounded Native/Node/Chromium M1 acquisition passed. The workspace passed 1,872 tests with five ignored across 302 harnesses, excluding 13 nested child passes from the aggregate. The public `ModuleKeyKind` enum has three new variants, requiring downstream exhaustive matches to change. See the [Stage137 report](stage137-module-diagnostics-semver/README.md) for raw evidence and remaining limits.
+
+
 ## Stage136 lexical mappings and ready replay
 
 The local full-ready acquisition records 4,483 cases (candidate-unsupported: 74, mismatch: 12, oracle-error: 2, pass: 4,395); integrity verification exited 0 and strict full verification exited 1. Twelve lexical mappings are supported by 49 scalar matches and a separate registered RECORD module match. The 62-test Python run includes 14 target-directory tests. See [the Stage136 report](stage136-language-replay/README.md) for recorded nonpasses and scope.

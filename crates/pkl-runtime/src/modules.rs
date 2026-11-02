@@ -1,5 +1,8 @@
 //! Typed module Host effects. Resolution and source loading have different
 //! cache boundaries; neither is a resource read or an evaluation in another VM.
+mod standard_keys;
+pub use standard_keys::standard_key_completion;
+
 use crate::source::SourceText;
 use std::sync::Arc;
 
@@ -21,6 +24,11 @@ pub struct ResolvedKeyId(pub u64);
 pub enum ModuleKeyKind {
     StandardLibrary,
     Host,
+    /// Explicit standard-key profiles. Their semantic capabilities are owned by
+    /// the shared profile; actual filesystem or URL I/O still belongs to a Host.
+    StandardFile,
+    StandardHttp,
+    StandardGenericUrl,
     SuppliedText,
     Synthetic,
 }
@@ -191,6 +199,22 @@ impl ModuleHostError {
             other => other.into_runtime(&uri),
         }
     }
+    /// ModuleCache.resolve adds this hint to resolution-time missing files.
+    /// Factory lookup and source loading have different exception boundaries.
+    pub(crate) fn into_resolution_runtime(self, uri: impl Into<PklString>) -> RuntimeError {
+        let uri = uri.into();
+        let missing_with_backslash = matches!(&self, Self::NotFound)
+            && crate::host::resources::module_path_has_backslash(&uri);
+        let mut error = self.into_runtime(uri);
+        if missing_with_backslash {
+            error.hint = Some(
+                "To resolve modules in nested directories, use `/` as the directory separator."
+                    .into(),
+            );
+        }
+        error
+    }
+
     pub(crate) fn into_runtime(self, uri: impl Into<PklString>) -> RuntimeError {
         let uri = uri.into();
         match self {

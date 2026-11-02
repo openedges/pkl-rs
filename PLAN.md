@@ -11,6 +11,12 @@
 
 ## 현재 상태
 
+Stage137에서 모듈 URI 진단·키 종류 전달과 `pkl:semver` 원본 모듈 로딩을 반영했습니다. 공개 `ModuleKeyKind`에 세 variant가 추가되어 downstream exhaustive match 수정이 필요합니다. 최종 focused native 69개 테스트, Java 원시 관측 48개, 등록 원본 CLI 계약 6개와 mocked JavaScript 19개 테스트가 통과했습니다. 별도 bounded M1은 Native·Node·Chromium 각각 6,078개와 Node·브라우저 시나리오 각각 92개가 일치했습니다. default02는 format·xtask·Clippy·Wasm이 통과한 뒤 오래된 manifest 때문에 실패했고 workspace는 실행되지 않았습니다. manifest의 source hash만 갱신한 뒤 resume03에서 새 manifest와 전체 workspace가 통과했고 앞선 네 통과는 기존 실행으로 결합합니다. 전체 workspace 독립 집계는 harness 302개·통과 1,872개·실패 0개·ignored 5개이며 중첩 자식 통과 13개는 제외합니다. 이 집계는 개별 test identity와 interleaving 부재를 증명하지 않습니다. 초기 독립 reader 두 번은 끊긴 자식 출력의 결과 줄을 인식하지 못해 실패했고, 원시 출력을 보존한 새 reader가 source 기반 문법을 확인했으며 Rust 재실행은 없었습니다. 내부 오류 catch 초안은 포함하지 않고 Stage136 전체 재생을 변경된 엔진 결과로 간주하지 않습니다.
+
+[Stage137 보고서](reports/m2/stage137-module-diagnostics-semver/README.md)에 원시 증거 3,740개 archive member의 독립 판독과 게시 사본을 기록했습니다. 다음 단계는 준비된 JSON 파서·converter·Resource 경계 구현의 통합과 Java 관측 108건에 대한 Rust 비교입니다. 아직 Rust 통과로 계산하지 않습니다.
+
+### 이전 검증 결과
+
 Stage134에서 타입 source 소유권·union 표기와 객체 항목 이름·생성기 앞 방문 순서를 통합했습니다. 진단 source 값의 동등성과 Java 노드 identity를 분리하고 직접 `unknown`의 inferred parent 회귀를 수정했습니다. Java 관측 160개와 새 unknown 사례 4개를 구분해 보존합니다.
 
 최종 전체 workspace는 exit 0이며 독립 집계 harness 298개·통과 1,848개·실패 0개·ignored 5개입니다. 자식 중복 통과 13개는 제외하며 정확한 개별 test identity와 interleaving 부재는 증명하지 않습니다. focused 24개 target, format·xtask·Clippy·Wasm·manifest 검사가 통과했고 별도 새 Native·Node·Chromium 실험은 각각 6,078개, Node·브라우저 시나리오는 각각 92개가 일치했습니다. 세 번의 실패 workspace와 격리된 146개 테스트는 별도 기록이며 전체 합계에 더하지 않습니다. [Stage134 보고서](reports/m2/stage134-type-source-scopes/README.md)에 원시 증거와 한계를 보존합니다.
@@ -72,7 +78,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: Stage129 전체 workspace exit0·1,786개 통과·ignored5개; Java URI-catch32개 관측 확보; 내부 오류·catch 구현과 전체 언어 gate 미완료; Stage122 ready4,351/4,442는 과거 결과 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: Stage136 기준 ready4,483개 중4,395개 일치·12개 불일치·74개 미지원·Java 오류2개; integrity exit0·전체 gate exit1. Stage137 모듈 진단·semver의 선택 Java 48건·원본 CLI 6건·workspace 1,872개 및 bounded M1 검증 완료; 전체 gate는 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |

@@ -18,6 +18,7 @@ impl Vm {
             Some("pkl:test") => crate::stdlib_sources::test(),
             Some("pkl:ref") => crate::stdlib_sources::reference(),
             Some("pkl:reflect") => crate::stdlib_sources::reflect(),
+            Some("pkl:semver") => crate::stdlib_sources::semver(),
             Some("pkl:json") => crate::stdlib_sources::json(),
             Some("pkl:yaml") => crate::stdlib_sources::yaml(),
             Some("pkl:math") => crate::stdlib_sources::math(),
@@ -67,11 +68,13 @@ impl Vm {
         let uri = uri.into();
         let uri = &uri;
         let source = self.stdlib_source(uri)?;
+        let power_assertions = self.power_assertions;
         let program = Arc::make_mut(&mut self.program);
         let unit = append_definition(
             program,
             uri.as_str().expect("selected pinned builtin URI"),
             source,
+            power_assertions,
         )?;
         Ok(program.units[unit.0 as usize].entry)
     }
@@ -123,6 +126,7 @@ fn append_definition(
     program: &mut Program,
     uri: &str,
     source: Arc<crate::value::RuntimeSource>,
+    power_assertions: bool,
 ) -> Result<UnitId, RuntimeError> {
     if let Some(unit) = program.units.iter().find(|unit| {
         unit.standard_library
@@ -140,7 +144,7 @@ fn append_definition(
         )
     })?;
     let checkpoint = modules::ArenaCheckpoint::new(program);
-    let result = append_members(program, uri, source, &parsed).inspect(|unit| {
+    let result = append_members(program, uri, source, &parsed, power_assertions).inspect(|unit| {
         program.units[unit.0 as usize].standard_library = true;
     });
     if result.is_err() {
@@ -154,8 +158,9 @@ fn append_members(
     uri: &str,
     source: Arc<crate::value::RuntimeSource>,
     parsed: &crate::syntax::Module,
+    power_assertions: bool,
 ) -> Result<UnitId, RuntimeError> {
-    if uri == "pkl:reflect" {
+    if matches!(uri, "pkl:reflect" | "pkl:semver") {
         // Compile the actual module, including distinct class/property and
         // method namespaces. External bodies bind in the shared compiler.
         // Publish the singleton before recursively forcing its constants, as
@@ -168,7 +173,7 @@ fn append_members(
             CompileOptions {
                 fuse_constant_add: true,
             },
-            false,
+            power_assertions,
             Some(source),
             Some(ModuleIdentity {
                 original_uri: uri.into(),

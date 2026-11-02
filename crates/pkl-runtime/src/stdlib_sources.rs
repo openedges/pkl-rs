@@ -95,8 +95,32 @@ pub(crate) fn reflect() -> Arc<RuntimeSource> {
         .clone()
 }
 
+/// Exact pinned pure-Pkl module; methods and classes compile as authored.
+pub(crate) fn semver() -> Arc<RuntimeSource> {
+    static SOURCE: OnceLock<Arc<RuntimeSource>> = OnceLock::new();
+    SOURCE
+        .get_or_init(|| {
+            Arc::new(RuntimeSource {
+                text: include_str!("stdlib/semver.pkl").into(),
+                uri: "pkl:semver".into(),
+                module_name: "pkl.semver".into(),
+            })
+        })
+        .clone()
+}
+
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn bundled_semver_source_matches_the_pinned_checkout() {
+        let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../../external/pkl/stdlib/semver.pkl");
+        assert_eq!(
+            include_bytes!("stdlib/semver.pkl").as_slice(),
+            std::fs::read(path).unwrap()
+        );
+    }
+
     #[test]
     fn bundled_yaml_source_matches_the_pinned_checkout() {
         let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))

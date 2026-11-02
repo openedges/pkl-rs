@@ -1,7 +1,8 @@
 // Shared Node/browser transport validation. URI matching and caches remain in Rust.
 const fields = new Set(['id', 'kind', 'uri', 'readerKind', 'readerId', 'readerUri', 'readerScheme', 'readerHandle', 'keyKind']);
 const kinds = new Set(['select-resource', 'is-globbable', 'is-hierarchical', 'fragment-paths', 'has-element', 'list-elements']);
-const keyKinds = new Set(['standard-library', 'host', 'supplied-text', 'synthetic']);
+const keyKinds = new Set(['standard-library', 'host', 'supplied-text', 'synthetic',
+  'standard-file', 'standard-http', 'standard-generic-url']);
 const present = value => value !== undefined && value !== null;
 const text = value => typeof value === 'string';
 export const decimalU64 = value => text(value) && /^(0|[1-9][0-9]*)$/.test(value)

@@ -1,0 +1,5 @@
+import "pkl:semver"
+alias = import("pkl:semver#alias")
+function again() = import("pkl:semver")
+result = semver == alias && semver == again() && semver.Version == alias.Version && semver.comparator == alias.comparator
+output { text = result.toString() }

@@ -383,7 +383,13 @@ impl Vm {
                         && let Some(key) = self.program.units[current.spec.unit.0 as usize]
                             .key
                             .as_ref()
-                        && key.kind == crate::modules::ModuleKeyKind::Host
+                        && matches!(
+                            key.kind,
+                            crate::modules::ModuleKeyKind::Host
+                                | crate::modules::ModuleKeyKind::StandardFile
+                                | crate::modules::ModuleKeyKind::StandardHttp
+                                | crate::modules::ModuleKeyKind::StandardGenericUrl
+                        )
                     {
                         let key = key.clone();
                         let authored_uri = parsed_authored.clone();

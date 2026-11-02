@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot expand glob pattern `birds:///missing/*.pkl` because scheme `birds` is not globbable.
+
+1 | res = import*("birds:///missing/*.pkl")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#res (file:///stage137-module-diagnostics/generic-url-glob/main.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

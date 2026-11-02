@@ -1,0 +1,4 @@
+import "pkl:semver"
+text = "9223372036854775808.0.0"
+result = if (semver.isValid(text)) semver.Version(text).major else throw("unexpected lexical rejection")
+output { text = result.toString() }

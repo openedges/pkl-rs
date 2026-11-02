@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Cannot find module `file:///stage137-module-diagnostics/missing-backslash/missing%5Cchild.pkl`.
+
+1 | res = import(#"missing\child.pkl"#)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#res (file:///stage137-module-diagnostics/missing-backslash/main.pkl)
+
+To resolve modules in nested directories, use `/` as the directory separator.
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

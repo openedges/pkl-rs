@@ -15,7 +15,8 @@ const contexts = {
   'resolve-import-uri': ['originalUri', 'importUri'],
   'load-source': ['originalUri', 'resolvedUri', 'sourceUri'],
 };
-const keyKinds = new Set(['standard-library', 'host', 'supplied-text', 'synthetic']);
+const keyKinds = new Set(['standard-library', 'host', 'supplied-text', 'synthetic',
+  'standard-file', 'standard-http', 'standard-generic-url']);
 const phases = new Set(['runtime-import', 'clause-preparation', 'primary']);
 const present = value => value !== null && value !== undefined;
 const nonempty = value => typeof value === 'string' && value.length > 0;

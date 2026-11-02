@@ -1,0 +1,4 @@
+import "pkl:semver"
+v = new semver.Version { major=1; minor=2; patch=3; preRelease="01" }
+result = v.preRelease
+output { text = result.toString() }

@@ -903,7 +903,8 @@ impl Vm {
             .last_mut()
             .and_then(|frame| frame.module_load.as_mut())
             .ok_or_else(|| invalid("missing import continuation"))?;
-        let resolved_key = result.map_err(|error| error.into_runtime(&run.spec.original_uri))?;
+        let resolved_key =
+            result.map_err(|error| error.into_resolution_runtime(&run.spec.original_uri))?;
         let resolved = resolved_key.module.clone();
         if resolved.original_uri != run.spec.original_uri {
             return Err(invalid("module resolver changed original key"));

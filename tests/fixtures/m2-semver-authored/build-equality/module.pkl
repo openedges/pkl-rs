@@ -1,0 +1,5 @@
+import "pkl:semver"
+a = semver.Version("1.0.0+abc")
+b = semver.Version("1.0.0+def")
+result = a.equals(b) && a != b && !a.isLessThan(b) && !b.isLessThan(a)
+output { text = result.toString() }

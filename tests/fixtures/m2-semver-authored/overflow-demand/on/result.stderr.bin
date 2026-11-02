@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Cannot parse string as `Int`.
+String: "9223372036854775808"
+
+54 | major = groups[1].value.toInt()
+             ^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.semver#parseOrNull.<let expr>.major (https://github.com/apple/pkl/blob/0.32.0/stdlib/semver.pkl#L54)
+
+3 | result = if (semver.isValid(text)) semver.Version(text).major else throw("unexpected lexical rejection")
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage138-semver/overflow-demand/main.pkl)
+
+4 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage138-semver/overflow-demand/main.pkl)

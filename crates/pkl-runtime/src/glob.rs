@@ -222,6 +222,11 @@ pub fn configured_completion(
         GlobRequestKind::IsGlobbable {
             reader: GlobReader::Module(key),
         } if key.kind == crate::modules::ModuleKeyKind::StandardLibrary
+            || matches!(
+                key.kind,
+                crate::modules::ModuleKeyKind::StandardHttp
+                    | crate::modules::ModuleKeyKind::StandardGenericUrl
+            )
             || (key.handle == "builtin:url" && {
                 let text = SourceText::from(key.uri.clone());
                 text.entire()

@@ -1,0 +1,14 @@
+–– Pkl Error ––
+`1.02.3` is not a valid semantic version number.
+
+36 | parseOrNull(version) ?? throw("`\(version)` is not a valid semantic version number.")
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.semver#Version (https://github.com/apple/pkl/blob/0.32.0/stdlib/semver.pkl#L36)
+
+2 | result = semver.Version("1.02.3")
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage138-semver/invalid-constructor/main.pkl)
+
+3 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage138-semver/invalid-constructor/main.pkl)

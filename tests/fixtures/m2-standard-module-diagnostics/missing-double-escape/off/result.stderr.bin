@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find module `file:///stage137-module-diagnostics/missing-double-escape/missing%25255Cchild.pkl`.
+
+1 | res = import("missing%255Cchild.pkl")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#res (file:///stage137-module-diagnostics/missing-double-escape/main.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

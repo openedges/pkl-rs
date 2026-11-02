@@ -708,6 +708,9 @@ fn key_kind_name(kind: crate::modules::ModuleKeyKind) -> &'static str {
     match kind {
         ModuleKeyKind::StandardLibrary => "standard-library",
         ModuleKeyKind::Host => "host",
+        ModuleKeyKind::StandardFile => "standard-file",
+        ModuleKeyKind::StandardHttp => "standard-http",
+        ModuleKeyKind::StandardGenericUrl => "standard-generic-url",
         ModuleKeyKind::SuppliedText => "supplied-text",
         ModuleKeyKind::Synthetic => "synthetic",
     }
@@ -1403,6 +1406,9 @@ impl SourceProbe {
         use crate::modules::{ModuleCompletion, ModuleKey, ModuleKeyId, ModuleKeyKind};
         let kind = match kind {
             "host" => ModuleKeyKind::Host,
+            "standard-file" => ModuleKeyKind::StandardFile,
+            "standard-http" => ModuleKeyKind::StandardHttp,
+            "standard-generic-url" => ModuleKeyKind::StandardGenericUrl,
             "standard-library" => ModuleKeyKind::StandardLibrary,
             "supplied-text" => ModuleKeyKind::SuppliedText,
             "synthetic" => ModuleKeyKind::Synthetic,

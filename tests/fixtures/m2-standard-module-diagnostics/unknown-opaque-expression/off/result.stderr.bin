@@ -1,0 +1,10 @@
+–– Pkl Error ––
+No module loader is registered for module `birds:opaque.pkl`.
+
+1 | res = import("birds:opaque.pkl")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#res (file:///stage137-module-diagnostics/unknown-opaque-expression/main.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

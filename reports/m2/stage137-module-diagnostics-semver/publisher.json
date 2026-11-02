@@ -1,0 +1,99 @@
+{
+  "archive": {
+    "bytes": 50862664,
+    "path": "target/m2/stage137-publication-01/evidence.tar.gz",
+    "sha256": "638fcdd1c36d0c1947150e97b90b00807827c1ca74bda0286cbcfdeda6b60711"
+  },
+  "bookends_stable": true,
+  "complete": true,
+  "compressed_limit_bytes": 52428800,
+  "disk_free_floor_bytes": 1073741824,
+  "errors": [],
+  "excluded_product_files": [
+    {
+      "path": "target/m2/stage137-module-oracle-01/acquisition/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "reason": "product/runtime binary requires explicit file selection"
+    },
+    {
+      "path": "target/m2/stage137-original-invalid-file-uri-3-03/cases/e2f99ceb1a77958caf6db3bc/java/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "reason": "product/runtime binary requires explicit file selection"
+    },
+    {
+      "path": "target/m2/stage137-original-invalid-file-uri-4-03/cases/616577695c5f937e3f1dfe1c/java/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "reason": "product/runtime binary requires explicit file selection"
+    },
+    {
+      "path": "target/m2/stage137-original-invalid-glob-import-5-03/cases/cdd1d36a3aa74db8f0ef944e/java/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "reason": "product/runtime binary requires explicit file selection"
+    },
+    {
+      "path": "target/m2/stage137-original-invalid-import-backslash-03/cases/9644188b5932189921f2107b/java/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "reason": "product/runtime binary requires explicit file selection"
+    },
+    {
+      "path": "target/m2/stage137-original-refusing-to-load-module-03/cases/c6c02d99c458e1e0f2cff496/java/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "reason": "product/runtime binary requires explicit file selection"
+    },
+    {
+      "path": "target/m2/stage137-original-semver-module-03/cases/7408e58727ee839c50508f65/java/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "reason": "product/runtime binary requires explicit file selection"
+    },
+    {
+      "path": "target/m2/stage137-publication-prep-02/__pycache__",
+      "reason": "excluded cache/tool tree before metadata"
+    },
+    {
+      "path": "target/m2/stage137-resume-prep-01/__pycache__",
+      "reason": "excluded cache/tool tree before metadata"
+    },
+    {
+      "path": "target/m2/stage137-workspace-readback-prep-05/__pycache__",
+      "reason": "excluded cache/tool tree before metadata"
+    },
+    {
+      "path": "target/m2/stage137-workspace-readback-prep-06/__pycache__",
+      "reason": "excluded cache/tool tree before metadata"
+    },
+    {
+      "path": "target/m2/stage138-semver-oracle-01/acquisition/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "reason": "product/runtime binary requires explicit file selection"
+    }
+  ],
+  "finished_epoch": 1793653902.925199,
+  "head_after": "0d1883a9bca9c52bd778620f2474f50c6f020421",
+  "head_before": "0d1883a9bca9c52bd778620f2474f50c6f020421",
+  "manifest_sha256": "d3d270a65112e231ebdadfd88a0930f81b884d2a408bd11d0dfa18fca186c7e8",
+  "member_count": 3740,
+  "publisher_source": {
+    "bytes": 10631,
+    "metadata": {
+      "st_ctime_ns": 1793647744432106946,
+      "st_dev": 16777229,
+      "st_ino": 257226992,
+      "st_mode": 33188,
+      "st_mtime_ns": 1793647744432106946,
+      "st_size": 10631
+    },
+    "mode": 420,
+    "path": "target/m2/stage137-publication-prep-02/publish.py",
+    "sha256": "aa434879c5d6714e8db1d107d312aa95302c2537f0f4570f55d33ed436c5425e"
+  },
+  "scope": "Finite raw evidence publication; not a complete source/compiler/runtime restoration closure",
+  "selection": {
+    "bytes": 111185,
+    "metadata": {
+      "st_ctime_ns": 1793653675881773159,
+      "st_dev": 16777229,
+      "st_ino": 257250215,
+      "st_mode": 33188,
+      "st_mtime_ns": 1793653675881773159,
+      "st_size": 111185
+    },
+    "mode": 420,
+    "path": "target/m2/stage137-publication-finalize-02/selection.json",
+    "sha256": "c98889a625c8b81a420f0d3bfae913de0dfc3ff07766c1eedc7c1a8ce1700e91"
+  },
+  "source_member_count": 3739,
+  "started_epoch": 1793653892.242183,
+  "uncompressed_member_bytes": 680849116
+}

@@ -1,0 +1,3 @@
+import "pkl:semver"
+result = semver.Version("1.02.3")
+output { text = result.toString() }

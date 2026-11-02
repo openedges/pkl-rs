@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot expand glob pattern `http://example.invalid/**.pkl` because scheme `http` is not globbable.
+
+1 | res = import*("http://example.invalid/**.pkl")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#res (file:///stage137-module-diagnostics/http-glob-expression/main.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

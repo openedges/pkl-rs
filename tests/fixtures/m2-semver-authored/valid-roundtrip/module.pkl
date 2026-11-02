@@ -1,0 +1,3 @@
+import "pkl:semver"
+result = List("0.0.0", "1.2.3", "1.2.3-alpha.1+001", "777.888.999-rc-1+abc").map((it) -> semver.Version(it).toString()).join("|")
+output { text = result.toString() }

@@ -1,5 +1,8 @@
 # pkl-rs
 
+Stage137 extends module diagnostics and authored semver. The shared runtime adds standard module-key profiles and loads the authored `pkl:semver` module; `ModuleKeyKind` has three new public variants, so downstream exhaustive matches must be updated. Focused checks match 48 Java observations and six original CLI cases, and a bounded M1 run records 6,078 matches per target. The full workspace passed 1,872 tests with five ignored across 302 harnesses; the independent aggregate readback excludes 13 nested child passes. Full M2/API, release-platform and performance requirements remain open. See the [Stage137 report](reports/m2/stage137-module-diagnostics-semver/README.md) for raw evidence and remaining limits.
+
+
 The [Stage136 report](reports/m2/stage136-language-replay/README.md) records a fresh local full-ready replay of 4,483 cases (candidate-unsupported: 74, mismatch: 12, oracle-error: 2, pass: 4,395). The integrity verifier exited 0; strict full verification exited 1. Twelve lexical requirements were promoted after 49 scalar comparisons and a separate RECORD module comparison. Complete M2/API, release-platform and performance requirements remain open.
 
 

@@ -1,0 +1,23 @@
+–– Pkl Error ––
+Type constraint `matches(
+      Regex(
+        #"(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*"#,
+      ),
+    )` violated.
+Value: "01"
+
+104 | matches(
+      ^^^^^^^^
+at pkl.semver#Version.preRelease (https://github.com/apple/pkl/blob/0.32.0/stdlib/semver.pkl#L104)
+
+2 | v = new semver.Version { major=1; minor=2; patch=3; preRelease="01" }
+                                                                   ^^^^
+at main#v.preRelease (file:///stage138-semver/invalid-prerelease/main.pkl)
+
+3 | result = v.preRelease
+             ^^^^^^^^^^^^
+at main#result (file:///stage138-semver/invalid-prerelease/main.pkl)
+
+4 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage138-semver/invalid-prerelease/main.pkl)

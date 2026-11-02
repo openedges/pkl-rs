@@ -1,0 +1,60 @@
+{
+  "complete": true,
+  "scope": "Finite raw evidence publication; not a complete source/compiler/runtime restoration closure",
+  "base_head": "0d1883a9bca9c52bd778620f2474f50c6f020421",
+  "archive_member_count": 3740,
+  "copy_hashes_match": true,
+  "files": [
+    {
+      "path": "reports/m2/stage137-module-diagnostics-semver/evidence.tar.gz",
+      "source": "target/m2/stage137-publication-01/evidence.tar.gz",
+      "bytes": 50862664,
+      "sha256": "638fcdd1c36d0c1947150e97b90b00807827c1ca74bda0286cbcfdeda6b60711",
+      "mode": 420
+    },
+    {
+      "path": "reports/m2/stage137-module-diagnostics-semver/publisher.json",
+      "source": "target/m2/stage137-publication-01/report.json",
+      "bytes": 5063,
+      "sha256": "a3ede577d273762b07c2e92d19182bebbfd41288a5ee75b59a71a494e292fbe5",
+      "mode": 420
+    },
+    {
+      "path": "reports/m2/stage137-module-diagnostics-semver/archive-readback.json",
+      "source": "target/m2/stage137-publication-readback-01/report.json",
+      "bytes": 1270,
+      "sha256": "fc74edfa610c8b50f873290266d9c5712f14c5b14a196d7060c76106c073a255",
+      "mode": 420
+    },
+    {
+      "path": "reports/m2/stage137-module-diagnostics-semver/members.json",
+      "source": "target/m2/stage137-publication-01/members.json",
+      "bytes": 933272,
+      "sha256": "d3d270a65112e231ebdadfd88a0930f81b884d2a408bd11d0dfa18fca186c7e8",
+      "mode": 420
+    },
+    {
+      "path": "reports/m2/stage137-module-diagnostics-semver/publication-inputs-before.json",
+      "source": "target/m2/stage137-publication-01/inputs-before.json",
+      "bytes": 1662071,
+      "sha256": "617b24aac05e2c2fdeea68b499f8937e2b10c5c45b5db2f8f30557d697cdbe3e",
+      "mode": 420
+    },
+    {
+      "path": "reports/m2/stage137-module-diagnostics-semver/publication-inputs-after.json",
+      "source": "target/m2/stage137-publication-01/inputs-after.json",
+      "bytes": 1662071,
+      "sha256": "617b24aac05e2c2fdeea68b499f8937e2b10c5c45b5db2f8f30557d697cdbe3e",
+      "mode": 420
+    },
+    {
+      "path": "reports/m2/stage137-module-diagnostics-semver/members-verified.json",
+      "source": "target/m2/stage137-publication-readback-01/members-verified.json",
+      "bytes": 888160,
+      "sha256": "5dadecba1ee1354699639c1ac45c400aa9b98be0efe0837594d8ef7bda79127f",
+      "mode": 420
+    }
+  ],
+  "source_descriptor": "source-files.json",
+  "source_descriptor_sha256": "0209dbfdf448ee8b175e13cc0bf279b24abf5f42c28a5fc511cba584a4a2e1a4"
+}

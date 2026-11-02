@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Cannot expand glob pattern `https://example.invalid/**.pkl` because scheme `https` is not globbable.
+
+1 | import* "https://example.invalid/**.pkl" as all
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#all (file:///stage137-module-diagnostics/https-glob-clause/main.pkl)
+
+2 | res = all
+          ^^^
+at main#res (file:///stage137-module-diagnostics/https-glob-clause/main.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

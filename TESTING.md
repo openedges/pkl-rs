@@ -21,6 +21,11 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+### Stage137 module diagnostics and authored semver
+
+The focused native run passed 69 tests and matched 48 Java observations in status and complete UTF-8/UTF-16 expression/stdout/stderr fields. Six original CLI cases matched every recorded public channel. The full workspace exited zero: the independent aggregate reader qualifies 1,872 passed, zero failed and five ignored across 302 outer harnesses, excluding 13 nested child passes. Formatting, xtask, Clippy and Wasm were four earlier successful runs; the refreshed manifest and workspace were two fresh runs. The bounded M1 acquisition matched 6,078 results per Native/Node/Chromium target and 92 scenarios per Node/browser target. See the [Stage137 report](reports/m2/stage137-module-diagnostics-semver/README.md) for retained failed attempts, raw evidence and provenance limits. This does not rerun the full language inventory or complete M2/API, release-platform or performance requirements.
+
+
 ### Stage136 lexical mappings and ready replay
 
 The local full-ready acquisition records 4,483 cases (candidate-unsupported: 74, mismatch: 12, oracle-error: 2, pass: 4,395); integrity verification exited 0 and strict full verification exited 1. Twelve lexical mappings are supported by 49 scalar matches and a separate registered RECORD module match. The 62-test Python run includes 14 target-directory tests. See [the Stage136 report](reports/m2/stage136-language-replay/README.md) for recorded nonpasses and scope.

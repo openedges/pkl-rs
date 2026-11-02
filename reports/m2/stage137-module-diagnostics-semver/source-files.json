@@ -1,0 +1,3336 @@
+{
+  "scope": "Final checkpoint source, fixture and documentation bytes; excludes this self-referential descriptor and publication files, which Git pins separately. Not a compiler dependency closure.",
+  "base_head": "0d1883a9bca9c52bd778620f2474f50c6f020421",
+  "files": [
+    {
+      "path": "crates/pkl-runtime/src/modules.rs",
+      "bytes": 15555,
+      "sha256": "35d00f70559ba3720892532dcfeb5dec30e622ce45cd20104fe8c84933366b05",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/modules/standard_keys.rs",
+      "bytes": 5172,
+      "sha256": "fbf7104c73f8fc39e9c2f73222d428f8cd8fbbf504c64b06deb1774491c1490c",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/host/resources.rs",
+      "bytes": 28009,
+      "sha256": "e558ec1ebadf51d3011f57fb449e178a24f96597bb074870ca5d4daa9e800936",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/modules.rs",
+      "bytes": 51192,
+      "sha256": "fb41bb09873d60478041ddbab3d3f256f9a96a8d60871873a0e03fd2c0410214",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/glob.rs",
+      "bytes": 14634,
+      "sha256": "996a4e388dac49137b92d8e0d4aaf6fc90b542ba0ea2e98f4a048f994c037dfd",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/examples/support/module_host.rs",
+      "bytes": 13154,
+      "sha256": "e46f8fa2c0a3b850c049747785c633f1580092c2cac132040e0123d2508476eb",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_standard_module_diagnostics.rs",
+      "bytes": 14609,
+      "sha256": "bb5a03fe912cb5bdac09eec9e97d02845ce33a87855016a6171f5801cc4ec04c",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/probe.rs",
+      "bytes": 68580,
+      "sha256": "8b17033ec5d05ae927f992b1e569b9f80341a3114f1861bb31753fd68fca1f3b",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/uri_resolution.rs",
+      "bytes": 37576,
+      "sha256": "69f9845c98d4bd9fa3e4f965d3a9431be2897d9711c6ffc7cd07814a580a35e1",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/stdlib_sources.rs",
+      "bytes": 5528,
+      "sha256": "1d9ae9bf4a383524accc593f47b591036d9d9ba98111a3caed9629a553d24be4",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
+      "bytes": 32814,
+      "sha256": "61f5716c86e438df8d301c02bbf15423037f34ec1cc543976070ae257fb9bcf8",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/stdlib/semver.pkl",
+      "bytes": 10092,
+      "sha256": "fbcc1f29f268977a15546b1d0fa5d20168f9dc82ddc1ac14eb969a8f63db14fb",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_semver_authored.rs",
+      "bytes": 5547,
+      "sha256": "e4cf9172aecc2c5234fe1029b23df124267d5ddb3297a69e1d49dfba503cd3e5",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_standard_module_oracle.rs",
+      "bytes": 6059,
+      "sha256": "ac333805957053866c898c18ab8993cb528621aff89b7e1d78d70e57835a4e53",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_semver_oracle.rs",
+      "bytes": 4277,
+      "sha256": "d6148b0b77d779bd38cc6dea46a7f425a5afe4485166a230119da1884db60971",
+      "mode": 420
+    },
+    {
+      "path": "tools/platform/module-policy-session.mjs",
+      "bytes": 6017,
+      "sha256": "b64972ccd58fedaa98db994cf6fc56c2e8a854ca70d4c01d3dd2deb15a57a201",
+      "mode": 420
+    },
+    {
+      "path": "tools/platform/glob-transport.mjs",
+      "bytes": 4073,
+      "sha256": "fc5ab36c01b8ca3eaaae57743366c43c7d61fa7e91199a84b3a1edf464794e38",
+      "mode": 420
+    },
+    {
+      "path": "tools/platform/module-policy-session.test.mjs",
+      "bytes": 24008,
+      "sha256": "27a0038f427d5c4494fd5a2cb56fa018cb4cae5f50af735650493e48ec0489a6",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/cases.txt",
+      "bytes": 261,
+      "sha256": "dc24cc4b7e9d8007ae3eafc05a4f3d0dc52feadb4a33adcd18bfa4eacfa94b92",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/module.pkl",
+      "bytes": 40,
+      "sha256": "e8b860d71ddade4591ec0b379acca9ea46baebef6dc2448a3ec7316310df7059",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/off/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/off/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/off/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/off/result.stderr.bin",
+      "bytes": 452,
+      "sha256": "f45f0f9dc3d34821928d08d3cd5b001f456fa774302d3eb51aa0abe9d0ca2184",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/off/result.stderr.code-units.bin",
+      "bytes": 888,
+      "sha256": "cce4ec4ba96e5f212edff24ac7b9e4a67024d3745db54741a4a41df7217d2410",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/off/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/off/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/on/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/on/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/on/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/on/result.stderr.bin",
+      "bytes": 452,
+      "sha256": "f45f0f9dc3d34821928d08d3cd5b001f456fa774302d3eb51aa0abe9d0ca2184",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/on/result.stderr.code-units.bin",
+      "bytes": 888,
+      "sha256": "cce4ec4ba96e5f212edff24ac7b9e4a67024d3745db54741a4a41df7217d2410",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/on/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/on/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/generic-url-glob/uri.txt",
+      "bytes": 61,
+      "sha256": "e61e9570ed176bde00df5552af78644e4e6a1c0b818e1170a4dec5f12b921134",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/module.pkl",
+      "bytes": 47,
+      "sha256": "268da57c7cc578ce632642e5353aa087b5a7b40e87cea980229c6bebb4b83aff",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/off/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/off/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/off/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/off/result.stderr.bin",
+      "bytes": 476,
+      "sha256": "b58254b32fdb7c535620994ee9d252db9f793186c467217dbae2ef83a428a97d",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/off/result.stderr.code-units.bin",
+      "bytes": 936,
+      "sha256": "1c4151604c129086ffa80de06239566cb663d5adef984d91b405b56e9408cd86",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/off/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/off/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/on/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/on/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/on/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/on/result.stderr.bin",
+      "bytes": 476,
+      "sha256": "b58254b32fdb7c535620994ee9d252db9f793186c467217dbae2ef83a428a97d",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/on/result.stderr.code-units.bin",
+      "bytes": 936,
+      "sha256": "1c4151604c129086ffa80de06239566cb663d5adef984d91b405b56e9408cd86",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/on/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/on/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/http-glob-expression/uri.txt",
+      "bytes": 65,
+      "sha256": "5f740594a758ac18f07f8781560d27f00d657669a29071e383d7d1f077650b7e",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/module.pkl",
+      "bytes": 58,
+      "sha256": "d063b273303542eb1c9a4354bf6157877bad57d0aa94df9de9d3004f44314a5e",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/off/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/off/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/off/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/off/result.stderr.bin",
+      "bytes": 583,
+      "sha256": "b8904a06c07fcfefc2d3f6b18b673467eacd0d174ae2a82901366e33e9ff942c",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/off/result.stderr.code-units.bin",
+      "bytes": 1150,
+      "sha256": "ee1258f2cb3e3fd612d11a06736fcd3e756e3c4c9399096207d2d347b5721e0e",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/off/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/off/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/on/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/on/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/on/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/on/result.stderr.bin",
+      "bytes": 583,
+      "sha256": "b8904a06c07fcfefc2d3f6b18b673467eacd0d174ae2a82901366e33e9ff942c",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/on/result.stderr.code-units.bin",
+      "bytes": 1150,
+      "sha256": "ee1258f2cb3e3fd612d11a06736fcd3e756e3c4c9399096207d2d347b5721e0e",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/on/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/on/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/https-glob-clause/uri.txt",
+      "bytes": 62,
+      "sha256": "dfbb8ede110ef083acf31d1a181e2523cc050173fe0b7fab6c9bfc1dfd7cc4d8",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/module.pkl",
+      "bytes": 36,
+      "sha256": "7609251aa16f1cb918732dd68df29a3911307907d318a3de025e55e46bee61d4",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/off/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/off/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/off/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/off/result.stderr.bin",
+      "bytes": 527,
+      "sha256": "0c4bb1794e8f2728647544be612aa01ea243d19c0d3da62950479216ab69afeb",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/off/result.stderr.code-units.bin",
+      "bytes": 1038,
+      "sha256": "c7da6ae02387457e234bcef75ef5c31c29cbd360aeafcb5bd50edf0db51dd8ee",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/off/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/off/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/on/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/on/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/on/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/on/result.stderr.bin",
+      "bytes": 527,
+      "sha256": "0c4bb1794e8f2728647544be612aa01ea243d19c0d3da62950479216ab69afeb",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/on/result.stderr.code-units.bin",
+      "bytes": 1038,
+      "sha256": "c7da6ae02387457e234bcef75ef5c31c29cbd360aeafcb5bd50edf0db51dd8ee",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/on/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/on/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-backslash/uri.txt",
+      "bytes": 62,
+      "sha256": "f27ec6f53bdacec67132fedd0c8d1b6c40c23f5792cb580394453ca45aaf6de2",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/module.pkl",
+      "bytes": 38,
+      "sha256": "dfb692002c33f645a8e086f1eff56abb8dd7394a91fbf66a521c5669fca422fa",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/off/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/off/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/off/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/off/result.stderr.bin",
+      "bytes": 464,
+      "sha256": "2a5716cef960192d05c70f2ce4bee78114e4bccb27b8468392f661e838ced20f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/off/result.stderr.code-units.bin",
+      "bytes": 912,
+      "sha256": "6ecfba9cb9de2fd12d38b1c0f529b338f34b6084a245baa0b77e046560f17752",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/off/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/off/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/on/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/on/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/on/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/on/result.stderr.bin",
+      "bytes": 464,
+      "sha256": "2a5716cef960192d05c70f2ce4bee78114e4bccb27b8468392f661e838ced20f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/on/result.stderr.code-units.bin",
+      "bytes": 912,
+      "sha256": "6ecfba9cb9de2fd12d38b1c0f529b338f34b6084a245baa0b77e046560f17752",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/on/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/on/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/missing-double-escape/uri.txt",
+      "bytes": 66,
+      "sha256": "f91e9163e1f69984a758e45d0564199eeb051fe96995fe71af2a6a5672c636d4",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/module.pkl",
+      "bytes": 44,
+      "sha256": "480189639fe8919a31ecb35dad5f03187f685ce5710987d07f42dfa7b2f0646b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/off/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/off/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/off/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/off/result.stderr.bin",
+      "bytes": 229,
+      "sha256": "870a2831be098d20f9069e896dad3a3912ef5d2a659e0ac5ff6112c71b5b75cd",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/off/result.stderr.code-units.bin",
+      "bytes": 442,
+      "sha256": "f0a30350d5bf78ea35d87036eada9be8da840f466ba2122496808539cb4b0641",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/off/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/off/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/on/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/on/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/on/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/on/result.stderr.bin",
+      "bytes": 229,
+      "sha256": "870a2831be098d20f9069e896dad3a3912ef5d2a659e0ac5ff6112c71b5b75cd",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/on/result.stderr.code-units.bin",
+      "bytes": 442,
+      "sha256": "f0a30350d5bf78ea35d87036eada9be8da840f466ba2122496808539cb4b0641",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/on/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/on/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-clause-unused/uri.txt",
+      "bytes": 70,
+      "sha256": "02040fbdf533fd8754179e99ef1ffbda59f8865aebe10d350780d7077438d50a",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/module.pkl",
+      "bytes": 37,
+      "sha256": "1373c12b8b12fc73a0c8bcb38c48e7ead4ea2799f1930462fb6d0d9361df8b53",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/off/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/off/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/off/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/off/result.stderr.bin",
+      "bytes": 568,
+      "sha256": "d9ddf1c8a32534f4fb4b9a0808a728b917d5cf2e76d5c56324487f8039c7bda5",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/off/result.stderr.code-units.bin",
+      "bytes": 1120,
+      "sha256": "16a1a75839610a9ff6990db9475dc1acad09f271ea62679a030945ce87cd4366",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/off/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/off/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/on/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/on/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/on/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/on/result.stderr.bin",
+      "bytes": 568,
+      "sha256": "d9ddf1c8a32534f4fb4b9a0808a728b917d5cf2e76d5c56324487f8039c7bda5",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/on/result.stderr.code-units.bin",
+      "bytes": 1120,
+      "sha256": "16a1a75839610a9ff6990db9475dc1acad09f271ea62679a030945ce87cd4366",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/on/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/on/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-expression/uri.txt",
+      "bytes": 67,
+      "sha256": "255a590bddebc02e3b23d6e17616f94f5f6457cd6c59e2781f3566fe720a892f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/module.pkl",
+      "bytes": 38,
+      "sha256": "1745b4c8973d4abf365e25061d4ec9600b83be49526d52379fa12e63ca1c51d3",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/off/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/off/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/off/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/off/result.stderr.bin",
+      "bytes": 575,
+      "sha256": "6dff0a5a2644384bb5239a0c09aa84da477920d7a3ba10e5d2049fa8b5a243da",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/off/result.stderr.code-units.bin",
+      "bytes": 1134,
+      "sha256": "c90534c6c89bf90434bdc5d10d6f0ec4babf8e8b58cdb876a671ef9235c5d1af",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/off/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/off/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/on/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/on/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/on/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/on/result.stderr.bin",
+      "bytes": 575,
+      "sha256": "6dff0a5a2644384bb5239a0c09aa84da477920d7a3ba10e5d2049fa8b5a243da",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/on/result.stderr.code-units.bin",
+      "bytes": 1134,
+      "sha256": "c90534c6c89bf90434bdc5d10d6f0ec4babf8e8b58cdb876a671ef9235c5d1af",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/on/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/on/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/opaque-file-glob-expression/uri.txt",
+      "bytes": 72,
+      "sha256": "cd795eddf640ceb79f68821ff3a19b52213ac0c0ff3daf7738f05dcd336ee8da",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/module.pkl",
+      "bytes": 33,
+      "sha256": "2471b4bb6b62fa8b93da0e2199ef0edc513e5a90d107d7c5053cefdbc0e1031f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/off/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/off/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/off/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/off/result.stderr.bin",
+      "bytes": 416,
+      "sha256": "4d8184497919e99ad49f483ec03370ed27e52d183034c0f1fc9ac4ae0afdb23b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/off/result.stderr.code-units.bin",
+      "bytes": 816,
+      "sha256": "32db81db83aab74a8e1bb1646b5c8c1ceccd1b6710c7a9eb1e942ffec5c0eefa",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/off/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/off/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/on/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/on/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/on/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/on/result.stderr.bin",
+      "bytes": 416,
+      "sha256": "4d8184497919e99ad49f483ec03370ed27e52d183034c0f1fc9ac4ae0afdb23b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/on/result.stderr.code-units.bin",
+      "bytes": 816,
+      "sha256": "32db81db83aab74a8e1bb1646b5c8c1ceccd1b6710c7a9eb1e942ffec5c0eefa",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/on/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/on/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unknown-opaque-expression/uri.txt",
+      "bytes": 70,
+      "sha256": "f2b0ea9845aa2c747b7abcd6f6362452eeaf0b3675e6eeb0e658863aa719d1cc",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/module.pkl",
+      "bytes": 34,
+      "sha256": "c6d250e68dc9b7552674a9f0cd55a08681af66111c0e455ee7b471da571a1b54",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/off/result.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/off/result.error-class.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/off/result.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/off/result.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/off/result.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/off/result.stdout.bin",
+      "bytes": 8,
+      "sha256": "08f4eae4cd14908817b186feb3c678f9a5e928e89ffc8d89216213c46aa0656c",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/off/result.stdout.code-units.bin",
+      "bytes": 16,
+      "sha256": "2f367c2f27c6d197229cc87d40030d2213d7d0a56e5f81f5820d833d4676cf67",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/on/result.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/on/result.error-class.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/on/result.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/on/result.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/on/result.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/on/result.stdout.bin",
+      "bytes": 8,
+      "sha256": "08f4eae4cd14908817b186feb3c678f9a5e928e89ffc8d89216213c46aa0656c",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/on/result.stdout.code-units.bin",
+      "bytes": 16,
+      "sha256": "2f367c2f27c6d197229cc87d40030d2213d7d0a56e5f81f5820d833d4676cf67",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/unused-denied-clause/uri.txt",
+      "bytes": 65,
+      "sha256": "a7154dbd84f2056b787fe141bf094bee033e70eadfc7530eb8900c93c7f74be6",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/module.pkl",
+      "bytes": 37,
+      "sha256": "94c0cfee93dab738e901bee172f3dd2118579637d507ccaab8fde619bc9c7c72",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/off/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/off/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/off/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/off/result.stderr.bin",
+      "bytes": 567,
+      "sha256": "35226cfbc5b68d43e17d76623c2362a850ee20019c3b80e84329ca946c95fb61",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/off/result.stderr.code-units.bin",
+      "bytes": 1118,
+      "sha256": "20478e11b6021f8c88147776f14a38c73e5dc2fe6573e237602a31616a602ecf",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/off/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/off/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/on/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/on/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/on/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/on/result.stderr.bin",
+      "bytes": 567,
+      "sha256": "35226cfbc5b68d43e17d76623c2362a850ee20019c3b80e84329ca946c95fb61",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/on/result.stderr.code-units.bin",
+      "bytes": 1118,
+      "sha256": "20478e11b6021f8c88147776f14a38c73e5dc2fe6573e237602a31616a602ecf",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/on/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/on/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/uppercase-opaque-file/uri.txt",
+      "bytes": 66,
+      "sha256": "0cfbc8a620a1cb2961339106c6038fbc6f44f5c6cda7ccf6315ffc3371796ade",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/module.pkl",
+      "bytes": 36,
+      "sha256": "1c3660979105a77d5f9008ed98b38af5b399dcdb0275258e6271e97baf8390cf",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/off/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/off/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/off/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/off/result.stderr.bin",
+      "bytes": 566,
+      "sha256": "c7070788b677ffde8f7df801f5be0694212a5601a5a4c0d8d95950954c5358fc",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/off/result.stderr.code-units.bin",
+      "bytes": 1116,
+      "sha256": "26404851c17e3f247ce7ce442d46f6876d88ced0f59cb89f973e59eac57fe110",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/off/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/off/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/on/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/on/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/on/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/on/result.stderr.bin",
+      "bytes": 566,
+      "sha256": "c7070788b677ffde8f7df801f5be0694212a5601a5a4c0d8d95950954c5358fc",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/on/result.stderr.code-units.bin",
+      "bytes": 1116,
+      "sha256": "26404851c17e3f247ce7ce442d46f6876d88ced0f59cb89f973e59eac57fe110",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/on/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/on/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-standard-module-diagnostics/used-denied-clause/uri.txt",
+      "bytes": 63,
+      "sha256": "20f2163becbf246c6a519a4cbd8ca29ccdc6cfc0e489b9ce1abc25002ef31a69",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/module.pkl",
+      "bytes": 191,
+      "sha256": "99b35bc9907055a49c21c81ff7b01055b3d32b3893764556eaa28ea27d645128",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/off/result.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/off/result.error-class.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/off/result.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/off/result.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/off/result.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/off/result.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/off/result.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/on/result.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/on/result.error-class.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/on/result.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/on/result.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/on/result.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/on/result.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/on/result.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/build-equality/uri.txt",
+      "bytes": 47,
+      "sha256": "b2063d485ab51f649e6f0fa130a1c5748cbdd90a39ef30980b6dc4833a33f27e",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/cases.txt",
+      "bytes": 180,
+      "sha256": "b7a51f316f082f2f8270d9ad3864fb0ed8aa450f52060b6d0a47c6a91fb4bfe6",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/module.pkl",
+      "bytes": 168,
+      "sha256": "9ee649722dfcab915f871522203783666fe22c14eb39540f01c841fbbd72bcc3",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/off/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/off/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/off/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/off/result.stderr.bin",
+      "bytes": 752,
+      "sha256": "0879452532b8119b1dfa5e5e9799e32bd6484e4a79583d756a2fc4285a39b242",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/off/result.stderr.code-units.bin",
+      "bytes": 1488,
+      "sha256": "fff9c57842e5884e35c9e87381a1c146528868f541cf2808c54c48adf80c2933",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/off/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/off/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/on/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/on/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/on/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/on/result.stderr.bin",
+      "bytes": 752,
+      "sha256": "0879452532b8119b1dfa5e5e9799e32bd6484e4a79583d756a2fc4285a39b242",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/on/result.stderr.code-units.bin",
+      "bytes": 1488,
+      "sha256": "fff9c57842e5884e35c9e87381a1c146528868f541cf2808c54c48adf80c2933",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/on/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/on/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/defaults/uri.txt",
+      "bytes": 41,
+      "sha256": "5d38746dd4db3b281a15d83d578aa83315ac0c2be1ada65b40871304cf6bf00e",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/module.pkl",
+      "bytes": 90,
+      "sha256": "0d7b05d9fbf68255a07fc9eb24aafd54d7ea1b55bb74eb70cb549e15b69617eb",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/off/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/off/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/off/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/off/result.stderr.bin",
+      "bytes": 633,
+      "sha256": "b97d47972109d3cd625244cbd98ac6e8b1427b5a3108e015e5c5d86910e0c46d",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/off/result.stderr.code-units.bin",
+      "bytes": 1250,
+      "sha256": "cdc065d77148bfec7d3e562ff36fb516534a063f4ee8bafdc4bfb0c743a50883",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/off/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/off/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/on/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/on/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/on/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/on/result.stderr.bin",
+      "bytes": 633,
+      "sha256": "b97d47972109d3cd625244cbd98ac6e8b1427b5a3108e015e5c5d86910e0c46d",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/on/result.stderr.code-units.bin",
+      "bytes": 1250,
+      "sha256": "cdc065d77148bfec7d3e562ff36fb516534a063f4ee8bafdc4bfb0c743a50883",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/on/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/on/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-constructor/uri.txt",
+      "bytes": 52,
+      "sha256": "b9bdddc1b20eaf9a54fadef2e47216325e56a2fc12c500c283f6b9f6a1ecb50f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/module.pkl",
+      "bytes": 225,
+      "sha256": "3c68fbba8ff0a37015299d4c064a8799f804a8a4bd97919129c8abacf4eb028c",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/off/result.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/off/result.error-class.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/off/result.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/off/result.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/off/result.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/off/result.stdout.bin",
+      "bytes": 34,
+      "sha256": "0b467292c10c1ac0e5f6b531e05870423f4c03383bb1bb4c3fdbc7de731f2f7f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/off/result.stdout.code-units.bin",
+      "bytes": 68,
+      "sha256": "7714f53393fc358fd681ce97675089e68c73225b1ee57aa3d9bc7e7beb9d3119",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/on/result.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/on/result.error-class.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/on/result.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/on/result.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/on/result.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/on/result.stdout.bin",
+      "bytes": 34,
+      "sha256": "0b467292c10c1ac0e5f6b531e05870423f4c03383bb1bb4c3fdbc7de731f2f7f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/on/result.stdout.code-units.bin",
+      "bytes": 68,
+      "sha256": "7714f53393fc358fd681ce97675089e68c73225b1ee57aa3d9bc7e7beb9d3119",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-lexical/uri.txt",
+      "bytes": 48,
+      "sha256": "7a5f6e4b5b7bc4ce86e0746f20e98ca7ce646ff79d9ce19b2910a55b1a77f3fd",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/module.pkl",
+      "bytes": 148,
+      "sha256": "6dc532a65f09c8d31ac647795dba4c0e94992388c0f65f90cb8fd971246750f2",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/off/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/off/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/off/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/off/result.stderr.bin",
+      "bytes": 818,
+      "sha256": "b14a7aafc34a8389bf4dc2e5bdb4b76608a7550e10ce1ea81b6ab5738e1491e8",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/off/result.stderr.code-units.bin",
+      "bytes": 1620,
+      "sha256": "5504c807ff400e33c910c3bcce2b8c2a14aa1cfb8501392790e0a845a0cf1721",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/off/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/off/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/on/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/on/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/on/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/on/result.stderr.bin",
+      "bytes": 981,
+      "sha256": "0e10fc602ac978da15a6558493e540972edc24870145b3f14d141b79c2a68663",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/on/result.stderr.code-units.bin",
+      "bytes": 1942,
+      "sha256": "4b492cc933545cc22bb235e3c37528a2ea30ae772fd5357af547d35829803b67",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/on/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/on/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/invalid-prerelease/uri.txt",
+      "bytes": 51,
+      "sha256": "50db82ac92159e56d78d393efbce0453c5594ddc5df93dc651d03d0ec5627d18",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/module.pkl",
+      "bytes": 248,
+      "sha256": "d334f5360dc60e77643f1e5fd19e88e32020f207dfa8f5bda39d3f404c8c0cd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/off/result.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/off/result.error-class.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/off/result.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/off/result.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/off/result.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/off/result.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/off/result.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/on/result.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/on/result.error-class.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/on/result.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/on/result.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/on/result.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/on/result.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/on/result.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/namespace/uri.txt",
+      "bytes": 42,
+      "sha256": "b84144e65b4fd7be347b16fd8a38bd90650bf6ef4875d558deec4142455fcd5e",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/module.pkl",
+      "bytes": 127,
+      "sha256": "3e73f5a459ee0e3c77a17189bda4be23fb896ff8fe7340645b8e7a057dbc3795",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/off/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/off/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/off/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/off/result.stderr.bin",
+      "bytes": 689,
+      "sha256": "f6787ff42bc19591df14c02ece11fca259656d029387b94de64bcbce6caaf33d",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/off/result.stderr.code-units.bin",
+      "bytes": 1358,
+      "sha256": "a9d9efe9157bd048907ddc928436deda0ac894f6790a0669d6ea4e54caac56d1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/off/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/off/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/on/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/on/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/on/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/on/result.stderr.bin",
+      "bytes": 689,
+      "sha256": "f6787ff42bc19591df14c02ece11fca259656d029387b94de64bcbce6caaf33d",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/on/result.stderr.code-units.bin",
+      "bytes": 1358,
+      "sha256": "a9d9efe9157bd048907ddc928436deda0ac894f6790a0669d6ea4e54caac56d1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/on/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/on/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/negative-major/uri.txt",
+      "bytes": 47,
+      "sha256": "d08cb0295458de399540b434c30a8857392af6123741de39ef352a50b1792a20",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/module.pkl",
+      "bytes": 240,
+      "sha256": "8905cd7963391f02a32c46a188a52a180dc67a02746c89dce9c900217a6e9ab1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/off/result.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/off/result.error-class.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/off/result.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/off/result.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/off/result.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/off/result.stdout.bin",
+      "bytes": 32,
+      "sha256": "cb6a4967801c507b23b03583f9ee677bd21311e622b611c98edcd189ebb21ccc",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/off/result.stdout.code-units.bin",
+      "bytes": 64,
+      "sha256": "5d944ed9e70e6f96f2f61196fc2719ec8aa9b7697de25bfec87fd6374cd5d9ce",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/on/result.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/on/result.error-class.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/on/result.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/on/result.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/on/result.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/on/result.stdout.bin",
+      "bytes": 32,
+      "sha256": "cb6a4967801c507b23b03583f9ee677bd21311e622b611c98edcd189ebb21ccc",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/on/result.stdout.code-units.bin",
+      "bytes": 64,
+      "sha256": "5d944ed9e70e6f96f2f61196fc2719ec8aa9b7697de25bfec87fd6374cd5d9ce",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/normal-stability/uri.txt",
+      "bytes": 49,
+      "sha256": "9ca3aa4201ee74c81415f9c53b57dbc5384b630374e5c6bfccf1363f6a279e85",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/module.pkl",
+      "bytes": 194,
+      "sha256": "85328e54fe9d770df09b4b4c73188d52fb6143e87962f26f39ad1eb7ce335b04",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/off/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/off/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/off/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/off/result.stderr.bin",
+      "bytes": 648,
+      "sha256": "c16d8be6fccec1c767bbf7c8f8390ef27c55b74a3167da60e4cfa1944b4ecc5d",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/off/result.stderr.code-units.bin",
+      "bytes": 1280,
+      "sha256": "2bad29ef78a24ff45da0e6b5de58df70400f1d0342bd6910a99a6c60f9c847db",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/off/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/off/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/on/result.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/on/result.error-class.code-units.bin",
+      "bytes": 50,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/on/result.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/on/result.stderr.bin",
+      "bytes": 648,
+      "sha256": "c16d8be6fccec1c767bbf7c8f8390ef27c55b74a3167da60e4cfa1944b4ecc5d",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/on/result.stderr.code-units.bin",
+      "bytes": 1280,
+      "sha256": "2bad29ef78a24ff45da0e6b5de58df70400f1d0342bd6910a99a6c60f9c847db",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/on/result.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/on/result.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/overflow-demand/uri.txt",
+      "bytes": 48,
+      "sha256": "e3396d96619c1a6022d42e8dabd75eab24f822ec42cd2fbc161f87bd629a43e9",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/module.pkl",
+      "bytes": 289,
+      "sha256": "79f2bb31e30dfd06b782e3cadc80db90e1f4023f20d89cfb5757e79397ebf6c2",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/off/result.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/off/result.error-class.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/off/result.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/off/result.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/off/result.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/off/result.stdout.bin",
+      "bytes": 97,
+      "sha256": "6eeb5dfdbe2ca0e3cf04943cef7982cc474d057fc5ba2164da762492c4f0ca52",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/off/result.stdout.code-units.bin",
+      "bytes": 194,
+      "sha256": "4df079c469136a183ace8828adcecabc76c342121e1b2aa67a4c482d970c9f5c",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/on/result.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/on/result.error-class.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/on/result.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/on/result.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/on/result.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/on/result.stdout.bin",
+      "bytes": 97,
+      "sha256": "6eeb5dfdbe2ca0e3cf04943cef7982cc474d057fc5ba2164da762492c4f0ca52",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/on/result.stdout.code-units.bin",
+      "bytes": 194,
+      "sha256": "4df079c469136a183ace8828adcecabc76c342121e1b2aa67a4c482d970c9f5c",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/precedence/uri.txt",
+      "bytes": 43,
+      "sha256": "d23cda67b047e5e5a6a37349d468cf2c30d6d67b7b6afd03bd3ec803ad78025a",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/module.pkl",
+      "bytes": 253,
+      "sha256": "f3a7ba5cef6fe77f28913a4580004b796a80768d968cecade887a0349b6699c1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/off/result.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/off/result.error-class.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/off/result.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/off/result.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/off/result.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/off/result.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/off/result.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/on/result.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/on/result.error-class.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/on/result.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/on/result.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/on/result.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/on/result.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/on/result.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/singleton-alias/uri.txt",
+      "bytes": 48,
+      "sha256": "b6bddf961a532b5cbf2d603124195b293a0ad65cb9f9e27ba4329f70156f361a",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/expression.txt",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/module-name.txt",
+      "bytes": 4,
+      "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/module.pkl",
+      "bytes": 186,
+      "sha256": "fe839e277ddc9d4d278690cd0688572734d481ec5cf6f94a2b869e008c0521f0",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/off/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/off/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/off/result.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/off/result.error-class.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/off/result.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/off/result.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/off/result.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/off/result.stdout.bin",
+      "bytes": 50,
+      "sha256": "82c3f75c1d69ca474cf09bae1f9a6d7705afcf13dbd03733c57adf881e3946f3",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/off/result.stdout.code-units.bin",
+      "bytes": 100,
+      "sha256": "4af847e0ea764579b9eb3104367fe4ca57e0cf9ae99651b3e5f3d454e18bd0c0",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/on/expression.bin",
+      "bytes": 11,
+      "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/on/expression.code-units.bin",
+      "bytes": 22,
+      "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/on/result.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/on/result.error-class.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/on/result.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/on/result.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/on/result.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/on/result.stdout.bin",
+      "bytes": 50,
+      "sha256": "82c3f75c1d69ca474cf09bae1f9a6d7705afcf13dbd03733c57adf881e3946f3",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/on/result.stdout.code-units.bin",
+      "bytes": 100,
+      "sha256": "4af847e0ea764579b9eb3104367fe4ca57e0cf9ae99651b3e5f3d454e18bd0c0",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/m2-semver-authored/valid-roundtrip/uri.txt",
+      "bytes": 48,
+      "sha256": "31672b7c050cc1deac695d54c345fb4c92f943536c65fe66e6e0dd5702f4e997",
+      "mode": 420
+    },
+    {
+      "path": "compatibility/m2-language.json",
+      "bytes": 6884964,
+      "sha256": "de4232d60fa822cdb50bf309a53338b0965e8174265d0a782691a4682d15c56e",
+      "mode": 420
+    },
+    {
+      "path": "README.md",
+      "bytes": 21478,
+      "sha256": "18ac69b31e34d60371565de9234f51224297b27789d083db4e34b213bfad44b2",
+      "mode": 420
+    },
+    {
+      "path": "PLAN.md",
+      "bytes": 521867,
+      "sha256": "35855573b1d98587f62e72806adf53a78dcae225ea650e368816adfa6e1999f6",
+      "mode": 420
+    },
+    {
+      "path": "TESTING.md",
+      "bytes": 128750,
+      "sha256": "b220ebfc7b13c8bddc0c9d91b09d2744b9576bb251e6b0c0a8482eec79fb9132",
+      "mode": 420
+    },
+    {
+      "path": "docs/m2-language.md",
+      "bytes": 141720,
+      "sha256": "0ea2bd0adc0e8208aa3fa229d2b3e08fb5f961797ac0f3b7ad9eceeee2ac16e3",
+      "mode": 420
+    },
+    {
+      "path": "reports/m2/README.md",
+      "bytes": 409817,
+      "sha256": "03d844131cb3745d45f16d4a9bb4f18eacd5b1b84d2d729b1f5a6ff53da92858",
+      "mode": 420
+    },
+    {
+      "path": "reports/m2/stage137-module-diagnostics-semver/README.md",
+      "bytes": 10015,
+      "sha256": "fd71ffbcf81bc14eda552cea78b00d1c4dee06ce778af4024c99beb182fb0561",
+      "mode": 420
+    }
+  ]
+}

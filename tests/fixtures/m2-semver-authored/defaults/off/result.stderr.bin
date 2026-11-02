@@ -1,0 +1,18 @@
+–– Pkl Error ––
+Tried to read property `major` but its value is undefined.
+
+78 | major: UInt
+     ^^^^^
+at pkl.semver#Version.major (https://github.com/apple/pkl/blob/0.32.0/stdlib/semver.pkl#L78)
+
+193 | "\(major).\(minor).\(patch)\(if (preRelease != null)"-\(preRelease)" else "")\(if (build != null) "+\(build)" else "")"
+         ^^^^^
+at pkl.semver#Version.toString (https://github.com/apple/pkl/blob/0.32.0/stdlib/semver.pkl#L193)
+
+3 | result = v.toString() + ":" + v.isNormal().toString() + ":" + v.isStable().toString()
+             ^^^^^^^^^^^^
+at main#result (file:///stage138-semver/defaults/main.pkl)
+
+4 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage138-semver/defaults/main.pkl)

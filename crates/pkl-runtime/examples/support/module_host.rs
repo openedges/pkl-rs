@@ -11,6 +11,11 @@ pub fn complete(request: &ModuleRequest) -> ModuleCompletion {
     if let Some(completion) = pkl_runtime::modules::default_completion(request) {
         return completion;
     }
+    // Selection/capability/policy are shared and perform no filesystem I/O.
+    // In particular, an unsupported native file conversion is not NoLoader.
+    if let Some(completion) = pkl_runtime::modules::standard_key_completion(request) {
+        return completion;
+    }
     match &request.kind {
         ModuleRequestKind::ResolveImportUri { .. } => {
             unreachable!("explicit default handles inherited URI resolution")

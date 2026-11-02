@@ -5,6 +5,7 @@ import {runBootstrapCase} from './bootstrap-session.mjs';
 import {runModuleInfoCase} from './moduleinfo-session.mjs';
 import {runSecurityDenialCase} from './security-denial-session.mjs';
 import {runGuestCatchCase} from './guest-catch-session.mjs';
+import {validateGlobRequest, completeDefaultGlob, completeGlobBoolean} from './glob-transport.mjs';
 
 const edge = {kind: 'module-request', token: 'edge-token', module: {
   id: '18446744073709551615', kind: 'check-import', originalUri: 'pkl:test', importUri: 'pkl:test',
@@ -332,5 +333,85 @@ test('bootstrap and ModuleInfo retain new select/cache/resolve requests without 
       assert.equal(Object.hasOwn(session.calls[0], 'readsAfter'), false);
     }
     assert.equal(session.architecture.terminalSlots, 0);
+  }
+});
+
+
+const standardKeyKinds = ['standard-file', 'standard-http', 'standard-generic-url'];
+const opaqueHandles = ['', 'arbitrary:\ud800x\udfff'];
+
+test('standard keys retain phase descriptors and opaque handles through module dispatch', () => {
+  for (const keyKind of standardKeyKinds) for (const keyHandle of opaqueHandles) {
+    const descriptor = {keyId, keyKind, keyHandle};
+    const events = [
+      key('query-cache-policy', descriptor), key('query-fragment-paths', descriptor),
+      key('resolve-import-uri', {...descriptor, importUri: '../child.pkl'}),
+      key('resolve-key', {...descriptor, resolvedKeyId: '9007199254740995', resolutionPhase: 'query'}),
+      {...resolution, module: {...resolution.module, ...descriptor}},
+      {...loaded, module: {...loaded.module, ...descriptor, resolvedKeyHandle: keyHandle}},
+      ...['capabilities', 'has-element'].map(kind => key(kind, {...descriptor,
+        importerOriginalUri: 'mem:/original', importerResolvedUri: 'mem:/resolved'})),
+    ];
+    for (const event of events) {
+      const before = structuredClone(event);
+      assert.equal(validateModuleRequest(event), event.module);
+      assert.deepEqual(event, before);
+      if (['query-cache-policy', 'query-fragment-paths', 'resolve-import-uri', 'resolve-key', 'resolve'].includes(event.module.kind)) {
+        for (const result of [false, true]) {
+          const calls = [];
+          assert.equal(completeDefaultModuleRequest({completeDefaultModule(...args) {
+            calls.push(args); return result;
+          }}, event), result);
+          assert.deepEqual(calls, [[event.token, 0]]);
+        }
+      }
+    }
+    const event = events[0];
+    assert.throws(() => completeFixtureModuleKey({}, event, new Set([event.module.originalUri])),
+      /descriptor does not match its owner/);
+    for (const override of [{keyKind: `${keyKind}-unknown`}, {keyHandle: null}, {keyHandle: 7}, {keyId: '18446744073709551616'}]) {
+      assert.throws(() => completeDefaultModuleRequest({completeDefaultModule() {
+        assert.fail('invalid descriptor must not consume the token');
+      }}, {...event, module: {...event.module, ...override}}), /module request context/);
+    }
+    assert.throws(() => completeDefaultModuleRequest({completeDefaultModule() {
+      throw Error('stale standard key token');
+    }}, event), /stale standard key token/);
+  }
+});
+
+test('standard module glob readers retain lossless descriptors and dispatch typed booleans', () => {
+  for (const keyKind of standardKeyKinds) for (const readerHandle of opaqueHandles) {
+    const event = {kind: 'glob-request', token: 'glob-key-token', glob: {
+      id: '9007199254740993', kind: 'is-globbable', readerKind: 'module', readerId: keyId,
+      readerUri: 'mem:/child', readerHandle, keyKind,
+    }};
+    const before = structuredClone(event);
+    assert.equal(validateGlobRequest(event), event.glob);
+    const calls = [];
+    for (const result of [false, true]) {
+      assert.equal(completeDefaultGlob({completeDefaultGlob(...args) {
+        calls.push(['default', ...args]); return result;
+      }}, event, 11), result);
+      completeGlobBoolean({completeGlobBoolean(...args) { calls.push(['boolean', ...args]); }}, event, result, 12);
+    }
+    assert.deepEqual(calls, [
+      ['default', event.token, 11], ['boolean', event.token, 'is-globbable', false, 12],
+      ['default', event.token, 11], ['boolean', event.token, 'is-globbable', true, 12],
+    ]);
+    assert.deepEqual(event, before);
+    for (const override of [{keyKind: `${keyKind}-unknown`}, {readerHandle: null},
+      {readerHandle: 7}, {readerScheme: 'file'}, {readerId: '18446744073709551616'}]) {
+      assert.throws(() => completeDefaultGlob({completeDefaultGlob() {
+        assert.fail('invalid glob descriptor must not consume the token');
+      }}, {...event, glob: {...event.glob, ...override}}), /glob|reader/);
+    }
+    assert.throws(() => completeDefaultGlob({completeDefaultGlob: () => 'false'}, event), /completion result/);
+    assert.throws(() => completeGlobBoolean({completeGlobBoolean() {
+      assert.fail('invalid boolean must not consume the token');
+    }}, event, 'false'), /boolean completion/);
+    assert.throws(() => completeDefaultGlob({completeDefaultGlob() {
+      throw Error('stale glob token');
+    }}, event), /stale glob token/);
   }
 });

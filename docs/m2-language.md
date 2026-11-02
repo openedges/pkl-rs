@@ -1,5 +1,10 @@
 # M2 language verification
 
+## Stage137 module diagnostics and authored semver
+
+The shared runtime adds standard file, HTTP and generic URL key profiles and loads the pinned authored `pkl:semver` module. The public `ModuleKeyKind` enum has three new variants; downstream exhaustive matches require updates. The focused native run passed 69 tests and matched 48 raw Java observations; six registered original CLI cases matched their full public channels. Nineteen mocked JavaScript transport tests passed. A fresh bounded M1 run matched 6,078 results per Native, Node and Chromium target, with 92 Node and 92 browser scenarios. The full workspace passed 1,872 tests with five ignored across 302 harnesses; the independent aggregate readback excludes 13 nested child passes and does not prove per-test identities or absence of interleaving. These results do not establish full M2/API, release-platform or performance completion. See the [Stage137 report](../reports/m2/stage137-module-diagnostics-semver/README.md) for raw evidence and remaining limits.
+
+
 ## Stage136 lexical mappings and ready replay
 
 The local full-ready acquisition records 4,483 cases (candidate-unsupported: 74, mismatch: 12, oracle-error: 2, pass: 4,395); integrity verification exited 0 and strict full verification exited 1. Twelve lexical mappings are supported by 49 scalar matches and a separate registered RECORD module match. The 62-test Python run includes 14 target-directory tests. See [the Stage136 report](../reports/m2/stage136-language-replay/README.md) for recorded nonpasses and scope.

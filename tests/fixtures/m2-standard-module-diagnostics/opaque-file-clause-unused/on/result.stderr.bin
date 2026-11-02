@@ -1,0 +1,5 @@
+–– Pkl Error ––
+Module URI `file:relative.pkl` has invalid syntax.
+
+File URIs must have a path that starts with `/` (e.g. file:/path/to/my_module.pkl).
+To resolve relative paths, remove the scheme prefix (remove "file:").

@@ -1,0 +1,23 @@
+–– Pkl Error ––
+Type constraint `isPositive` violated.
+Value: -1
+
+    isPositive
+    │
+    false
+
+1122 | typealias UInt = Int(isPositive)
+                            ^^^^^^^^^^
+at pkl.semver#Version.major (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1122)
+
+2 | v = new semver.Version { major=-1; minor=2; patch=3 }
+                                   ^^
+at main#v.major (file:///stage138-semver/negative-major/main.pkl)
+
+3 | result = v.major
+             ^^^^^^^
+at main#result (file:///stage138-semver/negative-major/main.pkl)
+
+4 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage138-semver/negative-major/main.pkl)

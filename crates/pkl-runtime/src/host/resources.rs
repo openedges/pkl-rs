@@ -239,6 +239,13 @@ pub(crate) fn decoded_scheme_specific_part(uri: &PklString) -> Option<PklString>
     Some(decode_escapes(&raw.to_pkl_string()))
 }
 
+/// URI.getPath is decoded once and absent for opaque URIs. A backslash in
+/// authority, query, or fragment does not trigger ModuleCache's missing-path hint.
+pub(crate) fn module_path_has_backslash(uri: &PklString) -> bool {
+    ResourceUri::parse(uri)
+        .is_ok_and(|parsed| !parsed.opaque && decode_escapes(&parsed.path).contains("\\"))
+}
+
 fn fold_escapes(text: &PklString) -> PklString {
     let source = SourceText::from(text.clone());
     let mut output = PklStringBuilder::default();

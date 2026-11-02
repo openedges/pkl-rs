@@ -1,0 +1,13 @@
+–– Pkl Error ––
+Module URI `file:path/to/foo.pkl` has invalid syntax.
+
+1 | res = import*("file:path/to/foo.pkl")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#res (file:///stage137-module-diagnostics/opaque-file-glob-expression/main.pkl)
+
+File URIs must have a path that starts with `/` (e.g. file:/path/to/my_module.pkl).
+To resolve relative paths, remove the scheme prefix (remove "file:").
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

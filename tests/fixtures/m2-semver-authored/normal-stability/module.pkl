@@ -1,0 +1,5 @@
+import "pkl:semver"
+a = semver.Version("2.3.4-alpha+001")
+b = a.toNormal()
+result = a.toString() + "|" + b.toString() + "|" + b.isStable().toString() + "|" + semver.Version("0.3.4").isStable().toString()
+output { text = result.toString() }

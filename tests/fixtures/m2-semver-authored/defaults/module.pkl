@@ -1,0 +1,4 @@
+import "pkl:semver"
+v = new semver.Version {}
+result = v.toString() + ":" + v.isNormal().toString() + ":" + v.isStable().toString()
+output { text = result.toString() }
