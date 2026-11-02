@@ -8582,6 +8582,421 @@
         ],
         "state": "partial"
       }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser/string_lexer.rs",
+            "symbol": "string_step"
+          }
+        ],
+        "state": "implemented"
+      },
+      "remaining": [],
+      "requirement": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+      "scope": "Decodes this authored escape when active and preserves its text when inactive under raw delimiters. Selected scalar controls cover delimiter, interpolation, newline, and error-order boundaries. Java internal token representation and unrelated Host transport are outside this lexical scope.",
+      "tests": {
+        "case_ids": [
+          "string-escapes",
+          "string-stage135-active-h0-single-lf",
+          "string-stage135-active-h0-single-crlf",
+          "string-stage135-active-h0-multiline-lf",
+          "string-stage135-active-h0-multiline-crlf",
+          "string-stage135-active-h1-single-lf",
+          "string-stage135-active-h1-single-crlf",
+          "string-stage135-active-h1-multiline-lf",
+          "string-stage135-active-h1-multiline-crlf",
+          "string-stage135-active-h2-single-lf",
+          "string-stage135-active-h2-single-crlf",
+          "string-stage135-active-h2-multiline-lf",
+          "string-stage135-active-h2-multiline-crlf",
+          "string-stage135-inactive-h1-single-lf",
+          "string-stage135-inactive-h1-single-crlf",
+          "string-stage135-inactive-h1-multiline-lf",
+          "string-stage135-inactive-h1-multiline-crlf",
+          "string-stage135-inactive-h2-single-lf",
+          "string-stage135-inactive-h2-single-crlf",
+          "string-stage135-inactive-h2-multiline-lf",
+          "string-stage135-inactive-h2-multiline-crlf"
+        ],
+        "state": "mapped"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser/string_lexer.rs",
+            "symbol": "string_step"
+          }
+        ],
+        "state": "implemented"
+      },
+      "remaining": [],
+      "requirement": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+      "scope": "Decodes this authored escape when active and preserves its text when inactive under raw delimiters. Selected scalar controls cover delimiter, interpolation, newline, and error-order boundaries. Java internal token representation and unrelated Host transport are outside this lexical scope.",
+      "tests": {
+        "case_ids": [
+          "string-escapes",
+          "string-stage135-active-h0-single-lf",
+          "string-stage135-active-h0-single-crlf",
+          "string-stage135-active-h0-multiline-lf",
+          "string-stage135-active-h0-multiline-crlf",
+          "string-stage135-active-h1-single-lf",
+          "string-stage135-active-h1-single-crlf",
+          "string-stage135-active-h1-multiline-lf",
+          "string-stage135-active-h1-multiline-crlf",
+          "string-stage135-active-h2-single-lf",
+          "string-stage135-active-h2-single-crlf",
+          "string-stage135-active-h2-multiline-lf",
+          "string-stage135-active-h2-multiline-crlf",
+          "string-stage135-inactive-h1-single-lf",
+          "string-stage135-inactive-h1-single-crlf",
+          "string-stage135-inactive-h1-multiline-lf",
+          "string-stage135-inactive-h1-multiline-crlf",
+          "string-stage135-inactive-h2-single-lf",
+          "string-stage135-inactive-h2-single-crlf",
+          "string-stage135-inactive-h2-multiline-lf",
+          "string-stage135-inactive-h2-multiline-crlf"
+        ],
+        "state": "mapped"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser/string_lexer.rs",
+            "symbol": "string_step"
+          }
+        ],
+        "state": "implemented"
+      },
+      "remaining": [],
+      "requirement": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+      "scope": "Decodes this authored escape when active and preserves its text when inactive under raw delimiters. Selected scalar controls cover delimiter, interpolation, newline, and error-order boundaries. Java internal token representation and unrelated Host transport are outside this lexical scope.",
+      "tests": {
+        "case_ids": [
+          "string-stage26-unicode-valid-escapes",
+          "string-stage135-active-h0-single-lf",
+          "string-stage135-active-h0-single-crlf",
+          "string-stage135-active-h0-multiline-lf",
+          "string-stage135-active-h0-multiline-crlf",
+          "string-stage135-active-h1-single-lf",
+          "string-stage135-active-h1-single-crlf",
+          "string-stage135-active-h1-multiline-lf",
+          "string-stage135-active-h1-multiline-crlf",
+          "string-stage135-active-h2-single-lf",
+          "string-stage135-active-h2-single-crlf",
+          "string-stage135-active-h2-multiline-lf",
+          "string-stage135-active-h2-multiline-crlf",
+          "string-stage135-inactive-h1-single-lf",
+          "string-stage135-inactive-h1-single-crlf",
+          "string-stage135-inactive-h1-multiline-lf",
+          "string-stage135-inactive-h1-multiline-crlf",
+          "string-stage135-inactive-h2-single-lf",
+          "string-stage135-inactive-h2-single-crlf",
+          "string-stage135-inactive-h2-multiline-lf",
+          "string-stage135-inactive-h2-multiline-crlf"
+        ],
+        "state": "mapped"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser/string_lexer.rs",
+            "symbol": "string_step"
+          }
+        ],
+        "state": "implemented"
+      },
+      "remaining": [],
+      "requirement": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+      "scope": "Decodes this authored escape when active and preserves its text when inactive under raw delimiters. Selected scalar controls cover delimiter, interpolation, newline, and error-order boundaries. Java internal token representation and unrelated Host transport are outside this lexical scope.",
+      "tests": {
+        "case_ids": [
+          "string-escapes",
+          "string-stage135-active-h0-single-lf",
+          "string-stage135-active-h0-single-crlf",
+          "string-stage135-active-h0-multiline-lf",
+          "string-stage135-active-h0-multiline-crlf",
+          "string-stage135-active-h1-single-lf",
+          "string-stage135-active-h1-single-crlf",
+          "string-stage135-active-h1-multiline-lf",
+          "string-stage135-active-h1-multiline-crlf",
+          "string-stage135-active-h2-single-lf",
+          "string-stage135-active-h2-single-crlf",
+          "string-stage135-active-h2-multiline-lf",
+          "string-stage135-active-h2-multiline-crlf",
+          "string-stage135-inactive-h1-single-lf",
+          "string-stage135-inactive-h1-single-crlf",
+          "string-stage135-inactive-h1-multiline-lf",
+          "string-stage135-inactive-h1-multiline-crlf",
+          "string-stage135-inactive-h2-single-lf",
+          "string-stage135-inactive-h2-single-crlf",
+          "string-stage135-inactive-h2-multiline-lf",
+          "string-stage135-inactive-h2-multiline-crlf"
+        ],
+        "state": "mapped"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser/string_lexer.rs",
+            "symbol": "string_step"
+          }
+        ],
+        "state": "implemented"
+      },
+      "remaining": [],
+      "requirement": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH",
+      "scope": "Decodes this authored escape when active and preserves its text when inactive under raw delimiters. Selected scalar controls cover delimiter, interpolation, newline, and error-order boundaries. Java internal token representation and unrelated Host transport are outside this lexical scope.",
+      "tests": {
+        "case_ids": [
+          "string-escapes",
+          "string-stage135-active-h0-single-lf",
+          "string-stage135-active-h0-single-crlf",
+          "string-stage135-active-h0-multiline-lf",
+          "string-stage135-active-h0-multiline-crlf",
+          "string-stage135-active-h1-single-lf",
+          "string-stage135-active-h1-single-crlf",
+          "string-stage135-active-h1-multiline-lf",
+          "string-stage135-active-h1-multiline-crlf",
+          "string-stage135-active-h2-single-lf",
+          "string-stage135-active-h2-single-crlf",
+          "string-stage135-active-h2-multiline-lf",
+          "string-stage135-active-h2-multiline-crlf",
+          "string-stage135-inactive-h1-single-lf",
+          "string-stage135-inactive-h1-single-crlf",
+          "string-stage135-inactive-h1-multiline-lf",
+          "string-stage135-inactive-h1-multiline-crlf",
+          "string-stage135-inactive-h2-single-lf",
+          "string-stage135-inactive-h2-single-crlf",
+          "string-stage135-inactive-h2-multiline-lf",
+          "string-stage135-inactive-h2-multiline-crlf"
+        ],
+        "state": "mapped"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "identifier"
+          }
+        ],
+        "state": "implemented"
+      },
+      "remaining": [],
+      "requirement": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:PROTECTED",
+      "scope": "Recognizes this reserved spelling as a keyword and preserves observable bare-name, quoted-name, and identifier-boundary behavior. The selected controls address lexical recognition and diagnostics; Java token representation and higher-level language features are outside this scope.",
+      "tests": {
+        "case_ids": [
+          "keyword-stage136-bare-protected",
+          "keyword-stage136-quoted-all",
+          "keyword-stage136-identifier-boundaries"
+        ],
+        "state": "mapped"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "identifier"
+          }
+        ],
+        "state": "implemented"
+      },
+      "remaining": [],
+      "requirement": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:OVERRIDE",
+      "scope": "Recognizes this reserved spelling as a keyword and preserves observable bare-name, quoted-name, and identifier-boundary behavior. The selected controls address lexical recognition and diagnostics; Java token representation and higher-level language features are outside this scope.",
+      "tests": {
+        "case_ids": [
+          "keyword-stage136-bare-override",
+          "keyword-stage136-quoted-all",
+          "keyword-stage136-identifier-boundaries"
+        ],
+        "state": "mapped"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "identifier"
+          }
+        ],
+        "state": "implemented"
+      },
+      "remaining": [],
+      "requirement": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:RECORD",
+      "scope": "Recognizes this reserved spelling as a keyword and preserves observable bare-name, quoted-name, and identifier-boundary behavior. The selected controls address lexical recognition and diagnostics; Java token representation and higher-level language features are outside this scope.",
+      "tests": {
+        "case_ids": [
+          "keyword-stage136-bare-record",
+          "keyword-stage136-quoted-all",
+          "keyword-stage136-identifier-boundaries",
+          "keyword-stage136-first-reserved",
+          "keyword-stage136-utf16-column",
+          "keyword-stage136-utf16-same-line",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/keywordNotAllowedHere4.pkl"
+        ],
+        "state": "mapped"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "identifier"
+          }
+        ],
+        "state": "implemented"
+      },
+      "remaining": [],
+      "requirement": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:DELETE",
+      "scope": "Recognizes this reserved spelling as a keyword and preserves observable bare-name, quoted-name, and identifier-boundary behavior. The selected controls address lexical recognition and diagnostics; Java token representation and higher-level language features are outside this scope.",
+      "tests": {
+        "case_ids": [
+          "keyword-stage136-bare-delete",
+          "keyword-stage136-quoted-all",
+          "keyword-stage136-identifier-boundaries"
+        ],
+        "state": "mapped"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "identifier"
+          }
+        ],
+        "state": "implemented"
+      },
+      "remaining": [],
+      "requirement": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:CASE",
+      "scope": "Recognizes this reserved spelling as a keyword and preserves observable bare-name, quoted-name, and identifier-boundary behavior. The selected controls address lexical recognition and diagnostics; Java token representation and higher-level language features are outside this scope.",
+      "tests": {
+        "case_ids": [
+          "keyword-stage136-bare-case",
+          "keyword-stage136-quoted-all",
+          "keyword-stage136-identifier-boundaries"
+        ],
+        "state": "mapped"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "identifier"
+          }
+        ],
+        "state": "implemented"
+      },
+      "remaining": [],
+      "requirement": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:SWITCH",
+      "scope": "Recognizes this reserved spelling as a keyword and preserves observable bare-name, quoted-name, and identifier-boundary behavior. The selected controls address lexical recognition and diagnostics; Java token representation and higher-level language features are outside this scope.",
+      "tests": {
+        "case_ids": [
+          "keyword-stage136-bare-switch",
+          "keyword-stage136-quoted-all",
+          "keyword-stage136-identifier-boundaries",
+          "keyword-stage136-second-reserved"
+        ],
+        "state": "mapped"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "identifier"
+          }
+        ],
+        "state": "implemented"
+      },
+      "remaining": [],
+      "requirement": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:VARARG",
+      "scope": "Recognizes this reserved spelling as a keyword and preserves observable bare-name, quoted-name, and identifier-boundary behavior. The selected controls address lexical recognition and diagnostics; Java token representation and higher-level language features are outside this scope.",
+      "tests": {
+        "case_ids": [
+          "keyword-stage136-bare-vararg",
+          "keyword-stage136-quoted-all",
+          "keyword-stage136-identifier-boundaries"
+        ],
+        "state": "mapped"
+      }
     }
   ],
   "schema_version": 1

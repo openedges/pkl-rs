@@ -276,7 +276,11 @@
       "input_sha256": "373d0d902f927cf706025320fa00212c6aadc45dd3573d9fd06047a035817465",
       "required": true,
       "requirements": [
-        "semantic:strings"
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
       ]
     },
     {
@@ -55178,7 +55182,8 @@
         "semantic:lexing",
         "semantic:operators",
         "semantic:diagnostics",
-        "semantic:shared-engine"
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN"
       ]
     },
     {
@@ -71975,6 +71980,780 @@
       "required": true,
       "requirements": [
         "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:NULL"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h0-single-lf",
+      "input": "tests/fixtures/m2/string-stage135-active-h0-single-lf.pkl",
+      "input_sha256": "3003e188ed0b3fa14fdda52bae91efcca10955d5a229b9e8b30ca168817e4879",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h0-single-crlf",
+      "input": "tests/fixtures/m2/string-stage135-active-h0-single-crlf.pkl",
+      "input_sha256": "b0afce1c0ecee4c8dc3a998e3dc3ddd88692ea5307626febdf6c07aba82b1e14",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h0-multiline-lf",
+      "input": "tests/fixtures/m2/string-stage135-active-h0-multiline-lf.pkl",
+      "input_sha256": "9132c3d4271693abb56f27fb5b8fc2cbd6fb13dff1e4046df8741b2f96215558",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h0-multiline-crlf",
+      "input": "tests/fixtures/m2/string-stage135-active-h0-multiline-crlf.pkl",
+      "input_sha256": "1d1c3e3cd77b8bd224053e463d3d7e807187b76fd6407463de9c88e980f3a27f",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h1-single-lf",
+      "input": "tests/fixtures/m2/string-stage135-active-h1-single-lf.pkl",
+      "input_sha256": "f58b4df835a411d5b8e3aba6fd0d9d021319359790b4c23380542c7de0e2f7de",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h1-single-crlf",
+      "input": "tests/fixtures/m2/string-stage135-active-h1-single-crlf.pkl",
+      "input_sha256": "9d0a868d05205da4b133c65f053c90964597f7baee5b35f17d90913b7395fb35",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h1-multiline-lf",
+      "input": "tests/fixtures/m2/string-stage135-active-h1-multiline-lf.pkl",
+      "input_sha256": "d204c7d8931b54cfb3a3231f369af787b939642ff57ca35be2b1ee9f4054389b",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h1-multiline-crlf",
+      "input": "tests/fixtures/m2/string-stage135-active-h1-multiline-crlf.pkl",
+      "input_sha256": "444983b286409be0241bbef1992ca284144eff5d33f24abee894d02df3d55fc2",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h2-single-lf",
+      "input": "tests/fixtures/m2/string-stage135-active-h2-single-lf.pkl",
+      "input_sha256": "7c7416dbbd27c56505f869e04ebd51d1026708de38cfc7ae3f32f16eef9dfe80",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h2-single-crlf",
+      "input": "tests/fixtures/m2/string-stage135-active-h2-single-crlf.pkl",
+      "input_sha256": "b44e4b8fa26292ebcdee599bfb5f902e2947eed7f05ab35d4e0e3beb5818bde7",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h2-multiline-lf",
+      "input": "tests/fixtures/m2/string-stage135-active-h2-multiline-lf.pkl",
+      "input_sha256": "deed1fde217246855e0ef2d11c069a704f9959eaada96a536cf4366cd857606d",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h2-multiline-crlf",
+      "input": "tests/fixtures/m2/string-stage135-active-h2-multiline-crlf.pkl",
+      "input_sha256": "bb0eed5817d96afe53b84ad0d55fd24aabb193a20f37cbacdf4f3ff1f1032292",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-inactive-h1-single-lf",
+      "input": "tests/fixtures/m2/string-stage135-inactive-h1-single-lf.pkl",
+      "input_sha256": "b2af3ba2c3c90d5e44ebd4a6a5e47ad11ce571f714c519bb9132f5ca24183895",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-inactive-h1-single-crlf",
+      "input": "tests/fixtures/m2/string-stage135-inactive-h1-single-crlf.pkl",
+      "input_sha256": "17aebb7484c5dd15f22d634b7ccd2a5953c25c453239b5db697a962ec00300ec",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-inactive-h1-multiline-lf",
+      "input": "tests/fixtures/m2/string-stage135-inactive-h1-multiline-lf.pkl",
+      "input_sha256": "014447567e586a2e466ad271cfd3266e55aa57ac91fadd0eee8ac1d6ab8f0b9e",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-inactive-h1-multiline-crlf",
+      "input": "tests/fixtures/m2/string-stage135-inactive-h1-multiline-crlf.pkl",
+      "input_sha256": "9bf085d7813d027a7340b10cb80ab2d9464b2db873e249e7fe247069d076d61c",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-inactive-h2-single-lf",
+      "input": "tests/fixtures/m2/string-stage135-inactive-h2-single-lf.pkl",
+      "input_sha256": "17c749152e5c9f7d3d5282825e829fd4e4f7bd03362284ac1ad3f852c681efb4",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-inactive-h2-single-crlf",
+      "input": "tests/fixtures/m2/string-stage135-inactive-h2-single-crlf.pkl",
+      "input_sha256": "940ba972f0a35494b44795d3a35aeb2ac9d9b86d898195b8b6e5c777eef39b4b",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-inactive-h2-multiline-lf",
+      "input": "tests/fixtures/m2/string-stage135-inactive-h2-multiline-lf.pkl",
+      "input_sha256": "d6b704151f28ed1c8dd8b64484fbde7cb74cac099f9029e8ad42c779a0af9be1",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-inactive-h2-multiline-crlf",
+      "input": "tests/fixtures/m2/string-stage135-inactive-h2-multiline-crlf.pkl",
+      "input_sha256": "184da626a2277a2b854503310422b9832b3c19d4973c8b5bef271bf9d046680f",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-nested-outer-plain-inner-raw",
+      "input": "tests/fixtures/m2/string-stage135-nested-outer-plain-inner-raw.pkl",
+      "input_sha256": "152ffac95dad8d6a51194f7f90e369976996a518a2e58c5d8ac754ccc7b13db3",
+      "required": true,
+      "requirements": [
+        "semantic:strings"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-nested-outer-raw-inner-plain",
+      "input": "tests/fixtures/m2/string-stage135-nested-outer-raw-inner-plain.pkl",
+      "input_sha256": "5c0bb6038a9355e0e648d01031b4bd0d46d88c299cdf3d711c4a52775e4cbdc2",
+      "required": true,
+      "requirements": [
+        "semantic:strings"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage135-utf16-prefix-invalid-lf",
+      "input": "tests/fixtures/m2/string-stage135-utf16-prefix-invalid-lf.pkl",
+      "input_sha256": "eb2632c798ba6acd6caf2c10219411f35301373955d0ff1b9382f9ec7b2a0dac",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage135-utf16-prefix-invalid-crlf",
+      "input": "tests/fixtures/m2/string-stage135-utf16-prefix-invalid-crlf.pkl",
+      "input_sha256": "e64af046c187f0215642fd51324315b6cfb027f1db2ed4daf9c6bc467532bfbb",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage135-raw2-prefix-invalid",
+      "input": "tests/fixtures/m2/string-stage135-raw2-prefix-invalid.pkl",
+      "input_sha256": "4d6619a65e1c2f477b5ccfd326fa99cc2a646c302e0f017bd7e2935709963a42",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage135-invalid-before-interpolation",
+      "input": "tests/fixtures/m2/string-stage135-invalid-before-interpolation.pkl",
+      "input_sha256": "fa9b2a0607fb55cfb5f25d04b95e9d7496aed8a365a51179861c3f848148e5ba",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage135-interpolation-before-invalid",
+      "input": "tests/fixtures/m2/string-stage135-interpolation-before-invalid.pkl",
+      "input_sha256": "9bcf319828559b9d9be7cd056c5f9482981df8590574fa51898d5aa55e403970",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage135-raw2-escape-eof",
+      "input": "tests/fixtures/m2/string-stage135-raw2-escape-eof.pkl",
+      "input_sha256": "9418c4c53c225c2ef818ea293cf0fa03d3473d277beb46095256851c82659331",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-bare-protected",
+      "input": "tests/fixtures/m2/keyword-stage136-bare-protected.pkl",
+      "input_sha256": "e7e61e7215c0051a1bef78ece55a1897f24f42cb752e2b9a5f49bac2578b3883",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:PROTECTED"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-bare-override",
+      "input": "tests/fixtures/m2/keyword-stage136-bare-override.pkl",
+      "input_sha256": "3724e282240e0472d7b23ffef1ff67ef215a63fb0fb11742693c8ba7b8b2c4a4",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:OVERRIDE"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-bare-record",
+      "input": "tests/fixtures/m2/keyword-stage136-bare-record.pkl",
+      "input_sha256": "c4b7cddcc71a4286405f57bc2754fc50b3f8fc409934842ba4bf46029aa441d9",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:RECORD"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-bare-delete",
+      "input": "tests/fixtures/m2/keyword-stage136-bare-delete.pkl",
+      "input_sha256": "a4c1510173edd5b7c29c5616db0e3b6cae74574eebbcb6482b0e45fc4448e26b",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:DELETE"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-bare-case",
+      "input": "tests/fixtures/m2/keyword-stage136-bare-case.pkl",
+      "input_sha256": "2b112f9aaa1c18b1d2d1c726aa4c2fa2b794df0573b2cc8ef6fbb65d7df00183",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:CASE"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-bare-switch",
+      "input": "tests/fixtures/m2/keyword-stage136-bare-switch.pkl",
+      "input_sha256": "f763ba22a964ab3236fc1e32ccd9156172bc0ef9b96b55c315c6815e7ccf29f7",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:SWITCH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-bare-vararg",
+      "input": "tests/fixtures/m2/keyword-stage136-bare-vararg.pkl",
+      "input_sha256": "fb47189026d8a122254f04405a3d929e4704103108a3172762f3a6a10d164b48",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:VARARG"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "keyword-stage136-quoted-all",
+      "input": "tests/fixtures/m2/keyword-stage136-quoted-all.pkl",
+      "input_sha256": "91e2633d8096eca793d420e624f4ec583137cd04e64b882d157e427eb3215959",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:PROTECTED",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:OVERRIDE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:RECORD",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:DELETE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:CASE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:SWITCH",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:VARARG"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "keyword-stage136-identifier-boundaries",
+      "input": "tests/fixtures/m2/keyword-stage136-identifier-boundaries.pkl",
+      "input_sha256": "98f2cb987ada85bc040c1452489169039a7da440b46e3e089c347be1d2f1f0c1",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:PROTECTED",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:OVERRIDE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:RECORD",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:DELETE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:CASE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:SWITCH",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:VARARG"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-first-reserved",
+      "input": "tests/fixtures/m2/keyword-stage136-first-reserved.pkl",
+      "input_sha256": "bad6e620454cb9af2f9b722fe9d3edaf88f74c748fc8470ad3e2c2402db4dd75",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:RECORD"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-second-reserved",
+      "input": "tests/fixtures/m2/keyword-stage136-second-reserved.pkl",
+      "input_sha256": "f422a3d0b202a2a30c67d7fb1a315d13c9397dae3fd17b92e25103a7c8d0a9a8",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:SWITCH"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-utf16-column",
+      "input": "tests/fixtures/m2/keyword-stage136-utf16-column.pkl",
+      "input_sha256": "7586f50e84290dc73cc719b5c7623aafef6cf1776d02b51d181bfa1cca9c40f4",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:RECORD"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-utf16-same-line",
+      "input": "tests/fixtures/m2/keyword-stage136-utf16-same-line.pkl",
+      "input_sha256": "404d2e429c3728a1eece82237e66463d0029a6562b93292d7b25e48babf967f8",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:RECORD"
       ]
     },
     {
@@ -120372,7 +121151,9 @@
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/keywordNotAllowedHere4.pkl",
       "input_sha256": "b6b39427d5a7fa0f51a39e81b4904ff3fa6bb62bed14dd4f852962af7a61498f",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:RECORD"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -164807,9 +165588,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 4545,
+    "cases": 4586,
     "cases_by_execution": {
-      "ready": 4442,
+      "ready": 4483,
       "unimplemented": 71,
       "unmapped": 32
     },
@@ -165519,6 +166300,34 @@
           "trace-stage37-repeat-supplementary-normal",
           "trace-stage37-repeat-arity-two-before-constraint",
           "read-stage38-uri-unpaired-surrogate",
+          "string-stage135-active-h0-single-lf",
+          "string-stage135-active-h0-single-crlf",
+          "string-stage135-active-h0-multiline-lf",
+          "string-stage135-active-h0-multiline-crlf",
+          "string-stage135-active-h1-single-lf",
+          "string-stage135-active-h1-single-crlf",
+          "string-stage135-active-h1-multiline-lf",
+          "string-stage135-active-h1-multiline-crlf",
+          "string-stage135-active-h2-single-lf",
+          "string-stage135-active-h2-single-crlf",
+          "string-stage135-active-h2-multiline-lf",
+          "string-stage135-active-h2-multiline-crlf",
+          "string-stage135-inactive-h1-single-lf",
+          "string-stage135-inactive-h1-single-crlf",
+          "string-stage135-inactive-h1-multiline-lf",
+          "string-stage135-inactive-h1-multiline-crlf",
+          "string-stage135-inactive-h2-single-lf",
+          "string-stage135-inactive-h2-single-crlf",
+          "string-stage135-inactive-h2-multiline-lf",
+          "string-stage135-inactive-h2-multiline-crlf",
+          "string-stage135-nested-outer-plain-inner-raw",
+          "string-stage135-nested-outer-raw-inner-plain",
+          "string-stage135-utf16-prefix-invalid-lf",
+          "string-stage135-utf16-prefix-invalid-crlf",
+          "string-stage135-raw2-prefix-invalid",
+          "string-stage135-invalid-before-interpolation",
+          "string-stage135-interpolation-before-invalid",
+          "string-stage135-raw2-escape-eof",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/string.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/stringUnicode.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/identifier.pkl",
@@ -181211,6 +182020,12 @@
           "method-stage38-order-explicit-module-excludes-base-properties",
           "method-stage38-order-same-scope-property-before-method",
           "method-stage38-order-nested-method-before-outer-property",
+          "string-stage135-utf16-prefix-invalid-lf",
+          "string-stage135-utf16-prefix-invalid-crlf",
+          "string-stage135-raw2-prefix-invalid",
+          "string-stage135-invalid-before-interpolation",
+          "string-stage135-interpolation-before-invalid",
+          "string-stage135-raw2-escape-eof",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingClassDelimiter.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingConstrainedTypeSeparator.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingContainerAmendDefDelimiter.pkl",
@@ -185718,19 +186533,44 @@
       "description": "CASE",
       "id": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:CASE",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "identifier"
+          }
+        ],
+        "state": "implemented"
       },
       "kind": "language_token",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [],
+        "scope": "Recognizes this reserved spelling as a keyword and preserves observable bare-name, quoted-name, and identifier-boundary behavior. The selected controls address lexical recognition and diagnostics; Java token representation and higher-level language features are outside this scope.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 65,
         "path": "pkl-parser/src/main/java/org/pkl/parser/Token.java"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "keyword-stage136-bare-case",
+          "keyword-stage136-quoted-all",
+          "keyword-stage136-identifier-boundaries"
+        ],
+        "state": "mapped"
       }
     },
     {
@@ -185832,19 +186672,44 @@
       "description": "DELETE",
       "id": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:DELETE",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "identifier"
+          }
+        ],
+        "state": "implemented"
       },
       "kind": "language_token",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [],
+        "scope": "Recognizes this reserved spelling as a keyword and preserves observable bare-name, quoted-name, and identifier-boundary behavior. The selected controls address lexical recognition and diagnostics; Java token representation and higher-level language features are outside this scope.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 64,
         "path": "pkl-parser/src/main/java/org/pkl/parser/Token.java"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "keyword-stage136-bare-delete",
+          "keyword-stage136-quoted-all",
+          "keyword-stage136-identifier-boundaries"
+        ],
+        "state": "mapped"
       }
     },
     {
@@ -186868,19 +187733,44 @@
       "description": "OVERRIDE",
       "id": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:OVERRIDE",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "identifier"
+          }
+        ],
+        "state": "implemented"
       },
       "kind": "language_token",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [],
+        "scope": "Recognizes this reserved spelling as a keyword and preserves observable bare-name, quoted-name, and identifier-boundary behavior. The selected controls address lexical recognition and diagnostics; Java token representation and higher-level language features are outside this scope.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 62,
         "path": "pkl-parser/src/main/java/org/pkl/parser/Token.java"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "keyword-stage136-bare-override",
+          "keyword-stage136-quoted-all",
+          "keyword-stage136-identifier-boundaries"
+        ],
+        "state": "mapped"
       }
     },
     {
@@ -186944,19 +187834,44 @@
       "description": "PROTECTED",
       "id": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:PROTECTED",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "identifier"
+          }
+        ],
+        "state": "implemented"
       },
       "kind": "language_token",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [],
+        "scope": "Recognizes this reserved spelling as a keyword and preserves observable bare-name, quoted-name, and identifier-boundary behavior. The selected controls address lexical recognition and diagnostics; Java token representation and higher-level language features are outside this scope.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 61,
         "path": "pkl-parser/src/main/java/org/pkl/parser/Token.java"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "keyword-stage136-bare-protected",
+          "keyword-stage136-quoted-all",
+          "keyword-stage136-identifier-boundaries"
+        ],
+        "state": "mapped"
       }
     },
     {
@@ -187272,19 +188187,48 @@
       "description": "RECORD",
       "id": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:RECORD",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "identifier"
+          }
+        ],
+        "state": "implemented"
       },
       "kind": "language_token",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [],
+        "scope": "Recognizes this reserved spelling as a keyword and preserves observable bare-name, quoted-name, and identifier-boundary behavior. The selected controls address lexical recognition and diagnostics; Java token representation and higher-level language features are outside this scope.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 63,
         "path": "pkl-parser/src/main/java/org/pkl/parser/Token.java"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "keyword-stage136-bare-record",
+          "keyword-stage136-quoted-all",
+          "keyword-stage136-identifier-boundaries",
+          "keyword-stage136-first-reserved",
+          "keyword-stage136-utf16-column",
+          "keyword-stage136-utf16-same-line",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/keywordNotAllowedHere4.pkl"
+        ],
+        "state": "mapped"
       }
     },
     {
@@ -187424,19 +188368,52 @@
       "description": "STRING_ESCAPE_BACKSLASH",
       "id": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser/string_lexer.rs",
+            "sha256": "46f149915a977e4c34625a8348e3e64dfcfa97c0870e9b4e580666be99ca9d96",
+            "symbol": "string_step"
+          }
+        ],
+        "state": "implemented"
       },
       "kind": "language_token",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [],
+        "scope": "Decodes this authored escape when active and preserves its text when inactive under raw delimiters. Selected scalar controls cover delimiter, interpolation, newline, and error-order boundaries. Java internal token representation and unrelated Host transport are outside this lexical scope.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 132,
         "path": "pkl-parser/src/main/java/org/pkl/parser/Token.java"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "string-escapes",
+          "string-stage135-active-h0-single-lf",
+          "string-stage135-active-h0-single-crlf",
+          "string-stage135-active-h0-multiline-lf",
+          "string-stage135-active-h0-multiline-crlf",
+          "string-stage135-active-h1-single-lf",
+          "string-stage135-active-h1-single-crlf",
+          "string-stage135-active-h1-multiline-lf",
+          "string-stage135-active-h1-multiline-crlf",
+          "string-stage135-active-h2-single-lf",
+          "string-stage135-active-h2-single-crlf",
+          "string-stage135-active-h2-multiline-lf",
+          "string-stage135-active-h2-multiline-crlf",
+          "string-stage135-inactive-h1-single-lf",
+          "string-stage135-inactive-h1-single-crlf",
+          "string-stage135-inactive-h1-multiline-lf",
+          "string-stage135-inactive-h1-multiline-crlf",
+          "string-stage135-inactive-h2-single-lf",
+          "string-stage135-inactive-h2-single-crlf",
+          "string-stage135-inactive-h2-multiline-lf",
+          "string-stage135-inactive-h2-multiline-crlf"
+        ],
+        "state": "mapped"
       }
     },
     {
@@ -187462,76 +188439,208 @@
       "description": "STRING_ESCAPE_NEWLINE",
       "id": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser/string_lexer.rs",
+            "sha256": "46f149915a977e4c34625a8348e3e64dfcfa97c0870e9b4e580666be99ca9d96",
+            "symbol": "string_step"
+          }
+        ],
+        "state": "implemented"
       },
       "kind": "language_token",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [],
+        "scope": "Decodes this authored escape when active and preserves its text when inactive under raw delimiters. Selected scalar controls cover delimiter, interpolation, newline, and error-order boundaries. Java internal token representation and unrelated Host transport are outside this lexical scope.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 128,
         "path": "pkl-parser/src/main/java/org/pkl/parser/Token.java"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "string-escapes",
+          "string-stage135-active-h0-single-lf",
+          "string-stage135-active-h0-single-crlf",
+          "string-stage135-active-h0-multiline-lf",
+          "string-stage135-active-h0-multiline-crlf",
+          "string-stage135-active-h1-single-lf",
+          "string-stage135-active-h1-single-crlf",
+          "string-stage135-active-h1-multiline-lf",
+          "string-stage135-active-h1-multiline-crlf",
+          "string-stage135-active-h2-single-lf",
+          "string-stage135-active-h2-single-crlf",
+          "string-stage135-active-h2-multiline-lf",
+          "string-stage135-active-h2-multiline-crlf",
+          "string-stage135-inactive-h1-single-lf",
+          "string-stage135-inactive-h1-single-crlf",
+          "string-stage135-inactive-h1-multiline-lf",
+          "string-stage135-inactive-h1-multiline-crlf",
+          "string-stage135-inactive-h2-single-lf",
+          "string-stage135-inactive-h2-single-crlf",
+          "string-stage135-inactive-h2-multiline-lf",
+          "string-stage135-inactive-h2-multiline-crlf"
+        ],
+        "state": "mapped"
       }
     },
     {
       "description": "STRING_ESCAPE_QUOTE",
       "id": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser/string_lexer.rs",
+            "sha256": "46f149915a977e4c34625a8348e3e64dfcfa97c0870e9b4e580666be99ca9d96",
+            "symbol": "string_step"
+          }
+        ],
+        "state": "implemented"
       },
       "kind": "language_token",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [],
+        "scope": "Decodes this authored escape when active and preserves its text when inactive under raw delimiters. Selected scalar controls cover delimiter, interpolation, newline, and error-order boundaries. Java internal token representation and unrelated Host transport are outside this lexical scope.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 131,
         "path": "pkl-parser/src/main/java/org/pkl/parser/Token.java"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "string-escapes",
+          "string-stage135-active-h0-single-lf",
+          "string-stage135-active-h0-single-crlf",
+          "string-stage135-active-h0-multiline-lf",
+          "string-stage135-active-h0-multiline-crlf",
+          "string-stage135-active-h1-single-lf",
+          "string-stage135-active-h1-single-crlf",
+          "string-stage135-active-h1-multiline-lf",
+          "string-stage135-active-h1-multiline-crlf",
+          "string-stage135-active-h2-single-lf",
+          "string-stage135-active-h2-single-crlf",
+          "string-stage135-active-h2-multiline-lf",
+          "string-stage135-active-h2-multiline-crlf",
+          "string-stage135-inactive-h1-single-lf",
+          "string-stage135-inactive-h1-single-crlf",
+          "string-stage135-inactive-h1-multiline-lf",
+          "string-stage135-inactive-h1-multiline-crlf",
+          "string-stage135-inactive-h2-single-lf",
+          "string-stage135-inactive-h2-single-crlf",
+          "string-stage135-inactive-h2-multiline-lf",
+          "string-stage135-inactive-h2-multiline-crlf"
+        ],
+        "state": "mapped"
       }
     },
     {
       "description": "STRING_ESCAPE_RETURN",
       "id": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser/string_lexer.rs",
+            "sha256": "46f149915a977e4c34625a8348e3e64dfcfa97c0870e9b4e580666be99ca9d96",
+            "symbol": "string_step"
+          }
+        ],
+        "state": "implemented"
       },
       "kind": "language_token",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [],
+        "scope": "Decodes this authored escape when active and preserves its text when inactive under raw delimiters. Selected scalar controls cover delimiter, interpolation, newline, and error-order boundaries. Java internal token representation and unrelated Host transport are outside this lexical scope.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 130,
         "path": "pkl-parser/src/main/java/org/pkl/parser/Token.java"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "string-stage26-unicode-valid-escapes",
+          "string-stage135-active-h0-single-lf",
+          "string-stage135-active-h0-single-crlf",
+          "string-stage135-active-h0-multiline-lf",
+          "string-stage135-active-h0-multiline-crlf",
+          "string-stage135-active-h1-single-lf",
+          "string-stage135-active-h1-single-crlf",
+          "string-stage135-active-h1-multiline-lf",
+          "string-stage135-active-h1-multiline-crlf",
+          "string-stage135-active-h2-single-lf",
+          "string-stage135-active-h2-single-crlf",
+          "string-stage135-active-h2-multiline-lf",
+          "string-stage135-active-h2-multiline-crlf",
+          "string-stage135-inactive-h1-single-lf",
+          "string-stage135-inactive-h1-single-crlf",
+          "string-stage135-inactive-h1-multiline-lf",
+          "string-stage135-inactive-h1-multiline-crlf",
+          "string-stage135-inactive-h2-single-lf",
+          "string-stage135-inactive-h2-single-crlf",
+          "string-stage135-inactive-h2-multiline-lf",
+          "string-stage135-inactive-h2-multiline-crlf"
+        ],
+        "state": "mapped"
       }
     },
     {
       "description": "STRING_ESCAPE_TAB",
       "id": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser/string_lexer.rs",
+            "sha256": "46f149915a977e4c34625a8348e3e64dfcfa97c0870e9b4e580666be99ca9d96",
+            "symbol": "string_step"
+          }
+        ],
+        "state": "implemented"
       },
       "kind": "language_token",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [],
+        "scope": "Decodes this authored escape when active and preserves its text when inactive under raw delimiters. Selected scalar controls cover delimiter, interpolation, newline, and error-order boundaries. Java internal token representation and unrelated Host transport are outside this lexical scope.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 129,
         "path": "pkl-parser/src/main/java/org/pkl/parser/Token.java"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "string-escapes",
+          "string-stage135-active-h0-single-lf",
+          "string-stage135-active-h0-single-crlf",
+          "string-stage135-active-h0-multiline-lf",
+          "string-stage135-active-h0-multiline-crlf",
+          "string-stage135-active-h1-single-lf",
+          "string-stage135-active-h1-single-crlf",
+          "string-stage135-active-h1-multiline-lf",
+          "string-stage135-active-h1-multiline-crlf",
+          "string-stage135-active-h2-single-lf",
+          "string-stage135-active-h2-single-crlf",
+          "string-stage135-active-h2-multiline-lf",
+          "string-stage135-active-h2-multiline-crlf",
+          "string-stage135-inactive-h1-single-lf",
+          "string-stage135-inactive-h1-single-crlf",
+          "string-stage135-inactive-h1-multiline-lf",
+          "string-stage135-inactive-h1-multiline-crlf",
+          "string-stage135-inactive-h2-single-lf",
+          "string-stage135-inactive-h2-single-crlf",
+          "string-stage135-inactive-h2-multiline-lf",
+          "string-stage135-inactive-h2-multiline-crlf"
+        ],
+        "state": "mapped"
       }
     },
     {
@@ -187652,19 +188761,45 @@
       "description": "SWITCH",
       "id": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:SWITCH",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "identifier"
+          }
+        ],
+        "state": "implemented"
       },
       "kind": "language_token",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [],
+        "scope": "Recognizes this reserved spelling as a keyword and preserves observable bare-name, quoted-name, and identifier-boundary behavior. The selected controls address lexical recognition and diagnostics; Java token representation and higher-level language features are outside this scope.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 66,
         "path": "pkl-parser/src/main/java/org/pkl/parser/Token.java"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "keyword-stage136-bare-switch",
+          "keyword-stage136-quoted-all",
+          "keyword-stage136-identifier-boundaries",
+          "keyword-stage136-second-reserved"
+        ],
+        "state": "mapped"
       }
     },
     {
@@ -187866,19 +189001,44 @@
       "description": "VARARG",
       "id": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:VARARG",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "is_keyword"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "next_with_comments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "f49ed7810638b60c07b496954357f5e188f1391e009e89c242cb898adff59af3",
+            "symbol": "identifier"
+          }
+        ],
+        "state": "implemented"
       },
       "kind": "language_token",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [],
+        "scope": "Recognizes this reserved spelling as a keyword and preserves observable bare-name, quoted-name, and identifier-boundary behavior. The selected controls address lexical recognition and diagnostics; Java token representation and higher-level language features are outside this scope.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 67,
         "path": "pkl-parser/src/main/java/org/pkl/parser/Token.java"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "keyword-stage136-bare-vararg",
+          "keyword-stage136-quoted-all",
+          "keyword-stage136-identifier-boundaries"
+        ],
+        "state": "mapped"
       }
     },
     {
@@ -192189,11 +193349,11 @@
     "compatibility/m2-execution-profiles.json": "198850daa534a33f0d1b87f8bc8d38d7717f1e9b792ec70a13053c0affc6f477",
     "compatibility/m2-historical-collections.json": "f2cba632473ea199620804f8620a417226d005c04586c421fd985729faa83c6a",
     "compatibility/m2-jvm-classpath.json": "93a97f62fa55742f4ddaee342c6cf3e1509e76700bfffa9ce478352f9bab9af7",
-    "compatibility/m2-mappings.json": "e8fdf2e336f093e034c4d31c287267271b477cbd783f1cc69136604877b00ed4",
+    "compatibility/m2-mappings.json": "b67677411824724923cd9ca2b9b2283a36c5b2a8aff4f90384299c76302d1401",
     "compatibility/m2-module-eval.json": "1196b940cdd95daf5e360dabdbcf3f4329ee1c31db754879c32e4b26ea438f9c",
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "de0e7c4e8100c59149ce999ddd4d40941196921efa1c95650bc74939c73bdc13"
+    "tests/fixtures/m2/cases.json": "12f524c6f6e0807d227f85f89a5465dbf815a1295ee8d79a3adf47ca57fcbee4"
   }
 }

@@ -1,0 +1,313 @@
+{
+  "complete": true,
+  "errors": [],
+  "started_epoch": 1793643918.467492,
+  "source_parent": "6e3530edb5b635818d6b8f13ee73d60a4f7e1b6d",
+  "source_files": 531713,
+  "unique_chunks": 39887,
+  "utility": [
+    {
+      "path": "target/m2/stage136-publication-prep-02/restore.py",
+      "bytes": 14242,
+      "sha256": "e0c35ef20b5ff931c4002246c7ee0432a090aea2eab2f6af652c163138554b4d"
+    },
+    {
+      "path": "target/m2/stage136-publication-prep-02/restore_reader.py",
+      "bytes": 10662,
+      "sha256": "bfa2cce07094167b7d745d19c7551b33ed6bb0ab037af64c5de89821b6de75ec"
+    },
+    {
+      "path": "target/m2/stage136-publication-prep-02/README.restore.md",
+      "bytes": 2370,
+      "sha256": "b98299f532bae1740280bb8ef538ad072309d339168bd2e1026489b11307f0f0"
+    }
+  ],
+  "parts": [
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-001.tar.gz",
+      "bytes": 3161290,
+      "sha256": "96aacbc4e92549ecd1ae79a4efb0f66b3c6aa9c379df676aecf2b43a2e81c9ea",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "96aacbc4e92549ecd1ae79a4efb0f66b3c6aa9c379df676aecf2b43a2e81c9ea",
+          "bytes": 3161290
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-002.tar.gz",
+      "bytes": 2519719,
+      "sha256": "3712530aac501ea91e0a2e97d0344f1f22fd2b7a882a506c206139741ae544fa",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "3712530aac501ea91e0a2e97d0344f1f22fd2b7a882a506c206139741ae544fa",
+          "bytes": 2519719
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-003.tar.gz",
+      "bytes": 2447434,
+      "sha256": "4c263edc056fba51b193528f4f4d23de62a1c710fdf0ad336f303bacab7ac13d",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "4c263edc056fba51b193528f4f4d23de62a1c710fdf0ad336f303bacab7ac13d",
+          "bytes": 2447434
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-004.tar.gz",
+      "bytes": 2926335,
+      "sha256": "d8428d44843f1f608380c4ed3bdef41bf41f900be9e24fe804b434695a0f1f39",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "d8428d44843f1f608380c4ed3bdef41bf41f900be9e24fe804b434695a0f1f39",
+          "bytes": 2926335
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-005.tar.gz",
+      "bytes": 3533080,
+      "sha256": "05378ffab520a8348ef668001e959d98823b1e4ae7aab1d7d6fb22ce388160de",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "05378ffab520a8348ef668001e959d98823b1e4ae7aab1d7d6fb22ce388160de",
+          "bytes": 3533080
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-006.tar.gz",
+      "bytes": 3151920,
+      "sha256": "bbfe2fd525ac926e2978e7f4039df833d05522dc0402ff8851415304a88cdad3",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "bbfe2fd525ac926e2978e7f4039df833d05522dc0402ff8851415304a88cdad3",
+          "bytes": 3151920
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-007.tar.gz",
+      "bytes": 3549618,
+      "sha256": "c6319b73882b847aca740a9b7226228aa74ef7ee19dc5ee0519852c330e2cfa1",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "c6319b73882b847aca740a9b7226228aa74ef7ee19dc5ee0519852c330e2cfa1",
+          "bytes": 3549618
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-008.tar.gz",
+      "bytes": 13240205,
+      "sha256": "fad94d93d52fd0c05330891396cf968f9c5f29872679a03fc124ea4fab6efc8f",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "8a90a1111f854a55a7c1e6b2f023e08219e1d8fbd60726cb4bf2a1de8c7b7aef",
+          "bytes": 8388608
+        },
+        {
+          "sha256": "143b9840dfa812843fcedb29cdd0b372267652356648806f96eca334e3428f84",
+          "bytes": 4851597
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-009.tar.gz",
+      "bytes": 5770745,
+      "sha256": "2e466a7d1f2f69e453c996e25640ed6b77fa1f242c0129a63b99708300473b1c",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "2e466a7d1f2f69e453c996e25640ed6b77fa1f242c0129a63b99708300473b1c",
+          "bytes": 5770745
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-010.tar.gz",
+      "bytes": 3948299,
+      "sha256": "852db3b84c30d216c92027ec018a25348bba6dfdf7e365445390d101ec64692e",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "852db3b84c30d216c92027ec018a25348bba6dfdf7e365445390d101ec64692e",
+          "bytes": 3948299
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-011.tar.gz",
+      "bytes": 3661616,
+      "sha256": "cf5d451d25124c13e35506f835c0513cf13d8e5792b0c722c125801372d7f425",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "cf5d451d25124c13e35506f835c0513cf13d8e5792b0c722c125801372d7f425",
+          "bytes": 3661616
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-012.tar.gz",
+      "bytes": 3007811,
+      "sha256": "2fa9b016ce44a48f7bf27848b2562300ab5d0e7a9405002e8c1649926f45e297",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "2fa9b016ce44a48f7bf27848b2562300ab5d0e7a9405002e8c1649926f45e297",
+          "bytes": 3007811
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-013.tar.gz",
+      "bytes": 3922878,
+      "sha256": "a01b138bdc1f2faad2ad3bcdab9abb55be0fdbb4624e10c36a18cd5edc9fc943",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "a01b138bdc1f2faad2ad3bcdab9abb55be0fdbb4624e10c36a18cd5edc9fc943",
+          "bytes": 3922878
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-014.tar.gz",
+      "bytes": 2836536,
+      "sha256": "16d0991dbde83e038919154af6a3c8390d9dd7f47f6df683fe7f993390fc732e",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "16d0991dbde83e038919154af6a3c8390d9dd7f47f6df683fe7f993390fc732e",
+          "bytes": 2836536
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-015.tar.gz",
+      "bytes": 9973241,
+      "sha256": "5c7027f09c516f3ada10fc120f01902627c3829f83d0fb831796feedc32cb1fa",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "6c900d36840928d95f0dfb9d5608a662e4cc1eb2ce1c02e7e546dae7f7c4d2d7",
+          "bytes": 8388608
+        },
+        {
+          "sha256": "2a574ec0bbd1db23cd82af2c3bb4b762d73b9d694624643a7e3140f01dd0dfa9",
+          "bytes": 1584633
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-016.tar.gz",
+      "bytes": 10139535,
+      "sha256": "0dc0255d2a4da1ddb4175687dd82a319abcec70b5d4a6656ceaf40e66780465f",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "0ea5c8b52e03b60410e5f9e84a681019545924291b797b5fd33dfed3b49ca75b",
+          "bytes": 8388608
+        },
+        {
+          "sha256": "e10833d2ab860694d5e67fb6c2d9a8efe17872f2c0bda0af56837f28ea516ad0",
+          "bytes": 1750927
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-017.tar.gz",
+      "bytes": 3533465,
+      "sha256": "3873d485f407f1128395d4bdb2194610f20a3a4fc25a10c0873d2a3bf66476cd",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "3873d485f407f1128395d4bdb2194610f20a3a4fc25a10c0873d2a3bf66476cd",
+          "bytes": 3533465
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-018.tar.gz",
+      "bytes": 10586198,
+      "sha256": "9b57d96476e33420fef8ff5c1eb4cffdab32e9d79b00ea9e1f840e594da5e6cd",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "b22436851a70c9258865976eadfc8f69f324b603f34d4be6ee4d2ca210e64a0b",
+          "bytes": 8388608
+        },
+        {
+          "sha256": "b84a45986d6dc21741749cb2e86346acb4dc72bd3b94d4c4c46e1040e5d29954",
+          "bytes": 2197590
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-019.tar.gz",
+      "bytes": 3794750,
+      "sha256": "1b8be8e64920fa9c6ca20b4054a4ff426984e801f39612aa976b4edcc798e497",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "1b8be8e64920fa9c6ca20b4054a4ff426984e801f39612aa976b4edcc798e497",
+          "bytes": 3794750
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-020.tar.gz",
+      "bytes": 3080402,
+      "sha256": "37539601f3405a189e3b415bbffea930d3abb6890eb738e97e677d360d0791b6",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "37539601f3405a189e3b415bbffea930d3abb6890eb738e97e677d360d0791b6",
+          "bytes": 3080402
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-021.tar.gz",
+      "bytes": 3029485,
+      "sha256": "1725cdd3a089b3a67b8ffb5df8dd23410c93d1ed007a6ea4bbbc3dff227a5c71",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "1725cdd3a089b3a67b8ffb5df8dd23410c93d1ed007a6ea4bbbc3dff227a5c71",
+          "bytes": 3029485
+        }
+      ]
+    },
+    {
+      "path": "target/m2/stage136-publication-01/stage136-evidence-022.tar.gz",
+      "bytes": 523055,
+      "sha256": "0333c2e07847e441f75807485002031bf99b8ffe7a5475517a5f6ed23824d392",
+      "mode": 420,
+      "chunks": [
+        {
+          "sha256": "0333c2e07847e441f75807485002031bf99b8ffe7a5475517a5f6ed23824d392",
+          "bytes": 523055
+        }
+      ]
+    }
+  ],
+  "scope": "Archive integrity/restoration only; not full compatibility or dependency closure.",
+  "index_sha256": "4b521c43bf6c3e274e81438d329f211bd3e219bd54cfccd3cb1bf1619468cc76",
+  "index_bytes": 165829514,
+  "index_slices": 20,
+  "source_bookends_stable": true,
+  "finished_epoch": 1793644638.8453288
+}

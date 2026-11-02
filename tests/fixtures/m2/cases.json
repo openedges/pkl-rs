@@ -46295,6 +46295,493 @@
       "requirements": [
         "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:NULL"
       ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h0-single-lf",
+      "input": "tests/fixtures/m2/string-stage135-active-h0-single-lf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h0-single-crlf",
+      "input": "tests/fixtures/m2/string-stage135-active-h0-single-crlf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h0-multiline-lf",
+      "input": "tests/fixtures/m2/string-stage135-active-h0-multiline-lf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h0-multiline-crlf",
+      "input": "tests/fixtures/m2/string-stage135-active-h0-multiline-crlf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h1-single-lf",
+      "input": "tests/fixtures/m2/string-stage135-active-h1-single-lf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h1-single-crlf",
+      "input": "tests/fixtures/m2/string-stage135-active-h1-single-crlf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h1-multiline-lf",
+      "input": "tests/fixtures/m2/string-stage135-active-h1-multiline-lf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h1-multiline-crlf",
+      "input": "tests/fixtures/m2/string-stage135-active-h1-multiline-crlf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h2-single-lf",
+      "input": "tests/fixtures/m2/string-stage135-active-h2-single-lf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h2-single-crlf",
+      "input": "tests/fixtures/m2/string-stage135-active-h2-single-crlf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h2-multiline-lf",
+      "input": "tests/fixtures/m2/string-stage135-active-h2-multiline-lf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-active-h2-multiline-crlf",
+      "input": "tests/fixtures/m2/string-stage135-active-h2-multiline-crlf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-inactive-h1-single-lf",
+      "input": "tests/fixtures/m2/string-stage135-inactive-h1-single-lf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-inactive-h1-single-crlf",
+      "input": "tests/fixtures/m2/string-stage135-inactive-h1-single-crlf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-inactive-h1-multiline-lf",
+      "input": "tests/fixtures/m2/string-stage135-inactive-h1-multiline-lf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-inactive-h1-multiline-crlf",
+      "input": "tests/fixtures/m2/string-stage135-inactive-h1-multiline-crlf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-inactive-h2-single-lf",
+      "input": "tests/fixtures/m2/string-stage135-inactive-h2-single-lf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-inactive-h2-single-crlf",
+      "input": "tests/fixtures/m2/string-stage135-inactive-h2-single-crlf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-inactive-h2-multiline-lf",
+      "input": "tests/fixtures/m2/string-stage135-inactive-h2-multiline-lf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-inactive-h2-multiline-crlf",
+      "input": "tests/fixtures/m2/string-stage135-inactive-h2-multiline-crlf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_NEWLINE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_TAB",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_RETURN",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_QUOTE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:STRING_ESCAPE_BACKSLASH"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-nested-outer-plain-inner-raw",
+      "input": "tests/fixtures/m2/string-stage135-nested-outer-plain-inner-raw.pkl",
+      "requirements": [
+        "semantic:strings"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage135-nested-outer-raw-inner-plain",
+      "input": "tests/fixtures/m2/string-stage135-nested-outer-raw-inner-plain.pkl",
+      "requirements": [
+        "semantic:strings"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage135-utf16-prefix-invalid-lf",
+      "input": "tests/fixtures/m2/string-stage135-utf16-prefix-invalid-lf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage135-utf16-prefix-invalid-crlf",
+      "input": "tests/fixtures/m2/string-stage135-utf16-prefix-invalid-crlf.pkl",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage135-raw2-prefix-invalid",
+      "input": "tests/fixtures/m2/string-stage135-raw2-prefix-invalid.pkl",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage135-invalid-before-interpolation",
+      "input": "tests/fixtures/m2/string-stage135-invalid-before-interpolation.pkl",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage135-interpolation-before-invalid",
+      "input": "tests/fixtures/m2/string-stage135-interpolation-before-invalid.pkl",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage135-raw2-escape-eof",
+      "input": "tests/fixtures/m2/string-stage135-raw2-escape-eof.pkl",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-bare-protected",
+      "input": "tests/fixtures/m2/keyword-stage136-bare-protected.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:PROTECTED"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-bare-override",
+      "input": "tests/fixtures/m2/keyword-stage136-bare-override.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:OVERRIDE"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-bare-record",
+      "input": "tests/fixtures/m2/keyword-stage136-bare-record.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:RECORD"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-bare-delete",
+      "input": "tests/fixtures/m2/keyword-stage136-bare-delete.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:DELETE"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-bare-case",
+      "input": "tests/fixtures/m2/keyword-stage136-bare-case.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:CASE"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-bare-switch",
+      "input": "tests/fixtures/m2/keyword-stage136-bare-switch.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:SWITCH"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-bare-vararg",
+      "input": "tests/fixtures/m2/keyword-stage136-bare-vararg.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:VARARG"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "keyword-stage136-quoted-all",
+      "input": "tests/fixtures/m2/keyword-stage136-quoted-all.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:PROTECTED",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:OVERRIDE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:RECORD",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:DELETE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:CASE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:SWITCH",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:VARARG"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "keyword-stage136-identifier-boundaries",
+      "input": "tests/fixtures/m2/keyword-stage136-identifier-boundaries.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:PROTECTED",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:OVERRIDE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:RECORD",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:DELETE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:CASE",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:SWITCH",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:VARARG"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-first-reserved",
+      "input": "tests/fixtures/m2/keyword-stage136-first-reserved.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:RECORD"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-second-reserved",
+      "input": "tests/fixtures/m2/keyword-stage136-second-reserved.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:SWITCH"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-utf16-column",
+      "input": "tests/fixtures/m2/keyword-stage136-utf16-column.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:RECORD"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "keyword-stage136-utf16-same-line",
+      "input": "tests/fixtures/m2/keyword-stage136-utf16-same-line.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:RECORD"
+      ]
     }
   ],
   "schema_version": 1,

@@ -200,9 +200,27 @@ def selected_cases(manifest, adapters=None):
     return [row for row in manifest['cases'] if row.get('adapter') in (adapters or known)]
 
 
+def select_cargo_target(explicit, output, workspaces, requested_candidates):
+    if explicit is None:
+        return ROOT / 'target'
+    target_dir = Path(explicit).absolute()
+    if target_dir.exists() or target_dir.is_symlink():
+        raise ValueError('explicit Cargo target directory must be fresh')
+    if target_dir.resolve() != target_dir:
+        raise ValueError('explicit Cargo target directory cannot traverse symlinks')
+    for item in [output, *workspaces]:
+        if item is not None:
+            item = Path(item).resolve()
+            if target_dir == item or target_dir in item.parents or item in target_dir.parents:
+                raise ValueError('Cargo target directory must be separate from evidence and workspaces')
+    if not any(supplied is None for supplied in requested_candidates):
+        raise ValueError('explicit Cargo target directory requires an internal build')
+    return target_dir
+
+
 def execute(output: Path, candidate: Path | None, workers=1, *, adapters=None,
             module_candidate=None, module_workspace=None, classpath_candidate=None, classpath_workspace=None,
-            module_workspace_profile=m2_workspace.DEFAULT_PROFILE, historical_workspace=None):
+            module_workspace_profile=m2_workspace.DEFAULT_PROFILE, historical_workspace=None, cargo_target_dir=None):
     validate_workers(workers)
     manifest = contract.current_manifest()
     selected = selected_cases(manifest, adapters)
@@ -223,6 +241,15 @@ def execute(output: Path, candidate: Path | None, workers=1, *, adapters=None,
         raise ValueError('classpath candidate/workspace supplied for an unselected adapter')
     if historical_workspace is not None and not historical:
         raise ValueError('historical workspace supplied for unselected adapter')
+    needed = ([candidate] if scalars else []) + ([module_candidate] if modules or historical else []) + ([classpath_candidate] if classpath else [])
+    # Compare the actual workspace paths, including defaults, before any
+    # evidence directory or Cargo build can create one of them.
+    workspaces = [
+        module_workspace or output.with_name(output.name + '-workspace') if modules else None,
+        historical_workspace or output.with_name(output.name + '-historical-workspace') if historical else None,
+        classpath_workspace or output.with_name(output.name + '-jvm-classpath-workspace') if classpath else None,
+    ]
+    target_dir = select_cargo_target(cargo_target_dir, output, workspaces, needed)
     metadata = oracle.ensure_oracle(ROOT, fetch=False)
     output.mkdir(parents=True, exist_ok=False)
     selection = dict(adapters=list(adapters) if adapters else ['language-api-string', m2_module_eval.ADAPTER, m2_jvm_classpath.ADAPTER, m2_historical.ADAPTER],
@@ -250,13 +277,13 @@ def execute(output: Path, candidate: Path | None, workers=1, *, adapters=None,
         command = ['cargo', 'build', '-p', 'pkl-runtime', '--locked', '--release']
         for name in need_build:
             command += ['--example', name]
-        command += ['--target-dir', str(ROOT / 'target')]
+        command += ['--target-dir', str(target_dir)]
         build = capture(command, output, 'build', timeout=300)
         if build['exit_code'] != 0:
             raise ValueError('candidate build failed; raw build evidence preserved')
     bindings = {}
     for name, supplied in requested:
-        path = supplied or ROOT / 'target/release/examples' / name
+        path = supplied or target_dir / 'release/examples' / name
         if not path.is_file():
             raise ValueError('candidate artifact missing: ' + name)
         frozen = artifacts / name
@@ -350,6 +377,8 @@ def execute(output: Path, candidate: Path | None, workers=1, *, adapters=None,
                   results=results, metamorphic_results=relations,
                   status_counts=dict(Counter(row['status'] for row in results)),
                   full_gate_failures=contract.full_gate_failures(manifest, results))
+    if cargo_target_dir is not None:
+        report['cargo_target_dir'] = str(target_dir)
     report['evidence_sha256'] = {str(path.relative_to(output)): oracle.sha256(path)
                                  for path in sorted(evidence_paths(output))}
     (output / 'report.json').write_bytes(contract.encoded(report))
@@ -415,6 +444,36 @@ def verify_oracle(directory: Path, report):
             raise ValueError('missing exact JDK identity hash')
 
 
+def verify_candidate_binding(directory, report, name, candidate):
+    if not candidate or oracle.sha256(directory / 'artifacts' / name) != candidate['sha256']:
+        raise ValueError('candidate artifact identity differs')
+    binding = candidate.get('source_binding')
+    if binding == 'recorded-build':
+        build = json.loads((directory / 'build.process.json').read_bytes())
+        if build != candidate['build'] or build['exit_code'] != 0 or build['timed_out']:
+            raise ValueError('candidate recorded build differs or failed')
+        if report.get('schema_version', 2) >= 3:
+            raw_target = report.get('cargo_target_dir', str(ROOT / 'target'))
+            if not isinstance(raw_target, str):
+                raise ValueError('invalid Cargo target directory')
+            target_dir = Path(raw_target)
+            if not target_dir.is_absolute() or '..' in target_dir.parts or str(target_dir) != raw_target:
+                raise ValueError('invalid Cargo target directory')
+            built = [('language_probe', report.get('candidate')), ('module_eval_probe', report.get('module_candidate')),
+                     ('jvm_snippet_probe', report.get('classpath_candidate'))]
+            command = ['cargo', 'build', '-p', 'pkl-runtime', '--locked', '--release']
+            for example, claim in built:
+                if claim is not None and claim['source_binding'] == 'recorded-build':
+                    command += ['--example', example]
+            command += ['--target-dir', str(target_dir)]
+            if build['command'] != command:
+                raise ValueError('candidate build command differs from selected artifacts')
+            if candidate['path'] != str(target_dir / 'release/examples' / name):
+                raise ValueError('candidate recorded build artifact path differs')
+    elif binding != 'unbound-caller-supplied' or candidate.get('build') is not None:
+        raise ValueError('invalid source/artifact binding claim')
+
+
 def check_report(directory: Path):
     report = json.loads((directory / 'report.json').read_bytes())
     if 'execution' in report:
@@ -476,27 +535,7 @@ def check_report(directory: Path):
             if candidate is not None:
                 raise ValueError('unselected candidate binding')
             continue
-        if not candidate or oracle.sha256(directory / 'artifacts' / name) != candidate['sha256']:
-            raise ValueError('candidate artifact identity differs')
-        binding = candidate.get('source_binding')
-        if binding == 'recorded-build':
-            build = json.loads((directory / 'build.process.json').read_bytes())
-            if build != candidate['build'] or build['exit_code'] != 0 or build['timed_out']:
-                raise ValueError('candidate recorded build differs or failed')
-            if report.get('schema_version', 2) >= 3:
-                built = [('language_probe', report.get('candidate')), ('module_eval_probe', report.get('module_candidate')),
-                         ('jvm_snippet_probe', report.get('classpath_candidate'))]
-                command = ['cargo', 'build', '-p', 'pkl-runtime', '--locked', '--release']
-                for example, claim in built:
-                    if claim is not None and claim['source_binding'] == 'recorded-build':
-                        command += ['--example', example]
-                command += ['--target-dir', str(ROOT / 'target')]
-                if build['command'] != command:
-                    raise ValueError('candidate build command differs from selected artifacts')
-                if candidate['path'] != str(ROOT / 'target/release/examples' / name):
-                    raise ValueError('candidate recorded build artifact path differs')
-        elif binding != 'unbound-caller-supplied' or candidate.get('build') is not None:
-            raise ValueError('invalid source/artifact binding claim')
+        verify_candidate_binding(directory, report, name, candidate)
     if any(case['adapter'] == m2_module_eval.ADAPTER for case in selected.values()):
         context = report['module_eval']
         if (context['workers'] != 1 or type(context.get('watchdog_seconds')) is not int
@@ -685,6 +724,14 @@ def development_passes(report, directory: Path):
     return True
 
 
+def full_gate_passes(report):
+    """Apply the strict requirement and selected-candidate provenance gates."""
+    candidates = (report.get('candidate'), report.get('module_candidate'), report.get('classpath_candidate'))
+    return not report['full_gate_failures'] and all(
+        row['source_binding'] == 'recorded-build' for row in candidates if row
+    )
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     action = parser.add_mutually_exclusive_group(required=True)
@@ -704,16 +751,21 @@ def main():
                         help='explicit filesystem profile; default preserves legacy project-fixture copying')
     parser.add_argument('--classpath-candidate', type=Path, help='override the JVM-profile native artifact; parent binding remains unverified')
     parser.add_argument('--classpath-workspace', type=Path, help='fresh JVM-profile workspace outside the parent evidence directory')
+    parser.add_argument('--cargo-target-dir', type=Path, help='fresh, separate Cargo target directory for recorded builds')
     parser.add_argument('--workers', type=worker_argument, default=1,
                         help=f'scalar acquisition concurrency (1-{MAX_WORKERS}, default 1); module eval remains sequential; throughput only')
     args = parser.parse_args()
     if args.record_only and not args.output:
         parser.error('--record-only requires --output')
+    if args.cargo_target_dir is not None and not args.output:
+        parser.error('--cargo-target-dir requires --output')
     if args.workers != 1 and not args.output:
         parser.error('--workers requires --output')
     if (args.adapter or args.module_candidate or args.module_workspace or args.module_workspace_profile or args.classpath_candidate or args.classpath_workspace or args.historical_workspace) and not args.output:
         parser.error('adapter/module acquisition settings require --output')
     extra = {}
+    if args.cargo_target_dir is not None:
+        extra['cargo_target_dir'] = args.cargo_target_dir.absolute()
     if args.historical_workspace is not None:
         extra['historical_workspace'] = args.historical_workspace
     if args.adapter is not None:
@@ -736,8 +788,7 @@ def main():
         return 0
     if args.verify_development:
         return int(not development_passes(report, args.verify_development.resolve()))
-    return int(not subset_passes(report) or bool(args.verify_full and (report['full_gate_failures']
-                     or any(row['source_binding'] != 'recorded-build' for row in [report.get('candidate'), report.get('module_candidate'), report.get('classpath_candidate')] if row))))
+    return int(not subset_passes(report) or bool(args.verify_full and not full_gate_passes(report)))
 
 
 if __name__ == '__main__':

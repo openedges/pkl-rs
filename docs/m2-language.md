@@ -1,5 +1,10 @@
 # M2 language verification
 
+## Stage136 lexical mappings and ready replay
+
+The local full-ready acquisition records 4,483 cases (candidate-unsupported: 74, mismatch: 12, oracle-error: 2, pass: 4,395); integrity verification exited 0 and strict full verification exited 1. Twelve lexical mappings are supported by 49 scalar matches and a separate registered RECORD module match. The 62-test Python run includes 14 target-directory tests. See [the Stage136 report](../reports/m2/stage136-language-replay/README.md) for recorded nonpasses and scope.
+
+
 ## Stage134 type sources and object entry diagnostics
 
 The selected corpus contains 164 Java observations: 160 prior source and entry
@@ -1639,6 +1644,21 @@ and raw process captures. `--adapter language-api-string` and
 `--adapter language-module-eval` select a focused acquisition; omitted required
 cases remain incomplete in the full gate. `--candidate` and `--module-candidate`
 are explicit artifact overrides whose source bindings are unverified.
+
+
+For internally built candidates, `--cargo-target-dir` selects a fresh Cargo target
+directory separate from the evidence output and all workspaces. The directory
+must not already exist or traverse symlinks, and at least one selected candidate
+must be built internally. For example:
+
+```sh
+python3 tools/m2_language.py --output target/m2/language-new --cargo-target-dir target/m2/language-cargo-new --record-only
+```
+
+Supplied candidates remain `unbound-caller-supplied`, including when other
+selected candidates use the separate recorded build. This option does not relax
+`--verify-full` source-binding or completion requirements.
+
 
 Expression acquisition defaults to one worker. `--workers 4` runs up to four
 expression cases concurrently; the accepted range is 1–32. Original module

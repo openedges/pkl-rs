@@ -21,6 +21,11 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+### Stage136 lexical mappings and ready replay
+
+The local full-ready acquisition records 4,483 cases (candidate-unsupported: 74, mismatch: 12, oracle-error: 2, pass: 4,395); integrity verification exited 0 and strict full verification exited 1. Twelve lexical mappings are supported by 49 scalar matches and a separate registered RECORD module match. The 62-test Python run includes 14 target-directory tests. See [the Stage136 report](reports/m2/stage136-language-replay/README.md) for recorded nonpasses and scope.
+
+
 ### Stage134 type sources and object entry diagnostics
 
 The selected corpus contains 164 Java observations: 160 prior source and entry

@@ -1,8 +1,11 @@
 # pkl-rs
 
+The [Stage136 report](reports/m2/stage136-language-replay/README.md) records a fresh local full-ready replay of 4,483 cases (candidate-unsupported: 74, mismatch: 12, oracle-error: 2, pass: 4,395). The integrity verifier exited 0; strict full verification exited 1. Twelve lexical requirements were promoted after 49 scalar comparisons and a separate RECORD module comparison. Complete M2/API, release-platform and performance requirements remain open.
+
+
 This project reimplements [Pkl](https://pkl-lang.org/) 0.32.0 in Rust. It aims to share one engine across native Rust, WebAssembly, and Node.js N-API, with automated compatibility checks against the Java implementation.
 
-The latest [Stage134 report](reports/m2/stage134-type-source-scopes/README.md) records source-aware type diagnostics,
+The earlier [Stage134 report](reports/m2/stage134-type-source-scopes/README.md) records source-aware type diagnostics,
 object-entry naming, and repaired inferred-parent and diagnostic equality regressions.
 The full local workspace passes with **1,848 passed, zero failed and 5
 ignored across 298 harnesses**. Full M2/API, release-platform and performance

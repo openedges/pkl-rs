@@ -1,0 +1,8 @@
+`protected` = 1
+`override` = 2
+`record` = 3
+`delete` = 4
+`case` = 5
+`switch` = 6
+`vararg` = 7
+result = `protected` + `override` + `record` + `delete` + `case` + `switch` + `vararg`
