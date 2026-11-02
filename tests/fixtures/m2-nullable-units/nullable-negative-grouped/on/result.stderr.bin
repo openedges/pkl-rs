@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "bad"
+
+1 | res = new Mapping<unknown, Int> { [(-1)?.s] = "bad" }
+                               ^^^
+at nullable-negative-grouped#res (file:///stage133-nullable-unit/nullable-negative-grouped.pkl)
+
+1 | res = new Mapping<unknown, Int> { [(-1)?.s] = "bad" }
+                                                  ^^^^^
+at nullable-negative-grouped#res[-1.s] (file:///stage133-nullable-unit/nullable-negative-grouped.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

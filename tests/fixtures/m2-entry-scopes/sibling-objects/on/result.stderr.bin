@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Type constraint `length == 5` violated.
+Value: "hi"
+
+    length == 5
+    │      │
+    2      false
+
+3 | } else new Mapping<Listing<String(length == 5)>, String> {
+                                      ^^^^^^^^^^^
+at sibling-objects#res (file:///stage133-entries/sibling-objects.pkl)
+
+4 | [new Listing { "hi" }] = "bad"
+     ^^^^^^^^^^^^^^^^^^^^
+at sibling-objects#res[#1] (file:///stage133-entries/sibling-objects.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

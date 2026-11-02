@@ -46,6 +46,10 @@ type Trace = BTreeMap<Span, Observation>;
 
 #[derive(Clone)]
 enum Mismatch {
+    SourceSection {
+        inner: Box<Mismatch>,
+        section: crate::type_source::TypeSourceSection,
+    },
     AliasSource {
         inner: Box<Mismatch>,
         source: Arc<crate::value::RuntimeSource>,
@@ -69,7 +73,11 @@ enum Mismatch {
     Union {
         span: Span,
         value: Value,
-        children: Vec<(Span, Mismatch)>,
+        children: Vec<(
+            Span,
+            Option<crate::type_source::TypeSourceSection>,
+            Mismatch,
+        )>,
     },
 }
 impl Mismatch {
@@ -81,30 +89,127 @@ impl Mismatch {
     ) -> Result<TypeDiagnostic, RuntimeError> {
         use crate::diagnostic_values::{render_string as render, type_name as actual_type};
         Ok(match self {
-            Self::InsertedFrame { inner, .. } | Self::AliasSource { inner, .. } => inner.diagnostic(heap, module, indent)?,
-            Self::Simple { span, ty, value } => TypeDiagnostic::Simple { span: *span, message: type_error_at_width(ty, value, module, heap, 80usize.saturating_sub(indent))?.message },
-            Self::Constraint { span, value, body_span, observations, .. } => TypeDiagnostic::Constraint {
-                span: *span, value: render(value, heap, module, 80usize.saturating_sub(indent))?, body_span: *body_span,
-                observations: observations.as_ref().map(|trace| trace.iter().map(|(span, observation)| Ok(PowerAssertionValue {
-                    span: *span, value: observation.value.render(heap, module)?, executions: observation.executions,
-                    hidden: matches!(observation.value, ObservedValue::Runtime(Value::Function(_))),
-                })).collect::<Result<Vec<_>, RuntimeError>>()).transpose()?,
+            Self::SourceSection { inner, section } => inner
+                .diagnostic(heap, module, indent)?
+                .with_source(section.clone()),
+            Self::InsertedFrame { inner, .. } => inner.diagnostic(heap, module, indent)?,
+            Self::AliasSource { inner, source } => {
+                let diagnostic = inner.diagnostic(heap, module, indent)?;
+                let section = crate::type_source::TypeSourceSection::new(
+                    crate::type_source::TypeSourceOwner::External(source.clone()),
+                    diagnostic.span(),
+                );
+                diagnostic.with_source(section)
+            }
+            Self::Simple { span, ty, value } => TypeDiagnostic::Simple {
+                span: *span,
+                message: type_error_at_width(
+                    ty,
+                    value,
+                    module,
+                    heap,
+                    80usize.saturating_sub(indent),
+                )?
+                .message,
             },
-            Self::Union { span, value, children } => TypeDiagnostic::Union {
-                span: *span, value: render(value, heap, module, 80usize.saturating_sub(indent))?, actual_type: actual_type(value, heap, module)?, is_null: value.is_null(),
-                children: children.iter().map(|(type_span, mismatch)| Ok(UnionTypeDiagnostic {
-                    type_span: *type_span,
-                    nontrivial: !matches!(mismatch, Mismatch::Simple { span, ty, .. } if span == type_span && !matches!(ty.unaliased(), TypeCheck::Nothing)),
-                    diagnostic: Box::new(mismatch.diagnostic(heap, module, indent + 2)?),
-                })).collect::<Result<Vec<_>, RuntimeError>>()?,
+            Self::Constraint {
+                span,
+                value,
+                body_span,
+                observations,
+                ..
+            } => TypeDiagnostic::Constraint {
+                span: *span,
+                value: render(value, heap, module, 80usize.saturating_sub(indent))?,
+                body_span: *body_span,
+                observations: observations
+                    .as_ref()
+                    .map(|trace| {
+                        trace
+                            .iter()
+                            .map(|(span, observation)| {
+                                Ok(PowerAssertionValue {
+                                    span: *span,
+                                    value: observation.value.render(heap, module)?,
+                                    executions: observation.executions,
+                                    hidden: matches!(
+                                        observation.value,
+                                        ObservedValue::Runtime(Value::Function(_))
+                                    ),
+                                })
+                            })
+                            .collect::<Result<Vec<_>, RuntimeError>>()
+                    })
+                    .transpose()?,
+            },
+            Self::Union {
+                span,
+                value,
+                children,
+            } => TypeDiagnostic::Union {
+                span: *span,
+                value: render(value, heap, module, 80usize.saturating_sub(indent))?,
+                actual_type: actual_type(value, heap, module)?,
+                is_null: value.is_null(),
+                children: children
+                    .iter()
+                    .map(|(type_span, type_source, mismatch)| {
+                        Ok(UnionTypeDiagnostic {
+                            type_span: *type_span,
+                            type_source: type_source.clone(),
+                            nontrivial: !mismatch.is_trivial(type_source.as_ref(), *type_span),
+                            diagnostic: Box::new(mismatch.diagnostic(heap, module, indent + 2)?),
+                        })
+                    })
+                    .collect::<Result<Vec<_>, RuntimeError>>()?,
             },
         })
     }
+    fn section(&self) -> Option<&crate::type_source::TypeSourceSection> {
+        match self {
+            Self::SourceSection { inner, section } => inner.section().or(Some(section)),
+            Self::AliasSource { inner, .. } | Self::InsertedFrame { inner, .. } => inner.section(),
+            _ => None,
+        }
+    }
+    fn is_trivial(
+        &self,
+        expected: Option<&crate::type_source::TypeSourceSection>,
+        expected_span: Span,
+    ) -> bool {
+        let section = self.section();
+        let mut inner = self;
+        let mut alias_without_section = false;
+        loop {
+            match inner {
+                Self::AliasSource { inner: child, .. } => {
+                    alias_without_section |= child.section().is_none();
+                    inner = child;
+                }
+                Self::SourceSection { inner: child, .. }
+                | Self::InsertedFrame { inner: child, .. } => inner = child,
+                _ => break,
+            }
+        }
+        if alias_without_section {
+            return false;
+        }
+        match inner {
+            Self::Simple { span, ty, .. } if !matches!(ty.unaliased(), TypeCheck::Nothing) => {
+                match (section, expected) {
+                    (Some(actual), Some(expected)) => actual.same_identity(expected),
+                    (None, None) => *span == expected_span,
+                    _ => false,
+                }
+            }
+            _ => false,
+        }
+    }
     fn roots(&self, roots: &mut Vec<Value>) {
         match self {
-            Self::InsertedFrame { inner, .. } | Self::AliasSource { inner, .. } => {
-                inner.roots(roots)
-            }
+            Self::SourceSection { inner, .. }
+            | Self::InsertedFrame { inner, .. }
+            | Self::AliasSource { inner, .. } => inner.roots(roots),
             Self::Simple { value, .. } => roots.push(value.clone()),
             Self::Constraint {
                 value,
@@ -124,7 +229,7 @@ impl Mismatch {
                 value, children, ..
             } => {
                 roots.push(value.clone());
-                for (_, mismatch) in children {
+                for (_, _, mismatch) in children {
                     mismatch.roots(roots);
                 }
             }
@@ -137,9 +242,14 @@ struct UnionState {
     types: Vec<TypeCheck>,
     spans: Vec<Span>,
     labels: Vec<Span>,
+    label_sources: Vec<Option<crate::type_source::TypeSourceSection>>,
     span: Span,
     index: usize,
-    failures: Vec<(Span, Mismatch)>,
+    failures: Vec<(
+        Span,
+        Option<crate::type_source::TypeSourceSection>,
+        Mismatch,
+    )>,
     parent_test: bool,
     parent_eager: bool,
     replay: bool,
@@ -170,6 +280,7 @@ struct PairState {
 }
 #[derive(Clone)]
 enum Task {
+    SourceSection(crate::type_source::TypeSourceSection),
     AliasSource(Arc<crate::value::RuntimeSource>),
     PairResult(PairState),
     ReferenceDomainResult {
@@ -229,6 +340,7 @@ pub(super) struct TypeRun {
     constraint_active: bool,
     tracker: Option<Trace>,
     constraint_source: Option<Arc<crate::value::RuntimeSource>>,
+    constraint_section: Option<crate::type_source::TypeSourceSection>,
 }
 pub(super) fn environment_roots(environment: &Environment, roots: &mut Vec<Value>) {
     roots.extend(environment.locals.iter().cloned());
@@ -283,7 +395,7 @@ impl TypeRun {
                     roots.extend(state.replacements.iter().map(|(_, value)| value.clone()));
                 }
                 Task::UnionResult(state) => {
-                    for (_, mismatch) in &state.failures {
+                    for (_, _, mismatch) in &state.failures {
                         mismatch.roots(roots);
                     }
                 }
@@ -308,12 +420,19 @@ impl TypeRun {
         }
     }
     fn mismatch(&mut self, span: Span, body_span: Span, value: Value) {
-        self.outcome = Some(Err(Mismatch::Constraint {
+        let mismatch = Mismatch::Constraint {
             source: self.constraint_source.clone(),
             span,
             value,
             body_span,
             observations: self.tracker.take(),
+        };
+        self.outcome = Some(Err(match &self.constraint_section {
+            Some(section) => Mismatch::SourceSection {
+                inner: Box::new(mismatch),
+                section: section.clone(),
+            },
+            None => mismatch,
         }));
     }
 }
@@ -516,6 +635,7 @@ impl Vm {
             constraint_active: false,
             tracker: None,
             constraint_source: None,
+            constraint_section: None,
         });
         Ok(())
     }
@@ -651,6 +771,7 @@ impl Vm {
             .filter(|metadata| metadata.constraint_root.is_some())
             .map_or_else(|| run.member.clone(), |metadata| metadata.member.clone());
         run.constraint_active = true;
+        run.constraint_section = constraint.section.clone();
         run.constraint_source = self
             .program
             .metadata
@@ -777,29 +898,40 @@ impl Vm {
                 (Err(mismatch), _) => {
                     let diagnostic =
                         mismatch.diagnostic(&self.heap, &self.program.module_name, 0)?;
-                    let mut error = RuntimeError::new(
-                        ErrorKind::Type,
-                        match &diagnostic {
+                    let mut error = RuntimeError::new(ErrorKind::Type, {
+                        let mut plain = &diagnostic;
+                        while let TypeDiagnostic::AtSource { diagnostic, .. } = plain {
+                            plain = diagnostic;
+                        }
+                        match plain {
                             TypeDiagnostic::Simple { message, .. } => message.clone(),
                             _ => "Type constraint violated.".into(),
-                        },
-                    );
+                        }
+                    });
                     error.span = Some(diagnostic.span());
                     error.frames = run.frames;
                     let mut alias_source = None;
                     let mut inner_mismatch = &mismatch;
-                    while let Mismatch::AliasSource { inner, source } = inner_mismatch {
-                        // The innermost alias owns the failed type expression.
-                        // An alias that merely names another alias must not
-                        // replace the latter's source section.
-                        alias_source = Some(source.clone());
-                        inner_mismatch = inner;
+                    let mut inserted_frames = Vec::new();
+                    loop {
+                        match inner_mismatch {
+                            Mismatch::AliasSource { inner, source } => {
+                                alias_source = Some(source.clone());
+                                inner_mismatch = inner;
+                            }
+                            Mismatch::SourceSection { inner, .. } => inner_mismatch = inner,
+                            Mismatch::InsertedFrame { inner, frame } => {
+                                inserted_frames.push(frame.clone());
+                                inner_mismatch = inner;
+                            }
+                            _ => break,
+                        }
                     }
                     let constraint_source = match inner_mismatch {
                         Mismatch::Constraint { source, .. } => source.clone(),
                         _ => None,
                     };
-                    if let Some(source) = alias_source.or(constraint_source) {
+                    if let Some(source) = alias_source.or(constraint_source.clone()) {
                         // Keep the constraint's source section, but qualify its
                         // member with the same logical root that supplied
                         // TypeRun.member. An explicit frame with no source
@@ -836,7 +968,7 @@ impl Vm {
                         }
                         caller.callsite_hidden = true;
                     }
-                    if let Mismatch::InsertedFrame { frame, .. } = &mismatch {
+                    for frame in inserted_frames {
                         if error.frames.is_empty() {
                             error.frames.push(RuntimeFrame {
                                 anonymous: false,
@@ -849,8 +981,49 @@ impl Vm {
                                 member: run.member.clone(),
                             });
                         }
-                        error.insert_frame(1, frame.clone());
+                        error.insert_frame(1, frame);
                         self.frames.last_mut().expect("type frame").callsite_hidden = true;
+                    }
+                    if let Some(section) = diagnostic.source_section() {
+                        let caller = self.frames.last().expect("type frame");
+                        let logical_source = match error.frames.first() {
+                            Some(frame) => frame.source.as_ref(),
+                            None => self
+                                .program
+                                .metadata
+                                .get(caller.block)
+                                .and_then(|metadata| metadata.source.as_ref()),
+                        };
+                        let module = logical_source
+                            .map_or(&self.program.module_name, |source| &source.module_name);
+                        // A primary section owns immutable diagnostic text, but
+                        // its constraint block can carry a relocated frame URI.
+                        // External argument sections take precedence; an outer
+                        // alias source must not replace a primary argument.
+                        let source = section
+                            .external_source()
+                            .or_else(|| constraint_source.clone())
+                            .map(|source| {
+                                if &source.module_name == module {
+                                    source
+                                } else {
+                                    Arc::new(crate::value::RuntimeSource {
+                                        module_name: module.clone(),
+                                        ..source.as_ref().clone()
+                                    })
+                                }
+                            });
+                        if let Some(frame) = error.frames.first_mut() {
+                            frame.source = source;
+                        } else if let Some(source) = source {
+                            error.frames.push(RuntimeFrame {
+                                anonymous: false,
+                                source: Some(source),
+                                span: diagnostic.span(),
+                                member: run.member.clone(),
+                            });
+                            self.frames.last_mut().expect("type frame").callsite_hidden = true;
+                        }
                     }
                     if let Some(frame) = error.frames.first_mut() {
                         frame.span = diagnostic.span();
@@ -887,7 +1060,31 @@ impl Vm {
         } else {
             task
         };
+        let task = if let Task::Check { ty, span } = task {
+            if let Some(section) = ty.source_section() {
+                let span = section.span();
+                run.tasks.push(Task::SourceSection(section));
+                Task::Check {
+                    ty: ty.into_resolved(),
+                    span,
+                }
+            } else {
+                Task::Check { ty, span }
+            }
+        } else {
+            task
+        };
         match task {
+            Task::SourceSection(section) => {
+                let outcome = run
+                    .outcome
+                    .take()
+                    .ok_or_else(|| invalid("missing source section outcome"))?;
+                run.outcome = Some(outcome.map_err(|inner| Mismatch::SourceSection {
+                    inner: Box::new(inner),
+                    section,
+                }));
+            }
             Task::AliasSource(source) => {
                 let outcome = run
                     .outcome
@@ -1022,6 +1219,7 @@ impl Vm {
                     run.eager |= union_eager(&types);
                     run.in_type_test = true;
                     run.tasks.push(Task::UnionResult(UnionState {
+                        label_sources: types.iter().map(TypeCheck::source_section).collect(),
                         types: types.clone(),
                         spans: spans.clone(),
                         labels,
@@ -1489,9 +1687,17 @@ crate::diagnostic_values::render(
                 } else {
                     if let Err(mismatch) = outcome {
                         if state.replay {
-                            state.failures[state.index] = (state.labels[state.index], mismatch);
+                            state.failures[state.index] = (
+                                state.labels[state.index],
+                                state.label_sources[state.index].clone(),
+                                mismatch,
+                            );
                         } else {
-                            state.failures.push((state.labels[state.index], mismatch));
+                            state.failures.push((
+                                state.labels[state.index],
+                                state.label_sources[state.index].clone(),
+                                mismatch,
+                            ));
                         }
                     }
                     state.index += 1;
@@ -1727,5 +1933,30 @@ impl Vm {
         };
         run.outcome = Some(Ok(result));
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod source_identity_tests {
+    use super::*;
+    use crate::type_source::{TypeSourceOwner, TypeSourceSection};
+
+    #[test]
+    fn union_triviality_uses_section_identity_not_equal_source_text() {
+        let section =
+            || TypeSourceSection::new(TypeSourceOwner::Primary("Int".into()), Span::new(0, 3));
+        let actual = section();
+        let separate = section();
+        let mismatch = Mismatch::SourceSection {
+            section: actual.clone(),
+            inner: Box::new(Mismatch::Simple {
+                span: Span::new(0, 3),
+                ty: TypeCheck::Int,
+                value: Value::Bool(false),
+            }),
+        };
+        assert_eq!(actual, separate);
+        assert!(mismatch.is_trivial(Some(&actual), Span::new(0, 3)));
+        assert!(!mismatch.is_trivial(Some(&separate), Span::new(0, 3)));
     }
 }

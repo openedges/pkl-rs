@@ -1,0 +1,4 @@
+import "pkl:test"
+local value = new Listing { "foo"; 1 }
+local typed: (Listing<String>|Listing<Int>) = value
+result = test.catch(() -> typed)

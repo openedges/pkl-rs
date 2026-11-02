@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Duplicate definition of member `x`.
+
+1 | res = new Dynamic { [(() -> 7).apply()] = 1; x = 1; x = 2; for (i in List(1)) { local function bad() = i } }
+                                                        ^
+at duplicate-before-for#res (file:///stage133-prefix-order/duplicate-before-for.pkl)

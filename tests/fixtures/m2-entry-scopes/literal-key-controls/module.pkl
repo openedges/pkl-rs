@@ -1,0 +1,5 @@
+res = new Mapping<Any, String> {
+  ["stable"] = "ok"
+  [7] = "ok"
+  [new Listing { 1 }] = 42
+}

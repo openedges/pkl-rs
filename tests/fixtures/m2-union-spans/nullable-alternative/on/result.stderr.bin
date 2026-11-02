@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Expected value of type `Boolean|(Int|String)?`, but got a different `Float`.
+Value: 1.5
+
+1 | result: Boolean|(Int|String)? = 1.5
+            ^^^^^^^^^^^^^^^^^^^^^
+at nullable-alternative#result (file:///stage132-union/nullable-alternative.pkl)
+
+* Value is not of type `(Int|String)?` because:
+  Expected value of type `Int|String`, but got type `Float`.
+  Value: 1.5
+
+1 | result: Boolean|(Int|String)? = 1.5
+                                    ^^^
+at nullable-alternative#result (file:///stage132-union/nullable-alternative.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

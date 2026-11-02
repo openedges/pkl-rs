@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Cannot tell which parent to amend.
+
+2 | value: U = new { x = 1 }
+               ^^^
+at alias-unknown#value (file:///stage134-unknown-property/alias-unknown.pkl)
+
+Please specify a parent explicitly, for example `new Person { ... }` instead of `new { ... }`.
+
+3 | output { text = value.getClass().simpleName }
+                    ^^^^^
+at alias-unknown#output.text (file:///stage134-unknown-property/alias-unknown.pkl)

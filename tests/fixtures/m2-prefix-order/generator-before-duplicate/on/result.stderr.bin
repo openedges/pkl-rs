@@ -1,0 +1,6 @@
+–– Pkl Error ––
+A for-generator cannot generate object methods (only entries and elements).
+
+1 | res = new Dynamic { [(() -> 7).apply()] = 1; for (i in List(1)) { local function bad() = i }; x = 1; x = 2 }
+                                                 ^^^
+at generator-before-duplicate#res (file:///stage133-prefix-order/generator-before-duplicate.pkl)

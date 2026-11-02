@@ -18,7 +18,15 @@ impl TypeCheck {
         use TypeCheck::*;
         let sub = |ty: &TypeCheck| ty.substituted(environment);
         Ok(match self {
-            Shared(_) => self.clone(),
+            Shared(node) if !node.node().has_parameters => self.clone(),
+            Shared(node) => {
+                let value = node.node().ty.substituted(environment)?;
+                if matches!(node.node().ty, Parameter { .. }) {
+                    value
+                } else {
+                    value.with_optional_source_section(node.node().source_section.clone())
+                }
+            }
             Declared { recipe, arguments } => Declared {
                 recipe: *recipe,
                 arguments: arguments.iter().map(sub).collect::<Result<_, _>>()?,
@@ -667,6 +675,8 @@ struct SharedNode {
     noop: bool,
     needs_custom_this: bool,
     has_declared: bool,
+    source_section: Option<crate::type_source::TypeSourceSection>,
+    has_parameters: bool,
 }
 impl std::fmt::Debug for SharedTypeCheck {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -757,6 +767,54 @@ impl TypeCheck {
             ty => ty,
         }
     }
+    pub(super) fn source_section(&self) -> Option<crate::type_source::TypeSourceSection> {
+        match self {
+            Self::Shared(node) => node.node().source_section.clone(),
+            _ => None,
+        }
+    }
+    pub(super) fn with_optional_source_section(
+        self,
+        section: Option<crate::type_source::TypeSourceSection>,
+    ) -> Self {
+        let Some(section) = section else {
+            return self;
+        };
+        let ty = self.into_resolved();
+        let noop = ty.noop();
+        let needs_custom_this = typecheck::needs_custom_this(&ty);
+        let has_declared = ty.has_declared();
+        let has_parameters = ty.requires_substitution();
+        Self::Shared(SharedTypeCheck(Some(Arc::new(SharedNode {
+            ty,
+            noop,
+            needs_custom_this,
+            has_declared,
+            source_section: Some(section),
+            has_parameters,
+        }))))
+    }
+    /// Check lexical parameters in structural children and constraint actuals.
+    /// Shared descendants cache this property so repeated DAG prefixes stay bounded.
+    fn requires_substitution(&self) -> bool {
+        let mut pending = vec![self];
+        while let Some(value) = pending.pop() {
+            if let Self::Shared(node) = value {
+                if node.node().has_parameters {
+                    return true;
+                }
+                continue;
+            }
+            if matches!(value, Self::Parameter { .. }) {
+                return true;
+            }
+            pending.extend(value.type_children());
+            if let Self::Constrained { constraints, .. } = value {
+                pending.extend(constraints.iter().flat_map(|c| c.arguments.values()));
+            }
+        }
+        false
+    }
     pub(super) fn shared(self) -> Self {
         if matches!(self, Self::Shared(_)) {
             return self;
@@ -764,11 +822,14 @@ impl TypeCheck {
         let noop = self.noop();
         let needs_custom_this = typecheck::needs_custom_this(&self);
         let has_declared = self.has_declared();
+        let has_parameters = self.requires_substitution();
         Self::Shared(SharedTypeCheck(Some(Arc::new(SharedNode {
             ty: self,
             noop,
             needs_custom_this,
             has_declared,
+            source_section: None,
+            has_parameters,
         }))))
     }
 }

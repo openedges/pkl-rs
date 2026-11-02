@@ -1,0 +1,2 @@
+import "defs.pkl" as d
+result: d.U<Int(this > 5)> = -1

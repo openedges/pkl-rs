@@ -4,6 +4,16 @@
 
 ## 현재 상태
 
+Stage134에서 타입 source 소유권·union 표기와 객체 항목 이름·생성기 앞 방문 순서를 통합했습니다. 진단 source 값의 동등성과 Java 노드 identity를 분리하고 직접 `unknown`의 inferred parent 회귀를 수정했습니다. Java 관측 160개와 새 unknown 사례 4개를 구분해 보존합니다.
+
+최종 전체 workspace는 exit 0이며 독립 집계 harness 298개·통과 1,848개·실패 0개·ignored 5개입니다. 자식 중복 통과 13개는 제외하며 정확한 개별 test identity와 interleaving 부재는 증명하지 않습니다. focused 24개 target, format·xtask·Clippy·Wasm·manifest 검사가 통과했고 별도 새 Native·Node·Chromium 실험은 각각 6,078개, Node·브라우저 시나리오는 각각 92개가 일치했습니다. 세 번의 실패 workspace와 격리된 146개 테스트는 별도 기록이며 전체 합계에 더하지 않습니다. [Stage134 보고서](reports/m2/stage134-type-source-scopes/README.md)에 원시 증거와 한계를 보존합니다.
+
+요구사항 475개 중 구현 3·부분 42·미구현 430이며, 실행 계약 4,545개 중 ready 4,442·미구현 71·미연결 32입니다. 요구사항 연결이 없는 815개는 그대로이며 ready는 호환 통과를 뜻하지 않습니다. 전체 replay와 strict gate, API·릴리스 플랫폼·성능 목표는 미완료입니다.
+
+다음에는 검토된 `--cargo-target-dir` 도구 변경을 통합·검증하고 28개 escape fixture를 등록한 뒤 새 28개와 기존 2개 scalar 사례를 실제 Java와 비교합니다. 예약어 일곱 개도 제안한 13개 scalar 사례와 기존 identifier 대조군 여섯 개로 검증합니다. 각 요구사항은 해당 원시 비교와 구현 검토가 실제 통과한 경우에만 승격합니다. 그 후 현재 manifest의 전체 ready 사례를 재실행해 남은 불일치·미지원과 엄격한 완료 조건을 다시 집계합니다. 이 scalar 및 전체 재생 결과는 아직 취득하지 않았습니다.
+
+내부 오류 stack projection은 별도 선택 API에서 검증한 초안으로 유지합니다. 기본 평가 경로와 전체 언어 목록의 통과 증가를 아직 입증하지 않았으므로 전체 목록을 다시 실행한 뒤 필요한 기본 경로 통합을 결정합니다. 격리된 실험 결과를 이 단계나 기본 API의 호환 통과로 합산하지 않습니다.
+
 Stage131에서 power assertion의 생성기·predicate·lambda·객체 메서드 경계 표시를 수정했습니다. Java **17개 프로그램 × on/off, 총 34개 관측**이 일치하며 원래 `errors/power/typeConstraints11.pkl`의 전체 CLI 결과도 일치합니다. 별도로 실행한 Stage130 기준의 불일치와 초기 실패는 보존합니다.
 
 전체 workspace는 실제 exit **0**, 독립 집계 **harness 288개·통과 1,790개·실패 0개·ignored 5개**이며 자식 반복 통과 13개는 제외합니다. format·xtask·Clippy·Wasm·목록 최신성 검사가 통과하고 Native·Node·Chromium은 각각 6,078개, Node·브라우저 시나리오는 각각 92개가 통과했습니다. [Stage131 보고서](reports/m2/stage131-power-boundaries/README.md)에 원시 증거와 집계·출처의 한계를 보존합니다.

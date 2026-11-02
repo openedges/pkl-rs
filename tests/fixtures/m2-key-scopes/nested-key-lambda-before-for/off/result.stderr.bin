@@ -1,0 +1,14 @@
+–– Pkl Error ––
+nested-key
+
+1 | res = new Mapping { [new Listing { (() -> throw("nested-key")).apply() }] = 1; for (i in List(1)) { [i] = 1 } }
+                                              ^^^^^^^^^^^^^^^^^^^
+at nested-key-lambda-before-for#res[#1].<function#1> (file:///stage133-key-scope/nested-key-lambda-before-for.pkl)
+
+1 | res = new Mapping { [new Listing { (() -> throw("nested-key")).apply() }] = 1; for (i in List(1)) { [i] = 1 } }
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at nested-key-lambda-before-for#res[#1] (file:///stage133-key-scope/nested-key-lambda-before-for.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

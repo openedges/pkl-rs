@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Type constraint `length == 5` violated.
+Value: "hi"
+
+1 | res = new Mapping<Listing<String(length == 5)>, String> {
+                                     ^^^^^^^^^^^
+at original-minimal#res (file:///stage133-entries/original-minimal.pkl)
+
+2 | [new Listing { "hi" }] = "hi"
+     ^^^^^^^^^^^^^^^^^^^^
+at original-minimal#res[#1] (file:///stage133-entries/original-minimal.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

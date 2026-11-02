@@ -1,0 +1,10 @@
+–– Pkl Error ––
+generator-first
+
+1 | res = new Mapping { [(() -> 7).apply()] = 1; for (i in throw("generator-first")) { [i] = 2 } }
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^
+at key-ok-generator-throw#res (file:///stage133-prefix-order/key-ok-generator-throw.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

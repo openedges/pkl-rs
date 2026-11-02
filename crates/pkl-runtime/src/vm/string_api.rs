@@ -87,6 +87,7 @@ fn char_type(
             base: Box::new(TypeCheck::String),
             base_span: base,
             constraints: vec![ConstraintCode {
+                section: None,
                 block,
                 arguments: BTreeMap::new(),
                 argument_sources: BTreeMap::new(),

@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Expected value of type `T|Boolean`, but got a different `Float`.
+Value: 1.5
+
+1 | typealias U<T> = T|Boolean
+                     ^^^^^^^^^
+at actual-union#result (file:///stage132-generic/actual-union.pkl)
+
+* Value is not of type `Int|String` because:
+  Expected value of type `Int|String`, but got type `Float`.
+  Value: 1.5
+
+2 | result: U<(Int|String)> = 1.5
+                              ^^^
+at actual-union#result (file:///stage132-generic/actual-union.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

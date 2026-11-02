@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "bad"
+
+1 | res = new Mapping<unknown, Int> { [-(1.0)] = "bad" }
+                               ^^^
+at minus-float-grouped-operand#res (file:///stage133-key-boundary/minus-float-grouped-operand.pkl)
+
+1 | res = new Mapping<unknown, Int> { [-(1.0)] = "bad" }
+                                                 ^^^^^
+at minus-float-grouped-operand#res[#1] (file:///stage133-key-boundary/minus-float-grouped-operand.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

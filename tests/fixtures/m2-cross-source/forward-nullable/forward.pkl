@@ -1,0 +1,2 @@
+import "defs.pkl" as d
+typealias F<T> = d.U<T>

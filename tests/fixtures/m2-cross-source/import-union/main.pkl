@@ -1,0 +1,2 @@
+import "defs.pkl" as d
+result: d.U<(Int|String)> = 1.5

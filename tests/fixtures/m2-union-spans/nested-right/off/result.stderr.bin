@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Expected value of type `Int|(String|Boolean)`, but got a different `Float`.
+Value: 1.5
+
+1 | result: Int|(String|Boolean) = 1.5
+            ^^^^^^^^^^^^^^^^^^^^
+at nested-right#result (file:///stage132-union/nested-right.pkl)
+
+* Value is not of type `String|Boolean` because:
+  Expected value of type `String|Boolean`, but got type `Float`.
+  Value: 1.5
+
+1 | result: Int|(String|Boolean) = 1.5
+                                   ^^^
+at nested-right#result (file:///stage132-union/nested-right.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

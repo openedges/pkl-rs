@@ -1,0 +1,49 @@
+{
+  "complete": true,
+  "scope": "Exact published byte copies of a newly sealed archive and its two receipts; integrity is not execution verification.",
+  "copies": [
+    {
+      "source": {
+        "path": "target/m2/stage134-publication-01/stage134-evidence.tar.gz",
+        "bytes": 62068642,
+        "sha256": "dd2544cbb3569feef6eb0601ec8255c7227324733620173e423919913e8daadc",
+        "mode": 420
+      },
+      "destination": {
+        "path": "reports/m2/stage134-type-source-scopes/stage134-evidence.tar.gz",
+        "bytes": 62068642,
+        "sha256": "dd2544cbb3569feef6eb0601ec8255c7227324733620173e423919913e8daadc",
+        "mode": 420
+      }
+    },
+    {
+      "source": {
+        "path": "target/m2/stage134-publication-01/report.json",
+        "bytes": 6103,
+        "sha256": "7070f5760d3a290112fcf1e94bc93a0dc625632976e911b659dc4a6682c55e08",
+        "mode": 420
+      },
+      "destination": {
+        "path": "reports/m2/stage134-type-source-scopes/publication.json",
+        "bytes": 6103,
+        "sha256": "7070f5760d3a290112fcf1e94bc93a0dc625632976e911b659dc4a6682c55e08",
+        "mode": 420
+      }
+    },
+    {
+      "source": {
+        "path": "target/m2/stage134-archive-readback-01/report.json",
+        "bytes": 478,
+        "sha256": "07b74fcb68481b3dd9f2c88527890e022bf4cd99e83b4f3f813b19fa6edba5c6",
+        "mode": 420
+      },
+      "destination": {
+        "path": "reports/m2/stage134-type-source-scopes/archive-readback.json",
+        "bytes": 478,
+        "sha256": "07b74fcb68481b3dd9f2c88527890e022bf4cd99e83b4f3f813b19fa6edba5c6",
+        "mode": 420
+      }
+    }
+  ],
+  "recorded_epoch": 1793626741.692014
+}

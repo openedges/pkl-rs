@@ -1,0 +1,1 @@
+res = new Mapping { [(() -> 7).apply()] = 1; for (i in throw("generator-first")) { [i] = 2 } }

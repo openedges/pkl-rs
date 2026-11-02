@@ -1,0 +1,23 @@
+–– Pkl Error ––
+Expected value of type `T|Boolean`, but got a different `Int`.
+Value: -1
+
+1 | typealias U<T> = T|Boolean
+                     ^^^^^^^^^
+at main#result (file:///stage132-cross/import-constrained/defs.pkl)
+
+* Value is not of type `Int(this > 5)` because:
+  Type constraint `this > 5` violated.
+  Value: -1
+
+      this > 5
+      │    │
+      -1   false
+
+2 | result: d.U<Int(this > 5)> = -1
+                                 ^^
+at main#result (file:///stage132-cross/import-constrained/main.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

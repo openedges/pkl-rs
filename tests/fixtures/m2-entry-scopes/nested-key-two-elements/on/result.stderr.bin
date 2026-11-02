@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Type constraint `length == 5` violated.
+Value: "hi"
+
+    length == 5
+    │      │
+    2      false
+
+1 | res = new Mapping<Listing<String(length == 5)>, String> {
+                                     ^^^^^^^^^^^
+at nested-key-two-elements#res (file:///stage133-entries/nested-key-two-elements.pkl)
+
+2 | [new Listing { "12345"; "hi" }] = "ok"
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at nested-key-two-elements#res[#1] (file:///stage133-entries/nested-key-two-elements.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

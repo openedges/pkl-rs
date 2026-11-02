@@ -144,6 +144,7 @@ fn yaml_indent(d: &mut Definitions<'_>) -> TypeCheck {
         base: Box::new(TypeCheck::Int),
         base_span: Span::new(start, start + 3),
         constraints: vec![ConstraintCode {
+            section: None,
             block,
             arguments: BTreeMap::new(),
             argument_sources: BTreeMap::new(),

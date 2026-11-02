@@ -1,0 +1,2 @@
+value: unknown = new { x = 1 }
+output { text = value.getClass().simpleName }

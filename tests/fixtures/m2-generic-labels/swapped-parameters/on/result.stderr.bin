@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Expected value of type `T|Boolean`, but got a different `String`.
+Value: "x"
+
+1 | typealias U<T> = T|Boolean
+                     ^^^^^^^^^
+at swapped-parameters#result (file:///stage132-generic/swapped-parameters.pkl)
+
+* Value is not of type `Int?` because:
+  Expected value of type `Int`, but got type `String`.
+  Value: "x"
+
+3 | result: V<String,(Int?)> = "x"
+                               ^^^
+at swapped-parameters#result (file:///stage132-generic/swapped-parameters.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

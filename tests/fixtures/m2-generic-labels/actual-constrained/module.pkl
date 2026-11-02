@@ -1,0 +1,2 @@
+typealias U<T> = T|Boolean
+result: U<Int(this > 0)> = -1

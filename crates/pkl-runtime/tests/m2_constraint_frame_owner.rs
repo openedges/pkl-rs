@@ -81,6 +81,16 @@ fn inherited_primary_declaration_remains_primary_with_a_foreign_value_body() {
         let source = first.source.as_ref().unwrap();
         assert_eq!(source.module_name, "primary");
         assert_eq!(source.uri, "file:///declarations.pkl");
+        let pkl_runtime::diagnostic::TypeDiagnostic::AtSource { section, .. } =
+            error.type_diagnostic.as_deref().unwrap()
+        else {
+            panic!("constraint diagnostic lost its compiled source section")
+        };
+        assert!(matches!(
+            section.owner(),
+            pkl_runtime::type_source::TypeSourceOwner::Primary(_)
+        ));
+        assert_eq!(section.text(), &text.into());
         assert!(error.frames.iter().any(|frame| {
             frame
                 .source

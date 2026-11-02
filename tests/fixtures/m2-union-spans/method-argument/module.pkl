@@ -1,0 +1,2 @@
+function pick(x: (Int|String)) = x
+result = pick(true)

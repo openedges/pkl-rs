@@ -1,0 +1,3 @@
+typealias A = Int?
+typealias U<T> = T|Boolean
+result: U<A> = "x"

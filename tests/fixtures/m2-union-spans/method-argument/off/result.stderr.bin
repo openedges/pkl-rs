@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Int|String`, but got type `Boolean`.
+Value: true
+
+1 | function pick(x: (Int|String)) = x
+                      ^^^^^^^^^^
+at method-argument#pick (file:///stage132-union/method-argument.pkl)
+
+2 | result = pick(true)
+             ^^^^^^^^^^
+at method-argument#result (file:///stage132-union/method-argument.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

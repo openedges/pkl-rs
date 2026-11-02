@@ -1,0 +1,832 @@
+{
+  "schema": 1,
+  "stage": 134,
+  "title": "Type source ownership and object entry diagnostics",
+  "status": "local-checkpoint-verified; full-M2-open",
+  "compatibility_baseline": "Pkl 0.32.0",
+  "source_parent": "7fe884d61c878f2537a511f8cf46088a5cd54bc5",
+  "sources": [
+    {
+      "path": "PLAN.md",
+      "bytes": 519397,
+      "sha256": "68580f6233ea64c0306667112dcff8423e29d52a2b4bb74d5571229160f9539e",
+      "mode": 420
+    },
+    {
+      "path": "README.md",
+      "bytes": 20305,
+      "sha256": "b30005f4252a2885bce3b0056e9cb2b694b79c9bd0429b6b588120ecb565862a",
+      "mode": 420
+    },
+    {
+      "path": "TESTING.md",
+      "bytes": 127279,
+      "sha256": "dd7f6934fe4fcc0e8bf72838a5b2f7de95ffb62c4f4e88d2335a12ab435276ae",
+      "mode": 420
+    },
+    {
+      "path": "compatibility/m2-language.json",
+      "bytes": 6833023,
+      "sha256": "138ba9a6c1dd0619f4f20942f401d7801708c17c3bc92540605a7828ee545ad5",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/diagnostic.rs",
+      "bytes": 27228,
+      "sha256": "0b720628c1827da78ec9290cf532d1b565632cc787502b1365f51eb394bb4ea0",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/lib.rs",
+      "bytes": 793,
+      "sha256": "2b0acf238445043727ecc2abed06ad510b32caa9d9fef8a62192134b194897ff",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/type_source.rs",
+      "bytes": 3213,
+      "sha256": "320d8d7370ac220ed618440ea7043b764797c3df8e896d0e2c26b20e7b5716dd",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm.rs",
+      "bytes": 418808,
+      "sha256": "02a99d3b761ec5d8b4e22dde159718e1b360205f1b76c62148f81039d6a87176",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/annotations.rs",
+      "bytes": 18613,
+      "sha256": "dc387d68720cf70ece932fdfffbdc51bf0264c5fdb9f77e47adafeb1f87c1b4b",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/classes/ordinary.rs",
+      "bytes": 11023,
+      "sha256": "7ae4f9cc5ffd7bb67842d7819d14d9581d0697648736c9ea3a1f91367ef5808d",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/collections.rs",
+      "bytes": 140255,
+      "sha256": "a0f6344d0e2dcaa5d9c5e7c484eee0e3761cd14f9fe41579248fc3162c5913b5",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+      "bytes": 89374,
+      "sha256": "b912bca28362149ffda4a84d926c8d2874c710283df9e97b8a387889b03a0356",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/generics.rs",
+      "bytes": 33595,
+      "sha256": "21064bec82c2c1edb545b0d2f68c831d2f5c0024b3070bec3279956cea33a02b",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/generics/tests.rs",
+      "bytes": 12715,
+      "sha256": "ff3eafb79894a9db5f68592cdbf6f137ed5a8acd99cb854dbc6e197c2751f154",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/numeric_apis.rs",
+      "bytes": 9800,
+      "sha256": "d73d7c61dcd68a38d199aa73ff30dacff2a699ade138ba7313f9da5928e93cfe",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/reference.rs",
+      "bytes": 78594,
+      "sha256": "e38189c34c59728771654f1a920de53d92bce9f49b00f956952c9f586adf4022",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/remaining_apis.rs",
+      "bytes": 12227,
+      "sha256": "fa1bd21663308dd35aa1e721b975799cc045f5d064f19cd5ee0fb6cfcf78312d",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/session_expressions.rs",
+      "bytes": 10379,
+      "sha256": "ed28e98d23c862ba2960a94f96c052622817ca8fa0925c4f1672989d35070dc8",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
+      "bytes": 32555,
+      "sha256": "140df415f2ae9a753332a19291309b680144fdb330dff68d630b79a206cae0e1",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/string_api.rs",
+      "bytes": 20220,
+      "sha256": "81b20d0956ef7c0a02ab4e37182a3028ce483f3c7ee734ae36aa2524c9b744d8",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/string_transforms.rs",
+      "bytes": 18586,
+      "sha256": "f98203487a3dbbeae5a1fab52c2997fae2b08f29943410a78683e32d3bfd2863",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/type_resolution.rs",
+      "bytes": 62296,
+      "sha256": "876290a5ac5f347f9d33b08514a8a63287cf6ffe561fea2532855eb252e8a1a5",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/typecheck.rs",
+      "bytes": 80513,
+      "sha256": "e0d1ae70fc8ceaddf9630a8a92c451ed1c0f45821849e1eadfa9b7423b0ce5d6",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_constraint_frame_owner.rs",
+      "bytes": 4111,
+      "sha256": "28381cef81aa363e75fc16bc02c0499ad5f028374f4812bd59cec1993ec781d0",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_constraint_slots_runtime.rs",
+      "bytes": 5583,
+      "sha256": "51b95831547cb993c5eb911f926826db154a01bfc06526965a33c12522cba1d0",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_cross_source_oracle.rs",
+      "bytes": 7371,
+      "sha256": "913a5d89506b5d3bed250551bc5115c965f48c7cd11a1c4fb37a5ca8a50150c6",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_entry_scope_oracle.rs",
+      "bytes": 3257,
+      "sha256": "411f2d5b6036ceadfc6f1c46e12ddcee70f0eec6d4098d34114e28016f3becf7",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_generic_label_oracle.rs",
+      "bytes": 3338,
+      "sha256": "50319668f996229e57cfc7c21fe4375b576d5a3f69c7fe11af2ac35e41c07ebd",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_key_boundary_oracle.rs",
+      "bytes": 3065,
+      "sha256": "34cd62c98cdd130af58417321d91fbf3585eb9ba9ed34800fc3bce9da924eebb",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_key_scope_oracle.rs",
+      "bytes": 3379,
+      "sha256": "e9fc37c546611754912d2eadca627854ab364430a1d119d439ac8ce3764b3660",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_nullable_unit_oracle.rs",
+      "bytes": 2773,
+      "sha256": "6eb815116b36127554b85a1d0a778670d07c84ee8a80b67c431c562664b65835",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_prefix_order_oracle.rs",
+      "bytes": 3029,
+      "sha256": "79603d56051ff28140e256906ac42755c71df1bc7cdc875aff7fb746ff3c53c6",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_recursive_constraints_runtime.rs",
+      "bytes": 7936,
+      "sha256": "ea52cf7a50d56901aa088e9a1d381c5d1198dc9b377288e3b0aec011a489f92f",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_runtime.rs",
+      "bytes": 43709,
+      "sha256": "44c72ec370509dc6b465012b5af149d8837835681bf100e9149e832213d1c692",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_shared_metadata_oracle.rs",
+      "bytes": 3452,
+      "sha256": "1715fb072c2a293f2c447bf027baf578d4178b13af2048b98c30d623af8fcc34",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_type_resolution_runtime.rs",
+      "bytes": 6419,
+      "sha256": "8e0c2d6e689bf93d31ba8790b683c63d85ed7efdf096afcfe9d196922a4fe4b0",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_union_span_oracle.rs",
+      "bytes": 3662,
+      "sha256": "b97c3b5d3ac49b21b65d3ada7e584df2f2093c7b1356cfb10d8f97d7788840c1",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_unknown_property_oracle.rs",
+      "bytes": 2301,
+      "sha256": "92ae1dd61667448b73a900303d8622a4e2c42534a6511baf9fd568be184d33b0",
+      "mode": 420
+    },
+    {
+      "path": "docs/architecture.md",
+      "bytes": 119301,
+      "sha256": "d0fae208776f63ff6b2b66cff0140d96f626fe4815821b612218c75de0539c38",
+      "mode": 420
+    },
+    {
+      "path": "docs/m2-language.md",
+      "bytes": 139540,
+      "sha256": "83912eb9b54f1d9a39f9e355d239b7b338ef86067cb1629fcc281d7401819fbe",
+      "mode": 420
+    },
+    {
+      "path": "reports/m2/README.md",
+      "bytes": 408701,
+      "sha256": "217035ca3ec8a2e8237d72d182750e0f4b8a40776e4efbcb4763cfcbfdbcc0f7",
+      "mode": 420
+    },
+    {
+      "path": "reports/m2/stage134-type-source-scopes/README.md",
+      "bytes": 8030,
+      "sha256": "401195168b52c9fd08d4959fc4b095ae5604c8e6a3e27847bbdad58cdb5863f5",
+      "mode": 420
+    },
+    {
+      "path": "tools/M2CrossSourceOracle.java",
+      "bytes": 3702,
+      "sha256": "231827a5ff3fb10f5ebfa8974f2f77c9ee92af7d3ca06b68f676bd8ec9bd4415",
+      "mode": 420
+    },
+    {
+      "path": "tools/M2PowerAssertionOracle.java",
+      "bytes": 2418,
+      "sha256": "6e3b54330bfa711456c3034cfc537235ddf13c491844452a0a251f05a6fe2179",
+      "mode": 420
+    }
+  ],
+  "published_evidence": {
+    "path": "reports/m2/stage134-type-source-scopes/stage134-evidence.tar.gz",
+    "bytes": 62068642,
+    "sha256": "dd2544cbb3569feef6eb0601ec8255c7227324733620173e423919913e8daadc",
+    "mode": 420
+  },
+  "publication_receipt": {
+    "path": "reports/m2/stage134-type-source-scopes/publication.json",
+    "bytes": 6103,
+    "sha256": "7070f5760d3a290112fcf1e94bc93a0dc625632976e911b659dc4a6682c55e08",
+    "mode": 420
+  },
+  "archive_readback": {
+    "path": "reports/m2/stage134-type-source-scopes/archive-readback.json",
+    "bytes": 478,
+    "sha256": "07b74fcb68481b3dd9f2c88527890e022bf4cd99e83b4f3f813b19fa6edba5c6",
+    "mode": 420
+  },
+  "published_copy_receipt": {
+    "path": "reports/m2/stage134-type-source-scopes/published-copy.json",
+    "bytes": 1655,
+    "sha256": "da537c9bc3f3c304e794b3d35dd0b8b344a6262dc3d18ea91c59d9dc531bac3d",
+    "mode": 420
+  },
+  "archive_logical_members": 12889,
+  "archive_source_members": 12888,
+  "archive_source_bytes": 589926503,
+  "archive_excludes": [
+    "all archive bodies and partial files",
+    "Cargo caches, binaries, generated Wasm and Node artifacts, Java classes",
+    "private Java state/cache and temporary workspaces",
+    "24 sealed Stage134 regression executable bodies; identities retained in producer reports",
+    "Predecessor executable bodies and full runtime/compiler dependency closure are not archived"
+  ],
+  "archive_omitted_paths": [
+    "target/m2/stage132-cross-virtual-oracle-01/classes",
+    "target/m2/stage132-cross-virtual-oracle-01/home/Library/Caches",
+    "target/m2/stage132-generic-oracle-02/acquisition/classes",
+    "target/m2/stage132-generic-oracle-02/acquisition/home/Library/Caches",
+    "target/m2/stage132-shared-oracle-01/classes",
+    "target/m2/stage132-shared-oracle-01/home/Library/Caches",
+    "target/m2/stage132-shared-oracle-02/classes",
+    "target/m2/stage132-shared-oracle-02/home/Library/Caches",
+    "target/m2/stage132-union-oracle-01/acquisition/classes",
+    "target/m2/stage132-union-oracle-01/acquisition/home/Library/Caches",
+    "target/m2/stage132-union-oracle-04/acquisition/classes",
+    "target/m2/stage132-union-oracle-04/acquisition/home/Library/Caches",
+    "target/m2/stage133-key-boundary-oracle-01/classes",
+    "target/m2/stage133-key-boundary-oracle-01/home/Library/Caches",
+    "target/m2/stage133-key-scope-oracle-01/classes",
+    "target/m2/stage133-key-scope-oracle-01/home/Library/Caches",
+    "target/m2/stage133-nullable-unit-oracle-01/classes",
+    "target/m2/stage133-nullable-unit-oracle-01/home/Library/Caches",
+    "target/m2/stage133-oracle-01/acquisition/classes",
+    "target/m2/stage133-oracle-01/acquisition/home/Library/Caches",
+    "target/m2/stage133-prefix-order-oracle-01/classes",
+    "target/m2/stage133-prefix-order-oracle-01/home/Library/Caches",
+    "target/m2/stage134-platforms-01/experiment/pkl_napi.node",
+    "target/m2/stage134-platforms-01/experiment/semantics_probe",
+    "target/m2/stage134-platforms-01/experiment/wasm",
+    "target/m2/stage134-platforms-02/experiment/pkl_napi.node",
+    "target/m2/stage134-platforms-02/experiment/semantics_probe",
+    "target/m2/stage134-platforms-02/experiment/wasm",
+    "target/m2/stage134-platforms-04/experiment/pkl_napi.node",
+    "target/m2/stage134-platforms-04/experiment/semantics_probe",
+    "target/m2/stage134-platforms-04/experiment/wasm",
+    "target/m2/stage134-production-original-mapping-01/cases/64f2367bb02f227d12af153a/java/private-state",
+    "target/m2/stage134-production-original-mapping-02/cases/64f2367bb02f227d12af153a/java/private-state",
+    "target/m2/stage134-production-original-mapping-04/cases/64f2367bb02f227d12af153a/java/private-state",
+    "target/m2/stage134-production-original-typecheck-01/cases/e76db879473e6ec2685f1729/java/private-state",
+    "target/m2/stage134-production-original-typecheck-02/cases/e76db879473e6ec2685f1729/java/private-state",
+    "target/m2/stage134-production-original-typecheck-04/cases/e76db879473e6ec2685f1729/java/private-state",
+    "target/m2/stage134-regressions-execution-02/1-m2_inferred_new-af8f88d6dd295c9c",
+    "target/m2/stage134-regressions-execution-02/10-m2_recursive_constraints_runtime-d52c44410a96bf59",
+    "target/m2/stage134-regressions-execution-02/11-m2_runtime-25dbc554dd043570",
+    "target/m2/stage134-regressions-execution-02/12-m2_constraint_frame_owner-cf661c3c86ca71d4",
+    "target/m2/stage134-regressions-execution-02/13-m2_cross_source_oracle-1af9f381f89bbe63",
+    "target/m2/stage134-regressions-execution-02/14-m2_union_span_oracle-b32a67a78afa0365",
+    "target/m2/stage134-regressions-execution-02/15-m2_generic_label_oracle-b172eca4d13fb508",
+    "target/m2/stage134-regressions-execution-02/16-m2_entry_scope_oracle-fa5ed744ec9e0ea1",
+    "target/m2/stage134-regressions-execution-02/17-m2_key_scope_oracle-79c4f85412962802",
+    "target/m2/stage134-regressions-execution-02/18-m2_prefix_order_oracle-ad35cbcd8d0056d0",
+    "target/m2/stage134-regressions-execution-02/19-m2_key_boundary_oracle-1b1ec0149618c448",
+    "target/m2/stage134-regressions-execution-02/2-m2_inferred_new_default_diagnostics-8bddf7ba621009cf",
+    "target/m2/stage134-regressions-execution-02/20-m2_nullable_unit_oracle-011206e3a513b190",
+    "target/m2/stage134-regressions-execution-02/21-m2_shared_metadata_oracle-5c92734f9d4d62bb",
+    "target/m2/stage134-regressions-execution-02/22-m2_unknown_property_oracle-4ca00e22ffa3c5e1",
+    "target/m2/stage134-regressions-execution-02/23-pkl_runtime-a04de5120dc468ee",
+    "target/m2/stage134-regressions-execution-02/24-pkl_runtime-a04de5120dc468ee",
+    "target/m2/stage134-regressions-execution-02/3-m2_inferred_new_method_cache-ebd86190600a6340",
+    "target/m2/stage134-regressions-execution-02/4-m2_inferred_new_module_receiver-57daaa3dfc856a84",
+    "target/m2/stage134-regressions-execution-02/5-m2_method_parents-949567200f9a8274",
+    "target/m2/stage134-regressions-execution-02/6-m2_inferred_new_lifecycle-fa7ff53b17e3a87d",
+    "target/m2/stage134-regressions-execution-02/7-m2_generic_constructors_lifecycle-1cb42978415ae32d",
+    "target/m2/stage134-regressions-execution-02/8-m2_generic_defaults_lifecycle-01c4dd68a057a51b",
+    "target/m2/stage134-regressions-execution-02/9-m2_mapping_apis_lifecycle-3d9c3596dfa0b879",
+    "target/m2/stage134-unknown-property-oracle-01/classes",
+    "target/m2/stage134-unknown-property-oracle-01/home/Library/Caches"
+  ],
+  "full_workspace_test": {
+    "command": [
+      "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+      "test",
+      "--workspace",
+      "--locked",
+      "--no-fail-fast",
+      "--message-format=json"
+    ],
+    "complete": true,
+    "cargo_exit_code": 0,
+    "completed_harnesses": 298,
+    "completed_tests": {
+      "passed": 1848,
+      "failed": 0,
+      "ignored": 5,
+      "measured": 0,
+      "filtered": 0
+    },
+    "nested_child_tests_excluded": {
+      "passed": 13,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 36
+    },
+    "all_required_pass": false,
+    "aggregate_qualification": "aggregate counts under pinned child-source and marker assumptions",
+    "exact_per_test_identity_proven": false,
+    "absence_of_interleaving_proven": false,
+    "source_bookends_stable": true
+  },
+  "artifact_observation": {
+    "products": 322,
+    "test_executables": 296,
+    "compile_only_examples": 26,
+    "cargo_cached_products": 26,
+    "current_wrapper_signature_matches": 321,
+    "current_wrapper_gaps": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage134-cargo-01/debug/deps/xtask-1627471670fafdf4"
+    ],
+    "complete_inherited_cache_provenance": false
+  },
+  "java_authorities": [
+    {
+      "fixture": "tests/fixtures/m2-shared-metadata",
+      "observations": 8,
+      "capture": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage132-shared-oracle-02/report.json",
+        "bytes": 71822,
+        "sha256": "f2271bc4c28c3cca8b4e1ce0da22acde7dafb74747f03ff0420a18a8b889ec11"
+      },
+      "readback": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage132-shared-oracle-independent-readback-01/report.json",
+        "bytes": 1366,
+        "sha256": "76acf976abf68605b19942eb1afb22f42f5a5b5f37a93286ff4e15311a4ebc50"
+      }
+    },
+    {
+      "fixture": "tests/fixtures/m2-union-spans",
+      "observations": 52,
+      "capture": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage132-union-oracle-04/acquisition/report.json",
+        "bytes": 325989,
+        "sha256": "054243e52c387d56df0668119456075383a6cf7444d60598b8445c5efa0510b7"
+      },
+      "readback": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage132-union-admission-03/report.json",
+        "bytes": 1662,
+        "sha256": "a3432c8dbdd1ab78107ab0e9463816c2611b106679bb4b0baf6c9add7cee9165"
+      }
+    },
+    {
+      "fixture": "tests/fixtures/m2-generic-labels",
+      "observations": 24,
+      "capture": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage132-generic-oracle-02/acquisition/report.json",
+        "bytes": 156627,
+        "sha256": "968209ab47484ce5407a9aeba3a8829d43a39c73c7cf04da36f76f2c4e265140"
+      },
+      "readback": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage132-generic-admission-02/report.json",
+        "bytes": 925,
+        "sha256": "598fbeedf3d157ca3e4fb46c9690923d273305430f795492d053035eac99e05b"
+      }
+    },
+    {
+      "fixture": "tests/fixtures/m2-cross-source",
+      "observations": 16,
+      "capture": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage132-cross-virtual-oracle-01/report.json",
+        "bytes": 134340,
+        "sha256": "72799559ec6b081b403f06ae06c2ab402796d356ce4267105af8546e5e4f4f50"
+      },
+      "readback": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage132-cross-virtual-readback-01/report.json",
+        "bytes": 101337,
+        "sha256": "0eb0017f60f1d6c608df44fd9efeae5b9a0ef8ca520c86bbbb7ac816de412a4a"
+      }
+    },
+    {
+      "fixture": "tests/fixtures/m2-entry-scopes",
+      "observations": 16,
+      "capture": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage133-oracle-01/acquisition/report.json",
+        "bytes": 106199,
+        "sha256": "f8239f277ba236a15cc758db849752e6800873d0f0ab3a2f1ab23a2dac8751bc"
+      },
+      "readback": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage133-oracle-readback-01/report.json",
+        "bytes": 73992,
+        "sha256": "2e773463d3655a1d83c4e926a911f6f96325e474c866c381eeb7151ca0575bb3"
+      }
+    },
+    {
+      "fixture": "tests/fixtures/m2-key-scopes",
+      "observations": 18,
+      "capture": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage133-key-scope-oracle-01/report.json",
+        "bytes": 135999,
+        "sha256": "89b635532c70c087a2b04b65a22f29888fde498e17871c2e716875da7b8db340"
+      },
+      "readback": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage133-key-scope-readback-02/report.json",
+        "bytes": 101015,
+        "sha256": "dbc4d02eb7672711070a5b126f6f451c7621f4730aa7e4b364fa1fb2b2dc4f35"
+      }
+    },
+    {
+      "fixture": "tests/fixtures/m2-prefix-order",
+      "observations": 8,
+      "capture": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage133-prefix-order-oracle-01/report.json",
+        "bytes": 69662,
+        "sha256": "9856a1a47821ab718be9c19201e4418b6effd0c8f50e670990916bc06c53d1a6"
+      },
+      "readback": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage133-prefix-order-readback-01/report.json",
+        "bytes": 51240,
+        "sha256": "39f3db340e97c2126e2c3ad1083ae54c43c1378ed4547a9afb8bd0926b33e31f"
+      }
+    },
+    {
+      "fixture": "tests/fixtures/m2-key-boundaries",
+      "observations": 12,
+      "capture": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage133-key-boundary-oracle-01/report.json",
+        "bytes": 98192,
+        "sha256": "96725e0824dcdeedec2cdf344cc18af537abbeef9b75adcbd6429bcbf0c0e7c6"
+      },
+      "readback": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage133-key-boundary-readback-01/report.json",
+        "bytes": 73674,
+        "sha256": "029dc2eca7038614850c47ae3522e2a9649d11540671ed1314b76d3f37d6109b"
+      }
+    },
+    {
+      "fixture": "tests/fixtures/m2-nullable-units",
+      "observations": 6,
+      "capture": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage133-nullable-unit-oracle-01/report.json",
+        "bytes": 55345,
+        "sha256": "98552581e06d3720afdea869522ac31bd7e7540b7a21add761e9d8792bb09346"
+      },
+      "readback": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage133-nullable-unit-readback-01/report.json",
+        "bytes": 40152,
+        "sha256": "04445c757a62e328be44828494af3d8906ccf518d207b4403b4a90dd3ff90670"
+      }
+    }
+  ],
+  "original_cli_comparisons": [
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/listings/typeCheck.pkl",
+      "status": "pass",
+      "raw_channels_match": true,
+      "java_exit": 0,
+      "rust_exit": 0,
+      "requirements": [],
+      "receipt": "target/m2/stage134-production-original-typecheck-04/report.json"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/mappingTypeCheckError7.pkl",
+      "status": "pass",
+      "raw_channels_match": true,
+      "java_exit": 1,
+      "rust_exit": 1,
+      "requirements": [],
+      "receipt": "target/m2/stage134-production-original-mapping-04/report.json"
+    }
+  ],
+  "fresh_other_checks": {
+    "stage134-focused-04": {
+      "complete": true,
+      "exit_code": 0,
+      "argv": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "test",
+        "-p",
+        "pkl-runtime",
+        "--locked",
+        "--no-fail-fast",
+        "--message-format=json",
+        "--test",
+        "m2_constraint_frame_owner",
+        "--test",
+        "m2_union_span_oracle",
+        "--test",
+        "m2_generic_label_oracle",
+        "--test",
+        "m2_cross_source_oracle",
+        "--test",
+        "m2_entry_scope_oracle",
+        "--test",
+        "m2_key_scope_oracle",
+        "--test",
+        "m2_prefix_order_oracle",
+        "--test",
+        "m2_key_boundary_oracle",
+        "--test",
+        "m2_nullable_unit_oracle",
+        "--test",
+        "m2_shared_metadata_oracle",
+        "--test",
+        "m2_import_type_clauses",
+        "--test",
+        "m2_generic_defaults_lifecycle",
+        "--test",
+        "m2_guest_catch_oracle",
+        "--test",
+        "m2_imported_ast_owner",
+        "--test",
+        "m2_session_type_resolution",
+        "--test",
+        "m2_reference_declared_type_lifecycle",
+        "--test",
+        "m2_constraint_slots_runtime",
+        "--test",
+        "m2_runtime",
+        "--test",
+        "m2_recursive_constraints_runtime",
+        "--test",
+        "m2_type_resolution_runtime",
+        "--test",
+        "m2_inferred_new",
+        "--test",
+        "m2_inferred_new_default_diagnostics",
+        "--test",
+        "m2_mapping_apis_lifecycle",
+        "--test",
+        "m2_unknown_property_oracle"
+      ],
+      "receipt": "target/m2/stage134-focused-04/report.json"
+    },
+    "stage134-generics-unit-04": {
+      "complete": true,
+      "exit_code": 0,
+      "argv": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "test",
+        "-p",
+        "pkl-runtime",
+        "--locked",
+        "--lib",
+        "vm::generics::tests"
+      ],
+      "receipt": "target/m2/stage134-generics-unit-04/report.json"
+    },
+    "stage134-format-04": {
+      "complete": true,
+      "exit_code": 0,
+      "argv": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "receipt": "target/m2/stage134-format-04/report.json"
+    },
+    "stage134-xtask-04": {
+      "complete": true,
+      "exit_code": 0,
+      "argv": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "xtask",
+        "verify"
+      ],
+      "receipt": "target/m2/stage134-xtask-04/report.json"
+    },
+    "stage134-clippy-04": {
+      "complete": true,
+      "exit_code": 0,
+      "argv": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "receipt": "target/m2/stage134-clippy-04/report.json"
+    },
+    "stage134-wasm-check-04": {
+      "complete": true,
+      "exit_code": 0,
+      "argv": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      "receipt": "target/m2/stage134-wasm-check-04/report.json"
+    },
+    "stage134-manifest-04": {
+      "complete": true,
+      "exit_code": 0,
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-B",
+        "tools/m2_manifest.py",
+        "--check"
+      ],
+      "receipt": "target/m2/stage134-manifest-04/report.json"
+    }
+  },
+  "platform_experiment": {
+    "strict_status": "pass",
+    "contract_status": "pass",
+    "oracle_matches": {
+      "rust": 6078,
+      "node": 6078,
+      "browser": 6078
+    },
+    "scenario_counts": {
+      "node": 92,
+      "browser": 92
+    },
+    "known_gaps": [],
+    "sources_missing_supervisor_bookends": [],
+    "performance_evidence": false
+  },
+  "preserved_workspace_failure": {
+    "cargo_exit_code": 101,
+    "failed_harness": "crates/pkl-runtime/tests/m2_constraint_frame_owner.rs",
+    "failed_test": "inherited_primary_declaration_remains_primary_with_a_foreign_value_body",
+    "started_harnesses": 58,
+    "emitted_artifacts_without_heading": 237,
+    "receipt": "target/m2/stage134-workspace-failure-readback-01/report.json"
+  },
+  "preserved_second_workspace_failure": {
+    "cargo_exit_code": 101,
+    "failed_harness": "crates/pkl-runtime/tests/m2_constraint_slots_runtime.rs",
+    "failed_tests": [
+      "boolean_power_replay_starts_with_the_mutated_slot",
+      "function_predicate_failures_keep_the_argument_captured_before_the_call",
+      "constrained_entry_initializes_once_and_returns_the_original_checked_value",
+      "let_roots_isolate_mutations_in_each_replay_from_the_checking_frame",
+      "recursive_inline_checks_leave_the_final_auxiliary_receiver"
+    ],
+    "started_harnesses": 60,
+    "emitted_artifacts_without_heading": 235,
+    "receipt": "target/m2/stage134-workspace-failure-readback-02/report.json"
+  },
+  "preserved_third_workspace_failure": {
+    "cargo_exit_code": 101,
+    "failed_targets": [
+      {
+        "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/crates/pkl-runtime/tests/m2_inferred_new.rs",
+        "tests": [
+          "complete_java_inferred_new_amends_matrix",
+          "complete_java_inferred_new_values_matrix"
+        ],
+        "summary": {
+          "passed": 0,
+          "failed": 2,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        }
+      },
+      {
+        "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/crates/pkl-runtime/tests/m2_mapping_apis_lifecycle.rs",
+        "tests": [
+          "stolen_cache_cast_error_survives_gc_reentry_and_retry_without_publication"
+        ],
+        "summary": {
+          "passed": 4,
+          "failed": 1,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        }
+      }
+    ],
+    "summary_totals": {
+      "passed": 1842,
+      "failed": 3,
+      "ignored": 5,
+      "measured": 0,
+      "filtered": 0
+    },
+    "receipt": "target/m2/stage134-workspace-failure-readback-03/report.json"
+  },
+  "regression_authority": {
+    "java_capture": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage134-unknown-property-oracle-01/report.json",
+      "bytes": 43383,
+      "sha256": "be545be4f3eabec9e1acf0c579df480d3ea4b2e3fed8148fa8ddd655bc97cde0"
+    },
+    "java_readback": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage134-unknown-property-readback-01/report.json",
+      "bytes": 1511,
+      "sha256": "86af825c1462b64286434b7e942de01a4c923822b4b1d155b1e174e15855819e"
+    },
+    "independent_readback": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage134-regressions-independent-readback-02/report.json",
+      "bytes": 16865,
+      "sha256": "e08bfa716e171acabc61523b69de38078ff7a267ff88c13e7e2e9c6157905244"
+    },
+    "validated": {
+      "test_runs": 24,
+      "passed_tests": 146,
+      "failed_tests": 0,
+      "ignored_tests": 0,
+      "retained_stage134_oracle_observations": 160,
+      "fresh_property_java_observations": 4
+    },
+    "fixture_files": 45
+  },
+  "compiler_warning_observation": {
+    "receipt": "target/m2/stage134-compiler-warning-readback-04/report.json",
+    "compiler_warning_events": 322,
+    "stripping_failure_events": 322,
+    "stripping_failure_events_with_libLLVM": 322,
+    "scope": "Recorded diagnostic events; no stripping success or unique compiler process count claimed."
+  },
+  "provenance": {
+    "source_bookends_stable": true,
+    "complete_compiler_runtime_rustdoc_dependency_closure": false,
+    "archive_integrity_is_not_execution_verification": true
+  },
+  "full_language_inventory_replayed": false,
+  "full_glob_inventory_replayed": false,
+  "full_M2_complete": false,
+  "performance_targets_evaluated": false,
+  "release_platforms_verified": false,
+  "hosted_ci_claimed": false,
+  "remaining_required_scope": [
+    "Ignored tests remain non-passes",
+    "Actual execution-node Java stack projection and typed internal-error catch integration",
+    "Full language/API inventories and unmapped or unimplemented requirements",
+    "Release-platform execution and speed/memory targets"
+  ]
+}

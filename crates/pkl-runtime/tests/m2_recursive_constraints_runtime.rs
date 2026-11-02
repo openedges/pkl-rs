@@ -162,13 +162,19 @@ fn recursive_constraint_blocks_preserve_power_assertion_observations_and_retry()
     vm.start(program.entry, vec![]).unwrap();
     let module = finish(&mut vm).unwrap().as_object().unwrap();
     let error = member(&mut vm, module, "result").unwrap_err();
-    let Some(diagnostic) = &error.type_diagnostic else {
+    let Some(mut diagnostic) = error.type_diagnostic.as_deref() else {
         panic!("missing constraint diagnostic")
     };
+    while let TypeDiagnostic::AtSource {
+        diagnostic: inner, ..
+    } = diagnostic
+    {
+        diagnostic = inner;
+    }
     let TypeDiagnostic::Constraint {
         observations: Some(observations),
         ..
-    } = &**diagnostic
+    } = diagnostic
     else {
         panic!("missing recursive observations")
     };

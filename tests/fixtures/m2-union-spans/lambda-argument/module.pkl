@@ -1,0 +1,2 @@
+local f = (x: (Int|String)) -> x
+result = f.apply(true)

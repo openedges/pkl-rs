@@ -1,0 +1,14 @@
+–– Pkl Error ––
+prefix-first
+
+1 | res = new Mapping { [(() -> throw("prefix-first")).apply()] = 1; for (i in throw("generator-second")) { [i] = 2 } }
+                                ^^^^^^^^^^^^^^^^^^^^^
+at key-throw-before-for#res.<function#1> (file:///stage133-prefix-order/key-throw-before-for.pkl)
+
+1 | res = new Mapping { [(() -> throw("prefix-first")).apply()] = 1; for (i in throw("generator-second")) { [i] = 2 } }
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at key-throw-before-for#res (file:///stage133-prefix-order/key-throw-before-for.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

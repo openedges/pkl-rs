@@ -1,5 +1,22 @@
 # M2 language evidence
 
+## Stage134 type sources and object entry diagnostics
+
+The selected corpus contains 164 Java observations: 160 prior source and entry
+controls plus four fresh direct/aliased-unknown property controls. The final
+focused production acquisition runs 24 integration targets. Fresh production
+Listing and Mapping CLI acquisitions match Java in their complete raw channels.
+
+The final full workspace exits zero with **1,848 passed, zero failed and
+5 ignored across 298 harnesses**; the aggregate reader excludes
+13 nested child passes. Formatting, xtask, all-target Clippy, Wasm and
+manifest freshness pass. The fresh bounded M1 acquisition matches 6,078 results
+per Native, Node and Chromium target, with 92 Node and 92 browser scenarios and
+both strict and architecture predicates passing. These are local, bounded
+results; full M2/API, release-platform and performance requirements remain open.
+
+See [the Stage134 report](stage134-type-source-scopes/README.md).
+
 ## Stage131 power-assertion boundaries and local checks
 
 The shared power-assertion renderer follows the selected Java generator,

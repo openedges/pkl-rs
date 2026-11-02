@@ -183,6 +183,7 @@ pub(super) fn builtin_members(
                     base: Box::new(TypeCheck::String),
                     base_span: Span::new(type_start, type_start + 6),
                     constraints: vec![ConstraintCode {
+                        section: None,
                         block,
                         arguments: BTreeMap::new(),
                         argument_sources: BTreeMap::new(),

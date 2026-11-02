@@ -1,0 +1,5 @@
+res = if (false) new Mapping<Listing<String(length == 5)>, String> {
+  [new Listing { "12345" }] = "ok"
+} else new Mapping<Listing<String(length == 5)>, String> {
+  [new Listing { "hi" }] = "bad"
+}

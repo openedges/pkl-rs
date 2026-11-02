@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Int | /* edge */ String`, but got type `Boolean`.
+Value: true
+
+1 | result: ( /* open */ Int | /* edge */ String /* end */ ) = true
+                         ^^^^^^^^^^^^^^^^^^^^^^^
+at comments-space#result (file:///stage132-union/comments-space.pkl)
+
+1 | result: ( /* open */ Int | /* edge */ String /* end */ ) = true
+                                                               ^^^^
+at comments-space#result (file:///stage132-union/comments-space.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

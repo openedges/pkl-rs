@@ -157,9 +157,14 @@ fn parameterized_shadow_union_diagnostics_retain_the_authored_alternative() {
     let source = "typealias T<X> = X\ntypealias A<T> = T<String> | Int\np: A<Boolean> = false";
     let (mut vm, module) = module(source);
     let error = member(&mut vm, module, "p").unwrap_err();
-    let pkl_runtime::diagnostic::TypeDiagnostic::Union { children, .. } =
-        error.type_diagnostic.as_deref().unwrap()
-    else {
+    let mut diagnostic = error.type_diagnostic.as_deref().unwrap();
+    while let pkl_runtime::diagnostic::TypeDiagnostic::AtSource {
+        diagnostic: inner, ..
+    } = diagnostic
+    {
+        diagnostic = inner;
+    }
+    let pkl_runtime::diagnostic::TypeDiagnostic::Union { children, .. } = diagnostic else {
         panic!("expected union diagnostic");
     };
     let labels: Vec<_> = children

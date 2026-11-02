@@ -1,0 +1,1 @@
+res = new Dynamic { [(() -> 7).apply()] = 1; x = 1; x = 2; for (i in List(1)) { local function bad() = i } }

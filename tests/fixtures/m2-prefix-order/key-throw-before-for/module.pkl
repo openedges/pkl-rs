@@ -1,0 +1,1 @@
+res = new Mapping { [(() -> throw("prefix-first")).apply()] = 1; for (i in throw("generator-second")) { [i] = 2 } }

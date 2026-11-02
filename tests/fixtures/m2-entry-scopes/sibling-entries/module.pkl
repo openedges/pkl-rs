@@ -1,0 +1,4 @@
+res = new Mapping<Listing<String(length == 5)>, String> {
+  [new Listing { "12345" }] = "ok"
+  [new Listing { "hi" }] = "bad"
+}

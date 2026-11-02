@@ -585,6 +585,7 @@ pub enum TypeCheck {
 
 #[derive(Clone, Debug)]
 pub struct ConstraintCode {
+    section: Option<crate::type_source::TypeSourceSection>,
     block: usize,
     /// Actual arguments for this constraint template, possibly referring to an outer template.
     arguments: BTreeMap<PklString, TypeCheck>,
@@ -7056,6 +7057,7 @@ fn compile_unit_body_at(
         active_type_parameters: BTreeMap::new(),
         constructor_parameters_bound: false,
         parameter_spans: BTreeMap::new(),
+        parameter_label_spans: BTreeMap::new(),
         argument_spans: BTreeMap::new(),
         function_counts: BTreeMap::new(),
         entry_counts: BTreeMap::new(),
@@ -7305,6 +7307,8 @@ struct Compiler<'a> {
     /// Alias cloning visits inline/lambda nodes, but not lazy member call targets.
     constructor_parameters_bound: bool,
     parameter_spans: BTreeMap<PklString, Span>,
+    /// Union labels retain the actual type node rather than its failing child.
+    parameter_label_spans: BTreeMap<PklString, Span>,
     /// Constructor parent nodes retain the authored actual, including alias syntax.
     argument_spans: BTreeMap<PklString, Span>,
     function_counts: BTreeMap<PklString, usize>,
@@ -9199,6 +9203,21 @@ impl Compiler<'_> {
         self.type_source_span_at(ty, &self.parameter_spans, &mut BTreeSet::new())
     }
 
+    // Union labels use the actual node's source, preserving nullable wrappers
+    // and alias use sites while forwarding already-bound type parameters.
+    fn type_label_span(&self, ty: &crate::syntax::Type) -> Span {
+        if let crate::syntax::TypeKind::Named {
+            path, arguments, ..
+        } = &ty.kind
+            && path.len() == 1
+            && arguments.is_empty()
+            && let Some(span) = self.parameter_label_spans.get(&path[0])
+        {
+            return *span;
+        }
+        ty.unparenthesized_span.unwrap_or(ty.span)
+    }
+
     fn type_argument_sources(&self) -> BTreeMap<PklString, TypeArgumentSource> {
         self.argument_spans
             .iter()
@@ -9230,6 +9249,9 @@ impl Compiler<'_> {
         use crate::syntax::{ExprKind, TypeKind};
         match &ty.kind {
             TypeKind::Nullable(inner) => self.type_source_span_at(inner, parameters, aliases),
+            // ParenthesizedType resolves to its inner Java type node. Alias
+            // use-site labels remain distinct from expanded failure spans.
+            TypeKind::Union { .. } => ty.unparenthesized_span.unwrap_or(ty.span),
             TypeKind::Named {
                 path, arguments, ..
             } if path.len() == 1 => {
@@ -9260,13 +9282,40 @@ impl Compiler<'_> {
                     aliases.remove(&member.expr.span);
                     return span;
                 }
-                ty.span
+                ty.unparenthesized_span.unwrap_or(ty.span)
             }
-            _ => ty.span,
+            _ => ty.unparenthesized_span.unwrap_or(ty.span),
         }
     }
 
+    fn type_source_section(&self, span: Span) -> crate::type_source::TypeSourceSection {
+        let owner = match &self.source {
+            Some(source) => crate::type_source::TypeSourceOwner::External(source.clone()),
+            None => {
+                crate::type_source::TypeSourceOwner::Primary(self.resolved.module.source.clone())
+            }
+        };
+        crate::type_source::TypeSourceSection::new(owner, span)
+    }
+
     fn compile_type_at(
+        &mut self,
+        ty: &crate::syntax::Type,
+        limit: usize,
+        aliases: &mut BTreeSet<Span>,
+        parameters: &BTreeMap<PklString, TypeCheck>,
+    ) -> Result<TypeCheck, RuntimeError> {
+        let check = self.compile_type_at_unlocated(ty, limit, aliases, parameters)?;
+        if matches!(&ty.kind, crate::syntax::TypeKind::Named { path, arguments, .. }
+            if path.len() == 1 && arguments.is_empty() && parameters.contains_key(&path[0]))
+        {
+            return Ok(check);
+        }
+        let section = self.type_source_section(ty.unparenthesized_span.unwrap_or(ty.span));
+        Ok(check.with_optional_source_section(Some(section)))
+    }
+
+    fn compile_type_at_unlocated(
         &mut self,
         ty: &crate::syntax::Type,
         limit: usize,
@@ -9349,6 +9398,7 @@ impl Compiler<'_> {
                     let expression = expression.unparenthesized();
                     if let Some(&block) = self.active_constraints.get(&expression.span) {
                         compiled.push(ConstraintCode {
+                            section: Some(self.type_source_section(expression.span)),
                             block,
                             arguments: parameters.clone(),
                             argument_sources: self.type_argument_sources(),
@@ -9419,6 +9469,7 @@ impl Compiler<'_> {
                         block
                     };
                     compiled.push(ConstraintCode {
+                        section: Some(self.type_source_section(expression.span)),
                         block: target,
                         arguments: parameters.clone(),
                         argument_sources: self.type_argument_sources(),
@@ -9441,19 +9492,7 @@ impl Compiler<'_> {
                 // Alternatives retain their use-site labels even when checking an
                 // alias expands to a different source section. Type parameters
                 // alone inherit the actual argument's source section.
-                labels: types
-                    .iter()
-                    .map(|ty| match &ty.kind {
-                        TypeKind::Named {
-                            path, arguments, ..
-                        } if path.len() == 1 && arguments.is_empty() => self
-                            .parameter_spans
-                            .get(&path[0])
-                            .copied()
-                            .unwrap_or(ty.span),
-                        _ => ty.span,
-                    })
-                    .collect(),
+                labels: types.iter().map(|ty| self.type_label_span(ty)).collect(),
                 types: types
                     .iter()
                     .map(|ty| self.compile_type_at(ty, limit, aliases, parameters))
@@ -9577,8 +9616,17 @@ impl Compiler<'_> {
                                     (parameter.name.clone(), self.type_source_span(argument))
                                 })
                                 .collect();
+                            let label_spans = type_parameters
+                                .iter()
+                                .zip(arguments)
+                                .map(|(parameter, argument)| {
+                                    (parameter.name.clone(), self.type_label_span(argument))
+                                })
+                                .collect();
                             let previous_spans =
                                 std::mem::replace(&mut self.parameter_spans, spans);
+                            let previous_label_spans =
+                                std::mem::replace(&mut self.parameter_label_spans, label_spans);
                             let argument_spans = type_parameters
                                 .iter()
                                 .zip(arguments)
@@ -9643,6 +9691,7 @@ impl Compiler<'_> {
                             self.constraint_module = previous_module;
                             self.member = previous_member;
                             self.parameter_spans = previous_spans;
+                            self.parameter_label_spans = previous_label_spans;
                             self.argument_spans = previous_argument_spans;
                             let result = result?;
                             aliases.remove(&member.expr.span);
@@ -10054,7 +10103,7 @@ impl Compiler<'_> {
             );
             return Ok(true);
         }
-        match check {
+        match check.resolved() {
             TypeCheck::VarArgs { .. } => output.push_at(
                 Instruction::ResolvedDefault {
                     ty: check.clone(),
@@ -10115,7 +10164,7 @@ impl Compiler<'_> {
                         has_parent: false,
                         specialized: true,
                     });
-                    if let TypeCheck::ParameterizedCollection { arguments, .. } = check
+                    if let TypeCheck::ParameterizedCollection { arguments, .. } = check.resolved()
                         && !matches!(
                             kind,
                             crate::heap::CollectionKind::Map | crate::heap::CollectionKind::Set

@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Expected value of type `T|Boolean`, but got a different `String`.
+Value: "x"
+
+2 | typealias U<T> = T|Boolean
+                     ^^^^^^^^^
+at actual-named-alias#result (file:///stage132-generic/actual-named-alias.pkl)
+
+* Value is not of type `A` because:
+  Expected value of type `Int`, but got type `String`.
+  Value: "x"
+
+3 | result: U<A> = "x"
+                   ^^^
+at actual-named-alias#result (file:///stage132-generic/actual-named-alias.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

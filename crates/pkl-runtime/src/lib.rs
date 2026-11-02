@@ -35,3 +35,5 @@ mod value_identity;
 pub mod vm;
 
 mod strict_map;
+
+pub mod type_source;

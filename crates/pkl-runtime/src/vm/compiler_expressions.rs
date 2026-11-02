@@ -192,7 +192,7 @@ impl Compiler<'_> {
     ) -> Result<(), RuntimeError> {
         let parent = if let Some(ty) = &member.ty {
             let check = self.compile_type(ty)?;
-            if matches!(check, TypeCheck::Unknown) {
+            if matches!(check.resolved(), TypeCheck::Unknown) {
                 register_inferred_parents(&member.expr, InferredParent::EmptyDynamic, parents);
                 return Ok(());
             }
@@ -646,7 +646,7 @@ impl Compiler<'_> {
                                     .map(|ty| self.compile_type(ty))
                                     .transpose()?
                                     .unwrap_or(TypeCheck::Unknown);
-                                let parent = if matches!(check, TypeCheck::Unknown) {
+                                let parent = if matches!(check.resolved(), TypeCheck::Unknown) {
                                     InferredParent::EmptyDynamic
                                 } else {
                                     InferredParent::DeclaredType(

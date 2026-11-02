@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Type constraint `length == 5` violated.
+Value: "7"
+
+    length == 5
+    │      │
+    1      false
+
+1 | res = new Mapping<Listing<String(length == 5)>, String> {
+                                     ^^^^^^^^^^^
+at generator-parent-counter#res (file:///stage133-entries/generator-parent-counter.pkl)
+
+4 | [new Listing { i.toString() }] = "generated"
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at generator-parent-counter#res[#3] (file:///stage133-entries/generator-parent-counter.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

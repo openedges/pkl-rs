@@ -2985,7 +2985,11 @@ impl Compiler<'_> {
         output: &mut Code,
     ) -> Result<(), RuntimeError> {
         let previous = std::mem::replace(&mut self.super_method_allowed, false);
+        // Java ObjectScope owns entry numbering even when nested object bodies
+        // share the same displayed qualified name (for example an entry key).
+        let previous_entry_counts = std::mem::take(&mut self.entry_counts);
         let result = self.collection_body_scoped(members, parameters, kind, has_parent, output);
+        self.entry_counts = previous_entry_counts;
         self.super_method_allowed = previous;
         result
     }
@@ -3031,6 +3035,17 @@ impl Compiler<'_> {
             None
         };
         self.type_scopes.push(properties.clone());
+        if let Some(first_generator) = members.iter().position(|member| {
+            matches!(
+                member,
+                crate::syntax::ObjectMember::When { .. }
+                    | crate::syntax::ObjectMember::For { .. }
+                    | crate::syntax::ObjectMember::Spread { .. }
+                    | crate::syntax::ObjectMember::Predicate { .. }
+            )
+        }) {
+            self.project_generator_prefix(&members[..first_generator])?;
+        }
         output.push(Instruction::BeginCollection {
             kind,
             has_parent,
@@ -3091,6 +3106,115 @@ impl Compiler<'_> {
         Ok(())
     }
 
+    /// AstBuilder first constructs ordinary members, then revisits the whole
+    /// body when it encounters a generator. Preserve that construction order
+    /// and only its owning scope's entry counters, not abandoned bytecode.
+    fn project_generator_prefix(
+        &mut self,
+        prefix: &[crate::syntax::ObjectMember],
+    ) -> Result<(), RuntimeError> {
+        if prefix.is_empty() {
+            return Ok(());
+        }
+        let mut scratch_program = self.program.clone();
+        let mut scratch = self.fork_for_entry_projection(&mut scratch_program);
+        let mut abandoned = Code::default();
+        scratch.collection_members(prefix, false, &mut abandoned)?;
+        let entry_counts = std::mem::take(&mut scratch.entry_counts);
+        drop(scratch);
+        self.entry_counts = entry_counts;
+        Ok(())
+    }
+
+    fn fork_for_entry_projection<'b>(&'b self, program: &'b mut Program) -> Compiler<'b> {
+        Compiler {
+            program,
+            resolved: self.resolved,
+            unit: self.unit,
+            declaration_base: self.declaration_base,
+            source: self.source.clone(),
+            identity: self.identity.clone(),
+            options: self.options,
+            member: self.member.clone(),
+            super_method_allowed: self.super_method_allowed,
+            module_annotation: self.module_annotation,
+            let_members: self.let_members.clone(),
+            type_scopes: self.type_scopes.clone(),
+            modifiers: self.modifiers.clone(),
+            constraint_module: self.constraint_module,
+            runtime_type_owner: self.runtime_type_owner,
+            runtime_type_fallback: self.runtime_type_fallback,
+            alias_frames: self.alias_frames.clone(),
+            constraint_origins: self.constraint_origins.clone(),
+            active_constraints: self.active_constraints.clone(),
+            shared_constraint_roots: self.shared_constraint_roots.clone(),
+            active_type_parameters: self.active_type_parameters.clone(),
+            constructor_parameters_bound: self.constructor_parameters_bound,
+            parameter_spans: self.parameter_spans.clone(),
+            parameter_label_spans: self.parameter_label_spans.clone(),
+            argument_spans: self.argument_spans.clone(),
+            function_counts: self.function_counts.clone(),
+            entry_counts: self.entry_counts.clone(),
+            function_names: self.function_names.clone(),
+            instrument: self.instrument,
+        }
+    }
+
+    /// Match the scalar ConstantNode values that Java uses for entry names.
+    /// Parentheses lower to their child; arbitrary constant folding does not.
+    fn entry_key_node_label(key: &crate::syntax::Expr) -> Option<PklString> {
+        use crate::syntax::{ExprKind, UnaryOp};
+
+        fn numeric_literal(expr: &crate::syntax::Expr) -> Option<f64> {
+            match &expr.unparenthesized().kind {
+                ExprKind::Int(value) => Some(*value as f64),
+                ExprKind::Float(value) => Some(*value),
+                ExprKind::Unary {
+                    op: UnaryOp::Negate,
+                    operand,
+                } => match &operand.kind {
+                    ExprKind::Float(value) => Some(-value),
+                    _ => None,
+                },
+                _ => None,
+            }
+        }
+
+        match &key.unparenthesized().kind {
+            ExprKind::String(value) => {
+                Some(PklString::from("\"").concat(value).concat(&"\"".into()))
+            }
+            ExprKind::Int(value) => Some(value.to_string().into()),
+            ExprKind::Float(value) => Some(crate::numeric::double_to_string(*value).into()),
+            ExprKind::Bool(value) => Some(value.to_string().into()),
+            ExprKind::Unary {
+                op: UnaryOp::Negate,
+                operand,
+            } => match &operand.kind {
+                ExprKind::Float(value) => Some(crate::numeric::double_to_string(-value).into()),
+                _ => None,
+            },
+            ExprKind::Member(receiver, name) | ExprKind::NullableMember(receiver, name) => {
+                let value = numeric_literal(receiver)?;
+                let unit = name.as_str()?;
+                if let Some(unit) = crate::duration::DurationUnit::parse(unit) {
+                    Some(
+                        crate::duration::Duration::new(value, unit)
+                            .to_string()
+                            .into(),
+                    )
+                } else {
+                    crate::data_size::DataSizeUnit::parse(unit).map(|unit| {
+                        crate::data_size::DataSize::new(value, unit)
+                            .to_string()
+                            .into()
+                    })
+                }
+            }
+            _ => None,
+        }
+    }
+
     fn lazy_collection_member(
         &mut self,
         value: &crate::syntax::Expr,
@@ -3110,17 +3234,7 @@ impl Compiler<'_> {
         span: Span,
     ) -> Result<Member, RuntimeError> {
         let previous = self.member.clone();
-        let literal = key.and_then(|key| match &key.kind {
-            crate::syntax::ExprKind::String(value) => {
-                Some(PklString::from("\"").concat(value).concat(&"\"".into()))
-            }
-            crate::syntax::ExprKind::Int(value) => Some(value.to_string().into()),
-            crate::syntax::ExprKind::Float(value) => {
-                Some(crate::numeric::double_to_string(*value).into())
-            }
-            crate::syntax::ExprKind::Bool(value) => Some(value.to_string().into()),
-            _ => None,
-        });
+        let literal = key.and_then(Self::entry_key_node_label);
         let label = literal.unwrap_or_else(|| {
             let count = self.entry_counts.entry(previous.clone()).or_default();
             *count += 1;

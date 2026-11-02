@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "bad"
+
+1 | res = new Mapping<unknown, Int> { [("heron")] = "bad" }
+                               ^^^
+at grouped-string#res (file:///stage133-key-scope/grouped-string.pkl)
+
+1 | res = new Mapping<unknown, Int> { [("heron")] = "bad" }
+                                               ^^^^^^^^^^
+at grouped-string#res["heron"] (file:///stage133-key-scope/grouped-string.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

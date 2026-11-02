@@ -1,0 +1,1 @@
+res = new Mapping { [new Listing { (() -> throw("nested-key")).apply() }] = 1; for (i in List(1)) { [i] = 1 } }

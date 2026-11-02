@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "bad"
+
+1 | res = new Mapping<unknown, Int> { [-5] = "bad" }
+                               ^^^
+at negative-int#res (file:///stage133-key-scope/negative-int.pkl)
+
+1 | res = new Mapping<unknown, Int> { [-5] = "bad" }
+                                             ^^^^^
+at negative-int#res[-5] (file:///stage133-key-scope/negative-int.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

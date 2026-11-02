@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "bad"
+
+1 | res = new Mapping<unknown, Int> { [null] = 1; [("x")] = 1; [1 + 1] = "bad" }
+                               ^^^
+at mixed-prefix-counter#res (file:///stage133-key-boundary/mixed-prefix-counter.pkl)
+
+1 | res = new Mapping<unknown, Int> { [null] = 1; [("x")] = 1; [1 + 1] = "bad" }
+                                                                         ^^^^^
+at mixed-prefix-counter#res[#2] (file:///stage133-key-boundary/mixed-prefix-counter.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

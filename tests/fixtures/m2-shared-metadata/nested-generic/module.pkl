@@ -1,0 +1,12 @@
+import "pkl:ref" as ref
+class D extends ref.Domain {
+  function renderReference(r): String = throw("reference rendering must not run")
+}
+local d = new D {}
+local typealias Nested<T> = List<Mapping<String, T?>>
+class Holder {
+  ints: Nested<Int> = throw("referent body must not run")
+  strings: Nested<String> = throw("referent body must not run")
+}
+local r = ref.Reference(d, Holder, null)
+output { text = if (r.ints[0]["k"] is ref.Reference<D, Int?> && r.strings[0]["k"] is ref.Reference<D, String?> && !(r.strings[0]["k"] is ref.Reference<D, Int>)) "ok" else "bad" }

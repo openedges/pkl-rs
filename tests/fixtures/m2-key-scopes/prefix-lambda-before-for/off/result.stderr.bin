@@ -1,0 +1,14 @@
+–– Pkl Error ––
+prefix-key
+
+1 | res = new Mapping { [(() -> throw("prefix-key")).apply()] = 1; for (i in List(1)) { [i] = 1 } }
+                                ^^^^^^^^^^^^^^^^^^^
+at prefix-lambda-before-for#res.<function#1> (file:///stage133-key-scope/prefix-lambda-before-for.pkl)
+
+1 | res = new Mapping { [(() -> throw("prefix-key")).apply()] = 1; for (i in List(1)) { [i] = 1 } }
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at prefix-lambda-before-for#res (file:///stage133-key-scope/prefix-lambda-before-for.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

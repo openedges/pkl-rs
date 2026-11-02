@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `String`, but got type `Int`.
+Value: 42
+
+1 | res = new Mapping<Any, String> {
+                           ^^^^^^
+at literal-key-controls#res (file:///stage133-entries/literal-key-controls.pkl)
+
+4 | [new Listing { 1 }] = 42
+                          ^^
+at literal-key-controls#res[#1] (file:///stage133-entries/literal-key-controls.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

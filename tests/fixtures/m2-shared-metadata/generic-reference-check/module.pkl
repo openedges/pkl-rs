@@ -1,0 +1,15 @@
+import "pkl:ref" as ref
+class D extends ref.Domain {
+  function renderReference(r): String = throw("reference rendering must not run")
+}
+local d = new D {}
+local typealias Optional<T> = Mapping<String, T?>
+local typealias ReferenceTo<T> = ref.Reference<D, T?>
+class Holder {
+  ints: Optional<Int> = throw("referent body must not run")
+  strings: Optional<String> = throw("referent body must not run")
+}
+local r = ref.Reference(d, Holder, null)
+local intReference: ReferenceTo<Int> = r.ints["k"]
+local stringReference: ReferenceTo<String> = r.strings["k"]
+output { text = if (intReference is ReferenceTo<Int> && stringReference is ReferenceTo<String> && !(intReference is ReferenceTo<String>)) "ok" else "bad" }

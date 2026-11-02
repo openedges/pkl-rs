@@ -1,0 +1,12 @@
+import "pkl:ref" as ref
+class D extends ref.Domain {
+  function renderReference(r): String = throw("reference rendering must not run")
+}
+local d = new D {}
+local typealias Checked<T> = Mapping<String, T>(throw("constraint must not run"))
+class Holder {
+  ints: Checked<Int> = throw("referent body must not run")
+  strings: Checked<String> = throw("referent body must not run")
+}
+local r = ref.Reference(d, Holder, null)
+output { text = if (r.ints["k"] is ref.Reference<D, Int> && r.strings["k"] is ref.Reference<D, String> && !(r.ints["k"] is ref.Reference<D, String>)) "ok" else "bad" }

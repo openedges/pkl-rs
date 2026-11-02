@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Int|String`, but got type `Boolean`.
+Value: true
+
+1 | local f = (x: (Int|String)) -> x
+                   ^^^^^^^^^^
+at lambda-argument#f.<function#1> (file:///stage132-union/lambda-argument.pkl)
+
+2 | result = f.apply(true)
+             ^^^^^^^^^^^^^
+at lambda-argument#result (file:///stage132-union/lambda-argument.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

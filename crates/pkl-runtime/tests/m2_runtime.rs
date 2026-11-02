@@ -1031,9 +1031,15 @@ fn power_constraint_replay_resumes_and_gc_traces_observed_values() {
         vm.resume(request.id, Ok(Value::string("ok"))).unwrap();
     }
     let error = done(&mut vm).unwrap_err();
-    let Some(diagnostic) = error.type_diagnostic.as_deref() else {
+    let Some(mut diagnostic) = error.type_diagnostic.as_deref() else {
         panic!("missing diagnostic")
     };
+    while let pkl_runtime::diagnostic::TypeDiagnostic::AtSource {
+        diagnostic: inner, ..
+    } = diagnostic
+    {
+        diagnostic = inner;
+    }
     let pkl_runtime::diagnostic::TypeDiagnostic::Constraint {
         observations: Some(observations),
         ..

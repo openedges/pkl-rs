@@ -68,6 +68,7 @@ pub struct PowerAssertionValue {
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct UnionTypeDiagnostic {
     pub type_span: Span,
+    pub type_source: Option<crate::type_source::TypeSourceSection>,
     pub nontrivial: bool,
     pub diagnostic: Box<TypeDiagnostic>,
 }
@@ -75,6 +76,10 @@ pub struct UnionTypeDiagnostic {
 /// Source-dependent type mismatch details, rendered at the common boundary.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum TypeDiagnostic {
+    AtSource {
+        section: crate::type_source::TypeSourceSection,
+        diagnostic: Box<TypeDiagnostic>,
+    },
     Simple {
         span: Span,
         message: PklString,
@@ -97,9 +102,28 @@ pub enum TypeDiagnostic {
 impl TypeDiagnostic {
     pub fn span(&self) -> Span {
         match self {
+            Self::AtSource { diagnostic, .. } => diagnostic.span(),
             Self::Simple { span, .. }
             | Self::Constraint { span, .. }
             | Self::Union { span, .. } => *span,
+        }
+    }
+
+    pub(crate) fn source_section(&self) -> Option<&crate::type_source::TypeSourceSection> {
+        match self {
+            Self::AtSource { section, .. } => Some(section),
+            _ => None,
+        }
+    }
+
+    pub(crate) fn with_source(self, section: crate::type_source::TypeSourceSection) -> Self {
+        if self.source_section().is_some() {
+            self
+        } else {
+            Self::AtSource {
+                section,
+                diagnostic: Box::new(self),
+            }
         }
     }
 
@@ -119,6 +143,10 @@ impl TypeDiagnostic {
     ) -> (PklString, Option<PklString>) {
         let mut message_text = PklStringBuilder::default();
         match self {
+            Self::AtSource {
+                section,
+                diagnostic,
+            } => section.with_source(|source| diagnostic.render_indented(source, indent, power)),
             Self::Simple { message, .. } => {
                 let units: Vec<_> = message.encode_utf16().collect();
                 for (index, line) in units.split(|unit| *unit == 10).enumerate() {
@@ -188,10 +216,17 @@ impl TypeDiagnostic {
                 let hints: Vec<_> = nontrivial
                     .into_iter()
                     .map(|child| {
-                        let expected = source
-                            .slice(child.type_span)
-                            .map(|text| text.to_pkl_string())
-                            .unwrap_or_default();
+                        let expected = match &child.type_source {
+                            Some(section) => section
+                                .text()
+                                .slice(section.span())
+                                .map(|text| text.to_pkl_string())
+                                .unwrap_or_default(),
+                            None => source
+                                .slice(child.type_span)
+                                .map(|text| text.to_pkl_string())
+                                .unwrap_or_default(),
+                        };
                         let (message, hint) =
                             child
                                 .diagnostic

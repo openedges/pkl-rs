@@ -120,6 +120,7 @@ pub(super) fn blocks(
                         base: Box::new(TypeCheck::Int),
                         base_span: Span::new(offset, offset + 3),
                         constraints: vec![ConstraintCode {
+                            section: None,
                             block: constraint_block,
                             arguments: BTreeMap::new(),
                             argument_sources: BTreeMap::new(),

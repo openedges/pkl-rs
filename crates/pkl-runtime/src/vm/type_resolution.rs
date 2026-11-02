@@ -536,7 +536,9 @@ impl Vm {
                 Work::Shared(original, key) => {
                     let (value, changed) = values.pop().expect("shared type result");
                     let value = if changed {
-                        value.shared()
+                        value
+                            .with_optional_source_section(original.source_section())
+                            .shared()
                     } else {
                         original.clone()
                     };

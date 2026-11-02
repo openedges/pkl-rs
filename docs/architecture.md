@@ -37,6 +37,15 @@ Portable entry validation delegates the primary file/http/no-loader policy to th
 
 Annotation/const diagnostics are verified against their exact authored Java outcomes. The required Java const-lambda internal failure remains unresolved. These bounded probes and their raw results do not imply complete diagnostic, language or API compatibility, and correctness acquisition profiles are not performance measurements.
 
+### Instantiated type sources and entry scopes
+
+Type diagnostics retain immutable source sections through resolution. Diagnostic
+value equality compares complete source provenance and span; union grouping uses
+explicit source-node identity. Physical frame URI, diagnostic text and logical
+declaration owner remain distinct. Entry counters belong to object scope; a scratch
+compiler visits ordinary entries before a generator. Its Program-copy cost remains
+to be measured against performance targets.
+
 ### Base failures and diagnostic ownership
 
 `Undefined()` carries a receiverless undefined-value marker. The common VM

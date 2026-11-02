@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Expected value of type `(U)|Boolean`, but got a different `Float`.
+Value: 1.5
+
+2 | result: (U)|Boolean = 1.5
+            ^^^^^^^^^^^
+at grouped-alias-alternative#result (file:///stage132-union/grouped-alias-alternative.pkl)
+
+* Value is not of type `U` because:
+  Expected value of type `Int|String`, but got type `Float`.
+  Value: 1.5
+
+2 | result: (U)|Boolean = 1.5
+                          ^^^
+at grouped-alias-alternative#result (file:///stage132-union/grouped-alias-alternative.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

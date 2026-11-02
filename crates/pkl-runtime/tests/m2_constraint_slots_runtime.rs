@@ -43,14 +43,22 @@ fn evaluate(source: &str, power: bool) -> Result<Value, RuntimeError> {
 
 fn rejection(source: &str, power: bool, expected: &str) {
     let error = evaluate(source, power).unwrap_err();
+    let mut diagnostic = error
+        .type_diagnostic
+        .as_deref()
+        .expect("constraint diagnostic");
+    // Source ownership wraps the payload without changing the observed slots.
+    while let TypeDiagnostic::AtSource {
+        diagnostic: inner, ..
+    } = diagnostic
+    {
+        diagnostic = inner;
+    }
     let TypeDiagnostic::Constraint {
         value,
         observations,
         ..
-    } = error
-        .type_diagnostic
-        .as_deref()
-        .expect("constraint diagnostic")
+    } = diagnostic
     else {
         panic!("unexpected diagnostic: {error:?}")
     };

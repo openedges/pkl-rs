@@ -1610,6 +1610,7 @@ pub(super) fn access_members(
         base: Box::new(TypeCheck::String),
         base_span: span("String(key == null)?"),
         constraints: vec![ConstraintCode {
+            section: None,
             block: constraint,
             arguments: BTreeMap::new(),
             argument_sources: BTreeMap::new(),
@@ -2009,6 +2010,7 @@ mod generic_metadata_tests {
                 base: Box::new(TypeCheck::Int),
                 base_span: Span::new(0, 0),
                 constraints: vec![ConstraintCode {
+                    section: None,
                     block: 0,
                     arguments: BTreeMap::new(),
                     argument_sources: BTreeMap::new(),

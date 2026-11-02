@@ -1,0 +1,2 @@
+typealias Pick<T> = T
+result: Pick<(Int|String)> = true

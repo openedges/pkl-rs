@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Expected value of type `T|Boolean`, but got a different `Int`.
+Value: -1
+
+1 | typealias U<T> = T|Boolean
+                     ^^^^^^^^^
+at actual-constrained#result (file:///stage132-generic/actual-constrained.pkl)
+
+* Value is not of type `Int(this > 0)` because:
+  Type constraint `this > 0` violated.
+  Value: -1
+
+2 | result: U<Int(this > 0)> = -1
+                               ^^
+at actual-constrained#result (file:///stage132-generic/actual-constrained.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

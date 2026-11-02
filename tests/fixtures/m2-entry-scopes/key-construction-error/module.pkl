@@ -1,0 +1,3 @@
+res = new Mapping {
+  [new Listing { throw("key element") }] = "ok"
+}

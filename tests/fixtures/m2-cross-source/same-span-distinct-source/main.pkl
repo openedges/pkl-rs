@@ -1,0 +1,3 @@
+import "defs.pkl" as d
+typealias I = Int
+result: d.U<I> = "x"

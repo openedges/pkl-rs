@@ -260,3 +260,70 @@ fn varargs_metadata_retains_substituted_elements_without_value_checks() {
     );
     assert!(!resolved.noop());
 }
+
+#[test]
+fn normalized_generic_metadata_substitutes_each_lexical_invocation() {
+    let parameter = TypeCheck::Parameter {
+        block: 41,
+        name: "T".into(),
+    };
+    let original = TypeCheck::Nullable(Box::new(parameter));
+    let normalized = reference::normalize(&original, &"shared-control".into());
+    for actual in [TypeCheck::Int, TypeCheck::String] {
+        let mut environment = Environment::default();
+        environment
+            .type_arguments
+            .insert((41, "T".into()), actual.clone());
+        let substituted = normalized.substituted(&environment).unwrap();
+        let expected = reference::normalize(
+            &TypeCheck::Nullable(Box::new(actual)),
+            &"shared-control".into(),
+        );
+        assert!(!substituted.contains_parameter());
+        let normalized_result = reference::normalize(&substituted, &"shared-control".into());
+        assert_eq!(
+            reference::metadata_key(&normalized_result),
+            reference::metadata_key(&expected)
+        );
+    }
+    assert!(
+        normalized.contains_parameter(),
+        "reusable lexical template stays unbound"
+    );
+}
+
+#[test]
+fn shared_constraint_actuals_follow_each_lexical_invocation() {
+    let constraint = ConstraintCode {
+        section: None,
+        block: 42,
+        arguments: BTreeMap::from([(
+            "T".into(),
+            TypeCheck::Parameter {
+                block: 41,
+                name: "T".into(),
+            },
+        )]),
+        argument_sources: BTreeMap::new(),
+        span: Span::new(0, 4),
+        module_environment: false,
+        source: "this".into(),
+    };
+    let template = TypeCheck::Constrained {
+        base: Box::new(TypeCheck::Int),
+        base_span: Span::new(0, 0),
+        constraints: vec![constraint],
+    }
+    .shared();
+    for actual in [TypeCheck::Int, TypeCheck::String] {
+        let mut environment = Environment::default();
+        environment
+            .type_arguments
+            .insert((41, "T".into()), actual.clone());
+        let result = template.substituted(&environment).unwrap();
+        let TypeCheck::Constrained { constraints, .. } = result.resolved() else {
+            panic!("constraint remains executable")
+        };
+        assert!(constraints[0].arguments[&PklString::from("T")].equivalent(&actual));
+    }
+}

@@ -562,6 +562,7 @@ fn compile_reflection_annotations(
         active_type_parameters: BTreeMap::new(),
         constructor_parameters_bound: false,
         parameter_spans: BTreeMap::new(),
+        parameter_label_spans: BTreeMap::new(),
         argument_spans: BTreeMap::new(),
         function_counts: BTreeMap::new(),
         entry_counts: BTreeMap::new(),

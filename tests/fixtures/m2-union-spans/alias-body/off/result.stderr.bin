@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Int|String`, but got type `Boolean`.
+Value: true
+
+1 | typealias Choice = (Int|String)
+                        ^^^^^^^^^^
+at alias-body#result (file:///stage132-union/alias-body.pkl)
+
+2 | result: Choice = true
+                     ^^^^
+at alias-body#result (file:///stage132-union/alias-body.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

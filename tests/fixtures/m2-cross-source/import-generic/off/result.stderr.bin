@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Expected value of type `T|Boolean`, but got a different `List`.
+Value: List("x")
+
+1 | typealias U<T> = T|Boolean
+                     ^^^^^^^^^
+at main#result (file:///stage132-cross/import-generic/defs.pkl)
+
+* Value is not of type `List<Int>` because:
+  Expected value of type `Int`, but got type `String`.
+  Value: "x"
+
+2 | result: d.U<List<Int>> = List("x")
+                             ^^^^^^^^^
+at main#result (file:///stage132-cross/import-generic/main.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

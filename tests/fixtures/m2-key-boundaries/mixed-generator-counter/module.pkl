@@ -1,0 +1,1 @@
+res = new Mapping<unknown, Int> { [null] = 1; [("x")] = 1; for (i in List(1)) { [i + 1] = "bad" } }

@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Expected value of type `T|Boolean`, but got a different `String`.
+Value: "x"
+
+1 | typealias U<T> = /*é😀*/T|Boolean
+                            ^^^^^^^^^
+at main#result (file:///stage132-cross/unicode-inline-columns/defs.pkl)
+
+* Value is not of type `Int?` because:
+  Expected value of type `Int`, but got type `String`.
+  Value: "x"
+
+2 | result: d.U<(/*한😀*/Int?)> = "x"
+                                 ^^^
+at main#result (file:///stage132-cross/unicode-inline-columns/main.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)
