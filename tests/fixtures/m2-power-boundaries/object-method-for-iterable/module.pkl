@@ -1,0 +1,1 @@
+foo: Dynamic(this == new Dynamic { for (n in (new Dynamic { local function seq(x) = List(x + 1); result = seq(1) }).result) { n + 1 } })

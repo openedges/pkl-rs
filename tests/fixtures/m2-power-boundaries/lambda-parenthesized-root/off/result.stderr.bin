@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Type constraint `(x) -> x + 1 > 4` violated.
+Value: 1
+
+1 | foo: Int(((x) -> x + 1 > 4)) = 1
+              ^^^^^^^^^^^^^^^^
+at lambda-parenthesized-root#foo (file:///stage131-power/lambda-parenthesized-root.pkl)
+
+1 | foo: Int(((x) -> x + 1 > 4)) = 1
+                                   ^
+at lambda-parenthesized-root#foo (file:///stage131-power/lambda-parenthesized-root.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

@@ -1,0 +1,5 @@
+local people = new Mapping { ["Pigeon"] { age = 2 } }
+local limit = 1
+local seed = 4
+local nums = List(1)
+foo: Int(((people) { for (n in nums) { [[age > limit]] { age = seed + n } } }).toMap().values.first.age == 7) = 1

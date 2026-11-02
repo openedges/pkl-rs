@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Type constraint `this == new Dynamic { for (a in outerValues) { when (a > 0) { for (b in innerValues.take(1)) { a + b } } } }` violated.
+Value: new Dynamic {}
+
+3 | foo: Dynamic(this == new Dynamic { for (a in outerValues) { when (a > 0) { for (b in innerValues.take(1)) { a + b } } } })
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at generator-nested-when#foo (file:///stage131-power/generator-nested-when.pkl)
+
+3 | foo: Dynamic(this == new Dynamic { for (a in outerValues) { when (a > 0) { for (b in innerValues.take(1)) { a + b } } } })
+    ^^^
+at generator-nested-when#foo (file:///stage131-power/generator-nested-when.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

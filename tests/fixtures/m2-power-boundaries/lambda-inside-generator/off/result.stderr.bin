@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Type constraint `this == new Dynamic { for (x in list) { ((y) -> y + 1).apply(x) } }` violated.
+Value: new Dynamic {}
+
+2 | foo: Dynamic(this == new Dynamic { for (x in list) { ((y) -> y + 1).apply(x) } })
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at lambda-inside-generator#foo (file:///stage131-power/lambda-inside-generator.pkl)
+
+2 | foo: Dynamic(this == new Dynamic { for (x in list) { ((y) -> y + 1).apply(x) } })
+    ^^^
+at lambda-inside-generator#foo (file:///stage131-power/lambda-inside-generator.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

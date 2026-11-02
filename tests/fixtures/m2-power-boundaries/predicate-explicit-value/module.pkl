@@ -1,0 +1,4 @@
+local people = new Mapping { ["Pigeon"] { age = 2 } }
+local limit = 1
+local seed = 4
+foo: Int(((people) { [[age > limit]] = new Dynamic { age = seed + 1 } }).toMap().values.first.age == 7) = 1

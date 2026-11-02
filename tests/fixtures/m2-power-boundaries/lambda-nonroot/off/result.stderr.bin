@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Type constraint `fold(0, (a, b) -> a + b) == 5` violated.
+Value: List(1)
+
+1 | foo: List(fold(0, (a, b) -> a + b) == 5) = List(1)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at lambda-nonroot#foo (file:///stage131-power/lambda-nonroot.pkl)
+
+1 | foo: List(fold(0, (a, b) -> a + b) == 5) = List(1)
+                                               ^^^^^^^
+at lambda-nonroot#foo (file:///stage131-power/lambda-nonroot.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

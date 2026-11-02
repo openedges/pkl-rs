@@ -633,6 +633,15 @@ follows the pinned parser's literal classification while its inner expression
 remains observable. These rules affect complete constraint diagrams, including
 their value placement and whitespace.
 
+Visibility follows the closest Java parser boundary. A `for` iterable can be
+visible even inside a hidden outer body, while its body observations are hidden;
+a nearer nested boundary can change that decision. Member predicates suppress
+their descendants, but the synthesized whole amendment is governed by enclosing
+boundaries. Object methods inherit visibility; root and nested function literals
+follow the lambda rule. The Stage131 oracle covers these distinctions with
+assertions on and off. This filters rendered observations and does not change
+evaluation order.
+
 These mechanisms remain subject to the selected differential and lifecycle
 checks. Complete structural and function types, imported
 aliases, and the full language corpus remain M2 requirements.

@@ -2,7 +2,15 @@
 
 This project reimplements [Pkl](https://pkl-lang.org/) 0.32.0 in Rust. It aims to share one engine across native Rust, WebAssembly, and Node.js N-API, with automated compatibility checks against the Java implementation.
 
-The latest [Stage130 report](reports/m2/stage130-java-exception-renderer/README.md)
+The latest [Stage131 report](reports/m2/stage131-power-boundaries/README.md)
+records corrected power-assertion visibility: 34 Java observations and the
+original `typeConstraints11.pkl` CLI diagnostic now match. The complete local
+workspace exits zero with **1,790 passed, zero failed and 5 ignored across
+288 harnesses**. Native, Node and Chromium each match 6,078 Java results;
+Node and Chromium each pass 92 platform scenarios. Full M2/API, release-platform
+and performance requirements remain open.
+
+The preceding [Stage130 report](reports/m2/stage130-java-exception-renderer/README.md)
 adds a shared Java exception renderer checked against 54 graphs in LF and CRLF.
 The full local workspace records **1,789 passed, zero failed and five ignored
 across 287 harnesses**. Native, Node and Chromium each match 6,078 Java results;

@@ -1,5 +1,30 @@
 # M2 language evidence
 
+## Stage131 power-assertion boundaries and local checks
+
+The shared power-assertion renderer follows the selected Java generator,
+predicate, lambda and object-method boundaries. It matches all **34 Java
+observations across 17 programs** with assertions on and off, and the unchanged
+upstream `errors/power/typeConstraints11.pkl` now matches the complete Java CLI
+result. A separately acquired Stage130 baseline retains the original mismatch.
+
+The unchanged manifest distinguishes **71 unimplemented case execution contracts**
+from **430 requirements marked unimplemented**, alongside 42 partial and three
+implemented requirements. Its 4,442 ready cases are executable contracts, not
+passes; 815 cases have no requirement links. These counts match the manifest
+pinned by the successful freshness check, and do not recompute the historical
+strict full-completion gate.
+
+The full local workspace exits **0** with **1,790 passed, zero failed and
+5 ignored across 288 harnesses**; 13 nested child passes are excluded.
+Formatting, xtask, all-target Clippy, Wasm checking and manifest freshness pass.
+Native, Node and Chromium each match 6,078 Java results; Node and Chromium each
+pass 92 platform scenarios. These are bounded local results. Full language/API,
+release-platform and performance requirements remain open, and the full
+language inventory has not been replayed in this checkpoint.
+
+See [the Stage131 report](stage131-power-boundaries/README.md) for the original-case comparison, raw fixtures, failed attempts and exact evidence limits.
+
 ## Stage130 shared exception rendering and local checks
 
 Stage130 adds a shared throwable-graph renderer with full UTF-8/UTF-16 Java

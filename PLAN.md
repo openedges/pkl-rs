@@ -4,6 +4,14 @@
 
 ## 현재 상태
 
+Stage131에서 power assertion의 생성기·predicate·lambda·객체 메서드 경계 표시를 수정했습니다. Java **17개 프로그램 × on/off, 총 34개 관측**이 일치하며 원래 `errors/power/typeConstraints11.pkl`의 전체 CLI 결과도 일치합니다. 별도로 실행한 Stage130 기준의 불일치와 초기 실패는 보존합니다.
+
+전체 workspace는 실제 exit **0**, 독립 집계 **harness 288개·통과 1,790개·실패 0개·ignored 5개**이며 자식 반복 통과 13개는 제외합니다. format·xtask·Clippy·Wasm·목록 최신성 검사가 통과하고 Native·Node·Chromium은 각각 6,078개, Node·브라우저 시나리오는 각각 92개가 통과했습니다. [Stage131 보고서](reports/m2/stage131-power-boundaries/README.md)에 원시 증거와 집계·출처의 한계를 보존합니다.
+
+실행 계약의 미구현 71개와 요구사항 구현 상태의 미구현 430개는 서로 다른 수입니다. 요구사항 475개 중 구현 완료 표시는 3개, 부분 구현 42개이며, ready 실행 계약 4,442개도 호환 통과를 뜻하지 않습니다. 요구사항 연결이 없는 사례 815개는 그대로 남습니다. 현재 manifest와 성공한 최신성 검사의 입력 hash를 대조했으며 과거 strict gate 1,768개는 이번에 재계산하지 않았습니다.
+
+전체 언어 inventory는 이번 단계에서 다시 실행하지 않았습니다. 원래 사례의 요구사항 연결은 비어 있으며 기존 ignored·미구현·미연결 요구사항과 전체 M2·API·릴리스 플랫폼·성능 조건은 계속 미완료입니다. 다음에는 별도 복사본에서 확인한 모듈 간 generic 타입의 소스 소유권·구역 정체성과 객체 항목 이름·생성기 앞 항목의 방문 순서를 수정·통합합니다. 후속 실험 결과는 Stage131 통과 수에 합산하지 않습니다. 실제 실행 노드에 따른 내부 오류 스택과 typed catch 연결도 남아 있습니다.
+
 Stage130에서 Java throwable graph 렌더러와 Cargo jobserver FD 전달 수정을 통합했습니다. Java **54개 모델 × LF/CRLF**의 UTF-8·UTF-16 전체 결과를 비교했습니다. 전체 workspace는 실제 exit **0**, 독립 집계 **harness 287개·통과 1,789개·실패 0개·ignored 5개**이며 자식 반복 통과 13개는 제외합니다. Native·Node·Chromium은 각각 6,078개가 일치하고 Node·브라우저 시나리오는 각각 92개가 통과했습니다. [Stage130 보고서](reports/m2/stage130-java-exception-renderer/README.md)에 실패한 초기 시도, 원시 증거, 집계·소스 출처의 한계를 함께 보존합니다.
 
 실제 평가 노드 상태에 따른 Java 스택 생성, 호출자 프로필, typed bug payload와 내부 오류 catch 연결은 남아 있습니다. 기존 ignored·미구현·미연결 요구사항과 전체 M2·API·릴리스 플랫폼·성능 조건은 완료로 바꾸지 않습니다. 다음에는 별도 복사본에서 재현·검증 중인 power assertion의 생성기·람다·멤버 조건 표시 차이를 원본 계약으로 검증해 반영하고, 실행 노드별 상태를 사용하는 내부 오류 스택·catch 구현을 이어갑니다. 별도 복사본의 후속 결과는 Stage130의 workspace 수에 합산하지 않습니다.

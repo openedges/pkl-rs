@@ -198,14 +198,16 @@ fn expression_anchors(
     root: bool,
     anchors: &mut BTreeMap<Span, Option<usize>>,
 ) {
-    let mut work = vec![(expression, root)];
-    while let Some((expression, root)) = work.pop() {
+    let mut work = vec![(expression, root, true, None)];
+    while let Some((expression, root, visible, child_visibility)) = work.pop() {
         if let ExprKind::Parenthesized(inner) = &expression.kind {
             anchors.insert(expression.span, None);
-            work.push((inner, root));
+            work.push((inner, root, child_visibility.unwrap_or(visible), None));
             continue;
         }
         let mut children = Vec::new();
+        let mut scoped_children = Vec::new();
+        let child_visible = child_visibility.unwrap_or(visible);
         let mut anchor = Some(expression.span.start);
         match &expression.kind {
             ExprKind::Parenthesized(_) => unreachable!("handled above"),
@@ -219,11 +221,12 @@ fn expression_anchors(
             | ExprKind::EntryParent
             | ExprKind::TypeAlias { .. }
             | ExprKind::Class { .. } => anchor = None,
-            ExprKind::Function { body, .. } => {
+            ExprKind::Function { body, method, .. } => {
                 anchor = None;
-                if root {
-                    children.push(body.as_ref());
-                }
+                // Object methods are not FunctionLiteralExpr boundaries in
+                // the Java parser. Only lambda bodies reset visibility.
+                let body_visible = if *method { child_visible } else { root };
+                scoped_children.push((body.as_ref(), body_visible, None));
             }
             ExprKind::Let { value, body, .. } => {
                 anchor = None;
@@ -283,10 +286,10 @@ fn expression_anchors(
                 parent, members, ..
             } => {
                 children.extend(parent.iter().map(AsRef::as_ref));
-                member_expressions(members, &mut children);
+                member_expressions(members, child_visible, &mut scoped_children);
             }
             ExprKind::New { members, .. } | ExprKind::Annotation { members, .. } => {
-                member_expressions(members, &mut children);
+                member_expressions(members, child_visible, &mut scoped_children);
             }
             ExprKind::Name(_)
             | ExprKind::This
@@ -294,38 +297,73 @@ fn expression_anchors(
             | ExprKind::Module
             | ExprKind::Super => {}
         }
-        anchors.insert(expression.span, anchor);
-        work.extend(children.into_iter().rev().map(|child| (child, false)));
+        anchors.insert(expression.span, if visible { anchor } else { None });
+        work.extend(
+            scoped_children
+                .into_iter()
+                .rev()
+                .map(|(child, visible, child_visibility)| {
+                    (child, false, visible, child_visibility)
+                }),
+        );
+        work.extend(
+            children
+                .into_iter()
+                .rev()
+                .map(|child| (child, false, child_visible, None)),
+        );
     }
 }
 
-fn member_expressions<'a>(members: &'a [ObjectMember], expressions: &mut Vec<&'a Expr>) {
+fn member_expressions<'a>(
+    members: &'a [ObjectMember],
+    visible: bool,
+    expressions: &mut Vec<(&'a Expr, bool, Option<bool>)>,
+) {
     for member in members {
         match member {
-            ObjectMember::Property(member) => expressions.push(&member.expr),
+            ObjectMember::Property(member) => expressions.push((&member.expr, visible, None)),
             ObjectMember::Element { value, .. } | ObjectMember::Spread { value, .. } => {
-                expressions.push(value);
+                expressions.push((value, visible, None));
             }
-            ObjectMember::Entry { key, value, .. } => expressions.extend([key, value]),
+            ObjectMember::Entry { key, value, .. } => {
+                expressions.extend([(key, visible, None), (value, visible, None)]);
+            }
             ObjectMember::When {
                 condition,
                 then_members,
                 else_members,
                 ..
             } => {
-                expressions.push(condition);
-                member_expressions(then_members, expressions);
-                member_expressions(else_members, expressions);
+                expressions.push((condition, visible, None));
+                member_expressions(then_members, visible, expressions);
+                member_expressions(else_members, visible, expressions);
             }
             ObjectMember::For {
                 iterable, members, ..
             } => {
-                expressions.push(iterable);
-                member_expressions(members, expressions);
+                // Java stops at the nearest for-generator ancestor. Its
+                // iterable is visible even when an outer boundary hides it.
+                expressions.push((iterable, true, None));
+                member_expressions(members, false, expressions);
             }
             ObjectMember::Predicate {
-                condition, value, ..
-            } => expressions.extend([condition, value]),
+                condition,
+                value,
+                span,
+                ..
+            } => {
+                expressions.push((condition, false, None));
+                if value.span == *span {
+                    // The parser synthesizes an amendment expression spanning
+                    // the predicate itself. Java tests the parser node's parent,
+                    // so its value is visible subject to enclosing boundaries;
+                    // descendants still belong to the predicate body.
+                    expressions.push((value, visible, Some(false)));
+                } else {
+                    expressions.push((value, false, None));
+                }
+            }
         }
     }
 }

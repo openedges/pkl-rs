@@ -1,0 +1,20 @@
+–– Pkl Error ––
+Type constraint `(x) -> (new Dynamic { local function plus(y) = y + 1; result = plus(x) }).result == 7` violated.
+Value: 1
+
+    (x) -> (new Dynamic { local function plus(y) = y + 1; result = plus(x) }).result == 7
+            │                                      │ │             │    │     │      │
+            new Dynamic { result = 2 }             │ 2             2    1     2      false
+                                                   1
+
+1 | foo: Int((x) -> (new Dynamic { local function plus(y) = y + 1; result = plus(x) }).result == 7) = 1
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at object-method-root-lambda#foo (file:///stage131-power/object-method-root-lambda.pkl)
+
+1 | foo: Int((x) -> (new Dynamic { local function plus(y) = y + 1; result = plus(x) }).result == 7) = 1
+                                                                                                      ^
+at object-method-root-lambda#foo (file:///stage131-power/object-method-root-lambda.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

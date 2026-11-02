@@ -1,0 +1,22 @@
+–– Pkl Error ––
+Type constraint `((people) { [[age > limit]] = new Dynamic { age = seed + 1 } }).toMap().values.first.age == 7` violated.
+Value: 1
+
+    ((people) { [[age > limit]] = new Dynamic { age = seed + 1 } }).toMap().values.first.age == 7
+     ││                                                             │       │      │     │   │
+     │new Mapping { ["Pigeon"] { age = 2 } }                        │       │      │     5   false
+     new Mapping { ["Pigeon"] { age = 5 } }                         │       │      new Dynamic { age = 5 }
+                                                                    │       List(new Dynamic { age = 5 })
+                                                                    Map("Pigeon", new Dynamic { age = 5 })
+
+4 | foo: Int(((people) { [[age > limit]] = new Dynamic { age = seed + 1 } }).toMap().values.first.age == 7) = 1
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at predicate-explicit-value#foo (file:///stage131-power/predicate-explicit-value.pkl)
+
+4 | foo: Int(((people) { [[age > limit]] = new Dynamic { age = seed + 1 } }).toMap().values.first.age == 7) = 1
+                                                                                                              ^
+at predicate-explicit-value#foo (file:///stage131-power/predicate-explicit-value.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

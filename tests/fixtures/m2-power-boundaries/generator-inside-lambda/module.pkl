@@ -1,0 +1,2 @@
+local list = List(1)
+foo: Int(((x) -> (new Dynamic { for (n in list) { n + x } }).toList().length).apply(this) == 3) = 1

@@ -1,0 +1,2 @@
+local list = List(1)
+foo: Dynamic(this == new Dynamic { for (x in list) { ((y) -> y + 1).apply(x) } })

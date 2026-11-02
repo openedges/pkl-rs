@@ -1,0 +1,21 @@
+–– Pkl Error ––
+Type constraint `this == new Dynamic { for (elem in list.take(1)) { elem + 1 } }` violated.
+Value: new Dynamic {}
+
+    this == new Dynamic { for (elem in list.take(1)) { elem + 1 } }
+    │    │  │                          │    │
+    │    │  new Dynamic { 2 }          │    List(1)
+    │    false                         List(1, 2)
+    new Dynamic {}
+
+2 | foo: Dynamic(this == new Dynamic { for (elem in list.take(1)) { elem + 1 } })
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at generator-iterable-call#foo (file:///stage131-power/generator-iterable-call.pkl)
+
+2 | foo: Dynamic(this == new Dynamic { for (elem in list.take(1)) { elem + 1 } })
+    ^^^
+at generator-iterable-call#foo (file:///stage131-power/generator-iterable-call.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

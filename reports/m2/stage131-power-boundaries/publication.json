@@ -1,0 +1,42 @@
+{
+  "complete": true,
+  "errors": [],
+  "started_epoch": 1793612558.3444679,
+  "source_members": 7243,
+  "source_bytes": 221569481,
+  "excludes": [
+    "Cargo caches and selected executable, N-API and Wasm product bodies",
+    "JDK/JAR, browser installations and private Java native-library caches",
+    "Old evidence archive bodies",
+    "Unrelated original-workspace resources; exact original source and fixture selected separately"
+  ],
+  "omitted_paths": [
+    "target/m2/stage131-baseline-01/acquisition/home/Library/Caches",
+    "target/m2/stage131-baseline-01/acquisition/language_probe",
+    "target/m2/stage131-candidate-01/acquisition/language_probe",
+    "target/m2/stage131-original-01/cases/7301ae25372cf8542713336c/java/private-state/home/Library/Caches",
+    "target/m2/stage131-original-baseline-01/cases/7301ae25372cf8542713336c/java/private-state/home/Library/Caches",
+    "target/m2/stage131-platforms-01/experiment/pkl_napi.node",
+    "target/m2/stage131-platforms-01/experiment/semantics_probe",
+    "target/m2/stage131-platforms-01/experiment/wasm/pkl_wasm_bg.wasm",
+    "target/m2/stage131-power-oracle-01/acquisition/home/Library/Caches",
+    "target/m2/stage131-power-oracle-02/acquisition/home/Library/Caches",
+    "target/m2/stage131-power-oracle-03/acquisition/home/Library/Caches",
+    "target/m2/stage131-power-oracle-04/acquisition/home/Library/Caches",
+    "target/m2/stage131-power-oracle-05/acquisition/home/Library/Caches",
+    "target/m2/stage131-production-original-02/cases/7301ae25372cf8542713336c/java/private-state/home/Library/Caches",
+    "target/m2/stage131-production-original-03/cases/7301ae25372cf8542713336c/java/private-state/home/Library/Caches"
+  ],
+  "full_source_dependency_closure": false,
+  "compatibility_claim": false,
+  "scope": "Archive integrity and publication only; execution results remain acquisition-specific.",
+  "archive": {
+    "path": "target/m2/stage131-publication-01/stage131-evidence.tar.gz",
+    "bytes": 29728204,
+    "sha256": "96d31c672d7be2819d303605ec137bd342a99f73da27fcb2c6f2eaaba132e8b0",
+    "mode": 420
+  },
+  "inventory_sha256": "fc6218ae707a36a24d35eb4a8d0b09940c1d8d200a729d7e855b5284ec5c48b6",
+  "source_bookends_stable": true,
+  "finished_epoch": 1793612569.178756
+}

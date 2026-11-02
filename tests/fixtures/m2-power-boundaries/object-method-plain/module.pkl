@@ -1,0 +1,1 @@
+foo: Int((new Dynamic { local function plus(x) = x + 1; result = plus(1) }).result == 7) = 1

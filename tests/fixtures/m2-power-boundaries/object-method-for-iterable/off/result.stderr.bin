@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Type constraint `this == new Dynamic { for (n in (new Dynamic { local function seq(x) = List(x + 1); result = seq(1) }).result) { n + 1 } }` violated.
+Value: new Dynamic {}
+
+1 | foo: Dynamic(this == new Dynamic { for (n in (new Dynamic { local function seq(x) = List(x + 1); result = seq(1) }).result) { n + 1 } })
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at object-method-for-iterable#foo (file:///stage131-power/object-method-for-iterable.pkl)
+
+1 | foo: Dynamic(this == new Dynamic { for (n in (new Dynamic { local function seq(x) = List(x + 1); result = seq(1) }).result) { n + 1 } })
+    ^^^
+at object-method-for-iterable#foo (file:///stage131-power/object-method-for-iterable.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Type constraint `(new Dynamic { local function plus(x) = x + 1; result = plus(1) }).result == 7` violated.
+Value: 1
+
+1 | foo: Int((new Dynamic { local function plus(x) = x + 1; result = plus(1) }).result == 7) = 1
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at object-method-plain#foo (file:///stage131-power/object-method-plain.pkl)
+
+1 | foo: Int((new Dynamic { local function plus(x) = x + 1; result = plus(1) }).result == 7) = 1
+                                                                                               ^
+at object-method-plain#foo (file:///stage131-power/object-method-plain.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

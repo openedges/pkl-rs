@@ -1,0 +1,437 @@
+{
+  "schema": 1,
+  "stage": 131,
+  "title": "Power-assertion visibility at generator, predicate and lambda boundaries",
+  "status": "local-checkpoint-verified; full-M2-open",
+  "compatibility_baseline": "Pkl 0.32.0",
+  "source_parent": "1da918c5243a693ed3e249cd256f132eb854fde3",
+  "host": "macOS 27 arm64; Rust 1.98.1; Python 3.14.8; Temurin 21.0.12.1+1",
+  "implementation_changes": [
+    "Track closest parser visibility boundaries for generator iterable/body and nested lambdas",
+    "Separate synthesized predicate amendment visibility from its descendants",
+    "Keep object-method observation visibility distinct from function literals"
+  ],
+  "sources": [
+    {
+      "path": "crates/pkl-runtime/src/power_assertions.rs",
+      "bytes": 19260,
+      "sha256": "82476230747dd72f4d2e32ec6481ee54863fac7685163e7b418cb191b21814e8",
+      "mode": 420
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_power_boundaries_oracle.rs",
+      "bytes": 3620,
+      "sha256": "a2219447da5d62abd5c0abbe2dc6a3aaaf511928be7bad61a452e3dce51702fb",
+      "mode": 420
+    },
+    {
+      "path": "tools/M2PowerAssertionOracle.java",
+      "bytes": 2418,
+      "sha256": "6e3b54330bfa711456c3034cfc537235ddf13c491844452a0a251f05a6fe2179",
+      "mode": 420
+    },
+    {
+      "path": "README.md",
+      "bytes": 19921,
+      "sha256": "ddf7fce042302926cfee5717d8c929bccb8da3d7578d8bc4792d041031d2c6ee",
+      "mode": 420
+    },
+    {
+      "path": "PLAN.md",
+      "bytes": 516977,
+      "sha256": "54121ca6e64b1e726490b1732203b168848dccfef6c82667dcd57d8e04cd4f07",
+      "mode": 420
+    },
+    {
+      "path": "TESTING.md",
+      "bytes": 126265,
+      "sha256": "e08ff94a725f11dc7172d0e9147287acd10ab920e0d2d9df548b075a4304ce05",
+      "mode": 420
+    },
+    {
+      "path": "docs/architecture.md",
+      "bytes": 118800,
+      "sha256": "e7ca57039c689065da5c819909e417094b89506a0ccc721457a5aec160dc3339",
+      "mode": 420
+    },
+    {
+      "path": "docs/m2-language.md",
+      "bytes": 138483,
+      "sha256": "084841d1271ca743c5a5c99b526fcad47bab0a7e71d9c641b90e55b2fb66951f",
+      "mode": 420
+    },
+    {
+      "path": "reports/m2/README.md",
+      "bytes": 407741,
+      "sha256": "a9be78276b6ac359fef0a63044f6434e0518ee6e1fcc70eb2ca2a67087d04adc",
+      "mode": 420
+    },
+    {
+      "path": "reports/m2/stage131-power-boundaries/README.md",
+      "bytes": 7773,
+      "sha256": "6e42cdb3fac86802fee82475db406c3e56f75a76fb68ea51a1ddfd02b5bf106a",
+      "mode": 420
+    }
+  ],
+  "fixture_inventory": {
+    "path_prefix": "tests/fixtures/m2-power-boundaries/",
+    "raw_field_files": 306,
+    "input_files": 69,
+    "captured_files": 375,
+    "readme_files": 1,
+    "exact_identities_in_archive": "STAGE131_INVENTORY.json",
+    "archive_inventory_sha256": "fc6218ae707a36a24d35eb4a8d0b09940c1d8d200a729d7e855b5284ec5c48b6"
+  },
+  "published_evidence": {
+    "path": "reports/m2/stage131-power-boundaries/stage131-evidence.tar.gz",
+    "bytes": 29728204,
+    "sha256": "96d31c672d7be2819d303605ec137bd342a99f73da27fcb2c6f2eaaba132e8b0",
+    "mode": 420
+  },
+  "publication_receipt": {
+    "path": "reports/m2/stage131-power-boundaries/publication.json",
+    "bytes": 2256,
+    "sha256": "3f8cd6a1dba0298141601f6840b349840b3ac6fabd5343527cda1d0ec6448f1a",
+    "mode": 420
+  },
+  "archive_readback": {
+    "path": "reports/m2/stage131-power-boundaries/archive-readback.json",
+    "bytes": 476,
+    "sha256": "fcdb08b4cb452fa27a15b6da8bc4c5659c7f9e096ec38e4ebc4c456a57121585",
+    "mode": 420
+  },
+  "published_copy_receipt": {
+    "path": "reports/m2/stage131-power-boundaries/published-copy.json",
+    "bytes": 1650,
+    "sha256": "5e0b600dcfa3ca0177effbccaff2bd3478d4c269cfd7bf1791eb8cb683303b3d",
+    "mode": 420
+  },
+  "archive_logical_members": 7244,
+  "archive_source_members": 7243,
+  "archive_source_bytes": 221569481,
+  "archive_excludes": [
+    "Cargo caches and selected executable, N-API and Wasm product bodies",
+    "JDK/JAR, browser installations and private Java native-library caches",
+    "Old evidence archive bodies",
+    "Unrelated original-workspace resources; exact original source and fixture selected separately"
+  ],
+  "archive_omitted_paths": [
+    "target/m2/stage131-baseline-01/acquisition/home/Library/Caches",
+    "target/m2/stage131-baseline-01/acquisition/language_probe",
+    "target/m2/stage131-candidate-01/acquisition/language_probe",
+    "target/m2/stage131-original-01/cases/7301ae25372cf8542713336c/java/private-state/home/Library/Caches",
+    "target/m2/stage131-original-baseline-01/cases/7301ae25372cf8542713336c/java/private-state/home/Library/Caches",
+    "target/m2/stage131-platforms-01/experiment/pkl_napi.node",
+    "target/m2/stage131-platforms-01/experiment/semantics_probe",
+    "target/m2/stage131-platforms-01/experiment/wasm/pkl_wasm_bg.wasm",
+    "target/m2/stage131-power-oracle-01/acquisition/home/Library/Caches",
+    "target/m2/stage131-power-oracle-02/acquisition/home/Library/Caches",
+    "target/m2/stage131-power-oracle-03/acquisition/home/Library/Caches",
+    "target/m2/stage131-power-oracle-04/acquisition/home/Library/Caches",
+    "target/m2/stage131-power-oracle-05/acquisition/home/Library/Caches",
+    "target/m2/stage131-production-original-02/cases/7301ae25372cf8542713336c/java/private-state/home/Library/Caches",
+    "target/m2/stage131-production-original-03/cases/7301ae25372cf8542713336c/java/private-state/home/Library/Caches"
+  ],
+  "full_workspace_test": {
+    "command": [
+      "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+      "test",
+      "--workspace",
+      "--locked",
+      "--message-format=json"
+    ],
+    "complete": true,
+    "cargo_exit_code": 0,
+    "completed_harnesses": 288,
+    "completed_tests": {
+      "passed": 1790,
+      "failed": 0,
+      "ignored": 5,
+      "measured": 0,
+      "filtered": 0
+    },
+    "nested_child_passes_excluded": 13,
+    "test_executables": 286,
+    "doctest_crates": [
+      "pkl_runtime",
+      "pkl_wasm"
+    ],
+    "examples_compiled_not_executed": 26,
+    "all_required_pass": false,
+    "elapsed_seconds": 4221.975095000118,
+    "disk_floor_bytes": 1073741824,
+    "minimum_sampled_free_bytes": 10736803840,
+    "peak_sampled_owned_rss_bytes": 578240512,
+    "stop_reason": null,
+    "source_bookends_stable": true,
+    "aggregate_qualification": "aggregate counts under pinned child-source and marker assumptions",
+    "exact_per_test_identity_proven": false,
+    "absence_of_interleaving_proven": false,
+    "targeted_counts_added": false
+  },
+  "artifact_observation": {
+    "products": 312,
+    "cargo_rebuilt_products": 306,
+    "cargo_cached_products": 6,
+    "current_wrapper_signature_matches": 311,
+    "current_wrapper_gaps": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage131-cargo-01/debug/deps/xtask-1627471670fafdf4"
+    ],
+    "new_signature_commands_run": false,
+    "atomic_snapshot": false,
+    "complete_inherited_cache_provenance": false
+  },
+  "java_expression_comparison": {
+    "programs": 17,
+    "observations": 34,
+    "profiles": [
+      "on",
+      "off"
+    ],
+    "statuses": {
+      "error": 32,
+      "success": 2
+    },
+    "whole_utf8_and_utf16_compared": true,
+    "text_pairs": 136,
+    "java_heap_mib": 512,
+    "oracle_jar_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "copied_inputs_acquisition_bookends_stable": true,
+    "java04_raw_fields_equal": 306,
+    "unpaired_surrogate_transport_established": false,
+    "java_exception_class_comparison_claimed": false,
+    "focused_rust_tests": 14,
+    "filtered_library_tests": 5,
+    "filtered_library_unexecuted": 207,
+    "focused_counts_added_to_workspace": false
+  },
+  "original_cli_comparison": {
+    "case": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/power/typeConstraints11.pkl",
+    "upstream_source_unchanged": true,
+    "baseline_status": "mismatch",
+    "production_status": "pass",
+    "raw_channels_match": true,
+    "java_exit": 1,
+    "rust_exit": 1,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "933f468672871a53ebcaa7404d8fa82d8b8c3b2fbae3ec32af2a6d79d2eb89b4",
+    "java_files": {},
+    "rust_files": {},
+    "java_workspace_changes": {},
+    "rust_workspace_changes": {},
+    "requirements": [],
+    "definitive_receipt": "target/m2/stage131-production-original-03/report.json"
+  },
+  "fresh_other_checks": {
+    "targeted": {
+      "complete": true,
+      "exit_code": 0,
+      "receipt_in_archive": "target/m2/stage131-targeted-01/report.json",
+      "argv": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "test",
+        "-p",
+        "pkl-runtime",
+        "--locked",
+        "--test",
+        "m2_power_boundaries_oracle",
+        "--test",
+        "m2_power_observation_oracle",
+        "--test",
+        "m2_constraint_slots_runtime",
+        "--test",
+        "m2_original_diagnostics_stage113"
+      ]
+    },
+    "power_units": {
+      "complete": true,
+      "exit_code": 0,
+      "receipt_in_archive": "target/m2/stage131-power-unit-01/report.json",
+      "argv": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "test",
+        "-p",
+        "pkl-runtime",
+        "--locked",
+        "--lib",
+        "power_assertions::tests"
+      ]
+    },
+    "xtask": {
+      "complete": true,
+      "exit_code": 0,
+      "receipt_in_archive": "target/m2/stage131-xtask-01/report.json",
+      "argv": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "xtask",
+        "verify"
+      ]
+    },
+    "format": {
+      "complete": true,
+      "exit_code": 0,
+      "receipt_in_archive": "target/m2/stage131-format-01/report.json",
+      "argv": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ]
+    },
+    "clippy": {
+      "complete": true,
+      "exit_code": 0,
+      "receipt_in_archive": "target/m2/stage131-clippy-01/report.json",
+      "argv": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ]
+    },
+    "wasm_runtime_check": {
+      "complete": true,
+      "exit_code": 0,
+      "receipt_in_archive": "target/m2/stage131-wasm-check-01/report.json",
+      "argv": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ]
+    },
+    "manifest_freshness": {
+      "complete": true,
+      "exit_code": 0,
+      "receipt_in_archive": "target/m2/stage131-manifest-01/report.json",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "tools/m2_manifest.py",
+        "--check"
+      ]
+    }
+  },
+  "platform_experiment": {
+    "complete": true,
+    "strict_status": "pass",
+    "contract_status": "pass",
+    "oracle_matches": {
+      "rust": 6078,
+      "node": 6078,
+      "browser": 6078
+    },
+    "scenario_counts": {
+      "node": 92,
+      "browser": 92
+    },
+    "known_gaps": [],
+    "sources_missing_independent_supervisor_bookends": 0,
+    "oracle_alias_acquisition_identity_established": true,
+    "overlaps_workspace_execution": true,
+    "performance_evidence": false,
+    "new_power_matrix_executed_through_public_bindings": false
+  },
+  "preserved_attempts": {
+    "java01": "Four of 24 observations are parser failures caused by reserved identifiers; corrected acquisitions separate",
+    "isolated_v1": "Predicate synthesized whole amendment incorrectly hidden; test exit 101 retained",
+    "java04": "Copied input acquisition bookends missing; Java05 added bookends and reproduced 306 raw fields",
+    "production_original01": "Driver derived /usr/release from /usr/bin/java; failed before evaluation",
+    "production_original02": "Default Java launcher capture retained; original03 explicitly pins selected JDK",
+    "isolated_builds": "Earlier missing auxiliary build inputs and compiler failures retained with original raw output"
+  },
+  "receipts_in_archive": {
+    "java": "target/m2/stage131-power-oracle-05/report.json",
+    "java_readback": "target/m2/stage131-power-oracle-readback-02/report.json",
+    "workspace": "target/m2/stage131-workspace-01/report.json",
+    "workspace_readback": "target/m2/stage131-workspace-readback-01/report.json",
+    "artifact_readback": "target/m2/stage131-artifacts-01/report.json",
+    "platforms": "target/m2/stage131-platforms-01/report.json",
+    "platform_readback": "target/m2/stage131-platforms-readback-01/report.json",
+    "reviews": "target/m2/stage131-reviews-01/report.json"
+  },
+  "inventory_accounting_readback": {
+    "complete": true,
+    "scope": "Read-only inventory state count and exact Stage131 manifest-check input identity join; no generation, replay, mapping change, or strict gate recomputation.",
+    "manifest": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/compatibility/m2-language.json",
+      "bytes": 6833023,
+      "sha256": "dd2c9f607cb67bb76277a6c8804ce4f35d8a041a467f49e09843cdd5dde0051a"
+    },
+    "requirement_count": 475,
+    "requirement_implementation_states": {
+      "partial": 42,
+      "unimplemented": 430,
+      "implemented": 3
+    },
+    "requirement_test_mapping_states": {
+      "partial": 42,
+      "unmapped": 430,
+      "mapped": 3
+    },
+    "case_count": 4545,
+    "case_execution_states": {
+      "ready": 4442,
+      "unimplemented": 71,
+      "unmapped": 32
+    },
+    "cases_with_empty_requirement_links": 815,
+    "all_rows_required": true,
+    "manifest_check": {
+      "report_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage131-manifest-01/report.json",
+      "report_sha256": "6da4791aa4936a8bd918d12a55e089bb9fb0b37f62afeed60453db3b46698781",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "tools/m2_manifest.py",
+        "--check"
+      ],
+      "complete": true,
+      "exit_code": 0,
+      "source_bookends_stable": true,
+      "input_before": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/compatibility/m2-language.json",
+        "bytes": 6833023,
+        "sha256": "dd2c9f607cb67bb76277a6c8804ce4f35d8a041a467f49e09843cdd5dde0051a"
+      },
+      "input_after": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/compatibility/m2-language.json",
+        "bytes": 6833023,
+        "sha256": "dd2c9f607cb67bb76277a6c8804ce4f35d8a041a467f49e09843cdd5dde0051a"
+      },
+      "current_manifest_matches_both": true
+    },
+    "interpretation": "The 71 unimplemented cases are case execution/adapter contracts; the 430 unimplemented requirements are requirement implementation states. Ready is not an execution pass. Empty case links are not a standalone count of unmet gate conditions.",
+    "historical_strict_gate_1768_recomputed": false,
+    "fresh_execution_or_replay": false
+  },
+  "provenance": {
+    "source_bookends_stable": true,
+    "complete_compiler_runtime_rustdoc_dependency_closure": false,
+    "archive_integrity_is_not_execution_verification": true,
+    "inherited_environment_fully_snapshotted": false,
+    "archive_reader_algorithm_reused": "Stage130 independent reader; only stage inventory token and docstring changed"
+  },
+  "full_language_inventory_replayed": false,
+  "full_glob_inventory_replayed": false,
+  "full_M2_complete": false,
+  "performance_targets_evaluated": false,
+  "release_platforms_verified": false,
+  "hosted_ci_claimed": false,
+  "stage132_or_stage133_isolated_work_included": false,
+  "remaining_required_scope": [
+    "Ignored tests remain non-passes",
+    "Cross-source generic type ownership and identity, object entry names and generator prefix visitation",
+    "Actual execution-node Java stack projection, caller profiles, typed bug payloads and internal-error catch integration",
+    "Full language/API inventories and unmapped or unimplemented requirements",
+    "Complete compiler/runtime provenance, release-platform execution and speed/memory targets"
+  ]
+}

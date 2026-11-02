@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Type constraint `((people) { [[(new Dynamic { for (n in nums) { n + 1 } }).toList().length > 0]] { age = 5 } }).toMap().values.first.age == 7` violated.
+Value: 1
+
+3 | foo: Int(((people) { [[(new Dynamic { for (n in nums) { n + 1 } }).toList().length > 0]] { age = 5 } }).toMap().values.first.age == 7) = 1
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at predicate-generator#foo (file:///stage131-power/predicate-generator.pkl)
+
+3 | foo: Int(((people) { [[(new Dynamic { for (n in nums) { n + 1 } }).toList().length > 0]] { age = 5 } }).toMap().values.first.age == 7) = 1
+                                                                                                                                             ^
+at predicate-generator#foo (file:///stage131-power/predicate-generator.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Type constraint `((people) { for (n in nums) { [[age > limit]] { age = seed + n } } }).toMap().values.first.age == 7` violated.
+Value: 1
+
+5 | foo: Int(((people) { for (n in nums) { [[age > limit]] { age = seed + n } } }).toMap().values.first.age == 7) = 1
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at predicate-in-outer-for#foo (file:///stage131-power/predicate-in-outer-for.pkl)
+
+5 | foo: Int(((people) { for (n in nums) { [[age > limit]] { age = seed + n } } }).toMap().values.first.age == 7) = 1
+                                                                                                                    ^
+at predicate-in-outer-for#foo (file:///stage131-power/predicate-in-outer-for.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)
