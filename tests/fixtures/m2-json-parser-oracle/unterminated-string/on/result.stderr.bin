@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Error parsing JSON document.
+
+3 | result = parser.parse(#""abc"#)
+             ^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage139-json/unterminated-string/main.pkl)
+
+Unexpected end of input at 1:5
+
+4 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage139-json/unterminated-string/main.pkl)

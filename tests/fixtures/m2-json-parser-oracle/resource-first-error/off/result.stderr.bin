@@ -1,0 +1,14 @@
+–– Pkl Error ––
+resource-text
+
+3 | result = parser.parse(new Resource { text = throw("resource-text") })
+                                                ^^^^^^^^^^^^^^^^^^^^^^
+at main#result.text (file:///stage139-json/resource-first-error/main.pkl)
+
+3 | result = parser.parse(new Resource { text = throw("resource-text") })
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage139-json/resource-first-error/main.pkl)
+
+4 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage139-json/resource-first-error/main.pkl)

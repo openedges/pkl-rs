@@ -1,0 +1,5 @@
+import "pkl:json"
+local parser = new json.Parser {}
+local v = parser.parse(#"{"\uD800":42}"#)
+result = v.toMap()[parser.parse(#""\uD800""#)]
+output { text = result.toString() }

@@ -160,7 +160,7 @@ fn append_members(
     parsed: &crate::syntax::Module,
     power_assertions: bool,
 ) -> Result<UnitId, RuntimeError> {
-    if matches!(uri, "pkl:reflect" | "pkl:semver") {
+    if matches!(uri, "pkl:reflect" | "pkl:semver" | "pkl:json") {
         // Compile the actual module, including distinct class/property and
         // method namespaces. External bodies bind in the shared compiler.
         // Publish the singleton before recursively forcing its constants, as
@@ -187,7 +187,7 @@ fn append_members(
     // bodies are bound below; they are not rewritten into Pkl source strings.
     let mut header = parsed.clone();
     // Pure Pkl declarations keep their actual bodies, annotations, class identity
-    // and source owners. The JSON parser's external binding remains explicit.
+    // and source owners. JSON uses the full authored branch above.
     header.members.retain(|member| {
         (matches!(uri, "pkl:json" | "pkl:yaml")
             && matches!(

@@ -1,0 +1,4 @@
+import "pkl:json"
+local parser = new json.Parser {}
+result = parser.parse("[1,\r\n]")
+output { text = result.toString() }

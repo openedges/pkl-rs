@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Converter path `a..b` has invalid syntax.
+
+4 | result = broken.parse("!")
+             ^^^^^^^^^^^^^^^^^
+at main#result (file:///stage139-json/mapping-versus-converter/main.pkl)
+
+5 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage139-json/mapping-versus-converter/main.pkl)

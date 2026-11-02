@@ -1,0 +1,53 @@
+{
+  "complete": true,
+  "scope": "Finite raw evidence publication; not a complete source/compiler/runtime restoration closure",
+  "base_head": "3f1939f873f5617303525ca80b9bb4cbc05c9c58",
+  "archive_member_count": 5910,
+  "copy_hashes_match": true,
+  "files": [
+    {
+      "path": "reports/m2/stage139-json-parser/evidence.tar.gz",
+      "bytes": 36307521,
+      "sha256": "1b90a55183ffb6a30b211507965d5328835daa7810a56f4e55836f83d5b1d586",
+      "mode": 420
+    },
+    {
+      "path": "reports/m2/stage139-json-parser/publisher.json",
+      "bytes": 5621,
+      "sha256": "8c0d14bea44794b42556f1529304853c84413dbc33955c63eab11255b9e83a42",
+      "mode": 420
+    },
+    {
+      "path": "reports/m2/stage139-json-parser/members.json",
+      "bytes": 1442247,
+      "sha256": "6fddb61da870c35850dec166b78e2db5abbdf81da755dd7bad7d6fba5c64af5a",
+      "mode": 420
+    },
+    {
+      "path": "reports/m2/stage139-json-parser/publication-inputs-before.json",
+      "bytes": 2591214,
+      "sha256": "550cace35e0807a48057ba39a46cdb49fc61ca10d5ff507aee4bfaab1444a08e",
+      "mode": 420
+    },
+    {
+      "path": "reports/m2/stage139-json-parser/publication-inputs-after.json",
+      "bytes": 2591214,
+      "sha256": "550cace35e0807a48057ba39a46cdb49fc61ca10d5ff507aee4bfaab1444a08e",
+      "mode": 420
+    },
+    {
+      "path": "reports/m2/stage139-json-parser/archive-readback.json",
+      "bytes": 1271,
+      "sha256": "7eec24bc55779b15a67344118b297630d7e46d1e951890a2d2696892086497e0",
+      "mode": 420
+    },
+    {
+      "path": "reports/m2/stage139-json-parser/members-verified.json",
+      "bytes": 1371095,
+      "sha256": "743485e6b554b276b51d4940a93621504b2b2052fc53f2579d3717d6327a5300",
+      "mode": 420
+    }
+  ],
+  "source_descriptor": "source-files.json",
+  "source_descriptor_sha256": "614206f7e6dd8f53d7614bfd3bb81d0b476d07f6f1e390d2c64f8146f552c542"
+}

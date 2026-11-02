@@ -1,0 +1,4 @@
+import "pkl:json"
+local parser = new json.Parser { converters { ["^[0]"] = (_) -> 99 } }
+result = parser.parse(#"[1]"#)[0]
+output { text = result.toString() }

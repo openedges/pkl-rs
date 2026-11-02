@@ -1,5 +1,8 @@
 # pkl-rs
 
+The Stage139 JSON Parser checkpoint matches 108 Java observations and five registered original CLI cases. Its focused native run passed 47 tests; the full workspace passed 1,886 tests with five ignored across 305 harnesses, excluding 13 nested child passes from the independent aggregate. A bounded M1 run matched 6,078 results per Native, Node and Chromium target. Full M2/API, release-platform and performance requirements remain open. See the [Stage139 report](reports/m2/stage139-json-parser/README.md) for the evidence and limits.
+
+
 Stage137 extends module diagnostics and authored semver. The shared runtime adds standard module-key profiles and loads the authored `pkl:semver` module; `ModuleKeyKind` has three new public variants, so downstream exhaustive matches must be updated. Focused checks match 48 Java observations and six original CLI cases, and a bounded M1 run records 6,078 matches per target. The full workspace passed 1,872 tests with five ignored across 302 harnesses; the independent aggregate readback excludes 13 nested child passes. Full M2/API, release-platform and performance requirements remain open. See the [Stage137 report](reports/m2/stage137-module-diagnostics-semver/README.md) for raw evidence and remaining limits.
 
 

@@ -1,0 +1,4 @@
+import "pkl:json"
+local parser = new json.Parser { converters { [Int] = (_) -> 8; ["^x"] = (_) -> 9 } }
+result = parser.parse(#"{"x":1}"#).x
+output { text = result.toString() }

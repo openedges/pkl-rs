@@ -700,13 +700,31 @@ impl Compiler<'_> {
                         else {
                             unreachable!()
                         };
-                        if let Some(ty) = return_type {
+                        // AstBuilder disables class/module method return checks
+                        // in trusted stdlib modules outside Java's test mode.
+                        // ObjectMethodNode keeps its check even inside stdlib;
+                        // super_method_allowed is the existing declaration-context
+                        // distinction (false for object/amending-module methods).
+                        // Keep authored signatures, inferred parents and argument
+                        // checks; URI spelling alone never grants this policy.
+                        let check_return_type = !(*method
+                            && self.resolved.standard_library
+                            && self.super_method_allowed);
+                        if check_return_type && let Some(ty) = return_type {
                             output.push_at(
                                 Instruction::CheckType(self.compile_type(ty)?),
                                 self.type_source_span(ty),
                             );
                         }
                         output.push(Instruction::Return);
+                        // The declaration/signature is authored, but Java's
+                        // external JSON body has an unavailable source section.
+                        // Keep the authored signature's own locations.
+                        for index in 0..output.len() {
+                            if matches!(output[index], Instruction::JsonParse) {
+                                output.spans[index] = None;
+                            }
+                        }
                         let instructions = std::mem::replace(output, parent);
                         let block = self.block(
                             instructions,
@@ -1809,5 +1827,64 @@ mod tests {
                 }
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod stdlib_return_policy_tests {
+    use super::super::*;
+
+    fn done(vm: &mut Vm) -> Result<Value, RuntimeError> {
+        for _ in 0..10_000 {
+            match vm.poll(1_000) {
+                VmPoll::Ready(value) => return value,
+                VmPoll::Yielded => {}
+                other => panic!("unexpected return-policy effect: {other:?}"),
+            }
+        }
+        panic!("bounded return-policy evaluation did not settle");
+    }
+
+    // Synthetic trusted AST controls exercise declaration context. They are
+    // runtime invariants, not new Java observations or user-loadable stdlib.
+    fn evaluate(source: &str, trusted: bool) -> Result<Value, RuntimeError> {
+        let parsed = crate::parser::parse_module(source).unwrap();
+        let resolved = if trusted {
+            crate::resolver::resolve_stdlib_module(&parsed)
+        } else {
+            crate::resolver::resolve_module(&parsed)
+        }
+        .unwrap();
+        let program = compile_module(&resolved).unwrap();
+        let mut vm = Vm::new(program.clone());
+        vm.start(program.entry, Vec::new()).unwrap();
+        let module = done(&mut vm).unwrap().as_object().unwrap();
+        vm.start_member(module, "result").unwrap();
+        let result = done(&mut vm);
+        vm.close();
+        assert_eq!(vm.heap_stats().slots, 0);
+        result
+    }
+
+    #[test]
+    fn trusted_stdlib_class_and_module_methods_skip_only_return_checks() {
+        for source in [
+            "function f(): Int = \"text\"\nresult = f()",
+            "class C { function f(): Int = \"text\" }\nresult = new C {}.f()",
+        ] {
+            assert_eq!(
+                evaluate(source, true).unwrap(),
+                Value::String("text".into())
+            );
+            assert_eq!(evaluate(source, false).unwrap_err().kind, ErrorKind::Type);
+        }
+        let argument = "function f(x: Int): Int = x\nresult = f(\"text\")";
+        assert_eq!(evaluate(argument, true).unwrap_err().kind, ErrorKind::Type);
+    }
+
+    #[test]
+    fn object_local_methods_inside_trusted_modules_keep_return_checks() {
+        let source = "holder = new Dynamic { local function f(): Int = \"text\"; result = f() }\nresult = holder.result";
+        assert_eq!(evaluate(source, true).unwrap_err().kind, ErrorKind::Type);
     }
 }

@@ -1,0 +1,4 @@
+import "pkl:json"
+local parser = new json.Parser {  }
+result = parser.parse(#"[1,{"x":true},null]"#)
+output { text = result.toString() }

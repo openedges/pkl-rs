@@ -1,5 +1,10 @@
 # M2 language evidence
 
+## Stage139 JSON Parser
+
+Focused native checks passed 47 tests and matched 108 Java observations; five original CLI contracts matched. Five fresh prechecks passed. The full workspace passed 1,886 tests with zero failed and five ignored across 305 harnesses, excluding 13 nested child passes from the aggregate. Bounded M1 matched 6,078 results per Native, Node and Chromium target. See the [Stage139 report](stage139-json-parser/README.md) for evidence and limits.
+
+
 ## Stage137 module diagnostics and authored semver
 
 Focused native checks passed 69 tests and matched 48 Java observations; six original CLI contracts matched. Nineteen mocked JavaScript transport tests and the bounded Native/Node/Chromium M1 acquisition passed. The workspace passed 1,872 tests with five ignored across 302 harnesses, excluding 13 nested child passes from the aggregate. The public `ModuleKeyKind` enum has three new variants, requiring downstream exhaustive matches to change. See the [Stage137 report](stage137-module-diagnostics-semver/README.md) for raw evidence and remaining limits.

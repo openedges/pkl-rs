@@ -1,0 +1,4 @@
+import "pkl:json"
+local parser = new json.Parser { converters { ["a..b"] = (_) -> 0 } }
+result = parser.parse(new Resource { text = 42 })
+output { text = result.toString() }

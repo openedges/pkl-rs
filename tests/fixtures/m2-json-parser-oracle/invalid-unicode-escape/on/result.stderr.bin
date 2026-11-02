@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Error parsing JSON document.
+
+3 | result = parser.parse(#""\u12x4""#)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage139-json/invalid-unicode-escape/main.pkl)
+
+Expected hexadecimal digit at 1:6
+
+4 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage139-json/invalid-unicode-escape/main.pkl)

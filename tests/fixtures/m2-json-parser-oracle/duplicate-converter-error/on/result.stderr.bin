@@ -1,0 +1,14 @@
+–– Pkl Error ––
+first-value
+
+2 | local parser = new json.Parser { converters { [Int] = (it) -> if (it == 1) throw("first-value") else it } }
+                                                                               ^^^^^^^^^^^^^^^^^^^^
+at main#parser.converters[#1].<function#1> (file:///stage139-json/duplicate-converter-error/main.pkl)
+
+3 | result = parser.parse(#"{"x":1,"x":2}"#)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage139-json/duplicate-converter-error/main.pkl)
+
+4 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage139-json/duplicate-converter-error/main.pkl)

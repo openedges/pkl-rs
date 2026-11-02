@@ -44,6 +44,7 @@ pub(crate) mod glob;
 mod glob_pattern;
 mod glob_traversal;
 mod guest_exceptions;
+mod json_parser;
 mod modules;
 mod null;
 mod query_lifecycle;
@@ -77,6 +78,8 @@ use typecheck::{TypeDestination, TypeRun};
 pub enum Instruction {
     LoadRefModule,
     ReflectCall(reflection::Operation),
+    /// Execute the authored pkl:json Parser.parse external body.
+    JsonParse,
     MirrorProperty(PklString),
     LoadBaseModule,
     /// Invoke a checked Function0 under a guest exception handler.
@@ -1250,6 +1253,7 @@ struct Frame {
     warning: Option<deprecation::PendingWarning>,
     method_call_site: Option<Box<deprecation::CallSite>>,
     pcf_render: Option<rendering::RenderRun>,
+    json_parse: Option<Box<json_parser::Run>>,
     collection_join: Option<collections::JoinRun>,
     collection_transform: Option<Box<collection_transforms::TransformRun>>,
     set_order: Option<Box<set_order::Run>>,
@@ -1544,6 +1548,7 @@ impl Vm {
             warning: None,
             method_call_site: None,
             pcf_render: None,
+            json_parse: None,
             collection_join: None,
             collection_transform: None,
             set_order: None,
@@ -2076,6 +2081,9 @@ impl Vm {
                     run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.string_transform {
+                    run.roots(&mut roots);
+                }
+                if let Some(run) = &frame.json_parse {
                     run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.pcf_render {
@@ -3371,6 +3379,7 @@ impl Vm {
             warning: None,
             method_call_site: None,
             pcf_render: None,
+            json_parse: None,
             collection_join: None,
             collection_transform: None,
             set_order: None,
@@ -4473,6 +4482,7 @@ impl Vm {
             warning: None,
             method_call_site: None,
             pcf_render: None,
+            json_parse: None,
             collection_join: None,
             collection_transform: None,
             set_order: None,
@@ -4562,6 +4572,13 @@ impl Vm {
             .is_some_and(|frame| frame.deep_force.is_some())
         {
             return self.step_deep_force();
+        }
+        if self
+            .frames
+            .last()
+            .is_some_and(|frame| frame.json_parse.is_some())
+        {
+            return self.step_json_parse();
         }
         if self
             .frames
@@ -5154,6 +5171,7 @@ impl Vm {
             Instruction::MakeRegex => self.make_regex()?,
             Instruction::RegexMatchProperty(property) => self.regex_match_property(property)?,
             Instruction::ReflectCall(operation) => self.begin_reflection(operation)?,
+            Instruction::JsonParse => self.begin_json_parse()?,
             Instruction::MirrorProperty(name) => self.begin_mirror_property(name)?,
             Instruction::IntSeqConstructor => {
                 let value = self.int_seq_constructor();
@@ -8108,6 +8126,13 @@ impl Compiler<'_> {
                     && let Some(operation) = reflection::Operation::binding(&self.member)
                 {
                     output.push(Instruction::ReflectCall(operation));
+                } else if self
+                    .source
+                    .as_ref()
+                    .is_some_and(|source| source.uri == "pkl:json")
+                    && self.member == "#Parser.parse"
+                {
+                    output.push(Instruction::JsonParse);
                 } else {
                     output.push(Instruction::AbstractMember {
                         name: self.member.clone(),

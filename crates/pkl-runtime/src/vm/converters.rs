@@ -1,8 +1,10 @@
-//! Ordered renderer converter selection and source-backed path grammar.
+//! Ordered parser/renderer converter selection and source-backed path grammar.
 use super::*;
 #[derive(Clone)]
 pub(super) enum PathPart {
     Root,
+    /// Parser arrays use the upstream singleton, never an actual index key.
+    WildcardElement,
     Property(PklString),
     Entry(Value),
 }
@@ -33,6 +35,16 @@ impl Converters {
         mapping: ObjectId,
         transformers: ObjectId,
     ) -> Result<Self, RuntimeError> {
+        Self::load_parts(heap, mapping, Some(transformers))
+    }
+    pub(super) fn load_parser(heap: &Heap, mapping: ObjectId) -> Result<Self, RuntimeError> {
+        Self::load_parts(heap, mapping, None)
+    }
+    fn load_parts(
+        heap: &Heap,
+        mapping: ObjectId,
+        transformers: Option<ObjectId>,
+    ) -> Result<Self, RuntimeError> {
         let mut result = Self::default();
         let mut paths = Vec::new();
         for member in collections::ordered_members(heap, mapping)? {
@@ -49,16 +61,18 @@ impl Converters {
                 }
             }
         }
-        for member in collections::ordered_members(heap, transformers)? {
-            let Value::Class(class) = member.key else {
-                return Err(RuntimeError::new(
-                    ErrorKind::Type,
-                    "Property transformer keys must be classes.",
-                ));
-            };
-            let value = collections::cached_render_value(heap, transformers, &member)?
-                .ok_or_else(|| invalid("transformer not cached"))?;
-            result.transformers.push((class, value));
+        if let Some(transformers) = transformers {
+            for member in collections::ordered_members(heap, transformers)? {
+                let Value::Class(class) = member.key else {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Type,
+                        "Property transformer keys must be classes.",
+                    ));
+                };
+                let value = collections::cached_render_value(heap, transformers, &member)?
+                    .ok_or_else(|| invalid("transformer not cached"))?;
+                result.transformers.push((class, value));
+            }
         }
         for (spec, value) in paths {
             result.paths.push((parse(&spec)?, value));
@@ -103,7 +117,9 @@ impl Converters {
                         (SpecPart::Property(a), PathPart::Property(b)) => a == b,
                         (SpecPart::Entry(a), PathPart::Entry(Value::String(b))) => a == b,
                         (SpecPart::AnyProperty, PathPart::Property(_))
-                        | (SpecPart::AnyEntry, PathPart::Entry(_)) => true,
+                        | (SpecPart::AnyEntry, PathPart::Entry(_) | PathPart::WildcardElement) => {
+                            true
+                        }
                         _ => false,
                     })
             {

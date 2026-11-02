@@ -1191,6 +1191,7 @@ impl Vm {
             warning: None,
             method_call_site: None,
             pcf_render: None,
+            json_parse: None,
             collection_join: None,
             collection_transform: None,
             set_order: None,

@@ -1,0 +1,5 @@
+import "pkl:json"
+local parser = new json.Parser {}
+local broken = new json.Parser { useMapping = throw("mapping-first"); converters { ["a..b"] = (_) -> 0 } }
+result = broken.parse("!")
+output { text = result.toString() }

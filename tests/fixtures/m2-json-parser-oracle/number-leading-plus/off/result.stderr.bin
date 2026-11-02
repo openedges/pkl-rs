@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Error parsing JSON document.
+
+3 | result = parser.parse(#"+1"#)
+             ^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage139-json/number-leading-plus/main.pkl)
+
+Expected value at 1:1
+
+4 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage139-json/number-leading-plus/main.pkl)

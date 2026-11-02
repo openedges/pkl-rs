@@ -1,0 +1,4 @@
+import "pkl:json"
+local parser = new json.Parser {}
+result = parser.parse(#""😀" x"#)
+output { text = result.toString() }

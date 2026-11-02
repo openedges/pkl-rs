@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Resource | String`, but got type `Int`.
+Value: 42
+
+65 | external function parse(source: Resource | String): Value
+                                     ^^^^^^^^^^^^^^^^^
+at pkl.json#Parser.parse (https://github.com/apple/pkl/blob/0.32.0/stdlib/json.pkl#L65)
+
+3 | result = parser.parse(42)
+             ^^^^^^^^^^^^^^^^
+at main#result (file:///stage139-json-boundary/source-int/main.pkl)
+
+4 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage139-json-boundary/source-int/main.pkl)

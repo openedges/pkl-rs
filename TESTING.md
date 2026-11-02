@@ -21,6 +21,11 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+### Stage139 JSON Parser
+
+The focused native run passed 47 tests and matched 108 Java observations in status and complete expression/stdout/stderr UTF-8 and UTF-16 fields; five registered original CLI cases matched their full public channels. Five fresh prechecks passed. The full workspace passed 1,886 tests with zero failed and five ignored across 305 harnesses; the aggregate excludes 13 nested child passes and does not prove individual test identities or absence of interleaving. The separate M1 acquisition matched 6,078 results per Native, Node and Chromium target, with 92 Node and 92 browser scenarios. See the [Stage139 report](reports/m2/stage139-json-parser/README.md) for retained failures and provenance limits.
+
+
 ### Stage137 module diagnostics and authored semver
 
 The focused native run passed 69 tests and matched 48 Java observations in status and complete UTF-8/UTF-16 expression/stdout/stderr fields. Six original CLI cases matched every recorded public channel. The full workspace exited zero: the independent aggregate reader qualifies 1,872 passed, zero failed and five ignored across 302 outer harnesses, excluding 13 nested child passes. Formatting, xtask, Clippy and Wasm were four earlier successful runs; the refreshed manifest and workspace were two fresh runs. The bounded M1 acquisition matched 6,078 results per Native/Node/Chromium target and 92 scenarios per Node/browser target. See the [Stage137 report](reports/m2/stage137-module-diagnostics-semver/README.md) for retained failed attempts, raw evidence and provenance limits. This does not rerun the full language inventory or complete M2/API, release-platform or performance requirements.

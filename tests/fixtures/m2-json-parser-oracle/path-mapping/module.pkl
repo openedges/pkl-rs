@@ -1,0 +1,4 @@
+import "pkl:json"
+local parser = new json.Parser { useMapping = true; converters { ["^a.x"] = (it) -> it + 10 } }
+result = parser.parse(#"{"a":{"x":2}}"#)["a"]["x"]
+output { text = result.toString() }

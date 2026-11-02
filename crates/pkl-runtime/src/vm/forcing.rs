@@ -170,6 +170,7 @@ impl Vm {
             generic_default: None,
             equality_run: None,
             pcf_render: None,
+            json_parse: None,
             collection_join: None,
             collection_transform: None,
             set_order: None,

@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got type `Int`.
+Value: 1
+
+2015 | hidden default: (unknown) -> Any = (_) -> new Dynamic {}
+                       ^^^^^^^^^^^^^^^^
+at pkl.base#Dynamic.default (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2015)
+
+3 | result = parser.parse(#"{"default":1}"#).default
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage139-json/dynamic-default/main.pkl)
+
+4 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage139-json/dynamic-default/main.pkl)

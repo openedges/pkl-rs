@@ -1,0 +1,14 @@
+–– Pkl Error ––
+first-value
+
+2 | local parser = new json.Parser { converters { [Int] = (_) -> throw("first-value") } }
+                                                                 ^^^^^^^^^^^^^^^^^^^^
+at main#parser.converters[#1].<function#1> (file:///stage139-json/prefix-converter-error/main.pkl)
+
+3 | result = parser.parse(#"[1,]"#)
+             ^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage139-json/prefix-converter-error/main.pkl)
+
+4 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage139-json/prefix-converter-error/main.pkl)

@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Error parsing JSON document.
+
+3 | result = parser.parse(#""😀" x"#)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage139-json/error-supplementary-column/main.pkl)
+
+Unexpected character at 1:6
+
+4 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage139-json/error-supplementary-column/main.pkl)

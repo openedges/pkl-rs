@@ -1,0 +1,4 @@
+import "pkl:json"
+local parser = new json.Parser {  }
+result = parser.parse(#""\uD83D\uDE00""#)
+output { text = result.toString() }

@@ -1,0 +1,4 @@
+import "pkl:json"
+local parser = new json.Parser {  }
+result = parser.parse(#""\u12x4""#)
+output { text = result.toString() }

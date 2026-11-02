@@ -1,0 +1,119 @@
+{
+  "archive": {
+    "bytes": 36307521,
+    "path": "target/m2/stage139-publication-01/evidence.tar.gz",
+    "sha256": "1b90a55183ffb6a30b211507965d5328835daa7810a56f4e55836f83d5b1d586"
+  },
+  "bookends_stable": true,
+  "complete": true,
+  "compressed_limit_bytes": 52428800,
+  "disk_free_floor_bytes": 1073741824,
+  "errors": [],
+  "excluded_product_files": [
+    {
+      "path": "target/m2/stage139-json-boundary-oracle-01/acquisition/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "reason": "product/runtime binary requires explicit file selection"
+    },
+    {
+      "path": "target/m2/stage139-json-oracle-01/acquisition/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "reason": "product/runtime binary requires explicit file selection"
+    },
+    {
+      "path": "target/m2/stage139-native-readback-prep-01/__pycache__",
+      "reason": "excluded cache/tool tree before metadata"
+    },
+    {
+      "path": "target/m2/stage139-original-json-parser-1-01/cases/d38a21e8d554ac6a1dc9a155/java/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "reason": "product/runtime binary requires explicit file selection"
+    },
+    {
+      "path": "target/m2/stage139-original-json-parser-2-01/cases/2877e6eb10c832f6529b7e73/java/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "reason": "product/runtime binary requires explicit file selection"
+    },
+    {
+      "path": "target/m2/stage139-original-json-parser-3-01/cases/2ca0cc4e589bebfcd1158789/java/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "reason": "product/runtime binary requires explicit file selection"
+    },
+    {
+      "path": "target/m2/stage139-original-json-parser-4-01/cases/71fd902327634ba49b60cca4/java/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "reason": "product/runtime binary requires explicit file selection"
+    },
+    {
+      "path": "target/m2/stage139-original-json-parser-5-01/cases/99102513ca6ac70636ccbf70/java/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "reason": "product/runtime binary requires explicit file selection"
+    },
+    {
+      "path": "target/m2/stage139-original-prep-01/__pycache__",
+      "reason": "excluded cache/tool tree before metadata"
+    },
+    {
+      "path": "target/m2/stage139-platforms-02/experiment/semantics_probe",
+      "reason": "admitted only by explicit pinned product roster"
+    },
+    {
+      "path": "target/m2/stage139-platforms-02/experiment/pkl_napi.node",
+      "reason": "admitted only by explicit pinned product roster"
+    },
+    {
+      "path": "target/m2/stage139-platforms-02/experiment/wasm/pkl_wasm_bg.wasm.d.ts",
+      "reason": "admitted only by explicit pinned product roster"
+    },
+    {
+      "path": "target/m2/stage139-platforms-02/experiment/wasm/pkl_wasm_bg.wasm",
+      "reason": "admitted only by explicit pinned product roster"
+    },
+    {
+      "path": "target/m2/stage139-platforms-02/experiment/wasm/pkl_wasm.js",
+      "reason": "admitted only by explicit pinned product roster"
+    },
+    {
+      "path": "target/m2/stage139-platforms-02/experiment/wasm/pkl_wasm.d.ts",
+      "reason": "admitted only by explicit pinned product roster"
+    },
+    {
+      "path": "target/m2/stage139-publication-prep-02/__pycache__",
+      "reason": "excluded cache/tool tree before metadata"
+    },
+    {
+      "path": "target/m2/stage139-workspace-readback-prep-01/__pycache__",
+      "reason": "excluded cache/tool tree before metadata"
+    }
+  ],
+  "finished_epoch": 1793661135.904994,
+  "head_after": "3f1939f873f5617303525ca80b9bb4cbc05c9c58",
+  "head_before": "3f1939f873f5617303525ca80b9bb4cbc05c9c58",
+  "manifest_sha256": "6fddb61da870c35850dec166b78e2db5abbdf81da755dd7bad7d6fba5c64af5a",
+  "member_count": 5910,
+  "publisher_source": {
+    "bytes": 11147,
+    "metadata": {
+      "st_ctime_ns": 1793661101757233292,
+      "st_dev": 16777229,
+      "st_ino": 257331957,
+      "st_mode": 33188,
+      "st_mtime_ns": 1793661101757233292,
+      "st_size": 11147
+    },
+    "mode": 420,
+    "path": "target/m2/stage139-publication-prep-03/publish.py",
+    "sha256": "980a12ac11b82101c783375d29e318569abaf355771b567a0e9dd069cb175f63"
+  },
+  "scope": "Finite raw evidence publication; not a complete source/compiler/runtime restoration closure",
+  "selection": {
+    "bytes": 594428,
+    "metadata": {
+      "st_ctime_ns": 1793661110543395375,
+      "st_dev": 16777229,
+      "st_ino": 257331981,
+      "st_mode": 33188,
+      "st_mtime_ns": 1793661110543395375,
+      "st_size": 594428
+    },
+    "mode": 420,
+    "path": "target/m2/stage139-publication-finalize-03/selection.json",
+    "sha256": "fc55c73aa88fb6755f4aafb1cdfa614cbaab041124c76533b1fdc0e72656f20f"
+  },
+  "source_member_count": 5909,
+  "started_epoch": 1793661126.562109,
+  "uncompressed_member_bytes": 410153736
+}

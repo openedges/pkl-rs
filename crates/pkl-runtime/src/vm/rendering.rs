@@ -387,6 +387,10 @@ impl Vm {
             for part in path {
                 match part {
                     PathPart::Root => {}
+                    PathPart::WildcardElement => {
+                        text.push_str("[*]");
+                        trailing = true;
+                    }
                     PathPart::Property(name) => {
                         if trailing {
                             text.push('.');
@@ -793,6 +797,7 @@ impl Vm {
                 });
                 match part {
                     PathPart::Root => {}
+                    PathPart::WildcardElement => run.append("[*]"),
                     PathPart::Property(name) => {
                         run.append_value(&properties_string(&name, true, run.restrict_charset))
                     }

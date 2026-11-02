@@ -1,0 +1,5 @@
+import "pkl:json"
+local parser = new json.Parser {}
+local v = parser.parse("-0.0")
+result = (v is Int).toString() + ":" + (v is Float).toString() + ":" + v.toString()
+output { text = result.toString() }

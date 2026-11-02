@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Error parsing JSON document.
+
+3 | result = parser.parse(#"1 x"#)
+             ^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage139-json/root-after-trailing/main.pkl)
+
+Unexpected character at 1:3
+
+4 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage139-json/root-after-trailing/main.pkl)

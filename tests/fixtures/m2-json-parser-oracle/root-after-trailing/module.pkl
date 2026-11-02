@@ -1,0 +1,4 @@
+import "pkl:json"
+local parser = new json.Parser { converters { ["^"] = (_) -> throw("root-value") } }
+result = parser.parse(#"1 x"#)
+output { text = result.toString() }

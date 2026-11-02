@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Error parsing JSON document.
+
+3 | result = parser.parse(#"01"#)
+             ^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage139-json/number-leading-zero/main.pkl)
+
+Unexpected character at 1:2
+
+4 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage139-json/number-leading-zero/main.pkl)

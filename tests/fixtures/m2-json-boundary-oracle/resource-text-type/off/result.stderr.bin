@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Expected value of type `String`, but got type `Int`.
+Value: 42
+
+680 | text: String
+            ^^^^^^
+at pkl.base#Resource.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L680)
+
+3 | result = parser.parse(new Resource { text = 42 })
+                                                ^^
+at main#result.text (file:///stage139-json-boundary/resource-text-type/main.pkl)
+
+3 | result = parser.parse(new Resource { text = 42 })
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage139-json-boundary/resource-text-type/main.pkl)
+
+4 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage139-json-boundary/resource-text-type/main.pkl)

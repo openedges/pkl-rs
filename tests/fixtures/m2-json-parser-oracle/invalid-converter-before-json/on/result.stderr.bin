@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Converter path `a..b` has invalid syntax.
+
+3 | result = parser.parse(#"!"#)
+             ^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage139-json/invalid-converter-before-json/main.pkl)
+
+4 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage139-json/invalid-converter-before-json/main.pkl)

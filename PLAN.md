@@ -11,9 +11,13 @@
 
 ## 현재 상태
 
+Stage139에서 공유 엔진의 authored `pkl:json` Parser, converter 및 Resource 경로를 통합했습니다. 공개 `Instruction` enum에 `JsonParse`가 추가되어 downstream exhaustive match 수정이 필요합니다. 집중 native 47개 테스트와 Java 원시 관측 108개, 등록 원본 CLI 5개의 전체 공개 채널이 일치했습니다. 별도 64 MiB Java syntax utility 비교는 303건의 문법 허용과 오류 hint UTF-16만 다룹니다. format·xtask·Clippy·Wasm·manifest의 새로운 검사 5개가 통과했고 전체 workspace의 독립 집계는 harness 305개·통과 1,886개·실패 0개·ignored 5개이며 중첩 자식 통과 13개는 제외합니다. 이 집계는 개별 test identity와 interleaving 부재를 증명하지 않습니다. 실제 bounded M1은 Native·Node·Chromium 각각 6,078개와 Node·브라우저 시나리오 각각 92개가 일치했습니다. manifest는 구현 링크 hash 84개만 갱신했고 요구사항·사례·상태는 바꾸지 않았습니다. 이전 Cargo 캐시 삭제 후 보존하지 않은 과거 native 실행 파일은 재빌드가 필요합니다. 전체 M2·API·릴리스 플랫폼과 긴 token의 응답성 및 성능 목표는 미완료입니다. [Stage139 보고서](reports/m2/stage139-json-parser/README.md)에 archive member 5,910개의 독립 판독과 게시 사본을 기록했습니다. 다음은 별도 작업 공간에서 검증 중인 Jsonnet·XML 후보의 남은 오류 수정과 통합입니다.
+
+### Stage137 검증 완료
+
 Stage137에서 모듈 URI 진단·키 종류 전달과 `pkl:semver` 원본 모듈 로딩을 반영했습니다. 공개 `ModuleKeyKind`에 세 variant가 추가되어 downstream exhaustive match 수정이 필요합니다. 최종 focused native 69개 테스트, Java 원시 관측 48개, 등록 원본 CLI 계약 6개와 mocked JavaScript 19개 테스트가 통과했습니다. 별도 bounded M1은 Native·Node·Chromium 각각 6,078개와 Node·브라우저 시나리오 각각 92개가 일치했습니다. default02는 format·xtask·Clippy·Wasm이 통과한 뒤 오래된 manifest 때문에 실패했고 workspace는 실행되지 않았습니다. manifest의 source hash만 갱신한 뒤 resume03에서 새 manifest와 전체 workspace가 통과했고 앞선 네 통과는 기존 실행으로 결합합니다. 전체 workspace 독립 집계는 harness 302개·통과 1,872개·실패 0개·ignored 5개이며 중첩 자식 통과 13개는 제외합니다. 이 집계는 개별 test identity와 interleaving 부재를 증명하지 않습니다. 초기 독립 reader 두 번은 끊긴 자식 출력의 결과 줄을 인식하지 못해 실패했고, 원시 출력을 보존한 새 reader가 source 기반 문법을 확인했으며 Rust 재실행은 없었습니다. 내부 오류 catch 초안은 포함하지 않고 Stage136 전체 재생을 변경된 엔진 결과로 간주하지 않습니다.
 
-[Stage137 보고서](reports/m2/stage137-module-diagnostics-semver/README.md)에 원시 증거 3,740개 archive member의 독립 판독과 게시 사본을 기록했습니다. 다음 단계는 준비된 JSON 파서·converter·Resource 경계 구현의 통합과 Java 관측 108건에 대한 Rust 비교입니다. 아직 Rust 통과로 계산하지 않습니다.
+[Stage137 보고서](reports/m2/stage137-module-diagnostics-semver/README.md)에 원시 증거 3,740개 archive member의 독립 판독과 게시 사본을 기록했습니다. 이후 JSON 파서의 현재 결과는 위 Stage139 항목에 별도로 기록합니다.
 
 ### 이전 검증 결과
 

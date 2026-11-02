@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Error parsing JSON document.
+
+3 | result = parser.parse("[1,\n]")
+             ^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage139-json/error-lf-bad/main.pkl)
+
+Expected value at 2:1
+
+4 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage139-json/error-lf-bad/main.pkl)
