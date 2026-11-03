@@ -1,0 +1,8 @@
+import "pkl:protobuf"
+
+class Input {
+values: List<List<Int>> =List(List(1,2),List())
+}
+output { value=new Input {}; renderer=new protobuf.Renderer { indent="  "
+
+} }

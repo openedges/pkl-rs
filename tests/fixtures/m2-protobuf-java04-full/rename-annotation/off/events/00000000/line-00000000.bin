@@ -1,0 +1,1 @@
+converters { ["original"]=(v)->trace(v+1); ["RENAMED"]=(_)->throw("wrong converter path") }

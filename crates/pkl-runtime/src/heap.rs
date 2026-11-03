@@ -695,6 +695,14 @@ impl Heap {
             .code_roots = roots;
     }
 
+    #[cfg(test)]
+    pub(crate) fn code_roots_for_test(&self, owner: ExecutableOwnerId) -> &[Value] {
+        &self
+            .executable(owner)
+            .expect("live executable owner")
+            .code_roots
+    }
+
     fn executable_mut(
         &mut self,
         owner: ExecutableOwnerId,

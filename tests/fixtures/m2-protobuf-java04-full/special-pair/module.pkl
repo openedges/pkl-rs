@@ -1,0 +1,9 @@
+import "pkl:protobuf"
+import "pkl:ref"
+class Domain extends ref.Domain { function renderReference(reference: ref.Reference<ref.Domain, Any>): String="REF" }
+class Input {
+value=Pair(1,"s")
+}
+output { value=new Input {}; renderer=new protobuf.Renderer { indent="  "
+
+} }

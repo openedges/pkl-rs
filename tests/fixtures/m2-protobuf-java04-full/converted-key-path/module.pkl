@@ -1,0 +1,8 @@
+import "pkl:protobuf"
+
+class Input {
+values=Map("old",1,"omit",2)
+}
+output { value=new Input {}; renderer=new protobuf.Renderer { indent="  "
+converters { [String]=(v)->trace(v+"-key"); ["values[old-key]"]=(v)->trace(v+10); ["values[omit-key]"]=(_)->null }
+} }

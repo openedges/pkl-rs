@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot render value of type `Bytes` as Protobuf.
+Value: Bytes(120)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)
+
+Consider adding a converter to `output.converters`.

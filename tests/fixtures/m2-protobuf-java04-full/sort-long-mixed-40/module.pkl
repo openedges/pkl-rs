@@ -1,0 +1,15 @@
+import "pkl:protobuf"
+open class C0 { x=1 }
+open class C1 extends C0 {}
+open class C2 extends C1 {}
+open class C3 extends C2 {}
+open class C4 extends C3 {}
+open class C5 extends C4 {}
+open class C6 extends C5 {}
+open class C7 extends C6 {}
+open class C8 extends C7 {}
+open class C9 extends C8 {}
+open class C10 extends C9 {}
+open class C11 extends C10 {}
+class Input { value: C0 | Int | C11 | Boolean | C5 | String | C5 | Duration | C9 | Float | C0 | Int | C11 | Boolean | C5 | String | C5 | Duration | C9 | Float | C0 | Int | C11 | Boolean | C5 | String | C5 | Duration | C9 | Float | C0 | Int | C11 | Boolean | C5 | String | C5 | Duration | C9 | Float = new C11 {} }
+output { value=new Input {}; renderer=new protobuf.Renderer {} }

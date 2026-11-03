@@ -1,0 +1,1 @@
+output { value=new Child {}; renderer=new protobuf.Renderer { indent=trace("indent"); converters=trace(new Mapping {}); convertPropertyTransformers=trace(new Mapping {}) } }

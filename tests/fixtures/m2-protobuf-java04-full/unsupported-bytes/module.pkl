@@ -1,0 +1,8 @@
+import "pkl:protobuf"
+typealias Choice=Int | String
+class Input {
+value="x".encodeToBytes("UTF-8")
+}
+output { value=new Input {}; renderer=new protobuf.Renderer { indent="  "
+
+} }

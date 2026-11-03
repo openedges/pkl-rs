@@ -1,0 +1,59 @@
+{
+  "complete": true,
+  "errors": [],
+  "started_epoch": 1793726303.9795032,
+  "scope": "One new Stage145 archive and its exact final finite roster. No extraction, older archive bodies, source payload replays, or cache walks.",
+  "archive_expected": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-publication-01/evidence.tar.gz",
+    "bytes": 47300207,
+    "sha256": "dd2d818d17f02e3e1a35af5fb9b00d04fe949325e3997079193764fd289cf826"
+  },
+  "roster_expected": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-publication-prep-03/selection.json",
+    "sha256": "9c687d69eef258f279e17d678683509a4f959d46ff8889bc3cc4d8543f524d79"
+  },
+  "tar_logical_bytes": 404029440,
+  "zero_end_padding_bytes": 9728,
+  "archive": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-publication-01/evidence.tar.gz",
+    "bytes": 47300207,
+    "sha256": "dd2d818d17f02e3e1a35af5fb9b00d04fe949325e3997079193764fd289cf826",
+    "mode": 420,
+    "device": 16777229,
+    "inode": 258607033,
+    "mtime_ns": 1793726276937282990,
+    "ctime_ns": 1793726276937282990
+  },
+  "roster": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-publication-prep-03/selection.json",
+    "bytes": 8648660,
+    "sha256": "9c687d69eef258f279e17d678683509a4f959d46ff8889bc3cc4d8543f524d79",
+    "mode": 420,
+    "device": 16777229,
+    "inode": 258606983,
+    "mtime_ns": 1793726207200119612,
+    "ctime_ns": 1793726207200119612
+  },
+  "member_count": 17433,
+  "logical_payload_bytes": 371680036,
+  "exact_member_order_and_set": true,
+  "duplicate_members": false,
+  "all_members_regular": true,
+  "modes_lengths_and_stream_sha256_match": true,
+  "canonical_forbidden_lexical_checks": true,
+  "gzip_crc_isize_consumed": true,
+  "raw_archive_checksum_verified_twice": true,
+  "archive_and_roster_bookends_stable": true,
+  "claim": "Finite raw evidence integrity only; not hermetic restoration, complete dependencies, compatibility completion, or performance qualification.",
+  "reader": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-publication-readback-tool-02/readback.py",
+    "bytes": 9415,
+    "sha256": "cb77e3f78166b06d281d1a957e3514bb876320f1c47225dcd01934628f841774",
+    "mode": 420,
+    "device": 16777229,
+    "inode": 258070808,
+    "mtime_ns": 1793723355735685201,
+    "ctime_ns": 1793723355735685201
+  },
+  "finished_epoch": 1793726305.47394
+}

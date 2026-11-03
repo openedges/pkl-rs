@@ -1,0 +1,8 @@
+import "pkl:protobuf"
+typealias Key=String
+class Input {
+values: Mapping<Float,String> =new {}
+}
+output { value=new Input {}; renderer=new protobuf.Renderer { indent="  "
+
+} }

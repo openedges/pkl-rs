@@ -1,0 +1,59 @@
+An unexpected error has occurred. Would you mind filing a bug report?
+Cmd+Double-click the link below to open an issue.
+Please copy and paste the entire error output into the issue's description.
+
+https://github.com/apple/pkl/issues/new
+
+java.lang.NullPointerException%3A%20Cannot%20invoke%20%22java.lang.Boolean.booleanValue%28%29%22%20because%20%22result%22%20is%20null
+
+–– Pkl Error ––
+Cannot invoke "java.lang.Boolean.booleanValue()" because "result" is null
+
+44 | external function renderDocument(value: Any): String
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.protobuf#Renderer.renderDocument (https://github.com/apple/pkl/blob/0.32.0/stdlib/protobuf.pkl#L44)
+
+3 | output { text=new protobuf.Renderer {}.renderDocument(Map("x",1)) }
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#output.text (file:///stage145-protobuf/document-map/main.pkl)
+
+Pkl 0.32.0 (macOS 27.0, Java 21.0.12.1)
+
+java.lang.NullPointerException: Cannot invoke "java.lang.Boolean.booleanValue()" because "result" is null
+	at org.pkl.core.stdlib.protobuf.RendererNodes$ProtobufRenderer.requiresWrapper(RendererNodes.java:449)
+	at org.pkl.core.stdlib.protobuf.RendererNodes$ProtobufRenderer.startMaplike(RendererNodes.java:234)
+	at org.pkl.core.stdlib.protobuf.RendererNodes$ProtobufRenderer.startMap(RendererNodes.java:273)
+	at org.pkl.core.stdlib.AbstractRenderer.visitMap(AbstractRenderer.java:323)
+	at org.pkl.core.runtime.VmMap.accept(VmMap.java:265)
+	at org.pkl.core.runtime.VmValueVisitor.visit(VmValueVisitor.java:69)
+	at org.pkl.core.stdlib.AbstractRenderer.visit(AbstractRenderer.java:119)
+	at org.pkl.core.stdlib.protobuf.RendererNodes$ProtobufRenderer.visitDocument(RendererNodes.java:156)
+	at org.pkl.core.stdlib.AbstractRenderer.renderDocument(AbstractRenderer.java:94)
+	at org.pkl.core.stdlib.protobuf.RendererNodes$renderDocument.eval(RendererNodes.java:93)
+	at org.pkl.core.stdlib.protobuf.RendererNodesFactory$renderDocumentNodeGen.executeAndSpecialize(RendererNodesFactory.java:91)
+	at org.pkl.core.stdlib.protobuf.RendererNodesFactory$renderDocumentNodeGen.executeGeneric(RendererNodesFactory.java:82)
+	at org.pkl.core.ast.member.FunctionNode.executeImpl(FunctionNode.java:116)
+	at org.pkl.core.ast.PklRootNode.execute(PklRootNode.java:46)
+	at com.oracle.truffle.api.impl.DefaultCallTarget.call(DefaultCallTarget.java:118)
+	at com.oracle.truffle.api.impl.DefaultDirectCallNode.call(DefaultDirectCallNode.java:59)
+	at org.pkl.core.ast.expression.member.InvokeMethodVirtualNode.evalCached(InvokeMethodVirtualNode.java:137)
+	at org.pkl.core.ast.expression.member.InvokeMethodVirtualNodeGen.executeAndSpecialize(InvokeMethodVirtualNodeGen.java:268)
+	at org.pkl.core.ast.expression.member.InvokeMethodVirtualNodeGen.executeGeneric(InvokeMethodVirtualNodeGen.java:189)
+	at org.pkl.core.ast.member.TypeCheckedPropertyNode.evalTypedObjectCached(TypeCheckedPropertyNode.java:54)
+	at org.pkl.core.ast.member.TypeCheckedPropertyNodeGen.executeAndSpecialize(TypeCheckedPropertyNodeGen.java:132)
+	at org.pkl.core.ast.member.TypeCheckedPropertyNodeGen.executeImpl(TypeCheckedPropertyNodeGen.java:97)
+	at org.pkl.core.ast.PklRootNode.execute(PklRootNode.java:46)
+	at com.oracle.truffle.api.impl.DefaultCallTarget.call(DefaultCallTarget.java:97)
+	at com.oracle.truffle.api.nodes.IndirectCallNode$1.call(IndirectCallNode.java:96)
+	at org.pkl.core.runtime.VmUtils.doReadMember(VmUtils.java:395)
+	at org.pkl.core.runtime.VmUtils.readMemberOrNull(VmUtils.java:324)
+	at org.pkl.core.runtime.VmUtils.readMemberOrNull(VmUtils.java:287)
+	at org.pkl.core.runtime.VmUtils.readMember(VmUtils.java:267)
+	at org.pkl.core.runtime.VmUtils.readTextProperty(VmUtils.java:210)
+	at org.pkl.core.EvaluatorImpl.lambda$evaluateOutputText$0(EvaluatorImpl.java:162)
+	at org.pkl.core.EvaluatorImpl.lambda$doEvaluate$0(EvaluatorImpl.java:470)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:388)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateOutputText(EvaluatorImpl.java:158)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:261)
+	at M2PowerAssertionOracle.main(M2PowerAssertionOracle.java:155)

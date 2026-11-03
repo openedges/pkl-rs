@@ -1,0 +1,10 @@
+–– Pkl Error ––
+irrelevant
+
+4 | values=Map(new RenderDirective { text="raw"; bytes=throw("irrelevant") },1)
+                                                       ^^^^^^^^^^^^^^^^^^^
+at main#Input.values.bytes (file:///stage145-protobuf/map-key-directive/main.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

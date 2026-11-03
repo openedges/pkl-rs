@@ -1,0 +1,1 @@
+output { value=new Input {}; renderer=new protobuf.Renderer { indent=trace(".."); converters { ["value"]=(_)->if (trace(read("proto:convert")) == "yes") new Listing { trace(read("proto:element")) } else throw("conversion") }

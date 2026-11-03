@@ -1,0 +1,41 @@
+{
+  "name": "imported-alias-owner-off",
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-oracle-04/acquisition/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-oracle-04/acquisition/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-oracle-04/acquisition/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage51/.cache/oracle/pkl-tools-0.32.0.jar",
+    "M2PowerAssertionOracle",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-oracle-04/acquisition/fixtures/imported-alias-owner/off",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-oracle-04/acquisition/fixtures/imported-alias-owner/module.pkl",
+    "file:///stage145-protobuf/imported-alias-owner/main.pkl",
+    "off",
+    "output.text",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-oracle-04/acquisition/fixtures/imported-alias-owner"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+  "exit_code": 1,
+  "timed_out": false,
+  "elapsed_seconds": 0.5450733746401966,
+  "stdout": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-oracle-04/acquisition/processes/imported-alias-owner-off/stdout.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-oracle-04/acquisition/processes/imported-alias-owner-off/stderr.bin",
+    "bytes": 1310,
+    "sha256": "4060fa79e6199f28f1ebb3c11407c54d4c3c3b82c431463529524cd68206b0d0"
+  }
+}

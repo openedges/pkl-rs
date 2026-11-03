@@ -1,0 +1,8 @@
+import "pkl:protobuf"
+typealias Nested=Int | String
+class Input {
+value: (Int | String) | Int=1
+}
+output { value=new Input {}; renderer=new protobuf.Renderer { indent="  "
+
+} }

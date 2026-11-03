@@ -1,0 +1,13 @@
+–– Pkl Error ––
+Cannot render value of type `TypeAlias` as Protobuf.
+Value: main#Choice
+
+4 | value=Choice
+    ^^^^^^^^^^^^
+at pkl.protobuf#Renderer.renderDocument (file:///stage145-protobuf/unsupported-alias/main.pkl)
+
+Consider adding a converter to `output.converters`.
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

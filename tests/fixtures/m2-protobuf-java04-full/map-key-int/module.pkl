@@ -1,0 +1,8 @@
+import "pkl:protobuf"
+
+class Input {
+values=Map(1,1)
+}
+output { value=new Input {}; renderer=new protobuf.Renderer { indent="  "
+
+} }

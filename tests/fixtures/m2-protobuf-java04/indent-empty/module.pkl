@@ -1,0 +1,11 @@
+import "pkl:protobuf"
+class Child { x=2; y=3 }
+class Empty {}
+class Input {
+a=1
+b=new Child {}
+empty=new Empty {}
+}
+output { value=new Input {}; renderer=new protobuf.Renderer { indent=""
+
+} }

@@ -1,0 +1,3 @@
+import "pkl:protobuf"
+class Input { value = (x, y) -> x + y }
+output { text = new protobuf.Renderer {}.renderDocument(new Input {}) }

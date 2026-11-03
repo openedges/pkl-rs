@@ -1,0 +1,1 @@
+output { text=new protobuf.Renderer {}.renderValue(new Input { value=Map(new RenderDirective { text=trace("raw-key"); bytes=throw("key hash may force") },1) }) }

@@ -1,0 +1,11 @@
+–– Pkl Error ––
+I/O error reading resource `proto:convert`.
+IOException: failure
+
+7 | output { value=new Input {}; renderer=new protobuf.Renderer { indent=trace(".."); converters { ["value"]=(_)->if (trace(read("proto:convert")) == "yes") new Listing { trace(read("proto:element")) } else throw("conversion") }
+                                                                                                                            ^^^^^^^^^^^^^^^^^^^^^
+at main#output.renderer.converters["value"].<function#1> (file:///stage145-protobuf/lifecycle-io/main.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

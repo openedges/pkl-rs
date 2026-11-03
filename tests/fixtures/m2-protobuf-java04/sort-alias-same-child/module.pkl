@@ -1,0 +1,9 @@
+import "pkl:protobuf"
+open class Parent { x=1 }
+class Child extends Parent {}
+typealias A=Parent
+typealias B=Parent
+typealias C=Child
+typealias D=Child
+class Input { value: Parent | C | D | Child = new Child {} }
+output { value=new Input {}; renderer=new protobuf.Renderer {} }

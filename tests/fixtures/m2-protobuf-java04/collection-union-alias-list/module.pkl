@@ -1,0 +1,8 @@
+import "pkl:protobuf"
+typealias Choice=Int | String
+class Input {
+values: List<Choice> =List(1,"s")
+}
+output { value=new Input {}; renderer=new protobuf.Renderer { indent="  "
+
+} }

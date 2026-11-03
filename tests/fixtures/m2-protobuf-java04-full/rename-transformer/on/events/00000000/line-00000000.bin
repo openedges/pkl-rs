@@ -1,0 +1,1 @@
+convertPropertyTransformers { [Name]=(a)->new protobuf.Property { name=trace("transformed") } }

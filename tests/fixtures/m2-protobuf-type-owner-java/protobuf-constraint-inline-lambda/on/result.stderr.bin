@@ -1,0 +1,14 @@
+–– Pkl Error ––
+helper
+
+2 | class Input { value: Int(((_) -> throw("helper")).apply(0)) | String = "seed" }
+                                     ^^^^^^^^^^^^^^^
+at main#Input.value.<function#1> (file:///stage145-protobuf/protobuf-constraint-inline-lambda/main.pkl)
+
+2 | class Input { value: Int(((_) -> throw("helper")).apply(0)) | String = "seed" }
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.protobuf#Renderer.renderValue (file:///stage145-protobuf/protobuf-constraint-inline-lambda/main.pkl)
+
+3 | output { text = new protobuf.Renderer { converters { ["value"] = (_) -> 7 } }.renderValue(new Input {}) }
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#output.text (file:///stage145-protobuf/protobuf-constraint-inline-lambda/main.pkl)

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+The top-level value of a protobuf file must have type `Typed`, but got type `List`.
+
+3 | output { text=new protobuf.Renderer { converters { ["^"]=(_)->trace(List(1)) } }.renderValue("before") }
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#output.text (file:///stage145-protobuf/root-rendervalue-invalid/main.pkl)

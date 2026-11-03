@@ -1,0 +1,18 @@
+–– Pkl Error ––
+constraint throw
+
+1 | class Input { value: Int(throw("constraint throw")) = 7 }
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#Input.value (file:///stage145-protobuf/ordinary-constraint-throw/main.pkl)
+
+1 | class Input { value: Int(throw("constraint throw")) = 7 }
+                                                          ^
+at main#Input.value (file:///stage145-protobuf/ordinary-constraint-throw/main.pkl)
+
+2 | result = new Input {}.value
+             ^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage145-protobuf/ordinary-constraint-throw/main.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

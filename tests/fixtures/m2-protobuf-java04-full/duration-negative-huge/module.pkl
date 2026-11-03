@@ -1,0 +1,3 @@
+import "pkl:protobuf"
+
+output { text=new protobuf.Renderer {}.renderValue((-1.0e300).d) }

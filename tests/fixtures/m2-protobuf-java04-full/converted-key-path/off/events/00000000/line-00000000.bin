@@ -1,0 +1,1 @@
+converters { [String]=(v)->trace(v+"-key"); ["values[old-key]"]=(v)->trace(v+10); ["values[omit-key]"]=(_)->null }

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+The top-level value of a protobuf file must have type `Typed`, but got type `List`.
+
+3 | output { text=new protobuf.Renderer {}.renderValue(List(1)) }
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#output.text (file:///stage145-protobuf/top-list/main.pkl)

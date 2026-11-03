@@ -1,0 +1,8 @@
+import "pkl:protobuf"
+typealias Alias="a" | "b"
+class Input {
+value: "a" | "b"="a"
+}
+output { value=new Input {}; renderer=new protobuf.Renderer { indent="  "
+
+} }

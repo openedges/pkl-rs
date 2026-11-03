@@ -1,0 +1,4 @@
+import "pkl:protobuf"
+open class Parent { a=trace(701); hidden skip=throw("hidden"); local omitted=throw("local") }
+class Child extends Parent { b=trace(702); c: Int }
+output { value=new Child {}; renderer=new protobuf.Renderer { indent=trace("indent"); converters=trace(new Mapping {}); convertPropertyTransformers=trace(new Mapping {}) } }

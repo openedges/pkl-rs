@@ -1,0 +1,8 @@
+import "pkl:protobuf"
+
+class Input {
+values: Map<String,Map<Int,Boolean>> =Map("a",Map(1,true),"b",Map())
+}
+output { value=new Input {}; renderer=new protobuf.Renderer { indent="  "
+
+} }

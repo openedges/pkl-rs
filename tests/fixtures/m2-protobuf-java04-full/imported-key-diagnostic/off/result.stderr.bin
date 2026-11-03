@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot render map with a non-scalar, floating point or byte array key type.
+
+2 | class Input { values: Mapping<Float,Int> =new {} }
+                          ^^^^^^^^^^^^^^^^^^
+at pkl.protobuf#Renderer.renderDocument (file:///stage145-protobuf/imported-key-diagnostic/types.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

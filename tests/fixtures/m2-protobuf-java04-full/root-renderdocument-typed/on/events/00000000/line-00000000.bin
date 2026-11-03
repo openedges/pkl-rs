@@ -1,0 +1,1 @@
+output { text=new protobuf.Renderer { converters { ["^"]=(_)->trace(new Input {}) } }.renderDocument("before") }

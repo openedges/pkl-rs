@@ -1,0 +1,8 @@
+import "pkl:protobuf"
+
+class Input {
+value: Int(read("proto:constraint") == "yes") | String="seed"
+}
+output { value=new Input {}; renderer=new protobuf.Renderer { indent="  "
+converters { ["value"]=(_)->trace(7) }
+} }

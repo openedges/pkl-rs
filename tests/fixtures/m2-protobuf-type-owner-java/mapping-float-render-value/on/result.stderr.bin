@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot render map with a non-scalar, floating point or byte array key type.
+
+2 | class Input { values: Mapping<Float,String> = new {} }
+                          ^^^^^^^^^^^^^^^^^^^^^
+at pkl.protobuf#Renderer.renderValue (file:///stage145-protobuf/mapping-float-render-value/main.pkl)
+
+3 | output { text = new protobuf.Renderer {}.renderValue(new Input {}) }
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#output.text (file:///stage145-protobuf/mapping-float-render-value/main.pkl)

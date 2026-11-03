@@ -1,0 +1,8 @@
+import "pkl:protobuf"
+
+class Input {
+values: Listing<Mapping<Int,Listing<String>>> =new { new { [1] { "a"; "b" }; [2] {} } }
+}
+output { value=new Input {}; renderer=new protobuf.Renderer { indent="  "
+
+} }

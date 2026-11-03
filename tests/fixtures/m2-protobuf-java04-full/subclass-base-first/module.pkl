@@ -1,0 +1,9 @@
+import "pkl:protobuf"
+open class Parent { x=1 }
+class Child extends Parent {}
+class Input {
+value: Parent | Child=new Child {}
+}
+output { value=new Input {}; renderer=new protobuf.Renderer { indent="  "
+
+} }

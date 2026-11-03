@@ -1,0 +1,9 @@
+import "pkl:protobuf"
+class Name extends ConvertProperty { name: String; render=(prop, renderer)->Pair(name, prop.value) }
+class Input {
+@Name { name="ignored" }
+original: Int=1
+}
+output { value=new Input {}; renderer=new protobuf.Renderer { indent="  "
+convertPropertyTransformers { [Name]=(a)->new protobuf.Property { name=trace("transformed") } }
+} }

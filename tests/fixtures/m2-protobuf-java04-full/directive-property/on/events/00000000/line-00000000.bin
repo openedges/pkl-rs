@@ -1,0 +1,1 @@
+output { text=new protobuf.Renderer {}.renderValue(new Input { value=new RenderDirective { text=trace("raw"); bytes=throw("unused") } }) }

@@ -1,0 +1,10 @@
+import "pkl:protobuf"
+
+class Input {
+property="remove"
+entries=Map("gone","remove","keep",1)
+elements=List("remove",1)
+}
+output { value=new Input {}; renderer=new protobuf.Renderer { indent="  "
+converters { [String]=(v)->if (v == "remove") null else v }
+} }

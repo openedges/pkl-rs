@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `pkl.reflect#Type`, but got type `pkl.reflect#Class`.
+Value: new Class { location { line = 993; column = 1; displayUri = "https://github.c...
+
+49 | external function renderType(type: reflect.Type): String
+                                        ^^^^^^^^^^^^
+at pkl.protobuf#Renderer.renderType (https://github.com/apple/pkl/blob/0.32.0/stdlib/protobuf.pkl#L49)
+
+4 | output { text=new protobuf.Renderer {}.renderType(reflect.Class(Int)) }
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#output.text (file:///stage145-protobuf/render-type-class-wrong/main.pkl)

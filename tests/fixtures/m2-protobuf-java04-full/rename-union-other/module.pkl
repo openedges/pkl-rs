@@ -1,0 +1,10 @@
+import "pkl:protobuf"
+
+class Input {
+@protobuf.Property { name="other" }
+original: Int | String=1
+hidden other: Int=0
+}
+output { value=new Input {}; renderer=new protobuf.Renderer { indent="  "
+
+} }

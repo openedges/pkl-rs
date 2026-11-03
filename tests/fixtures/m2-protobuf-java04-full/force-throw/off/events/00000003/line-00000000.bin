@@ -1,0 +1,1 @@
+class Child extends Parent { b=trace(702); c=throw("first visible error") }

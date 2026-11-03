@@ -1,0 +1,4 @@
+module types
+typealias Choice<T> = T | String
+open class Parent { value: Choice<Int> =1 }
+class Child extends Parent { value="child" }

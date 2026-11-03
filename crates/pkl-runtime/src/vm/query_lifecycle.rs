@@ -87,8 +87,71 @@ impl Start {
         }
     }
 }
+/// First matching arena for each half-open ID range, rebuilt per collection.
+/// A boundary sweep preserves linear `.position()` behavior even for overlapping
+/// ranges. It indexes arena boundaries, not every instruction/recipe/object ID.
+#[derive(Default)]
+struct ArenaRangeIndex {
+    boundaries: Vec<(usize, Option<usize>)>,
+}
+impl ArenaRangeIndex {
+    fn new<'a>(ranges: impl Iterator<Item = &'a Range<usize>>) -> Self {
+        let mut changes = Vec::new();
+        for (arena, range) in ranges.enumerate() {
+            if !range.is_empty() {
+                changes.push((range.start, arena, true));
+                changes.push((range.end, arena, false));
+            }
+        }
+        changes.sort_unstable_by_key(|change| change.0);
+        let mut active = BTreeSet::new();
+        let mut boundaries = Vec::new();
+        for group in changes.chunk_by(|left, right| left.0 == right.0) {
+            for &(_, arena, start) in group {
+                if start {
+                    active.insert(arena);
+                } else {
+                    active.remove(&arena);
+                }
+            }
+            boundaries.push((group[0].0, active.first().copied()));
+        }
+        Self { boundaries }
+    }
+
+    fn get(&self, id: usize) -> Option<usize> {
+        let after = self.boundaries.partition_point(|(start, _)| *start <= id);
+        after
+            .checked_sub(1)
+            .and_then(|index| self.boundaries[index].1)
+    }
+}
+
 impl Vm {
     pub(super) fn declaration_code_roots(&mut self, roots: &mut Vec<Value>) {
+        let recipes = if self.resolved_declarations.is_empty() {
+            ArenaRangeIndex::default()
+        } else {
+            ArenaRangeIndex::new(self.code_arenas.iter().map(|arena| &arena.recipes))
+        };
+        let blocks = if self.type_parent_defaults.is_empty() && self.executable_roots.is_empty() {
+            ArenaRangeIndex::default()
+        } else {
+            ArenaRangeIndex::new(self.code_arenas.iter().map(|arena| &arena.blocks))
+        };
+        let objects = if self.class_singletons.is_empty() {
+            ArenaRangeIndex::default()
+        } else {
+            ArenaRangeIndex::new(self.code_arenas.iter().map(|arena| &arena.objects))
+        };
+        let mut aliases = BTreeMap::new();
+        if !self.alias_singletons.is_empty() {
+            for (index, arena) in self.code_arenas.iter().enumerate() {
+                for alias in &arena.aliases {
+                    aliases.entry(*alias).or_insert(index);
+                }
+            }
+        }
         let mut owned = vec![Vec::new(); self.code_arenas.len()];
         let mut retain = |index: Option<usize>, value: Value| {
             if let Some(index) = index {
@@ -98,53 +161,32 @@ impl Vm {
             }
         };
         for ((recipe, owner), value) in &self.resolved_declarations {
-            let index = self
-                .code_arenas
-                .iter()
-                .position(|arena| arena.recipes.contains(recipe));
+            let index = recipes.get(*recipe);
             retain(index, Value::Object(*owner));
             if let type_resolution::DeclarationValue::Value(value) = value {
                 retain(index, value.clone());
             }
         }
         for ((block, _), value) in &self.type_parent_defaults {
-            retain(
-                self.code_arenas
-                    .iter()
-                    .position(|arena| arena.blocks.contains(block)),
-                value.clone(),
-            );
+            retain(blocks.get(*block), value.clone());
         }
         for (block, owner) in &self.executable_roots {
-            retain(
-                self.code_arenas
-                    .iter()
-                    .position(|arena| arena.blocks.contains(block)),
-                owner.root(),
-            );
+            retain(blocks.get(*block), owner.root());
         }
         for (template, id) in &self.class_singletons {
-            retain(
-                self.code_arenas
-                    .iter()
-                    .position(|arena| arena.objects.contains(template)),
-                Value::Class(*id),
-            );
+            retain(objects.get(*template), Value::Class(*id));
         }
         for (declaration, id) in &self.alias_singletons {
-            retain(
-                self.code_arenas
-                    .iter()
-                    .position(|arena| arena.aliases.contains(declaration)),
-                Value::TypeAlias(*id),
-            );
+            retain(aliases.get(declaration).copied(), Value::TypeAlias(*id));
         }
         let mut by_owner: Vec<(ExecutableOwnerId, Vec<Value>)> = Vec::new();
+        let mut owner_positions = BTreeMap::<_, usize>::new();
         for (arena, roots) in self.code_arenas.iter().zip(owned) {
-            if let Some((_, values)) = by_owner.iter_mut().find(|(owner, _)| *owner == arena.owner)
-            {
-                values.extend(roots);
+            let owner_key = arena.owner.root().heap_id().expect("executable owner ID");
+            if let Some(&index) = owner_positions.get(&owner_key) {
+                by_owner[index].1.extend(roots);
             } else {
+                owner_positions.insert(owner_key, by_owner.len());
                 by_owner.push((arena.owner, roots));
             }
         }
@@ -203,6 +245,231 @@ mod tests {
         ModuleCompletion, ModuleHostError, ModuleKey, ModuleKeyKind, ModuleRequest,
         ModuleRequestKind, ModuleSource, ModuleSourceSpec, ResolutionPhase, ResolvedModule,
     };
+
+    #[test]
+    fn arena_range_index_keeps_first_membership_across_overlaps_gaps_and_empty_ranges() {
+        let ranges = [10..20, 0..30, 15..35, 30..30, usize::MAX - 2..usize::MAX];
+        let indexed = ArenaRangeIndex::new(ranges.iter());
+        for id in [
+            0,
+            9,
+            10,
+            14,
+            15,
+            19,
+            20,
+            24,
+            25,
+            29,
+            30,
+            34,
+            35,
+            usize::MAX - 3,
+            usize::MAX - 2,
+            usize::MAX - 1,
+            usize::MAX,
+        ] {
+            assert_eq!(
+                indexed.get(id),
+                ranges.iter().position(|range| range.contains(&id)),
+                "first arena for {id}"
+            );
+        }
+        assert_eq!(ArenaRangeIndex::new(std::iter::empty()).get(0), None);
+    }
+
+    #[test]
+    fn declaration_roots_keep_repeated_owner_order_and_refresh_materialized_aliases() {
+        let mut vm = Vm::new(Arc::new(Program::new(Vec::new())));
+        let stale = vm.heap.allocate_executable();
+        let stale_id = stale.root().heap_id().unwrap();
+        vm.collect(&[]);
+        assert!(!vm.heap.executable_is_live(stale));
+        let first = vm.heap.allocate_executable();
+        let first_id = first.root().heap_id().unwrap();
+        assert_eq!(first_id.heap, stale_id.heap);
+        assert_eq!(first_id.index, stale_id.index);
+        assert_ne!(first_id.generation, stale_id.generation);
+        assert_ne!(first, stale);
+        let second = vm.heap.allocate_executable();
+        assert_ne!(first, second);
+        assert!(vm.code_arenas.is_empty());
+        vm.code_arenas = vec![
+            CodeArena {
+                owner: first,
+                query: false,
+                blocks: 10..20,
+                objects: 10..20,
+                units: 0..0,
+                recipes: 10..20,
+                aliases: BTreeSet::from([100, 101]),
+            },
+            CodeArena {
+                owner: second,
+                query: false,
+                blocks: 20..30,
+                objects: 20..30,
+                units: 0..0,
+                recipes: 20..30,
+                aliases: BTreeSet::from([200]),
+            },
+            CodeArena {
+                owner: first,
+                query: false,
+                blocks: 30..40,
+                objects: 30..40,
+                units: 0..0,
+                recipes: 30..40,
+                aliases: BTreeSet::from([300, 301]),
+            },
+        ];
+        let declarations: Vec<_> = (0..4)
+            .map(|_| vm.heap.allocate(Object::default()))
+            .collect();
+        let executables: Vec<_> = (0..4).map(|_| vm.heap.allocate_executable()).collect();
+        let classes: Vec<_> = (0..4)
+            .map(|_| {
+                let prototype = vm.heap.allocate(Object::default());
+                vm.heap.allocate_class(prototype)
+            })
+            .collect();
+        let aliases: Vec<_> = (0..6)
+            .map(|_| vm.heap.allocate(Object::default()))
+            .collect();
+        for (index, recipe) in [11, 21, 31, 99].into_iter().enumerate() {
+            vm.resolved_declarations.insert(
+                (recipe, declarations[index]),
+                type_resolution::DeclarationValue::Value(Value::Int(
+                    (111 + index as i64 * 100).into(),
+                )),
+            );
+        }
+        for (index, block) in [12, 22, 32, 98].into_iter().enumerate() {
+            vm.type_parent_defaults
+                .insert((block, 0), Value::Int((112 + index as i64 * 100).into()));
+        }
+        for (index, block) in [13, 23, 33, 97].into_iter().enumerate() {
+            vm.executable_roots.insert(block, executables[index]);
+        }
+        for (index, template) in [14, 24, 34, 96].into_iter().enumerate() {
+            vm.class_singletons.insert(template, classes[index]);
+        }
+        for (index, alias) in [100, 101, 200, 300, 999].into_iter().enumerate() {
+            vm.alias_singletons.insert(alias, aliases[index]);
+        }
+        let mut first_expected = vec![
+            Value::Object(declarations[0]),
+            Value::Int(111.into()),
+            Value::Int(112.into()),
+            executables[0].root(),
+            Value::Class(classes[0]),
+            Value::TypeAlias(aliases[0]),
+            Value::TypeAlias(aliases[1]),
+            Value::Object(declarations[2]),
+            Value::Int(311.into()),
+            Value::Int(312.into()),
+            executables[2].root(),
+            Value::Class(classes[2]),
+            Value::TypeAlias(aliases[3]),
+        ];
+        let second_expected = vec![
+            Value::Object(declarations[1]),
+            Value::Int(211.into()),
+            Value::Int(212.into()),
+            executables[1].root(),
+            Value::Class(classes[1]),
+            Value::TypeAlias(aliases[2]),
+        ];
+        let unowned_expected = vec![
+            Value::Int((-1).into()),
+            Value::Object(declarations[3]),
+            Value::Int(411.into()),
+            Value::Int(412.into()),
+            executables[3].root(),
+            Value::Class(classes[3]),
+            Value::TypeAlias(aliases[4]),
+        ];
+        let mut unowned = vec![Value::Int((-1).into())];
+        vm.declaration_code_roots(&mut unowned);
+        assert_eq!(unowned, unowned_expected);
+        assert_eq!(
+            vm.heap.code_roots_for_test(first),
+            first_expected.as_slice()
+        );
+        assert_eq!(
+            vm.heap.code_roots_for_test(second),
+            second_expected.as_slice()
+        );
+
+        // A declaration in the third arena materializes after the first GC-root
+        // enumeration. Rebuilding must replace the shared owner's complete edge
+        // vector, retaining earlier arena order and adding exactly one new edge.
+        vm.alias_singletons.insert(301, aliases[5]);
+        first_expected.push(Value::TypeAlias(aliases[5]));
+        let mut refreshed = vec![Value::Int((-1).into())];
+        vm.declaration_code_roots(&mut refreshed);
+        assert_eq!(refreshed, unowned_expected);
+        assert_eq!(
+            vm.heap.code_roots_for_test(first),
+            first_expected.as_slice()
+        );
+        assert_eq!(
+            vm.heap.code_roots_for_test(second),
+            second_expected.as_slice()
+        );
+
+        // Observe the actual published executable edges through tracing. With
+        // only the first owner rooted, its aliases survive and the other owner's
+        // alias is reclaimed; unowned values survive only via explicit roots.
+        refreshed.push(first.root());
+        vm.heap.collect(&refreshed);
+        for index in [0, 1, 3, 4, 5] {
+            assert!(vm.heap.get(aliases[index]).is_ok());
+        }
+        assert!(vm.heap.get(aliases[2]).is_err());
+        assert!(vm.heap.executable_is_live(first));
+        assert!(!vm.heap.executable_is_live(second));
+    }
+
+    #[test]
+    fn empty_declaration_maps_clear_previously_published_owner_edges() {
+        // Like the repeated-owner test, this constructs publication dataflow
+        // over an empty Program; it does not claim compiler/VM retirement coverage.
+        let mut vm = Vm::new(Arc::new(Program::new(Vec::new())));
+        let owner = vm.heap.allocate_executable();
+        let alias = vm.heap.allocate(Object::default());
+        vm.code_arenas.push(CodeArena {
+            owner,
+            query: false,
+            blocks: 0..0,
+            objects: 0..0,
+            units: 0..0,
+            recipes: 0..0,
+            aliases: BTreeSet::from([100]),
+        });
+        vm.alias_singletons.insert(100, alias);
+        let mut roots = Vec::new();
+        vm.declaration_code_roots(&mut roots);
+        assert!(roots.is_empty());
+        assert_eq!(
+            vm.heap.code_roots_for_test(owner),
+            &[Value::TypeAlias(alias)]
+        );
+        vm.heap.collect(&[owner.root()]);
+        assert!(vm.heap.get(alias).is_ok());
+
+        vm.alias_singletons.clear();
+        assert!(vm.resolved_declarations.is_empty());
+        assert!(vm.type_parent_defaults.is_empty());
+        assert!(vm.executable_roots.is_empty());
+        assert!(vm.class_singletons.is_empty());
+        vm.declaration_code_roots(&mut roots);
+        assert!(roots.is_empty());
+        assert!(vm.heap.code_roots_for_test(owner).is_empty());
+        vm.heap.collect(&[owner.root()]);
+        assert!(vm.heap.executable_is_live(owner));
+        assert!(vm.heap.get(alias).is_err());
+    }
 
     fn complete(request: &ModuleRequest) -> ModuleCompletion {
         match &request.kind {

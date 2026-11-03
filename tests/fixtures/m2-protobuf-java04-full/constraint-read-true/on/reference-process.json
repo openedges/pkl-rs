@@ -1,0 +1,41 @@
+{
+  "name": "constraint-read-true-on",
+  "argv": [
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-oracle-04/acquisition/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-oracle-04/acquisition/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-oracle-04/acquisition/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage51/.cache/oracle/pkl-tools-0.32.0.jar",
+    "M2PowerAssertionOracle",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-oracle-04/acquisition/fixtures/constraint-read-true/on",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-oracle-04/acquisition/fixtures/constraint-read-true/module.pkl",
+    "file:///stage145-protobuf/constraint-read-true/main.pkl",
+    "on",
+    "output.text",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-oracle-04/acquisition/fixtures/constraint-read-true"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+  "exit_code": 1,
+  "timed_out": false,
+  "elapsed_seconds": 0.5656717079691589,
+  "stdout": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-oracle-04/acquisition/processes/constraint-read-true-on/stdout.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-oracle-04/acquisition/processes/constraint-read-true-on/stderr.bin",
+    "bytes": 1313,
+    "sha256": "f004acb83374570a7c860867717714abdbdeb346921cbe24d552a7c2d4ae60b2"
+  }
+}

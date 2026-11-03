@@ -1,0 +1,10 @@
+–– Pkl Error ––
+first visible error
+
+3 | class Child extends Parent { b=trace(702); c=throw("first visible error") }
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#Child.c (file:///stage145-protobuf/force-throw/main.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

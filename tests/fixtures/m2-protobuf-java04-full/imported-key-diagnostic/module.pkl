@@ -1,0 +1,3 @@
+import "pkl:protobuf"
+import "types.pkl"
+output { value=new types.Input {}; renderer=new protobuf.Renderer {} }

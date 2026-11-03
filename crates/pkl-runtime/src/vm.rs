@@ -83,6 +83,7 @@ pub enum Instruction {
     LoadRefModule,
     LoadJsonnetModule,
     LoadXmlModule,
+    LoadProtobufModule,
     ReflectCall(reflection::Operation),
     /// Execute the authored pkl:json Parser.parse external body.
     JsonParse,
@@ -113,6 +114,10 @@ pub enum Instruction {
     RenderPklBinary {
         document: bool,
     },
+    RenderProtobuf {
+        document: bool,
+    },
+    ProtobufRenderType,
     RenderXml {
         document: bool,
     },
@@ -2490,7 +2495,7 @@ impl Vm {
                     && !replaced_byte_argument
                     && !(unavailable_origin && frame_index + 1 == self.frames.len())
                 {
-                    let displayed = RuntimeFrame {
+                    let mut displayed = RuntimeFrame {
                         anonymous: metadata.anonymous_root,
                         source: metadata.source.clone(),
                         span: if error.frames.is_empty() {
@@ -2506,6 +2511,26 @@ impl Vm {
                             .clone()
                             .unwrap_or_else(|| metadata.member.clone()),
                     };
+                    // Only the inline constraint body executed by the nearest
+                    // Protobuf alternative shares the renderer's logical root.
+                    // Ordinary checks and called functions retain their roots.
+                    if frame.return_to_type
+                        && metadata.inline_constraint
+                        && metadata.constraint_root.is_none()
+                        && let Some(renderer) = diagnostic_frames[..frame_index]
+                            .iter()
+                            .rev()
+                            .find(|parent| parent.type_run.is_some())
+                            .filter(|parent| {
+                                parent
+                                    .type_run
+                                    .as_ref()
+                                    .is_some_and(|run| run.is_protobuf_alternative())
+                            })
+                            .and_then(|parent| self.program.metadata.get(parent.block))
+                    {
+                        displayed = self.protobuf_type_origin(displayed, renderer);
+                    }
                     if matches!(instruction(frame), Some(Instruction::CheckByte))
                         && let Some(target) = cast_targets[frame_index]
                     {
@@ -4663,6 +4688,8 @@ impl Vm {
         // still starts in the ordinary module initializer and can yield there.
         let result = if matches!(instruction, Instruction::LoadBaseModule) {
             self.import_stdlib("pkl:base").map(|_| ())
+        } else if matches!(instruction, Instruction::LoadProtobufModule) {
+            self.import_stdlib("pkl:protobuf").map(|_| ())
         } else if matches!(instruction, Instruction::LoadXmlModule) {
             self.import_stdlib("pkl:xml").map(|_| ())
         } else if matches!(instruction, Instruction::LoadJsonnetModule) {
@@ -4793,6 +4820,8 @@ impl Vm {
             Instruction::RenderPklBinary { document } => {
                 self.begin_pkl_binary_render(document)?;
             }
+            Instruction::RenderProtobuf { document } => self.begin_protobuf_render(document)?,
+            Instruction::ProtobufRenderType => self.protobuf_render_type()?,
             Instruction::RenderXml { document } => {
                 self.begin_xml_render(document)?;
             }
@@ -4964,7 +4993,8 @@ impl Vm {
             Instruction::LoadBaseModule
             | Instruction::LoadRefModule
             | Instruction::LoadJsonnetModule
-            | Instruction::LoadXmlModule => {
+            | Instruction::LoadXmlModule
+            | Instruction::LoadProtobufModule => {
                 unreachable!("bundled module preparation is dispatched before this frame")
             }
 
@@ -8237,6 +8267,27 @@ impl Compiler<'_> {
                 {
                     output.push(Instruction::RenderJsonnet {
                         document: self.member == "#Renderer.renderDocument",
+                    });
+                } else if self.resolved.standard_library
+                    && self
+                        .source
+                        .as_ref()
+                        .is_some_and(|source| source.uri == "pkl:protobuf")
+                    && matches!(
+                        self.member.as_str(),
+                        Some(
+                            "#Renderer.renderValue"
+                                | "#Renderer.renderDocument"
+                                | "#Renderer.renderType"
+                        )
+                    )
+                {
+                    output.push(if self.member == "#Renderer.renderType" {
+                        Instruction::ProtobufRenderType
+                    } else {
+                        Instruction::RenderProtobuf {
+                            document: self.member == "#Renderer.renderDocument",
+                        }
                     });
                 } else if self
                     .source

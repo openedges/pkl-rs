@@ -1,0 +1,9 @@
+import "pkl:protobuf"
+
+class Input {
+@protobuf.Property { name="RENAMED" }
+original: Int=1
+}
+output { value=new Input {}; renderer=new protobuf.Renderer { indent="  "
+converters { ["original"]=(v)->trace(v+1); ["RENAMED"]=(_)->throw("wrong converter path") }
+} }

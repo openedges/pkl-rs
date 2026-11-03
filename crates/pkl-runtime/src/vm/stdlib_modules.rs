@@ -20,6 +20,7 @@ impl Vm {
             Some("pkl:reflect") => crate::stdlib_sources::reflect(),
             Some("pkl:semver") => crate::stdlib_sources::semver(),
             Some("pkl:shell") => crate::stdlib_sources::shell(),
+            Some("pkl:protobuf") => crate::stdlib_sources::protobuf(),
             Some("pkl:xml") => crate::stdlib_sources::xml(),
             Some("pkl:jsonnet") => crate::stdlib_sources::jsonnet(),
             Some("pkl:pklbinary") => crate::stdlib_sources::pklbinary(),
@@ -170,6 +171,7 @@ fn append_members(
             | "pkl:semver"
             | "pkl:json"
             | "pkl:jsonnet"
+            | "pkl:protobuf"
             | "pkl:xml"
             | "pkl:yaml"
             | "pkl:shell"

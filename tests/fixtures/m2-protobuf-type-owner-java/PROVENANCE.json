@@ -1,0 +1,1970 @@
+{
+  "source_only": true,
+  "java_independent_readback": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-java-independent-readback-01/report.json",
+    "bytes": 68658,
+    "sha256": "64b017a093a95d644a5a2b7901240590ff5488e955498c5919976422566f6fa1",
+    "mode": 420
+  },
+  "producer": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/report.json",
+    "bytes": 53018,
+    "sha256": "b7cbc42cca0069cbd523b72ff754c3fb15ee1428114b261c88eafbd8bcb6112a",
+    "mode": 420
+  },
+  "source_manifest": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-01/manifest.json",
+    "bytes": 6010,
+    "sha256": "a5fe93df02de83185ec9bd7e4444a2eda7fa2cac0700d094fd55e8b154837b24",
+    "mode": 420
+  },
+  "ordinary_observations": 8,
+  "source_programs": 4,
+  "power_modes": [
+    "on",
+    "off"
+  ],
+  "immutable_copy_records": [
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-01/pending-java/mapping-float-render-value/module.pkl",
+        "bytes": 146,
+        "sha256": "9154aace736ac8a01f6002e9a00c69bcffe9e5813055eda9f2a88445593be277",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/module.pkl",
+        "bytes": 146,
+        "sha256": "9154aace736ac8a01f6002e9a00c69bcffe9e5813055eda9f2a88445593be277",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/module.pkl"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-01/pending-java/mapping-float-render-value/uri.txt",
+        "bytes": 62,
+        "sha256": "af2431206966f43e67da84a9237417ffd6e5dcac2e3b11aa2b28bb2d25838bc6",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/uri.txt",
+        "bytes": 62,
+        "sha256": "af2431206966f43e67da84a9237417ffd6e5dcac2e3b11aa2b28bb2d25838bc6",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/uri.txt"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-01/pending-java/mapping-float-render-value/expression.txt",
+        "bytes": 12,
+        "sha256": "dcecf57dc09dfa9e46670b450d1b537b71c8ed1fc61f72a9c30ea754d021424d",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/expression.txt",
+        "bytes": 12,
+        "sha256": "dcecf57dc09dfa9e46670b450d1b537b71c8ed1fc61f72a9c30ea754d021424d",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/expression.txt"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-01/pending-java/mapping-float-render-value/modules.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/modules.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/modules.tsv"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-01/pending-java/mapping-float-render-value/resources.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/resources.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/resources.tsv"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-01/pending-java/mapping-float-render-value/properties.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/properties.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/properties.tsv"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/mapping-float-render-value/on/result.status.bin",
+        "bytes": 6,
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/result.status.bin",
+        "bytes": 6,
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/result.status.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/mapping-float-render-value/on/events.count.bin",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/events.count.bin",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/events.count.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/mapping-float-render-value/on/result.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/result.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/result.stdout.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/mapping-float-render-value/on/result.stdout.code-units.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/result.stdout.code-units.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/result.stdout.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/mapping-float-render-value/on/result.stderr.bin",
+        "bytes": 538,
+        "sha256": "e99ce7b97eb302c753deaf1a005428a457b515c0987879a8400fb6e0ad92e638",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/result.stderr.bin",
+        "bytes": 538,
+        "sha256": "e99ce7b97eb302c753deaf1a005428a457b515c0987879a8400fb6e0ad92e638",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/result.stderr.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/mapping-float-render-value/on/result.stderr.code-units.bin",
+        "bytes": 1060,
+        "sha256": "e2834df54a5ea48f786f018c8136f09449a11e8d73c69bfe0de645489660d985",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/result.stderr.code-units.bin",
+        "bytes": 1060,
+        "sha256": "e2834df54a5ea48f786f018c8136f09449a11e8d73c69bfe0de645489660d985",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/result.stderr.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/mapping-float-render-value/on/result.error-class.bin",
+        "bytes": 25,
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/result.error-class.bin",
+        "bytes": 25,
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/result.error-class.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/mapping-float-render-value/on/result.error-class.code-units.bin",
+        "bytes": 50,
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/result.error-class.code-units.bin",
+        "bytes": 50,
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/result.error-class.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/mapping-float-render-value/on/expression.bin",
+        "bytes": 11,
+        "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/expression.bin",
+        "bytes": 11,
+        "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/expression.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/mapping-float-render-value/on/expression.code-units.bin",
+        "bytes": 22,
+        "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/expression.code-units.bin",
+        "bytes": 22,
+        "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/expression.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/1.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/process.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/process.stdout.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/1.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/process.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/on/process.stderr.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/mapping-float-render-value/off/result.status.bin",
+        "bytes": 6,
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/result.status.bin",
+        "bytes": 6,
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/result.status.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/mapping-float-render-value/off/events.count.bin",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/events.count.bin",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/events.count.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/mapping-float-render-value/off/result.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/result.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/result.stdout.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/mapping-float-render-value/off/result.stdout.code-units.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/result.stdout.code-units.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/result.stdout.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/mapping-float-render-value/off/result.stderr.bin",
+        "bytes": 538,
+        "sha256": "e99ce7b97eb302c753deaf1a005428a457b515c0987879a8400fb6e0ad92e638",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/result.stderr.bin",
+        "bytes": 538,
+        "sha256": "e99ce7b97eb302c753deaf1a005428a457b515c0987879a8400fb6e0ad92e638",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/result.stderr.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/mapping-float-render-value/off/result.stderr.code-units.bin",
+        "bytes": 1060,
+        "sha256": "e2834df54a5ea48f786f018c8136f09449a11e8d73c69bfe0de645489660d985",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/result.stderr.code-units.bin",
+        "bytes": 1060,
+        "sha256": "e2834df54a5ea48f786f018c8136f09449a11e8d73c69bfe0de645489660d985",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/result.stderr.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/mapping-float-render-value/off/result.error-class.bin",
+        "bytes": 25,
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/result.error-class.bin",
+        "bytes": 25,
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/result.error-class.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/mapping-float-render-value/off/result.error-class.code-units.bin",
+        "bytes": 50,
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/result.error-class.code-units.bin",
+        "bytes": 50,
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/result.error-class.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/mapping-float-render-value/off/expression.bin",
+        "bytes": 11,
+        "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/expression.bin",
+        "bytes": 11,
+        "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/expression.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/mapping-float-render-value/off/expression.code-units.bin",
+        "bytes": 22,
+        "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/expression.code-units.bin",
+        "bytes": 22,
+        "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/expression.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/2.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/process.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/process.stdout.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/2.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/process.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/mapping-float-render-value/off/process.stderr.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-01/pending-java/constraint-throw-render-value/module.pkl",
+        "bytes": 200,
+        "sha256": "633e25cad6662189f9f261d45f1a4a890276ac8460674e36fcfcc4bf5768cc1d",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/module.pkl",
+        "bytes": 200,
+        "sha256": "633e25cad6662189f9f261d45f1a4a890276ac8460674e36fcfcc4bf5768cc1d",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/module.pkl"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-01/pending-java/constraint-throw-render-value/uri.txt",
+        "bytes": 65,
+        "sha256": "0ca30ab673a42bff091b8b7aa69f52228c274b1d8eb43550ca882b5063ad2546",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/uri.txt",
+        "bytes": 65,
+        "sha256": "0ca30ab673a42bff091b8b7aa69f52228c274b1d8eb43550ca882b5063ad2546",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/uri.txt"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-01/pending-java/constraint-throw-render-value/expression.txt",
+        "bytes": 12,
+        "sha256": "dcecf57dc09dfa9e46670b450d1b537b71c8ed1fc61f72a9c30ea754d021424d",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/expression.txt",
+        "bytes": 12,
+        "sha256": "dcecf57dc09dfa9e46670b450d1b537b71c8ed1fc61f72a9c30ea754d021424d",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/expression.txt"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-01/pending-java/constraint-throw-render-value/modules.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/modules.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/modules.tsv"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-01/pending-java/constraint-throw-render-value/resources.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/resources.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/resources.tsv"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-01/pending-java/constraint-throw-render-value/properties.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/properties.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/properties.tsv"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/constraint-throw-render-value/on/result.status.bin",
+        "bytes": 6,
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/result.status.bin",
+        "bytes": 6,
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/result.status.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/constraint-throw-render-value/on/events.count.bin",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/events.count.bin",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/events.count.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/constraint-throw-render-value/on/result.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/result.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/result.stdout.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/constraint-throw-render-value/on/result.stdout.code-units.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/result.stdout.code-units.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/result.stdout.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/constraint-throw-render-value/on/result.stderr.bin",
+        "bytes": 583,
+        "sha256": "b076b94b72e0a7f7b337b7991956c525a2509e4a7b211c8e543fdf0fc2b871fb",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/result.stderr.bin",
+        "bytes": 583,
+        "sha256": "b076b94b72e0a7f7b337b7991956c525a2509e4a7b211c8e543fdf0fc2b871fb",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/result.stderr.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/constraint-throw-render-value/on/result.stderr.code-units.bin",
+        "bytes": 1150,
+        "sha256": "2e81d91cc26d187707c1ab2d5544027887e7ecd985bd15d51bd2497bff598d2f",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/result.stderr.code-units.bin",
+        "bytes": 1150,
+        "sha256": "2e81d91cc26d187707c1ab2d5544027887e7ecd985bd15d51bd2497bff598d2f",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/result.stderr.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/constraint-throw-render-value/on/result.error-class.bin",
+        "bytes": 25,
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/result.error-class.bin",
+        "bytes": 25,
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/result.error-class.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/constraint-throw-render-value/on/result.error-class.code-units.bin",
+        "bytes": 50,
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/result.error-class.code-units.bin",
+        "bytes": 50,
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/result.error-class.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/constraint-throw-render-value/on/expression.bin",
+        "bytes": 11,
+        "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/expression.bin",
+        "bytes": 11,
+        "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/expression.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/constraint-throw-render-value/on/expression.code-units.bin",
+        "bytes": 22,
+        "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/expression.code-units.bin",
+        "bytes": 22,
+        "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/expression.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/3.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/process.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/process.stdout.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/3.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/process.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/on/process.stderr.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/constraint-throw-render-value/off/result.status.bin",
+        "bytes": 6,
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/result.status.bin",
+        "bytes": 6,
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/result.status.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/constraint-throw-render-value/off/events.count.bin",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/events.count.bin",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/events.count.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/constraint-throw-render-value/off/result.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/result.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/result.stdout.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/constraint-throw-render-value/off/result.stdout.code-units.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/result.stdout.code-units.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/result.stdout.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/constraint-throw-render-value/off/result.stderr.bin",
+        "bytes": 583,
+        "sha256": "b076b94b72e0a7f7b337b7991956c525a2509e4a7b211c8e543fdf0fc2b871fb",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/result.stderr.bin",
+        "bytes": 583,
+        "sha256": "b076b94b72e0a7f7b337b7991956c525a2509e4a7b211c8e543fdf0fc2b871fb",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/result.stderr.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/constraint-throw-render-value/off/result.stderr.code-units.bin",
+        "bytes": 1150,
+        "sha256": "2e81d91cc26d187707c1ab2d5544027887e7ecd985bd15d51bd2497bff598d2f",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/result.stderr.code-units.bin",
+        "bytes": 1150,
+        "sha256": "2e81d91cc26d187707c1ab2d5544027887e7ecd985bd15d51bd2497bff598d2f",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/result.stderr.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/constraint-throw-render-value/off/result.error-class.bin",
+        "bytes": 25,
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/result.error-class.bin",
+        "bytes": 25,
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/result.error-class.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/constraint-throw-render-value/off/result.error-class.code-units.bin",
+        "bytes": 50,
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/result.error-class.code-units.bin",
+        "bytes": 50,
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/result.error-class.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/constraint-throw-render-value/off/expression.bin",
+        "bytes": 11,
+        "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/expression.bin",
+        "bytes": 11,
+        "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/expression.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/constraint-throw-render-value/off/expression.code-units.bin",
+        "bytes": 22,
+        "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/expression.code-units.bin",
+        "bytes": 22,
+        "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/expression.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/4.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/process.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/process.stdout.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/4.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/process.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/constraint-throw-render-value/off/process.stderr.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-01/pending-java/ordinary-constraint-throw/module.pkl",
+        "bytes": 86,
+        "sha256": "aba17e4a95ee609f32cd38e698b0a4db16d45807dbfc9e50faa34a6c9d5e9a79",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/module.pkl",
+        "bytes": 86,
+        "sha256": "aba17e4a95ee609f32cd38e698b0a4db16d45807dbfc9e50faa34a6c9d5e9a79",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/module.pkl"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-01/pending-java/ordinary-constraint-throw/uri.txt",
+        "bytes": 61,
+        "sha256": "14fa9de54041651d53d91b37ae14fa5e338b115cfccf13d5f8e8ebab45102fb6",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/uri.txt",
+        "bytes": 61,
+        "sha256": "14fa9de54041651d53d91b37ae14fa5e338b115cfccf13d5f8e8ebab45102fb6",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/uri.txt"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-01/pending-java/ordinary-constraint-throw/expression.txt",
+        "bytes": 7,
+        "sha256": "5656fafa00d4f294bcb606cf4f7d4fa877390e46f583e8b3c8744ace104a31d1",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/expression.txt",
+        "bytes": 7,
+        "sha256": "5656fafa00d4f294bcb606cf4f7d4fa877390e46f583e8b3c8744ace104a31d1",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/expression.txt"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-01/pending-java/ordinary-constraint-throw/modules.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/modules.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/modules.tsv"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-01/pending-java/ordinary-constraint-throw/resources.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/resources.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/resources.tsv"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-01/pending-java/ordinary-constraint-throw/properties.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/properties.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/properties.tsv"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/ordinary-constraint-throw/on/result.status.bin",
+        "bytes": 6,
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/result.status.bin",
+        "bytes": 6,
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/result.status.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/ordinary-constraint-throw/on/events.count.bin",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/events.count.bin",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/events.count.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/ordinary-constraint-throw/on/result.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/result.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/result.stdout.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/ordinary-constraint-throw/on/result.stdout.code-units.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/result.stdout.code-units.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/result.stdout.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/ordinary-constraint-throw/on/result.stderr.bin",
+        "bytes": 630,
+        "sha256": "3825e12cfe57af4e0bea36cfa7cd234ec97f2780b4172d3f1b108e31e4ff6b2d",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/result.stderr.bin",
+        "bytes": 630,
+        "sha256": "3825e12cfe57af4e0bea36cfa7cd234ec97f2780b4172d3f1b108e31e4ff6b2d",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/result.stderr.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/ordinary-constraint-throw/on/result.stderr.code-units.bin",
+        "bytes": 1244,
+        "sha256": "834a18d425e9f8fb9290d18c14b34b08cf84a55804670eae7b9f363a7a300289",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/result.stderr.code-units.bin",
+        "bytes": 1244,
+        "sha256": "834a18d425e9f8fb9290d18c14b34b08cf84a55804670eae7b9f363a7a300289",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/result.stderr.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/ordinary-constraint-throw/on/result.error-class.bin",
+        "bytes": 25,
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/result.error-class.bin",
+        "bytes": 25,
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/result.error-class.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/ordinary-constraint-throw/on/result.error-class.code-units.bin",
+        "bytes": 50,
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/result.error-class.code-units.bin",
+        "bytes": 50,
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/result.error-class.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/ordinary-constraint-throw/on/expression.bin",
+        "bytes": 6,
+        "sha256": "f6a214f7a5fcda0c2cee9660b7fc29f5649e3c68aad48e20e950137c98913a68",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/expression.bin",
+        "bytes": 6,
+        "sha256": "f6a214f7a5fcda0c2cee9660b7fc29f5649e3c68aad48e20e950137c98913a68",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/expression.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/ordinary-constraint-throw/on/expression.code-units.bin",
+        "bytes": 12,
+        "sha256": "89f6f36218b8ee6f026483029c7b8a5f3c3005cb9fa6a9b48ad3eee8f321748a",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/expression.code-units.bin",
+        "bytes": 12,
+        "sha256": "89f6f36218b8ee6f026483029c7b8a5f3c3005cb9fa6a9b48ad3eee8f321748a",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/expression.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/5.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/process.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/process.stdout.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/5.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/process.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/on/process.stderr.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/ordinary-constraint-throw/off/result.status.bin",
+        "bytes": 6,
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/result.status.bin",
+        "bytes": 6,
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/result.status.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/ordinary-constraint-throw/off/events.count.bin",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/events.count.bin",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/events.count.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/ordinary-constraint-throw/off/result.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/result.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/result.stdout.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/ordinary-constraint-throw/off/result.stdout.code-units.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/result.stdout.code-units.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/result.stdout.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/ordinary-constraint-throw/off/result.stderr.bin",
+        "bytes": 630,
+        "sha256": "3825e12cfe57af4e0bea36cfa7cd234ec97f2780b4172d3f1b108e31e4ff6b2d",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/result.stderr.bin",
+        "bytes": 630,
+        "sha256": "3825e12cfe57af4e0bea36cfa7cd234ec97f2780b4172d3f1b108e31e4ff6b2d",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/result.stderr.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/ordinary-constraint-throw/off/result.stderr.code-units.bin",
+        "bytes": 1244,
+        "sha256": "834a18d425e9f8fb9290d18c14b34b08cf84a55804670eae7b9f363a7a300289",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/result.stderr.code-units.bin",
+        "bytes": 1244,
+        "sha256": "834a18d425e9f8fb9290d18c14b34b08cf84a55804670eae7b9f363a7a300289",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/result.stderr.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/ordinary-constraint-throw/off/result.error-class.bin",
+        "bytes": 25,
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/result.error-class.bin",
+        "bytes": 25,
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/result.error-class.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/ordinary-constraint-throw/off/result.error-class.code-units.bin",
+        "bytes": 50,
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/result.error-class.code-units.bin",
+        "bytes": 50,
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/result.error-class.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/ordinary-constraint-throw/off/expression.bin",
+        "bytes": 6,
+        "sha256": "f6a214f7a5fcda0c2cee9660b7fc29f5649e3c68aad48e20e950137c98913a68",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/expression.bin",
+        "bytes": 6,
+        "sha256": "f6a214f7a5fcda0c2cee9660b7fc29f5649e3c68aad48e20e950137c98913a68",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/expression.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/ordinary-constraint-throw/off/expression.code-units.bin",
+        "bytes": 12,
+        "sha256": "89f6f36218b8ee6f026483029c7b8a5f3c3005cb9fa6a9b48ad3eee8f321748a",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/expression.code-units.bin",
+        "bytes": 12,
+        "sha256": "89f6f36218b8ee6f026483029c7b8a5f3c3005cb9fa6a9b48ad3eee8f321748a",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/expression.code-units.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/6.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/process.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/process.stdout.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-oracle-01/6.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/process.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "scope": "ordinary Java reference, native unexecuted",
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/ordinary-constraint-throw/off/process.stderr.bin"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-02/pending-java/protobuf-constraint-inline-lambda/module.pkl",
+        "bytes": 208,
+        "sha256": "db64f2a666baac56ea6b2d4a60b98bfd0b9afc9f123960c454328d730d7f6c40",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/module.pkl",
+        "bytes": 208,
+        "sha256": "db64f2a666baac56ea6b2d4a60b98bfd0b9afc9f123960c454328d730d7f6c40",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/module.pkl",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-02/pending-java/protobuf-constraint-inline-lambda/uri.txt",
+        "bytes": 69,
+        "sha256": "c271679622599fc5da8676d84013885b331e4aca7ac317ed3da141fc2d5fc75f",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/uri.txt",
+        "bytes": 69,
+        "sha256": "c271679622599fc5da8676d84013885b331e4aca7ac317ed3da141fc2d5fc75f",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/uri.txt",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-02/pending-java/protobuf-constraint-inline-lambda/expression.txt",
+        "bytes": 12,
+        "sha256": "dcecf57dc09dfa9e46670b450d1b537b71c8ed1fc61f72a9c30ea754d021424d",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/expression.txt",
+        "bytes": 12,
+        "sha256": "dcecf57dc09dfa9e46670b450d1b537b71c8ed1fc61f72a9c30ea754d021424d",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/expression.txt",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-02/pending-java/protobuf-constraint-inline-lambda/modules.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/modules.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/modules.tsv",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-02/pending-java/protobuf-constraint-inline-lambda/resources.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/resources.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/resources.tsv",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-02/pending-java/protobuf-constraint-inline-lambda/properties.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/properties.tsv",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/properties.tsv",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/protobuf-constraint-inline-lambda/on/result.status.bin",
+        "bytes": 6,
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/result.status.bin",
+        "bytes": 6,
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/result.status.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/protobuf-constraint-inline-lambda/on/events.count.bin",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/events.count.bin",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/events.count.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/protobuf-constraint-inline-lambda/on/result.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/result.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/result.stdout.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/protobuf-constraint-inline-lambda/on/result.stdout.code-units.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/result.stdout.code-units.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/result.stdout.code-units.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/protobuf-constraint-inline-lambda/on/result.stderr.bin",
+        "bytes": 839,
+        "sha256": "992014d5a3d7a5acab259fef9d8fa8d72f4f5a426735650336086f71cb3b14e8",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/result.stderr.bin",
+        "bytes": 839,
+        "sha256": "992014d5a3d7a5acab259fef9d8fa8d72f4f5a426735650336086f71cb3b14e8",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/result.stderr.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/protobuf-constraint-inline-lambda/on/result.stderr.code-units.bin",
+        "bytes": 1662,
+        "sha256": "a24253a9639f66a1ce50752835822503d437763fb13c37aecc57ef929eac2d7e",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/result.stderr.code-units.bin",
+        "bytes": 1662,
+        "sha256": "a24253a9639f66a1ce50752835822503d437763fb13c37aecc57ef929eac2d7e",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/result.stderr.code-units.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/protobuf-constraint-inline-lambda/on/result.error-class.bin",
+        "bytes": 25,
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/result.error-class.bin",
+        "bytes": 25,
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/result.error-class.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/protobuf-constraint-inline-lambda/on/result.error-class.code-units.bin",
+        "bytes": 50,
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/result.error-class.code-units.bin",
+        "bytes": 50,
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/result.error-class.code-units.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/protobuf-constraint-inline-lambda/on/expression.bin",
+        "bytes": 11,
+        "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/expression.bin",
+        "bytes": 11,
+        "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/expression.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/protobuf-constraint-inline-lambda/on/expression.code-units.bin",
+        "bytes": 22,
+        "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/expression.code-units.bin",
+        "bytes": 22,
+        "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/expression.code-units.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/1.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/process.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/process.stdout.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/1.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/process.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/on/process.stderr.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/protobuf-constraint-inline-lambda/off/result.status.bin",
+        "bytes": 6,
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/result.status.bin",
+        "bytes": 6,
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/result.status.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/protobuf-constraint-inline-lambda/off/events.count.bin",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/events.count.bin",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/events.count.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/protobuf-constraint-inline-lambda/off/result.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/result.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/result.stdout.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/protobuf-constraint-inline-lambda/off/result.stdout.code-units.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/result.stdout.code-units.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/result.stdout.code-units.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/protobuf-constraint-inline-lambda/off/result.stderr.bin",
+        "bytes": 839,
+        "sha256": "992014d5a3d7a5acab259fef9d8fa8d72f4f5a426735650336086f71cb3b14e8",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/result.stderr.bin",
+        "bytes": 839,
+        "sha256": "992014d5a3d7a5acab259fef9d8fa8d72f4f5a426735650336086f71cb3b14e8",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/result.stderr.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/protobuf-constraint-inline-lambda/off/result.stderr.code-units.bin",
+        "bytes": 1662,
+        "sha256": "a24253a9639f66a1ce50752835822503d437763fb13c37aecc57ef929eac2d7e",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/result.stderr.code-units.bin",
+        "bytes": 1662,
+        "sha256": "a24253a9639f66a1ce50752835822503d437763fb13c37aecc57ef929eac2d7e",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/result.stderr.code-units.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/protobuf-constraint-inline-lambda/off/result.error-class.bin",
+        "bytes": 25,
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/result.error-class.bin",
+        "bytes": 25,
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/result.error-class.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/protobuf-constraint-inline-lambda/off/result.error-class.code-units.bin",
+        "bytes": 50,
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/result.error-class.code-units.bin",
+        "bytes": 50,
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/result.error-class.code-units.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/protobuf-constraint-inline-lambda/off/expression.bin",
+        "bytes": 11,
+        "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/expression.bin",
+        "bytes": 11,
+        "sha256": "7777e7027b734b033b51f4b65a22f00ff621865073bfb1a45c262982fa67458f",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/expression.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/protobuf-constraint-inline-lambda/off/expression.code-units.bin",
+        "bytes": 22,
+        "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/expression.code-units.bin",
+        "bytes": 22,
+        "sha256": "daf74c652499f9e873306bd1e9d223d26c260515b1eeb2273cc96353c4af8bd1",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/expression.code-units.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/2.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/process.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/process.stdout.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/2.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-draft-03/overlay/tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/process.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "destination": "tests/fixtures/m2-protobuf-type-owner-java/protobuf-constraint-inline-lambda/off/process.stderr.bin",
+      "scope": "Java-qualified ordinary lambda observation; native unexecuted"
+    }
+  ],
+  "expected_bytes_origin": "Only actual pinned Java0.32.0 API result/process channels; no Rust result or output normalization.",
+  "native_results": 0,
+  "supplemental_nonpasses": 2,
+  "supplemental_nonpass_scope": "Called-helper captures are retained locally as PklBugException/NPE at VmUtils.skipInvisibleScopes. They provide no independent-function preservation success.",
+  "additional_java_independent_readback": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-independent-readback-01/report.json",
+    "bytes": 17877,
+    "sha256": "83edf65bf688a910e6465e33c91b29a56a2292718cb7865f9bbfd59f9000d4bd",
+    "mode": 420
+  },
+  "additional_producer": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-protobuf-type-owner-lambda-oracle-01/report.json",
+    "bytes": 42912,
+    "sha256": "1c2501221a3db09c89545f9d68e5a38d57b186e30cfbb501eb8f54cd5ec9aeef",
+    "mode": 420
+  },
+  "lambda_logical_roots": [
+    "main#Input.value.<function#1>",
+    "pkl.protobuf#Renderer.renderValue",
+    "main#output.text"
+  ]
+}

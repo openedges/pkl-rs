@@ -1,0 +1,145 @@
+{
+  "complete": true,
+  "epoch": 1793726430.727895,
+  "source_epoch": "fc1b43be414cfaeeb2dee19622d13581a6b4538b",
+  "pack": {
+    "complete": true,
+    "errors": [],
+    "roster_sha256": "9c687d69eef258f279e17d678683509a4f959d46ff8889bc3cc4d8543f524d79",
+    "roster_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-publication-prep-03/selection.json",
+    "file_count": 17433,
+    "logical_payload_bytes": 371680036,
+    "scope": "Finite raw evidence payload; excludes compiled/cache bodies. Not a hermetic restoration or complete dependency closure.",
+    "archive": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-publication-01/evidence.tar.gz",
+      "bytes": 47300207,
+      "sha256": "dd2d818d17f02e3e1a35af5fb9b00d04fe949325e3997079193764fd289cf826"
+    }
+  },
+  "integrity_report": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-publication-readback-01/report.json",
+    "bytes": 2467,
+    "sha256": "6f1c8fb4ca33e9cd19c6566b944b53bff71c586b62c0ee8eeee567b64a062b5e",
+    "mode": 420
+  },
+  "source_verification": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-source-verification-01/source-verification.json",
+    "bytes": 2795084,
+    "sha256": "bf8bf04b2fdc3137202397fd3a9525d2f5340de02fdd4bc54591bc696b3b3301",
+    "mode": 420
+  },
+  "copies": [
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-closeout-doc-draft-07/README.md",
+        "bytes": 11177,
+        "sha256": "aa7a7ce696a0e0f7248aabd230ae6f9f816f9c23a1ccbe7032f6226c6343a080",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage145-protobuf-gc/README.md",
+        "bytes": 11177,
+        "sha256": "aa7a7ce696a0e0f7248aabd230ae6f9f816f9c23a1ccbe7032f6226c6343a080",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-publication-01/evidence.tar.gz",
+        "bytes": 47300207,
+        "sha256": "dd2d818d17f02e3e1a35af5fb9b00d04fe949325e3997079193764fd289cf826",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage145-protobuf-gc/evidence.tar.gz",
+        "bytes": 47300207,
+        "sha256": "dd2d818d17f02e3e1a35af5fb9b00d04fe949325e3997079193764fd289cf826",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-publication-prep-03/selection.json",
+        "bytes": 8648660,
+        "sha256": "9c687d69eef258f279e17d678683509a4f959d46ff8889bc3cc4d8543f524d79",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage145-protobuf-gc/evidence-index.json",
+        "bytes": 8648660,
+        "sha256": "9c687d69eef258f279e17d678683509a4f959d46ff8889bc3cc4d8543f524d79",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-publication-readback-01/report.json",
+        "bytes": 2467,
+        "sha256": "6f1c8fb4ca33e9cd19c6566b944b53bff71c586b62c0ee8eeee567b64a062b5e",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage145-protobuf-gc/evidence-integrity.json",
+        "bytes": 2467,
+        "sha256": "6f1c8fb4ca33e9cd19c6566b944b53bff71c586b62c0ee8eeee567b64a062b5e",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-source-verification-01/source-verification.json",
+        "bytes": 2795084,
+        "sha256": "bf8bf04b2fdc3137202397fd3a9525d2f5340de02fdd4bc54591bc696b3b3301",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage145-protobuf-gc/source-verification.json",
+        "bytes": 2795084,
+        "sha256": "bf8bf04b2fdc3137202397fd3a9525d2f5340de02fdd4bc54591bc696b3b3301",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    }
+  ],
+  "documentation_application": {
+    "complete": true,
+    "epoch": 1793726430.7259881,
+    "report_readme_byte_identical_to_frozen_draft": true,
+    "root_readme_before": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-documentation-application-01/README.before.md",
+      "bytes": 23553,
+      "sha256": "caeb4abcc3c0cfe9eb56dc24170b80c72107dc4d5992dc8a0077f56d014f0833",
+      "mode": 420
+    },
+    "root_readme_after": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/README.md",
+      "bytes": 24254,
+      "sha256": "cd705ce940e1d62a509a5fd16d84b1b990d70d64a06803904e83246e8fdc4218",
+      "mode": 420
+    },
+    "plan_before": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-documentation-application-01/PLAN.before.md",
+      "bytes": 526304,
+      "sha256": "3a019ad219d575700f8cb7c66e75c53544382c49c87e8dddc7ea0b98f4633556",
+      "mode": 420
+    },
+    "plan_after": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/PLAN.md",
+      "bytes": 531623,
+      "sha256": "89917456172d57b4c05c0590f6bfeb98d819a04af39de8dea610054adcb3ff3d",
+      "mode": 420
+    },
+    "plan_draft": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-closeout-doc-draft-07/PLAN-insertion.md",
+      "bytes": 5370,
+      "sha256": "9e31dce4511559c56ffb086a090684eccf2ed6104535611949bf2c009548fa6a",
+      "mode": 420
+    },
+    "scope": "Root README gains the current checkpoint summary. PLAN applies the reviewed Korean draft with completed publication wording and a matching section level; final documentation application is separate from the draft/source pin audit."
+  },
+  "scope": "All selected published copies match the verified source bytes and modes. Finite raw evidence integrity only; compiled/cache bodies and duplicate canonical source copies are omitted. No hermetic replay, full M2/API compatibility or performance completion claim. Git closeout is recorded separately."
+}

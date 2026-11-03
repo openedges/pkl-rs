@@ -1,0 +1,11 @@
+–– Pkl Error ––
+I/O error reading resource `proto:constraint`.
+IOException: original read failure
+
+4 | value: Int(read("proto:constraint") == "yes") | String="seed"
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.protobuf#Renderer.renderDocument (file:///stage145-protobuf/constraint-read-io/main.pkl)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

@@ -1,0 +1,10 @@
+–– Pkl Error ––
+constraint throw
+
+2 | class Input { value: Int(throw("constraint throw")) | String = "seed" }
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.protobuf#Renderer.renderValue (file:///stage145-protobuf/constraint-throw-render-value/main.pkl)
+
+3 | output { text = new protobuf.Renderer { converters { ["value"] = (_) -> 7 } }.renderValue(new Input {}) }
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#output.text (file:///stage145-protobuf/constraint-throw-render-value/main.pkl)

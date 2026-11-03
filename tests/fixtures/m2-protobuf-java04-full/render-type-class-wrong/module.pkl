@@ -1,0 +1,4 @@
+import "pkl:protobuf"
+import "pkl:reflect"
+typealias Choice=Int | String
+output { text=new protobuf.Renderer {}.renderType(reflect.Class(Int)) }

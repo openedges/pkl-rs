@@ -1,5 +1,31 @@
 # 구현 계획
 
+### Stage145 Protobuf·GC 검증
+
+공유 VM의 선택된 `pkl:protobuf` 렌더링, type/owner frame, error-origin, function-label 경로와 GC arena/owner index를 통합했다. 출력 format `textproto`를 사용할 수 있다. Public `Instruction`의 `LoadProtobufModule`, `RenderProtobuf`, `ProtobufRenderType` 추가로 downstream exhaustive match도 갱신해야 한다. GC는 첫 arena 소유권과 root 순서 및 기존 수집 호출을 유지한다. 빈 consumer의 불필요한 index 생성은 피하지만, 빈 owner edge publication은 계속 수행한다.
+
+현재 소스의 검증 결과는 다음과 같다.
+
+- Prechecks03 / readback04: format, xtask, Clippy, Wasm, manifest의 다섯 검사가 통과했다. 실패와 미실행은 0개이며 별도 inventory freshness도 검증했다.
+- Workspace03: 실제 Cargo exit 0. 독립 판독 결과는 outer group 330개에서 2,104개 통과, 실패 0개, ignored 6개다. Nested child의 13개 통과는 합산에서 제외했다.
+- 현재 renderer 13개, owner 26개, origins 12개, labels 24개도 위 workspace에서 통과했다. 이 75개는 2,104개에 이미 포함되어 있으므로 다시 더하지 않는다. 이전 standalone 75개와 negative control 4개의 실제 결과는 lint 전 증거로 별도 보존한다.
+- 같은 workspace의 raw266: 새 `fresh=false` Cargo artifact와 storage/current-byte를 연결했다. Native 266개 전부 취득, renderer 240개와 pre-renderer 8개 raw 일치, harness 및 구조 오류 0개다. Java04 관측을 재사용했으며 fresh Java 266회로 계산하지 않는다.
+- Fresh bounded M1: Rust/Native, Node, Chromium 각 target에서 Java 6,078개가 일치했고 Node와 browser의 scenario는 각각 92개다. Architecture contract와 같은 취득의 독립 strict raw 판독이 모두 통과했다. `--verify-contract` 취득은 한 번이며 별도 strict CLI는 실행하지 않았다. 별도 3 GiB / 3 GiB sampled 조건을 유지하며 Protobuf의 18개 미충족 의무는 그대로다.
+
+Internal 14개와 process 4개, 총 18개의 reference nonpass는 계속 미충족이다. Ordinary development contract만 통과했고 strict 판정은 false다. 별도 strict entry는 default에서 ignored/unmet이며, `TESTING.md`의 `--ignored --exact` release 호출 의무가 남는다. Ignored나 미실행을 통과로 계산하지 않는다. Renderer 13개는 주로 source-derived 개발·lifecycle assertion이고 나머지 62개는 retained Java 채널 비교다. 75개를 독립 Java 관측 75개로 바꾸지 않으며, 기존 32개 fixture와 full266의 중복 coverage도 합산하지 않는다.
+
+GC는 baseline filter 3개, candidate focused 12개, whole reflection 5개를 별도로 통과했다. Whole target의 2,645.76초와 과거 2,641.40초는 실행 순서·warmth·sampling observer 조건이 달라 속도 향상이나 Java 성능 목표 달성을 입증하지 않는다. 수동 owner/root-vector 테스트의 범위와 별도 compiled lifecycle 검증도 구분한다.
+
+과거 196/266 timeout, native02의 renderer 228/240·pre 8/8·ordinary mismatch 12개·reference nonpass 18개, collecting allowance 200,000 실패, 두 번의 Clippy 실패와 각각 미실행 2개를 보존한다. 이후 allowance 400,000은 변경된 조건이며, diagnostic 237,679 polls와 normal renderer 통과를 원래 실패의 무변경 통과로 쓰지 않는다. 잘못된 authored source, primary Host setup, supplemental Java helper NPE, binding/reader 실패도 기록을 유지한다. Original57의 실제 `pkl.tar` directory를 거부한 첫 staging 실패와 progress 57줄을 JSON 하나로 읽은 configuration-reader 실패도 보존한다.
+
+검증 범위와 증거 자료는 다음과 같이 구분한다.
+
+- M1 완료 범위는 기존 target별 6,078개 primitive와 Node/browser 92개 scenario의 회귀·platform 증거다. 새 Protobuf browser/Node matrix는 취득하지 않았으며 동등성을 주장하지 않는다.
+- Selected original57: fresh Java/native CLI 57개가 모두 raw 일치했고 acquisition02와 독립 canonical 판독이 완료됐다. `upstream-original-modules-v1` profile과 실제 managed-workspace URI를 보존하고 project fixture는 제외했다. Subset full gate는 false다. API 41개, `pklbinary` 11개, policy 5개는 이전 단계의 구현 범위와 중복되는 회귀 검증이다. 새 Protobuf 57개나 고유 coverage로 더하지 않는다. 다른 31개 과거 nonpass와 전체 ready inventory는 이번 취득에서 미선택·미실행이며 과거 status만 보존한다.
+- 최종 소스·fixture 6,612개의 바이트와 모드를 확인했다. 선별 증거 17,433개를 묶어 독립 무결성 검사를 완료했다. 파일별 출처와 한계는 [Stage145 보고서](reports/m2/stage145-protobuf-gc/README.md)에 기록한다.
+
+완료된 M1·original57 판독과 최종 source verification, archive 무결성 검사 및 게시 사본의 출처는 보고서에 연결했다. 실패한 취득과 판독도 별도 기록으로 보존한다. Wasm compile, bounded M1, native Protobuf 비교를 full API/platform 동등성으로 확대하지 않는다. Full M2/API, release platform, 속도·메모리 목표는 미완료이며 Stage146–151은 별도 적용·검증 전까지 이 체크포인트 밖의 후보로 유지한다.
+
 ### Stage144 binary·YAML·shell 검증
 
 공유 `pkl:pklbinary` 바이트 렌더링, bounded YAML 파서와 authored shell escaping을 통합했습니다. public `Instruction`에 `YamlParse`·`RenderPklBinary`가 추가되어 exhaustive match 수정이 필요합니다. lint 수정 전 집중 native 38개·Java 보존 관측 320개와 별도 원본 CLI 21개를 확인했습니다. 두 YAML oracle 내부 오류 관측은 비교 통과가 아닙니다.

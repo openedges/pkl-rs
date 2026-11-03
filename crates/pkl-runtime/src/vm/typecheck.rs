@@ -6,6 +6,8 @@ use crate::diagnostic::{PowerAssertionValue, TypeDiagnostic, UnionTypeDiagnostic
 pub(super) enum TypeDestination {
     Stack,
     Test,
+    /// Renderer TypeNode.execute: mismatch is false, ordinary checks stay lazy.
+    ProtobufAlternative,
     Return,
     Local {
         depth: Option<usize>,
@@ -360,6 +362,10 @@ pub(super) fn environment_roots(environment: &Environment, roots: &mut Vec<Value
     }
 }
 impl TypeRun {
+    pub(super) fn is_protobuf_alternative(&self) -> bool {
+        matches!(self.destination, TypeDestination::ProtobufAlternative)
+    }
+
     /// Inherited annotation continuations have no authored Return instruction.
     /// Fatal child evaluation still needs the overriding property's value frame.
     pub(super) fn fatal_value_frames(&self) -> impl Iterator<Item = &RuntimeFrame> {
@@ -887,8 +893,12 @@ impl Vm {
                 .take()
                 .ok_or_else(|| invalid("missing type result"))?;
             match (outcome, run.destination) {
-                (Ok(_), TypeDestination::Test) => self.stack.push(Value::Bool(true)),
-                (Err(_), TypeDestination::Test) => self.stack.push(Value::Bool(false)),
+                (Ok(_), TypeDestination::Test | TypeDestination::ProtobufAlternative) => {
+                    self.stack.push(Value::Bool(true))
+                }
+                (Err(_), TypeDestination::Test | TypeDestination::ProtobufAlternative) => {
+                    self.stack.push(Value::Bool(false))
+                }
                 (Ok(value), TypeDestination::Stack) => self.stack.push(value),
                 (Ok(value), TypeDestination::Local { depth, policy }) => {
                     self.bind_local(depth, policy, value)?

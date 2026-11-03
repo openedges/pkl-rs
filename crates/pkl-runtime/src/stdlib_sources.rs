@@ -162,6 +162,20 @@ pub(crate) fn shell() -> Arc<RuntimeSource> {
         .clone()
 }
 
+/// Unmodified Pkl 0.32.0 authored module; externals use the shared renderer VM.
+pub(crate) fn protobuf() -> Arc<RuntimeSource> {
+    static SOURCE: OnceLock<Arc<RuntimeSource>> = OnceLock::new();
+    SOURCE
+        .get_or_init(|| {
+            Arc::new(RuntimeSource {
+                text: include_str!("stdlib/protobuf.pkl").into(),
+                uri: "pkl:protobuf".into(),
+                module_name: "pkl.protobuf".into(),
+            })
+        })
+        .clone()
+}
+
 #[cfg(test)]
 mod tests {
     #[test]

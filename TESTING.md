@@ -2,6 +2,50 @@
 
 The goals are behavioral and byte compatibility with the Java implementation of Pkl 0.32.0, with execution time and memory usage at least as good as Java for every required workload. Source verification, inventories, a pinned Java oracle, and raw comparison tooling are available. M1 adds bounded Rust/Java architecture comparisons and actual browser/Node execution; complete language and product performance gates remain open.
 
+## Protobuf development contract and strict completion gate
+
+The ordinary workspace entry `java04_completed_reference_contract` attempts all
+266 Java04 observations. Its development contract requires 266 native terminals,
+no harness failures, exact result/callback projection membership, 240 complete
+renderer matches and eight pre-renderer matches. Missing or extra projected
+channels, invalid terminals and inconsistent event counts are harness failures
+for every slot, including the 18 reference nonpasses; missing values are never
+filled in. Java exception-class channels remain unprojected provenance.
+All 18 internal/process reference nonpasses remain explicit and receive no
+compatibility credit. A comparable raw mismatch still fails this entry. The
+retained native02 result (228/240 renderer matches, eight pre-renderer matches,
+12 ordinary mismatches and 18 reference nonpasses) remains historical evidence;
+changing test entrypoints does not reclassify it.
+
+`java04_strict_full_compatibility_gate` is an explicit ignored test in an ordinary
+workspace run. Count it as ignored and unmet, never as a compatibility pass. This
+temporary development exception does not waive the release completion gate.
+The named strict invocation is required for full-completion assessment and must
+use a fresh capture path that does not already exist:
+
+```sh
+mkdir -p target/m2
+PKL_PROTOBUF_CAPTURE_DIR="$PWD/target/m2/stage145-protobuf-strict-01" \
+cargo test -p pkl-runtime --test m2_protobuf_java04_full --locked \
+  java04_strict_full_compatibility_gate -- \
+  --ignored --exact --test-threads=1 --nocapture
+```
+
+Use a new path for each rerun and the applicable root resource admission. The
+retained strict predicate is false because of the 18 reference nonpasses. The new
+named strict invocation remains unexecuted until recorded separately. The broader
+M2 language/API, platform and performance requirements remain separate and open.
+A green ordinary workspace is a development checkpoint, not strict completion.
+
+Each entry fixes its assertion mode in source. A present nonempty
+`PKL_PROTOBUF_JAVA04_MODE` is rejected; it cannot switch the expectation of the
+same test. `PKL_PROTOBUF_CAPTURE_DIR` controls only capture output. It is optional
+for ordinary workspace execution and required for the explicit strict gate.
+For evidence publication, run the named ordinary entry with a fresh capture too.
+The same complete result/effect channels, all observations and strict-failure
+ledger are preserved whenever capture is enabled. `contract.json` retains its
+existing mode/count/strict/experiment fields.
+
 ## Execution environment
 
 Development checkpoints may be verified locally. GitHub Actions automates the

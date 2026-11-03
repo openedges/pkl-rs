@@ -1,0 +1,2 @@
+import "pkl:protobuf"
+output { text = new protobuf.Renderer {}.renderDocument(((x) -> x)) }

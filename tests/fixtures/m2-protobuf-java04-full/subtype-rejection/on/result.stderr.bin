@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot render subtype main#Parent of specified type main#Child in protobuf.
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)

@@ -1,0 +1,3 @@
+import "pkl:protobuf"
+class Input { value: Int(throw("constraint throw")) | String = "seed" }
+output { text = new protobuf.Renderer { converters { ["value"] = (_) -> 7 } }.renderValue(new Input {}) }

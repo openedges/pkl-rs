@@ -728,6 +728,8 @@ impl Compiler<'_> {
                                     | Instruction::RenderJsonnet { .. }
                                     | Instruction::RenderXml { .. }
                                     | Instruction::RenderPklBinary { .. }
+                                    | Instruction::RenderProtobuf { .. }
+                                    | Instruction::ProtobufRenderType
                             ) {
                                 output.spans[index] = None;
                             }

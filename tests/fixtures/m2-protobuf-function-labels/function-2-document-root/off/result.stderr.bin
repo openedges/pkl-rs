@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot render value of type `Function2` as Protobuf.
+Value: new Function2 {}
+
+2 | output { text = new protobuf.Renderer {}.renderDocument(((x, y) -> x + y)) }
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#output.text (file:///stage145-protobuf/function-2-document-root/main.pkl)
+
+Consider adding a converter to `output.converters`.

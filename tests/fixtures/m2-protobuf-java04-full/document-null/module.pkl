@@ -1,0 +1,3 @@
+import "pkl:protobuf"
+class Input { x: Int }
+output { text=new protobuf.Renderer {}.renderDocument(null) }

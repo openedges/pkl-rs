@@ -1,0 +1,13 @@
+–– Pkl Error ––
+Cannot render value of type `Function1` as Protobuf.
+Value: new Function1 {}
+
+2 | class Input { value = (x) -> x }
+                  ^^^^^^^^^^^^^^^^
+at pkl.protobuf#Renderer.renderDocument (file:///stage145-protobuf/function-1-document-nested/main.pkl)
+
+Consider adding a converter to `output.converters`.
+
+3 | output { text = new protobuf.Renderer {}.renderDocument(new Input {}) }
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#output.text (file:///stage145-protobuf/function-1-document-nested/main.pkl)

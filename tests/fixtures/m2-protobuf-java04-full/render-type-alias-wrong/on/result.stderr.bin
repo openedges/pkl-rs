@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `pkl.reflect#Type`, but got type `pkl.reflect#TypeAlias`.
+Value: new TypeAlias { location = ?; docComment = ?; annotations = ?; modifiers = ?;...
+
+49 | external function renderType(type: reflect.Type): String
+                                        ^^^^^^^^^^^^
+at pkl.protobuf#Renderer.renderType (https://github.com/apple/pkl/blob/0.32.0/stdlib/protobuf.pkl#L49)
+
+4 | output { text=new protobuf.Renderer {}.renderType(reflect.TypeAlias(Choice)) }
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#output.text (file:///stage145-protobuf/render-type-alias-wrong/main.pkl)

@@ -1,0 +1,2 @@
+module types
+class Input { values: Mapping<Float,Int> =new {} }

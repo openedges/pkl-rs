@@ -7,6 +7,7 @@ use crate::heap::{CollectionKind, CollectionMember, CollectionMemberKind};
 pub(super) enum Format {
     Pcf,
     PklBinary,
+    Protobuf,
     Json,
     Jsonnet,
     Xml,
@@ -18,6 +19,7 @@ impl Format {
     fn name(self) -> &'static str {
         match self {
             Self::Pcf => "Pcf",
+            Self::Protobuf => "Protobuf",
             Self::PklBinary => "pkl-binary",
             Self::Json => "JSON",
             Self::Jsonnet => "Jsonnet",
@@ -69,6 +71,7 @@ struct PropertyRun {
     step: usize,
 }
 enum Task {
+    Protobuf(ProtoTask),
     BinaryArray(usize),
     Xml(XmlTask),
     JsonnetKey {
@@ -122,6 +125,8 @@ enum Task {
     },
 }
 enum Await {
+    ProtobufAlternative,
+    ProtobufString,
     XmlRead {
         receiver: ObjectId,
         path: Vec<PathPart>,
@@ -169,6 +174,7 @@ pub(super) struct RenderRun {
     active: BTreeSet<ObjectId>,
     output: crate::pkl_string::PklStringBuilder,
     binary: super::pkl_binary_wire::BinaryWire,
+    protobuf: ProtoState,
     indent: PklString,
     omit_null: bool,
     restrict_charset: bool,
@@ -189,6 +195,7 @@ impl RenderRun {
         roots.extend(self.options.iter().cloned());
         roots.extend(self.active.iter().copied().map(Value::Object));
         self.converters.roots(roots);
+        self.protobuf.roots(roots);
         if let Some(
             Await::Directive { receiver, path }
             | Await::JsonnetWrapper { receiver, path, .. }
@@ -203,6 +210,7 @@ impl RenderRun {
         }
         for task in &self.tasks {
             match task {
+                Task::Protobuf(task) => task.roots(roots),
                 Task::Xml(task) => task.roots(roots),
                 Task::YamlKey(key) | Task::PlistKey { key, .. } | Task::JsonnetKey { key, .. } => {
                     roots.push(key.clone())
@@ -269,6 +277,11 @@ impl RenderRun {
         text.finish()
     }
     fn append(&mut self, text: &str) {
+        if self.format == Format::Protobuf
+            && let Some(last) = text.encode_utf16().last()
+        {
+            self.protobuf.last = Some(last);
+        }
         if let Some(yaml) = &mut self.yaml {
             yaml.text(text);
         } else {
@@ -276,6 +289,11 @@ impl RenderRun {
         }
     }
     fn append_value(&mut self, text: &PklString) {
+        if self.format == Format::Protobuf
+            && let Some(last) = text.encode_utf16().last()
+        {
+            self.protobuf.last = Some(last);
+        }
         if let Some(yaml) = &mut self.yaml {
             yaml.raw(text);
         } else {
@@ -530,7 +548,10 @@ impl Vm {
         format: Format,
     ) -> Result<(), RuntimeError> {
         let root = self.pop()?;
-        let receiver = if matches!(format, Format::Jsonnet | Format::Xml | Format::PklBinary) {
+        let receiver = if matches!(
+            format,
+            Format::Jsonnet | Format::Xml | Format::PklBinary | Format::Protobuf
+        ) {
             self.this_receiver()?.as_object()?
         } else {
             self.scope(0)?.receiver
@@ -548,6 +569,7 @@ impl Vm {
             active: BTreeSet::new(),
             output: Default::default(),
             binary: Default::default(),
+            protobuf: Default::default(),
             indent: Default::default(),
             omit_null: false,
             restrict_charset: false,
@@ -588,6 +610,21 @@ impl Vm {
     fn advance_pcf(&mut self, run: &mut RenderRun) -> Result<bool, RuntimeError> {
         if let Some(await_) = run.await_.take() {
             match await_ {
+                Await::ProtobufAlternative => {
+                    let Value::Bool(accepted) = self.pop()? else {
+                        return Err(invalid("protobuf alternative result"));
+                    };
+                    let Some(Task::Protobuf(ProtoTask::Field(field))) = run.tasks.last_mut() else {
+                        return Err(invalid("protobuf alternative continuation"));
+                    };
+                    field.accepted = Some(accepted);
+                }
+                Await::ProtobufString => {
+                    let Value::String(text) = self.pop()? else {
+                        return Err(invalid("protobuf scalar string"));
+                    };
+                    run.append_value(&text);
+                }
                 Await::XmlRead { .. } => {
                     let value = self.pop()?;
                     let Some(Task::Xml(task)) = run.tasks.last_mut() else {
@@ -734,7 +771,7 @@ impl Vm {
                 "converters",
                 "convertPropertyTransformers",
             ]
-        } else if run.format == Format::Plist {
+        } else if matches!(run.format, Format::Plist | Format::Protobuf) {
             &["indent", "converters", "convertPropertyTransformers"]
         } else if matches!(run.format, Format::Json | Format::Jsonnet) {
             &[
@@ -825,7 +862,7 @@ impl Vm {
                 };
                 run.indent = indent.clone();
                 run.omit_null = true;
-            } else if run.format == Format::Plist {
+            } else if matches!(run.format, Format::Plist | Format::Protobuf) {
                 let Value::String(indent) = &run.options[0] else {
                     return Err(invalid("Plist indent type"));
                 };
@@ -883,7 +920,20 @@ impl Vm {
             return Ok(false);
         }
         let Some(task) = run.tasks.pop() else {
-            if run.document && run.format == Format::Plist {
+            if run.format == Format::Protobuf {
+                if !run.document && run.protobuf.wrappers.pop() != Some(false) {
+                    return Err(invalid("protobuf root wrapper"));
+                }
+                if !run.protobuf.names.is_empty()
+                    || !run.protobuf.wrappers.is_empty()
+                    || run.protobuf.depth != 0
+                {
+                    return Err(invalid("protobuf traversal stack"));
+                }
+            }
+            if run.document && run.format == Format::Protobuf {
+                run.proto_newline();
+            } else if run.document && run.format == Format::Plist {
                 run.append("\n</plist>\n");
             } else if run.document && run.format == Format::Yaml {
                 run.yaml.as_mut().unwrap().newline();
@@ -896,6 +946,7 @@ impl Vm {
             return Ok(true);
         };
         match task {
+            Task::Protobuf(task) => return self.advance_protobuf(run, task),
             Task::BinaryArray(length) => run.binary.array(length)?,
             Task::Xml(task) => return self.advance_xml(run, task),
             Task::JsonnetKey { key, depth } => match key {
@@ -1121,6 +1172,9 @@ impl Vm {
                             PklString::from(format!("The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `{ty}`.\nValue: ")).concat(&text),
                         ));
                     }
+                }
+                if run.format == Format::Protobuf {
+                    return self.protobuf_visit(run, value, root, path);
                 }
                 if run.format == Format::PklBinary {
                     return self.binary_visit(run, value, depth, standalone, root, path);
@@ -1423,11 +1477,13 @@ impl Vm {
                 }
                 let members = if (stream
                     && matches!(kind, CollectionKind::List | CollectionKind::Set))
-                    || (matches!(run.format, Format::Xml | Format::PklBinary)
-                        && matches!(
-                            kind,
-                            CollectionKind::List | CollectionKind::Set | CollectionKind::Map
-                        )) {
+                    || (matches!(
+                        run.format,
+                        Format::Xml | Format::PklBinary | Format::Protobuf
+                    ) && matches!(
+                        kind,
+                        CollectionKind::List | CollectionKind::Set | CollectionKind::Map
+                    )) {
                     collections::ordered_members(&self.heap, receiver)?
                         .into_iter()
                         .map(|descriptor| collections::RenderMember {
@@ -1446,7 +1502,9 @@ impl Vm {
                     .iter()
                     .any(|m| !m.skip && m.descriptor.kind == CollectionMemberKind::Element);
                 let doc = run.format == Format::Pcf && run.document && root;
-                if run.format == Format::PklBinary {
+                if run.format == Format::Protobuf {
+                    self.protobuf_start(run, receiver)?;
+                } else if run.format == Format::PklBinary {
                     self.binary_start(run, receiver)?;
                 } else if run.format == Format::Yaml && !stream {
                     run.yaml.as_mut().unwrap().start(array);
@@ -1518,6 +1576,7 @@ impl Vm {
                         | Format::Plist
                         | Format::Xml
                         | Format::PklBinary
+                        | Format::Protobuf
                 ) && m.strict)
                     && !m.prepared
                 {
@@ -1535,6 +1594,7 @@ impl Vm {
                         | Format::Plist
                         | Format::Xml
                         | Format::PklBinary
+                        | Format::Protobuf
                 ) && m.strict)
                 {
                     m.hash = self.java_hash(&descriptor.key)?;
@@ -1738,7 +1798,18 @@ impl Vm {
                     return Ok(false);
                 }
                 let depth = m.depth;
-                if run.format == Format::PklBinary {
+                if run.format == Format::Protobuf {
+                    self.protobuf_member(
+                        run,
+                        m,
+                        descriptor,
+                        key,
+                        value,
+                        output_name,
+                        previous_source,
+                        path,
+                    )?;
+                } else if run.format == Format::PklBinary {
                     self.binary_member(
                         run,
                         m,
@@ -2071,7 +2142,9 @@ impl Vm {
                 array,
                 stream,
             } => {
-                if run.format == Format::Yaml {
+                if run.format == Format::Protobuf {
+                    self.protobuf_close(run, receiver)?;
+                } else if run.format == Format::Yaml {
                     if !stream {
                         run.yaml.as_mut().unwrap().close(!emitted);
                     }
@@ -2225,6 +2298,14 @@ impl Vm {
         )
     }
     fn pcf_unrenderable(&self, run: &RenderRun, value: &Value) -> Result<bool, RuntimeError> {
+        self.render_unrenderable_at(run, value, run.source.as_ref())
+    }
+    fn render_unrenderable_at(
+        &self,
+        run: &RenderRun,
+        value: &Value,
+        source: Option<&RuntimeFrame>,
+    ) -> Result<bool, RuntimeError> {
         let ty = crate::diagnostic_values::type_name(value, &self.heap, &self.program.module_name)?;
         let rendered =
             crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 80)?;
@@ -2245,7 +2326,7 @@ impl Vm {
             ))
         {
             error.set_template_hint("Consider adding a converter to `output.converters`.");
-            error.frames.extend(run.source.clone());
+            error.frames.extend(source.cloned());
         }
         Err(error)
     }
@@ -2418,3 +2499,6 @@ fn yaml_scalar(value: &Value) -> Result<PklString, RuntimeError> {
 include!("xml_rendering.rs");
 
 include!("pkl_binary_render.rs");
+
+include!("protobuf_types.rs");
+include!("protobuf_rendering.rs");

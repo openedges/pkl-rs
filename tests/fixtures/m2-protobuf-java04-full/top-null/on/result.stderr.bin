@@ -1,0 +1,6 @@
+–– Pkl Error ––
+The top-level value of a protobuf file must have type `Typed`, but got type `Null`.
+
+3 | output { text=new protobuf.Renderer {}.renderValue(null) }
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#output.text (file:///stage145-protobuf/top-null/main.pkl)
