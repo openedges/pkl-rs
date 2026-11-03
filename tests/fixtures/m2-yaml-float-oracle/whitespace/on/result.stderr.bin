@@ -1,0 +1,16 @@
+–– Pkl Error ––
+Error parsing YAML document.
+
+3 | local parsed = parser.parse("!!float '   '\n")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#parsed (file:///stage142-yaml-float/whitespace/main.pkl)
+
+java.lang.NumberFormatException: empty String
+
+4 | result = parsed
+             ^^^^^^
+at main#result (file:///stage142-yaml-float/whitespace/main.pkl)
+
+5 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage142-yaml-float/whitespace/main.pkl)

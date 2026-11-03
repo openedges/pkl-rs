@@ -10,6 +10,7 @@ mod numeric_apis;
 mod remaining_apis;
 #[path = "string_api.rs"]
 mod string_api;
+pub(super) use string_api::string_parse;
 
 #[derive(Clone, Copy, Debug)]
 pub enum Operation {

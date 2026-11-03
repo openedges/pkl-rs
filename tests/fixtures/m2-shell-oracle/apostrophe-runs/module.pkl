@@ -1,0 +1,2 @@
+import "pkl:shell"
+output { text = shell.escapeWithSingleQuotes("a''b'''c") }

@@ -1,5 +1,9 @@
 # M2 language verification
 
+## Stage144 binary, YAML and shell
+
+The shared engine adds Pkl binary byte rendering, bounded YAML parsing and authored shell escaping. Before lint corrections, 38 native tests passed against 320 retained Java observations and 21 original CLI contracts separately matched all public channels. Two additional YAML oracle-internal observations remain noncomparisons. After seven lint corrections, all five prechecks passed and the full workspace aggregate records 1,947 passed, zero failed and five ignored across 323 groups; 13 nested child passes are excluded. Fresh bounded M1 matched 6,078 results per Native, Node and Chromium target and 92 Node/browser scenarios each; the architecture command and independent strict comparison pass on the same capture. Requirement/case states and counts are unchanged, and no new full-ready replay is claimed. Full M2/API, release-platform and performance gates remain open. See the [Stage144 report](../reports/m2/stage144-binary-yaml-shell/README.md) for failures and aggregate/provenance limits.
+
 ## Stage141 Jsonnet and XML renderers
 
 The Stage141 Jsonnet and XML checkpoint adds shared renderer support and qualifies 21 focused native tests against 172 Java observations, including four retained setup-error controls. Twenty-five original CLI cases matched their complete public channels. The full workspace aggregate records 1,909 passed, zero failed and five ignored across 313 harnesses; 13 nested child passes are excluded. Bounded M1 matched 6,078 results per Native, Node and Chromium target, with 92 Node and 92 browser scenarios. Full M2/API, release-platform and performance requirements remain open. See the [Stage141 report](../reports/m2/stage141-jsonnet-xml/README.md) for retained failures and scope.

@@ -1,0 +1,16 @@
+–– Pkl Error ––
+Error parsing YAML document: The number of aliases for collection nodes exceeds the allowed maximum of 1.
+
+3 | local parsed = parser.parse("a: &item [x]\nb: *item\nc: *item\n")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#parsed (file:///stage142-yaml-supplemental/alias-limit-two/main.pkl)
+
+To increase the allowed maximum, set `YamlRenderer.maxCollectionAliases`.
+
+4 | result = parsed
+             ^^^^^^
+at main#result (file:///stage142-yaml-supplemental/alias-limit-two/main.pkl)
+
+5 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage142-yaml-supplemental/alias-limit-two/main.pkl)

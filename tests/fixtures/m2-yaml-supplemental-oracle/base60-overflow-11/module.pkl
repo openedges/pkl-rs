@@ -1,0 +1,5 @@
+import "pkl:yaml"
+local parser = new yaml.Parser { mode = "1.1" }
+local parsed = parser.parse("9223372036854775807:59\n")
+result = parsed
+output { text = result.toString() }

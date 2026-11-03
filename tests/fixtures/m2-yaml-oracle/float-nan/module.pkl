@@ -1,0 +1,5 @@
+import "pkl:yaml"
+
+local parser = new yaml.Parser {  }
+result = parser.parse(".nan")
+output { text = result.toString() }

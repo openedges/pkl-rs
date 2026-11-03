@@ -1,0 +1,5 @@
+import "pkl:yaml"
+
+local parser = new yaml.Parser { converters { ["a..b"] = (_) -> 0 } }
+result = parser.parse(new Resource { text = throw("resource-text") })
+output { text = result.toString() }

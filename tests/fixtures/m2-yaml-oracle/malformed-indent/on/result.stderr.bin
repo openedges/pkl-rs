@@ -1,0 +1,20 @@
+–– Pkl Error ––
+Error parsing YAML document.
+
+4 | result = parser.parse("a:\n  b: 1\n c: 2\n")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage142-yaml/malformed-indent/main.pkl)
+
+while parsing a block mapping
+ in input_string, line 1, column 1:
+    a:
+    ^
+expected <block end>, but found '<block mapping start>'
+ in input_string, line 3, column 2:
+     c: 2
+     ^
+
+
+5 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage142-yaml/malformed-indent/main.pkl)

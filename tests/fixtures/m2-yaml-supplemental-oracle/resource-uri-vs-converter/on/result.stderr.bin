@@ -1,0 +1,14 @@
+–– Pkl Error ––
+resource-uri
+
+4 | result = parser.parse(new Resource { text = "ok"; uri = throw("resource-uri") })
+                                                            ^^^^^^^^^^^^^^^^^^^^^
+at main#result.uri (file:///stage142-yaml-supplemental/resource-uri-vs-converter/main.pkl)
+
+4 | result = parser.parse(new Resource { text = "ok"; uri = throw("resource-uri") })
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage142-yaml-supplemental/resource-uri-vs-converter/main.pkl)
+
+5 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage142-yaml-supplemental/resource-uri-vs-converter/main.pkl)

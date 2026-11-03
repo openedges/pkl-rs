@@ -724,8 +724,10 @@ impl Compiler<'_> {
                             if matches!(
                                 output[index],
                                 Instruction::JsonParse
+                                    | Instruction::YamlParse { .. }
                                     | Instruction::RenderJsonnet { .. }
                                     | Instruction::RenderXml { .. }
+                                    | Instruction::RenderPklBinary { .. }
                             ) {
                                 output.spans[index] = None;
                             }

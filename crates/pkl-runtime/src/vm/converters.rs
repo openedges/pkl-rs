@@ -5,6 +5,8 @@ pub(super) enum PathPart {
     Root,
     /// Parser arrays use the upstream singleton, never an actual index key.
     WildcardElement,
+    /// YAML non-string original map keys use this singleton.
+    WildcardProperty,
     Property(PklString),
     Entry(Value),
 }
@@ -116,7 +118,10 @@ impl Converters {
                         (SpecPart::Root, PathPart::Root) => true,
                         (SpecPart::Property(a), PathPart::Property(b)) => a == b,
                         (SpecPart::Entry(a), PathPart::Entry(Value::String(b))) => a == b,
-                        (SpecPart::AnyProperty, PathPart::Property(_))
+                        (
+                            SpecPart::AnyProperty,
+                            PathPart::Property(_) | PathPart::WildcardProperty,
+                        )
                         | (SpecPart::AnyEntry, PathPart::Entry(_) | PathPart::WildcardElement) => {
                             true
                         }

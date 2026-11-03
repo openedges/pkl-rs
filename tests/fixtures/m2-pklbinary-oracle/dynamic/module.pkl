@@ -1,0 +1,2 @@
+import "pkl:pklbinary"
+output { bytes = (new pklbinary.Renderer {}).renderValue(new Dynamic { hello = "world"; ["k"] = 7; "x" }) }

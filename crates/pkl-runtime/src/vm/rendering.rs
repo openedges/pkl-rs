@@ -6,6 +6,7 @@ use crate::heap::{CollectionKind, CollectionMember, CollectionMemberKind};
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub(super) enum Format {
     Pcf,
+    PklBinary,
     Json,
     Jsonnet,
     Xml,
@@ -17,6 +18,7 @@ impl Format {
     fn name(self) -> &'static str {
         match self {
             Self::Pcf => "Pcf",
+            Self::PklBinary => "pkl-binary",
             Self::Json => "JSON",
             Self::Jsonnet => "Jsonnet",
             Self::Xml => "XML",
@@ -67,6 +69,7 @@ struct PropertyRun {
     step: usize,
 }
 enum Task {
+    BinaryArray(usize),
     Xml(XmlTask),
     JsonnetKey {
         key: Value,
@@ -165,6 +168,7 @@ pub(super) struct RenderRun {
     tasks: Vec<Task>,
     active: BTreeSet<ObjectId>,
     output: crate::pkl_string::PklStringBuilder,
+    binary: super::pkl_binary_wire::BinaryWire,
     indent: PklString,
     omit_null: bool,
     restrict_charset: bool,
@@ -253,7 +257,7 @@ impl RenderRun {
                     );
                     roots.extend(p.member.members.seen.iter().map(|(m, _)| m.key.clone()));
                 }
-                Task::Text(_) | Task::RestoreSource(_) => {}
+                Task::Text(_) | Task::RestoreSource(_) | Task::BinaryArray(_) => {}
             }
         }
     }
@@ -436,6 +440,13 @@ impl Vm {
             for part in path {
                 match part {
                     PathPart::Root => {}
+                    PathPart::WildcardProperty => {
+                        if trailing {
+                            text.push('.');
+                        }
+                        text.push('*');
+                        trailing = true;
+                    }
                     PathPart::WildcardElement => {
                         text.push_str("[*]");
                         trailing = true;
@@ -519,7 +530,7 @@ impl Vm {
         format: Format,
     ) -> Result<(), RuntimeError> {
         let root = self.pop()?;
-        let receiver = if matches!(format, Format::Jsonnet | Format::Xml) {
+        let receiver = if matches!(format, Format::Jsonnet | Format::Xml | Format::PklBinary) {
             self.this_receiver()?.as_object()?
         } else {
             self.scope(0)?.receiver
@@ -536,6 +547,7 @@ impl Vm {
             tasks: Vec::new(),
             active: BTreeSet::new(),
             output: Default::default(),
+            binary: Default::default(),
             indent: Default::default(),
             omit_null: false,
             restrict_charset: false,
@@ -558,6 +570,10 @@ impl Vm {
             .expect("renderer continuation");
         let result = self.advance_pcf(&mut run);
         match result {
+            Ok(true) if run.format == Format::PklBinary => {
+                self.stack
+                    .push(Value::Bytes(run.binary.into_bytes().into()));
+            }
             Ok(true) => {
                 let text = match run.yaml {
                     Some(yaml) => yaml.finish(),
@@ -655,6 +671,12 @@ impl Vm {
                 Await::Shallow => {
                     self.pop()?;
                 }
+                Await::Directive { .. } if run.format == Format::PklBinary => {
+                    let Value::Bytes(bytes) = self.pop()? else {
+                        return Err(invalid("checked render directive bytes"));
+                    };
+                    run.binary.raw(&bytes)?;
+                }
                 Await::Directive { .. } => {
                     let Value::String(text) = self.pop()? else {
                         return Err(invalid("checked render directive text"));
@@ -684,7 +706,9 @@ impl Vm {
                 }
             }
         }
-        let names: &[&str] = if run.format == Format::Pcf {
+        let names: &[&str] = if run.format == Format::PklBinary {
+            &["converters", "convertPropertyTransformers"]
+        } else if run.format == Format::Pcf {
             &[
                 "indent",
                 "omitNullProperties",
@@ -762,7 +786,9 @@ impl Vm {
         }
         if !run.started {
             run.started = true;
-            if run.format == Format::Yaml {
+            if run.format == Format::PklBinary {
+                // BytesRenderer has no text formatting or omission options.
+            } else if run.format == Format::Yaml {
                 let (
                     Value::String(mode),
                     Value::Int(width),
@@ -862,7 +888,7 @@ impl Vm {
             } else if run.document && run.format == Format::Yaml {
                 run.yaml.as_mut().unwrap().newline();
             } else if run.document
-                && run.format != Format::Properties
+                && !matches!(run.format, Format::Properties | Format::PklBinary)
                 && (matches!(run.format, Format::Json | Format::Jsonnet) || !run.output_empty())
             {
                 run.append("\n");
@@ -870,6 +896,7 @@ impl Vm {
             return Ok(true);
         };
         match task {
+            Task::BinaryArray(length) => run.binary.array(length)?,
             Task::Xml(task) => return self.advance_xml(run, task),
             Task::JsonnetKey { key, depth } => match key {
                 Value::String(text) => run.append_value(&super::jsonnet::field_name(
@@ -930,6 +957,7 @@ impl Vm {
                 match part {
                     PathPart::Root => {}
                     PathPart::WildcardElement => run.append("[*]"),
+                    PathPart::WildcardProperty => run.append("*"),
                     PathPart::Property(name) => {
                         run.append_value(&properties_string(&name, true, run.restrict_charset))
                     }
@@ -1093,6 +1121,9 @@ impl Vm {
                             PklString::from(format!("The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `{ty}`.\nValue: ")).concat(&text),
                         ));
                     }
+                }
+                if run.format == Format::PklBinary {
+                    return self.binary_visit(run, value, depth, standalone, root, path);
                 }
                 if run.format == Format::Properties {
                     match &value {
@@ -1373,9 +1404,26 @@ impl Vm {
                     return self.pcf_unrenderable(run, &Value::Object(receiver));
                 }
                 let kind = self.heap.get(receiver)?.collection_kind;
+                if run.format == Format::PklBinary
+                    && kind == CollectionKind::Mapping
+                    && self.heap.get(receiver)?.mapping_length.is_none()
+                {
+                    // VmMapping.getLength hashes keys before the first member
+                    // converter; reuse the ordinary resumable length operation.
+                    run.tasks.push(Task::OpenObject {
+                        receiver,
+                        depth,
+                        standalone,
+                        root,
+                        path,
+                        stream,
+                    });
+                    self.binary_prepare_mapping_length(receiver)?;
+                    return Ok(false);
+                }
                 let members = if (stream
                     && matches!(kind, CollectionKind::List | CollectionKind::Set))
-                    || (run.format == Format::Xml
+                    || (matches!(run.format, Format::Xml | Format::PklBinary)
                         && matches!(
                             kind,
                             CollectionKind::List | CollectionKind::Set | CollectionKind::Map
@@ -1398,7 +1446,9 @@ impl Vm {
                     .iter()
                     .any(|m| !m.skip && m.descriptor.kind == CollectionMemberKind::Element);
                 let doc = run.format == Format::Pcf && run.document && root;
-                if run.format == Format::Yaml && !stream {
+                if run.format == Format::PklBinary {
+                    self.binary_start(run, receiver)?;
+                } else if run.format == Format::Yaml && !stream {
                     run.yaml.as_mut().unwrap().start(array);
                 } else if !doc
                     && !matches!(run.format, Format::Properties | Format::Plist | Format::Xml)
@@ -1467,6 +1517,7 @@ impl Vm {
                         | Format::Yaml
                         | Format::Plist
                         | Format::Xml
+                        | Format::PklBinary
                 ) && m.strict)
                     && !m.prepared
                 {
@@ -1483,6 +1534,7 @@ impl Vm {
                         | Format::Yaml
                         | Format::Plist
                         | Format::Xml
+                        | Format::PklBinary
                 ) && m.strict)
                 {
                     m.hash = self.java_hash(&descriptor.key)?;
@@ -1686,7 +1738,18 @@ impl Vm {
                     return Ok(false);
                 }
                 let depth = m.depth;
-                if run.format == Format::Xml {
+                if run.format == Format::PklBinary {
+                    self.binary_member(
+                        run,
+                        m,
+                        descriptor,
+                        key,
+                        value,
+                        output_name,
+                        previous_source,
+                        path,
+                    )?;
+                } else if run.format == Format::Xml {
                     let place = if descriptor.kind == CollectionMemberKind::Element {
                         XmlPlace::Element
                     } else {
@@ -2022,7 +2085,10 @@ impl Vm {
                         (false, false) => "<dict/>",
                         (false, true) => "</dict>",
                     });
-                } else if matches!(run.format, Format::Properties | Format::Xml) {
+                } else if matches!(
+                    run.format,
+                    Format::Properties | Format::Xml | Format::PklBinary
+                ) {
                     // Flattened output has no container delimiters.
                 } else if run.format == Format::Jsonnet {
                     if emitted && !run.indent.is_empty() {
@@ -2350,3 +2416,5 @@ fn yaml_scalar(value: &Value) -> Result<PklString, RuntimeError> {
 }
 
 include!("xml_rendering.rs");
+
+include!("pkl_binary_render.rs");

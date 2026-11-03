@@ -1,0 +1,2 @@
+import "pkl:shell"
+output { text = shell.escapeWithSingleQuotes("\u{1f600}'\u{10400}") }

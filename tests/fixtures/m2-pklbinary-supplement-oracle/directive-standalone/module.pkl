@@ -1,0 +1,2 @@
+import "pkl:pklbinary"
+output { renderer=new pklbinary.Renderer {}; value=new RenderDirective { bytes=Bytes(0,255,128); text=throw("unused") } }

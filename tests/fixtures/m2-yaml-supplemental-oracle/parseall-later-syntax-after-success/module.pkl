@@ -1,0 +1,5 @@
+import "pkl:yaml"
+local parser = new yaml.Parser {  }
+local parsed = parser.parseAll("---\nok\n---\n[invalid\n")
+result = parsed
+output { text = result.toString() }

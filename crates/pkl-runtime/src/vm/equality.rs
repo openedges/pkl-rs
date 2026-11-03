@@ -611,6 +611,21 @@ impl Vm {
         Ok(())
     }
 
+    /// Renderer continuation receives no stack result and does not retry its
+    /// external Render instruction after the length cache is published.
+    pub(super) fn count_render_mapping_keys(&mut self, id: ObjectId, keys: Vec<Value>) {
+        let mut roots = keys.clone();
+        roots.push(Value::Object(id));
+        self.schedule_tasks(vec![Task::CountKey(id, keys, 0, Vec::new())], roots);
+        self.frames
+            .last_mut()
+            .expect("renderer frame")
+            .equality_run
+            .as_mut()
+            .expect("mapping count")
+            .hide_callsite = false;
+    }
+
     pub(super) fn count_mapping_keys(&mut self, id: ObjectId, keys: Vec<Value>) {
         let mut roots = keys.clone();
         roots.push(Value::Object(id));
@@ -638,6 +653,23 @@ impl Vm {
             vec![Task::SetRestHash(source, first.clone(), false)],
             vec![Value::Object(source), first],
         );
+    }
+
+    /// Java boxed key equality without bytecode-PC retries.
+    pub(super) fn begin_boxed_equality(&mut self, left: Value, right: Value) {
+        self.begin_equality(left, right, false);
+        if let Some(Task::Compare(_, _, semantic)) = self
+            .frames
+            .last_mut()
+            .unwrap()
+            .equality_run
+            .as_mut()
+            .unwrap()
+            .tasks
+            .last_mut()
+        {
+            *semantic = false;
+        }
     }
 
     pub(super) fn begin_equality(&mut self, left: Value, right: Value, negate: bool) {
@@ -791,7 +823,10 @@ impl Vm {
         // Only Typed/module instances use class-declared property ordering.
         Ok((!matches!(prototype.builtin_type, Some(TypeCheck::Collection(_)))).then_some(class))
     }
-    fn equality_members(&self, id: ObjectId) -> Result<Vec<CollectionMember>, RuntimeError> {
+    pub(super) fn equality_members(
+        &self,
+        id: ObjectId,
+    ) -> Result<Vec<CollectionMember>, RuntimeError> {
         if self.heap.get(id)?.collection_kind == CollectionKind::Map {
             return self.map_hash_members(id);
         }
@@ -882,7 +917,10 @@ impl Vm {
         Ok(result)
     }
 
-    fn dynamic_regular_member_count(&mut self, id: ObjectId) -> Result<usize, RuntimeError> {
+    pub(super) fn dynamic_regular_member_count(
+        &mut self,
+        id: ObjectId,
+    ) -> Result<usize, RuntimeError> {
         if let Some(count) = self.heap.get(id)?.dynamic_regular_member_count {
             return Ok(count);
         }

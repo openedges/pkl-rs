@@ -177,6 +177,11 @@ pub struct RuntimeErrorDetails {
     pub(crate) rendered_diagnostic: Option<PklString>,
     /// An uncaught Java URI.create failure whose JVM rendering is not implemented.
     pub uri_create_cause: Option<UriCreateCause>,
+    /// Exact Java Throwable class/message when established at the throw site.
+    /// Internal constructor provenance; excluded from ordinary error equality.
+    pub(crate) java_exception_message: Option<(&'static str, PklString)>,
+    /// One-shot continuation marker consumed before a YAML error escapes.
+    pub(crate) yaml_constructor_error_ready: bool,
     /// Optional rendered hint; retained with rare provenance, outside the common error.
     pub hint: Option<PklString>,
     /// External ErrorMessages template paragraphs have priority over dynamic hints.
@@ -235,6 +240,8 @@ static EMPTY_ERROR_DETAILS: RuntimeErrorDetails = RuntimeErrorDetails {
     frame_transformer: crate::logging::FrameTransformer::Default,
     rendered_diagnostic: None,
     uri_create_cause: None,
+    java_exception_message: None,
+    yaml_constructor_error_ready: false,
     hint: None,
     hint_from_template: false,
     type_lookup_module: None,

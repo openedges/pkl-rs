@@ -1,0 +1,10 @@
+–– Pkl Error ––
+unused
+
+2 | output { renderer=new pklbinary.Renderer {}; value=Map(new RenderDirective { bytes=Bytes(1); text=throw("unused") },new RenderDirective { bytes=Bytes(2); text=throw("unused") }) }
+                                                                                                      ^^^^^^^^^^^^^^^
+at main#output.value.text (file:///stage144-pklbinary/main.pkl)
+
+135 | if (renderer is BytesRenderer) renderer.renderDocument(value) else text.encodeToBytes("UTF-8")
+                                                             ^^^^^
+at pkl.base#Module.output.bytes (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L135)

@@ -1,0 +1,2 @@
+import "pkl:pklbinary"
+output { bytes = (new pklbinary.Renderer {}).renderValue(IntSeq(1, 4).step(5)) }

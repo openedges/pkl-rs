@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected value of type `String`, but got `null`.
+
+24 | function escapeWithSingleQuotes(str: String): String =
+                                          ^^^^^^
+at pkl.shell#escapeWithSingleQuotes (https://github.com/apple/pkl/blob/0.32.0/stdlib/shell.pkl#L24)
+
+2 | output { text = shell.escapeWithSingleQuotes(null) }
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#output.text (file:///stage143-shell/wrong-null/main.pkl)

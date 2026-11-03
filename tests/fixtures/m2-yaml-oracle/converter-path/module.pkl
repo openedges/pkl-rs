@@ -1,0 +1,5 @@
+import "pkl:yaml"
+
+local parser = new yaml.Parser { converters { ["^a[*]"] = (it) -> it + 10 } }
+result = parser.parse("a: [1, 2]")
+output { text = result.toString() }

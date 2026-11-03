@@ -1,5 +1,13 @@
 # 구현 계획
 
+### Stage144 binary·YAML·shell 검증
+
+공유 `pkl:pklbinary` 바이트 렌더링, bounded YAML 파서와 authored shell escaping을 통합했습니다. public `Instruction`에 `YamlParse`·`RenderPklBinary`가 추가되어 exhaustive match 수정이 필요합니다. lint 수정 전 집중 native 38개·Java 보존 관측 320개와 별도 원본 CLI 21개를 확인했습니다. 두 YAML oracle 내부 오류 관측은 비교 통과가 아닙니다.
+
+일곱 lint 수정 후 다섯 선행 검사가 통과했고 workspace10은 종료 0입니다. 독립 reader11 외부 집계는 323개 그룹에서 1,947통과·0실패·ignored 5개이며 중첩 자식 통과 13개는 제외합니다. 새 bounded M1은 Native·Node·Chromium 각각 6,078개와 Node·브라우저 시나리오 각각 92개가 일치했습니다. 실제 `--verify-contract` capture는 한 번이며 독립 strict 판독은 같은 원시 바이트로 판정했습니다. 별도 strict CLI 실행이나 capture 재실행은 없습니다. 첫 M1 reader의 Python launcher 표기 오류와 수정 판독을 보존합니다.
+
+집계 가정, 개별 테스트 식별·interleaving·완전 의존성 증명 한계와 이전 workspace/reader 실패를 유지합니다. manifest는 구현 링크 hash 88개만 갱신했으며 요구사항·사례·상태·개수는 바꾸지 않았습니다. 선별 원시 기록 1,030개를 묶어 파일별 바이트·모드·해시와 archive 무결성을 독립 검증했으며 게시 사본도 같은 해시로 확인했습니다. 전체 ready inventory 재생, M2·API·릴리스 플랫폼·성능, YAML 미지원 분기와 긴 token 응답성은 미완료입니다. [Stage144 보고서](reports/m2/stage144-binary-yaml-shell/README.md)에 범위와 원시 실패를 기록합니다.
+
 ### Stage141 Jsonnet·XML 검증
 
 공유 Jsonnet·XML 렌더러 통합 후 격리 native 21개 테스트와 Java 관측 172개를 확인했습니다. 172개에는 renderer 의도 관측이 아닌 setup 오류 통제 4개가 포함됩니다. 원본 CLI 25개는 전체 공개 채널이 일치했습니다. 별도 XML primitive 검증 8개 bitset과 38개 sequence는 새 Pkl 사례에 더하지 않습니다. 다섯 선행 검사가 통과했고 전체 workspace는 독립 aggregate 기준 313개 harness에서 통과 1,909개·실패 0개·ignored 5개이며 중첩 자식 통과 13개는 제외합니다. 개별 test identity와 interleaving 부재는 증명하지 않습니다. bounded M1은 Native·Node·Chromium 각각 6,078개, Node·브라우저 시나리오 각각 92개가 일치했습니다. 전체 M2·API·릴리스 플랫폼·성능 조건은 미완료입니다. 실패한 초기 native 실행과 초기 marker 20/24 승인, 후속 24/24 authority 및 여섯 oracle test의 formatting 변경을 보존합니다. 비봉인 cache executable은 삭제되어 동일 artifact 복원이 아니라 재빌드가 필요합니다. [Stage141 보고서](reports/m2/stage141-jsonnet-xml/README.md)에 범위와 증거를 기록합니다.

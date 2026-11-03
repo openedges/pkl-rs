@@ -15,7 +15,7 @@ fn number_units(text: &PklString) -> Vec<u16> {
     }
     result
 }
-fn decimal_digit(unit: u16) -> Option<i64> {
+pub(in crate::vm) fn decimal_digit(unit: u16) -> Option<i64> {
     let point = u32::from(unit);
     if java_regex::utf16::character_record(point)?.category != 9 {
         return None;
@@ -28,7 +28,7 @@ fn decimal_digit(unit: u16) -> Option<i64> {
     }
     Some(i64::from((point - start) % 10))
 }
-pub(super) fn integer(text: &PklString) -> Option<i64> {
+pub(in crate::vm) fn integer(text: &PklString) -> Option<i64> {
     let units = number_units(text);
     let (negative, start) = match units.first()? {
         0x2d => (true, 1),
@@ -152,7 +152,7 @@ fn hexadecimal(bytes: &[u8], negative: bool) -> Option<f64> {
     };
     Some(f64::from_bits(sign | magnitude))
 }
-pub(super) fn float(text: &PklString) -> Option<f64> {
+pub(in crate::vm) fn float(text: &PklString) -> Option<f64> {
     let units = number_units(text);
     let first = units.iter().position(|&u| u > 0x20)?;
     let last = units.iter().rposition(|&u| u > 0x20)? + 1;

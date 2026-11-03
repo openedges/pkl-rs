@@ -19,8 +19,10 @@ impl Vm {
             Some("pkl:ref") => crate::stdlib_sources::reference(),
             Some("pkl:reflect") => crate::stdlib_sources::reflect(),
             Some("pkl:semver") => crate::stdlib_sources::semver(),
+            Some("pkl:shell") => crate::stdlib_sources::shell(),
             Some("pkl:xml") => crate::stdlib_sources::xml(),
             Some("pkl:jsonnet") => crate::stdlib_sources::jsonnet(),
+            Some("pkl:pklbinary") => crate::stdlib_sources::pklbinary(),
             Some("pkl:json") => crate::stdlib_sources::json(),
             Some("pkl:yaml") => crate::stdlib_sources::yaml(),
             Some("pkl:math") => crate::stdlib_sources::math(),
@@ -164,7 +166,14 @@ fn append_members(
 ) -> Result<UnitId, RuntimeError> {
     if matches!(
         uri,
-        "pkl:reflect" | "pkl:semver" | "pkl:json" | "pkl:jsonnet" | "pkl:xml"
+        "pkl:reflect"
+            | "pkl:semver"
+            | "pkl:json"
+            | "pkl:jsonnet"
+            | "pkl:xml"
+            | "pkl:yaml"
+            | "pkl:shell"
+            | "pkl:pklbinary"
     ) {
         // Compile the actual module, including distinct class/property and
         // method namespaces. External bodies bind in the shared compiler.

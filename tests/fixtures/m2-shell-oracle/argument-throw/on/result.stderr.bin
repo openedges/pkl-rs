@@ -1,0 +1,6 @@
+–– Pkl Error ––
+argument-sentinel
+
+2 | output { text = shell.escapeWithSingleQuotes(throw("argument-sentinel")) }
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#output.text (file:///stage143-shell/argument-throw/main.pkl)

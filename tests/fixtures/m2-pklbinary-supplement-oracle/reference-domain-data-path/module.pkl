@@ -1,0 +1,10 @@
+import "pkl:pklbinary"
+import "pkl:ref"
+class D extends ref.Domain {
+ function renderReference(r): String = throw("not a text renderer")
+}
+class Holder { value: Int=throw("referent body") }
+output {
+ renderer=new pklbinary.Renderer { converters { [Int]=(v)->v+10 } }
+ value=ref.Reference(new D {}, Holder, 2)
+}

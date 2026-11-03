@@ -5,7 +5,7 @@ mod string_glob;
 #[path = "string_lower.rs"]
 mod string_lower;
 #[path = "string_parse.rs"]
-mod string_parse;
+pub(in crate::vm) mod string_parse;
 #[path = "string_predicate.rs"]
 mod string_predicate;
 

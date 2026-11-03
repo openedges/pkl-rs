@@ -21,6 +21,10 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+### Stage144 binary, YAML and shell
+
+The pre-lint focused run passed 38 native tests with 320 retained Java observations; two additional YAML oracle-internal observations remain noncomparisons. Twenty-one original CLI contracts separately matched their complete public channels. After seven lint corrections, formatting, xtask, warnings-denied all-target Clippy, Wasm checking and manifest freshness passed. Workspace10 exited zero: the independent aggregate qualifies 1,947 passed, zero failed and five ignored across 323 outer groups, excluding 13 nested child passes. It does not independently prove individual test identities, absence of count-preserving interleaving or complete dependency closure. One fresh `--verify-contract` M1 capture matched 6,078 results per Native, Node and Chromium target and 92 scenarios each for Node/browser; the independent strict predicate passes on those same bytes, without a second strict CLI run. The full language inventory was not replayed and requirement/case states are unchanged. See the [Stage144 report](reports/m2/stage144-binary-yaml-shell/README.md) for retained failures and local provenance.
+
 ### Stage141 Jsonnet and XML renderers
 
 The Stage141 Jsonnet and XML checkpoint adds shared renderer support and qualifies 21 focused native tests against 172 Java observations, including four retained setup-error controls. Twenty-five original CLI cases matched their complete public channels. The full workspace aggregate records 1,909 passed, zero failed and five ignored across 313 harnesses; 13 nested child passes are excluded. Bounded M1 matched 6,078 results per Native, Node and Chromium target, with 92 Node and 92 browser scenarios. Full M2/API, release-platform and performance requirements remain open. The aggregate does not establish individual test identities or exclude count-preserving interleaving. See the [Stage141 report](reports/m2/stage141-jsonnet-xml/README.md) for retained failures and provenance limits.

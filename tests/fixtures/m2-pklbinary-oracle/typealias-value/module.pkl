@@ -1,0 +1,3 @@
+import "pkl:pklbinary"
+typealias Alias = String
+output { bytes = (new pklbinary.Renderer {}).renderValue(Alias) }

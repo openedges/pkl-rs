@@ -1,0 +1,5 @@
+import "pkl:yaml"
+
+local parser = new yaml.Parser { converters { [Int] = (_) -> throw("convert-failed") } }
+result = parser.parse("[1, 2]")
+output { text = result.toString() }

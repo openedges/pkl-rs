@@ -1,0 +1,98 @@
+An unexpected error has occurred. Would you mind filing a bug report?
+Cmd+Double-click the link below to open an issue.
+Please copy and paste the entire error output into the issue's description.
+
+https://github.com/apple/pkl/issues/new
+
+java.lang.IndexOutOfBoundsException%3A%20Range%20%5B1025%2C%201025%20%2B%201%29%20out%20of%20bounds%20for%20length%201025
+
+–– Pkl Error ––
+Range [1025, 1025 + 1) out of bounds for length 1025
+
+90 | external function parse(source: Resource | String): Value
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.yaml#Parser.parse (https://github.com/apple/pkl/blob/0.32.0/stdlib/yaml.pkl#L90)
+
+3 | local parsed = parser.parse("a: \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx😀\"\nb: [1,\n")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#parsed (file:///stage142-yaml-supplemental/reader-boundary-1025/main.pkl)
+
+4 | result = parsed
+             ^^^^^^
+at main#result (file:///stage142-yaml-supplemental/reader-boundary-1025/main.pkl)
+
+5 | output { text = result.toString() }
+                    ^^^^^^
+at main#output.text (file:///stage142-yaml-supplemental/reader-boundary-1025/main.pkl)
+
+Pkl 0.32.0 (macOS 27.0, Java 21.0.12.1)
+
+java.lang.IndexOutOfBoundsException: Range [1025, 1025 + 1) out of bounds for length 1025
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:100)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckFromIndexSize(Preconditions.java:118)
+	at java.base/jdk.internal.util.Preconditions.checkFromIndexSize(Preconditions.java:397)
+	at java.base/java.util.Objects.checkFromIndexSize(Objects.java:437)
+	at java.base/java.io.StringReader.read(StringReader.java:98)
+	at org.pkl.thirdparty.snakeyaml.engine.v2.scanner.StreamReader.extendIfTrailingHighSurrogate(StreamReader.java:275)
+	at org.pkl.thirdparty.snakeyaml.engine.v2.scanner.StreamReader.update(StreamReader.java:247)
+	at org.pkl.thirdparty.snakeyaml.engine.v2.scanner.StreamReader.ensureEnoughData(StreamReader.java:228)
+	at org.pkl.thirdparty.snakeyaml.engine.v2.scanner.StreamReader.ensureEnoughData(StreamReader.java:215)
+	at org.pkl.thirdparty.snakeyaml.engine.v2.scanner.StreamReader.peek(StreamReader.java:170)
+	at org.pkl.thirdparty.snakeyaml.engine.v2.scanner.ScannerImpl.scanToNextToken(ScannerImpl.java:1111)
+	at org.pkl.thirdparty.snakeyaml.engine.v2.scanner.ScannerImpl.fetchMoreTokens(ScannerImpl.java:289)
+	at org.pkl.thirdparty.snakeyaml.engine.v2.scanner.ScannerImpl.checkToken(ScannerImpl.java:175)
+	at org.pkl.thirdparty.snakeyaml.engine.v2.parser.ParserImpl$ParseImplicitDocumentStart.produce(ParserImpl.java:421)
+	at org.pkl.thirdparty.snakeyaml.engine.v2.parser.ParserImpl.lambda$produce$1(ParserImpl.java:210)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at org.pkl.thirdparty.snakeyaml.engine.v2.parser.ParserImpl.produce(ParserImpl.java:210)
+	at org.pkl.thirdparty.snakeyaml.engine.v2.parser.ParserImpl.peekEvent(ParserImpl.java:184)
+	at org.pkl.thirdparty.snakeyaml.engine.v2.parser.ParserImpl.checkEvent(ParserImpl.java:176)
+	at org.pkl.thirdparty.snakeyaml.engine.v2.composer.Composer.getSingleNode(Composer.java:124)
+	at org.pkl.thirdparty.snakeyaml.engine.v2.api.Load.loadOne(Load.java:110)
+	at org.pkl.thirdparty.snakeyaml.engine.v2.api.Load.loadFromString(Load.java:146)
+	at org.pkl.core.stdlib.yaml.ParserNodes$parse.doParse(ParserNodes.java:72)
+	at org.pkl.core.stdlib.yaml.ParserNodes$parse.eval(ParserNodes.java:55)
+	at org.pkl.core.stdlib.yaml.ParserNodesFactory$parseNodeGen.executeAndSpecialize(ParserNodesFactory.java:120)
+	at org.pkl.core.stdlib.yaml.ParserNodesFactory$parseNodeGen.executeGeneric(ParserNodesFactory.java:109)
+	at org.pkl.core.ast.member.FunctionNode.executeImpl(FunctionNode.java:116)
+	at org.pkl.core.ast.PklRootNode.execute(PklRootNode.java:46)
+	at com.oracle.truffle.api.impl.DefaultCallTarget.call(DefaultCallTarget.java:118)
+	at com.oracle.truffle.api.impl.DefaultDirectCallNode.call(DefaultDirectCallNode.java:59)
+	at org.pkl.core.ast.expression.member.InvokeMethodVirtualNode.evalCached(InvokeMethodVirtualNode.java:137)
+	at org.pkl.core.ast.expression.member.InvokeMethodVirtualNodeGen.executeAndSpecialize(InvokeMethodVirtualNodeGen.java:268)
+	at org.pkl.core.ast.expression.member.InvokeMethodVirtualNodeGen.executeGeneric(InvokeMethodVirtualNodeGen.java:189)
+	at org.pkl.core.ast.member.UntypedObjectMemberNode.executeImpl(UntypedObjectMemberNode.java:36)
+	at org.pkl.core.ast.PklRootNode.execute(PklRootNode.java:46)
+	at com.oracle.truffle.api.impl.DefaultCallTarget.call(DefaultCallTarget.java:118)
+	at com.oracle.truffle.api.impl.DefaultDirectCallNode.call(DefaultDirectCallNode.java:59)
+	at org.pkl.core.ast.expression.member.ReadLocalPropertyNode.executeGeneric(ReadLocalPropertyNode.java:66)
+	at org.pkl.core.ast.member.TypeCheckedPropertyNode.evalTypedObjectCached(TypeCheckedPropertyNode.java:54)
+	at org.pkl.core.ast.member.TypeCheckedPropertyNodeGen.executeAndSpecialize(TypeCheckedPropertyNodeGen.java:132)
+	at org.pkl.core.ast.member.TypeCheckedPropertyNodeGen.executeImpl(TypeCheckedPropertyNodeGen.java:97)
+	at org.pkl.core.ast.PklRootNode.execute(PklRootNode.java:46)
+	at com.oracle.truffle.api.impl.DefaultCallTarget.call(DefaultCallTarget.java:118)
+	at com.oracle.truffle.api.impl.DefaultIndirectCallNode.call(DefaultIndirectCallNode.java:53)
+	at org.pkl.core.runtime.VmUtils.doReadMember(VmUtils.java:395)
+	at org.pkl.core.runtime.VmUtils.readMemberOrNull(VmUtils.java:324)
+	at org.pkl.core.ast.expression.member.ReadPropertyNode.evalObject(ReadPropertyNode.java:112)
+	at org.pkl.core.ast.expression.member.ReadPropertyNodeGen.executeAndSpecialize(ReadPropertyNodeGen.java:142)
+	at org.pkl.core.ast.expression.member.ReadPropertyNodeGen.executeGeneric(ReadPropertyNodeGen.java:104)
+	at org.pkl.core.ast.expression.member.InvokeMethodVirtualNodeGen.executeGeneric(InvokeMethodVirtualNodeGen.java:143)
+	at org.pkl.core.ast.member.TypeCheckedPropertyNode.evalTypedObjectCached(TypeCheckedPropertyNode.java:54)
+	at org.pkl.core.ast.member.TypeCheckedPropertyNodeGen.executeAndSpecialize(TypeCheckedPropertyNodeGen.java:132)
+	at org.pkl.core.ast.member.TypeCheckedPropertyNodeGen.executeImpl(TypeCheckedPropertyNodeGen.java:97)
+	at org.pkl.core.ast.PklRootNode.execute(PklRootNode.java:46)
+	at com.oracle.truffle.api.impl.DefaultCallTarget.call(DefaultCallTarget.java:97)
+	at com.oracle.truffle.api.nodes.IndirectCallNode$1.call(IndirectCallNode.java:96)
+	at org.pkl.core.runtime.VmUtils.doReadMember(VmUtils.java:395)
+	at org.pkl.core.runtime.VmUtils.readMemberOrNull(VmUtils.java:324)
+	at org.pkl.core.runtime.VmUtils.readMemberOrNull(VmUtils.java:287)
+	at org.pkl.core.runtime.VmUtils.readMember(VmUtils.java:267)
+	at org.pkl.core.runtime.VmUtils.readTextProperty(VmUtils.java:210)
+	at org.pkl.core.EvaluatorImpl.lambda$evaluateOutputText$0(EvaluatorImpl.java:162)
+	at org.pkl.core.EvaluatorImpl.lambda$doEvaluate$0(EvaluatorImpl.java:470)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:388)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateOutputText(EvaluatorImpl.java:158)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:261)
+	at M2PowerAssertionOracle.main(M2PowerAssertionOracle.java:36)

@@ -1,0 +1,5 @@
+import "pkl:yaml"
+local parser = new yaml.Parser {  }
+local parsed = parser.parse("base: &base {x: 1}\n!!merge <<: *base\n")
+result = parsed
+output { text = result.toString() }

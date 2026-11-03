@@ -55,6 +55,19 @@ pub(crate) fn xml() -> Arc<RuntimeSource> {
         .clone()
 }
 
+pub(crate) fn pklbinary() -> Arc<RuntimeSource> {
+    static SOURCE: OnceLock<Arc<RuntimeSource>> = OnceLock::new();
+    SOURCE
+        .get_or_init(|| {
+            Arc::new(RuntimeSource {
+                text: include_str!("stdlib/pklbinary.pkl").into(),
+                uri: "pkl:pklbinary".into(),
+                module_name: "pkl.pklbinary".into(),
+            })
+        })
+        .clone()
+}
+
 pub(crate) fn jsonnet() -> Arc<RuntimeSource> {
     static SOURCE: OnceLock<Arc<RuntimeSource>> = OnceLock::new();
     SOURCE
@@ -130,6 +143,20 @@ pub(crate) fn semver() -> Arc<RuntimeSource> {
                 text: include_str!("stdlib/semver.pkl").into(),
                 uri: "pkl:semver".into(),
                 module_name: "pkl.semver".into(),
+            })
+        })
+        .clone()
+}
+
+/// Exact pinned pure-Pkl shell utilities; evaluated through ordinary VM frames.
+pub(crate) fn shell() -> Arc<RuntimeSource> {
+    static SOURCE: OnceLock<Arc<RuntimeSource>> = OnceLock::new();
+    SOURCE
+        .get_or_init(|| {
+            Arc::new(RuntimeSource {
+                text: include_str!("stdlib/shell.pkl").into(),
+                uri: "pkl:shell".into(),
+                module_name: "pkl.shell".into(),
             })
         })
         .clone()

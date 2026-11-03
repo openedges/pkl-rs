@@ -1,0 +1,5 @@
+import "pkl:yaml"
+
+local parser = new yaml.Parser { mode = "1.1" }
+result = let (v = parser.parse("\"yes\"")) (v is Boolean).toString() + ":" + (v is Int).toString() + ":" + (v is String).toString() + ":" + v.toString()
+output { text = result.toString() }

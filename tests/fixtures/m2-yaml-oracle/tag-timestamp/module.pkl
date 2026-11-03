@@ -1,0 +1,5 @@
+import "pkl:yaml"
+
+local parser = new yaml.Parser {  }
+result = parser.parse("!!timestamp 2020-01-02")
+output { text = result.toString() }

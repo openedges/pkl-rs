@@ -1,0 +1,5 @@
+import "pkl:yaml"
+local parser = new yaml.Parser { mode = "1.1" }
+local parsed = parser.parse("[yes, ON, 012, 1:20]\n")
+result = parsed
+output { text = result.toString() }

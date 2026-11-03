@@ -52,6 +52,7 @@ mod query_lifecycle;
 mod session_expressions;
 mod stdlib_modules;
 mod xml;
+mod yaml_parser;
 pub use session_expressions::{SessionExpressionError, compile_session_expression};
 mod frame_transformation;
 pub(crate) mod identity;
@@ -59,6 +60,7 @@ mod object_lookups;
 mod output;
 mod pair;
 mod pcf_format;
+mod pkl_binary_wire;
 mod plist;
 mod primitives;
 #[cfg(test)]
@@ -84,6 +86,9 @@ pub enum Instruction {
     ReflectCall(reflection::Operation),
     /// Execute the authored pkl:json Parser.parse external body.
     JsonParse,
+    YamlParse {
+        all: bool,
+    },
     MirrorProperty(PklString),
     LoadBaseModule,
     /// Invoke a checked Function0 under a guest exception handler.
@@ -103,6 +108,9 @@ pub enum Instruction {
     EncodeUtf8,
     OutputRenderer,
     RenderPcf {
+        document: bool,
+    },
+    RenderPklBinary {
         document: bool,
     },
     RenderXml {
@@ -1264,6 +1272,7 @@ struct Frame {
     method_call_site: Option<Box<deprecation::CallSite>>,
     pcf_render: Option<rendering::RenderRun>,
     json_parse: Option<Box<json_parser::Run>>,
+    yaml_parse: Option<Box<yaml_parser::Run>>,
     collection_join: Option<collections::JoinRun>,
     collection_transform: Option<Box<collection_transforms::TransformRun>>,
     set_order: Option<Box<set_order::Run>>,
@@ -1559,6 +1568,7 @@ impl Vm {
             method_call_site: None,
             pcf_render: None,
             json_parse: None,
+            yaml_parse: None,
             collection_join: None,
             collection_transform: None,
             set_order: None,
@@ -2093,6 +2103,9 @@ impl Vm {
                 if let Some(run) = &frame.string_transform {
                     run.roots(&mut roots);
                 }
+                if let Some(run) = &frame.yaml_parse {
+                    run.roots(&mut roots);
+                }
                 if let Some(run) = &frame.json_parse {
                     run.roots(&mut roots);
                 }
@@ -2185,7 +2198,11 @@ impl Vm {
             error.unavailable_origin = true;
         }
         let cast_boundary = self.mapping_cast_boundary(&error);
-        let catch_boundary = self.guest_catch_boundary(&error).max(cast_boundary);
+        let yaml_boundary = self.yaml_constructor_boundary(&error);
+        let catch_boundary = self
+            .guest_catch_boundary(&error)
+            .max(cast_boundary)
+            .max(yaml_boundary);
         if error.undefined_value && self.catch_force_undefined(catch_boundary) {
             return;
         }
@@ -2236,7 +2253,7 @@ impl Vm {
         // The internal boundary retains its frame for findMember, but abandons
         // that frame's cast work, including any module/force subcontinuation.
         let cleanup_start = catch_boundary
-            .filter(|index| Some(*index) == cast_boundary)
+            .filter(|index| Some(*index) == cast_boundary || Some(*index) == yaml_boundary)
             .unwrap_or(unwind_start);
         if guest_exceptions::is_guest_exception(&error) && !error.hint_from_template {
             match self.document_conversion_hint(unwind_start) {
@@ -2700,7 +2717,9 @@ impl Vm {
                 }
             }
         }
-        if let Some(index) = catch_boundary.filter(|index| Some(*index) == cast_boundary) {
+        if let Some(index) = catch_boundary.filter(|index| Some(*index) == yaml_boundary) {
+            self.catch_yaml_constructor(index, error);
+        } else if let Some(index) = catch_boundary.filter(|index| Some(*index) == cast_boundary) {
             self.catch_mapping_cast(index, error);
         } else if let Some(index) = catch_boundary {
             let value = self.render_caught_exception(&error);
@@ -3390,6 +3409,7 @@ impl Vm {
             method_call_site: None,
             pcf_render: None,
             json_parse: None,
+            yaml_parse: None,
             collection_join: None,
             collection_transform: None,
             set_order: None,
@@ -4493,6 +4513,7 @@ impl Vm {
             method_call_site: None,
             pcf_render: None,
             json_parse: None,
+            yaml_parse: None,
             collection_join: None,
             collection_transform: None,
             set_order: None,
@@ -4582,6 +4603,13 @@ impl Vm {
             .is_some_and(|frame| frame.deep_force.is_some())
         {
             return self.step_deep_force();
+        }
+        if self
+            .frames
+            .last()
+            .is_some_and(|frame| frame.yaml_parse.is_some())
+        {
+            return self.step_yaml_parse();
         }
         if self
             .frames
@@ -4761,6 +4789,9 @@ impl Vm {
             Instruction::OutputRenderer => self.output_renderer()?,
             Instruction::RenderPcf { document } => {
                 self.begin_render(document, rendering::Format::Pcf)?
+            }
+            Instruction::RenderPklBinary { document } => {
+                self.begin_pkl_binary_render(document)?;
             }
             Instruction::RenderXml { document } => {
                 self.begin_xml_render(document)?;
@@ -5118,7 +5149,10 @@ impl Vm {
                         &self.heap,
                     )?);
                 };
-                return Err(RuntimeError::new(ErrorKind::Type, message));
+                let mut error = RuntimeError::new(ErrorKind::Type, message.clone());
+                error.java_exception_message =
+                    Some(("org.pkl.core.runtime.VmEvalException", message));
+                return Err(error);
             }
             Instruction::StringRepeat => self.repeat_string()?,
             Instruction::CollectionJoin => self.begin_collection_join()?,
@@ -5195,6 +5229,7 @@ impl Vm {
             Instruction::RegexMatchProperty(property) => self.regex_match_property(property)?,
             Instruction::ReflectCall(operation) => self.begin_reflection(operation)?,
             Instruction::JsonParse => self.begin_json_parse()?,
+            Instruction::YamlParse { all } => self.begin_yaml_parse(all)?,
             Instruction::MirrorProperty(name) => self.begin_mirror_property(name)?,
             Instruction::IntSeqConstructor => {
                 let value = self.int_seq_constructor();
@@ -5716,15 +5751,36 @@ impl Vm {
                         .expect("active frame")
                         .environment
                         .clone();
+                    let declaration_code = self.frames.last().map(|frame| frame.block);
+                    // Primary Programs can acquire their source after bytecode
+                    // compilation. Resolve the missing URI from this class's
+                    // declaring block, never from the renderer or its caller.
+                    let origin_uri = class.origin_uri.clone().or_else(|| {
+                        let metadata =
+                            declaration_code.and_then(|code| self.program.metadata.get(code))?;
+                        metadata
+                            .unit
+                            .and_then(|unit| self.program.units.get(unit.0 as usize))
+                            .and_then(|unit| {
+                                unit.identity
+                                    .as_ref()
+                                    .map(|identity| identity.original_uri.clone())
+                                    .or_else(|| {
+                                        unit.source.as_ref().map(|source| source.uri.clone())
+                                    })
+                            })
+                            .or_else(|| metadata.source.as_ref().map(|source| source.uri.clone()))
+                    });
                     let id = self.heap.allocate(Object {
                         class_definition: Some(Class {
+                            origin_uri,
                             module: class
                                 .module
                                 .or_else(|| Some(self.current_module_name().into())),
                             ..class
                         }),
                         class_initializing: true,
-                        declaration_code: self.frames.last().map(|frame| frame.block),
+                        declaration_code,
                         environment,
                         ..Object::default()
                     });
@@ -8156,6 +8212,19 @@ impl Compiler<'_> {
                     && self.member == "#Parser.parse"
                 {
                     output.push(Instruction::JsonParse);
+                } else if self.resolved.standard_library
+                    && self
+                        .source
+                        .as_ref()
+                        .is_some_and(|source| source.uri == "pkl:yaml")
+                    && matches!(
+                        self.member.as_str(),
+                        Some("#Parser.parse" | "#Parser.parseAll")
+                    )
+                {
+                    output.push(Instruction::YamlParse {
+                        all: self.member == "#Parser.parseAll",
+                    });
                 } else if self
                     .source
                     .as_ref()
@@ -8167,6 +8236,19 @@ impl Compiler<'_> {
                     )
                 {
                     output.push(Instruction::RenderJsonnet {
+                        document: self.member == "#Renderer.renderDocument",
+                    });
+                } else if self
+                    .source
+                    .as_ref()
+                    .is_some_and(|source| source.uri == "pkl:pklbinary")
+                    && self.resolved.standard_library
+                    && matches!(
+                        self.member.as_str(),
+                        Some("#Renderer.renderDocument" | "#Renderer.renderValue")
+                    )
+                {
+                    output.push(Instruction::RenderPklBinary {
                         document: self.member == "#Renderer.renderDocument",
                     });
                 } else if self

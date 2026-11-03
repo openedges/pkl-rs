@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `String`, but got type `Int`.
+Value: 1
+
+24 | function escapeWithSingleQuotes(str: String): String =
+                                          ^^^^^^
+at pkl.shell#escapeWithSingleQuotes (https://github.com/apple/pkl/blob/0.32.0/stdlib/shell.pkl#L24)
+
+2 | output { text = shell.escapeWithSingleQuotes(1) }
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#output.text (file:///stage143-shell/wrong-int/main.pkl)

@@ -1,0 +1,5 @@
+import "pkl:yaml"
+
+local parser = new yaml.Parser { useMapping = true }
+result = parser.parse("default: 1\na: 2\n")["default"]
+output { text = result.toString() }

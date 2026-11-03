@@ -1,0 +1,2 @@
+import "pkl:pklbinary"
+output { renderer=new pklbinary.Renderer {}; value=Map(new RenderDirective { bytes=Bytes(1); text="key" },new RenderDirective { bytes=Bytes(2); text=throw("unused") }) }

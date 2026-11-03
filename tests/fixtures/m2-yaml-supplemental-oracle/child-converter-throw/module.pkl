@@ -1,0 +1,5 @@
+import "pkl:yaml"
+local parser = new yaml.Parser { converters { [String] = (it) -> if (it == "boom") throw("child-string-converter") else it } }
+local parsed = parser.parse("[boom]\n")
+result = parsed
+output { text = result.toString() }

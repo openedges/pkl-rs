@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+24 | function escapeWithSingleQuotes(str: String): String =
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.shell#escapeWithSingleQuotes (https://github.com/apple/pkl/blob/0.32.0/stdlib/shell.pkl#L24)
+
+2 | output { text = shell.escapeWithSingleQuotes() }
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#output.text (file:///stage143-shell/missing-argument/main.pkl)

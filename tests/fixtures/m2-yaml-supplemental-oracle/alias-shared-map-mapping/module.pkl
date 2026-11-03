@@ -1,0 +1,5 @@
+import "pkl:yaml"
+local parser = new yaml.Parser { useMapping = true }
+local parsed = parser.parse("a: &shared {x: 1}\nb: *shared\n")
+result = parsed["a"]["x"] + parsed["b"]["x"]
+output { text = result.toString() }

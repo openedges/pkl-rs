@@ -1,0 +1,6 @@
+–– Pkl Error ––
+first-argument
+
+2 | output { text = shell.escapeWithSingleQuotes(throw("first-argument"), throw("second-argument")) }
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+at main#output.text (file:///stage143-shell/arity-versus-argument/main.pkl)

@@ -1,0 +1,5 @@
+import "pkl:yaml"
+local parser = new yaml.Parser {  }
+local parsed = parser.parse("\"😀\": [1,\r\n  2\n")
+result = parsed
+output { text = result.toString() }

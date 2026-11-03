@@ -1,0 +1,68 @@
+{
+  "complete": true,
+  "epoch": 1793695161.640191,
+  "copies": [
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage144-publication-01/evidence.tar.gz",
+        "bytes": 14444156,
+        "sha256": "5027a4e95edfff18cee9c1b352a23cd1c8197903151bc11aa1c8c1a51674fcaa",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage144-binary-yaml-shell/evidence.tar.gz",
+        "bytes": 14444156,
+        "sha256": "5027a4e95edfff18cee9c1b352a23cd1c8197903151bc11aa1c8c1a51674fcaa",
+        "mode": 420
+      }
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage144-publication-prep-03/payload-roster.json",
+        "bytes": 507427,
+        "sha256": "193eb78ae0bba54bc55f07074003cf1f2e24219dd5f7a119302be31eb2052006",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage144-binary-yaml-shell/evidence-index.json",
+        "bytes": 507427,
+        "sha256": "193eb78ae0bba54bc55f07074003cf1f2e24219dd5f7a119302be31eb2052006",
+        "mode": 420
+      }
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage144-publication-readback-01/report.json",
+        "bytes": 2476,
+        "sha256": "10e05b9d8201cbd8ad6778516c68c2618012f6a226ab4ee4d9c6ca58c971363b",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage144-binary-yaml-shell/evidence-integrity.json",
+        "bytes": 2476,
+        "sha256": "10e05b9d8201cbd8ad6778516c68c2618012f6a226ab4ee4d9c6ca58c971363b",
+        "mode": 420
+      }
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage144-final-source-audit-01/report.json",
+        "bytes": 369,
+        "sha256": "39dd086a35514c3dbc1e9fb4e60474920be97109de305d54368ac43e155829cd",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage144-binary-yaml-shell/source-verification.json",
+        "bytes": 369,
+        "sha256": "39dd086a35514c3dbc1e9fb4e60474920be97109de305d54368ac43e155829cd",
+        "mode": 420
+      }
+    }
+  ],
+  "doc_draft_manifest_sha256": "7937a9c5b9eb6e59f5f570a4b54fee435cdc31b7e5c16013463d10f8323fa5a5",
+  "source_audit_sha256": "39dd086a35514c3dbc1e9fb4e60474920be97109de305d54368ac43e155829cd",
+  "archive_members": 1030,
+  "logical_payload_bytes": 88144442,
+  "archived_source_audit": false,
+  "scope": "Published copies verified byte-for-byte against the independently checked finite payload and metadata. Source verification is a separate published receipt. No full language, OS, performance, hermetic or executable-restoration claim."
+}

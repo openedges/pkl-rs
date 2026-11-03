@@ -171,6 +171,7 @@ impl Vm {
             equality_run: None,
             pcf_render: None,
             json_parse: None,
+            yaml_parse: None,
             collection_join: None,
             collection_transform: None,
             set_order: None,

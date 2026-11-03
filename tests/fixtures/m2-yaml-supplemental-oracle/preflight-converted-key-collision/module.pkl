@@ -1,0 +1,5 @@
+import "pkl:yaml"
+local parser = new yaml.Parser { useMapping = true; converters { [String] = (it) -> "same" } }
+local parsed = parser.parse("a: 1\nb: 2\n")
+result = parsed
+output { text = result.toString() }

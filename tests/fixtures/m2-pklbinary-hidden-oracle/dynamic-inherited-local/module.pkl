@@ -1,0 +1,2 @@
+import "pkl:pklbinary"
+output { renderer=new pklbinary.Renderer {}; value=(new Dynamic { x=1; local l=throw("local"); ["k"]=2 }) { x=3; ["k"]=4 } }

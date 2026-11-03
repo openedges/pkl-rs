@@ -1,0 +1,5 @@
+import "pkl:yaml"
+local parser = new yaml.Parser {  }
+local parsed = parser.parse("%TAG !e! tag:example.org,2026:\n---\n!e!thing value\n")
+result = parsed
+output { text = result.toString() }

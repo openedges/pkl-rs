@@ -1,0 +1,344 @@
+// Included in rendering.rs so binary traversal shares its private continuation,
+// converter paths, source frames and GC roots with the text renderers.
+impl Vm {
+    pub(super) fn begin_pkl_binary_render(&mut self, document: bool) -> Result<(), RuntimeError> {
+        let root = self
+            .frames
+            .last()
+            .and_then(|frame| frame.environment.locals.last())
+            .cloned()
+            .ok_or_else(|| invalid("pkl-binary renderer argument"))?;
+        self.stack.push(root);
+        self.begin_render(document, Format::PklBinary)
+    }
+
+    fn binary_class_identity(
+        &mut self,
+        value: &Value,
+    ) -> Result<(PklString, PklString), RuntimeError> {
+        let class = match classes::runtime_class(value, &self.heap)? {
+            classes::RuntimeClass::Declared(class) => class,
+            classes::RuntimeClass::Builtin(class) => self.canonical_builtin_class(class),
+        };
+        self.binary_declared_class_identity(class)
+    }
+
+    fn binary_declared_class_identity(
+        &self,
+        class: ObjectId,
+    ) -> Result<(PklString, PklString), RuntimeError> {
+        let name = self.heap.class_display_name(class)?;
+        let definition = self.heap.class_definition(class)?;
+        let uri = definition
+            .origin_uri
+            .clone()
+            .ok_or_else(|| invalid("pkl-binary class has no declaration URI"))?;
+        Ok((name, uri))
+    }
+
+    fn binary_alias_identity(
+        &self,
+        alias: ObjectId,
+    ) -> Result<(PklString, PklString), RuntimeError> {
+        let object = self.heap.get(alias)?;
+        let stored_name = object
+            .type_alias
+            .clone()
+            .ok_or_else(|| invalid("pkl-binary type alias name"))?;
+        let metadata = object
+            .declaration_code
+            .and_then(|code| self.program.metadata.get(code));
+        let qualified = object
+            .declaration_code
+            .and_then(|code| self.program.declaration_sources.get(&code))
+            .zip(metadata.and_then(|metadata| metadata.source.as_ref()))
+            .map(|(declaration, source)| {
+                source
+                    .module_name
+                    .concat(&"#".into())
+                    .concat(&declaration.name)
+            })
+            .unwrap_or(stored_name);
+        let uri = metadata
+            .and_then(|metadata| metadata.unit)
+            .and_then(|unit| self.program.units.get(unit.0 as usize))
+            .and_then(|unit| {
+                unit.key.as_ref().map(|key| key.uri.clone()).or_else(|| {
+                    unit.identity
+                        .as_ref()
+                        .map(|identity| identity.original_uri.clone())
+                })
+            })
+            .or_else(|| {
+                metadata
+                    .and_then(|metadata| metadata.source.as_ref())
+                    .map(|source| source.uri.clone())
+            })
+            .or_else(|| {
+                (object.declaration_code.is_none() && object.type_alias_declaration.is_none())
+                    .then(|| "pkl:base".into())
+            })
+            .ok_or_else(|| invalid("pkl-binary type alias has no declaration URI"))?;
+        let name = if uri == "pkl:base" {
+            crate::source::SourceText::from(&qualified)
+                .entire()
+                .strip_prefix("pkl.base#")
+                .map(|name| name.to_pkl_string())
+                .unwrap_or(qualified)
+        } else {
+            qualified
+        };
+        Ok((name, uri))
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn binary_visit(
+        &mut self,
+        run: &mut RenderRun,
+        value: Value,
+        depth: usize,
+        standalone: bool,
+        root: bool,
+        path: Vec<PathPart>,
+    ) -> Result<bool, RuntimeError> {
+        match value {
+            Value::Class(class) => {
+                let (name, uri) = self.binary_declared_class_identity(class)?;
+                run.binary.array(3)?;
+                run.binary.integer(0x0c)?;
+                run.binary.string(&name)?;
+                run.binary.string(&uri)?;
+            }
+            Value::TypeAlias(alias) => {
+                let (name, uri) = self.binary_alias_identity(alias)?;
+                run.binary.array(3)?;
+                run.binary.integer(0x0d)?;
+                run.binary.string(&name)?;
+                run.binary.string(&uri)?;
+            }
+            Value::Object(receiver) => {
+                if self.is_render_directive(receiver)? {
+                    run.await_ = Some(Await::Directive { receiver, path });
+                    self.force(receiver, receiver, "bytes".into(), false, true, false)?;
+                    return Ok(false);
+                }
+                let object = self.heap.get(receiver)?;
+                if let Some(pair) = object.pair.clone() {
+                    run.binary.array(3)?;
+                    run.binary.integer(0x09)?;
+                    // VmPklBinaryEncoder.visitPair calls visit directly, without
+                    // converter selection or an added member path component.
+                    run.value(pair[1].clone(), depth, false, false, false, path.clone());
+                    run.value(pair[0].clone(), depth, false, false, false, path);
+                    return Ok(false);
+                }
+                if let Some(reference) = object.reference.clone() {
+                    run.binary.array(4)?;
+                    run.binary.integer(0x20)?;
+                    for access in reference.path.iter().rev() {
+                        run.value(access.clone(), depth, false, false, false, path.clone());
+                    }
+                    run.tasks.push(Task::BinaryArray(reference.path.len()));
+                    run.value(reference.data, depth, false, false, false, path.clone());
+                    run.value(reference.domain, depth, false, false, false, path);
+                    return Ok(false);
+                }
+                if object.foreign_map_entry.is_some() {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Unsupported,
+                        "Foreign Map.Entry rendering has a pinned Java internal-error protocol that remains unresolved.",
+                    ));
+                }
+                let strict = matches!(
+                    object.collection_kind,
+                    CollectionKind::List | CollectionKind::Set | CollectionKind::Map
+                );
+                if !run.active.insert(receiver) {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Cycle,
+                        "cyclic value rendering",
+                    ));
+                }
+                run.tasks.push(Task::OpenObject {
+                    receiver,
+                    depth,
+                    standalone,
+                    root,
+                    path,
+                    stream: false,
+                });
+                if !strict {
+                    run.await_ = Some(Await::Shallow);
+                    self.force_shallow_frame(Value::Object(receiver))?;
+                }
+            }
+            value => run.binary.scalar(&value)?,
+        }
+        Ok(false)
+    }
+
+    fn binary_regular_property_count(&self, receiver: ObjectId) -> Result<usize, RuntimeError> {
+        let class = self
+            .heap
+            .object_class(receiver)?
+            .ok_or_else(|| invalid("pkl-binary Typed class"))?;
+        let mut owner = Some(self.heap.get_class(class)?.prototype);
+        let mut visited = BTreeSet::new();
+        let mut names = BTreeSet::new();
+        while let Some(id) = owner {
+            if !visited.insert(id) {
+                return Err(RuntimeError::new(
+                    ErrorKind::Cycle,
+                    "cyclic class parent chain",
+                ));
+            }
+            let prototype = self.heap.get(id)?;
+            for member in &prototype.members {
+                // VmClass collects each class's declared regular names, then
+                // unions its superclass's independently collected names. An
+                // external override must not remove a regular ancestor name.
+                if !member.local
+                    && !member.method
+                    && !member.entry
+                    && !member.definition()
+                    && !member.import()
+                    && !member.external()
+                    && !collections::hidden_property(&self.heap, id, &member.name, false)?
+                {
+                    names.insert(member.name.clone());
+                }
+            }
+            owner = prototype.parent;
+        }
+        Ok(names.len())
+    }
+
+    fn binary_start(
+        &mut self,
+        run: &mut RenderRun,
+        receiver: ObjectId,
+    ) -> Result<(), RuntimeError> {
+        let object = self.heap.get(receiver)?;
+        let kind = object.collection_kind;
+        let length = object.length;
+        if kind == CollectionKind::Dynamic {
+            let typed = classes::typed_instance(&self.heap, receiver)? || object.is_module;
+            let count = if typed {
+                // Count class declarations, independently of cached equality
+                // slots and the renderer's emitted-member traversal.
+                self.binary_regular_property_count(receiver)?
+            } else {
+                // Preserve VmDynamic's cached count even for a reentrant force
+                // prefix; counting emitted members would silently repair bytes.
+                self.dynamic_regular_member_count(receiver)?
+            };
+            let (name, uri) = self.binary_class_identity(&Value::Object(receiver))?;
+            run.binary.array(4)?;
+            run.binary.integer(0x01)?;
+            run.binary.string(&name)?;
+            run.binary.string(&uri)?;
+            run.binary.array(count)?;
+        } else {
+            let tag = match kind {
+                CollectionKind::Map => 0x02,
+                CollectionKind::Mapping => 0x03,
+                CollectionKind::List => 0x04,
+                CollectionKind::Listing => 0x05,
+                CollectionKind::Set => 0x06,
+                CollectionKind::Dynamic => unreachable!(),
+            };
+            run.binary.array(2)?;
+            run.binary.integer(tag)?;
+            if matches!(kind, CollectionKind::Map | CollectionKind::Mapping) {
+                let length = if kind == CollectionKind::Mapping {
+                    self.heap
+                        .get(receiver)?
+                        .mapping_length
+                        .ok_or_else(|| invalid("pkl-binary Mapping length"))?
+                } else {
+                    length
+                };
+                run.binary.map(length)?;
+            } else {
+                run.binary.array(length)?;
+            }
+        }
+        Ok(())
+    }
+
+    fn binary_prepare_mapping_length(&mut self, receiver: ObjectId) -> Result<(), RuntimeError> {
+        // Use the same parent-first key sequence as collection_builtin's
+        // Mapping.length. CountKey retains keys/receiver across Host and GC;
+        // unlike the property instruction, this continuation must not retry PC.
+        let mut chain = Vec::new();
+        let mut owner = Some(receiver);
+        while let Some(id) = owner {
+            chain.push(id);
+            owner = self.heap.get(id)?.parent;
+        }
+        let mut keys = Vec::new();
+        for id in chain.into_iter().rev() {
+            keys.extend(
+                self.heap
+                    .get(id)?
+                    .collection_members
+                    .iter()
+                    .filter(|member| member.kind == CollectionMemberKind::Entry)
+                    .map(|member| member.key.clone()),
+            );
+        }
+        self.count_render_mapping_keys(receiver, keys);
+        Ok(())
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn binary_member(
+        &self,
+        run: &mut RenderRun,
+        mut members: Members,
+        descriptor: CollectionMember,
+        key: Value,
+        value: Value,
+        output_name: Option<PklString>,
+        previous_source: Option<RuntimeFrame>,
+        path: Vec<PathPart>,
+    ) -> Result<(), RuntimeError> {
+        let object = self.heap.get(members.receiver)?;
+        let dynamic = object.collection_kind == CollectionKind::Dynamic
+            && !object.is_module
+            && !classes::typed_instance(&self.heap, members.receiver)?;
+        let depth = members.depth;
+        members.emitted = true;
+        match descriptor.kind {
+            CollectionMemberKind::Property => {
+                let name = output_name.unwrap_or_else(|| match descriptor.key {
+                    Value::String(name) => name,
+                    _ => unreachable!("property String key"),
+                });
+                run.binary.array(3)?;
+                run.binary.integer(0x10)?;
+                run.binary.string(&name)?;
+            }
+            CollectionMemberKind::Entry if dynamic => {
+                run.binary.array(3)?;
+                run.binary.integer(0x11)?;
+            }
+            CollectionMemberKind::Element if dynamic => {
+                run.binary.array(3)?;
+                run.binary.integer(0x12)?;
+                let Value::Int(index) = descriptor.key else {
+                    return Err(invalid("pkl-binary element index"));
+                };
+                run.binary.integer(*index)?;
+            }
+            _ => (),
+        }
+        run.tasks.push(Task::Members(members));
+        run.tasks.push(Task::RestoreSource(previous_source));
+        run.value(value, depth, false, false, false, path);
+        if descriptor.kind == CollectionMemberKind::Entry {
+            run.value(key, depth, false, false, false, Vec::new());
+        }
+        Ok(())
+    }
+}

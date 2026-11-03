@@ -1,0 +1,6 @@
+import "pkl:pklbinary"
+class Holder {
+  x: Int=3
+  hidden h: Int=throw("hidden")
+}
+output { renderer=new pklbinary.Renderer {}; value=new Holder {} }

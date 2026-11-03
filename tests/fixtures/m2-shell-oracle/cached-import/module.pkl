@@ -1,0 +1,2 @@
+import "pkl:shell"
+output { text = (import("pkl:shell") == import("pkl:shell")).toString() }

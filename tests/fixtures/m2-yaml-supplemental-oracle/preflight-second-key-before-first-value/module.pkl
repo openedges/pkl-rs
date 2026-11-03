@@ -1,0 +1,5 @@
+import "pkl:yaml"
+local parser = new yaml.Parser { converters { [String] = (it) -> if (it == "value-first") throw("value-first") else if (it == "key-second") throw("key-second") else it } }
+local parsed = parser.parse("first: value-first\n? [key-second]\n: later\n")
+result = parsed
+output { text = result.toString() }

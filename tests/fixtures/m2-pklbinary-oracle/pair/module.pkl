@@ -1,0 +1,2 @@
+import "pkl:pklbinary"
+output { bytes = (new pklbinary.Renderer {}).renderValue(Pair("a", 1)) }
