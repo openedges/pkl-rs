@@ -1,0 +1,7 @@
+import "pkl:xml"
+import "pkl:ref"
+local renderer = new xml.Renderer { indent = "" }
+class D extends ref.Domain { function renderReference(r: ref.Reference<D, Any>): String = "ref" }
+local const d: D = new {}
+result = renderer.renderValue(ref.Reference(d, Int, 1))
+output { text = result }

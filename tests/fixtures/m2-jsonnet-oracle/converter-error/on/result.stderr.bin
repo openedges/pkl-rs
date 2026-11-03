@@ -1,0 +1,14 @@
+–– Pkl Error ––
+converter-failed
+
+3 | local r = new jsonnet.Renderer { converters { [Int] = (_) -> throw("converter-failed") } }
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#r.converters[#1].<function#1> (file:///stage140-jsonnet/converter-error/main.pkl)
+
+4 | result = r.renderValue(1)
+             ^^^^^^^^^^^^^^^^
+at main#result (file:///stage140-jsonnet/converter-error/main.pkl)
+
+5 | output { text = result }
+                    ^^^^^^
+at main#output.text (file:///stage140-jsonnet/converter-error/main.pkl)

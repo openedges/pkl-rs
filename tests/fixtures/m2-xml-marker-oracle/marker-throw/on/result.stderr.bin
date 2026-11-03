@@ -1,0 +1,14 @@
+–– Pkl Error ––
+marker-failed
+
+3 | result = renderer.renderValue(new Dynamic { _isXmlElement = throw("marker-failed"); name = "x" })
+                                                                ^^^^^^^^^^^^^^^^^^^^^^
+at main#result._isXmlElement (file:///stage141-xml-marker/marker-throw/main.pkl)
+
+3 | result = renderer.renderValue(new Dynamic { _isXmlElement = throw("marker-failed"); name = "x" })
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage141-xml-marker/marker-throw/main.pkl)
+
+4 | output { text = result }
+                    ^^^^^^
+at main#output.text (file:///stage141-xml-marker/marker-throw/main.pkl)

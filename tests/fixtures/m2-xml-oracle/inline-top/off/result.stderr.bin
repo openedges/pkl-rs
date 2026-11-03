@@ -1,0 +1,11 @@
+–– Pkl Error ––
+`xml.Inline` is not supported here.
+Value: new Inline { value = List("a") }
+
+4 | result = renderer.renderValue(xml.Inline(List("a")))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage141-xml/inline-top/main.pkl)
+
+5 | output { text = result }
+                    ^^^^^^
+at main#output.text (file:///stage141-xml/inline-top/main.pkl)

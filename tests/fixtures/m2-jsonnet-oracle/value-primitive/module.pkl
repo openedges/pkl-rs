@@ -1,0 +1,5 @@
+import "pkl:jsonnet"
+
+local r = new jsonnet.Renderer {  }
+result = r.renderValue(123)
+output { text = result }

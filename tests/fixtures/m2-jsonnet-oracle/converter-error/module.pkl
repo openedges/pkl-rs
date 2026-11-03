@@ -1,0 +1,5 @@
+import "pkl:jsonnet"
+
+local r = new jsonnet.Renderer { converters { [Int] = (_) -> throw("converter-failed") } }
+result = r.renderValue(1)
+output { text = result }

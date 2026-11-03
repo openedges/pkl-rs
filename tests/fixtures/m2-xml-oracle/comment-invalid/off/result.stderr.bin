@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Type constraint `!contains("--")` violated.
+Value: "a--b"
+
+119 | text: String(!contains("--"))
+                   ^^^^^^^^^^^^^^^
+at pkl.xml#Comment.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/xml.pkl#L119)
+
+115 | function Comment(_text: String): Comment = new { text = _text }
+                                                              ^^^^^
+at pkl.xml#Comment.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/xml.pkl#L115)
+
+4 | result = renderer.renderValue(xml.Comment("a--b"))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage141-xml/comment-invalid/main.pkl)
+
+5 | output { text = result }
+                    ^^^^^^
+at main#output.text (file:///stage141-xml/comment-invalid/main.pkl)

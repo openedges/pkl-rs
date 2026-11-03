@@ -1,0 +1,5 @@
+import "pkl:jsonnet"
+
+local r = new jsonnet.Renderer { converters { ["a"] = (it) -> it + 10 } }
+result = r.renderValue(new Dynamic { a = 1; b = 2 })
+output { text = result }

@@ -1,5 +1,9 @@
 # 구현 계획
 
+### Stage141 Jsonnet·XML 검증
+
+공유 Jsonnet·XML 렌더러 통합 후 격리 native 21개 테스트와 Java 관측 172개를 확인했습니다. 172개에는 renderer 의도 관측이 아닌 setup 오류 통제 4개가 포함됩니다. 원본 CLI 25개는 전체 공개 채널이 일치했습니다. 별도 XML primitive 검증 8개 bitset과 38개 sequence는 새 Pkl 사례에 더하지 않습니다. 다섯 선행 검사가 통과했고 전체 workspace는 독립 aggregate 기준 313개 harness에서 통과 1,909개·실패 0개·ignored 5개이며 중첩 자식 통과 13개는 제외합니다. 개별 test identity와 interleaving 부재는 증명하지 않습니다. bounded M1은 Native·Node·Chromium 각각 6,078개, Node·브라우저 시나리오 각각 92개가 일치했습니다. 전체 M2·API·릴리스 플랫폼·성능 조건은 미완료입니다. 실패한 초기 native 실행과 초기 marker 20/24 승인, 후속 24/24 authority 및 여섯 oracle test의 formatting 변경을 보존합니다. 비봉인 cache executable은 삭제되어 동일 artifact 복원이 아니라 재빌드가 필요합니다. [Stage141 보고서](reports/m2/stage141-jsonnet-xml/README.md)에 범위와 증거를 기록합니다.
+
 ## Stage136 lexical 매핑과 전체 ready 재생
 
 다섯 문자열 escape와 일곱 예약어 요구사항을 승격했습니다. Java/Rust scalar 30개와 19개 및 별도 RECORD 원본 module case가 일치했으며 Python 62개 검사에는 target-directory 14개가 포함됩니다. 실제 전체 ready 재생은 4,483개이며 상태는 candidate-unsupported: 74, mismatch: 12, oracle-error: 2, pass: 4,395입니다. integrity verifier 종료는 0, strict verifier 종료는 1이고 전체 gate 미충족 조건은 1,743개입니다. 이 결과는 전체 언어/API·릴리스 플랫폼·성능 완료를 뜻하지 않습니다.
@@ -11,7 +15,7 @@
 
 ## 현재 상태
 
-Stage139에서 공유 엔진의 authored `pkl:json` Parser, converter 및 Resource 경로를 통합했습니다. 공개 `Instruction` enum에 `JsonParse`가 추가되어 downstream exhaustive match 수정이 필요합니다. 집중 native 47개 테스트와 Java 원시 관측 108개, 등록 원본 CLI 5개의 전체 공개 채널이 일치했습니다. 별도 64 MiB Java syntax utility 비교는 303건의 문법 허용과 오류 hint UTF-16만 다룹니다. format·xtask·Clippy·Wasm·manifest의 새로운 검사 5개가 통과했고 전체 workspace의 독립 집계는 harness 305개·통과 1,886개·실패 0개·ignored 5개이며 중첩 자식 통과 13개는 제외합니다. 이 집계는 개별 test identity와 interleaving 부재를 증명하지 않습니다. 실제 bounded M1은 Native·Node·Chromium 각각 6,078개와 Node·브라우저 시나리오 각각 92개가 일치했습니다. manifest는 구현 링크 hash 84개만 갱신했고 요구사항·사례·상태는 바꾸지 않았습니다. 이전 Cargo 캐시 삭제 후 보존하지 않은 과거 native 실행 파일은 재빌드가 필요합니다. 전체 M2·API·릴리스 플랫폼과 긴 token의 응답성 및 성능 목표는 미완료입니다. [Stage139 보고서](reports/m2/stage139-json-parser/README.md)에 archive member 5,910개의 독립 판독과 게시 사본을 기록했습니다. 다음은 별도 작업 공간에서 검증 중인 Jsonnet·XML 후보의 남은 오류 수정과 통합입니다.
+Stage139에서 공유 엔진의 authored `pkl:json` Parser, converter 및 Resource 경로를 통합했습니다. 공개 `Instruction` enum에 `JsonParse`가 추가되어 downstream exhaustive match 수정이 필요합니다. 집중 native 47개 테스트와 Java 원시 관측 108개, 등록 원본 CLI 5개의 전체 공개 채널이 일치했습니다. 별도 64 MiB Java syntax utility 비교는 303건의 문법 허용과 오류 hint UTF-16만 다룹니다. format·xtask·Clippy·Wasm·manifest의 새로운 검사 5개가 통과했고 전체 workspace의 독립 집계는 harness 305개·통과 1,886개·실패 0개·ignored 5개이며 중첩 자식 통과 13개는 제외합니다. 이 집계는 개별 test identity와 interleaving 부재를 증명하지 않습니다. 실제 bounded M1은 Native·Node·Chromium 각각 6,078개와 Node·브라우저 시나리오 각각 92개가 일치했습니다. manifest는 구현 링크 hash 84개만 갱신했고 요구사항·사례·상태는 바꾸지 않았습니다. 이전 Cargo 캐시 삭제 후 보존하지 않은 과거 native 실행 파일은 재빌드가 필요합니다. 전체 M2·API·릴리스 플랫폼과 긴 token의 응답성 및 성능 목표는 미완료입니다. [Stage139 보고서](reports/m2/stage139-json-parser/README.md)에 archive member 5,910개의 독립 판독과 게시 사본을 기록했습니다. 이후 Jsonnet·XML 통합과 현재 검증은 위 Stage141 항목에 별도로 기록합니다.
 
 ### Stage137 검증 완료
 

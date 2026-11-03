@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Cannot render object with both elements and properties/entries as Jsonnet.
+Object: new Dynamic { a = 2; 1 }
+
+4 | result = r.renderValue(new Dynamic { 1; a = 2 })
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage140-jsonnet/dynamic-mixed/main.pkl)
+
+5 | output { text = result }
+                    ^^^^^^
+at main#output.text (file:///stage140-jsonnet/dynamic-mixed/main.pkl)

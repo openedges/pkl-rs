@@ -21,6 +21,10 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+### Stage141 Jsonnet and XML renderers
+
+The Stage141 Jsonnet and XML checkpoint adds shared renderer support and qualifies 21 focused native tests against 172 Java observations, including four retained setup-error controls. Twenty-five original CLI cases matched their complete public channels. The full workspace aggregate records 1,909 passed, zero failed and five ignored across 313 harnesses; 13 nested child passes are excluded. Bounded M1 matched 6,078 results per Native, Node and Chromium target, with 92 Node and 92 browser scenarios. Full M2/API, release-platform and performance requirements remain open. The aggregate does not establish individual test identities or exclude count-preserving interleaving. See the [Stage141 report](reports/m2/stage141-jsonnet-xml/README.md) for retained failures and provenance limits.
+
 ### Stage139 JSON Parser
 
 The focused native run passed 47 tests and matched 108 Java observations in status and complete expression/stdout/stderr UTF-8 and UTF-16 fields; five registered original CLI cases matched their full public channels. Five fresh prechecks passed. The full workspace passed 1,886 tests with zero failed and five ignored across 305 harnesses; the aggregate excludes 13 nested child passes and does not prove individual test identities or absence of interleaving. The separate M1 acquisition matched 6,078 results per Native, Node and Chromium target, with 92 Node and 92 browser scenarios. See the [Stage139 report](reports/m2/stage139-json-parser/README.md) for retained failures and provenance limits.

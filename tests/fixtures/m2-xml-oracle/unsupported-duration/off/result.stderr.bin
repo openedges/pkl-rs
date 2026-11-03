@@ -1,0 +1,13 @@
+–– Pkl Error ––
+Cannot render value of type `Duration` as XML.
+Value: 1.min
+
+4 | result = renderer.renderValue(1.min)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage141-xml/unsupported-duration/main.pkl)
+
+Consider adding a converter to `output.converters`.
+
+5 | output { text = result }
+                    ^^^^^^
+at main#output.text (file:///stage141-xml/unsupported-duration/main.pkl)

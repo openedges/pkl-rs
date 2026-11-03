@@ -1,0 +1,5 @@
+import "pkl:xml"
+import "pkl:math"
+local renderer = new xml.Renderer { indent = "" }
+result = renderer.renderValue(math)
+output { text = result }

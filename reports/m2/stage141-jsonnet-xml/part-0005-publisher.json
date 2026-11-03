@@ -1,0 +1,50 @@
+{
+  "archive": {
+    "bytes": 454511,
+    "path": "target/m2/stage141-publication-part-0005/evidence.tar.gz",
+    "sha256": "2be1b8ebd0d5ff95fc5f7d07d02d57949efbd5b033b2caef68d2bde74b8e30c3"
+  },
+  "bookends_stable": true,
+  "complete": true,
+  "compressed_limit_bytes": 52428800,
+  "disk_free_floor_bytes": 1073741824,
+  "errors": [],
+  "excluded_product_files": [],
+  "finished_epoch": 1793670641.8522,
+  "head_after": "508a82c35abac3d4c73e4f59a6fdfd076aba51b4",
+  "head_before": "508a82c35abac3d4c73e4f59a6fdfd076aba51b4",
+  "manifest_sha256": "5e7d75d0eaa50ea55f766c5709dc2ec20b1771e6ee56a63b0f5e9e08cd53ea4b",
+  "member_count": 88,
+  "publisher_source": {
+    "bytes": 15696,
+    "metadata": {
+      "st_ctime_ns": 1793665065060811080,
+      "st_dev": 16777229,
+      "st_ino": 257557793,
+      "st_mode": 33188,
+      "st_mtime_ns": 1793665065060811080,
+      "st_size": 15696
+    },
+    "mode": 420,
+    "path": "target/m2/stage141-publication-prep-05/publish.py",
+    "sha256": "fcf59b89b020ea20b42eac094ceb7703f3b5fe000da4ff176318e57655ca672d"
+  },
+  "scope": "Finite raw evidence publication; not a complete source/compiler/runtime restoration closure",
+  "selection": {
+    "bytes": 24626,
+    "metadata": {
+      "st_ctime_ns": 1793670302885392138,
+      "st_dev": 16777229,
+      "st_ino": 257588018,
+      "st_mode": 33188,
+      "st_mtime_ns": 1793670302885392138,
+      "st_size": 24626
+    },
+    "mode": 420,
+    "path": "target/m2/stage141-publication-partition-01/selection-0005.json",
+    "sha256": "e82d1a21dfc41b03cbf502e289fda1a2a2573cc5d2a8fd865c92ccd7133c4aa4"
+  },
+  "source_member_count": 87,
+  "started_epoch": 1793670641.76955,
+  "uncompressed_member_bytes": 3472584
+}

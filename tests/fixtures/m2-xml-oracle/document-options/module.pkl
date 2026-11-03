@@ -1,0 +1,5 @@
+import "pkl:xml"
+
+local renderer = new xml.Renderer { xmlVersion = "1.1"; rootElementName = "order"; rootElementAttributes { ["id"] = 7; ["ok"] = true; ["q"] = "a&b" } }
+result = renderer.renderDocument("a&b")
+output { text = result }

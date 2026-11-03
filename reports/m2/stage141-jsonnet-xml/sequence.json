@@ -1,0 +1,1577 @@
+{
+  "complete": true,
+  "errors": [],
+  "steps": [
+    {
+      "name": "publish-0001",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+        "--selection",
+        "target/m2/stage141-publication-partition-01/selection-0001.json",
+        "--output",
+        "target/m2/stage141-publication-part-0001"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 2.5522895408794284,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0001/stdout.bin",
+        "bytes": 210,
+        "sha256": "5ed1ceb55f405d467e20525deadca4612a7ecc86987faa98c8865ded4d03a2af"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0001/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0001/report.json",
+        "bytes": 1710,
+        "sha256": "27097efb1f9f4d8912657504a99f501e309b3c4778d9177eb2834a530d7d8f02"
+      }
+    },
+    {
+      "name": "readback-0001",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+        "--publication",
+        "target/m2/stage141-publication-part-0001",
+        "--output",
+        "target/m2/stage141-publication-readback-part-0001"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.17881629196926951,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0001/stdout.bin",
+        "bytes": 55,
+        "sha256": "19b7fc8d1c560f60161d3762b5f90dc83eedcaf0187f8aaa530123d495063747"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0001/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0001/report.json",
+        "bytes": 1303,
+        "sha256": "f736173a83178cb0c1d5581325e8ec2099e506e339f597b58098d1842ff9ac05"
+      }
+    },
+    {
+      "name": "publish-0002",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+        "--selection",
+        "target/m2/stage141-publication-partition-01/selection-0002.json",
+        "--output",
+        "target/m2/stage141-publication-part-0002"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 2.429207583889365,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0002/stdout.bin",
+        "bytes": 211,
+        "sha256": "9dd64eea9d41db6ae4b2967023b3daecb769230301425f341f0dd728172dda13"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0002/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0002/report.json",
+        "bytes": 1706,
+        "sha256": "e714c3dec69d9a290cdc07a0109ed5d743433547e6b2bc05ad168a39282aff20"
+      }
+    },
+    {
+      "name": "readback-0002",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+        "--publication",
+        "target/m2/stage141-publication-part-0002",
+        "--output",
+        "target/m2/stage141-publication-readback-part-0002"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.1285058748908341,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0002/stdout.bin",
+        "bytes": 53,
+        "sha256": "36a31e839266d764dd1ab3c14cd9e50ae804986b76648aab870e2257b49b7724"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0002/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0002/report.json",
+        "bytes": 1295,
+        "sha256": "8bce4c839cb01d7711df77b721a6ffd965231737dfb658e36118ba7ba2eb9997"
+      }
+    },
+    {
+      "name": "publish-0003",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+        "--selection",
+        "target/m2/stage141-publication-partition-01/selection-0003.json",
+        "--output",
+        "target/m2/stage141-publication-part-0003"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 1.9593642498366535,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0003/stdout.bin",
+        "bytes": 210,
+        "sha256": "dc7745a08f5197e1a68f75b53fdf4179c96f3194a5cfef07d55c8c7fa9f92247"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0003/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0003/report.json",
+        "bytes": 1706,
+        "sha256": "12c860337a44f1ecd595e92ffbb0ba47edb7958d1ccefb4a23e05822a40e0258"
+      }
+    },
+    {
+      "name": "readback-0003",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+        "--publication",
+        "target/m2/stage141-publication-part-0003",
+        "--output",
+        "target/m2/stage141-publication-readback-part-0003"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.121501374989748,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0003/stdout.bin",
+        "bytes": 54,
+        "sha256": "2eb0fe26442b565004f86b6d63f2c5461a2e9629a4f5499d471e422127294734"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0003/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0003/report.json",
+        "bytes": 1296,
+        "sha256": "d54469b7e0f45764d1dfca49340e1193f8624004b560542fad4e432882bae165"
+      }
+    },
+    {
+      "name": "publish-0004",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+        "--selection",
+        "target/m2/stage141-publication-partition-01/selection-0004.json",
+        "--output",
+        "target/m2/stage141-publication-part-0004"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 1.4055277919396758,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0004/stdout.bin",
+        "bytes": 210,
+        "sha256": "3ab194aa49a0d6cc178be27382309d060ad122b756691955383c356cb3355baf"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0004/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0004/report.json",
+        "bytes": 1711,
+        "sha256": "84a851ac74c52eba32e2a3003e3dfbbbd21b076661157923095622918d80a1d5"
+      }
+    },
+    {
+      "name": "readback-0004",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+        "--publication",
+        "target/m2/stage141-publication-part-0004",
+        "--output",
+        "target/m2/stage141-publication-readback-part-0004"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.17593762511387467,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0004/stdout.bin",
+        "bytes": 55,
+        "sha256": "67c7c072558820b5ff3161a7a63c30bd791626cc0a290c8dca5082e5138a031c"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0004/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0004/report.json",
+        "bytes": 1302,
+        "sha256": "7011b60d55945cd698ff7ac5aec2534b664adf69a7db98123262c68fe91aa866"
+      }
+    },
+    {
+      "name": "publish-0005",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+        "--selection",
+        "target/m2/stage141-publication-partition-01/selection-0005.json",
+        "--output",
+        "target/m2/stage141-publication-part-0005"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.18232004204764962,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0005/stdout.bin",
+        "bytes": 209,
+        "sha256": "95bfaf990c29e2b090c56ead0a73d1dd770409eda51b44280599af52c5ccedbb"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0005/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0005/report.json",
+        "bytes": 1699,
+        "sha256": "ca8f422473747221bc447ea33bf237180c49cb9a5ffa7a9c99da8171c7956ab0"
+      }
+    },
+    {
+      "name": "readback-0005",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+        "--publication",
+        "target/m2/stage141-publication-part-0005",
+        "--output",
+        "target/m2/stage141-publication-readback-part-0005"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.06197258271276951,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0005/stdout.bin",
+        "bytes": 53,
+        "sha256": "da998c220a580d58cda15d55a3ca534515bac0b364327e07284281841e7545db"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0005/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0005/report.json",
+        "bytes": 1293,
+        "sha256": "d7d9eef2c12e6cf9ca23374b97d09d054de69c03af702dabf8c907bdf924c9a1"
+      }
+    },
+    {
+      "name": "publish-0006",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+        "--selection",
+        "target/m2/stage141-publication-partition-01/selection-0006.json",
+        "--output",
+        "target/m2/stage141-publication-part-0006"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 1.3066521668806672,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0006/stdout.bin",
+        "bytes": 210,
+        "sha256": "fcb53876d951d89f0e82b7a089845db847408749c75b45518e3a2166731703bb"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0006/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0006/report.json",
+        "bytes": 1705,
+        "sha256": "80abc5166701077ab7832aeaa81311ce34b920959dc01fd6c473bce6a0d37b85"
+      }
+    },
+    {
+      "name": "readback-0006",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+        "--publication",
+        "target/m2/stage141-publication-part-0006",
+        "--output",
+        "target/m2/stage141-publication-readback-part-0006"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.16425558272749186,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0006/stdout.bin",
+        "bytes": 53,
+        "sha256": "808cdff9c47e4d5d56149fdb5d0f75daf90688141760af2f50ac1e4cab62cf40"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0006/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0006/report.json",
+        "bytes": 1292,
+        "sha256": "3636cd189718560377739ec7a4d00744946dd01404a08a6b9b26b59d4034f5bf"
+      }
+    },
+    {
+      "name": "publish-0007",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+        "--selection",
+        "target/m2/stage141-publication-partition-01/selection-0007.json",
+        "--output",
+        "target/m2/stage141-publication-part-0007"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 1.3080104161053896,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0007/stdout.bin",
+        "bytes": 210,
+        "sha256": "5b1bd7585bd481d59dd803aa02a2efa67f93d7ebe68810f07c9c072e211e562d"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0007/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0007/report.json",
+        "bytes": 1705,
+        "sha256": "f81d9d5594a9de745dd5ed11a95bc7a8c930ae03dc96717ed3fe854344ae53df"
+      }
+    },
+    {
+      "name": "readback-0007",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+        "--publication",
+        "target/m2/stage141-publication-part-0007",
+        "--output",
+        "target/m2/stage141-publication-readback-part-0007"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.16935887467116117,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0007/stdout.bin",
+        "bytes": 53,
+        "sha256": "808cdff9c47e4d5d56149fdb5d0f75daf90688141760af2f50ac1e4cab62cf40"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0007/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0007/report.json",
+        "bytes": 1292,
+        "sha256": "e3106f6ecd43cebfe3f9746d36ee4a7428a7055fd1d7d2ac3aa711ef656ecd35"
+      }
+    },
+    {
+      "name": "publish-0008",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+        "--selection",
+        "target/m2/stage141-publication-partition-01/selection-0008.json",
+        "--output",
+        "target/m2/stage141-publication-part-0008"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 1.1338638332672417,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0008/stdout.bin",
+        "bytes": 210,
+        "sha256": "c5e04ec8ae588a56eaf64b7926a4395634a07b859e4173d68dcfb4c35c20f8cf"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0008/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0008/report.json",
+        "bytes": 1708,
+        "sha256": "18731c9052ed9af94eff5885915012808e5a9afdec6bf5ab0d5170a214e985e7"
+      }
+    },
+    {
+      "name": "readback-0008",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+        "--publication",
+        "target/m2/stage141-publication-part-0008",
+        "--output",
+        "target/m2/stage141-publication-readback-part-0008"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.17206891672685742,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0008/stdout.bin",
+        "bytes": 55,
+        "sha256": "6233b2a9ce77b1c7bd9b7944f77ac3b109bfb510477b29e8781914af56105c3e"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0008/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0008/report.json",
+        "bytes": 1301,
+        "sha256": "87482e36a32fc5458a23f3e9b93d6edd9daf17c72d75f7213a6c2eda569612ff"
+      }
+    },
+    {
+      "name": "publish-0009",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+        "--selection",
+        "target/m2/stage141-publication-partition-01/selection-0009.json",
+        "--output",
+        "target/m2/stage141-publication-part-0009"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 2.441449458245188,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0009/stdout.bin",
+        "bytes": 211,
+        "sha256": "cf90d43488042c44484289743fa613780fadbf3c3adf70d7841fa37ce9f2639f"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0009/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0009/report.json",
+        "bytes": 1706,
+        "sha256": "235e8ca9dfe5124fdc855641b7ad759e769cb977b18b7b68931cabb3f6bd11e4"
+      }
+    },
+    {
+      "name": "readback-0009",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+        "--publication",
+        "target/m2/stage141-publication-part-0009",
+        "--output",
+        "target/m2/stage141-publication-readback-part-0009"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.1385026671923697,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0009/stdout.bin",
+        "bytes": 53,
+        "sha256": "36a31e839266d764dd1ab3c14cd9e50ae804986b76648aab870e2257b49b7724"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0009/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0009/report.json",
+        "bytes": 1294,
+        "sha256": "c65809fb833d9ae44265dc24d3b027e2683565b9bcde2318c822c726565c735d"
+      }
+    },
+    {
+      "name": "publish-0010",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+        "--selection",
+        "target/m2/stage141-publication-partition-01/selection-0010.json",
+        "--output",
+        "target/m2/stage141-publication-part-0010"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 2.436303125228733,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0010/stdout.bin",
+        "bytes": 211,
+        "sha256": "07be8d248c15746e7dc439fef015afbf37685f9860bc3f64b6691dd15e7f32af"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0010/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0010/report.json",
+        "bytes": 1706,
+        "sha256": "27c3713c0445c4dbc5b133de636d6601092c675afa8d9936708bf4449f0d1f7b"
+      }
+    },
+    {
+      "name": "readback-0010",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+        "--publication",
+        "target/m2/stage141-publication-part-0010",
+        "--output",
+        "target/m2/stage141-publication-readback-part-0010"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.13132862513884902,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0010/stdout.bin",
+        "bytes": 53,
+        "sha256": "36a31e839266d764dd1ab3c14cd9e50ae804986b76648aab870e2257b49b7724"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0010/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0010/report.json",
+        "bytes": 1295,
+        "sha256": "be13b48bf99e11495a293a67d294a94fa77fab49fb0fa232e4b2a2c41da7197f"
+      }
+    },
+    {
+      "name": "publish-0011",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+        "--selection",
+        "target/m2/stage141-publication-partition-01/selection-0011.json",
+        "--output",
+        "target/m2/stage141-publication-part-0011"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 2.5386396246030927,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0011/stdout.bin",
+        "bytes": 211,
+        "sha256": "e58ed0a7cec64c2411b999a47b25b299ca0ddbcb7c3deaee42ab844b81b32402"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0011/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0011/report.json",
+        "bytes": 1706,
+        "sha256": "bca5a9600c7ad517ac433fb2cbb27e8c50c28bbc2a00c67dd46e96b0f81510ae"
+      }
+    },
+    {
+      "name": "readback-0011",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+        "--publication",
+        "target/m2/stage141-publication-part-0011",
+        "--output",
+        "target/m2/stage141-publication-readback-part-0011"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.13527804194018245,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0011/stdout.bin",
+        "bytes": 53,
+        "sha256": "478b762e186aee0b84481bf01850e132397d7025d1199e84b9b954778fea0902"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0011/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0011/report.json",
+        "bytes": 1295,
+        "sha256": "f1004f6a3155337a97cf791099d49e28affcee82c58dc832c4497d1825c449d4"
+      }
+    },
+    {
+      "name": "publish-0012",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+        "--selection",
+        "target/m2/stage141-publication-partition-01/selection-0012.json",
+        "--output",
+        "target/m2/stage141-publication-part-0012"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 2.4345079171471298,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0012/stdout.bin",
+        "bytes": 211,
+        "sha256": "18449d485ffd178afb4a908ffb149b582b34a0339256c7b2d5ff952fc3aa0d9a"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0012/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0012/report.json",
+        "bytes": 1707,
+        "sha256": "144e6aba7608ed00e002a2d3af48a0602fb581014db2d7e599f4f9c8aee80fbb"
+      }
+    },
+    {
+      "name": "readback-0012",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+        "--publication",
+        "target/m2/stage141-publication-part-0012",
+        "--output",
+        "target/m2/stage141-publication-readback-part-0012"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.12945120921358466,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0012/stdout.bin",
+        "bytes": 53,
+        "sha256": "36a31e839266d764dd1ab3c14cd9e50ae804986b76648aab870e2257b49b7724"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0012/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0012/report.json",
+        "bytes": 1296,
+        "sha256": "c3282d8b1fcd823edc402e0668112d266f36cba1bf6e2b6faf97ae69a2edea07"
+      }
+    },
+    {
+      "name": "publish-0013",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+        "--selection",
+        "target/m2/stage141-publication-partition-01/selection-0013.json",
+        "--output",
+        "target/m2/stage141-publication-part-0013"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 2.420586416963488,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0013/stdout.bin",
+        "bytes": 211,
+        "sha256": "e085c020e08d2efe29e55f238c4ea350be7bfc165718b84866bb9fc9961567f6"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0013/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0013/report.json",
+        "bytes": 1705,
+        "sha256": "65a49b8cf8cb6c24f4b3382d62d3d9058d948629c67a1a3dc458efcc86c3d0cf"
+      }
+    },
+    {
+      "name": "readback-0013",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+        "--publication",
+        "target/m2/stage141-publication-part-0013",
+        "--output",
+        "target/m2/stage141-publication-readback-part-0013"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.1289591253735125,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0013/stdout.bin",
+        "bytes": 53,
+        "sha256": "36a31e839266d764dd1ab3c14cd9e50ae804986b76648aab870e2257b49b7724"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0013/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0013/report.json",
+        "bytes": 1295,
+        "sha256": "671feb1987fcbb0b9fe781032e4ff9187d3995d1e9f38f376813d71051239077"
+      }
+    },
+    {
+      "name": "publish-0014",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+        "--selection",
+        "target/m2/stage141-publication-partition-01/selection-0014.json",
+        "--output",
+        "target/m2/stage141-publication-part-0014"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 1.9241884578950703,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0014/stdout.bin",
+        "bytes": 210,
+        "sha256": "426970a0aaca791fcf56843b661649cb0d2719b19346c3e6595b2a553c1d6ec6"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0014/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0014/report.json",
+        "bytes": 1706,
+        "sha256": "eea349462602c8329654745ab8467d29813a9ee3053868920d70832e02e32d50"
+      }
+    },
+    {
+      "name": "readback-0014",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+        "--publication",
+        "target/m2/stage141-publication-part-0014",
+        "--output",
+        "target/m2/stage141-publication-readback-part-0014"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.1274697077460587,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0014/stdout.bin",
+        "bytes": 54,
+        "sha256": "2270108c1ce48352782014ebe2bd9cea5ae6d44ea31fdf654d3063d94e46d8dc"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0014/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0014/report.json",
+        "bytes": 1296,
+        "sha256": "7fca9bd4a757a15b60687a656f30824b3e6dc2bb6fc075cfa72a5f5adbbd820c"
+      }
+    },
+    {
+      "name": "publish-0015",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+        "--selection",
+        "target/m2/stage141-publication-partition-01/selection-0015.json",
+        "--output",
+        "target/m2/stage141-publication-part-0015"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 1.3162459577433765,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0015/stdout.bin",
+        "bytes": 210,
+        "sha256": "29993d79554016edb321dd4a5d0ee34d3b59dc8ddc8da3afc58d46c9103dd901"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0015/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0015/report.json",
+        "bytes": 1705,
+        "sha256": "6ab0c6ca44f67e71a544bbb82640ce1b24378330b766115e87074b7c21b93ec8"
+      }
+    },
+    {
+      "name": "readback-0015",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+        "--publication",
+        "target/m2/stage141-publication-part-0015",
+        "--output",
+        "target/m2/stage141-publication-readback-part-0015"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.1352203330025077,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0015/stdout.bin",
+        "bytes": 54,
+        "sha256": "d7da0c04087728dc28139f3936c1d2f6c00caaa164576d80541e936fc58001c4"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0015/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0015/report.json",
+        "bytes": 1298,
+        "sha256": "59b3447d7ebfe2ab22aabcaa9a5a887071f7e26c7d0e8a6a8ada1659a0a9177f"
+      }
+    },
+    {
+      "name": "publish-0016",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+        "--selection",
+        "target/m2/stage141-publication-partition-01/selection-0016.json",
+        "--output",
+        "target/m2/stage141-publication-part-0016"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.7557294168509543,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0016/stdout.bin",
+        "bytes": 210,
+        "sha256": "8bd79aa1ef228bfb2d47394298fd24759f8b25b1897453d4cbba7df2f65a39d8"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0016/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0016/report.json",
+        "bytes": 1707,
+        "sha256": "1aebf4c572ca7cc46fda1fdbccb39515660f0d8e90ecdffa85143fe12851028b"
+      }
+    },
+    {
+      "name": "readback-0016",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+        "--publication",
+        "target/m2/stage141-publication-part-0016",
+        "--output",
+        "target/m2/stage141-publication-readback-part-0016"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.1280668331310153,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0016/stdout.bin",
+        "bytes": 54,
+        "sha256": "601082ad836fc4fbcdcc007431e0b3568e8a77e1eb3de5362f2e897f4215b6c0"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0016/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0016/report.json",
+        "bytes": 1298,
+        "sha256": "09cb5376180747c75aadc24e2546f0b81d657193924910e26236ec29a46b466b"
+      }
+    },
+    {
+      "name": "publish-0017",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+        "--selection",
+        "target/m2/stage141-publication-partition-01/selection-0017.json",
+        "--output",
+        "target/m2/stage141-publication-part-0017"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 2.5119287497363985,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0017/stdout.bin",
+        "bytes": 210,
+        "sha256": "3de8c4f8228a308854490ca1f09a6748bd23913ca3e77cfd7f29a93c91a670fc"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0017/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0017/report.json",
+        "bytes": 1706,
+        "sha256": "15599bedf9900c69312ca07c4b7a22f87d3fac71553632e09b492e1e44b81f4d"
+      }
+    },
+    {
+      "name": "readback-0017",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+        "--publication",
+        "target/m2/stage141-publication-part-0017",
+        "--output",
+        "target/m2/stage141-publication-readback-part-0017"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.14513175003230572,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0017/stdout.bin",
+        "bytes": 54,
+        "sha256": "f8656cf5dd1895550bc4385370f3a37e55132a58bfcb9ba11ff53fcc6e5d65ea"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0017/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0017/report.json",
+        "bytes": 1298,
+        "sha256": "f96683ee97575d75e4549d2c576e59ed6ffa647d00acb88a4eddae2a932f91b2"
+      }
+    },
+    {
+      "name": "publish-0018",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+        "--selection",
+        "target/m2/stage141-publication-partition-01/selection-0018.json",
+        "--output",
+        "target/m2/stage141-publication-part-0018"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 2.204741541761905,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0018/stdout.bin",
+        "bytes": 210,
+        "sha256": "f3df4a5c8ac643b348dcfc7f5acb285e414f9349b70f56d72439d718456f8928"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0018/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0018/report.json",
+        "bytes": 1707,
+        "sha256": "599357ff3669f065c4a3a3d2d31c363d3187a2d57c6096612324e270fb98e4f6"
+      }
+    },
+    {
+      "name": "readback-0018",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+        "--publication",
+        "target/m2/stage141-publication-part-0018",
+        "--output",
+        "target/m2/stage141-publication-readback-part-0018"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.13787966594099998,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0018/stdout.bin",
+        "bytes": 54,
+        "sha256": "dfad217b928921016470bfebd667dc1ca1c3c62b1469e997f36ea768dc2c2054"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0018/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0018/report.json",
+        "bytes": 1299,
+        "sha256": "7866ce12e21e291ff8f7c364774dc1511e4561358525cbd0fb814c2b6ae1bcf8"
+      }
+    },
+    {
+      "name": "publish-0019",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+        "--selection",
+        "target/m2/stage141-publication-partition-01/selection-0019.json",
+        "--output",
+        "target/m2/stage141-publication-part-0019"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 2.5048201251775026,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0019/stdout.bin",
+        "bytes": 211,
+        "sha256": "ccf41a9bb14ab05319be2ab82e7f7803885d480f2f763f1c7b7b1bc1635d3c92"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0019/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0019/report.json",
+        "bytes": 1705,
+        "sha256": "a2562f9cc32f23d425d3b4626e4361357995631de33bf2b857fafff0394f7a85"
+      }
+    },
+    {
+      "name": "readback-0019",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+        "--publication",
+        "target/m2/stage141-publication-part-0019",
+        "--output",
+        "target/m2/stage141-publication-readback-part-0019"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.129163374658674,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0019/stdout.bin",
+        "bytes": 53,
+        "sha256": "36a31e839266d764dd1ab3c14cd9e50ae804986b76648aab870e2257b49b7724"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0019/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0019/report.json",
+        "bytes": 1294,
+        "sha256": "7418582e2edf50c8e2bea2acb8a1065acfb8be42b5b85bc0fe782b2bf51b5eab"
+      }
+    },
+    {
+      "name": "publish-0020",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+        "--selection",
+        "target/m2/stage141-publication-partition-01/selection-0020.json",
+        "--output",
+        "target/m2/stage141-publication-part-0020"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 2.750092249829322,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0020/stdout.bin",
+        "bytes": 210,
+        "sha256": "821895df6b1f2abe5fdcb9dd86fba053593756b602404d0ed3a7cbeb3705b8f5"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/publish-0020/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0020/report.json",
+        "bytes": 1711,
+        "sha256": "d074378d52e19b148f649447ec3805724c18c156ab5dd21c4f1f298e32b25230"
+      }
+    },
+    {
+      "name": "readback-0020",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+        "--publication",
+        "target/m2/stage141-publication-part-0020",
+        "--output",
+        "target/m2/stage141-publication-readback-part-0020"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.18448479194194078,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0020/stdout.bin",
+        "bytes": 55,
+        "sha256": "d9ac0ec034b8a11f8f9e3d626768bd6a69cd45d84d66d027fcc135111104d786"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/readback-0020/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0020/report.json",
+        "bytes": 1301,
+        "sha256": "00f20c14959631798bc9743d0b3aad10103777baa6e5b4e922e666b197801ea4"
+      }
+    },
+    {
+      "name": "verify-parts",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/verify-parts.py",
+        "--partition",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/report.json",
+        "--pair",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0001",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0001",
+        "--pair",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0002",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0002",
+        "--pair",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0003",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0003",
+        "--pair",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0004",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0004",
+        "--pair",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0005",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0005",
+        "--pair",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0006",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0006",
+        "--pair",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0007",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0007",
+        "--pair",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0008",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0008",
+        "--pair",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0009",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0009",
+        "--pair",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0010",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0010",
+        "--pair",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0011",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0011",
+        "--pair",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0012",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0012",
+        "--pair",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0013",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0013",
+        "--pair",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0014",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0014",
+        "--pair",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0015",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0015",
+        "--pair",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0016",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0016",
+        "--pair",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0017",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0017",
+        "--pair",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0018",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0018",
+        "--pair",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0019",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0019",
+        "--pair",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-part-0020",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-readback-part-0020",
+        "--output",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-parts-readback-01"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "elapsed_seconds": 0.18310808297246695,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/verify-parts/stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-01/verify-parts/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-parts-readback-01/report.json",
+        "bytes": 10200,
+        "sha256": "cc7272b0aef76a05a75aaec5b9e7ac6fa6892fd3897dde576417a65e37be266a"
+      }
+    }
+  ],
+  "scope": "Sequential finite publication and independent readbacks. Final published-copy verification and Git blob checks remain separate.",
+  "started_epoch": 1793670632.6883998,
+  "index": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/report.json",
+    "bytes": 673349,
+    "sha256": "bf2be71b50e09b123643f04a47e602024e083c440a21779cc3fee9b96dc8a997"
+  },
+  "inputs_before": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/report.json",
+      "bytes": 673349,
+      "sha256": "bf2be71b50e09b123643f04a47e602024e083c440a21779cc3fee9b96dc8a997"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-finalize-01/selection.json",
+      "bytes": 32083,
+      "sha256": "5991379e19c925df14593e9e805f35b93a0198f616795709d5cb6e5ea5dca168"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-prep-01/run.py",
+      "bytes": 5814,
+      "sha256": "8cdc16251fc0edd8cc973b8ff3ba42c965cd32e9f728f2a194d553e2d8418f89"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+      "bytes": 15696,
+      "sha256": "fcf59b89b020ea20b42eac094ceb7703f3b5fe000da4ff176318e57655ca672d"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+      "bytes": 9205,
+      "sha256": "f60ba8766b6a768ceda14644127a70db71771f22af42c3aa27aba1e92b79769f"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/verify-parts.py",
+      "bytes": 3124,
+      "sha256": "3233098a3e70e00b976e0b387c741d711e9787a88e8341471031c6e3504b89f8"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0001.json",
+      "bytes": 222636,
+      "sha256": "02d137ed854fb70a0034b4a6148471dfc980d6ef9ff15b7f9da6174a14931686"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0002.json",
+      "bytes": 11421,
+      "sha256": "df34381abb157ee74e15a524059c26e2fb638665855860d4566347205018a4c8"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0003.json",
+      "bytes": 32246,
+      "sha256": "751bc853b7a2f5fd5072e153ffe659acdc9ab4b44e8ee63161f8397a50671a74"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0004.json",
+      "bytes": 278913,
+      "sha256": "5b6878c114c31aa8464e2932ab9a735141fc604ba341a9406ff2845c838f91f7"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0005.json",
+      "bytes": 24626,
+      "sha256": "e82d1a21dfc41b03cbf502e289fda1a2a2573cc5d2a8fd865c92ccd7133c4aa4"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0006.json",
+      "bytes": 11052,
+      "sha256": "ef8cae18bbdaf413c5368f045aab8408221e1efd0af628ee73292c82fe43ee55"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0007.json",
+      "bytes": 11053,
+      "sha256": "64c8eb04031b7c3a973c37d36c6ad9af3642d6c4972fb544e3983f1bef1f969a"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0008.json",
+      "bytes": 258371,
+      "sha256": "d88cc11642a39148347b75a725608872c8400fdab3b294d9317126a34fff930c"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0009.json",
+      "bytes": 11428,
+      "sha256": "3abc3248e9c416fe83cb08312eff4565085250435683154f1eda29fd6869e406"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0010.json",
+      "bytes": 11416,
+      "sha256": "6cd23e97003d2ec2022f3087379159a989b7771f3292f3b8ded0985dbc241814"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0011.json",
+      "bytes": 11576,
+      "sha256": "282247656bfbdaac51c7d6c96c4bf9665afa9486ca1d3bb1d5a3a9758c6a86b8"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0012.json",
+      "bytes": 11421,
+      "sha256": "2d421435ffd3f891397f0fe9fd81671824d2d973961b1ff9bb8bf62e7ab78c37"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0013.json",
+      "bytes": 11417,
+      "sha256": "2d106253786f2d1e0d0b6c9f0642a7fda3f834a9183d2cc104662e7b9faaee3e"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0014.json",
+      "bytes": 26469,
+      "sha256": "2d0c38721ca8be5daafd4b194ed4e07d59d44512eae9f70a91747f241bd7d3de"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0015.json",
+      "bytes": 59413,
+      "sha256": "18ebff502b2aa2b7a30dacefc710bc3591fd3433fedb5e9b32cda4dc1749a846"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0016.json",
+      "bytes": 68002,
+      "sha256": "3e1480f7ddfe4d3b81e344f0a8479e79039cfc3aa70952b68be4bda8635c2828"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0017.json",
+      "bytes": 74828,
+      "sha256": "fc207ae12138dc51a596a3b55c09f6ad71c9b7b74bfa1197d182cd56069f7c48"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0018.json",
+      "bytes": 65477,
+      "sha256": "4b602f2fbc5cde46d5030ebf3c5eb065c35bbcd23e62f31f1354d2dcb37170c9"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0019.json",
+      "bytes": 11461,
+      "sha256": "1a6fbb67fb441f85887fff3c708050f329e88f6722cb60c30671eff44e4944bf"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0020.json",
+      "bytes": 295276,
+      "sha256": "2ed01e6777673d3333e4a6228f1a97675a793d6b127d87eb0e934c3d81b15649"
+    }
+  ],
+  "head_before": "508a82c35abac3d4c73e4f59a6fdfd076aba51b4",
+  "expected_parts": 20,
+  "inputs_after": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/report.json",
+      "bytes": 673349,
+      "sha256": "bf2be71b50e09b123643f04a47e602024e083c440a21779cc3fee9b96dc8a997"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-finalize-01/selection.json",
+      "bytes": 32083,
+      "sha256": "5991379e19c925df14593e9e805f35b93a0198f616795709d5cb6e5ea5dca168"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-sequence-prep-01/run.py",
+      "bytes": 5814,
+      "sha256": "8cdc16251fc0edd8cc973b8ff3ba42c965cd32e9f728f2a194d553e2d8418f89"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/publish.py",
+      "bytes": 15696,
+      "sha256": "fcf59b89b020ea20b42eac094ceb7703f3b5fe000da4ff176318e57655ca672d"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/readback.py",
+      "bytes": 9205,
+      "sha256": "f60ba8766b6a768ceda14644127a70db71771f22af42c3aa27aba1e92b79769f"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-prep-05/verify-parts.py",
+      "bytes": 3124,
+      "sha256": "3233098a3e70e00b976e0b387c741d711e9787a88e8341471031c6e3504b89f8"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0001.json",
+      "bytes": 222636,
+      "sha256": "02d137ed854fb70a0034b4a6148471dfc980d6ef9ff15b7f9da6174a14931686"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0002.json",
+      "bytes": 11421,
+      "sha256": "df34381abb157ee74e15a524059c26e2fb638665855860d4566347205018a4c8"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0003.json",
+      "bytes": 32246,
+      "sha256": "751bc853b7a2f5fd5072e153ffe659acdc9ab4b44e8ee63161f8397a50671a74"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0004.json",
+      "bytes": 278913,
+      "sha256": "5b6878c114c31aa8464e2932ab9a735141fc604ba341a9406ff2845c838f91f7"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0005.json",
+      "bytes": 24626,
+      "sha256": "e82d1a21dfc41b03cbf502e289fda1a2a2573cc5d2a8fd865c92ccd7133c4aa4"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0006.json",
+      "bytes": 11052,
+      "sha256": "ef8cae18bbdaf413c5368f045aab8408221e1efd0af628ee73292c82fe43ee55"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0007.json",
+      "bytes": 11053,
+      "sha256": "64c8eb04031b7c3a973c37d36c6ad9af3642d6c4972fb544e3983f1bef1f969a"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0008.json",
+      "bytes": 258371,
+      "sha256": "d88cc11642a39148347b75a725608872c8400fdab3b294d9317126a34fff930c"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0009.json",
+      "bytes": 11428,
+      "sha256": "3abc3248e9c416fe83cb08312eff4565085250435683154f1eda29fd6869e406"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0010.json",
+      "bytes": 11416,
+      "sha256": "6cd23e97003d2ec2022f3087379159a989b7771f3292f3b8ded0985dbc241814"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0011.json",
+      "bytes": 11576,
+      "sha256": "282247656bfbdaac51c7d6c96c4bf9665afa9486ca1d3bb1d5a3a9758c6a86b8"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0012.json",
+      "bytes": 11421,
+      "sha256": "2d421435ffd3f891397f0fe9fd81671824d2d973961b1ff9bb8bf62e7ab78c37"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0013.json",
+      "bytes": 11417,
+      "sha256": "2d106253786f2d1e0d0b6c9f0642a7fda3f834a9183d2cc104662e7b9faaee3e"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0014.json",
+      "bytes": 26469,
+      "sha256": "2d0c38721ca8be5daafd4b194ed4e07d59d44512eae9f70a91747f241bd7d3de"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0015.json",
+      "bytes": 59413,
+      "sha256": "18ebff502b2aa2b7a30dacefc710bc3591fd3433fedb5e9b32cda4dc1749a846"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0016.json",
+      "bytes": 68002,
+      "sha256": "3e1480f7ddfe4d3b81e344f0a8479e79039cfc3aa70952b68be4bda8635c2828"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0017.json",
+      "bytes": 74828,
+      "sha256": "fc207ae12138dc51a596a3b55c09f6ad71c9b7b74bfa1197d182cd56069f7c48"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0018.json",
+      "bytes": 65477,
+      "sha256": "4b602f2fbc5cde46d5030ebf3c5eb065c35bbcd23e62f31f1354d2dcb37170c9"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0019.json",
+      "bytes": 11461,
+      "sha256": "1a6fbb67fb441f85887fff3c708050f329e88f6722cb60c30671eff44e4944bf"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-partition-01/selection-0020.json",
+      "bytes": 295276,
+      "sha256": "2ed01e6777673d3333e4a6228f1a97675a793d6b127d87eb0e934c3d81b15649"
+    }
+  ],
+  "head_after": "508a82c35abac3d4c73e4f59a6fdfd076aba51b4",
+  "parts": 20,
+  "aggregate": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage141-publication-parts-readback-01/report.json",
+    "bytes": 10200,
+    "sha256": "cc7272b0aef76a05a75aaec5b9e7ac6fa6892fd3897dde576417a65e37be266a"
+  },
+  "finished_epoch": 1793670674.32004
+}

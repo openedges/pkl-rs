@@ -1,0 +1,4 @@
+import "pkl:jsonnet"
+local renderer = new jsonnet.Renderer { indent = "" }
+result = renderer.renderValue("\b\f\n\r\t\\\u{0085}")
+output { text = result }

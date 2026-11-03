@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Cannot render map with non-string key as Jsonnet.
+Map: Map(1, "x")
+Key: 1
+
+4 | result = r.renderValue(Map(1, "x"))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage140-jsonnet/nonstring-key/main.pkl)
+
+5 | output { text = result }
+                    ^^^^^^
+at main#output.text (file:///stage140-jsonnet/nonstring-key/main.pkl)

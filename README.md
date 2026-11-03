@@ -1,5 +1,7 @@
 # pkl-rs
 
+The Stage141 Jsonnet and XML checkpoint adds shared renderer support and qualifies 21 focused native tests against 172 Java observations, including four retained setup-error controls. Twenty-five original CLI cases matched their complete public channels. The full workspace aggregate records 1,909 passed, zero failed and five ignored across 313 harnesses; 13 nested child passes are excluded. Bounded M1 matched 6,078 results per Native, Node and Chromium target, with 92 Node and 92 browser scenarios. Full M2/API, release-platform and performance requirements remain open. See the [Stage141 report](reports/m2/stage141-jsonnet-xml/README.md) for the evidence and limits.
+
 The Stage139 JSON Parser checkpoint matches 108 Java observations and five registered original CLI cases. Its focused native run passed 47 tests; the full workspace passed 1,886 tests with five ignored across 305 harnesses, excluding 13 nested child passes from the independent aggregate. A bounded M1 run matched 6,078 results per Native, Node and Chromium target. Full M2/API, release-platform and performance requirements remain open. See the [Stage139 report](reports/m2/stage139-json-parser/README.md) for the evidence and limits.
 
 

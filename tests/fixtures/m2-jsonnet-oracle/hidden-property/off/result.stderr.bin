@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Modifier `hidden` is not applicable to object members.
+
+4 | result = r.renderValue(new Dynamic { hidden a = 1; b = 2 })
+                                         ^^^^^^
+at main#result (file:///stage140-jsonnet/hidden-property/main.pkl)

@@ -1,0 +1,5 @@
+import "pkl:xml"
+class Holder { @xml.Property { name = "renamed" } value: Int }
+local renderer = new xml.Renderer {  }
+result = renderer.renderValue(new Holder { value = 2 })
+output { text = result }

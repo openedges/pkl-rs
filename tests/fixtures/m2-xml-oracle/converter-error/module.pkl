@@ -1,0 +1,5 @@
+import "pkl:xml"
+
+local renderer = new xml.Renderer { converters { [Int] = (_) -> throw("converter-failed") } }
+result = renderer.renderValue(1)
+output { text = result }

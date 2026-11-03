@@ -45,11 +45,13 @@ mod glob_pattern;
 mod glob_traversal;
 mod guest_exceptions;
 mod json_parser;
+mod jsonnet;
 mod modules;
 mod null;
 mod query_lifecycle;
 mod session_expressions;
 mod stdlib_modules;
+mod xml;
 pub use session_expressions::{SessionExpressionError, compile_session_expression};
 mod frame_transformation;
 pub(crate) mod identity;
@@ -77,6 +79,8 @@ use typecheck::{TypeDestination, TypeRun};
 #[derive(Clone, Debug)]
 pub enum Instruction {
     LoadRefModule,
+    LoadJsonnetModule,
+    LoadXmlModule,
     ReflectCall(reflection::Operation),
     /// Execute the authored pkl:json Parser.parse external body.
     JsonParse,
@@ -99,6 +103,12 @@ pub enum Instruction {
     EncodeUtf8,
     OutputRenderer,
     RenderPcf {
+        document: bool,
+    },
+    RenderXml {
+        document: bool,
+    },
+    RenderJsonnet {
         document: bool,
     },
     RenderJson {
@@ -4625,6 +4635,10 @@ impl Vm {
         // still starts in the ordinary module initializer and can yield there.
         let result = if matches!(instruction, Instruction::LoadBaseModule) {
             self.import_stdlib("pkl:base").map(|_| ())
+        } else if matches!(instruction, Instruction::LoadXmlModule) {
+            self.import_stdlib("pkl:xml").map(|_| ())
+        } else if matches!(instruction, Instruction::LoadJsonnetModule) {
+            self.import_stdlib("pkl:jsonnet").map(|_| ())
         } else if matches!(instruction, Instruction::LoadRefModule) {
             self.import_stdlib("pkl:ref").map(|_| ())
         } else if matches!(
@@ -4747,6 +4761,12 @@ impl Vm {
             Instruction::OutputRenderer => self.output_renderer()?,
             Instruction::RenderPcf { document } => {
                 self.begin_render(document, rendering::Format::Pcf)?
+            }
+            Instruction::RenderXml { document } => {
+                self.begin_xml_render(document)?;
+            }
+            Instruction::RenderJsonnet { document } => {
+                self.begin_jsonnet_render(document)?;
             }
             Instruction::RenderJson { document } => {
                 self.begin_render(document, rendering::Format::Json)?
@@ -4910,7 +4930,10 @@ impl Vm {
             Instruction::GuestCatch { or_null } => {
                 self.begin_guest_catch(or_null)?;
             }
-            Instruction::LoadBaseModule | Instruction::LoadRefModule => {
+            Instruction::LoadBaseModule
+            | Instruction::LoadRefModule
+            | Instruction::LoadJsonnetModule
+            | Instruction::LoadXmlModule => {
                 unreachable!("bundled module preparation is dispatched before this frame")
             }
 
@@ -8133,6 +8156,32 @@ impl Compiler<'_> {
                     && self.member == "#Parser.parse"
                 {
                     output.push(Instruction::JsonParse);
+                } else if self
+                    .source
+                    .as_ref()
+                    .is_some_and(|source| source.uri == "pkl:jsonnet")
+                    && self.resolved.standard_library
+                    && matches!(
+                        self.member.as_str(),
+                        Some("#Renderer.renderDocument" | "#Renderer.renderValue")
+                    )
+                {
+                    output.push(Instruction::RenderJsonnet {
+                        document: self.member == "#Renderer.renderDocument",
+                    });
+                } else if self
+                    .source
+                    .as_ref()
+                    .is_some_and(|source| source.uri == "pkl:xml")
+                    && self.resolved.standard_library
+                    && matches!(
+                        self.member.as_str(),
+                        Some("#Renderer.renderDocument" | "#Renderer.renderValue")
+                    )
+                {
+                    output.push(Instruction::RenderXml {
+                        document: self.member == "#Renderer.renderDocument",
+                    });
                 } else {
                     output.push(Instruction::AbstractMember {
                         name: self.member.clone(),

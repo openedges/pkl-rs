@@ -1,0 +1,5 @@
+import "pkl:jsonnet"
+
+local r = new jsonnet.Renderer {  }
+result = r.renderValue(Map("normal", 1, "if", 2, "_x9", 3, "x-y", 4, "é", 5))
+output { text = result }

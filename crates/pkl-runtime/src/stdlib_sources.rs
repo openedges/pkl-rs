@@ -42,6 +42,32 @@ pub(crate) fn test() -> Arc<RuntimeSource> {
         .clone()
 }
 
+pub(crate) fn xml() -> Arc<RuntimeSource> {
+    static SOURCE: OnceLock<Arc<RuntimeSource>> = OnceLock::new();
+    SOURCE
+        .get_or_init(|| {
+            Arc::new(RuntimeSource {
+                text: include_str!("stdlib/xml.pkl").into(),
+                uri: "pkl:xml".into(),
+                module_name: "pkl.xml".into(),
+            })
+        })
+        .clone()
+}
+
+pub(crate) fn jsonnet() -> Arc<RuntimeSource> {
+    static SOURCE: OnceLock<Arc<RuntimeSource>> = OnceLock::new();
+    SOURCE
+        .get_or_init(|| {
+            Arc::new(RuntimeSource {
+                text: include_str!("stdlib/jsonnet.pkl").into(),
+                uri: "pkl:jsonnet".into(),
+                module_name: "pkl.jsonnet".into(),
+            })
+        })
+        .clone()
+}
+
 pub(crate) fn json() -> Arc<RuntimeSource> {
     static SOURCE: OnceLock<Arc<RuntimeSource>> = OnceLock::new();
     SOURCE
@@ -111,6 +137,26 @@ pub(crate) fn semver() -> Arc<RuntimeSource> {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn bundled_xml_source_matches_the_pinned_checkout() {
+        let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../../external/pkl/stdlib/xml.pkl");
+        assert_eq!(
+            include_bytes!("stdlib/xml.pkl").as_slice(),
+            std::fs::read(path).unwrap()
+        );
+    }
+
+    #[test]
+    fn bundled_jsonnet_source_matches_the_pinned_checkout() {
+        let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../../external/pkl/stdlib/jsonnet.pkl");
+        assert_eq!(
+            include_bytes!("stdlib/jsonnet.pkl").as_slice(),
+            std::fs::read(path).unwrap()
+        );
+    }
+
     #[test]
     fn bundled_semver_source_matches_the_pinned_checkout() {
         let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))

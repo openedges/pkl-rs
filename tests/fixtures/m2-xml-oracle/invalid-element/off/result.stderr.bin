@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Invalid XML 1.0 element name: `bad name`
+
+4 | result = renderer.renderValue(xml.Element("bad name"))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage141-xml/invalid-element/main.pkl)
+
+5 | output { text = result }
+                    ^^^^^^
+at main#output.text (file:///stage141-xml/invalid-element/main.pkl)

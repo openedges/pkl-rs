@@ -7,6 +7,8 @@ use crate::heap::{CollectionKind, CollectionMember, CollectionMemberKind};
 pub(super) enum Format {
     Pcf,
     Json,
+    Jsonnet,
+    Xml,
     Properties,
     Plist,
     Yaml,
@@ -16,6 +18,8 @@ impl Format {
         match self {
             Self::Pcf => "Pcf",
             Self::Json => "JSON",
+            Self::Jsonnet => "Jsonnet",
+            Self::Xml => "XML",
             Self::Properties => "Properties",
             Self::Plist => "XML property list",
             Self::Yaml => "YAML",
@@ -23,7 +27,12 @@ impl Format {
     }
 }
 
+enum XmlMembers {
+    Attributes { name: PklString },
+    Elements,
+}
 struct Members {
+    xml: Option<XmlMembers>,
     path: Vec<PathPart>,
     receiver: ObjectId,
     members: Vec<collections::RenderMember>,
@@ -58,6 +67,11 @@ struct PropertyRun {
     step: usize,
 }
 enum Task {
+    Xml(XmlTask),
+    JsonnetKey {
+        key: Value,
+        depth: usize,
+    },
     PlistKey {
         key: Value,
         depth: usize,
@@ -105,6 +119,17 @@ enum Task {
     },
 }
 enum Await {
+    XmlRead {
+        receiver: ObjectId,
+        path: Vec<PathPart>,
+        hint: bool,
+    },
+    JsonnetWrapper {
+        receiver: ObjectId,
+        path: Vec<PathPart>,
+        depth: usize,
+        import_str: bool,
+    },
     PlistKey {
         receiver: ObjectId,
         depth: usize,
@@ -146,6 +171,7 @@ pub(super) struct RenderRun {
     properties_document: bool,
     yaml: Option<super::yaml::Emitter>,
     yaml_stream: bool,
+    xml_line: usize,
     custom: bool,
     started: bool,
     converters: Converters,
@@ -159,7 +185,12 @@ impl RenderRun {
         roots.extend(self.options.iter().cloned());
         roots.extend(self.active.iter().copied().map(Value::Object));
         self.converters.roots(roots);
-        if let Some(Await::Directive { receiver, path }) = &self.await_ {
+        if let Some(
+            Await::Directive { receiver, path }
+            | Await::JsonnetWrapper { receiver, path, .. }
+            | Await::XmlRead { receiver, path, .. },
+        ) = &self.await_
+        {
             roots.push(Value::Object(*receiver));
             path_roots(path, roots);
         }
@@ -168,7 +199,10 @@ impl RenderRun {
         }
         for task in &self.tasks {
             match task {
-                Task::YamlKey(key) | Task::PlistKey { key, .. } => roots.push(key.clone()),
+                Task::Xml(task) => task.roots(roots),
+                Task::YamlKey(key) | Task::PlistKey { key, .. } | Task::JsonnetKey { key, .. } => {
+                    roots.push(key.clone())
+                }
                 Task::PropertiesKey { path, .. } => path_roots(path, roots),
                 Task::PropertiesDirective { receiver, path } => {
                     roots.push(Value::Object(*receiver));
@@ -355,7 +389,15 @@ impl Vm {
                 continue;
             };
             let path = match &run.await_ {
-                Some(Await::Directive { receiver, path }) if *receiver == force.receiver => {
+                Some(
+                    Await::Directive { receiver, path }
+                    | Await::JsonnetWrapper { receiver, path, .. }
+                    | Await::XmlRead {
+                        receiver,
+                        path,
+                        hint: true,
+                    },
+                ) if *receiver == force.receiver => {
                     // VmUndefinedValueException.fillInHint appends the missing
                     // member key even when the receiver is a RenderDirective.
                     let mut path = path.clone();
@@ -366,8 +408,15 @@ impl Vm {
                     vec![PathPart::Property(force.name.clone())]
                 }
                 Some(Await::Shallow) => {
-                    let Some(Task::OpenObject { receiver, path, .. }) = run.tasks.last() else {
-                        continue;
+                    let (receiver, path) = match run.tasks.last() {
+                        Some(Task::OpenObject { receiver, path, .. }) => (receiver, path),
+                        Some(Task::Xml(XmlTask {
+                            value: Value::Object(receiver),
+                            path,
+                            action: XmlAction::CheckedObject { .. },
+                            ..
+                        })) => (receiver, path),
+                        _ => continue,
                     };
                     if *receiver != force.receiver {
                         continue;
@@ -453,13 +502,28 @@ impl Vm {
         }
         None
     }
+    pub(super) fn begin_jsonnet_render(&mut self, document: bool) -> Result<(), RuntimeError> {
+        // Authored methods may capture lexical locals before their argument.
+        let root = self
+            .frames
+            .last()
+            .and_then(|frame| frame.environment.locals.last())
+            .cloned()
+            .ok_or_else(|| invalid("Jsonnet renderer argument"))?;
+        self.stack.push(root);
+        self.begin_render(document, Format::Jsonnet)
+    }
     pub(super) fn begin_render(
         &mut self,
         document: bool,
         format: Format,
     ) -> Result<(), RuntimeError> {
         let root = self.pop()?;
-        let receiver = self.scope(0)?.receiver;
+        let receiver = if matches!(format, Format::Jsonnet | Format::Xml) {
+            self.this_receiver()?.as_object()?
+        } else {
+            self.scope(0)?.receiver
+        };
         self.frames.last_mut().expect("renderer frame").pcf_render = Some(RenderRun {
             receiver,
             root,
@@ -478,6 +542,7 @@ impl Vm {
             properties_document: false,
             yaml: None,
             yaml_stream: false,
+            xml_line: 0,
             custom: false,
             started: false,
             converters: Converters::default(),
@@ -507,6 +572,32 @@ impl Vm {
     fn advance_pcf(&mut self, run: &mut RenderRun) -> Result<bool, RuntimeError> {
         if let Some(await_) = run.await_.take() {
             match await_ {
+                Await::XmlRead { .. } => {
+                    let value = self.pop()?;
+                    let Some(Task::Xml(task)) = run.tasks.last_mut() else {
+                        return Err(invalid("XML read continuation"));
+                    };
+                    task.input = Some(value);
+                }
+                Await::JsonnetWrapper {
+                    depth, import_str, ..
+                } => {
+                    let Value::String(text) = self.pop()? else {
+                        return Err(invalid("checked Jsonnet wrapper String"));
+                    };
+                    if import_str {
+                        run.append("importstr ");
+                        run.append_value(&super::jsonnet::quoted(&text));
+                    } else {
+                        run.append("std.extVar(");
+                        run.append_value(&super::jsonnet::string(
+                            &text,
+                            &run.indent,
+                            &run.indentation(depth),
+                        ));
+                        run.append(")");
+                    }
+                }
                 Await::PlistKey { depth, .. } => {
                     let Value::String(text) = self.pop()? else {
                         return Err(invalid("checked Plist directive key text"));
@@ -610,9 +701,18 @@ impl Vm {
                 "converters",
                 "convertPropertyTransformers",
             ]
+        } else if run.format == Format::Xml {
+            &[
+                "indent",
+                "xmlVersion",
+                "rootElementName",
+                "rootElementAttributes",
+                "converters",
+                "convertPropertyTransformers",
+            ]
         } else if run.format == Format::Plist {
             &["indent", "converters", "convertPropertyTransformers"]
-        } else if run.format == Format::Json {
+        } else if matches!(run.format, Format::Json | Format::Jsonnet) {
             &[
                 "indent",
                 "omitNullProperties",
@@ -693,6 +793,12 @@ impl Vm {
                 run.yaml = Some(super::yaml::Emitter::new(mode, width as usize));
                 run.omit_null = *omit;
                 run.yaml_stream = *stream;
+            } else if run.format == Format::Xml {
+                let Value::String(indent) = &run.options[0] else {
+                    return Err(invalid("XML indent"));
+                };
+                run.indent = indent.clone();
+                run.omit_null = true;
             } else if run.format == Format::Plist {
                 let Value::String(indent) = &run.options[0] else {
                     return Err(invalid("Plist indent type"));
@@ -707,6 +813,16 @@ impl Vm {
                 };
                 run.omit_null = *omit;
                 run.restrict_charset = *restrict;
+            } else if run.format == Format::Jsonnet {
+                run.indent = match &run.options[0] {
+                    Value::String(indent) => indent.clone(),
+                    value if value.is_null() => PklString::default(),
+                    _ => return Err(invalid("checked Jsonnet indent")),
+                };
+                let Value::Bool(omit) = run.options[1] else {
+                    return Err(invalid("checked Jsonnet omit"));
+                };
+                run.omit_null = omit;
             } else {
                 let Value::String(indent) = &run.options[0] else {
                     return Err(invalid("renderer indent type"));
@@ -747,13 +863,29 @@ impl Vm {
                 run.yaml.as_mut().unwrap().newline();
             } else if run.document
                 && run.format != Format::Properties
-                && (run.format == Format::Json || !run.output_empty())
+                && (matches!(run.format, Format::Json | Format::Jsonnet) || !run.output_empty())
             {
                 run.append("\n");
             }
             return Ok(true);
         };
         match task {
+            Task::Xml(task) => return self.advance_xml(run, task),
+            Task::JsonnetKey { key, depth } => match key {
+                Value::String(text) => run.append_value(&super::jsonnet::field_name(
+                    &text,
+                    &run.indent,
+                    &run.indentation(depth),
+                )),
+                Value::Object(receiver) => {
+                    run.await_ = Some(Await::Directive {
+                        receiver,
+                        path: Vec::new(),
+                    });
+                    self.force(receiver, receiver, "text".into(), false, true, false)?;
+                }
+                _ => return Err(invalid("checked Jsonnet key")),
+            },
             Task::PlistKey { key, depth } => match key {
                 Value::String(text) => run.plist_key(&text, depth),
                 Value::Object(receiver) => {
@@ -850,6 +982,10 @@ impl Vm {
                         run.document_original = Some(run.root.clone());
                     }
                     run.root = value.clone();
+                    if run.format == Format::Xml {
+                        run.xml_dispatch(value, depth, path, XmlPlace::Top);
+                        return Ok(false);
+                    }
                     if run.format == Format::Yaml && run.document && run.yaml_stream {
                         let id = match value {
                             Value::Object(id)
@@ -978,6 +1114,10 @@ impl Vm {
                         _ => return self.pcf_unrenderable(run, &value),
                     }
                 }
+                if run.format == Format::Xml {
+                    run.xml_dispatch(value, depth, path, XmlPlace::Visit);
+                    return Ok(false);
+                }
                 if run.format == Format::Plist {
                     if let Some(text) = super::plist::scalar(&value) {
                         run.append_value(&text);
@@ -1033,19 +1173,19 @@ impl Vm {
                         run.append(&text);
                     }
                     Value::DataSize(value) => {
-                        if run.format == Format::Json {
+                        if matches!(run.format, Format::Json | Format::Jsonnet) {
                             return self.pcf_unrenderable(run, &Value::DataSize(value));
                         }
                         run.append(&value.to_string());
                     }
                     Value::IntSeq(value) => {
-                        if run.format == Format::Json {
+                        if matches!(run.format, Format::Json | Format::Jsonnet) {
                             return self.pcf_unrenderable(run, &Value::IntSeq(value));
                         }
                         run.append(&value.to_string());
                     }
                     Value::Regex(value) => {
-                        if run.format == Format::Json {
+                        if matches!(run.format, Format::Json | Format::Jsonnet) {
                             return self.pcf_unrenderable(run, &Value::Regex(value));
                         }
                         // The language PcfRenderer delegates to VmRegex.toString;
@@ -1053,12 +1193,14 @@ impl Vm {
                         run.append_value(&super::regex::string(&value));
                     }
                     Value::Duration(value) => {
-                        if run.format == Format::Json {
+                        if matches!(run.format, Format::Json | Format::Jsonnet) {
                             return self.pcf_unrenderable(run, &Value::Duration(value));
                         }
                         run.append(&value.to_string());
                     }
-                    Value::String(value) => run.append_value(&if run.format == Format::Json {
+                    Value::String(value) => run.append_value(&if run.format == Format::Jsonnet {
+                        super::jsonnet::string(&value, &run.indent, &run.indentation(depth))
+                    } else if run.format == Format::Json {
                         json_string(&value)
                     } else {
                         super::pcf_format::string(
@@ -1068,7 +1210,7 @@ impl Vm {
                         )
                     }),
                     Value::Bytes(value) => {
-                        if run.format == Format::Json {
+                        if matches!(run.format, Format::Json | Format::Jsonnet) {
                             return self.pcf_unrenderable(run, &Value::Bytes(value));
                         }
                         run.append("Bytes(");
@@ -1081,6 +1223,25 @@ impl Vm {
                         run.append(")");
                     }
                     Value::Object(id) => {
+                        if run.format == Format::Jsonnet
+                            && let Some(import_str) = self.jsonnet_wrapper(id)?
+                        {
+                            run.await_ = Some(Await::JsonnetWrapper {
+                                receiver: id,
+                                path,
+                                depth,
+                                import_str,
+                            });
+                            self.force(
+                                id,
+                                id,
+                                if import_str { "path" } else { "name" }.into(),
+                                false,
+                                true,
+                                false,
+                            )?;
+                            return Ok(false);
+                        }
                         if self.is_render_directive(id)? {
                             if run.format == Format::Properties && run.properties_document {
                                 run.tasks.push(Task::PropertiesDirective {
@@ -1137,16 +1298,21 @@ impl Vm {
                             }
                             if run.format == Format::Yaml {
                                 run.yaml.as_mut().unwrap().start(array);
-                            } else if !matches!(run.format, Format::Properties | Format::Plist) {
-                                run.append(if run.format == Format::Json {
-                                    if array { "[" } else { "{" }
-                                } else {
-                                    match kind {
-                                        CollectionKind::List => "List(",
-                                        CollectionKind::Map => "Map(",
-                                        _ => "Set(",
-                                    }
-                                });
+                            } else if !matches!(
+                                run.format,
+                                Format::Properties | Format::Plist | Format::Xml
+                            ) {
+                                run.append(
+                                    if matches!(run.format, Format::Json | Format::Jsonnet) {
+                                        if array { "[" } else { "{" }
+                                    } else {
+                                        match kind {
+                                            CollectionKind::List => "List(",
+                                            CollectionKind::Map => "Map(",
+                                            _ => "Set(",
+                                        }
+                                    },
+                                );
                             }
                             let members = collections::ordered_members(&self.heap, id)?
                                 .into_iter()
@@ -1157,6 +1323,7 @@ impl Vm {
                                 })
                                 .collect();
                             run.tasks.push(Task::Members(Members {
+                                xml: None,
                                 receiver: id,
                                 members,
                                 next: 0,
@@ -1167,7 +1334,7 @@ impl Vm {
                                 depth: depth
                                     + usize::from(matches!(
                                         run.format,
-                                        Format::Json | Format::Plist
+                                        Format::Json | Format::Jsonnet | Format::Plist
                                     )),
                                 document_root: false,
                                 emitted: false,
@@ -1206,19 +1373,24 @@ impl Vm {
                     return self.pcf_unrenderable(run, &Value::Object(receiver));
                 }
                 let kind = self.heap.get(receiver)?.collection_kind;
-                let members =
-                    if stream && matches!(kind, CollectionKind::List | CollectionKind::Set) {
-                        collections::ordered_members(&self.heap, receiver)?
-                            .into_iter()
-                            .map(|descriptor| collections::RenderMember {
-                                descriptor,
-                                skip: false,
-                                code: None,
-                            })
-                            .collect()
-                    } else {
-                        collections::render_members(&self.heap, receiver)?
-                    };
+                let members = if (stream
+                    && matches!(kind, CollectionKind::List | CollectionKind::Set))
+                    || (run.format == Format::Xml
+                        && matches!(
+                            kind,
+                            CollectionKind::List | CollectionKind::Set | CollectionKind::Map
+                        )) {
+                    collections::ordered_members(&self.heap, receiver)?
+                        .into_iter()
+                        .map(|descriptor| collections::RenderMember {
+                            descriptor,
+                            skip: false,
+                            code: None,
+                        })
+                        .collect()
+                } else {
+                    collections::render_members(&self.heap, receiver)?
+                };
                 let array = matches!(
                     kind,
                     CollectionKind::Listing | CollectionKind::List | CollectionKind::Set
@@ -1229,19 +1401,22 @@ impl Vm {
                 if run.format == Format::Yaml && !stream {
                     run.yaml.as_mut().unwrap().start(array);
                 } else if !doc
-                    && !matches!(run.format, Format::Properties | Format::Plist)
+                    && !matches!(run.format, Format::Properties | Format::Plist | Format::Xml)
                     && !stream
                 {
                     if run.format == Format::Pcf && standalone {
                         run.append("new ");
                     }
-                    run.append(if run.format == Format::Json && array {
-                        "["
-                    } else {
-                        "{"
-                    });
+                    run.append(
+                        if matches!(run.format, Format::Json | Format::Jsonnet) && array {
+                            "["
+                        } else {
+                            "{"
+                        },
+                    );
                 }
                 run.tasks.push(Task::Members(Members {
+                    xml: None,
                     receiver,
                     members,
                     next: 0,
@@ -1249,7 +1424,7 @@ impl Vm {
                     compare: 0,
                     prepared: false,
                     hash: None,
-                    depth: depth + usize::from(!doc),
+                    depth: depth + usize::from(!doc && run.format != Format::Xml),
                     document_root: doc,
                     emitted: false,
                     strict: matches!(
@@ -1263,13 +1438,18 @@ impl Vm {
             }
             Task::Members(mut m) => {
                 if m.next == m.members.len() {
+                    if m.xml.is_some() {
+                        return Ok(false);
+                    }
                     run.tasks.push(Task::Close {
                         receiver: m.receiver,
                         depth: m.depth,
                         document_root: m.document_root,
                         emitted: m.emitted
-                            || (matches!(run.format, Format::Json | Format::Yaml | Format::Plist)
-                                && m.strict
+                            || (matches!(
+                                run.format,
+                                Format::Json | Format::Jsonnet | Format::Yaml | Format::Plist
+                            ) && m.strict
                                 && !m.array
                                 && !m.members.is_empty()),
                         strict: m.strict,
@@ -1282,7 +1462,11 @@ impl Vm {
                 let descriptor = &item.descriptor;
                 if !(matches!(
                     run.format,
-                    Format::Properties | Format::Yaml | Format::Plist
+                    Format::Properties
+                        | Format::Jsonnet
+                        | Format::Yaml
+                        | Format::Plist
+                        | Format::Xml
                 ) && m.strict)
                     && !m.prepared
                 {
@@ -1294,7 +1478,11 @@ impl Vm {
                 }
                 if !(matches!(
                     run.format,
-                    Format::Properties | Format::Yaml | Format::Plist
+                    Format::Properties
+                        | Format::Jsonnet
+                        | Format::Yaml
+                        | Format::Plist
+                        | Format::Xml
                 ) && m.strict)
                 {
                     m.hash = self.java_hash(&descriptor.key)?;
@@ -1325,8 +1513,14 @@ impl Vm {
                 }
                 if matches!(
                     run.format,
-                    Format::Json | Format::Properties | Format::Yaml | Format::Plist
+                    Format::Json
+                        | Format::Properties
+                        | Format::Jsonnet
+                        | Format::Yaml
+                        | Format::Plist
+                        | Format::Xml
                 ) && m.array
+                    && m.xml.is_none()
                     && descriptor.kind != CollectionMemberKind::Element
                 {
                     let rendered = crate::diagnostic_values::render(
@@ -1340,6 +1534,36 @@ impl Vm {
                 }
                 let value = collections::cached_render_value(&self.heap, m.receiver, descriptor)?
                     .ok_or_else(|| invalid("shallow-forced member is uncached"))?;
+                if let Some(mode) = &m.xml {
+                    let action = match mode {
+                        XmlMembers::Attributes { name } => XmlAction::Attribute {
+                            name: name.clone(),
+                            key: descriptor.key.clone(),
+                        },
+                        XmlMembers::Elements
+                            if descriptor.kind == CollectionMemberKind::Element =>
+                        {
+                            XmlAction::Dispatch {
+                                place: XmlPlace::Element,
+                                marker_read: false,
+                            }
+                        }
+                        XmlMembers::Elements => {
+                            run.tasks.push(Task::Members(m));
+                            return Ok(false);
+                        }
+                    };
+                    let task = XmlTask {
+                        value,
+                        depth: m.depth,
+                        path: m.path.clone(),
+                        input: None,
+                        action,
+                    };
+                    run.tasks.push(Task::Members(m));
+                    run.tasks.push(Task::Xml(task));
+                    return Ok(false);
+                }
                 if m.stream {
                     if m.emitted {
                         run.yaml.as_mut().unwrap().separator();
@@ -1462,7 +1686,27 @@ impl Vm {
                     return Ok(false);
                 }
                 let depth = m.depth;
-                if run.format == Format::Plist {
+                if run.format == Format::Xml {
+                    let place = if descriptor.kind == CollectionMemberKind::Element {
+                        XmlPlace::Element
+                    } else {
+                        XmlPlace::Property {
+                            key: if descriptor.kind == CollectionMemberKind::Property {
+                                Value::String(output_name.unwrap_or_else(|| match descriptor.key {
+                                    Value::String(name) => name,
+                                    _ => unreachable!(),
+                                }))
+                            } else {
+                                key
+                            },
+                            enclosing: m.receiver,
+                            validate: true,
+                        }
+                    };
+                    run.tasks.push(Task::Members(m));
+                    run.tasks.push(Task::RestoreSource(previous_source));
+                    run.xml_dispatch(value, depth, path, place);
+                } else if run.format == Format::Plist {
                     let element = descriptor.kind == CollectionMemberKind::Element;
                     if descriptor.kind == CollectionMemberKind::Entry
                         && !matches!(&key, Value::String(_))
@@ -1552,6 +1796,38 @@ impl Vm {
                         });
                     } else {
                         run.value(value, depth, false, false, false, path);
+                    }
+                } else if run.format == Format::Jsonnet {
+                    let element = descriptor.kind == CollectionMemberKind::Element;
+                    if m.emitted {
+                        run.append(",");
+                    }
+                    if !run.indent.is_empty() {
+                        run.json_newline(depth);
+                    } else if m.emitted || !element {
+                        run.append(" ");
+                    }
+                    if descriptor.kind == CollectionMemberKind::Entry
+                        && !matches!(&key, Value::String(_))
+                        && !matches!(&key, Value::Object(id) if self.is_render_directive(*id)?)
+                    {
+                        return self.jsonnet_non_string_key(m.receiver, &key);
+                    }
+                    m.emitted = true;
+                    run.tasks.push(Task::Members(m));
+                    run.tasks.push(Task::RestoreSource(previous_source));
+                    run.value(value, depth, false, false, false, path);
+                    if !element {
+                        run.tasks.push(Task::Text(": ".into()));
+                        let key = if descriptor.kind == CollectionMemberKind::Property {
+                            Value::String(output_name.unwrap_or_else(|| match descriptor.key {
+                                Value::String(name) => name,
+                                _ => unreachable!("property string key"),
+                            }))
+                        } else {
+                            key
+                        };
+                        run.tasks.push(Task::JsonnetKey { key, depth });
                     }
                 } else if run.format == Format::Json {
                     if m.emitted {
@@ -1746,8 +2022,16 @@ impl Vm {
                         (false, false) => "<dict/>",
                         (false, true) => "</dict>",
                     });
-                } else if run.format == Format::Properties {
+                } else if matches!(run.format, Format::Properties | Format::Xml) {
                     // Flattened output has no container delimiters.
+                } else if run.format == Format::Jsonnet {
+                    if emitted && !run.indent.is_empty() {
+                        run.append(",");
+                        run.json_newline(depth - 1);
+                    } else if emitted && !array {
+                        run.append(" ");
+                    }
+                    run.append(if array { "]" } else { "}" });
                 } else if run.format == Format::Json {
                     if emitted {
                         run.json_newline(depth - 1);
@@ -1920,6 +2204,52 @@ impl Vm {
             .concat(&render(key)?),
         ))
     }
+    fn jsonnet_wrapper(&self, receiver: ObjectId) -> Result<Option<bool>, RuntimeError> {
+        let Some(actual) = self.heap.object_class(receiver)? else {
+            return Ok(None);
+        };
+        let Some(modules::CachedModule::Value(module)) = self.modules_stdlib.get("pkl:jsonnet")
+        else {
+            return Err(invalid("Jsonnet renderer without its canonical module"));
+        };
+        let module = self.heap.get(*module)?;
+        for (name, import_str) in [("ImportStr", true), ("ExtVar", false)] {
+            let key = CacheKey {
+                owner: None,
+                entry: false,
+                method: false,
+                name: name.into(),
+            };
+            let Some(LazyState::Completed(Value::Class(expected))) = module.cache.get(&key) else {
+                return Err(invalid("Jsonnet module class not initialized"));
+            };
+            if actual == *expected {
+                return Ok(Some(import_str));
+            }
+        }
+        Ok(None)
+    }
+    fn jsonnet_non_string_key(
+        &self,
+        receiver: ObjectId,
+        key: &Value,
+    ) -> Result<bool, RuntimeError> {
+        let map = self.heap.get(receiver)?.collection_kind == CollectionKind::Map;
+        let render = |value: &Value| {
+            crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 80)
+        };
+        Err(RuntimeError::new(
+            ErrorKind::Type,
+            PklString::from(if map {
+                "Cannot render map with non-string key as Jsonnet.\nMap: "
+            } else {
+                "Cannot render object with non-string key as Jsonnet.\nObject: "
+            })
+            .concat(&render(&Value::Object(receiver))?)
+            .concat(&if map { "\nKey: " } else { "\nKey   : " }.into())
+            .concat(&render(key)?),
+        ))
+    }
     fn json_non_string_key(&self, receiver: ObjectId, key: &Value) -> Result<bool, RuntimeError> {
         let map = self.heap.get(receiver)?.collection_kind == CollectionKind::Map;
         let render = |value: &Value| {
@@ -2018,3 +2348,5 @@ fn yaml_scalar(value: &Value) -> Result<PklString, RuntimeError> {
         _ => scalar_string(value)?,
     })
 }
+
+include!("xml_rendering.rs");

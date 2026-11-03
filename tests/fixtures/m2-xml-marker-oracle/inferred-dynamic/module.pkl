@@ -1,0 +1,5 @@
+import "pkl:xml"
+local renderer = new xml.Renderer { indent = "" }
+function make(): Dynamic = new { _isXmlElement = true; name = "x"; attributes = new Mapping {}; isBlockFormat = true; "z" }
+result = renderer.renderValue(make())
+output { text = result }

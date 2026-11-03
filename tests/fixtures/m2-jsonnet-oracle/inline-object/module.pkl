@@ -1,0 +1,5 @@
+import "pkl:jsonnet"
+
+local r = new jsonnet.Renderer { indent = "" }
+result = r.renderValue(Map("a", 1, "b", 2))
+output { text = result }

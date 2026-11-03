@@ -1,0 +1,5 @@
+import "pkl:jsonnet"
+
+local r = new jsonnet.Renderer {  }
+result = r.renderDocument(Map("a", List(1, 2), "b", Map("x", true)))
+output { text = result }

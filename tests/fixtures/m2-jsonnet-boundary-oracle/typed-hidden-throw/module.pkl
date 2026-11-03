@@ -1,0 +1,8 @@
+import "pkl:jsonnet"
+class Holder {
+  hidden a: Int = throw("hidden-forced")
+  b: Int = 2
+}
+local renderer = new jsonnet.Renderer { indent = "" }
+result = renderer.renderValue(new Holder {})
+output { text = result }

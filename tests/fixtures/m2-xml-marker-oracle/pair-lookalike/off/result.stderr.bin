@@ -1,0 +1,13 @@
+–– Pkl Error ––
+Cannot render value of type `Pair` as XML.
+Value: Pair(1, 2)
+
+3 | result = renderer.renderValue(Pair(1, 2))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage141-xml-marker/pair-lookalike/main.pkl)
+
+Consider adding a converter to `output.converters`.
+
+4 | output { text = result }
+                    ^^^^^^
+at main#output.text (file:///stage141-xml-marker/pair-lookalike/main.pkl)

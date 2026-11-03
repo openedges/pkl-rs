@@ -1,0 +1,35 @@
+{
+  "archive": {
+    "bytes": 11549097,
+    "path": "target/m2/stage141-publication-part-0010/evidence.tar.gz",
+    "sha256": "2d63fbeac235b94708b30bcc241443588983e71f3db72b8787fe16333d12ecd9"
+  },
+  "complete": true,
+  "errors": [],
+  "finished_epoch": 1793670651.3365152,
+  "inputs_after": {
+    "bytes": 10661,
+    "path": "target/m2/stage141-publication-part-0010/inputs-after.json",
+    "sha256": "f059ad0ab6ba1cb38c85609cb13a03e2ca3564a8b9d992188517a99d5295a899"
+  },
+  "inputs_before": {
+    "bytes": 10661,
+    "path": "target/m2/stage141-publication-part-0010/inputs-before.json",
+    "sha256": "f059ad0ab6ba1cb38c85609cb13a03e2ca3564a8b9d992188517a99d5295a899"
+  },
+  "manifest": {
+    "bytes": 5781,
+    "path": "target/m2/stage141-publication-part-0010/members.json",
+    "sha256": "a169fa1f29883072486a0e13bcb0f610ddc5abbffdbcdd586c2f74a64c4fb1a4"
+  },
+  "member_count": 27,
+  "publisher": {
+    "bytes": 1706,
+    "path": "target/m2/stage141-publication-part-0010/report.json",
+    "sha256": "27c3713c0445c4dbc5b133de636d6601092c675afa8d9936708bf4449f0d1f7b"
+  },
+  "raw_member_bytes": 34690387,
+  "scope": "Exact raw archive-member verification only; no extraction or complete runtime/source restoration claim",
+  "source_member_count": 26,
+  "started_epoch": 1793670651.265258
+}

@@ -1,0 +1,5 @@
+import "pkl:xml"
+class Comment { text: String }
+local renderer = new xml.Renderer {  }
+result = renderer.renderValue(new Comment { text="text" })
+output { text = result }

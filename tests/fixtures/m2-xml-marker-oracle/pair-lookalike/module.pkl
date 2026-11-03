@@ -1,0 +1,4 @@
+import "pkl:xml"
+local renderer = new xml.Renderer { indent = "" }
+result = renderer.renderValue(Pair(1, 2))
+output { text = result }

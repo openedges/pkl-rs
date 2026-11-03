@@ -1,0 +1,5 @@
+import "pkl:xml"
+
+local renderer = new xml.Renderer { rootElementAttributes { ["bad name"] = "x" } }
+result = renderer.renderDocument("x")
+output { text = result }

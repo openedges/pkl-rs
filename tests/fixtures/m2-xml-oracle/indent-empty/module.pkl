@@ -1,0 +1,5 @@
+import "pkl:xml"
+
+local renderer = new xml.Renderer { indent = "" }
+result = renderer.renderDocument(new Dynamic { a=1; b=2 })
+output { text = result }

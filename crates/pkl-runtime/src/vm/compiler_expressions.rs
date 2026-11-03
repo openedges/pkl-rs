@@ -718,10 +718,15 @@ impl Compiler<'_> {
                         }
                         output.push(Instruction::Return);
                         // The declaration/signature is authored, but Java's
-                        // external JSON body has an unavailable source section.
+                        // external parser/renderer bodies have unavailable source sections.
                         // Keep the authored signature's own locations.
                         for index in 0..output.len() {
-                            if matches!(output[index], Instruction::JsonParse) {
+                            if matches!(
+                                output[index],
+                                Instruction::JsonParse
+                                    | Instruction::RenderJsonnet { .. }
+                                    | Instruction::RenderXml { .. }
+                            ) {
                                 output.spans[index] = None;
                             }
                         }

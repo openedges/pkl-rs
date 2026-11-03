@@ -1,0 +1,14 @@
+–– Pkl Error ––
+converter-failed
+
+3 | local renderer = new xml.Renderer { converters { [Int] = (_) -> throw("converter-failed") } }
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#renderer.converters[#1].<function#1> (file:///stage141-xml/converter-error/main.pkl)
+
+4 | result = renderer.renderValue(1)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///stage141-xml/converter-error/main.pkl)
+
+5 | output { text = result }
+                    ^^^^^^
+at main#output.text (file:///stage141-xml/converter-error/main.pkl)

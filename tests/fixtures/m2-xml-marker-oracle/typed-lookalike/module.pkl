@@ -1,0 +1,5 @@
+import "pkl:xml"
+local renderer = new xml.Renderer { indent = "" }
+class Fake { _isXmlElement: Boolean = true; name: String = "x"; attributes: Mapping = new Mapping {}; isBlockFormat: Boolean = true }
+result = renderer.renderValue(new Fake {})
+output { text = result }
