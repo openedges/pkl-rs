@@ -1,11 +1,13 @@
 //! Development-only original module-output operation, not a complete product CLI.
 use pkl_runtime::evaluation::frontend::{
-    ModuleSourceInput, arguments::parse_module_eval_args, evaluate_module_output_with_hosts,
+    ModuleSourceInput, arguments::parse_module_eval_args, evaluate_module_output_with_glob_host,
 };
 use std::{io::Write, path::Path};
 
 #[path = "module_eval_probe/environment.rs"]
 mod environment;
+#[path = "support/file_glob_host.rs"]
+mod file_glob_host;
 #[path = "support/module_host.rs"]
 mod module_host;
 #[path = "support/resource_host.rs"]
@@ -66,7 +68,7 @@ fn run(arguments: &[String]) -> Result<i32, ProbeError> {
     let mut inherited = environment::inherited().map_err(ProbeError::Unsupported)?;
     inherited.append(&mut invocation.options.environment);
     invocation.options.environment = inherited;
-    let result = evaluate_module_output_with_hosts(
+    let result = evaluate_module_output_with_glob_host(
         ModuleSourceInput {
             text: &text,
             uri: &uri,
@@ -75,6 +77,7 @@ fn run(arguments: &[String]) -> Result<i32, ProbeError> {
         &invocation.options,
         module_host::complete,
         resource_host::complete,
+        file_glob_host::complete,
     );
     std::io::stdout()
         .write_all(&result.stdout)

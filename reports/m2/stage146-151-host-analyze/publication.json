@@ -1,0 +1,605 @@
+{
+  "complete": true,
+  "epoch": 1793749222.809477,
+  "source_epoch": "9409cd3c6633f738a3353f4cca65b7f6be251001",
+  "actual_git_head_checked": true,
+  "pack": {
+    "complete": true,
+    "errors": [],
+    "roster_sha256": "f512cd221612f87b348b3a947e617df3589d46fcb0ffe2cd54ee03d6b892771f",
+    "roster_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-01/payload-roster.json",
+    "file_count": 17377,
+    "logical_payload_bytes": 211370801,
+    "scope": "Finite raw evidence payload; excludes compiled/cache bodies. Not a hermetic restoration or complete dependency closure.",
+    "archive": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-01/evidence.tar.gz",
+      "bytes": 22255034,
+      "sha256": "4e41a9b3567ffab8f7f459bf0262913e3309f0ff956742f03c0b81e1a8a2010b"
+    }
+  },
+  "integrity_report": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-readback-01/report.json",
+    "bytes": 2512,
+    "sha256": "e101d1986b883694a6ec36d9419d856130abd8b6ac24bb84a4e61b1f8ab64e8d",
+    "mode": 420
+  },
+  "source_verification": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-source-verification-01/source-verification.json",
+    "bytes": 5036293,
+    "sha256": "939ec1cc497e9ec278b6a782bb6d3f2eaa4555c1721c54aaf6cf48305951a2ad",
+    "mode": 420
+  },
+  "documentation_application": {
+    "complete": true,
+    "head": "9409cd3c6633f738a3353f4cca65b7f6be251001",
+    "epoch": 1793748472.630262,
+    "draft": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-checkpoint-doc-draft-05/manifest.json",
+      "bytes": 22775,
+      "sha256": "0d9b13acb075b9b33c4b53bb49aea66c174995ace53109e7a37e6a52de243cd8",
+      "mode": 420
+    },
+    "documents": [
+      {
+        "destination": "README.md",
+        "before": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/README.md",
+          "bytes": 24254,
+          "sha256": "cd705ce940e1d62a509a5fd16d84b1b990d70d64a06803904e83246e8fdc4218",
+          "mode": 420
+        },
+        "retained_before": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-documentation-application-01/README.md.before",
+          "bytes": 24254,
+          "sha256": "cd705ce940e1d62a509a5fd16d84b1b990d70d64a06803904e83246e8fdc4218",
+          "mode": 420
+        },
+        "fragment": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-checkpoint-doc-draft-05/README-insertion.md",
+          "bytes": 850,
+          "sha256": "48bba9eef46a237973e1f3e096d5d1a273b53c0d61ac5b62bc46fc4bf3b6cd01",
+          "mode": 420
+        },
+        "transformation": null,
+        "after": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/README.md",
+          "bytes": 25104,
+          "sha256": "3f35de248a92fb88dd891d2f74011a4c38baa352f60602e66f82101b30380d2a",
+          "mode": 420
+        }
+      },
+      {
+        "destination": "TESTING.md",
+        "before": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/TESTING.md",
+          "bytes": 134059,
+          "sha256": "b5685f3e33b09a73914e7754504a6061cae3cb95f39e332d459c928ff222a5ad",
+          "mode": 420
+        },
+        "retained_before": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-documentation-application-01/TESTING.md.before",
+          "bytes": 134059,
+          "sha256": "b5685f3e33b09a73914e7754504a6061cae3cb95f39e332d459c928ff222a5ad",
+          "mode": 420
+        },
+        "fragment": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-checkpoint-doc-draft-05/TESTING-insertion.md",
+          "bytes": 1332,
+          "sha256": "69033bb807da157146df77920e845461280514c5dc9e9b88380f5fcdb19bd7b8",
+          "mode": 420
+        },
+        "transformation": null,
+        "after": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/TESTING.md",
+          "bytes": 135391,
+          "sha256": "7f382f2a347f0734b7b74e3180fb56af6651684e6c8a62caa2d1d2d95c23c555",
+          "mode": 420
+        }
+      },
+      {
+        "destination": "docs/m2-language.md",
+        "before": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/docs/m2-language.md",
+          "bytes": 144269,
+          "sha256": "6c3af4b2edf9add1514e29038d568c9722401b0c1405d472b0ad37c90364f1a2",
+          "mode": 420
+        },
+        "retained_before": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-documentation-application-01/docs__m2-language.md.before",
+          "bytes": 144269,
+          "sha256": "6c3af4b2edf9add1514e29038d568c9722401b0c1405d472b0ad37c90364f1a2",
+          "mode": 420
+        },
+        "fragment": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-checkpoint-doc-draft-05/m2-language-insertion.md",
+          "bytes": 1423,
+          "sha256": "4ae96ba966522254e9e3c3b4ec3f00706cb9094792f80977b93081976c26e4dd",
+          "mode": 420
+        },
+        "transformation": null,
+        "after": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/docs/m2-language.md",
+          "bytes": 145692,
+          "sha256": "6a02b50080542a20e69b02dbaf7d65be75b5b50c805a8b86bdb8aec619092077",
+          "mode": 420
+        }
+      },
+      {
+        "destination": "docs/architecture.md",
+        "before": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/docs/architecture.md",
+          "bytes": 119301,
+          "sha256": "d0fae208776f63ff6b2b66cff0140d96f626fe4815821b612218c75de0539c38",
+          "mode": 420
+        },
+        "retained_before": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-documentation-application-01/docs__architecture.md.before",
+          "bytes": 119301,
+          "sha256": "d0fae208776f63ff6b2b66cff0140d96f626fe4815821b612218c75de0539c38",
+          "mode": 420
+        },
+        "fragment": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-checkpoint-doc-draft-05/architecture-insertion.md",
+          "bytes": 1265,
+          "sha256": "bcf09161ee95761aa0c55bcd20af53a55efb44858460f29fdb13fac77e146b8b",
+          "mode": 420
+        },
+        "transformation": null,
+        "after": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/docs/architecture.md",
+          "bytes": 120566,
+          "sha256": "2f445e42c53ac1a50fee57b48763bc7294eb2e596896a92c306c7a59393c93ad",
+          "mode": 420
+        }
+      },
+      {
+        "destination": "PLAN.md",
+        "before": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/PLAN.md",
+          "bytes": 531623,
+          "sha256": "89917456172d57b4c05c0590f6bfeb98d819a04af39de8dea610054adcb3ff3d",
+          "mode": 420
+        },
+        "retained_before": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-documentation-application-01/PLAN.md.before",
+          "bytes": 531623,
+          "sha256": "89917456172d57b4c05c0590f6bfeb98d819a04af39de8dea610054adcb3ff3d",
+          "mode": 420
+        },
+        "fragment": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-checkpoint-doc-draft-05/PLAN-insertion.md",
+          "bytes": 6687,
+          "sha256": "bc05fb72acf0d0ba360ada4c1d5de0c3aa2f4b3218a77dfff8b1517c2e1742d9",
+          "mode": 420
+        },
+        "transformation": "Omit the final draft-only application instruction paragraph; all milestone content is unchanged.",
+        "after": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/PLAN.md",
+          "bytes": 537886,
+          "sha256": "2d0f975abe121f4a9b00ba885761b1b031fecd7b00e30b9aacdcfcfd4ac21d7e",
+          "mode": 420
+        }
+      }
+    ],
+    "plan_applied_fragment": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-documentation-application-01/PLAN-applied-insertion.md",
+      "bytes": 6263,
+      "sha256": "89c705defd5c46657477190488acbb43ef3fb7fee9168b7aca85c929bed4eada",
+      "mode": 420
+    },
+    "post_validation_docs_only_transition": true,
+    "runtime_source_plan_changed_destinations": [
+      "TESTING.md"
+    ],
+    "runtime_sources_modified": false,
+    "old_runtime_receipts_rewritten": false,
+    "all_runtime_input_bytes_unchanged_after_application_claim": false,
+    "publication_complete": false,
+    "scope": "Actual five-document application after all runtime readers closed. Retained before aliases preserve validation-era bytes. TESTING is the sole changed runtime source-plan input; runtime code and all original reports remain unchanged. Final publication and Git receipts follow separately."
+  },
+  "resource_guards": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-audit-guard-01/report.json",
+      "bytes": 8444,
+      "sha256": "3092e647b9d1d182a951b047106585af3a4e6c7948bbd2f4281caf81d994ade4",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-guard-01/report.json",
+      "bytes": 9278,
+      "sha256": "140d418b5bf7f3c191be6699b5ae26aeac4733f1c94e989f5c5dec8d3e956344",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-pack-guard-01/report.json",
+      "bytes": 7266,
+      "sha256": "573a7d5764547bb45714692710c58fb0a301495a02a46f4c6b62eb0cfa892d96",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-readback-guard-01/report.json",
+      "bytes": 8215,
+      "sha256": "ebaf83367933e8d6d32a5c8a3d928d8d15adf573ff64f62a54491b461e4f164f",
+      "mode": 420
+    }
+  ],
+  "copies": [
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-checkpoint-doc-draft-05/README.md",
+        "bytes": 8214,
+        "sha256": "5a90420f381d3c6e138ef328b7d8b845f797b2dc00dc56363ea25d6e4095ac65",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/README.md",
+        "bytes": 8214,
+        "sha256": "5a90420f381d3c6e138ef328b7d8b845f797b2dc00dc56363ea25d6e4095ac65",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-01/evidence.tar.gz",
+        "bytes": 22255034,
+        "sha256": "4e41a9b3567ffab8f7f459bf0262913e3309f0ff956742f03c0b81e1a8a2010b",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/evidence.tar.gz",
+        "bytes": 22255034,
+        "sha256": "4e41a9b3567ffab8f7f459bf0262913e3309f0ff956742f03c0b81e1a8a2010b",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-01/payload-roster.json",
+        "bytes": 9120294,
+        "sha256": "f512cd221612f87b348b3a947e617df3589d46fcb0ffe2cd54ee03d6b892771f",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/evidence-index.json",
+        "bytes": 9120294,
+        "sha256": "f512cd221612f87b348b3a947e617df3589d46fcb0ffe2cd54ee03d6b892771f",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-readback-01/report.json",
+        "bytes": 2512,
+        "sha256": "e101d1986b883694a6ec36d9419d856130abd8b6ac24bb84a4e61b1f8ab64e8d",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/evidence-integrity.json",
+        "bytes": 2512,
+        "sha256": "e101d1986b883694a6ec36d9419d856130abd8b6ac24bb84a4e61b1f8ab64e8d",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-source-verification-01/source-verification.json",
+        "bytes": 5036293,
+        "sha256": "939ec1cc497e9ec278b6a782bb6d3f2eaa4555c1721c54aaf6cf48305951a2ad",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/source-verification.json",
+        "bytes": 5036293,
+        "sha256": "939ec1cc497e9ec278b6a782bb6d3f2eaa4555c1721c54aaf6cf48305951a2ad",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-01/report.json",
+        "bytes": 692,
+        "sha256": "f28cee237c9b7fc7bab360e0093a06ea2c7bcd8caadb926516f4eb2c04949102",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/verification/pack-report.json",
+        "bytes": 692,
+        "sha256": "f28cee237c9b7fc7bab360e0093a06ea2c7bcd8caadb926516f4eb2c04949102",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-closed-plan-independent-review-01/report.json",
+        "bytes": 8411,
+        "sha256": "1f225243921a89f5067bb5dcadc5e64ba279783abbd3dcbfe3de839637832bfc",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/verification/closed-plan-review01.json",
+        "bytes": 8411,
+        "sha256": "1f225243921a89f5067bb5dcadc5e64ba279783abbd3dcbfe3de839637832bfc",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-closed-plan-independent-review-02/report.json",
+        "bytes": 4269,
+        "sha256": "f98940b4c4d4d4272197c4b7da1d5acaf3011e35f40807d6f36e62adda9717f1",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/verification/closed-plan-review02.json",
+        "bytes": 4269,
+        "sha256": "f98940b4c4d4d4272197c4b7da1d5acaf3011e35f40807d6f36e62adda9717f1",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-documentation-application-01/report.json",
+        "bytes": 7098,
+        "sha256": "e33f5b11edc74d28f7a311e02efa23d4d848bbc4636c0485190481840962ec20",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/verification/documentation-application.json",
+        "bytes": 7098,
+        "sha256": "e33f5b11edc74d28f7a311e02efa23d4d848bbc4636c0485190481840962ec20",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-audit-guard-01/report.json",
+        "bytes": 8444,
+        "sha256": "3092e647b9d1d182a951b047106585af3a4e6c7948bbd2f4281caf81d994ade4",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/verification/audit-guard.json",
+        "bytes": 8444,
+        "sha256": "3092e647b9d1d182a951b047106585af3a4e6c7948bbd2f4281caf81d994ade4",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-root-config-01/audit.json",
+        "bytes": 2984,
+        "sha256": "2779a3713824987e1e71e8409eaca26154c8d916797e4bc53313c1002cf21a46",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/verification/audit-config.json",
+        "bytes": 2984,
+        "sha256": "2779a3713824987e1e71e8409eaca26154c8d916797e4bc53313c1002cf21a46",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-audit-guard-01/0.stdout.bin",
+        "bytes": 237,
+        "sha256": "8086c8c94b738fab123c1d4d4ece841a14f099a2226ca4c30896fc4ab65b3f6a",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/verification/audit.stdout.bin",
+        "bytes": 237,
+        "sha256": "8086c8c94b738fab123c1d4d4ece841a14f099a2226ca4c30896fc4ab65b3f6a",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-audit-guard-01/0.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/verification/audit.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-guard-01/report.json",
+        "bytes": 9278,
+        "sha256": "140d418b5bf7f3c191be6699b5ae26aeac4733f1c94e989f5c5dec8d3e956344",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/verification/select-guard.json",
+        "bytes": 9278,
+        "sha256": "140d418b5bf7f3c191be6699b5ae26aeac4733f1c94e989f5c5dec8d3e956344",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-root-config-01/select.json",
+        "bytes": 3538,
+        "sha256": "b7ad6dd2fb4ea63979a0b4a6d662e9768283bd229a18db1264901a09c309294b",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/verification/select-config.json",
+        "bytes": 3538,
+        "sha256": "b7ad6dd2fb4ea63979a0b4a6d662e9768283bd229a18db1264901a09c309294b",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-guard-01/0.stdout.bin",
+        "bytes": 234,
+        "sha256": "0b833fecc31101a0b8b43932922f3c9e2d84d136b6b0f7cd130ea5b7b0b92c52",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/verification/select.stdout.bin",
+        "bytes": 234,
+        "sha256": "0b833fecc31101a0b8b43932922f3c9e2d84d136b6b0f7cd130ea5b7b0b92c52",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-guard-01/0.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/verification/select.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-pack-guard-01/report.json",
+        "bytes": 7266,
+        "sha256": "573a7d5764547bb45714692710c58fb0a301495a02a46f4c6b62eb0cfa892d96",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/verification/pack-guard.json",
+        "bytes": 7266,
+        "sha256": "573a7d5764547bb45714692710c58fb0a301495a02a46f4c6b62eb0cfa892d96",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-root-config-01/pack.json",
+        "bytes": 2381,
+        "sha256": "4aad838d38b9cb5a7684550dcfd5c6f8a6353b47b79730942898b604b07b2921",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/verification/pack-config.json",
+        "bytes": 2381,
+        "sha256": "4aad838d38b9cb5a7684550dcfd5c6f8a6353b47b79730942898b604b07b2921",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-pack-guard-01/0.stdout.bin",
+        "bytes": 658,
+        "sha256": "a42d804245edbd0e9b2a40f3b18874ec40fab18e4874cc8c96fece04dff78457",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/verification/pack.stdout.bin",
+        "bytes": 658,
+        "sha256": "a42d804245edbd0e9b2a40f3b18874ec40fab18e4874cc8c96fece04dff78457",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-pack-guard-01/0.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/verification/pack.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-readback-guard-01/report.json",
+        "bytes": 8215,
+        "sha256": "ebaf83367933e8d6d32a5c8a3d928d8d15adf573ff64f62a54491b461e4f164f",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/verification/readback-guard.json",
+        "bytes": 8215,
+        "sha256": "ebaf83367933e8d6d32a5c8a3d928d8d15adf573ff64f62a54491b461e4f164f",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-root-config-01/readback.json",
+        "bytes": 3045,
+        "sha256": "9028475c0df7eee2186309ea70b6546dc4d9eeaea314d572693a68a816023eff",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/verification/readback-config.json",
+        "bytes": 3045,
+        "sha256": "9028475c0df7eee2186309ea70b6546dc4d9eeaea314d572693a68a816023eff",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-readback-guard-01/0.stdout.bin",
+        "bytes": 372,
+        "sha256": "c4cff54a84eef15460f22860b348dcc94db00d5ecd32ca839113e7530e13a8c2",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/verification/readback.stdout.bin",
+        "bytes": 372,
+        "sha256": "c4cff54a84eef15460f22860b348dcc94db00d5ecd32ca839113e7530e13a8c2",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-readback-guard-01/0.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "published": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage146-151-host-analyze/verification/readback.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "copy_exit_code": 0
+    }
+  ],
+  "git_closeout_recorded_separately": true,
+  "scope": "Actual byte/mode-identical publication of the qualified finite evidence archive, index, source audit and independent integrity reader. Supplemental verification records preserve all four actual publication guard/config/raw-channel records and plan reviews outside the archive. Runtime validation precedes the explicit docs-only TESTING transition. No full M2/API, complete dependency closure, release-platform or performance claim."
+}

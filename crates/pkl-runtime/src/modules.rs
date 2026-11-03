@@ -1,5 +1,6 @@
 //! Typed module Host effects. Resolution and source loading have different
 //! cache boundaries; neither is a resource read or an evaluation in another VM.
+pub mod analyze;
 mod standard_keys;
 pub use standard_keys::standard_key_completion;
 

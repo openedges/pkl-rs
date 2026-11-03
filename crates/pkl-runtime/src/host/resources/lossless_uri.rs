@@ -53,6 +53,103 @@ pub(super) fn opaque_syntax_index(text: &PklString, reason: &str) -> Option<usiz
     None
 }
 
+/// Locate a modeled syntax failure without turning parser capability gaps into
+/// Java URI failures. Authority/IPv6-specific diagnostics remain unprojected.
+/// This only runs after the shared parser reports a Syntax failure.
+pub(super) fn analysis_syntax_index(text: &PklString, reason: &str) -> Option<usize> {
+    if reason == "Expected scheme name" {
+        return Some(0);
+    }
+    let source = SourceText::from(text.clone());
+    let view = source.entire();
+    let (body, fragment) = view
+        .split_once("#")
+        .map_or((view, None), |(a, b)| (a, Some(b)));
+    let colon = body.find(":").filter(|colon| {
+        [body.find("/"), body.find("?")]
+            .into_iter()
+            .flatten()
+            .min()
+            .is_none_or(|delimiter| *colon < delimiter)
+    });
+    let (rest, mut base) = if let Some(colon) = colon {
+        // A colon after '/' or '?' belongs to a relative path/query. Only
+        // delegate after establishing the same scheme boundary as the parser.
+        if let Some(index) = opaque_syntax_index(text, reason) {
+            return Some(index);
+        }
+        let rest = body.range(colon + 1..);
+        if !rest.starts_with("/") {
+            return None;
+        }
+        (
+            rest,
+            body.range(..colon + 1)
+                .to_pkl_string()
+                .encode_utf16()
+                .count(),
+        )
+    } else {
+        (body, 0)
+    };
+    let (hierarchy, query) = rest
+        .split_once("?")
+        .map_or((rest, None), |(a, b)| (a, Some(b)));
+    let path = if let Some(after) = hierarchy.strip_prefix("//") {
+        // Empty authority is sufficient for file:/// roots. Nonempty authority
+        // requires JDK server/registry fallback diagnostics, not a guessed index.
+        if !after.starts_with("/") {
+            return None;
+        }
+        base += 2;
+        after
+    } else {
+        hierarchy
+    };
+    let components = [
+        Some((path, Component::Path, base)),
+        query.map(|part| {
+            (
+                part,
+                Component::Query,
+                body.to_pkl_string().encode_utf16().count()
+                    - part.to_pkl_string().encode_utf16().count(),
+            )
+        }),
+        fragment.map(|part| {
+            (
+                part,
+                Component::Fragment,
+                body.to_pkl_string().encode_utf16().count() + 1,
+            )
+        }),
+    ];
+    for (part, component, mut index) in components.into_iter().flatten() {
+        let mut characters = part.characters().peekable();
+        while let Some((_, character)) = characters.next() {
+            let invalid = if character == SourceCharacter::Scalar('%') {
+                let mut lookahead = characters.clone();
+                (!(0..2).all(|_| {
+                    lookahead
+                        .next()
+                        .is_some_and(|(_, c)| c.scalar().is_some_and(|c| c.is_ascii_hexdigit()))
+                }))
+                .then_some("Malformed escape pair")
+            } else {
+                character
+                    .scalar()
+                    .filter(|c| !component.permits(*c))
+                    .map(|_| component.illegal())
+            };
+            if let Some(actual) = invalid {
+                return (actual == reason).then_some(index);
+            }
+            index += character.len_utf16();
+        }
+    }
+    None
+}
+
 #[derive(Clone, Debug)]
 pub(super) struct ResourceUri {
     pub(super) text: PklString,

@@ -1,0 +1,71 @@
+{
+  "output": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-audit-guard-01",
+  "inputs": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-closed-plan-02/closed-plan.json",
+      "bytes": 5168360,
+      "sha256": "cfa73558c95906fecd8fbbf024ac24479e7faed4ef47e5d0138db8445aa660a0",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-prep-04/manifest.json",
+      "bytes": 6132,
+      "sha256": "9aa19004c1b3aa5ca5ab47a7ea4d86c3d17a1ad66a1af212651d43ef3230641d",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-prep-04/audit.py",
+      "bytes": 3356,
+      "sha256": "bfa65401f997a1e49e17018abea835f301246f01642d5fb8d096ccccb0a9ceb8",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-prep-04/common.py",
+      "bytes": 10420,
+      "sha256": "1d2a202210781a8e917f1c0e6fb84890b6ba78d3ac1f26f257b594f35ac27e1a",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-independent-review-04/report.json",
+      "bytes": 11827,
+      "sha256": "c9da56adcb44df7db9f464776613eb3272fe734281c84b2976485183e1d5b1f1",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-closed-plan-independent-review-01/report.json",
+      "bytes": 8411,
+      "sha256": "1f225243921a89f5067bb5dcadc5e64ba279783abbd3dcbfe3de839637832bfc",
+      "mode": 420
+    }
+  ],
+  "commands": [
+    {
+      "name": "finite-current-source-audit",
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-prep-04/audit.py",
+        "--plan-pin",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-closed-plan-02/closed-plan.json",
+        "5168360",
+        "cfa73558c95906fecd8fbbf024ac24479e7faed4ef47e5d0138db8445aa660a0",
+        "420"
+      ]
+    }
+  ],
+  "environment": {
+    "PATH": "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin:/usr/bin:/bin:/usr/sbin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "limits": {
+    "new_tree_rss_bytes": 1610612736,
+    "aggregate_rss_bytes": 2147483648,
+    "disk_floor_bytes": 1275068416,
+    "seconds_per_command": 3600
+  },
+  "initial_growth_reserved_bytes": 268435456,
+  "scope": "Finite current source/document audit after all runtime readers closed. One docs-only TESTING transition is explicit in the plan; no rerun or full dependency-closure claim."
+}

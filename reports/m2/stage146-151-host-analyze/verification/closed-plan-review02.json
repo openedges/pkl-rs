@@ -1,0 +1,93 @@
+{
+  "review_complete": true,
+  "narrow_successor_review": true,
+  "source_and_closed_metadata_only": true,
+  "plan": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-closed-plan-02/closed-plan.json",
+    "bytes": 5168360,
+    "sha256": "cfa73558c95906fecd8fbbf024ac24479e7faed4ef47e5d0138db8445aa660a0",
+    "mode": 420
+  },
+  "predecessor_plan": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-closed-plan-01/closed-plan.json",
+    "bytes": 5166218,
+    "sha256": "157f1d1aca591dbb92a01b54245a78407c30c8c2f04012b8b7d29d6a1702693f",
+    "mode": 420
+  },
+  "predecessor_review": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-closed-plan-independent-review-01/report.json",
+    "bytes": 8411,
+    "sha256": "1f225243921a89f5067bb5dcadc5e64ba279783abbd3dcbfe3de839637832bfc",
+    "mode": 420
+  },
+  "findings": [],
+  "concrete_blocker_found": false,
+  "checks": {
+    "exact_requested_metadata_delta_only": true,
+    "roles_sources_rawmaps_docs_TESTING_transition_unchanged": true,
+    "stale_operating_M1_note_corrected": true,
+    "recovery_receipt_and_linked_failure_selected_as_scanned_records": true,
+    "failed_storage_stdout_stderr_verified": [
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-default-workspace-01/storage-receipts/8715d21e-3249-448a-9f71-2d93d85dc5d0.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-default-workspace-01/storage-receipts/8715d21e-3249-448a-9f71-2d93d85dc5d0.stderr.bin",
+        "bytes": 398,
+        "sha256": "2e566e567e571aae59603af714b7f976d9fc69dc150b9c9a990ce264136559ae",
+        "mode": 420
+      }
+    ],
+    "below_floor_recovery_explicit_no_test_credit": true,
+    "unknown_recovery_path_gap_removed": true,
+    "observed_free_delta_not_exclusive_extent_claim": true
+  },
+  "inputs": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-closed-plan-01/closed-plan.json",
+      "bytes": 5166218,
+      "sha256": "157f1d1aca591dbb92a01b54245a78407c30c8c2f04012b8b7d29d6a1702693f",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-closed-plan-02/closed-plan.json",
+      "bytes": 5168360,
+      "sha256": "cfa73558c95906fecd8fbbf024ac24479e7faed4ef47e5d0138db8445aa660a0",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-failed-wrapper-product-recovery-01/report.json",
+      "bytes": 1795,
+      "sha256": "064c2076b9a0f67b058cfa349e4271ef0087e6b025da2cc597677ab6453c60c6",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-default-workspace-01/storage-receipts/8715d21e-3249-448a-9f71-2d93d85dc5d0.json",
+      "bytes": 3748,
+      "sha256": "ad4342d506c1a7e5a43ee5e182bb01085b773ca3a22d7de3b08aa9649839d674",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-default-workspace-01/storage-receipts/8715d21e-3249-448a-9f71-2d93d85dc5d0.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-default-workspace-01/storage-receipts/8715d21e-3249-448a-9f71-2d93d85dc5d0.stderr.bin",
+      "bytes": 398,
+      "sha256": "2e566e567e571aae59603af714b7f976d9fc69dc150b9c9a990ce264136559ae",
+      "mode": 420
+    }
+  ],
+  "limitations": [
+    "No audit/selector/archive execution, cache/toolchain/compiled body access or runtime replay. Final actual audit/selection and archive integrity remain root-owned prerequisites.",
+    "Prior plan01 targeted source/raw routing review is retained; unchanged tables were compared exactly, not reverified by replay."
+  ],
+  "tracked_files_modified": false,
+  "resource_jobs": 0,
+  "archive_bodies_accessed": false
+}

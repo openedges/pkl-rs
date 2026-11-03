@@ -1,0 +1,56 @@
+{
+  "output": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-pack-guard-01",
+  "inputs": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-01/payload-roster.json",
+      "bytes": 9120294,
+      "sha256": "f512cd221612f87b348b3a947e617df3589d46fcb0ffe2cd54ee03d6b892771f",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-tool-01/pack.py",
+      "bytes": 5270,
+      "sha256": "4143b6bcff8e753e64391533033382fe864bf3267f541628dfae8956fd1e7513",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-tool-01/manifest.json",
+      "bytes": 4351,
+      "sha256": "cab173205a76cb77435121bb651997ea4e8f6addefabeb937ae28e7e98dec985",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-independent-review-01/report.json",
+      "bytes": 12040,
+      "sha256": "462756daf230c77c29bf8c5ac90f299ab1121a999b9191cc336a0d640d39a551",
+      "mode": 420
+    }
+  ],
+  "commands": [
+    {
+      "name": "finite-evidence-pack",
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-tool-01/pack.py",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-01/payload-roster.json",
+        "f512cd221612f87b348b3a947e617df3589d46fcb0ffe2cd54ee03d6b892771f"
+      ]
+    }
+  ],
+  "environment": {
+    "PATH": "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin:/usr/bin:/bin:/usr/sbin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "limits": {
+    "new_tree_rss_bytes": 1610612736,
+    "aggregate_rss_bytes": 2147483648,
+    "disk_floor_bytes": 1275068416,
+    "seconds_per_command": 3600
+  },
+  "initial_growth_reserved_bytes": 268435456,
+  "scope": "Pack only the final qualified finite current roster into a new streaming gzip/tar archive. All nonpasses and declared omitted dependencies retain their original meaning; no old archive bodies or caches are opened."
+}

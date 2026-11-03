@@ -4,6 +4,7 @@
 use crate::pkl_string::PklStringBuilder;
 use crate::source::{SourceCharacter, SourceSlice, SourceText};
 use crate::value::{ErrorKind, PklString, RuntimeError, Value};
+pub(crate) mod analysis_uri;
 mod lossless_uri;
 use crate::vm::ReadRequest;
 use lossless_uri::ResourceUri;
@@ -52,9 +53,18 @@ pub(crate) fn configured_read(
     let uri = ResourceUri::parse(&resolved_uri(request)?).expect("resolved resource URI");
     let scheme = uri.scheme.as_deref().expect("resolved URI is absolute");
     if matches!(scheme, "http" | "https") && !uri.has_supported_http_authority() {
-        return Err(unsupported(
-            "HTTP resource request construction for this URI form is not implemented.",
-        ));
+        let message = "HTTP resource request construction for this URI form is not implemented.";
+        // The existing Host support predicate also rejects valid user-info and
+        // IPv6 authorities. Do not mislabel those unsupported forms as Java bugs.
+        if known_http_null_host(&uri) {
+            return Err(RuntimeError::foreign(
+                crate::java_exception::provenance::ForeignOperation::HttpRequestWithoutHost {
+                    uri: uri.text.clone(),
+                },
+                message,
+            ));
+        }
+        return Err(unsupported(message));
     }
     if !matches!(
         scheme,
@@ -62,6 +72,22 @@ pub(crate) fn configured_read(
     ) {
         return Err(RuntimeError::host_language(PklString::from("Refusing to read resource `")
             .concat(&uri.text).concat(&"` because it does not match any entry in the resource allowlist (`--allowed-resources`).".into())));
+    }
+    // ResourceManager.read checks the resource allowlist first. FileResource
+    // then validates the decoded scheme-specific part before resolveSecurePath
+    // and I/O. An encoded leading slash is valid even for an opaque URI shape.
+    if scheme == "file"
+        && !decoded_scheme_specific_part(&uri.text)
+            .expect("parsed absolute resource URI")
+            .starts_with("/")
+    {
+        let mut error = RuntimeError::host_language(
+            PklString::from("Resource URI `")
+                .concat(&uri.text)
+                .concat(&"` has invalid syntax.".into()),
+        );
+        error.hint = Some("File URIs must have a path that starts with `/` (e.g. file:/path/to/my_module.pkl).\nTo resolve relative paths, remove the scheme prefix (remove \"file:\").".into());
+        return Err(error);
     }
     if matches!(scheme, "env" | "prop") {
         let key = decoded_scheme_specific_part(&uri.text).expect("absolute URI");
@@ -269,6 +295,19 @@ fn fold_escapes(text: &PklString) -> PklString {
         }
     }
     output.finish()
+}
+
+// A bounded proof of URI.getHost() == null, not a new HTTP support policy.
+// Exotic/escaped/user-info/IPv6 authority forms remain unclassified here.
+fn known_http_null_host(uri: &ResourceUri) -> bool {
+    uri.opaque
+        || uri.authority.as_ref().is_none_or(|authority| {
+            authority.as_str().is_some_and(|text| {
+                text.is_ascii()
+                    && !text.contains(['[', ']', '@', '%'])
+                    && server_authority(authority).is_none()
+            })
+        })
 }
 
 fn server_authority(authority: &PklString) -> Option<AuthorityKey> {
@@ -596,6 +635,47 @@ pub(crate) fn prepare_module_uri(
     };
     let absolute = parsed.text.clone();
     Ok((absolute, parsed.normalize().text))
+}
+
+/// Java URI.resolve(".") followed by getPath/getHost, for the pure cross-OS
+/// EvaluatorSettings path resolver. No filesystem or executing-OS data is used.
+pub(crate) fn evaluator_settings_directory(
+    base: &PklString,
+) -> Result<(PklString, Option<PklString>), RuntimeError> {
+    let parsed = ResourceUri::parse(base).map_err(|failure| match failure {
+        ParseError::Syntax(_) => RuntimeError::new(
+            ErrorKind::Type,
+            PklString::from("URI `")
+                .concat(base)
+                .concat(&"` has invalid syntax.".into()),
+        ),
+        ParseError::Unsupported(reason) => unsupported(reason),
+    })?;
+    if parsed.scheme.as_deref() != Some("file") || parsed.opaque {
+        return Err(unsupported(
+            "EvaluatorSettings.resolvePath requires a hierarchical file URI.",
+        ));
+    }
+    let directory = ResourceUri::parse(&".".into())
+        .expect("literal relative URI")
+        .resolve_module(Some(base))?;
+    let host = directory.authority.as_ref().and_then(|authority| {
+        // Validate server authority with the shared parser, but retain the
+        // original host spelling: Java URI.getHost does not case-fold it.
+        server_authority(authority)?;
+        let text = SourceText::from(authority.clone());
+        let view = text.entire();
+        let host_port = view.split_once("@").map_or(view, |(_, host)| host);
+        let host = if host_port.starts_with("[") {
+            host_port.range(..host_port.find("]")? + 1)
+        } else {
+            host_port
+                .split_once(":")
+                .map_or(host_port, |(host, _)| host)
+        };
+        Some(host.to_pkl_string())
+    });
+    Ok((decode_escapes(&directory.path), host))
 }
 
 pub(crate) fn resolve_module_key_uri(

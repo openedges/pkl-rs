@@ -1,0 +1,168 @@
+{
+  "complete": true,
+  "head": "9409cd3c6633f738a3353f4cca65b7f6be251001",
+  "epoch": 1793748472.630262,
+  "draft": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-checkpoint-doc-draft-05/manifest.json",
+    "bytes": 22775,
+    "sha256": "0d9b13acb075b9b33c4b53bb49aea66c174995ace53109e7a37e6a52de243cd8",
+    "mode": 420
+  },
+  "documents": [
+    {
+      "destination": "README.md",
+      "before": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/README.md",
+        "bytes": 24254,
+        "sha256": "cd705ce940e1d62a509a5fd16d84b1b990d70d64a06803904e83246e8fdc4218",
+        "mode": 420
+      },
+      "retained_before": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-documentation-application-01/README.md.before",
+        "bytes": 24254,
+        "sha256": "cd705ce940e1d62a509a5fd16d84b1b990d70d64a06803904e83246e8fdc4218",
+        "mode": 420
+      },
+      "fragment": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-checkpoint-doc-draft-05/README-insertion.md",
+        "bytes": 850,
+        "sha256": "48bba9eef46a237973e1f3e096d5d1a273b53c0d61ac5b62bc46fc4bf3b6cd01",
+        "mode": 420
+      },
+      "transformation": null,
+      "after": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/README.md",
+        "bytes": 25104,
+        "sha256": "3f35de248a92fb88dd891d2f74011a4c38baa352f60602e66f82101b30380d2a",
+        "mode": 420
+      }
+    },
+    {
+      "destination": "TESTING.md",
+      "before": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/TESTING.md",
+        "bytes": 134059,
+        "sha256": "b5685f3e33b09a73914e7754504a6061cae3cb95f39e332d459c928ff222a5ad",
+        "mode": 420
+      },
+      "retained_before": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-documentation-application-01/TESTING.md.before",
+        "bytes": 134059,
+        "sha256": "b5685f3e33b09a73914e7754504a6061cae3cb95f39e332d459c928ff222a5ad",
+        "mode": 420
+      },
+      "fragment": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-checkpoint-doc-draft-05/TESTING-insertion.md",
+        "bytes": 1332,
+        "sha256": "69033bb807da157146df77920e845461280514c5dc9e9b88380f5fcdb19bd7b8",
+        "mode": 420
+      },
+      "transformation": null,
+      "after": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/TESTING.md",
+        "bytes": 135391,
+        "sha256": "7f382f2a347f0734b7b74e3180fb56af6651684e6c8a62caa2d1d2d95c23c555",
+        "mode": 420
+      }
+    },
+    {
+      "destination": "docs/m2-language.md",
+      "before": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/docs/m2-language.md",
+        "bytes": 144269,
+        "sha256": "6c3af4b2edf9add1514e29038d568c9722401b0c1405d472b0ad37c90364f1a2",
+        "mode": 420
+      },
+      "retained_before": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-documentation-application-01/docs__m2-language.md.before",
+        "bytes": 144269,
+        "sha256": "6c3af4b2edf9add1514e29038d568c9722401b0c1405d472b0ad37c90364f1a2",
+        "mode": 420
+      },
+      "fragment": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-checkpoint-doc-draft-05/m2-language-insertion.md",
+        "bytes": 1423,
+        "sha256": "4ae96ba966522254e9e3c3b4ec3f00706cb9094792f80977b93081976c26e4dd",
+        "mode": 420
+      },
+      "transformation": null,
+      "after": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/docs/m2-language.md",
+        "bytes": 145692,
+        "sha256": "6a02b50080542a20e69b02dbaf7d65be75b5b50c805a8b86bdb8aec619092077",
+        "mode": 420
+      }
+    },
+    {
+      "destination": "docs/architecture.md",
+      "before": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/docs/architecture.md",
+        "bytes": 119301,
+        "sha256": "d0fae208776f63ff6b2b66cff0140d96f626fe4815821b612218c75de0539c38",
+        "mode": 420
+      },
+      "retained_before": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-documentation-application-01/docs__architecture.md.before",
+        "bytes": 119301,
+        "sha256": "d0fae208776f63ff6b2b66cff0140d96f626fe4815821b612218c75de0539c38",
+        "mode": 420
+      },
+      "fragment": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-checkpoint-doc-draft-05/architecture-insertion.md",
+        "bytes": 1265,
+        "sha256": "bcf09161ee95761aa0c55bcd20af53a55efb44858460f29fdb13fac77e146b8b",
+        "mode": 420
+      },
+      "transformation": null,
+      "after": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/docs/architecture.md",
+        "bytes": 120566,
+        "sha256": "2f445e42c53ac1a50fee57b48763bc7294eb2e596896a92c306c7a59393c93ad",
+        "mode": 420
+      }
+    },
+    {
+      "destination": "PLAN.md",
+      "before": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/PLAN.md",
+        "bytes": 531623,
+        "sha256": "89917456172d57b4c05c0590f6bfeb98d819a04af39de8dea610054adcb3ff3d",
+        "mode": 420
+      },
+      "retained_before": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-documentation-application-01/PLAN.md.before",
+        "bytes": 531623,
+        "sha256": "89917456172d57b4c05c0590f6bfeb98d819a04af39de8dea610054adcb3ff3d",
+        "mode": 420
+      },
+      "fragment": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-checkpoint-doc-draft-05/PLAN-insertion.md",
+        "bytes": 6687,
+        "sha256": "bc05fb72acf0d0ba360ada4c1d5de0c3aa2f4b3218a77dfff8b1517c2e1742d9",
+        "mode": 420
+      },
+      "transformation": "Omit the final draft-only application instruction paragraph; all milestone content is unchanged.",
+      "after": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/PLAN.md",
+        "bytes": 537886,
+        "sha256": "2d0f975abe121f4a9b00ba885761b1b031fecd7b00e30b9aacdcfcfd4ac21d7e",
+        "mode": 420
+      }
+    }
+  ],
+  "plan_applied_fragment": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-documentation-application-01/PLAN-applied-insertion.md",
+    "bytes": 6263,
+    "sha256": "89c705defd5c46657477190488acbb43ef3fb7fee9168b7aca85c929bed4eada",
+    "mode": 420
+  },
+  "post_validation_docs_only_transition": true,
+  "runtime_source_plan_changed_destinations": [
+    "TESTING.md"
+  ],
+  "runtime_sources_modified": false,
+  "old_runtime_receipts_rewritten": false,
+  "all_runtime_input_bytes_unchanged_after_application_claim": false,
+  "publication_complete": false,
+  "scope": "Actual five-document application after all runtime readers closed. Retained before aliases preserve validation-era bytes. TESTING is the sole changed runtime source-plan input; runtime code and all original reports remain unchanged. Final publication and Git receipts follow separately."
+}

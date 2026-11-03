@@ -11,6 +11,7 @@ use crate::logging::{EvaluationContext, FrameTransformRequest, LogRequest, Logge
 use crate::source::Span;
 use crate::value::{ErrorKind, ObjectId, PklString, RuntimeError, RuntimeFrame, Value};
 pub(crate) mod amendment;
+mod analyze;
 pub(crate) mod annotations;
 mod any;
 pub(crate) mod builtins;
@@ -50,6 +51,7 @@ mod modules;
 mod null;
 mod query_lifecycle;
 mod session_expressions;
+mod settings_paths;
 mod stdlib_modules;
 mod xml;
 mod yaml_parser;
@@ -87,6 +89,9 @@ pub enum Instruction {
     ReflectCall(reflection::Operation),
     /// Execute the authored pkl:json Parser.parse external body.
     JsonParse,
+    /// Pure lexical path resolution for authored EvaluatorSettings.resolveForOs.
+    ResolveEvaluatorSettingsPath,
+    AnalyzeImportGraph,
     YamlParse {
         all: bool,
     },
@@ -1289,6 +1294,7 @@ struct Frame {
     mapping_lookup: Option<Box<mapping_ops::LookupRun>>,
     mapping_keys: Option<Box<mapping_ops::KeysRun>>,
     reflection: Option<Box<reflection::Run>>,
+    analysis: Option<Box<analyze::Run>>,
     conversion_run: Option<Box<collection_conversions::Run>>,
     collection_addition: Option<Box<collection_addition::Run>>,
     function_owner: Option<ObjectId>,
@@ -1585,6 +1591,7 @@ impl Vm {
             mapping_lookup: None,
             mapping_keys: None,
             reflection: None,
+            analysis: None,
             conversion_run: None,
             collection_addition: None,
             function_owner: None,
@@ -2075,6 +2082,9 @@ impl Vm {
                 if let Some(run) = &frame.mapping_lookup {
                     run.roots(&mut roots);
                 }
+                if let Some(run) = &frame.analysis {
+                    run.roots(&mut roots);
+                }
                 if let Some(run) = &frame.reflection {
                     roots.extend(run.roots());
                 }
@@ -2174,6 +2184,60 @@ impl Vm {
     }
 
     fn fail(&mut self, mut error: RuntimeError) {
+        // Capture the original activations before catches, header relocation or
+        // diagnostic filtering. A cached/rethrown cause retains its first origin.
+        if error
+            .foreign_exception
+            .as_ref()
+            .is_some_and(|cause| cause.origin.is_none())
+        {
+            use crate::java_exception::provenance::{ForeignActivation, ForeignOrigin};
+            let origin = ForeignOrigin {
+                activations: self
+                    .frames
+                    .iter()
+                    .map(|frame| {
+                        let metadata = self.program.metadata.get(frame.block);
+                        let instruction_index = frame.pc.checked_sub(1);
+                        ForeignActivation {
+                            instruction_index,
+                            member: metadata.map(|metadata| metadata.member.clone()),
+                            source: metadata.and_then(|metadata| metadata.source.clone()),
+                            instruction_span: metadata.and_then(|metadata| {
+                                instruction_index
+                                    .and_then(|index| metadata.spans.get(index).copied().flatten())
+                            }),
+                            declaration_span: metadata.and_then(|metadata| metadata.declaration),
+                            method_signature: metadata
+                                .and_then(|metadata| metadata.method_signature.clone()),
+                            active_let_frames: metadata.map_or_else(Vec::new, |metadata| {
+                                metadata
+                                    .let_scopes
+                                    .iter()
+                                    .filter(|scope| {
+                                        instruction_index
+                                            .is_some_and(|index| scope.body.contains(&index))
+                                    })
+                                    .map(|scope| scope.frame.clone())
+                                    .collect()
+                            }),
+                            lambda: frame.lambda,
+                            inline_constraint: metadata
+                                .is_some_and(|metadata| metadata.inline_constraint),
+                            anonymous_root: metadata
+                                .is_some_and(|metadata| metadata.anonymous_root),
+                        }
+                    })
+                    .collect(),
+                primary_source: self.context.primary_source.clone(),
+                power_assertions: self.power_assertions,
+                frame_transformer: self.context.frame_transformer,
+                original_span: error.span,
+                existing_guest_frames: error.frames.clone(),
+            };
+            Arc::make_mut(error.foreign_exception.as_mut().expect("foreign cause")).origin =
+                Some(origin);
+        }
         if error.kind == ErrorKind::MissingType
             && error.type_lookup_module.is_none()
             && let Some(frame) = self.frames.last()
@@ -3446,6 +3510,7 @@ impl Vm {
             mapping_lookup: None,
             mapping_keys: None,
             reflection: None,
+            analysis: None,
             conversion_run: None,
             collection_addition: None,
             function_owner: None,
@@ -4550,6 +4615,7 @@ impl Vm {
             mapping_lookup: None,
             mapping_keys: None,
             reflection: None,
+            analysis: None,
             conversion_run: None,
             collection_addition: None,
             function_owner: Some(id),
@@ -4621,6 +4687,13 @@ impl Vm {
             .is_some_and(|frame| frame.reflection.is_some())
         {
             return self.step_reflection();
+        }
+        if self
+            .frames
+            .last()
+            .is_some_and(|frame| frame.analysis.is_some())
+        {
+            return self.step_analysis();
         }
         if self
             .frames
@@ -4813,6 +4886,8 @@ impl Vm {
                     .push(Value::Bytes(value.to_java_utf8().into_bytes().into()));
             }
             Instruction::ResourceProperty(property) => self.resource_property(property)?,
+            Instruction::ResolveEvaluatorSettingsPath => self.resolve_evaluator_settings_path()?,
+            Instruction::AnalyzeImportGraph => self.begin_analysis()?,
             Instruction::OutputRenderer => self.output_renderer()?,
             Instruction::RenderPcf { document } => {
                 self.begin_render(document, rendering::Format::Pcf)?
@@ -6893,6 +6968,14 @@ fn binary(
                     .map_err(numeric_error)?
                     .into(),
             ),
+            Instruction::Remainder if right.get() == 0 => {
+                return Err(RuntimeError::foreign(
+                    crate::java_exception::provenance::ForeignOperation::IntegerRemainderByZero {
+                        dividend: left.get(),
+                    },
+                    "Integer remainder by zero requires foreign-exception projection.",
+                ));
+            }
             Instruction::Remainder => Value::Int(
                 crate::numeric::remainder(*left, *right)
                     .map_err(numeric_error)?
@@ -7780,6 +7863,20 @@ impl Compiler<'_> {
                 && let Some(operation) = reflection::Operation::binding(&self.member)
             {
                 instructions.push_at(Instruction::ReflectCall(operation), member.name_span);
+            } else if self.resolved.standard_library
+                && self.source.as_ref().is_some_and(|source| {
+                    matches!(source.uri.as_str(), Some("pkl:platform" | "pkl:release"))
+                })
+                && self.member == "#current"
+                && self
+                    .modifiers
+                    .iter()
+                    .any(|modifier| modifier.kind == crate::syntax::ModifierKind::External)
+            {
+                // External current values come from actual runtime/release data,
+                // never the property's ordinary class default or Rust guesses.
+                instructions.push_at(Instruction::Fail(RuntimeError::new(ErrorKind::Unsupported,
+                    "This standard-library current value requires explicit platform/release Host data.")), member.name_span);
             } else {
                 self.default_property(member, &mut instructions)?;
             }
@@ -8213,7 +8310,31 @@ impl Compiler<'_> {
                 output.push(Instruction::ApplyEntryDefault);
             }
             ExprKind::Uninitialized => {
-                if self
+                if self.resolved.standard_library
+                    && self
+                        .source
+                        .as_ref()
+                        .is_some_and(|source| source.uri == "pkl:analyze")
+                    && self.member == "#importGraph"
+                    && self
+                        .modifiers
+                        .iter()
+                        .any(|modifier| modifier.kind == crate::syntax::ModifierKind::External)
+                {
+                    output.push(Instruction::AnalyzeImportGraph);
+                } else if self.resolved.standard_library
+                    && self
+                        .source
+                        .as_ref()
+                        .is_some_and(|source| source.uri == "pkl:EvaluatorSettings")
+                    && self.member == "#resolvePath"
+                    && self
+                        .modifiers
+                        .iter()
+                        .any(|modifier| modifier.kind == crate::syntax::ModifierKind::External)
+                {
+                    output.push(Instruction::ResolveEvaluatorSettingsPath);
+                } else if self
                     .source
                     .as_ref()
                     .is_some_and(|source| source.uri == "pkl:base")

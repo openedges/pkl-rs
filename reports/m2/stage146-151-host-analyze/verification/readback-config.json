@@ -1,0 +1,66 @@
+{
+  "output": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-readback-guard-01",
+  "inputs": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-01/payload-roster.json",
+      "bytes": 9120294,
+      "sha256": "f512cd221612f87b348b3a947e617df3589d46fcb0ffe2cd54ee03d6b892771f",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-01/report.json",
+      "bytes": 692,
+      "sha256": "f28cee237c9b7fc7bab360e0093a06ea2c7bcd8caadb926516f4eb2c04949102",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-readback-tool-01/readback.py",
+      "bytes": 9593,
+      "sha256": "fb8a3c740b05ea325afefdb6d1c4372800c1c1a1147eaa59b9e1703da528f5ec",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-readback-tool-01/manifest.json",
+      "bytes": 1719,
+      "sha256": "116ca9b144ec403da42deebd2b6ac2f4bea17921113640aaccac4979c1099735",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-independent-review-01/report.json",
+      "bytes": 12040,
+      "sha256": "462756daf230c77c29bf8c5ac90f299ab1121a999b9191cc336a0d640d39a551",
+      "mode": 420
+    }
+  ],
+  "commands": [
+    {
+      "name": "independent-new-archive-readback",
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-readback-tool-01/readback.py",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-01/evidence.tar.gz",
+        "4e41a9b3567ffab8f7f459bf0262913e3309f0ff956742f03c0b81e1a8a2010b",
+        "22255034",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-01/payload-roster.json",
+        "f512cd221612f87b348b3a947e617df3589d46fcb0ffe2cd54ee03d6b892771f",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-readback-01"
+      ]
+    }
+  ],
+  "environment": {
+    "PATH": "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin:/usr/bin:/bin:/usr/sbin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "limits": {
+    "new_tree_rss_bytes": 1610612736,
+    "aggregate_rss_bytes": 2147483648,
+    "disk_floor_bytes": 1275068416,
+    "seconds_per_command": 3600
+  },
+  "initial_growth_reserved_bytes": 268435456,
+  "scope": "Read and verify the one newly closed archive by complete member/order/mode/length/SHA and whole-archive checksum. No extraction, older archive body, runtime or cache access. Archive identity verified by independent reader; guard inputs keep only its closed pack receipt."
+}

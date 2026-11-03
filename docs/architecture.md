@@ -27,6 +27,12 @@ Incorporate Pkl 0.32 name resolution into compilation. Distinguish lexical bindi
 
 Represent lazy members with unevaluated, evaluating, and completed cache states. Keep a failed evaluation's result separate from the member cache so a later attempt can retry. Design inheritance, amendments, closures, type constraints, and memoization together. An evaluator-owned heap must support reclamation, including cyclic objects, in long-running REPL and server sessions.
 
+### Static analysis and native file capabilities
+
+`modules::analyze` exposes typed key-selection, resolution and source-loading continuations. It parses imports without compiling or evaluating loaded guest module bodies. Original graph URI spelling, normalized factory requests and provider-owned loading identities remain distinct. The current graph builder is eager; Java's lazy graph allocation and identity-dependent sibling effect/error order remain unqualified. Static analyzer glob traversal is Unsupported, and complete standard-library source service remains unfinished.
+
+Native development Hosts supply file Glob/HasElement metadata while matching, ordering and lazy value loading stay in the shared VM. Authorization and decoded file-URI validation precede filesystem I/O. Selected authored settings modules use explicit POSIX/Windows lexical path operations rather than invented Host descriptors; full project/package support, `platform.current`, `release.current` and Benchmark execution remain open. Public `Instruction` adds `ResolveEvaluatorSettingsPath` and `AnalyzeImportGraph`, requiring downstream exhaustive matches to handle them. These bounded shared-engine capabilities do not establish complete browser/Node Host or language/API coverage.
+
 ### Typed property lookup, module identity and bounded annotation/const diagnostics
 
 `Typed.getProperty` uses the existing String-checked property lookup continuation and actual Typed inheritance. It preserves lazy lookup, existing const-method restrictions, missing-member suggestions, receiver labels and UTF-16 property names. It shares the evaluator, diagnostic renderer and heap with native, Wasm and N-API.

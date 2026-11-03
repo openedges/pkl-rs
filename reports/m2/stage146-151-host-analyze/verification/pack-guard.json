@@ -1,0 +1,176 @@
+{
+  "complete": true,
+  "errors": [],
+  "head": "9409cd3c6633f738a3353f4cca65b7f6be251001",
+  "config": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-root-config-01/pack.json",
+    "bytes": 2381,
+    "sha256": "4aad838d38b9cb5a7684550dcfd5c6f8a6353b47b79730942898b604b07b2921",
+    "mode": 420
+  },
+  "inputs_before": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-01/payload-roster.json",
+      "bytes": 9120294,
+      "sha256": "f512cd221612f87b348b3a947e617df3589d46fcb0ffe2cd54ee03d6b892771f",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-tool-01/pack.py",
+      "bytes": 5270,
+      "sha256": "4143b6bcff8e753e64391533033382fe864bf3267f541628dfae8956fd1e7513",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-tool-01/manifest.json",
+      "bytes": 4351,
+      "sha256": "cab173205a76cb77435121bb651997ea4e8f6addefabeb937ae28e7e98dec985",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-independent-review-01/report.json",
+      "bytes": 12040,
+      "sha256": "462756daf230c77c29bf8c5ac90f299ab1121a999b9191cc336a0d640d39a551",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-root-config-01/pack.json",
+      "bytes": 2381,
+      "sha256": "4aad838d38b9cb5a7684550dcfd5c6f8a6353b47b79730942898b604b07b2921",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-command-guard-prep-01/run.py",
+      "bytes": 7473,
+      "sha256": "ac61660af44fc27e0108c9336b13c3dcb1b630d9d923cd8c5d9bbbc5c35f195f",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-composed-lossless-glob576-prep-01/owned_processes.py",
+      "bytes": 3686,
+      "sha256": "542f1a5bbd2bba80795ca3b5dbe1fbe0beeec92dee02f716ec9b856e1b92e58d",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-composed-lossless-glob576-prep-01/child_gate.py",
+      "bytes": 254,
+      "sha256": "f436bb983c45f832ba8bfb2203089ed18c676c83804cf942f8f88f15419a90df",
+      "mode": 420
+    }
+  ],
+  "commands": [
+    {
+      "name": "finite-evidence-pack",
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-tool-01/pack.py",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-01/payload-roster.json",
+        "f512cd221612f87b348b3a947e617df3589d46fcb0ffe2cd54ee03d6b892771f"
+      ],
+      "command_environment": {},
+      "started_epoch": 1793749131.184333,
+      "stop_reason": null,
+      "peak_owned_rss_bytes": 94371840,
+      "peak_aggregate_rss_bytes": 152059904,
+      "minimum_free_bytes": 2855563264,
+      "elapsed_seconds": 11.457772749941796,
+      "exit_code": 0,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-pack-guard-01/0.stdout.bin",
+        "bytes": 658,
+        "sha256": "a42d804245edbd0e9b2a40f3b18874ec40fab18e4874cc8c96fece04dff78457",
+        "mode": 420
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-pack-guard-01/0.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "owned": {
+        "root_pid": 47726,
+        "root_observed": true,
+        "tracked": [
+          {
+            "pid": 47726,
+            "started": "Wed Nov 4 08:38:51 2026",
+            "parent_pid_at_discovery": 47720,
+            "group_id_at_discovery": 47726
+          }
+        ],
+        "terminal_live": []
+      }
+    }
+  ],
+  "limits": {
+    "new_tree_rss_bytes": 1610612736,
+    "aggregate_rss_bytes": 2147483648,
+    "disk_floor_bytes": 1275068416,
+    "seconds_per_command": 3600
+  },
+  "environment": {
+    "PATH": "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin:/usr/bin:/bin:/usr/sbin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "scope": "Pack only the final qualified finite current roster into a new streaming gzip/tar archive. All nonpasses and declared omitted dependencies retain their original meaning; no old archive bodies or caches are opened.",
+  "started_epoch": 1793749131.1396759,
+  "source_dependency_closure_established": false,
+  "aggregate_scope": "Supervisor, descendants and same-process-group peers observed by the existing ownership helper; sampled, not whole-host peak.",
+  "inputs_after": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-01/payload-roster.json",
+      "bytes": 9120294,
+      "sha256": "f512cd221612f87b348b3a947e617df3589d46fcb0ffe2cd54ee03d6b892771f",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-tool-01/pack.py",
+      "bytes": 5270,
+      "sha256": "4143b6bcff8e753e64391533033382fe864bf3267f541628dfae8956fd1e7513",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-tool-01/manifest.json",
+      "bytes": 4351,
+      "sha256": "cab173205a76cb77435121bb651997ea4e8f6addefabeb937ae28e7e98dec985",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-independent-review-01/report.json",
+      "bytes": 12040,
+      "sha256": "462756daf230c77c29bf8c5ac90f299ab1121a999b9191cc336a0d640d39a551",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-root-config-01/pack.json",
+      "bytes": 2381,
+      "sha256": "4aad838d38b9cb5a7684550dcfd5c6f8a6353b47b79730942898b604b07b2921",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-command-guard-prep-01/run.py",
+      "bytes": 7473,
+      "sha256": "ac61660af44fc27e0108c9336b13c3dcb1b630d9d923cd8c5d9bbbc5c35f195f",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-composed-lossless-glob576-prep-01/owned_processes.py",
+      "bytes": 3686,
+      "sha256": "542f1a5bbd2bba80795ca3b5dbe1fbe0beeec92dee02f716ec9b856e1b92e58d",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-composed-lossless-glob576-prep-01/child_gate.py",
+      "bytes": 254,
+      "sha256": "f436bb983c45f832ba8bfb2203089ed18c676c83804cf942f8f88f15419a90df",
+      "mode": 420
+    }
+  ],
+  "selected_source_bookends_stable": true,
+  "commands_succeeded": true,
+  "finished_epoch": 1793749142.659322
+}

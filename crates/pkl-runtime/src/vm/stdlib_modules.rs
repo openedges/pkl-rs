@@ -17,8 +17,13 @@ impl Vm {
             Some("pkl:base") => crate::stdlib_sources::base(),
             Some("pkl:test") => crate::stdlib_sources::test(),
             Some("pkl:ref") => crate::stdlib_sources::reference(),
+            Some("pkl:analyze") => crate::stdlib_sources::analyze(),
             Some("pkl:reflect") => crate::stdlib_sources::reflect(),
             Some("pkl:semver") => crate::stdlib_sources::semver(),
+            Some("pkl:EvaluatorSettings") => crate::stdlib_sources::evaluator_settings(),
+            Some("pkl:Project") => crate::stdlib_sources::project(),
+            Some("pkl:platform") => crate::stdlib_sources::platform(),
+            Some("pkl:release") => crate::stdlib_sources::release(),
             Some("pkl:shell") => crate::stdlib_sources::shell(),
             Some("pkl:protobuf") => crate::stdlib_sources::protobuf(),
             Some("pkl:xml") => crate::stdlib_sources::xml(),
@@ -165,18 +170,24 @@ fn append_members(
     parsed: &crate::syntax::Module,
     power_assertions: bool,
 ) -> Result<UnitId, RuntimeError> {
-    if matches!(
-        uri,
-        "pkl:reflect"
-            | "pkl:semver"
-            | "pkl:json"
-            | "pkl:jsonnet"
-            | "pkl:protobuf"
-            | "pkl:xml"
-            | "pkl:yaml"
-            | "pkl:shell"
-            | "pkl:pklbinary"
-    ) {
+    let cached_settings = matches!(uri, "pkl:EvaluatorSettings" | "pkl:Project");
+    if cached_settings
+        || matches!(
+            uri,
+            "pkl:analyze"
+                | "pkl:platform"
+                | "pkl:release"
+                | "pkl:reflect"
+                | "pkl:semver"
+                | "pkl:json"
+                | "pkl:jsonnet"
+                | "pkl:protobuf"
+                | "pkl:xml"
+                | "pkl:yaml"
+                | "pkl:shell"
+                | "pkl:pklbinary"
+        )
+    {
         // Compile the actual module, including distinct class/property and
         // method namespaces. External bodies bind in the shared compiler.
         // Publish the singleton before recursively forcing its constants, as
@@ -196,7 +207,12 @@ fn append_members(
                 resolved_uri: uri.into(),
             }),
         )?;
-        append_bootstrap(program, unit, uri);
+        // ModuleCache does not load these cached modules through StdLibModule.
+        // Their ordinary properties remain lazy: Project.resolvedEvaluatorSettings
+        // must not require platform.current merely because its schema is imported.
+        if !cached_settings {
+            append_bootstrap(program, unit, uri);
+        }
         return Ok(unit);
     }
     // Compile the real authored annotation/initialization path. External member

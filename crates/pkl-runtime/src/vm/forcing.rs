@@ -183,6 +183,7 @@ impl Vm {
             mapping_lookup: None,
             mapping_keys: None,
             reflection: None,
+            analysis: None,
             conversion_run: None,
             collection_addition: None,
             function_owner: None,

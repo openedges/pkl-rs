@@ -3,6 +3,8 @@
 use pkl_runtime::{probe::SourceProbe, value::PklString};
 use std::{io::Write, path::Path};
 
+#[path = "file_glob_host.rs"]
+mod file_glob_host;
 #[path = "module_host.rs"]
 mod module_host;
 #[path = "resource_host.rs"]
@@ -80,7 +82,7 @@ fn run(arguments: &[String]) -> AdapterResult<Observation> {
             .evaluate_module_source(&uri, None, &arguments[1], 0, None)
             .map_err(internal)?;
         loop {
-            let event = probe.poll(0, 1024).map_err(internal)?;
+            let event = probe.poll_text(0, 1024).map_err(internal)?;
             probe.collect();
             match event.kind {
                 "yield" => {}
@@ -92,6 +94,19 @@ fn run(arguments: &[String]) -> AdapterResult<Observation> {
                     let request = probe.module_request(token).map_err(internal)?;
                     probe
                         .complete_module(token, module_host::complete(&request), 0)
+                        .map_err(internal)?;
+                }
+                "glob-request" => {
+                    let token = event
+                        .token
+                        .as_deref()
+                        .ok_or_else(|| internal("missing glob token"))?;
+                    let request = probe.glob_request(token).map_err(internal)?;
+                    let completion = file_glob_host::complete(&request).unwrap_or_else(|| {
+                        pkl_runtime::glob::configured_or_unsupported_completion(&request, &[], &[])
+                    });
+                    probe
+                        .complete_glob(token, completion, 0)
                         .map_err(internal)?;
                 }
                 "read" => {

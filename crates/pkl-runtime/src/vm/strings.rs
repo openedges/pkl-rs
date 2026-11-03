@@ -175,8 +175,12 @@ impl Vm {
         // empty receiver this can expose a negative Java implementation count.
         let narrowed = count.get() as i32;
         if narrowed < 0 {
-            return Err(RuntimeError::new(
-                ErrorKind::Unsupported,
+            return Err(RuntimeError::foreign(
+                crate::java_exception::provenance::ForeignOperation::StringRepeatNegativeCount {
+                    length_utf16: length,
+                    requested_count: count.get(),
+                    narrowed_count: narrowed,
+                },
                 "String.repeat encountered the pinned Java negative narrowed-count bug.",
             ));
         }

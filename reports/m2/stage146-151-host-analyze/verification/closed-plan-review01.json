@@ -1,0 +1,190 @@
+{
+  "review_complete": true,
+  "source_and_closed_metadata_only": true,
+  "plan": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-closed-plan-01/closed-plan.json",
+    "bytes": 5166218,
+    "sha256": "157f1d1aca591dbb92a01b54245a78407c30c8c2f04012b8b7d29d6a1702693f",
+    "mode": 420
+  },
+  "selector_preparation": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-prep-04/manifest.json",
+    "bytes": 6132,
+    "sha256": "9aa19004c1b3aa5ca5ab47a7ea4d86c3d17a1ad66a1af212651d43ef3230641d",
+    "mode": 420
+  },
+  "findings": [],
+  "concrete_blocker_found": false,
+  "checks": {
+    "nine_actual_role_assertions_verified": true,
+    "tenth_role_is_future_actual_source_audit": true,
+    "role_scope_preserves_full_M2_false": true,
+    "sourceplan_project_rows": 11911,
+    "finite_current_source_rows": 11910,
+    "exact_loader_source_payload_completes_project_mapping": true,
+    "sole_postvalidation_TESTING_transition": true,
+    "all_five_applied_docs_and_before_aliases_selected": true,
+    "frozen05_report_and_Korean_plan_selected": true,
+    "original_batches": [
+      {
+        "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-original31-first16-01",
+        "selected_count": 16,
+        "status_counts": {
+          "pass": 16
+        },
+        "evidence_map_counts": {
+          "selected": 154,
+          "omitted_source_compiled_private": 688
+        }
+      },
+      {
+        "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-original31-remaining15-01",
+        "selected_count": 15,
+        "status_counts": {
+          "candidate-unsupported": 3,
+          "mismatch": 6,
+          "oracle-error": 2,
+          "pass": 4
+        },
+        "evidence_map_counts": {
+          "selected": 143,
+          "omitted_source_compiled_private": 680
+        }
+      }
+    ],
+    "raw266_slots": 266,
+    "raw266_actual_channel_pin_requests": 3729,
+    "raw266_ledgers": 3,
+    "reference_nonpasses_retained": 18,
+    "M1_capture_catalogue_rows": 516,
+    "M1_compiled_product_omissions": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-platforms-01/experiment/pkl_napi.node",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-platforms-01/experiment/semantics_probe",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-platforms-01/experiment/wasm/pkl_wasm_bg.wasm"
+    ],
+    "M1_source_prefixes_exact": true,
+    "failed_M1_reader01_selected": true,
+    "synthetic_source_review_payload_only_no_real_channel_waiver": true
+  },
+  "documentation_application": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-documentation-application-01/report.json",
+    "bytes": 7098,
+    "sha256": "e33f5b11edc74d28f7a311e02efa23d4d848bbc4636c0485190481840962ec20",
+    "mode": 420
+  },
+  "documentation_review": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-documentation-application-independent-review-01/report.json",
+    "bytes": 12972,
+    "sha256": "b88f850563f53ab575cf60b17fe12b05dd6a87f3fc856846cfa07912ab39117d",
+    "mode": 420
+  },
+  "notes": [
+    "Two inherited explanatory strings still say current M1 active/not inspected. They are stale planning prose, not operative assertions; actual role pins, M1 input catalogue, raw map and successful reader02 identify the closed qualification. No status promotion follows from those strings."
+  ],
+  "inputs": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-closed-plan-01/closed-plan.json",
+      "bytes": 5166218,
+      "sha256": "157f1d1aca591dbb92a01b54245a78407c30c8c2f04012b8b7d29d6a1702693f",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-prep-04/manifest.json",
+      "bytes": 6132,
+      "sha256": "9aa19004c1b3aa5ca5ab47a7ea4d86c3d17a1ad66a1af212651d43ef3230641d",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-precheck-sequence-01/report.json",
+      "bytes": 2521,
+      "sha256": "6b4128cbbcd1c947bfe930be30fffeeeb6fb89f0a303cec32ec04492be10ccf9",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-focused-tests-04/report.json",
+      "bytes": 316730,
+      "sha256": "a55a3bfa0f9c6048a0b793c08b4fb7b088be318d130aa6359944a220304b9ca1",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-original31-first16-readback-01/report.json",
+      "bytes": 4530,
+      "sha256": "c102df38a3b6434243e63f8c360ebe51930a165414f4f9211be465ae506ea71a",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-original31-remaining15-readback-01/report.json",
+      "bytes": 4167,
+      "sha256": "8cc4d5ca8c6ea43b779c21071ae6ee5771748b9461b96959539c1dfd652ced34",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-nfc-readback-01/report.json",
+      "bytes": 2566,
+      "sha256": "b03e30eab5ea8cf4d0d6557fcf43a3e3926d794453baccb577460d2e6640a2b4",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-default-workspace-02/report.json",
+      "bytes": 6918993,
+      "sha256": "eeec948edfdcecb0206a60dc56bfc48780f50000466a427a371c3aeab69a6545",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-default-workspace-readback-01/report.json",
+      "bytes": 429905,
+      "sha256": "8e80fc99b97daa612cf4e41c547abd6f970cc8667473270643889323403e8946",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-workspace-protobuf-readback-01/report.json",
+      "bytes": 1345929,
+      "sha256": "8402844ed3ad460b2051f1531fe11055f9b5372e8fcf7e9a2dac812562b844ff",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-platforms-readback-02/report.json",
+      "bytes": 3514485,
+      "sha256": "4c9a43ffc73e4b21d2b9cc60bf6373538250bd25158cf91fbd5502a67b51bb80",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-default-config-01/source-plan.json",
+      "bytes": 5194133,
+      "sha256": "f52e77fa6e5e60b5f151050ba4b8dfa7eb1c7af1821887b179293bf8af50af16",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-documentation-application-01/report.json",
+      "bytes": 7098,
+      "sha256": "e33f5b11edc74d28f7a311e02efa23d4d848bbc4636c0485190481840962ec20",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-original31-first16-01/report.json",
+      "bytes": 811077,
+      "sha256": "444101bf7221c5d38898f1696513fa9efec7d57e38c351125ac4a8ae5ab6e6ee",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-original31-remaining15-01/report.json",
+      "bytes": 775007,
+      "sha256": "c178cc63b6d744945b4fb3507e4231c99840d9629bfa48ea1bd474423f1c4a40",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-independent-review-01/report.json",
+      "bytes": 8725,
+      "sha256": "bbb2c19d8672e77f6823419af08b6079a2058819bac8a68c4e820535792ccc1e",
+      "mode": 420
+    }
+  ],
+  "limitations": [
+    "No audit.py/select.py execution, actual payload body verification, archive creation/readback, whole-Git audit, or dependency closure proof. Root must still run the reviewed finite audit/selection and archive integrity checks.",
+    "Source-plan and raw channel coverage checked as exact metadata/selection routing, not a fresh replay or rehash of every selected channel/source body.",
+    "All compatibility nonpasses and missing provenance scopes remain; this review does not grant full M2/API/platform/performance completion."
+  ],
+  "tracked_files_modified": false,
+  "resource_jobs": 0,
+  "archive_bodies_accessed": false
+}

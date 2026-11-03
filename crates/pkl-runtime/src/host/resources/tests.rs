@@ -298,3 +298,111 @@ fn pending_read_uses_declaration_source_and_keeps_custom_host_operand_raw() {
     );
     vm.close();
 }
+
+#[test]
+fn default_file_reader_validates_decoded_ssp_before_unimplemented_io() {
+    let reason = "File URIs must have a path that starts with `/` (e.g. file:/path/to/my_module.pkl).\nTo resolve relative paths, remove the scheme prefix (remove \"file:\").";
+    for authored in [
+        "file:path/to/foo.txt",
+        "file:%70ath/to/foo.txt",
+        "file:%252Ftmp",
+    ] {
+        let error = default_result(&request(authored)).unwrap_err();
+        assert_eq!(error.kind, ErrorKind::Host);
+        assert!(error.host_language_exception);
+        assert_eq!(
+            error.message,
+            format!("Resource URI `{authored}` has invalid syntax.")
+        );
+        assert_eq!(
+            error.hint.as_ref().and_then(PklString::as_str),
+            Some(reason)
+        );
+        assert!(error.foreign_exception.is_none());
+    }
+    // IoUtils validates decoded scheme-specific text exactly once. These pass
+    // that check but remain explicit missing-I/O capabilities in this helper.
+    for authored in [
+        "file:/tmp",
+        "file:///tmp",
+        "file:%2Ftmp",
+        "file:%2ftmp#fragment",
+    ] {
+        let error = default_result(&request(authored)).unwrap_err();
+        assert_eq!(error.kind, ErrorKind::Unsupported);
+        assert!(error.hint.is_none());
+    }
+    let malformed = default_result(&request("file:bad%zz")).unwrap_err();
+    assert_eq!(
+        malformed.hint.as_ref().and_then(PklString::as_str),
+        Some("Malformed escape pair")
+    );
+    let denied = default_result(&request("unknown:resource")).unwrap_err();
+    assert!(denied.message.starts_with("Refusing to read resource `"));
+    assert!(denied.hint.is_none());
+}
+
+#[test]
+fn file_uri_reader_failure_prevents_later_reads_and_preserves_custom_host_boundary() {
+    let text = "result = read(\"file:path/to/foo.txt\") + read(\"prop:later\")\n";
+    let program = compile_module(&resolve_module(&parse_module(text).unwrap()).unwrap()).unwrap();
+    let entry = program.entry;
+    let mut vm = Vm::with_context(
+        program,
+        EvaluationContext {
+            primary_source: Some(Arc::new(RuntimeSource {
+                text: text.into(),
+                uri: "file:///stage150/main.pkl".into(),
+                module_name: "stage150".into(),
+            })),
+            ..Default::default()
+        },
+    );
+    vm.start(entry, vec![]).unwrap();
+    let VmPoll::Ready(Ok(module)) = event(&mut vm, &[]) else {
+        panic!("initial module")
+    };
+    let roots = [module];
+    let mut previous = 0;
+    for _ in 0..2 {
+        vm.start_member(roots[0].as_object().unwrap(), "result")
+            .unwrap();
+        let VmPoll::Pending(read) = event(&mut vm, &roots) else {
+            panic!("file reader request")
+        };
+        assert_eq!(read.uri, "file:path/to/foo.txt");
+        assert!(read.id > previous);
+        previous = read.id;
+        vm.collect(&roots);
+        vm.resume(read.id, default_result(&read)).unwrap();
+        let VmPoll::Ready(Err(error)) = event(&mut vm, &roots) else {
+            panic!("file validation must precede prop:later")
+        };
+        assert_eq!(error.kind, ErrorKind::Host);
+        assert!(error.host_language_exception);
+        assert_eq!(
+            error.message,
+            "Resource URI `file:path/to/foo.txt` has invalid syntax."
+        );
+        assert!(!error.frames.is_empty());
+    }
+    // Default-reader validation is not a blanket URI parser restriction: a
+    // caller-supplied Host can still fulfill the same typed request explicitly.
+    vm.start_member(roots[0].as_object().unwrap(), "result")
+        .unwrap();
+    let VmPoll::Pending(read) = event(&mut vm, &roots) else {
+        panic!("custom first read")
+    };
+    vm.resume(read.id, Ok(Value::string("custom"))).unwrap();
+    let VmPoll::Pending(read) = event(&mut vm, &roots) else {
+        panic!("later read after custom success")
+    };
+    assert_eq!(read.uri, "prop:later");
+    vm.resume(read.id, Ok(Value::string(" later"))).unwrap();
+    assert_eq!(
+        event(&mut vm, &roots),
+        VmPoll::Ready(Ok(Value::string("custom later")))
+    );
+    vm.close();
+    assert_eq!(vm.collect(&[]).slots, 0);
+}

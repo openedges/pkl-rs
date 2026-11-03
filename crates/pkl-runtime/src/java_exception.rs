@@ -5,6 +5,8 @@
 
 use crate::value::PklString;
 
+pub mod provenance;
+
 /// Identity of a throwable in a [`JavaThrowableGraph`].
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub struct JavaThrowableId(pub usize);

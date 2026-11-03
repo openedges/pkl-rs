@@ -14,5 +14,9 @@ md-5 = { version = "=0.11.0", default-features = false }
 sha1 = { version = "=0.11.0", default-features = false }
 sha2 = { version = "=0.11.1", default-features = false }
 
+[dev-dependencies]
+# Native Host examples/tests use the JDK 21 Unicode 15.0 normalization tables.
+unicode-normalization = { version = "=0.1.22", default-features = false }
+
 [lints]
 workspace = true

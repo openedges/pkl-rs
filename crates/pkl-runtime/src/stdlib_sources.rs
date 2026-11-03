@@ -3,6 +3,19 @@
 use crate::value::RuntimeSource;
 use std::sync::{Arc, OnceLock};
 
+pub(crate) fn analyze() -> Arc<RuntimeSource> {
+    static SOURCE: OnceLock<Arc<RuntimeSource>> = OnceLock::new();
+    SOURCE
+        .get_or_init(|| {
+            Arc::new(RuntimeSource {
+                text: include_str!("stdlib/analyze.pkl").into(),
+                uri: "pkl:analyze".into(),
+                module_name: "pkl.analyze".into(),
+            })
+        })
+        .clone()
+}
+
 pub(crate) fn reference() -> Arc<RuntimeSource> {
     static SOURCE: OnceLock<Arc<RuntimeSource>> = OnceLock::new();
     SOURCE
@@ -171,6 +184,62 @@ pub(crate) fn protobuf() -> Arc<RuntimeSource> {
                 text: include_str!("stdlib/protobuf.pkl").into(),
                 uri: "pkl:protobuf".into(),
                 module_name: "pkl.protobuf".into(),
+            })
+        })
+        .clone()
+}
+
+/// Exact pinned authored declarations; environment-dependent externals are separate bindings.
+pub(crate) fn evaluator_settings() -> Arc<RuntimeSource> {
+    static SOURCE: OnceLock<Arc<RuntimeSource>> = OnceLock::new();
+    SOURCE
+        .get_or_init(|| {
+            Arc::new(RuntimeSource {
+                text: include_str!("stdlib/EvaluatorSettings.pkl").into(),
+                uri: "pkl:EvaluatorSettings".into(),
+                module_name: "pkl.EvaluatorSettings".into(),
+            })
+        })
+        .clone()
+}
+
+/// Exact pinned authored declarations; environment-dependent externals are separate bindings.
+pub(crate) fn project() -> Arc<RuntimeSource> {
+    static SOURCE: OnceLock<Arc<RuntimeSource>> = OnceLock::new();
+    SOURCE
+        .get_or_init(|| {
+            Arc::new(RuntimeSource {
+                text: include_str!("stdlib/Project.pkl").into(),
+                uri: "pkl:Project".into(),
+                module_name: "pkl.Project".into(),
+            })
+        })
+        .clone()
+}
+
+/// Exact pinned authored declarations; environment-dependent externals are separate bindings.
+pub(crate) fn platform() -> Arc<RuntimeSource> {
+    static SOURCE: OnceLock<Arc<RuntimeSource>> = OnceLock::new();
+    SOURCE
+        .get_or_init(|| {
+            Arc::new(RuntimeSource {
+                text: include_str!("stdlib/platform.pkl").into(),
+                uri: "pkl:platform".into(),
+                module_name: "pkl.platform".into(),
+            })
+        })
+        .clone()
+}
+
+/// Exact pinned authored declarations; environment-dependent externals are separate bindings.
+pub(crate) fn release() -> Arc<RuntimeSource> {
+    static SOURCE: OnceLock<Arc<RuntimeSource>> = OnceLock::new();
+    SOURCE
+        .get_or_init(|| {
+            Arc::new(RuntimeSource {
+                text: include_str!("stdlib/release.pkl").into(),
+                uri: "pkl:release".into(),
+                module_name: "pkl.release".into(),
             })
         })
         .clone()

@@ -177,6 +177,9 @@ pub struct RuntimeErrorDetails {
     pub(crate) rendered_diagnostic: Option<PklString>,
     /// An uncaught Java URI.create failure whose JVM rendering is not implemented.
     pub uri_create_cause: Option<UriCreateCause>,
+    /// A source-backed foreign cause; complete Java stack projection is pending.
+    pub foreign_exception:
+        Option<Arc<crate::java_exception::provenance::ForeignExceptionProvenance>>,
     /// Exact Java Throwable class/message when established at the throw site.
     /// Internal constructor provenance; excluded from ordinary error equality.
     pub(crate) java_exception_message: Option<(&'static str, PklString)>,
@@ -219,6 +222,7 @@ impl PartialEq for RuntimeErrorDetails {
             && self.frame_transformer == other.frame_transformer
             && self.rendered_diagnostic == other.rendered_diagnostic
             && self.uri_create_cause == other.uri_create_cause
+            && self.foreign_exception == other.foreign_exception
             && self.hint == other.hint
             && self.hint_from_template == other.hint_from_template
             && self.type_lookup_module == other.type_lookup_module
@@ -240,6 +244,7 @@ static EMPTY_ERROR_DETAILS: RuntimeErrorDetails = RuntimeErrorDetails {
     frame_transformer: crate::logging::FrameTransformer::Default,
     rendered_diagnostic: None,
     uri_create_cause: None,
+    foreign_exception: None,
     java_exception_message: None,
     yaml_constructor_error_ready: false,
     hint: None,
@@ -281,6 +286,19 @@ impl std::ops::DerefMut for RuntimeError {
 }
 
 impl RuntimeError {
+    /// Temporary projection gap: Unsupported bypasses native guest catches.
+    /// Java wraps these causes in VmBugException (a catchable VmException).
+    pub(crate) fn foreign(
+        operation: crate::java_exception::provenance::ForeignOperation,
+        message: impl Into<PklString>,
+    ) -> Self {
+        let mut error = Self::new(ErrorKind::Unsupported, message);
+        error.foreign_exception = Some(Arc::new(
+            crate::java_exception::provenance::ForeignExceptionProvenance::new(operation),
+        ));
+        error
+    }
+
     pub(crate) fn diagnostic_roots(&self, roots: &mut Vec<Value>) {
         roots.extend(
             self.cast_insertions

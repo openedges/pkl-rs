@@ -824,6 +824,20 @@ impl Vm {
                 "SecurityManagerException is not supported for ModuleKey capability getters.",
             ));
         }
+        // Validate the public request and global key identities above before
+        // translating them back into the static continuation's private IDs.
+        if self.frames.last().is_some_and(|frame| {
+            frame
+                .analysis
+                .as_ref()
+                .is_some_and(|run| run.awaiting_host())
+        }) {
+            let result = self.complete_analysis_module(completion);
+            if let Err(error) = result {
+                self.fail(error);
+            }
+            return Ok(());
+        }
         if self.frames.last().is_some_and(|frame| frame.glob.is_some()) {
             let result = self.complete_glob_module(completion);
             if let Err(error) = result {
@@ -1204,6 +1218,7 @@ impl Vm {
             mapping_lookup: None,
             mapping_keys: None,
             reflection: None,
+            analysis: None,
             conversion_run: None,
             collection_addition: None,
             function_owner: None,

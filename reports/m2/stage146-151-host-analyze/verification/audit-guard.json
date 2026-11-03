@@ -1,0 +1,203 @@
+{
+  "complete": true,
+  "errors": [],
+  "head": "9409cd3c6633f738a3353f4cca65b7f6be251001",
+  "config": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-root-config-01/audit.json",
+    "bytes": 2984,
+    "sha256": "2779a3713824987e1e71e8409eaca26154c8d916797e4bc53313c1002cf21a46",
+    "mode": 420
+  },
+  "inputs_before": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-closed-plan-02/closed-plan.json",
+      "bytes": 5168360,
+      "sha256": "cfa73558c95906fecd8fbbf024ac24479e7faed4ef47e5d0138db8445aa660a0",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-prep-04/manifest.json",
+      "bytes": 6132,
+      "sha256": "9aa19004c1b3aa5ca5ab47a7ea4d86c3d17a1ad66a1af212651d43ef3230641d",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-prep-04/audit.py",
+      "bytes": 3356,
+      "sha256": "bfa65401f997a1e49e17018abea835f301246f01642d5fb8d096ccccb0a9ceb8",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-prep-04/common.py",
+      "bytes": 10420,
+      "sha256": "1d2a202210781a8e917f1c0e6fb84890b6ba78d3ac1f26f257b594f35ac27e1a",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-independent-review-04/report.json",
+      "bytes": 11827,
+      "sha256": "c9da56adcb44df7db9f464776613eb3272fe734281c84b2976485183e1d5b1f1",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-closed-plan-independent-review-01/report.json",
+      "bytes": 8411,
+      "sha256": "1f225243921a89f5067bb5dcadc5e64ba279783abbd3dcbfe3de839637832bfc",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-root-config-01/audit.json",
+      "bytes": 2984,
+      "sha256": "2779a3713824987e1e71e8409eaca26154c8d916797e4bc53313c1002cf21a46",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-command-guard-prep-01/run.py",
+      "bytes": 7473,
+      "sha256": "ac61660af44fc27e0108c9336b13c3dcb1b630d9d923cd8c5d9bbbc5c35f195f",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-composed-lossless-glob576-prep-01/owned_processes.py",
+      "bytes": 3686,
+      "sha256": "542f1a5bbd2bba80795ca3b5dbe1fbe0beeec92dee02f716ec9b856e1b92e58d",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-composed-lossless-glob576-prep-01/child_gate.py",
+      "bytes": 254,
+      "sha256": "f436bb983c45f832ba8bfb2203089ed18c676c83804cf942f8f88f15419a90df",
+      "mode": 420
+    }
+  ],
+  "commands": [
+    {
+      "name": "finite-current-source-audit",
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-prep-04/audit.py",
+        "--plan-pin",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-closed-plan-02/closed-plan.json",
+        "5168360",
+        "cfa73558c95906fecd8fbbf024ac24479e7faed4ef47e5d0138db8445aa660a0",
+        "420"
+      ],
+      "command_environment": {},
+      "started_epoch": 1793749060.7012448,
+      "stop_reason": null,
+      "peak_owned_rss_bytes": 110870528,
+      "peak_aggregate_rss_bytes": 106594304,
+      "minimum_free_bytes": 2887401472,
+      "elapsed_seconds": 10.431860041804612,
+      "exit_code": 0,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-audit-guard-01/0.stdout.bin",
+        "bytes": 237,
+        "sha256": "8086c8c94b738fab123c1d4d4ece841a14f099a2226ca4c30896fc4ab65b3f6a",
+        "mode": 420
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-audit-guard-01/0.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "owned": {
+        "root_pid": 47374,
+        "root_observed": true,
+        "tracked": [
+          {
+            "pid": 47374,
+            "started": "Wed Nov 4 08:37:40 2026",
+            "parent_pid_at_discovery": 47356,
+            "group_id_at_discovery": 47374
+          }
+        ],
+        "terminal_live": []
+      }
+    }
+  ],
+  "limits": {
+    "new_tree_rss_bytes": 1610612736,
+    "aggregate_rss_bytes": 2147483648,
+    "disk_floor_bytes": 1275068416,
+    "seconds_per_command": 3600
+  },
+  "environment": {
+    "PATH": "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin:/usr/bin:/bin:/usr/sbin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "scope": "Finite current source/document audit after all runtime readers closed. One docs-only TESTING transition is explicit in the plan; no rerun or full dependency-closure claim.",
+  "started_epoch": 1793749060.652419,
+  "source_dependency_closure_established": false,
+  "aggregate_scope": "Supervisor, descendants and same-process-group peers observed by the existing ownership helper; sampled, not whole-host peak.",
+  "inputs_after": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-closed-plan-02/closed-plan.json",
+      "bytes": 5168360,
+      "sha256": "cfa73558c95906fecd8fbbf024ac24479e7faed4ef47e5d0138db8445aa660a0",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-prep-04/manifest.json",
+      "bytes": 6132,
+      "sha256": "9aa19004c1b3aa5ca5ab47a7ea4d86c3d17a1ad66a1af212651d43ef3230641d",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-prep-04/audit.py",
+      "bytes": 3356,
+      "sha256": "bfa65401f997a1e49e17018abea835f301246f01642d5fb8d096ccccb0a9ceb8",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-prep-04/common.py",
+      "bytes": 10420,
+      "sha256": "1d2a202210781a8e917f1c0e6fb84890b6ba78d3ac1f26f257b594f35ac27e1a",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-selection-independent-review-04/report.json",
+      "bytes": 11827,
+      "sha256": "c9da56adcb44df7db9f464776613eb3272fe734281c84b2976485183e1d5b1f1",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-closed-plan-independent-review-01/report.json",
+      "bytes": 8411,
+      "sha256": "1f225243921a89f5067bb5dcadc5e64ba279783abbd3dcbfe3de839637832bfc",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-publication-root-config-01/audit.json",
+      "bytes": 2984,
+      "sha256": "2779a3713824987e1e71e8409eaca26154c8d916797e4bc53313c1002cf21a46",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-command-guard-prep-01/run.py",
+      "bytes": 7473,
+      "sha256": "ac61660af44fc27e0108c9336b13c3dcb1b630d9d923cd8c5d9bbbc5c35f195f",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-composed-lossless-glob576-prep-01/owned_processes.py",
+      "bytes": 3686,
+      "sha256": "542f1a5bbd2bba80795ca3b5dbe1fbe0beeec92dee02f716ec9b856e1b92e58d",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage122-composed-lossless-glob576-prep-01/child_gate.py",
+      "bytes": 254,
+      "sha256": "f436bb983c45f832ba8bfb2203089ed18c676c83804cf942f8f88f15419a90df",
+      "mode": 420
+    }
+  ],
+  "selected_source_bookends_stable": true,
+  "commands_succeeded": true,
+  "finished_epoch": 1793749071.16661
+}

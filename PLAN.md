@@ -1,5 +1,27 @@
 # 구현 계획
 
+### Stage146–151 Host·analyze 체크포인트
+
+Lossless scalar `poll_text`, native file Glob/HasElement, file URI validation, authored settings/path resolution과 제한된 `pkl:analyze` 경로를 연결했다. Glob matching·정렬·lazy 처리는 공통 VM에 남긴다. Percent escape를 decode하지 않은 상태에서 NFC normalization과 ASCII quoting을 적용한다. Literal combining mark가 hexadecimal escape에 인접한 경계는 미검증이며 모든 escaped spelling의 불변을 주장하지 않는다.
+
+현재 binding02의 original31 실제 독립 판독은 **20 raw 일치 / 6 mismatch / 3 candidate-unsupported / 2 oracle-error**다. First16은 모두 일치했고 Remaining15는 4/6/3/2다. Scalar surrogate, settings/project 4개, 기존 Protobuf·복합 renderer 5개, URI/glob 오류 5개, 일본어 module과 analyzer 원본 4개가 일치했다. Invalid-glob은 `reflect.Module` argument에서 먼저 실패하므로 analyzer glob traversal coverage로 계산하지 않는다. 정수 `% 0`, repeat narrowing 2개와 HTTP authority 3개의 mismatch를 보존한다. Benchmark/platform/release는 미지원이며 cycle의 Java 초기화 오류와 List의 Java heap 오류/native watchdog timeout도 통과로 바꾸지 않는다.
+
+NFC는 Java 18회와 native 18회를 모두 취득·판독했고 Java/native 전체 UTF-8/UTF-16 path value 13개가 일치했다. Native `path_os_bytes`는 별도 기록이며 Java/native OS-path-byte 직접 일치를 검증한 것은 아니다. 잘못된 percent 3개, escaped NUL, escaped non-UTF-8의 **5 nonpass**를 유지한다. 양쪽 rejection만으로 오류 바이트 일치를 주장하지 않는다. 현재 focused는 diagnostic unit 7개와 analyzer integration 18개를 통과했으며 이전 compile/fixture 실패는 별도 보존한다.
+
+**현재 six prechecks는 모두 실제 exit 0**이다: `cargo xtask verify`, `cargo fmt --all -- --check`, workspace all-target Clippy `-D warnings`, Wasm runtime check, manifest freshness, inventory freshness. 소스 bookend가 안정적이었다. 전체 workspace01은 Cargo101로 컴파일 중 종료했다. 성공한 linked executable을 storage wrapper가 floor 위에서 복사할 공간이 부족했고 게스트 테스트는 **0개 실행**됐다. Guard acquisition complete와 workspace 통과를 구분한다.
+
+실패한 workspace01 원문/채널을 유지한다. Root의 닫힌 유지보수는 성공 컴파일된 일반 test cache 292개를 엄격한 Cargo/wrapper/바이트/메타데이터·idle 검증 후 제거했고 관측 free 증가는 1,332,039,680 bytes였다. 테스트 통과 근거가 아니며 Proto/probe/example/library와 source/raw evidence는 보존했다. 별도 실패-wrapper product 복구는 이미 floor 아래였던 상태에서 12,340,560 logical bytes를 제거한 것으로 global floor가 한 번도 깨지지 않았다고 서술하지 않는다. 기존 공유/투명 압축의 independent readback과 실제 metadata 전이를 보존하고 block 합계를 독점 회수량으로 계산하지 않는다.
+
+Workspace02는 normal opt1/debug0·serial test·2 GiB/2 GiB sampled RSS·1,216 MiB floor 조건에서 **Cargo0, 7,705.299초**로 종료했다. 독립 aggregate는 **2,172 pass / 0 fail / 6 ignored, 335 outer groups**를 기록하고 nested child pass 13개를 제외했다. 개별 test identity 전체나 count-preserving interleaving 부재를 증명하는 집계는 아니다. 현재 25 focused를 workspace 수에 다시 더하지 않는다.
+
+같은 workspace의 Protobuf raw266은 전부 structurally complete이며 renderer 240개와 pre-renderer 8개가 일치했다. Reference nonpass 18개는 strict 미충족으로 유지하고 harness/structural failure는 0이다. 실제 same-run Cargo/storage/body proof와 기존 Java04 fixtures를 연결했으며 새 266 Java 취득은 하지 않았다. 별도 strict CLI를 실행한 것으로 서술하지 않는다.
+
+완료한 workspace 판독 후 ordinary test-cache 320개를 별도 audit/idle/바이트·metadata 검증 및 독립 판독으로 제거했고 관측 free 증가는 1,446,572,032 bytes였다. 앞의 실패-build 292개 복구와 별개다. Reflection lifecycle baseline은 cache 밖 exact artifact로 보존했으나 실제 benchmark/profile은 실행하지 않았다. Toolchain sharing도 3,762개를 바이트/metadata 보존 후 독립 확인했고 631,992,320 bytes의 free 증가를 관측했다. 두 설치와 설정/components를 유지한다. 이 수들은 독점 APFS 회수량·미래 용량 보장·추가 호환성 통과로 합산하지 않는다.
+
+M1은 한 `--verify-contract` capture와 actual readback02를 마쳤다. Native/Node/Chromium 각각 **6,078 raw 일치**, shared 6,078, Node/browser 각각 **92 scenarios**, strict/architecture pass다. 별도 strict CLI는 실행하지 않았다. Known gaps와 missing supervisor bookends는 비었다. 별도 sampled 3 GiB/3 GiB·512 MiB reserve와 기록된 native 및 opt3/thinLTO/codegen1 release 조건을 유지한다. Reader01은 nested Python의 canonical/기존 Homebrew alias 철자 기대값에서 멈췄다. Prep03은 원래 clone ancestry02와 exact argv/alias identity 검사를 유지한 최소 reader 수정이며 source review와 실제 readback02를 통과했다. Capture 재실행은 없었다. Publication·commit/push는 실제 source/archive 검증 및 문서 application 기록으로 별도 확정한다. `TEST_STRIP=symbols`는 검토했으나 현재 workspace02에 적용하지 않았다.
+
+목록 4,586개 중 ready 4,483개·실행 계약 미구현 71개·미매핑 32개와 요구사항 475개를 유지한다. 과거 full-ready 4,395/4,483, Stage145 original57을 현재 replay로 합산하지 않는다. Package/HTTP/TLS/project 68개, t36/t40 adapter 3개, historical 32개, requirement links와 M2 아홉 영역의 나머지 의미론을 이어간다. Analyzer factory I/O·glob·전체 stdlib·sibling effect/error 순서·lazy graph allocation, 환경 descriptor/Benchmark, foreign bug stack/catch, Protobuf18, API·릴리스 OS·성능 목표는 열려 있다. Stage152–158 future scratch는 현재 검증 범위 밖이다. 62 include gap과 불완전한 의존성 폐쇄를 명시하고 full M2 완료를 선언하지 않는다.
+
 ### Stage145 Protobuf·GC 검증
 
 공유 VM의 선택된 `pkl:protobuf` 렌더링, type/owner frame, error-origin, function-label 경로와 GC arena/owner index를 통합했다. 출력 format `textproto`를 사용할 수 있다. Public `Instruction`의 `LoadProtobufModule`, `RenderProtobuf`, `ProtobufRenderType` 추가로 downstream exhaustive match도 갱신해야 한다. GC는 첫 arena 소유권과 root 순서 및 기존 수집 호출을 유지한다. 빈 consumer의 불필요한 index 생성은 피하지만, 빈 owner edge publication은 계속 수행한다.

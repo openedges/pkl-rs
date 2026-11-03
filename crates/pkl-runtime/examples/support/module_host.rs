@@ -55,7 +55,8 @@ pub fn complete(request: &ModuleRequest) -> ModuleCompletion {
             element_uri,
             ..
         } => ModuleCompletion::HasElement(
-            file_path(&module.original_uri)
+            pkl_runtime::glob::check_default_resolve(element_uri, false)
+                .and_then(|_| file_path(&module.original_uri))
                 .and_then(|_| file_path(element_uri))
                 .map(|path| path.exists()),
         ),
@@ -139,6 +140,9 @@ pub(super) fn file_path(uri: impl Into<PklString>) -> Result<PathBuf, ModuleHost
     if !path.starts_with('/') {
         return Err(unsupported());
     }
+    // IoUtils.pathOf calls URI.toASCIIString before Path.of. Normalize only
+    // literal Unicode before quoting; percent-escaped octets stay untouched.
+    let path = java_ascii_file_path(path);
     let mut decoded = Vec::with_capacity(path.len());
     let mut index = 0;
     while index < path.len() {
@@ -157,6 +161,26 @@ pub(super) fn file_path(uri: impl Into<PklString>) -> Result<PathBuf, ModuleHost
         return Err(unsupported());
     }
     Ok(PathBuf::from(text))
+}
+
+// The pinned unicode-normalization dependency uses Unicode 15.0 tables,
+// matching JDK 21. Raw Java/native boundary comparisons qualify behavior.
+fn java_ascii_file_path(path: &str) -> std::borrow::Cow<'_, str> {
+    if path.is_ascii() {
+        return std::borrow::Cow::Borrowed(path);
+    }
+    use std::fmt::Write;
+    use unicode_normalization::UnicodeNormalization;
+    let normalized: String = path.nfc().collect();
+    let mut ascii = String::with_capacity(normalized.len());
+    for byte in normalized.bytes() {
+        if byte.is_ascii() {
+            ascii.push(char::from(byte));
+        } else {
+            write!(&mut ascii, "%{byte:02X}").expect("String write");
+        }
+    }
+    std::borrow::Cow::Owned(ascii)
 }
 
 pub(super) fn file_uri(path: &Path) -> Result<String, ModuleHostError> {
@@ -210,6 +234,23 @@ mod tests {
     }
 
     #[test]
+    fn literal_unicode_is_nfc_before_escaping_but_existing_octets_are_not_normalized() {
+        // Source-derived Java URI.toASCIIString expectations; actual Java and
+        // native qualification is pending, including normalization table parity.
+        for (uri, expected_path) in [
+            ("file:/tmp/e\u{301}.pkl", "/tmp/é.pkl"),
+            ("file:/tmp/é.pkl", "/tmp/é.pkl"),
+            ("file:/tmp/%65%CC%81.pkl", "/tmp/e\u{301}.pkl"),
+            (
+                "file:/tmp/e\u{301}-%65%CC%81-日本語.pkl",
+                "/tmp/é-e\u{301}-日本語.pkl",
+            ),
+        ] {
+            assert_eq!(file_path(uri).unwrap(), Path::new(expected_path));
+        }
+    }
+
+    #[test]
     fn unsupported_uri_forms_do_not_turn_into_missing_files() {
         for unit in [0xd800, 0xdfff] {
             let uri = PklString::from("file:/").concat(&PklString::from_utf16(vec![unit]));
@@ -225,6 +266,10 @@ mod tests {
             "file:/a.pkl?x",
             "file:/a.pkl#x",
             "file:/bad%00.pkl",
+            "file:/bad%.pkl",
+            "file:/bad%GG.pkl",
+            "file:/bad%FF.pkl",
+            "file:/bad%C3%28.pkl",
         ] {
             assert!(matches!(
                 file_path(uri),
