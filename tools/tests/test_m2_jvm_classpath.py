@@ -52,6 +52,93 @@ class ProfileTests(unittest.TestCase):
                 module.validate_classpath(root, profile)
 
 
+class WorkspacePreparationTests(unittest.TestCase):
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name).resolve()
+        self.workspace = self.root / 'target/workspace'
+        self.profile = module.load_profile()
+        self.original = module.original_case(module.ROOT)
+        names = {module.INPUT, *self.profile['classpath_resources'],
+                 *(resource['path'] for resource in self.original['resources'])}
+        self.files = {name: (module.ROOT / name).read_bytes() for name in names}
+        self.files['external/pkl-pantry/ordinary.pkl'] = b'ordinary = true\n'
+        for name, data in self.files.items():
+            path = self.root / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data)
+        fixtures = self.root / 'tests/fixtures'
+        fixtures.mkdir(parents=True)
+        (fixtures / 'unrelated.pkl').write_bytes(b'closed unrelated fixture\n')
+        self.corpus = dict(sources=[], cases=[self.original])
+        pinned = compat.read_json(module.ROOT / 'compatibility/corpus.json')
+        for repository, relative in module.m2_workspace.SOURCE_ROOTS.items():
+            resources = [dict(path=name, kind='file', sha256=compat.digest(data))
+                         for name, data in sorted(self.files.items()) if name.startswith(relative + '/')]
+            source = next(row for row in pinned['sources'] if row['repository'] == repository)
+            self.corpus['sources'].append(dict(source, resources=resources,
+                resource_set_sha256=compat.digest(compat.encoded(resources))))
+        compat.write_json(self.root / 'compatibility/corpus.json', self.corpus)
+        (self.root / 'references.lock').write_bytes((module.ROOT / 'references.lock').read_bytes())
+
+    def tracked(self, repository):
+        prefix = repository.relative_to(self.root).as_posix() + '/'
+        return sorted(name.removeprefix(prefix) for name in self.files if name.startswith(prefix))
+
+    def prepare(self):
+        fixtures = self.root / 'tests/fixtures'
+        original_stat = Path.stat
+        original_rglob = Path.rglob
+
+        def guarded_stat(path, *args, **kwargs):
+            if path == fixtures or fixtures in path.parents:
+                raise AssertionError('local fixture metadata must not be visited')
+            return original_stat(path, *args, **kwargs)
+
+        def guarded_rglob(path, *args, **kwargs):
+            if path == fixtures or fixtures in path.parents:
+                raise AssertionError('local fixture tree must not be traversed')
+            return original_rglob(path, *args, **kwargs)
+
+        def git_identity(command):
+            for source in self.corpus['sources']:
+                checkout = str(self.root / source['path'])
+                if command == ['git', '-C', checkout, 'rev-parse', 'HEAD']:
+                    return (source['revision'] + '\n').encode()
+                if command == ['git', '-C', str(self.root), 'ls-tree', 'HEAD', source['path']]:
+                    return f"160000 commit {source['revision']}\t{source['path']}\n".encode()
+            raise AssertionError('unexpected offline git command')
+
+        with patch.object(compat, 'tracked_paths', side_effect=self.tracked), \
+                patch.object(Path, 'stat', guarded_stat), \
+                patch.object(Path, 'rglob', guarded_rglob), \
+                patch.object(compat.shutil, 'copytree', side_effect=AssertionError('local fixtures must not be copied')), \
+                patch('subprocess.check_output', side_effect=git_identity), \
+                patch('subprocess.run', side_effect=AssertionError('offline test must not execute')):
+            return module.prepare_original_workspace(self.root, self.workspace, self.profile)
+
+    def test_original_jvm_workspace_never_visits_local_fixtures(self):
+        record, inputs, baseline = self.prepare()
+        self.assertEqual(record['project_fixtures'], 'exclude')
+        self.assertEqual(record['profile'], module.m2_workspace.ORIGINAL_PROFILE)
+        self.assertFalse((self.workspace / 'tests').exists())
+        self.assertEqual((self.workspace / module.INPUT).read_bytes(), self.files[module.INPUT])
+        self.assertEqual(module.original_case(self.root), self.original)
+        self.assertEqual(inputs['files'], len(self.files))
+        module.validate_classpath(self.workspace, self.profile)
+        module.m2_workspace.validate_baseline(baseline, self.corpus, record)
+
+    def test_changed_original_input_or_classpath_resource_cannot_be_staged_as_valid(self):
+        for index, name in enumerate((module.INPUT, module.RESOURCE)):
+            path = self.root / name
+            path.write_bytes(self.files[name] + b'changed')
+            self.workspace = self.root / f'target/workspace-{index}'
+            with self.subTest(name=name), self.assertRaises(ValueError):
+                self.prepare()
+            path.write_bytes(self.files[name])
+
+
 def synthetic_report(output, original_root):
     """Synthetic process/artifact evidence, explicitly unrelated to Java results."""
     snapshot = output / 'sources'
@@ -105,6 +192,12 @@ def synthetic_report(output, original_root):
     corpus = compat.read_json(snapshot / 'compatibility/corpus.json')
     declared = {item['path']: item for source in corpus['sources'] for item in source['resources']}
     baseline = {name: dict(kind=item['kind'], sha256=item['sha256']) for name, item in declared.items()}
+    for name in declared:
+        for parent in Path(name).parents:
+            if parent != Path('.'):
+                baseline[parent.as_posix()] = dict(kind='directory', sha256=None)
+    workspace_profile = module.m2_workspace.original_source_profile(corpus)
+    compat.write_json(output / 'workspace-profile.json', workspace_profile)
     compat.write_json(output / 'workspace-baseline.json', baseline)
     input_hashes = {name: item['sha256'] for name, item in declared.items()}
     compat.write_json(output / 'workspace-inputs.json',
@@ -144,7 +237,8 @@ def synthetic_report(output, original_root):
         results.append(dict(repeat=repeat, processes=processes, **module.comparison(output, repeat)))
     compat.write_json(output / 'partial-results.json', results)
     sources = {name: oracle.sha256(snapshot / name) for name in module.source_paths(snapshot)}
-    report = dict(schema=1, adapter=module.ADAPTER, profile=profile, original_case=original,
+    report = dict(schema=2, adapter=module.ADAPTER, profile=profile, workspace_profile=workspace_profile,
+        original_case=original,
         original_cli_contract_preserved=True, full_m2_complete=False,
         original_root=str(original_root), output=str(output), workspace=str(workspace), oracle=metadata,
         sources=sources, sources_after=sources,
@@ -253,6 +347,50 @@ class OfflineReportTests(unittest.TestCase):
         self.save()
         with self.assertRaisesRegex(ValueError, 'recorded native build artifact path'):
             module.verify_report(self.output)
+
+    def test_legacy_schema_and_missing_workspace_profile_are_not_defaulted(self):
+        for mutation in ('legacy-schema', 'missing-profile'):
+            self.report = copy.deepcopy(self.original)
+            if mutation == 'legacy-schema':
+                self.report['schema'] = 1
+            else:
+                self.report.pop('workspace_profile')
+            self.save()
+            with self.subTest(mutation=mutation), self.assertRaises(ValueError):
+                module.verify_report(self.output)
+
+    def test_rehashed_workspace_profile_tampering_is_rejected(self):
+        for mutation in ('legacy-fixtures', 'membership', 'digest'):
+            self.report = copy.deepcopy(self.original)
+            record = self.report['workspace_profile']
+            if mutation == 'legacy-fixtures':
+                record['project_fixtures'] = 'include'
+            elif mutation == 'membership':
+                record['retained_sources'].pop()
+            else:
+                record['retained_sources'][0]['resource_set_sha256'] = '0' * 64
+            compat.write_json(self.output / 'workspace-profile.json', record)
+            self.save()
+            with self.subTest(mutation=mutation), self.assertRaisesRegex(ValueError, 'workspace profile'):
+                module.verify_report(self.output)
+
+    def test_rehashed_workspace_baseline_requires_exact_retained_membership(self):
+        path = self.output / 'workspace-baseline.json'
+        original = json.loads(self.before[path])
+        for mutation in ('missing-resource', 'extra-resource', 'resource-hash', 'parent-kind'):
+            baseline = copy.deepcopy(original)
+            if mutation == 'missing-resource':
+                baseline.pop(module.RESOURCE)
+            elif mutation == 'extra-resource':
+                baseline['tests/fixtures/unrelated.pkl'] = dict(kind='file', sha256='0' * 64)
+            elif mutation == 'resource-hash':
+                baseline[module.RESOURCE]['sha256'] = '0' * 64
+            else:
+                baseline['external/pkl']['kind'] = 'symlink'
+            compat.write_json(path, baseline)
+            self.save()
+            with self.subTest(mutation=mutation), self.assertRaisesRegex(ValueError, 'baseline'):
+                module.verify_report(self.output)
 
     def test_cargo_config_change_cannot_be_hidden_by_refreshing_outer_inventory(self):
         config = self.output / 'sources/.cargo/config.toml'

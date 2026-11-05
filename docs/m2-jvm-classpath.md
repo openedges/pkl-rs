@@ -58,6 +58,14 @@ Java outcome metadata distinguishes successful output from JVM/internal failures
 The expected original exit remains zero; matching a missing-fixture failure is
 never a pass. The upstream normalized golden is provenance only.
 
+Child report schema 2 explicitly records `workspace-profile.json` and the
+`upstream-original-modules-v1` retained-upstream filesystem profile. Both pinned
+upstream source trees are staged, unrelated local `tests/fixtures` are excluded,
+and the complete resource and directory baseline is verified exactly. This
+physical profile does not establish equivalence with historical `legacy-full`
+workspaces. The current verifier rejects schema 1 reports; their original
+evidence and tooling remain preserved for that historical verification contract.
+
 ```sh
 python3 tools/m2_jvm_classpath.py --check
 python3 -m unittest discover -s tools/tests -p 'test_m2_jvm_classpath.py' -v
@@ -120,9 +128,10 @@ partial `semantic:modules` requirement link. It gives that row the explicit
 `language-jvm-classpath-output` adapter instead of attempting the blocked CLI
 setup. The historical corpus and its CLI registry entry remain unchanged.
 
-The default selected runner includes 3,527 expression cases, 136 original CLI
-cases and this one JVM-profile case, preserving the 3,664-case selection order
-and 4,527-row inventory. Readiness accounting changes to 3,664 ready, 823
+At the mapping checkpoint, the default selected runner included 3,527 expression
+cases, 136 original CLI cases and this one JVM-profile case, preserving the
+3,664-case selection order and 4,527-row inventory. Readiness accounting changed
+to 3,664 ready, 823
 unimplemented and 40 unmapped rows; readiness is not passing behavior or feature
 coverage. Missing or failing JVM-profile execution keeps the original case's
 full-gate obligation open. Other requirements and known failures remain required.

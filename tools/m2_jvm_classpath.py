@@ -12,6 +12,7 @@ import sys
 
 import compat
 import m2_source_inputs
+import m2_workspace
 import oracle
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -256,6 +257,20 @@ def comparison(output, repeat):
                 upstream_expected_exit_match=java['exit_code'] == 0 and not java['timed_out'])
 
 
+def prepare_original_workspace(root, workspace, profile):
+    """Stage complete retained trees for this original JVM input, not local fixtures."""
+    if workspace.exists():
+        raise ValueError('JVM classpath acquisition requires a fresh workspace')
+    corpus = compat.read_json(root / 'compatibility/corpus.json')
+    record = m2_workspace.original_source_profile(corpus)
+    m2_workspace.prepare(root, workspace, record)
+    validate_classpath(workspace, profile)
+    inputs = compat.validate_inputs(root, dict(sources=corpus['sources'], cases=[original_case(root)]), workspace)
+    baseline = compat.snapshot(workspace)
+    m2_workspace.validate_baseline(baseline, corpus, record)
+    return record, inputs, baseline
+
+
 def execute(output, candidate=None, workspace=None):
     output = output.absolute()
     workspace = (workspace or output.with_name(output.name + '-workspace')).absolute()
@@ -297,12 +312,9 @@ def execute(output, candidate=None, workspace=None):
                        for path in artifacts.rglob('*') if path.is_file()}
     if artifact_before['pkl-tools-0.32.0.jar'] != metadata['artifact_sha256']:
         raise ValueError('frozen oracle JAR changed before execution')
-    compat.prepare_workspace(ROOT, workspace)
-    validate_classpath(workspace, profile)
-    corpus = compat.read_json(ROOT / 'compatibility/corpus.json')
-    inputs = compat.validate_inputs(ROOT, dict(sources=corpus['sources'], cases=[original_case(ROOT)]), workspace)
+    workspace_profile, inputs, baseline = prepare_original_workspace(ROOT, workspace, profile)
+    compat.write_json(output / 'workspace-profile.json', workspace_profile)
     compat.write_json(output / 'workspace-inputs.json', inputs)
-    baseline = compat.snapshot(workspace)
     compat.write_json(output / 'workspace-baseline.json', baseline)
     results = []
     for repeat in range(profile['repetitions']):
@@ -313,7 +325,8 @@ def execute(output, candidate=None, workspace=None):
         compat.write_json(output / 'partial-results.json', results)
     after = {name: oracle.sha256(ROOT / name) for name in sources}
     compat.write_json(output / 'oracle.json', metadata)
-    report = dict(schema=1, adapter=ADAPTER, profile=profile, original_case=original_case(ROOT),
+    report = dict(schema=2, adapter=ADAPTER, profile=profile, workspace_profile=workspace_profile,
+        original_case=original_case(ROOT),
         original_cli_contract_preserved=True, full_m2_complete=False,
         original_root=str(ROOT), output=str(output), workspace=str(workspace),
         oracle=metadata, sources=sources, sources_after=after, commands=commands,
@@ -380,7 +393,7 @@ def verify_capture(output, report, repeat, runtime, process, baseline):
 def verify_report(output):
     output = Path(output)
     report = compat.read_json(output / 'report.json')
-    if report.get('schema') != 1 or report.get('adapter') != ADAPTER or report['files'] != inventory(output):
+    if report.get('schema') != 2 or report.get('adapter') != ADAPTER or report['files'] != inventory(output):
         raise ValueError('JVM classpath evidence inventory changed')
     snapshot = output / 'sources'
     profile = load_profile(snapshot)
@@ -459,6 +472,11 @@ def verify_report(output):
         raise ValueError('JVM classpath frozen native artifact changed')
     baseline = compat.read_json(output / 'workspace-baseline.json')
     corpus = compat.read_json(snapshot / 'compatibility/corpus.json')
+    expected_workspace_profile = m2_workspace.original_source_profile(corpus)
+    if (report.get('workspace_profile') != expected_workspace_profile
+            or compat.read_json(output / 'workspace-profile.json') != expected_workspace_profile):
+        raise ValueError('JVM classpath explicit workspace profile changed')
+    m2_workspace.validate_baseline(baseline, corpus, expected_workspace_profile)
     declared_inputs = {}
     for source in corpus['sources']:
         if compat.digest(compat.encoded(source['resources'])) != source['resource_set_sha256']:

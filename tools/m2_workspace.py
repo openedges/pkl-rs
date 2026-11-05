@@ -53,6 +53,15 @@ def _record(profile, corpus):
                 project_fixtures='include' if profile == DEFAULT_PROFILE else 'exclude'), files
 
 
+def original_source_profile(corpus):
+    """Describe the retained filesystem without classifying any case as ready.
+
+    Callers must separately validate their original input and execution profile.
+    This record excludes the project's unrelated local fixture tree.
+    """
+    return _record(ORIGINAL_PROFILE, corpus)[0]
+
+
 def profile_record(profile, corpus, cases):
     """Bind an explicit staging profile to inventories and selected case contracts.
 

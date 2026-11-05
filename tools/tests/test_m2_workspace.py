@@ -68,6 +68,13 @@ class WorkspaceProfileTests(unittest.TestCase):
         for relative, data in self.source_files.items():
             self.assertEqual((self.destination / relative).read_bytes(), data)
 
+    def test_filesystem_record_does_not_promote_a_blocked_case_to_module_readiness(self):
+        expected = self.record()
+        self.corpus['cases'][0]['execution']['status'] = 'blocked'
+        self.assertEqual(workspace.original_source_profile(self.corpus), expected)
+        with self.assertRaisesRegex(ValueError, 'unchanged original-ready'):
+            workspace.profile_record(workspace.ORIGINAL_PROFILE, self.corpus, self.cases)
+
     def test_default_compat_staging_and_legacy_helper_preserve_fixture_copy_and_marker(self):
         with patch.object(compat, 'tracked_paths', side_effect=self.tracked):
             compat.prepare_workspace(self.root, self.destination)
