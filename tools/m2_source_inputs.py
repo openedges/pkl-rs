@@ -1,5 +1,7 @@
 """Shared source catalog for M2 acquisition; independent of runners/manifests."""
+import fnmatch
 import json
+import os
 from pathlib import Path
 
 MANIFEST = 'compatibility/m2-language.json'
@@ -12,6 +14,34 @@ INPUTS = ('references.lock', 'compatibility/inventory.json', 'compatibility/corp
           'tests/fixtures/m2/cases.json', 'compatibility/m2-mappings.json',
           'compatibility/m2-module-eval.json', PROFILE, EXECUTION_PROFILES, HISTORICAL, SELECTED_REGRESSIONS)
 
+# Independent offline authority bundles, not inputs to the language runners.
+# Their loose inputs, observations and manifests remain in the source catalog.
+PROVENANCE_ARCHIVES = frozenset(
+    f'tests/fixtures/{fixture}/oracle-evidence.tar.gz'
+    for fixture in ('m2-deprecation', 'm2-frame-transformers', 'm2-class-values',
+                    'm2-class-metadata-completion'))
+
+
+def glob_source_paths(root: Path, directory: str, pattern: str):
+    """Exclude named provenance bundles before asking for entry metadata."""
+    pending = [root / directory]
+    while pending:
+        current = pending.pop()
+        try:
+            entries = os.scandir(current)
+        except FileNotFoundError:
+            continue
+        with entries as entries:
+            for entry in entries:
+                path = Path(entry.path)
+                relative = path.relative_to(root).as_posix()
+                if relative in PROVENANCE_ARCHIVES:
+                    continue
+                if entry.is_dir(follow_symlinks=False):
+                    pending.append(path)
+                elif fnmatch.fnmatchcase(entry.name, pattern) and entry.is_file():
+                    yield relative
+
 
 def source_paths(root: Path):
     paths = set(INPUTS) | {MANIFEST, 'tools/m2_source_inputs.py', 'tools/m2_manifest.py',
@@ -19,6 +49,7 @@ def source_paths(root: Path):
         'crates/pkl-runtime/src/vm/string_word_break.provenance.json',
         'crates/pkl-runtime/src/vm/string_word_break.README.md',
         'tools/m2_language.py', 'tools/m2_module_eval.py', 'tools/m2_historical.py', 'tools/m2_selected_regressions.py', 'tools/m2_workspace.py', 'tools/m2_jvm_classpath.py',
+        'tools/tests/test_m2_source_inputs.py',
         'tools/m2_execution_profiles.py', 'tools/compat.py', 'tools/m2_generate.py',
         'tools/benchmark.py',
         'tools/parameterized_object_fixtures.py', 'tools/parameterized_object_compare.py',
@@ -91,7 +122,7 @@ def source_paths(root: Path):
                                ('tests/fixtures/m2-class-values', '*'),
                                ('tests/fixtures/m2-class-metadata-completion', '*'),
                                ('tests/fixtures/m2-parameterized-object-bodies', '*')]:
-        paths.update(path.relative_to(root).as_posix() for path in (root / directory).rglob(pattern) if path.is_file())
+        paths.update(glob_source_paths(root, directory, pattern))
     retained = json.loads((root / SELECTED_REGRESSIONS).read_bytes())
     paths.update(resource['path'] for resource in retained['resources'])
     historical = json.loads((root / HISTORICAL).read_bytes())

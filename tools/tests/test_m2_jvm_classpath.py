@@ -56,10 +56,11 @@ def synthetic_report(output, original_root):
     """Synthetic process/artifact evidence, explicitly unrelated to Java results."""
     snapshot = output / 'sources'
     profile = module.load_profile()
-    # source_paths reads the historical registry before enumerating its raw
-    # resources. Bootstrap this input alongside the JVM profile, not a mocked
+    # source_paths reads both retained registries before enumerating their raw
+    # resources. Bootstrap these inputs alongside the JVM profile, not a mocked
     # or empty catalog that would silently omit historical source evidence.
     initial = {module.PROFILE, module.m2_source_inputs.HISTORICAL,
+               module.m2_source_inputs.SELECTED_REGRESSIONS,
                'compatibility/corpus.json', module.INPUT,
                *profile['reference']['sources'], *profile['classpath_resources']}
     for name in initial:
