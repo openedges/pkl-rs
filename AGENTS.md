@@ -29,6 +29,9 @@ These instructions apply to agents making changes in this repository. Explicit u
 - Do not modify reference checkouts or gitlinks under `external/` unless the task requests a reference version update. Consult the reference sources for evidence, then make implementation changes in this project.
 - When updating reference versions, update the gitlinks, `references.lock`, documentation, and verification criteria together.
 - Implement only the changes needed for the task. Document features and commands as available only after they are implemented.
+- Group related fixes into a source checkpoint. Use focused checks while iterating, then complete the applicable required checks on the final source state. Repeat passing checks when relevant inputs change or an unresolved concern warrants it; document-only publication work does not itself require another runtime capture.
+- Keep detailed execution history in one canonical checkpoint report. Update `PLAN.md` with current priorities, status, decisions, and report links; update `TESTING.md` for validation-contract changes and architecture documentation for design changes. Preserve existing evidence without copying the same run history into every document.
+- Reuse the active worktree and suitable build caches. Create fresh evidence output directories, and honor tools that require fresh build directories. Prefer existing acquisition and verification tools; add tooling only for a demonstrated missing capability or correctness issue. Preserve original failures and artifact/input identities.
 - Use the Rust version in `rust-toolchain.toml`. Review `Cargo.lock` when changing dependencies.
 - Run checks appropriate to the change. The default checks for Rust code or development configuration changes are:
 
