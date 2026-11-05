@@ -1,0 +1,798 @@
+{
+  "omissions": [
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+      "bytes": 70432,
+      "sha256": "9be1d0a740ff6502df1a762145e62860f5de4b7e17658d9cb9498da3acf9d16c",
+      "mode": 493,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/javac",
+      "bytes": 70464,
+      "sha256": "20ce8ae6a5771801267af082a573e02758e5004a25ef3cba71d14fc95897bb2f",
+      "mode": 493,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/libjava.dylib",
+      "bytes": 188320,
+      "sha256": "30ed8d3f55fce957cd51ce59783115ee3574283c34b52e1b19c4c5382337722d",
+      "mode": 420,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/modules",
+      "bytes": 140714013,
+      "sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+      "mode": 420,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/server/libjvm.dylib",
+      "bytes": 18203936,
+      "sha256": "629b4f2a124e373f7eec14e0bdd3248ae6e817e20e2fb85c881f96a0233bbeec",
+      "mode": 420,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/release",
+      "bytes": 1628,
+      "sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+      "mode": 420,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+      "bytes": 31960040,
+      "sha256": "6e17e865f3a20dd55a1d212f849f58b77124179f0de7c52973096d84ba34118d",
+      "mode": 493,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo-clippy",
+      "bytes": 1148064,
+      "sha256": "8d552a240180cecf00971a870f5fee443249389d39c0667d37f29676d868f18b",
+      "mode": 493,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo-fmt",
+      "bytes": 1244392,
+      "sha256": "5d654150e27f0a5e62ee5fc045fbfc7ce2e3185af3874e0cc671af03d9e1ea58",
+      "mode": 493,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/clippy-driver",
+      "bytes": 13065024,
+      "sha256": "3e43a13a5b341ce6ceaf90addfd94bd7958c0e1988cf44d357fe07c6383ce3e9",
+      "mode": 493,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/rustc",
+      "bytes": 412504,
+      "sha256": "766eda9d8f53afd6fc7f27b3cd2e444dd22afacb5afa710a5625fc8e45b8c941",
+      "mode": 493,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/rustdoc",
+      "bytes": 11269752,
+      "sha256": "8ce1ae78157758d4d75eee1355ed333f27e903ab6b0904e09d326009b333c2ee",
+      "mode": 493,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/rustfmt",
+      "bytes": 4455400,
+      "sha256": "98e8da71078a8b5710f1818c98da25d92de162a122bd9a6db222ca929e545468",
+      "mode": 493,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/lib/libLLVM.dylib",
+      "bytes": 139564208,
+      "sha256": "6f65eb3fd2cef5fa962c20b0520ee91a393b15bbe8b19b46d363d791b6bab028",
+      "mode": 420,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy",
+      "bytes": 242128,
+      "sha256": "a7a547d50b4f643710e30238f451b355514cdcf819bd1d3b3e0d6264fca9a121",
+      "mode": 493,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+      "bytes": 52112,
+      "sha256": "c8509aee32abd6977968e9999769980b7a420dea05402d90042d9e5b41db15ef",
+      "mode": 493,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/.cache/oracle/pkl-tools-0.32.0.jar",
+      "bytes": 26877190,
+      "sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+      "mode": 420,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/m1-tools/bin/wasm-bindgen",
+      "bytes": 6170064,
+      "sha256": "b72ed0a81b26005a7c85ff4f06670988f028c3092fb7072ea8d18969047560c1",
+      "mode": 493,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright-core/package.json",
+      "bytes": 876,
+      "sha256": "8aa1c9863fa8dea324e674254158cdc79440f4124ef2d84d38053013541cb7d6",
+      "mode": 420,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright/package.json",
+      "bytes": 1219,
+      "sha256": "313d23ce667d93962d3a1ab4be80908cefe840e4d9e48f1cd5863b91f65e8e39",
+      "mode": 420,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/bin/ls",
+      "bytes": 252512,
+      "sha256": "13f44bfe1c4af602da4465c834dbe7b16a5441ccbd843178b36116ee23422bfb",
+      "mode": 493,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/opt/homebrew/Cellar/git/2.56.0/bin/git",
+      "bytes": 3758960,
+      "sha256": "40163333061f7223ecb604ed0f12988cfc8096d57ca8b1db006d410d4aeb700e",
+      "mode": 365,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+      "bytes": 132848,
+      "sha256": "d4cd917f05a5730ffda8a203e32fb8f9b70f79213fff1fafb045e438db8a6c06",
+      "mode": 365,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "bytes": 34640,
+      "sha256": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063",
+      "mode": 493,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/usr/bin/cc",
+      "bytes": 200560,
+      "sha256": "34129c71a01a74f7f3b2443521519b2e5447553fa187f5fcafaaf8c42cc192e2",
+      "mode": 493,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/usr/bin/codesign",
+      "bytes": 973408,
+      "sha256": "d517c9be608ffd266ec106c685e880cda71abc94001450e36d2476016406dd1e",
+      "mode": 493,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/usr/bin/ditto",
+      "bytes": 270464,
+      "sha256": "88933d7c96cc2c02219d61f5523b61a902dca8fdeed3b8384f24066ff48541bb",
+      "mode": 493,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/usr/bin/xattr",
+      "bytes": 184240,
+      "sha256": "ac420b32e8401155adf35994ac66362769e6c2d67e8a287389427c5b4375c7f6",
+      "mode": 493,
+      "category": "external-runtime-toolchain",
+      "reason": "Recorded sourceplan tool/runtime identity only.",
+      "body_selected": false,
+      "acquisition_authority": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source07-validation-01/report.json",
+        "bytes": 6722754,
+        "sha256": "5ed3f27f936807ecbe4ea549da79f4d5672d427556c390fa155ecee97c51d4e5",
+        "mode": 420
+      }
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-02/artifacts/module_eval_probe",
+      "bytes": 11628320,
+      "sha256": "f7974679de4b413ec49a48c149d7952585bc8fbde7b42a9587e1872608aa8fc7",
+      "mode": 493,
+      "reason": "compiled-t40-product"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-02/cases/51bbcfe4ca6096dcb961bd17/java/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "mode": 420,
+      "reason": "host-private-runtime-cache-library",
+      "body_selected": false,
+      "source_selected": false
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-02/cases/b01be896fe1b43f5c262dde8/java/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "mode": 420,
+      "reason": "host-private-runtime-cache-library",
+      "body_selected": false,
+      "source_selected": false
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-cache-off-02/cases/51bbcfe4ca6096dcb961bd17/java/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "mode": 420,
+      "reason": "host-private-runtime-cache-library",
+      "body_selected": false,
+      "source_selected": false
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-cache-off-02/cases/b01be896fe1b43f5c262dde8/java/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "mode": 420,
+      "reason": "host-private-runtime-cache-library",
+      "body_selected": false,
+      "source_selected": false
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-platforms-02/experiment/pkl_napi.node",
+      "bytes": 9086240,
+      "sha256": "e2276ff22371e46a924494f1bcc65cd6ba0946d54f54a94f81b45b7f6bd8ac50",
+      "mode": 420,
+      "reason": "compiled-M1-product"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-platforms-02/experiment/semantics_probe",
+      "bytes": 2473616,
+      "sha256": "5121c4c2bdd460a80b351e20893beee3234a659c4c00effb094d9cfa4d9d1251",
+      "mode": 493,
+      "reason": "compiled-M1-product"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-platforms-02/experiment/wasm/pkl_wasm_bg.wasm",
+      "bytes": 8132335,
+      "sha256": "32e8402034d8b372db226b3255243da0ec1cee09764ec3c633eee2c486aea292",
+      "mode": 420,
+      "reason": "compiled-M1-product"
+    }
+  ],
+  "historical_dependencies": [
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+        "bytes": 70432,
+        "sha256": "9be1d0a740ff6502df1a762145e62860f5de4b7e17658d9cb9498da3acf9d16c",
+        "mode": 493
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/javac",
+        "bytes": 70464,
+        "sha256": "20ce8ae6a5771801267af082a573e02758e5004a25ef3cba71d14fc95897bb2f",
+        "mode": 493
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/libjava.dylib",
+        "bytes": 188320,
+        "sha256": "30ed8d3f55fce957cd51ce59783115ee3574283c34b52e1b19c4c5382337722d",
+        "mode": 420
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/modules",
+        "bytes": 140714013,
+        "sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+        "mode": 420
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/server/libjvm.dylib",
+        "bytes": 18203936,
+        "sha256": "629b4f2a124e373f7eec14e0bdd3248ae6e817e20e2fb85c881f96a0233bbeec",
+        "mode": 420
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/release",
+        "bytes": 1628,
+        "sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+        "mode": 420
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "bytes": 31960040,
+        "sha256": "6e17e865f3a20dd55a1d212f849f58b77124179f0de7c52973096d84ba34118d",
+        "mode": 493
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo-clippy",
+        "bytes": 1148064,
+        "sha256": "8d552a240180cecf00971a870f5fee443249389d39c0667d37f29676d868f18b",
+        "mode": 493
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo-fmt",
+        "bytes": 1244392,
+        "sha256": "5d654150e27f0a5e62ee5fc045fbfc7ce2e3185af3874e0cc671af03d9e1ea58",
+        "mode": 493
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/clippy-driver",
+        "bytes": 13065024,
+        "sha256": "3e43a13a5b341ce6ceaf90addfd94bd7958c0e1988cf44d357fe07c6383ce3e9",
+        "mode": 493
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/rustc",
+        "bytes": 412504,
+        "sha256": "766eda9d8f53afd6fc7f27b3cd2e444dd22afacb5afa710a5625fc8e45b8c941",
+        "mode": 493
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/rustdoc",
+        "bytes": 11269752,
+        "sha256": "8ce1ae78157758d4d75eee1355ed333f27e903ab6b0904e09d326009b333c2ee",
+        "mode": 493
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/rustfmt",
+        "bytes": 4455400,
+        "sha256": "98e8da71078a8b5710f1818c98da25d92de162a122bd9a6db222ca929e545468",
+        "mode": 493
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/lib/libLLVM.dylib",
+        "bytes": 139564208,
+        "sha256": "6f65eb3fd2cef5fa962c20b0520ee91a393b15bbe8b19b46d363d791b6bab028",
+        "mode": 420
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy",
+        "bytes": 242128,
+        "sha256": "a7a547d50b4f643710e30238f451b355514cdcf819bd1d3b3e0d6264fca9a121",
+        "mode": 493
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/Users/cody.ij.hwang/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+        "bytes": 52112,
+        "sha256": "c8509aee32abd6977968e9999769980b7a420dea05402d90042d9e5b41db15ef",
+        "mode": 493
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/.cache/oracle/pkl-tools-0.32.0.jar",
+        "bytes": 26877190,
+        "sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+        "mode": 420
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/m1-tools/bin/wasm-bindgen",
+        "bytes": 6170064,
+        "sha256": "b72ed0a81b26005a7c85ff4f06670988f028c3092fb7072ea8d18969047560c1",
+        "mode": 493
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright-core/package.json",
+        "bytes": 876,
+        "sha256": "8aa1c9863fa8dea324e674254158cdc79440f4124ef2d84d38053013541cb7d6",
+        "mode": 420
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright/package.json",
+        "bytes": 1219,
+        "sha256": "313d23ce667d93962d3a1ab4be80908cefe840e4d9e48f1cd5863b91f65e8e39",
+        "mode": 420
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/bin/ls",
+        "bytes": 252512,
+        "sha256": "13f44bfe1c4af602da4465c834dbe7b16a5441ccbd843178b36116ee23422bfb",
+        "mode": 493
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/opt/homebrew/Cellar/git/2.56.0/bin/git",
+        "bytes": 3758960,
+        "sha256": "40163333061f7223ecb604ed0f12988cfc8096d57ca8b1db006d410d4aeb700e",
+        "mode": 365
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+        "bytes": 132848,
+        "sha256": "d4cd917f05a5730ffda8a203e32fb8f9b70f79213fff1fafb045e438db8a6c06",
+        "mode": 365
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "bytes": 34640,
+        "sha256": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063",
+        "mode": 493
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/usr/bin/cc",
+        "bytes": 200560,
+        "sha256": "34129c71a01a74f7f3b2443521519b2e5447553fa187f5fcafaaf8c42cc192e2",
+        "mode": 493
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/usr/bin/codesign",
+        "bytes": 973408,
+        "sha256": "d517c9be608ffd266ec106c685e880cda71abc94001450e36d2476016406dd1e",
+        "mode": 493
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/usr/bin/ditto",
+        "bytes": 270464,
+        "sha256": "88933d7c96cc2c02219d61f5523b61a902dca8fdeed3b8384f24066ff48541bb",
+        "mode": 493
+      }
+    },
+    {
+      "fresh_java": false,
+      "body_selected": false,
+      "reason": "Recorded current source-plan/runtime identity; body intentionally omitted and not rehashed by this source-only fragment.",
+      "identity": {
+        "path": "/usr/bin/xattr",
+        "bytes": 184240,
+        "sha256": "ac420b32e8401155adf35994ac66362769e6c2d67e8a287389427c5b4375c7f6",
+        "mode": 493
+      }
+    }
+  ]
+}

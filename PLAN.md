@@ -1,5 +1,21 @@
 # 구현 계획
 
+### Stage153–155 T40·URI 체크포인트
+
+원본 T40 계약 2개를 보존하는 어댑터, native file URI의 byte/text 구분 및 공통 PackageUri/PackageAssetUri 검증을 추가했다. 원본 argv·URI·stdout/stderr/exit/생성 파일을 유지해 두 계약이 일치했다. Java cache-off 제어 2개도 통과했지만 원본 개수에 합산하지 않는다. Package transport·project·전체 JVM 진단과 API 완성은 주장하지 않는다.
+
+Source06 full workspace는 Cargo 101로 종료했다. Outer 336개 그룹에서 **2,190 통과·1 실패·6 ignored**이며 nested 13개 통과는 제외했다. 실패는 package://example/x의 factory 결과를 None으로 기대하던 오래된 테스트였다. 같은 workspace의 raw266은 renderer 240개와 pre-renderer 8개가 일치했고 엄격 비통과 18개를 유지한다. 새 266 Java 취득은 없다.
+
+Source07은 Rust 테스트 하나와 Python 어댑터·mock 회귀 파일 두 개만 바꿨다. 실제 original ID로 생성한 HOME/TMP 상태를 동일한 ID로 보존·검증하고, evidence 폴더의 manifest ID는 유지한다. Before alias·patch·format·이전/현재 sourceplan을 보존했으며 나머지 11,962개 선언 pin은 그대로다. Production Rust 구현은 바뀌지 않았다. 별도 검증은 Python 83개·inventory·prechecks 5개 통과, 전체 affected target 15개 통과다. 실패한 full workspace를 새 whole-workspace 통과로 바꾸거나 두 실행의 통과 수를 합산하지 않는다.
+
+File URI는 Java/native 각각 24개를 취득해 **19개 경계 일치·5개 비통과**를 기록했다. Native OS byte는 별도이며 Java OS byte 동일성이나 전체 Host/Windows 호환을 주장하지 않는다. Package API는 각각 37개를 취득해 **6개 전체 raw value 일치·31개 비통과**다. 원본 package CLI/server/project 11개 의무는 이 API 제어로 충족되지 않는다.
+
+새 M1은 Native/Node/Chromium 각각 6,078개 raw 일치, shared 6,078개, Node/browser 각각 92개 scenario를 확인했다. 동일한 한 capture에서 strict와 architecture 판독이 통과했으며 별도 strict CLI를 실행한 것은 아니다. 기존 cache를 그대로 재사용했고 새로운 clone 증거·성능 개선·전체 Protobuf 플랫폼 matrix는 주장하지 않는다.
+
+Python01–04·prechecks01·seal01·잘못된 filename 선택·T40 상태 key 및 reader 범위 실패는 보존한다. 정상 개별 target의 cache 321개 정리는 관측 free 변화 **1,452,425,216 B**만 기록하며 독점 회수량·복원·추가 통과로 세지 않는다. 목록 4,586개 중 ready 4,485·미구현 69·미매핑 32이고 요구사항 상태는 구현 15·부분 42·미구현 418이다. 전체 M2 아홉 영역·API·패키지/Host·릴리스 플랫폼·엄격 gate·성능 의무를 계속 수행한다.
+
+[체크포인트 보고서](reports/m2/stage153-155-t40-uri/README.md)와 별도 publication/source/archive/Git 영수증으로 로컬 증거를 연결한다. 검증 후 TESTING.md를 바꿀 때는 검증된 이전 body의 before alias와 문서 전용 전환을 보존하며 기존 runtime 영수증을 새 문서에 재결합하지 않는다.
+
 ### Stage146–151 Host·analyze 체크포인트
 
 Lossless scalar `poll_text`, native file Glob/HasElement, file URI validation, authored settings/path resolution과 제한된 `pkl:analyze` 경로를 연결했다. Glob matching·정렬·lazy 처리는 공통 VM에 남긴다. Percent escape를 decode하지 않은 상태에서 NFC normalization과 ASCII quoting을 적용한다. Literal combining mark가 hexadecimal escape에 인접한 경계는 미검증이며 모든 escaped spelling의 불변을 주장하지 않는다.

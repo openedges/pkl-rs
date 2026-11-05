@@ -25,6 +25,9 @@ pub fn parse_module_eval_args(argv: &[String]) -> Result<ModuleEvalInvocation, S
         match argument.as_str() {
             "--no-cache" => options.no_cache = true,
             "--no-project" => options.no_project = true,
+            // The bounded diagnostic renderer always emits plain text. Keep
+            // this original explicit spelling rather than rewriting argv.
+            "--color=never" => {}
             "--settings" => {
                 options.settings = arguments
                     .next()
@@ -114,6 +117,8 @@ mod tests {
             &["eval"][..],
             &["eval", "a.pkl", "b.pkl"],
             &["eval", "--expression", "x", "a.pkl"],
+            &["eval", "--color=always", "a.pkl"],
+            &["eval", "--color=auto", "a.pkl"],
             &["eval", "--settings"],
             &["eval", "--property", "missing-equals", "a.pkl"],
             &["eval", "--env-var"],
@@ -124,5 +129,25 @@ mod tests {
         let invocation = parse(&["eval", "--settings", "custom.pkl", "a.pkl"]).unwrap();
         assert_eq!(invocation.options.settings, "custom.pkl");
         assert!(!invocation.options.no_cache && !invocation.options.no_project);
+    }
+
+    #[test]
+    fn original_plain_t40_argv_preserves_enabled_package_cache_setting() {
+        let invocation = parse(&[
+            "eval",
+            "--settings",
+            "pkl:settings",
+            "--color=never",
+            "--no-project",
+            "tests/fixtures/rev1/class_authority/t40/repro.pkl",
+        ])
+        .unwrap();
+        assert!(!invocation.options.no_cache);
+        assert!(invocation.options.no_project);
+        assert_eq!(invocation.options.settings, "pkl:settings");
+        assert_eq!(
+            invocation.source_path,
+            "tests/fixtures/rev1/class_authority/t40/repro.pkl"
+        );
     }
 }

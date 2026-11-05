@@ -177,6 +177,11 @@ def source_paths(root=ROOT):
                 path = Path(directory) / name
                 if path.suffix in suffixes and path.is_file():
                     paths.add(path)
+    # Retain binary fixtures embedded by inline runtime test modules as well.
+    # These are source provenance, not executed platform compatibility cases.
+    for folder in ['crates/pkl-runtime/tests/fixtures/m2-glob-lossless-source',
+                   'crates/pkl-runtime/tests/fixtures/m2-supplementary-identifier/parser']:
+        paths.update(path for path in (root / folder).rglob('*') if path.is_file())
     from vendor_sources import vendor_source_paths
     paths.add(root / 'tools/vendor_sources.py')
     paths.update(vendor_source_paths(root))

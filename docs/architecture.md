@@ -33,6 +33,10 @@ Represent lazy members with unevaluated, evaluating, and completed cache states.
 
 Native development Hosts supply file Glob/HasElement metadata while matching, ordering and lazy value loading stay in the shared VM. Authorization and decoded file-URI validation precede filesystem I/O. Selected authored settings modules use explicit POSIX/Windows lexical path operations rather than invented Host descriptors; full project/package support, `platform.current`, `release.current` and Benchmark execution remain open. Public `Instruction` adds `ResolveEvaluatorSettingsPath` and `AnalyzeImportGraph`, requiring downstream exhaustive matches to handle them. These bounded shared-engine capabilities do not establish complete browser/Node Host or language/API coverage.
 
+### Package URI validation and development file paths
+
+`packages::PackageUri` and `PackageAssetUri` provide shared pure validation with typed input/reason ownership. Standard module/resource handling retains constructor/policy order; valid package transport, project resolution and full JVM diagnostic projection remain separate capabilities. Native development file handling distinguishes the exact Unix `file:///` byte route from Java `File(URI)` text decoding, sharing Unicode/UTF-8 primitives while keeping OS bytes distinct from display text. Non-UTF-8 module filename/source loading and Windows provider behavior remain unqualified. These bounded helpers preserve custom Host ownership and add no production Java fallback. See the [checkpoint scope](../reports/m2/stage153-155-t40-uri/README.md).
+
 ### Typed property lookup, module identity and bounded annotation/const diagnostics
 
 `Typed.getProperty` uses the existing String-checked property lookup continuation and actual Typed inheritance. It preserves lazy lookup, existing const-method restrictions, missing-member suggestions, receiver labels and UTF-16 property names. It shares the evaluator, diagnostic renderer and heap with native, Wasm and N-API.

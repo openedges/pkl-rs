@@ -1,0 +1,44 @@
+{
+  "complete": true,
+  "independent": true,
+  "source_only": true,
+  "reviewed_preparation": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/manifest.json",
+    "bytes": 10572,
+    "sha256": "1822aebaf8e5913cfcf340e5f25f287d6b32fe0d2e726ae2a01496673008fefd",
+    "mode": 420
+  },
+  "reviewed_failure_stderr": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-01/0.stderr.bin",
+    "bytes": 2816,
+    "sha256": "1bfffc40021bc8ae7a32247b3a52ece463331d949978f2ca2c03ca9ee134ed79",
+    "mode": 420
+  },
+  "concrete_blockers": [],
+  "checks": {
+    "unique_source_metadata_pins_verified": 16,
+    "new_exact_digest_fields": 12,
+    "historical_registry_fields": 4,
+    "result_digest_fields": 8,
+    "exact_document_pins": 5,
+    "sibling_stream_pin_metadata_joined": 8,
+    "pure_source_controls_passed": 6,
+    "common_audit_pack_readback_byte_identical_to04": true
+  },
+  "findings": [
+    "Only exact failed01 copied registry path and cases0/1 contract/oracle_observation/sha256 stdout/stderr trails accept historical digest strings. Its complete pinned document identity remains required; no current process body inferred.",
+    "Only four exact failed01 result.json documents at the two cases/java-rust paths accept sha256 stdout/stderr digests. Each digest must equal the exact recorded sibling stream pin from the frozen37 table; normal add/body-SHA selection remains required.",
+    "Five complete document pins and all eight sibling metadata pins match the immutable failed37 selection. Unrecognized paths/trails and malformed real descriptor channels still fail closed.",
+    "Selection output moves to fresh02; frozen plan/audit and source07 bridge/failed workspace/T40 evidence remain unchanged.",
+    "Applied report README remains exact8291B3d9940\u2026; no concrete unexecuted compatibility/platform/archive/Git claim blocker found. Publication/archive/Git success is explicitly separate."
+  ],
+  "limits": [
+    "No actual selector/audit/resource run, archive/cache/executable body query or production/Git mutation by reviewer.",
+    "Actual stream-body integrity remains the root selector/pack/readback responsibility.",
+    "Successor05 source/review/failed selector01 and launch-preparation receipts are supplemental post-plan evidence; frozen plan is not rewritten."
+  ],
+  "production_modified": false,
+  "resource_jobs": 0,
+  "cache_queries": 0,
+  "archive_bodies_accessed": false
+}

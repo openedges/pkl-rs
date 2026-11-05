@@ -13,6 +13,7 @@ import sys
 import m2_generate
 import m2_module_eval
 import m2_historical
+import m2_selected_regressions
 import m2_execution_profiles
 import m2_jvm_classpath
 import m2_source_inputs
@@ -156,6 +157,7 @@ def build_manifest(root: Path = ROOT) -> dict:
     corpus = load(Path('compatibility/corpus.json'), root)
     rev1 = load(Path('compatibility/rev1-inventory.json'), root)
     historical = m2_historical.registry_cases(root)
+    retained = m2_selected_regressions.registry_cases(root)
     selected = load(SELECTION, root)['cases']
     module_cases = m2_module_eval.registry_cases(root, corpus, load(MODULE_ADAPTERS, root))
     profiles = m2_execution_profiles.registry_cases(root, corpus)
@@ -198,10 +200,7 @@ def build_manifest(root: Path = ROOT) -> dict:
             continue
         cases.append(m2_historical.manifest_case(row, historical.get('rev1-candidate:' + row['path'])))
     for row in load(Path('compatibility/regressions.json'), root)['cases']:
-        cases.append(dict(id='m2:' + row['id'], required=True, adapter=None, input=row['source']['path'],
-                          input_sha256=row['source']['sha256'], requirements=[],
-                          execution=dict(state='unimplemented', reason='Selected original regression retained; M2 full module/CLI adapter is unimplemented.'),
-                          regression_case=row))
+        cases.append(m2_selected_regressions.manifest_case(row, retained.get('m2:' + row['id'])))
     apply_mappings(requirements, cases, load(MAPPINGS, root), inventory['baseline'], root)
     result = dict(schema_version=1, baseline=inventory['baseline'],
                   scope='Complete M2 language requirement accounting with a conservative superset of all pinned language snippets; initial executable probes are a separate selection.',
@@ -226,6 +225,7 @@ def validate_manifest(manifest: dict, root: Path = ROOT):
     profiles = m2_execution_profiles.registry_cases(root, corpus)
     originals = {row['id']: row for row in corpus['cases']}
     m2_historical.validate_manifest(root, manifest)
+    m2_selected_regressions.validate_manifest(root, manifest)
     requirement_ids = {row['id'] for row in manifest['requirements']}
     case_ids = {row['id'] for row in manifest['cases']}
     if not set(registered) <= case_ids:

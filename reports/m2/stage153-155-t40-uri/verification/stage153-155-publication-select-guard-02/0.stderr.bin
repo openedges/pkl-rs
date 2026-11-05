@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/select.py", line 198, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/select.py", line 127, in main
+    for row in plan['payloads']:add(row['pin'],row['group'],row['kind'])
+                                ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/select.py", line 15, in add
+    payload_path(expected['path'],kind,excluded_roots)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/common.py", line 160, in payload_path
+    if kind=='authority':assert p.suffix=='.json'
+                                ^^^^^^^^^^^^^^^^^
+AssertionError

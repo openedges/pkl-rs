@@ -21,7 +21,8 @@ pub enum ReadResult {
 /// Java UTF-8 decoder consumes a malformed surrogate encoding as one sequence,
 /// unlike Rust's lossy decoder. Other malformed sequences consume only their
 /// valid prefix, leaving the next byte for the following decoding step.
-pub(crate) fn decode_utf8(bytes: &[u8]) -> PklString {
+/// Host adapters may use this same decoder when a Java API converts bytes to text.
+pub fn decode_utf8(bytes: &[u8]) -> PklString {
     if let Ok(text) = std::str::from_utf8(bytes) {
         return text.into();
     }

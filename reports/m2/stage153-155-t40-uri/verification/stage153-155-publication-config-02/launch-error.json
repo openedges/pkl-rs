@@ -1,0 +1,8 @@
+{
+  "phase": "guard-launch-before-output-creation",
+  "exit_code": 1,
+  "argument": "target/m2/stage153-155-publication-config-02/select.json",
+  "reason": "Root supplied a relative config argument; execution guard safe() requires an absolute path. Assertion failed before output-directory creation, report creation or child launch.",
+  "evidence": "Observed exec_command result c6a855; no raw child channels were created.",
+  "corrected_argument": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-config-02/select.json"
+}

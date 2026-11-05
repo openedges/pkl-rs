@@ -1,0 +1,6 @@
+{
+  "complete": false,
+  "resource_job_started": false,
+  "error": "KeyError: source_authorities",
+  "reason": "Root used another helper manifest schema while preparing a publication guard; no guard/config/source audit was executed."
+}

@@ -64,7 +64,7 @@ class HistoricalRegistryTests(unittest.TestCase):
     def test_total_ids_and_other_original_contracts_unchanged(self):
         manifest=m2_manifest.current_manifest()
         originals=json.loads((self.root/'compatibility/regressions.json').read_bytes())['cases']
-        self.assertEqual(len(manifest['cases']),4527 + 18)
+        self.assertEqual(len(manifest['cases']),4586)
         token_ids={f'token-stage97-{token}-{boundary}'
             for token in ('true','false','null')
             for boundary in ('identifier-classes','delimiter-classes','literal-at-EOF',
@@ -82,15 +82,17 @@ class HistoricalRegistryTests(unittest.TestCase):
         self.assertEqual(len(candidates),40)
         self.assertEqual(sum(x['execution']['state']=='ready' for x in candidates),8)
         self.assertEqual(sum(x['execution']['state']=='unmapped' for x in candidates),32)
-        self.assertEqual(manifest['counts']['cases_by_execution'],{'ready':4442,'unimplemented':71,'unmapped':32})
+        self.assertEqual(manifest['counts']['cases_by_execution'],{'ready':4485,'unimplemented':69,'unmapped':32})
+        admitted={'rev1:t40-imported-declaration-authority','rev1:t40-foreign-namesake'}
         for original in originals:
             case=next(x for x in manifest['cases'] if x['id']=='m2:'+original['id'])
             self.assertEqual(case['regression_case'],original)
-            self.assertEqual(case['execution']['state'],'unimplemented')
+            self.assertEqual(case['execution']['state'],'ready' if original['id'] in admitted else 'unimplemented')
+            self.assertEqual(case['adapter'],'selected-regression-module-eval' if original['id'] in admitted else None)
             self.assertIn('--color=never',case['regression_case']['command'])
         selected=m2_language.selected_cases(manifest,[historical.ADAPTER])
         self.assertEqual([x['id'] for x in selected],[x['id'] for x in self.registry['cases']])
-        self.assertEqual(len(m2_language.selected_cases(manifest)),4442)
+        self.assertEqual(len(m2_language.selected_cases(manifest)),4485)
         self.assertTrue(any(selected[0]['id'] in error for error in m2_manifest.full_gate_failures(manifest,[])))
 
     def test_unselected_promotion_and_missing_id_rejected(self):
@@ -157,7 +159,7 @@ class MainRunnerDispatchTests(unittest.TestCase):
                 self.assertEqual(report['schema_version'],6)
                 self.assertEqual(report['selection']['case_ids'],[c['id'] for c in cases])
                 self.assertEqual(report['selected_count'],8)
-                self.assertEqual(report['inventory_counts']['cases'],4527 + 18)
+                self.assertEqual(report['inventory_counts']['cases'],4586)
                 self.assertEqual(report['module_candidate']['source_binding'],'unbound-caller-supplied')
                 self.assertEqual(acquire.call_count,1)
                 self.assertEqual(acquire.call_args.args[2],cases)

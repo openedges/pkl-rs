@@ -1,0 +1,2102 @@
+{
+  "draft": false,
+  "head": "6d5d72f66a4a7e9343781d570600c8782f460d9c",
+  "all_publication_guards_terminal_reaped": true,
+  "authorities": {
+    "pack": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-01/report.json",
+      "bytes": 692,
+      "sha256": "6474a6b9449c57e7fbefa443fc5eca4fb5acfecd8f0c64b514ef9d2e2f186ec1",
+      "mode": 420
+    },
+    "integrity": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-readback-01/report.json",
+      "bytes": 2504,
+      "sha256": "af344d7d95e2a89b14f1641f1222d6a6452adca1043093f8cfab55bf935476ef",
+      "mode": 420
+    },
+    "source_audit": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source-verification-02/source-verification.json",
+      "bytes": 14121159,
+      "sha256": "0dd45ce84288ca50262bcdf53c12df5c48310983edfe0e5a60398e054bcf0c16",
+      "mode": 420
+    },
+    "roster": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-selection-02/payload-roster.json",
+      "bytes": 18176839,
+      "sha256": "28f2b045b9aeb1bac2afcae29ef274a85e52e00ba30249a55885266e6f0f0cfd",
+      "mode": 420
+    },
+    "documentation_application": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-documentation-transition-01/report.json",
+      "bytes": 6789,
+      "sha256": "063b40f3b2f882142a0b1e22a63fa1f5218652f9135da95bd9bd9d74b20bbece",
+      "mode": 420
+    }
+  },
+  "archive": {
+    "sha256": "e69ae4f370e63107ece8255f2447fdd6b2f70f23c21f0353ed318496017e9d11",
+    "bytes": 39554359,
+    "mode": 420,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-01/evidence.tar.gz"
+  },
+  "guards": [
+    {
+      "label": "audit",
+      "pin": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-audit-guard-02/report.json",
+        "bytes": 7124180,
+        "sha256": "d11e47bec1981cad879a92b0f581c49c03a26a0f2ad3cfa308eab8edb8e51159",
+        "mode": 420
+      }
+    },
+    {
+      "label": "select",
+      "pin": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-03/report.json",
+        "bytes": 7125005,
+        "sha256": "1cabdac73754daf2e703e6ce6f3e8c614d5bdbb1ad2fc0130ae0ee75504309a7",
+        "mode": 420
+      }
+    },
+    {
+      "label": "pack",
+      "pin": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-pack-guard-01/report.json",
+        "bytes": 7125733,
+        "sha256": "808bf5a04c06a975becd2a536aa359d77dcc9fba54934655b125d59d6e4f1f5a",
+        "mode": 420
+      }
+    },
+    {
+      "label": "archive_readback",
+      "pin": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-readback-guard-01/report.json",
+        "bytes": 7127095,
+        "sha256": "e7a00f814bf1048155f7cfda5208b13b886d58714b72a5460dcb2e95b0e0cd48",
+        "mode": 420
+      }
+    }
+  ],
+  "preserved_failures": [
+    {
+      "label": "selector01",
+      "pin": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-01/report.json",
+        "bytes": 3558429,
+        "sha256": "d7aa3a3db9994dc8b109ae40e02eb3f8d52db86df778c3bb8da7336fc4b9081b",
+        "mode": 420
+      },
+      "reason": "Strict process-channel parsing rejected exact historical digest-string metadata; retained with raw channels and superseded by the separately verified producer06."
+    },
+    {
+      "label": "prep_error",
+      "pin": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-config-01/preparation-error.json",
+        "bytes": 236,
+        "sha256": "b36497c7ec782c5bde9e8a5a651387535e4b1bbf38b3ae0f9df0acdbf3f4d199",
+        "mode": 420
+      },
+      "reason": "Initial preparation used a nonexistent source_authorities key instead of dependencies; no child workload was launched."
+    }
+  ],
+  "postplan_sources": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-audit-guard-01/report.json",
+      "bytes": 7110339,
+      "sha256": "9721875a6488e0dad6598da60ab1c10d250ad55895bdd0fa50b877180a65562b",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-config-01/audit.json",
+      "bytes": 3554674,
+      "sha256": "1014693cc0733e619127e4f7ec6b1128c1c68e90086a299aaf28d984d3c63a72",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-audit-guard-01/0.stdout.bin",
+      "bytes": 238,
+      "sha256": "1ef86bffa29b37de6ac3bbb3dcb4fb96599140a57e97c49e64b87377c60114fb",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-audit-guard-01/0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-audit-guard-01/host-processes.txt",
+      "bytes": 34026,
+      "sha256": "c3468c25455e16cee69c69ff8f26f06e86f74b322cc95463cd103f210506de17",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-audit-guard-01/host-memory.txt",
+      "bytes": 1247,
+      "sha256": "a8e8626693091e596055b52069c9fae4b611d42168ef013d09504e8b7733271d",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-audit-guard-01/host-swap.txt",
+      "bytes": 77,
+      "sha256": "b9499094146fa59bc014228df4e25480b9b9f7e9bb12a3a77727ecfeb571c14f",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-01/report.json",
+      "bytes": 3558429,
+      "sha256": "d7aa3a3db9994dc8b109ae40e02eb3f8d52db86df778c3bb8da7336fc4b9081b",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-config-01/select.json",
+      "bytes": 3555216,
+      "sha256": "b9c00ccc8b2a9f0290770284ea3f660e67935b2f8a0a3b65bf14c46de5b8dd1f",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-01/0.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-01/0.stderr.bin",
+      "bytes": 2816,
+      "sha256": "1bfffc40021bc8ae7a32247b3a52ece463331d949978f2ca2c03ca9ee134ed79",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-01/host-processes.txt",
+      "bytes": 34026,
+      "sha256": "9b2ec566e9c240f39150b89ef4a7cb34ccb5a1d9876032ea98bc087f5cf3dc99",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-01/host-memory.txt",
+      "bytes": 1247,
+      "sha256": "565fb3a928947df54a2ab46e81369d059d84acce613b8daccb424eea41c87e99",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-01/host-swap.txt",
+      "bytes": 77,
+      "sha256": "b9499094146fa59bc014228df4e25480b9b9f7e9bb12a3a77727ecfeb571c14f",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-02/report.json",
+      "bytes": 3561616,
+      "sha256": "0f690dfaa3519fd5698772dc4ea084c3f7ddf0aa05936354c2a7bb815f9de8ee",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-config-02/select.json",
+      "bytes": 3558405,
+      "sha256": "3883da7e729acfed77b7486e796b5c1b328cf52d31ea769dd6be48807bf8cfbe",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-02/0.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-02/0.stderr.bin",
+      "bytes": 990,
+      "sha256": "0337d8ee2aa695b0c4b589657d24434c629c62e9ea3d16dd580c134137738f3b",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-02/host-processes.txt",
+      "bytes": 34026,
+      "sha256": "3c52c9287c52e731b65259da67600cbd6a14b8236a589b53fdf1a3a8ffcc6edd",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-02/host-memory.txt",
+      "bytes": 1247,
+      "sha256": "23928ee3790de30a3faabe830440c4943ef3e2d578f36b4ff63f1a1ab3c7e9e1",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-02/host-swap.txt",
+      "bytes": 77,
+      "sha256": "b9499094146fa59bc014228df4e25480b9b9f7e9bb12a3a77727ecfeb571c14f",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-config-01/preparation-error.json",
+      "bytes": 236,
+      "sha256": "b36497c7ec782c5bde9e8a5a651387535e4b1bbf38b3ae0f9df0acdbf3f4d199",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-config-02/launch-error.json",
+      "bytes": 555,
+      "sha256": "2486a588148457fcd4fb5a18ee550b1f62b56afb088f96d1aad67e18614cf6d9",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-closed-plan-01/closed-plan.json",
+      "bytes": 5585136,
+      "sha256": "d85bebace686acbe3939e11be9693838d28f1a8d30ddac7a51ffb7ead6d41ca3",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-closed-plan-02/closed-plan.json",
+      "bytes": 5585109,
+      "sha256": "66d2e1077fc1decab9c80d8b27b1d37dd2594372d2efbced9efde7e3af5cad82",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-closed-plan-02/transition.json",
+      "bytes": 4604,
+      "sha256": "083c11643cd3d2edd46e0e91cef1992ff170f0f6964b17406c42539194896006",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source-verification-01/source-verification.json",
+      "bytes": 14121159,
+      "sha256": "9057d8738f2cb8a622d80c679bc33989d8fd6222467b2dbf70d0cdc58b27b862",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-selection-02/omissions.json",
+      "bytes": 35033,
+      "sha256": "3c6de7f44ef4cd3b59bbb2bc5f21cc9ea7a8f19c142eb386712fdcacb62c784e",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/manifest.json",
+      "bytes": 10572,
+      "sha256": "1822aebaf8e5913cfcf340e5f25f287d6b32fe0d2e726ae2a01496673008fefd",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/common.py",
+      "bytes": 37788,
+      "sha256": "2867ab284ecd844f112982372f6f1633030fa23ea50528e4bf046fb36e08276a",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/audit.py",
+      "bytes": 5961,
+      "sha256": "79480313a82cd7680c33c823cbd5a822f644af0e733f7dcf30f5eab8d33b5ec1",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/select.py",
+      "bytes": 19253,
+      "sha256": "e65412c17414c38ea5877dacfdb0b864e036ceeb167667f3948e8621748c21eb",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/pack.py",
+      "bytes": 5230,
+      "sha256": "d6e5e7acc4bc68c7a4cc2fa89068d9e5f58a010c17c7d37acb0c7b34ef5a5bcb",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/readback.py",
+      "bytes": 9553,
+      "sha256": "8fa5521cf4c12712dd1fdf47172021d28b3942567d1ba5411e90f1020aafc272",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/selftest.py",
+      "bytes": 2662,
+      "sha256": "9098cdee8fe65758844d5fd72bcd4afcf10e03c4d64275f85477884955572e72",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/README.md",
+      "bytes": 2165,
+      "sha256": "c4509c4b363f750ec8125e02f2a6a3af5eb0fc4e72de0d0370c4c3ec18f85c30",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/PLAN.md",
+      "bytes": 864,
+      "sha256": "88a89d8bdbb086b1930e091253e24f34d76534006ee5458bbc7b164c09b03e14",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/source-check.json",
+      "bytes": 5384,
+      "sha256": "81b27204804b8749e880b4767045e9540a81c64b6535c29c721f373d603c0c60",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/successor05.patch",
+      "bytes": 6696,
+      "sha256": "545f738012dcbfdbb04486c85905899d4794aa5e3ead86a296f33dcf067c2b7f",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/manifest.json",
+      "bytes": 8943,
+      "sha256": "40c7b2bedf70b8a1128182e2ba2541b9e89a389c434abf5f4e27a06dfeaaa6fa",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/common.py",
+      "bytes": 40926,
+      "sha256": "39d984799d7bb702081c661083edafb7c5de25a1e7b2fe329b08e1d54cef6390",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/audit.py",
+      "bytes": 5961,
+      "sha256": "c8f631bf480f3c0ebc27af581224ebccd54bdd60b336656a1f3664f5e2fe7087",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/select.py",
+      "bytes": 20014,
+      "sha256": "0e549be32dc9041c0b6657fcfffd9be8b2b13b36dbb410fd534e40219a3ebc7b",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/pack.py",
+      "bytes": 5230,
+      "sha256": "d6e5e7acc4bc68c7a4cc2fa89068d9e5f58a010c17c7d37acb0c7b34ef5a5bcb",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/readback.py",
+      "bytes": 9553,
+      "sha256": "8fa5521cf4c12712dd1fdf47172021d28b3942567d1ba5411e90f1020aafc272",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/selftest.py",
+      "bytes": 3900,
+      "sha256": "9579d0f7f9d5b1cfc43ea11dc0b78b816b92ae63b98ffd7809973350fd135ce8",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/README.md",
+      "bytes": 1170,
+      "sha256": "d55abd88a2e2e51d73c724e639ff784f6f9eecd5983ca40b52fecb42f8a7d255",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/PLAN.md",
+      "bytes": 552,
+      "sha256": "02b776c9dcf096ac1980b87bf0c219ab514fef645a636fc38b5a65f3f2c52554",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/source-check.json",
+      "bytes": 3496,
+      "sha256": "c1b0e2058ae3bac231c9bf4f46060fbefdc7f3e41633b35fa029f6d0792bb959",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/successor06.patch",
+      "bytes": 12465,
+      "sha256": "cca6724138c7478bd33dc8c7e9810b7e7b1d0f0eaf6942621807075d94fae0bc",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-selector05-independent-review-01/manifest.json",
+      "bytes": 595,
+      "sha256": "64572f6599143cb21bf4ebf597973cebd8b0695fa317f5baecd5bdf1f9957ba9",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-selector05-independent-review-01/report.json",
+      "bytes": 2515,
+      "sha256": "48922629dedc511d15f161d3f65c051f23abdcdb3b97a0ac9b9de92b6b35613f",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-selector06-independent-review-01/manifest.json",
+      "bytes": 698,
+      "sha256": "e333ccca2443d502bfa447faaf8d60db694002d46d88e60f35fb02228789fca1",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-selector06-independent-review-01/checks.json",
+      "bytes": 3237,
+      "sha256": "618149b2463fd3b0e18f34c36607f5898cbd523e85ce90adb561046ffdabc315",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-selector06-independent-review-01/report.json",
+      "bytes": 2891,
+      "sha256": "76e4f61a970fa73bb6278041c32bd3f7aac9447b793bddbb1259e42ef18560b9",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-01/manifest.json",
+      "bytes": 1553,
+      "sha256": "1d7d9ec59dfa2af88cdd0d39c671cf9d080cf8f7c79babc7ab4241f6e4e7837e",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-01/publish.py",
+      "bytes": 9722,
+      "sha256": "b9c779566bdf5141dfe35ef97181d3c5555ac48138a6c585544f59e1a19b9822",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-01/mapping.template.json",
+      "bytes": 2871,
+      "sha256": "6bbf5921e31b810d3d30e52cd732cda2320832f18bc8f2e4d72b244b84d7349a",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-01/README.md",
+      "bytes": 2617,
+      "sha256": "101b33658b1a0b66287cd67d9367d1734ec460e180c3801eb5bd53d0444b5456",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-01/PLAN.md",
+      "bytes": 980,
+      "sha256": "ac306cb9a6e7d858564991c30926ee47aadc7a051f5b5000d53eb116e4efb895",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-02/manifest.json",
+      "bytes": 2012,
+      "sha256": "2dfe8717f1388c3193fb4e8e0cbc4e78f72c13896ec870ea57e6d81e7cf31c75",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-02/publish.py",
+      "bytes": 9722,
+      "sha256": "b2375e34d63410d96c1f6e142ef775affe37cbf4168f7c87a92b178b83a1612e",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-02/mapping.template.json",
+      "bytes": 2871,
+      "sha256": "6bbf5921e31b810d3d30e52cd732cda2320832f18bc8f2e4d72b244b84d7349a",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-02/README.md",
+      "bytes": 2617,
+      "sha256": "101b33658b1a0b66287cd67d9367d1734ec460e180c3801eb5bd53d0444b5456",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-02/PLAN.md",
+      "bytes": 980,
+      "sha256": "ac306cb9a6e7d858564991c30926ee47aadc7a051f5b5000d53eb116e4efb895",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-independent-review-01/manifest.json",
+      "bytes": 597,
+      "sha256": "ceaa96519488e6a51f04afad3f9bbd51573a707f90f6ca4ab666deae6521cf34",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-independent-review-01/report.json",
+      "bytes": 2449,
+      "sha256": "c68739cc7a39150ca71d7bc3c5128dc590d45e3ccdae435086c43d0e0a31da25",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-final-table-independent-review-01/manifest.json",
+      "bytes": 601,
+      "sha256": "0391d35afc0d01dbaa2c25bc43ad0dfc537b983b0cd556607318d0c8b096e9fa",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-final-table-independent-review-01/report.json",
+      "bytes": 4151,
+      "sha256": "548e0454f955c79d9495ff48d51e1b76e0acc37a9858de65879e54cac95a3682",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-map-01/post-plan-notes.json",
+      "bytes": 2644,
+      "sha256": "5c66dc61246011ae3bedb760ca76ab6aa17f3e1665eecb3618fb46ea08a0b878",
+      "mode": 420
+    }
+  ],
+  "copies": [
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-checkpoint-doc-draft-03/README.md",
+        "bytes": 8291,
+        "sha256": "3d9940ad399fb8687ae0d66b2ba485dc9fa08251178b641e7558cb973b085f32",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/README.md",
+        "bytes": 8291,
+        "sha256": "3d9940ad399fb8687ae0d66b2ba485dc9fa08251178b641e7558cb973b085f32",
+        "mode": 420
+      },
+      "allow_existing": true
+    },
+    {
+      "source": {
+        "sha256": "e69ae4f370e63107ece8255f2447fdd6b2f70f23c21f0353ed318496017e9d11",
+        "bytes": 39554359,
+        "mode": 420,
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-01/evidence.tar.gz"
+      },
+      "destination": {
+        "sha256": "e69ae4f370e63107ece8255f2447fdd6b2f70f23c21f0353ed318496017e9d11",
+        "bytes": 39554359,
+        "mode": 420,
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/evidence.tar.gz"
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-selection-02/payload-roster.json",
+        "bytes": 18176839,
+        "sha256": "28f2b045b9aeb1bac2afcae29ef274a85e52e00ba30249a55885266e6f0f0cfd",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/evidence-index.json",
+        "bytes": 18176839,
+        "sha256": "28f2b045b9aeb1bac2afcae29ef274a85e52e00ba30249a55885266e6f0f0cfd",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source-verification-02/source-verification.json",
+        "bytes": 14121159,
+        "sha256": "0dd45ce84288ca50262bcdf53c12df5c48310983edfe0e5a60398e054bcf0c16",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/source-verification.json",
+        "bytes": 14121159,
+        "sha256": "0dd45ce84288ca50262bcdf53c12df5c48310983edfe0e5a60398e054bcf0c16",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-readback-01/report.json",
+        "bytes": 2504,
+        "sha256": "af344d7d95e2a89b14f1641f1222d6a6452adca1043093f8cfab55bf935476ef",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/evidence-integrity.json",
+        "bytes": 2504,
+        "sha256": "af344d7d95e2a89b14f1641f1222d6a6452adca1043093f8cfab55bf935476ef",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-01/report.json",
+        "bytes": 692,
+        "sha256": "6474a6b9449c57e7fbefa443fc5eca4fb5acfecd8f0c64b514ef9d2e2f186ec1",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/pack-report.json",
+        "bytes": 692,
+        "sha256": "6474a6b9449c57e7fbefa443fc5eca4fb5acfecd8f0c64b514ef9d2e2f186ec1",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-documentation-transition-01/report.json",
+        "bytes": 6789,
+        "sha256": "063b40f3b2f882142a0b1e22a63fa1f5218652f9135da95bd9bd9d74b20bbece",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/documentation-application.json",
+        "bytes": 6789,
+        "sha256": "063b40f3b2f882142a0b1e22a63fa1f5218652f9135da95bd9bd9d74b20bbece",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-audit-guard-02/report.json",
+        "bytes": 7124180,
+        "sha256": "d11e47bec1981cad879a92b0f581c49c03a26a0f2ad3cfa308eab8edb8e51159",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/audit-guard.json",
+        "bytes": 7124180,
+        "sha256": "d11e47bec1981cad879a92b0f581c49c03a26a0f2ad3cfa308eab8edb8e51159",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-config-03/audit.json",
+        "bytes": 3561630,
+        "sha256": "a2d011438ee7e9c8cde59874fb970cee2e62dd534f16f0d0611c369fcc39b8ae",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/audit-config.json",
+        "bytes": 3561630,
+        "sha256": "a2d011438ee7e9c8cde59874fb970cee2e62dd534f16f0d0611c369fcc39b8ae",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-audit-guard-02/0.stdout.bin",
+        "bytes": 238,
+        "sha256": "e4fb291c05dc9152d1c228ce2dfd99f3637abef1acd65650b4a3a654cf84c53c",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/audit-0.stdout.bin",
+        "bytes": 238,
+        "sha256": "e4fb291c05dc9152d1c228ce2dfd99f3637abef1acd65650b4a3a654cf84c53c",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-audit-guard-02/0.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/audit-0.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-audit-guard-02/host-processes.txt",
+        "bytes": 34272,
+        "sha256": "c6d83bf1eaa87389ba0900f725b6c5d3be65bd74a3885cd7da04d3be99a08aef",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/audit-host-processes.txt",
+        "bytes": 34272,
+        "sha256": "c6d83bf1eaa87389ba0900f725b6c5d3be65bd74a3885cd7da04d3be99a08aef",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-audit-guard-02/host-memory.txt",
+        "bytes": 1247,
+        "sha256": "e6dfc92328cde88885e2388958da968f80fa767c3240dcd4660f71c50ab95587",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/audit-host-memory.txt",
+        "bytes": 1247,
+        "sha256": "e6dfc92328cde88885e2388958da968f80fa767c3240dcd4660f71c50ab95587",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-audit-guard-02/host-swap.txt",
+        "bytes": 77,
+        "sha256": "b9499094146fa59bc014228df4e25480b9b9f7e9bb12a3a77727ecfeb571c14f",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/audit-host-swap.txt",
+        "bytes": 77,
+        "sha256": "b9499094146fa59bc014228df4e25480b9b9f7e9bb12a3a77727ecfeb571c14f",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-03/report.json",
+        "bytes": 7125005,
+        "sha256": "1cabdac73754daf2e703e6ce6f3e8c614d5bdbb1ad2fc0130ae0ee75504309a7",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/select-guard.json",
+        "bytes": 7125005,
+        "sha256": "1cabdac73754daf2e703e6ce6f3e8c614d5bdbb1ad2fc0130ae0ee75504309a7",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-config-03/select.json",
+        "bytes": 3562179,
+        "sha256": "93b1839b4fe0e083ba7e4695a20f32bcd75a80ad16535a51bd4dc68c6dda4519",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/select-config.json",
+        "bytes": 3562179,
+        "sha256": "93b1839b4fe0e083ba7e4695a20f32bcd75a80ad16535a51bd4dc68c6dda4519",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-03/0.stdout.bin",
+        "bytes": 235,
+        "sha256": "f538acdd553e28ff3d9de23fc1dfb9a0efc3ebd726b11ee9d98c1def24bdcd28",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/select-0.stdout.bin",
+        "bytes": 235,
+        "sha256": "f538acdd553e28ff3d9de23fc1dfb9a0efc3ebd726b11ee9d98c1def24bdcd28",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-03/0.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/select-0.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-03/host-processes.txt",
+        "bytes": 34272,
+        "sha256": "5627665a36e66bbd2d94c07c6aad2d82dcf02d53498449a7c20a83b2571cd8e2",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/select-host-processes.txt",
+        "bytes": 34272,
+        "sha256": "5627665a36e66bbd2d94c07c6aad2d82dcf02d53498449a7c20a83b2571cd8e2",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-03/host-memory.txt",
+        "bytes": 1247,
+        "sha256": "57f807191cb6baf49938fc9d3d77cab03f226cd650217180a75a401d09731fad",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/select-host-memory.txt",
+        "bytes": 1247,
+        "sha256": "57f807191cb6baf49938fc9d3d77cab03f226cd650217180a75a401d09731fad",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-03/host-swap.txt",
+        "bytes": 77,
+        "sha256": "b9499094146fa59bc014228df4e25480b9b9f7e9bb12a3a77727ecfeb571c14f",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/select-host-swap.txt",
+        "bytes": 77,
+        "sha256": "b9499094146fa59bc014228df4e25480b9b9f7e9bb12a3a77727ecfeb571c14f",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-pack-guard-01/report.json",
+        "bytes": 7125733,
+        "sha256": "808bf5a04c06a975becd2a536aa359d77dcc9fba54934655b125d59d6e4f1f5a",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/pack-guard.json",
+        "bytes": 7125733,
+        "sha256": "808bf5a04c06a975becd2a536aa359d77dcc9fba54934655b125d59d6e4f1f5a",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-config-03/pack.json",
+        "bytes": 3562380,
+        "sha256": "00acc352292317e501cab58252ca19cd8a2294f389ec928bdaba5fbf4a8f5247",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/pack-config.json",
+        "bytes": 3562380,
+        "sha256": "00acc352292317e501cab58252ca19cd8a2294f389ec928bdaba5fbf4a8f5247",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-pack-guard-01/0.stdout.bin",
+        "bytes": 658,
+        "sha256": "149d14d3e95453550e37f5de730a790b768897f80381fc8ba8c0bfd8663031bd",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/pack-0.stdout.bin",
+        "bytes": 658,
+        "sha256": "149d14d3e95453550e37f5de730a790b768897f80381fc8ba8c0bfd8663031bd",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-pack-guard-01/0.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/pack-0.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-pack-guard-01/host-processes.txt",
+        "bytes": 34165,
+        "sha256": "e060cff7888b1250115d6da5dec3fa201f9da508b194dd43b7ef7b79f66da148",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/pack-host-processes.txt",
+        "bytes": 34165,
+        "sha256": "e060cff7888b1250115d6da5dec3fa201f9da508b194dd43b7ef7b79f66da148",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-pack-guard-01/host-memory.txt",
+        "bytes": 1247,
+        "sha256": "a6e68919d9dbe53a092dd5492ac5f73d416ad84eeb4dc68f67bd81cb6aab14da",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/pack-host-memory.txt",
+        "bytes": 1247,
+        "sha256": "a6e68919d9dbe53a092dd5492ac5f73d416ad84eeb4dc68f67bd81cb6aab14da",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-pack-guard-01/host-swap.txt",
+        "bytes": 77,
+        "sha256": "b9499094146fa59bc014228df4e25480b9b9f7e9bb12a3a77727ecfeb571c14f",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/pack-host-swap.txt",
+        "bytes": 77,
+        "sha256": "b9499094146fa59bc014228df4e25480b9b9f7e9bb12a3a77727ecfeb571c14f",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-readback-guard-01/report.json",
+        "bytes": 7127095,
+        "sha256": "e7a00f814bf1048155f7cfda5208b13b886d58714b72a5460dcb2e95b0e0cd48",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/archive_readback-guard.json",
+        "bytes": 7127095,
+        "sha256": "e7a00f814bf1048155f7cfda5208b13b886d58714b72a5460dcb2e95b0e0cd48",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-config-03/readback.json",
+        "bytes": 3563217,
+        "sha256": "4f31b2dd9692fc0259fd3c3f5b2ac9df5a5e16844f5c791706d46a848da0dc2e",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/archive_readback-config.json",
+        "bytes": 3563217,
+        "sha256": "4f31b2dd9692fc0259fd3c3f5b2ac9df5a5e16844f5c791706d46a848da0dc2e",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-readback-guard-01/0.stdout.bin",
+        "bytes": 372,
+        "sha256": "0d3f95f7f85cba04933917f305a594b49d713d6d40080f2efa22a73a6a87e778",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/archive_readback-0.stdout.bin",
+        "bytes": 372,
+        "sha256": "0d3f95f7f85cba04933917f305a594b49d713d6d40080f2efa22a73a6a87e778",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-readback-guard-01/0.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/archive_readback-0.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-readback-guard-01/host-processes.txt",
+        "bytes": 34272,
+        "sha256": "357a1c46cb2aef031f8c07aaa9fc1254140d2c8f30de89428999f2cc174949f4",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/archive_readback-host-processes.txt",
+        "bytes": 34272,
+        "sha256": "357a1c46cb2aef031f8c07aaa9fc1254140d2c8f30de89428999f2cc174949f4",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-readback-guard-01/host-memory.txt",
+        "bytes": 1247,
+        "sha256": "b3ba6cd689befad9857f8cc80f1a2626203324a6d2dc3641b79f7bafae21602b",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/archive_readback-host-memory.txt",
+        "bytes": 1247,
+        "sha256": "b3ba6cd689befad9857f8cc80f1a2626203324a6d2dc3641b79f7bafae21602b",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-readback-guard-01/host-swap.txt",
+        "bytes": 77,
+        "sha256": "b9499094146fa59bc014228df4e25480b9b9f7e9bb12a3a77727ecfeb571c14f",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/archive_readback-host-swap.txt",
+        "bytes": 77,
+        "sha256": "b9499094146fa59bc014228df4e25480b9b9f7e9bb12a3a77727ecfeb571c14f",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-audit-guard-01/report.json",
+        "bytes": 7110339,
+        "sha256": "9721875a6488e0dad6598da60ab1c10d250ad55895bdd0fa50b877180a65562b",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-audit-guard-01/report.json",
+        "bytes": 7110339,
+        "sha256": "9721875a6488e0dad6598da60ab1c10d250ad55895bdd0fa50b877180a65562b",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-config-01/audit.json",
+        "bytes": 3554674,
+        "sha256": "1014693cc0733e619127e4f7ec6b1128c1c68e90086a299aaf28d984d3c63a72",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-config-01/audit.json",
+        "bytes": 3554674,
+        "sha256": "1014693cc0733e619127e4f7ec6b1128c1c68e90086a299aaf28d984d3c63a72",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-audit-guard-01/0.stdout.bin",
+        "bytes": 238,
+        "sha256": "1ef86bffa29b37de6ac3bbb3dcb4fb96599140a57e97c49e64b87377c60114fb",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-audit-guard-01/0.stdout.bin",
+        "bytes": 238,
+        "sha256": "1ef86bffa29b37de6ac3bbb3dcb4fb96599140a57e97c49e64b87377c60114fb",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-audit-guard-01/0.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-audit-guard-01/0.stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-audit-guard-01/host-processes.txt",
+        "bytes": 34026,
+        "sha256": "c3468c25455e16cee69c69ff8f26f06e86f74b322cc95463cd103f210506de17",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-audit-guard-01/host-processes.txt",
+        "bytes": 34026,
+        "sha256": "c3468c25455e16cee69c69ff8f26f06e86f74b322cc95463cd103f210506de17",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-audit-guard-01/host-memory.txt",
+        "bytes": 1247,
+        "sha256": "a8e8626693091e596055b52069c9fae4b611d42168ef013d09504e8b7733271d",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-audit-guard-01/host-memory.txt",
+        "bytes": 1247,
+        "sha256": "a8e8626693091e596055b52069c9fae4b611d42168ef013d09504e8b7733271d",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-audit-guard-01/host-swap.txt",
+        "bytes": 77,
+        "sha256": "b9499094146fa59bc014228df4e25480b9b9f7e9bb12a3a77727ecfeb571c14f",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-audit-guard-01/host-swap.txt",
+        "bytes": 77,
+        "sha256": "b9499094146fa59bc014228df4e25480b9b9f7e9bb12a3a77727ecfeb571c14f",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-01/report.json",
+        "bytes": 3558429,
+        "sha256": "d7aa3a3db9994dc8b109ae40e02eb3f8d52db86df778c3bb8da7336fc4b9081b",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-select-guard-01/report.json",
+        "bytes": 3558429,
+        "sha256": "d7aa3a3db9994dc8b109ae40e02eb3f8d52db86df778c3bb8da7336fc4b9081b",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-config-01/select.json",
+        "bytes": 3555216,
+        "sha256": "b9c00ccc8b2a9f0290770284ea3f660e67935b2f8a0a3b65bf14c46de5b8dd1f",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-config-01/select.json",
+        "bytes": 3555216,
+        "sha256": "b9c00ccc8b2a9f0290770284ea3f660e67935b2f8a0a3b65bf14c46de5b8dd1f",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-01/0.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-select-guard-01/0.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-01/0.stderr.bin",
+        "bytes": 2816,
+        "sha256": "1bfffc40021bc8ae7a32247b3a52ece463331d949978f2ca2c03ca9ee134ed79",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-select-guard-01/0.stderr.bin",
+        "bytes": 2816,
+        "sha256": "1bfffc40021bc8ae7a32247b3a52ece463331d949978f2ca2c03ca9ee134ed79",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-01/host-processes.txt",
+        "bytes": 34026,
+        "sha256": "9b2ec566e9c240f39150b89ef4a7cb34ccb5a1d9876032ea98bc087f5cf3dc99",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-select-guard-01/host-processes.txt",
+        "bytes": 34026,
+        "sha256": "9b2ec566e9c240f39150b89ef4a7cb34ccb5a1d9876032ea98bc087f5cf3dc99",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-01/host-memory.txt",
+        "bytes": 1247,
+        "sha256": "565fb3a928947df54a2ab46e81369d059d84acce613b8daccb424eea41c87e99",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-select-guard-01/host-memory.txt",
+        "bytes": 1247,
+        "sha256": "565fb3a928947df54a2ab46e81369d059d84acce613b8daccb424eea41c87e99",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-01/host-swap.txt",
+        "bytes": 77,
+        "sha256": "b9499094146fa59bc014228df4e25480b9b9f7e9bb12a3a77727ecfeb571c14f",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-select-guard-01/host-swap.txt",
+        "bytes": 77,
+        "sha256": "b9499094146fa59bc014228df4e25480b9b9f7e9bb12a3a77727ecfeb571c14f",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-02/report.json",
+        "bytes": 3561616,
+        "sha256": "0f690dfaa3519fd5698772dc4ea084c3f7ddf0aa05936354c2a7bb815f9de8ee",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-select-guard-02/report.json",
+        "bytes": 3561616,
+        "sha256": "0f690dfaa3519fd5698772dc4ea084c3f7ddf0aa05936354c2a7bb815f9de8ee",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-config-02/select.json",
+        "bytes": 3558405,
+        "sha256": "3883da7e729acfed77b7486e796b5c1b328cf52d31ea769dd6be48807bf8cfbe",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-config-02/select.json",
+        "bytes": 3558405,
+        "sha256": "3883da7e729acfed77b7486e796b5c1b328cf52d31ea769dd6be48807bf8cfbe",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-02/0.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-select-guard-02/0.stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-02/0.stderr.bin",
+        "bytes": 990,
+        "sha256": "0337d8ee2aa695b0c4b589657d24434c629c62e9ea3d16dd580c134137738f3b",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-select-guard-02/0.stderr.bin",
+        "bytes": 990,
+        "sha256": "0337d8ee2aa695b0c4b589657d24434c629c62e9ea3d16dd580c134137738f3b",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-02/host-processes.txt",
+        "bytes": 34026,
+        "sha256": "3c52c9287c52e731b65259da67600cbd6a14b8236a589b53fdf1a3a8ffcc6edd",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-select-guard-02/host-processes.txt",
+        "bytes": 34026,
+        "sha256": "3c52c9287c52e731b65259da67600cbd6a14b8236a589b53fdf1a3a8ffcc6edd",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-02/host-memory.txt",
+        "bytes": 1247,
+        "sha256": "23928ee3790de30a3faabe830440c4943ef3e2d578f36b4ff63f1a1ab3c7e9e1",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-select-guard-02/host-memory.txt",
+        "bytes": 1247,
+        "sha256": "23928ee3790de30a3faabe830440c4943ef3e2d578f36b4ff63f1a1ab3c7e9e1",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-02/host-swap.txt",
+        "bytes": 77,
+        "sha256": "b9499094146fa59bc014228df4e25480b9b9f7e9bb12a3a77727ecfeb571c14f",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-select-guard-02/host-swap.txt",
+        "bytes": 77,
+        "sha256": "b9499094146fa59bc014228df4e25480b9b9f7e9bb12a3a77727ecfeb571c14f",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-config-01/preparation-error.json",
+        "bytes": 236,
+        "sha256": "b36497c7ec782c5bde9e8a5a651387535e4b1bbf38b3ae0f9df0acdbf3f4d199",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-config-01/preparation-error.json",
+        "bytes": 236,
+        "sha256": "b36497c7ec782c5bde9e8a5a651387535e4b1bbf38b3ae0f9df0acdbf3f4d199",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-config-02/launch-error.json",
+        "bytes": 555,
+        "sha256": "2486a588148457fcd4fb5a18ee550b1f62b56afb088f96d1aad67e18614cf6d9",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-config-02/launch-error.json",
+        "bytes": 555,
+        "sha256": "2486a588148457fcd4fb5a18ee550b1f62b56afb088f96d1aad67e18614cf6d9",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-closed-plan-01/closed-plan.json",
+        "bytes": 5585136,
+        "sha256": "d85bebace686acbe3939e11be9693838d28f1a8d30ddac7a51ffb7ead6d41ca3",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-closed-plan-01/closed-plan.json",
+        "bytes": 5585136,
+        "sha256": "d85bebace686acbe3939e11be9693838d28f1a8d30ddac7a51ffb7ead6d41ca3",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-closed-plan-02/closed-plan.json",
+        "bytes": 5585109,
+        "sha256": "66d2e1077fc1decab9c80d8b27b1d37dd2594372d2efbced9efde7e3af5cad82",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-closed-plan-02/closed-plan.json",
+        "bytes": 5585109,
+        "sha256": "66d2e1077fc1decab9c80d8b27b1d37dd2594372d2efbced9efde7e3af5cad82",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-closed-plan-02/transition.json",
+        "bytes": 4604,
+        "sha256": "083c11643cd3d2edd46e0e91cef1992ff170f0f6964b17406c42539194896006",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-closed-plan-02/transition.json",
+        "bytes": 4604,
+        "sha256": "083c11643cd3d2edd46e0e91cef1992ff170f0f6964b17406c42539194896006",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source-verification-01/source-verification.json",
+        "bytes": 14121159,
+        "sha256": "9057d8738f2cb8a622d80c679bc33989d8fd6222467b2dbf70d0cdc58b27b862",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-source-verification-01/source-verification.json",
+        "bytes": 14121159,
+        "sha256": "9057d8738f2cb8a622d80c679bc33989d8fd6222467b2dbf70d0cdc58b27b862",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-selection-02/omissions.json",
+        "bytes": 35033,
+        "sha256": "3c6de7f44ef4cd3b59bbb2bc5f21cc9ea7a8f19c142eb386712fdcacb62c784e",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-selection-02/omissions.json",
+        "bytes": 35033,
+        "sha256": "3c6de7f44ef4cd3b59bbb2bc5f21cc9ea7a8f19c142eb386712fdcacb62c784e",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/manifest.json",
+        "bytes": 10572,
+        "sha256": "1822aebaf8e5913cfcf340e5f25f287d6b32fe0d2e726ae2a01496673008fefd",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-05/manifest.json",
+        "bytes": 10572,
+        "sha256": "1822aebaf8e5913cfcf340e5f25f287d6b32fe0d2e726ae2a01496673008fefd",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/common.py",
+        "bytes": 37788,
+        "sha256": "2867ab284ecd844f112982372f6f1633030fa23ea50528e4bf046fb36e08276a",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-05/common.py",
+        "bytes": 37788,
+        "sha256": "2867ab284ecd844f112982372f6f1633030fa23ea50528e4bf046fb36e08276a",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/audit.py",
+        "bytes": 5961,
+        "sha256": "79480313a82cd7680c33c823cbd5a822f644af0e733f7dcf30f5eab8d33b5ec1",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-05/audit.py",
+        "bytes": 5961,
+        "sha256": "79480313a82cd7680c33c823cbd5a822f644af0e733f7dcf30f5eab8d33b5ec1",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/select.py",
+        "bytes": 19253,
+        "sha256": "e65412c17414c38ea5877dacfdb0b864e036ceeb167667f3948e8621748c21eb",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-05/select.py",
+        "bytes": 19253,
+        "sha256": "e65412c17414c38ea5877dacfdb0b864e036ceeb167667f3948e8621748c21eb",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/pack.py",
+        "bytes": 5230,
+        "sha256": "d6e5e7acc4bc68c7a4cc2fa89068d9e5f58a010c17c7d37acb0c7b34ef5a5bcb",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-05/pack.py",
+        "bytes": 5230,
+        "sha256": "d6e5e7acc4bc68c7a4cc2fa89068d9e5f58a010c17c7d37acb0c7b34ef5a5bcb",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/readback.py",
+        "bytes": 9553,
+        "sha256": "8fa5521cf4c12712dd1fdf47172021d28b3942567d1ba5411e90f1020aafc272",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-05/readback.py",
+        "bytes": 9553,
+        "sha256": "8fa5521cf4c12712dd1fdf47172021d28b3942567d1ba5411e90f1020aafc272",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/selftest.py",
+        "bytes": 2662,
+        "sha256": "9098cdee8fe65758844d5fd72bcd4afcf10e03c4d64275f85477884955572e72",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-05/selftest.py",
+        "bytes": 2662,
+        "sha256": "9098cdee8fe65758844d5fd72bcd4afcf10e03c4d64275f85477884955572e72",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/README.md",
+        "bytes": 2165,
+        "sha256": "c4509c4b363f750ec8125e02f2a6a3af5eb0fc4e72de0d0370c4c3ec18f85c30",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-05/README.md",
+        "bytes": 2165,
+        "sha256": "c4509c4b363f750ec8125e02f2a6a3af5eb0fc4e72de0d0370c4c3ec18f85c30",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/PLAN.md",
+        "bytes": 864,
+        "sha256": "88a89d8bdbb086b1930e091253e24f34d76534006ee5458bbc7b164c09b03e14",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-05/PLAN.md",
+        "bytes": 864,
+        "sha256": "88a89d8bdbb086b1930e091253e24f34d76534006ee5458bbc7b164c09b03e14",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/source-check.json",
+        "bytes": 5384,
+        "sha256": "81b27204804b8749e880b4767045e9540a81c64b6535c29c721f373d603c0c60",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-05/source-check.json",
+        "bytes": 5384,
+        "sha256": "81b27204804b8749e880b4767045e9540a81c64b6535c29c721f373d603c0c60",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/successor05.patch",
+        "bytes": 6696,
+        "sha256": "545f738012dcbfdbb04486c85905899d4794aa5e3ead86a296f33dcf067c2b7f",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-05/successor05.patch",
+        "bytes": 6696,
+        "sha256": "545f738012dcbfdbb04486c85905899d4794aa5e3ead86a296f33dcf067c2b7f",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/manifest.json",
+        "bytes": 8943,
+        "sha256": "40c7b2bedf70b8a1128182e2ba2541b9e89a389c434abf5f4e27a06dfeaaa6fa",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-06/manifest.json",
+        "bytes": 8943,
+        "sha256": "40c7b2bedf70b8a1128182e2ba2541b9e89a389c434abf5f4e27a06dfeaaa6fa",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/common.py",
+        "bytes": 40926,
+        "sha256": "39d984799d7bb702081c661083edafb7c5de25a1e7b2fe329b08e1d54cef6390",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-06/common.py",
+        "bytes": 40926,
+        "sha256": "39d984799d7bb702081c661083edafb7c5de25a1e7b2fe329b08e1d54cef6390",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/audit.py",
+        "bytes": 5961,
+        "sha256": "c8f631bf480f3c0ebc27af581224ebccd54bdd60b336656a1f3664f5e2fe7087",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-06/audit.py",
+        "bytes": 5961,
+        "sha256": "c8f631bf480f3c0ebc27af581224ebccd54bdd60b336656a1f3664f5e2fe7087",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/select.py",
+        "bytes": 20014,
+        "sha256": "0e549be32dc9041c0b6657fcfffd9be8b2b13b36dbb410fd534e40219a3ebc7b",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-06/select.py",
+        "bytes": 20014,
+        "sha256": "0e549be32dc9041c0b6657fcfffd9be8b2b13b36dbb410fd534e40219a3ebc7b",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/pack.py",
+        "bytes": 5230,
+        "sha256": "d6e5e7acc4bc68c7a4cc2fa89068d9e5f58a010c17c7d37acb0c7b34ef5a5bcb",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-06/pack.py",
+        "bytes": 5230,
+        "sha256": "d6e5e7acc4bc68c7a4cc2fa89068d9e5f58a010c17c7d37acb0c7b34ef5a5bcb",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/readback.py",
+        "bytes": 9553,
+        "sha256": "8fa5521cf4c12712dd1fdf47172021d28b3942567d1ba5411e90f1020aafc272",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-06/readback.py",
+        "bytes": 9553,
+        "sha256": "8fa5521cf4c12712dd1fdf47172021d28b3942567d1ba5411e90f1020aafc272",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/selftest.py",
+        "bytes": 3900,
+        "sha256": "9579d0f7f9d5b1cfc43ea11dc0b78b816b92ae63b98ffd7809973350fd135ce8",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-06/selftest.py",
+        "bytes": 3900,
+        "sha256": "9579d0f7f9d5b1cfc43ea11dc0b78b816b92ae63b98ffd7809973350fd135ce8",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/README.md",
+        "bytes": 1170,
+        "sha256": "d55abd88a2e2e51d73c724e639ff784f6f9eecd5983ca40b52fecb42f8a7d255",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-06/README.md",
+        "bytes": 1170,
+        "sha256": "d55abd88a2e2e51d73c724e639ff784f6f9eecd5983ca40b52fecb42f8a7d255",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/PLAN.md",
+        "bytes": 552,
+        "sha256": "02b776c9dcf096ac1980b87bf0c219ab514fef645a636fc38b5a65f3f2c52554",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-06/PLAN.md",
+        "bytes": 552,
+        "sha256": "02b776c9dcf096ac1980b87bf0c219ab514fef645a636fc38b5a65f3f2c52554",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/source-check.json",
+        "bytes": 3496,
+        "sha256": "c1b0e2058ae3bac231c9bf4f46060fbefdc7f3e41633b35fa029f6d0792bb959",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-06/source-check.json",
+        "bytes": 3496,
+        "sha256": "c1b0e2058ae3bac231c9bf4f46060fbefdc7f3e41633b35fa029f6d0792bb959",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-06/successor06.patch",
+        "bytes": 12465,
+        "sha256": "cca6724138c7478bd33dc8c7e9810b7e7b1d0f0eaf6942621807075d94fae0bc",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publication-prep-06/successor06.patch",
+        "bytes": 12465,
+        "sha256": "cca6724138c7478bd33dc8c7e9810b7e7b1d0f0eaf6942621807075d94fae0bc",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-selector05-independent-review-01/manifest.json",
+        "bytes": 595,
+        "sha256": "64572f6599143cb21bf4ebf597973cebd8b0695fa317f5baecd5bdf1f9957ba9",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-selector05-independent-review-01/manifest.json",
+        "bytes": 595,
+        "sha256": "64572f6599143cb21bf4ebf597973cebd8b0695fa317f5baecd5bdf1f9957ba9",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-selector05-independent-review-01/report.json",
+        "bytes": 2515,
+        "sha256": "48922629dedc511d15f161d3f65c051f23abdcdb3b97a0ac9b9de92b6b35613f",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-selector05-independent-review-01/report.json",
+        "bytes": 2515,
+        "sha256": "48922629dedc511d15f161d3f65c051f23abdcdb3b97a0ac9b9de92b6b35613f",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-selector06-independent-review-01/manifest.json",
+        "bytes": 698,
+        "sha256": "e333ccca2443d502bfa447faaf8d60db694002d46d88e60f35fb02228789fca1",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-selector06-independent-review-01/manifest.json",
+        "bytes": 698,
+        "sha256": "e333ccca2443d502bfa447faaf8d60db694002d46d88e60f35fb02228789fca1",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-selector06-independent-review-01/checks.json",
+        "bytes": 3237,
+        "sha256": "618149b2463fd3b0e18f34c36607f5898cbd523e85ce90adb561046ffdabc315",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-selector06-independent-review-01/checks.json",
+        "bytes": 3237,
+        "sha256": "618149b2463fd3b0e18f34c36607f5898cbd523e85ce90adb561046ffdabc315",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-selector06-independent-review-01/report.json",
+        "bytes": 2891,
+        "sha256": "76e4f61a970fa73bb6278041c32bd3f7aac9447b793bddbb1259e42ef18560b9",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-selector06-independent-review-01/report.json",
+        "bytes": 2891,
+        "sha256": "76e4f61a970fa73bb6278041c32bd3f7aac9447b793bddbb1259e42ef18560b9",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-01/manifest.json",
+        "bytes": 1553,
+        "sha256": "1d7d9ec59dfa2af88cdd0d39c671cf9d080cf8f7c79babc7ab4241f6e4e7837e",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publish-copy-prep-01/manifest.json",
+        "bytes": 1553,
+        "sha256": "1d7d9ec59dfa2af88cdd0d39c671cf9d080cf8f7c79babc7ab4241f6e4e7837e",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-01/publish.py",
+        "bytes": 9722,
+        "sha256": "b9c779566bdf5141dfe35ef97181d3c5555ac48138a6c585544f59e1a19b9822",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publish-copy-prep-01/publish.py",
+        "bytes": 9722,
+        "sha256": "b9c779566bdf5141dfe35ef97181d3c5555ac48138a6c585544f59e1a19b9822",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-01/mapping.template.json",
+        "bytes": 2871,
+        "sha256": "6bbf5921e31b810d3d30e52cd732cda2320832f18bc8f2e4d72b244b84d7349a",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publish-copy-prep-01/mapping.template.json",
+        "bytes": 2871,
+        "sha256": "6bbf5921e31b810d3d30e52cd732cda2320832f18bc8f2e4d72b244b84d7349a",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-01/README.md",
+        "bytes": 2617,
+        "sha256": "101b33658b1a0b66287cd67d9367d1734ec460e180c3801eb5bd53d0444b5456",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publish-copy-prep-01/README.md",
+        "bytes": 2617,
+        "sha256": "101b33658b1a0b66287cd67d9367d1734ec460e180c3801eb5bd53d0444b5456",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-01/PLAN.md",
+        "bytes": 980,
+        "sha256": "ac306cb9a6e7d858564991c30926ee47aadc7a051f5b5000d53eb116e4efb895",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publish-copy-prep-01/PLAN.md",
+        "bytes": 980,
+        "sha256": "ac306cb9a6e7d858564991c30926ee47aadc7a051f5b5000d53eb116e4efb895",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-02/manifest.json",
+        "bytes": 2012,
+        "sha256": "2dfe8717f1388c3193fb4e8e0cbc4e78f72c13896ec870ea57e6d81e7cf31c75",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publish-copy-prep-02/manifest.json",
+        "bytes": 2012,
+        "sha256": "2dfe8717f1388c3193fb4e8e0cbc4e78f72c13896ec870ea57e6d81e7cf31c75",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-02/publish.py",
+        "bytes": 9722,
+        "sha256": "b2375e34d63410d96c1f6e142ef775affe37cbf4168f7c87a92b178b83a1612e",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publish-copy-prep-02/publish.py",
+        "bytes": 9722,
+        "sha256": "b2375e34d63410d96c1f6e142ef775affe37cbf4168f7c87a92b178b83a1612e",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-02/mapping.template.json",
+        "bytes": 2871,
+        "sha256": "6bbf5921e31b810d3d30e52cd732cda2320832f18bc8f2e4d72b244b84d7349a",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publish-copy-prep-02/mapping.template.json",
+        "bytes": 2871,
+        "sha256": "6bbf5921e31b810d3d30e52cd732cda2320832f18bc8f2e4d72b244b84d7349a",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-02/README.md",
+        "bytes": 2617,
+        "sha256": "101b33658b1a0b66287cd67d9367d1734ec460e180c3801eb5bd53d0444b5456",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publish-copy-prep-02/README.md",
+        "bytes": 2617,
+        "sha256": "101b33658b1a0b66287cd67d9367d1734ec460e180c3801eb5bd53d0444b5456",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-02/PLAN.md",
+        "bytes": 980,
+        "sha256": "ac306cb9a6e7d858564991c30926ee47aadc7a051f5b5000d53eb116e4efb895",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publish-copy-prep-02/PLAN.md",
+        "bytes": 980,
+        "sha256": "ac306cb9a6e7d858564991c30926ee47aadc7a051f5b5000d53eb116e4efb895",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-independent-review-01/manifest.json",
+        "bytes": 597,
+        "sha256": "ceaa96519488e6a51f04afad3f9bbd51573a707f90f6ca4ab666deae6521cf34",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publish-copy-independent-review-01/manifest.json",
+        "bytes": 597,
+        "sha256": "ceaa96519488e6a51f04afad3f9bbd51573a707f90f6ca4ab666deae6521cf34",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-independent-review-01/report.json",
+        "bytes": 2449,
+        "sha256": "c68739cc7a39150ca71d7bc3c5128dc590d45e3ccdae435086c43d0e0a31da25",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-publish-copy-independent-review-01/report.json",
+        "bytes": 2449,
+        "sha256": "c68739cc7a39150ca71d7bc3c5128dc590d45e3ccdae435086c43d0e0a31da25",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-final-table-independent-review-01/manifest.json",
+        "bytes": 601,
+        "sha256": "0391d35afc0d01dbaa2c25bc43ad0dfc537b983b0cd556607318d0c8b096e9fa",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-final-table-independent-review-01/manifest.json",
+        "bytes": 601,
+        "sha256": "0391d35afc0d01dbaa2c25bc43ad0dfc537b983b0cd556607318d0c8b096e9fa",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-final-table-independent-review-01/report.json",
+        "bytes": 4151,
+        "sha256": "548e0454f955c79d9495ff48d51e1b76e0acc37a9858de65879e54cac95a3682",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/stage153-155-final-table-independent-review-01/report.json",
+        "bytes": 4151,
+        "sha256": "548e0454f955c79d9495ff48d51e1b76e0acc37a9858de65879e54cac95a3682",
+        "mode": 420
+      },
+      "allow_existing": false
+    },
+    {
+      "source": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-map-01/post-plan-notes.json",
+        "bytes": 2644,
+        "sha256": "5c66dc61246011ae3bedb760ca76ab6aa17f3e1665eecb3618fb46ea08a0b878",
+        "mode": 420
+      },
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/post-plan-notes.json",
+        "bytes": 2644,
+        "sha256": "5c66dc61246011ae3bedb760ca76ab6aa17f3e1665eecb3618fb46ea08a0b878",
+        "mode": 420
+      },
+      "allow_existing": false
+    }
+  ]
+}

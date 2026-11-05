@@ -1,0 +1,264 @@
+{
+  "adapter": "selected-regression-module-eval",
+  "cases": [
+    {
+      "contract": {
+        "assertion_count": null,
+        "channels": [
+          "stdout",
+          "stderr",
+          "exit_code",
+          "files"
+        ],
+        "command": [
+          "eval",
+          "--settings",
+          "pkl:settings",
+          "--color=never",
+          "--no-project",
+          "tests/fixtures/rev1/class_authority/t40/repro.pkl"
+        ],
+        "cwd": ".",
+        "environment": {},
+        "execution": {
+          "reason": null,
+          "status": "ready"
+        },
+        "expected_exit": [
+          0
+        ],
+        "expected_outcome": "success",
+        "historical_assertion": {
+          "authority": "Historical Rust assertion is selection context only; fresh pinned Java 0.32.0 output determines compatibility.",
+          "expected_outcome": "success",
+          "function": "imported_collection_member_declaration_authority",
+          "path": "crates/pkl-core/src/tests/bytecode_tests/class_surface_execution.rs",
+          "repository": "rev1",
+          "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+          "sha256": "7ef0b61e012dd3a88c0b7a77f2b447ef0ad0d4df96671daead18c01fa8921f59"
+        },
+        "host_requirements": [
+          "filesystem"
+        ],
+        "id": "rev1:t40-imported-declaration-authority",
+        "oracle_observation": {
+          "comparison_role": "Observed raw hashes preserve provenance for this recorded environment; the runner captures and compares its own raw Java baseline.",
+          "exit_code": 0,
+          "generated_files": {},
+          "sha256": {
+            "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout": "4d4d0946a537296a4ac9e2b9a1705e3cb4fa597fbcb4ba14b57b9275a71851ec"
+          }
+        },
+        "original": {
+          "path": "crates/pkl-core/tests/fixtures/class_authority/t40/repro.pkl",
+          "repository": "rev1",
+          "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+          "sha256": "0c4c3dc936abf666af1a2b406680c3fb083d64761f450a4c4871c4837ea477d8"
+        },
+        "resources": [
+          {
+            "path": "tests/fixtures/rev1/class_authority/t40/repro.pkl",
+            "sha256": "0c4c3dc936abf666af1a2b406680c3fb083d64761f450a4c4871c4837ea477d8"
+          },
+          {
+            "path": "tests/fixtures/rev1/class_authority/t40/repro_lib.pkl",
+            "sha256": "ea11fa9feae78cdc9ff40b8e9e8831ff03a5fb90f5fc1aa9c1c04dc513aadef8"
+          }
+        ],
+        "source": {
+          "path": "tests/fixtures/rev1/class_authority/t40/repro.pkl",
+          "repository": "pkl-rs",
+          "sha256": "0c4c3dc936abf666af1a2b406680c3fb083d64761f450a4c4871c4837ea477d8"
+        },
+        "suite": "selected-historical-regression",
+        "target": [
+          "native",
+          "wasm",
+          "napi"
+        ]
+      },
+      "contract_sha256": "9822595d43e291cd42a554065aa4dc47a9a3672dc499d7c01e7c02aee845d5da",
+      "id": "m2:rev1:t40-imported-declaration-authority",
+      "input": "tests/fixtures/rev1/class_authority/t40/repro.pkl",
+      "input_sha256": "0c4c3dc936abf666af1a2b406680c3fb083d64761f450a4c4871c4837ea477d8"
+    },
+    {
+      "contract": {
+        "assertion_count": null,
+        "channels": [
+          "stdout",
+          "stderr",
+          "exit_code",
+          "files"
+        ],
+        "command": [
+          "eval",
+          "--settings",
+          "pkl:settings",
+          "--color=never",
+          "--no-project",
+          "tests/fixtures/rev1/class_authority/t40/foreign_namesake/repro.pkl"
+        ],
+        "cwd": ".",
+        "environment": {},
+        "execution": {
+          "reason": null,
+          "status": "ready"
+        },
+        "expected_exit": [
+          1
+        ],
+        "expected_outcome": "failure",
+        "historical_assertion": {
+          "authority": "Historical Rust assertion is selection context only; fresh pinned Java 0.32.0 output determines compatibility.",
+          "expected_outcome": "error",
+          "function": "foreign_namesake_bytecode_declaration_frame_matches_apple",
+          "path": "crates/pkl-cli/tests/imported_collection_authority.rs",
+          "repository": "rev1",
+          "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+          "sha256": "7738fe613d741af24ec6eb12eec05ab6bdb63727fde4ff20cf659458bd736845"
+        },
+        "host_requirements": [
+          "filesystem"
+        ],
+        "id": "rev1:t40-foreign-namesake",
+        "oracle_observation": {
+          "comparison_role": "Observed raw hashes preserve provenance for this recorded environment; the runner captures and compares its own raw Java baseline.",
+          "exit_code": 1,
+          "generated_files": {},
+          "sha256": {
+            "stderr": "508e9aadbe9918b03998926c72f074301535483ab2bd3622367d3942ced9b24e",
+            "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "original": {
+          "path": "crates/pkl-core/tests/fixtures/class_authority/t40/foreign_namesake/repro.pkl",
+          "repository": "rev1",
+          "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+          "sha256": "69bf0c5b50859614d47559ec5ff1cc5842415064eeed4805c6fd5c516d4e276c"
+        },
+        "resources": [
+          {
+            "path": "tests/fixtures/rev1/class_authority/t40/foreign_namesake/foreign.pkl",
+            "sha256": "b47d4e0237c80e684dbd954bc77afaa927094aaee9f79f63401129a7ad860611"
+          },
+          {
+            "path": "tests/fixtures/rev1/class_authority/t40/foreign_namesake/repro.pkl",
+            "sha256": "69bf0c5b50859614d47559ec5ff1cc5842415064eeed4805c6fd5c516d4e276c"
+          },
+          {
+            "path": "tests/fixtures/rev1/class_authority/t40/foreign_namesake/repro_lib.pkl",
+            "sha256": "ea11fa9feae78cdc9ff40b8e9e8831ff03a5fb90f5fc1aa9c1c04dc513aadef8"
+          }
+        ],
+        "source": {
+          "path": "tests/fixtures/rev1/class_authority/t40/foreign_namesake/repro.pkl",
+          "repository": "pkl-rs",
+          "sha256": "69bf0c5b50859614d47559ec5ff1cc5842415064eeed4805c6fd5c516d4e276c"
+        },
+        "suite": "selected-historical-regression",
+        "target": [
+          "native",
+          "wasm",
+          "napi"
+        ]
+      },
+      "contract_sha256": "ac4587a9286abae38855980e0dacee4fef7c633b7cb3fc32b1c531b77d94ca1b",
+      "id": "m2:rev1:t40-foreign-namesake",
+      "input": "tests/fixtures/rev1/class_authority/t40/foreign_namesake/repro.pkl",
+      "input_sha256": "69bf0c5b50859614d47559ec5ff1cc5842415064eeed4805c6fd5c516d4e276c"
+    }
+  ],
+  "profile": "pkl-0.32-original-t40-file-cli-v1",
+  "resources": [
+    {
+      "bytes": 10765,
+      "kind": "file",
+      "original": {
+        "path": "LICENSE",
+        "repository": "rev1",
+        "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+        "sha256": "87f7f506593ec1c2b6a5b34bb449cd37f8ec7f040479f37a6697f6750ecc6296"
+      },
+      "path": "tests/fixtures/rev1/LICENSE",
+      "sha256": "87f7f506593ec1c2b6a5b34bb449cd37f8ec7f040479f37a6697f6750ecc6296"
+    },
+    {
+      "bytes": 1318,
+      "kind": "file",
+      "original": {
+        "path": "NOTICE",
+        "repository": "rev1",
+        "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+        "sha256": "70ad1559eebf49c6ffea8dba7ecb646289506f669dc52fbdcd01f0f13afd27ee"
+      },
+      "path": "tests/fixtures/rev1/NOTICE",
+      "sha256": "70ad1559eebf49c6ffea8dba7ecb646289506f669dc52fbdcd01f0f13afd27ee"
+    },
+    {
+      "bytes": 45,
+      "kind": "file",
+      "original": {
+        "path": "crates/pkl-core/tests/fixtures/class_authority/t40/foreign_namesake/foreign.pkl",
+        "repository": "rev1",
+        "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+        "sha256": "b47d4e0237c80e684dbd954bc77afaa927094aaee9f79f63401129a7ad860611"
+      },
+      "path": "tests/fixtures/rev1/class_authority/t40/foreign_namesake/foreign.pkl",
+      "sha256": "b47d4e0237c80e684dbd954bc77afaa927094aaee9f79f63401129a7ad860611"
+    },
+    {
+      "bytes": 169,
+      "kind": "file",
+      "original": {
+        "path": "crates/pkl-core/tests/fixtures/class_authority/t40/foreign_namesake/repro.pkl",
+        "repository": "rev1",
+        "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+        "sha256": "69bf0c5b50859614d47559ec5ff1cc5842415064eeed4805c6fd5c516d4e276c"
+      },
+      "path": "tests/fixtures/rev1/class_authority/t40/foreign_namesake/repro.pkl",
+      "sha256": "69bf0c5b50859614d47559ec5ff1cc5842415064eeed4805c6fd5c516d4e276c"
+    },
+    {
+      "bytes": 202,
+      "kind": "file",
+      "original": {
+        "path": "crates/pkl-core/tests/fixtures/class_authority/t40/foreign_namesake/repro_lib.pkl",
+        "repository": "rev1",
+        "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+        "sha256": "ea11fa9feae78cdc9ff40b8e9e8831ff03a5fb90f5fc1aa9c1c04dc513aadef8"
+      },
+      "path": "tests/fixtures/rev1/class_authority/t40/foreign_namesake/repro_lib.pkl",
+      "sha256": "ea11fa9feae78cdc9ff40b8e9e8831ff03a5fb90f5fc1aa9c1c04dc513aadef8"
+    },
+    {
+      "bytes": 133,
+      "kind": "file",
+      "original": {
+        "path": "crates/pkl-core/tests/fixtures/class_authority/t40/repro.pkl",
+        "repository": "rev1",
+        "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+        "sha256": "0c4c3dc936abf666af1a2b406680c3fb083d64761f450a4c4871c4837ea477d8"
+      },
+      "path": "tests/fixtures/rev1/class_authority/t40/repro.pkl",
+      "sha256": "0c4c3dc936abf666af1a2b406680c3fb083d64761f450a4c4871c4837ea477d8"
+    },
+    {
+      "bytes": 202,
+      "kind": "file",
+      "original": {
+        "path": "crates/pkl-core/tests/fixtures/class_authority/t40/repro_lib.pkl",
+        "repository": "rev1",
+        "revision": "008930df07f457fefd5d6f4ac9308ff3063daabc",
+        "sha256": "ea11fa9feae78cdc9ff40b8e9e8831ff03a5fb90f5fc1aa9c1c04dc513aadef8"
+      },
+      "path": "tests/fixtures/rev1/class_authority/t40/repro_lib.pkl",
+      "sha256": "ea11fa9feae78cdc9ff40b8e9e8831ff03a5fb90f5fc1aa9c1c04dc513aadef8"
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Exactly two unchanged original t40 CLI contracts. T36/project remains unimplemented; historical observations are provenance, not expected output.",
+  "source_registry_sha256": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
+  "watchdog_seconds": 60
+}

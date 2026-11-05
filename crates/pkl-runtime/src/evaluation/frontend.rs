@@ -52,6 +52,8 @@ pub enum DiagnosticProfile {
 
 #[derive(Clone, Debug)]
 pub struct ModuleEvalOptions {
+    /// Whether Host-managed package caching is disabled. The bounded file/pkl
+    /// Host does not persist package sources; other Host caching is not implied.
     pub no_cache: bool,
     pub no_project: bool,
     pub settings: String,
@@ -174,11 +176,20 @@ fn resolve_input(
     defer_ast: bool,
 ) -> Result<(crate::resolver::ResolvedModule, PklString), ModuleFrontendFailure> {
     let input = input.into();
-    if !options.no_cache || !options.no_project || options.settings != "pkl:settings" {
+    // Java's moduleCacheDir controls package: caching (EvaluatorBuilder), while
+    // File ModuleKey resolves the file directly. Preserve the original enabled
+    // cache option for the bounded file/pkl profile; do not append --no-cache.
+    // Remote/package cache behavior remains a Host responsibility and is not
+    // admitted here for a cache-enabled non-file primary source.
+    let file_or_bundled = input.uri.starts_with("file:") || input.uri.starts_with("pkl:");
+    if !options.no_project
+        || options.settings != "pkl:settings"
+        || (!options.no_cache && !file_or_bundled)
+    {
         return Err(unsupported(
             FrontendPhase::Configuration,
             "module-evaluation-configuration",
-            "This module-evaluation adapter requires --no-cache --no-project --settings pkl:settings.",
+            "This module-evaluation adapter requires --no-project --settings pkl:settings; cache-enabled primary sources are limited to file: and pkl:.",
         ));
     }
     let module = match crate::parser::parse_module_for_evaluation(&input.text) {
@@ -653,6 +664,62 @@ fn evaluate_module_output_with_budget_and_hosts(
 #[cfg(test)]
 mod output_budget_tests {
     use super::*;
+
+    #[test]
+    fn file_output_keeps_the_package_cache_switch_without_changing_raw_output() {
+        let input = ModuleSourceInput {
+            text: "output { text = \"plain file\" }",
+            uri: "file:///cache-policy.pkl",
+            inferred_name: "cachePolicy",
+        };
+        let uncached = evaluate_module_output(input, &ModuleEvalOptions::default());
+        let cached = evaluate_module_output(
+            input,
+            &ModuleEvalOptions {
+                no_cache: false,
+                ..Default::default()
+            },
+        );
+        assert_eq!(uncached.exit_code, 0);
+        assert_eq!(cached.exit_code, uncached.exit_code);
+        assert_eq!(cached.stdout, uncached.stdout);
+        assert_eq!(cached.stderr, uncached.stderr);
+    }
+
+    #[test]
+    fn enabled_cache_does_not_admit_project_or_remote_primary_profiles() {
+        let input = || ModuleSourceInput {
+            text: "x = 1",
+            uri: "file:///cache-policy.pkl",
+            inferred_name: "cachePolicy",
+        };
+        assert!(
+            resolve_input(
+                input(),
+                &ModuleEvalOptions {
+                    no_cache: false,
+                    no_project: false,
+                    ..Default::default()
+                },
+                false
+            )
+            .is_err()
+        );
+        assert!(
+            resolve_input(
+                ModuleSourceInput {
+                    uri: "https://example.test/cache-policy.pkl",
+                    ..input()
+                },
+                &ModuleEvalOptions {
+                    no_cache: false,
+                    ..Default::default()
+                },
+                false
+            )
+            .is_err()
+        );
+    }
 
     #[test]
     fn reflection_locations_use_cli_editor_settings_without_changing_api_defaults() {

@@ -2,6 +2,12 @@
 
 The goals are behavioral and byte compatibility with the Java implementation of Pkl 0.32.0, with execution time and memory usage at least as good as Java for every required workload. Source verification, inventories, a pinned Java oracle, and raw comparison tooling are available. M1 adds bounded Rust/Java architecture comparisons and actual browser/Node execution; complete language and product performance gates remain open.
 
+## Stage153–155 original contracts and URI boundaries
+
+The two original T40 CLI contracts preserve original argv/URI/environment and complete stdout/stderr/exit/generated files. Both match; two Java-only cache-off controls are separately counted and do not add original coverage. Host-private files remain provenance outside the original public-file comparison. File URI 24 and package API 37 inputs retain 48/74 raw Java/native processes with normal Cargo source/artifact/storage and fresh Java helper/runtime joins. File 19 matches/5 nonpasses and package 6 value matches/31 nonpasses do not establish full error/Host/API compatibility; the 11 original package CLI/server/project cases remain unqualified by these controls.
+
+The source06 full workspace records Cargo101 with 2,190 passed, 1 failed and 6 ignored; 13 nested passes are excluded. A source07 test/tooling correction is verified by a separate whole affected target (15 passed), 83 Python tests and five prechecks. Preserve the failed full-workspace receipt; the later target pass is not a whole-workspace rerun. Same-workspace raw266 retains 18 strict nonpasses. Fresh bounded M1’s strict and architecture predicates pass from one actual capture; no second strict CLI or new Protobuf-specific browser/Node matrix is implied. See the [checkpoint report](reports/m2/stage153-155-t40-uri/README.md) and accompanying publication metadata for source transitions, raw evidence and preserved setup failures.
+
 ## Protobuf development contract and strict completion gate
 
 The ordinary workspace entry `java04_completed_reference_contract` attempts all

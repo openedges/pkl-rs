@@ -45,6 +45,129 @@ pub(crate) fn missing(authored: impl Into<PklString>) -> RuntimeError {
     )
 }
 
+/// Shared parsed Java URI components for package syntax validation. Keeping
+/// this inside the URI owner avoids a second parser or platform URL dependency.
+pub(crate) fn package_components(
+    text: &PklString,
+) -> Result<crate::packages::UriComponents, crate::packages::PackageUriError> {
+    use crate::packages::{PackageUriError, PackageUriFailure, UriComponents};
+    let parsed = ResourceUri::parse(text).map_err(|error| PackageUriError {
+        input: text.clone(),
+        failure: match error {
+            ParseError::Syntax(reason) => PackageUriFailure::UriSyntax(reason.into()),
+            ParseError::Unsupported(reason) => PackageUriFailure::Unsupported(reason.into()),
+        },
+    })?;
+    Ok(UriComponents {
+        scheme: parsed.scheme,
+        opaque: parsed.opaque,
+        authority: parsed.authority.as_ref().map(decode_escapes),
+        path: decode_escapes(&parsed.path),
+        fragment: parsed
+            .fragment
+            .as_ref()
+            .map(|part| decode_uri_component(part, false)),
+    })
+}
+
+pub(crate) fn package_without_fragment(
+    text: &PklString,
+) -> Result<PklString, crate::packages::PackageUriError> {
+    let mut uri = ResourceUri::parse(text).map_err(|_| crate::packages::PackageUriError {
+        input: text.clone(),
+        failure: crate::packages::PackageUriFailure::Unsupported(
+            "Package URI changed after component validation.".into(),
+        ),
+    })?;
+    let authority = uri.authority.as_ref().and_then(|raw| {
+        let AuthorityKey::Server { port, .. } = server_authority(raw)? else {
+            return None;
+        };
+        let source = SourceText::from(raw.clone());
+        let (user, host_port) = source
+            .entire()
+            .split_once("@")
+            .map_or((None, source.entire()), |(user, host)| (Some(user), host));
+        let raw_host = host_port.as_str().expect("validated server host");
+        let host = if raw_host.starts_with('[') {
+            &raw_host[..=raw_host.find(']').expect("validated IPv6")]
+        } else {
+            raw_host.split_once(':').map_or(raw_host, |(host, _)| host)
+        };
+        let mut result = PklStringBuilder::default();
+        if let Some(user) = user {
+            let user = decode_escapes(&user.to_pkl_string());
+            result.push_value(&package_quote(&user, true));
+            result.push('@');
+        }
+        result.push_str(host);
+        if let Some(port) = port {
+            result.push(':');
+            result.push_str(&port.to_string());
+        }
+        Some(result.finish())
+    });
+    // The Java seven-component constructor drops registry-based authorities
+    // because getHost/getUserInfo are null; preserve that surprising behavior.
+    uri.authority = authority;
+    uri.path = quote_path(&decode_escapes(&uri.path));
+    uri.query = uri
+        .query
+        .as_ref()
+        .map(|query| package_quote(&decode_uri_component(query, false), false));
+    uri.fragment = None;
+    uri.rebuild();
+    // URI's seven-component constructor reparses the quoted text with server
+    // authority required. Dropping a registry authority can expose a decoded
+    // leading // path as a new authority; rebuilding alone does not validate it.
+    let reconstruction_failure = || crate::packages::PackageUriError {
+        input: text.clone(),
+        failure: crate::packages::PackageUriFailure::Unsupported(
+            "Package URI reconstruction requires unprojected Java constructor failure handling."
+                .into(),
+        ),
+    };
+    let rebuilt = ResourceUri::parse(&uri.text).map_err(|_| reconstruction_failure())?;
+    if rebuilt
+        .authority
+        .as_ref()
+        .is_some_and(|authority| !authority.is_empty() && server_authority(authority).is_none())
+    {
+        // IoUtils wraps this constructor failure in PklBugException. Do not
+        // misclassify it as an ordinary authored-URI syntax error or success.
+        return Err(reconstruction_failure());
+    }
+    Ok(uri.text)
+}
+
+fn package_quote(text: &PklString, user_info: bool) -> PklString {
+    let source = SourceText::from(text.clone());
+    let mut result = PklStringBuilder::default();
+    for (_, character) in source.characters() {
+        match character {
+            SourceCharacter::Surrogate(unit) => result.push_unit(unit),
+            SourceCharacter::Scalar(c) => {
+                let allowed = if user_info {
+                    c.is_ascii_alphanumeric()
+                        || "_-!.~'()*;:&=+$,".contains(c)
+                        || !c.is_ascii() && !c.is_control() && !java_space(c)
+                } else {
+                    Component::Query.permits(c)
+                };
+                if allowed {
+                    result.push(c);
+                } else {
+                    let mut buffer = [0; 4];
+                    for byte in c.encode_utf8(&mut buffer).bytes() {
+                        result.push_str(&format!("%{byte:02X}"));
+                    }
+                }
+            }
+        }
+    }
+    result.finish()
+}
+
 pub(crate) fn configured_read(
     request: &ReadRequest,
     properties: &[(String, String)],
@@ -87,6 +210,22 @@ pub(crate) fn configured_read(
                 .concat(&"` has invalid syntax.".into()),
         );
         error.hint = Some("File URIs must have a path that starts with `/` (e.g. file:/path/to/my_module.pkl).\nTo resolve relative paths, remove the scheme prefix (remove \"file:\").".into());
+        return Err(error);
+    }
+    // Validation succeeds before transport/project resolution, which this
+    // default reader still does not implement. Never fabricate a resource.
+    if matches!(scheme, "package" | "projectpackage")
+        && let Err(failure) = crate::packages::PackageAssetUri::parse(&uri.text)
+    {
+        if let crate::packages::PackageUriFailure::Unsupported(reason) = &failure.failure {
+            return Err(unsupported(reason.clone()));
+        }
+        let mut error = RuntimeError::host_language(
+            PklString::from("Resource URI `")
+                .concat(&uri.text)
+                .concat(&"` has invalid syntax.".into()),
+        );
+        error.hint = Some(failure.reason());
         return Err(error);
     }
     if matches!(scheme, "env" | "prop") {

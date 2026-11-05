@@ -18,6 +18,7 @@ pub mod java_exception;
 pub mod logging;
 pub mod modules;
 pub mod numeric;
+pub mod packages;
 pub mod parser;
 mod pkl_regex;
 mod pkl_string;

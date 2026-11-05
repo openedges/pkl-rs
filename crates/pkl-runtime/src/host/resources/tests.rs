@@ -406,3 +406,91 @@ fn file_uri_reader_failure_prevents_later_reads_and_preserves_custom_host_bounda
     vm.close();
     assert_eq!(vm.collect(&[]).slots, 0);
 }
+
+#[test]
+fn package_reader_validation_follows_default_allowlist_and_preserves_transport_gap() {
+    let uri = "package://host/name@bad::unsupported:x#relative";
+    let error = default_result(&request(uri)).unwrap_err();
+    assert!(error.host_language_exception);
+    assert_eq!(
+        error.message,
+        format!("Resource URI `{uri}` has invalid syntax.")
+    );
+    assert_eq!(
+        error.hint,
+        Some(
+            crate::packages::PackageAssetUri::parse(uri)
+                .unwrap_err()
+                .reason()
+        )
+    );
+    let valid = default_result(&request("package://host/name@1.0.0#/asset")).unwrap_err();
+    assert_eq!(valid.kind, ErrorKind::Unsupported);
+    let denied = default_result(&request("otherpackage://host/name@bad#relative")).unwrap_err();
+    assert!(denied.message.starts_with("Refusing to read resource `"));
+    assert!(denied.hint.is_none());
+}
+#[test]
+fn package_reader_failure_retries_without_later_effect_and_custom_host_still_owns_reads() {
+    let text = "result = read(\"package://host/name#/asset\") + read(\"prop:later\")\n";
+    let program = compile_module(&resolve_module(&parse_module(text).unwrap()).unwrap()).unwrap();
+    let entry = program.entry;
+    let mut vm = Vm::with_context(
+        program,
+        EvaluationContext {
+            primary_source: Some(Arc::new(RuntimeSource {
+                text: text.into(),
+                uri: "file:///stage155/main.pkl".into(),
+                module_name: "stage155".into(),
+            })),
+            ..Default::default()
+        },
+    );
+    vm.start(entry, vec![]).unwrap();
+    let VmPoll::Ready(Ok(module)) = event(&mut vm, &[]) else {
+        panic!("initial module")
+    };
+    let roots = [module];
+    let mut previous = 0;
+    for _ in 0..2 {
+        vm.start_member(roots[0].as_object().unwrap(), "result")
+            .unwrap();
+        let VmPoll::Pending(read) = event(&mut vm, &roots) else {
+            panic!("package reader request")
+        };
+        assert_eq!(read.uri, "package://host/name#/asset");
+        assert!(read.id > previous);
+        previous = read.id;
+        vm.collect(&roots);
+        vm.resume(read.id, default_result(&read)).unwrap();
+        let VmPoll::Ready(Err(error)) = event(&mut vm, &roots) else {
+            panic!("package validation must precede prop:later")
+        };
+        assert_eq!(error.kind, ErrorKind::Host);
+        assert!(error.host_language_exception);
+        assert_eq!(
+            error.message,
+            "Resource URI `package://host/name#/asset` has invalid syntax."
+        );
+        assert!(!error.frames.is_empty());
+    }
+    // Default-reader validation is not a blanket URI parser restriction: a
+    // caller-supplied Host can still fulfill the same typed request explicitly.
+    vm.start_member(roots[0].as_object().unwrap(), "result")
+        .unwrap();
+    let VmPoll::Pending(read) = event(&mut vm, &roots) else {
+        panic!("custom first read")
+    };
+    vm.resume(read.id, Ok(Value::string("custom"))).unwrap();
+    let VmPoll::Pending(read) = event(&mut vm, &roots) else {
+        panic!("later read after custom success")
+    };
+    assert_eq!(read.uri, "prop:later");
+    vm.resume(read.id, Ok(Value::string(" later"))).unwrap();
+    assert_eq!(
+        event(&mut vm, &roots),
+        VmPoll::Ready(Ok(Value::string("custom later")))
+    );
+    vm.close();
+    assert_eq!(vm.collect(&[]).slots, 0);
+}

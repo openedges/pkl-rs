@@ -193,7 +193,7 @@ def capture_process(root, workspace, case, prefix, environment, directory, timeo
                 except Exception as error:
                     retention_errors.append(f'generated files: {type(error).__name__}: {error}')
             try:
-                private = compat.output_files(workspace / '.state' / compat.case_directory(case['id']))
+                private = compat.output_files(workspace / '.state' / compat.case_directory(original['id']))
                 retained.update({f'private-state/{name}': data for name, data in private.items()})
             except Exception as error:
                 retention_errors.append(f'private state: {type(error).__name__}: {error}')
@@ -211,7 +211,7 @@ def capture_process(root, workspace, case, prefix, environment, directory, timeo
     captured['files'] = {**{f'generated/{name}': data for name, data in captured['files'].items()}, **secondary}
     captured['workspace_changes'] = changes
     stored = compat.store_capture(directory, captured)
-    private = compat.output_files(workspace / '.state' / compat.case_directory(case['id']))
+    private = compat.output_files(workspace / '.state' / compat.case_directory(original['id']))
     for name, data in private.items():
         path = compat.contained(directory / 'private-state', name)
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -284,7 +284,9 @@ def verify_case(root, workspace, case, row, output, metadata, binary, baseline):
             raise ValueError('module-eval external watchdog setting differs')
         # case_execution is pure with respect to command construction but resets
         # private runtime directories; verification must never invoke it.
-        state = workspace / '.state' / compat.case_directory(case['id'])
+        # case_execution receives the original contract, whose ID can differ
+        # from the manifest adapter ID. Preserve its exact private-state key.
+        state = workspace / '.state' / compat.case_directory(original['id'])
         expected_prefix = [f'-Duser.home={state / "home"}' if arg.startswith('-Duser.home=')
                            else f'-Djava.io.tmpdir={state / "tmp"}' if arg.startswith('-Djava.io.tmpdir=')
                            else arg for arg in prefix]

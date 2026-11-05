@@ -1,0 +1,365 @@
+  PID  PPID    RSS     ELAPSED COMM
+    1     0  20496 48-22:17:06 /sbin/launchd
+  365     1  68128 48-22:14:52 /usr/libexec/logd
+  368     1   7696 48-22:14:52 /usr/libexec/UserEventAgent
+  370     1   6640 48-22:14:52 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/FSEvents.framework/Versions/A/Support/fseventsd
+  374     1   4480 48-22:14:52 /usr/sbin/systemstats
+  378     1   5056 48-22:14:52 /usr/libexec/configd
+  380     1   4976 48-22:14:52 /System/Library/CoreServices/powerd.bundle/powerd
+  381     1     80 48-22:14:52 /usr/libexec/IOMFB_bics_daemon
+  385     1   1440 48-22:14:52 /usr/libexec/remoted
+  389     1    128 48-22:14:52 /System/Library/PrivateFrameworks/CoreSpeech.framework/corespeechd_system
+  391     1   1072 48-22:14:52 /usr/libexec/watchdogd
+  394     1  20544 48-22:14:52 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mds
+  396     1    400 48-22:14:52 /usr/libexec/kernelmanagerd
+  397     1   2432 48-22:14:52 /usr/libexec/diskarbitrationd
+  402     1   1968 48-22:14:52 /usr/sbin/syslogd
+  404     1   2064 48-22:14:52 /usr/libexec/thermalmonitord
+  405     1   4384 48-22:14:52 /System/Library/PrivateFrameworks/CoreDuetContext.framework/Resources/contextstored
+  406     1   1472 48-22:14:52 /usr/libexec/xprotectd
+  407     1  10880 48-22:14:52 /usr/libexec/opendirectoryd
+  409     1   6656 48-22:14:52 /System/Library/CoreServices/launchservicesd
+  410     1   3792 48-22:14:52 /usr/libexec/timed
+  412     1   6880 48-22:14:52 /usr/sbin/securityd
+  414     1  16768 48-22:14:52 /usr/libexec/locationd
+  415     1   2896 48-22:14:52 /usr/libexec/nesessionmanager
+  417     1     80 48-22:14:52 autofsd
+  418     1  17248 48-22:14:52 /usr/libexec/dasd
+  419     1   1312 48-22:14:52 /System/Library/PrivateFrameworks/Heimdal.framework/Helpers/kdc
+  422     1   1616 48-22:14:52 /usr/sbin/distnoted
+  425     1    304 48-22:14:52 /System/Library/CoreServices/logind
+  426     1    544 48-22:14:52 /System/Library/PrivateFrameworks/GenerationalStorage.framework/Versions/A/Support/revisiond
+  427     1    224 48-22:14:52 /usr/sbin/KernelEventAgent
+  431     1  19408 48-22:14:52 /usr/sbin/bluetoothd
+  432     1   4544 48-22:14:52 /usr/sbin/notifyd
+  434     1   2912 48-22:14:52 /usr/libexec/corebrightnessd
+  435     1    640 48-22:14:52 /System/Library/Frameworks/CoreMediaIO.framework/Versions/A/Resources/com.apple.cmio.registerassistantservice
+  442     1   4064 48-22:14:51 /usr/sbin/cfprefsd
+  443     1  17408 48-22:14:51 /usr/libexec/runningboardd
+  446     1   3408 48-22:14:51 /System/Library/CoreServices/coreservicesd
+  447     1  11344 48-22:14:51 /System/Library/PrivateFrameworks/CoreAnalytics.framework/Support/analyticsd
+  452     1   9936 48-22:14:51 /usr/libexec/lsd
+  462     1   2144 48-22:14:51 /usr/libexec/clocksyncd
+  466     1  17968 48-22:14:51 /usr/libexec/airportd
+  468     1   8048 48-22:14:51 /usr/libexec/symptomsd
+  481     1   1312 48-22:14:51 /usr/sbin/distnoted
+  483     1   5520 48-22:14:51 /System/Library/PrivateFrameworks/BackgroundTaskManagement.framework/Resources/backgroundtaskmanagementd
+  487     1  38672 48-22:14:51 /usr/libexec/syspolicyd
+  488     1   7472 48-22:14:51 /System/Library/Frameworks/Security.framework/Versions/A/XPCServices/authd.xpc/Contents/MacOS/authd
+  492     1   1296 48-22:14:51 /usr/sbin/distnoted
+  494     1   3200 48-22:14:51 /usr/libexec/eligibilityd
+  495     1  10912 48-22:14:51 /usr/sbin/mDNSResponder
+  497     1   5312 48-22:14:51 /usr/libexec/nsurlsessiond
+  499     1   1296 48-22:14:51 /usr/sbin/distnoted
+  514     1  85728 48-22:14:50 /Applications/Microsoft Defender.app/Contents/MacOS/wdavdaemon
+  522     1   2656 48-22:14:50 /usr/sbin/mDNSResponderHelper
+  524     1   1296 48-22:14:50 /usr/sbin/distnoted
+  534     1    432 48-22:14:50 /usr/libexec/com.apple.cmio.videodriverkithostextension.systemextension/Contents/MacOS/com.apple.cmio.videodriverkithostextension
+  538     1   1312 48-22:14:50 /usr/sbin/distnoted
+  540     1    832 48-22:14:50 /System/Library/DriverExtensions/com.apple.DriverKit-IOUserDockChannelSerial.dext/com.apple.DriverKit-IOUserDockChannelSerial
+  541     1  37920 48-22:14:50 /System/Library/DriverExtensions/com.apple.DriverKit-AppleBCMWLAN.dext/com.apple.DriverKit-AppleBCMWLAN
+  542     1   1072 48-22:14:50 /System/Library/DriverExtensions/com.apple.AppleUserHIDDrivers.dext/com.apple.AppleUserHIDDrivers
+  544     1  20144 48-22:14:50 /Library/SystemExtensions/71DB2EA3-04EB-49F1-9D33-6888B483600E/com.microsoft.wdav.epsext.systemextension/Contents/MacOS/epsext
+  548     1   3536 48-22:14:50 /usr/libexec/ApplicationFirewall/socketfilterfw
+  563     1   4784 48-22:14:50 /usr/libexec/searchpartyd
+  575     1   2928 48-22:14:50 /System/Library/CoreServices/Software Update.app/Contents/Resources/suhelperd
+  576     1   1296 48-22:14:50 /usr/sbin/distnoted
+  579     1   1728 48-22:14:49 /System/Library/CoreServices/appleeventsd
+  580     1    400 48-22:14:49 /usr/libexec/cameracaptured
+  581     1    480 48-22:14:49 /System/Library/Frameworks/CoreMediaIO.framework/Versions/A/Resources/UVCAssistant.systemextension/Contents/MacOS/UVCAssistant
+  584     1   1296 48-22:14:49 /usr/sbin/distnoted
+  596     1   1312 48-22:14:49 /usr/sbin/distnoted
+  599     1   1296 48-22:14:49 /usr/sbin/distnoted
+  619     1   7216 48-22:14:48 /Library/SystemExtensions/E98E5D34-DB64-4E55-A163-8464781C4046/com.microsoft.wdav.netext.systemextension/Contents/MacOS/netext
+  620   514  14416 48-22:14:48 /Applications/Microsoft Defender.app/Contents/MacOS/wdavdaemon_enterprise.app/Contents/MacOS/wdavdaemon_enterprise
+  644     1   2000 48-22:14:47 /usr/sbin/distnoted
+  667     1   4944 48-22:14:47 /usr/libexec/lsd
+  726     1    192 48-22:14:46 automountd
+  746     1   2512 48-22:14:45 /usr/libexec/audiomxd
+  762     1    784 48-22:14:45 /usr/sbin/filecoordinationd
+  769     1    544 48-22:14:45 /System/Library/Frameworks/CryptoTokenKit.framework/ctkd
+  783     1   2000 48-22:14:44 /usr/libexec/nearbyd
+  815     1   1072 48-22:14:43 /System/Library/PrivateFrameworks/TextInputUIMacHelper.framework/Versions/A/XPCServices/CursorUIViewService.xpc/Contents/MacOS/CursorUIViewService
+  818     1   1312 48-22:14:43 /usr/sbin/distnoted
+  865     1   2688 48-22:14:42 /System/Library/CoreServices/SubmitDiagInfo
+  956     1    816 48-22:14:38 /System/Library/DriverExtensions/IOUserBluetoothSerialDriver.dext/IOUserBluetoothSerialDriver
+  997     1   2464 48-22:14:35 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdbulkimport
+ 1033     1   1296 48-22:14:29 /usr/sbin/distnoted
+ 1062     1   1296 48-22:14:28 /usr/sbin/distnoted
+ 1090   374    752 48-22:14:26 /usr/sbin/systemstats
+ 1091     1   1312 48-22:14:25 /usr/sbin/distnoted
+ 1101     1   1312 48-22:14:22 /usr/sbin/distnoted
+ 1105     1     80 48-22:14:19 /System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/CVMServer
+ 1192     1    224 48-22:13:37 /System/Library/CoreServices/CrashReporterSupportHelper
+ 1282     1   1296 48-22:12:08 /usr/sbin/distnoted
+ 1285     1   1312 48-22:12:07 /usr/sbin/distnoted
+ 1477     1   1216 48-22:04:57 /usr/sbin/distnoted
+ 1502     1   2976 02-13:26:00 /System/Library/Frameworks/CryptoTokenKit.framework/ctkd
+ 1513     1   3584 02-13:25:59 /usr/libexec/biometrickitd
+ 2273     1    976 06-22:28:28 /System/Library/PrivateFrameworks/IMDPersistence.framework/XPCServices/IMDPersistenceAgent.xpc/Contents/MacOS/IMDPersistenceAgent
+ 2285     1   2624 48-21:43:11 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdbulkimport
+ 2292     1   2592 48-21:43:11 /usr/libexec/lsd
+ 2605     1   1296 48-21:37:01 /usr/sbin/distnoted
+ 2726 99596  34816 06-12:05:18 /Users/luuvish/.codex/packages/app-server-daemon/releases/0.166.0-aarch64-apple-darwin/bin/codex
+ 3349     1    480 02-13:21:21 /usr/sbin/cfprefsd
+ 3521     1   1024 07-02:22:03 /usr/libexec/AssetCache/AssetCache
+ 3782     1   6752 10-10:03:54 /usr/libexec/secd
+ 3797     1   9328 10-10:03:54 /usr/libexec/gamepolicyd
+ 3818     1   2848 10-10:03:54 /usr/libexec/secd
+ 3866     1  12816 10-10:03:53 /System/Library/PrivateFrameworks/TCC.framework/Support/tccd
+ 3894     1   4464 10-10:03:53 /System/Library/PrivateFrameworks/BiomeStreams.framework/Support/biomed
+ 3917     1    464 10-10:03:53 /usr/libexec/pkd
+ 3923     1    464 10-10:03:53 /usr/libexec/pkd
+ 3935     1    544 10-10:03:53 /usr/libexec/containermanagerd
+ 3942     1   3872 10-10:03:53 /System/Library/CoreServices/TimeMachine/backupd
+ 3948     1    560 10-10:03:53 /usr/libexec/containermanagerd
+ 4027     1   6784 10-10:03:53 /System/Library/PrivateFrameworks/PackageKit.framework/Resources/installd
+ 4171     1   3328 10-10:03:40 /System/Library/Frameworks/LocalAuthentication.framework/Support/coreauthd
+ 4191     1   5376 10-10:03:37 /System/Library/Frameworks/LocalAuthentication.framework/Support/coreauthd
+ 4195     1    848 48-19:45:42 /System/Library/PrivateFrameworks/CoreFP.framework/Versions/A/fairplayd
+ 4303     1   2816 10-10:03:26 /usr/sbin/cfprefsd
+ 4385     1   1472 10-10:03:21 /System/Library/PrivateFrameworks/MediaRemote.framework/Support/mediaremoted
+ 4447     1  12768 10-10:03:15 /usr/libexec/mobileassetd
+ 4531     1   1904 10-10:03:06 /System/Library/Frameworks/Contacts.framework/Support/contactsd
+ 4548     1    464 10-10:03:06 /usr/libexec/secinitd
+ 4553     1    448 10-10:03:06 /usr/libexec/secinitd
+ 4554     1   3184 10-10:03:06 /usr/libexec/nehelper
+ 4557     1    768 10-10:03:06 /usr/libexec/pkd
+ 4563     1   2816 10-10:03:06 /usr/sbin/WirelessRadioManagerd
+ 4567     1   1872 10-10:03:06 /usr/sbin/cfprefsd
+ 4570     1    368 10-10:03:06 /usr/libexec/usermanagerd
+ 4574     1   2688 10-10:03:06 /System/Library/Frameworks/Security.framework/Versions/A/XPCServices/com.apple.CodeSigningHelper.xpc/Contents/MacOS/com.apple.CodeSigningHelper
+ 4607     1   8688 10-10:02:56 /usr/libexec/amfid
+ 4635     1    672 10-10:02:46 /usr/libexec/pkd
+ 5904     1   2896 01-19:31:18 /usr/libexec/wifivelocityd
+ 6517     1    512 06-22:03:38 /System/Library/PrivateFrameworks/PackageKit.framework/Resources/system_installd
+ 9131     1    912 48-12:27:23 /usr/sbin/distnoted
+ 9559     1   1728 02-05:16:08 /usr/sbin/cfprefsd
+ 9560     1   1760 02-05:16:08 /usr/sbin/cfprefsd
+ 9563     1   6672 02-05:16:08 /usr/libexec/dbtelemetryd
+ 9565     1   1760 02-05:16:08 /usr/sbin/cfprefsd
+ 9566     1   1792 02-05:16:08 /usr/sbin/cfprefsd
+ 9572     1   1760 02-05:15:51 /usr/sbin/cfprefsd
+ 9573     1   1776 02-05:15:51 /usr/sbin/cfprefsd
+ 9579     1   1760 02-05:15:34 /usr/sbin/cfprefsd
+ 9623     1   1744 02-05:15:01 /usr/sbin/cfprefsd
+ 9817     1    752 01-19:05:17 /System/Library/PrivateFrameworks/AppleCredentialManager.framework/AppleCredentialManagerDaemon
+10474     1   4976 02-05:11:17 /usr/libexec/ValidUpdater
+10844     1   4160 02-09:26:15 /System/Library/PrivateFrameworks/MobileSoftwareUpdate.framework/Support/softwareupdated
+10845     1    704 02-09:26:15 /System/Library/PrivateFrameworks/MobileSoftwareUpdate.framework/Versions/A/XPCServices/com.apple.MobileSoftwareUpdate.CleanupPreparePathService.xpc/Contents/MacOS/com.apple.MobileSoftwareUpdate.CleanupPreparePathService
+10846     1   6992 02-09:26:14 /System/Library/PrivateFrameworks/SoftwareUpdateCore.framework/Versions/A/XPCServices/SUCoreHelperService.xpc/Contents/MacOS/SUCoreHelperService
+10847     1  21104 02-09:26:12 /System/Library/PrivateFrameworks/UIFoundation.framework/Versions/A/XPCServices/nsattributedstringagent.xpc/Contents/MacOS/nsattributedstringagent
+10850     1   1568 02-09:26:11 /System/Library/Frameworks/MediaAccessibility.framework/Versions/A/XPCServices/com.apple.accessibility.mediaaccessibilityd.xpc/Contents/MacOS/com.apple.accessibility.mediaaccessibilityd
+10852     1   1792 02-09:26:11 /usr/sbin/cfprefsd
+10854     1  10032 02-09:26:11 /System/Library/PrivateFrameworks/SoftwareUpdate.framework/Resources/SoftwareUpdateNotificationManager.app/Contents/MacOS/SoftwareUpdateNotificationManager
+10855     1  22192 02-09:26:11 /System/Library/PrivateFrameworks/UIFoundation.framework/Versions/A/XPCServices/nsattributedstringagent.xpc/Contents/MacOS/nsattributedstringagent
+10858     1   1280 02-09:26:10 /System/Library/Frameworks/MediaAccessibility.framework/Versions/A/XPCServices/com.apple.accessibility.mediaaccessibilityd.xpc/Contents/MacOS/com.apple.accessibility.mediaaccessibilityd
+11599     1   1056 48-06:43:51 /usr/sbin/distnoted
+11611     1   1584 48-06:43:51 /usr/libexec/lsd
+11614     1   1824 48-06:43:50 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdbulkimport
+11630     1   1312 48-06:42:35 /usr/sbin/distnoted
+11856     1   3472 48-06:16:14 /opt/homebrew/bin/luvus
+13243     1   1968 43-19:55:04 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python
+18731     1   2784 02-09:12:35 /System/Library/Frameworks/GSS.framework/Helpers/GSSCred
+19826     1  14752 06-06:04:02 /usr/libexec/trustd
+19833     1  11808 06-06:03:58 /usr/libexec/trustd
+19888     1   9856 06-06:03:26 /usr/libexec/trustd
+20471     1  11360 04-08:02:29 /Users/cody.ij.hwang/.local/bin/herdr-core
+20530     1   5536 04-08:02:15 /System/Library/PrivateFrameworks/CoreADI.framework/adid
+20616     1   1712 06-05:59:43 /usr/libexec/trustd
+20617     1   1712 06-05:59:43 /usr/libexec/trustd
+20873 20471   7168 04-07:59:55 /Users/cody.ij.hwang/.local/bin/herdr-core
+21782     1   3680 02-12:46:58 /usr/libexec/findmydeviced
+21801     1   3456 02-12:46:55 /System/Library/PrivateFrameworks/SystemAdministration.framework/XPCServices/writeconfig.xpc/Contents/MacOS/writeconfig
+21802     1   2032 02-12:46:55 /System/Library/PrivateFrameworks/RecoveryOS.framework/Versions/A/XPCServices/recoveryos_lockout_service.xpc/Contents/MacOS/recoveryos_lockout_service
+21820     1  15616 02-12:46:51 /System/Library/PrivateFrameworks/AppStoreDaemon.framework/Support/appstored
+21821     1   1632 02-12:46:51 /System/Library/PrivateFrameworks/InstallCoordination.framework/Support/installcoordinationd
+21836     1  11120 02-12:46:50 /System/Library/PrivateFrameworks/RemoteManagement.framework/remotemanagementd
+21844     1   1360 02-12:46:49 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/SoftwareUpdateSubscriber.xpc/Contents/MacOS/SoftwareUpdateSubscriber
+21845     1   1136 02-12:46:49 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/SecuritySubscriber.xpc/Contents/MacOS/SecuritySubscriber
+21846     1   1904 02-12:46:49 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/InteractiveLegacyProfilesSubscriber.xpc/Contents/MacOS/InteractiveLegacyProfilesSubscriber
+21849     1   1136 02-12:46:49 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/PowerSubscriber.xpc/Contents/MacOS/PowerSubscriber
+21850     1   1584 02-12:46:49 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/ScreenSharingSubscriber.xpc/Contents/MacOS/ScreenSharingSubscriber
+21851     1   1280 02-12:46:49 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/ManagedAppsSubscriber.xpc/Contents/MacOS/ManagedAppsSubscriber
+21852     1   3600 02-12:46:49 /System/Library/Frameworks/ManagedAppDistribution.framework/Support/managedappdistributiond
+21853     1   1904 02-12:46:49 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/LegacyProfilesSubscriber.xpc/Contents/MacOS/LegacyProfilesSubscriber
+21854     1   1888 02-12:46:48 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/PasscodeSettingsSubscriber.xpc/Contents/MacOS/PasscodeSettingsSubscriber
+21857     1   1152 02-12:46:48 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/DiskManagementSubscriber.xpc/Contents/MacOS/DiskManagementSubscriber
+21858     1   1920 02-12:46:48 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/ManagedPreferencesSubscriber.xpc/Contents/MacOS/ManagedPreferencesSubscriber
+21859     1   1104 02-12:46:48 /usr/libexec/managedappsd
+21860     1   2560 02-12:46:48 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/MigrationSubscriber.xpc/Contents/MacOS/MigrationSubscriber
+21861     1   1808 02-12:46:48 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/ManagedStatusSubscriber.xpc/Contents/MacOS/ManagedStatusSubscriber
+21864     1   7712 02-12:46:48 /System/Library/PrivateFrameworks/SystemMigration.framework/Resources/systemmigrationd
+21865     1   1200 02-12:46:48 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/AssetCacheSubscriber.xpc/Contents/MacOS/AssetCacheSubscriber
+21866     1   1424 02-12:46:48 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/DeviceConfigurationSubscriber.xpc/Contents/MacOS/DeviceConfigurationSubscriber
+21867     1    624 02-12:46:47 /System/Library/PrivateFrameworks/AssetCacheServicesExtensions.framework/XPCServices/AssetCacheManagerService.xpc/Contents/MacOS/AssetCacheManagerService
+21868     1   1216 02-12:46:47 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/NetworkExtensionSubscriber.xpc/Contents/MacOS/NetworkExtensionSubscriber
+21871     1   1104 02-12:46:47 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/ManagementTestSubscriber.xpc/Contents/MacOS/ManagementTestSubscriber
+21872     1   1248 02-12:46:47 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/ManagedConfigurationFilesSubscriber.xpc/Contents/MacOS/ManagedConfigurationFilesSubscriber
+21873     1   1248 02-12:46:47 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/ExtensibleSSOSubscriber.xpc/Contents/MacOS/ExtensibleSSOSubscriber
+27162     1  39392 03-04:07:55 /Library/Application Support/Exosphere/Exosphere.app/Contents/MacOS/Exosphere
+30106     1   5904 02-12:26:20 /System/Library/PrivateFrameworks/CoreLSKD.framework/Versions/A/lskdd
+30107     1    544 02-12:26:20 /usr/libexec/uarpassetmanagerd
+30108     1    560 02-12:26:20 /usr/libexec/griddatad
+30109     1    528 02-12:26:20 /System/Library/PrivateFrameworks/UARPAssetManager.framework/XPCServices/UARPAssetManagerServiceiCloud.xpc/Contents/MacOS/UARPAssetManagerServiceiCloud
+30110     1    608 02-12:26:20 /System/Library/PrivateFrameworks/UARPAssetManager.framework/XPCServices/UARPAssetManagerServiceMobileAsset.xpc/Contents/MacOS/UARPAssetManagerServiceMobileAsset
+30111     1   5872 02-12:26:20 /usr/libexec/fpassetmanagerd
+30113     1   2288 02-12:26:20 /Library/Apple/System/Library/CoreServices/XProtect.app/Contents/MacOS/XProtect
+30114     1   2048 02-12:26:20 /System/Library/PrivateFrameworks/XprotectFramework.framework/Versions/A/XPCServices/XProtectUpdateService.xpc/Contents/MacOS/XProtectUpdateService
+30115     1   5136 02-12:26:20 /Library/Apple/System/Library/CoreServices/XProtect.app/Contents/XPCServices/XProtectPluginService.xpc/Contents/MacOS/XProtectPluginService
+30118     1   4272 02-12:26:19 /System/Library/PrivateFrameworks/AssetCacheServices.framework/Versions/A/XPCServices/AssetCacheLocatorService.xpc/Contents/MacOS/AssetCacheLocatorService
+30119     1   3504 02-12:26:19 /System/Library/PrivateFrameworks/MobileAssetDaemon.framework/Versions/A/XPCServices/com.apple.MobileAsset.DownloadService.Builtin.xpc/Contents/MacOS/com.apple.MobileAsset.DownloadService.Builtin
+30122     1   3440 02-12:26:18 /usr/libexec/dprivacyd
+30124     1   2784 02-12:26:18 /usr/libexec/tzd
+30130     1   3472 02-12:26:18 /System/Library/PrivateFrameworks/CoreAccessories.framework/Support/accessoryd
+30141     1    608 02-12:26:16 /System/Library/PrivateFrameworks/StreamingZip.framework/Versions/A/XPCServices/com.apple.StreamingUnzipService.privileged.xpc/Contents/MacOS/com.apple.StreamingUnzipService.privileged
+30150     1    880 02-12:26:15 /System/Library/PrivateFrameworks/AppleNeuralEngine.framework/XPCServices/ANEStorageMaintainer.xpc/Contents/MacOS/ANEStorageMaintainer
+30151     1    880 02-12:26:15 /System/Library/PrivateFrameworks/AppleNeuralEngine.framework/XPCServices/ANEStorageMaintainer.xpc/Contents/MacOS/ANEStorageMaintainer
+31695     1   2736 02-12:21:04 /usr/libexec/mmaintenanced
+34102     1    688 07-21:58:58 /usr/libexec/containermanagerd_system
+36329     1    752 02-12:11:20 /System/Library/PrivateFrameworks/TrialServer.framework/Versions/A/XPCServices/TrialArchivingService.xpc/Contents/MacOS/TrialArchivingService
+36790     1   1648 07-00:35:06 /usr/libexec/triald_system
+38169     1   1200 10-12:28:19 /usr/libexec/apfsd
+38458     1   1952 02-12:05:53 /usr/sbin/cfprefsd
+40352     1    592 33-21:40:09 /System/Library/Frameworks/CryptoTokenKit.framework/ctkd
+40692     1   8480 02-11:57:44 /usr/libexec/trustd
+41968     1   1728 02-03:11:01 /usr/sbin/cfprefsd
+42033     1   6224 07-21:32:21 /usr/libexec/wifip2pd
+43059     1   8000 02-20:58:25 /System/Library/PrivateFrameworks/XprotectFramework.framework/Versions/A/XPCServices/XProtectBridgeService.xpc/Contents/MacOS/XProtectBridgeService
+43196     1   5120 07-21:31:14 /System/Library/PrivateFrameworks/CloudTelemetry.framework/Support/cloudtelemetryd
+44313     1  15216 33-00:24:51 /System/Library/CoreServices/Software Update.app/Contents/Resources/softwareupdated
+44876     1   2352 02-11:36:17 /usr/libexec/audioanalyticsd
+45030     1   1888 07-21:29:32 /System/Library/PrivateFrameworks/SystemStatusServer.framework/Support/systemstatusd
+45670     1   3600 43-06:08:12 /opt/homebrew/bin/luvus
+46272     1   1984 07-21:24:27 /usr/libexec/sysmond
+49946     1   1040 12-08:37:29 /usr/sbin/distnoted
+49951     1   1808 12-08:37:29 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdbulkimport
+49953     1   1152 12-08:37:28 /usr/libexec/lsd
+51007     1   7888 07-20:58:52 /System/Library/PrivateFrameworks/GeoServices.framework/Versions/A/XPCServices/com.apple.geod.xpc/Contents/MacOS/com.apple.geod
+51170     1    896 41-15:24:49 /usr/sbin/distnoted
+51236     1   1648 02-16:47:25 /usr/sbin/netbiosd
+53256     1   6512 10-11:58:35 /System/Library/PrivateFrameworks/GeoServices.framework/Versions/A/XPCServices/com.apple.geod.xpc/Contents/MacOS/com.apple.geod
+53282     1   6848 10-11:58:35 /usr/sbin/coreaudiod
+53283     1   5568 10-11:58:35 /System/Library/PrivateFrameworks/GeoServices.framework/Versions/A/XPCServices/com.apple.geod.xpc/Contents/MacOS/com.apple.geod
+53304     1   7584 10-11:58:35 /System/Library/PrivateFrameworks/GeoServices.framework/Versions/A/XPCServices/com.apple.geod.xpc/Contents/MacOS/com.apple.geod
+55079     1    208 01-17:47:47 aslmanager
+55340     1    192 46-20:52:47 /usr/libexec/taskgated
+55671     1  28432 08-06:38:28 /Applications/OneDrive.app/Contents/OneDrive Sync Service.app/Contents/MacOS/OneDrive Sync Service
+55842     1    896 01-17:46:17 /usr/libexec/microstackshot
+56794     1   1760 02-02:56:18 /usr/sbin/cfprefsd
+58217     1   1680 02-23:07:25 /System/Library/PrivateFrameworks/IMDPersistence.framework/XPCServices/IMDPersistenceAgent.xpc/Contents/MacOS/IMDPersistenceAgent
+61361     1   4704    18:13:52 /usr/libexec/wifianalyticsd
+62261     1  14656    16:59:23 /usr/libexec/PerfPowerServices
+65109 99396  42720       00:02 /opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python
+65124     1   6960       00:01 /System/Library/CoreServices/ManagedClient.app/Contents/MacOS/ManagedClient
+65125 65109   1424       00:00 ps
+65359     1  13280    13:03:50 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mds_stores
+65851     1    624 01-22:01:22 /usr/libexec/ASPCarryLog
+67761     1   1472 02-10:56:17 /usr/libexec/symptomsd-diag
+69409     1    512 02-15:35:07 /System/Library/PrivateFrameworks/PowerLog.framework/Versions/A/XPCServices/PerfPowerTelemetryClientRegistrationService.xpc/Contents/MacOS/PerfPowerTelemetryClientRegistrationService
+69856     1   3280 02-15:31:45 /System/Library/Frameworks/LocalAuthentication.framework/Support/coreauthd
+69892     1   4016 02-15:31:29 /usr/libexec/ospredictiond
+69943     1   1552 02-15:31:03 /System/Library/PrivateFrameworks/ModelCatalogRuntime.framework/Versions/A/modelcatalogd
+70129     1   3792 02-15:29:48 /usr/libexec/mobileactivationd
+70130     1   1456 02-15:29:48 /usr/libexec/smd
+70408     1   1424 02-15:27:56 /System/Library/PrivateFrameworks/CoreSymbolication.framework/coresymbolicationd
+70476     1   5664 02-15:27:31 /System/Library/CoreServices/osanalyticshelper
+70716   514  58192    06:00:03 /Applications/Microsoft Defender.app/Contents/MacOS/wdavdaemon_unprivileged.app/Contents/MacOS/wdavdaemon_unprivileged
+71049     1   5552 07-03:06:20 /usr/libexec/rtcreportingd
+71200     1   5888 08-04:03:54 /Applications/OneDrive.app/Contents/StandaloneUpdaterDaemon.xpc/Contents/MacOS/StandaloneUpdaterDaemon
+71616     1    416 01-17:11:18 /usr/sbin/cfprefsd
+71681     1   2256 02-15:25:02 /usr/libexec/modelmanagerd
+71686     1    688 02-15:25:01 /System/Library/ExtensionKit/Extensions/PCCAgentClientExtension.appex/Contents/MacOS/PCCAgentClientExtension
+71831     1  13760    04:52:38 sshd-session: cody.ij.hwang [priv]
+71832 71831      0    04:52:38 <defunct>
+71834 71831   2256    04:52:38 sshd-session: cody.ij.hwang@notty
+71835 71834   5008    04:52:38 /Users/cody.ij.hwang/.local/bin/herdr-core
+71975     1   1264 01-12:26:24 /System/Library/PrivateFrameworks/GameControllerFoundation.framework/Versions/A/XPCServices/GameControllerConfigService.xpc/Contents/MacOS/GameControllerConfigService
+72739     1   4352 34-14:37:12 /System/Library/Frameworks/SystemExtensions.framework/Versions/A/Helpers/sysextd
+73568     1   6736 02-15:17:23 /usr/libexec/coreduetd
+74717     1  35744 06-12:45:42 /Library/Intune/Microsoft Intune Agent.app/Contents/MacOS/IntuneMdmDaemon
+74913     1   7472 02-15:09:29 /usr/sbin/spindump
+74985     1    384 07-02:58:44 /System/Library/PrivateFrameworks/CacheDelete.framework/deleted_helper
+75070     1   1568 02-15:08:11 /usr/libexec/online-auth-agent
+75090     1   1248 02-15:08:01 /usr/libexec/seputil
+75899     1    480 01-21:36:17 /usr/sbin/cfprefsd
+75986     1   2352 02-15:00:56 /usr/libexec/peakpowermanagerd
+77884     1   2768 07-02:51:51 /System/Library/CoreServices/TimeMachine/backupd-helper
+77973     1   3312 02-20:10:58 /usr/libexec/securityd_system
+79789     1   5760 02-14:45:00 /System/Library/Frameworks/Contacts.framework/Support/contactsd
+79809     1   8816 02-14:44:56 /usr/libexec/sandboxd
+80184     1   7024 06-23:28:35 /System/Library/PrivateFrameworks/CloudKitDaemon.framework/Support/cloudd
+81980     1   1536 02-14:39:54 /usr/libexec/keybagd
+83673     1   2256 02-14:30:56 /usr/libexec/assetsubscriptiond
+84479     1   3040 02-14:24:26 /usr/libexec/aned
+84480     1   1200 02-14:24:26 /System/Library/PrivateFrameworks/AppleNeuralEngine.framework/XPCServices/ANECompilerService.xpc/Contents/MacOS/ANECompilerService
+84668     1   1312 02-14:22:50 /usr/libexec/logd_helper
+85009     1   2768 02-14:20:31 /usr/libexec/aneuserd
+85902     1    880 02-14:13:00 /usr/libexec/AirPlayXPCHelper
+85940     1    176 02-14:12:42 /usr/libexec/dirhelper
+86020     1   2736 02-14:12:10 /usr/libexec/nfcd
+86024     1    928 02-14:12:10 /System/Library/PrivateFrameworks/NearFieldPrivateServices.framework/Versions/A/XPCServices/NFStorageServer.xpc/Contents/MacOS/NFStorageServer
+86607     1   1984 02-14:07:44 /usr/libexec/countryd
+86715     1   1200 02-14:06:47 /System/Library/PrivateFrameworks/CoreKDL.framework/Support/corekdld
+86719     1   3152 02-14:06:47 /System/Library/CoreServices/ReportCrash
+86722     1  21568 02-14:06:47 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
+86726     1    368 02-14:06:47 /usr/libexec/hidd
+86727     1  18624 02-14:06:47 /System/Library/CoreServices/loginwindow.app/Contents/MacOS/loginwindow
+86728     1   1184 02-14:06:47 /usr/libexec/uarpd
+86729     1   1360 02-14:06:47 /usr/libexec/seld
+86730     1    752 02-14:06:47 /System/Library/Frameworks/AccessoryAccess.framework/Resources/accessoryaccessd
+86731     1    592 02-14:06:47 /System/Library/PrivateFrameworks/DeviceConfiguration.framework/Versions/A/deviceconfigurationd
+86733     1   1824 02-14:06:47 /usr/libexec/gamecontrollerd
+86744     1   2592 02-14:06:46 /usr/libexec/secinitd
+86750     1    368 02-14:06:46 /usr/libexec/colorsync.displayservices
+86753     1   6144 02-14:06:46 /System/Library/CoreServices/MenuBarAgent.app/Contents/MacOS/MenuBarAgent
+86754     1   3808 02-14:06:45 /System/Library/Frameworks/InputMethodKit.framework/Resources/imklaunchagent
+86755     1   1008 02-14:06:45 /usr/libexec/UserEventAgent
+86756     1   4480 02-14:06:45 /usr/sbin/universalaccessd
+86757     1   8608 02-14:06:45 /System/Library/CoreServices/WiFiAgent.app/Contents/MacOS/WiFiAgent
+86758     1   7232 02-14:06:45 /usr/libexec/pkd
+86759     1    400 02-14:06:45 /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/HIServices.framework/Versions/A/XPCServices/com.apple.hiservices-xpcservice.xpc/Contents/MacOS/com.apple.hiservices-xpcservice
+86760     1   2880 02-14:06:45 /System/Library/PrivateFrameworks/ViewBridge.framework/Versions/A/XPCServices/ViewBridgeAuxiliary.xpc/Contents/MacOS/ViewBridgeAuxiliary
+86761     1  79120 02-14:06:45 /System/Library/Frameworks/Security.framework/Versions/A/MachServices/SecurityAgent.bundle/Contents/MacOS/SecurityAgent
+86762     1   1856 02-14:06:45 /System/Library/PrivateFrameworks/CascadeSets.framework/Versions/A/XPCServices/SetStoreUpdateService.xpc/Contents/MacOS/SetStoreUpdateService
+86763     1   1776 02-14:06:45 /usr/sbin/cfprefsd
+86764     1   1856 02-14:06:45 /System/Library/PrivateFrameworks/CascadeSets.framework/Versions/A/XPCServices/SetStoreUpdateService.xpc/Contents/MacOS/SetStoreUpdateService
+86766     1   5232 02-14:06:44 /usr/libexec/storagekitd
+86767     1   7872 02-14:06:44 /System/Library/PrivateFrameworks/AppSSO.framework/Support/AppSSODaemon
+86768     1    608 02-14:06:44 /System/Library/Frameworks/CryptoTokenKit.framework/ctkahp.bundle/Contents/MacOS/ctkahp
+86769     1   1104 02-14:06:44 /System/Library/Frameworks/CryptoTokenKit.framework/ctkahp.bundle/Contents/MacOS/ctkahp
+86771     1   3040 02-14:06:44 /System/Library/Frameworks/CryptoTokenKit.framework/ctkd
+86772     1   1856 02-14:06:44 /System/Library/PrivateFrameworks/CascadeSets.framework/Versions/A/XPCServices/SetStoreUpdateService.xpc/Contents/MacOS/SetStoreUpdateService
+86776     1    448 02-14:06:43 /usr/sbin/systemsoundserverd
+86777     1    800 02-14:06:43 /System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService
+86778     1   2368 02-14:06:43 /System/Library/CoreServices/iconservicesagent
+86779     1    800 02-14:06:43 /System/Library/CoreServices/iconservicesd
+86781     1    400 02-14:06:41 /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/HIServices.framework/Versions/A/XPCServices/com.apple.hiservices-xpcservice.xpc/Contents/MacOS/com.apple.hiservices-xpcservice
+86783     1   4864 02-14:06:35 /usr/libexec/fskitd
+86794     1    432 02-14:06:30 /System/Library/PrivateFrameworks/WiFiPolicy.framework/XPCServices/WiFiCloudAssetsXPCService.xpc/Contents/MacOS/WiFiCloudAssetsXPCService
+86804     1   1536 02-14:06:17 /System/Library/PrivateFrameworks/MobileDevice.framework/Versions/A/Resources/usbmuxd
+86806     1   4240 02-14:06:10 /System/Library/CoreServices/diagnosticservicesd
+86810     1   3216 02-14:06:05 /System/Library/PrivateFrameworks/FamilyCircle.framework/Versions/A/Resources/familycircled
+86811     1   2464 02-14:06:04 /System/Library/PrivateFrameworks/AuthKit.framework/Versions/A/Support/akd
+87195     1    176 45-13:10:10 /usr/libexec/PowerUIAgent
+87944     1  20528 20-05:05:50 /Library/SystemExtensions/91525E27-E8B6-4209-8B7C-CBDC492DAF3B/com.exosphere.Exosphere.ESExtension.systemextension/Contents/MacOS/com.exosphere.Exosphere.ESExtension
+88013     1  31024 02-14:00:39 /System/Library/PrivateFrameworks/XprotectFramework.framework/Versions/A/XPCServices/XprotectService.xpc/Contents/MacOS/XprotectService
+88865     1   2928 34-04:22:36 /Users/cody.ij.hwang/.local/bin/luvus
+91694     1    176 34-04:13:51 /System/Library/PrivateFrameworks/SystemMigrationNetwork.framework/Resources/migrationhelper
+92135     1   2192 02-13:43:16 /System/Library/PrivateFrameworks/PackageKit.framework/Versions/A/XPCServices/package_script_service.xpc/Contents/MacOS/package_script_service
+92496     1  14448 34-04:12:33 /System/Library/PrivateFrameworks/ApplePushService.framework/apsd
+93526     1   1312 34-04:10:08 /usr/sbin/distnoted
+93527     1   3552 34-04:10:08 /System/Library/CoreServices/sharedfilelistd
+95736     1   1024 34-04:07:11 /System/Library/PrivateFrameworks/TextInputUIMacHelper.framework/Versions/A/XPCServices/CursorUIViewService.xpc/Contents/MacOS/CursorUIViewService
+98995     1   1600 02-05:55:35 /usr/libexec/applekeystored
+99396 99394 308784 02-05:52:32 /Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.166.0-aarch64-apple-darwin/bin/codex
+99409 99394  34512 02-05:52:32 /Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.166.0-aarch64-apple-darwin/bin/codex
+99550 99396  24288 02-05:52:12 /Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.166.0-aarch64-apple-darwin/bin/codex-code-mode-host
+99596     1  15632 34-04:00:52 /Users/luuvish/.codex/packages/app-server-daemon/releases/0.166.0-aarch64-apple-darwin/bin/codex
+20874 20873   1376 04-07:59:55 /bin/zsh
+99394 20874 160192 02-05:52:32 codex
+88870 88865    400 34-04:22:36 /bin/zsh
+89553 88865    400 34-04:19:05 /bin/zsh
+13264 11856    384 48-06:07:29 /bin/zsh
+23544 20873   2208 04-07:47:54 /bin/zsh
+45755 45670    400 43-06:07:58 /bin/zsh

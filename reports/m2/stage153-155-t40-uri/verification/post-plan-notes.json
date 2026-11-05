@@ -1,0 +1,64 @@
+{
+  "complete": true,
+  "epoch": 1793871022.9825752,
+  "scope": "Post-plan publication provenance; no runtime result or source scope changes.",
+  "preserved_selector_failures": [
+    {
+      "guard": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-01/report.json",
+        "bytes": 3558429,
+        "sha256": "d7aa3a3db9994dc8b109ae40e02eb3f8d52db86df778c3bb8da7336fc4b9081b",
+        "mode": 420
+      },
+      "reason": "Exact retained historical digest strings were misread as process pins."
+    },
+    {
+      "guard": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-02/report.json",
+        "bytes": 3561616,
+        "sha256": "0f690dfaa3519fd5698772dc4ea084c3f7ddf0aa05936354c2a7bb815f9de8ee",
+        "mode": 420
+      },
+      "reason": "Nine source/license/input payloads were incorrectly classified as JSON authorities."
+    }
+  ],
+  "preserved_prelaunch_failures": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-config-01/preparation-error.json",
+      "bytes": 236,
+      "sha256": "b36497c7ec782c5bde9e8a5a651387535e4b1bbf38b3ae0f9df0acdbf3f4d199",
+      "mode": 420
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-config-02/launch-error.json",
+      "bytes": 555,
+      "sha256": "2486a588148457fcd4fb5a18ee550b1f62b56afb088f96d1aad67e18614cf6d9",
+      "mode": 420
+    }
+  ],
+  "plan_transition": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-closed-plan-02/transition.json",
+    "bytes": 4604,
+    "sha256": "083c11643cd3d2edd46e0e91cef1992ff170f0f6964b17406c42539194896006",
+    "mode": 420
+  },
+  "source_audit_01_preserved": true,
+  "final_source_audit": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-source-verification-02/source-verification.json",
+    "bytes": 14121159,
+    "sha256": "0dd45ce84288ca50262bcdf53c12df5c48310983edfe0e5a60398e054bcf0c16",
+    "mode": 420
+  },
+  "successful_selector": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-select-guard-03/report.json",
+    "bytes": 7125005,
+    "sha256": "1cabdac73754daf2e703e6ce6f3e8c614d5bdbb1ad2fc0130ae0ee75504309a7",
+    "mode": 420
+  },
+  "exact_private_cache_omissions": 4,
+  "source_body_scope_not_expanded": true,
+  "original_full_workspace_failed": true,
+  "separate_affected_target_passed": 15,
+  "full_workspace_rerun_after_correction": false,
+  "full_m2_complete": false
+}

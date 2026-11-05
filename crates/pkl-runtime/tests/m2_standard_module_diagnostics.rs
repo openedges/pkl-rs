@@ -53,9 +53,16 @@ fn factory_validation_uses_decoded_ssp_and_preserves_case_and_original_uri() {
         assert_eq!(selected(uri).kind, ModuleKeyKind::StandardGenericUrl);
     }
     assert!(standard_key_completion(&selection("birds:opaque.pkl")).is_none());
-    for uri in ["modulepath:/x.pkl", "package://example/x", "jrt:/x"] {
+    for uri in ["modulepath:/x.pkl", "jrt:/x"] {
         assert!(standard_key_completion(&selection(uri)).is_none());
     }
+    // The package factory validates the version before fragment/transport.
+    assert!(matches!(
+        standard_key_completion(&selection("package://example/x")),
+        Some(ModuleCompletion::KeySelected(Err(
+            ModuleHostError::UriSyntax { .. }
+        )))
+    ));
 }
 
 #[test]

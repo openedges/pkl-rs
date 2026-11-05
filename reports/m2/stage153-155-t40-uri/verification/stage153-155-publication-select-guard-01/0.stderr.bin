@@ -1,0 +1,35 @@
+Traceback (most recent call last):
+  File "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-04/select.py", line 186, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-04/select.py", line 107, in main
+    if Path(value['path']).suffix=='.json':record(value,'preserved-failures')
+                                           ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-04/select.py", line 57, in record
+    doc=documents[actual['path']];raw_channels(doc,group,actual['path'])
+                                  ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-04/select.py", line 50, in raw_channels
+    else:raw_channels(item,group,document_path,current)
+         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-04/select.py", line 52, in raw_channels
+    for index,item in enumerate(value):raw_channels(item,group,document_path,trail+(index,))
+                                       ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-04/select.py", line 50, in raw_channels
+    else:raw_channels(item,group,document_path,current)
+         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-04/select.py", line 50, in raw_channels
+    else:raw_channels(item,group,document_path,current)
+         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-04/select.py", line 50, in raw_channels
+    else:raw_channels(item,group,document_path,current)
+         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-04/select.py", line 49, in raw_channels
+    for row in channel_projection(document_path,current,item):add(row,group+'-process-raw')
+               ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-04/select.py", line 42, in channel_projection
+    return [process_channel_pin(item)]
+            ~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-04/common.py", line 172, in process_channel_pin
+    assert isinstance(value,dict)
+           ~~~~~~~~~~^^^^^^^^^^^^
+AssertionError

@@ -141,8 +141,21 @@ pub(super) fn file_path(uri: impl Into<PklString>) -> Result<PathBuf, ModuleHost
         return Err(unsupported());
     }
     // IoUtils.pathOf calls URI.toASCIIString before Path.of. Normalize only
-    // literal Unicode before quoting; percent-escaped octets stay untouched.
+    // the entire literal string before quoting, without decoding existing
+    // escapes. A combining mark can therefore change an adjacent hex letter;
+    // malformed escapes after that transformation remain unsupported here.
     let path = java_ascii_file_path(path);
+    // UnixUriUtils uses its byte-path branch only for this exact spelling.
+    // Other accepted scheme spellings take File(URI), which first decodes text.
+    #[cfg(unix)]
+    let raw_unix_path = uri.starts_with("file:///");
+    #[cfg(not(unix))]
+    let raw_unix_path = false;
+    let path = if raw_unix_path && path.len() > 1 && path.ends_with('/') {
+        &path[..path.len() - 1]
+    } else {
+        path.as_ref()
+    };
     let mut decoded = Vec::with_capacity(path.len());
     let mut index = 0;
     while index < path.len() {
@@ -156,11 +169,39 @@ pub(super) fn file_path(uri: impl Into<PklString>) -> Result<PathBuf, ModuleHost
             index += 1;
         }
     }
-    let text = String::from_utf8(decoded).map_err(|_| unsupported())?;
-    if text.contains('\0') {
+    if decoded.contains(&0) {
         return Err(unsupported());
     }
-    Ok(PathBuf::from(text))
+    #[cfg(unix)]
+    {
+        use std::os::unix::ffi::OsStringExt;
+        // Both Java Unix path constructors collapse repeated separators. Only
+        // File(URI)'s text route removes every trailing decoded separator.
+        let mut previous_slash = false;
+        decoded.retain(|byte| {
+            let slash = *byte == b'/';
+            let retain = !slash || !previous_slash;
+            previous_slash = slash;
+            retain
+        });
+        if raw_unix_path {
+            return Ok(PathBuf::from(std::ffi::OsString::from_vec(decoded)));
+        }
+        while decoded.len() > 1 && decoded.last() == Some(&b'/') {
+            decoded.pop();
+        }
+        let text = pkl_runtime::resources::decode_utf8(&decoded);
+        Ok(PathBuf::from(
+            text.as_str().expect("UTF-8 decoder emits scalars"),
+        ))
+    }
+    #[cfg(not(unix))]
+    {
+        // Windows provider/native-encoding behavior is not qualified by the
+        // Unix oracle; preserve the previous strict scalar-only boundary.
+        let text = String::from_utf8(decoded).map_err(|_| unsupported())?;
+        Ok(PathBuf::from(text))
+    }
 }
 
 // The pinned unicode-normalization dependency uses Unicode 15.0 tables,
@@ -268,14 +309,72 @@ mod tests {
             "file:/bad%00.pkl",
             "file:/bad%.pkl",
             "file:/bad%GG.pkl",
-            "file:/bad%FF.pkl",
-            "file:/bad%C3%28.pkl",
         ] {
             assert!(matches!(
                 file_path(uri),
                 Err(ModuleHostError::Unsupported(_))
             ));
         }
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn unix_file_uri_spelling_selects_text_or_lossless_bytes() {
+        use std::os::unix::ffi::OsStrExt;
+        // The first control has a closed Java path-text observation. Remaining
+        // byte identities are source-derived and await the paired Java oracle.
+        for uri in ["file:/tmp/stage147/%FF", "FILE:///tmp/stage147/%FF"] {
+            assert_eq!(
+                file_path(uri).unwrap().as_os_str().as_bytes(),
+                b"/tmp/stage147/\xef\xbf\xbd"
+            );
+        }
+        assert_eq!(
+            file_path("file:///tmp/stage147/%FF")
+                .unwrap()
+                .as_os_str()
+                .as_bytes(),
+            b"/tmp/stage147/\xff"
+        );
+        assert_ne!(
+            file_path("file:///tmp/stage147/%FF").unwrap(),
+            file_path("file:/tmp/stage147/%FF").unwrap()
+        );
+        for (suffix, expected) in [
+            ("%ED%A0%80", "\u{fffd}"),
+            ("%E2%82", "\u{fffd}"),
+            ("%C3%28", "\u{fffd}("),
+            ("%F0%80%80%80", "\u{fffd}\u{fffd}\u{fffd}\u{fffd}"),
+        ] {
+            assert_eq!(
+                file_path(format!("file:/tmp/{suffix}")).unwrap(),
+                Path::new(&format!("/tmp/{expected}"))
+            );
+        }
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn raw_uri_trailing_escape_is_not_text_path_normalization() {
+        use std::os::unix::ffi::OsStrExt;
+        for (uri, bytes) in [
+            ("file:///tmp//name%2F", b"/tmp/name/".as_slice()),
+            ("file:/tmp//name%2F", b"/tmp/name".as_slice()),
+            ("file:///tmp/name//", b"/tmp/name/".as_slice()),
+            ("file:/tmp/name//", b"/tmp/name".as_slice()),
+        ] {
+            assert_eq!(file_path(uri).unwrap().as_os_str().as_bytes(), bytes);
+        }
+        // Whole-URI NFC can change the last ASCII hex letter before reparsing.
+        // That Java error projection is still unsupported, never a guessed path.
+        assert!(matches!(
+            file_path("file:/tmp/%4A\u{30c}"),
+            Err(ModuleHostError::Unsupported(_))
+        ));
+        assert!(matches!(
+            file_path("file:///tmp/%00"),
+            Err(ModuleHostError::Unsupported(_))
+        ));
     }
 
     #[test]

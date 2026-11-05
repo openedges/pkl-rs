@@ -1,0 +1,77 @@
+{
+  "complete": true,
+  "independent": true,
+  "source_only": true,
+  "reviewed_plan": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-closed-plan-01/closed-plan.json",
+    "bytes": 5585136,
+    "sha256": "d85bebace686acbe3939e11be9693838d28f1a8d30ddac7a51ffb7ead6d41ca3",
+    "mode": 420
+  },
+  "reviewed_final_handoff": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-final-handoff-01/handoff.json",
+    "bytes": 29396,
+    "sha256": "4204b975e71b689b56f97fff19aa768276430620364b02605e9e6c0b096af5a1",
+    "mode": 420
+  },
+  "reviewed_pending_handoff": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-final-handoff-01/handoff.pending.json",
+    "bytes": 29139,
+    "sha256": "699974c332c46cad4c7387755360df92a018d573322ffab96e60a44bfa22b452",
+    "mode": 420
+  },
+  "reviewed_publication_preparation": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-04/manifest.json",
+    "bytes": 21091,
+    "sha256": "3c7cd37c25882f0aacd7ec09a3dd455b5d1393fd8fa6682d94c8536d3df6743e",
+    "mode": 420
+  },
+  "reviewed_fill_preparation": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-fill-prep-02/manifest.json",
+    "bytes": 5881,
+    "sha256": "7732ec25b333cd6cef3bcc683d4deb038b18b748247d42fce2824cabc16fcaae",
+    "mode": 420
+  },
+  "concrete_blockers": [],
+  "validation": {
+    "final_handoff_changes_only": [
+      "evidence_tables_complete",
+      "evidence_fragments"
+    ],
+    "roles": 9,
+    "records": 90,
+    "payloads": 713,
+    "source_rows": 11918,
+    "unique_explicit_body_paths": 12721,
+    "project_sourceplan_routes": 11937,
+    "identity_only_sourceplan_rows": 28,
+    "original_sourceplan_count": 11965,
+    "actual_closed_JSON_authorities_checked": 92,
+    "literal_assertions_checked": 534,
+    "fragment_record_payload_rows_preserved": 850,
+    "named_failure_records_retained": 9,
+    "raw_map_role_pin_joins": 3,
+    "documentation_transitions": 1,
+    "exact_source07_changes": 3,
+    "validate_plan_and_source_coverage_passed": true
+  },
+  "findings": [
+    "Final handoff only attests tables complete and appends reviewed extras; prior role, outcome, raw-map and source/doc transition identities remain unchanged.",
+    "Every fragment body pin, group membership and explicit record assertion survives metadata merge; canonical conflicts and duplicate source routes are absent.",
+    "Python01\u201304/prechecks01/sealguard01/T40-original01/reader02/source07-wrong-pattern failures retain exact closed reports and selected raw authority references.",
+    "Old full workspace06 remains2190pass1fail6ignored/Cargo101; source07 affected target15 and later captures are distinct, no fullworkspace rerun or green claim.",
+    "Exact three source07 changes retain verified06 pins/before aliases/current07 pins. TESTING before135391B7f382\u2026 remains sourceplan06/07 identity, with current136861Bb995\u2026 documentation-only alias transition.",
+    "Cache-binding02 config/setup/corrected-reader marker/owned-config extension and latest repair/pub04/fill02/docs03 source/anchor metadata are selected.",
+    "All nine role assertions and three raw-map reader pins agree with actual closed JSON; raw26618 strict nonpasses/newJava0, file19/5, package6/31, M1samecapture strict/contract and separateT40cache scope remain explicit.",
+    "External tool IDs and compiled/cache bodies remain omitted identity-only; full dependency closure and full M2 claims remain false."
+  ],
+  "limits": [
+    "Metadata/source-table review only; actual source/payload bodies are for the separately authorized audit/selector.",
+    "No actual audit/selector/archive creation/archive reader, Git or production mutation executed.",
+    "No executable/runtime/cache/toolchain/archive bodies opened or broad traversal performed.",
+    "Root must complete actual guarded source audit, payload selection, pack and independent archive integrity/publication steps."
+  ],
+  "production_modified": false,
+  "resource_jobs": 0,
+  "cache_queries": 0
+}

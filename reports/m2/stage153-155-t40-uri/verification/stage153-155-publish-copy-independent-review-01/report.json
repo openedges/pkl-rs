@@ -1,0 +1,43 @@
+{
+  "complete": true,
+  "independent": true,
+  "source_only": true,
+  "reviewed_preparation": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-02/manifest.json",
+    "bytes": 2012,
+    "sha256": "2dfe8717f1388c3193fb4e8e0cbc4e78f72c13896ec870ea57e6d81e7cf31c75",
+    "mode": 420
+  },
+  "predecessor": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publish-copy-prep-01/manifest.json",
+    "bytes": 1553,
+    "sha256": "1d7d9ec59dfa2af88cdd0d39c671cf9d080cf8f7c79babc7ab4241f6e4e7837e",
+    "mode": 420
+  },
+  "concrete_source_blockers": [],
+  "checks": {
+    "Python_ASTs": 1,
+    "pure_lexical_scalar_controls_passed": 12,
+    "one_AUDIT_literal_reversal_byte_identical": true,
+    "pack_integrity_roster_audit_schema_names_match_frozen_producers": true
+  },
+  "findings": [
+    "Publisher02 changes only audit01\u219202 authority path; selection02 and new archive01 remain exact.",
+    "Exact completed pack/integrity/roster/audit counts/checksums/modes and four successful guards required before copy; root mapping remains the authority for concrete source/destination correspondence.",
+    "Only exact new archive exception; stage/current-source namespace, exclusive destinations and preexisting exact README rule, streamed bytes/mode/bookends/head/disk reserve preserve finite copy contract.",
+    "Partial prefix copies remain visible on error; no overwrite/rollback or whole metadata/restoration claim."
+  ],
+  "required_final_mapping_checks": [
+    "Include executed publisher02 script/manifest, selector06/source/control/review and this review in explicit postplan_sources/copies; code intentionally does not infer a nonempty own-helper set.",
+    "Map all failed selector01/selector02 and preparation/relative-launch receipts/raws as explicit post-plan verification artifacts, preserving failed states.",
+    "Root must check each successful guard actual command/authority and frozen README source correspondence; script guard labels alone are not a new independent execution proof."
+  ],
+  "limitations": [
+    "Actual mapping, archive/product/source bodies and publication destinations not queried.",
+    "No copy/main/subprocess/namespace/source/archive/runtime operation executed.",
+    "Root exact mapping review and actual guarded copy/readback remain required."
+  ],
+  "production_modified": false,
+  "resource_jobs": 0,
+  "cache_queries": 0
+}

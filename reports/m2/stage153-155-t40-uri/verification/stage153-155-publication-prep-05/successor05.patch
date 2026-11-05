@@ -1,0 +1,38 @@
+--- /Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-04/select.py
++++ /Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-prep-05/select.py
+@@ -6,8 +6,10 @@
+ import argparse,json
+ from pathlib import Path
+ from common import *
+-OUT=ROOT/'target/m2/stage153-155-publication-selection-01'
++OUT=ROOT/'target/m2/stage153-155-publication-selection-02'
+ rows={};omitted=[];documents={};checked={};excluded_roots=[]
++FAILED_REGISTRY_DIGEST_DOCUMENT={'path': '/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-01/selected-regression-registry.json', 'bytes': 10494, 'sha256': '83511fa5fad7a85873f648be541596faaee6858297b4124d2c84aef08ace2bae', 'mode': 420}
++FAILED_RESULT_DIGEST_DOCUMENTS={'/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-01/cases/51bbcfe4ca6096dcb961bd17/java/result.json': {'document': {'path': '/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-01/cases/51bbcfe4ca6096dcb961bd17/java/result.json', 'bytes': 294, 'sha256': '2fbdc69fc8e7c78bbcbf8159486d709e43f4827a6ee3e8c34bde7be11bf2dfa2', 'mode': 420}, 'stdout': {'path': '/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-01/cases/51bbcfe4ca6096dcb961bd17/java/stdout.bin', 'bytes': 17, 'sha256': '4d4d0946a537296a4ac9e2b9a1705e3cb4fa597fbcb4ba14b57b9275a71851ec', 'mode': 420}, 'stderr': {'path': '/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-01/cases/51bbcfe4ca6096dcb961bd17/java/stderr.bin', 'bytes': 0, 'sha256': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', 'mode': 420}}, '/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-01/cases/51bbcfe4ca6096dcb961bd17/rust/result.json': {'document': {'path': '/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-01/cases/51bbcfe4ca6096dcb961bd17/rust/result.json', 'bytes': 294, 'sha256': '4dd96272576adef5f719f194d274bd5a1ae7c63477d9a984ee73af853bb29c82', 'mode': 420}, 'stdout': {'path': '/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-01/cases/51bbcfe4ca6096dcb961bd17/rust/stdout.bin', 'bytes': 17, 'sha256': '4d4d0946a537296a4ac9e2b9a1705e3cb4fa597fbcb4ba14b57b9275a71851ec', 'mode': 420}, 'stderr': {'path': '/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-01/cases/51bbcfe4ca6096dcb961bd17/rust/stderr.bin', 'bytes': 0, 'sha256': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', 'mode': 420}}, '/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-01/cases/b01be896fe1b43f5c262dde8/java/result.json': {'document': {'path': '/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-01/cases/b01be896fe1b43f5c262dde8/java/result.json', 'bytes': 294, 'sha256': '591b0678b483f657920420a8cb38f4b6b4486991cb8682f93d34b1b13283de0b', 'mode': 420}, 'stdout': {'path': '/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-01/cases/b01be896fe1b43f5c262dde8/java/stdout.bin', 'bytes': 0, 'sha256': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', 'mode': 420}, 'stderr': {'path': '/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-01/cases/b01be896fe1b43f5c262dde8/java/stderr.bin', 'bytes': 1824, 'sha256': '9b8edd057c55eaa3b49407c32ab111430acf2e90dbbbfc78fff85372e8b72311', 'mode': 420}}, '/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-01/cases/b01be896fe1b43f5c262dde8/rust/result.json': {'document': {'path': '/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-01/cases/b01be896fe1b43f5c262dde8/rust/result.json', 'bytes': 293, 'sha256': '58f9d72c4060514faaf1b7ed1768428c01b7ecfccd9c09c1a9953a877f6e0f30', 'mode': 420}, 'stdout': {'path': '/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-01/cases/b01be896fe1b43f5c262dde8/rust/stdout.bin', 'bytes': 0, 'sha256': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', 'mode': 420}, 'stderr': {'path': '/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-01/cases/b01be896fe1b43f5c262dde8/rust/stderr.bin', 'bytes': 1824, 'sha256': '9b8edd057c55eaa3b49407c32ab111430acf2e90dbbbfc78fff85372e8b72311', 'mode': 420}}}
+ def add(expected,group,kind='raw'):
+     assert isinstance(expected,dict) and {'path','sha256'}<=expected.keys()
+     payload_path(expected['path'],kind,excluded_roots)
+@@ -28,6 +30,14 @@
+ def channel_projection(document_path,trail,item):
+     # Exact existing document/field schemas only. A recognized process channel
+     # anywhere else must satisfy the ordinary process-pin contract.
++    if document_path==FAILED_REGISTRY_DIGEST_DOCUMENT['path']and len(trail)==6 and trail[0]=='cases'and type(trail[1])is int and trail[1]in (0,1)and trail[2:5]==('contract','oracle_observation','sha256')and trail[5]in ('stdout','stderr'):
++        assert isinstance(item,str)and re.fullmatch('[0-9a-f]{64}',item)
++        return []  # Historical contract digest metadata, not a current process pin.
++    if document_path in FAILED_RESULT_DIGEST_DOCUMENTS and len(trail)==2 and trail[0]=='sha256'and trail[1]in ('stdout','stderr'):
++        assert isinstance(item,str)and re.fullmatch('[0-9a-f]{64}',item)
++        stream=process_channel_pin(FAILED_RESULT_DIGEST_DOCUMENTS[document_path][trail[1]])
++        assert item==stream['sha256'],'Failed result digest differs from exact selected sibling stream.'
++        return [stream]
+     if document_path==str(ROOT/'compatibility/regressions.json') and len(trail)==5 and trail[0]=='cases' and type(trail[1])is int and trail[2:4]==('oracle_observation','sha256'):
+         assert trail[-1] in ('stdout','stderr') and isinstance(item,str) and re.fullmatch('[0-9a-f]{64}',item)
+         return []  # Exact digest-only inventory metadata, retained verbatim.
+@@ -54,6 +64,8 @@
+ def record(expected,group):
+     canonical(expected);actual=add(expected,group,'authority')
+     if actual['path'] not in documents:documents[actual['path']]=read_pin(actual)
++    if actual['path']==FAILED_REGISTRY_DIGEST_DOCUMENT['path']:assert actual==FAILED_REGISTRY_DIGEST_DOCUMENT
++    if actual['path']in FAILED_RESULT_DIGEST_DOCUMENTS:assert actual==FAILED_RESULT_DIGEST_DOCUMENTS[actual['path']]['document']
+     doc=documents[actual['path']];raw_channels(doc,group,actual['path'])
+     # Current flat guards retain full inline before/after arrays in this body.
+     # Retain any explicitly encoded stored snapshot too, without assuming gzip.

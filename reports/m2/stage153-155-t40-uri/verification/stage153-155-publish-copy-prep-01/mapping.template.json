@@ -1,0 +1,116 @@
+{
+  "draft": true,
+  "head": "6d5d72f66a4a7e9343781d570600c8782f460d9c",
+  "all_publication_guards_terminal_reaped": false,
+  "authorities": {
+    "pack": null,
+    "integrity": null,
+    "source_audit": null,
+    "roster": null,
+    "documentation_application": null
+  },
+  "archive": null,
+  "guards": [
+    {
+      "label": "audit",
+      "pin": null
+    },
+    {
+      "label": "select",
+      "pin": null
+    },
+    {
+      "label": "pack",
+      "pin": null
+    },
+    {
+      "label": "archive_readback",
+      "pin": null
+    }
+  ],
+  "preserved_failures": [
+    {
+      "label": "selector01",
+      "pin": null,
+      "reason": "ACTUAL retained failure; fill exact pin and reason"
+    },
+    {
+      "label": "prep_error",
+      "pin": null,
+      "reason": "ACTUAL retained failure; fill exact pin and reason"
+    }
+  ],
+  "postplan_sources": [],
+  "copies": [
+    {
+      "source": null,
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/README.md",
+        "bytes": null,
+        "sha256": null,
+        "mode": null
+      },
+      "allow_existing": true
+    },
+    {
+      "source": null,
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/evidence.tar.gz",
+        "bytes": null,
+        "sha256": null,
+        "mode": null
+      },
+      "allow_existing": false
+    },
+    {
+      "source": null,
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/evidence-index.json",
+        "bytes": null,
+        "sha256": null,
+        "mode": null
+      },
+      "allow_existing": false
+    },
+    {
+      "source": null,
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/evidence-integrity.json",
+        "bytes": null,
+        "sha256": null,
+        "mode": null
+      },
+      "allow_existing": false
+    },
+    {
+      "source": null,
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/source-verification.json",
+        "bytes": null,
+        "sha256": null,
+        "mode": null
+      },
+      "allow_existing": false
+    },
+    {
+      "source": null,
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/pack-report.json",
+        "bytes": null,
+        "sha256": null,
+        "mode": null
+      },
+      "allow_existing": false
+    },
+    {
+      "source": null,
+      "destination": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/reports/m2/stage153-155-t40-uri/verification/documentation-application.json",
+        "bytes": null,
+        "sha256": null,
+        "mode": null
+      },
+      "allow_existing": false
+    }
+  ]
+}

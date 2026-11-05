@@ -15,6 +15,7 @@ import m2_jvm_classpath as jvm
 import m2_historical as historical
 import m2_language as language
 import m2_manifest as manifest
+import m2_selected_regressions as selected_regressions
 
 
 class ProfileMappingTests(unittest.TestCase):
@@ -36,25 +37,37 @@ class ProfileMappingTests(unittest.TestCase):
         current = manifest.current_manifest()
         corpus = manifest.load(Path('compatibility/corpus.json'))
         originals = [row for row in corpus['cases'] if row['suite'] == 'language-snippet']
-        # Historical admission also stores an upstream_case contract. Keep its
-        # exact eight rows separate from the original 957 upstream snippets.
+        # Keep the eight historical and two selected original contracts
+        # distinct from the original 957 upstream snippets.
         all_original_contracts = [row for row in current['cases'] if 'upstream_case' in row]
         actual = [row for row in all_original_contracts if row['id'].startswith('pkl:language-snippet:')]
         history = historical.registry_cases(manifest.ROOT)
+        selected = selected_regressions.registry_cases(manifest.ROOT)
         self.assertEqual(len(history), 8)
+        self.assertEqual(list(selected), ['m2:rev1:t40-imported-declaration-authority',
+                                          'm2:rev1:t40-foreign-namesake'])
         self.assertEqual([row['id'] for row in all_original_contracts],
-                         [row['id'] for row in originals] + list(history))
+                         [row['id'] for row in originals] + list(history) + list(selected))
         for row in all_original_contracts[len(originals):]:
-            self.assertEqual(row['upstream_case'], history[row['id']]['contract'])
-            self.assertEqual(row['adapter'], historical.ADAPTER)
+            registry = history if row['id'] in history else selected
+            adapter = historical.ADAPTER if row['id'] in history else selected_regressions.ADAPTER
+            self.assertEqual(row['upstream_case'], registry[row['id']]['contract'])
+            self.assertEqual(row['adapter'], adapter)
             self.assertEqual(row['execution']['state'], 'ready')
         self.assertEqual([row['id'] for row in actual], [row['id'] for row in originals])
         self.assertEqual(len(actual), 957)
-        self.assertEqual(current['counts']['cases'], 4527 + 18)
+        self.assertEqual(current['counts']['cases'], 4586)
         self.assertEqual(current['counts']['requirements'], 475)
-        self.assertEqual(current['counts']['cases_by_execution']['unimplemented'], 68 + 3)
+        self.assertEqual(current['counts']['cases_by_execution']['unimplemented'], 68 + 1)
         self.assertEqual(current['counts']['cases_by_execution']['unmapped'], 32)
-        self.assertEqual(current['counts']['cases_by_execution']['ready'], 4442)
+        self.assertEqual(current['counts']['cases_by_execution']['ready'], 4485)
+        retained = [row for row in current['cases'] if 'regression_case' in row]
+        other_retained = [row for row in retained if row['id'] not in selected]
+        self.assertEqual(len(other_retained), 1)
+        self.assertIn('t36', other_retained[0]['id'])
+        self.assertEqual(other_retained[0]['execution']['state'], 'unimplemented')
+        self.assertIsNone(other_retained[0]['adapter'])
+        self.assertNotIn('upstream_case', other_retained[0])
         import m2_module_eval
         registered = m2_module_eval.registry_cases(manifest.ROOT, corpus, manifest.load(manifest.MODULE_ADAPTERS))
         for original, case in zip(originals, actual):

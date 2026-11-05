@@ -1,0 +1,122 @@
+{
+  "complete": true,
+  "epoch": 1793869849.2901409,
+  "original": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-closed-plan-01/closed-plan.json",
+    "bytes": 5585136,
+    "sha256": "d85bebace686acbe3939e11be9693838d28f1a8d30ddac7a51ffb7ead6d41ca3",
+    "mode": 420
+  },
+  "successor": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-closed-plan-02/closed-plan.json",
+    "bytes": 5585109,
+    "sha256": "66d2e1077fc1decab9c80d8b27b1d37dd2594372d2efbced9efde7e3af5cad82",
+    "mode": 420
+  },
+  "changes": [
+    {
+      "index": 644,
+      "pin": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-01/cases/51bbcfe4ca6096dcb961bd17/input.pkl",
+        "bytes": 133,
+        "sha256": "0c4c3dc936abf666af1a2b406680c3fb083d64761f450a4c4871c4837ea477d8",
+        "mode": 420
+      },
+      "before_kind": "authority",
+      "after_kind": "source"
+    },
+    {
+      "index": 653,
+      "pin": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-01/cases/b01be896fe1b43f5c262dde8/input.pkl",
+        "bytes": 169,
+        "sha256": "69bf0c5b50859614d47559ec5ff1cc5842415064eeed4805c6fd5c516d4e276c",
+        "mode": 420
+      },
+      "before_kind": "authority",
+      "after_kind": "source"
+    },
+    {
+      "index": 662,
+      "pin": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-workspace-01/tests/fixtures/rev1/LICENSE",
+        "bytes": 10765,
+        "sha256": "87f7f506593ec1c2b6a5b34bb449cd37f8ec7f040479f37a6697f6750ecc6296",
+        "mode": 420
+      },
+      "before_kind": "authority",
+      "after_kind": "source"
+    },
+    {
+      "index": 663,
+      "pin": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-workspace-01/tests/fixtures/rev1/NOTICE",
+        "bytes": 1318,
+        "sha256": "70ad1559eebf49c6ffea8dba7ecb646289506f669dc52fbdcd01f0f13afd27ee",
+        "mode": 420
+      },
+      "before_kind": "authority",
+      "after_kind": "source"
+    },
+    {
+      "index": 664,
+      "pin": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-workspace-01/tests/fixtures/rev1/class_authority/t40/foreign_namesake/foreign.pkl",
+        "bytes": 45,
+        "sha256": "b47d4e0237c80e684dbd954bc77afaa927094aaee9f79f63401129a7ad860611",
+        "mode": 420
+      },
+      "before_kind": "authority",
+      "after_kind": "source"
+    },
+    {
+      "index": 665,
+      "pin": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-workspace-01/tests/fixtures/rev1/class_authority/t40/foreign_namesake/repro.pkl",
+        "bytes": 169,
+        "sha256": "69bf0c5b50859614d47559ec5ff1cc5842415064eeed4805c6fd5c516d4e276c",
+        "mode": 420
+      },
+      "before_kind": "authority",
+      "after_kind": "source"
+    },
+    {
+      "index": 666,
+      "pin": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-workspace-01/tests/fixtures/rev1/class_authority/t40/foreign_namesake/repro_lib.pkl",
+        "bytes": 202,
+        "sha256": "ea11fa9feae78cdc9ff40b8e9e8831ff03a5fb90f5fc1aa9c1c04dc513aadef8",
+        "mode": 420
+      },
+      "before_kind": "authority",
+      "after_kind": "source"
+    },
+    {
+      "index": 667,
+      "pin": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-workspace-01/tests/fixtures/rev1/class_authority/t40/repro.pkl",
+        "bytes": 133,
+        "sha256": "0c4c3dc936abf666af1a2b406680c3fb083d64761f450a4c4871c4837ea477d8",
+        "mode": 420
+      },
+      "before_kind": "authority",
+      "after_kind": "source"
+    },
+    {
+      "index": 668,
+      "pin": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-workspace-01/tests/fixtures/rev1/class_authority/t40/repro_lib.pkl",
+        "bytes": 202,
+        "sha256": "ea11fa9feae78cdc9ff40b8e9e8831ff03a5fb90f5fc1aa9c1c04dc513aadef8",
+        "mode": 420
+      },
+      "before_kind": "authority",
+      "after_kind": "source"
+    }
+  ],
+  "only_nine_payload_kind_fields_changed": true,
+  "payload_pins_and_count_unchanged": true,
+  "all_payload_path_kinds_preflight_passed": true,
+  "original_preserved": true,
+  "scope": "Publication plan metadata correction only. Nine retained source/fixture/license payloads were incorrectly labelled JSON authorities. No body, scope, outcome, source-plan or runtime changes."
+}

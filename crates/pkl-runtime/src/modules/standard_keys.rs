@@ -1,4 +1,4 @@
-//! Explicit non-I/O portion of the standard file/HTTP/generic-URL key profile.
+//! Explicit non-I/O portion of the standard file/HTTP/package/generic-URL key profile.
 //! Native development Hosts opt in; custom Hosts retain their own factories.
 use super::*;
 
@@ -25,18 +25,24 @@ fn selected_kind(uri: &PklString) -> Result<Option<ModuleKeyKind>, ModuleHostErr
     if scheme.eq_ignore_ascii_case("http") || scheme.eq_ignore_ascii_case("https") {
         return Ok(Some(ModuleKeyKind::StandardHttp));
     }
+    if scheme.eq_ignore_ascii_case("package") || scheme.eq_ignore_ascii_case("projectpackage") {
+        match crate::packages::PackageAssetUri::parse(uri) {
+            Ok(_) => return Err(ModuleHostError::Unsupported(
+                "Package URI validation succeeded, but package/project source resolution is not implemented.".into(),
+            )),
+            Err(failure) => {
+                return Err(match &failure.failure {
+                    crate::packages::PackageUriFailure::Unsupported(reason) => ModuleHostError::Unsupported(reason.clone()),
+                    _ => ModuleHostError::UriSyntax { reason: failure.reason() },
+                });
+            }
+        }
+    }
     // These have earlier built-in factories or provider semantics that this
     // bounded profile does not implement. Do not substitute GenericUrl for them.
-    if [
-        "pkl",
-        "modulepath",
-        "package",
-        "projectpackage",
-        "repl",
-        "jrt",
-    ]
-    .iter()
-    .any(|known| scheme.eq_ignore_ascii_case(known))
+    if ["pkl", "modulepath", "repl", "jrt"]
+        .iter()
+        .any(|known| scheme.eq_ignore_ascii_case(known))
     {
         return Ok(None);
     }

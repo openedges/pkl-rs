@@ -1,0 +1,66 @@
+{
+  "source_only": true,
+  "pure_tests_passed": 9,
+  "Python_ASTs": 6,
+  "closed_plan": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-publication-closed-plan-02/closed-plan.json",
+    "bytes": 5585109,
+    "sha256": "66d2e1077fc1decab9c80d8b27b1d37dd2594372d2efbced9efde7e3af5cad82",
+    "mode": 420
+  },
+  "exact_nine_authority_to_source_data_changes_only": true,
+  "all_explicit_payload_kinds_pass": 713,
+  "all_source_row_name_admissions_pass": 11918,
+  "closed_JSON_schema_documents": 121,
+  "exact_digest_fields_checked": 16,
+  "cache_contract_fields": 4,
+  "all_three_raw_map_metadata_admissions_pass": true,
+  "raw_map_body_name_requests_validated": 5374,
+  "exact_four_host_private_cache_omissions": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-02/cases/51bbcfe4ca6096dcb961bd17/java/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "mode": 420,
+      "reason": "host-private-runtime-cache-library",
+      "body_selected": false,
+      "source_selected": false
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-original-02/cases/b01be896fe1b43f5c262dde8/java/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "mode": 420,
+      "reason": "host-private-runtime-cache-library",
+      "body_selected": false,
+      "source_selected": false
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-cache-off-02/cases/51bbcfe4ca6096dcb961bd17/java/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "mode": 420,
+      "reason": "host-private-runtime-cache-library",
+      "body_selected": false,
+      "source_selected": false
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage153-155-t40-cache-off-02/cases/b01be896fe1b43f5c262dde8/java/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "mode": 420,
+      "reason": "host-private-runtime-cache-library",
+      "body_selected": false,
+      "source_selected": false
+    }
+  ],
+  "epoch_guard_and_json_assertions_metadata_only_pass": true,
+  "pack_readback_byte_identical05": true,
+  "audit_only_OUT_changes": true,
+  "selector_output": "target/m2/stage153-155-publication-selection-02",
+  "audit_output": "target/m2/stage153-155-source-verification-02",
+  "unknown_process_and_binary_body_admission_strict": true,
+  "actual_payload_hash_or_producer_or_archive_executed": false,
+  "raw_runtime_cache_artifact_archive_bodies_read": false,
+  "production_or_Git_mutated": false
+}
