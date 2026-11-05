@@ -2,6 +2,74 @@
 
 The goals are behavioral and byte compatibility with the Java implementation of Pkl 0.32.0, with execution time and memory usage at least as good as Java for every required workload. Source verification, inventories, a pinned Java oracle, and raw comparison tooling are available. M1 adds bounded Rust/Java architecture comparisons and actual browser/Node execution; complete language and product performance gates remain open.
 
+## M2 behavior verification contract
+
+The implementation owners, domain scenarios, Host dependencies and work-item
+definition are maintained in [PLAN.md](PLAN.md#m2-구현과-테스트-구조).
+Use the existing M2-01–09 workstreams, requirement IDs and original case IDs.
+The structure organizes implementation and verification; it grants no new
+implementation, mapping, execution or compatibility status.
+
+### Test layers and their claims
+
+| Layer | Required observation | Existing entry points |
+| --- | --- | --- |
+| Local invariants | Parser/source structure, value/type identity, ownership and GC roots, error provenance, and other implementation invariants affected by the change | Inline runtime tests and focused tests in `crates/pkl-runtime/tests` |
+| Shared engine behavior | Values, evaluation order, lazy forcing, repeated calls, failure/retry, Host suspension and cleanup within the same evaluator | Existing runtime/lifecycle tests and the applicable Java sequence probes |
+| Original Java differential | Complete original input, invocation, environment, result/error channels and generated files, with the pinned 0.32.0 oracle | `tools/m2_language.py` and its original-module, JVM-profile, historical and selected-regression adapters |
+| Platform boundary | Shared semantic behavior through actual native, Node and browser adapters, including declared Host capabilities and lossless transport | `tools/m1_platforms.py`, `tools/platform/compare-language-cases.mjs` and existing scenario-specific runners |
+| Generated and aggregate checks | Reproducible seeds, valid metamorphic domains, minimized discrepancies, inventory completeness and strict completion accounting | `tools/m2_generate.py`, `tools/m2_manifest.py`, existing report and strict verifiers |
+
+Select the existing tests that observe the claimed behavior. Add cases for an
+unobserved requirement or a discovered regression. Normal, boundary, error,
+ordering and lifecycle scenarios are applicable axes, not a mandatory Cartesian
+product for every feature. Generated relations must specify their valid domain;
+for example, integer associativity under bounded operands does not establish
+floating-point associativity. Fuzz findings become retained regression inputs.
+
+### Observation boundaries
+
+| Boundary | Comparison contract |
+| --- | --- |
+| Original CLI/module contract | Preserve input/resources, URI, argv, cwd and environment; compare complete stdout, stderr, exit code, generated-file path set and each file's raw bytes |
+| Expression or typed API | Compare the exact public value/error representation supplied by that API. A string-expression result qualifies that boundary; typed value export needs its own observation |
+| UTF-16 and UTF-8 | Preserve original Java bytes and any captured code units. A JS-string comparison has its declared encoding contract; it cannot silently replace Java UTF-8 or native OS-path-byte comparison |
+| Trace, Host and persistent sessions | Compare ordered requests/events/callbacks, payloads and terminal results where exposed. Exercise retry, reentry, cancellation, timeout and close for stateful behavior; use runtime assertions for internal lifetime invariants |
+| Errors | Observe the first failure, complete diagnostic text and applicable source/frame/hint data. Compare caught and uncaught behavior at their original boundaries; missing values or channels remain failures |
+
+Native filesystem/network, Node I/O and browser VFS/loader capabilities must be
+identified per execution contract. Missing required capabilities remain blocked
+or unimplemented. A shared-engine build or bounded M1 result qualifies only its
+recorded scope; full product bindings and release-platform coverage retain their
+separate requirements. Relevant performance and memory checks retain the
+measurement contract below, including correctness before timing.
+
+### Work-item and checkpoint acceptance
+
+Before implementing a change, record its behavior, primary workstream,
+requirement/case IDs, existing implementation, observed discrepancy or missing
+capability, intended source boundary and required observations. Use one active
+work item or canonical checkpoint report; no additional manifest format is
+required. An unexplored area stays unverified until investigated.
+
+Internal invariants may use Rust assertions. Observable compatibility expected
+results come from the pinned Java oracle. Tooling tests for missing results,
+duplicate IDs, stale identities and byte differences belong to the shared tooling
+suite and need not be duplicated for each language feature.
+
+Close a work item after its original/regression comparisons, affected boundary
+tests, applicable platform checks, reviewed source/test links and the required
+development checks pass on the qualified source state. Preserve prior failures
+and any explicitly unresolved scope. Reuse unchanged evidence only with its
+original source, input, artifact, environment and comparison-boundary identities;
+do not present an old observation as a new execution.
+
+The full M2 gate still requires every required implementation/test mapping and
+complete passing execution, together with recorded build and applicable platform
+verification. A successful work item does not waive unselected cases, known
+failures, oracle errors, ignored tests or missing adapters. The design tables
+themselves are not new runtime evidence.
+
 ## Stage153–155 original contracts and URI boundaries
 
 The two original T40 CLI contracts preserve original argv/URI/environment and complete stdout/stderr/exit/generated files. Both match; two Java-only cache-off controls are separately counted and do not add original coverage. Host-private files remain provenance outside the original public-file comparison. File URI 24 and package API 37 inputs retain 48/74 raw Java/native processes with normal Cargo source/artifact/storage and fresh Java helper/runtime joins. File 19 matches/5 nonpasses and package 6 value matches/31 nonpasses do not establish full error/Host/API compatibility; the 11 original package CLI/server/project cases remain unqualified by these controls.

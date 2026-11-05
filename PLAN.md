@@ -1,5 +1,11 @@
 # 구현 계획
 
+## 현재 우선순위 — 구현과 테스트 구조 정의
+
+M2는 [구현과 테스트 구조](#m2-구현과-테스트-구조)를 먼저 작업 기준으로 삼는다. 기존 9개 작업 ID에 31개 의미론 분류의 주 소유자, 구현 경계, 필수 시나리오, 기존 테스트의 출발점과 완료 조건을 연결했다. 테스트의 공통 관측 계약은 [TESTING.md](TESTING.md#m2-behavior-verification-contract)에 둔다. 이 구조와 개별 작업의 입력·관측·의존성을 정한 다음 기준선 취득과 공통 원인 수정에 착수한다.
+
+이는 기능 분류와 작업 계약이며, 475개 요구사항이나 4,586개 원본 계약의 검증 완료를 뜻하지 않는다. 현행 manifest의 구현·mapping·실행 상태는 유지한다. 아래 첫 3작업일 계획은 이 구조를 적용한 다음 실행 묶음의 시간 배정이다.
+
 ## M2 작업 방식과 일정 재검토 — 2026-11-05
 
 **앞서 제시한 8–12주는 실제 잔여 결함의 원인과 처리 시간을 확인하기 전에 큰 작업 범주에 주 단위를 배정한 추정이었다. 이를 근거가 충분한 완료 일정으로 사용하지 않는다.** 2027년 1월 목표와 12–16주 위험 범위도 이번 재검토로 대체한다. 구현과 검증의 완료 조건은 유지하고, 중복 작업을 줄인 첫 3작업일의 결과로 새 일정을 산정한다. 이전 제안은 커밋 `4d7ec05f`에 보존되어 있다.
@@ -322,33 +328,104 @@ M1은 아래 항목별 구현·비교 증거·설계 결정이 갖춰진 뒤 완
 
 ## M2 — 언어 런타임
 
-M1의 공통 VM을 확장합니다. VM·heap·호출 의미론은 `gpt-6-astra / high`, parser·resolver와 검증 도구는 각각 `gpt-6.1-sol / high`에 배정합니다. 주 에이전트가 공통 진단 렌더러, 통합 검증, 문서와 커밋·원격 CI를 담당합니다.
+### M2 구현과 테스트 구조
 
-### 전체 진행도 해석
+M2-01–09는 기존 작업 식별자를 유지한다. 아래 표는 코드를 새로 나누라는 지시가 아니라 현재 공유 엔진에 대한 책임과 검증 범위다. **모든 영역은 진행 중**이며, 파일·테스트가 존재한다는 사실과 현재 소스에서 검증을 마쳤다는 사실을 구분한다. 새로운 실패마다 주 소유자 한 곳을 정하고 다른 영역은 의존성으로 기록한다.
 
-핵심 언어 기능을 폭넓게 구현했지만, 전체 호환성 마감에는 상당한 작업이 남아 있습니다. 아래 9개 작업 영역은 모두 일부 종료 조건이 남은 `진행 중` 상태입니다. Stage 번호는 완료한 전체 작업의 비율이 아니라 누적 구현·검증 단계를 나타냅니다. 선택 코퍼스의 높은 성공률도 M2 전체 완료율이 아닙니다.
+```mermaid
+flowchart LR
+    S[소스와 URI] --> F[M2-02 구문과 이름 해석]
+    F --> V[M2-03~06 호출·객체·타입·컬렉션]
+    V --> R[M2-07 Reference와 메타데이터]
+    V --> O[공유 값과 출력 경계]
+    R --> O
+    V <--> H[Host 모듈·리소스 요청]
+    F --> D[M2-08 진단과 trace]
+    V --> D
+    H --> D
+    O --> A[Native·Wasm·N-API adapter]
+    D --> A
+    G[M2-01 목록·연결 / M2-09 실행·판정] -.-> A
+```
 
-전체 목록의 요구사항 475개와 검토된 mapping 33개에는 서로 겹치는 의미론·선언·후보 기록이 있습니다. Stage 52의 원본 어댑터 연결 후 ready 4,416개·미구현 71개·미연결 40개 accounting row 역시 독립적인 기능 수나 남은 작업량을 뜻하지 않습니다. 기존 ready 3,664개에서 추가된 752개는 실행 연결이며 새 통과 결과가 아닙니다. Stage92에서 원래 case ID를 유지한 historical 8개를 추가 연결한 Stage92 당시 상태는 ready 4,424개·미구현 71개·미연결 32개입니다. Stage97은 토큰 사례 18개를 추가하여 전체 4,545개·ready 4,442개·미구현 71개·미연결 32개이며, `TRUE`·`FALSE`·`NULL`의 한정된 토큰 요구사항 3개를 검증했습니다. ready는 어댑터로 실행 가능하다는 뜻이며 통과 판정은 별도입니다. 현재 목록에는 검토된 기능별 작업량 가중치가 없으므로 신뢰할 수 있는 전체 완료 백분율은 산정하지 않습니다. 진행 보고는 구현한 범위, 실제 실행·일치 수, 미구현·미실행 범위와 엄격한 완료 gate를 함께 제시합니다.
+플랫폼 adapter는 I/O와 값 전달을 담당한다. 언어 의미론, 오류 생성·렌더링과 평가 순서는 공유 엔진에 둔다. 전체 제품 API와 renderer 범위는 M3–M7에서 이어가며, 원본 M2 계약이 사용하는 경로는 아래 의존성에 포함한다.
 
-남은 큰 범위는 annotation·module 초기화와 상속 규칙, 지연·재귀 타입 및 제약, collection·Reference 메타데이터의 나머지 의미론, 전체 오류 메시지·논리적 스택과 원본 upstream 코퍼스 연결입니다. 원본 언어 사례가 요구하는 표준 라이브러리·출력·로딩 기능은 M3·M4와의 의존성으로 유지합니다. 이 조건을 충족하기 전에는 검증만 남은 마감 단계로 보고하지 않습니다.
+#### 구현 영역과 필수 검증
 
-### 실행 항목과 진행 상태
+아래 소스 경로는 `crates/pkl-runtime/src/`, Rust 테스트 경로는 `crates/pkl-runtime/tests/` 기준이다. 기존 테스트는 재사용할 출발점이며 해당 영역 전체를 이미 검증했다는 뜻이 아니다. 각 행의 시나리오에서 실제 주장에 필요한 원본·회귀 사례를 선택하고 빠진 경우만 추가한다.
 
-| 작업 | 상태 | 구현·검증 범위와 남은 조건 |
+| 작업 | 구현 책임·주요 코드 | 필수 동작·실패·상태 시나리오 | 기존 테스트·도구 출발점 |
+| --- | --- | --- | --- |
+| M2-01 목록과 검증 연결 | `compatibility/m2-language.json`, `compatibility/m2-mappings.json`, `tools/m2_manifest.py`; 요구사항·입력·실행·판정의 연결 | 원본 ID 보존, 중복·누락·오래된 hash 검출, 실패/미실행/미연결의 정확한 집계, 실행 성공과 의미론 주장 구분 | `tools/tests/test_m2_mappings.py`, `tools/tests/test_m2_language.py` |
+| M2-02 소스·구문·기본 표현식 | `source.rs`, `parser.rs`, `parser/`, `syntax.rs`, `resolver.rs`, `evaluation/frontend.rs`; 연산 실행은 `vm/primitives.rs`, `numeric.rs`, `vm/strings.rs`와 연결 | UTF-16 위치·CRLF·Unicode·escape·multiline, 우선순위와 단락 평가, lexical/owner/receiver 이름 해석, 수치 경계·0 나눗셈·잘못된 문법의 첫 오류 | `m2_string_frontend_lifecycle.rs`, `m2_lexical_diagnostic_lifecycle.rs`, `m2_frontend_lifecycle.rs`, `tests/fixtures/m2/cases.json` |
+| M2-03 함수·closure·호출 | `vm/function_apply.rs`, `vm.rs`, `evaluation/`; 호출 순서와 환경 수명 | 인자 평가→매개변수 검사→본문→반환 검사, arity·재귀·반환 closure, suspension 중 capture/owner 보존, 실패 재시도·취소 | `m2_object_method_type_lifecycle.rs`, `tools/platform/method-order-cases.mjs`, 원본 함수·lambda 계약 |
+| M2-04 객체·클래스·모듈 | `vm/classes.rs`, `vm/modules.rs`, `vm/amendment.rs`, `vm/forcing.rs`, `vm/annotations.rs`, `modules.rs`; 선언 identity·초기화·지연 값 | extends/amends·modifier·super, annotation 순서, 미사용 멤버 미평가, 성공 cache와 실패 retry, 부분 초기화·순환·evaluator 간 격리·GC 보존 | `m2_class_lifecycle.rs`, `m2_module_inheritance_oracle.rs`, `m2_annotation_const_oracle.rs`, `tools/m2_class_lifecycle.py` |
+| M2-05 타입·제약·generic | `vm/type_resolution.rs`, `vm/typecheck.rs`, `vm/generics.rs`, `type_source.rs`; 타입 identity·source owner·검사 시점 | alias·nullable·union 기본값, generic 치환·재귀/수입 타입, 제약의 this/owner, eager/lazy 검사 순서, 불일치와 실행 오류 구분, 중단 중 타입 상태 | `m2_type_resolution_lifecycle.rs`, `m2_recursive_types_lifecycle.rs`, `m2_constraints_lifecycle.rs`, `m2_generic_nodes_lifecycle.rs` |
+| M2-06 컬렉션·generator | `vm/collections.rs`, `vm/lazy_collections.rs`, `vm/equality.rs`, `vm/collection_transforms.rs`, `economic_map.rs`; 순서·key·forcing 규칙 | List/Set/Map과 Listing/Mapping 차이, for/when/spread·predicate, typed wrapper·custom default, hash 충돌·순환 key·중복·구조 동등성, 변환 중 재진입 | `m2_collections_frontend.rs`, `m2_collection_types_lifecycle.rs`, `m2_collection_default_contracts.rs`, `m2_equality_lifecycle.rs` |
+| M2-07 Reference·reflection | `vm/reference.rs`, `vm/reflection.rs`, `vm/reflection/`, `vm/identity.rs`; 선언·타입 metadata 조회 | domain/referent 제약, 상속·hidden/fixed·annotation metadata, referent를 강제하지 않는 조회, alias/클래스 identity, 정규화·동등성·렌더링 경계 | `m2_references_lifecycle.rs`, `m2_reference_declared_type_original.rs`, `m2_reflection_source_metadata.rs`, `m2_reflection_apis_oracle.rs` |
+| M2-08 진단·오류·trace | `diagnostic.rs`, `diagnostic/`, `java_exception.rs`, `vm/guest_exceptions.rs`, `vm/tracing.rs`; 관측 가능한 실패 생성과 표현 | 첫 오류 선택, 위치·밑줄·hint·frame·재귀 압축, caught/uncaught 차이, UTF-16와 UTF-8 경계, trace forcing·logger 순서, Host 오류·내부 오류 구분 | `m2_lossless_diagnostic_transport.rs`, `m2_diagnostic_frame_identity.rs`, `m2_diagnostics.rs`, `tools/tests/test_m2_trace.py` |
+| M2-09 플랫폼·생성 검사·전체 판정 | `crates/pkl-wasm`, `crates/pkl-napi`, `tools/m2_language.py`, `tools/m1_platforms.py`, `tools/m2_generate.py`; 공통 엔진 실행과 누락 없는 판정 | 원본 Java 차등, 같은 의미론의 native/Node/browser 비교, 명시된 Host 능력, seed·입력·실패 축소 재현, 변형 관계, strict gate와 전체 실행 집계 | `tools/platform/compare-language-cases.mjs`, `tools/tests/test_m2_module_capture_failures.py`, 기존 플랫폼 scenario와 생성 corpus |
+
+#### 의미론 분류의 주 소유자
+
+아래 31개 ID는 현행 manifest의 semantic family 전체다. 문법 token·parser 선언·명세 heading 444개는 이 분류의 구체적인 요구사항으로 검토하여 연결한다. 이 표 자체는 `compatibility/m2-mappings.json`의 검토된 source/test 연결을 대신하지 않는다. M2-01은 목록 전체를 관리하며 새로운 semantic family를 만들지 않는다.
+
+| 주 소유자 | semantic family ID |
+| --- | --- |
+| M2-02 | `semantic:lexing`, `semantic:numeric-literals`, `semantic:scalar-literals`, `semantic:strings`, `semantic:operators`, `semantic:numeric-errors`, `semantic:control-flow`, `semantic:name-resolution` |
+| M2-03 | `semantic:functions`, `semantic:closures` |
+| M2-04 | `semantic:lazy-evaluation`, `semantic:objects`, `semantic:amendment`, `semantic:classes`, `semantic:modifiers`, `semantic:annotations`, `semantic:modules` |
+| M2-05 | `semantic:types`, `semantic:type-aliases`, `semantic:constraints`, `semantic:generics`, `semantic:unions`, `semantic:type-tests-casts` |
+| M2-06 | `semantic:generators`, `semantic:collections` |
+| M2-07 | `semantic:reference`, `semantic:reflection-metadata` |
+| M2-08 | `semantic:diagnostics`, `semantic:tracing` |
+| M2-09 | `semantic:shared-engine`, `semantic:generated-verification` |
+
+#### 영역 사이의 계약
+
+| 경계 | 고정할 책임 | 함께 검증할 관측 |
 | --- | --- | --- |
-| M2-01 전체 목록과 실행 판정 | 진행 중 | `compatibility/m2-language.json`에 의미론 분류·upstream 선언·언어 snippet·rev1 후보를 보존합니다. 선언 수는 기능 커버리지가 아니며, 미연결 항목은 전체 gate 실패로 남깁니다. |
-| M2-02 lexer·표현식·문자열 | 진행 중 | 숫자·연산자 우선순위·조건식·nullable 연산·raw/multiline/interpolation과 0.32 continuation을 구현했습니다. 고정 Java의 UTF-16 식별자 표, CR/CRLF, 지연 AST 검증 순서를 연결했습니다. 전체 유효·오류 문법 코퍼스 연결이 필요합니다. |
-| M2-03 함수·closure·호출 | 진행 중 | 별도 method namespace, 재귀, lexical capture, 매개변수·반환 타입 검사, `\|>` 호출과 함수형 제약을 구현했습니다. Host 중단·재개 중 GC와 함수 타입 metadata·arity 검사를 연결했습니다. 메서드 반환 타입의 `new {}` 기본값과 상속 속성의 prototype·instance 추론을 연결하고 별칭·nullable·union·첫 오류와 수명주기를 검증했습니다. 전체 callable·amendment·오류 조건은 후속 항목입니다. |
-| M2-04 객체·클래스·상속 | 진행 중 | 클래스·prototype·상속·super 메서드·const capture·runtime identity와 타입 초기화 순서를 연결했습니다. fixed·const 선언 일치, 객체 대입·amendment 제한과 선언별 오류 순서를 구현했습니다. 선언별 singleton의 선행 게시·실패 뒤 부분 상태·GC 보존을 같은 evaluator 순차 계약에 연결했습니다. annotation 구문·선언별 초기화 순서·성공한 annotation prefix 보존과 실제 Host 재진입을 추가했습니다. 전체 module 초기화·annotation reflection·modifier·상속 순환 및 eager/lazy 규칙은 남아 있습니다. |
-| M2-05 타입·제약·generic | 진행 중 | primitive·nullable·union·클래스 타입과 generic alias·기본 값을 구현했습니다. 같은 VM의 제약 continuation, custom `this`, 상속된 제약의 선언 owner, alias 실행 환경, 복구 가능한 불일치와 실행 오류 구분을 연결했습니다. generic collection의 lazy wrapper·eager key/List 검사·캐시 재사용을 연결했습니다. 별칭 선언 identity와 확장 검사를 분리하고 함수 타입 metadata를 추가했습니다. 지원하는 타입 구문의 해석 순서와 generic 매개변수 범위를 연결했습니다. 완전한 지연 타입 해석·구조 타입·recursive 타입·전체 제약 코퍼스는 남아 있습니다. |
-| M2-06 collection·generator | 진행 중 | 순서 있는 객체 본문, `Dynamic`·`Listing`·`Mapping`의 element·entry·subscript·amendment, `for`·`when`·spread와 `List` 생성 경로를 연결했습니다. 지연 멤버·반복 변수 capture·source 선행 강제 평가·상속 순서·Host 중단 중 GC를 검증합니다. generic wrapper와 일부 inferred new·클래스 기본 값을 연결했습니다. member predicate의 부모 순회·선택·amendment·지연 본문과 선언 owner 캐시를 추가했습니다. 구조 동등성과 객체 키를 확장하며 전체 해시 충돌·순환 키·typed generator·custom default 규칙은 남아 있습니다. |
-| M2-07 Reference·메타데이터 | 진행 중 | `pkl:ref` import·생성·합성 접근·정규화·렌더링·동등성과 필요한 선언·타입 정보를 연결했습니다. 상속된 hidden fixed 선언 메타데이터를 referent 본문 실행 없이 조회합니다. 전체 builtin metadata·reflection·원래 upstream suite는 남아 있습니다. |
-| M2-08 진단·첫 오류·논리적 스택 | 진행 중 | 공통 uncolored renderer에 제약·union 진단, 선택적인 power assertion 재실행·관찰값 그래프, 값을 강제하지 않는 객체 표시와 UTF-16 길이 제한을 연결했습니다. 재귀 frame 압축·전체 method 진단·전체 오류 선택은 남아 있습니다. |
-| M2-09 생성 검사·플랫폼·완료 gate | 진행 중 | Java 차등 입력·metamorphic 관계·seeded 생성과 실제 native/Node/browser 실행을 연결합니다. 작은 선택 코퍼스 성공은 M2 전체 완료가 아닙니다. |
+| frontend → VM | source 위치·선언 owner·receiver·타입 source를 실행 metadata에 보존 | 같은 이름이 다른 구역에 있는 사례, import된 타입 오류, Unicode 앞뒤 위치와 첫 오류 |
+| VM ↔ heap/HostSession | 성공 값의 cache, 부분 게시, 재시도와 GC root의 소유권을 구분 | 같은 evaluator의 성공→실패→재시도, pending 중 GC·재진입, 취소/close/timeout 후 자원 해제와 늦은 응답 |
+| module/resource → Host | 선택·검증·접근 제한·resolve·read·cache의 순서와 typed failure를 전달 | 성공/거부/없음/손상·동시 오류, callback 순서와 횟수, 실제 파일·네트워크 원본 계약 |
+| runtime failure → 진단 → adapter | 구조화된 원인·frame을 공통 renderer에 전달하고 adapter는 지정된 encoding/전달 경계만 적용 | 전체 오류 bytes, caught message와 uncaught stack의 차이, UTF-16 code unit과 OS/path byte의 별도 계약 |
 
-`|>`와 타입 제약에 이어 객체 본문을 순서 있는 멤버 모델로 확장하고 element·entry·generator·spread를 연결했습니다. generic collection wrapper와 member predicate를 추가했으며 다음 구현에는 나머지 collection 규칙, 함수/구조 타입, `Reference`·메타데이터, 전체 진단·upstream 코퍼스가 필요합니다. 현재 선택 사례의 성공은 원래 M2 범위나 종료 조건을 줄이지 않습니다.
+이 경계들은 새로운 전체 API 설계가 아니라 기존 `Program`, `RuntimeError`, `HostSession`, `ModuleRequest` 등에서 보존할 동작이다. 실제 수정 전에 현행 타입과 pinned Java의 동작을 확인한다. 경계 테스트는 관련 영역을 가로지르되 같은 실패를 여러 신규 기능으로 집계하지 않는다.
 
-타입 제약의 실행 상태·alias 실행 환경·GC와 선택적인 관찰 명령은 [아키텍처](docs/architecture.md)에 기록했습니다. 동일 alias를 타입 인자로 중첩한 오류 span은 새 회귀 사례로 확인했습니다. 클래스 초기화 실패 후 재시도 및 부분 초기화의 전체 규칙, 탐색 과정에서 드러난 Java alias JVM 버그와 미구현 Dynamic method 진단은 별도의 미해결 범위로 유지합니다.
+#### M2 원본 계약에 필요한 Host 의존성
+
+| 연결 순서 | 구현·실행기 작업 | 필수 테스트 |
+| --- | --- | --- |
+| fixture와 실행 계약 | package/HTTP/TLS/project 원본의 서버·인증서·port·cwd·설정·입출력을 고정하고 Java부터 취득 | 서버 종료·포트/설정 오류가 준비 실패로 기록되는지, 입력·원본 argv·환경 보존, 누락된 기대 결과 검출 |
+| URI와 policy | 기존 `packages.rs`, `modules/standard_keys.rs`, `host/resources.rs`와 native Host를 연결 | 올바른 URI, 잘못된 version/fragment/authority, 접근 거부, URI 오류와 policy 오류가 함께 있는 순서 |
+| 실제 package loading | metadata→download→checksum→archive member→module source를 Host로 공급 | 실제 성공, 없음·손상·checksum 차이, cache hit/miss·실패 retry, 경로·대소문자·원본 생성 파일 |
+| project와 의존성 | 원본 M2 계약에 필요한 project settings·dependency resolution·foreign nominal identity를 연결 | 기존 `m2:rev1:t36-foreign-nominal-identity`, 상대/외부 의존성·동일/상이한 타입 owner, 설정 우선순위와 원본 오류 |
+| 이식 가능한 Host 동작 | 같은 공통 요청·응답 규칙을 가능한 각 adapter로 전달 | native 파일/네트워크, Node I/O, browser VFS/loader의 각 계약. 필요한 능력이 없으면 blocked로 기록 |
+
+이 표는 M4 전체나 M5 제품 CLI를 선행 완성하라는 뜻이 아니다. 또한 URI 단위 검사·mock Host·브라우저 compile만으로 실제 package/CLI 계약의 통과를 주장하지 않는다. 68개 fixture 의존 계약과 historical 32개·T36 1개의 기존 ID와 실패 상태를 유지한다.
+
+#### 구현에 착수할 작업의 최소 정의
+
+각 수정은 아래 항목을 PLAN의 활성 작업이나 대표 체크포인트 보고서에 한 번 기록한다. 별도 작업 추적 도구·중복 manifest는 만들지 않는다.
+
+| 항목 | 반드시 정할 내용 |
+| --- | --- |
+| 동작과 범위 | 무엇을 입력했을 때 어떤 값·오류·효과가 어떤 순서로 관측되어야 하는지; 주 M2 ID와 기존 requirement ID |
+| 현재 상태 | 확인된 구현 누락 / 확인된 차이 / 실행기 미준비 / 검토·mapping 미연결 / 미확인 중 해당 상태와 근거 소스·실행 시점 |
+| 변경 경계 | 기존 구현 파일·공통 함수·Host/타입/진단 의존성, 같은 파일을 변경하는 작업의 통합 순서 |
+| 테스트 선택 | 기존 원본 case ID·집중 Rust test·Java oracle 또는 기존 capture, 추가 검사가 필요한 구체적인 미관측 동작 |
+| 관측 계약 | 원본 입력·URI·argv·환경·target, 값/오류/exit/files/logger/lifecycle 중 적용되는 완전한 채널과 이유 |
+| 완료 증거 | 수정 전 재현과 수정 후 해당 원본·관련 회귀 결과, 필요한 플랫폼 결과, source/test mapping, 해당 최종 소스의 필수 검사 |
+
+기존 검증으로 이미 충족한 항목은 근거를 재사용하고, 현재 소스에 적용할 수 없는 기록은 과거 결과로 표시한다. 미확인 항목은 먼저 재현 작업으로 잡으며 구현이 없다고 단정하지 않는다. 새 테스트는 기존 사례가 관측하지 못하는 동작이나 실제 발견된 회귀에 한정한다.
+
+#### 작업 종료와 M2 전체 종료
+
+개별 작업은 정한 동작을 관측하는 원본/회귀 검사, 영향받는 영역·플랫폼 검사, 요구사항 연결과 필수 개발 검사를 충족해야 닫는다. 내부 불변식 검사는 Rust assertion으로 확인할 수 있지만 외부 호환성 기대값은 pinned Java에서 얻는다. 성공·오류·경계·순서·수명주기 축은 실제 동작에 적용되는 경우를 선택하며 빈 조합을 기계적으로 늘리지 않는다.
+
+M2 전체는 개별 작업의 완료 수가 아니라 현행 `tools/m2_manifest.py::full_gate_failures`와 `tools/m2_language.py --verify-full`의 조건으로 판정한다. 필수 요구사항의 구현·테스트 연결, 모든 필수 원본 계약의 실행과 raw 일치, recorded build, 적용되는 플랫폼·생성 검사·필수 개발 검사가 필요하다. 비통과·미준비·미연결·oracle 오류는 그대로 남겨야 하며 작은 M1 실험의 통과로 전체를 대체하지 않는다.
+
+진행 순서는 **작업 계약 정의 → 기존 입력·oracle 확인 → 현재 기준선 취득 → 실제 원인에 따른 공통 구현 수정 → 집중·관련 원본 검증 → 같은 소스의 필수 통합 검사 → mapping·대표 보고서 갱신**이다. 9개 영역을 순서대로 재작성하는 일정은 세우지 않는다. 전체 목록과 플랫폼 검증은 처음부터 병행하고, Host 의존성 및 원인별 수정의 우선순위는 실제 결과로 정한다.
 
 ### 원래 범위와 종료 조건
 
