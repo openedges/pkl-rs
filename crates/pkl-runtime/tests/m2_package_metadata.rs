@@ -53,7 +53,7 @@ fn metadata_checksum_precedes_json_decoding_and_marker_is_exact_and_opt_in() {
         .into();
     assert!(matches!(
         accept(malformed, Some(&"wrong".into()), false),
-        Err(MetadataFailure::InvalidMetadataChecksum { .. })
+        Err(MetadataFailure::InvalidMetadataChecksum(_))
     ));
     assert!(matches!(
         accept(malformed, Some(&digest), false),
@@ -73,7 +73,7 @@ fn metadata_checksum_precedes_json_decoding_and_marker_is_exact_and_opt_in() {
             bypass
         );
         assert_eq!(
-            matches!(result, Err(MetadataFailure::InvalidMetadataChecksum { .. })),
+            matches!(result, Err(MetadataFailure::InvalidMetadataChecksum(_))),
             !bypass
         );
     }

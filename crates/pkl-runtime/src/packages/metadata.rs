@@ -27,16 +27,20 @@ pub struct RemoteDependency {
     pub sha256: PklString,
 }
 
+/// Complete checksum failure arguments, allocated only on the failure path.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct MetadataChecksumMismatch {
+    pub package: PklString,
+    pub request_uri: PklString,
+    pub computed: PklString,
+    pub expected: PklString,
+}
+
 /// Typed stages allow a future module/resource Host to preserve its own error
 /// boundary. `Unsupported` must not be translated into a compatible guest error.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum MetadataFailure {
-    InvalidMetadataChecksum {
-        package: PklString,
-        request_uri: PklString,
-        computed: PklString,
-        expected: PklString,
-    },
+    InvalidMetadataChecksum(Box<MetadataChecksumMismatch>),
     InvalidDependencyMetadata {
         package: PklString,
         request_uri: PklString,
@@ -56,11 +60,11 @@ impl MetadataFailure {
     /// headline. Unsupported reasons have no Java exception provenance.
     pub fn message(&self) -> PklString {
         match self {
-            Self::InvalidMetadataChecksum { package, request_uri, computed, expected } => text(&[
-                "Cannot download package `".into(), package.clone(),
+            Self::InvalidMetadataChecksum(mismatch) => text(&[
+                "Cannot download package `".into(), mismatch.package.clone(),
                 "` because the computed checksum for package metadata does not match the expected checksum.\n\nComputed checksum: \"".into(),
-                computed.clone(), "\"\nExpected checksum: \"".into(), expected.clone(),
-                "\"\nAsset URL: \"".into(), request_uri.clone(), "\"".into(),
+                mismatch.computed.clone(), "\"\nExpected checksum: \"".into(), mismatch.expected.clone(),
+                "\"\nAsset URL: \"".into(), mismatch.request_uri.clone(), "\"".into(),
             ]),
             Self::InvalidDependencyMetadata { package, request_uri, cause } => text(&[
                 "Received invalid dependency metadata for package `".into(), package.clone(),
@@ -96,12 +100,14 @@ pub fn accept_metadata(
             .collect::<String>()
             .into();
         if &computed != expected {
-            return Err(MetadataFailure::InvalidMetadataChecksum {
-                package: display,
-                request_uri: request_uri.clone(),
-                computed,
-                expected: expected.clone(),
-            });
+            return Err(MetadataFailure::InvalidMetadataChecksum(Box::new(
+                MetadataChecksumMismatch {
+                    package: display,
+                    request_uri: request_uri.clone(),
+                    computed,
+                    expected: expected.clone(),
+                },
+            )));
         }
     }
     let source = crate::resources::decode_utf8(bytes);
