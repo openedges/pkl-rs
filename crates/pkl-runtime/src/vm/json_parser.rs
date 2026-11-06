@@ -3,7 +3,7 @@
 use super::converters::{Converters, PathPart};
 use super::*;
 use crate::heap::{CollectionKind, CollectionMember, CollectionMemberKind};
-mod syntax;
+pub(crate) mod syntax;
 use syntax::{Event, Reader, Scalar};
 
 enum Container {

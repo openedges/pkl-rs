@@ -1,5 +1,7 @@
-//! Pure package URI validation. Parsing does not load metadata, ZIPs or projects.
+//! Pure package URI validation and bounded metadata acceptance.
+//! Parsing does not perform I/O or load ZIPs or projects.
 //! Rules follow Pkl 0.32 PackageUri/PackageAssetUri and its permissive Version.
+pub mod metadata;
 use crate::source::SourceText;
 use crate::value::PklString;
 

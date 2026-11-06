@@ -1,12 +1,14 @@
 # 구현 계획
 
-## 현재 우선순위 — 기준선 공개와 package/Host 시범 작업
+## 현재 우선순위 — package metadata acceptance 검증과 후속 Host 통합
 
-[Stage156 대표 보고서](reports/m2/stage156-baseline/README.md)에 Rust와 full-ready 기준선 취득을 완료해 공개한다. 두 소스 시점과 원시 실패·엄격 gate를 분리하고 상세 실행 이력은 보고서 한 곳에 둔다. [구현과 테스트 구조](#m2-구현과-테스트-구조)의 기존 M2-01–09 작업과 31개 의미론 분류, [TESTING.md](TESTING.md#m2-behavior-verification-contract)의 동작별 관측·gap 계약을 이후 구현에 적용한다.
+[Stage156 기준선](reports/m2/stage156-baseline/README.md) 취득·공개를 마쳤고, [Stage157 보고서 초안](reports/m2/stage157-package-metadata/README.md)에 canonical fixture 자격 검증과 공유 metadata acceptance의 실제 관측을 기록한다. 기존 M2-01–09 작업과 [동작별 검증 계약](TESTING.md#m2-behavior-verification-contract)을 유지하며 상세 실행 이력은 대표 보고서에 둔다.
 
-다음 순서는 기존 canonical fixture 자격 검증을 준비한 뒤 checksum·parser·오류 순서의 공유 metadata acceptance를 제한적으로 구현하는 것이다. Package Host 통합은 그 이후의 별도 작업이며 순수 helper 구현을 Host 연결로 서술하지 않는다. 실제 original package ID와 정상·거부·손상 관측을 먼저 고정한다. 전체 `packages1` 성공 경로는 목표이며 아직 구현·검증 완료가 아니다. 68개 fixture 계약 전체를 한 번에 통과한다고 가정하지 않는다. 새 범용 evidence 체계나 전체 VM 재작성은 선행 조건으로 넣지 않는다.
+현재 구현은 이미 취득한 metadata의 checksum·parser·오류 순서를 처리하는 순수 공유 경계다. Fixture 준비와 선택 API 관측은 완료했지만 최종 소스 고정, 필수 Rust 전체 검사와 새 M1 검증은 아직 완료하지 않았다. 여섯 원본의 예비 관측은 제한된 fixture profile의 Java 전용 결과이며 candidate 호환성이나 ready 승격으로 계산하지 않는다.
 
-M2는 진행 중이며 4,586개 필수 계약, 475개 요구사항과 기존 완료 gate를 유지한다. 남은 일정은 실제 시범 수정의 구현·검증·기록 비용을 확인한 뒤 산정하며 새 완료 날짜를 제시하지 않는다.
+다음에는 최종 소스의 필수 검증을 마친 뒤 metadata acceptance를 package Host admission·취득·오류 경계에 연결한다. ZIP·cache·project resolution과 전체 `packages1` Rust 성공 경로는 후속 목표다. 순수 helper를 Host 통합 완료로 서술하거나 68개 fixture 계약 전체가 통과한다고 가정하지 않는다.
+
+M2는 진행 중이며 4,586개 필수 계약, 101개 미준비 의무, 475개 요구사항과 기존 완료 gate를 유지한다. 새 범용 evidence 체계나 전체 VM 재작성을 선행 조건으로 넣지 않으며 완료 날짜를 추정하지 않는다.
 
 ## M2 작업 방식과 일정 재검토 — 2026-11-05
 

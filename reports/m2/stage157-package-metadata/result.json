@@ -1,0 +1,255 @@
+{
+  "status": "draft; final-source freeze and required full checks pending",
+  "scope": "Bounded shared package metadata acceptance and fixture qualification; no Host/ZIP/resolver or original candidate compatibility claim.",
+  "source": {
+    "qualified_commit": null,
+    "recorded_base_head": "843ea3b81bdc1b2e32ee9b9ba8bbe982da0a90bf",
+    "bookend_receipt": "bounded-source-bookend",
+    "source_sha256": {
+      "crates/pkl-runtime/src/packages.rs": "d2212a74df10e09d689593c48aa9a2930294959995d1727a1700554c76aa9356",
+      "crates/pkl-runtime/src/packages/metadata.rs": "2c95c1804299dac821fa461eb41c38423f6f73a1c4d62073011fa7f505ccc246",
+      "crates/pkl-runtime/src/vm/json_parser/syntax.rs": "a3da9efefb9185c073a2d37551ad68d6c3eef98bc84b42e00cde52bf82ba6c78",
+      "crates/pkl-runtime/examples/metadata_probe.rs": "f938278335b9acdf364d680ab9eae763770f94b938ef31ae8b81e61175a1b307",
+      "crates/pkl-runtime/tests/m2_package_metadata.rs": "b57b9b932ef2582ca463b5163db9bd5da8c22c4292f6b11413bdb566b3863054"
+    },
+    "hermetic_dependency_closure": false
+  },
+  "fixture": {
+    "generation_exit": 0,
+    "elapsed_seconds": 4.874539375305176,
+    "packages": [
+      "badImportsWithinPackage@1.0.0",
+      "badMetadataJson@1.0.0",
+      "badPackageZipUrl@1.0.0",
+      "birds@0.5.0",
+      "fruit@1.0.5"
+    ],
+    "generated_files": 15,
+    "verified_manifest_sha256": "c56a310b6a52ef72bb392b41473089fbc7644350e873693f1cdba329605e7210",
+    "https_server_exit": 0,
+    "https_routes": 14,
+    "https_routes_passed": true,
+    "preserved_https_stderr": {
+      "bytes": 161,
+      "mode": "0o644",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage157-package-fixture-tls-01/server.stderr.bin",
+      "sha256": "564f8674b75cd4f44a52ca5c734629bbfa9e0ac8ed4fafb213d8ca85216430a9"
+    }
+  },
+  "metadata_api": {
+    "protocol": 2,
+    "oracle_cases": 19,
+    "native_cases": 19,
+    "raw_matches": 19,
+    "observation": "Exact named-file set and full UTF-8/UTF-16 payload comparison of selected required fields and complete error class/message; HTTP response stub.",
+    "case_ids": [
+      "canonical-birds@0.5.0",
+      "canonical-fruit@1.0.5",
+      "canonical-badMetadataJson@1.0.0",
+      "canonical-badPackageZipUrl@1.0.0",
+      "canonical-badImportsWithinPackage@1.0.0",
+      "malformed-wrong-checksum",
+      "malformed-correct-checksum",
+      "skip-valid-off",
+      "skip-malformed-off",
+      "skip-valid-on",
+      "skip-malformed-on",
+      "near-skip-marker-test-mode-on",
+      "missing-name",
+      "missing-packageUri",
+      "missing-version",
+      "missing-packageZipUrl",
+      "missing-packageZipChecksums",
+      "missing-dependencies",
+      "invalid-utf8-name"
+    ],
+    "oracle_artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "java_version": "21.0.12.1",
+    "java_executable_sha256": "9be1d0a740ff6502df1a762145e62860f5de4b7e17658d9cb9498da3acf9d16c",
+    "native_artifact": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage142-yaml-native-cargo-01/debug/examples/metadata_probe",
+      "bytes": 766016,
+      "sha256": "0f0e0122a41226c7c838a6ede9b29f2cd70efbf0c74a51f479e12c744f0bd195",
+      "mode": 493,
+      "flags": 32,
+      "nlink": 1,
+      "magic16_hex": "cffaedfe0c0000010000000002000000"
+    },
+    "native_source_binding": "Comparator records caller-supplied executable; separate local build/storage/source receipts are retained in native-build-binding.",
+    "optional_fields_annotations_zip_cache_host_not_qualified": true
+  },
+  "focused_validation": {
+    "rust_tests": {
+      "metadata": 5,
+      "package_uri": 6,
+      "json_parser": 9,
+      "total": 20,
+      "failed": 0,
+      "ignored": 0,
+      "exit_code": 0
+    },
+    "formatting_exit": 0,
+    "probe_build_exit": 0,
+    "tool_commands": [
+      {
+        "name": "fixture-tests",
+        "exit_code": 0
+      },
+      {
+        "name": "metadata-tests",
+        "exit_code": 0
+      },
+      {
+        "name": "inventory",
+        "exit_code": 0
+      },
+      {
+        "name": "manifest-generate",
+        "exit_code": 0
+      },
+      {
+        "name": "manifest-check",
+        "exit_code": 0
+      }
+    ],
+    "python_tests": 17,
+    "manifest_update": "53 implementation-link SHA-256 refreshes only; requirement/case counts and states unchanged"
+  },
+  "original_java_only": {
+    "physical_profile": "bounded 13-file workspace with fixture-derived argv; original manifest rows unchanged",
+    "rows": [
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/packages1.pkl",
+        "status": "oracle-observed-success",
+        "exit_code": 0,
+        "request_count": 6
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport1.error.pkl",
+        "status": "oracle-observed-error",
+        "exit_code": 1,
+        "request_count": 0
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport6.error.pkl",
+        "status": "oracle-observed-error",
+        "exit_code": 1,
+        "request_count": 1
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport7.error.pkl",
+        "status": "oracle-observed-error",
+        "exit_code": 1,
+        "request_count": 1
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport8.error.pkl",
+        "status": "oracle-observed-error",
+        "exit_code": 1,
+        "request_count": 2
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badRead1.error.pkl",
+        "status": "oracle-observed-error",
+        "exit_code": 1,
+        "request_count": 0
+      }
+    ],
+    "candidate_executed": false,
+    "compatibility_credit": false,
+    "readiness_promoted": false
+  },
+  "pending": {
+    "five_required_rust_checks": "not yet executed as a complete final-source checkpoint; focused formatting above is separate",
+    "m1_native_node_browser": "not yet executed for this checkpoint",
+    "qualified_source_commit": null,
+    "original_candidate_comparison": "not executed"
+  },
+  "preserved_attempts": [
+    {
+      "path": "target/m2/stage157-package-metadata-api-01",
+      "limitation": "Protocol 1 lacks exception-class UTF-16; preserved separately without protocol2 comparison credit."
+    },
+    {
+      "path": "target/m2/stage157-package-metadata-native-01/check",
+      "limitation": "Initial build preflight failed on missing receipt directory before Rust execution."
+    },
+    {
+      "path": "target/m2/stage157-package-originals-java-01",
+      "limitation": "Symlink/metadata preflight failure; zero cases, no JVM execution."
+    }
+  ],
+  "full_m2": {
+    "required": 4586,
+    "unready": 101,
+    "completion": false,
+    "counts_and_states_changed": false
+  },
+  "receipts": {
+    "fixture-generation": {
+      "path": "target/m2/stage157-fixture-qualification-01/execution/report.json",
+      "bytes": 467471,
+      "sha256": "64b4f881408f4fb1ef0d2a47e743b4a0197b30e421aed3180cd812e11308249a"
+    },
+    "qualified-fixtures": {
+      "path": "target/m2/stage157-package-fixture-verified-02/manifest.json",
+      "bytes": 19779,
+      "sha256": "c56a310b6a52ef72bb392b41473089fbc7644350e873693f1cdba329605e7210"
+    },
+    "https-server": {
+      "path": "target/m2/stage157-package-fixture-tls-01/server-result.json",
+      "bytes": 4694,
+      "sha256": "732d72afcbdf6aad2b195490ff64628df1a39a83cb08401f33e72ef9b3ca5798"
+    },
+    "https-routes": {
+      "path": "target/m2/stage157-package-fixture-tls-01/route-checks/report.json",
+      "bytes": 6744,
+      "sha256": "fb5cdbe1f64c095ef751da923316a7767b99a8454f36c63aadcffede8fb11f5f"
+    },
+    "java-api-protocol2": {
+      "path": "target/m2/stage157-package-metadata-api-02/report.json",
+      "bytes": 70934,
+      "sha256": "dae8bea17ed670091eca930357ac780d1f15ff1e1638be41f267a5f5b783fbfe"
+    },
+    "native-comparison": {
+      "path": "target/m2/stage157-package-metadata-compare-01/report.json",
+      "bytes": 40653,
+      "sha256": "d75872fce0c2f7ca8ebfbba740cf6c99ba2733cff2605c4c995ff4716f3f1093"
+    },
+    "native-build-binding": {
+      "path": "target/m2/stage157-package-metadata-native-01/artifact-closure.json",
+      "bytes": 9449,
+      "sha256": "3bce02433083188bb7c2bd3b73f3eb47f39b2bcbc280e09ff7abb7d44dcb3ada"
+    },
+    "bounded-source-bookend": {
+      "path": "target/m2/stage157-package-metadata-native-01/build03/source-after.json",
+      "bytes": 1734,
+      "sha256": "1a37cb16ab91c0cde1b9fb0d68b148506bb6d70f164cd01e7697e2cd23a95c4f"
+    },
+    "focused-tests": {
+      "path": "target/m2/stage157-package-metadata-native-01/tests02/result.json",
+      "bytes": 399,
+      "sha256": "133ffb7e772767ba8acb69196345d42ff0de84addaa445329200411a88aa18d3"
+    },
+    "formatting": {
+      "path": "target/m2/stage157-package-metadata-native-01/fmt03/result.json",
+      "bytes": 277,
+      "sha256": "a02d43888966a37128f6120aa50f1b5028c299fea898880bffa0a5b928111581"
+    },
+    "probe-build": {
+      "path": "target/m2/stage157-package-metadata-native-01/build03/result.json",
+      "bytes": 326,
+      "sha256": "d578222f31f7c856c0b1a2182b0565e737cb392d1e0a075cb6fb694880aa017b"
+    },
+    "python-and-freshness": {
+      "path": "target/m2/stage157-package-toolchecks-01/report.json",
+      "bytes": 4099,
+      "sha256": "59a6f8e8a7b88cdec0a79f4bca83baaceedb4d4a4dfb600b836ab7d2ec9a3014"
+    },
+    "six-original-java-only": {
+      "path": "target/m2/stage157-package-originals-java-02/report.json",
+      "bytes": 31300,
+      "sha256": "7e7999c688293087740afad17b38a76e15106912a16adda5b52e50cd6af4f05b"
+    }
+  }
+}

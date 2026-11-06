@@ -3,13 +3,13 @@
 //! converters can run (and fail) at the same point as Java's JsonHandler.
 use crate::value::PklString;
 
-pub(super) enum Scalar {
+pub(crate) enum Scalar {
     Null,
     Boolean(bool),
     String(PklString),
     Number(String),
 }
-pub(super) enum Event {
+pub(crate) enum Event {
     StartArray,
     EndArray,
     StartObject,
@@ -29,7 +29,7 @@ enum Task {
     ObjectName,
     ObjectAfter,
 }
-pub(super) struct Reader {
+pub(crate) struct Reader {
     units: Vec<u16>,
     cursor: usize,
     line: usize,
@@ -38,7 +38,7 @@ pub(super) struct Reader {
     tasks: Vec<Task>,
 }
 impl Reader {
-    pub(super) fn new(text: &PklString) -> Self {
+    pub(crate) fn new(text: &PklString) -> Self {
         Self {
             units: text.encode_utf16().collect(),
             cursor: 0,
@@ -183,7 +183,7 @@ impl Reader {
         }
         Ok(())
     }
-    pub(super) fn next(&mut self) -> Result<Event, PklString> {
+    pub(crate) fn next(&mut self) -> Result<Event, PklString> {
         loop {
             match self.tasks.pop().unwrap_or(Task::EndDocument) {
                 Task::Value => {

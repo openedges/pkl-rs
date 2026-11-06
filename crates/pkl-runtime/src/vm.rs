@@ -45,7 +45,7 @@ pub(crate) mod glob;
 mod glob_pattern;
 mod glob_traversal;
 mod guest_exceptions;
-mod json_parser;
+pub(crate) mod json_parser;
 mod jsonnet;
 mod modules;
 mod null;

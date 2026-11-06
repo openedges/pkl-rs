@@ -1,0 +1,88 @@
+// SPDX-License-Identifier: Apache-2.0
+// Adapted from Apple/Pkl 0.32.0 pkl-commons-test.gradle.kts:35-87.
+// Reference revision e51fb2f91774265666f94980ec630db794a4db2d.
+// Run with a staged inputs/packages tree and a fresh Gradle output directory.
+import java.security.MessageDigest
+import java.util.regex.Pattern
+import java.util.regex.Matcher
+import org.gradle.api.tasks.Copy
+import org.gradle.api.tasks.bundling.Zip
+
+String fixtureSha256(File input) {
+    return MessageDigest.getInstance('SHA-256').digest(input.bytes).encodeHex().toString()
+}
+
+// Finite source snapshot; no upstream project/plugins/dependencies are configured.
+def packageNames = [
+    'badImportsWithinPackage@1.0.0',
+    'badMetadataJson@1.0.0',
+    'badPackageZipUrl@1.0.0',
+    'birds@0.5.0',
+    'fruit@1.0.5',
+]
+def createTestPackages = tasks.register('createTestPackages')
+def windowsHost = System.getProperty('os.name').startsWith('Windows')
+
+packageNames.each { String packageName ->
+    def packageDir = file("inputs/packages/${packageName}")
+    def destinationDir = layout.buildDirectory.dir("test-packages/${packageName}")
+    def metadataJson = new File(packageDir, "${packageName}.json")
+    def packageContents = new File(packageDir, 'package')
+    def zipFileName = "${packageName}.zip"
+    def archiveFile = destinationDir.map { it.file(zipFileName) }
+
+    def zipTask = tasks.register("zip-${packageName}", Zip) {
+        destinationDirectory.set(destinationDir)
+        archiveFileName.set(zipFileName)
+        from(packageContents)
+        // Preserve upstream defaults for compression, permissions and directory entries.
+        preserveFileTimestamps = false
+        reproducibleFileOrder = true
+    }
+
+    def copyTask = tasks.register("copy-${packageName}", Copy) {
+        dependsOn(zipTask)
+        from(metadataJson)
+        into(destinationDir)
+        def shasumFile = destinationDir.map { it.file("${packageName}.json.sha256") }
+        outputs.file(shasumFile)
+        filter { String line ->
+            // Kotlin replaceFirst(oldValue: String, newValue: String) is literal.
+            // Quote the marker explicitly because Groovy's String method takes regex.
+            line.replaceFirst(Pattern.quote('$computedChecksum'),
+                Matcher.quoteReplacement(fixtureSha256(archiveFile.get().asFile)))
+        }
+        doLast {
+            def outputFile = new File(destinationDir.get().asFile, "${packageName}.json")
+            if (windowsHost) {
+                // Same upstream Windows-only Gradle #1151 workaround.
+                outputFile.setText(outputFile.getText('UTF-8').replace('\r\n', '\n'), 'UTF-8')
+            }
+            // Upstream writeText writes no trailing newline to this checksum file.
+            shasumFile.get().asFile.setText(fixtureSha256(outputFile), 'UTF-8')
+        }
+    }
+    createTestPackages.configure { dependsOn(copyTask) }
+}
+
+// Separate check after generation; never rewrite a mismatching payload/metadata.
+tasks.register('verifyFixtureMetadata') {
+    dependsOn(createTestPackages)
+    doLast {
+        def expected = [
+            'birds@0.5.0': 'b27206b80f4f227752b6f02143887f3ea41e554542cec38f7b572b987566c4de',
+            'fruit@1.0.5': '8ff80e5ac882650e817f261c8af024bf0db9b07888c9d18c20017457e04ffe06',
+        ]
+        packageNames.each { String packageName ->
+            def directory = layout.buildDirectory.dir("test-packages/${packageName}").get().asFile
+            def metadata = new File(directory, "${packageName}.json")
+            def actual = fixtureSha256(metadata)
+            if (new File(directory, "${packageName}.json.sha256").getText('UTF-8') != actual) {
+                throw new GradleException("Metadata checksum file differs: ${packageName}")
+            }
+            if (expected.containsKey(packageName) && expected[packageName] != actual) {
+                throw new GradleException("Pinned metadata checksum mismatch for ${packageName}: expected ${expected[packageName]}, actual ${actual}")
+            }
+        }
+    }
+}
