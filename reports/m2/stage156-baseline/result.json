@@ -1,0 +1,750 @@
+{
+  "scope": "Concise publication readback of retained local evidence; no new runtime execution, archive reads or full dependency-closure claim.",
+  "rust": {
+    "source_head": "2e56343aa84fc814101408f01ff53bf449fbc8a1",
+    "commands": [
+      {
+        "name": "xtask",
+        "exit_code": 0,
+        "elapsed_seconds": 1.1626050416380167,
+        "stop_reason": null,
+        "peak_owned_rss_bytes": 54493184,
+        "peak_aggregate_rss_bytes": 58720256,
+        "minimum_free_bytes": 47281598464
+      },
+      {
+        "name": "fmt",
+        "exit_code": 0,
+        "elapsed_seconds": 2.2317766658961773,
+        "stop_reason": null,
+        "peak_owned_rss_bytes": 166510592,
+        "peak_aggregate_rss_bytes": 166559744,
+        "minimum_free_bytes": 47281577984
+      },
+      {
+        "name": "clippy",
+        "exit_code": 0,
+        "elapsed_seconds": 86.10105179203674,
+        "stop_reason": null,
+        "peak_owned_rss_bytes": 971948032,
+        "peak_aggregate_rss_bytes": 972324864,
+        "minimum_free_bytes": 47203594240
+      },
+      {
+        "name": "workspace",
+        "exit_code": 0,
+        "elapsed_seconds": 8233.506002792157,
+        "stop_reason": null,
+        "peak_owned_rss_bytes": 1446182912,
+        "peak_aggregate_rss_bytes": 1447247872,
+        "minimum_free_bytes": 41513000960
+      },
+      {
+        "name": "wasm",
+        "exit_code": 0,
+        "elapsed_seconds": 8.871826500166208,
+        "stop_reason": null,
+        "peak_owned_rss_bytes": 774242304,
+        "peak_aggregate_rss_bytes": 774946816,
+        "minimum_free_bytes": 41491652608
+      }
+    ],
+    "outer_totals": {
+      "passed": 2191,
+      "failed": 0,
+      "ignored": 6,
+      "measured": 0,
+      "filtered": 0
+    },
+    "outer_harness_count": 336,
+    "nested_totals_excluded": {
+      "passed": 13,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 36
+    },
+    "ignored_tests": [
+      {
+        "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/crates/pkl-runtime/tests/frontend.rs",
+        "test": "frontend_probe"
+      },
+      {
+        "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/crates/pkl-runtime/tests/m2_annotation_const_oracle.rs",
+        "test": "java_supplement_const_lambda"
+      },
+      {
+        "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/crates/pkl-runtime/tests/m2_list_apis_oracle.rs",
+        "test": "java_foreign_entry_renderer_protocol_remains_required"
+      },
+      {
+        "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/crates/pkl-runtime/tests/m2_protobuf_java04_full.rs",
+        "test": "java04_strict_full_compatibility_gate"
+      },
+      {
+        "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/crates/pkl-runtime/tests/m2_set_apis_oracle.rs",
+        "test": "java_foreign_entry_internal_protocol_remains_required"
+      },
+      {
+        "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/crates/pkl-runtime/tests/m2_string_apis_oracle.rs",
+        "test": "java_glob_internal_error_protocol_is_unresolved"
+      }
+    ],
+    "artifact_count": 334,
+    "source_input_count": 12785,
+    "protobuf": {
+      "native_terminal_count": 266,
+      "renderer_matches": 240,
+      "pre_renderer_matches": 8,
+      "reference_nonpasses": 18,
+      "harness_failure_count": 0,
+      "structural_failure_slots": 0,
+      "acquisition_complete": true,
+      "experiment_contract_pass": true
+    },
+    "new_Java_executions": 0,
+    "strict_completion": false,
+    "limitations": [
+      "Finite source bookends and exact local commands/artifact bodies; no hermetic dependency closure.",
+      "Retained aggregate parser does not prove every individual test identity or exclude count-preserving interleaving. Nested child totals are excluded from outer totals.",
+      "Ignored tests and Protobuf18 reference nonpasses remain unmet; named strict CLI was not executed.",
+      "Aggregate reader alone reports Protobuf contract metadata; the separate protobuf-readback.json independently compares all266 raw slots against unchanged bookended historical Java04 fixture bytes.",
+      "Sampled process guards are not whole-host peak or performance measurements.",
+      "Local macOS native and Wasm compilation do not establish browser/Node execution or Linux/Windows/release qualification.",
+      "Earlier excessive prep executed a broad Git working-tree diff and initial inspection used Git status listing an excluded untracked partial. Their metadata/body audit limitations are retained separately; this bounded capture does not certify those early inspection boundaries."
+    ]
+  },
+  "rust_environment": {
+    "host": {
+      "system": "Darwin",
+      "node": "research-macmini1.local",
+      "release": "27.0.0",
+      "version": "Darwin Kernel Version 27.0.0: Tue Aug 11 21:05:27 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T8103",
+      "machine": "arm64",
+      "processor": "arm"
+    },
+    "environment": {
+      "CARGO_TARGET_DIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage142-yaml-native-cargo-01",
+      "CARGO_INCREMENTAL": "0",
+      "CARGO_BUILD_JOBS": "1",
+      "CARGO_NET_OFFLINE": "true",
+      "RUST_TEST_THREADS": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "CARGO_PROFILE_DEV_DEBUG": "0",
+      "CARGO_PROFILE_TEST_DEBUG": "0",
+      "CARGO_PROFILE_DEV_OPT_LEVEL": "1",
+      "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+      "RUSTC": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/rustc",
+      "RUSTDOC": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/rustdoc",
+      "RUSTC_WRAPPER": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage144-storage-loader-fix-prep-01/storage_wrapper.py",
+      "PKL_STORAGE_TARGET": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage142-yaml-native-cargo-01",
+      "PKL_STORAGE_RECEIPTS": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage156-baseline-rust-01/execution/storage-receipts",
+      "PKL_STORAGE_MIN_FREE_MIB": "1216",
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "TZ": "UTC",
+      "PKL_ORACLE_JAVA": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+      "PKL_PROTOBUF_CAPTURE_DIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage156-baseline-rust-01/execution/protobuf-capture"
+    },
+    "limits": {
+      "new_tree_rss_bytes": 2147483648,
+      "aggregate_rss_bytes": 2147483648,
+      "disk_floor_bytes": 1275068416,
+      "seconds_per_command": 14400
+    },
+    "gitlinks": "160000 e51fb2f91774265666f94980ec630db794a4db2d 0\texternal/pkl\n160000 904a68184e54da378b0a0e8a911a3fab3956f693 0\texternal/pkl-pantry\n",
+    "oracle_input_pins": [
+      {
+        "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+        "bytes": 70432,
+        "sha256": "9be1d0a740ff6502df1a762145e62860f5de4b7e17658d9cb9498da3acf9d16c",
+        "mode": 493
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/.cache/oracle/pkl-tools-0.32.0.jar",
+        "bytes": 26877190,
+        "sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+        "mode": 420
+      }
+    ],
+    "protobuf_workspace_artifact": {
+      "condition": "workspace Cargo fresh=false; same-workspace storage/current-byte join",
+      "workspace_cargo_record": {
+        "reason": "compiler-artifact",
+        "package_id": "path+file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/crates/pkl-runtime#0.1.0",
+        "manifest_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/crates/pkl-runtime/Cargo.toml",
+        "target": {
+          "kind": [
+            "test"
+          ],
+          "crate_types": [
+            "bin"
+          ],
+          "name": "m2_protobuf_java04_full",
+          "src_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/crates/pkl-runtime/tests/m2_protobuf_java04_full.rs",
+          "edition": "2024",
+          "doc": false,
+          "doctest": false,
+          "test": true
+        },
+        "profile": {
+          "opt_level": "1",
+          "debuginfo": 0,
+          "debug_assertions": true,
+          "overflow_checks": true,
+          "test": true
+        },
+        "features": [],
+        "filenames": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage142-yaml-native-cargo-01/debug/deps/m2_protobuf_java04_full-f6204adfdea0607f"
+        ],
+        "executable": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage142-yaml-native-cargo-01/debug/deps/m2_protobuf_java04_full-f6204adfdea0607f",
+        "fresh": false
+      },
+      "executable": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage142-yaml-native-cargo-01/debug/deps/m2_protobuf_java04_full-f6204adfdea0607f",
+        "bytes": 12416768,
+        "sha256": "192920d90254f48b70df26d4fdd53665c6991b9f4714003348501055c77f8450",
+        "mode": 493
+      },
+      "storage_receipt": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage156-baseline-rust-01/execution/storage-receipts/a5cd1f26-a81c-4409-b668-8ec0eee320bb.json",
+        "bytes": 6679,
+        "sha256": "900cd7c160f2f29b61273cdef1733175da3c61c1cc7876dcf8f8187414de5907",
+        "mode": 420
+      }
+    },
+    "build_and_source_receipts": {
+      "configuration": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage156-baseline-rust-01/config.json",
+        "bytes": 3599893,
+        "sha256": "9e069d94e28b5255893c5e9c75771d21c58e35e6ae99beafc35cca65ffc1fc09",
+        "mode": 420
+      },
+      "supervisor": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage156-baseline-rust-01/execution/report.json",
+        "bytes": 7492802,
+        "sha256": "b0be22034480cbc5a5b97cfbf02e14a8b2bdb609fc483a131d425a494b9c29da",
+        "mode": 420
+      },
+      "aggregate_parser": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-default-readback-prep-04/aggregate.py",
+        "bytes": 13749,
+        "sha256": "5d9c35b3e840730f325dd1e65c6aa1c051f47581c3f20ad5094107bbf63ea737",
+        "mode": 420
+      },
+      "parser_evidence_helper": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage145-default-readback-prep-04/evidence.py",
+        "bytes": 3291,
+        "sha256": "1f0b94f4b67051f6ab04040f34fbfb013fe90108acbb0b2cd4034765c92881e5",
+        "mode": 420
+      },
+      "nested_source_qualifier": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage128-independent-review-01/qualifier.json",
+        "bytes": 3995,
+        "sha256": "532916f68218454e7f58c8128f5fe50671ece23f92149aee8b5855b62a8a074d",
+        "mode": 420
+      }
+    }
+  },
+  "full_ready": {
+    "head": "921f23e05b7435d832dc7d99963ca2c3c6851c10",
+    "commands": [
+      {
+        "name": "release-prebuild",
+        "argv": [
+          "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+          "build",
+          "-p",
+          "pkl-runtime",
+          "--locked",
+          "--release",
+          "--example",
+          "language_probe",
+          "--example",
+          "module_eval_probe",
+          "--example",
+          "jvm_snippet_probe",
+          "--target-dir",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 188.68875341583043,
+        "stop_reason": null,
+        "peak_owned_rss_bytes": 1783758848,
+        "peak_aggregate_rss_bytes": 1783758848,
+        "minimum_free_bytes": 39479922688
+      },
+      {
+        "name": "full-ready-acquisition",
+        "argv": [
+          "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+          "-B",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/tools/m2_language.py",
+          "--output",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage156-full-ready-01",
+          "--record-only",
+          "--workers",
+          "2",
+          "--module-workspace-profile",
+          "upstream-original-modules-v1"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 10282.798180750571,
+        "stop_reason": null,
+        "peak_owned_rss_bytes": 2183725056,
+        "peak_aggregate_rss_bytes": 2183725056,
+        "minimum_free_bytes": 28644970496
+      },
+      {
+        "name": "full-ready-integrity",
+        "argv": [
+          "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+          "-B",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/tools/m2_language.py",
+          "--verify-report",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage156-full-ready-01"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 291.0243108747527,
+        "stop_reason": null,
+        "peak_owned_rss_bytes": 1097072640,
+        "peak_aggregate_rss_bytes": 1097072640,
+        "minimum_free_bytes": 28373745664
+      },
+      {
+        "name": "strict-full-gate",
+        "argv": [
+          "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+          "-B",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/tools/m2_language.py",
+          "--verify-full",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage156-full-ready-01"
+        ],
+        "exit_code": 1,
+        "elapsed_seconds": 293.9993736250326,
+        "stop_reason": null,
+        "peak_owned_rss_bytes": 1094451200,
+        "peak_aggregate_rss_bytes": 1094451200,
+        "minimum_free_bytes": 28143570944
+      }
+    ],
+    "strict_full_gate_passed": false,
+    "integrity_passed": true,
+    "required_cases": 4586,
+    "selected_count": 4485,
+    "status_counts": {
+      "pass": 4474,
+      "oracle-error": 2,
+      "mismatch": 6,
+      "candidate-unsupported": 3
+    },
+    "unready_count": 101,
+    "unready_execution_states": {
+      "unimplemented": 69,
+      "unmapped": 32
+    },
+    "by_adapter": {
+      "language-api-string": {
+        "pass": 3579,
+        "oracle-error": 1,
+        "mismatch": 6
+      },
+      "language-module-eval": {
+        "pass": 884,
+        "candidate-unsupported": 3,
+        "oracle-error": 1
+      },
+      "language-jvm-classpath-output": {
+        "pass": 1
+      },
+      "historical-collections-module-eval": {
+        "pass": 8
+      },
+      "selected-regression-module-eval": {
+        "pass": 2
+      }
+    },
+    "full_gate_condition_count": 1741,
+    "full_gate_conditions_by_prefix": {
+      "implementation incomplete": 460,
+      "test mapping incomplete": 460,
+      "required case incomplete": 821
+    },
+    "source_input_bookend_count": 12786,
+    "canonical_source_snapshot_count": 246545,
+    "evidence_file_count": 530819,
+    "artifacts": [
+      {
+        "name": "language_probe",
+        "source_binding": "recorded-build",
+        "frozen": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage156-full-ready-01/artifacts/language_probe",
+          "bytes": 8498784,
+          "sha256": "4aed8be83e8a4ea22f850263cd6ac0744c79067cfda61019dbf3bfb2e9ef2f0b",
+          "mode": 493
+        },
+        "original": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/release/examples/language_probe",
+          "bytes": 8498784,
+          "sha256": "4aed8be83e8a4ea22f850263cd6ac0744c79067cfda61019dbf3bfb2e9ef2f0b",
+          "mode": 493
+        }
+      },
+      {
+        "name": "module_eval_probe",
+        "source_binding": "recorded-build",
+        "frozen": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage156-full-ready-01/artifacts/module_eval_probe",
+          "bytes": 8400080,
+          "sha256": "0346692e6a3aba8c57a3a388366b5c2c5d4f01ea17ccc0fe132b1c4d0eb3b375",
+          "mode": 493
+        },
+        "original": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/release/examples/module_eval_probe",
+          "bytes": 8400080,
+          "sha256": "0346692e6a3aba8c57a3a388366b5c2c5d4f01ea17ccc0fe132b1c4d0eb3b375",
+          "mode": 493
+        }
+      },
+      {
+        "name": "jvm_snippet_probe",
+        "source_binding": "recorded-build",
+        "frozen": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage156-full-ready-01/artifacts/jvm_snippet_probe",
+          "bytes": 8379936,
+          "sha256": "83081c1fa7e652ce33d59c458d717daca29b36bcd12b9a55f420634c4b8b37f5",
+          "mode": 493
+        },
+        "original": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/release/examples/jvm_snippet_probe",
+          "bytes": 8379936,
+          "sha256": "83081c1fa7e652ce33d59c458d717daca29b36bcd12b9a55f420634c4b8b37f5",
+          "mode": 493
+        }
+      }
+    ],
+    "nonpass_count": 11,
+    "receipts": {
+      "config.json": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage156-full-ready-prep-02/config.json",
+        "bytes": 3607689,
+        "sha256": "ce4f3e211bf635f8a0af44d77624ef4e508dd18b22e56a738f81ab9a16d34c76",
+        "mode": 420
+      },
+      "run.py": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage156-full-ready-prep-02/run.py",
+        "bytes": 7641,
+        "sha256": "d6f2fbec431276869dbc6d8eca5e3d7b3a248548d50365fdf7fc00076bec85b7",
+        "mode": 420
+      },
+      "validation.json": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage156-full-ready-prep-02/validation.json",
+        "bytes": 10618,
+        "sha256": "a659e4db28d714f819c9e450e78d5e82d69055c258e625cdf5ef50a7f41e8494",
+        "mode": 420
+      },
+      "root-review.json": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage156-full-ready-prep-02/root-review.json",
+        "bytes": 1453,
+        "sha256": "90054ec2a687db41933d26dc1915a004b7aacca73bf182c5afaffdb7c69a75b0",
+        "mode": 420
+      },
+      "execution/report.json": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage156-full-ready-prep-02/execution/report.json",
+        "bytes": 8095677,
+        "sha256": "a77e1467ad749741eae6bd268ebdaf70989baca20747c1e5c0a2541e2a8e5598",
+        "mode": 420
+      }
+    },
+    "canonical_report": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage156-full-ready-01/report.json",
+      "bytes": 156418512,
+      "sha256": "b5cfb3b760278a2ad76ff94222bb41d6813aeab567aeb8c43dcd2c97ff9ac896",
+      "mode": 420
+    },
+    "manifest": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage156-full-ready-01/sources/compatibility/m2-language.json",
+      "bytes": 6891482,
+      "sha256": "1acb12bae3196297d33b3d4df227de58720baaeb6dc4a2ca569f1c5e6fc3052d",
+      "mode": 420
+    },
+    "rust_baseline_provenance": {
+      "source_head": "2e56343aa84fc814101408f01ff53bf449fbc8a1",
+      "summary": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage156-baseline-rust-01/terminal-summary.json",
+        "bytes": 6536,
+        "sha256": "ee0ae3d523cbebb3c09af59f5bed1f2e0645d1085a52af9538add194a5cd11bb",
+        "mode": 420
+      },
+      "run_not_relabelled_to_current_head": true
+    },
+    "scope": "Current local macOS full-ready development acquisition at HEAD 921f23e05b7435d832dc7d99963ca2c3c6851c10. The unchanged 4,485 ready contracts comprise 3,586 scalar, 888 original module, eight historical, two selected regression and one JVM profile cases; 101 unready contracts remain required. Both original module and schema 2 JVM child use explicitly recorded retained-upstream filesystem profiles excluding unrelated local fixtures. These physical environments differ from historical legacy-full runs. Default Stage57 target cache is reused for a prebuild followed by the canonical recorded internal release build, without supplied candidates. The real Java heap remains 512 MiB. Sampled 3 GiB process caps, a 64 MiB console cap and deadlines are execution conditions, not performance evidence. Integrity exit 0 and strict full gate exit 1 are expected separately. Finite source pins and canonical source snapshots do not establish complete compiler/runtime dependency closure. The completed Rust baseline belongs to HEAD 2e56343aa84fc814101408f01ff53bf449fbc8a1, before the five-file Python/documentation transition; its roster did not include the document added explicitly here. No historical archive body reads, forbidden paths or source mutations are authorized.",
+    "limitations": [
+      "Strict exit1 is an unmet compatibility/implementation/mapping gate, not a pass. Its1741 conditions overlap and are not unique bug counts.",
+      "Current controlled JVM heap and workers are unchanged; no missing or unready case receives pass credit.",
+      "Original-only module and schema2 JVM filesystem profiles differ from historical legacy-full captures.",
+      "Canonical source snapshots and finite supervisor bookends do not prove hermetic compiler/runtime dependency closure.",
+      "Rust baseline remains at2e56343; current full-ready capture is at921f23e. No fresh Rust workspace/M1/browser/Node/Linux/Windows/performance claim.",
+      "Earlier preparation/inspection failures and audit limitations remain retained; previews classify only and never replace complete raw-byte comparisons."
+    ],
+    "nonpass_classification": {
+      "scalar_foreign_bug_projection_mismatches": {
+        "count": 6,
+        "families": {
+          "integer_remainder_zero": 1,
+          "repeat_narrowed_negative_count": 2,
+          "http_uri_request_construction": 3
+        },
+        "java": "PklBugException, exit1",
+        "rust": "Unsupported projection diagnostics, exit2; stderr and exit differ"
+      },
+      "oracle_internal_initialization_failure": {
+        "count": 1,
+        "id": "error-cycle",
+        "java": "NoClassDefFoundError for VmStackOverflowException, exit1, empty outcome file",
+        "rust": "ordinary cyclic-forcing diagnostic, exit1"
+      },
+      "oracle_resource_failure_and_candidate_watchdog": {
+        "count": 1,
+        "input": "api/list.pkl",
+        "java": "OutOfMemoryError: Java heap space, exit1",
+        "rust": "external watchdog timeout, exit-9, empty stdout/stderr"
+      },
+      "missing_native_stdlib_capabilities": {
+        "count": 3,
+        "inputs": [
+          "api/benchmarkModule.pkl",
+          "api/platformModule.pkl",
+          "api/releaseModule.pkl"
+        ],
+        "java": "success, exit0",
+        "rust": "Unsupported, exit2; Benchmark module or explicit platform/release Host data unavailable"
+      }
+    }
+  },
+  "full_ready_environment": {
+    "environment": {
+      "CARGO_INCREMENTAL": "0",
+      "CARGO_BUILD_JOBS": "1",
+      "CARGO_NET_OFFLINE": "true",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "RUSTC": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/rustc",
+      "RUSTDOC": "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/rustdoc",
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "TZ": "UTC",
+      "PKL_ORACLE_JAVA": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java"
+    },
+    "limits": {
+      "new_tree_rss_bytes": 3221225472,
+      "aggregate_rss_bytes": 3221225472,
+      "disk_floor_bytes": 1275068416,
+      "seconds_per_command": 43200,
+      "raw_output_bytes": 67108864
+    },
+    "module_workspace_profile": "upstream-original-modules-v1",
+    "jvm_workspace_profile": {
+      "profile": "upstream-original-modules-v1",
+      "project_fixtures": "exclude",
+      "retained_sources": [
+        {
+          "path": "external/pkl",
+          "repository": "pkl",
+          "resource_set_sha256": "caaece316d09ffdce01e29871c8accbcf2783b1d1557b515ca7f117f1eaaf3c2",
+          "revision": "e51fb2f91774265666f94980ec630db794a4db2d"
+        },
+        {
+          "path": "external/pkl-pantry",
+          "repository": "pkl-pantry",
+          "resource_set_sha256": "ce8902c934fb21aea92bdfad78edb3194863f90b30c73585e84b8c6363518ab0",
+          "revision": "904a68184e54da378b0a0e8a911a3fab3956f693"
+        }
+      ],
+      "schema_version": 1
+    },
+    "jvm_child_report": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage156-full-ready-01/jvm-classpath/report.json",
+      "bytes": 131714903,
+      "sha256": "3b8a3a821c2eea68e83934486a8d3ca6bb8ef3f521a0ccabb04da19d7ac68ba9",
+      "mode": 420
+    },
+    "jvm_child_source_binding": "unbound-caller-supplied",
+    "parent_source_binding": "recorded-build"
+  },
+  "nonpasses": [
+    {
+      "id": "error-cycle",
+      "adapter": "language-api-string",
+      "status": "oracle-error",
+      "java_exit": 1,
+      "java_timed_out": false,
+      "rust_exit": 1,
+      "rust_timed_out": false,
+      "differing_channels": [
+        "stderr"
+      ]
+    },
+    {
+      "id": "error-remainder-zero",
+      "adapter": "language-api-string",
+      "status": "mismatch",
+      "java_exit": 1,
+      "java_timed_out": false,
+      "rust_exit": 2,
+      "rust_timed_out": false,
+      "differing_channels": [
+        "stderr",
+        "exit_code"
+      ]
+    },
+    {
+      "id": "trace-stage37-repeat-empty-cast-negative",
+      "adapter": "language-api-string",
+      "status": "mismatch",
+      "java_exit": 1,
+      "java_timed_out": false,
+      "rust_exit": 2,
+      "rust_timed_out": false,
+      "differing_channels": [
+        "stderr",
+        "exit_code"
+      ]
+    },
+    {
+      "id": "trace-stage37-repeat-empty-max-count",
+      "adapter": "language-api-string",
+      "status": "mismatch",
+      "java_exit": 1,
+      "java_timed_out": false,
+      "rust_exit": 2,
+      "rust_timed_out": false,
+      "differing_channels": [
+        "stderr",
+        "exit_code"
+      ]
+    },
+    {
+      "id": "read-stage38-edge-http-opaque",
+      "adapter": "language-api-string",
+      "status": "mismatch",
+      "java_exit": 1,
+      "java_timed_out": false,
+      "rust_exit": 2,
+      "rust_timed_out": false,
+      "differing_channels": [
+        "stderr",
+        "exit_code"
+      ]
+    },
+    {
+      "id": "read-stage38-edge-http-invalid-host",
+      "adapter": "language-api-string",
+      "status": "mismatch",
+      "java_exit": 1,
+      "java_timed_out": false,
+      "rust_exit": 2,
+      "rust_timed_out": false,
+      "differing_channels": [
+        "stderr",
+        "exit_code"
+      ]
+    },
+    {
+      "id": "read-stage38-edge-http-nonnumeric-port",
+      "adapter": "language-api-string",
+      "status": "mismatch",
+      "java_exit": 1,
+      "java_timed_out": false,
+      "rust_exit": 2,
+      "rust_timed_out": false,
+      "differing_channels": [
+        "stderr",
+        "exit_code"
+      ]
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/benchmarkModule.pkl",
+      "adapter": "language-module-eval",
+      "status": "candidate-unsupported",
+      "java_exit": 0,
+      "java_timed_out": false,
+      "rust_exit": 2,
+      "rust_timed_out": false,
+      "differing_channels": [
+        "stdout",
+        "stderr",
+        "exit_code"
+      ]
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/list.pkl",
+      "adapter": "language-module-eval",
+      "status": "oracle-error",
+      "java_exit": 1,
+      "java_timed_out": false,
+      "rust_exit": -9,
+      "rust_timed_out": true,
+      "differing_channels": [
+        "stderr",
+        "exit_code",
+        "timed_out"
+      ]
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/platformModule.pkl",
+      "adapter": "language-module-eval",
+      "status": "candidate-unsupported",
+      "java_exit": 0,
+      "java_timed_out": false,
+      "rust_exit": 2,
+      "rust_timed_out": false,
+      "differing_channels": [
+        "stdout",
+        "stderr",
+        "exit_code"
+      ]
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/releaseModule.pkl",
+      "adapter": "language-module-eval",
+      "status": "candidate-unsupported",
+      "java_exit": 0,
+      "java_timed_out": false,
+      "rust_exit": 2,
+      "rust_timed_out": false,
+      "differing_channels": [
+        "stdout",
+        "stderr",
+        "exit_code"
+      ]
+    }
+  ],
+  "retained_readbacks": [
+    {
+      "path": "target/m2/stage156-baseline-rust-01/readback.json",
+      "bytes": 567663,
+      "sha256": "72770387206a3fc09c842ec56a1999f8998d15f31bc4bd71853e18a65abc41ed"
+    },
+    {
+      "path": "target/m2/stage156-baseline-rust-01/terminal-summary.json",
+      "bytes": 6536,
+      "sha256": "ee0ae3d523cbebb3c09af59f5bed1f2e0645d1085a52af9538add194a5cd11bb"
+    },
+    {
+      "path": "target/m2/stage156-baseline-rust-01/protobuf-readback.json",
+      "bytes": 1386929,
+      "sha256": "b87391ce567ca9101ff85a9fa1d9922a168b574394fc0a65034ee9e324751e02"
+    },
+    {
+      "path": "target/m2/stage156-full-ready-prep-02/inspection/summary.json",
+      "bytes": 29508,
+      "sha256": "e8467008924ab0c510539ff7f4e748ca76685791179fad5ef1380c9dcc7f98e2"
+    },
+    {
+      "path": "target/m2/stage156-full-ready-prep-02/inspection/nonpasses.json",
+      "bytes": 33702,
+      "sha256": "5d460d89b395868d50d8b32b0ddc4ecc24598bddd3e68f5c475964489d79c003"
+    }
+  ]
+}

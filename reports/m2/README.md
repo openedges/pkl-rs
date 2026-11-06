@@ -1,5 +1,15 @@
 # M2 language evidence
 
+The [Stage156 scoped baseline](stage156-baseline/README.md) is the current canonical checkpoint.
+It separates the Rust and full-ready source epochs, retained failures, integrity
+and strict completion results. Baseline acquisition is complete; M2 remains
+in progress, with package fixture qualification and bounded shared metadata
+acceptance next, followed by package Host integration. Full language/API, release-platform and performance
+gates remain open.
+
+The checkpoint descriptions below retain their historical source and execution
+scope; they are not current-source reruns.
+
 ## Stage141 Jsonnet and XML renderers
 
 The Stage141 Jsonnet and XML checkpoint adds shared renderer support and qualifies 21 focused native tests against 172 Java observations, including four retained setup-error controls. Twenty-five original CLI cases matched their complete public channels. The full workspace aggregate records 1,909 passed, zero failed and five ignored across 313 harnesses; 13 nested child passes are excluded. Bounded M1 matched 6,078 results per Native, Node and Chromium target, with 92 Node and 92 browser scenarios. Full M2/API, release-platform and performance requirements remain open. See the [Stage141 report](stage141-jsonnet-xml/README.md) for evidence and limits.

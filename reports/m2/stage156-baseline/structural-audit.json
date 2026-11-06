@@ -1,0 +1,148 @@
+{
+  "scope": "Static inventory audit plus readback of one previously recorded serial Rust run. No test deletion, new execution or measured speed improvement.",
+  "sources": [
+    {
+      "path": "compatibility/m2-language.json",
+      "bytes": 6891482,
+      "sha256": "1acb12bae3196297d33b3d4df227de58720baaeb6dc4a2ca569f1c5e6fc3052d"
+    },
+    {
+      "path": "tests/fixtures/m2/cases.json",
+      "bytes": 1476688,
+      "sha256": "12f524c6f6e0807d227f85f89a5465dbf815a1295ee8d79a3adf47ca57fcbee4"
+    },
+    {
+      "path": "target/m2/stage156-baseline-rust-01/readback.json",
+      "bytes": 567663,
+      "sha256": "72770387206a3fc09c842ec56a1999f8998d15f31bc4bd71853e18a65abc41ed"
+    },
+    {
+      "path": "target/m2/stage156-baseline-rust-01/execution/3.stdout.bin",
+      "bytes": 573901,
+      "sha256": "ca270543aa569c157601a4f23da88c00ce74626b19b818fb0e47f9eff823e9fb"
+    }
+  ],
+  "scalar_grouping": {
+    "key": [
+      "input_sha256",
+      "expression",
+      "expected_outcome"
+    ],
+    "scalar_rows": 3586,
+    "groups_with_multiple_rows": 65,
+    "group_sizes": [
+      2
+    ],
+    "groups_with_different_power_assertions": 48,
+    "remaining_review_candidates": 17,
+    "remaining_candidate_ids": [
+      [
+        "int-min",
+        "diagnostic-stage31-success-minint"
+      ],
+      [
+        "literal-false",
+        "generated-constraint-base-right"
+      ],
+      [
+        "generated-add-1-left",
+        "generated-add-1-right"
+      ],
+      [
+        "reference-stage10-relation-alias-right",
+        "reference-stage10-relation-unforced-right"
+      ],
+      [
+        "types-stage14-parameter-direct",
+        "types-stage14-relation-generic-parameter-rename-left"
+      ],
+      [
+        "types-stage18-base-match",
+        "types-stage18-root-parameter-constrained"
+      ],
+      [
+        "collection-stage24-list-is-listing",
+        "collection-stage24-list-is-nested-lazy"
+      ],
+      [
+        "collection-stage24-set-is-listing",
+        "collection-stage24-set-is-nested-lazy"
+      ],
+      [
+        "collection-stage24-nullable-default-int",
+        "collection-stage24-nullable-list-attached"
+      ],
+      [
+        "collection-stage24-metadata-default",
+        "collection-stage24-relation-default-kind-left-property"
+      ],
+      [
+        "string-stage26-nested-31",
+        "string-stage28-recovery-ordinary"
+      ],
+      [
+        "string-stage26-multiline-24",
+        "string-stage28-recovery-multiline"
+      ],
+      [
+        "string-stage27-multiline-continuation-spaces",
+        "string-stage27-continuation-multiline-lf-space"
+      ],
+      [
+        "string-stage27-multiline-continuation-tab",
+        "string-stage27-continuation-multiline-lf-tab"
+      ],
+      [
+        "diagnostic-stage32-object-local-function",
+        "diagnostic-stage33-object-local-function-dynamic"
+      ],
+      [
+        "annotation-stage35-deprecated-body-this",
+        "object-string-stage36-annotation-this-to-string"
+      ],
+      [
+        "read-stage38-env-missing-nullable",
+        "read-stage38-frontend-single-operand"
+      ]
+    ],
+    "deletion_approved": false,
+    "limitations": "Equal scalar grouping keys do not prove equivalent modes, environments, observed channels, lifecycle, or coverage purposes."
+  },
+  "generated": {
+    "rows_with_truthy_generated": 42,
+    "metadata_examples": [
+      {
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic",
+        "seed": "4d32504b4c303332"
+      }
+    ],
+    "unique_metamorphic_relations": 88,
+    "method": "Unique canonical JSON-encoded metamorphic_relation objects; not a new execution or pass count."
+  },
+  "recorded_timing": {
+    "source_head": "2e56343aa84fc814101408f01ff53bf449fbc8a1",
+    "workspace_command_seconds": 8233.506002792157,
+    "outer_groups_matched": 336,
+    "method": "At each readback.groups summary_line, read finished in N.s from the one-based raw stdout line. Rank outer elapsed times without adding nested child summaries.",
+    "top_three": [
+      {
+        "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/crates/pkl-runtime/tests/m2_reflection_apis_lifecycle.rs",
+        "summary_line": 3529,
+        "elapsed_seconds": 2828.07
+      },
+      {
+        "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/crates/pkl-runtime/tests/m2_protobuf_java04_full.rs",
+        "summary_line": 3262,
+        "elapsed_seconds": 1667.88
+      },
+      {
+        "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/crates/pkl-runtime/tests/m2_reflection_apis_oracle.rs",
+        "summary_line": 3582,
+        "elapsed_seconds": 806.89
+      }
+    ],
+    "top_three_fraction_of_workspace": 0.6440561284830173,
+    "limitations": "Single serial opt1/debug0 run. Harness times and workspace wall time have different overhead boundaries. No candidate run, speedup, benchmark or Java performance comparison."
+  }
+}

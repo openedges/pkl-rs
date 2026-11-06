@@ -1,5 +1,15 @@
 # M2 language verification
 
+The [Stage156 scoped baseline](../reports/m2/stage156-baseline/README.md) is the current canonical checkpoint.
+It separates the Rust and full-ready source epochs, retained failures, integrity
+and strict completion results. Baseline acquisition is complete; M2 remains
+in progress, with package fixture qualification and bounded shared metadata
+acceptance next, followed by package Host integration. Full language/API, release-platform and performance
+gates remain open.
+
+The checkpoint descriptions below retain their historical source and execution
+scope; they are not current-source reruns.
+
 ## Stage153–155 selected original and URI boundaries
 
 Two retained original T40 CLI contracts now match their full raw comparison; two separate cache-off controls add no original cases. File URI records 19 boundary matches/5 nonpasses; package API records 6 complete value matches/31 nonpasses and qualifies none of the 11 original package CLI/server/project cases. Source06 full workspace failed at 2,190/1/6; source07 separately passes the corrected 15-test target, 83 Python tests and five prechecks. Same-workspace raw266 retains 240 renderer+8 pre-renderer matches and 18 strict nonpasses. Fresh bounded M1 matches 6,078 results per target and 92 Node/browser scenarios each.

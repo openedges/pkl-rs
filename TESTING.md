@@ -27,6 +27,42 @@ product for every feature. Generated relations must specify their valid domain;
 for example, integer associativity under bounded operands does not establish
 floating-point associativity. Fuzz findings become retained regression inputs.
 
+### Per-behavior coverage matrix
+
+For each active behavior, keep one row in the existing work item or canonical
+checkpoint report. Use the existing requirement IDs, M2-01–09 owner and original
+case IDs; this is a review view, not a new manifest or a new completion score.
+
+| Row field | Required review |
+| --- | --- |
+| Behavior and owner | Name the observable rule and primary existing workstream; cite its requirement IDs and affected implementation boundary |
+| Applicable scenarios | Select normal, boundary, error, ordering, lazy/repeated evaluation and lifecycle scenarios that can change this rule; explain a material non-applicable axis |
+| Existing evidence | Link original cases, minimized regressions, local invariants, generated relations and platform observations with their source/input identities |
+| Required observation | State complete value/error/file channels, ordered events and Host capabilities actually needed to establish the claim |
+| Remaining gap | Distinguish test gap (no adequate assertion), execution gap (a defined check not run), mapping gap (evidence not reviewed/linked) and observation gap (executed boundary cannot expose the claimed behavior) |
+| Disposition | Record each applicable comparison and unresolved obligation; a passing subset does not close the row or promote unrelated mappings |
+
+For example, the M2-08 error-projection review can retain
+`error-remainder-zero`, both `trace-stage37-repeat-empty-*` IDs and the three
+`read-stage38-edge-http-*` IDs as distinct original observations under the
+existing requirements. Their similar unsupported outcomes do not prove one
+implementation cause. The package/Host work item must select actual existing
+original package IDs and capabilities before implementation; URI controls do
+not supply missing original I/O observations.
+
+Record oracle execution, candidate execution, raw comparison and evidence
+integrity separately. An oracle process failure and a candidate timeout can
+coexist on the same case. A completed acquisition or successful integrity check
+does not make either execution or its compatibility comparison pass.
+
+Apparent duplication is purposeful when it observes a different diagnostic mode,
+public API, original invocation/environment, platform transport, ordering or
+lifecycle invariant, or preserves an original case alongside its minimized
+reproducer. Before consolidating, compare those purposes and complete channels;
+preserve original IDs and evidence. Equal input hashes, expressions and expected
+outcomes alone do not authorize deletion. The bounded inventory review is
+recorded in the [canonical checkpoint](reports/m2/stage156-baseline/README.md).
+
 ### Observation boundaries
 
 | Boundary | Comparison contract |
@@ -45,6 +81,13 @@ separate requirements. Relevant performance and memory checks retain the
 measurement contract below, including correctness before timing.
 
 ### Work-item and checkpoint acceptance
+
+Use focused affected checks while iterating. Group related fixes into a source
+checkpoint, then run the applicable required full checks on its final source
+state, including platform checks for shared primitives or bindings. Repeat a
+passing check when relevant inputs change or an unresolved concern requires it;
+documentation publication alone does not require another runtime acquisition.
+
 
 Before implementing a change, record its behavior, primary workstream,
 requirement/case IDs, existing implementation, observed discrepancy or missing
@@ -69,6 +112,22 @@ complete passing execution, together with recorded build and applicable platform
 verification. A successful work item does not waive unselected cases, known
 failures, oracle errors, ignored tests or missing adapters. The design tables
 themselves are not new runtime evidence.
+
+## Current recorded baseline
+
+The [Stage156 canonical report](reports/m2/stage156-baseline/README.md) separates
+the qualified Rust and full-ready source epochs, raw outcomes, strict failures,
+static coverage review and validation-cost observations. Full M2 remains open.
+The retained checkpoint sections below describe their original source epochs;
+they are historical observations, not current-source reruns.
+
+A validation-contract revision must state what scope or observation changed,
+why, and which current claims require new evidence. In review, distinguish the
+historical contract and identities from applicability to the current contract.
+The existing report verifier still binds the live current manifest and combines
+these concerns; this review rule does not claim an independently implemented
+historical-contract verifier. Never rewrite an old failure as a pass or reuse a
+formerly sufficient observation for a stronger new claim without qualification.
 
 ## Stage153–155 original contracts and URI boundaries
 

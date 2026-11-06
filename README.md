@@ -1,5 +1,15 @@
 # pkl-rs
 
+The [Stage156 scoped baseline](reports/m2/stage156-baseline/README.md) is the current canonical checkpoint.
+It separates the Rust and full-ready source epochs, retained failures, integrity
+and strict completion results. Baseline acquisition is complete; M2 remains
+in progress, with package fixture qualification and bounded shared metadata
+acceptance next, followed by package Host integration. Full language/API, release-platform and performance
+gates remain open.
+
+The checkpoint descriptions below retain their historical source and execution
+scope; they are not current-source reruns.
+
 Stage153–155 adds exact original T40 adapters, native file-URI byte/text handling and bounded shared package URI validation. Two original CLI contracts and two separately counted Java cache-off controls match; file URI records 19 boundary matches/5 nonpasses and package API 6 raw value matches/31 nonpasses. Source06’s full workspace failed (2,190 passed, 1 failed, 6 ignored); source07 separately passes the corrected 15-test target, 83 Python tests and five prechecks. Fresh bounded M1 matches 6,078 results per Native/Node/Chromium target and 92 scenarios per Node/browser. Full M2/API, package/Host, release-platform and performance gates remain open. See the [Stage153–155 report](reports/m2/stage153-155-t40-uri/README.md) for exact source epochs, retained failures and scope.
 
 Stage146–151 adds lossless scalar diagnostics, native file Glob support, selected authored settings/path behavior and bounded static import analysis. The workspace passes 2,172 tests with zero failures and six ignored; 13 nested child passes are excluded. Fresh original31 comparisons record 20 matches, six mismatches, three unsupported cases and two oracle errors. The separate NFC boundary records 13 UTF-8/UTF-16 path-value matches and five nonpasses. Six prechecks passed. One bounded M1 capture matched 6,078 results per Native/Node/Chromium target and 92 scenarios each for Node/browser; strict and architecture predicates pass from the same raw capture. Full M2/API, release-platform and performance requirements remain open. See the [Stage146–151 report](reports/m2/stage146-151-host-analyze/README.md) for retained failures and scope.
