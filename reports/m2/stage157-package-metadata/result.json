@@ -1,18 +1,33 @@
 {
-  "status": "draft; final-source freeze and required full checks pending",
+  "status": "Bounded development checkpoint qualified at a2aa18cd; documentation-only publication follows this runtime source epoch. Full M2 remains incomplete.",
   "scope": "Bounded shared package metadata acceptance and fixture qualification; no Host/ZIP/resolver or original candidate compatibility claim.",
   "source": {
-    "qualified_commit": null,
-    "recorded_base_head": "843ea3b81bdc1b2e32ee9b9ba8bbe982da0a90bf",
-    "bookend_receipt": "bounded-source-bookend",
+    "actual_source_commit": "a2aa18cddc72799b1eb20ee617446b5faa2f3c57",
+    "initial_implementation_commit": "15e77ad7f42d970a381aedfc6db6ebb9e2b2dea8",
+    "qualified_commit": "a2aa18cddc72799b1eb20ee617446b5faa2f3c57",
+    "native_build_recorded_head": "15e77ad7f42d970a381aedfc6db6ebb9e2b2dea8",
+    "native_build_source_relation": "The native02 build ran at recorded HEAD15e77ad7 with bounded changed source bytes later committed exactly at a2aa18cd. Captured HEAD is preserved. All14 bookended files match current bytes and a2aa18cd Git blobs.",
     "source_sha256": {
+      "Cargo.toml": "3be60782271de27eba812305754e3d7f864ab5356e470dd44bdb32024cad3361",
+      "Cargo.lock": "0726a664f25efe8e3660b042e1e87d04720249f8837c57fa159518582c60c78e",
+      "rust-toolchain.toml": "04ab0c8ee214f246c7c53bdfba7ba80a93dad65da5b8455edf17c5ec226d5b20",
+      "crates/pkl-runtime/Cargo.toml": "e7d4e15935b9ababc5da65cb099e7133b14c2161d09f8db93fd3a72dd6ae6061",
       "crates/pkl-runtime/src/packages.rs": "d2212a74df10e09d689593c48aa9a2930294959995d1727a1700554c76aa9356",
-      "crates/pkl-runtime/src/packages/metadata.rs": "2c95c1804299dac821fa461eb41c38423f6f73a1c4d62073011fa7f505ccc246",
+      "crates/pkl-runtime/src/packages/metadata.rs": "28c828cd5bb02950726fb24d3a54afa9c007baa6e2b862c2c1477ae35d9441e5",
+      "crates/pkl-runtime/src/vm.rs": "5919a85590da0d45855474d6f68462a9d91fdb2814babc4265f1d9fd9e72b97f",
+      "crates/pkl-runtime/src/vm/json_parser.rs": "fbccb4e2023b79417f31bbedf41896ca4eb418bef0fadb4b271d3d6db0fd2ebe",
       "crates/pkl-runtime/src/vm/json_parser/syntax.rs": "a3da9efefb9185c073a2d37551ad68d6c3eef98bc84b42e00cde52bf82ba6c78",
+      "crates/pkl-runtime/src/resources.rs": "370de063c61a47ebec813244d72bc8839e4ae8ae862c3a38cb9bd1a2d668f5d2",
+      "crates/pkl-runtime/src/host/resources.rs": "a5b6d732db95513af741242082cb6cb12f5ed1a1f6b4ce3b961780a2e482f6c6",
+      "crates/pkl-runtime/src/host/resources/lossless_uri.rs": "8d1cddf70be8e66b9ecbcbeded8361a0ab40f161707fa612984716b7c2d0d6e9",
       "crates/pkl-runtime/examples/metadata_probe.rs": "f938278335b9acdf364d680ab9eae763770f94b938ef31ae8b81e61175a1b307",
-      "crates/pkl-runtime/tests/m2_package_metadata.rs": "b57b9b932ef2582ca463b5163db9bd5da8c22c4292f6b11413bdb566b3863054"
+      "crates/pkl-runtime/tests/m2_package_metadata.rs": "291d6b5bfc8646ad843107b1213e6d1e3c794a6c7bc60f8acf064f202687d495"
     },
-    "hermetic_dependency_closure": false
+    "source_files_checked_against_final_commit": 14,
+    "source_bookend_receipt": "bounded-source-bookend",
+    "initial_recorded_base_head": "843ea3b81bdc1b2e32ee9b9ba8bbe982da0a90bf",
+    "hermetic_dependency_closure": false,
+    "publication_status": "All five required Rust commands and bounded M1 recorded; qualification applies to the stated development checkpoint only."
   },
   "fixture": {
     "generation_exit": 0,
@@ -68,15 +83,25 @@
     "java_executable_sha256": "9be1d0a740ff6502df1a762145e62860f5de4b7e17658d9cb9498da3acf9d16c",
     "native_artifact": {
       "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage142-yaml-native-cargo-01/debug/examples/metadata_probe",
-      "bytes": 766016,
-      "sha256": "0f0e0122a41226c7c838a6ede9b29f2cd70efbf0c74a51f479e12c744f0bd195",
+      "bytes": 766128,
+      "sha256": "ee331add79b596c0f4867d7523d2acc63081ec893ea331a7dc082a8f20c8c239",
       "mode": 493,
       "flags": 32,
       "nlink": 1,
       "magic16_hex": "cffaedfe0c0000010000000002000000"
     },
-    "native_source_binding": "Comparator records caller-supplied executable; separate local build/storage/source receipts are retained in native-build-binding.",
-    "optional_fields_annotations_zip_cache_host_not_qualified": true
+    "native_source_binding": "Comparator records caller-supplied executable; native02 artifact/build/storage/bookend receipts bind the actual Mach-O bytes. Native02 recorded HEAD15e77ad7 is preserved;14 bounded source hashes match later committed a2aa18cd.",
+    "optional_fields_annotations_zip_cache_host_not_qualified": true,
+    "preserved_native_artifact": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage157-package-metadata-native-02/preserved-artifact/metadata_probe",
+      "bytes": 766128,
+      "sha256": "ee331add79b596c0f4867d7523d2acc63081ec893ea331a7dc082a8f20c8c239",
+      "mode": 493,
+      "flags": 0,
+      "nlink": 1,
+      "magic16_hex": "cffaedfe0c0000010000000002000000"
+    },
+    "original_case_compatibility_credit": false
   },
   "focused_validation": {
     "rust_tests": {
@@ -86,7 +111,10 @@
       "total": 20,
       "failed": 0,
       "ignored": 0,
-      "exit_code": 0
+      "exit_code": 0,
+      "recorded_head": "15e77ad7f42d970a381aedfc6db6ebb9e2b2dea8",
+      "bounded_final_content_match": true,
+      "elapsed_seconds": 5.407387971878052
     },
     "formatting_exit": 0,
     "probe_build_exit": 0,
@@ -113,7 +141,10 @@
       }
     ],
     "python_tests": 17,
-    "manifest_update": "53 implementation-link SHA-256 refreshes only; requirement/case counts and states unchanged"
+    "manifest_update": "53 implementation-link SHA-256 refreshes only; requirement/case counts and states unchanged",
+    "source_epoch": "Native02 focused 20 Rust tests ran with captured HEAD 15e77ad7 and 14 stable bounded source hashes equal to final a2aa18cd contents; captured HEAD is preserved. Final full workspace separately executed the current tests at a2aa18cd.",
+    "probe_build_source_epoch": "native02 build recorded at15e77ad7; exact14 source hashes match final a2aa18cd",
+    "python_source_epoch": "The 17 Python tests and freshness commands are historical unchanged-source observations; not a current-source rerun."
   },
   "original_java_only": {
     "physical_profile": "bounded 13-file workspace with fixture-derived argv; original manifest rows unchanged",
@@ -160,10 +191,9 @@
     "readiness_promoted": false
   },
   "pending": {
-    "five_required_rust_checks": "not yet executed as a complete final-source checkpoint; focused formatting above is separate",
-    "m1_native_node_browser": "not yet executed for this checkpoint",
-    "qualified_source_commit": null,
-    "original_candidate_comparison": "not executed"
+    "original_candidate_comparison": "Not executed; all six selected original package cases remain Java-only.",
+    "package_host_zip_cache_project_lifecycle": "Not implemented/qualified by this acceptance helper.",
+    "full_m2": "Incomplete; 4586 required contracts and 101 unready contracts remain. Six ordinary-run ignored entries are not counted as passes; 18 Protobuf reference nonpasses remain unmet."
   },
   "preserved_attempts": [
     {
@@ -177,6 +207,18 @@
     {
       "path": "target/m2/stage157-package-originals-java-01",
       "limitation": "Symlink/metadata preflight failure; zero cases, no JVM execution."
+    },
+    {
+      "path": "target/m2/stage157-rust-prechecks-01/execution/report.json",
+      "limitation": "Recorded HEAD15e77ad7; xtask/fmt0, Clippy101 due result_large_err; no subsequent command in that attempt. The boxed failure change was committed as a2aa18cd."
+    },
+    {
+      "path": "target/m2/stage157-platforms-01/report.json",
+      "limitation": "Terminal guard complete with child exit1 before inner M1 driver: explicitly selected stage146-151-platform-cargo-01 absent. Output02 uses a distinct existing cache; this setup failure is preserved."
+    },
+    {
+      "path": "target/m2/stage157-package-metadata-compare-01/report.json",
+      "limitation": "Initial artifact/source epoch preserved; final selected19 API qualification uses native02/compare02."
     }
   ],
   "full_m2": {
@@ -211,35 +253,10 @@
       "bytes": 70934,
       "sha256": "dae8bea17ed670091eca930357ac780d1f15ff1e1638be41f267a5f5b783fbfe"
     },
-    "native-comparison": {
-      "path": "target/m2/stage157-package-metadata-compare-01/report.json",
-      "bytes": 40653,
-      "sha256": "d75872fce0c2f7ca8ebfbba740cf6c99ba2733cff2605c4c995ff4716f3f1093"
-    },
-    "native-build-binding": {
-      "path": "target/m2/stage157-package-metadata-native-01/artifact-closure.json",
-      "bytes": 9449,
-      "sha256": "3bce02433083188bb7c2bd3b73f3eb47f39b2bcbc280e09ff7abb7d44dcb3ada"
-    },
-    "bounded-source-bookend": {
-      "path": "target/m2/stage157-package-metadata-native-01/build03/source-after.json",
-      "bytes": 1734,
-      "sha256": "1a37cb16ab91c0cde1b9fb0d68b148506bb6d70f164cd01e7697e2cd23a95c4f"
-    },
-    "focused-tests": {
-      "path": "target/m2/stage157-package-metadata-native-01/tests02/result.json",
-      "bytes": 399,
-      "sha256": "133ffb7e772767ba8acb69196345d42ff0de84addaa445329200411a88aa18d3"
-    },
     "formatting": {
       "path": "target/m2/stage157-package-metadata-native-01/fmt03/result.json",
       "bytes": 277,
       "sha256": "a02d43888966a37128f6120aa50f1b5028c299fea898880bffa0a5b928111581"
-    },
-    "probe-build": {
-      "path": "target/m2/stage157-package-metadata-native-01/build03/result.json",
-      "bytes": 326,
-      "sha256": "d578222f31f7c856c0b1a2182b0565e737cb392d1e0a075cb6fb694880aa017b"
     },
     "python-and-freshness": {
       "path": "target/m2/stage157-package-toolchecks-01/report.json",
@@ -250,6 +267,372 @@
       "path": "target/m2/stage157-package-originals-java-02/report.json",
       "bytes": 31300,
       "sha256": "7e7999c688293087740afad17b38a76e15106912a16adda5b52e50cd6af4f05b"
+    },
+    "initial-native-comparison": {
+      "path": "target/m2/stage157-package-metadata-compare-01/report.json",
+      "bytes": 40653,
+      "sha256": "d75872fce0c2f7ca8ebfbba740cf6c99ba2733cff2605c4c995ff4716f3f1093"
+    },
+    "initial-native-build-binding": {
+      "path": "target/m2/stage157-package-metadata-native-01/artifact-closure.json",
+      "bytes": 9449,
+      "sha256": "3bce02433083188bb7c2bd3b73f3eb47f39b2bcbc280e09ff7abb7d44dcb3ada"
+    },
+    "initial-bounded-source-bookend": {
+      "path": "target/m2/stage157-package-metadata-native-01/build03/source-after.json",
+      "bytes": 1734,
+      "sha256": "1a37cb16ab91c0cde1b9fb0d68b148506bb6d70f164cd01e7697e2cd23a95c4f"
+    },
+    "initial-probe-build": {
+      "path": "target/m2/stage157-package-metadata-native-01/build03/result.json",
+      "bytes": 326,
+      "sha256": "d578222f31f7c856c0b1a2182b0565e737cb392d1e0a075cb6fb694880aa017b"
+    },
+    "native-comparison": {
+      "path": "target/m2/stage157-package-metadata-compare-02/report.json",
+      "bytes": 40431,
+      "sha256": "6c94eecdd3b58206d418fd877b9176bda84e0752e50e15d87dd7dc2842a3b5a2"
+    },
+    "native-build-binding": {
+      "path": "target/m2/stage157-package-metadata-native-02/artifact-closure.json",
+      "bytes": 6231,
+      "sha256": "bcff5094baf4ff1eb48cda61075a043ca5c2c531591335034079cd51d3aa46d0"
+    },
+    "bounded-source-bookend": {
+      "path": "target/m2/stage157-package-metadata-native-02/build/source-after.json",
+      "bytes": 1734,
+      "sha256": "823c550cc424d9e4a398dffdffcdbda34817e23f1eb234c69bf586f0031539b4"
+    },
+    "probe-build": {
+      "path": "target/m2/stage157-package-metadata-native-02/build/result.json",
+      "bytes": 326,
+      "sha256": "b544b9a7108f5a32f277fbca27c3e92c78bcf4bf0da24c8f1bedc441c968bffe"
+    },
+    "initial-required-prechecks": {
+      "path": "target/m2/stage157-rust-prechecks-01/execution/report.json",
+      "bytes": 3608681,
+      "sha256": "ba4a090a75dd41a618a33e356a12da2690a856f618b807e5c5d3e4ca6c55793c"
+    },
+    "required-prechecks": {
+      "path": "target/m2/stage157-rust-prechecks-02/execution/report.json",
+      "bytes": 7242176,
+      "sha256": "41eb40cdc81baed7915d2fd38cbc57231567b1d4b7c3c3a20a171f029ad1c50a"
+    },
+    "final-source-plan": {
+      "path": "target/m2/stage157-rust-prechecks-02/source-plan-final.json",
+      "bytes": 3595027,
+      "sha256": "51a4c3aa000345b83205f04c073f99bf9fa404ad9e5483fa13dbc263702a78a6"
+    },
+    "initial-m1-cache-failure": {
+      "path": "target/m2/stage157-platforms-01/report.json",
+      "bytes": 7216176,
+      "sha256": "cfabe7e09514113850cc6e44fe7ef82e97c1d788479b3baa1f30dd60353129b8"
+    },
+    "m1-capture": {
+      "path": "target/m2/stage157-platforms-02/report.json",
+      "bytes": 7229217,
+      "sha256": "83b84ac50a12cccc1e0dbc1c3f99a42a25dda43137b45b77d1c07b171a654909"
+    },
+    "m1-setup": {
+      "path": "target/m2/stage157-platforms-binding-02/setup.json",
+      "bytes": 3073,
+      "sha256": "b4368a83e2f81dfaf79554cf0ade73a941bc84f241afd9487408f733bd3a2fd9"
+    },
+    "m1-independent-readback": {
+      "path": "target/m2/stage157-platforms-readback-02/report.json",
+      "bytes": 3762387,
+      "sha256": "f4a458a96ab3fbd9f0f6370b443bd4056b76e0f4a0cc9d8964d737397c9efb30"
+    },
+    "m1-process-closure": {
+      "path": "target/m2/stage157-platforms-binding-02/closure.json",
+      "bytes": 908,
+      "sha256": "7c83f06ecdbef6a47773b6e2cf2f2916ba5cc31f9a929d6fe9b0e353c4c1796d"
+    },
+    "workspace-capture": {
+      "path": "target/m2/stage157-rust-workspace-01/execution/report.json",
+      "bytes": 7454225,
+      "sha256": "95d9ef57750b6f6c7570024edb7bf002f7faddef7a31e58aeef5fac180cca9f6"
+    },
+    "workspace-aggregate-readback": {
+      "path": "target/m2/stage157-rust-workspace-01/readback.json",
+      "bytes": 565148,
+      "sha256": "4fd4b5cb1e62be9cec843dbbb31e1dec0a9809517b1719c9d68ad924c08022ff"
+    },
+    "workspace-protobuf-raw-readback": {
+      "path": "target/m2/stage157-rust-workspace-01/protobuf-readback.json",
+      "bytes": 1390665,
+      "sha256": "53e76eaf5277d6610d15e5f90b54022921a0613a469748fb8da255d4e6e1e592"
+    },
+    "workspace-terminal-summary": {
+      "path": "target/m2/stage157-rust-workspace-01/terminal-summary.json",
+      "bytes": 5538,
+      "sha256": "7da5f9710ac32e08e0fff247cc7020fdc26a78fe27b5de2cdf1cd5808281126d"
+    },
+    "workspace-configuration": {
+      "path": "target/m2/stage157-rust-workspace-01/config.json",
+      "bytes": 3607530,
+      "sha256": "9926b199848a8cad98d4935ea63520c52e166b1a55afe26a4554948465fb6153"
+    },
+    "initial-focused-tests": {
+      "path": "target/m2/stage157-package-metadata-native-01/tests02/result.json",
+      "bytes": 399,
+      "sha256": "133ffb7e772767ba8acb69196345d42ff0de84addaa445329200411a88aa18d3"
+    },
+    "focused-tests": {
+      "path": "target/m2/stage157-package-metadata-native-02/tests/result.json",
+      "bytes": 399,
+      "sha256": "637b9ce56f401cec8eae0731ced243916cf98d31c86692102b86fd4d11c838bb"
+    },
+    "focused-tests-source-before": {
+      "path": "target/m2/stage157-package-metadata-native-02/tests/source-before.json",
+      "bytes": 1734,
+      "sha256": "3c25f10805428a07e22b696e7adc122e0edd0f84a07e068e61e9beab49f15a91"
+    },
+    "focused-tests-source-after": {
+      "path": "target/m2/stage157-package-metadata-native-02/tests/source-after.json",
+      "bytes": 1734,
+      "sha256": "5414dafcf035cea3ed9fdcd8978a4f2b2987c4c17eb2b001402a60ec63377ed3"
     }
+  },
+  "owner_requirements": {
+    "M2-04": [
+      "semantic:modules"
+    ],
+    "M2-08": [
+      "semantic:diagnostics"
+    ]
+  },
+  "required_validation": {
+    "source_commit": "a2aa18cddc72799b1eb20ee617446b5faa2f3c57",
+    "four_prechecks": [
+      {
+        "name": "xtask",
+        "argv": [
+          "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+          "xtask",
+          "verify"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 1.162997749634087
+      },
+      {
+        "name": "fmt",
+        "argv": [
+          "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 2.2245848327875137
+      },
+      {
+        "name": "clippy",
+        "argv": [
+          "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 66.03175575006753
+      },
+      {
+        "name": "wasm",
+        "argv": [
+          "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+          "check",
+          "-p",
+          "pkl-runtime",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 4.976157708093524
+      }
+    ],
+    "selected_source_bookends_stable": true,
+    "full_workspace": {
+      "status": "complete; command exit0 with ignored obligations preserved",
+      "command": [
+        "/Users/cody.ij.hwang/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--no-fail-fast",
+        "--message-format=json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 8098.746730499901,
+      "outer_harness_count": 337,
+      "outer_totals": {
+        "passed": 2196,
+        "failed": 0,
+        "ignored": 6,
+        "measured": 0,
+        "filtered": 0
+      },
+      "nested_totals_excluded_from_outer": {
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 36
+      },
+      "ignored_tests": [
+        {
+          "source": "crates/pkl-runtime/tests/frontend.rs",
+          "test": "frontend_probe"
+        },
+        {
+          "source": "crates/pkl-runtime/tests/m2_annotation_const_oracle.rs",
+          "test": "java_supplement_const_lambda"
+        },
+        {
+          "source": "crates/pkl-runtime/tests/m2_list_apis_oracle.rs",
+          "test": "java_foreign_entry_renderer_protocol_remains_required"
+        },
+        {
+          "source": "crates/pkl-runtime/tests/m2_protobuf_java04_full.rs",
+          "test": "java04_strict_full_compatibility_gate"
+        },
+        {
+          "source": "crates/pkl-runtime/tests/m2_set_apis_oracle.rs",
+          "test": "java_foreign_entry_internal_protocol_remains_required"
+        },
+        {
+          "source": "crates/pkl-runtime/tests/m2_string_apis_oracle.rs",
+          "test": "java_glob_internal_error_protocol_is_unresolved"
+        }
+      ],
+      "ignored_not_passes": true,
+      "ignored_unchanged_from_baseline": true,
+      "selected_source_bookends_stable": true,
+      "finite_source_input_count": 12820,
+      "owned_terminal_live": [],
+      "heavy_process_scan_matches": [],
+      "peak_sampled_owned_rss_bytes": 1402896384,
+      "peak_sampled_aggregate_rss_bytes": 1402929152,
+      "minimum_free_bytes": 3213799424,
+      "aggregate_parser_limitations": [
+        "Finite source bookends and exact local commands/artifact bodies; no hermetic dependency closure.",
+        "Retained aggregate parser does not prove every individual test identity or exclude count-preserving interleaving. Nested child totals are excluded from outer totals.",
+        "Ignored tests and Protobuf18 reference nonpasses remain unmet; named strict CLI was not executed.",
+        "Protobuf contract is reported metadata here; this reader does not independently compare all266 raw slots.",
+        "Sampled process guards are not whole-host peak or performance measurements.",
+        "Local macOS native and Wasm compilation do not establish browser/Node execution or Linux/Windows/release qualification.",
+        "Earlier excessive prep executed a broad Git working-tree diff and initial inspection used Git status listing an excluded untracked partial. Their metadata/body audit limitations are retained separately; this bounded capture does not certify those early inspection boundaries."
+      ]
+    },
+    "host": "macOS27.0 arm64; local execution, not hosted CI",
+    "toolchain": "Rust1.98.1-aarch64-apple-darwin; rust-toolchain.toml pin",
+    "all_five_required_commands_exit_zero": true
+  },
+  "m1": {
+    "strict_status": "pass",
+    "contract_status": "pass",
+    "strict_cli_executed": false,
+    "architecture_cli_executed": true,
+    "total": 6078,
+    "oracle_passed": {
+      "rust": 6078,
+      "node": 6078,
+      "browser": 6078
+    },
+    "shared_engine_passed": 6078,
+    "scenario_counts": {
+      "node": 92,
+      "browser": 92
+    },
+    "known_gaps": [],
+    "mismatch_case_ids": {
+      "rust": [],
+      "node": [],
+      "browser": []
+    },
+    "cache": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage142-yaml-native-cargo-01",
+    "cache_mode": "reuse-explicit-existing-cache",
+    "previous_cache": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage146-151-platform-cargo-01",
+    "cache_condition": "different-existing-cache-stage142-native-release-and-wasm-reused-in-place",
+    "new_cache_clone_claim": false,
+    "cache_body_inventory_claim": false,
+    "source_commit": "a2aa18cddc72799b1eb20ee617446b5faa2f3c57",
+    "one_capture": true,
+    "elapsed_seconds": 400.8351915422827,
+    "peak_sampled_owned_rss_bytes": 2579447808,
+    "peak_sampled_aggregate_rss_bytes": 2581577728,
+    "minimum_free_bytes": 6903185408,
+    "terminal_owned_live": [],
+    "metadata_api_platform_binding_qualified": false,
+    "scope": "Shared-engine regression capture; metadata API export, package acquisition/Host networking, full language/API and performance remain unqualified."
+  },
+  "protobuf_workspace": {
+    "readback_complete": true,
+    "ordinary_test_status": {
+      "historical_twelve_mismatches_and_incomplete_acquisition_fail_contract": "ok",
+      "java04_completed_reference_contract": "ok",
+      "java04_strict_full_compatibility_gate": "ignored",
+      "missing_result_or_callback_channel_is_harness_failure": "ok",
+      "reference_nonpasses_never_become_strict_completion": "ok",
+      "same_length_raw_diagnostic_mutation_is_rejected": "ok"
+    },
+    "actual_raw_slot_qualification": {
+      "native_terminal_count": 266,
+      "renderer_matches": 240,
+      "pre_renderer_matches": 8,
+      "reference_nonpasses": 18,
+      "harness_failure_count": 0,
+      "structural_failure_slots": 0,
+      "acquisition_complete": true,
+      "experiment_contract_pass": true
+    },
+    "independent_summary": {
+      "mode": "completed-reference-experiment",
+      "observations_attempted": 266,
+      "native_terminal_count": 266,
+      "harness_failure_count": 0,
+      "regular_renderer_slots": 240,
+      "regular_renderer_matches": 240,
+      "pre_renderer_slots": 8,
+      "pre_renderer_reference_matches": 8,
+      "reference_nonpasses": 18,
+      "strict_compatible": false,
+      "experiment_contract_pass": true,
+      "java_exception_class_projected": false,
+      "full_compatibility_qualified": false
+    },
+    "strict_compatible": false,
+    "strict_cli_executed": false,
+    "full_compatibility_qualified": false,
+    "new_java_executions": 0,
+    "limitations": [
+      "Java04 fixture bytes are retained historical authority joined through original composition metadata and current configured pin bookends; no fresh Java266 acquisition.",
+      "All266 native terminals and result/event field membership are checked, including18 reference nonpasses. Java exception class provenance remains unprojected.",
+      "Cargo fresh=false, actual same-run storage/compression receipt and current executable bytes are joined.",
+      "The18 internal/process reference nonpasses and ignored strict gate remain unmet. Full M2/API/platform/performance completion is not claimed.",
+      "Finite configured sources are not a hermetic dependency closure; aggregate and early inspection audit limitations remain in their separate receipts."
+    ]
+  },
+  "publication_transition": {
+    "runtime_qualified_source_commit": "a2aa18cddc72799b1eb20ee617446b5faa2f3c57",
+    "next_commit_scope": "Documentation-only publication of this completed bounded checkpoint; runtime observations retain a2aa18cd provenance.",
+    "new_runtime_rerun": false,
+    "source_and_receipt_verification": "All 33 referenced receipt JSON pins and 14 bounded implementation inputs checked independently; 14 source inputs also match a2aa18cd Git blobs. Full 12,820 input list is not revalidated against publication-only documentation changes.",
+    "scope": "No full language/API/platform/performance completion or historical captureHEAD relabelling."
+  },
+  "next_step": {
+    "owner": "M2-04 semantic:modules with M2-08 semantic:diagnostics",
+    "original_cases": [
+      "badImport6.error.pkl",
+      "badImport7.error.pkl"
+    ],
+    "observation": "Exercise real package HTTPS acquisition through Host to complete metadata acceptance, ending before ZIP loading. A normal accepted-metadata case must then report an explicit unsupported ZIP boundary. Preserve full original input/argv/environment, ordered requests and raw result/error channels.",
+    "excluded_claim": "This next bounded step will not by itself establish full Host/package resolution compatibility."
   }
 }

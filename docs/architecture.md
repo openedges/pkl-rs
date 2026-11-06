@@ -37,6 +37,16 @@ Native development Hosts supply file Glob/HasElement metadata while matching, or
 
 `packages::PackageUri` and `PackageAssetUri` provide shared pure validation with typed input/reason ownership. Standard module/resource handling retains constructor/policy order; valid package transport, project resolution and full JVM diagnostic projection remain separate capabilities. Native development file handling distinguishes the exact Unix `file:///` byte route from Java `File(URI)` text decoding, sharing Unicode/UTF-8 primitives while keeping OS bytes distinct from display text. Non-UTF-8 module filename/source loading and Windows provider behavior remain unqualified. These bounded helpers preserve custom Host ownership and add no production Java fallback. See the [checkpoint scope](../reports/m2/stage153-155-t40-uri/README.md).
 
+### Package metadata acceptance
+
+`packages::metadata::accept_metadata` consumes an already acquired response and
+returns typed metadata or a typed failure. It validates the metadata checksum
+before JSON decoding, preserves required Java string units, and checks the ZIP
+URL scheme after parsing. Transport and security admission belong to Host;
+ZIP loading, package caches, project resolution and evaluator integration remain
+unfinished. Unsupported annotation and exception projections stay explicit.
+This pure boundary adds no package network capability to the platform bindings.
+
 ### Typed property lookup, module identity and bounded annotation/const diagnostics
 
 `Typed.getProperty` uses the existing String-checked property lookup continuation and actual Typed inheritance. It preserves lazy lookup, existing const-method restrictions, missing-member suggestions, receiver labels and UTF-16 property names. It shares the evaluator, diagnostic renderer and heap with native, Wasm and N-API.

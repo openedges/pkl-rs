@@ -1,12 +1,14 @@
 # 구현 계획
 
-## 현재 우선순위 — package metadata acceptance 검증과 후속 Host 통합
+## 현재 우선순위 — package metadata의 실제 Host 경로 연결
 
-[Stage156 기준선](reports/m2/stage156-baseline/README.md) 취득·공개를 마쳤고, [Stage157 보고서 초안](reports/m2/stage157-package-metadata/README.md)에 canonical fixture 자격 검증과 공유 metadata acceptance의 실제 관측을 기록한다. 기존 M2-01–09 작업과 [동작별 검증 계약](TESTING.md#m2-behavior-verification-contract)을 유지하며 상세 실행 이력은 대표 보고서에 둔다.
+[Stage157 체크포인트](reports/m2/stage157-package-metadata/README.md)의 공유 metadata acceptance, canonical fixture 검증과 최종 소스의 필수 Rust·M1 검증을 완료했다. [Stage156 기준선](reports/m2/stage156-baseline/README.md)은 기존 full-ready·strict gate 결과를 보존한다. 기존 M2-01–09 작업과 [동작별 검증 계약](TESTING.md#m2-behavior-verification-contract)을 유지하며 상세 실행 이력은 대표 보고서에 둔다.
 
-현재 구현은 이미 취득한 metadata의 checksum·parser·오류 순서를 처리하는 순수 공유 경계다. Fixture 준비와 선택 API 관측은 완료했지만 최종 소스 고정, 필수 Rust 전체 검사와 새 M1 검증은 아직 완료하지 않았다. 여섯 원본의 예비 관측은 제한된 fixture profile의 Java 전용 결과이며 candidate 호환성이나 ready 승격으로 계산하지 않는다.
+현재 구현은 이미 취득한 metadata의 checksum·parser·오류 순서를 처리하는 순수 공유 경계다. 실제 package Host·ZIP·cache·project resolution은 아직 연결하지 않았다. 여섯 원본의 예비 관측은 제한된 fixture profile의 Java 전용 결과이며 candidate 호환성이나 ready 승격으로 계산하지 않는다.
 
-다음에는 최종 소스의 필수 검증을 마친 뒤 metadata acceptance를 package Host admission·취득·오류 경계에 연결한다. ZIP·cache·project resolution과 전체 `packages1` Rust 성공 경로는 후속 목표다. 순수 helper를 Host 통합 완료로 서술하거나 68개 fixture 계약 전체가 통과한다고 가정하지 않는다.
+다음 구현은 `packages/badImport6.error.pkl`·`packages/badImport7.error.pkl`의 실제 HTTPS metadata 취득과 import 오류 경로다. M2-04 `semantic:modules`가 로딩을, M2-08 `semantic:diagnostics`가 오류 투영을 담당한다. 두 원본은 ZIP 취득 전에 끝나므로 기존 Host·module 경로에 package key와 typed package-load 오류를 연결하는 범위를 먼저 검증한다. Module/resource 정책 → HTTP 응답 → checksum → parser → ZIP URL 검사 순서를 유지하고, 전체 stdout·stderr·종료 코드·생성 파일과 metadata 요청 1회·ZIP 요청 0회를 비교한다.
+
+정상 metadata 취득은 명시적인 ZIP 미지원 경계까지 확인하고, 정책 거부·경쟁 오류·실패 재시도·중단 중 GC·취소/종료를 기존 수명주기 검사에 연결한다. 세부 parser 경계는 이미 확보한 비교를 재사용하며 조합을 무조건 늘리지 않는다. ZIP·cache·project resolution과 전체 `packages1` Rust 성공 경로는 후속 목표다. 순수 helper를 Host 통합 완료로 서술하거나 68개 fixture 계약 전체가 통과한다고 가정하지 않는다.
 
 M2는 진행 중이며 4,586개 필수 계약, 101개 미준비 의무, 475개 요구사항과 기존 완료 gate를 유지한다. 새 범용 evidence 체계나 전체 VM 재작성을 선행 조건으로 넣지 않으며 완료 날짜를 추정하지 않는다.
 
