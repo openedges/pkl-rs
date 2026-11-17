@@ -154,18 +154,9 @@ impl Vm {
     }
     fn protobuf_type_name(&mut self, ty: &TypeCheck) -> Result<PklString, RuntimeError> {
         let Some(class) = self.protobuf_type_class(ty)? else {
-            let is_mapping = matches!(
-                ty.resolved(),
-                TypeCheck::ParameterizedCollection {
-                    kind: CollectionKind::Mapping,
-                    ..
-                } | TypeCheck::Collection(CollectionKind::Mapping)
-            );
-            return Err(RuntimeError::foreign(
-                crate::java_exception::provenance::ForeignOperation::ProtobufListingOrMappingRootNullPointer {
-                    is_mapping,
-                },
-                "Cannot invoke \"com.oracle.truffle.api.nodes.RootNode.getName()\" because the return value of \"org.pkl.core.ast.type.TypeNode$ListingOrMappingTypeNode.getRootNode()\" is null",
+            return Err(RuntimeError::new(
+                ErrorKind::Unsupported,
+                "Failed to resolve type required for rendering protobuf.\n\nConsider adding a type annotation.\nInternal TypeNode diagnostic value projection remains unresolved.",
             ));
         };
         Ok(protobuf_escape_name(&self.heap.class_simple_name(class)?))
@@ -457,15 +448,22 @@ impl Vm {
                 }
                 if field.phase == 1 {
                     if !element && let Some(context) = &mut field.ty {
-                        let Some(resolved) =
-                            self.resolve_runtime_type(&context.ty, &context.environment, false)?
+                        let env = context.environment.clone();
+                        let Some(resolved) = self.resolve_runtime_type(&context.ty, &env, false)?
+                        else {
+                            run.tasks.push(Task::Protobuf(ProtoTask::Field(field)));
+                            return Ok(false);
+                        };
+                        let Some(normalized) =
+                            self.protobuf_normalize_type(&resolved, &env, run.protobuf.wrapper()?)?
                         else {
                             run.tasks.push(Task::Protobuf(ProtoTask::Field(field)));
                             return Ok(false);
                         };
                         self.protobuf_retain_type(&resolved, &mut context.retained);
-                        let normalized =
-                            self.protobuf_normalize_type(&resolved, run.protobuf.wrapper()?)?;
+                        if let Some(ty) = &normalized {
+                            self.protobuf_retain_type(ty, &mut context.retained);
+                        }
                         if let Some(ty) = normalized {
                             context.ty = ty;
                         } else {

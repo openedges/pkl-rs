@@ -391,3 +391,143 @@ output { value=new Input {}; renderer=new protobuf.Renderer { indent="" } }
         b"value: {x: 1}"
     );
 }
+#[test]
+fn parameterized_type_alias_union_uses_unparameterized_alias_body_and_rejects_type_variable() {
+    use pkl_runtime::modules::{ModuleCompletion, ModuleKey, ModuleKeyKind};
+
+    let inline_result = evaluate_module_output(
+        ModuleSourceInput {
+            text: r#"import "pkl:protobuf"
+typealias Choice<T> = T | String
+open class Base { value: Choice<Int> = 1 }
+class Child extends Base { value = "child" }
+output { value = new Child {}; renderer = new protobuf.Renderer { indent = "" } }
+"#,
+            uri: "file:///stage145-protobuf/inline-alias/main.pkl",
+            inferred_name: "main",
+        },
+        &ModuleEvalOptions::default(),
+    );
+    assert_ne!(inline_result.exit_code, 0);
+    assert!(inline_result.stdout.is_empty());
+    let inline_stderr = String::from_utf8_lossy(&inline_result.stderr);
+    assert!(
+        inline_stderr.contains("Failed to resolve type required for rendering protobuf."),
+        "{inline_stderr}"
+    );
+
+    let types_source = r#"module types
+typealias Choice<T> = T | String
+open class Parent { value: Choice<Int> = 1 }
+class Child extends Parent { value = "child" }
+"#;
+    let types_uri = "file:///stage145-protobuf/types.pkl";
+    let mut s = session(
+        r#"import "pkl:protobuf"
+import "types.pkl"
+result = new protobuf.Renderer { indent = "" }.renderDocument(new types.Child {})
+nested = null
+"#,
+    );
+    s.start_path(0, 0, None).unwrap();
+    let outcome = loop {
+        match s.poll(0, 10_000) {
+            HostPoll::Yielded => {}
+            HostPoll::Module { token, request } => {
+                let completion = if let Some(default) = default_completion(&request) {
+                    default
+                } else {
+                    match &request.kind {
+                        ModuleRequestKind::SelectKey { id, uri, .. } if uri == types_uri => {
+                            ModuleCompletion::KeySelected(Ok(ModuleKey {
+                                id: *id,
+                                uri: uri.clone(),
+                                kind: ModuleKeyKind::Synthetic,
+                                handle: "types".into(),
+                            }))
+                        }
+                        ModuleRequestKind::QueryCachePolicy { .. } => {
+                            ModuleCompletion::CachePolicy(Ok(true))
+                        }
+                        ModuleRequestKind::Resolve { original_uri, .. }
+                            if original_uri == types_uri =>
+                        {
+                            ModuleCompletion::Resolved(Ok(pkl_runtime::modules::ResolvedModule {
+                                original_uri: original_uri.clone(),
+                                resolved_uri: original_uri.clone(),
+                                source_uri: original_uri.clone(),
+                            }))
+                        }
+                        ModuleRequestKind::LoadSource { .. } => {
+                            ModuleCompletion::Source(Ok(pkl_runtime::modules::ModuleSource {
+                                text: types_source.into(),
+                                inferred_name: "types".into(),
+                            }))
+                        }
+                        other => panic!("unexpected module request {other:?}"),
+                    }
+                };
+                s.complete_module(&token, completion, 0).unwrap();
+            }
+            other => break other,
+        }
+    };
+    let HostPoll::Ready(Err(error)) = outcome else {
+        panic!("imported parameterized alias TypeVariable must be rejected: {outcome:?}");
+    };
+    assert_eq!(error.kind, ErrorKind::Unsupported);
+    assert!(
+        error
+            .message
+            .contains("Failed to resolve type required for rendering protobuf."),
+        "{error:?}"
+    );
+    s.close();
+    assert_eq!(s.collect(&[]).slots, 0);
+
+    assert_eq!(
+        output(
+            r#"import "pkl:protobuf"
+typealias SafeChoice<T> = String | T
+open class Base { value: SafeChoice<Int> = 1 }
+class Child extends Base { value = "child" }
+output { value = new Child {}; renderer = new protobuf.Renderer { indent = "" } }
+"#,
+            Default::default()
+        ),
+        b"value: {it_String: \"child\"}"
+    );
+}
+#[test]
+fn constrained_union_alternative_evaluates_constraint_before_rejecting_null_type_class() {
+    let mut s = session(
+        r#"import "pkl:protobuf"
+class Input { choice: Int(read("proto:constraint") == "yes") | String = "seed" }
+result = new protobuf.Renderer { converters { ["choice"] = (_) -> 7 } }.renderValue(new Input {})
+nested = null
+"#,
+    );
+    s.start_path(0, 0, None).unwrap();
+    let HostPoll::Read { token, uri } = event(&mut s, false) else {
+        panic!("constraint read")
+    };
+    assert_eq!(uri, "proto:constraint");
+    s.complete_read(&token, Ok(ReadResult::Text("yes".into())), 0)
+        .unwrap();
+    let HostPoll::Ready(Err(error)) = event(&mut s, true) else {
+        panic!("constrained union alternative must fail after constraint passes")
+    };
+    assert_eq!(error.kind, ErrorKind::Unsupported);
+    assert!(
+        error
+            .message
+            .contains("Failed to resolve type required for rendering protobuf."),
+        "{error:?}"
+    );
+    assert!(
+        !error.message.contains("ListingOrMappingTypeNode"),
+        "{error:?}"
+    );
+    s.close();
+    assert_eq!(s.collect(&[]).slots, 0);
+}

@@ -128,24 +128,39 @@ impl ArenaRangeIndex {
 }
 
 impl Vm {
+    pub(super) fn declaration_root_counts(&self) -> (usize, usize, usize, usize, usize, usize) {
+        (
+            self.code_arenas.len(),
+            self.resolved_declarations.len(),
+            self.type_parent_defaults.len(),
+            self.executable_roots.len(),
+            self.class_singletons.len(),
+            self.alias_singletons.len(),
+        )
+    }
+
     pub(super) fn declaration_code_roots(&mut self, roots: &mut Vec<Value>) {
-        let recipes = if self.resolved_declarations.is_empty() {
+        let small = self.code_arenas.len() <= 8;
+        let recipes = if small || self.resolved_declarations.is_empty() {
             ArenaRangeIndex::default()
         } else {
             ArenaRangeIndex::new(self.code_arenas.iter().map(|arena| &arena.recipes))
         };
-        let blocks = if self.type_parent_defaults.is_empty() && self.executable_roots.is_empty() {
+        let blocks = if small
+            || (self.type_parent_defaults.is_empty() && self.executable_roots.is_empty())
+        {
             ArenaRangeIndex::default()
         } else {
             ArenaRangeIndex::new(self.code_arenas.iter().map(|arena| &arena.blocks))
         };
-        let objects = if self.class_singletons.is_empty() {
+        let objects = if small || self.class_singletons.is_empty() {
             ArenaRangeIndex::default()
         } else {
             ArenaRangeIndex::new(self.code_arenas.iter().map(|arena| &arena.objects))
         };
         let mut aliases = BTreeMap::new();
-        if !self.alias_singletons.is_empty() {
+        let small_aliases = self.code_arenas.len() <= 16;
+        if !small_aliases && !self.alias_singletons.is_empty() {
             for (index, arena) in self.code_arenas.iter().enumerate() {
                 for alias in &arena.aliases {
                     aliases.entry(*alias).or_insert(index);
@@ -153,46 +168,87 @@ impl Vm {
             }
         }
         let mut owned = vec![Vec::new(); self.code_arenas.len()];
+        let mut unowned = std::mem::take(&mut self.unowned_declaration_roots);
+        unowned.clear();
         let mut retain = |index: Option<usize>, value: Value| {
             if let Some(index) = index {
                 owned[index].push(value);
             } else {
-                roots.push(value);
+                unowned.push(value);
             }
         };
         for ((recipe, owner), value) in &self.resolved_declarations {
-            let index = recipes.get(*recipe);
+            let index = if small {
+                self.code_arenas
+                    .iter()
+                    .position(|arena| arena.recipes.contains(recipe))
+            } else {
+                recipes.get(*recipe)
+            };
             retain(index, Value::Object(*owner));
             if let type_resolution::DeclarationValue::Value(value) = value {
                 retain(index, value.clone());
             }
         }
         for ((block, _), value) in &self.type_parent_defaults {
-            retain(blocks.get(*block), value.clone());
+            let index = if small {
+                self.code_arenas
+                    .iter()
+                    .position(|arena| arena.blocks.contains(block))
+            } else {
+                blocks.get(*block)
+            };
+            retain(index, value.clone());
         }
         for (block, owner) in &self.executable_roots {
-            retain(blocks.get(*block), owner.root());
+            let index = if small {
+                self.code_arenas
+                    .iter()
+                    .position(|arena| arena.blocks.contains(block))
+            } else {
+                blocks.get(*block)
+            };
+            retain(index, owner.root());
         }
         for (template, id) in &self.class_singletons {
-            retain(objects.get(*template), Value::Class(*id));
+            let index = if small {
+                self.code_arenas
+                    .iter()
+                    .position(|arena| arena.objects.contains(template))
+            } else {
+                objects.get(*template)
+            };
+            retain(index, Value::Class(*id));
         }
         for (declaration, id) in &self.alias_singletons {
-            retain(aliases.get(declaration).copied(), Value::TypeAlias(*id));
+            let index = if small_aliases {
+                self.code_arenas
+                    .iter()
+                    .position(|arena| arena.aliases.contains(declaration))
+            } else {
+                aliases.get(declaration).copied()
+            };
+            retain(index, Value::TypeAlias(*id));
         }
-        let mut by_owner: Vec<(ExecutableOwnerId, Vec<Value>)> = Vec::new();
-        let mut owner_positions = BTreeMap::<_, usize>::new();
+        let mut by_owner: Vec<(ExecutableOwnerId, ObjectId, Vec<Value>)> =
+            Vec::with_capacity(self.code_arenas.len());
         for (arena, roots) in self.code_arenas.iter().zip(owned) {
             let owner_key = arena.owner.root().heap_id().expect("executable owner ID");
-            if let Some(&index) = owner_positions.get(&owner_key) {
-                by_owner[index].1.extend(roots);
+            if let Some((_, _, existing)) =
+                by_owner.iter_mut().find(|(_, key, _)| *key == owner_key)
+            {
+                existing.extend(roots);
             } else {
-                owner_positions.insert(owner_key, by_owner.len());
-                by_owner.push((arena.owner, roots));
+                by_owner.push((arena.owner, owner_key, roots));
             }
         }
-        for (owner, roots) in by_owner {
+        for (owner, _, roots) in by_owner {
             self.heap.set_code_roots(owner, roots);
         }
+        roots.extend(unowned.iter().cloned());
+        self.unowned_declaration_roots = unowned;
+        self.declaration_roots_dirty = false;
+        self.declaration_roots_lens = self.declaration_root_counts();
     }
 
     pub(super) fn retire_unreachable_code(&mut self) {
@@ -200,6 +256,7 @@ impl Vm {
             if self.heap.executable_is_live(self.code_arenas[index].owner) {
                 continue;
             }
+            self.declaration_roots_dirty = true;
             let arena = self.code_arenas.remove(index);
             self.resolved_declarations
                 .retain(|(recipe, _), _| !arena.recipes.contains(recipe));
@@ -213,27 +270,29 @@ impl Vm {
                 .retain(|declaration, _| !arena.aliases.contains(declaration));
             arena.retire(Arc::make_mut(&mut self.program));
         }
-        let active: BTreeSet<_> = self
-            .frames
-            .iter()
-            .chain(self.suspended.iter().flat_map(|context| &context.frames))
-            .map(|frame| frame.block)
-            .collect();
-        let finished: Vec<_> = self
-            .public_operation_entries
-            .iter()
-            .filter(|entry| !active.contains(entry))
-            .copied()
-            .collect();
-        for entry in finished.into_iter().rev() {
-            self.public_operation_entries.remove(&entry);
-            let program = Arc::make_mut(&mut self.program);
-            program.blocks.retire(entry..entry + 1);
-            program.metadata.retire(entry..entry + 1);
-            program.declaration_sources.remove(&entry);
-            program
-                .reflection_annotations
-                .retain(|_, block| *block != entry);
+        if !self.public_operation_entries.is_empty() {
+            let active: BTreeSet<_> = self
+                .frames
+                .iter()
+                .chain(self.suspended.iter().flat_map(|context| &context.frames))
+                .map(|frame| frame.block)
+                .collect();
+            let finished: Vec<_> = self
+                .public_operation_entries
+                .iter()
+                .filter(|entry| !active.contains(entry))
+                .copied()
+                .collect();
+            for entry in finished.into_iter().rev() {
+                self.public_operation_entries.remove(&entry);
+                let program = Arc::make_mut(&mut self.program);
+                program.blocks.retire(entry..entry + 1);
+                program.metadata.retire(entry..entry + 1);
+                program.declaration_sources.remove(&entry);
+                program
+                    .reflection_annotations
+                    .retain(|_, block| *block != entry);
+            }
         }
     }
 }

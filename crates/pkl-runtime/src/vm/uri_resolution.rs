@@ -687,6 +687,7 @@ impl Vm {
         }
         if let (Some(arena), Some(owner)) = (arena, code_owner) {
             self.code_arenas.push(arena.finish(program, owner, false));
+            self.declaration_roots_dirty = true;
         }
         program.update_import_uris(unit, |span| build.prepared.get(&span));
         program.units[unit.0 as usize].key = declaration.key;

@@ -1,6 +1,31 @@
 # 구현 계획
 
-## 현재 상태 — Stage159 M2 무결성 시정(Iteration 4) 및 동결 작업트리 실측 검증 완료
+## 현재 상태 — Stage160 GC 세이프포인트 핫패스 최적화·Protobuf 경계 시정 및 단일 명령 전체 워크스페이스 검증 완료
+
+[Stage160 체크포인트 보고서](reports/m2/stage160-gc-protobuf-remediation/README.md)는 `pkl:reflect` GC 세이프포인트 핫패스 병목(Stage 159에서 타임아웃되던 `m2_reflection_apis_lifecycle` 5/5 포함 단일 명령 `cargo test --workspace --locked` 완주 달성)과 Protobuf `no-complete-reference-nonpass` 4개 슬롯의 실제 러스트 런타임 결함 두 건을 수정하고, 동결 소스 기준 전체 워크스페이스·플랫폼·집중 차분 검증을 완료했다(로컬 macOS arm64, `rustc 1.98.1`, `PKL_ALLOW_LOCAL_JDK=1`, Temurin `21.0.13+9-LTS`).
+
+### Stage 160 주요 변경 및 검증 결과
+1. **프로파일 정렬 및 정확한 GC 세이프포인트 핫패스 최적화 (`Cargo.toml`, `crates/pkl-runtime/src/`)**:
+   - `Cargo.toml`에 `[profile.dev.package.pkl-runtime] opt-level = 2`를 추가해 통합 테스트 바이너리가 `libpkl_runtime`을 `opt-level = 2`로 링크하도록 정렬.
+   - [reflection.rs](crates/pkl-runtime/src/vm/reflection.rs)·[vm.rs](crates/pkl-runtime/src/vm.rs): `reflection::Payload::roots` 및 `Run::roots`의 매 스텝 `Vec<Value>` 힙 할당·클론을 제거하고 `&mut Vec<Value>` push 및 무할당 `Payload::for_each_edge`로 전환.
+   - [heap.rs](crates/pkl-runtime/src/heap.rs): `Heap::collect`의 `mark_scratch`/`pending_scratch` 버퍼 재사용, `bytes_lists.is_empty()` 조건에서의 슬롯별 송신 엣지 캐시(`edges`/`edges_valid`, 모든 변경 경로 및 sweep 시 무효화), `trace_environment_edges`·`trace_entry_edges` 도우미 추출, `key_equalities`·`structural_keys` dirty/길이 가드 적용(`HeapStats` 전 필드 동일 보존).
+   - [query_lifecycle.rs](crates/pkl-runtime/src/vm/query_lifecycle.rs)·[vm.rs](crates/pkl-runtime/src/vm.rs)(및 [modules.rs](crates/pkl-runtime/src/vm/modules.rs)·[uri_resolution.rs](crates/pkl-runtime/src/vm/uri_resolution.rs)·[platform.rs](crates/pkl-runtime/src/vm/platform.rs)·[type_resolution.rs](crates/pkl-runtime/src/vm/type_resolution.rs)·[generics.rs](crates/pkl-runtime/src/vm/generics.rs)): 소규모 아레나(`<= 8`/`<= 16`) `ArenaRangeIndex`·`aliases` 할당 우회 및 `declaration_roots_dirty` / `declaration_root_counts()` / `unowned_declaration_roots` 캐시 도입.
+2. **Protobuf 18개 비통과 슬롯 경계 수정 (`crates/pkl-runtime`)**:
+   - [protobuf_rendering.rs](crates/pkl-runtime/src/vm/protobuf_rendering.rs): `protobuf_type_name`에서 `protobuf_type_class(ty)?`가 `None`일 때 `ProtobufListingOrMappingRootNullPointer`(`oracle-error`) 대신 `ErrorKind::Unsupported`를 반환하도록 복원하고, `ProtoTask::Field` `phase == 1`이 `property_env` 전달·비동기 중단 재시도·`resolved`/`normalized` 루트 유지를 수행하도록 수정.
+   - [type_resolution.rs](crates/pkl-runtime/src/vm/type_resolution.rs)·[protobuf_types.rs](crates/pkl-runtime/src/vm/protobuf_types.rs): `alias_check_environment`를 `pub(super)`로 공개하고, `protobuf_normalize_type`에서 매개변수화 `NamedAlias`가 업스트림 `RendererNodes.resolveType`(`typeAliasType.getVmTypeAlias().getTypeNode()`)와 동일하게 미매개변수화 별칭 본문(`T::Unknown`)을 정규화하도록 수정.
+   - [m2_protobuf_renderer.rs](crates/pkl-runtime/tests/m2_protobuf_renderer.rs): 인라인/임포트 `Choice<T> = T | String` 및 제약식 유니온 `Int(read(...) == "yes") | String` 회귀 테스트 2건 추가(`observations.tsv` 및 `m2_protobuf_java04_full.rs` `#[ignore]` 미변경).
+3. **동결 소스 최종 검증 결과 (`2026-11-18` 로컬 macOS arm64, `PKL_ALLOW_LOCAL_JDK=1`, Temurin `21.0.13+9-LTS`)**:
+   - `cargo fmt --all -- --check`, `cargo xtask verify`, `cargo clippy --workspace --all-targets --locked -- -D warnings`(및 `--no-deps`), `cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked`, 6종 Python `--check` 스크립트, M2 Python 단위 테스트 **`253`건**(`215.895s`), `tools/m2_manifest.py --check` (`4,586` 케이스: `4,575` ready / `11` unmapped, `475` 요구사항): 모두 **Exit 0** (`compatibility/m2-language.json`의 소스 SHA-256만 `356`줄 동기화, 비-`sha256` 변경 `0`).
+   - **단일 분할 없는 명령 `cargo test --workspace --locked`**: **Exit 0** (**`2,220 passed; 0 failed; 2 ignored`** [`frontend_probe`, `java04_strict_full_compatibility_gate`], 337개 외부 타깃/doctest 완료; `m2_unicode_diagnostic_lifecycle` 중첩 자식 13패스 제외 시 `2,220`, 원시 `test result:` 합산 `2,233`). **`m2_reflection_apis_lifecycle` 5/5가 `83.35s`에 완주**(단독 `90.63s`, `--lib` 단독 `20.71s` ← 기존 `1359.67s`).
+   - **Protobuf strict 게이트 캡처 (`target/m2/stage160-protobuf-strict`)**: 계약상 예상 **Exit 101** (`266/266` 실행, harness 오류 `0`, regular `240/240`, pre-renderer `8/8`, `strict-failures.txt` 정확히 `18`줄 `REFERENCE-NONPASS`, 4개 `no-complete-reference-nonpass` 슬롯 전원 `result.status.bin = unsupported-or-api-error\n` 기록).
+   - **M1 멀티 타깃 스윕**: 샌드박스 초기 시도(`target/m1/stage160-platforms`, Exit 2, 루프백 거부)를 보존하고 비샌드박스 재실행 **`target/m1/stage160-platforms-01 --verify-contract` Exit 0** (`rust` / `node` `v26.13.1` / `browser` Chromium `156.0.8078.4`·Playwright `1.64.1` 각 **`6,078 / 6,078`** 일치, Node/브라우저 시나리오 각 `92`건 통과).
+   - **집중 M2 4-어댑터 차분 취득**: 샌드박스 초기 시도(`target/m2/stage160-selected`, Exit 1)를 보존하고 비샌드박스 재실행 **`target/m2/stage160-selected-01` Exit 0** (**`100 / 100 pass`**: `package-project-eval` 68, `historical-cli-module-eval` 21, `historical-collections-module-eval` 8, `selected-regression-module-eval` 3; HTTP 요청 `188`건; `source_stability: True`, `artifact_stability: True`) 및 순차 `--verify-report`·`--verify-subset` **Exit 0**.
+
+### 보존된 한계 및 미검증 범위
+- Stage 160은 100건 4-어댑터 부분집합(`target/m2/stage160-selected-01`)만 신규 차분 실행했으며, 전체 4,575건 M2 재생은 [Stage159 `target/m2/stage159-genuine`](reports/m2/stage159-strict-gate-closure/README.md)(커밋 `2c25dd656`, `4,574 pass / 1 oracle-error [error-cycle] / 0 mismatch`)가 최신 전수 기준선이다.
+- `tests/fixtures/m2-protobuf-java04-full` 18건 참조 미통과(`java04_strict_full_compatibility_gate` `#[ignore]`), 콜드 Java `error-cycle` `oracle-error`, 11개 미매핑 후보, 로컬 JDK 출처(`exact_jdk_lock_match: false`), Linux/Windows 호스티드 CI, 그리고 미구현 마일스톤 **M3–M7**은 그대로 개방 상태로 남는다.
+
+## 이전 상태 — Stage159 M2 무결성 시정(Iteration 4) 및 동결 작업트리 실측 검증 완료
 
 [Stage159 체크포인트 보고서](reports/m2/stage159-strict-gate-closure/README.md)에서 이전 단계의 무결성 위반 항목(`stage159-final` 위조 산출물·주장, `tools/assemble_stage159.py`, `id()` 기반 다이제스트 메모이제이션, 하드코딩된 예외 문자열·릴리스 배너, Protobuf 픽스처·엄격 게이트 우회, `m2-mappings.json` 형식적 일괄 매핑)을 전면 철회 및 시정하고, 동결된 작업트리에서 실제 호환성 검증 결과를 정직하게 기록했다.
 

@@ -57,6 +57,7 @@ impl Vm {
         }
         self.heap.get_mut(id)?.class_initializing = false;
         self.class_singletons.insert(template, class_id);
+        self.declaration_roots_dirty = true;
         Ok(class_id)
     }
 

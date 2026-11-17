@@ -1419,6 +1419,9 @@ pub struct Vm {
     /// Static call targets own code state, never captured receivers/environments.
     executable_roots: BTreeMap<usize, ExecutableOwnerId>,
     code_arenas: Vec<query_lifecycle::CodeArena>,
+    declaration_roots_dirty: bool,
+    declaration_roots_lens: (usize, usize, usize, usize, usize, usize),
+    unowned_declaration_roots: Vec<Value>,
     public_operation_entries: BTreeSet<usize>,
     pub(crate) platform_metadata: Option<crate::logging::PlatformMetadata>,
     pub(crate) monotonic_clock: Option<crate::logging::MonotonicClock>,
@@ -1495,6 +1498,9 @@ impl Vm {
             type_parent_defaults: BTreeMap::new(),
             executable_roots: BTreeMap::new(),
             code_arenas: Vec::new(),
+            declaration_roots_dirty: true,
+            declaration_roots_lens: (0, 0, 0, 0, 0, 0),
+            unowned_declaration_roots: Vec::new(),
             public_operation_entries: BTreeSet::new(),
             platform_metadata,
             monotonic_clock: None,
@@ -1943,6 +1949,9 @@ impl Vm {
         self.type_parent_defaults.clear();
         self.executable_roots.clear();
         self.code_arenas.clear();
+        self.declaration_roots_dirty = true;
+        self.declaration_roots_lens = (0, 0, 0, 0, 0, 0);
+        self.unowned_declaration_roots.clear();
         self.public_operation_entries.clear();
         self.heap.release();
         self.program = Arc::new(Program::new(Vec::new()));
@@ -2000,7 +2009,8 @@ impl Vm {
 
     /// Safepoint collection includes suspended frames and externally pinned results.
     pub fn collect(&mut self, external_roots: &[Value]) -> HeapStats {
-        let mut roots = external_roots.to_vec();
+        let mut roots = Vec::with_capacity(external_roots.len() + 64);
+        roots.extend_from_slice(external_roots);
         roots.extend(self.resources.values().filter_map(Clone::clone));
         roots.extend(self.public_primary.map(Value::Object));
         roots.extend(
@@ -2030,7 +2040,13 @@ impl Vm {
             }
         }
         roots.extend(self.builtin_classes.values().copied().map(Value::Class));
-        self.declaration_code_roots(&mut roots);
+        if self.declaration_roots_dirty
+            || self.declaration_root_counts() != self.declaration_roots_lens
+        {
+            self.declaration_code_roots(&mut roots);
+        } else {
+            roots.extend(self.unowned_declaration_roots.iter().cloned());
+        }
         for (stack, inputs, frames, state) in self
             .suspended
             .iter()
@@ -2049,8 +2065,18 @@ impl Vm {
                 &self.state,
             )))
         {
-            roots.extend(stack.iter().cloned());
-            roots.extend(inputs.iter().cloned());
+            roots.extend(
+                stack
+                    .iter()
+                    .filter(|value| value.heap_id().is_some() || matches!(value, Value::Bytes(_)))
+                    .cloned(),
+            );
+            roots.extend(
+                inputs
+                    .iter()
+                    .filter(|value| value.heap_id().is_some() || matches!(value, Value::Bytes(_)))
+                    .cloned(),
+            );
             match state {
                 State::Finished(Ok(value)) => roots.push(value.clone()),
                 State::Finished(Err(error)) => error.diagnostic_roots(&mut roots),
@@ -2076,7 +2102,16 @@ impl Vm {
                     scope.roots(&mut roots);
                 }
                 roots.extend(frame.prepared_hashes.iter().flatten().cloned());
-                roots.extend(frame.environment.locals.iter().cloned());
+                roots.extend(
+                    frame
+                        .environment
+                        .locals
+                        .iter()
+                        .filter(|value| {
+                            value.heap_id().is_some() || matches!(value, Value::Bytes(_))
+                        })
+                        .cloned(),
+                );
                 roots.extend(frame.environment.this_value.iter().cloned());
                 roots.extend(frame.environment.outer_value.iter().cloned());
                 roots.extend(frame.environment.custom_this.map(|slot| slot.root()));
@@ -2104,7 +2139,7 @@ impl Vm {
                     run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.reflection {
-                    roots.extend(run.roots());
+                    run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.mapping_keys {
                     run.roots(&mut roots);
@@ -4403,10 +4438,13 @@ impl Vm {
     }
 
     fn executable_root(&mut self, block: usize) -> ExecutableOwnerId {
-        *self
-            .executable_roots
-            .entry(block)
-            .or_insert_with(|| self.heap.allocate_executable())
+        if let Some(&owner) = self.executable_roots.get(&block) {
+            return owner;
+        }
+        let owner = self.heap.allocate_executable();
+        self.executable_roots.insert(block, owner);
+        self.declaration_roots_dirty = true;
+        owner
     }
 
     fn current_executable(&mut self) -> Result<ExecutableOwnerId, RuntimeError> {
@@ -5440,6 +5478,7 @@ impl Vm {
                         ..Object::default()
                     });
                     self.alias_singletons.insert(declaration, id);
+                    self.declaration_roots_dirty = true;
                     self.stack.push(Value::TypeAlias(id));
                 }
             }
@@ -5975,6 +6014,7 @@ impl Vm {
                     });
                     let class = self.heap.allocate_class(id);
                     self.class_singletons.insert(template, class);
+                    self.declaration_roots_dirty = true;
                     self.stack.push(Value::Class(class));
                 }
             }

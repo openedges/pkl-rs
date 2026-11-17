@@ -429,6 +429,8 @@ enum Entry {
 struct Slot {
     generation: u64,
     entry: Option<Entry>,
+    edges: Vec<ObjectId>,
+    edges_valid: bool,
 }
 
 impl Slot {
@@ -455,6 +457,11 @@ pub struct Heap {
     slots: Vec<Slot>,
     free: Vec<usize>,
     stats: HeapStats,
+    mark_scratch: Vec<bool>,
+    pending_scratch: Vec<ObjectId>,
+    structural_keys_dirty: bool,
+    last_retained_structural_keys_len: usize,
+    last_retained_key_equalities_len: usize,
     pub(crate) structural_keys: BTreeMap<crate::vm::equality::StructuralKey, u64>,
     pub(crate) next_structural_key: u64,
     pub(crate) key_equalities: std::collections::BTreeSet<(ObjectId, ObjectId)>,
@@ -476,6 +483,11 @@ impl Heap {
             slots: Vec::new(),
             free: Vec::new(),
             stats: HeapStats::default(),
+            mark_scratch: Vec::new(),
+            pending_scratch: Vec::new(),
+            structural_keys_dirty: false,
+            last_retained_structural_keys_len: 0,
+            last_retained_key_equalities_len: 0,
             structural_keys: BTreeMap::new(),
             next_structural_key: 1,
             key_equalities: std::collections::BTreeSet::new(),
@@ -521,6 +533,7 @@ impl Heap {
             .transpose()?;
         if let Some(Entry::Class(class)) = &mut self.slots[id.index].entry {
             class.superclass = superclass;
+            self.slots[id.index].edges_valid = false;
         }
         let prototype = self.get_mut(prototype)?;
         prototype.parent = parent;
@@ -662,6 +675,7 @@ impl Heap {
     ) -> Result<(), RuntimeError> {
         self.custom_this(slot)?;
         self.slots[slot.0.index].entry = Some(Entry::CustomThis(value));
+        self.slots[slot.0.index].edges_valid = false;
         Ok(())
     }
 
@@ -709,6 +723,7 @@ impl Heap {
         owner: ExecutableOwnerId,
     ) -> Result<&mut ExecutableState, RuntimeError> {
         self.executable(owner)?;
+        self.slots[owner.0.index].edges_valid = false;
         match self.slots[owner.0.index].entry.as_mut() {
             Some(Entry::Executable(state)) => Ok(state),
             _ => unreachable!("validated executable owner"),
@@ -860,13 +875,20 @@ impl Heap {
 
     fn allocate_entry(&mut self, entry: Entry) -> ObjectId {
         self.stats.executable_live += usize::from(matches!(entry, Entry::Executable(_)));
+        if matches!(&entry, Entry::Object(object) if object.structural_key.is_some()) {
+            self.structural_keys_dirty = true;
+        }
         let index = if let Some(index) = self.free.pop() {
             self.slots[index].entry = Some(entry);
+            self.slots[index].edges.clear();
+            self.slots[index].edges_valid = false;
             index
         } else {
             self.slots.push(Slot {
                 generation: 0,
                 entry: Some(entry),
+                edges: Vec::new(),
+                edges_valid: false,
             });
             self.slots.len() - 1
         };
@@ -945,256 +967,339 @@ impl Heap {
 
     pub fn get_mut(&mut self, id: ObjectId) -> Result<&mut Object, RuntimeError> {
         self.get(id)?;
+        self.structural_keys_dirty = true;
+        self.slots[id.index].edges_valid = false;
         match self.slots[id.index].entry.as_mut() {
             Some(Entry::Object(object)) => Ok(object),
             _ => unreachable!("validated object slot"),
         }
     }
+}
 
+type BytesListMap = BTreeMap<crate::value_identity::Token, (std::sync::Weak<()>, ObjectId, bool)>;
+
+fn resolve_traced_id(bytes_lists: &BytesListMap, value: &Value) -> Option<ObjectId> {
+    if let Value::Bytes(bytes) = value {
+        if bytes_lists.is_empty() {
+            None
+        } else {
+            bytes_lists.get(&bytes.reference()).map(|(_, id, _)| *id)
+        }
+    } else {
+        value.heap_id()
+    }
+}
+
+fn push_id(identity: u64, out: &mut Vec<ObjectId>, id: ObjectId) {
+    if id.heap == identity {
+        out.push(id);
+    }
+}
+
+fn push_value(identity: u64, bytes_lists: &BytesListMap, out: &mut Vec<ObjectId>, value: &Value) {
+    if let Some(id) = resolve_traced_id(bytes_lists, value)
+        && id.heap == identity
+    {
+        out.push(id);
+    }
+}
+
+fn trace_environment_edges(
+    identity: u64,
+    bytes_lists: &BytesListMap,
+    environment: &Environment,
+    out: &mut Vec<ObjectId>,
+) {
+    if let Some(slot) = environment.custom_this {
+        push_id(identity, out, slot.0);
+    }
+    if let Some(owner) = environment.executable_owner {
+        push_id(identity, out, owner.0);
+    }
+    if let Some(owner) = environment.code_owner {
+        push_id(identity, out, owner.0);
+    }
+    for &(owner, _) in environment.local_owners.values() {
+        push_id(identity, out, owner.0);
+    }
+    for scope in &environment.scopes {
+        push_id(identity, out, scope.receiver);
+        push_id(identity, out, scope.owner);
+    }
+    for value in &environment.locals {
+        push_value(identity, bytes_lists, out, value);
+    }
+    if let Some(value) = &environment.this_value {
+        push_value(identity, bytes_lists, out, value);
+    }
+    if let Some(value) = &environment.outer_value {
+        push_value(identity, bytes_lists, out, value);
+    }
+}
+
+fn trace_entry_edges(
+    identity: u64,
+    bytes_lists: &BytesListMap,
+    entry: &Entry,
+    out: &mut Vec<ObjectId>,
+) {
+    let object = match entry {
+        Entry::Class(class) => {
+            push_id(identity, out, class.prototype);
+            if let Some(superclass) = class.superclass {
+                push_id(identity, out, superclass);
+            }
+            return;
+        }
+        Entry::NullDefault(value) => {
+            push_value(identity, bytes_lists, out, value);
+            return;
+        }
+        Entry::Executable(state) => {
+            for value in &state.code_roots {
+                push_value(identity, bytes_lists, out, value);
+            }
+            for owner in state.children.values() {
+                push_id(identity, out, owner.0);
+            }
+            for &id in state.imported_modules.values() {
+                push_id(identity, out, id);
+            }
+            for &id in state.glob_mappings.values() {
+                push_id(identity, out, id);
+            }
+            for cache in state.method_calls.values() {
+                cache.trace(out);
+            }
+            return;
+        }
+        Entry::CustomThis(value) => {
+            if let Some(value) = value {
+                push_value(identity, bytes_lists, out, value);
+            }
+            return;
+        }
+        Entry::Object(object) => object,
+    };
+    if let Some(mirror) = &object.mirror {
+        mirror.for_each_edge(
+            out,
+            |out, id| push_id(identity, out, id),
+            |out, value| push_value(identity, bytes_lists, out, value),
+        );
+    }
+    if let Some(parent) = object.parent {
+        push_id(identity, out, parent);
+    }
+    if let Some(class) = object.instance_class {
+        push_id(identity, out, class);
+    }
+    if let Some((owner, _)) = object.method_declaration {
+        push_id(identity, out, owner);
+    }
+    if let Some(amendment) = &object.amendment {
+        push_value(identity, bytes_lists, out, &amendment.parent);
+    }
+    if let Some(pair) = &object.pair {
+        for value in pair.iter() {
+            push_value(identity, bytes_lists, out, value);
+        }
+    }
+    if let Some(entry) = &object.foreign_map_entry {
+        for value in entry.iter() {
+            push_value(identity, bytes_lists, out, value);
+        }
+    }
+    for value in &object.annotations {
+        push_value(identity, bytes_lists, out, value);
+    }
+    for values in object.member_annotations.values() {
+        for value in values {
+            push_value(identity, bytes_lists, out, value);
+        }
+    }
+    if let Some(node) = object.collection_cast.as_ref().and_then(|cast| cast.node) {
+        push_id(identity, out, (node.0).0);
+    }
+    if let Some(function) = &object.function
+        && let Some(captured) = &function.captured_this
+    {
+        push_value(identity, bytes_lists, out, captured);
+    }
+    if let Some(reference) = &object.reference {
+        push_value(identity, bytes_lists, out, &reference.domain);
+        push_value(identity, bytes_lists, out, &reference.data);
+        for value in &reference.path {
+            push_value(identity, bytes_lists, out, value);
+        }
+        for &class in &reference.classes {
+            push_id(identity, out, class);
+        }
+    }
+    if let Some(native) = &object.native_function {
+        push_value(identity, bytes_lists, out, &native.receiver);
+    }
+    if let Some(order) = &object.map_key_order {
+        for member in order {
+            push_value(identity, bytes_lists, out, &member.key);
+        }
+    }
+    if let Some(mapping_keys) = object.mapping_keys {
+        push_id(identity, out, mapping_keys);
+    }
+    for member in &object.collection_members {
+        push_value(identity, bytes_lists, out, &member.key);
+    }
+    if let Some(iterator) = &object.iterator {
+        push_id(identity, out, iterator.source);
+        for member in iterator.members.iter().chain(&iterator.force_members) {
+            push_value(identity, bytes_lists, out, &member.key);
+        }
+    }
+    if let Some(delegate) = &object.conversion_delegate {
+        push_id(identity, out, delegate.source);
+    }
+    if !bytes_lists.is_empty()
+        && let Some(iterator) = &object.bytes_iterator
+        && let Some((_, id, _)) = bytes_lists.get(&iterator.0.reference())
+    {
+        push_id(identity, out, *id);
+    }
+    if let Some(iterator) = &object.predicate_iterator {
+        push_id(identity, out, iterator.source);
+        if let Some(previous) = &iterator.previous_this {
+            push_value(identity, bytes_lists, out, previous);
+        }
+        for (owner, member) in &iterator.members {
+            push_id(identity, out, *owner);
+            push_value(identity, bytes_lists, out, &member.key);
+        }
+    }
+    for environment in object.member_environments.values() {
+        trace_environment_edges(identity, bytes_lists, environment, out);
+    }
+    if let Some(cast) = &object.collection_cast {
+        trace_environment_edges(identity, bytes_lists, &cast.environment, out);
+    }
+    if let Some(mirror) = object.declaration_mirror {
+        push_id(identity, out, mirror);
+    }
+    if let Some(mirror) = object.module_mirror {
+        push_id(identity, out, mirror);
+    }
+    for values in object.mirror_annotations.values() {
+        for value in values {
+            push_value(identity, bytes_lists, out, value);
+        }
+    }
+    trace_environment_edges(identity, bytes_lists, &object.environment, out);
+    if let Some(Some(value)) = &object.collection_default {
+        push_value(identity, bytes_lists, out, value);
+    }
+    for value in object.member_values.values() {
+        push_value(identity, bytes_lists, out, value);
+    }
+    for value in &object.set_entries {
+        push_value(identity, bytes_lists, out, value);
+    }
+    for slot in &object.cache_slots {
+        push_value(identity, bytes_lists, out, &slot.value);
+        if let Some(entry_key) = &slot.entry_key {
+            push_value(identity, bytes_lists, out, entry_key);
+        }
+        if let Some(owner) = slot.key.owner {
+            push_id(identity, out, owner);
+        }
+    }
+    for (key, state) in &object.cache {
+        if let Some(owner) = key.owner {
+            push_id(identity, out, owner);
+        }
+        if let LazyState::Completed(value) = state {
+            push_value(identity, bytes_lists, out, value);
+        }
+    }
+}
+
+impl Heap {
     pub fn stats(&self) -> HeapStats {
         self.stats
-    }
-
-    fn traced_id(&self, value: &Value) -> Option<ObjectId> {
-        if let Value::Bytes(bytes) = value {
-            self.bytes_lists
-                .get(&bytes.reference())
-                .map(|(_, id, _)| *id)
-        } else {
-            value.heap_id()
-        }
     }
 
     /// Trace all object edges, including lazy captures and completed values, iteratively.
     /// The caller must include every externally retained handle in `roots`.
     pub fn collect(&mut self, roots: &[Value]) -> HeapStats {
-        let mut marked = vec![false; self.slots.len()];
-        let mut pending: Vec<ObjectId> = roots
-            .iter()
-            .filter_map(|value| self.traced_id(value))
-            .collect();
-        pending.extend(
-            self.bytes_lists
-                .values()
-                .filter_map(|(lifetime, id, constant)| {
-                    (*constant && lifetime.strong_count() != 0).then_some(*id)
-                }),
-        );
+        let identity = self.identity;
+        let slot_count = self.slots.len();
+        let mut marked = std::mem::take(&mut self.mark_scratch);
+        marked.clear();
+        marked.resize(slot_count, false);
+        let mut pending = std::mem::take(&mut self.pending_scratch);
+        pending.clear();
+        if pending.capacity() < slot_count.max(roots.len()) {
+            pending.reserve(slot_count.max(roots.len()) - pending.capacity());
+        }
+        for value in roots {
+            push_value(identity, &self.bytes_lists, &mut pending, value);
+        }
+        if !self.bytes_lists.is_empty() {
+            for (lifetime, id, constant) in self.bytes_lists.values() {
+                if *constant && lifetime.strong_count() != 0 && id.heap == identity {
+                    pending.push(*id);
+                }
+            }
+        }
+        // Per-slot cached outgoing edges are only used/populated when bytes_lists is
+        // empty, so Value::Bytes backlink insertions can never make cached edges stale.
+        let cache_edges = self.bytes_lists.is_empty();
         while let Some(id) = pending.pop() {
-            let Ok(entry) = self.entry(id) else { continue };
-            if marked[id.index] {
+            if id.heap != identity || id.index >= slot_count || marked[id.index] {
+                continue;
+            }
+            let slot = &self.slots[id.index];
+            if slot.generation != id.generation || slot.entry.is_none() {
                 continue;
             }
             marked[id.index] = true;
-            let object = match entry {
-                Entry::Class(class) => {
-                    pending.push(class.prototype);
-                    pending.extend(class.superclass);
-                    continue;
-                }
-                Entry::NullDefault(value) => {
-                    pending.extend(self.traced_id(value));
-                    continue;
-                }
-                Entry::Executable(state) => {
-                    pending.extend(
-                        state
-                            .code_roots
-                            .iter()
-                            .filter_map(|value| self.traced_id(value)),
+            if cache_edges {
+                if !self.slots[id.index].edges_valid {
+                    let mut edges = std::mem::take(&mut self.slots[id.index].edges);
+                    edges.clear();
+                    trace_entry_edges(
+                        identity,
+                        &self.bytes_lists,
+                        self.slots[id.index].entry.as_ref().expect("live entry"),
+                        &mut edges,
                     );
-                    pending.extend(state.children.values().map(|owner| owner.0));
-                    pending.extend(state.imported_modules.values().copied());
-                    pending.extend(state.glob_mappings.values().copied());
-                    for cache in state.method_calls.values() {
-                        cache.trace(&mut pending);
+                    if edges.len() > 1 {
+                        edges.sort_unstable_by_key(|edge| (edge.index, edge.generation));
+                        edges.dedup();
                     }
-                    continue;
+                    self.slots[id.index].edges = edges;
+                    self.slots[id.index].edges_valid = true;
                 }
-                Entry::CustomThis(value) => {
-                    pending.extend(value.iter().filter_map(|value| self.traced_id(value)));
-                    continue;
+                for &edge in &self.slots[id.index].edges {
+                    if edge.index < slot_count && !marked[edge.index] {
+                        pending.push(edge);
+                    }
                 }
-                Entry::Object(object) => object,
-            };
-            if let Some(mirror) = &object.mirror {
-                pending.extend(
-                    mirror
-                        .roots()
-                        .iter()
-                        .filter_map(|value| self.traced_id(value)),
+            } else {
+                trace_entry_edges(
+                    identity,
+                    &self.bytes_lists,
+                    self.slots[id.index].entry.as_ref().expect("live entry"),
+                    &mut pending,
                 );
-            }
-            pending.extend(object.parent);
-            pending.extend(object.instance_class);
-            pending.extend(object.method_declaration.map(|(owner, _)| owner));
-            if let Some(amendment) = &object.amendment {
-                pending.extend(self.traced_id(&amendment.parent));
-            }
-            if let Some(pair) = &object.pair {
-                pending.extend(pair.iter().filter_map(|value| self.traced_id(value)));
-            }
-            if let Some(entry) = &object.foreign_map_entry {
-                pending.extend(entry.iter().filter_map(|value| self.traced_id(value)));
-            }
-            pending.extend(
-                object
-                    .annotations
-                    .iter()
-                    .filter_map(|value| self.traced_id(value)),
-            );
-            pending.extend(
-                object
-                    .member_annotations
-                    .values()
-                    .flatten()
-                    .filter_map(|value| self.traced_id(value)),
-            );
-            pending.extend(
-                object
-                    .collection_cast
-                    .as_ref()
-                    .and_then(|cast| cast.node)
-                    .map(|node| (node.0).0),
-            );
-            if let Some(function) = &object.function {
-                pending.extend(
-                    function
-                        .captured_this
-                        .iter()
-                        .filter_map(|value| self.traced_id(value)),
-                );
-            }
-            if let Some(reference) = &object.reference {
-                pending.extend(self.traced_id(&reference.domain));
-                pending.extend(self.traced_id(&reference.data));
-                pending.extend(
-                    reference
-                        .path
-                        .iter()
-                        .filter_map(|value| self.traced_id(value)),
-                );
-                pending.extend(reference.classes.iter().copied());
-            }
-            if let Some(native) = &object.native_function {
-                pending.extend(self.traced_id(&native.receiver));
-            }
-            if let Some(order) = &object.map_key_order {
-                for member in order {
-                    pending.extend(self.traced_id(&member.key));
-                }
-            }
-            pending.extend(object.mapping_keys);
-            for member in &object.collection_members {
-                pending.extend(self.traced_id(&member.key));
-            }
-            if let Some(iterator) = &object.iterator {
-                pending.push(iterator.source);
-                for member in iterator.members.iter().chain(&iterator.force_members) {
-                    pending.extend(self.traced_id(&member.key));
-                }
-            }
-            if let Some(delegate) = &object.conversion_delegate {
-                pending.push(delegate.source);
-            }
-            if let Some(iterator) = &object.bytes_iterator {
-                pending.extend(self.traced_id(&crate::value::Value::Bytes(iterator.0.clone())));
-            }
-            if let Some(iterator) = &object.predicate_iterator {
-                pending.push(iterator.source);
-                pending.extend(
-                    iterator
-                        .previous_this
-                        .iter()
-                        .filter_map(|value| self.traced_id(value)),
-                );
-                for (owner, member) in &iterator.members {
-                    pending.push(*owner);
-                    pending.extend(self.traced_id(&member.key));
-                }
-            }
-            for environment in object
-                .member_environments
-                .values()
-                .chain(object.collection_cast.iter().map(|cast| &cast.environment))
-            {
-                pending.extend(environment.custom_this.map(|slot| slot.0));
-                pending.extend(environment.executable_owner.map(|owner| owner.0));
-                pending.extend(environment.code_owner.map(|owner| owner.0));
-                pending.extend(environment.local_owners.values().map(|(owner, _)| owner.0));
-                for scope in &environment.scopes {
-                    pending.push(scope.receiver);
-                    pending.push(scope.owner);
-                }
-                pending.extend(
-                    environment
-                        .locals
-                        .iter()
-                        .chain(environment.this_value.iter())
-                        .chain(environment.outer_value.iter())
-                        .filter_map(|value| self.traced_id(value)),
-                );
-            }
-            pending.extend(object.declaration_mirror);
-            pending.extend(object.module_mirror);
-            pending.extend(
-                object
-                    .mirror_annotations
-                    .values()
-                    .flatten()
-                    .filter_map(|value| self.traced_id(value)),
-            );
-            pending.extend(object.environment.custom_this.map(|slot| slot.0));
-            pending.extend(object.environment.executable_owner.map(|owner| owner.0));
-            pending.extend(object.environment.code_owner.map(|owner| owner.0));
-            pending.extend(
-                object
-                    .environment
-                    .local_owners
-                    .values()
-                    .map(|(owner, _)| owner.0),
-            );
-            for scope in &object.environment.scopes {
-                pending.push(scope.receiver);
-                pending.push(scope.owner);
-            }
-            for value in object
-                .environment
-                .locals
-                .iter()
-                .chain(object.environment.this_value.iter())
-                .chain(object.environment.outer_value.iter())
-                .chain(object.collection_default.iter().flatten())
-                .chain(object.member_values.values())
-                .chain(object.set_entries.iter())
-                .chain(object.cache_slots.iter().map(|slot| &slot.value))
-                .chain(
-                    object
-                        .cache_slots
-                        .iter()
-                        .filter_map(|slot| slot.entry_key.as_ref()),
-                )
-                .chain(object.cache.values().filter_map(|state| match state {
-                    LazyState::Completed(value) => Some(value),
-                    _ => None,
-                }))
-            {
-                if let Some(id) = self.traced_id(value) {
-                    pending.push(id);
-                }
-            }
-            for key in object
-                .cache
-                .keys()
-                .chain(object.cache_slots.iter().map(|slot| &slot.key))
-            {
-                pending.extend(key.owner);
             }
         }
+        let mut reclaimed_this_pass = 0usize;
         for (index, slot) in self.slots.iter_mut().enumerate() {
             if !marked[index]
                 && let Some(entry) = slot.entry.take()
             {
+                slot.edges.clear();
+                slot.edges_valid = false;
+                reclaimed_this_pass += 1;
                 self.stats.executable_live -= usize::from(matches!(entry, Entry::Executable(_)));
                 self.stats.live -= 1;
                 self.stats.reclaimed += 1;
@@ -1205,43 +1310,67 @@ impl Heap {
                 }
             }
         }
-        let live: std::collections::BTreeSet<_> = self
-            .slots
-            .iter()
-            .enumerate()
-            .filter_map(|(index, slot)| {
-                slot.object().map(|_| ObjectId {
-                    heap: self.identity,
-                    index,
-                    generation: slot.generation,
-                })
-            })
-            .collect();
-        self.bytes_lists
-            .retain(|_, (lifetime, id, _)| lifetime.strong_count() != 0 && live.contains(id));
-        self.key_equalities
-            .retain(|(a, b)| live.contains(a) && live.contains(b));
+        if !self.bytes_lists.is_empty() {
+            let slots = &self.slots;
+            self.bytes_lists.retain(|_, (lifetime, id, _)| {
+                lifetime.strong_count() != 0
+                    && id.heap == identity
+                    && slots.get(id.index).is_some_and(|slot| {
+                        slot.generation == id.generation && slot.object().is_some()
+                    })
+            });
+        }
+        if self.key_equalities.is_empty() {
+            self.last_retained_key_equalities_len = 0;
+        } else if reclaimed_this_pass > 0
+            || self.key_equalities.len() != self.last_retained_key_equalities_len
+        {
+            let slots = &self.slots;
+            self.key_equalities.retain(|(a, b)| {
+                a.heap == identity
+                    && b.heap == identity
+                    && slots.get(a.index).is_some_and(|slot| {
+                        slot.generation == a.generation && slot.object().is_some()
+                    })
+                    && slots.get(b.index).is_some_and(|slot| {
+                        slot.generation == b.generation && slot.object().is_some()
+                    })
+            });
+            self.last_retained_key_equalities_len = self.key_equalities.len();
+        }
         // Canonical keys are metadata, not roots. Retain only keys referenced by
         // live objects and their structural components.
-        let by_id: BTreeMap<_, _> = self
-            .structural_keys
-            .iter()
-            .map(|(key, id)| (*id, key))
-            .collect();
-        let mut pending: Vec<_> = self
-            .slots
-            .iter()
-            .filter_map(|slot| slot.object().and_then(|o| o.structural_key))
-            .collect();
-        let mut retained = std::collections::BTreeSet::new();
-        while let Some(id) = pending.pop() {
-            if retained.insert(id)
-                && let Some(key) = by_id.get(&id)
-            {
-                pending.extend(key.children());
+        if self.structural_keys.is_empty() {
+            self.structural_keys_dirty = false;
+            self.last_retained_structural_keys_len = 0;
+        } else if reclaimed_this_pass > 0
+            || self.structural_keys_dirty
+            || self.structural_keys.len() != self.last_retained_structural_keys_len
+        {
+            let by_id: BTreeMap<_, _> = self
+                .structural_keys
+                .iter()
+                .map(|(key, id)| (*id, key))
+                .collect();
+            let mut key_pending: Vec<_> = self
+                .slots
+                .iter()
+                .filter_map(|slot| slot.object().and_then(|o| o.structural_key))
+                .collect();
+            let mut retained = std::collections::BTreeSet::new();
+            while let Some(id) = key_pending.pop() {
+                if retained.insert(id)
+                    && let Some(key) = by_id.get(&id)
+                {
+                    key_pending.extend(key.children());
+                }
             }
+            self.structural_keys.retain(|_, id| retained.contains(id));
+            self.structural_keys_dirty = false;
+            self.last_retained_structural_keys_len = self.structural_keys.len();
         }
-        self.structural_keys.retain(|_, id| retained.contains(id));
+        self.mark_scratch = marked;
+        self.pending_scratch = pending;
         self.stats.collections += 1;
         self.stats
     }
@@ -1259,6 +1388,11 @@ impl Heap {
         self.stats.collections += 1;
         self.slots = Vec::new();
         self.free = Vec::new();
+        self.mark_scratch = Vec::new();
+        self.pending_scratch = Vec::new();
+        self.structural_keys_dirty = false;
+        self.last_retained_structural_keys_len = 0;
+        self.last_retained_key_equalities_len = 0;
         self.structural_keys = BTreeMap::new();
         self.key_equalities.clear();
         self.bytes_lists.clear();

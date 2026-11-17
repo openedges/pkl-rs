@@ -333,6 +333,7 @@ impl Vm {
                 let value = run.value.ok_or_else(cannot_infer_parent)?;
                 if let Some(key) = cache {
                     self.type_parent_defaults.insert(key, value.clone());
+                    self.declaration_roots_dirty = true;
                 }
                 self.stack.push(value);
                 return Ok(());
@@ -341,6 +342,7 @@ impl Vm {
                 if let Some(value) = run.value {
                     if let Some(key) = cache {
                         self.type_parent_defaults.insert(key, value.clone());
+                        self.declaration_roots_dirty = true;
                     }
                     self.stack.push(value);
                     return Ok(());

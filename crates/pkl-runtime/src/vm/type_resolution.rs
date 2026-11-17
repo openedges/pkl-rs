@@ -232,7 +232,7 @@ impl Vm {
         Err(invalid("cyclic lexical type owner"))
     }
 
-    fn alias_check_environment(
+    pub(super) fn alias_check_environment(
         &self,
         declaration: usize,
         environment: &Environment,
@@ -901,6 +901,7 @@ impl Vm {
             };
             self.resolved_declarations
                 .insert((need.recipe, need.owner), value);
+            self.declaration_roots_dirty = true;
             if retry_instruction {
                 self.frames.last_mut().expect("type frame").pc -= 1;
             }
@@ -941,6 +942,7 @@ impl Vm {
                             fallback.clone().map_err(|error| error.at(recipe.span))?,
                         ),
                     );
+                    self.declaration_roots_dirty = true;
                     if retry_instruction {
                         self.frames.last_mut().expect("type frame").pc -= 1;
                     }
@@ -1028,6 +1030,7 @@ impl Vm {
                             error.at(recipe.span)
                         })?),
                     );
+                    self.declaration_roots_dirty = true;
                     if run.retry_instruction {
                         self.frames.last_mut().expect("type frame").pc -= 1;
                     }
@@ -1082,6 +1085,7 @@ impl Vm {
                     (run.need.recipe, run.need.owner),
                     DeclarationValue::Value(value),
                 );
+                self.declaration_roots_dirty = true;
                 if run.retry_instruction {
                     self.frames.last_mut().unwrap().pc -= 1;
                 }

@@ -217,14 +217,35 @@ pub(crate) enum Data {
     Location(RuntimeFrame),
 }
 impl Payload {
-    pub(crate) fn roots(&self) -> Vec<Value> {
+    pub(crate) fn roots(&self, roots: &mut Vec<Value>) {
         match &self.data {
-            Data::Module(id) | Data::TypeAlias(id) => vec![Value::Object(*id)],
-            Data::Member(declaration) => vec![Value::Object(declaration.owner)],
-            Data::Recipe { context, .. } => vec![Value::Object(context.owner)],
-            Data::Class(id) => vec![Value::Class(*id)],
-            Data::Fields(fields) => fields.iter().map(|(_, value)| value.clone()).collect(),
-            Data::Location(_) => Vec::new(),
+            Data::Module(id) | Data::TypeAlias(id) => roots.push(Value::Object(*id)),
+            Data::Member(declaration) => roots.push(Value::Object(declaration.owner)),
+            Data::Recipe { context, .. } => roots.push(Value::Object(context.owner)),
+            Data::Class(id) => roots.push(Value::Class(*id)),
+            Data::Fields(fields) => {
+                roots.extend(fields.iter().map(|(_, value)| value.clone()));
+            }
+            Data::Location(_) => {}
+        }
+    }
+    pub(crate) fn for_each_edge<T>(
+        &self,
+        state: &mut T,
+        mut on_id: impl FnMut(&mut T, ObjectId),
+        mut on_value: impl FnMut(&mut T, &Value),
+    ) {
+        match &self.data {
+            Data::Module(id) | Data::TypeAlias(id) => on_id(state, *id),
+            Data::Member(declaration) => on_id(state, declaration.owner),
+            Data::Recipe { context, .. } => on_id(state, context.owner),
+            Data::Class(id) => on_id(state, *id),
+            Data::Fields(fields) => {
+                for (_, value) in fields {
+                    on_value(state, value);
+                }
+            }
+            Data::Location(_) => {}
         }
     }
     fn fields(kind: Kind, fields: Vec<(&'static str, Value)>) -> Self {
@@ -347,8 +368,8 @@ pub(super) struct Run {
     waiting: bool,
 }
 impl Run {
-    pub(super) fn roots(&self) -> Vec<Value> {
-        let mut roots = self.values.clone();
+    pub(super) fn roots(&self, roots: &mut Vec<Value>) {
+        roots.extend(self.values.iter().cloned());
         for task in &self.tasks {
             match task {
                 Task::Call(_, receiver, arguments) => {
@@ -358,7 +379,7 @@ impl Run {
                 Task::Make(payload)
                 | Task::FactoryClass(payload)
                 | Task::Allocate(payload)
-                | Task::Field(payload, _) => roots.extend(payload.roots()),
+                | Task::Field(payload, _) => payload.roots(roots),
                 Task::Read(id, _)
                 | Task::ReadDeclared { owner: id, .. }
                 | Task::ResolveSimpleBase { module: id, .. } => roots.push(Value::Object(*id)),
@@ -393,7 +414,6 @@ impl Run {
                 | Task::AsModuleMirror => (),
             }
         }
-        roots
     }
     fn new(task: Task) -> Self {
         Self {

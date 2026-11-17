@@ -386,6 +386,7 @@ impl Vm {
         let owner = self.heap.allocate_executable();
         self.code_arenas
             .push(arena.finish(Arc::make_mut(&mut self.program), owner, true));
+        self.declaration_roots_dirty = true;
         self.frames.last_mut().unwrap().environment.executable_owner = Some(owner);
         self.frames.last_mut().unwrap().environment.code_owner = Some(owner);
         self.frames
@@ -1184,6 +1185,7 @@ impl Vm {
         let entry = program.units[unit.0 as usize].entry;
         let owner = self.heap.allocate_executable();
         self.code_arenas.push(arena.finish(program, owner, false));
+        self.declaration_roots_dirty = true;
         self.heap.get_mut(receiver)?.environment.code_owner = Some(owner);
         self.state = State::Running;
         self.push_module_initializer(entry, Some(receiver));

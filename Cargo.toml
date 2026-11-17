@@ -17,6 +17,9 @@ unsafe_code = "deny"
 lto = "thin"
 codegen-units = 1
 
+[profile.dev.package.pkl-runtime]
+opt-level = 2
+
 [profile.test.package.pkl-runtime]
 opt-level = 2
 

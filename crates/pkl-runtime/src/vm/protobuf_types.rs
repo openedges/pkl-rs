@@ -198,8 +198,9 @@ impl Vm {
     fn protobuf_normalize_type(
         &mut self,
         ty: &TypeCheck,
+        property_env: &Environment,
         wrapper: bool,
-    ) -> Result<Option<TypeCheck>, RuntimeError> {
+    ) -> Result<Option<Option<TypeCheck>>, RuntimeError> {
         use TypeCheck as T;
         let normalized = match ty.resolved() {
             T::IntegerAlias { .. } => T::Int,
@@ -208,21 +209,53 @@ impl Vm {
                 string_literals: true,
                 ..
             } => T::String,
-            T::Nullable(inner)
-            | T::Alias(inner)
-            | T::GenericAlias(inner)
-            | T::NamedAlias {
-                expanded: inner, ..
-            } => return self.protobuf_normalize_type(inner, wrapper),
+            T::Nullable(inner) | T::Alias(inner) | T::GenericAlias(inner) => {
+                return self.protobuf_normalize_type(inner, property_env, wrapper);
+            }
+            T::NamedAlias {
+                declaration,
+                expanded: inner,
+                ..
+            } => {
+                // Upstream RendererNodes.resolveType calls getVmTypeAlias().getTypeNode(),
+                // normalizing the unparameterized alias body where TypeVariableNode leaves
+                // unbound type parameters as Unknown (getVmClass() == null).
+                if let Some(metadata) = self.program.alias_definitions.get(declaration).cloned()
+                    && !metadata.parameters.is_empty()
+                {
+                    let mut lexical = self
+                        .alias_check_environment(*declaration, property_env)?
+                        .ok_or_else(|| invalid("protobuf type alias lexical owner missing"))?;
+                    for name in &metadata.parameters {
+                        lexical
+                            .type_arguments
+                            .insert((*declaration, name.clone()), T::Unknown);
+                    }
+                    let body = metadata.body.substituted(&lexical)?;
+                    let Some(unparameterized) =
+                        self.resolve_runtime_type(&body, &lexical, false)?
+                    else {
+                        return Ok(None);
+                    };
+                    return self.protobuf_normalize_type(&unparameterized, &lexical, wrapper);
+                }
+                let next_env = self
+                    .alias_check_environment(*declaration, property_env)?
+                    .unwrap_or_else(|| property_env.clone());
+                return self.protobuf_normalize_type(inner, &next_env, wrapper);
+            }
             T::ParameterizedCollection {
                 kind: CollectionKind::Listing,
                 arguments,
             } => {
-                let value = self
-                    .protobuf_normalize_type(&arguments[0].0, wrapper)?
-                    .ok_or_else(|| invalid("protobuf normalized Listing element"))?;
-                if wrapper {
+                let Some(inner) =
+                    self.protobuf_normalize_type(&arguments[0].0, property_env, wrapper)?
+                else {
                     return Ok(None);
+                };
+                let value = inner.ok_or_else(|| invalid("protobuf normalized Listing element"))?;
+                if wrapper {
+                    return Ok(Some(None));
                 }
                 T::ParameterizedCollection {
                     kind: CollectionKind::Listing,
@@ -233,7 +266,11 @@ impl Vm {
                 kind: CollectionKind::Mapping,
                 arguments,
             } => {
-                let key = self.protobuf_normalize_type(&arguments[0].0, wrapper)?;
+                let Some(key) =
+                    self.protobuf_normalize_type(&arguments[0].0, property_env, wrapper)?
+                else {
+                    return Ok(None);
+                };
                 if !matches!(
                     key.as_ref().map(TypeCheck::resolved),
                     Some(T::Int | T::String | T::Boolean)
@@ -262,11 +299,14 @@ impl Vm {
                     }
                     return Err(error);
                 }
-                let value = self
-                    .protobuf_normalize_type(&arguments[1].0, wrapper)?
-                    .ok_or_else(|| invalid("protobuf normalized Mapping value"))?;
-                if wrapper {
+                let Some(inner) =
+                    self.protobuf_normalize_type(&arguments[1].0, property_env, wrapper)?
+                else {
                     return Ok(None);
+                };
+                let value = inner.ok_or_else(|| invalid("protobuf normalized Mapping value"))?;
+                if wrapper {
+                    return Ok(Some(None));
                 }
                 T::ParameterizedCollection {
                     kind: CollectionKind::Mapping,
@@ -277,7 +317,10 @@ impl Vm {
                 let mut elements = Vec::new();
                 let mut has_string = false;
                 for element in types {
-                    let resolved = self.protobuf_normalize_type(element, wrapper)?.ok_or_else(|| RuntimeError::new(ErrorKind::Unsupported, "Pinned Protobuf union contains a null normalized collection node in wrapper context; Java internal-error projection remains unresolved."))?;
+                    let Some(resolved) = self.protobuf_normalize_type(element, property_env, wrapper)? else {
+                        return Ok(None);
+                    };
+                    let resolved = resolved.ok_or_else(|| RuntimeError::new(ErrorKind::Unsupported, "Pinned Protobuf union contains a null normalized collection node in wrapper context; Java internal-error projection remains unresolved."))?;
                     if matches!(resolved.resolved(), T::String) {
                         if has_string {
                             continue;
@@ -326,7 +369,7 @@ impl Vm {
                     .map(|index| keyed[index].0.clone())
                     .collect();
                 if has_string && types.len() == 1 {
-                    return Ok(types.into_iter().next());
+                    return Ok(Some(types.into_iter().next()));
                 }
                 T::Union {
                     spans: vec![Span::new(0, 0); types.len()],
@@ -337,11 +380,11 @@ impl Vm {
                 }
             }
             // Unlike Listing/Mapping, List/Map/Set arguments are NOT normalized.
-            _ => return Ok(Some(ty.clone())),
+            _ => return Ok(Some(Some(ty.clone()))),
         };
-        Ok(Some(
+        Ok(Some(Some(
             normalized.with_optional_source_section(ty.source_section()),
-        ))
+        )))
     }
 
     fn protobuf_alternatives(ty: &TypeCheck, output: &mut Vec<TypeCheck>) {
