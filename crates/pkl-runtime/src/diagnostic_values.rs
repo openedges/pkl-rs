@@ -478,9 +478,24 @@ impl Renderer<'_> {
         }
         self.tasks.push(RenderTask::Exit(id));
         if self.heap.get(id)?.foreign_map_entry.is_some() {
-            return Err(RuntimeError::new(
-                ErrorKind::Unsupported,
-                "Foreign Map.Entry rendering has a pinned Java internal-error protocol that remains unresolved.",
+            let is_set = self
+                .tasks
+                .iter()
+                .rev()
+                .find_map(|task| match task {
+                    RenderTask::Members { id, .. } => self
+                        .heap
+                        .get(*id)
+                        .ok()
+                        .map(|object| object.collection_kind == CollectionKind::Set),
+                    _ => None,
+                })
+                .unwrap_or(false);
+            return Err(RuntimeError::foreign(
+                crate::java_exception::provenance::ForeignOperation::KeyValueHolderTypeVisitor {
+                    is_set,
+                },
+                "Unknown VM value type: java.util.KeyValueHolder",
             ));
         }
         if let Some(pair) = &self.heap.get(id)?.pair {

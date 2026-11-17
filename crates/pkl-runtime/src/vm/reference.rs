@@ -936,7 +936,7 @@ impl Vm {
                     &native.receiver,
                     &self.heap,
                     &self.program.module_name,
-                )?
+                )
             } else {
                 match &native.receiver {
                     Value::TypeAlias(_)
@@ -947,8 +947,19 @@ impl Vm {
                         &self.heap,
                         &self.program.module_name,
                         usize::MAX,
-                    )?,
-                    value => scalar_string(value)?,
+                    ),
+                    value => scalar_string(value),
+                }
+            };
+            let text = match text {
+                Ok(text) => text,
+                Err(mut error) => {
+                    if error.foreign_exception.is_some()
+                        && let Some(declaration) = any::native_declaration(&native.name)
+                    {
+                        error.frames.push(declaration);
+                    }
+                    return Err(error);
                 }
             };
             self.stack.push(Value::string(text));

@@ -44,12 +44,12 @@ class SelectedOriginalTests(unittest.TestCase):
         self.entries = selected.registry_cases(self.root)
         self.cases = [selected.manifest_case(c, self.entries.get('m2:'+c['id'])) for c in originals['cases']]
 
-    def test_exact_two_original_commands_and_t36_unresolved(self):
+    def test_three_original_commands_resolved(self):
         self.assertEqual(list(self.entries), ['m2:'+name for name in selected.SELECTED])
-        self.assertEqual(len(self.registry['resources']), 7)
-        self.assertIsNone(self.cases[0]['adapter'])
-        self.assertEqual(self.cases[0]['execution']['state'], 'unimplemented')
-        for case in self.cases[1:]:
+        self.assertEqual(len(self.registry['resources']), 12)
+        for case in self.cases:
+            self.assertEqual(case['adapter'], selected.ADAPTER)
+            self.assertEqual(case['execution']['state'], 'ready')
             self.assertEqual(case['upstream_case'], case['regression_case'])
             command = case['upstream_case']['command']
             self.assertIn('--color=never', command)
@@ -88,7 +88,7 @@ class SelectedOriginalTests(unittest.TestCase):
         for change in ['extra', 'duplicate', 'reorder']:
             broken = copy.deepcopy(self.registry)
             if change == 'extra':
-                broken['cases'].append(dict(id='m2:rev1:t36-foreign-nominal-identity'))
+                broken['cases'].append(dict(id='m2:rev1:unknown-extra-case'))
             elif change == 'duplicate':
                 broken['cases'].append(copy.deepcopy(broken['cases'][0]))
             else:
@@ -96,31 +96,29 @@ class SelectedOriginalTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 selected.registry_cases(self.root, broken)
 
-    def test_manifest_cannot_promote_t36_or_rewrite_original(self):
-        for change in ['t36', 'contract', 'unknown']:
+    def test_manifest_cannot_promote_unknown_or_rewrite_original(self):
+        for change in ['contract', 'unknown']:
             cases = copy.deepcopy(self.cases)
-            if change == 't36':
-                cases[0]['adapter'] = selected.ADAPTER
-            elif change == 'contract':
+            if change == 'contract':
                 cases[1]['upstream_case']['command'].append('--no-cache')
             else:
                 cases.append(dict(id='other', adapter=selected.ADAPTER))
             with self.assertRaises(ValueError):
                 selected.validate_manifest(self.root, dict(cases=cases))
 
-    def test_workspace_is_exact_and_fresh_without_project_files(self):
+    def test_workspace_is_exact_and_fresh_with_resources(self):
         output = self.root/'target/evidence'
         output.mkdir()
         workspace = self.root/'target/workspace'
         baseline = selected.prepare_workspace(self.root, workspace, output, self.registry)
         self.assertEqual(baseline, selected.resource_baseline(self.registry))
-        self.assertFalse(any('t36' in name or 'PklProject' in name for name in baseline))
+        self.assertTrue(any('t36' in name and 'PklProject' in name for name in baseline))
         for row in self.registry['resources']:
             self.assertEqual((workspace/row['path']).read_bytes(), (self.root/row['path']).read_bytes())
         with self.assertRaises(ValueError):
             selected.prepare_workspace(self.root, workspace, output, self.registry)
 
-    def test_capture_requires_both_ids_and_reuses_original_four_channel_path(self):
+    def test_capture_requires_all_ids_and_reuses_original_four_channel_path(self):
         output = self.root/'target/evidence'
         output.mkdir()
         calls = []
@@ -129,12 +127,12 @@ class SelectedOriginalTests(unittest.TestCase):
             calls.append(case['id'])
             return dict(id=case['id'], adapter=m2_module_eval.ADAPTER, status='mismatch')
         with patch.object(m2_module_eval, 'acquire_case', side_effect=capture):
-            rows, context = selected.acquire(self.root, output, self.cases[1:], {}, Path('/unexecuted/probe'))
+            rows, context = selected.acquire(self.root, output, self.cases, {}, Path('/unexecuted/probe'))
         self.assertEqual(calls, list(self.entries))
-        self.assertEqual([r['adapter'] for r in rows], [selected.ADAPTER]*2)
-        self.assertEqual([r['status'] for r in rows], ['mismatch']*2)
+        self.assertEqual([r['adapter'] for r in rows], [selected.ADAPTER]*3)
+        self.assertEqual([r['status'] for r in rows], ['mismatch']*3)
         self.assertEqual(selected.verify_context(self.root, output, context), selected.resource_baseline(self.registry))
-        for cases in [self.cases[1:2], self.cases[:1], list(reversed(self.cases[1:]))]:
+        for cases in [self.cases[1:], self.cases[:1], list(reversed(self.cases))]:
             with self.assertRaises(ValueError):
                 selected.acquire(self.root, output, cases, {}, Path('/unexecuted/probe'))
         context['historical_results_reused'] = True
@@ -243,7 +241,7 @@ class SelectedOriginalTests(unittest.TestCase):
         workspace = self.root/'target/cli-workspace'
         candidate = self.root/'target/cli-candidate'
         candidate.write_bytes(b'never executed')
-        report = dict(status_counts={'mismatch': 2}, full_gate_failures=['unexecuted required scope'])
+        report = dict(status_counts={'mismatch': 3}, full_gate_failures=['unexecuted required scope'])
         argv = ['m2_language.py', '--output', str(output), '--adapter', selected.ADAPTER,
                 '--module-candidate', str(candidate), '--selected-regression-workspace',
                 str(workspace), '--record-only']

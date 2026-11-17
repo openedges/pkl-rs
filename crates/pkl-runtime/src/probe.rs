@@ -1022,6 +1022,7 @@ impl SourceProbe {
             } else {
                 FrameTransformer::Default
             },
+            platform_data: false,
         })
     }
     pub fn new_output(
@@ -1274,6 +1275,9 @@ impl SourceProbe {
     }
     pub fn set_glob_test_mode(&mut self, enabled: bool) -> Result<(), RuntimeError> {
         self.session.set_glob_test_mode(enabled)
+    }
+    pub fn set_platform_metadata(&mut self, metadata: Option<crate::logging::PlatformMetadata>) {
+        self.session.set_platform_metadata(metadata);
     }
     pub fn glob_request(&self, token: &str) -> Result<crate::glob::GlobRequest, RuntimeError> {
         self.session.glob_request(token)

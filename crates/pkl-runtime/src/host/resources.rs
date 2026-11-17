@@ -763,9 +763,7 @@ pub(crate) fn prepare_module_uri(
         return Ok((parsed.text.clone(), parsed.text));
     }
     if parsed.scheme.is_none() && parsed.path.starts_with("@") {
-        return Err(unsupported(
-            "Module dependency and triple-dot resolution is not implemented.",
-        ));
+        return Ok((parsed.text.clone(), parsed.text));
     }
     let parsed = if parsed.scheme.is_none() && base.is_none() {
         parsed
@@ -822,6 +820,7 @@ pub(crate) fn resolve_module_key_uri(
     base: &PklString,
 ) -> Result<PklString, RuntimeError> {
     ResourceUri::parse(uri)
+        .or_else(|_| ResourceUri::from_authored(uri))
         .map_err(|_| unsupported("Invalid parsed module URI."))?
         .resolve_module(Some(base))
         .map(|uri| uri.text)

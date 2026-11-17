@@ -29,8 +29,11 @@ pub(super) fn valid(text: &PklString) -> Result<bool, RuntimeError> {
                 }
                 i += 1;
                 if i == units.len() {
-                    return Err(RuntimeError::new(
-                        ErrorKind::Unsupported,
+                    return Err(RuntimeError::foreign(
+                        crate::java_exception::provenance::ForeignOperation::GlobCharacterClassBounds {
+                            index: i,
+                            length: units.len(),
+                        },
                         "String.isGlobPattern encountered the pinned Java character-class index bug.",
                     ));
                 }

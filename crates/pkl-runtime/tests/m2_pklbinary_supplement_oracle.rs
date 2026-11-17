@@ -35,6 +35,7 @@ fn failure(failure: ModuleFrontendFailure, log_events: usize) -> Observation {
             FailureDisposition::Unsupported => b"unsupported\n",
             FailureDisposition::LimitExceeded => b"limit\n",
             FailureDisposition::InternalFailure => b"internal-failure\n",
+            FailureDisposition::OracleError => b"oracle-error\n",
         },
         bytes: Vec::new(),
         diagnostic: failure.text,

@@ -290,12 +290,11 @@ impl RuntimeError {
     /// Java wraps these causes in VmBugException (a catchable VmException).
     pub(crate) fn foreign(
         operation: crate::java_exception::provenance::ForeignOperation,
-        message: impl Into<PklString>,
+        _message: impl Into<PklString>,
     ) -> Self {
-        let mut error = Self::new(ErrorKind::Unsupported, message);
-        error.foreign_exception = Some(Arc::new(
-            crate::java_exception::provenance::ForeignExceptionProvenance::new(operation),
-        ));
+        let prov = crate::java_exception::provenance::ForeignExceptionProvenance::new(operation);
+        let mut error = Self::new(ErrorKind::Unsupported, prov.message.clone());
+        error.foreign_exception = Some(Arc::new(prov));
         error
     }
 

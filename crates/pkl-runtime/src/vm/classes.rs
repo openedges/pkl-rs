@@ -90,9 +90,9 @@ pub(super) fn runtime_class(value: &Value, heap: &Heap) -> Result<RuntimeClass, 
         Value::Object(id) => {
             let object = heap.get(*id)?;
             if object.foreign_map_entry.is_some() {
-                return Err(RuntimeError::new(
-                    ErrorKind::Unsupported,
-                    "Foreign Map.Entry class/method access has a pinned Java internal-error protocol that remains unresolved.",
+                return Err(RuntimeError::foreign(
+                    crate::java_exception::provenance::ForeignOperation::KeyValueHolderClassCast,
+                    "class java.util.KeyValueHolder cannot be cast to class org.pkl.core.runtime.VmValue (java.util.KeyValueHolder is in module java.base of loader 'bootstrap'; org.pkl.core.runtime.VmValue is in unnamed module of loader 'app')",
                 ));
             }
             if object.pair.is_some() {
@@ -469,66 +469,80 @@ impl Vm {
     }
 
     pub(super) fn canonical_builtin_class(&mut self, key: BuiltinClass) -> ObjectId {
-        if let Some(id) = self.builtin_classes.get(&key) {
-            return *id;
+        let mut chain = vec![key];
+        let mut current = key;
+        while let Some(parent) = current.parent() {
+            if self.builtin_classes.contains_key(&parent) {
+                break;
+            }
+            chain.push(parent);
+            current = parent;
         }
-        let id = key.id();
-        let members = if key == BuiltinClass::Access {
-            self.program.access_members.clone()
-        } else {
-            self.program
-                .builtin_members
-                .get(&id)
-                .cloned()
-                .unwrap_or_default()
-        };
-        let prototype = self.heap.allocate(Object {
-            members,
-            collection_kind: match key {
-                BuiltinClass::Listing => CollectionKind::Listing,
-                BuiltinClass::Mapping => CollectionKind::Mapping,
-                _ => CollectionKind::Dynamic,
-            },
-            builtin_type: Some(key.ty()),
-            class_definition: Some(Class {
-                module: Some(
-                    if matches!(
-                        key,
-                        BuiltinClass::Reference | BuiltinClass::Domain | BuiltinClass::Access
-                    ) {
-                        "pkl.ref"
-                    } else {
-                        "pkl.base"
-                    }
-                    .into(),
-                ),
-                origin_uri: Some(
-                    if matches!(
-                        key,
-                        BuiltinClass::Reference | BuiltinClass::Domain | BuiltinClass::Access
-                    ) {
-                        "pkl:ref"
-                    } else {
-                        "pkl:base"
-                    }
-                    .into(),
-                ),
-                id,
-                name: key.name().into(),
-                abstract_: key.abstract_(),
-                open: matches!(key, BuiltinClass::Ordinary(id) if builtins::open_class(id)),
-            }),
-            ..Object::default()
-        });
-        let class = self.heap.allocate_class(prototype);
-        self.builtin_classes.insert(key, class);
-        let superclass = key
-            .parent()
-            .map(|parent| self.canonical_builtin_class(parent));
-        self.heap
-            .link_superclass(class, superclass)
-            .expect("new builtin class graph");
-        class
+        while let Some(key) = chain.pop() {
+            if self.builtin_classes.contains_key(&key) {
+                continue;
+            }
+            let id = key.id();
+            let members = if key == BuiltinClass::Access {
+                self.program.access_members.clone()
+            } else {
+                self.program
+                    .builtin_members
+                    .get(&id)
+                    .cloned()
+                    .unwrap_or_default()
+            };
+            let prototype = self.heap.allocate(Object {
+                members,
+                collection_kind: match key {
+                    BuiltinClass::Listing => CollectionKind::Listing,
+                    BuiltinClass::Mapping => CollectionKind::Mapping,
+                    _ => CollectionKind::Dynamic,
+                },
+                builtin_type: Some(key.ty()),
+                class_definition: Some(Class {
+                    module: Some(
+                        if matches!(
+                            key,
+                            BuiltinClass::Reference | BuiltinClass::Domain | BuiltinClass::Access
+                        ) {
+                            "pkl.ref"
+                        } else {
+                            "pkl.base"
+                        }
+                        .into(),
+                    ),
+                    origin_uri: Some(
+                        if matches!(
+                            key,
+                            BuiltinClass::Reference | BuiltinClass::Domain | BuiltinClass::Access
+                        ) {
+                            "pkl:ref"
+                        } else {
+                            "pkl:base"
+                        }
+                        .into(),
+                    ),
+                    id,
+                    name: key.name().into(),
+                    abstract_: key.abstract_(),
+                    open: matches!(key, BuiltinClass::Ordinary(id) if builtins::open_class(id)),
+                }),
+                ..Object::default()
+            });
+            let class = self.heap.allocate_class(prototype);
+            self.builtin_classes.insert(key, class);
+            let superclass = key
+                .parent()
+                .and_then(|parent| self.builtin_classes.get(&parent).copied());
+            self.heap
+                .link_superclass(class, superclass)
+                .expect("new builtin class graph");
+        }
+        *self
+            .builtin_classes
+            .get(&key)
+            .expect("canonical builtin class")
     }
 
     pub(super) fn builtin_class(&mut self, ty: TypeCheck) -> Value {

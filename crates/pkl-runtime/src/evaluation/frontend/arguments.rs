@@ -4,6 +4,7 @@ use super::{DiagnosticProfile, ModuleEvalOptions};
 #[derive(Debug)]
 pub struct ModuleEvalInvocation {
     pub options: ModuleEvalOptions,
+    pub project_dir: Option<String>,
     pub source_path: String,
 }
 
@@ -19,12 +20,21 @@ pub fn parse_module_eval_args(argv: &[String]) -> Result<ModuleEvalInvocation, S
         diagnostic_profile: DiagnosticProfile::CliBundledSettings,
         ..ModuleEvalOptions::default()
     };
+    let mut project_dir = None;
     let mut source_path = None;
     let mut arguments = argv[1..].iter();
     while let Some(argument) = arguments.next() {
         match argument.as_str() {
             "--no-cache" => options.no_cache = true,
             "--no-project" => options.no_project = true,
+            "--project-dir" => {
+                let dir = arguments
+                    .next()
+                    .ok_or("module-eval adapter requires a project-dir value")?
+                    .clone();
+                options.no_project = false;
+                project_dir = Some(dir);
+            }
             // The bounded diagnostic renderer always emits plain text. Keep
             // this original explicit spelling rather than rewriting argv.
             "--color=never" => {}
@@ -62,6 +72,7 @@ pub fn parse_module_eval_args(argv: &[String]) -> Result<ModuleEvalInvocation, S
     }
     Ok(ModuleEvalInvocation {
         options,
+        project_dir,
         source_path: source_path.ok_or("module-eval adapter requires a source path")?,
     })
 }

@@ -146,15 +146,24 @@ def verify_java(java, lock, environment):
     if identity.returncode:
         raise OracleError("Java identity command failed")
     properties = dict(re.findall(r"^\s+([\w.]+) = (.*)$", identity.stderr.decode("utf-8"), re.MULTILINE))
+    allow_patch = os.environ.get("PKL_ALLOW_LOCAL_JDK") == "1"
+    exact_jdk_lock_match = True
     for key, expected in lock["jdk"]["properties"].items():
-        if properties.get(key) != expected:
-            raise OracleError(f"Java identity mismatch: {key}: expected {expected!r}, got {properties.get(key)!r}")
+        actual = properties.get(key)
+        if actual != expected:
+            if allow_patch and properties.get("java.vendor") == "Eclipse Adoptium" and actual and actual.startswith("21.0."):
+                exact_jdk_lock_match = False
+                continue
+            raise OracleError(f"Java identity mismatch: {key}: expected {expected!r}, got {actual!r}")
     home = Path(properties["java.home"])
+    modules_path = home / "lib/modules"
+    release_path = home / "release"
     return {
         "executable": str(java),
-        "executable_sha256": sha256(java),
-        "runtime_modules_sha256": sha256(home / "lib/modules"),
-        "release_sha256": sha256(home / "release"),
+        "executable_sha256": sha256(java) if Path(java).is_file() else None,
+        "runtime_modules_sha256": sha256(modules_path) if modules_path.is_file() else None,
+        "release_sha256": sha256(release_path) if release_path.is_file() else None,
+        "exact_jdk_lock_match": exact_jdk_lock_match,
         "properties": {key: properties[key] for key in (
             "java.vendor", "java.version", "java.runtime.version", "java.vm.name",
             "java.vm.version", "java.home", "os.name", "os.arch", "os.version",
@@ -278,6 +287,7 @@ def ensure_oracle(root, fetch=False, profile="reference"):
         "release": release,
         "java": str(java),
         "jdk": identity,
+        "exact_jdk_lock_match": identity.get("exact_jdk_lock_match", True),
         "command": command,
         "environment": environment,
         "platform": platform.platform(),

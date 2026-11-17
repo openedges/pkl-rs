@@ -736,20 +736,23 @@ impl Vm {
         use crate::modules::ModuleHostError as Failure;
         if matches!(
             &completion,
-            ModuleCompletion::KeySelected(Err(
-                Failure::NotFound | Failure::SecurityManagerException { .. }
-            )) | ModuleCompletion::FragmentPaths(Err(Failure::NotFound
-                | Failure::NoLoader
-                | Failure::Io(_)
-                | Failure::UriSyntax { .. }
-                | Failure::ExternalReaderProcess { .. }
-                | Failure::SecurityManagerException { .. }))
+            ModuleCompletion::KeySelected(Err(Failure::NotFound
+                | Failure::SecurityManagerException { .. }
+                | Failure::EvalError { .. }))
+                | ModuleCompletion::FragmentPaths(Err(Failure::NotFound
+                    | Failure::NoLoader
+                    | Failure::Io(_)
+                    | Failure::UriSyntax { .. }
+                    | Failure::ExternalReaderProcess { .. }
+                    | Failure::SecurityManagerException { .. }
+                    | Failure::EvalError { .. }))
                 | ModuleCompletion::CachePolicy(Err(Failure::NotFound
                     | Failure::NoLoader
                     | Failure::Io(_)
                     | Failure::UriSyntax { .. }
                     | Failure::ExternalReaderProcess { .. }
-                    | Failure::SecurityManagerException { .. }))
+                    | Failure::SecurityManagerException { .. }
+                    | Failure::EvalError { .. }))
                 | ModuleCompletion::Resolved(Err(Failure::NoLoader))
                 | ModuleCompletion::KeyResolved(Err(Failure::NoLoader))
                 | ModuleCompletion::Source(Err(Failure::NoLoader
@@ -1294,6 +1297,9 @@ pub(super) fn imported_diagnostic(
                 }
             }),
     });
+    if let Some(foreign) = &diagnostic.provenance.foreign_exception {
+        error.foreign_exception = Some(foreign.clone());
+    }
     error.frontend = Some(Arc::new(crate::modules::ModuleDiagnostic {
         diagnostic,
         source,

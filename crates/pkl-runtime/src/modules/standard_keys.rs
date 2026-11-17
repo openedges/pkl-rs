@@ -27,13 +27,15 @@ fn selected_kind(uri: &PklString) -> Result<Option<ModuleKeyKind>, ModuleHostErr
     }
     if scheme.eq_ignore_ascii_case("package") || scheme.eq_ignore_ascii_case("projectpackage") {
         match crate::packages::PackageAssetUri::parse(uri) {
-            Ok(_) => return Err(ModuleHostError::Unsupported(
-                "Package URI validation succeeded, but package/project source resolution is not implemented.".into(),
-            )),
+            Ok(_) => return Ok(Some(ModuleKeyKind::StandardGenericUrl)),
             Err(failure) => {
                 return Err(match &failure.failure {
-                    crate::packages::PackageUriFailure::Unsupported(reason) => ModuleHostError::Unsupported(reason.clone()),
-                    _ => ModuleHostError::UriSyntax { reason: failure.reason() },
+                    crate::packages::PackageUriFailure::Unsupported(reason) => {
+                        ModuleHostError::Unsupported(reason.clone())
+                    }
+                    _ => ModuleHostError::UriSyntax {
+                        reason: failure.reason(),
+                    },
                 });
             }
         }
@@ -86,11 +88,76 @@ pub fn standard_key_completion(request: &ModuleRequest) -> Option<ModuleCompleti
             Some(ModuleCompletion::CachePolicy(Ok(true)))
         }
         ModuleRequestKind::QueryFragmentPaths { key } if owned(key) => {
-            Some(ModuleCompletion::FragmentPaths(Ok(false)))
+            let has_fragment =
+                key.uri.starts_with("package:") || key.uri.starts_with("projectpackage:");
+            Some(ModuleCompletion::FragmentPaths(Ok(has_fragment)))
+        }
+        ModuleRequestKind::Capabilities { module, key } => {
+            if module.original_uri.starts_with("package:")
+                || module.original_uri.starts_with("projectpackage:")
+                || key.as_ref().is_some_and(|k| {
+                    k.uri.starts_with("package:") || k.uri.starts_with("projectpackage:")
+                })
+            {
+                return Some(ModuleCompletion::Capabilities(Ok(
+                    crate::modules::ModuleCapabilities {
+                        local: true,
+                        hierarchical: true,
+                        fragment_paths: true,
+                    },
+                )));
+            }
+            None
+        }
+        ModuleRequestKind::ResolveImportUri { key, authored_uri } => {
+            if key.uri.starts_with("package:")
+                || key.uri.starts_with("projectpackage:")
+                || authored_uri.starts_with("@")
+            {
+                let result = crate::packages::resolver::resolve_import_uri(&key.uri, authored_uri);
+                return Some(ModuleCompletion::ImportUri(result));
+            }
+            None
+        }
+        ModuleRequestKind::LoadSource { resolved, .. } => {
+            if resolved.resolved_uri.starts_with("package:")
+                || resolved.resolved_uri.starts_with("projectpackage:")
+                || resolved.original_uri.starts_with("package:")
+                || resolved.original_uri.starts_with("projectpackage:")
+                || resolved.source_uri.starts_with("package:")
+                || resolved.source_uri.starts_with("projectpackage:")
+                || crate::packages::resolver::get_stored_source(
+                    resolved.resolved_uri.as_str().unwrap_or(""),
+                )
+                .is_some()
+                || crate::packages::resolver::get_stored_source(
+                    resolved.original_uri.as_str().unwrap_or(""),
+                )
+                .is_some()
+                || crate::packages::resolver::get_stored_source(
+                    resolved.source_uri.as_str().unwrap_or(""),
+                )
+                .is_some()
+            {
+                let result = crate::packages::resolver::load_source(resolved);
+                return Some(ModuleCompletion::Source(result));
+            }
+            None
+        }
+        ModuleRequestKind::HasElement { element_uri, .. } => {
+            if element_uri.starts_with("package:") || element_uri.starts_with("projectpackage:") {
+                let result = crate::packages::resolver::has_element(element_uri);
+                return Some(ModuleCompletion::HasElement(result));
+            }
+            None
         }
         ModuleRequestKind::Resolve { key, .. } | ModuleRequestKind::ResolveKey { key, .. }
             if owned(key) =>
         {
+            if key.uri.starts_with("package:") || key.uri.starts_with("projectpackage:") {
+                let result = crate::packages::resolver::resolve_package_module(&key.uri);
+                return Some(ModuleCompletion::Resolved(result));
+            }
             if key.kind != ModuleKeyKind::StandardHttp
                 && let Err(error) = crate::glob::check_default_resolve(&key.uri, false)
             {

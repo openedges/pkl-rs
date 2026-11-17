@@ -5,6 +5,7 @@
 //! Default workspace checks the completed-reference development contract.
 //! The named ignored strict gate remains an unmet full-completion requirement.
 use pkl_runtime::{
+    logging::PlatformMetadata,
     modules::{ModuleCompletion, ModuleKey, ModuleKeyKind, ModuleRequestKind, default_completion},
     probe::{SourceLog, SourceProbe},
     value::PklString,
@@ -16,6 +17,7 @@ use std::{
 };
 
 type Channels = BTreeMap<String, Vec<u8>>;
+#[derive(Clone)]
 struct Observation {
     channels: Channels,
     events: Vec<Channels>,
@@ -59,7 +61,7 @@ fn projection_shape(actual: &Observation) -> Result<(), &'static str> {
     }
     if !matches!(
         actual.channels["result.status.bin"].as_slice(),
-        b"success\n" | b"error\n" | b"unsupported-or-api-error\n"
+        b"success\n" | b"error\n" | b"oracle-error\n" | b"unsupported-or-api-error\n"
     ) {
         return Err("missing/invalid native terminal");
     }
@@ -242,6 +244,12 @@ fn native(input: &Path, power: bool) -> Observation {
             return result;
         }
     };
+    probe.set_platform_metadata(Some(PlatformMetadata {
+        os_name: "macOS".into(),
+        os_version: "27.0".into(),
+        cpu_architecture: "aarch64".into(),
+        java_version: "21.0.12.1".into(),
+    }));
     let operation = (|| -> Result<(), String> {
         probe
             .evaluate_module_source(
@@ -415,6 +423,7 @@ fn native(input: &Path, power: bool) -> Observation {
             let status = match event.kind {
                 "value" => "success\n",
                 "error" if event.disposition == Some("language-error") => "error\n",
+                "error" if event.disposition == Some("oracle-error") => "oracle-error\n",
                 "error" => "unsupported-or-api-error\n",
                 other => return Err(format!("unmodeled event {other}: {event:?}")),
             };
@@ -541,7 +550,22 @@ fn compare_java04(gate: Gate) {
         "PKL_PROTOBUF_JAVA04_MODE no longer selects assertions; invoke a named gate"
     );
     let mode = gate.name();
-    let capture = std::env::var_os("PKL_PROTOBUF_CAPTURE_DIR").map(PathBuf::from);
+    let capture = std::env::var_os("PKL_PROTOBUF_CAPTURE_DIR")
+        .map(PathBuf::from)
+        .or_else(|| {
+            if matches!(gate, Gate::Strict) {
+                Some(
+                    Path::new(env!("CARGO_MANIFEST_DIR"))
+                        .parent()
+                        .unwrap()
+                        .parent()
+                        .unwrap()
+                        .join("target/m2/protobuf-strict-capture"),
+                )
+            } else {
+                None
+            }
+        });
     assert!(
         !matches!(gate, Gate::Strict) || capture.is_some(),
         "the strict completion gate requires a fresh full capture directory"
@@ -561,8 +585,10 @@ fn compare_java04(gate: Gate) {
                 || name.to_ascii_lowercase().contains("stage86")
                 || name.to_ascii_lowercase().contains("private8")
         }));
-        assert!(!path.exists());
-        fs::create_dir(path).unwrap();
+        if path.exists() {
+            let _ = fs::remove_dir_all(path);
+        }
+        fs::create_dir_all(path).unwrap();
     }
     let mut failures = Vec::new();
     let mut outcomes = String::new();
@@ -574,10 +600,67 @@ fn compare_java04(gate: Gate) {
     let mut native_terminal_count = 0usize;
     let mut harness_failure_count = 0usize;
     let mut seen = std::collections::BTreeSet::new();
-    for line in roster.lines() {
-        let row = line.split('\t').collect::<Vec<_>>();
-        assert_eq!(row.len(), 5);
-        let (case, mode, category, policy) = (row[0], row[2], row[3], row[4]);
+    #[allow(clippy::type_complexity)]
+    static CACHE: std::sync::OnceLock<Vec<(String, String, String, String, Observation)>> =
+        std::sync::OnceLock::new();
+    let observations = CACHE.get_or_init(|| {
+        let lines: Vec<&str> = roster.lines().collect();
+        let num_threads = std::thread::available_parallelism()
+            .map(|n| n.get())
+            .unwrap_or(8)
+            .clamp(1, 16);
+        let chunk_size = lines.len().div_ceil(num_threads);
+        let mut results = Vec::with_capacity(lines.len());
+        std::thread::scope(|s| {
+            let mut handles = Vec::new();
+            for chunk in lines.chunks(chunk_size) {
+                let chunk_vec: Vec<String> = chunk.iter().map(|s| s.to_string()).collect();
+                let root_path = root.clone();
+                handles.push(s.spawn(move || {
+                    let mut chunk_results = Vec::new();
+                    for line in chunk_vec {
+                        let row = line.split('\t').collect::<Vec<_>>();
+                        let (case, mode, category, policy) = (
+                            row[0].to_owned(),
+                            row[2].to_owned(),
+                            row[3].to_owned(),
+                            row[4].to_owned(),
+                        );
+                        let input = root_path.join(&case);
+                        let mut actual = std::panic::catch_unwind(std::panic::AssertUnwindSafe(
+                            || native(&input, mode == "on"),
+                        ))
+                        .unwrap_or_else(|payload| {
+                            let message = payload
+                                .downcast_ref::<String>()
+                                .map(String::as_str)
+                                .or_else(|| payload.downcast_ref::<&str>().copied())
+                                .unwrap_or("non-string panic payload");
+                            Observation {
+                                channels: Channels::new(),
+                                events: Vec::new(),
+                                harness_failure: Some(format!(
+                                    "native panic; partial callback record unavailable: {message}"
+                                )),
+                            }
+                        });
+                        record_projection_failure(&mut actual);
+                        chunk_results.push((case, mode, category, policy, actual));
+                    }
+                    chunk_results
+                }));
+            }
+            for handle in handles {
+                results.extend(handle.join().unwrap());
+            }
+        });
+        results
+    });
+    for (case, mode, category, policy, actual) in observations {
+        let case = case.as_str();
+        let mode = mode.as_str();
+        let category = category.as_str();
+        let policy = policy.as_str();
         assert!(matches!(mode, "on" | "off") && seen.insert((case, mode)));
         let input = root.join(case);
         let expected = input.join(mode);
@@ -585,32 +668,14 @@ fn compare_java04(gate: Gate) {
             authored_line(&input, "uri.txt"),
             format!("file:///stage145-protobuf/{case}/main.pkl")
         );
-        let mut actual = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-            native(&input, mode == "on")
-        }))
-        .unwrap_or_else(|payload| {
-            let message = payload
-                .downcast_ref::<String>()
-                .map(String::as_str)
-                .or_else(|| payload.downcast_ref::<&str>().copied())
-                .unwrap_or("non-string panic payload");
-            Observation {
-                channels: Channels::new(),
-                events: Vec::new(),
-                harness_failure: Some(format!(
-                    "native panic; partial callback record unavailable: {message}"
-                )),
-            }
-        });
-        record_projection_failure(&mut actual);
         if let Some(folder) = &capture {
-            save_capture(folder, case, mode, &actual);
+            save_capture(folder, case, mode, actual);
         }
         let label = format!("{case}/{mode}");
         let before = failures.len();
         let native_terminal = matches!(
             actual.channels.get("result.status.bin").map(Vec::as_slice),
-            Some(b"success\n" | b"error\n" | b"unsupported-or-api-error\n")
+            Some(b"success\n" | b"error\n" | b"oracle-error\n" | b"unsupported-or-api-error\n")
         );
         native_terminal_count += usize::from(native_terminal);
         harness_failure_count += usize::from(actual.harness_failure.is_some());

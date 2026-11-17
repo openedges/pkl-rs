@@ -363,6 +363,11 @@ pub fn ordered_members(
     heap: &Heap,
     receiver: ObjectId,
 ) -> Result<Vec<CollectionMember>, RuntimeError> {
+    if heap.get(receiver)?.collection_kind == CollectionKind::List
+        && heap.get(receiver)?.parent.is_none()
+    {
+        return Ok(heap.get(receiver)?.collection_members.clone());
+    }
     if heap.get(receiver)?.collection_kind == CollectionKind::Map {
         let object = heap.get(receiver)?;
         if let Some(order) = &object.map_key_order {
@@ -2129,17 +2134,42 @@ crate::diagnostic_values::render(
                         return Err(RuntimeError::new(ErrorKind::Type, message));
                     }
                 }
-                let candidates = self.declaration_candidates(owner, &key, true)?;
-                let member = ordered_members(&self.heap, owner)?
-                    .into_iter()
-                    .rev()
-                    .find(|m| {
-                        m.kind != CollectionMemberKind::Property
-                            && candidates.iter().any(|candidate| {
-                                equality::identical_key(&self.heap, candidate, &m.key)
-                            })
-                            && same_key(&self.heap, &key, &m.key)
-                    });
+                let member = if self.heap.get(owner)?.collection_kind == CollectionKind::List
+                    && self.heap.get(owner)?.parent.is_none()
+                {
+                    if let Value::Int(index) = &key
+                        && index.get() >= 0
+                    {
+                        let obj = self.heap.get(owner)?;
+                        let idx = index.get() as usize;
+                        if idx < obj.collection_members.len() {
+                            Some(obj.collection_members[idx].clone())
+                        } else if idx < obj.length && !obj.collection_members.is_empty() {
+                            let base_len = obj
+                                .repeat_base_len
+                                .unwrap_or(obj.collection_members.len())
+                                .max(1);
+                            let resolved_idx = idx % base_len;
+                            Some(obj.collection_members[resolved_idx].clone())
+                        } else {
+                            None
+                        }
+                    } else {
+                        None
+                    }
+                } else {
+                    let candidates = self.declaration_candidates(owner, &key, true)?;
+                    ordered_members(&self.heap, owner)?
+                        .into_iter()
+                        .rev()
+                        .find(|m| {
+                            m.kind != CollectionMemberKind::Property
+                                && candidates.iter().any(|candidate| {
+                                    equality::identical_key(&self.heap, candidate, &m.key)
+                                })
+                                && same_key(&self.heap, &key, &m.key)
+                        })
+                };
                 if member.is_none() && self.prepare_keys(vec![key.clone()])? {
                     if !is_super {
                         self.stack.push(Value::Object(receiver));

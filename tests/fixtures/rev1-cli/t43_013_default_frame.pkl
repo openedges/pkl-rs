@@ -1,0 +1,5 @@
+class Node {
+  label: String
+  weight: Int(this >= 0) = -1
+}
+nodes: Listing<Node> = new { new { label = "bad" } }

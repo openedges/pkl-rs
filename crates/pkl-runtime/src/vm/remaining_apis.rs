@@ -219,11 +219,24 @@ impl Vm {
                 };
                 let index = index.get();
                 let id = receiver.as_object()?;
-                let members = collections::ordered_members(&self.heap, id)?;
-                let value = if index < 0 || index as u64 >= members.len() as u64 {
+                let obj = self.heap.get(id)?;
+                let total_len = obj.length;
+                let value = if index < 0 || index as u64 >= total_len as u64 {
                     Value::Null
                 } else {
-                    collections::cached_render_value(&self.heap, id, &members[index as usize])?
+                    let idx = index as usize;
+                    let member = if idx < obj.collection_members.len() {
+                        &obj.collection_members[idx]
+                    } else if !obj.collection_members.is_empty() {
+                        let base_len = obj
+                            .repeat_base_len
+                            .unwrap_or(obj.collection_members.len())
+                            .max(1);
+                        &obj.collection_members[idx % base_len]
+                    } else {
+                        return Err(invalid("empty collection members with positive length"));
+                    };
+                    collections::cached_render_value(&self.heap, id, member)?
                         .ok_or_else(|| invalid("uncached strict List element"))?
                 };
                 // Return the stored Value itself, preserving heap identity.

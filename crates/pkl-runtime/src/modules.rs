@@ -188,6 +188,11 @@ pub enum ModuleHostError {
     SecurityManagerException {
         message: Option<PklString>,
     },
+    /// Explicit evalError message and hint (e.g. invalidProjectDepsJson, cannotLoadProjectDepsJson).
+    EvalError {
+        message: PklString,
+        hint: Option<PklString>,
+    },
     Unsupported(PklString),
 }
 
@@ -251,9 +256,15 @@ impl ModuleHostError {
             }
             Self::Io(cause) => cause.into_runtime("loading module", uri),
             Self::Denied(message) => RuntimeError::new(ErrorKind::Host, message),
-            Self::SecurityManagerException { message } => RuntimeError::host_language(
-                message.unwrap_or_else(|| "None (cause has no message)".into()),
-            ),
+            Self::SecurityManagerException { message } => {
+                let text = message.unwrap_or_else(|| "None (cause has no message)".into());
+                RuntimeError::host_language(text)
+            }
+            Self::EvalError { message, hint } => {
+                let mut err = RuntimeError::host_language(message);
+                err.hint = hint;
+                err
+            }
             Self::Unsupported(message) => RuntimeError::new(ErrorKind::Unsupported, message),
         }
     }
@@ -368,13 +379,21 @@ pub fn default_completion(request: &ModuleRequest) -> Option<ModuleCompletion> {
             Some(ModuleCompletion::CachePolicy(Ok(true)))
         }
         ModuleRequestKind::ResolveImportUri { key, authored_uri } => {
+            if key.uri.starts_with("package:")
+                || key.uri.starts_with("projectpackage:")
+                || authored_uri.starts_with("@")
+            {
+                return None;
+            }
             Some(ModuleCompletion::ImportUri(
                 crate::host::resources::resolve_module_key_uri(authored_uri, &key.uri)
                     .map_err(|error| ModuleHostError::Unsupported(error.message)),
             ))
         }
-        ModuleRequestKind::QueryFragmentPaths { .. } => {
-            Some(ModuleCompletion::FragmentPaths(Ok(false)))
+        ModuleRequestKind::QueryFragmentPaths { key } => {
+            let has_fragment =
+                key.uri.starts_with("package:") || key.uri.starts_with("projectpackage:");
+            Some(ModuleCompletion::FragmentPaths(Ok(has_fragment)))
         }
         ModuleRequestKind::CheckImport {
             importer,

@@ -124,3 +124,237 @@ fn duplicate_json_fields_replace_values_before_metadata_extraction() {
         "fruit"
     );
 }
+
+#[test]
+fn stage1_package_metadata_error_projection_and_request_counts() {
+    use pkl_runtime::modules::ModuleHostError;
+    use pkl_runtime::packages::http::{
+        metadata_request_count, reset_request_counts, zip_request_count,
+    };
+    use pkl_runtime::packages::project::PklProject;
+    use pkl_runtime::packages::resolver::{PackageHost, resolve_package_module, with_package_host};
+    use pkl_runtime::packages::zip::ZipArchive;
+    use std::path::{Path, PathBuf};
+    use std::sync::Arc;
+
+    struct TestPackageHost;
+    impl PackageHost for TestPackageHost {
+        fn fetch_metadata(
+            &self,
+            _package: &PackageUri,
+            uri: &PklString,
+        ) -> Result<Vec<u8>, ModuleHostError> {
+            let raw_uri = uri.as_str().unwrap_or("");
+            if raw_uri.contains("badPackageZipUrl@1.0.0") {
+                Ok(include_bytes!(
+                    "../../../external/pkl/pkl-commons-test/src/main/files/packages/badPackageZipUrl@1.0.0/badPackageZipUrl@1.0.0.json"
+                ).to_vec())
+            } else if raw_uri.contains("badMetadataJson@1.0.0") {
+                Ok(include_bytes!(
+                    "../../../external/pkl/pkl-commons-test/src/main/files/packages/badMetadataJson@1.0.0/badMetadataJson@1.0.0.json"
+                ).to_vec())
+            } else {
+                Err(ModuleHostError::SecurityManagerException {
+                    message: Some(
+                        format!(
+                            "Exception when making request `GET {raw_uri}`:\nConnection refused (localhost)"
+                        )
+                        .into(),
+                    ),
+                })
+            }
+        }
+
+        fn fetch_zip(
+            &self,
+            _package: &PackageUri,
+            _url: &PklString,
+        ) -> Result<Vec<u8>, ModuleHostError> {
+            Err(ModuleHostError::SecurityManagerException { message: None })
+        }
+
+        fn read_disk_archive(&self, _package: &PackageUri) -> Option<ZipArchive> {
+            None
+        }
+
+        fn write_disk_archive(
+            &self,
+            _package: &PackageUri,
+            _metadata_bytes: &[u8],
+            _zip_bytes: &[u8],
+        ) -> Result<(), ModuleHostError> {
+            Ok(())
+        }
+
+        fn find_project_dir(&self, _start: &Path) -> Option<PathBuf> {
+            None
+        }
+
+        fn load_project(&self, project_dir: &Path) -> Result<PklProject, ModuleHostError> {
+            Ok(PklProject {
+                project_dir: project_dir.to_path_buf(),
+                dependencies: std::collections::BTreeMap::new(),
+                ..Default::default()
+            })
+        }
+
+        fn read_file(&self, _path: &Path) -> Result<Vec<u8>, ModuleHostError> {
+            Err(ModuleHostError::SecurityManagerException { message: None })
+        }
+
+        fn list_dir(
+            &self,
+            _path: &Path,
+        ) -> Result<Vec<pkl_runtime::glob::PathElement>, ModuleHostError> {
+            Ok(Vec::new())
+        }
+
+        fn is_test_mode(&self) -> bool {
+            false
+        }
+    }
+
+    with_package_host(Arc::new(TestPackageHost), || {
+        // Test badImport6: invalid zip asset URL (ftp instead of https)
+        reset_request_counts();
+        let bad_zip_uri: PklString = "package://localhost:0/badPackageZipUrl@1.0.0#/Bug.pkl".into();
+        let err = resolve_package_module(&bad_zip_uri).unwrap_err();
+        assert_eq!(metadata_request_count(), 1);
+        assert_eq!(zip_request_count(), 0);
+        match err {
+            ModuleHostError::SecurityManagerException { message } => {
+                let msg = message.expect("error message");
+                assert!(
+                    msg.contains("Expected the zip asset for package `package://localhost:0/badPackageZipUrl@1.0.0` to be an HTTPS URI, but got `ftp://wait/a/minute`."),
+                    "Unexpected message: {msg}"
+                );
+            }
+            other => panic!("Expected SecurityManagerException, got {other:?}"),
+        }
+
+        // Test badImport7: malformed JSON in metadata
+        reset_request_counts();
+        let bad_json_uri: PklString = "package://localhost:0/badMetadataJson@1.0.0#/Bug.pkl".into();
+        let err = resolve_package_module(&bad_json_uri).unwrap_err();
+        assert_eq!(metadata_request_count(), 1);
+        assert_eq!(zip_request_count(), 0);
+        match err {
+            ModuleHostError::SecurityManagerException { message } => {
+                let msg = message.expect("error message");
+                assert!(
+                    msg.contains("Received invalid dependency metadata for package `package://localhost:0/badMetadataJson@1.0.0` when making request `GET https://localhost:0/badMetadataJson@1.0.0`:\nMalformed JSON: Expected 'r' at 1:2.\n\nOriginal input:\n`this is not json\n`"),
+                    "Unexpected message: {msg}"
+                );
+            }
+            other => panic!("Expected SecurityManagerException, got {other:?}"),
+        }
+    });
+}
+
+#[test]
+fn package_vs_projectpackage_dependency_lookup_isolation() {
+    use pkl_runtime::packages::project::{PklProject, ResolvedProjectDep};
+    use pkl_runtime::packages::resolver::{PackageHost, resolve_import_uri, with_package_host};
+    use pkl_runtime::packages::zip::ZipArchive;
+    use std::collections::BTreeMap;
+    use std::path::{Path, PathBuf};
+    use std::sync::Arc;
+
+    struct MockHost;
+    impl PackageHost for MockHost {
+        fn fetch_metadata(
+            &self,
+            _package: &PackageUri,
+            uri: &PklString,
+        ) -> Result<Vec<u8>, pkl_runtime::modules::ModuleHostError> {
+            let raw_uri = uri.as_str().unwrap_or("");
+            if raw_uri.contains("birds@0.5.0") {
+                Ok(BIRDS.to_vec())
+            } else {
+                Err(pkl_runtime::modules::ModuleHostError::NotFound)
+            }
+        }
+        fn fetch_zip(
+            &self,
+            _package: &PackageUri,
+            _url: &PklString,
+        ) -> Result<Vec<u8>, pkl_runtime::modules::ModuleHostError> {
+            Ok(pkl_runtime::packages::zip::build_uncompressed_zip(&[]))
+        }
+        fn read_disk_archive(&self, _package: &PackageUri) -> Option<ZipArchive> {
+            None
+        }
+        fn write_disk_archive(
+            &self,
+            _package: &PackageUri,
+            _meta: &[u8],
+            _zip: &[u8],
+        ) -> Result<(), pkl_runtime::modules::ModuleHostError> {
+            Ok(())
+        }
+        fn find_project_dir(&self, _start: &Path) -> Option<PathBuf> {
+            Some(PathBuf::from("/mock/project"))
+        }
+        fn load_project(
+            &self,
+            project_dir: &Path,
+        ) -> Result<PklProject, pkl_runtime::modules::ModuleHostError> {
+            let mut deps = BTreeMap::new();
+            deps.insert(
+                "fruities".to_string(),
+                ResolvedProjectDep {
+                    dep_type: "remote".to_string(),
+                    uri: "projectpackage://localhost:0/fruit@1.1.0".into(),
+                    path: None,
+                    sha256: None,
+                },
+            );
+            Ok(PklProject {
+                project_dir: project_dir.to_path_buf(),
+                dependencies: deps,
+                deps_loaded: true,
+                ..Default::default()
+            })
+        }
+        fn read_file(
+            &self,
+            _path: &Path,
+        ) -> Result<Vec<u8>, pkl_runtime::modules::ModuleHostError> {
+            Err(pkl_runtime::modules::ModuleHostError::NotFound)
+        }
+        fn list_dir(
+            &self,
+            _path: &Path,
+        ) -> Result<Vec<pkl_runtime::glob::PathElement>, pkl_runtime::modules::ModuleHostError>
+        {
+            Ok(Vec::new())
+        }
+        fn is_test_mode(&self) -> bool {
+            true
+        }
+    }
+
+    with_package_host(Arc::new(MockHost), || {
+        // Absolute `package:` base MUST resolve strictly to package's own metadata (fruit@1.0.5)
+        let pkg_res = resolve_import_uri(
+            &"package://localhost:0/birds@0.5.0#/catalog/Swallow.pkl".into(),
+            &"@fruities/Apple.pkl".into(),
+        )
+        .unwrap();
+        assert_eq!(
+            pkg_res.as_str().unwrap(),
+            "package://localhost:0/fruit@1.0.5#/Apple.pkl"
+        );
+
+        // `projectpackage:` base MUST consult project dependencies (rewritten to fruit@1.1.0)
+        let proj_res = resolve_import_uri(
+            &"projectpackage://localhost:0/birds@0.5.0#/catalog/Swallow.pkl".into(),
+            &"@fruities/Apple.pkl".into(),
+        )
+        .unwrap();
+        assert_eq!(
+            proj_res.as_str().unwrap(),
+            "projectpackage://localhost:0/fruit@1.1.0#/Apple.pkl"
+        );
+    });
+}

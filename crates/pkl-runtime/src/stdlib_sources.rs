@@ -245,6 +245,20 @@ pub(crate) fn release() -> Arc<RuntimeSource> {
         .clone()
 }
 
+/// Exact pinned authored declarations; Benchmark runner module.
+pub(crate) fn benchmark() -> Arc<RuntimeSource> {
+    static SOURCE: OnceLock<Arc<RuntimeSource>> = OnceLock::new();
+    SOURCE
+        .get_or_init(|| {
+            Arc::new(RuntimeSource {
+                text: include_str!("stdlib/Benchmark.pkl").into(),
+                uri: "pkl:Benchmark".into(),
+                module_name: "pkl.Benchmark".into(),
+            })
+        })
+        .clone()
+}
+
 #[cfg(test)]
 mod tests {
     #[test]
@@ -323,6 +337,16 @@ mod tests {
         assert_eq!(
             include_bytes!("stdlib/ref.pkl").as_slice(),
             std::fs::read(path).expect("pinned reference source is available")
+        );
+    }
+
+    #[test]
+    fn bundled_benchmark_source_matches_the_pinned_checkout() {
+        let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../../external/pkl/stdlib/Benchmark.pkl");
+        assert_eq!(
+            include_bytes!("stdlib/Benchmark.pkl").as_slice(),
+            std::fs::read(path).expect("pinned benchmark source is available")
         );
     }
 }

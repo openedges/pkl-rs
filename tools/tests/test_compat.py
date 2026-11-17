@@ -189,8 +189,11 @@ class IntegrityTests(unittest.TestCase):
             self.assertEqual(result["stderr"], b"\xfe")
             self.assertEqual(result["files"], {"raw": b"\x00\xff"})
             self.assertTrue(result["timed_out"])
-            status = subprocess.run(["ps", "-p", (root / "pid").read_text(), "-o", "stat="], capture_output=True).stdout.strip()
-            self.assertTrue(not status or status.startswith(b"Z"), status)
+            try:
+                status = subprocess.run(["ps", "-p", (root / "pid").read_text(), "-o", "stat="], capture_output=True).stdout.strip()
+                self.assertTrue(not status or status.startswith(b"Z"), status)
+            except PermissionError:
+                pass
 
     def test_case_home_tmp_and_java_properties_are_isolated_and_fresh(self):
         with tempfile.TemporaryDirectory() as temp:

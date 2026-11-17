@@ -30,6 +30,24 @@ class HistoricalRegistryTests(unittest.TestCase):
         self.assertEqual({Path(x['path']).name for x in self.registry['resources'] if x['original']['path'] in ('LICENSE','NOTICE')},{'LICENSE','NOTICE'})
         self.assertTrue(all(x['contract']['channels']==['stdout','stderr','exit_code','files','workspace_changes'] for x in rows.values()))
 
+    def test_cli_registry_contains_twenty_one_cases_and_two_support_libraries(self):
+        cli_reg = historical.build_cli_registry(self.root)
+        self.assertEqual(len(cli_reg['cases']), 21)
+        self.assertEqual(len(historical.CLI_SELECTED), 21)
+        self.assertTrue(all(k.startswith('rev1-candidate:') for k in [c['id'] for c in cli_reg['cases']]))
+        self.assertEqual(len(cli_reg['resources']), 25)
+        self.assertTrue(any(x['path'].endswith('t43_043_inherited_method_lib.pkl') for x in cli_reg['resources']))
+        self.assertTrue(any(x['path'].endswith('t43_064_imported_function_lib.pkl') for x in cli_reg['resources']))
+        self.assertFalse(any(c['id'].endswith('_lib.pkl') for c in cli_reg['cases']))
+        self.assertEqual({Path(x['path']).name for x in cli_reg['resources'] if x['original']['path'] in ('LICENSE', 'NOTICE')}, {'LICENSE', 'NOTICE'})
+        self.assertTrue(all(c['contract']['channels'] == ['stdout', 'stderr', 'exit_code', 'files', 'workspace_changes'] for c in cli_reg['cases']))
+
+    def test_resource_only_map_and_tracked_regressions_census(self):
+        self.assertEqual(len(historical.RESOURCE_ONLY_MAP), 8)
+        self.assertEqual(len(historical.ALL_RESOURCE_ONLY), 8)
+        self.assertEqual(len(historical.TRACKED_REGRESSIONS), 3)
+        self.assertEqual(len(historical.SELECTED) + len(historical.CLI_SELECTED) + len(historical.RESOURCE_ONLY_MAP) + len(historical.TRACKED_REGRESSIONS), 40)
+
     def test_missing_duplicate_extra_or_contract_tamper_rejected(self):
         for change in ('missing','duplicate','extra','argv','env','cwd','resources','output','source','watchdog'):
             registry=copy.deepcopy(self.registry)
@@ -80,10 +98,10 @@ class HistoricalRegistryTests(unittest.TestCase):
             self.assertNotIn('upstream_case',row)
         candidates=[x for x in manifest['cases'] if x['id'].startswith('rev1-candidate:')]
         self.assertEqual(len(candidates),40)
-        self.assertEqual(sum(x['execution']['state']=='ready' for x in candidates),8)
-        self.assertEqual(sum(x['execution']['state']=='unmapped' for x in candidates),32)
-        self.assertEqual(manifest['counts']['cases_by_execution'],{'ready':4485,'unimplemented':69,'unmapped':32})
-        admitted={'rev1:t40-imported-declaration-authority','rev1:t40-foreign-namesake'}
+        self.assertEqual(sum(x['execution']['state']=='ready' for x in candidates),29)
+        self.assertEqual(sum(x['execution']['state']=='unmapped' for x in candidates),11)
+        self.assertEqual(manifest['counts']['cases_by_execution'],{'ready':4575,'unmapped':11})
+        admitted={'rev1:t36-foreign-nominal-identity','rev1:t40-imported-declaration-authority','rev1:t40-foreign-namesake'}
         for original in originals:
             case=next(x for x in manifest['cases'] if x['id']=='m2:'+original['id'])
             self.assertEqual(case['regression_case'],original)
@@ -92,7 +110,11 @@ class HistoricalRegistryTests(unittest.TestCase):
             self.assertIn('--color=never',case['regression_case']['command'])
         selected=m2_language.selected_cases(manifest,[historical.ADAPTER])
         self.assertEqual([x['id'] for x in selected],[x['id'] for x in self.registry['cases']])
-        self.assertEqual(len(m2_language.selected_cases(manifest)),4485)
+        cli_selected=m2_language.selected_cases(manifest,[historical.CLI_ADAPTER])
+        cli_registry=historical.cli_registry_cases(self.root)
+        self.assertEqual(len(cli_selected),21)
+        self.assertEqual([x['id'] for x in cli_selected],list(cli_registry.keys()))
+        self.assertEqual(len(m2_language.selected_cases(manifest)),4575)
         self.assertTrue(any(selected[0]['id'] in error for error in m2_manifest.full_gate_failures(manifest,[])))
 
     def test_unselected_promotion_and_missing_id_rejected(self):
@@ -163,8 +185,39 @@ class MainRunnerDispatchTests(unittest.TestCase):
                 self.assertEqual(report['module_candidate']['source_binding'],'unbound-caller-supplied')
                 self.assertEqual(acquire.call_count,1)
                 self.assertEqual(acquire.call_args.args[2],cases)
-                self.assertEqual(context.call_count,8)
+                self.assertEqual(context.call_count,1)
                 self.assertEqual(verifier.call_count,8)
+                self.assertEqual([c.args[4]['id'] for c in verifier.call_args_list],[c['id'] for c in cases])
+                self.assertEqual(capture.call_count,1)
+                self.assertEqual(capture.call_args.args[0],['rustc','--version','--verbose'])
+                self.assertTrue(report['full_gate_failures'])
+
+    def test_focused_main_runner_and_offline_verifier_dispatch_all_twenty_one_cli_without_build(self):
+        manifest=m2_manifest.current_manifest()
+        cases=m2_language.selected_cases(manifest,[historical.CLI_ADAPTER])
+        rows=[{'id':c['id'],'adapter':historical.CLI_ADAPTER,'status':'pass'} for c in cases]
+        metadata={'command':['synthetic-java'],'environment':{},'artifact':'synthetic-oracle'}
+        with tempfile.TemporaryDirectory() as folder:
+            base=Path(folder);binary=base/'synthetic-module-probe';binary.write_bytes(b'synthetic artifact, never executed')
+            output=base/'target/evidence'
+            with patch.object(m2_language.contract,'current_manifest',return_value=manifest), \
+                 patch.object(m2_language.oracle,'ensure_oracle',return_value=metadata), \
+                 patch.object(m2_language,'source_paths',return_value=['compatibility/m2-language.json']), \
+                 patch.object(m2_language,'capture',return_value={'exit_code':0}) as capture, \
+                 patch.object(historical,'acquire_cli',return_value=(rows,{'profile':historical.CLI_PROFILE})) as acquire, \
+                 patch.object(m2_language,'verify_oracle'), \
+                 patch.object(historical,'verify_cli_context',return_value={}) as context, \
+                 patch.object(historical,'verify_cli_case') as verifier:
+                report=m2_language.execute(output,None,adapters=[historical.CLI_ADAPTER],module_candidate=binary)
+                self.assertEqual(report['schema_version'],6)
+                self.assertEqual(report['selection']['case_ids'],[c['id'] for c in cases])
+                self.assertEqual(report['selected_count'],21)
+                self.assertEqual(report['inventory_counts']['cases'],4586)
+                self.assertEqual(report['module_candidate']['source_binding'],'unbound-caller-supplied')
+                self.assertEqual(acquire.call_count,1)
+                self.assertEqual(acquire.call_args.args[2],cases)
+                self.assertEqual(context.call_count,1)
+                self.assertEqual(verifier.call_count,21)
                 self.assertEqual([c.args[4]['id'] for c in verifier.call_args_list],[c['id'] for c in cases])
                 self.assertEqual(capture.call_count,1)
                 self.assertEqual(capture.call_args.args[0],['rustc','--version','--verbose'])
@@ -181,7 +234,7 @@ import m2_jvm_classpath
 
 
 class MixedProfileFixture:
-    def __init__(self, directory, *, schema=6, profile=m2_workspace.ORIGINAL_PROFILE, historical_selected=True, classpath=False):
+    def __init__(self, directory, *, schema=6, profile=m2_workspace.ORIGINAL_PROFILE, historical_selected=True, historical_cli_selected=False, classpath=False):
         self.directory=directory
         directory.mkdir(parents=True)
         self.payloads={'external/pkl/input.pkl':b'value = 1\n','external/pkl-pantry/resource.pkl':b'value = 2\n'}
@@ -199,6 +252,7 @@ class MixedProfileFixture:
             'required':True,'requirements':[],'execution':{'state':'ready','reason':None}}
         cases=[module_case]
         if historical_selected:cases.append({'id':'synthetic-historical','adapter':historical.ADAPTER,'required':True,'requirements':[],'execution':{'state':'ready','reason':None}})
+        if historical_cli_selected:cases.append({'id':'synthetic-historical-cli','adapter':historical.CLI_ADAPTER,'required':True,'requirements':[],'execution':{'state':'ready','reason':None}})
         if classpath:cases.append({'id':m2_jvm_classpath.CASE_ID,'adapter':m2_jvm_classpath.ADAPTER,'required':True,'requirements':[],'execution':{'state':'ready','reason':None}})
         self.manifest={'cases':cases,'requirements':[],'comparison_boundary':'synthetic infrastructure control',
             'module_comparison_boundary':'synthetic exact original module control',
@@ -219,7 +273,9 @@ class MixedProfileFixture:
             'selection':{'adapters':[c['adapter'] for c in cases],'case_ids':[c['id'] for c in cases]},
             'selected_count':len(cases),'candidate':None,'classpath_candidate':None,
             'module_candidate':{'sha256':compat.digest(b'synthetic-module-artifact'),'source_binding':'unbound-caller-supplied','build':None},
-            'module_eval':self.context,'historical_eval':{'profile':historical.PROFILE} if historical_selected else None,
+            'module_eval':self.context,
+            'historical_eval':{'profile':historical.PROFILE} if historical_selected else None,
+            'historical_cli_eval':{'profile':historical.CLI_PROFILE} if historical_cli_selected else None,
             'classpath_eval':{'directory':'jvm-classpath'} if classpath else None,
             'results':self.rows,'metamorphic_results':[],'status_counts':{'pass':len(cases)},
             'full_gate_failures':m2_manifest.full_gate_failures(self.manifest,self.rows)}
@@ -258,6 +314,8 @@ class MixedProfileFixture:
             module_read=stack.enter_context(patch.object(m2_module_eval,'verify_case'))
             history_context=stack.enter_context(patch.object(historical,'verify_context',return_value={}))
             history_read=stack.enter_context(patch.object(historical,'verify_case'))
+            history_cli_context=stack.enter_context(patch.object(historical,'verify_cli_context',return_value={}))
+            history_cli_read=stack.enter_context(patch.object(historical,'verify_cli_case'))
             baseline=stack.enter_context(patch.object(m2_workspace,'validate_baseline',wraps=m2_workspace.validate_baseline))
             child=stack.enter_context(patch.object(m2_language,'verify_classpath_child',return_value={'synthetic':'child'},
                 side_effect=ValueError('synthetic child integrity rejection') if reject_child else None))
@@ -265,7 +323,8 @@ class MixedProfileFixture:
             stack.enter_context(patch.object(m2_language,'classpath_result',return_value=child_row))
             result=m2_language.check_report(self.directory)
             return result,{'module':module_read.call_count,'history':history_read.call_count,
-                'history_context':history_context.call_count,'baseline':baseline.call_count,'child':child.call_count}
+                'history_context':history_context.call_count,'history_cli':history_cli_read.call_count,
+                'history_cli_context':history_cli_context.call_count,'baseline':baseline.call_count,'child':child.call_count}
 
 
 class MixedProfileTests(unittest.TestCase):
@@ -276,12 +335,22 @@ class MixedProfileTests(unittest.TestCase):
     def test_original_schema5_profile_boundary_remains_valid(self):
         fixture=self.fixture(schema=5,historical_selected=False)
         result,calls=fixture.check()
-        self.assertEqual(calls,{'module':1,'history':0,'history_context':0,'baseline':1,'child':0})
+        self.assertEqual(calls,{'module':1,'history':0,'history_context':0,'history_cli':0,'history_cli_context':0,'baseline':1,'child':0})
 
     def test_schema6_upstream_and_historical_inherit_exact_original_profile(self):
         fixture=self.fixture()
         result,calls=fixture.check()
-        self.assertEqual(calls,{'module':1,'history':1,'history_context':1,'baseline':1,'child':0})
+        self.assertEqual(calls,{'module':1,'history':1,'history_context':1,'history_cli':0,'history_cli_context':0,'baseline':1,'child':0})
+
+    def test_schema6_upstream_historical_and_cli_inherit_exact_original_profile(self):
+        fixture=self.fixture(historical_cli_selected=True)
+        result,calls=fixture.check()
+        self.assertEqual(calls,{'module':1,'history':1,'history_context':1,'history_cli':1,'history_cli_context':1,'baseline':1,'child':0})
+
+    def test_schema6_rejects_unselected_historical_cli_context(self):
+        fixture=self.fixture()
+        fixture.report['historical_cli_eval']={'profile':'not-selected'};fixture.save_report()
+        with self.assertRaisesRegex(ValueError,'unselected historical CLI context'):fixture.check()
 
     def test_schema6_upstream_and_historical_preserve_legacy_profile(self):
         fixture=self.fixture(profile=m2_workspace.DEFAULT_PROFILE)
@@ -292,7 +361,7 @@ class MixedProfileTests(unittest.TestCase):
     def test_schema6_module_historical_and_jvm_keep_child_dispatch_and_rejection(self):
         fixture=self.fixture(classpath=True)
         result,calls=fixture.check()
-        self.assertEqual(calls,{'module':1,'history':1,'history_context':1,'baseline':1,'child':1})
+        self.assertEqual(calls,{'module':1,'history':1,'history_context':1,'history_cli':0,'history_cli_context':0,'baseline':1,'child':1})
         with self.assertRaisesRegex(ValueError,'synthetic child integrity rejection'):
             fixture.check(reject_child=True)
 

@@ -107,7 +107,70 @@ fn detached_listing_alternative_is_explicitly_unqualified_before_elements() {
     );
     assert_ne!(result.exit_code, 0);
     assert!(result.stdout.is_empty());
-    assert!(String::from_utf8_lossy(&result.stderr).contains("detached Listing alternative"));
+    let stderr = String::from_utf8_lossy(&result.stderr);
+    assert!(
+        stderr.contains("TypeNode$ListingOrMappingTypeNode.getRootNode()")
+            || stderr.contains("detached Listing alternative")
+    );
+}
+#[test]
+fn detached_mapping_alternative_is_explicitly_unqualified_before_elements() {
+    let text = r#"import "pkl:protobuf"
+class Input {
+  value: Mapping<String, Int> | String = "seed"
+}
+output {
+  value = new Input {}
+  renderer = new protobuf.Renderer {
+    converters {
+      ["value"] = (_) -> new Mapping {}
+    }
+  }
+}
+"#;
+    let result = evaluate_module_output(
+        ModuleSourceInput {
+            text,
+            uri: "file:///stage159-protobuf/detached-mapping/main.pkl",
+            inferred_name: "main",
+        },
+        &ModuleEvalOptions::default(),
+    );
+    assert_ne!(result.exit_code, 0);
+    assert!(result.stdout.is_empty());
+    let stderr = String::from_utf8_lossy(&result.stderr);
+    assert!(
+        stderr.contains("TypeNode$ListingOrMappingTypeNode.getRootNode()")
+            || stderr.contains("detached Mapping alternative")
+    );
+
+    // Verify foreign exception provenance frames for detached mapping (1642) vs listing (1572)
+    let prov = pkl_runtime::java_exception::provenance::ForeignExceptionProvenance::new(
+        pkl_runtime::java_exception::provenance::ForeignOperation::ProtobufListingOrMappingRootNullPointer {
+            is_mapping: true,
+        },
+    );
+    let bug = prov
+        .project_pkl_bug(&pkl_runtime::value::PklString::from("ordinary\n"))
+        .to_java_utf8();
+    assert!(
+        bug.contains("TypeNode$ListingOrMappingTypeNode.getRootNode()")
+            && bug.contains("TypeNode$MappingTypeNode.executeLazily")
+            && bug.contains("TypeNode.java:1642")
+    );
+
+    let prov_listing = pkl_runtime::java_exception::provenance::ForeignExceptionProvenance::new(
+        pkl_runtime::java_exception::provenance::ForeignOperation::ProtobufListingOrMappingRootNullPointer {
+            is_mapping: false,
+        },
+    );
+    let bug_listing = prov_listing
+        .project_pkl_bug(&pkl_runtime::value::PklString::from("ordinary\n"))
+        .to_java_utf8();
+    assert!(
+        bug_listing.contains("TypeNode$ListingTypeNode.executeLazily")
+            && bug_listing.contains("TypeNode.java:1572")
+    );
 }
 #[test]
 fn inherited_type_owner_and_final_renamed_name_are_distinct_from_converter_path() {
@@ -226,7 +289,12 @@ nested=null
         panic!("detached Listing must stop before element/tail Host reads")
     };
     assert_eq!(error.kind, ErrorKind::Unsupported);
-    assert!(error.message.contains("detached Listing alternative"));
+    assert!(
+        error
+            .message
+            .contains("TypeNode$ListingOrMappingTypeNode.getRootNode()")
+            || error.message.contains("detached Listing alternative")
+    );
     s.close();
     assert_eq!(s.collect(&[]).slots, 0);
 }

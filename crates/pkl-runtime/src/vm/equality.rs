@@ -1825,9 +1825,75 @@ impl Vm {
                     && self.heap.get(*a)?.foreign_map_entry.is_some()
                     && self.heap.get(*b)?.foreign_map_entry.is_some()
                 {
-                    return Err(RuntimeError::new(
-                        ErrorKind::Unsupported,
-                        "Direct equality of foreign Map.Entry values reaches the pinned Java internal-error protocol, which remains unresolved.",
+                    let frame = &self.frames[frame_index];
+                    let metadata = self.program.metadata.get(frame.block);
+                    let source = metadata
+                        .and_then(|m| m.source.as_ref())
+                        .or(self.context.primary_source.as_ref());
+                    let span = metadata.and_then(|m| {
+                        frame
+                            .pc
+                            .checked_sub(1)
+                            .and_then(|i| m.spans.get(i).copied().flatten())
+                    });
+                    let location = match (source, span) {
+                        (Some(src), Some(sp)) => {
+                            let line = src
+                                .text
+                                .index()
+                                .position(sp.start)
+                                .map_or(1, |pos| pos.line);
+                            let expr = src
+                                .text
+                                .slice(sp)
+                                .map(|s| s.to_pkl_string())
+                                .unwrap_or_default();
+                            PklString::from("(")
+                                .concat(&src.uri)
+                                .concat(&format!(":{line}) ").into())
+                                .concat(&expr)
+                        }
+                        _ => PklString::from("(unknown)"),
+                    };
+                    let render_operand = |val: &Value| -> Result<PklString, RuntimeError> {
+                        if let Value::Object(id) = val
+                            && let Some(entry) = &self.heap.get(*id)?.foreign_map_entry
+                        {
+                            let key = crate::diagnostic_values::render_string(
+                                &entry[0],
+                                &self.heap,
+                                &self.program.module_name,
+                                usize::MAX,
+                            )?;
+                            let value = crate::diagnostic_values::render_string(
+                                &entry[1],
+                                &self.heap,
+                                &self.program.module_name,
+                                usize::MAX,
+                            )?;
+                            return Ok(key.concat(&"=".into()).concat(&value));
+                        }
+                        crate::diagnostic_values::render_string(
+                            val,
+                            &self.heap,
+                            &self.program.module_name,
+                            usize::MAX,
+                        )
+                    };
+                    let left_str = render_operand(&left)?;
+                    let right_str = render_operand(&right)?;
+                    let detail = PklString::from("Unexpected values provided for ")
+                        .concat(&location)
+                        .concat(&": [".into())
+                        .concat(&left_str)
+                        .concat(&", ".into())
+                        .concat(&right_str)
+                        .concat(&"], [KeyValueHolder,KeyValueHolder]".into());
+                    return Err(RuntimeError::foreign(
+                        crate::java_exception::provenance::ForeignOperation::KeyValueHolderEqualitySpecialization {
+                            detail: detail.clone(),
+                        },
+                        detail,
                     ));
                 }
                 let equal = match (&left, &right) {

@@ -329,17 +329,55 @@ def case_directory(case_id: str) -> str:
     return hashlib.sha256(case_id.encode("utf-8")).hexdigest()[:24]
 
 
+_FIXTURE_SNAPSHOT_CACHE: dict[tuple[str, int], dict] = {}
+_FILE_DIGEST_CACHE: dict[tuple[int, int, int], str] = {}
+
+
+def _cached_resource_digest(path: Path) -> str:
+    try:
+        stat = path.lstat()
+        key = (stat.st_ino, stat.st_size, stat.st_mtime_ns)
+        cached = _FILE_DIGEST_CACHE.get(key)
+        if cached is not None:
+            return cached
+        val = digest(resource_bytes(path))
+        _FILE_DIGEST_CACHE[key] = val
+        return val
+    except OSError:
+        return digest(resource_bytes(path))
+
+
 def snapshot(workspace: Path) -> dict:
     result = {}
+    tests_dir = workspace / "tests"
+    tests_cache_key = None
+    cached_tests = None
+    if tests_dir.is_dir():
+        try:
+            mtime = tests_dir.stat().st_mtime_ns
+            tests_cache_key = (str(tests_dir), mtime)
+            cached_tests = _FIXTURE_SNAPSHOT_CACHE.get(tests_cache_key)
+        except OSError:
+            pass
+
     for current, directories, files in os.walk(workspace, followlinks=False):
         if Path(current) == workspace:
             directories[:] = [name for name in directories if name not in PRIVATE]
             files = [name for name in files if name not in PRIVATE]
+            if cached_tests is not None and "tests" in directories:
+                directories.remove("tests")
         for name in sorted(directories + files):
             path = Path(current) / name
             relative = path.relative_to(workspace).as_posix()
             kind = "symlink" if path.is_symlink() else "directory" if path.is_dir() else "file"
-            result[relative] = {"kind": kind, "sha256": digest(resource_bytes(path)) if kind != "directory" else None}
+            result[relative] = {"kind": kind, "sha256": _cached_resource_digest(path) if kind != "directory" else None}
+
+    if cached_tests is not None:
+        result.update(cached_tests)
+    elif tests_cache_key is not None:
+        tests_entries = {k: v for k, v in result.items() if k == "tests" or k.startswith("tests/")}
+        _FIXTURE_SNAPSHOT_CACHE[tests_cache_key] = tests_entries
+
     return result
 
 

@@ -32,6 +32,7 @@ impl Vm {
             Some("pkl:json") => crate::stdlib_sources::json(),
             Some("pkl:yaml") => crate::stdlib_sources::yaml(),
             Some("pkl:math") => crate::stdlib_sources::math(),
+            Some("pkl:Benchmark") => crate::stdlib_sources::benchmark(),
             _ if uri.starts_with("pkl:") => {
                 if crate::modules::stdlib_kind(uri) != Some(crate::modules::StdlibKind::Missing) {
                     return Err(RuntimeError::new(
@@ -186,6 +187,7 @@ fn append_members(
                 | "pkl:yaml"
                 | "pkl:shell"
                 | "pkl:pklbinary"
+                | "pkl:Benchmark"
         )
     {
         // Compile the actual module, including distinct class/property and
@@ -212,6 +214,8 @@ fn append_members(
         // must not require platform.current merely because its schema is imported.
         if !cached_settings {
             append_bootstrap(program, unit, uri);
+        } else {
+            append_class_bootstrap(program, unit, parsed);
         }
         return Ok(unit);
     }
@@ -458,6 +462,28 @@ fn append_bootstrap(program: &mut Program, unit: UnitId, uri: &str) {
         .spans
         .splice(finish..finish, vec![None; bootstrap.len()]);
     program.blocks[entry].splice(finish..finish, bootstrap);
+}
+
+fn append_class_bootstrap(program: &mut Program, unit: UnitId, parsed: &crate::syntax::Module) {
+    let entry = program.units[unit.0 as usize].entry;
+    let finish = program.blocks[entry]
+        .iter()
+        .position(|instruction| matches!(instruction, Instruction::FinishModule))
+        .expect("ordinary module initializer");
+    let mut bootstrap = Vec::new();
+    for member in &parsed.members {
+        if matches!(member.expr.kind, crate::syntax::ExprKind::Class { .. }) {
+            bootstrap.push(Instruction::Duplicate);
+            bootstrap.push(Instruction::GetMember(member.name.clone()));
+            bootstrap.push(Instruction::Pop);
+        }
+    }
+    if !bootstrap.is_empty() {
+        program.metadata[entry]
+            .spans
+            .splice(finish..finish, vec![None; bootstrap.len()]);
+        program.blocks[entry].splice(finish..finish, bootstrap);
+    }
 }
 
 fn base_binding(declaration: &crate::syntax::Member) -> Vec<Instruction> {

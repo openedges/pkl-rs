@@ -1,0 +1,92 @@
+{
+  "status": "Stage 158 M2 Milestone Remediation and Full Serial Verification completed; full integrity audit findings resolved; M3-M7 milestones remain open.",
+  "scope": "Purged static state and host IO from packages; restored #[ignore] on 8 protocol-unresolved oracle tests; ensured pure wasm32-unknown-unknown compilation; admitted 21 rev1-cli cases; synchronized 4,575 ready cases and 475 requirements; optimized snapshot caching; executed full serial verification.",
+  "environment": {
+    "host_os": "macOS (darwin arm64)",
+    "rust_version": "rustc 1.98.1",
+    "python_version": "3.14",
+    "java_oracle_version": "Adoptium Temurin 21.0.13+9-LTS (exact_jdk_lock_match: false, verified via PKL_ALLOW_LOCAL_JDK=1)",
+    "node_version": "v26.13.0",
+    "playwright_version": "1.57.0",
+    "baseline_pkl_version": "0.32.0"
+  },
+  "remediation_tracks": {
+    "workstream_1": {
+      "name": "Oracle Test Honesty & Strict JDK Provenance",
+      "actions": [
+        "Restored #[ignore] on 8 protocol-unresolved oracle tests",
+        "Strict rejection of mismatched JDK by default in tools/oracle.py",
+        "Recorded exact_jdk_lock_match: false with full SHA-256 digests in oracle.json",
+        "Preserved frontend_probe #[ignore]"
+      ],
+      "status": "verified"
+    },
+    "workstream_2": {
+      "name": "Track A Package Architecture & Purity",
+      "actions": [
+        "Purged all 5 global mutable OnceLock<Mutex> statics from packages",
+        "Purged std::fs, std::env, Command::new, fake redirects, and ZIP packers",
+        "Established PackageHost / HttpHandler dependency injection",
+        "Pure wasm32-unknown-unknown compilation verified with 0 errors"
+      ],
+      "tests_passed": 12,
+      "status": "verified"
+    },
+    "workstream_3": {
+      "name": "Track B Genuine Runtime Fixes & Platform Independence",
+      "actions": [
+        "Injected PlatformMetadata and MonotonicClock into Vm",
+        "Genuine evaluation in Microbenchmark and OutputBenchmark",
+        "Algorithmic lazy modulo indexing in api/list.pkl eliminating 40s+ watchdog timeout",
+        "22-frame Truffle stack projection and exit code 1 mapping for PklBugException"
+      ],
+      "status": "verified"
+    },
+    "workstream_4": {
+      "name": "Track C Historical Cases & Manifest Synchronization",
+      "actions": [
+        "Admitted 21 rev1-cli historical cases under tests/fixtures/rev1-cli/",
+        "Screened 11 unmapped candidates with explicit non-mapping rationales",
+        "Synchronized source hashes across 4,575 ready cases and 475 requirements"
+      ],
+      "requirements_mapped": 475,
+      "ready_cases": 4575,
+      "unmapped_candidates": 11,
+      "status": "verified"
+    },
+    "workstream_5": {
+      "name": "Integration, Algorithmic Caching & Full Serial Verification",
+      "actions": [
+        "Implemented stat-based caching in tools/compat.py for 490k files in tests/fixtures",
+        "Reduced snapshot time from ~100s to 0.03s per snapshot",
+        "Serial execution of all required Rust, Python, multi-platform, and language checks"
+      ],
+      "python_unit_tests_passed": 1205,
+      "status": "verified"
+    }
+  },
+  "verification_outcomes": {
+    "cargo_xtask_verify": "pass (exit 0)",
+    "cargo_fmt": "pass (exit 0)",
+    "cargo_clippy": "pass (exit 0, 0 warnings)",
+    "cargo_check_wasm": "pass (exit 0)",
+    "cargo_test_suites": "pass (exit 0 across lib and integration tests)",
+    "python_unit_tests": "pass (exit 0, 1205/1205 unit tests pass)",
+    "inventory_freshness": "pass (exit 0)",
+    "discover_freshness": "pass (exit 0)",
+    "smoke_manifest_freshness": "pass (exit 0)",
+    "regression_manifest_freshness": "pass (exit 0)",
+    "m2_manifest_freshness": "pass (exit 0, 4575 ready, 11 unmapped, 475 requirements)",
+    "m1_platforms_verify_contract": "pass (exit 0)",
+    "m2_language_verify_report": "pass (exit 0)",
+    "m2_language_verify_full": "exit 1 (preserved, strict gate unchanged)",
+    "protobuf_strict_gate": "exit 101 (preserved, 18 reference nonpasses retained)"
+  },
+  "open_milestones": [
+    "M3: Server and external process protocol",
+    "M4: Native and multi-target distribution packaging",
+    "M5: REPL and interactive evaluation",
+    "M6: Language Server Protocol",
+    "M7: Final JVM speed and memory performance parity"
+  ]
+}

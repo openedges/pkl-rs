@@ -42,15 +42,25 @@ class ProfileMappingTests(unittest.TestCase):
         all_original_contracts = [row for row in current['cases'] if 'upstream_case' in row]
         actual = [row for row in all_original_contracts if row['id'].startswith('pkl:language-snippet:')]
         history = historical.registry_cases(manifest.ROOT)
+        cli_history = historical.cli_registry_cases(manifest.ROOT)
         selected = selected_regressions.registry_cases(manifest.ROOT)
         self.assertEqual(len(history), 8)
-        self.assertEqual(list(selected), ['m2:rev1:t40-imported-declaration-authority',
+        self.assertEqual(len(cli_history), 21)
+        self.assertEqual(list(selected), ['m2:rev1:t36-foreign-nominal-identity',
+                                          'm2:rev1:t40-imported-declaration-authority',
                                           'm2:rev1:t40-foreign-namesake'])
         self.assertEqual([row['id'] for row in all_original_contracts],
-                         [row['id'] for row in originals] + list(history) + list(selected))
+                         [row['id'] for row in originals] + list(cli_history) + list(history) + list(selected))
         for row in all_original_contracts[len(originals):]:
-            registry = history if row['id'] in history else selected
-            adapter = historical.ADAPTER if row['id'] in history else selected_regressions.ADAPTER
+            if row['id'] in cli_history:
+                registry = cli_history
+                adapter = historical.CLI_ADAPTER
+            elif row['id'] in history:
+                registry = history
+                adapter = historical.ADAPTER
+            else:
+                registry = selected
+                adapter = selected_regressions.ADAPTER
             self.assertEqual(row['upstream_case'], registry[row['id']]['contract'])
             self.assertEqual(row['adapter'], adapter)
             self.assertEqual(row['execution']['state'], 'ready')
@@ -58,24 +68,24 @@ class ProfileMappingTests(unittest.TestCase):
         self.assertEqual(len(actual), 957)
         self.assertEqual(current['counts']['cases'], 4586)
         self.assertEqual(current['counts']['requirements'], 475)
-        self.assertEqual(current['counts']['cases_by_execution']['unimplemented'], 68 + 1)
-        self.assertEqual(current['counts']['cases_by_execution']['unmapped'], 32)
-        self.assertEqual(current['counts']['cases_by_execution']['ready'], 4485)
+        self.assertEqual(current['counts']['cases_by_execution'].get('unimplemented', 0), 0)
+        self.assertEqual(current['counts']['cases_by_execution']['unmapped'], 11)
+        self.assertEqual(current['counts']['cases_by_execution']['ready'], 4575)
         retained = [row for row in current['cases'] if 'regression_case' in row]
         other_retained = [row for row in retained if row['id'] not in selected]
-        self.assertEqual(len(other_retained), 1)
-        self.assertIn('t36', other_retained[0]['id'])
-        self.assertEqual(other_retained[0]['execution']['state'], 'unimplemented')
-        self.assertIsNone(other_retained[0]['adapter'])
-        self.assertNotIn('upstream_case', other_retained[0])
+        self.assertEqual(len(other_retained), 0)
         import m2_module_eval
         registered = m2_module_eval.registry_cases(manifest.ROOT, corpus, manifest.load(manifest.MODULE_ADAPTERS))
+        profile_cases = profiles.registry_cases(manifest.ROOT, corpus)
         for original, case in zip(originals, actual):
             self.assertEqual(case['upstream_case'], original)
             self.assertEqual(case['input_sha256'], original['source']['sha256'])
-            if case['id'] != jvm.CASE_ID:
+            if case['id'] not in profile_cases:
                 self.assertEqual(case['execution'], m2_module_eval.execution_state(original, case['id'] in registered))
                 self.assertEqual(case['adapter'], m2_module_eval.ADAPTER if case['id'] in registered else None)
+            else:
+                self.assertEqual(case['execution'], profiles.execution_state())
+                self.assertEqual(case['adapter'], profile_cases[case['id']]['adapter'])
 
     def test_source_catalog_has_no_runner_import_cycle_in_any_entry_order(self):
         for order in ['m2_language,m2_manifest,m2_jvm_classpath',

@@ -1,0 +1,417 @@
+{
+  "adapter": "package-project-eval",
+  "baseline": "0.32.0",
+  "cases": [
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/analyze1.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/api/analyze1.pkl",
+      "input_sha256": "47c6f6721230195214d0427f78a700d4e74662d29d0cad3d658c63d6e107ba45",
+      "upstream_case_sha256": "d9721a84d286539d4434c8c6186569be7825926061c0b0906561d2c2de979c4e"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/importGlob.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/basic/importGlob.pkl",
+      "input_sha256": "b7b8477b99902bcb2005931fb0834f51d0baadc815c87a5397aa1c4bd23ac59f",
+      "upstream_case_sha256": "e92a3c94dec0a5d332dbd24172c8a364552c8e40a901597b5edcda3b95cfa198"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/readGlob.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/basic/readGlob.pkl",
+      "input_sha256": "faa7067c94229d4b29e6050c534d7bef3bf18a0644675758399772b20e5cb501",
+      "upstream_case_sha256": "5805a4b27debfe87a642cce8074db44b2bab3fbba107ee4307ab740859cf31de"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport1.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport1.error.pkl",
+      "input_sha256": "a73fe5716edef14cff52d2fcaea0617268e0ff83c6425812899b8d67ee601ede",
+      "upstream_case_sha256": "8809975a7dbf474e5183ea7beca2d6532bdb762e48e09f740b8f4232667edffb"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport10.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport10.error.pkl",
+      "input_sha256": "8ce019389b49d533649f7d55f5117b5d0b10bc2a410d7443197dc2a1d68e7f33",
+      "upstream_case_sha256": "49dc269be2cd657b03d9c6fb1a01bdd3fbe946797b7410f0c332028e805ff06d"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport11.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport11.error.pkl",
+      "input_sha256": "d16649ad71480ad3a94457827d1ee79b0f54b131bb60c3d2638f8f9bb177207d",
+      "upstream_case_sha256": "2913e778298b126efdb5ff0ca5c88c503ea59a781d1c26e66e61f408aa65e0c9"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport12.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport12.error.pkl",
+      "input_sha256": "b3bd4fde765e539bdc0f6b092f3f73010a9ffe2867d8d2f54089c7ddaddc8ce0",
+      "upstream_case_sha256": "ee448d03d5fb694cb74bc247bd6f879a8c5e72ef356076d13d41ac3d1deb59c2"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport2.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport2.error.pkl",
+      "input_sha256": "4f2cbfa705a8cf6ce6309798d58a6a6daf3ccb5143f44072991691d1f93e8671",
+      "upstream_case_sha256": "d3330b424b53288f279f478ec8e6e98b861b6bd4e9a1dac92e25cd5fa5befced"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport3.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport3.error.pkl",
+      "input_sha256": "75c1228f7729485d620367719f476a6019bd67b8376429f81fe272e10f158e5f",
+      "upstream_case_sha256": "9f6cecbba525a36ae7ceef093f952d7f56b6675a3febcd020af7d1d567853e32"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport4.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport4.error.pkl",
+      "input_sha256": "2aca2b048d0fa5813a405364b1d53e1ad10ede62600a382ed864a99a67452460",
+      "upstream_case_sha256": "d7ecd52769a44dec9649142adeb4e97e41f02cf093b5235d80b67351b3d4affc"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport6.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport6.error.pkl",
+      "input_sha256": "83e829aeb784716a15927588171730cdae3b84213be92ca15a522f4a140a3a15",
+      "upstream_case_sha256": "e3fd52fd293fe0082bd5d89c609c2923d0dba75f3903c08a77d56d32d4f05153"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport7.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport7.error.pkl",
+      "input_sha256": "74a3cafb8958ebdd6fe0073c97854328c2cc8581a56fce8f2fb98108299f1f6a",
+      "upstream_case_sha256": "1f6790437813c26b52e3d7acb5b284207a9c99548ac7955f7f494f069fa6c92a"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport8.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport8.error.pkl",
+      "input_sha256": "e0df4366cfe2fe249ef9723fc494ba2cf77d19a4e22c233f2795c6849aa127f0",
+      "upstream_case_sha256": "d7a4c0ad3921fd54d7128bb72dccca47a33303d5bb6e3e998a612ebd7cd80b02"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport9.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/packages/badImport9.error.pkl",
+      "input_sha256": "880082bcacf22cb83b9455fcb495f704027409b11cfbed6518478055a063155b",
+      "upstream_case_sha256": "afe7f032c22e8205c3ddb96b5c287fdb46abab3d292c2370a12e3f0aff6342b9"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badRead1.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/packages/badRead1.error.pkl",
+      "input_sha256": "11dd40d614a13f0b5c51f42143951b2270627794e4f2c94801d62ba5512162fe",
+      "upstream_case_sha256": "80018bba88b8c5e96d91a625ac6048fa481cfdd3846a2c64f1e311ac4496d82b"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badRead2.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/packages/badRead2.error.pkl",
+      "input_sha256": "326f1a71b9f411343bcca6157df0cf081fe8b3474f2746289b7ee90d9928d695",
+      "upstream_case_sha256": "3104861d9f0827029b9db13472fe6f2ce5da38485f2479fc5094e4b91bf8f59d"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badRead3.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/packages/badRead3.error.pkl",
+      "input_sha256": "7272acf5c0f80144226f4ae0240db8b905b6fccbf3ca8c1a46bcfdf2f543e90a",
+      "upstream_case_sha256": "abc5863385330372717964c5b5532cf4809fdc2d9b1af6c8d0d8e080f444e368"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badRead4.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/packages/badRead4.error.pkl",
+      "input_sha256": "340ff320ac88083a43c88eb74ca6f334799810cd1468459181bec424fb923a86",
+      "upstream_case_sha256": "436369cd1059433eee07bca28531ae17073141e4438d1344171640fc47719541"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badRead8.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/packages/badRead8.error.pkl",
+      "input_sha256": "35d0db79e4bf5679b7d9a1b962eb6c121271159632f09f96cbdfc3f4f71348b7",
+      "upstream_case_sha256": "0d92b5b35c117ad600912ac4d5ac3f767b8c235481341bf6dbbe9d9a10c9941a"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/badRead9.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/packages/badRead9.error.pkl",
+      "input_sha256": "731b83be7842c87c17be59177cd608aba732152388fa9e72f0c8b4936818b552",
+      "upstream_case_sha256": "ded7481c2285c0c3775de97f1cabd101d84dfc3c253c186b28530eb65ef798c7"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/packages1.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/packages/packages1.pkl",
+      "input_sha256": "3447fa8ce5c25f803a34b284412b8e0a09261fdf6d85a4afae529840c17bf340",
+      "upstream_case_sha256": "9f2dcb8a742950ac4945cfc88fc74a6c2770ae56d7f2002b24bed12bff428238"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/packages2.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/packages/packages2.pkl",
+      "input_sha256": "a28bb62dee90a47c70945b42487981644257f8d29dffe8f37c28b16721a53d1d",
+      "upstream_case_sha256": "f00277863b0034c060d264566246f1b059eb5fc7118e2909945792dbdfdf0b61"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/packages/redirects.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/packages/redirects.pkl",
+      "input_sha256": "7779328c06ed515e83ee9cb4e06b31a3996b830549ed06f1cb2a38d875144046",
+      "upstream_case_sha256": "88cd614b50101f40fcb23ceb4ba5336aee782ce65b7d24804eb2894db2976110"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/badLocalProject/dog.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/badLocalProject/dog.pkl",
+      "input_sha256": "6eea7c557762c0a87e9598735922871b10e9114d1aa8c8de30b639fc8bc6d6f4",
+      "upstream_case_sha256": "b784b9fd03b1d7f8a10479b70df4dbef0bb5e05f7d42f855d556e86286acd28c"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/badPklProject1/bug.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/badPklProject1/bug.pkl",
+      "input_sha256": "718786b4d05680d207a116c30b24c029bfd5f2f29df5308faad46f88b4474eae",
+      "upstream_case_sha256": "6cc60715c1b8dd27f43f655ddbf3a6ba898602cdfdb4cf2e528ad4a77a40c82b"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/badPklProject2/bug.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/badPklProject2/bug.pkl",
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "upstream_case_sha256": "cc85805f3241f2630db13b17c91ded72c1398199de86553b4ee08eab3a012008"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/badPklProject3/bug.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/badPklProject3/bug.pkl",
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "upstream_case_sha256": "8d361e15c7bb03111c70203f54f4ce7d465a89e2b4a48b3f3aa3de31577533ae"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/badPklProject4/bug.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/badPklProject4/bug.pkl",
+      "input_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "upstream_case_sha256": "edb05d7af246df821f75a0141334d377575023bf4bf882efa7271c3be3a69f0b"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/badPklProject5/bug.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/badPklProject5/bug.pkl",
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "upstream_case_sha256": "29e3f2efc4ce26f7c8aafb7822dde09eded5217eca562103a08a34c2cacbd9aa"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/badProjectDeps1/bug.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/badProjectDeps1/bug.pkl",
+      "input_sha256": "815d5df67ce323fb42b07b65965c4e410bb59ce27c8661d7c0206b899107b643",
+      "upstream_case_sha256": "5f8b1cf1b07fedf01b924394770277d664dcc81059db3c7f84e4a0b5ae01a257"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/badProjectDeps2/bug.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/badProjectDeps2/bug.pkl",
+      "input_sha256": "815d5df67ce323fb42b07b65965c4e410bb59ce27c8661d7c0206b899107b643",
+      "upstream_case_sha256": "441b30550e5cc9fe5589c3afe1626ddd046cc304d12f712e2553e2948b2e2d4c"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/badProjectDeps3/bug.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/badProjectDeps3/bug.pkl",
+      "input_sha256": "c7ccb2562ea8dbe9f8ef95430ab9f9f979274e2395cbc99d538ef5195a57f9b7",
+      "upstream_case_sha256": "9161fdcb6d51222ee7f05d09152254fd19b80c163c52d90898d58f7325aedfc5"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/badProjectDeps4/bug.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/badProjectDeps4/bug.pkl",
+      "input_sha256": "a29ef3e4bb17d86ad40c511458d000cf1e3419913db0de1aeafd22dc8ca20bd1",
+      "upstream_case_sha256": "e2b7ef51eb30974bfde6931c69d573547944f7c81b23021f66a81a2a17c4096f"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/badProjectDeps5/bug.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/badProjectDeps5/bug.pkl",
+      "input_sha256": "3f34db6429ab1e0aa0517382761f2adc7d422bafc93eb465c20f261f9f62d5c8",
+      "upstream_case_sha256": "088f7f43f8a329a0bc676b84f412fa32f8a05b2b6dc184641e31dcbb0571c913"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/badProjectDeps6/bug.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/badProjectDeps6/bug.pkl",
+      "input_sha256": "a84cacce06828cae613c953cc1338d24b963e993d4c110c0f11c8737dde5ac83",
+      "upstream_case_sha256": "9d739a7d76fb59a544ca82a18260265c552172dbbeac30bccb311fcae833f1b1"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/badProjectDeps7/bug.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/badProjectDeps7/bug.pkl",
+      "input_sha256": "162f47f3069b870e05f91973791fa6fb85242f838c374bd763c0016e2cfbf648",
+      "upstream_case_sha256": "f3e56645cba4471c0ea0a20e01bc02e77014c212af95b1aa02ba6fead5e1b251"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/compactTraceMode/compactTraceMode.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/compactTraceMode/compactTraceMode.pkl",
+      "input_sha256": "3537d84d30627ab8a299678384beeefc35813cd7b8cddb34c112993115b1d233",
+      "upstream_case_sha256": "25c7a8e8b61aa6b21316036677b28a8149d2520b33cd7ef3a2b804a40eed4868"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/evaluatorSettings/basic.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/evaluatorSettings/basic.pkl",
+      "input_sha256": "13df090fb26f02f911d842b57348af7f9f9e7e5304ca1c2fac39b0f3bd70e847",
+      "upstream_case_sha256": "651d18453c80dd0d416b052ddd86ec090e11346a51ed95333de1c2f8e70d325e"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/evaluatorSettings/nullTraceMode.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/evaluatorSettings/nullTraceMode.pkl",
+      "input_sha256": "ca31f0f892e84744cb37c553d2be486c4a6803f301c5841251c6841d5c005e33",
+      "upstream_case_sha256": "462e4f9c1734e2f5a2a53ac3360fe0a52b9f501599e459c43addcdb964f2b970"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/evaluatorSettings2/badRead.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/evaluatorSettings2/badRead.pkl",
+      "input_sha256": "26ff901e92914e370cb78c6bbd6206150924a570a54ad10bf9d1670f228976ea",
+      "upstream_case_sha256": "f4ea15f8e416466de3a27a09eee2f25a9ba6192a4cc902aa65d3459673f7bb52"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/evaluatorSettings2/goodRead.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/evaluatorSettings2/goodRead.pkl",
+      "input_sha256": "019725cbef9b2f38e0c8c2bf6abb28534e189639e9b591dbb1423d1072cbb85b",
+      "upstream_case_sha256": "301988aa1edfb09a3c695c4ab8467bddc658589bc49f4811d9af1f07f9c559d9"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/missingProjectDeps/bug.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/missingProjectDeps/bug.pkl",
+      "input_sha256": "037f3017c8e95e5cb59eac0f1fb1d005d0e5e08e8bdde5662491535dc2eaba96",
+      "upstream_case_sha256": "ac783eaa5ed830f02fe784c1813d298df465f8de4f04aeefabd68d20532b0e04"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/notAProject/@child/theChild.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/notAProject/@child/theChild.pkl",
+      "input_sha256": "718786b4d05680d207a116c30b24c029bfd5f2f29df5308faad46f88b4474eae",
+      "upstream_case_sha256": "09f5667332f49949254b22c3768206163847936c21b16049b77acf8e3320e618"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/notAProject/badImport.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/notAProject/badImport.error.pkl",
+      "input_sha256": "6650068befcd0925831343449f7d44e85a94e38487213670d34f2b891633dade",
+      "upstream_case_sha256": "b7273bbb0d5d7c29e201b510a1477aa7f786d560f9d4ed3e105ff02bbcb5ca0a"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/notAProject/goodImport.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/notAProject/goodImport.pkl",
+      "input_sha256": "03c0a0f14a91bcf5100789bed217543e5d26eebd37dd8d1e99159eb32502103a",
+      "upstream_case_sha256": "a650fd5e84f0fc4665fcf6e1c0a6883d4c320674c046469db735fbb3aacbc6d9"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/packageWithSpaces/module with spaces.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/packageWithSpaces/module with spaces.pkl",
+      "input_sha256": "febdef644f16ce9d2385c8e1d15319d48d5f44c7a1bf83af20e48a37e02be3ac",
+      "upstream_case_sha256": "198042a2851960829f019c45789a88c4e36d355e264e62d758da2b538f25dafe"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/prettyTraceMode/prettyTraceMode.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/prettyTraceMode/prettyTraceMode.pkl",
+      "input_sha256": "3db56179f4a195dc76f71118b3d38946f469e22c31d987754092a068e91e5f79",
+      "upstream_case_sha256": "d9931acabff03dc82ca196fcab0c41c61874aef58c0278be93939a4950adcec6"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/badImport1.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/badImport1.error.pkl",
+      "input_sha256": "ced6be68b1b19ce5f4a8bc6b4c667b822e5b605918149a1ede8383c899699504",
+      "upstream_case_sha256": "c03cc7fc1ce15ce6805b041f7bc97e48125f2b1dd5896c1eb1962ea028f33a00"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/badImport2.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/badImport2.error.pkl",
+      "input_sha256": "bf2ba038e543e527eda68995f4479ed4017fd7666849a4f39cc14c296af7e7d2",
+      "upstream_case_sha256": "798c22d01ad66f2dfbd91e2f0bf8d849cd63077dda2c33068a4f26e6580f17cf"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/badImport3.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/badImport3.error.pkl",
+      "input_sha256": "2228d28fb714c4e0a1c09415307ac526d1b25bf86b2e807376874ddbd9cc845e",
+      "upstream_case_sha256": "d2d6f05630e8727d17b7de2049f5442cb27967117474bc0b5679a03b013ff2c7"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/badRead1.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/badRead1.error.pkl",
+      "input_sha256": "d9230a24ce74628a4971741636b2ee1d154d3fdedd45bf65d91fd8cb9279a9d9",
+      "upstream_case_sha256": "7f26f4912a3182fb801e1441cccd600796915e72c812e584f86326c205694e68"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/basic.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/basic.pkl",
+      "input_sha256": "92f975c36cbd1cacbd4ad25376acd41bee8b5d35de13b1012fe0c29b834e3f23",
+      "upstream_case_sha256": "bc7de717b87e0ad5f314f8d77e1b850bc4c3d2946446b79161510c8083a8e345"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/directPackageImport.error.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/directPackageImport.error.pkl",
+      "input_sha256": "1d7b972d31c47415d5703c46f725f33d12238d64695174db3bb77a13d2ff1cd3",
+      "upstream_case_sha256": "e888ebf28d824dc75ee1b60446888ae1772f69dc19fac36f297ea694acc9c9b3"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/globbing.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/globbing.pkl",
+      "input_sha256": "99b17ac6fa8056cf5ed10234734068414cd641e65470d43c3f495f270ab05444",
+      "upstream_case_sha256": "47dcc3b4c732a6349e3373a2ae718fc92fa47eb5f4209ed3b9b88bf582f8b1bd"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/localProject.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/localProject.pkl",
+      "input_sha256": "9f87d70ad3dfddea64483e8bffebf5369812ea8f5268fd90e4c8301b33d13ba7",
+      "upstream_case_sha256": "ab8549c02e745e88fde1c2d4c0842e9a896349e6cb9f24df5f4d771bebd4640b"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/localProject2.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/localProject2.pkl",
+      "input_sha256": "339118cef042350e1bf716d7df32e506d9e14da3a767aed1e4c0f6bd2a78572c",
+      "upstream_case_sha256": "53d8c4aecda3007fbeeb868ecbd3ab179a7bd20f7e9556783edc742530cdd340"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/localProjectRead.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/localProjectRead.pkl",
+      "input_sha256": "a1c8f54a2a6248fa53500124359f85da0779b65a16461ca9ddefdc67ddbaf795",
+      "upstream_case_sha256": "127edaad9fd512b1fe2cd7e8d85b008385350e0339526565658b9af731461e58"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/localProjectRead2.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project1/localProjectRead2.pkl",
+      "input_sha256": "c73d76a0813a4c41bcc45f6f3e22fb25b0ca2902bfd92f4f77edf388b9fc295e",
+      "upstream_case_sha256": "2a1bdb03a546d87807d348de21d5371d78f2f90ce8ca9f3946593099284924d0"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project2/penguin.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project2/penguin.pkl",
+      "input_sha256": "041345a5ad6001d0a78790c107c373cf99bcebf7391f95d818724b6ee9bb1908",
+      "upstream_case_sha256": "de324c6da44a158f56a8ceb497a70688afa905d032303df3423017c594960bb2"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project3/basic.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project3/basic.pkl",
+      "input_sha256": "7e614a3daf44a0717403a5632530d1136d383a74026e6342ea0cce5360532619",
+      "upstream_case_sha256": "2415dc1ded6b85afa064b2fd5da978e29bac231540dd600c231d5e994a7afc41"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project4/main.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project4/main.pkl",
+      "input_sha256": "1e0a338d45e375de074036de226a37d780f195984c331f00a247df2a748920a4",
+      "upstream_case_sha256": "93cdbd8c3e34390afc369d18dd4fac325b8f2dfbbf11d89afc8d1bac3c8911b0"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project5/main.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project5/main.pkl",
+      "input_sha256": "a3b10b56aea43110d64fcf32810b9f9ef08ff7c533f772f07f313f72f71e2cef",
+      "upstream_case_sha256": "f23b74b4567957852341ab18e1cbb386ec4da2df87b50b30ae17cf122d2aa4e8"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project6/children.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project6/children.pkl",
+      "input_sha256": "f0a162f5a7aa89626cad48d27cfb3af835a7fb333a9163ef9329cd02f706ce0a",
+      "upstream_case_sha256": "9e6a2bb1e9b539aa2632d8e13d0f4dcf0810d90b60d9afb14111190c003622ee"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project6/children/a.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project6/children/a.pkl",
+      "input_sha256": "368c8ca93e1105e439fd6eb88181582ff854556d1c59ecbf4148120b2933e3e1",
+      "upstream_case_sha256": "49351580a9c3486ca99a3b8aa1c50ed9ad8488ee80809e3c69d8b081908e736c"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project6/children/b.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project6/children/b.pkl",
+      "input_sha256": "e94e0c3a224375cecc0254315fb3cb6dd8646c92fc0cb13277335ed9530dc153",
+      "upstream_case_sha256": "ea409313872d1fcf0a22a53d32b52592b8aa6ff3c47a4b4673ecc00fc11c755e"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project6/children/c.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project6/children/c.pkl",
+      "input_sha256": "61932df0726e800bb18b734934bd8d3fa2d860c665faf35391196f095621e4d7",
+      "upstream_case_sha256": "8266dcb8d4b70741ae1b6fca7b82c5f39f70fc256148393e52a3635c5f117900"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project7/globWildcards.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project7/globWildcards.pkl",
+      "input_sha256": "d303d96f817648613e4af97cf538505a92a88d79f0f2308be97d06d2c3a7f01f",
+      "upstream_case_sha256": "8e670d52f571f0afcaf3c6c4c44524499a713b00ada4c3e8c632b7d502d0e4e0"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/projects/project7/spacesInImport.pkl",
+      "input": "pkl-core/src/test/files/LanguageSnippetTests/input/projects/project7/spacesInImport.pkl",
+      "input_sha256": "6a227f74f9991e3c54707727f94ba4b07e31831bcabda48e19758e0e4bdba118",
+      "upstream_case_sha256": "9d3cf43e9fd2bbc529b88eac96836f6fcf850ef54a414d32440dd1914dcbadfa"
+    }
+  ],
+  "profile": "pkl-0.32-package-project-eval-v1",
+  "schema_version": 1,
+  "scope": "All 68 reviewed package, project, and HTTPS execution profile cases executed with PackageFixtureServer over 12 upstream packages."
+}

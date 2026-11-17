@@ -514,3 +514,27 @@ fn transient_failures_retry_in_order_while_successful_dependencies_stay_cached()
     assert_eq!(done(&mut vm), Ok(Value::Int(42.into())));
     assert_eq!(vm.member_evaluations(), evaluations);
 }
+
+#[test]
+fn power_assertion_compilation_excludes_module_keyword_observation() {
+    let source = "x = (it) -> it != module\n";
+    let parsed = parse_module(source).unwrap();
+    let resolved = resolve_module(&parsed).unwrap();
+    let program = pkl_runtime::vm::compile_module_with_power_assertions(&resolved).unwrap();
+    let module_offset = source.find("module").unwrap();
+    let module_len = "module".len();
+    for i in 0..program.blocks.next_id() {
+        if let Some(instructions) = program.blocks.get(i) {
+            for inst in instructions {
+                if let I::Observe(span) = inst {
+                    let is_module_span =
+                        span.start == module_offset && (span.end - span.start) == module_len;
+                    assert!(
+                        !is_module_span,
+                        "Instruction::Observe must not be emitted for `module` keyword (GetModuleNode in Java)"
+                    );
+                }
+            }
+        }
+    }
+}

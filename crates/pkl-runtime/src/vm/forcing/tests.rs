@@ -331,8 +331,13 @@ fn builtin_integer_alias_values_have_stable_evaluator_local_identity_and_shadowi
 
 #[test]
 fn deep_force_and_render_are_iterative_and_render_cycles_are_bounded() {
+    let stack_size = if cfg!(debug_assertions) {
+        1024 * 1024
+    } else {
+        256 * 1024
+    };
     std::thread::Builder::new()
-        .stack_size(256 * 1024)
+        .stack_size(stack_size)
         .spawn(|| {
             let p = Arc::new(Program::new(vec![vec![
                 Instruction::Input(0),

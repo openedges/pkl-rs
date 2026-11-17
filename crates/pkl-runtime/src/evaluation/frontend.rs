@@ -133,7 +133,7 @@ impl From<ModuleFrontendFailure> for ModuleFrontendResult {
             stderr: failure.text.to_java_utf8().into_bytes(),
             // Development-probe outcomes, not the complete product CLI exit contract.
             exit_code: match failure.disposition {
-                FailureDisposition::LanguageError => 1,
+                FailureDisposition::LanguageError | FailureDisposition::OracleError => 1,
                 FailureDisposition::Unsupported => 2,
                 FailureDisposition::LimitExceeded => 3,
                 FailureDisposition::InternalFailure => 4,
@@ -182,14 +182,15 @@ fn resolve_input(
     // Remote/package cache behavior remains a Host responsibility and is not
     // admitted here for a cache-enabled non-file primary source.
     let file_or_bundled = input.uri.starts_with("file:") || input.uri.starts_with("pkl:");
-    if !options.no_project
+    let has_project_allowed = options.no_project || crate::packages::resolver::has_active_project();
+    if !has_project_allowed
         || options.settings != "pkl:settings"
         || (!options.no_cache && !file_or_bundled)
     {
         return Err(unsupported(
             FrontendPhase::Configuration,
             "module-evaluation-configuration",
-            "This module-evaluation adapter requires --no-project --settings pkl:settings; cache-enabled primary sources are limited to file: and pkl:.",
+            "This module-evaluation adapter requires --no-project or --project-dir and --settings pkl:settings; cache-enabled primary sources are limited to file: and pkl:.",
         ));
     }
     let module = match crate::parser::parse_module_for_evaluation(&input.text) {
@@ -314,7 +315,10 @@ pub fn render_module_runtime_failure_text(
 
     use crate::value::ErrorKind;
     if let Some(frontend) = &error.frontend {
-        let disposition = frontend.diagnostic.provenance.disposition;
+        let mut disposition = frontend.diagnostic.provenance.disposition;
+        if error.foreign_exception.is_some() {
+            disposition = FailureDisposition::OracleError;
+        }
         let phase = match frontend.diagnostic.provenance.origin {
             DiagnosticOrigin::Lexer => FrontendPhase::Lexing,
             DiagnosticOrigin::Parser => FrontendPhase::Parsing,
@@ -331,13 +335,17 @@ pub fn render_module_runtime_failure_text(
             ),
         };
     }
-    let (disposition, reason) = match error.kind {
-        ErrorKind::Unsupported => (FailureDisposition::Unsupported, Some("runtime-capability")),
-        ErrorKind::InvalidBytecode | ErrorKind::StaleHandle => (
-            FailureDisposition::InternalFailure,
-            Some("runtime-invariant"),
-        ),
-        _ => (FailureDisposition::LanguageError, None),
+    let (disposition, reason) = if error.foreign_exception.is_some() {
+        (FailureDisposition::OracleError, None)
+    } else {
+        match error.kind {
+            ErrorKind::Unsupported => (FailureDisposition::Unsupported, Some("runtime-capability")),
+            ErrorKind::InvalidBytecode | ErrorKind::StaleHandle => (
+                FailureDisposition::InternalFailure,
+                Some("runtime-invariant"),
+            ),
+            _ => (FailureDisposition::LanguageError, None),
+        }
     };
     ModuleFrontendFailure {
         phase: FrontendPhase::ModuleOutput,
@@ -554,6 +562,8 @@ fn evaluate_module_output_with_budget_and_hosts(
             evaluation: super::EvaluationOptions {
                 power_assertions: true,
             },
+            trace_mode: crate::packages::resolver::current_trace_mode()
+                .unwrap_or(crate::logging::TraceMode::Compact),
             log_delivery: crate::logging::LogDelivery::Host,
             // CLI settings transform reflection locations as well as log and
             // error frames. Keep the API default independent of editor settings.
@@ -564,7 +574,7 @@ fn evaluate_module_output_with_budget_and_hosts(
             } else {
                 crate::logging::FrameTransformer::Default
             },
-            ..Default::default()
+            platform_data: options.diagnostic_profile == DiagnosticProfile::CliBundledSettings,
         },
     ) {
         Ok(session) => session,

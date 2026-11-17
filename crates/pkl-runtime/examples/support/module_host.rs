@@ -20,53 +20,118 @@ pub fn complete(request: &ModuleRequest) -> ModuleCompletion {
         ModuleRequestKind::ResolveImportUri { .. } => {
             unreachable!("explicit default handles inherited URI resolution")
         }
-        ModuleRequestKind::SelectKey { id, uri, .. } => ModuleCompletion::KeySelected(
-            file_path(uri)
-                .map_err(|error| {
-                    if uri.as_str().is_none() {
-                        error
-                    } else {
-                        ModuleHostError::NoLoader
-                    }
-                })
-                .map(|_| pkl_runtime::modules::ModuleKey {
-                    id: *id,
-                    uri: uri.clone(),
-                    kind: pkl_runtime::modules::ModuleKeyKind::Host,
-                    handle: "file".into(),
-                }),
-        ),
+        ModuleRequestKind::SelectKey { id, uri, .. } => {
+            if uri.starts_with("package:") || uri.starts_with("projectpackage:") {
+                ModuleCompletion::KeySelected(
+                    match pkl_runtime::packages::PackageAssetUri::parse(uri.clone()) {
+                        Ok(_) => Ok(pkl_runtime::modules::ModuleKey {
+                            id: *id,
+                            uri: uri.clone(),
+                            kind: pkl_runtime::modules::ModuleKeyKind::StandardGenericUrl,
+                            handle: "".into(),
+                        }),
+                        Err(failure) => Err(match &failure.failure {
+                            pkl_runtime::packages::PackageUriFailure::Unsupported(reason) => {
+                                ModuleHostError::Unsupported(reason.clone())
+                            }
+                            _ => ModuleHostError::UriSyntax {
+                                reason: failure.reason(),
+                            },
+                        }),
+                    },
+                )
+            } else {
+                ModuleCompletion::KeySelected(
+                    file_path(uri)
+                        .map_err(|error| {
+                            if uri.as_str().is_none() {
+                                error
+                            } else {
+                                ModuleHostError::NoLoader
+                            }
+                        })
+                        .map(|_| pkl_runtime::modules::ModuleKey {
+                            id: *id,
+                            uri: uri.clone(),
+                            kind: pkl_runtime::modules::ModuleKeyKind::Host,
+                            handle: "file".into(),
+                        }),
+                )
+            }
+        }
         ModuleRequestKind::QueryCachePolicy { .. } => ModuleCompletion::CachePolicy(Ok(true)),
-        ModuleRequestKind::QueryFragmentPaths { .. } => ModuleCompletion::FragmentPaths(Ok(false)),
+        ModuleRequestKind::QueryFragmentPaths { key } => ModuleCompletion::FragmentPaths(Ok(key
+            .uri
+            .starts_with("package:")
+            || key.uri.starts_with("projectpackage:"))),
         ModuleRequestKind::CheckImport { .. } => {
             unreachable!("default policy handles import admission")
         }
-        ModuleRequestKind::Capabilities { module, .. } => {
-            ModuleCompletion::Capabilities(file_path(&module.original_uri).map(|_| {
-                pkl_runtime::modules::ModuleCapabilities {
+        ModuleRequestKind::Capabilities { module, key } => {
+            if module.original_uri.starts_with("package:")
+                || module.original_uri.starts_with("projectpackage:")
+                || key.as_ref().is_some_and(|k| {
+                    k.uri.starts_with("package:") || k.uri.starts_with("projectpackage:")
+                })
+            {
+                ModuleCompletion::Capabilities(Ok(pkl_runtime::modules::ModuleCapabilities {
                     local: true,
                     hierarchical: true,
-                    fragment_paths: false,
-                }
-            }))
+                    fragment_paths: true,
+                }))
+            } else {
+                ModuleCompletion::Capabilities(file_path(&module.original_uri).map(|_| {
+                    pkl_runtime::modules::ModuleCapabilities {
+                        local: true,
+                        hierarchical: true,
+                        fragment_paths: false,
+                    }
+                }))
+            }
         }
         ModuleRequestKind::HasElement {
             module,
             element_uri,
             ..
         } => ModuleCompletion::HasElement(
-            pkl_runtime::glob::check_default_resolve(element_uri, false)
-                .and_then(|_| file_path(&module.original_uri))
-                .and_then(|_| file_path(element_uri))
-                .map(|path| path.exists()),
+            pkl_runtime::glob::check_default_resolve(element_uri, false).and_then(|_| {
+                if element_uri.starts_with("package:") || element_uri.starts_with("projectpackage:")
+                {
+                    pkl_runtime::packages::resolver::has_element(element_uri)
+                } else {
+                    let _ = file_path(&module.original_uri);
+                    file_path(element_uri).map(|path| path.exists())
+                }
+            }),
         ),
         ModuleRequestKind::ResolveKey { key, .. } => {
-            ModuleCompletion::Resolved(resolve(&key.uri, &key.uri))
+            let res = if key.uri.starts_with("package:") || key.uri.starts_with("projectpackage:") {
+                pkl_runtime::packages::resolver::resolve_package_module(&key.uri)
+            } else {
+                resolve(&key.uri, &key.uri)
+            };
+            match res {
+                Ok(resolved) => ModuleCompletion::Resolved(Ok(resolved)),
+                Err(err) => ModuleCompletion::KeyResolved(Err(err)),
+            }
         }
         ModuleRequestKind::Resolve { key, .. } => {
-            ModuleCompletion::Resolved(resolve(&key.uri, &key.uri))
+            let res = if key.uri.starts_with("package:") || key.uri.starts_with("projectpackage:") {
+                pkl_runtime::packages::resolver::resolve_package_module(&key.uri)
+            } else {
+                resolve(&key.uri, &key.uri)
+            };
+            ModuleCompletion::Resolved(res)
         }
-        ModuleRequestKind::LoadSource { resolved, .. } => ModuleCompletion::Source(load(resolved)),
+        ModuleRequestKind::LoadSource { resolved, .. } => {
+            if resolved.resolved_uri.starts_with("package:")
+                || resolved.resolved_uri.starts_with("projectpackage:")
+            {
+                ModuleCompletion::Source(pkl_runtime::packages::resolver::load_source(resolved))
+            } else {
+                ModuleCompletion::Source(load(resolved))
+            }
+        }
     }
 }
 
@@ -110,6 +175,10 @@ fn load(module: &ResolvedModule) -> Result<ModuleSource, ModuleHostError> {
 pub(super) fn io_error(error: std::io::Error) -> ModuleHostError {
     if error.kind() == std::io::ErrorKind::NotFound {
         ModuleHostError::NotFound
+    } else if error.kind() == std::io::ErrorKind::IsADirectory
+        || error.to_string().starts_with("Is a directory")
+    {
+        ModuleHostError::Io("Is a directory".into())
     } else {
         ModuleHostError::Io(error.to_string().into())
     }

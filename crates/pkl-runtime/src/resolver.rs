@@ -2205,6 +2205,20 @@ impl<'a> Resolver<'a> {
             ExprKind::Module => {
                 if self.const_level != ConstLevel::None {
                     self.diagnostic_owner_requested = true;
+                    if self.receiver_is_lambda && self.module_const_owners.is_empty() {
+                        let mut error = self.const_error(
+                            expression,
+                            "An unexpected error has occurred. Would you mind filing a bug report?",
+                        );
+                        error.provenance.disposition =
+                            crate::diagnostic::FailureDisposition::OracleError;
+                        error.provenance.foreign_exception = Some(std::sync::Arc::new(
+                            crate::java_exception::provenance::ForeignExceptionProvenance::new(
+                                crate::java_exception::provenance::ForeignOperation::ConstLambdaNullPointer,
+                            ),
+                        ));
+                        return Err(error);
+                    }
                     let message = if let Some(owner) = self.module_const_owners.last() {
                         let article = if *owner == "annotation" { "an" } else { "a" };
                         PklString::from(format!(

@@ -65,6 +65,7 @@ struct Node {
     source: SourceText,
     remaining: VecDeque<collect::Entry>,
     children: Vec<Target>,
+    pending_glob_targets: VecDeque<Uri>,
 }
 enum Work {
     Root(Box<Uri>),
@@ -86,10 +87,28 @@ enum Action {
         node: Box<Node>,
         entry: collect::Entry,
     },
+    ImportGlob {
+        node: Box<Node>,
+        entry: collect::Entry,
+    },
 }
 struct Pending {
     request: ModuleRequest,
     action: Action,
+}
+
+#[derive(Clone, Debug)]
+pub struct PendingGlobInfo {
+    pub base_uri: PklString,
+    pub authored: PklString,
+    pub pattern_uri: PklString,
+    pub span: Span,
+    pub target_key: ResolvedModuleKey,
+}
+
+struct ActiveGlob {
+    node: Box<Node>,
+    entry: collect::Entry,
 }
 
 /// Independently pollable shared loading continuation. Request IDs are local to
@@ -99,6 +118,8 @@ pub struct ImportGraphAnalysis {
     work: VecDeque<Work>,
     nodes: BTreeMap<Uri, (PklString, Vec<PklString>)>,
     pending: Option<Pending>,
+    pending_glob: Option<PendingGlobInfo>,
+    active_glob: Option<ActiveGlob>,
     result: Option<Result<ImportGraph, Box<AnalysisFailure>>>,
     next_id: u64,
     order_qualified: bool,
@@ -110,6 +131,8 @@ impl ImportGraphAnalysis {
             work: VecDeque::new(),
             nodes: BTreeMap::new(),
             pending: None,
+            pending_glob: None,
+            active_glob: None,
             result: None,
             next_id: 1,
             order_qualified: true,
@@ -158,6 +181,8 @@ impl ImportGraphAnalysis {
         cause: FailureCause,
     ) {
         self.pending = None;
+        self.pending_glob = None;
+        self.active_glob = None;
         self.work.clear();
         self.nodes.clear();
         self.result = Some(Err(Box::new(AnalysisFailure {
@@ -207,16 +232,29 @@ impl ImportGraphAnalysis {
         );
     }
     fn advance(&mut self, mut node: Box<Node>) {
+        if let Some(uri) = node.pending_glob_targets.pop_front() {
+            self.select(uri, Some(node), None);
+            return;
+        }
         if let Some(entry) = node.remaining.pop_front() {
             if entry.glob {
-                self.fail(
-                    "import glob",
-                    node.target.uri.text.clone(),
-                    Some(Self::site(&node, &entry)),
-                    FailureCause::Unsupported(
-                        "Static analyzer glob traversal continuation is not yet implemented."
-                            .into(),
-                    ),
+                if entry.uri.starts_with("...") {
+                    self.fail(
+                        "import glob",
+                        node.target.uri.text.clone(),
+                        Some(Self::site(&node, &entry)),
+                        FailureCause::Unsupported(
+                            "Cannot combine glob imports with triple-dot module URIs.".into(),
+                        ),
+                    );
+                    return;
+                }
+                self.emit(
+                    ModuleRequestKind::ResolveImportUri {
+                        key: node.target.key.key.clone(),
+                        authored_uri: entry.uri.clone(),
+                    },
+                    Action::ImportGlob { node, entry },
                 );
                 return;
             }
@@ -275,6 +313,17 @@ impl ImportGraphAnalysis {
         }
         if let Some(pending) = &self.pending {
             return AnalysisPoll::Request(Box::new(pending.request.clone()));
+        }
+        if let Some(active) = &self.active_glob {
+            return AnalysisPoll::Ready(Err(Box::new(AnalysisFailure {
+                phase: "import glob",
+                module_uri: active.node.target.uri.text.clone(),
+                site: Some(Self::site(&active.node, &active.entry)),
+                cause: FailureCause::Unsupported(
+                    "Static analyzer glob traversal requires host glob resolution.".into(),
+                ),
+                traversal_order_qualified: self.order_qualified,
+            })));
         }
         while let Some(work) = self.work.pop_front() {
             match work {
@@ -397,6 +446,7 @@ impl ImportGraphAnalysis {
                         source: source.text,
                         remaining: entries.into(),
                         children: Vec::new(),
+                        pending_glob_targets: VecDeque::new(),
                     })),
                     Err(error) => self.fail(
                         "parse",
@@ -435,13 +485,76 @@ impl ImportGraphAnalysis {
                     ),
                 }
             }
+            (Action::ImportGlob { node, entry }, ModuleCompletion::ImportUri(result)) => {
+                match result {
+                    Ok(text) => {
+                        let info = PendingGlobInfo {
+                            base_uri: node.target.key.key.uri.clone(),
+                            authored: entry.uri.clone(),
+                            pattern_uri: text,
+                            span: entry.span,
+                            target_key: node.target.key.clone(),
+                        };
+                        self.pending_glob = Some(info);
+                        self.active_glob = Some(ActiveGlob { node, entry });
+                    }
+                    Err(error) => self.fail(
+                        "import URI",
+                        node.target.uri.text.clone(),
+                        Some(Self::site(&node, &entry)),
+                        FailureCause::Host(error),
+                    ),
+                }
+            }
             _ => unreachable!("completion validated before state change"),
         }
         Ok(())
     }
+    pub fn is_pending_glob(&self) -> bool {
+        self.pending_glob.is_some()
+    }
+    pub fn take_pending_glob(&mut self) -> Option<PendingGlobInfo> {
+        self.pending_glob.take()
+    }
+    pub fn complete_glob(&mut self, matched_uris: Vec<PklString>) {
+        let Some(ActiveGlob { mut node, entry: _ }) = self.active_glob.take() else {
+            return;
+        };
+        for text in matched_uris {
+            match Uri::parse(text.clone()) {
+                Ok(uri) => node.pending_glob_targets.push_back(uri),
+                Err(reason) => {
+                    self.fail(
+                        "import URI",
+                        node.target.uri.text.clone(),
+                        None,
+                        FailureCause::Uri {
+                            input: text,
+                            reason,
+                        },
+                    );
+                    return;
+                }
+            }
+        }
+        self.advance(node);
+    }
+    pub fn fail_glob(&mut self, cause: FailureCause) {
+        let Some(ActiveGlob { node, entry }) = self.active_glob.take() else {
+            return;
+        };
+        self.fail(
+            "import glob",
+            node.target.uri.text.clone(),
+            Some(Self::site(&node, &entry)),
+            cause,
+        );
+    }
     pub fn close(&mut self) {
         self.closed = true;
         self.pending = None;
+        self.pending_glob = None;
+        self.active_glob = None;
         self.result = None;
         self.work.clear();
         self.nodes.clear();

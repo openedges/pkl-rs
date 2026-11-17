@@ -32,6 +32,7 @@ pub enum FailureDisposition {
     Unsupported,
     LimitExceeded,
     InternalFailure,
+    OracleError,
 }
 
 impl FailureDisposition {
@@ -41,6 +42,7 @@ impl FailureDisposition {
             Self::Unsupported => "unsupported",
             Self::LimitExceeded => "limit-exceeded",
             Self::InternalFailure => "internal-failure",
+            Self::OracleError => "oracle-error",
         }
     }
 }
@@ -260,6 +262,8 @@ pub struct DiagnosticProvenance {
     pub reason: Option<&'static str>,
     /// Synthetic JVM underline width (not a source byte length), e.g. at EOF.
     pub highlight_length_utf16: Option<usize>,
+    pub foreign_exception:
+        Option<std::sync::Arc<crate::java_exception::provenance::ForeignExceptionProvenance>>,
 }
 
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -310,6 +314,7 @@ impl Diagnostic {
                 disposition: FailureDisposition::InternalFailure,
                 reason: Some("unclassified-legacy-diagnostic"),
                 highlight_length_utf16: None,
+                foreign_exception: None,
             }),
             span,
             message: message.into(),

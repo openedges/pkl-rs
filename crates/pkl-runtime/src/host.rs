@@ -555,6 +555,9 @@ impl HostSession {
     pub fn set_power_assertions(&mut self, enabled: bool) {
         self.vm.set_power_assertions(enabled);
     }
+    pub fn set_platform_metadata(&mut self, metadata: Option<crate::logging::PlatformMetadata>) {
+        self.vm.set_platform_metadata(metadata);
+    }
     pub fn primary_module(&self) -> Option<Value> {
         self.vm.primary_module()
     }

@@ -1,0 +1,2 @@
+a = new Dynamic { c = throw("boom") }
+b = (x) -> x

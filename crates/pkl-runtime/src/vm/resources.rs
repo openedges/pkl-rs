@@ -141,15 +141,28 @@ impl Vm {
             State::Waiting(PendingRequest::Read(request)) if request.id == id => request.clone(),
             _ => return self.resume(id, Err(invalid("invalid resource completion"))),
         };
-        let uri = match crate::host::resources::resolved_uri(&request) {
-            Ok(uri) => uri,
+        let (resource_uri_opt, value) = match result {
+            Ok(ReadResult::Missing) => (None, None),
+            Ok(ReadResult::Text(text)) => (None, Some(Value::String(text))),
+            Ok(ReadResult::Resource(resource)) => {
+                let res_uri = resource.uri.clone();
+                (Some(res_uri), Some(self.resource(resource)))
+            }
             Err(error) => return self.resume(id, Err(error)),
         };
-        let value = match result {
-            Ok(ReadResult::Missing) => None,
-            Ok(ReadResult::Text(text)) => Some(Value::String(text)),
-            Ok(ReadResult::Resource(resource)) => Some(self.resource(resource)),
-            Err(error) => return self.resume(id, Err(error)),
+        let uri = if let Some(res_uri) = resource_uri_opt
+            && request.resolved_uri.is_none()
+            && (request.uri.starts_with("@")
+                || request.uri.starts_with("package:")
+                || request.uri.starts_with("projectpackage:")
+                || !request.uri.contains(":"))
+        {
+            res_uri
+        } else {
+            match crate::host::resources::resolved_uri(&request) {
+                Ok(uri) => uri,
+                Err(error) => return self.resume(id, Err(error)),
+            }
         };
         self.resources
             .insert(crate::host::resources::cache_key(&uri), value.clone());

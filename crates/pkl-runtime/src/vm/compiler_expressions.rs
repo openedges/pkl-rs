@@ -270,8 +270,13 @@ impl Compiler<'_> {
                         for index in pending_spans.drain(start..) {
                             output.spans[index] = Some(expression.span);
                         }
+                        // In Java Pkl, GetModuleNode replaces itself with an uninstrumented
+                        // receiver node without source section, so `module` is ignored by PowerAssertions.
                         if self.instrument
-                            && !matches!(expression.kind, ExprKind::Parenthesized(_))
+                            && !matches!(
+                                expression.kind,
+                                ExprKind::Parenthesized(_) | ExprKind::Module
+                            )
                             && !self.power_literal_constructor(expression)
                             && !(matches!(expression.kind, ExprKind::InterpolatedString(_))
                                 && self.power_parser_literal(expression))
@@ -1170,6 +1175,16 @@ impl Compiler<'_> {
                             // Leaves do not need either large expression dispatcher.
                             // This also bounds annotation-property compilation.
                             output.push(Instruction::Constant(value));
+                        } else if matches!(expression.kind, ExprKind::Annotation { .. }) {
+                            // Annotation compilation can reenter the expression compiler.
+                            // Do not retain either general expression-dispatch frame.
+                            self.annotation_expression(expression, output)
+                                .map_err(|error| error.at(expression.span))?;
+                        } else if matches!(expression.kind, ExprKind::Class { .. }) {
+                            // Class member compilation can reenter the expression compiler.
+                            // Do not retain either general expression-dispatch frame.
+                            self.class_declaration_expression(expression, output)
+                                .map_err(|error| error.at(expression.span))?;
                         } else if matches!(expression.kind, ExprKind::TypeAlias { .. }) {
                             // Annotation compilation can reenter the expression compiler.
                             // Do not retain either general expression-dispatch frame.
@@ -1214,6 +1229,73 @@ impl Compiler<'_> {
         }
     }
 
+    fn annotation_expression(
+        &mut self,
+        expression: &Expr,
+        output: &mut Code,
+    ) -> Result<(), RuntimeError> {
+        let ExprKind::Annotation {
+            parameters,
+            ty,
+            members,
+        } = &expression.kind
+        else {
+            return Err(invalid("annotation expression"));
+        };
+        self.initialize_type_resolution(ty, output);
+        match self.compile_type(ty) {
+            Ok(check) => {
+                if matches!(check.unaliased(), TypeCheck::Class { .. }) || check.has_declared() {
+                    self.class_value(&check, output, ty.span)?;
+                    output.push_at(Instruction::CheckAnnotationClass, ty.span);
+                    let generator = members.iter().any(|member| {
+                        !matches!(
+                            member,
+                            crate::syntax::ObjectMember::Property(_)
+                                | crate::syntax::ObjectMember::Element { .. }
+                                | crate::syntax::ObjectMember::Entry { .. }
+                        )
+                    });
+                    if let Some(parameter) = parameters.first().filter(|_| generator) {
+                        let (kind, message, span) = match &parameter.ty {
+                            Some(ty) => (
+                                ErrorKind::Type,
+                                "Expected a function that returns an object, but got an object.",
+                                ty.span,
+                            ),
+                            None => (
+                                ErrorKind::Unsupported,
+                                "Untyped parameterized annotation generators are not implemented.",
+                                parameter.span,
+                            ),
+                        };
+                        output.push_at(Instruction::Fail(RuntimeError::new(kind, message)), span);
+                    } else {
+                        self.instance_body(members, parameters, ty.span, ty.span, output)?;
+                        if !parameters.is_empty() && !members.is_empty() {
+                            output.push_at(Instruction::Fail(RuntimeError::new(ErrorKind::Type, "Expected a function that returns an object, but got an object.")), ty.span);
+                        }
+                    }
+                } else {
+                    output.push_at(
+                        Instruction::Fail(RuntimeError::new(
+                            ErrorKind::Type,
+                            "Expected an annotation class.",
+                        )),
+                        ty.span,
+                    );
+                }
+            }
+            Err(error) => {
+                output.push_at(
+                    Instruction::Fail(error.clone()),
+                    error.span.unwrap_or(ty.span),
+                );
+            }
+        }
+        Ok(())
+    }
+
     fn schedule_expression<'a>(
         &mut self,
         expression: &'a Expr,
@@ -1221,71 +1303,7 @@ impl Compiler<'_> {
         work: &mut Vec<Work<'a>>,
     ) -> Result<(), RuntimeError> {
         match &expression.kind {
-            ExprKind::Annotation {
-                parameters,
-                ty,
-                members,
-            } => {
-                self.initialize_type_resolution(ty, output);
-                match self.compile_type(ty) {
-                    Ok(check) => {
-                        if matches!(check.unaliased(), TypeCheck::Class { .. })
-                            || check.has_declared()
-                        {
-                            self.class_value(&check, output, ty.span)?;
-                            output.push_at(Instruction::CheckAnnotationClass, ty.span);
-                            let generator = members.iter().any(|member| {
-                                !matches!(
-                                    member,
-                                    crate::syntax::ObjectMember::Property(_)
-                                        | crate::syntax::ObjectMember::Element { .. }
-                                        | crate::syntax::ObjectMember::Entry { .. }
-                                )
-                            });
-                            if let Some(parameter) = parameters.first().filter(|_| generator) {
-                                // GeneratorObjectLiteralNode checks the parameter descriptor
-                                // before executing its members. An untyped parameter triggers
-                                // an upstream null-location bug rather than a language error.
-                                let (kind, message, span) = match &parameter.ty {
-                                    Some(ty) => (
-                                        ErrorKind::Type,
-                                        "Expected a function that returns an object, but got an object.",
-                                        ty.span,
-                                    ),
-                                    None => (
-                                        ErrorKind::Unsupported,
-                                        "Untyped parameterized annotation generators are not implemented.",
-                                        parameter.span,
-                                    ),
-                                };
-                                output.push_at(
-                                    Instruction::Fail(RuntimeError::new(kind, message)),
-                                    span,
-                                );
-                            } else {
-                                self.instance_body(members, parameters, ty.span, ty.span, output)?;
-                                if !parameters.is_empty() && !members.is_empty() {
-                                    output.push_at(Instruction::Fail(RuntimeError::new(ErrorKind::Type, "Expected a function that returns an object, but got an object.")), ty.span);
-                                }
-                            }
-                        } else {
-                            output.push_at(
-                                Instruction::Fail(RuntimeError::new(
-                                    ErrorKind::Type,
-                                    "Expected an annotation class.",
-                                )),
-                                ty.span,
-                            );
-                        }
-                    }
-                    Err(error) => {
-                        output.push_at(
-                            Instruction::Fail(error.clone()),
-                            error.span.unwrap_or(ty.span),
-                        );
-                    }
-                }
-            }
+            ExprKind::Annotation { .. } => self.annotation_expression(expression, output)?,
             ExprKind::New {
                 ty,
                 members,

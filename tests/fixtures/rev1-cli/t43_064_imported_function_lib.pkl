@@ -1,0 +1,14 @@
+module lib
+
+class Field {
+  name: String
+  label: String = "[\(name)]"
+  check: (String) -> Boolean = (v) -> v.length > name.length
+}
+
+fields: Listing<Field> = new {
+  new { name = "a" }
+  new { name = "bb" }
+}
+
+validate = (f: Field, v: String) -> f.check.apply(v)

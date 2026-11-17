@@ -72,8 +72,65 @@ fn iteration_error(error: std::io::Error) -> ModuleHostError {
     ).into())
 }
 
+fn is_package_reader(reader: &GlobReader) -> bool {
+    match reader {
+        GlobReader::Module(key) => {
+            key.uri.starts_with("package:") || key.uri.starts_with("projectpackage:")
+        }
+        GlobReader::Resource(reader) => {
+            reader.scheme == "package" || reader.scheme == "projectpackage"
+        }
+    }
+}
+
 pub fn complete(request: &GlobRequest) -> Option<GlobCompletion> {
     match &request.kind {
+        GlobRequestKind::SelectResource { id, uri }
+            if uri.starts_with("package:") || uri.starts_with("projectpackage:") =>
+        {
+            let scheme = if uri.starts_with("package:") {
+                "package"
+            } else {
+                "projectpackage"
+            };
+            Some(GlobCompletion::Resource(Ok(
+                pkl_runtime::glob::ResourceReader {
+                    id: *id,
+                    scheme: scheme.into(),
+                    handle: format!("builtin:{scheme}").into(),
+                },
+            )))
+        }
+        GlobRequestKind::IsGlobbable { reader } if is_package_reader(reader) => {
+            Some(GlobCompletion::Globbable(Ok(true)))
+        }
+        GlobRequestKind::IsHierarchical { reader } if is_package_reader(reader) => {
+            Some(GlobCompletion::Hierarchical(Ok(true)))
+        }
+        GlobRequestKind::FragmentPaths { reader }
+            if reader.scheme == "package" || reader.scheme == "projectpackage" =>
+        {
+            Some(GlobCompletion::FragmentPaths(Ok(true)))
+        }
+        GlobRequestKind::HasElement { uri, reader }
+            if uri.starts_with("package:")
+                || uri.starts_with("projectpackage:")
+                || reader.scheme == "package"
+                || reader.scheme == "projectpackage" =>
+        {
+            Some(GlobCompletion::HasElement(
+                pkl_runtime::packages::resolver::has_element(uri).map_err(Into::into),
+            ))
+        }
+        GlobRequestKind::ListElements { uri, reader }
+            if uri.starts_with("package:")
+                || uri.starts_with("projectpackage:")
+                || is_package_reader(reader) =>
+        {
+            Some(GlobCompletion::Elements(
+                pkl_runtime::packages::resolver::list_elements(uri).map_err(Into::into),
+            ))
+        }
         GlobRequestKind::IsGlobbable {
             reader: GlobReader::Module(key),
         } if key.kind == ModuleKeyKind::StandardFile => Some(GlobCompletion::Globbable(Ok(true))),
@@ -379,5 +436,54 @@ mod tests {
     fn directory_iteration_failure_is_unsupported_instead_of_guest_io() {
         let failure = iteration_error(std::io::Error::other("synthetic iterator failure"));
         assert!(matches!(failure, ModuleHostError::Unsupported(_)));
+    }
+    #[test]
+    fn package_reader_and_select_resource_glob_support() {
+        let package_uri: PklString = "package://example.com/birds@0.5.0#/catalog/".into();
+        let select_req = GlobRequest {
+            id: 1,
+            kind: GlobRequestKind::SelectResource {
+                id: ResourceReaderId(42),
+                uri: package_uri.clone(),
+            },
+        };
+        let Some(GlobCompletion::Resource(Ok(reader))) = complete(&select_req) else {
+            panic!("SelectResource failed");
+        };
+        assert_eq!(reader.scheme, "package");
+        assert_eq!(reader.handle, "builtin:package");
+
+        let glob_req = GlobRequest {
+            id: 2,
+            kind: GlobRequestKind::IsGlobbable {
+                reader: GlobReader::Resource(reader.clone()),
+            },
+        };
+        assert_eq!(
+            complete(&glob_req),
+            Some(GlobCompletion::Globbable(Ok(true)))
+        );
+
+        let hier_req = GlobRequest {
+            id: 3,
+            kind: GlobRequestKind::IsHierarchical {
+                reader: GlobReader::Resource(reader.clone()),
+            },
+        };
+        assert_eq!(
+            complete(&hier_req),
+            Some(GlobCompletion::Hierarchical(Ok(true)))
+        );
+
+        let frag_req = GlobRequest {
+            id: 4,
+            kind: GlobRequestKind::FragmentPaths {
+                reader: reader.clone(),
+            },
+        };
+        assert_eq!(
+            complete(&frag_req),
+            Some(GlobCompletion::FragmentPaths(Ok(true)))
+        );
     }
 }

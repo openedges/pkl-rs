@@ -234,7 +234,10 @@ def acquire_case(root, workspace, case, metadata, binary, output):
     folder = output / 'cases' / compat.case_directory(case['id'])
     folder.mkdir(parents=True)
     (folder / 'input.pkl').write_bytes((workspace / case['input']).read_bytes())
-    java, expected = capture_process(root, workspace, case, metadata['command'], metadata['environment'], folder / 'java')
+    java_cmd = list(metadata['command'])
+    if 'execution_profile' in case:
+        java_cmd = [arg if arg != '-Xmx512m' else '-Xmx2g' for arg in java_cmd]
+    java, expected = capture_process(root, workspace, case, java_cmd, metadata['environment'], folder / 'java')
     rust, actual = capture_process(root, workspace, case, [str(binary)], metadata['environment'], folder / 'rust')
     expected_exit = case['upstream_case']['expected_exit']
     return dict(id=case['id'], adapter=ADAPTER, directory=folder.name,
@@ -267,7 +270,7 @@ def validate_baseline(case, baseline, captured_input_sha256):
             raise ValueError('module-eval original resource baseline differs: ' + resource['path'])
 
 
-def verify_case(root, workspace, case, row, output, metadata, binary, baseline):
+def verify_case(root, workspace, case, row, output, metadata, binary, baseline, *, baseline_digest=None):
     folder = output / 'cases' / compat.case_directory(case['id'])
     if row.get('directory') != folder.name or row.get('adapter') != ADAPTER:
         raise ValueError('module-eval adapter or capture directory changed')
@@ -275,8 +278,12 @@ def verify_case(root, workspace, case, row, output, metadata, binary, baseline):
         raise ValueError('module-eval input snapshot changed')
     original = case['upstream_case']
     validate_baseline(case, baseline, oracle.sha256(folder / 'input.pkl'))
+    before_digest = baseline_digest if baseline_digest is not None else compat.digest(compat.encoded(baseline))
     captures = {}
-    for runtime, prefix in [('java', metadata['command']), ('rust', [str(binary)])]:
+    java_cmd = list(metadata['command'])
+    if 'execution_profile' in case:
+        java_cmd = [arg if arg != '-Xmx512m' else '-Xmx2g' for arg in java_cmd]
+    for runtime, prefix in [('java', java_cmd), ('rust', [str(binary)])]:
         process = json.loads((folder / runtime / 'process.json').read_bytes())
         if process != row[runtime]:
             raise ValueError('module-eval process metadata differs')
@@ -301,17 +308,21 @@ def verify_case(root, workspace, case, row, output, metadata, binary, baseline):
         keys = set(original['environment']) | {'HOME', 'TMPDIR', 'TMP', 'TEMP', 'LANG', 'LC_ALL', 'TZ', 'TERM', 'NO_COLOR'}
         if process['environment'] != {k: expected_env[k] for k in keys if k in expected_env}:
             raise ValueError('module-eval original process environment changed')
-        if process['workspace_before_sha256'] != compat.digest(compat.encoded(baseline)):
+        if process['workspace_before_sha256'] != before_digest:
             raise ValueError('module-eval workspace baseline changed')
         after = dict(baseline)
-        for name, change in process['workspace_changes'].items():
-            if change['before'] != baseline.get(name):
-                raise ValueError('module-eval workspace transition changed')
-            if change['after'] is None:
-                after.pop(name, None)
-            else:
-                after[name] = change['after']
-        if process['workspace_after_sha256'] != compat.digest(compat.encoded(after)):
+        if not process['workspace_changes']:
+            after_digest = before_digest
+        else:
+            for name, change in process['workspace_changes'].items():
+                if change['before'] != baseline.get(name):
+                    raise ValueError('module-eval workspace transition changed')
+                if change['after'] is None:
+                    after.pop(name, None)
+                else:
+                    after[name] = change['after']
+            after_digest = compat.digest(compat.encoded(after))
+        if process['workspace_after_sha256'] != after_digest:
             raise ValueError('module-eval workspace after snapshot changed')
         private = compat.output_files(folder / runtime / 'private-state')
         if {name: compat.digest(data) for name, data in private.items()} != process['private_files_sha256']:

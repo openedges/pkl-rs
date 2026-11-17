@@ -1233,37 +1233,91 @@ impl Vm {
             }
             return Err(invalid("Listing endpoint missing numeric member"));
         }
-        let members = collections::ordered_members(&self.heap, id)?;
-        if single && members.len() != 1 {
-            if nullable {
-                self.stack.push(Value::Null);
-                return Ok(());
+        let (member, is_empty) = if self.heap.get(id)?.collection_kind == CollectionKind::List
+            && self.heap.get(id)?.parent.is_none()
+        {
+            let obj = self.heap.get(id)?;
+            if single && obj.length != 1 {
+                if nullable {
+                    self.stack.push(Value::Null);
+                    return Ok(());
+                }
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    PklString::join(
+                        &[
+                            "Expected a single-element collection.\nCollection: ".into(),
+                            crate::diagnostic_values::render_string(
+                                &receiver,
+                                &self.heap,
+                                &self.program.module_name,
+                                80,
+                            )?,
+                        ],
+                        "",
+                    ),
+                ));
             }
-            return Err(RuntimeError::new(
-                ErrorKind::Type,
-                PklString::join(
-                    &[
-                        "Expected a single-element collection.\nCollection: ".into(),
-                        crate::diagnostic_values::render_string(
-                            &receiver,
-                            &self.heap,
-                            &self.program.module_name,
-                            80,
-                        )?,
-                    ],
-                    "",
-                ),
-            ));
-        }
-        let member = if last {
-            members.last()
+            let mem = if last {
+                if obj.length > obj.collection_members.len() && !obj.collection_members.is_empty() {
+                    let base_len = obj
+                        .repeat_base_len
+                        .unwrap_or(obj.collection_members.len())
+                        .max(1);
+                    let resolved_idx = (obj.length - 1) % base_len;
+                    Some(obj.collection_members[resolved_idx].clone())
+                } else {
+                    obj.collection_members.last().cloned()
+                }
+            } else {
+                obj.collection_members.first().cloned()
+            };
+            let empty = obj.length == 0;
+            (mem, empty)
         } else {
-            members.first()
+            let members = collections::ordered_members(&self.heap, id)?;
+            if single && members.len() != 1 {
+                if nullable {
+                    self.stack.push(Value::Null);
+                    return Ok(());
+                }
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    PklString::join(
+                        &[
+                            "Expected a single-element collection.\nCollection: ".into(),
+                            crate::diagnostic_values::render_string(
+                                &receiver,
+                                &self.heap,
+                                &self.program.module_name,
+                                80,
+                            )?,
+                        ],
+                        "",
+                    ),
+                ));
+            }
+            let empty = members.is_empty();
+            let mem = if last {
+                members.last().cloned()
+            } else {
+                members.first().cloned()
+            };
+            (mem, empty)
         };
-        let value = if let Some(member) = member {
+        let value = if let Some(member) = &member {
             collections::cached_render_value(&self.heap, id, member)?
                 .ok_or_else(|| invalid("uncached strict collection endpoint"))?
-        } else if nullable {
+        } else if nullable || is_empty {
+            if is_empty && !nullable {
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    format!(
+                        "Expected a non-empty collection.\nCollection: {:?}()",
+                        self.heap.get(id)?.collection_kind
+                    ),
+                ));
+            }
             Value::Null
         } else {
             return Err(RuntimeError::new(

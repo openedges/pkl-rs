@@ -1,0 +1,38 @@
+pkl-rs
+Copyright 2025 OpenEdges Inc.
+
+This product is a pure Rust reimplementation of Apple's Pkl configuration language.
+It is not a fork or copy of the original source code, but an independent implementation
+targeting behavioral compatibility with Pkl v0.30.2.
+
+This product includes test fixture files from the original Pkl project for compatibility
+testing purposes.
+
+================================================================================
+
+Portions of the test fixtures included in this repository are from:
+
+Pkl
+Copyright 2024-2025 Apple Inc. and the Pkl project authors
+Licensed under the Apache License, Version 2.0
+https://github.com/apple/pkl
+
+================================================================================
+
+This product was developed with reference to the following upstream dependencies
+acknowledged in the original Pkl project:
+
+- SnakeYAML Engine by Andrey Somov (Apache License 2.0)
+  https://bitbucket.org/asomov/snakeyaml-engine/
+
+- gson by Google Inc. (Apache License 2.0)
+  https://github.com/google/gson
+
+- guava by Google Inc. (Apache License 2.0)
+  https://github.com/google/guava
+
+- xerces2-j by The Apache Software Foundation (Apache License 2.0)
+  https://github.com/apache/xerces2-j
+
+- Gradle by Gradle, Inc. (Apache License 2.0)
+  https://github.com/gradle/gradle

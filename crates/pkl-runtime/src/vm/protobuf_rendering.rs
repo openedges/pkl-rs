@@ -15,8 +15,15 @@ impl ProtoState {
         }
     }
     fn wrapper(&self) -> Result<bool, RuntimeError> {
-        self.wrappers.last().copied().ok_or_else(|| RuntimeError::new(ErrorKind::Unsupported,
-            "Pinned Protobuf document traversal uses an empty wrapper stack for this root; Java internal-error projection remains unresolved."))
+        self.wrapper_for(false)
+    }
+    fn wrapper_for(&self, is_map: bool) -> Result<bool, RuntimeError> {
+        self.wrappers.last().copied().ok_or_else(|| {
+            RuntimeError::foreign(
+                crate::java_exception::provenance::ForeignOperation::ProtobufEmptyWrapperNullPointer { is_map },
+                "Cannot invoke \"java.lang.Boolean.booleanValue()\" because \"result\" is null",
+            )
+        })
     }
 }
 struct ProtoField {
@@ -147,12 +154,18 @@ impl Vm {
     }
     fn protobuf_type_name(&mut self, ty: &TypeCheck) -> Result<PklString, RuntimeError> {
         let Some(class) = self.protobuf_type_class(ty)? else {
-            // The unresolved Java internal TypeNode ProgramValue is not a guest
-            // value. Keep the diagnostic boundary explicit until independently
-            // observed rather than fabricate a successful field name.
-            return Err(RuntimeError::new(
-                ErrorKind::Unsupported,
-                "Failed to resolve type required for rendering protobuf.\n\nConsider adding a type annotation.\nInternal TypeNode diagnostic value projection remains unresolved.",
+            let is_mapping = matches!(
+                ty.resolved(),
+                TypeCheck::ParameterizedCollection {
+                    kind: CollectionKind::Mapping,
+                    ..
+                } | TypeCheck::Collection(CollectionKind::Mapping)
+            );
+            return Err(RuntimeError::foreign(
+                crate::java_exception::provenance::ForeignOperation::ProtobufListingOrMappingRootNullPointer {
+                    is_mapping,
+                },
+                "Cannot invoke \"com.oracle.truffle.api.nodes.RootNode.getName()\" because the return value of \"org.pkl.core.ast.type.TypeNode$ListingOrMappingTypeNode.getRootNode()\" is null",
             ));
         };
         Ok(protobuf_escape_name(&self.heap.class_simple_name(class)?))
@@ -289,13 +302,13 @@ impl Vm {
                         .map(|_| ());
                 }
                 CollectionKind::Listing | CollectionKind::List | CollectionKind::Set => {
-                    if run.protobuf.wrapper()? {
+                    if run.protobuf.wrapper_for(false)? {
                         run.proto_name();
                         run.proto_start_message();
                     }
                 }
                 CollectionKind::Mapping | CollectionKind::Map => {
-                    if run.protobuf.wrapper()? {
+                    if run.protobuf.wrapper_for(true)? {
                         run.proto_name();
                         run.protobuf.names.push("it".into());
                         run.proto_start_message();
@@ -316,11 +329,11 @@ impl Vm {
             let kind = self.heap.get(receiver)?.collection_kind;
             if matches!(kind, CollectionKind::Map | CollectionKind::Mapping) {
                 run.protobuf.wrappers.pop();
-                if run.protobuf.wrapper()? {
+                if run.protobuf.wrapper_for(true)? {
                     run.proto_end_message()?;
                     run.protobuf.names.pop();
                 }
-            } else if run.protobuf.wrapper()? {
+            } else if run.protobuf.wrapper_for(false)? {
                 run.proto_end_message()?;
             }
         }

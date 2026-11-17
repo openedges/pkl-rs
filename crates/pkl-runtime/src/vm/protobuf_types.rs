@@ -394,17 +394,23 @@ impl Vm {
         // and fails before forcing any elements. Do not claim a successful
         // wrapper while the internal error and known-subtype fast path are
         // unqualified. Nonmatching values still take the normal mismatch path.
-        if matches!(
-            ty.resolved(),
-            TypeCheck::ParameterizedCollection {
-                kind: CollectionKind::Listing,
-                ..
+        let collection_kind = match ty.resolved() {
+            TypeCheck::ParameterizedCollection { kind, .. } | TypeCheck::Collection(kind)
+                if matches!(kind, CollectionKind::Listing | CollectionKind::Mapping) =>
+            {
+                Some(*kind)
             }
-        ) && TypeCheck::Collection(CollectionKind::Listing).accepts(&value, &self.heap)
+            _ => None,
+        };
+        if let Some(kind) = collection_kind
+            && TypeCheck::Collection(kind).accepts(&value, &self.heap)
         {
-            return Err(RuntimeError::new(
-                ErrorKind::Unsupported,
-                "Pinned Protobuf detached Listing alternative requires an unresolved Java internal-error or known-subtype projection; no element traversal was performed.",
+            let is_mapping = kind == CollectionKind::Mapping;
+            return Err(RuntimeError::foreign(
+                crate::java_exception::provenance::ForeignOperation::ProtobufListingOrMappingRootNullPointer {
+                    is_mapping,
+                },
+                "Cannot invoke \"com.oracle.truffle.api.nodes.RootNode.getName()\" because the return value of \"org.pkl.core.ast.type.TypeNode$ListingOrMappingTypeNode.getRootNode()\" is null",
             ));
         }
         // Use the declaration's captured lexical context, not the renderer's

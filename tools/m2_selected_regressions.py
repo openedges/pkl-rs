@@ -1,4 +1,4 @@
-"""Exactly two retained original t40 CLI contracts; no historical pass reuse."""
+"""Retained original t36/t40 CLI contracts; no historical pass reuse."""
 import json
 import os
 import stat
@@ -12,8 +12,13 @@ ADAPTER = 'selected-regression-module-eval'
 REGISTRY = Path('compatibility/m2-selected-regressions.json')
 PROFILE = 'pkl-0.32-original-t40-file-cli-v1'
 SOURCE_PROFILE = 'selected-original-t40-sources-v1'
-SELECTED = ('rev1:t40-imported-declaration-authority', 'rev1:t40-foreign-namesake')
+SELECTED = (
+    'rev1:t36-foreign-nominal-identity',
+    'rev1:t40-imported-declaration-authority',
+    'rev1:t40-foreign-namesake',
+)
 ORIGINAL_CONTRACTS = {
+    'rev1:t36-foreign-nominal-identity': 'e36499de91cbae203517555babc9894864b5b61336099a162baea8cccc3f731f',
     'rev1:t40-imported-declaration-authority': '9822595d43e291cd42a554065aa4dc47a9a3672dc499d7c01e7c02aee845d5da',
     'rev1:t40-foreign-namesake': 'ac4587a9286abae38855980e0dacee4fef7c633b7cb3fc32b1c531b77d94ca1b',
 }
@@ -55,27 +60,38 @@ def build_registry(root):
         row = by_path[name]
         if oracle.sha256(path) != row['sha256']:
             raise ValueError('selected original resource missing or changed: '+name)
-        resources.append(dict(path=name, kind='file', sha256=row['sha256'],
-                              bytes=path.stat().st_size, original=row['original']))
+        entry = dict(path=name, kind='file', sha256=row['sha256'], bytes=path.stat().st_size)
+        if 'original' in row:
+            entry['original'] = row['original']
+        if 'derivation' in row:
+            entry['derivation'] = row['derivation']
+        resources.append(entry)
     cases = []
     for original in selected:
         if compat.digest(compat.encoded(original)) != ORIGINAL_CONTRACTS[original['id']]:
-            raise ValueError('pinned original t40 contract changed')
+            raise ValueError('pinned original t36/t40 contract changed')
         source = original['source']
+        if original['id'] == 'rev1:t36-foreign-nominal-identity':
+            expected_cmd = ['eval', '--settings', 'pkl:settings', '--color=never',
+                            '--project-dir', 'tests/fixtures/rev1/diagnostics/t36/app', source['path']]
+            expected_host = ['filesystem', 'local-project-dependency']
+        else:
+            expected_cmd = ['eval', '--settings', 'pkl:settings', '--color=never',
+                            '--no-project', source['path']]
+            expected_host = ['filesystem']
         if (original['suite'] != 'selected-historical-regression'
                 or original['cwd'] != '.' or original['environment'] != {}
-                or original['command'] != ['eval', '--settings', 'pkl:settings', '--color=never',
-                                           '--no-project', source['path']]
+                or original['command'] != expected_cmd
                 or original['channels'] != ['stdout', 'stderr', 'exit_code', 'files']
-                or original['host_requirements'] != ['filesystem']):
-            raise ValueError('original t40 argv/cwd/env/channels/Host contract differs')
+                or original['host_requirements'] != expected_host):
+            raise ValueError('original t36/t40 argv/cwd/env/channels/Host contract differs')
         if oracle.sha256(source_file(root, source['path'])) != source['sha256']:
-            raise ValueError('original t40 input differs')
+            raise ValueError('original t36/t40 input differs')
         cases.append(dict(id='m2:'+original['id'], input=source['path'], input_sha256=source['sha256'],
                           contract=original, contract_sha256=compat.digest(compat.encoded(original))))
     return dict(schema_version=1, adapter=ADAPTER, profile=PROFILE,
                 source_registry_sha256=oracle.sha256(root/'compatibility/regressions.json'),
-                scope='Exactly two unchanged original t40 CLI contracts. T36/project remains unimplemented; historical observations are provenance, not expected output.',
+                scope='Exactly three unchanged original t36/t40 CLI contracts. Historical observations are provenance, not expected output.',
                 watchdog_seconds=m2_module_eval.CAPTURE_TIMEOUT_SECONDS,
                 resources=resources, cases=cases)
 

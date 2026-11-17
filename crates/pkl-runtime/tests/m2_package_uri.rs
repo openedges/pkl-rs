@@ -153,27 +153,37 @@ fn lossless_error_operands_and_version_labels_preserve_utf16_units() {
 
 #[test]
 fn explicit_standard_factory_validates_package_but_does_not_claim_io() {
-    for (uri, invalid) in [
-        ("package://host/name#/asset", true),
-        ("package://host/name@1.0.0#/asset", false),
-    ] {
-        let request = ModuleRequest {
-            id: 1,
-            kind: ModuleRequestKind::SelectKey {
-                id: ModuleKeyId(1),
-                uri: uri.into(),
-                phase: SelectionPhase::RuntimeImport,
-            },
-        };
-        let Some(ModuleCompletion::KeySelected(Err(error))) = standard_key_completion(&request)
-        else {
-            panic!("bounded factory result")
-        };
-        assert!(matches!(
-            (invalid, error),
-            (true, ModuleHostError::UriSyntax { .. }) | (false, ModuleHostError::Unsupported(_))
-        ));
-    }
+    let bad_request = ModuleRequest {
+        id: 1,
+        kind: ModuleRequestKind::SelectKey {
+            id: ModuleKeyId(1),
+            uri: "package://host/name#/asset".into(),
+            phase: SelectionPhase::RuntimeImport,
+        },
+    };
+    let Some(ModuleCompletion::KeySelected(Err(error))) = standard_key_completion(&bad_request)
+    else {
+        panic!("bounded factory result")
+    };
+    assert!(matches!(error, ModuleHostError::UriSyntax { .. }));
+
+    let good_request = ModuleRequest {
+        id: 1,
+        kind: ModuleRequestKind::SelectKey {
+            id: ModuleKeyId(1),
+            uri: "package://host/name@1.0.0#/asset".into(),
+            phase: SelectionPhase::RuntimeImport,
+        },
+    };
+    let Some(ModuleCompletion::KeySelected(Ok(key))) = standard_key_completion(&good_request)
+    else {
+        panic!("bounded factory result")
+    };
+    assert_eq!(
+        key.kind,
+        pkl_runtime::modules::ModuleKeyKind::StandardGenericUrl
+    );
+
     // Import-node trust admission is a separate earlier callback. A pkl module
     // cannot import this less trusted package, even when package syntax is bad.
     let request = ModuleRequest {

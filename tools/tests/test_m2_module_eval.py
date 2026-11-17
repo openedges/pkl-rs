@@ -1,5 +1,6 @@
 """Four-channel original CLI execution/verifier failures, using synthetic child tools."""
 import copy
+import gc
 import json
 import os
 from pathlib import Path
@@ -64,8 +65,8 @@ class RegistryTests(unittest.TestCase):
         self.assertIn(case, m2_language.selected_cases(manifest, [jvm.ADAPTER]))
         selected = m2_language.selected_cases(manifest)
         self.assertEqual(len(selected), manifest['counts']['cases_by_execution']['ready'])
-        self.assertEqual(manifest['counts']['cases_by_execution']['unimplemented'], 68 + 1)
-        self.assertEqual(manifest['counts']['cases_by_execution']['unmapped'], 32)
+        self.assertEqual(manifest['counts']['cases_by_execution'].get('unimplemented', 0), 0)
+        self.assertEqual(manifest['counts']['cases_by_execution']['unmapped'], 11)
         # The explicit profile still requires actual successful execution.
         self.assertIn('required case incomplete: ' + identifier,
                       m2_manifest.full_gate_failures(manifest, []))
@@ -348,6 +349,37 @@ class ModuleExecutionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'raw comparison status changed'):
             module.verify_case(self.root, self.workspace, case, forged, directory,
                                self.metadata, self.binary, self.baseline)
+
+    def test_verify_case_with_distinct_reallocated_baselines_never_aliases_digest(self):
+        # Verify distinct baselines allocated after freeing prior baselines never alias
+        # even if CPython reuses the same object id().
+        for index in range(6):
+            extra = self.workspace / f'extra_{index}.txt'
+            extra.write_bytes(f'payload-{index}'.encode())
+            baseline_b = compat.snapshot(self.workspace)
+            self.assertNotEqual(
+                compat.digest(compat.encoded(self.baseline)),
+                compat.digest(compat.encoded(baseline_b)),
+            )
+            out_b = self.root / f'reallocated-{index}'
+            out_b.mkdir()
+            case_b = copy.deepcopy(self.case)
+            case_b['id'] = f'original:reallocated-{index}'
+            case_b['upstream_case']['id'] = case_b['id']
+            row_b = module.acquire_case(self.root, self.workspace, case_b, self.metadata, self.binary, out_b)
+            # First verify with self.baseline on self.output, then drop references / collect.
+            self.verify()
+            holder = dict(baseline_b)
+            del holder
+            gc.collect()
+            # Verifying row_b with baseline_b must succeed even if its id() matches a freed dict.
+            module.verify_case(self.root, self.workspace, case_b, row_b, out_b, self.metadata, self.binary, baseline_b)
+            # Mismatched baseline_a or mismatched explicit baseline_digest must still fail.
+            with self.assertRaisesRegex(ValueError, 'module-eval workspace baseline changed'):
+                module.verify_case(self.root, self.workspace, case_b, row_b, out_b, self.metadata, self.binary, self.baseline)
+            with self.assertRaisesRegex(ValueError, 'module-eval workspace baseline changed'):
+                module.verify_case(self.root, self.workspace, case_b, row_b, out_b, self.metadata, self.binary, baseline_b, baseline_digest='0' * 64)
+            extra.unlink()
 
 
 if __name__ == '__main__':

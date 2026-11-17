@@ -1,7 +1,12 @@
 //! Pure package URI validation and bounded metadata acceptance.
 //! Parsing does not perform I/O or load ZIPs or projects.
 //! Rules follow Pkl 0.32 PackageUri/PackageAssetUri and its permissive Version.
+pub mod cache;
+pub mod http;
 pub mod metadata;
+pub mod project;
+pub mod resolver;
+pub mod zip;
 use crate::source::SourceText;
 use crate::value::PklString;
 

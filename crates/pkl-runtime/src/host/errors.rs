@@ -59,15 +59,37 @@ pub enum ReadFailure {
     SecurityManagerException {
         message: Option<PklString>,
     },
+    UriSyntax {
+        reason: PklString,
+    },
+    EvalError {
+        message: PklString,
+        hint: Option<PklString>,
+    },
 }
 
 impl ReadFailure {
     pub(crate) fn into_runtime(self, uri: impl Into<PklString>) -> RuntimeError {
+        let uri = uri.into();
         match self {
             Self::Io(failure) => failure.into_runtime("reading resource", uri),
             Self::SecurityManagerException { message } => RuntimeError::host_language(
                 message.unwrap_or_else(|| "None (cause has no message)".into()),
             ),
+            Self::UriSyntax { reason } => {
+                let mut error = RuntimeError::host_language(
+                    PklString::from("Resource URI `")
+                        .concat(&uri)
+                        .concat(&"` has invalid syntax.".into()),
+                );
+                error.hint = Some(reason);
+                error
+            }
+            Self::EvalError { message, hint } => {
+                let mut error = RuntimeError::host_language(message);
+                error.hint = hint;
+                error
+            }
         }
     }
 }

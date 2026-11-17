@@ -1,0 +1,5 @@
+import "lib.pkl"
+amended = (lib.fields) {
+  new { name = "ccc" }
+}
+kinds = amended.toList().map((f) -> f.getClass().simpleName)

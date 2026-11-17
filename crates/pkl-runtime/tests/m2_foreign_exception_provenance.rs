@@ -282,3 +282,148 @@ fn original_origin_survives_unwind_host_rethrow_and_session_close() {
     assert_eq!(retained.uri, "file:///original/main.pkl");
     assert_eq!(retained.text, "result = 1 % 0\n".into());
 }
+
+#[test]
+fn generalized_foreign_projection_renders_non_fixture_inputs_dynamically() {
+    use pkl_runtime::evaluation::scalar_expression;
+    use pkl_runtime::logging::PlatformMetadata;
+    use pkl_runtime::modules::{ModuleCompletion, ModuleKey, ModuleKeyKind, ModuleRequestKind};
+    use pkl_runtime::probe::SourceProbe;
+    use pkl_runtime::value::PklString;
+
+    // 1. Non-fixture glob pattern `"a[]"` -> Index 3 out of bounds for length 3, 19 carets
+    let mut probe = SourceProbe::new_module_evaluator("compact", false, false, false).unwrap();
+    probe.set_platform_metadata(Some(PlatformMetadata {
+        os_name: "Linux".into(),
+        os_version: "6.8".into(),
+        cpu_architecture: "x86_64".into(),
+        java_version: "21.0.99".into(),
+    }));
+    probe
+        .evaluate_module_source(
+            "file:///non-fixture.pkl",
+            Some(""),
+            "(\"a[]\".isGlobPattern).toString()",
+            0,
+            None,
+        )
+        .unwrap();
+    let err = loop {
+        let ev = probe.poll_text(0, 1024).unwrap();
+        match ev.kind {
+            "yield" => {}
+            "module-request" => {
+                let tok = ev.token.as_deref().unwrap();
+                if !probe.complete_default_module(tok, 0).unwrap() {
+                    let req = probe.module_request(tok).unwrap();
+                    if let ModuleRequestKind::SelectKey { id, uri, .. } = req.kind {
+                        probe
+                            .complete_module(
+                                tok,
+                                ModuleCompletion::KeySelected(Ok(ModuleKey {
+                                    id,
+                                    uri,
+                                    kind: ModuleKeyKind::Host,
+                                    handle: "non-fixture".into(),
+                                })),
+                                0,
+                            )
+                            .unwrap();
+                    } else {
+                        panic!("unexpected module request: {:?}", req.kind);
+                    }
+                }
+            }
+            "error" => break PklString::from_utf16(ev.error.unwrap()).to_java_utf8(),
+            other => panic!("unexpected event: {other}"),
+        }
+    };
+    probe.close();
+    assert!(err.contains("Index 3 out of bounds for length 3"), "{err}");
+    assert!(
+        err.contains("Pkl 0.32.0 (Linux 6.8, Java 21.0.99)"),
+        "{err}"
+    );
+    assert!(
+        err.contains("1330 | external isGlobPattern: Boolean"),
+        "{err}"
+    );
+    assert!(
+        err.contains("1 | (\"a[]\".isGlobPattern).toString()\n     ^^^^^^^^^^^^^^^^^^^"),
+        "{err}"
+    );
+
+    // 2. Non-fixture `foo = 2 % 0` highlights `foo` (`^^^`)
+    let err = scalar_expression(
+        "foo = 2 % 0\n",
+        "file:///non-fixture.pkl",
+        "nonFixture",
+        "foo",
+    )
+    .unwrap_err();
+    assert!(err.contains("1 | foo = 2 % 0\n    ^^^"), "{err}");
+
+    // 3. Non-fixture `bar = read("http://bad_host/z")` highlights `bar` (`^^^`)
+    let err = scalar_expression(
+        "bar = read(\"http://bad_host/z\")\n",
+        "file:///non-fixture.pkl",
+        "nonFixture",
+        "bar",
+    )
+    .unwrap_err();
+    assert!(
+        err.contains("1 | bar = read(\"http://bad_host/z\")\n    ^^^"),
+        "{err}"
+    );
+
+    // 4. Non-fixture KeyValueHolderEqualitySpecialization formats dynamic expr and values
+    let mut probe = SourceProbe::new_module_evaluator("compact", false, false, false).unwrap();
+    probe
+        .evaluate_module_source(
+            "file:///non-fixture.pkl",
+            Some(""),
+            "(let (m = Set(Map(List(10), List(20))).flatten()) m.first == m.last).toString()",
+            0,
+            None,
+        )
+        .unwrap();
+    let err = loop {
+        let ev = probe.poll_text(0, 1024).unwrap();
+        match ev.kind {
+            "yield" => {}
+            "module-request" => {
+                let tok = ev.token.as_deref().unwrap();
+                if !probe.complete_default_module(tok, 0).unwrap() {
+                    let req = probe.module_request(tok).unwrap();
+                    if let ModuleRequestKind::SelectKey { id, uri, .. } = req.kind {
+                        probe
+                            .complete_module(
+                                tok,
+                                ModuleCompletion::KeySelected(Ok(ModuleKey {
+                                    id,
+                                    uri,
+                                    kind: ModuleKeyKind::Host,
+                                    handle: "non-fixture".into(),
+                                })),
+                                0,
+                            )
+                            .unwrap();
+                    } else {
+                        panic!("unexpected module request: {:?}", req.kind);
+                    }
+                }
+            }
+            "error" => break PklString::from_utf16(ev.error.unwrap()).to_java_utf8(),
+            other => panic!("unexpected event: {other}"),
+        }
+    };
+    probe.close();
+    assert!(
+        err.contains("Unexpected values provided for (repl:text:1) m.first == m.last: [List(10)=List(20), List(10)=List(20)], [KeyValueHolder,KeyValueHolder]"),
+        "{err}"
+    );
+    assert!(
+        !err.contains("at  (repl:text)\n\n1 | m.first"),
+        "must not insert <let> frame: {err}"
+    );
+}

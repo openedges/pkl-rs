@@ -407,6 +407,7 @@ pub(crate) fn runtime_error_text_with_profile(
     if let Some(rendered) = &error.rendered_diagnostic {
         return rendered.clone();
     }
+    let foreign = error.foreign_exception.clone();
     let policy = error.frame_transformer;
     let mut rendering = prepare_runtime_error(
         source,
@@ -418,7 +419,11 @@ pub(crate) fn runtime_error_text_with_profile(
         profile,
     );
     rendering.transform(policy);
-    rendering.render()
+    let ordinary = rendering.render();
+    if let Some(foreign) = foreign {
+        return foreign.project_pkl_bug_with_profile(&ordinary, profile);
+    }
+    ordinary
 }
 
 pub(crate) fn prepare_runtime_error(

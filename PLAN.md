@@ -1,16 +1,60 @@
 # 구현 계획
 
-## 현재 우선순위 — package metadata의 실제 Host 경로 연결
+## 현재 상태 — Stage159 M2 무결성 시정(Iteration 4) 및 동결 작업트리 실측 검증 완료
 
-[Stage157 체크포인트](reports/m2/stage157-package-metadata/README.md)의 공유 metadata acceptance, canonical fixture 검증과 최종 소스의 필수 Rust·M1 검증을 완료했다. [Stage156 기준선](reports/m2/stage156-baseline/README.md)은 기존 full-ready·strict gate 결과를 보존한다. 기존 M2-01–09 작업과 [동작별 검증 계약](TESTING.md#m2-behavior-verification-contract)을 유지하며 상세 실행 이력은 대표 보고서에 둔다.
+[Stage159 체크포인트 보고서](reports/m2/stage159-strict-gate-closure/README.md)에서 이전 단계의 무결성 위반 항목(`stage159-final` 위조 산출물·주장, `tools/assemble_stage159.py`, `id()` 기반 다이제스트 메모이제이션, 하드코딩된 예외 문자열·릴리스 배너, Protobuf 픽스처·엄격 게이트 우회, `m2-mappings.json` 형식적 일괄 매핑)을 전면 철회 및 시정하고, 동결된 작업트리에서 실제 호환성 검증 결과를 정직하게 기록했다.
 
-현재 구현은 이미 취득한 metadata의 checksum·parser·오류 순서를 처리하는 순수 공유 경계다. 실제 package Host·ZIP·cache·project resolution은 아직 연결하지 않았다. 여섯 원본의 예비 관측은 제한된 fixture profile의 Java 전용 결과이며 candidate 호환성이나 ready 승격으로 계산하지 않는다.
+### Iteration 4 주요 시정 및 검증 결과
+1. **위조 산출물 제거 및 `m2_module_eval.py` 다이제스트 검증 복원**:
+   - `tools/assemble_stage159.py`, `target/m2/stage159-final`, `target/m2/stage159-final-jvm-classpath-workspace`를 삭제하고, `target/m2/stage158-final-03-*-workspace` 심볼릭 링크 5건을 물리적 실 디렉터리로 정리하여 `target/m2/` 내 깨진 심볼릭 링크를 완전히 제거.
+   - `tools/m2_module_eval.py`의 `_BASELINE_DIGEST_CACHE` / `_cached_baseline_digest` (`id()` 메모이제이션)를 삭제하고 `verify_case(..., *, baseline_digest=None)`로 전환. `tools/m2_language.py:check_report()`에서 `module_baseline_digest`, `historical_baseline`, `historical_cli_baseline`을 케이스 루프 밖에서 한 번만 계산·검증하도록 개선하고, 회귀 단위 테스트 `test_verify_case_with_distinct_reallocated_baselines_never_aliases_digest`를 추가.
+2. **일반화된 런타임 예외 투영 및 동적 릴리스 배너(`crates/pkl-runtime`)**:
+   - `crates/pkl-runtime/src/java_exception/provenance.rs`에서 하드코딩된 픽스처 오류 문자열, 고정 캐럿, `"Pkl 0.32.0 (macOS 27.0, Java 21.0.12.1)"` 고정 배너를 모두 제거하고, `ForeignOrigin` 일반 프레임 투영(`project_origin_diagnostic` / `project_pkl_bug_with_profile`), 동적 `GlobCharacterClassBounds { index, length }` (`vm/string_glob.rs`), 동적 `KeyValueHolderEqualitySpecialization { detail }` (`vm/equality.rs`), 네이티브 stdlib `ForeignActivation` (`vm/string_api.rs` `#String.isGlobPattern`, `vm/reference.rs` `#Any.toString`), `tasks` 스택 기반 `CollectionKind::Set` 조회(`diagnostic_values.rs`)로 대체.
+   - `PlatformMetadata`와 `SourceProbe::set_platform_metadata`를 `HostSession` / `SourceSession`까지 연결. `crates/pkl-runtime/examples/support/scalar_probe.rs`는 호스트 OS·아키텍처와 `PKL_ORACLE_JAVA_VERSION`(또는 `PKL_ORACLE_JAVA` 프로브)을 동적으로 읽어 배너를 생성하며, `tools/m2_language.py`는 `oracle.jdk.properties['java.version']`을 `PKL_ORACLE_JAVA_VERSION`으로 전달(`metadata['environment']` 미변조).
+   - 정적 픽스처를 비교하는 4개 센티넬 오라클 테스트(`m2_string_apis_oracle`, `m2_list_apis_oracle`, `m2_set_apis_oracle`, `m2_protobuf_java04_full`)에는 해당 픽스처 환경의 `PlatformMetadata`(`macOS`, `27.0`, `aarch64`, `21.0.12.1`)를 명시적으로 주입.
+3. **Protobuf 픽스처 및 엄격 게이트 복원**:
+   - `tests/fixtures/m2-protobuf-java04-full/observations.tsv`를 `HEAD`로 원복하여 18건의 참조 미통과(reference nonpass)를 정직하게 보존.
+   - `crates/pkl-runtime/tests/m2_protobuf_java04_full.rs`에서 `uncaught-java-process-failure` 우회 조건을 제거하고 `assert_eq!((regular, pre_renderer, nonpasses, seen.len()), (240, 8, 18, 266))`, `totals.completed_reference()`, `java04_strict_full_compatibility_gate`의 `#[ignore = "explicit strict completion gate; 18 reference nonpasses remain unmet"]`를 복원 (`TESTING.md` 준수).
+4. **`compatibility/m2-mappings.json` 의미론적 전수 재감사**:
+   - 전체 475개 요구사항(`specification` 198, `language_parser` 137, `language_token` 109, `semantic-family` 31)에서 빈 제목 `""` 14건, `:line<N>` 아티팩트, `basic/as.pkl..constModifier.pkl` 일괄 버킷 286건 및 고정 6-튜플 131건을 전면 제거하고, `external/pkl/docs/modules/language-reference/pages/index.adoc` 섹션 제목, 실제 `crates/pkl-runtime/src/` 심볼, 내용 기반 `.pkl` 테스트 케이스(ready 4,575건 전수 포함)로 재매핑.
+   - `compatibility/m2-language.json` 재생성 후 `tools/m2_manifest.py --check` Exit 0 및 `tools/tests/test_m2_mappings.py` 8/8 통과 확인.
+5. **`AGENTS.md` 엄격 게이트 준수 및 `error-cycle` 정직한 보고**:
+   - `tools/m2_manifest.py`에서 `case_satisfies_gate`를 삭제하여 `full_gate_failures()`가 `status == 'pass'`만 인정하도록 복원하고, `tools/m2_language.py` `--verify-full`이 `full_gate_failures` 비어 있지 않을 때 Exit 1을 반환하도록 복원.
+   - `error-cycle`은 콜드 Java 0.32.0 오라클이 `NoClassDefFoundError: VmStackOverflowException`으로 실패(`oracle-error`)하므로 `--verify-development`는 통과(Exit 0)하되 `--verify-full`은 정직하게 Exit 1을 유지.
+6. **최종 동결 작업트리 검증 및 실측 결과 (로컬 macOS arm64, `PKL_ALLOW_LOCAL_JDK=1`, Temurin `21.0.13+9-LTS`)**:
+   - `cargo xtask verify` / `cargo fmt --all -- --check` / `cargo clippy --workspace --all-targets --locked -- -D warnings` / `cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked`: 모두 **Exit 0**.
+   - 센티넬 5종(`m2_annotation_const_oracle` 38, `m2_list_apis_oracle` 14, `m2_set_apis_oracle` 17, `m2_string_apis_oracle` 20, `m2_protobuf_java04_full` 5 pass + 1 ignored): **94 통과 / 0 실패 / 1 ignored** (Exit 0).
+   - `m2_foreign_exception_provenance` (5/5), `m2_protobuf_renderer` (14/14), `m2_settings_authored` (4/4) 통과.
+   - M2 Python 단위 테스트(`unittest discover -s tools/tests -p 'test_m2_*.py'`): **253개 전원 통과** (`226.608s`, Exit 0).
+   - `tools/m2_manifest.py --check`: Exit 0 (4,586 케이스: ready 4,575 / unmapped 11, 요구사항 475).
+   - **실제 M2 전수 취득 (`target/m2/stage159-genuine`, 루프백 허용)**: **4,574 `pass` / 1 `oracle-error` (`error-cycle`) / 0 `mismatch`** (`fixture-server/requests.jsonl` 188건, `package-project-eval` 68/68 통과, 스칼라·배너 케이스 전원 일치, `source_stability: True`, `artifact_stability: True`). `--verify-report` 및 `--verify-development` Exit 0, `--verify-full` Exit 1 (`full_gate_failures: ['requirement execution incomplete: semantic:lazy-evaluation', 'required case incomplete: error-cycle']`).
+   - **실제 M1 멀티 타깃 스윕 (`target/m1/stage159-genuine`, 루프백 허용)**: `rust` / `node` / `browser` 각 **6,078 / 6,078** 일치 (`shared_engine_passed: 6078`, `compatibility_status: "pass"`, `experiment_contract_status: "pass"`, Exit 0).
+   - **분할 워크스페이스 Rust 테스트(`cargo test --workspace --locked` + 잔여 타깃)**: 완료된 346개 테스트 실행에서 **2,226 통과 / 0 실패 / 2 ignored** (`task-418`: `1,626` 통과·`2` ignored + `m2_reflection_apis_lifecycle` 4/5 통과, `task-483`+`task-488`: `xtask`·`pkl-wasm`·`pkl-napi`·doc-tests·잔여 99개 통합 테스트 `600` 통과). `m2_reflection_apis_lifecycle::cancellation_closes_evaluator_and_fresh_evaluator_rejects_old_transform_token`은 `next()`가 `pkl:reflect` 상에서 단일 명령 스텝마다 `probe.collect(); probe.poll(0, 1); probe.collect();`를 최대 300,000회 호출하는 GC 부하로 인해 debug(`opt-level = 2`) 60분 및 `--release` 29분 윈도우 내 미완료되어 정직하게 별도 기록.
 
-다음 구현은 `packages/badImport6.error.pkl`·`packages/badImport7.error.pkl`의 실제 HTTPS metadata 취득과 import 오류 경로다. M2-04 `semantic:modules`가 로딩을, M2-08 `semantic:diagnostics`가 오류 투영을 담당한다. 두 원본은 ZIP 취득 전에 끝나므로 기존 Host·module 경로에 package key와 typed package-load 오류를 연결하는 범위를 먼저 검증한다. Module/resource 정책 → HTTP 응답 → checksum → parser → ZIP URL 검사 순서를 유지하고, 전체 stdout·stderr·종료 코드·생성 파일과 metadata 요청 1회·ZIP 요청 0회를 비교한다.
+### 보존된 한계 및 미검증 범위
+- 로컬 JDK `21.0.13+9-LTS`(`exact_jdk_lock_match: false`, `PKL_ALLOW_LOCAL_JDK=1`) 환경 실행이므로 호스티드 CI 핀 JDK(`21.0.12.1+1-LTS`) 재검증은 별도 과제로 남는다.
+- `--verify-full`은 `error-cycle` `oracle-error` 1건으로 인해 정직하게 Exit 1이며, `tests/fixtures/m2-protobuf-java04-full`의 18건 참조 미통과(`java04_strict_full_compatibility_gate` `#[ignore]`)가 미해결 상태로 유지된다.
+- 향후 마일스톤 M3(표준 라이브러리와 출력), M4(모듈·리소스·프로젝트·패키지), M5(제품 API와 도구), M6(Wasm·N-API 제품 완성), M7(전체 릴리스 검증 및 JVM 성능·메모리 목표)은 미구현·미검증 상태로 유지된다.
 
-정상 metadata 취득은 명시적인 ZIP 미지원 경계까지 확인하고, 정책 거부·경쟁 오류·실패 재시도·중단 중 GC·취소/종료를 기존 수명주기 검사에 연결한다. 세부 parser 경계는 이미 확보한 비교를 재사용하며 조합을 무조건 늘리지 않는다. ZIP·cache·project resolution과 전체 `packages1` Rust 성공 경로는 후속 목표다. 순수 helper를 Host 통합 완료로 서술하거나 68개 fixture 계약 전체가 통과한다고 가정하지 않는다.
+## 이전 상태 — Stage158 M2 마일스톤 시정·잔여 불일치 해소 및 동결 소스 직렬 검증 완료 (`-03`)
 
-M2는 진행 중이며 4,586개 필수 계약, 101개 미준비 의무, 475개 요구사항과 기존 완료 gate를 유지한다. 새 범용 evidence 체계나 전체 VM 재작성을 선행 조건으로 넣지 않으며 완료 날짜를 추정하지 않는다.
+[Stage158 시정 체크포인트](reports/m2/stage158-m2-remediation/README.md)에서 무결성 감사 지적 사항(Track A: 패키지 아키텍처 순수화, Track B: 오라클 `#[ignore]` 복원 및 플랫폼 독립화, Track C: 475개 요구사항 및 `rev1-cli` 21개 매핑/동기화, Track WS5: 스냅샷 캐싱 최적화)을 완료한 데 이어, `stage158-final-02`(`4,568 pass / 2 oracle-error / 5 mismatch`)에 남아 있던 5개 원시 바이트 불일치를 두 가지 공통 원인 수정으로 모두 해소하고 동결 소스 기준 `-03` 직렬 검증을 완료했다.
+
+### 최종 수정 및 동결 소스 직렬 검증(`-03`) 결과
+- **공통 원인 수정 (`crates/pkl-runtime`)**:
+  1. [glob.rs](crates/pkl-runtime/src/vm/glob.rs): 기본 모듈(`run.declaration == None`)의 `Phase::ResolvePattern | Phase::ResolveBase`에서 `@`로 시작하는 의존성 URI가 `ModuleRequestKind::ResolveImportUri`를 거치도록 수정하여 `package-project-eval` 4건(`globbing.pkl`, `localProjectRead.pkl`, `localProjectRead2.pkl`, `globWildcards.pkl`) 불일치를 해소.
+  2. [typecheck.rs](crates/pkl-runtime/src/vm/typecheck.rs): `TypeCheck::Constrained`에서 `*base` 평가 동안 `run.eager`를 `false`로 임시 전환하고 `Task::AfterBase`에서 복원하여 업스트림 `ConstrainedTypeNode.executeLazily`와 일치시키고 `m2:rev1:t36-foreign-nominal-identity` 스택 프레임을 일치시킴.
+- **동결 소스 직렬 게이트 1–11 통과 (로컬 macOS arm64, `PKL_ALLOW_LOCAL_JDK=1`, Temurin `21.0.13+9-LTS`)**:
+  - [m2-language.json](compatibility/m2-language.json) 매니페스트 동기화·검사(`4,586`건: `4,575` ready / `11` unmapped, `475` 요구사항) 및 `cargo xtask verify`, `cargo fmt --check`, `cargo clippy -- -D warnings`, `cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked`, 6종 `--check` 스크립트, 95개 M2/오라클 Python 단위 테스트 전원 통과(exit `0`).
+  - `cargo test --workspace --locked`: **`2,225 passed / 0 failed / 6 ignored`** (`pkl-runtime` lib `263/263` 통과; `6`개 `#[ignore]`는 M1 러너 훅 1건 + 미해결 오라클/엄격 게이트 센티넬 5건).
+  - Protobuf strict 게이트(`target/m2/stage158-protobuf-strict-final-03`): 예상 exit `101` (`266/266` 실행, harness 오류 `0`, regular `240/240`, pre-renderer `8/8`, `18` `reference_nonpasses`, `experiment_contract_pass: true`, `strict_compatible: false`).
+  - 멀티 타깃 플랫폼 계약(`target/m1/stage158-platforms-final-03`): `rust`/`node`/`browser` 각 **`6,078 / 6,078`** 일치, `shared_engine_passed: 6,078`, Node/Chromium 시나리오 각 `92`건 통과(exit `0`).
+  - **전체 M2 원시 바이트 차분 캡처(`target/m2/stage158-final-03`)**: **`4,573 pass / 2 oracle-error / 0 mismatch`**, metamorphic **`88/88 pass`**, `source_stability: true`, `artifact_stability: true`, `--verify-report` exit `0`.
+  - **별도 `-Xmx2g` 실험(`target/m2/stage158-apilist-xmx2g-03`)**: `-Xmx512m` 고정 프로필에서 Java `OutOfMemoryError`로 `oracle-error`인 `api/list.pkl`이 `-Xmx2g`에서는 Java/Rust 모두 exit `0`·`diff_bytes: 0`(SHA-256 `39e6cd30...`)으로 완전 일치함을 별도 실증(`oracle.lock.json` 미변경).
+
+### 보존된 엄격 게이트 및 미검증 범위
+- `--verify-full`(exit `1`)은 `933`건의 `full_gate_failures`(`partial` 요구사항의 `implementation incomplete` `460` + `test mapping incomplete` `460` + `required case incomplete` `13` [`11`개 unmapped 후보 + `2`개 `oracle-error`(`error-cycle`, `-Xmx512m` `api/list.pkl`)])를 거짓 통과 없이 유지한다. `--verify-development`도 `api/list.pkl`의 `-Xmx512m` `oracle-error`로 인해 exit `1`을 유지한다.
+- 로컬 JDK `21.0.13+9-LTS`(`exact_jdk_lock_match: false`) 결과이므로 호스티드 CI 핀 JDK(`21.0.12.1+1-LTS`) 재확인이 별도로 남아 있다. M3(표준 라이브러리와 출력), M4(모듈·리소스·프로젝트·패키지), M5(제품 API와 도구), M6(Wasm·N-API 제품 완성), M7(전체 릴리스 검증 및 JVM 성능·메모리 목표)는 미구현·미검증 상태다.
 
 ## M2 작업 방식과 일정 재검토 — 2026-11-05
 
@@ -217,7 +261,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: [Stage156 기준선](reports/m2/stage156-baseline/README.md) 취득·공개 완료; full-ready의 실패·미준비 의무와 엄격 gate 유지. 다음은 canonical fixture 자격 검증과 공유 metadata acceptance; package Host 통합은 후속 작업 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: [Stage159 체크포인트](reports/m2/stage159-strict-gate-closure/README.md) 실측 완료(ready 4,575건 중 4,574 pass / 1 oracle-error[error-cycle] / 0 mismatch, M1 멀티 타깃 6,078/6,078 일치). 잔여 GC 스트레스 타임아웃·Protobuf 18건 참조 미통과·엄격 게이트 유지 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |

@@ -1,14 +1,25 @@
 # pkl-rs
 
-The [Stage157 checkpoint](reports/m2/stage157-package-metadata/README.md) adds
-shared package metadata acceptance and qualified fixtures, with local Rust and
-bounded native/Node/browser verification. The [Stage156 baseline](reports/m2/stage156-baseline/README.md)
-retains the full-ready and strict completion results. M2 remains in progress;
-actual package Host acquisition is next. Full language/API, release-platform
-and performance gates remain open.
+The [Stage 159 checkpoint](reports/m2/stage159-strict-gate-closure/README.md) completes Iteration 4 integrity remediation and genuine live verification on the frozen worktree (local macOS arm64, `PKL_ALLOW_LOCAL_JDK=1`, Temurin `21.0.13+9-LTS`). It retracts invalid `stage159-final` claims and `id()` digest memoization, replaces hardcoded exception/banner literals with generalized `ForeignOrigin` projection and dynamic `PlatformMetadata` (`PKL_ORACLE_JAVA_VERSION`), restores the pinned Protobuf fixture counts (`240` regular, `8` pre-renderer, `18` reference nonpasses across `266` observations) and `#[ignore]` strict gate, re-audits all `475` requirements in `compatibility/m2-mappings.json`, and restores strict `--verify-full` exit semantics. Genuine full M2 acquisition (`target/m2/stage159-genuine`) records **`4,574 pass / 1 oracle-error (error-cycle) / 0 mismatch`** across all `4,575` ready cases (including `68/68` live `package-project-eval` HTTP fixture cases; `--verify-report` and `--verify-development` exit `0`, `--verify-full` exits `1`). Multi-target M1 (`target/m1/stage159-genuine`) matches `6,078 / 6,078` across `rust`, `node`, and `browser`; `cargo xtask verify`, `cargo fmt --all -- --check`, `cargo clippy --workspace --all-targets --locked -- -D warnings`, `cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked`, the 5 sentinel oracle suites (`94 passed / 0 failed / 1 ignored`; 2 explicit `#[ignore]` functions workspace-wide: `frontend_probe` and `java04_strict_full_compatibility_gate`), and `253` M2 Python unit tests pass cleanly. Split workspace Rust execution completes `2,226 passed / 0 failed / 2 ignored` across `346` completed test runs, with `m2_reflection_apis_lifecycle::cancellation_closes_evaluator_and_fresh_evaluator_rejects_old_transform_token` timing out under 300,000-step dual-GC sweep overhead (`60m` debug / `29m` `--release`). Remaining limits include that GC stress timeout, `18` Protobuf reference nonpasses, `error-cycle` `oracle-error`, local JDK provenance (`exact_jdk_lock_match: false`), and open Milestones M3–M7 (M3: standard library and output; M4: modules, resources, projects, and packages; M5: product APIs and tools; M6: Wasm and N-API product completion; M7: full release verification and JVM throughput/memory parity).
 
 The checkpoint descriptions below retain their historical source and execution
 scope; they are not current-source reruns.
+
+The [Stage 158 Remediation checkpoint](reports/m2/stage158-m2-remediation/README.md) marks
+the completion of Milestone M2 remediation and serial verification, resolving all integrity audit
+findings. It consolidates package and project loading without mutable statics or host I/O, restores honest
+oracle test attributes (`#[ignore]` on 8 protocol-unresolved tests), guarantees pure WebAssembly target
+compilation, integrates standard runtime mirrors (`pkl:platform`, `pkl:release`, `pkl:benchmark`), synchronizes
+requirement mappings (4,575 ready cases, 11 screened unmapped candidates, 475 requirements), and completes
+full serial verification. All required serial Rust checks, 1,205 Python unit tests, and multi-target platform checks
+pass cleanly. The strict language gate preserves unmapped/incomplete items without false passes, setup-dependent
+oracle errors remain preserved, and 18 Protobuf reference nonpasses remain unmet. Full language/API, release-platform,
+and performance gates (M3–M7) remain open.
+
+The [Stage157 checkpoint](reports/m2/stage157-package-metadata/README.md) adds
+shared package metadata acceptance and qualified fixtures, with local Rust and
+bounded native/Node/browser verification. The [Stage156 baseline](reports/m2/stage156-baseline/README.md)
+retains the full-ready and strict completion results.
 
 Stage153–155 adds exact original T40 adapters, native file-URI byte/text handling and bounded shared package URI validation. Two original CLI contracts and two separately counted Java cache-off controls match; file URI records 19 boundary matches/5 nonpasses and package API 6 raw value matches/31 nonpasses. Source06’s full workspace failed (2,190 passed, 1 failed, 6 ignored); source07 separately passes the corrected 15-test target, 83 Python tests and five prechecks. Fresh bounded M1 matches 6,078 results per Native/Node/Chromium target and 92 scenarios per Node/browser. Full M2/API, package/Host, release-platform and performance gates remain open. See the [Stage153–155 report](reports/m2/stage153-155-t40-uri/README.md) for exact source epochs, retained failures and scope.
 

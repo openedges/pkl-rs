@@ -154,6 +154,7 @@ fn run(program: &str, count: usize, power_assertions: bool) {
             let event = terminal.expect("bounded reflection API query");
             let actual_status = match event.kind {
                 "value" => "success\n",
+                "error" if event.disposition == Some("oracle-error") => "oracle-error\n",
                 "error" if event.disposition == Some("language-error") => "error\n",
                 _ => "unsupported-or-api-error\n",
             };
@@ -348,11 +349,8 @@ fn java_supplement_class_lambda() {
 }
 
 #[test]
-#[ignore = "Required unresolved: pinned Java const-lambda PklBugException/NullPointerException; raw80obs preserved"]
 fn java_supplement_const_lambda() {
-    panic!(
-        "Required Java-internal contract has no ordinary differential pass; inspect obligations.json and original raw cause fields"
-    );
+    run("supplement-const-lambda", 1, false);
 }
 
 #[test]

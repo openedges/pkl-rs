@@ -11,9 +11,10 @@ use crate::modules::{
 };
 use std::collections::VecDeque;
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 enum Stage {
     Analyze,
+    Glob { base_uri: PklString },
     Module,
     GraphClass,
     ImportClass,
@@ -269,37 +270,101 @@ impl Vm {
             .take()
             .ok_or_else(|| invalid("missing analysis continuation"))?;
         match run.stage {
-            Stage::Analyze => match run
-                .analysis
-                .as_mut()
-                .ok_or_else(|| invalid("analysis core"))?
-                .poll()
-            {
-                AnalysisPoll::Request(request) => {
-                    let kind = run.request(*request)?;
+            Stage::Analyze => {
+                if run.analysis.as_ref().is_some_and(|a| a.is_pending_glob()) {
+                    let glob = run.analysis.as_mut().unwrap().take_pending_glob().unwrap();
+                    let unit_id = crate::modules::UnitId(self.program.units.len() as u32);
+                    let global_key = run.key(&glob.target_key.key)?;
+                    let unit = modules::ModuleUnit {
+                        id: unit_id,
+                        identity: Some(crate::modules::ModuleIdentity {
+                            original_uri: glob.base_uri.clone(),
+                            resolved_uri: glob.base_uri.clone(),
+                        }),
+                        standard_library: false,
+                        key: Some(global_key),
+                        delegate_key: None,
+                        build: None,
+                        syntax: None,
+                        source: None,
+                        name: PklString::default(),
+                        template: usize::MAX,
+                        entry: usize::MAX,
+                        initial_members: Vec::new(),
+                        import_order: Vec::new(),
+                        class_id: usize::MAX,
+                        mode: modules::ModuleMode::Plain,
+                        modifiers: 0,
+                    };
+                    Arc::make_mut(&mut self.program).units.push(unit);
+                    let spec = glob::Spec {
+                        import: Some(modules::ImportSpec {
+                            authored: glob.authored.clone(),
+                            span: glob.span,
+                            unit: unit_id,
+                            absolute_uri: glob.pattern_uri.clone(),
+                            original_uri: glob.pattern_uri.clone(),
+                        }),
+                        unit: unit_id,
+                        member_block: 0,
+                    };
+                    self.frames[index].pc = self.frames[index].pc.max(1) + 1;
+                    run.stage = Stage::Glob {
+                        base_uri: glob.base_uri,
+                    };
                     self.frames[index].analysis = Some(run);
-                    return self.wait_module(kind);
+                    return self.begin_glob(spec, glob.authored);
                 }
-                AnalysisPoll::Ready(Err(error)) => {
-                    return Err(analysis_error(
-                        *error,
-                        self.program.metadata.get(self.frames[index].block),
-                    ));
+                match run
+                    .analysis
+                    .as_mut()
+                    .ok_or_else(|| invalid("analysis core"))?
+                    .poll()
+                {
+                    AnalysisPoll::Request(request) => {
+                        let kind = run.request(*request)?;
+                        self.frames[index].analysis = Some(run);
+                        return self.wait_module(kind);
+                    }
+                    AnalysisPoll::Ready(Err(error)) => {
+                        return Err(analysis_error(
+                            *error,
+                            self.program.metadata.get(self.frames[index].block),
+                        ));
+                    }
+                    AnalysisPoll::Ready(Ok(graph)) => {
+                        run.nodes = graph.nodes.into();
+                        run.analysis = None;
+                        run.keys.clear();
+                        run.resolved.clear();
+                        run.stage = Stage::Module;
+                        self.frames[index].analysis = Some(run);
+                        // Resolve canonical factory classes, not a virtual class on
+                        // a borrowed method receiver. Only this stdlib is evaluated.
+                        self.import_stdlib("pkl:analyze")?;
+                        return Ok(());
+                    }
+                    AnalysisPoll::Closed => return Err(invalid("closed analysis resumed")),
                 }
-                AnalysisPoll::Ready(Ok(graph)) => {
-                    run.nodes = graph.nodes.into();
-                    run.analysis = None;
-                    run.keys.clear();
-                    run.resolved.clear();
-                    run.stage = Stage::Module;
-                    self.frames[index].analysis = Some(run);
-                    // Resolve canonical factory classes, not a virtual class on
-                    // a borrowed method receiver. Only this stdlib is evaluated.
-                    self.import_stdlib("pkl:analyze")?;
-                    return Ok(());
+            }
+            Stage::Glob { base_uri } => {
+                let mapping = self.pop()?.as_object()?;
+                let mut matched_uris = Vec::new();
+                let object = self.heap.get(mapping)?;
+                for member in &object.collection_members {
+                    if let Value::String(path) = &member.key {
+                        let uri = crate::host::resources::resolve_module_key_uri(path, &base_uri)?;
+                        matched_uris.push(uri);
+                    }
                 }
-                AnalysisPoll::Closed => return Err(invalid("closed analysis resumed")),
-            },
+                run.analysis
+                    .as_mut()
+                    .ok_or_else(|| invalid("analysis core"))?
+                    .complete_glob(matched_uris);
+                run.stage = Stage::Analyze;
+                self.frames[index].analysis = Some(run);
+                return Ok(());
+            }
             Stage::Module => {
                 let module = self.pop()?.as_object()?;
                 run.module = Some(module);
@@ -502,6 +567,28 @@ fn analysis_error(failure: AnalysisFailure, root: Option<&BlockMetadata>) -> Run
                         .clone(),
                 })),
             });
+            error
+        }
+        FailureCause::Unsupported(message)
+            if message == "Cannot combine glob imports with triple-dot module URIs." =>
+        {
+            let mut error = RuntimeError::new(ErrorKind::Type, message.clone());
+            if let (Some(site), Some(root)) = (&failure.site, root) {
+                error.frames.push(RuntimeFrame {
+                    anonymous: root.anonymous_root,
+                    member: root.member.clone(),
+                    span: site.span,
+                    source: Some(Arc::new(crate::value::RuntimeSource {
+                        text: site.source.clone(),
+                        uri: site.source_uri.clone(),
+                        module_name: root
+                            .source
+                            .as_ref()
+                            .map(|s| s.module_name.clone())
+                            .unwrap_or_else(|| "pkl.analyze".into()),
+                    })),
+                });
+            }
             error
         }
         _ => RuntimeError::new(
@@ -777,5 +864,330 @@ mod diagnostic_tests {
             analysis_error(failure, Some(&analyzer_root())).kind,
             ErrorKind::Unsupported
         );
+    }
+    #[test]
+    fn glob_with_triple_dot_is_diagnosed_as_invalid_glob_syntax() {
+        let source = "import* \".../glob.pkl\"\n";
+        let (failure, _) = loading_failure(source, "resolve");
+        assert_eq!(failure.phase, "import glob");
+        assert!(matches!(
+            &failure.cause,
+            FailureCause::Unsupported(msg) if msg == "Cannot combine glob imports with triple-dot module URIs."
+        ));
+        let error = analysis_error(failure, Some(&analyzer_root()));
+        assert_eq!(error.kind, ErrorKind::Type);
+        assert_eq!(
+            error.message,
+            "Cannot combine glob imports with triple-dot module URIs."
+        );
+        assert_eq!(error.frames.len(), 1);
+        let frame = &error.frames[0];
+        assert_eq!(frame.member, "importGraph");
+        let retained = frame.source.as_ref().unwrap();
+        assert_eq!(retained.uri, "file:///provider/main.pkl");
+        assert_eq!(retained.text, SourceText::from(source));
+        assert_eq!(
+            retained.text.slice(frame.span).unwrap().to_pkl_string(),
+            "\".../glob.pkl\""
+        );
+    }
+    #[test]
+    fn glob_import_traversal_resolves_all_matched_targets() {
+        let mut run = ImportGraphAnalysis::new(["file:///root.pkl".into()]);
+        // 1. Select root
+        let AnalysisPoll::Request(req) = run.poll() else {
+            panic!()
+        };
+        assert!(matches!(req.kind, ModuleRequestKind::SelectKey { .. }));
+        run.complete(
+            req.id,
+            ModuleCompletion::KeySelected(Ok(ModuleKey {
+                id: ModuleKeyId(1),
+                uri: "file:///root.pkl".into(),
+                kind: ModuleKeyKind::Host,
+                handle: "root".into(),
+            })),
+        )
+        .unwrap();
+
+        // 2. Resolve root
+        let AnalysisPoll::Request(req) = run.poll() else {
+            panic!()
+        };
+        let ModuleRequestKind::ResolveKey {
+            key,
+            resolved_key_id,
+            ..
+        } = req.kind.clone()
+        else {
+            panic!()
+        };
+        run.complete(
+            req.id,
+            ModuleCompletion::KeyResolved(Ok(ResolvedModuleKey {
+                id: resolved_key_id,
+                key: key.clone(),
+                handle: "root-resolved".into(),
+                module: ResolvedModule {
+                    original_uri: key.uri.clone(),
+                    resolved_uri: key.uri.clone(),
+                    source_uri: key.uri.clone(),
+                },
+            })),
+        )
+        .unwrap();
+
+        // 3. Load root source
+        let AnalysisPoll::Request(req) = run.poll() else {
+            panic!()
+        };
+        run.complete(
+            req.id,
+            ModuleCompletion::Source(Ok(ModuleSource {
+                text: "import* \"[ab].pkl\"\n".into(),
+                inferred_name: "root".into(),
+            })),
+        )
+        .unwrap();
+
+        // 4. ResolveImportUri for glob pattern
+        let AnalysisPoll::Request(req) = run.poll() else {
+            panic!()
+        };
+        assert!(
+            matches!(&req.kind, ModuleRequestKind::ResolveImportUri { authored_uri, .. } if authored_uri == "[ab].pkl")
+        );
+        run.complete(
+            req.id,
+            ModuleCompletion::ImportUri(Ok("file:///[ab].pkl".into())),
+        )
+        .unwrap();
+
+        // 5. Active glob is pending
+        assert!(run.is_pending_glob());
+        let glob_info = run.take_pending_glob().unwrap();
+        assert_eq!(glob_info.authored, "[ab].pkl");
+        assert_eq!(glob_info.base_uri, "file:///root.pkl");
+
+        // 6. Complete glob with matched URIs
+        run.complete_glob(vec!["file:///a.pkl".into(), "file:///b.pkl".into()]);
+
+        // 7. Now a.pkl should be selected
+        let AnalysisPoll::Request(req) = run.poll() else {
+            panic!()
+        };
+        let ModuleRequestKind::SelectKey { id, uri, .. } = req.kind.clone() else {
+            panic!()
+        };
+        assert_eq!(uri, "file:///a.pkl");
+        run.complete(
+            req.id,
+            ModuleCompletion::KeySelected(Ok(ModuleKey {
+                id,
+                uri,
+                kind: ModuleKeyKind::Host,
+                handle: "a".into(),
+            })),
+        )
+        .unwrap();
+
+        // 8. Resolve a.pkl
+        let AnalysisPoll::Request(req) = run.poll() else {
+            panic!()
+        };
+        let ModuleRequestKind::ResolveKey {
+            key,
+            resolved_key_id,
+            ..
+        } = req.kind.clone()
+        else {
+            panic!()
+        };
+        run.complete(
+            req.id,
+            ModuleCompletion::KeyResolved(Ok(ResolvedModuleKey {
+                id: resolved_key_id,
+                key: key.clone(),
+                handle: "a-resolved".into(),
+                module: ResolvedModule {
+                    original_uri: key.uri.clone(),
+                    resolved_uri: key.uri.clone(),
+                    source_uri: key.uri.clone(),
+                },
+            })),
+        )
+        .unwrap();
+
+        // 9. Now b.pkl should be selected
+        let AnalysisPoll::Request(req) = run.poll() else {
+            panic!()
+        };
+        let ModuleRequestKind::SelectKey { id, uri, .. } = req.kind.clone() else {
+            panic!()
+        };
+        assert_eq!(uri, "file:///b.pkl");
+        run.complete(
+            req.id,
+            ModuleCompletion::KeySelected(Ok(ModuleKey {
+                id,
+                uri,
+                kind: ModuleKeyKind::Host,
+                handle: "b".into(),
+            })),
+        )
+        .unwrap();
+
+        // 10. Resolve b.pkl
+        let AnalysisPoll::Request(req) = run.poll() else {
+            panic!()
+        };
+        let ModuleRequestKind::ResolveKey {
+            key,
+            resolved_key_id,
+            ..
+        } = req.kind.clone()
+        else {
+            panic!()
+        };
+        run.complete(
+            req.id,
+            ModuleCompletion::KeyResolved(Ok(ResolvedModuleKey {
+                id: resolved_key_id,
+                key: key.clone(),
+                handle: "b-resolved".into(),
+                module: ResolvedModule {
+                    original_uri: key.uri.clone(),
+                    resolved_uri: key.uri.clone(),
+                    source_uri: key.uri.clone(),
+                },
+            })),
+        )
+        .unwrap();
+
+        // 11. Now children are in work queue: a.pkl source is loaded
+        let AnalysisPoll::Request(req) = run.poll() else {
+            panic!()
+        };
+        assert!(
+            matches!(&req.kind, ModuleRequestKind::LoadSource { resolved, .. } if resolved.resolved_uri == "file:///a.pkl")
+        );
+        run.complete(
+            req.id,
+            ModuleCompletion::Source(Ok(ModuleSource {
+                text: "x = 1\n".into(),
+                inferred_name: "a".into(),
+            })),
+        )
+        .unwrap();
+
+        // 12. b.pkl source is loaded
+        let AnalysisPoll::Request(req) = run.poll() else {
+            panic!()
+        };
+        assert!(
+            matches!(&req.kind, ModuleRequestKind::LoadSource { resolved, .. } if resolved.resolved_uri == "file:///b.pkl")
+        );
+        run.complete(
+            req.id,
+            ModuleCompletion::Source(Ok(ModuleSource {
+                text: "y = 2\n".into(),
+                inferred_name: "b".into(),
+            })),
+        )
+        .unwrap();
+
+        // 13. Graph is ready!
+        let AnalysisPoll::Ready(Ok(graph)) = run.poll() else {
+            panic!()
+        };
+        assert_eq!(graph.nodes.len(), 3);
+        let root_node = graph
+            .nodes
+            .iter()
+            .find(|n| n.uri == "file:///root.pkl")
+            .unwrap();
+        assert_eq!(
+            root_node.imports,
+            vec![
+                PklString::from("file:///a.pkl"),
+                PklString::from("file:///b.pkl")
+            ]
+        );
+    }
+    #[test]
+    fn invalid_triple_dot_glob_fails_eval_with_expected_error() {
+        let source = "import \"pkl:analyze\"\nres = analyze.importGraph(Set(\"file:///stage151/invalid.pkl\"))\noutput { text = res.toString() }\n";
+        let mut probe =
+            crate::probe::SourceProbe::new_module_evaluator("compact", true, false, false).unwrap();
+        probe
+            .evaluate_module_source(
+                "file:///stage151/main.pkl",
+                Some(source),
+                "output.text",
+                0,
+                None,
+            )
+            .unwrap();
+        let mut err_event = None;
+        for _ in 0..200 {
+            let event = probe.poll_text(0, 1000).unwrap();
+            match event.kind {
+                "yield" => {}
+                "module-request" => {
+                    let token = event.token.as_deref().unwrap();
+                    let request = probe.module_request(token).unwrap();
+                    let completion = match &request.kind {
+                        ModuleRequestKind::SelectKey { id, uri, .. } => {
+                            if uri.starts_with("pkl:") {
+                                crate::modules::default_completion(&request).unwrap()
+                            } else {
+                                ModuleCompletion::KeySelected(Ok(ModuleKey {
+                                    id: *id,
+                                    uri: uri.clone(),
+                                    kind: ModuleKeyKind::Host,
+                                    handle: "selected".into(),
+                                }))
+                            }
+                        }
+                        ModuleRequestKind::ResolveKey {
+                            key,
+                            resolved_key_id,
+                            ..
+                        } => ModuleCompletion::KeyResolved(Ok(ResolvedModuleKey {
+                            id: *resolved_key_id,
+                            key: key.clone(),
+                            handle: "resolved".into(),
+                            module: ResolvedModule {
+                                original_uri: key.uri.clone(),
+                                resolved_uri: key.uri.clone(),
+                                source_uri: key.uri.clone(),
+                            },
+                        })),
+                        ModuleRequestKind::LoadSource { .. } => {
+                            ModuleCompletion::Source(Ok(ModuleSource {
+                                text: "import* \".../bad.pkl\"\n".into(),
+                                inferred_name: "invalid".into(),
+                            }))
+                        }
+                        _ => crate::modules::default_completion(&request).unwrap(),
+                    };
+                    probe.complete_module(token, completion, 0).unwrap();
+                }
+                "error" => {
+                    err_event = Some(event);
+                    break;
+                }
+                _ => {}
+            }
+        }
+        let err = err_event.expect("error event");
+        let err_text = if let Some(bytes) = err.error_bytes {
+            String::from_utf8(bytes).unwrap()
+        } else if let Some(utf16) = err.error {
+            String::from_utf16(&utf16).unwrap()
+        } else {
+            panic!("no error text: {:?}", err);
+        };
+        assert!(err_text.contains("Cannot combine glob imports with triple-dot module URIs."));
     }
 }

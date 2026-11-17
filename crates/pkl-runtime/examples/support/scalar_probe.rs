@@ -1,7 +1,84 @@
 //! Native filesystem adapter for the shared expression-string evaluator.
 //! This development probe is not a complete product CLI.
-use pkl_runtime::{probe::SourceProbe, value::PklString};
+use pkl_runtime::{logging::PlatformMetadata, probe::SourceProbe, value::PklString};
 use std::{io::Write, path::Path};
+
+fn detect_os_name() -> String {
+    #[cfg(target_os = "macos")]
+    {
+        "macOS".to_string()
+    }
+    #[cfg(target_os = "linux")]
+    {
+        "Linux".to_string()
+    }
+    #[cfg(not(any(target_os = "macos", target_os = "linux")))]
+    {
+        std::env::consts::OS.to_string()
+    }
+}
+
+fn detect_os_version() -> String {
+    #[cfg(target_os = "macos")]
+    {
+        if let Ok(output) = std::process::Command::new("/usr/bin/sw_vers")
+            .arg("-productVersion")
+            .output()
+            && output.status.success()
+        {
+            let version = String::from_utf8_lossy(&output.stdout).trim().to_string();
+            if !version.is_empty() {
+                return version;
+            }
+        }
+    }
+    #[cfg(target_os = "linux")]
+    {
+        if let Ok(output) = std::process::Command::new("uname").arg("-r").output()
+            && output.status.success()
+        {
+            let version = String::from_utf8_lossy(&output.stdout).trim().to_string();
+            if !version.is_empty() {
+                return version;
+            }
+        }
+    }
+    "unknown".to_string()
+}
+
+fn detect_java_version() -> String {
+    if let Ok(version) = std::env::var("PKL_ORACLE_JAVA_VERSION") {
+        let trimmed = version.trim();
+        if !trimmed.is_empty() {
+            return trimmed.to_string();
+        }
+    }
+    let java_bin = std::env::var("PKL_ORACLE_JAVA").unwrap_or_else(|_| "java".to_string());
+    if let Ok(output) = std::process::Command::new(java_bin)
+        .args(["-XshowSettings:properties", "-version"])
+        .output()
+    {
+        let text = String::from_utf8_lossy(&output.stderr);
+        for line in text.lines() {
+            if let Some(rest) = line.trim().strip_prefix("java.version = ") {
+                let version = rest.trim();
+                if !version.is_empty() {
+                    return version.to_string();
+                }
+            }
+        }
+    }
+    "unknown".to_string()
+}
+
+fn detect_platform_metadata() -> PlatformMetadata {
+    PlatformMetadata {
+        os_name: detect_os_name().into(),
+        os_version: detect_os_version().into(),
+        cpu_architecture: std::env::consts::ARCH.into(),
+        java_version: detect_java_version().into(),
+    }
+}
 
 #[path = "file_glob_host.rs"]
 mod file_glob_host;
@@ -53,6 +130,11 @@ fn bytes(units: Option<Vec<u16>>, field: &str) -> AdapterResult<Vec<u8>> {
 }
 
 fn run(arguments: &[String]) -> AdapterResult<Observation> {
+    let arguments = if arguments.first().map(|s| s.as_str()) == Some("eval") {
+        &arguments[1..]
+    } else {
+        arguments
+    };
     if arguments.len() != 2 && !(arguments.len() == 3 && arguments[2] == "--power-assertions") {
         return Err(AdapterError::Unsupported(
             "expected source path, expression, and optional --power-assertions".into(),
@@ -74,6 +156,7 @@ fn run(arguments: &[String]) -> AdapterResult<Observation> {
     let mut probe =
         SourceProbe::new_module_evaluator("compact", false, false, arguments.len() == 3)
             .map_err(|error| internal(error.to_java_utf8()))?;
+    probe.set_platform_metadata(Some(detect_platform_metadata()));
     let result = (|| {
         // Keep the exact query. The shared public operation loads/initializes
         // the module before parsing it, applies shared ToString, and dispatches
@@ -132,7 +215,7 @@ fn run(arguments: &[String]) -> AdapterResult<Observation> {
                 }
                 "error" => {
                     let exit_code = match event.disposition {
-                        Some("language-error") => 1,
+                        Some("language-error") | Some("internal-bug") | Some("oracle-error") => 1,
                         Some("unsupported") => 2,
                         Some("limit-exceeded") => 3,
                         Some("internal-failure") => 4,

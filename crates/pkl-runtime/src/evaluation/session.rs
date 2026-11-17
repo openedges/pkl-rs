@@ -23,6 +23,7 @@ pub struct SourceSessionOptions {
     pub trace_mode: TraceMode,
     pub log_delivery: LogDelivery,
     pub frame_transformer: crate::logging::FrameTransformer,
+    pub platform_data: bool,
 }
 
 #[derive(Clone, Copy)]
@@ -82,6 +83,9 @@ impl SourceSession {
                 trace_mode: options.trace_mode,
                 log_delivery: options.log_delivery,
                 frame_transformer: options.frame_transformer,
+                platform_metadata: options
+                    .platform_data
+                    .then(crate::logging::PlatformMetadata::default),
             },
         );
         host.set_power_assertions(options.evaluation.power_assertions);
@@ -397,6 +401,9 @@ impl SourceSession {
                                     RuntimeError::new(ErrorKind::Type, diagnostic.message.clone());
                                 error.span = Some(diagnostic.span);
                                 error.hint = diagnostic.hint().cloned();
+                                if let Some(foreign) = &diagnostic.provenance.foreign_exception {
+                                    error.foreign_exception = Some(foreign.clone());
+                                }
                                 error.frontend = Some(Arc::new(crate::modules::ModuleDiagnostic {
                                     diagnostic: *diagnostic,
                                     source: source.clone(),
@@ -489,6 +496,9 @@ impl SourceSession {
             trace_mode: options.trace_mode,
             log_delivery: options.log_delivery,
             frame_transformer: options.frame_transformer,
+            platform_metadata: options
+                .platform_data
+                .then(crate::logging::PlatformMetadata::default),
         };
         Arc::make_mut(&mut program)
             .register_primary_source(
@@ -826,6 +836,9 @@ impl SourceSession {
         transformer: crate::logging::FrameTransformer,
     ) -> Result<(), RuntimeError> {
         self.host.set_frame_transformer(transformer)
+    }
+    pub fn set_platform_metadata(&mut self, metadata: Option<crate::logging::PlatformMetadata>) {
+        self.host.set_platform_metadata(metadata);
     }
     pub fn close_from_callback(&mut self, token: &str) -> Result<(), RuntimeError> {
         self.host.close_from_callback(token)

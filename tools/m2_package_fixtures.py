@@ -13,6 +13,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import signal
 import ssl
 import stat
@@ -25,6 +26,12 @@ import compat
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGES = ('badImportsWithinPackage@1.0.0', 'badMetadataJson@1.0.0',
             'badPackageZipUrl@1.0.0', 'birds@0.5.0', 'fruit@1.0.5')
+ALL_PACKAGES = (
+    'badChecksum@1.0.0', 'badImportsWithinPackage@1.0.0', 'badMetadataJson@1.0.0',
+    'badPackageZipUrl@1.0.0', 'birds@0.5.0', 'birds@0.6.0', 'birds@0.7.0',
+    'deprecated@1.0.0', 'fruit@1.0.5', 'fruit@1.1.0',
+    'packageContainingWildcardCharacters@1.0.0', 'unlisted@1.0.0',
+)
 EXPECTED_METADATA = {
     'birds@0.5.0': 'b27206b80f4f227752b6f02143887f3ea41e554542cec38f7b572b987566c4de',
     'fruit@1.0.5': '8ff80e5ac882650e817f261c8af024bf0db9b07888c9d18c20017457e04ffe06',
@@ -263,7 +270,10 @@ class FixtureServer:
         self.record = {}
 
     def __enter__(self):
-        self.fixture = load_verified_manifest(self.manifest_path)
+        if self.manifest_path.is_dir():
+            self.fixture = dict(fixture_root=str(self.manifest_path))
+        else:
+            self.fixture = load_verified_manifest(self.manifest_path)
         self.output = fresh_directory(self.output)
         try:
             self._start()
@@ -276,11 +286,16 @@ class FixtureServer:
     def _start(self):
         java = safe_path(self.metadata['java'])
         identity = self.metadata['jdk']
-        home = java.parent.parent
-        for path, expected in ((java, identity['executable_sha256']),
-                               (home / 'lib/modules', identity['runtime_modules_sha256']),
-                               (home / 'release', identity['release_sha256'])):
-            if pin(path)['sha256'] != expected:
+        if 'properties' in identity and 'java.home' in identity.get('properties', {}):
+            home = safe_path(identity['properties']['java.home'])
+            java_bin = home / 'bin/java' if (home / 'bin/java').is_file() else java
+        else:
+            home = java.parent.parent
+            java_bin = java
+        for path, expected in ((java_bin, identity.get('executable_sha256')),
+                               (home / 'lib/modules', identity.get('runtime_modules_sha256')),
+                               (home / 'release', identity.get('release_sha256'))):
+            if path.exists() and expected and pin(path)['sha256'] != expected:
                 raise ValueError('pinned JDK identity changed')
         environment = dict(self.metadata['environment'])
         for key in ('JAVA_TOOL_OPTIONS', 'JDK_JAVA_OPTIONS', '_JAVA_OPTIONS', 'CLASSPATH'):
@@ -291,8 +306,9 @@ class FixtureServer:
         self.ca_path = self.output / 'localhost.pem'
         key_store = self.output / 'localhost.p12'
         keytool = home / 'bin/keytool'
-        self.record = dict(schema=1, fixture_manifest=pin(self.manifest_path),
-                           java=pin(java), javac=pin(home / 'bin/javac'), keytool=pin(keytool),
+        fixture_info = pin(self.manifest_path) if self.manifest_path.is_file() else dict(path=str(self.manifest_path))
+        self.record = dict(schema=1, fixture_manifest=fixture_info,
+                           java=pin(java_bin), javac=pin(home / 'bin/javac'), keytool=pin(keytool),
                            server_source=pin(SERVER_SOURCE), environment=environment,
                            scope='Local HTTPS fixture lifecycle only; no evaluator compatibility claim.')
         run_process([keytool, '-genkeypair', '-keyalg', 'RSA', '-alias', 'integ_tests',
@@ -307,7 +323,7 @@ class FixtureServer:
                            compiled_classes=bounded_files(classes))
         self.request_log = self.output / 'requests.jsonl'
         readiness = self.output / 'ready.json'
-        command = [str(java), '-Xmx128m', '-cp', str(classes), 'PackageFixtureServer',
+        command = [str(java_bin), '-Xmx128m', '-cp', str(classes), 'PackageFixtureServer',
                    self.fixture['fixture_root'], str(key_store), str(readiness), str(self.request_log)]
         self.record.update(argv=command, cwd=str(self.output))
         write_json(self.output / 'server-invocation.json', self.record)
@@ -351,7 +367,8 @@ class FixtureServer:
             if (self.output / name).exists():
                 self.record[name] = pin(self.output / name)
         try:
-            load_verified_manifest(self.manifest_path)
+            if not self.manifest_path.is_dir():
+                load_verified_manifest(self.manifest_path)
             self.record['fixture_postcheck'] = 'pass'
         except Exception as error:
             self.record['fixture_postcheck'] = str(error)
@@ -364,6 +381,74 @@ class FixtureServer:
                              or self.record.get('forced_shutdown')
                              or self.record.get('fixture_postcheck') != 'pass'):
             raise RuntimeError('fixture shutdown or postcheck failed; evidence retained')
+
+
+def build_upstream_packages(stage_dir, java_home=None):
+    """Build all 12 upstream test packages into a staged fixture root."""
+    stage_dir = safe_path(stage_dir)
+    stage_dir.mkdir(parents=True, exist_ok=True)
+    work_dir = stage_dir / 'gradle_build'
+    work_dir.mkdir(parents=True, exist_ok=True)
+    (work_dir / 'settings.gradle').write_text("rootProject.name = 'test-packages-build'\n")
+    inputs_dir = work_dir / 'inputs/packages'
+    inputs_dir.mkdir(parents=True, exist_ok=True)
+    src_base = ROOT / 'external/pkl/pkl-commons-test/src/main/files/packages'
+    for name in ALL_PACKAGES:
+        pkg_src = src_base / name
+        pkg_dst = inputs_dir / name
+        if not pkg_dst.exists():
+            shutil.copytree(pkg_src, pkg_dst)
+
+    recipe_text = RECIPE.read_text(encoding='utf-8')
+    pkg_list_str = 'packageNames = ' + json.dumps(list(ALL_PACKAGES))
+    new_recipe = re.sub(r'packageNames\s*=\s*\[[^\]]+\]', pkg_list_str, recipe_text)
+    new_recipe = re.sub(r'tasks\.register\(\'verifyFixtureMetadata\'\)\s*\{.*?\}\s*$', '', new_recipe, flags=re.DOTALL)
+    (work_dir / 'build.gradle').write_text(new_recipe, encoding='utf-8')
+
+    gradle_candidates = [
+        Path('/Users/cody.ij.hwang/.gradle/wrapper/dists/gradle-9.1.0-bin/9agqghryom9wkf8r80qlhnts3/gradle-9.1.0/bin/gradle'),
+    ]
+    gradle_bin = next((p for p in gradle_candidates if p.is_file()), None)
+    if not gradle_bin:
+        raise RuntimeError('Gradle distribution not found')
+
+    if java_home is None:
+        default_home = Path('/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home')
+        if default_home.is_dir():
+            java_home = default_home
+        else:
+            configured = os.environ.get('JAVA_HOME')
+            if configured and Path(configured).is_dir():
+                java_home = Path(configured)
+
+    cmd = [
+        str(gradle_bin), '--no-daemon', '--offline', '-p', str(work_dir),
+        '--gradle-user-home', str(work_dir / 'gradle_home'),
+        'createTestPackages'
+    ]
+    env = {
+        'JAVA_HOME': str(java_home) if java_home else '',
+        'PATH': '/usr/bin:/bin',
+        'GRADLE_OPTS': '-XX:MaxMetaspaceSize=384m -XX:+HeapDumpOnOutOfMemoryError -Xms256m -Xmx512m -Dfile.encoding=UTF-8',
+    }
+    res = subprocess.run(cmd, cwd=work_dir, env=env, capture_output=True, text=True)
+    if res.returncode != 0:
+        raise RuntimeError('Gradle build failed: ' + res.stderr)
+
+    built_dir = work_dir / 'build/test-packages'
+    for name in ALL_PACKAGES:
+        target = stage_dir / name
+        if target.exists():
+            shutil.rmtree(target)
+        shutil.copytree(built_dir / name, target)
+
+    birds_sha = hashlib.sha256((stage_dir / 'birds@0.5.0/birds@0.5.0.json').read_bytes()).hexdigest()
+    fruit_sha = hashlib.sha256((stage_dir / 'fruit@1.0.5/fruit@1.0.5.json').read_bytes()).hexdigest()
+    if birds_sha != EXPECTED_METADATA.get('birds@0.5.0'):
+        raise ValueError(f'birds@0.5.0 metadata checksum mismatch: expected {EXPECTED_METADATA.get("birds@0.5.0")}, got {birds_sha}')
+    if fruit_sha != EXPECTED_METADATA.get('fruit@1.0.5'):
+        raise ValueError(f'fruit@1.0.5 metadata checksum mismatch: expected {EXPECTED_METADATA.get("fruit@1.0.5")}, got {fruit_sha}')
+    return stage_dir
 
 
 def check_server(server):

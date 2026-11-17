@@ -88,6 +88,107 @@ class OracleTests(unittest.TestCase):
             with self.assertRaisesRegex(oracle.OracleError, "Java identity mismatch"):
                 oracle.verify_java(Path("java"), lock, {})
 
+    def test_jdk_version_mismatch_rejected_by_default(self):
+        lock = {
+            "jdk": {
+                "properties": {
+                    "java.vendor": "Eclipse Adoptium",
+                    "java.version": "21.0.12.1",
+                    "java.runtime.version": "21.0.12.1+1-LTS",
+                    "java.vm.name": "OpenJDK 64-Bit Server VM",
+                    "java.vm.version": "21.0.12.1+1-LTS",
+                }
+            }
+        }
+        stderr_21_0_13 = (
+            b"    java.vendor = Eclipse Adoptium\n"
+            b"    java.version = 21.0.13\n"
+            b"    java.runtime.version = 21.0.13+9-LTS\n"
+            b"    java.vm.name = OpenJDK 64-Bit Server VM\n"
+            b"    java.vm.version = 21.0.13+9-LTS\n"
+            b"    java.home = /fake/jdk\n"
+        )
+        identity = subprocess.CompletedProcess([], 0, b"", stderr_21_0_13)
+        with patch.dict(oracle.os.environ, {}, clear=True):
+            with patch.object(oracle, "_run", return_value=identity):
+                with self.assertRaisesRegex(oracle.OracleError, "Java identity mismatch: java.version"):
+                    oracle.verify_java(Path("java"), lock, {})
+
+    def test_jdk_version_mismatch_allowed_with_override_and_records_provenance(self):
+        jdk_dir = self.root / "fake_jdk"
+        jdk_dir.mkdir(parents=True)
+        (jdk_dir / "bin").mkdir()
+        java_bin = jdk_dir / "bin" / "java"
+        java_bin.write_bytes(b"java_binary_content")
+        (jdk_dir / "lib").mkdir()
+        (jdk_dir / "lib" / "modules").write_bytes(b"modules_content")
+        (jdk_dir / "release").write_bytes(b"JAVA_VERSION=\"21.0.13\"\n")
+
+        lock = {
+            "jdk": {
+                "properties": {
+                    "java.vendor": "Eclipse Adoptium",
+                    "java.version": "21.0.12.1",
+                    "java.runtime.version": "21.0.12.1+1-LTS",
+                    "java.vm.name": "OpenJDK 64-Bit Server VM",
+                    "java.vm.version": "21.0.12.1+1-LTS",
+                }
+            }
+        }
+        stderr_21_0_13 = (
+            f"    java.vendor = Eclipse Adoptium\n"
+            f"    java.version = 21.0.13\n"
+            f"    java.runtime.version = 21.0.13+9-LTS\n"
+            f"    java.vm.name = OpenJDK 64-Bit Server VM\n"
+            f"    java.vm.version = 21.0.13+9-LTS\n"
+            f"    java.home = {jdk_dir}\n"
+            f"    os.name = Mac OS X\n"
+            f"    os.arch = aarch64\n"
+            f"    os.version = 14.5\n"
+        ).encode("utf-8")
+        identity = subprocess.CompletedProcess([], 0, b"", stderr_21_0_13)
+
+        with patch.dict(oracle.os.environ, {"PKL_ALLOW_LOCAL_JDK": "1"}):
+            with patch.object(oracle, "_run", return_value=identity):
+                result = oracle.verify_java(java_bin, lock, {})
+                self.assertFalse(result["exact_jdk_lock_match"])
+                self.assertEqual(result["executable_sha256"], oracle.sha256(java_bin))
+                self.assertEqual(result["runtime_modules_sha256"], oracle.sha256(jdk_dir / "lib" / "modules"))
+                self.assertEqual(result["release_sha256"], oracle.sha256(jdk_dir / "release"))
+                self.assertEqual(result["properties"]["java.version"], "21.0.13")
+
+    def test_jdk_override_still_rejects_non_adoptium_or_major_version(self):
+        lock = {
+            "jdk": {
+                "properties": {
+                    "java.vendor": "Eclipse Adoptium",
+                    "java.version": "21.0.12.1",
+                    "java.runtime.version": "21.0.12.1+1-LTS",
+                }
+            }
+        }
+        # Wrong vendor
+        stderr_wrong_vendor = (
+            b"    java.vendor = Oracle Corporation\n"
+            b"    java.version = 21.0.13\n"
+            b"    java.runtime.version = 21.0.13+9-LTS\n"
+        )
+        with patch.dict(oracle.os.environ, {"PKL_ALLOW_LOCAL_JDK": "1"}):
+            with patch.object(oracle, "_run", return_value=subprocess.CompletedProcess([], 0, b"", stderr_wrong_vendor)):
+                with self.assertRaisesRegex(oracle.OracleError, "Java identity mismatch: java.vendor"):
+                    oracle.verify_java(Path("java"), lock, {})
+
+        # Major version difference
+        stderr_wrong_major = (
+            b"    java.vendor = Eclipse Adoptium\n"
+            b"    java.version = 17.0.10\n"
+            b"    java.runtime.version = 17.0.10+7\n"
+        )
+        with patch.dict(oracle.os.environ, {"PKL_ALLOW_LOCAL_JDK": "1"}):
+            with patch.object(oracle, "_run", return_value=subprocess.CompletedProcess([], 0, b"", stderr_wrong_major)):
+                with self.assertRaisesRegex(oracle.OracleError, "Java identity mismatch: java.version"):
+                    oracle.verify_java(Path("java"), lock, {})
+
     def test_performance_runtime_tamper_is_rejected(self):
         cache = self.root / ".cache/oracle"
         cache.mkdir(parents=True)

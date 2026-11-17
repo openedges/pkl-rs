@@ -188,9 +188,28 @@ impl Vm {
                 } else {
                     uri::parse_base(&run.base_path)?
                 };
-                if let Some(key) = &run.declaration {
+                let dep_key = if let Some(key) = &run.declaration {
+                    Some(key.clone())
+                } else if text.starts_with("@") {
+                    let uri = run.module_uri.clone().unwrap_or_default();
+                    let kind = if uri.starts_with("package:") || uri.starts_with("projectpackage:")
+                    {
+                        crate::modules::ModuleKeyKind::StandardGenericUrl
+                    } else {
+                        crate::modules::ModuleKeyKind::StandardFile
+                    };
+                    Some(crate::modules::ModuleKey {
+                        id: crate::modules::ModuleKeyId(0),
+                        uri,
+                        kind,
+                        handle: PklString::default(),
+                    })
+                } else {
+                    None
+                };
+                if let Some(key) = dep_key {
                     Effect::Module(ModuleRequestKind::ResolveImportUri {
-                        key: key.clone(),
+                        key,
                         authored_uri: text,
                     })
                 } else {
@@ -675,5 +694,120 @@ impl Compiler<'_> {
             unit: self.unit,
             member_block,
         })
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::glob::ResourceReader;
+    use crate::modules::ModuleKeyKind;
+
+    #[test]
+    fn primary_module_read_glob_dependency_requests_import_uri_resolution() {
+        let source = "x = read*(\"@birds/catalog/*.pkl\")\n";
+        let parsed = crate::parser::parse_module(source).unwrap();
+        let program = compile_module(&crate::resolver::resolve_module(&parsed).unwrap()).unwrap();
+        let mut vm = Vm::with_context(
+            program.clone(),
+            EvaluationContext {
+                primary_source: Some(Arc::new(crate::value::RuntimeSource {
+                    text: parsed.source.clone(),
+                    uri: "file:///project/main.pkl".into(),
+                    module_name: "main".into(),
+                })),
+                ..Default::default()
+            },
+        );
+        vm.start(program.entry, vec![]).unwrap();
+        let module = loop {
+            match vm.poll(100) {
+                VmPoll::Ready(result) => break result.unwrap().as_object().unwrap(),
+                VmPoll::Yielded => {}
+                other => panic!("unexpected poll initializing module: {other:?}"),
+            }
+        };
+        vm.start_member(module, "x").unwrap();
+        let mut resolve_calls = Vec::new();
+        let mut list_uris = Vec::new();
+        let value = loop {
+            match vm.poll(100) {
+                VmPoll::Ready(result) => break result.unwrap(),
+                VmPoll::Yielded => {}
+                VmPoll::Module(req) => match req.kind {
+                    ModuleRequestKind::ResolveImportUri { key, authored_uri } => {
+                        resolve_calls.push((key.uri.clone(), key.kind, authored_uri.clone()));
+                        let resolved = if authored_uri == "@birds/catalog/*.pkl" {
+                            "package://localhost:0/birds@0.5.0#/catalog/*.pkl"
+                        } else if authored_uri == "@birds/catalog/" {
+                            "package://localhost:0/birds@0.5.0#/catalog/"
+                        } else {
+                            panic!("unexpected authored_uri: {authored_uri:?}");
+                        };
+                        vm.complete_module(
+                            req.id,
+                            ModuleCompletion::ImportUri(Ok(resolved.into())),
+                        )
+                        .unwrap();
+                    }
+                    other => panic!("unexpected module request: {other:?}"),
+                },
+                VmPoll::Glob(req) => match req.kind {
+                    GlobRequestKind::SelectResource { id, uri } => {
+                        assert_eq!(uri, "package://localhost:0/birds@0.5.0#/catalog/*.pkl");
+                        vm.complete_glob(
+                            req.id,
+                            GlobCompletion::Resource(Ok(ResourceReader {
+                                id,
+                                scheme: "package".into(),
+                                handle: PklString::default(),
+                            })),
+                        )
+                        .unwrap();
+                    }
+                    GlobRequestKind::IsGlobbable { .. } => {
+                        vm.complete_glob(req.id, GlobCompletion::Globbable(Ok(true)))
+                            .unwrap();
+                    }
+                    GlobRequestKind::IsHierarchical { .. } => {
+                        vm.complete_glob(req.id, GlobCompletion::Hierarchical(Ok(true)))
+                            .unwrap();
+                    }
+                    GlobRequestKind::FragmentPaths { .. } => {
+                        vm.complete_glob(req.id, GlobCompletion::FragmentPaths(Ok(true)))
+                            .unwrap();
+                    }
+                    GlobRequestKind::ListElements { uri, .. } => {
+                        list_uris.push(uri);
+                        vm.complete_glob(req.id, GlobCompletion::Elements(Ok(Vec::new())))
+                            .unwrap();
+                    }
+                    other => panic!("unexpected glob request: {other:?}"),
+                },
+                other => panic!("unexpected poll event: {other:?}"),
+            }
+        };
+        assert!(matches!(value, Value::Object(_)));
+        assert_eq!(
+            resolve_calls,
+            vec![
+                (
+                    "file:///project/main.pkl".into(),
+                    ModuleKeyKind::StandardFile,
+                    "@birds/catalog/*.pkl".into(),
+                ),
+                (
+                    "file:///project/main.pkl".into(),
+                    ModuleKeyKind::StandardFile,
+                    "@birds/catalog/".into(),
+                ),
+            ]
+        );
+        assert_eq!(
+            list_uris,
+            vec![PklString::from(
+                "package://localhost:0/birds@0.5.0#/catalog/"
+            )]
+        );
     }
 }

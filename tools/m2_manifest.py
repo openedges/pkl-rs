@@ -157,6 +157,7 @@ def build_manifest(root: Path = ROOT) -> dict:
     corpus = load(Path('compatibility/corpus.json'), root)
     rev1 = load(Path('compatibility/rev1-inventory.json'), root)
     historical = m2_historical.registry_cases(root)
+    cli_historical = m2_historical.cli_registry_cases(root)
     retained = m2_selected_regressions.registry_cases(root)
     selected = load(SELECTION, root)['cases']
     module_cases = m2_module_eval.registry_cases(root, corpus, load(MODULE_ADAPTERS, root))
@@ -198,7 +199,11 @@ def build_manifest(root: Path = ROOT) -> dict:
     for row in rev1['files']:
         if row['kind'] != 'regression-candidate':
             continue
-        cases.append(m2_historical.manifest_case(row, historical.get('rev1-candidate:' + row['path'])))
+        cases.append(m2_historical.manifest_case(
+            row,
+            historical.get('rev1-candidate:' + row['path']),
+            cli_historical.get('rev1-candidate:' + row['path']),
+        ))
     for row in load(Path('compatibility/regressions.json'), root)['cases']:
         cases.append(m2_selected_regressions.manifest_case(row, retained.get('m2:' + row['id'])))
     apply_mappings(requirements, cases, load(MAPPINGS, root), inventory['baseline'], root)
@@ -234,7 +239,7 @@ def validate_manifest(manifest: dict, root: Path = ROOT):
         if not set(row['tests']['case_ids']) <= case_ids:
             raise ValueError('requirement maps missing case: ' + row['id'])
     for row in manifest['cases']:
-        if row.get('adapter') == m2_historical.ADAPTER and not row['id'].startswith('rev1-candidate:'):
+        if row.get('adapter') in (m2_historical.ADAPTER, m2_historical.CLI_ADAPTER) and not row['id'].startswith('rev1-candidate:'):
             raise ValueError('historical adapter on unknown case')
         if row['id'] in profiles:
             if (row.get('adapter') != profiles[row['id']]['adapter']

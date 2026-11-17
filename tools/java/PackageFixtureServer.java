@@ -41,7 +41,7 @@ public final class PackageFixtureServer {
     var context = SSLContext.getInstance("SSL");
     context.init(manager.getKeyManagers(), null, null);
     var engine = context.createSSLEngine();
-    var server = HttpsServer.create(new InetSocketAddress("localhost", 0), 0);
+    var server = HttpsServer.create(new InetSocketAddress(0), 0);
     server.setHttpsConfigurator(new HttpsConfigurator(context) {
       @Override public void configure(HttpsParameters parameters) {
         parameters.setNeedClientAuth(false);

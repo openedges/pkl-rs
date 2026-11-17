@@ -49,7 +49,9 @@ pub(crate) mod json_parser;
 mod jsonnet;
 mod modules;
 mod null;
+mod platform;
 mod query_lifecycle;
+mod release;
 mod session_expressions;
 mod settings_paths;
 mod stdlib_modules;
@@ -91,6 +93,9 @@ pub enum Instruction {
     JsonParse,
     /// Pure lexical path resolution for authored EvaluatorSettings.resolveForOs.
     ResolveEvaluatorSettingsPath,
+    PlatformCurrent,
+    ReleaseCurrent,
+    BenchmarkRun,
     AnalyzeImportGraph,
     YamlParse {
         all: bool,
@@ -1415,6 +1420,8 @@ pub struct Vm {
     executable_roots: BTreeMap<usize, ExecutableOwnerId>,
     code_arenas: Vec<query_lifecycle::CodeArena>,
     public_operation_entries: BTreeSet<usize>,
+    pub(crate) platform_metadata: Option<crate::logging::PlatformMetadata>,
+    pub(crate) monotonic_clock: Option<crate::logging::MonotonicClock>,
 }
 
 impl Vm {
@@ -1456,6 +1463,7 @@ impl Vm {
         } else {
             Ok(())
         };
+        let platform_metadata = context.platform_metadata.clone();
         Self {
             program,
             context,
@@ -1488,7 +1496,17 @@ impl Vm {
             executable_roots: BTreeMap::new(),
             code_arenas: Vec::new(),
             public_operation_entries: BTreeSet::new(),
+            platform_metadata,
+            monotonic_clock: None,
         }
+    }
+
+    pub fn set_platform_metadata(&mut self, metadata: Option<crate::logging::PlatformMetadata>) {
+        self.platform_metadata = metadata;
+    }
+
+    pub fn set_monotonic_clock(&mut self, clock: crate::logging::MonotonicClock) {
+        self.monotonic_clock = Some(clock);
     }
 
     pub fn set_power_assertions(&mut self, enabled: bool) {
@@ -2192,46 +2210,59 @@ impl Vm {
             .is_some_and(|cause| cause.origin.is_none())
         {
             use crate::java_exception::provenance::{ForeignActivation, ForeignOrigin};
+            let mut activations: Vec<ForeignActivation> = self
+                .frames
+                .iter()
+                .map(|frame| {
+                    let metadata = self.program.metadata.get(frame.block);
+                    let instruction_index = frame.pc.checked_sub(1);
+                    ForeignActivation {
+                        instruction_index,
+                        member: metadata.map(|metadata| metadata.member.clone()),
+                        source: metadata.and_then(|metadata| metadata.source.clone()),
+                        instruction_span: metadata.and_then(|metadata| {
+                            instruction_index
+                                .and_then(|index| metadata.spans.get(index).copied().flatten())
+                        }),
+                        declaration_span: metadata.and_then(|metadata| metadata.declaration),
+                        method_signature: metadata
+                            .and_then(|metadata| metadata.method_signature.clone()),
+                        active_let_frames: metadata.map_or_else(Vec::new, |metadata| {
+                            metadata
+                                .let_scopes
+                                .iter()
+                                .filter(|scope| {
+                                    instruction_index
+                                        .is_some_and(|index| scope.body.contains(&index))
+                                })
+                                .map(|scope| scope.frame.clone())
+                                .collect()
+                        }),
+                        lambda: frame.lambda,
+                        inline_constraint: metadata
+                            .is_some_and(|metadata| metadata.inline_constraint),
+                        anonymous_root: metadata.is_some_and(|metadata| metadata.anonymous_root),
+                    }
+                })
+                .collect();
+            activations.extend(error.frames.iter().rev().map(|frame| ForeignActivation {
+                instruction_index: None,
+                member: Some(frame.member.clone()),
+                source: frame.source.clone(),
+                instruction_span: None,
+                declaration_span: Some(frame.span),
+                method_signature: None,
+                active_let_frames: Vec::new(),
+                lambda: false,
+                inline_constraint: false,
+                anonymous_root: frame.anonymous,
+            }));
             let origin = ForeignOrigin {
-                activations: self
-                    .frames
-                    .iter()
-                    .map(|frame| {
-                        let metadata = self.program.metadata.get(frame.block);
-                        let instruction_index = frame.pc.checked_sub(1);
-                        ForeignActivation {
-                            instruction_index,
-                            member: metadata.map(|metadata| metadata.member.clone()),
-                            source: metadata.and_then(|metadata| metadata.source.clone()),
-                            instruction_span: metadata.and_then(|metadata| {
-                                instruction_index
-                                    .and_then(|index| metadata.spans.get(index).copied().flatten())
-                            }),
-                            declaration_span: metadata.and_then(|metadata| metadata.declaration),
-                            method_signature: metadata
-                                .and_then(|metadata| metadata.method_signature.clone()),
-                            active_let_frames: metadata.map_or_else(Vec::new, |metadata| {
-                                metadata
-                                    .let_scopes
-                                    .iter()
-                                    .filter(|scope| {
-                                        instruction_index
-                                            .is_some_and(|index| scope.body.contains(&index))
-                                    })
-                                    .map(|scope| scope.frame.clone())
-                                    .collect()
-                            }),
-                            lambda: frame.lambda,
-                            inline_constraint: metadata
-                                .is_some_and(|metadata| metadata.inline_constraint),
-                            anonymous_root: metadata
-                                .is_some_and(|metadata| metadata.anonymous_root),
-                        }
-                    })
-                    .collect(),
+                activations,
                 primary_source: self.context.primary_source.clone(),
                 power_assertions: self.power_assertions,
                 frame_transformer: self.context.frame_transformer,
+                platform_metadata: self.platform_metadata.clone(),
                 original_span: error.span,
                 existing_guest_frames: error.frames.clone(),
             };
@@ -4759,7 +4790,9 @@ impl Vm {
         // Compiling pinned bundled declarations must not retain the large
         // general instruction-dispatch frame on the native stack. Evaluation
         // still starts in the ordinary module initializer and can yield there.
-        let result = if matches!(instruction, Instruction::LoadBaseModule) {
+        let result = if matches!(instruction, Instruction::Return) {
+            self.finish_return()
+        } else if matches!(instruction, Instruction::LoadBaseModule) {
             self.import_stdlib("pkl:base").map(|_| ())
         } else if matches!(instruction, Instruction::LoadProtobufModule) {
             self.import_stdlib("pkl:protobuf").map(|_| ())
@@ -4769,6 +4802,10 @@ impl Vm {
             self.import_stdlib("pkl:jsonnet").map(|_| ())
         } else if matches!(instruction, Instruction::LoadRefModule) {
             self.import_stdlib("pkl:ref").map(|_| ())
+        } else if matches!(instruction, Instruction::ReadModuleVersion) {
+            self.read_module_version()
+        } else if matches!(instruction, Instruction::CheckModuleVersion) {
+            self.check_module_version()
         } else if matches!(
             &instruction,
             Instruction::Swap
@@ -4819,6 +4856,24 @@ impl Vm {
                 | Instruction::CheckType(_)
         ) {
             self.type_instruction(instruction)
+        } else if matches!(
+            &instruction,
+            Instruction::GetMember(_)
+                | Instruction::GetMethod(_)
+                | Instruction::GetConstMember(_)
+                | Instruction::GetConstMethod(_)
+                | Instruction::GetAmbiguousProperty { .. }
+                | Instruction::GetProperty { .. }
+                | Instruction::GetMethodProperty { .. }
+                | Instruction::GetImplicitProperty(_)
+                | Instruction::GetImplicitMethod(_)
+                | Instruction::InferPropertyParent
+                | Instruction::GetSuperMember(_)
+                | Instruction::GetSuperMethod(_)
+                | Instruction::GetConstSuperMember(_)
+                | Instruction::GetConstSuperMethod(_)
+        ) {
+            self.member_access_instruction(instruction)
         } else {
             self.step_instruction(instruction)
         };
@@ -4831,6 +4886,356 @@ impl Vm {
             frame.prepared_hashes = None;
         }
         result
+    }
+
+    #[inline(never)]
+    fn member_access_instruction(&mut self, instruction: Instruction) -> Result<(), RuntimeError> {
+        match instruction {
+            Instruction::GetMember(ref name)
+            | Instruction::GetMethod(ref name)
+            | Instruction::GetConstMember(ref name)
+            | Instruction::GetConstMethod(ref name) => {
+                let method = matches!(
+                    instruction,
+                    Instruction::GetMethod(_) | Instruction::GetConstMethod(_)
+                );
+                let needs_const = matches!(
+                    instruction,
+                    Instruction::GetConstMember(_) | Instruction::GetConstMethod(_)
+                );
+                let receiver = self.pop()?;
+                if method {
+                    self.retire_saturated_method_cache(&receiver, name)?;
+                }
+                if needs_const
+                    && method
+                    && name == "ifNonNull"
+                    && !matches!(receiver, Value::Object(_))
+                {
+                    return Err(Self::non_const_method_error(name));
+                }
+                if self.any_member(&receiver, name, method)
+                    || self.class_member(&receiver, name, method)?
+                    || self.primitive_member(&receiver, name, method)?
+                {
+                    return Ok(());
+                }
+                if method && name == "encodeToBytes" && matches!(receiver, Value::String(_)) {
+                    self.string_encode_method(receiver);
+                    return Ok(());
+                }
+                if method
+                    && name == "join"
+                    && (self.is_list(&receiver)
+                        || self.is_set(&receiver)
+                        || matches!(&receiver, Value::Object(id) if self.heap.get(*id)?.collection_kind == crate::heap::CollectionKind::Listing))
+                {
+                    self.collection_join_method(receiver);
+                    return Ok(());
+                }
+                if method && self.collection_transform_method(receiver.clone(), name) {
+                    return Ok(());
+                }
+                if self.collection_projection_member(receiver.clone(), name, method)? {
+                    return Ok(());
+                }
+                if method && name == "repeat" && matches!(receiver, Value::String(_)) {
+                    self.string_repeat_method(receiver);
+                } else if method
+                    && name == "getClass"
+                    && (!matches!(receiver, Value::Object(id) if self.heap.object_class(id)?.is_some()))
+                {
+                    let function = self.native_reference_method(receiver, "getClass");
+                    self.stack.push(function);
+                } else if matches!(receiver, Value::Function(_)) && method && name == "apply" {
+                    self.stack.push(receiver);
+                } else if method
+                    && name == "toString"
+                    && (receiver.as_object().is_err()
+                        || self.is_map(&receiver)
+                        || self.is_set(&receiver)
+                        || self.is_list(&receiver))
+                {
+                    let function = self.native_reference_method(receiver, "scalarToString");
+                    self.stack.push(function);
+                } else if matches!(receiver, Value::Function(_)) {
+                    return Err(self.function_member_error(&receiver, name, method)?);
+                } else if matches!(receiver, Value::DataSize(_)) {
+                    return Err(self.data_size_member_error(name, method));
+                } else if matches!(receiver, Value::Duration(_)) {
+                    return Err(self.duration_member_error(name, method));
+                } else if matches!(receiver, Value::IntSeq(_)) {
+                    return Err(self.int_seq_member_error(name, method));
+                } else if matches!(receiver, Value::Bytes(_)) {
+                    return Err(self.bytes_member_error(name, method));
+                } else if let Some(error) = self.scalar_member_error(&receiver, name, method) {
+                    return Err(error);
+                } else {
+                    let receiver = receiver.as_object()?;
+                    if method
+                        && self.heap.get(receiver)?.collection_kind
+                            == crate::heap::CollectionKind::Set
+                        && name == "contains"
+                    {
+                        let function = self.native_reference_method(
+                            Value::Object(receiver),
+                            name.as_str().expect("recognized builtin method"),
+                        );
+                        self.stack.push(function);
+                        return Ok(());
+                    }
+                    if method
+                        && self.heap.get(receiver)?.collection_kind
+                            == crate::heap::CollectionKind::Map
+                        && matches!(name.as_str(), Some("containsKey" | "getOrNull"))
+                    {
+                        let function = self.native_reference_method(
+                            Value::Object(receiver),
+                            name.as_str().expect("recognized builtin method"),
+                        );
+                        self.stack.push(function);
+                        return Ok(());
+                    }
+                    if self.reference_member(receiver, name, method)? {
+                        return Ok(());
+                    }
+                    if needs_const {
+                        self.require_const(receiver, name, false, method)?;
+                    }
+                    if !method && self.collection_builtin(receiver, name)? {
+                        // Builtin collection properties do not force values.
+                    } else {
+                        self.force(receiver, receiver, name.clone(), false, true, method)?;
+                    }
+                }
+            }
+            Instruction::GetAmbiguousProperty {
+                ref name,
+                owner_depth,
+                needs_const,
+            } => {
+                self.read_ambiguous_property(name.clone(), owner_depth, needs_const)?;
+            }
+            Instruction::GetProperty {
+                ref name,
+                owner_depth,
+                local,
+            }
+            | Instruction::GetMethodProperty {
+                ref name,
+                owner_depth,
+                local,
+            } => {
+                let method = matches!(instruction, Instruction::GetMethodProperty { .. });
+                let scope = self.scope(owner_depth)?;
+                if method {
+                    self.retire_saturated_method_cache(&Value::Object(scope.receiver), name)?;
+                }
+                let frame = self.frames.last().expect("active frame");
+                let resolved = if local && !method {
+                    frame
+                        .environment
+                        .executable_owner
+                        .or_else(|| self.executable_roots.get(&frame.block).copied())
+                        .map(|owner| self.heap.resolved_local(owner, (frame.block, frame.pc - 1)))
+                        .transpose()?
+                        .flatten()
+                } else {
+                    None
+                };
+                self.force_key_mode_prepared(
+                    scope.receiver,
+                    if local { scope.owner } else { scope.receiver },
+                    name.clone(),
+                    local,
+                    true,
+                    method,
+                    false,
+                    false,
+                    false,
+                    resolved,
+                )?;
+            }
+            Instruction::GetImplicitProperty(ref name)
+            | Instruction::GetImplicitMethod(ref name) => {
+                let method = matches!(instruction, Instruction::GetImplicitMethod(_));
+                let receiver = self.this_receiver()?;
+                if method {
+                    self.retire_saturated_method_cache(&receiver, name)?;
+                }
+                if self.any_member(&receiver, name, method)
+                    || self.class_member(&receiver, name, method)?
+                    || self.primitive_member(&receiver, name, method)?
+                {
+                    return Ok(());
+                }
+                if matches!(receiver, Value::DataSize(_)) {
+                    return Err(self.data_size_member_error(name, method));
+                }
+                if matches!(receiver, Value::Duration(_)) {
+                    return Err(self.duration_member_error(name, method));
+                }
+                if matches!(receiver, Value::IntSeq(_)) {
+                    return Err(self.int_seq_member_error(name, method));
+                }
+                if matches!(receiver, Value::Bytes(_)) {
+                    return Err(self.bytes_member_error(name, method));
+                }
+                if let Some(error) = self.scalar_member_error(&receiver, name, method) {
+                    return Err(error);
+                }
+                let receiver = receiver.as_object()?;
+                if method || !self.collection_builtin(receiver, name)? {
+                    self.force(receiver, receiver, name.clone(), false, true, method)?;
+                }
+            }
+            Instruction::InferPropertyParent => {
+                let scope = self.scope(0)?;
+                let name = self
+                    .frames
+                    .last()
+                    .and_then(|frame| frame.force.as_ref())
+                    .ok_or_else(|| invalid("property parent outside member"))?
+                    .name
+                    .clone();
+                if !self.heap.get(scope.owner)?.is_module
+                    && collections::typed_class(&self.heap, scope.owner)?.is_none()
+                {
+                    let kind = self.heap.get(scope.owner)?.collection_kind;
+                    if name == "default"
+                        && matches!(
+                            kind,
+                            crate::heap::CollectionKind::Listing
+                                | crate::heap::CollectionKind::Mapping
+                        )
+                    {
+                        let class = self.canonical_builtin_class(
+                            if kind == crate::heap::CollectionKind::Listing {
+                                classes::BuiltinClass::Listing
+                            } else {
+                                classes::BuiltinClass::Mapping
+                            },
+                        );
+                        let prototype = self.heap.get_class(class)?.prototype;
+                        self.force(prototype, prototype, name, false, true, false)?;
+                    } else {
+                        let empty = self.empty_object(crate::heap::CollectionKind::Dynamic);
+                        self.stack.push(Value::Object(empty));
+                    }
+                    return Ok(());
+                }
+                let mut prototype = Some(scope.owner);
+                while let Some(owner) = prototype {
+                    let object = self.heap.get(owner)?;
+                    if object.class_definition.is_some() {
+                        break;
+                    }
+                    prototype = object.parent;
+                }
+                if let Some(prototype) = prototype
+                    && prototype != scope.owner
+                {
+                    let depth = self.frames.len();
+                    self.force(prototype, prototype, name, false, true, false)?;
+                    if self.frames.len() > depth {
+                        self.frames
+                            .last_mut()
+                            .expect("prototype read")
+                            .force
+                            .as_mut()
+                            .expect("property force")
+                            .skip_typecheck = true;
+                    }
+                } else if prototype.is_some() {
+                    // A prototype uses the aggregated declaration type, not a
+                    // superclass initializer. Ordinary instances above read
+                    // their prototype's value instead.
+                    let mut owner = prototype;
+                    let mut annotation = None;
+                    while let Some(id) = owner {
+                        let object = self.heap.get(id)?;
+                        if let Some(member) = object.members.iter().find(|member| {
+                            !member.entry
+                                && !member.local
+                                && !member.method
+                                && member.name == name
+                                && member.ty.is_some()
+                        }) {
+                            let origin =
+                                self.program.metadata.get(member.code).and_then(|metadata| {
+                                    member.type_span.map(|span| RuntimeFrame {
+                                        anonymous: false,
+                                        source: metadata.source.clone(),
+                                        span,
+                                        member: metadata.member.concat(&".default".into()),
+                                    })
+                                });
+                            annotation = Some((member.ty.clone().expect("property type"), origin));
+                            break;
+                        }
+                        owner = object.parent;
+                    }
+                    if let Some((ty, origin)) = annotation
+                        && !matches!(ty.resolved(), TypeCheck::Unknown)
+                    {
+                        let frame = self.frames.last_mut().expect("property default frame");
+                        let ty = ty.substituted(&frame.environment)?;
+                        frame.generic_default = Some(generics::GenericDefaultRun::inferred_parent(
+                            ty, origin, None,
+                        ));
+                    } else {
+                        let empty = self.empty_object(crate::heap::CollectionKind::Dynamic);
+                        self.stack.push(Value::Object(empty));
+                    }
+                } else {
+                    let empty = self.empty_object(crate::heap::CollectionKind::Dynamic);
+                    self.stack.push(Value::Object(empty));
+                }
+            }
+            Instruction::GetSuperMember(ref name)
+            | Instruction::GetSuperMethod(ref name)
+            | Instruction::GetConstSuperMember(ref name)
+            | Instruction::GetConstSuperMethod(ref name) => {
+                let method = matches!(
+                    instruction,
+                    Instruction::GetSuperMethod(_) | Instruction::GetConstSuperMethod(_)
+                );
+                let scope = self.scope(0)?;
+                let parent = self.heap.get(scope.owner)?.parent;
+                if !method {
+                    let mut owner = parent;
+                    let mut found = false;
+                    while let Some(id) = owner {
+                        let object = self.heap.get(id)?;
+                        if object.members.iter().any(|member| {
+                            !member.entry && !member.local && !member.method && member.name == *name
+                        }) {
+                            found = true;
+                            break;
+                        }
+                        owner = object.parent;
+                    }
+                    if !found {
+                        self.stack
+                            .push(Value::Object(self.heap.allocate(Object::default())));
+                        return Ok(());
+                    }
+                }
+                let parent = parent.ok_or_else(|| {
+                    RuntimeError::new(ErrorKind::MissingMember, "super has no parent")
+                })?;
+                if matches!(
+                    instruction,
+                    Instruction::GetConstSuperMember(_) | Instruction::GetConstSuperMethod(_)
+                ) {
+                    self.require_const(parent, name, false, method)?;
+                }
+                // Java ReadSuperPropertyNode deliberately does not memoize super calls.
+                self.force(scope.receiver, parent, name.clone(), false, false, method)?;
+            }
+            _ => unreachable!("member access instruction called with non-member instruction"),
+        }
+        Ok(())
     }
 
     /// Keep the large general dispatch frame out of collection and continuation
@@ -4869,8 +5274,9 @@ impl Vm {
             Instruction::InitializeModuleParent => self.initialize_module_parent()?,
             Instruction::CheckModuleOutput => self.check_module_output()?,
             Instruction::BootstrapStdlib => self.bootstrap_stdlib()?,
-            Instruction::ReadModuleVersion => self.read_module_version()?,
-            Instruction::CheckModuleVersion => self.check_module_version()?,
+            Instruction::ReadModuleVersion | Instruction::CheckModuleVersion => {
+                unreachable!("module version instruction uses its bounded dispatcher")
+            }
             Instruction::MatchModuleVersion => {
                 let Value::String(value) = self.pop()? else {
                     return Err(invalid("checked version string"));
@@ -4887,6 +5293,9 @@ impl Vm {
             }
             Instruction::ResourceProperty(property) => self.resource_property(property)?,
             Instruction::ResolveEvaluatorSettingsPath => self.resolve_evaluator_settings_path()?,
+            Instruction::PlatformCurrent => self.platform_current()?,
+            Instruction::ReleaseCurrent => self.release_current()?,
+            Instruction::BenchmarkRun => self.benchmark_run()?,
             Instruction::AnalyzeImportGraph => self.begin_analysis()?,
             Instruction::OutputRenderer => self.output_renderer()?,
             Instruction::RenderPcf { document } => {
@@ -5475,348 +5884,23 @@ impl Vm {
                     )?;
                 }
             }
-            Instruction::GetMember(ref name)
-            | Instruction::GetMethod(ref name)
-            | Instruction::GetConstMember(ref name)
-            | Instruction::GetConstMethod(ref name) => {
-                let method = matches!(
-                    instruction,
-                    Instruction::GetMethod(_) | Instruction::GetConstMethod(_)
-                );
-                let needs_const = matches!(
-                    instruction,
-                    Instruction::GetConstMember(_) | Instruction::GetConstMethod(_)
-                );
-                let receiver = self.pop()?;
-                if method {
-                    self.retire_saturated_method_cache(&receiver, name)?;
-                }
-                if needs_const
-                    && method
-                    && name == "ifNonNull"
-                    && !matches!(receiver, Value::Object(_))
-                {
-                    return Err(Self::non_const_method_error(name));
-                }
-                if self.any_member(&receiver, name, method)
-                    || self.class_member(&receiver, name, method)?
-                    || self.primitive_member(&receiver, name, method)?
-                {
-                    return Ok(());
-                }
-                if method && name == "encodeToBytes" && matches!(receiver, Value::String(_)) {
-                    self.string_encode_method(receiver);
-                    return Ok(());
-                }
-                if method
-                    && name == "join"
-                    && (self.is_list(&receiver)
-                        || self.is_set(&receiver)
-                        || matches!(&receiver, Value::Object(id) if self.heap.get(*id)?.collection_kind == crate::heap::CollectionKind::Listing))
-                {
-                    self.collection_join_method(receiver);
-                    return Ok(());
-                }
-                if method && self.collection_transform_method(receiver.clone(), name) {
-                    return Ok(());
-                }
-                if self.collection_projection_member(receiver.clone(), name, method)? {
-                    return Ok(());
-                }
-                if method && name == "repeat" && matches!(receiver, Value::String(_)) {
-                    self.string_repeat_method(receiver);
-                } else if method
-                    && name == "getClass"
-                    && (!matches!(receiver, Value::Object(id) if self.heap.object_class(id)?.is_some()))
-                {
-                    let function = self.native_reference_method(receiver, "getClass");
-                    self.stack.push(function);
-                } else if matches!(receiver, Value::Function(_)) && method && name == "apply" {
-                    self.stack.push(receiver);
-                } else if method
-                    && name == "toString"
-                    && (receiver.as_object().is_err()
-                        || self.is_map(&receiver)
-                        || self.is_set(&receiver)
-                        || self.is_list(&receiver))
-                {
-                    let function = self.native_reference_method(receiver, "scalarToString");
-                    self.stack.push(function);
-                } else if matches!(receiver, Value::Function(_)) {
-                    return Err(self.function_member_error(&receiver, name, method)?);
-                } else if matches!(receiver, Value::DataSize(_)) {
-                    return Err(self.data_size_member_error(name, method));
-                } else if matches!(receiver, Value::Duration(_)) {
-                    return Err(self.duration_member_error(name, method));
-                } else if matches!(receiver, Value::IntSeq(_)) {
-                    return Err(self.int_seq_member_error(name, method));
-                } else if matches!(receiver, Value::Bytes(_)) {
-                    return Err(self.bytes_member_error(name, method));
-                } else if let Some(error) = self.scalar_member_error(&receiver, name, method) {
-                    return Err(error);
-                } else {
-                    let receiver = receiver.as_object()?;
-                    if method
-                        && self.heap.get(receiver)?.collection_kind
-                            == crate::heap::CollectionKind::Set
-                        && name == "contains"
-                    {
-                        let function = self.native_reference_method(
-                            Value::Object(receiver),
-                            name.as_str().expect("recognized builtin method"),
-                        );
-                        self.stack.push(function);
-                        return Ok(());
-                    }
-                    if method
-                        && self.heap.get(receiver)?.collection_kind
-                            == crate::heap::CollectionKind::Map
-                        && matches!(name.as_str(), Some("containsKey" | "getOrNull"))
-                    {
-                        let function = self.native_reference_method(
-                            Value::Object(receiver),
-                            name.as_str().expect("recognized builtin method"),
-                        );
-                        self.stack.push(function);
-                        return Ok(());
-                    }
-                    if self.reference_member(receiver, name, method)? {
-                        return Ok(());
-                    }
-                    if needs_const {
-                        self.require_const(receiver, name, false, method)?;
-                    }
-                    if !method && self.collection_builtin(receiver, name)? {
-                        // Builtin collection properties do not force values.
-                    } else {
-                        self.force(receiver, receiver, name.clone(), false, true, method)?;
-                    }
-                }
+            Instruction::GetMember(_)
+            | Instruction::GetMethod(_)
+            | Instruction::GetConstMember(_)
+            | Instruction::GetConstMethod(_)
+            | Instruction::GetAmbiguousProperty { .. }
+            | Instruction::GetProperty { .. }
+            | Instruction::GetMethodProperty { .. }
+            | Instruction::GetImplicitProperty(_)
+            | Instruction::GetImplicitMethod(_)
+            | Instruction::InferPropertyParent
+            | Instruction::GetSuperMember(_)
+            | Instruction::GetSuperMethod(_)
+            | Instruction::GetConstSuperMember(_)
+            | Instruction::GetConstSuperMethod(_) => {
+                unreachable!("member access instruction uses its bounded dispatcher")
             }
-            Instruction::GetAmbiguousProperty {
-                ref name,
-                owner_depth,
-                needs_const,
-            } => {
-                self.read_ambiguous_property(name.clone(), owner_depth, needs_const)?;
-            }
-            Instruction::GetProperty {
-                ref name,
-                owner_depth,
-                local,
-            }
-            | Instruction::GetMethodProperty {
-                ref name,
-                owner_depth,
-                local,
-            } => {
-                let method = matches!(instruction, Instruction::GetMethodProperty { .. });
-                let scope = self.scope(owner_depth)?;
-                if method {
-                    self.retire_saturated_method_cache(&Value::Object(scope.receiver), name)?;
-                }
-                let frame = self.frames.last().expect("active frame");
-                let resolved = if local && !method {
-                    frame
-                        .environment
-                        .executable_owner
-                        .or_else(|| self.executable_roots.get(&frame.block).copied())
-                        .map(|owner| self.heap.resolved_local(owner, (frame.block, frame.pc - 1)))
-                        .transpose()?
-                        .flatten()
-                } else {
-                    None
-                };
-                self.force_key_mode_prepared(
-                    scope.receiver,
-                    if local { scope.owner } else { scope.receiver },
-                    name.clone(),
-                    local,
-                    true,
-                    method,
-                    false,
-                    false,
-                    false,
-                    resolved,
-                )?;
-            }
-            Instruction::GetImplicitProperty(ref name)
-            | Instruction::GetImplicitMethod(ref name) => {
-                let method = matches!(instruction, Instruction::GetImplicitMethod(_));
-                let receiver = self.this_receiver()?;
-                if method {
-                    self.retire_saturated_method_cache(&receiver, name)?;
-                }
-                if self.any_member(&receiver, name, method)
-                    || self.class_member(&receiver, name, method)?
-                    || self.primitive_member(&receiver, name, method)?
-                {
-                    return Ok(());
-                }
-                if matches!(receiver, Value::DataSize(_)) {
-                    return Err(self.data_size_member_error(name, method));
-                }
-                if matches!(receiver, Value::Duration(_)) {
-                    return Err(self.duration_member_error(name, method));
-                }
-                if matches!(receiver, Value::IntSeq(_)) {
-                    return Err(self.int_seq_member_error(name, method));
-                }
-                if matches!(receiver, Value::Bytes(_)) {
-                    return Err(self.bytes_member_error(name, method));
-                }
-                if let Some(error) = self.scalar_member_error(&receiver, name, method) {
-                    return Err(error);
-                }
-                let receiver = receiver.as_object()?;
-                if method || !self.collection_builtin(receiver, name)? {
-                    self.force(receiver, receiver, name.clone(), false, true, method)?;
-                }
-            }
-            Instruction::InferPropertyParent => {
-                let scope = self.scope(0)?;
-                let name = self
-                    .frames
-                    .last()
-                    .and_then(|frame| frame.force.as_ref())
-                    .ok_or_else(|| invalid("property parent outside member"))?
-                    .name
-                    .clone();
-                if !self.heap.get(scope.owner)?.is_module
-                    && collections::typed_class(&self.heap, scope.owner)?.is_none()
-                {
-                    let kind = self.heap.get(scope.owner)?.collection_kind;
-                    if name == "default"
-                        && matches!(
-                            kind,
-                            crate::heap::CollectionKind::Listing
-                                | crate::heap::CollectionKind::Mapping
-                        )
-                    {
-                        let class = self.canonical_builtin_class(
-                            if kind == crate::heap::CollectionKind::Listing {
-                                classes::BuiltinClass::Listing
-                            } else {
-                                classes::BuiltinClass::Mapping
-                            },
-                        );
-                        let prototype = self.heap.get_class(class)?.prototype;
-                        self.force(prototype, prototype, name, false, true, false)?;
-                    } else {
-                        let empty = self.empty_object(crate::heap::CollectionKind::Dynamic);
-                        self.stack.push(Value::Object(empty));
-                    }
-                    return Ok(());
-                }
-                let mut prototype = Some(scope.owner);
-                while let Some(owner) = prototype {
-                    let object = self.heap.get(owner)?;
-                    if object.class_definition.is_some() {
-                        break;
-                    }
-                    prototype = object.parent;
-                }
-                if let Some(prototype) = prototype
-                    && prototype != scope.owner
-                {
-                    let depth = self.frames.len();
-                    self.force(prototype, prototype, name, false, true, false)?;
-                    if self.frames.len() > depth {
-                        self.frames
-                            .last_mut()
-                            .expect("prototype read")
-                            .force
-                            .as_mut()
-                            .expect("property force")
-                            .skip_typecheck = true;
-                    }
-                } else if prototype.is_some() {
-                    // A prototype uses the aggregated declaration type, not a
-                    // superclass initializer. Ordinary instances above read
-                    // their prototype's value instead.
-                    let mut owner = prototype;
-                    let mut annotation = None;
-                    while let Some(id) = owner {
-                        let object = self.heap.get(id)?;
-                        if let Some(member) = object.members.iter().find(|member| {
-                            !member.entry
-                                && !member.local
-                                && !member.method
-                                && member.name == name
-                                && member.ty.is_some()
-                        }) {
-                            let origin =
-                                self.program.metadata.get(member.code).and_then(|metadata| {
-                                    member.type_span.map(|span| RuntimeFrame {
-                                        anonymous: false,
-                                        source: metadata.source.clone(),
-                                        span,
-                                        member: metadata.member.concat(&".default".into()),
-                                    })
-                                });
-                            annotation = Some((member.ty.clone().expect("property type"), origin));
-                            break;
-                        }
-                        owner = object.parent;
-                    }
-                    if let Some((ty, origin)) = annotation
-                        && !matches!(ty.resolved(), TypeCheck::Unknown)
-                    {
-                        let frame = self.frames.last_mut().expect("property default frame");
-                        let ty = ty.substituted(&frame.environment)?;
-                        frame.generic_default = Some(generics::GenericDefaultRun::inferred_parent(
-                            ty, origin, None,
-                        ));
-                    } else {
-                        let empty = self.empty_object(crate::heap::CollectionKind::Dynamic);
-                        self.stack.push(Value::Object(empty));
-                    }
-                } else {
-                    let empty = self.empty_object(crate::heap::CollectionKind::Dynamic);
-                    self.stack.push(Value::Object(empty));
-                }
-            }
-            Instruction::GetSuperMember(ref name)
-            | Instruction::GetSuperMethod(ref name)
-            | Instruction::GetConstSuperMember(ref name)
-            | Instruction::GetConstSuperMethod(ref name) => {
-                let method = matches!(
-                    instruction,
-                    Instruction::GetSuperMethod(_) | Instruction::GetConstSuperMethod(_)
-                );
-                let scope = self.scope(0)?;
-                let parent = self.heap.get(scope.owner)?.parent;
-                if !method {
-                    let mut owner = parent;
-                    let mut found = false;
-                    while let Some(id) = owner {
-                        let object = self.heap.get(id)?;
-                        if object.members.iter().any(|member| {
-                            !member.entry && !member.local && !member.method && member.name == *name
-                        }) {
-                            found = true;
-                            break;
-                        }
-                        owner = object.parent;
-                    }
-                    if !found {
-                        self.stack
-                            .push(Value::Object(self.heap.allocate(Object::default())));
-                        return Ok(());
-                    }
-                }
-                let parent = parent.ok_or_else(|| {
-                    RuntimeError::new(ErrorKind::MissingMember, "super has no parent")
-                })?;
-                if matches!(
-                    instruction,
-                    Instruction::GetConstSuperMember(_) | Instruction::GetConstSuperMethod(_)
-                ) {
-                    self.require_const(parent, name, false, method)?;
-                }
-                // Java ReadSuperPropertyNode deliberately does not memoize super calls.
-                self.force(scope.receiver, parent, name.clone(), false, false, method)?;
-            }
+
             Instruction::Fail(error) => return Err(error),
 
             Instruction::Undefined(name) => {
@@ -6666,7 +6750,7 @@ impl Vm {
                 self.begin_read_resolution(request)?;
             }
             Instruction::Return => {
-                return self.finish_return();
+                unreachable!("Return instruction uses its bounded dispatcher")
             }
         }
         Ok(())
@@ -7873,13 +7957,18 @@ impl Compiler<'_> {
                     .iter()
                     .any(|modifier| modifier.kind == crate::syntax::ModifierKind::External)
             {
-                // External current values come from actual runtime/release data,
-                // never the property's ordinary class default or Rust guesses.
-                instructions.push_at(Instruction::Fail(RuntimeError::new(ErrorKind::Unsupported,
-                    "This standard-library current value requires explicit platform/release Host data.")), member.name_span);
+                if self.source.as_ref().unwrap().uri == "pkl:platform" {
+                    instructions.push_at(Instruction::PlatformCurrent, member.name_span);
+                } else {
+                    instructions.push_at(Instruction::ReleaseCurrent, member.name_span);
+                }
             } else {
                 self.default_property(member, &mut instructions)?;
             }
+        } else if matches!(member.expr.kind, crate::syntax::ExprKind::TypeAlias { .. }) {
+            self.type_alias_expression(&member.expr, &mut instructions)?;
+        } else if matches!(member.expr.kind, crate::syntax::ExprKind::Class { .. }) {
+            self.class_declaration_expression(&member.expr, &mut instructions)?;
         } else {
             self.expression_with_property_parent(&member.expr, &mut instructions, Some(member))?;
         }
@@ -8120,6 +8209,158 @@ impl Compiler<'_> {
         Ok(())
     }
 
+    // Class member compilation can reenter the expression compiler.
+    // Keep this path out of inner_expression's large general-dispatch frame.
+    fn class_declaration_expression(
+        &mut self,
+        expression: &crate::syntax::Expr,
+        output: &mut Code,
+    ) -> Result<(), RuntimeError> {
+        let crate::syntax::ExprKind::Class {
+            type_parameters,
+            superclass,
+            members,
+            ..
+        } = &expression.kind
+        else {
+            return Err(invalid("class expression"));
+        };
+        if !type_parameters.is_empty() {
+            return Err(unsupported_type("generic classes"));
+        }
+        let class = Class {
+            module: self
+                .source
+                .as_ref()
+                .map(|source| source.module_name.clone()),
+            origin_uri: self
+                .identity
+                .as_ref()
+                .map(|identity| identity.original_uri.clone())
+                .or_else(|| self.source.as_ref().map(|source| source.uri.clone())),
+            id: self.declaration_base + expression.span.start,
+            // PClassInfo receives the raw declaration name; quoted
+            // SymbolTable scope labels belong only to diagnostics.
+            name: self
+                .type_scopes
+                .iter()
+                .rev()
+                .flatten()
+                .find(|member| member.expr.span == expression.span)
+                .map(|member| member.name.clone())
+                .ok_or_else(|| invalid("missing class declaration name"))?,
+            open: crate::syntax::modifier_flags(&self.modifiers)
+                & crate::syntax::ModifierKind::Open.flag()
+                != 0,
+            abstract_: crate::syntax::modifier_flags(&self.modifiers)
+                & crate::syntax::ModifierKind::Abstract.flag()
+                != 0,
+        };
+        // Class definitions are forced lazily, including their member type resolution.
+        let arena = modules::ArenaCheckpoint::new(self.program);
+        let checkpoint = (
+            self.type_scopes.len(),
+            self.member.clone(),
+            self.modifiers.clone(),
+        );
+        let template = match self.object_template(members, true, false) {
+            Ok(template) => template,
+            Err(error) => {
+                arena.rollback(self.program);
+                self.type_scopes.truncate(checkpoint.0);
+                self.member = checkpoint.1;
+                self.modifiers = checkpoint.2;
+                let span = error.span.unwrap_or(expression.span);
+                output.push_at(Instruction::Fail(error.at(span)), span);
+                return Ok(());
+            }
+        };
+        let begin = output.len();
+        output.push_at(
+            Instruction::BeginClass {
+                template,
+                class,
+                end: 0,
+            },
+            expression.span,
+        );
+        if let Some(parent) = superclass {
+            if let Err(error) =
+                self.class_expression(parent, output, self.type_scopes.len(), &mut BTreeSet::new())
+            {
+                output.push_at(Instruction::Fail(error.at(parent.span)), parent.span);
+            } else {
+                output.push_at(Instruction::SetClassParent, parent.span);
+            }
+        } else {
+            output.push(Instruction::SetDefaultClassParent);
+        }
+        self.declaration_annotations(expression, output)?;
+        self.type_scopes.push(members.to_vec());
+        // ClassNode initializes properties in declaration order, then methods.
+        let compiled = self.program.objects[template].clone();
+        for method in [false, true] {
+            for (index, (member, compiled)) in members.iter().zip(&compiled).enumerate() {
+                if compiled.method != method {
+                    continue;
+                }
+                let annotated = !member.annotations.is_empty();
+                if annotated {
+                    self.member_annotations(member, output, true)?;
+                }
+                if let Some(error) = self.program.metadata[compiled.code]
+                    .initialization_error
+                    .clone()
+                {
+                    // Expansion failures still resolve declaration identities at
+                    // runtime, including a previously published partial alias.
+                    if let Some(ty) = &member.ty {
+                        self.initialize_type_resolution(ty, output);
+                    }
+                    if let crate::syntax::ExprKind::Function {
+                        parameters,
+                        return_type,
+                        ..
+                    } = &member.expr.kind
+                    {
+                        for ty in parameters
+                            .iter()
+                            .filter_map(|p| p.ty.as_ref())
+                            .chain(return_type.iter())
+                        {
+                            self.initialize_type_resolution(ty, output);
+                        }
+                    }
+                    output.push_at(
+                        Instruction::Fail(error.clone()),
+                        error.span.unwrap_or(member.span),
+                    );
+                    continue;
+                }
+                self.initialize_member_types(std::slice::from_ref(member), true, output)?;
+                if annotated && method {
+                    output.push(Instruction::InitializeDeprecation);
+                    output.push(Instruction::StoreDeprecation);
+                }
+                output.push_at(
+                    if annotated {
+                        Instruction::PublishAnnotatedClassMember { template, index }
+                    } else {
+                        Instruction::PublishClassMember { template, index }
+                    },
+                    member.name_span,
+                );
+            }
+        }
+        self.type_scopes.pop();
+        output.push(Instruction::FinishClass);
+        let end = output.len();
+        if let Instruction::BeginClass { end: target, .. } = &mut output[begin] {
+            *target = end;
+        }
+        Ok(())
+    }
+
     fn inner_expression(
         &mut self,
         expression: &crate::syntax::Expr,
@@ -8158,149 +8399,7 @@ impl Compiler<'_> {
                     output.push_at(Instruction::ImportModule(spec), expression.span);
                 }
             }
-            ExprKind::Class {
-                type_parameters,
-                superclass,
-                members,
-                ..
-            } => {
-                if !type_parameters.is_empty() {
-                    return Err(unsupported_type("generic classes"));
-                }
-                let class = Class {
-                    module: self
-                        .source
-                        .as_ref()
-                        .map(|source| source.module_name.clone()),
-                    origin_uri: self
-                        .identity
-                        .as_ref()
-                        .map(|identity| identity.original_uri.clone())
-                        .or_else(|| self.source.as_ref().map(|source| source.uri.clone())),
-                    id: self.declaration_base + expression.span.start,
-                    // PClassInfo receives the raw declaration name; quoted
-                    // SymbolTable scope labels belong only to diagnostics.
-                    name: self
-                        .type_scopes
-                        .iter()
-                        .rev()
-                        .flatten()
-                        .find(|member| member.expr.span == expression.span)
-                        .map(|member| member.name.clone())
-                        .ok_or_else(|| invalid("missing class declaration name"))?,
-                    open: crate::syntax::modifier_flags(&self.modifiers)
-                        & crate::syntax::ModifierKind::Open.flag()
-                        != 0,
-                    abstract_: crate::syntax::modifier_flags(&self.modifiers)
-                        & crate::syntax::ModifierKind::Abstract.flag()
-                        != 0,
-                };
-                // Class definitions are forced lazily, including their member type resolution.
-                let arena = modules::ArenaCheckpoint::new(self.program);
-                let checkpoint = (
-                    self.type_scopes.len(),
-                    self.member.clone(),
-                    self.modifiers.clone(),
-                );
-                let template = match self.object_template(members, true, false) {
-                    Ok(template) => template,
-                    Err(error) => {
-                        arena.rollback(self.program);
-                        self.type_scopes.truncate(checkpoint.0);
-                        self.member = checkpoint.1;
-                        self.modifiers = checkpoint.2;
-                        let span = error.span.unwrap_or(expression.span);
-                        output.push_at(Instruction::Fail(error.at(span)), span);
-                        return Ok(());
-                    }
-                };
-                let begin = output.len();
-                output.push_at(
-                    Instruction::BeginClass {
-                        template,
-                        class,
-                        end: 0,
-                    },
-                    expression.span,
-                );
-                if let Some(parent) = superclass {
-                    if let Err(error) = self.class_expression(
-                        parent,
-                        output,
-                        self.type_scopes.len(),
-                        &mut BTreeSet::new(),
-                    ) {
-                        output.push_at(Instruction::Fail(error.at(parent.span)), parent.span);
-                    } else {
-                        output.push_at(Instruction::SetClassParent, parent.span);
-                    }
-                } else {
-                    output.push(Instruction::SetDefaultClassParent);
-                }
-                self.declaration_annotations(expression, output)?;
-                self.type_scopes.push(members.to_vec());
-                // ClassNode initializes properties in declaration order, then methods.
-                let compiled = self.program.objects[template].clone();
-                for method in [false, true] {
-                    for (index, (member, compiled)) in members.iter().zip(&compiled).enumerate() {
-                        if compiled.method != method {
-                            continue;
-                        }
-                        let annotated = !member.annotations.is_empty();
-                        if annotated {
-                            self.member_annotations(member, output, true)?;
-                        }
-                        if let Some(error) = self.program.metadata[compiled.code]
-                            .initialization_error
-                            .clone()
-                        {
-                            // Expansion failures still resolve declaration identities at
-                            // runtime, including a previously published partial alias.
-                            if let Some(ty) = &member.ty {
-                                self.initialize_type_resolution(ty, output);
-                            }
-                            if let ExprKind::Function {
-                                parameters,
-                                return_type,
-                                ..
-                            } = &member.expr.kind
-                            {
-                                for ty in parameters
-                                    .iter()
-                                    .filter_map(|p| p.ty.as_ref())
-                                    .chain(return_type.iter())
-                                {
-                                    self.initialize_type_resolution(ty, output);
-                                }
-                            }
-                            output.push_at(
-                                Instruction::Fail(error.clone()),
-                                error.span.unwrap_or(member.span),
-                            );
-                            continue;
-                        }
-                        self.initialize_member_types(std::slice::from_ref(member), true, output)?;
-                        if annotated && method {
-                            output.push(Instruction::InitializeDeprecation);
-                            output.push(Instruction::StoreDeprecation);
-                        }
-                        output.push_at(
-                            if annotated {
-                                Instruction::PublishAnnotatedClassMember { template, index }
-                            } else {
-                                Instruction::PublishClassMember { template, index }
-                            },
-                            member.name_span,
-                        );
-                    }
-                }
-                self.type_scopes.pop();
-                output.push(Instruction::FinishClass);
-                let end = output.len();
-                if let Instruction::BeginClass { end: target, .. } = &mut output[begin] {
-                    *target = end;
-                }
-            }
+            ExprKind::Class { .. } => self.class_declaration_expression(expression, output)?,
             ExprKind::TypeAlias { .. } => self.type_alias_expression(expression, output)?,
             ExprKind::EntryParent => {
                 output.push(Instruction::EntryParent {
@@ -8376,6 +8475,14 @@ impl Compiler<'_> {
                     output.push(Instruction::YamlParse {
                         all: self.member == "#Parser.parseAll",
                     });
+                } else if self.resolved.standard_library
+                    && self
+                        .source
+                        .as_ref()
+                        .is_some_and(|source| source.uri == "pkl:Benchmark")
+                    && self.member.ends_with(".run")
+                {
+                    output.push(Instruction::BenchmarkRun);
                 } else if self
                     .source
                     .as_ref()

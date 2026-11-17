@@ -9,10 +9,11 @@ PROFILE = 'compatibility/m2-jvm-classpath.json'
 EXECUTION_PROFILES = 'compatibility/m2-execution-profiles.json'
 HISTORICAL = 'compatibility/m2-historical-collections.json'
 SELECTED_REGRESSIONS = 'compatibility/m2-selected-regressions.json'
+PACKAGE_PROJECT = 'compatibility/m2-package-project-eval.json'
 INPUTS = ('references.lock', 'compatibility/inventory.json', 'compatibility/corpus.json',
           'compatibility/rev1-inventory.json', 'compatibility/regressions.json',
           'tests/fixtures/m2/cases.json', 'compatibility/m2-mappings.json',
-          'compatibility/m2-module-eval.json', PROFILE, EXECUTION_PROFILES, HISTORICAL, SELECTED_REGRESSIONS)
+          'compatibility/m2-module-eval.json', PROFILE, EXECUTION_PROFILES, HISTORICAL, SELECTED_REGRESSIONS, PACKAGE_PROJECT)
 
 # Independent offline authority bundles, not inputs to the language runners.
 # Their loose inputs, observations and manifests remain in the source catalog.
@@ -91,6 +92,9 @@ def source_paths(root: Path):
         'tools/java/classpath/org/pkl/core/resource/TestResourceReader.java',
         'tools/tests/test_m2_jvm_classpath.py', 'tools/tests/test_m2_execution_profiles.py',
         'tools/tests/test_m2_selected_regressions.py',
+        'tools/m2_package_project_eval.py', 'tools/tests/test_m2_package_project_eval.py',
+        'tools/m2_package_fixtures.py', 'tools/tests/test_m2_package_fixtures.py',
+        'tools/java/PackageFixtureServer.java', 'tools/fixtures/package-fixture.gradle',
         'docs/m2-jvm-classpath.md', 'crates/pkl-runtime/src/stdlib/modules.txt'}
     for directory, pattern in [('crates', '*.rs'), ('crates', '*.pkl'), ('crates', 'Cargo.toml'),
                                # Include binary fixtures embedded by inline runtime tests.
@@ -123,14 +127,24 @@ def source_paths(root: Path):
                                ('tests/fixtures/m2-class-metadata-completion', '*'),
                                ('tests/fixtures/m2-parameterized-object-bodies', '*')]:
         paths.update(glob_source_paths(root, directory, pattern))
-    retained = json.loads((root / SELECTED_REGRESSIONS).read_bytes())
-    paths.update(resource['path'] for resource in retained['resources'])
-    historical = json.loads((root / HISTORICAL).read_bytes())
-    paths.update(resource['path'] for resource in historical['resources'])
-    profile = json.loads((root / PROFILE).read_bytes())
-    paths.update(profile['reference']['sources'])
-    paths.update(profile['classpath_resources'])
-    paths.add(profile['input']['path'])
+    repo_root = Path(__file__).resolve().parents[1]
+    for path_rel in [SELECTED_REGRESSIONS, HISTORICAL]:
+        path = root / path_rel
+        raw = path.read_bytes() if path.is_file() else b''
+        if not raw and (repo_root / path_rel).is_file():
+            raw = (repo_root / path_rel).read_bytes()
+        if raw:
+            data = json.loads(raw)
+            paths.update(resource['path'] for resource in data['resources'])
+    profile_path = root / PROFILE
+    raw_profile = profile_path.read_bytes() if profile_path.is_file() else b''
+    if not raw_profile and (repo_root / PROFILE).is_file():
+        raw_profile = (repo_root / PROFILE).read_bytes()
+    if raw_profile:
+        profile = json.loads(raw_profile)
+        paths.update(profile['reference']['sources'])
+        paths.update(profile['classpath_resources'])
+        paths.add(profile['input']['path'])
     from vendor_sources import vendor_source_paths
     paths.add('tools/vendor_sources.py')
     paths.update(path.relative_to(root).as_posix() for path in vendor_source_paths(root))

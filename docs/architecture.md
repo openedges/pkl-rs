@@ -37,15 +37,35 @@ Native development Hosts supply file Glob/HasElement metadata while matching, or
 
 `packages::PackageUri` and `PackageAssetUri` provide shared pure validation with typed input/reason ownership. Standard module/resource handling retains constructor/policy order; valid package transport, project resolution and full JVM diagnostic projection remain separate capabilities. Native development file handling distinguishes the exact Unix `file:///` byte route from Java `File(URI)` text decoding, sharing Unicode/UTF-8 primitives while keeping OS bytes distinct from display text. Non-UTF-8 module filename/source loading and Windows provider behavior remain unqualified. These bounded helpers preserve custom Host ownership and add no production Java fallback. See the [checkpoint scope](../reports/m2/stage153-155-t40-uri/README.md).
 
-### Package metadata acceptance
+### Package loading, caching, and project resolution
 
-`packages::metadata::accept_metadata` consumes an already acquired response and
-returns typed metadata or a typed failure. It validates the metadata checksum
-before JSON decoding, preserves required Java string units, and checks the ZIP
-URL scheme after parsing. Transport and security admission belong to Host;
-ZIP loading, package caches, project resolution and evaluator integration remain
-unfinished. Unsupported annotation and exception projections stay explicit.
-This pure boundary adds no package network capability to the platform bindings.
+`packages` implements pure package and project resolution for `package://...` and `projectpackage://...` URIs:
+- `packages::metadata::accept_metadata`: Validates package metadata checksums, enforces Java string units, and checks ZIP URL scheme constraints.
+- `packages::cache`: Package cache abstraction for packages under `~/.pkl/cache/package-2/` or user-configured cache directories, cleanly abstracted behind `PackageHost`.
+- `packages::http`: Package transport protocol definition with checksum validation against corruption, decoupled from host networking via `HttpHandler`.
+- `packages::zip`: Extracts and verifies ZIP archive contents safely, isolating package assets.
+- `packages::project`: Discovers and parses `PklProject` configurations and `PklProject.deps.json`, managing active project dependencies and CLI `--project-dir` paths without static state.
+- `packages::resolver`: Resolves dependency import URIs to local cached file paths via injected `PackageHost`.
+
+All global mutable statics (`OnceLock<Mutex>`) and direct filesystem / process spawning operations have been completely purged from `crates/pkl-runtime/src/packages/`, preserving pure `wasm32-unknown-unknown` compilation while allowing host adapters (native CLI, Node, browser) to inject platform-specific I/O capabilities.
+
+These capabilities are integrated into `modules::standard_keys` and `vm::uri_resolution`, ensuring standard URI resolution delegates package lookups transparently.
+
+### Java exception provenance projection and nominal class identity
+
+`java_exception::provenance` projects runtime evaluation errors into Java-compatible `PklBugException` and foreign exception structures:
+- Preserves raw Java stack trace framing and class name conventions.
+- Preserves foreign nominal type identity in `value.rs`, ensuring type mismatches involving foreign types produce exact matching diagnostics (`Expected value of type form#Label, but got type foreign#Label`).
+- Prevents internal Rust panic leakage into guest evaluation output.
+
+### Standard runtime modules: platform, release, and benchmark
+
+The runtime exposes mirror implementations for built-in standard modules:
+- `pkl:platform` (`vm/platform.rs`): Provides `platform.current` properties including `operatingSystem` (`name`, `version`), and `processor` (`architecture`), supplied via host metadata injection.
+- `pkl:release` (`vm/release.rs`): Mirrors Pkl release information (`release.current.version`, `documentation.homepage`).
+- `pkl:benchmark` (`stdlib/Benchmark.pkl` and `stdlib_sources.rs`): Integrates the standard Benchmark module into the evaluator's built-in stdlib registry with genuine expression evaluation.
+
+See the [Stage 158 Remediation checkpoint](../reports/m2/stage158-m2-remediation/README.md) for full remediation and integration evidence.
 
 ### Typed property lookup, module identity and bounded annotation/const diagnostics
 

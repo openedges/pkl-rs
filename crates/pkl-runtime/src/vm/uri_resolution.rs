@@ -378,18 +378,43 @@ impl Vm {
                                 error.span = Some(current.spec.span);
                                 error
                             })?;
-                    if current.prepared_uri.is_none()
-                        && crate::host::resources::import_triple_path(&parsed_authored)?.is_none()
-                        && let Some(key) = self.program.units[current.spec.unit.0 as usize]
-                            .key
-                            .as_ref()
-                        && matches!(
+                    let is_dep_notation = parsed_authored.starts_with("@");
+                    let unit_key = self.program.units[current.spec.unit.0 as usize].key.clone();
+                    let key_to_resolve = if let Some(key) = unit_key {
+                        if matches!(
                             key.kind,
                             crate::modules::ModuleKeyKind::Host
                                 | crate::modules::ModuleKeyKind::StandardFile
                                 | crate::modules::ModuleKeyKind::StandardHttp
                                 | crate::modules::ModuleKeyKind::StandardGenericUrl
-                        )
+                        ) {
+                            Some(key)
+                        } else {
+                            None
+                        }
+                    } else if is_dep_notation {
+                        let uri = module
+                            .as_ref()
+                            .map(|m| m.original_uri.clone())
+                            .unwrap_or_default();
+                        let kind =
+                            if uri.starts_with("package:") || uri.starts_with("projectpackage:") {
+                                crate::modules::ModuleKeyKind::StandardGenericUrl
+                            } else {
+                                crate::modules::ModuleKeyKind::StandardFile
+                            };
+                        Some(crate::modules::ModuleKey {
+                            id: crate::modules::ModuleKeyId(0),
+                            uri,
+                            kind,
+                            handle: PklString::default(),
+                        })
+                    } else {
+                        None
+                    };
+                    if current.prepared_uri.is_none()
+                        && crate::host::resources::import_triple_path(&parsed_authored)?.is_none()
+                        && let Some(key) = key_to_resolve
                     {
                         let key = key.clone();
                         let authored_uri = parsed_authored.clone();

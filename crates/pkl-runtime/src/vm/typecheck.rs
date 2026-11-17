@@ -302,6 +302,7 @@ enum Task {
     RestoreTypeNode(Option<TypeNodeId>),
     AfterBase {
         constraints: Vec<ConstraintCode>,
+        parent_eager: bool,
     },
     Constraints {
         constraints: Vec<ConstraintCode>,
@@ -1316,7 +1317,11 @@ impl Vm {
                     base_span,
                     constraints,
                 } => {
-                    run.tasks.push(Task::AfterBase { constraints });
+                    let parent_eager = std::mem::replace(&mut run.eager, false);
+                    run.tasks.push(Task::AfterBase {
+                        constraints,
+                        parent_eager,
+                    });
                     self.push_type_child(&mut run, *base, base_span, 0)?;
                 }
                 TypeCheck::NonNull => {
@@ -1529,7 +1534,11 @@ impl Vm {
             }
             Task::RestoreEnvironment(environment) => run.environment = environment,
             Task::RestoreTypeNode(node) => run.node = node,
-            Task::AfterBase { constraints } => {
+            Task::AfterBase {
+                constraints,
+                parent_eager,
+            } => {
+                run.eager = parent_eager;
                 if let Some(Ok(value)) = &run.outcome {
                     run.checked = value.clone();
                     let slot = run
@@ -1971,5 +1980,50 @@ mod source_identity_tests {
         assert_eq!(actual, separate);
         assert!(mismatch.is_trivial(Some(&actual), Span::new(0, 3)));
         assert!(!mismatch.is_trivial(Some(&separate), Span::new(0, 3)));
+    }
+
+    #[test]
+    fn constrained_base_clears_eager_flag_so_nested_constraint_frame_survives() {
+        let source = concat!(
+            "class Box {\n",
+            "  items: Listing<Int>(!toList().isEmpty)\n",
+            "  value: Int(items.length > 0)\n",
+            "}\n",
+            "local function makeBox(xs: Listing<Int(this > 0)>): Box = new Box {\n",
+            "  items = xs\n",
+            "  value = 1\n",
+            "}\n",
+            "res = makeBox(new Listing { -1 }).value\n",
+        );
+        let parsed = crate::parser::parse_module(source).unwrap();
+        let program = compile_module(&crate::resolver::resolve_module(&parsed).unwrap()).unwrap();
+        let mut vm = Vm::new(program.clone());
+        vm.start(program.entry, vec![]).unwrap();
+        let module = loop {
+            match vm.poll(100) {
+                VmPoll::Ready(result) => break result.unwrap().as_object().unwrap(),
+                VmPoll::Yielded => {}
+                other => panic!("unexpected poll initializing module: {other:?}"),
+            }
+        };
+        vm.start_member(module, "res").unwrap();
+        let err = loop {
+            match vm.poll(100) {
+                VmPoll::Ready(Err(err)) => break err,
+                VmPoll::Ready(Ok(val)) => panic!("expected constraint failure, got {val:?}"),
+                VmPoll::Yielded => {}
+                other => panic!("unexpected poll evaluating member: {other:?}"),
+            }
+        };
+        assert_eq!(err.kind, ErrorKind::Type);
+        let frames: Vec<_> = err
+            .frames
+            .iter()
+            .map(|frame| source.get(frame.span.start..frame.span.end))
+            .collect();
+        assert!(
+            frames.contains(&Some("toList()")),
+            "expected toList() constraint frame in error stack, got {frames:?}"
+        );
     }
 }

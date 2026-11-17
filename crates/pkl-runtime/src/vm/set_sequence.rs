@@ -1,6 +1,6 @@
 //! Set sequence operations preserve separate membership and visible-order paths.
 use super::*;
-use crate::heap::CollectionKind;
+use crate::heap::{CollectionKind, CollectionMember, CollectionMemberKind};
 #[derive(Clone, Copy, Debug)]
 pub enum Kind {
     FilterNonNull,
@@ -247,6 +247,7 @@ pub(super) struct Run {
     current: Value,
     stage: Stage,
     step: usize,
+    #[allow(dead_code)]
     cycle: i32,
     repeats: i64,
     group_key: Value,
@@ -409,14 +410,6 @@ impl Vm {
                     selection = input.clone();
                     stage = Stage::Emit;
                 } else if matches!(kind, Repeat) {
-                    if collection_kind == CollectionKind::List && (n == 0 || n == 1) {
-                        let value = if n == 0 {
-                            Value::Object(self.empty_strict_collection(CollectionKind::List))
-                        } else {
-                            receiver
-                        };
-                        return self.set_sequence_return(step, value);
-                    }
                     if n < 0 {
                         return Err(RuntimeError::new(
                             ErrorKind::Arithmetic,
@@ -425,6 +418,14 @@ impl Vm {
                                 strings::diagnostic_integer(n)
                             ),
                         ));
+                    }
+                    if n == 0 || input.is_empty() {
+                        let value =
+                            Value::Object(self.empty_strict_collection(CollectionKind::List));
+                        return self.set_sequence_return(step, value);
+                    }
+                    if n == 1 && collection_kind == CollectionKind::List {
+                        return self.set_sequence_return(step, receiver);
                     }
                     repeats = n;
                 } else {
@@ -771,18 +772,62 @@ impl Vm {
             }
             run.cursor += 1;
         } else if matches!(run.kind, Repeat) {
-            if i64::from(run.cycle) >= run.repeats {
+            let builder = run.builders[0];
+            if run.values.is_empty() || run.repeats <= 0 {
+                let object = self.heap.get_mut(builder)?;
+                object.length = 0;
+                object.repeat_base_len = Some(run.values.len());
                 let value = self.finish_set_sequence(&run)?;
                 return self.set_sequence_return(run.step, value);
             }
-            if run.cursor == run.values.len() {
-                run.cursor = 0;
-                run.cycle = run.cycle.wrapping_add(1);
+            let total = (run.values.len() as u64).saturating_mul(run.repeats as u64);
+            let total_count = total as usize;
+            let count_to_populate = if run.repeats == 0 {
+                0
+            } else if total_count <= 65_536 {
+                total_count
             } else {
-                let value = run.values[run.cursor].clone();
-                run.cursor += 1;
-                return self.set_sequence_insert(run, value, 0, false);
+                run.values.len()
+            };
+            let object = self.heap.get_mut(builder)?;
+            object.length = total_count;
+            object.repeat_base_len = Some(run.values.len());
+            object.collection_members.reserve(count_to_populate);
+            object.members.reserve(count_to_populate);
+            let m_len = run.values.len().max(1);
+            for i in 0..count_to_populate {
+                let val = run.values[i % m_len].clone();
+                let name = PklString::from(format!("\0{}:{}", builder.index, i));
+                let descriptor = CollectionMember {
+                    key: Value::Int((i as i64).into()),
+                    name: name.clone(),
+                    kind: CollectionMemberKind::Element,
+                };
+                let member = Member {
+                    flags: 0,
+                    entry: true,
+                    name: name.clone(),
+                    code: usize::MAX,
+                    local: false,
+                    method: false,
+                    ty: None,
+                    type_span: None,
+                    constant: false,
+                    fixed: false,
+                };
+                let cache_key = CacheKey {
+                    owner: None,
+                    name,
+                    method: false,
+                    entry: true,
+                };
+                object.collection_members.push(descriptor);
+                object.members.push(member);
+                object.member_values.insert(cache_key.clone(), val.clone());
+                object.cache.insert(cache_key, LazyState::Completed(val));
             }
+            let value = self.finish_set_sequence(&run)?;
+            return self.set_sequence_return(run.step, value);
         } else if run.cursor == run.values.len()
             || (matches!(run.kind, Zip) && run.cursor == run.other_values.len())
         {

@@ -1,0 +1,3 @@
+import "lib.pkl"
+class B extends lib.A {}
+x = new B {}.f()

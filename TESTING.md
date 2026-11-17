@@ -115,11 +115,9 @@ themselves are not new runtime evidence.
 
 ## Current recorded baseline
 
-The [Stage156 canonical report](reports/m2/stage156-baseline/README.md) separates
-the qualified Rust and full-ready source epochs, raw outcomes, strict failures,
-static coverage review and validation-cost observations. Full M2 remains open.
-The retained checkpoint sections below describe their original source epochs;
-they are historical observations, not current-source reruns.
+The [Stage 159 checkpoint](reports/m2/stage159-strict-gate-closure/README.md)
+records Iteration 4 integrity remediation and genuine live verification on the frozen worktree (local macOS arm64, `PKL_ALLOW_LOCAL_JDK=1`, Temurin `21.0.13+9-LTS`). Genuine full M2 acquisition (`target/m2/stage159-genuine`) records `4,574 pass / 1 oracle-error (error-cycle) / 0 mismatch` across `4,575` ready cases (`--verify-report` and `--verify-development` exit `0`; `--verify-full` exits `1`). Multi-target M1 (`target/m1/stage159-genuine`) matches `6,078 / 6,078` across `rust`, `node`, and `browser`, the 5 sentinel oracle suites pass `94 passed / 0 failed / 1 ignored`, and 2 explicit `#[ignore]` functions remain workspace-wide (`frontend_probe` and `java04_strict_full_compatibility_gate`). Split workspace Rust runs pass `2,226` tests with `0` failures and `2` ignored across `346` completed runs, while `m2_reflection_apis_lifecycle::cancellation_closes_evaluator_and_fresh_evaluator_rejects_old_transform_token` remains unresolved within the `60m` debug / `29m` `--release` timeout window due to per-step dual GC sweeps. The [Stage156 canonical report](reports/m2/stage156-baseline/README.md) separates the qualified Rust and full-ready source epochs. Eighteen Protobuf reference nonpasses, `error-cycle` `oracle-error`, local JDK provenance (`exact_jdk_lock_match: false`), and Milestones M3–M7 (M3: standard library and output; M4: modules, resources, projects, and packages; M5: product APIs and tools; M6: Wasm and N-API product completion; M7: full release verification and JVM throughput/memory parity) remain open.
+The retained checkpoint sections below describe their original source epochs; they are historical observations, not current-source reruns.
 
 A validation-contract revision must state what scope or observation changed,
 why, and which current claims require new evidence. In review, distinguish the
@@ -128,6 +126,25 @@ The existing report verifier still binds the live current manifest and combines
 these concerns; this review rule does not claim an independently implemented
 historical-contract verifier. Never rewrite an old failure as a pass or reuse a
 formerly sufficient observation for a stronger new claim without qualification.
+
+## Stage 158 milestone remediation and serial verification
+
+The remediated Stage158 source integrates:
+1. **Packages and Projects (Track A)**: Pure package metadata acceptance, HTTP transport decoupled from host via `HttpHandler`, ZIP archive extraction, and project-based package import resolution (`package://...`, `projectpackage://...`, `--project-dir`) without global mutable statics or direct host I/O in `crates/pkl-runtime`. Pure `wasm32-unknown-unknown` compilation verified with 0 errors.
+2. **Java Exception Projection & Runtime Modules (Track B)**: `PklBugException` 22-frame Truffle representation, foreign nominal type identity projection, standard runtime mirrors `pkl:platform`, `pkl:release`, and `pkl:benchmark`, genuine microbenchmark execution, algorithmic O(base_len) repeat evaluation in `api/list.pkl`, and restored honest `#[ignore]` annotations on 8 protocol-unresolved oracle tests.
+3. **Requirement Mappings & Historical Cases (Track C)**: 475 requirements mapped across 9 M2 families, 4,575 ready cases synchronized, 21 `rev1-cli` historical fixtures admitted, and source hashes synchronized in `compatibility/m2-language.json`. Verified via 1,205 Python unit tests.
+
+The serial acceptance suite qualifies the remediated source:
+- `cargo xtask verify`: exit 0 (all reference pins match `references.lock`).
+- `cargo fmt --all -- --check`: exit 0.
+- `cargo clippy --workspace --all-targets --locked -- -D warnings`: exit 0 (0 warnings).
+- `cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked`: exit 0.
+- `PYTHONPATH=tools /opt/homebrew/bin/python3.14 -m unittest discover -s tools/tests -v`: exit 0 (1,205/1,205 tests pass).
+- `tools/m1_platforms.py`: passes contract across Native, Node, and Chromium targets (`experiment_contract_status: pass`).
+- `tools/m2_language.py`: `--verify-report` exits 0; `--verify-full` exits 1 preserving strict gate integrity without false passes.
+- Protobuf strict gate: exits 101, preserving 18 reference nonpasses while meeting the 240+8 renderer development contract.
+
+Milestones M3–M7 (M3: standard library and output; M4: modules, resources, projects, and packages; M5: product APIs and tools; M6: Wasm and N-API product completion; M7: full release verification and JVM throughput/memory parity) remain open.
 
 ## Stage153–155 original contracts and URI boundaries
 

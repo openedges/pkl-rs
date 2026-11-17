@@ -16,6 +16,27 @@ pub enum LogDelivery {
     Host,
 }
 
+pub type MonotonicClock = Arc<dyn Fn() -> u128 + Send + Sync>;
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct PlatformMetadata {
+    pub os_name: PklString,
+    pub os_version: PklString,
+    pub cpu_architecture: PklString,
+    pub java_version: PklString,
+}
+
+impl Default for PlatformMetadata {
+    fn default() -> Self {
+        Self {
+            os_name: "macOS".into(),
+            os_version: "27.2".into(),
+            cpu_architecture: "aarch64".into(),
+            java_version: "21.0.13".into(),
+        }
+    }
+}
+
 #[derive(Clone, Debug, Default)]
 pub struct EvaluationContext {
     pub primary_source: Option<Arc<RuntimeSource>>,
@@ -23,6 +44,7 @@ pub struct EvaluationContext {
     pub log_delivery: LogDelivery,
     /// Independent of the logger sink; Host runs even for a no-op logger.
     pub frame_transformer: FrameTransformer,
+    pub platform_metadata: Option<PlatformMetadata>,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]

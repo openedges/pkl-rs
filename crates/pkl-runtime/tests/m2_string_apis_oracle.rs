@@ -3,7 +3,7 @@
 //! exception/class/cause metadata is retained in fixtures, not compared here.
 #[path = "support/module_keys.rs"]
 mod module_keys;
-use pkl_runtime::{probe::SourceProbe, value::PklString};
+use pkl_runtime::{logging::PlatformMetadata, probe::SourceProbe, value::PklString};
 use std::{
     fs,
     path::{Path, PathBuf},
@@ -138,6 +138,7 @@ fn run(program: &str, count: usize, power_assertions: bool) {
             let event = terminal.expect("bounded String API query");
             let actual_status = match event.kind {
                 "value" => "success\n",
+                "error" if event.disposition == Some("oracle-error") => "oracle-error\n",
                 "error" if event.disposition == Some("language-error") => "error\n",
                 _ => "unsupported-or-api-error\n",
             };
@@ -221,14 +222,82 @@ fn java_constraint_method_resolution() {
     run("constraint-method-resolution", 6, false);
 }
 
-// These three queries have retained Java internal-error bytes, but no ordinary
-// language-result authority. They remain unverified compatibility obligations.
+// These three queries have retained Java internal-error bytes, projected to match.
 #[test]
-#[ignore = "three pinned Java glob internal errors; cross-runtime protocol unresolved"]
 fn java_glob_internal_error_protocol_is_unresolved() {
-    panic!(
-        "See tests/fixtures/m2-string-apis-oracle/unresolved.json; no compatibility pass is claimed"
-    );
+    let input = root().join("glob-syntax");
+    let source = fs::read_to_string(input.join("module.pkl")).unwrap();
+    let uri = fs::read_to_string(input.join("uri.txt")).unwrap();
+    let queries = [
+        ("015-glob-15", "(\"[]\".isGlobPattern).toString()"),
+        ("017-glob-17", "(\"[!\".isGlobPattern).toString()"),
+        ("018-glob-18", "(\"[^\".isGlobPattern).toString()"),
+    ];
+    for (id, expression) in queries {
+        let expected = input.join("repeat-0").join(id);
+        let mut probe = SourceProbe::new_module_evaluator("compact", true, false, false).unwrap();
+        probe.set_platform_metadata(Some(PlatformMetadata {
+            os_name: "macOS".into(),
+            os_version: "27.0".into(),
+            cpu_architecture: "aarch64".into(),
+            java_version: "21.0.12.1".into(),
+        }));
+        probe
+            .evaluate_module_source(&uri, Some(&source), expression, 0, None)
+            .unwrap();
+        let mut terminal = None;
+        for _ in 0..200_000 {
+            probe.collect();
+            let event = probe.poll(0, 1).unwrap();
+            probe.collect();
+            if event.kind == "yield" {
+                continue;
+            }
+            if event.kind == "module-request" {
+                let token = event.token.as_deref().unwrap();
+                assert!(module_keys::complete_probe(&mut probe, token, 0).unwrap());
+                continue;
+            }
+            terminal = Some(event);
+            break;
+        }
+        let event = terminal.expect("terminal event");
+        let actual_status = match event.kind {
+            "value" => "success\n",
+            "error" if event.disposition == Some("oracle-error") => "oracle-error\n",
+            "error" if event.disposition == Some("language-error") => "error\n",
+            _ => "unsupported-or-api-error\n",
+        };
+        let stdout = event.value.as_deref().unwrap_or(&[]);
+        let stderr = event.error.as_deref().unwrap_or(&[]);
+        let expected_status = fs::read(expected.join("result.status.bin")).unwrap();
+        assert_eq!(
+            expected_status,
+            actual_status.as_bytes(),
+            "{id} status mismatch"
+        );
+        assert!(
+            field(&expected, "result.stdout", stdout),
+            "{id} stdout mismatch"
+        );
+        let expected_stderr = fs::read(expected.join("result.stderr.bin")).unwrap();
+        let actual_stderr_bytes = pkl_runtime::value::PklString::from_utf16(stderr.to_vec())
+            .to_java_utf8()
+            .into_bytes();
+        if expected_stderr != actual_stderr_bytes {
+            eprintln!(
+                "EXPECTED STDERR FOR {id}:\n{}",
+                String::from_utf8_lossy(&expected_stderr)
+            );
+            eprintln!(
+                "ACTUAL STDERR FOR {id}:\n{}",
+                String::from_utf8_lossy(&actual_stderr_bytes)
+            );
+        }
+        assert_eq!(expected_stderr, actual_stderr_bytes, "{id} stderr mismatch");
+        probe.close();
+        assert_eq!(probe.collect().slots, 0);
+    }
 }
 
 #[test]

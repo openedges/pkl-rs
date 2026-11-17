@@ -1,0 +1,970 @@
+//! Safe in-memory ZIP reader and DEFLATE (RFC 1951) decompressor.
+use std::collections::BTreeMap;
+use std::fmt;
+
+#[derive(Debug)]
+pub enum ZipError {
+    InvalidSignature,
+    UnexpectedEof,
+    UnsupportedCompression(u16),
+    CorruptedData(&'static str),
+}
+
+impl fmt::Display for ZipError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::InvalidSignature => write!(f, "Invalid ZIP signature"),
+            Self::UnexpectedEof => write!(f, "Unexpected EOF while parsing ZIP"),
+            Self::UnsupportedCompression(c) => write!(f, "Unsupported compression method: {c}"),
+            Self::CorruptedData(msg) => write!(f, "Corrupted ZIP data: {msg}"),
+        }
+    }
+}
+
+impl std::error::Error for ZipError {}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum ZipReadError {
+    NotFound,
+    IsADirectory,
+}
+
+pub fn percent_decode(s: &str) -> String {
+    let mut bytes = Vec::with_capacity(s.len());
+    let mut i = 0;
+    let s_bytes = s.as_bytes();
+    while i < s_bytes.len() {
+        if s_bytes[i] == b'%'
+            && i + 2 < s_bytes.len()
+            && let Ok(byte) = u8::from_str_radix(
+                std::str::from_utf8(&s_bytes[i + 1..i + 3]).unwrap_or_default(),
+                16,
+            )
+        {
+            bytes.push(byte);
+            i += 3;
+            continue;
+        }
+        bytes.push(s_bytes[i]);
+        i += 1;
+    }
+    String::from_utf8_lossy(&bytes).into_owned()
+}
+
+pub fn percent_encode_fragment(fragment: &str) -> String {
+    let mut encoded = String::with_capacity(fragment.len());
+    let bytes = fragment.as_bytes();
+    let mut i = 0;
+    while i < bytes.len() {
+        let b = bytes[i];
+        if b == b'%'
+            && i + 2 < bytes.len()
+            && bytes[i + 1].is_ascii_hexdigit()
+            && bytes[i + 2].is_ascii_hexdigit()
+        {
+            encoded.push('%');
+            encoded.push(bytes[i + 1] as char);
+            encoded.push(bytes[i + 2] as char);
+            i += 3;
+            continue;
+        }
+        if b.is_ascii_alphanumeric() || b"-_.!~*'();/:@&=+$,?[]".contains(&b) {
+            encoded.push(b as char);
+        } else {
+            use std::fmt::Write;
+            write!(&mut encoded, "%{b:02X}").unwrap();
+        }
+        i += 1;
+    }
+    encoded
+}
+
+pub fn normalize_zip_path(path: &str) -> String {
+    let mut parts: Vec<&str> = Vec::new();
+    for seg in path.split('/') {
+        if seg.is_empty() || seg == "." {
+            continue;
+        } else if seg == ".." {
+            parts.pop();
+        } else {
+            parts.push(seg);
+        }
+    }
+    if parts.is_empty() {
+        "/".to_string()
+    } else {
+        format!("/{}", parts.join("/"))
+    }
+}
+
+/// Represents an in-memory ZIP archive with normalized entry paths.
+#[derive(Clone, Debug, Default)]
+pub struct ZipArchive {
+    /// Maps normalized asset path (e.g. "/catalog/Swallow.pkl") to uncompressed bytes.
+    pub entries: BTreeMap<String, Vec<u8>>,
+    /// Set of directory paths (e.g. "/catalog", "/").
+    pub directories: BTreeMap<String, Vec<String>>,
+}
+
+impl ZipArchive {
+    /// Parses a ZIP archive from raw bytes.
+    pub fn parse(bytes: &[u8]) -> Result<Self, ZipError> {
+        let mut archive = ZipArchive::default();
+        archive.directories.insert("/".into(), Vec::new());
+
+        // Find End of Central Directory Record (EOCD) from the end
+        if bytes.len() < 22 {
+            return Err(ZipError::UnexpectedEof);
+        }
+
+        // Try reading central directory first
+        let eocd_pos = find_eocd(bytes)?;
+        let num_entries = u16::from_le_bytes([bytes[eocd_pos + 10], bytes[eocd_pos + 11]]) as usize;
+        let cd_size = u32::from_le_bytes([
+            bytes[eocd_pos + 12],
+            bytes[eocd_pos + 13],
+            bytes[eocd_pos + 14],
+            bytes[eocd_pos + 15],
+        ]) as usize;
+        let cd_offset = u32::from_le_bytes([
+            bytes[eocd_pos + 16],
+            bytes[eocd_pos + 17],
+            bytes[eocd_pos + 18],
+            bytes[eocd_pos + 19],
+        ]) as usize;
+
+        if cd_offset + cd_size > bytes.len() {
+            return Err(ZipError::CorruptedData("Central directory out of bounds"));
+        }
+
+        let mut offset = cd_offset;
+        for _ in 0..num_entries {
+            if offset + 46 > bytes.len() {
+                break;
+            }
+            let sig = u32::from_le_bytes([
+                bytes[offset],
+                bytes[offset + 1],
+                bytes[offset + 2],
+                bytes[offset + 3],
+            ]);
+            if sig != 0x02014b50 {
+                break;
+            }
+
+            let method = u16::from_le_bytes([bytes[offset + 10], bytes[offset + 11]]);
+            let cd_compressed_size = u32::from_le_bytes([
+                bytes[offset + 20],
+                bytes[offset + 21],
+                bytes[offset + 22],
+                bytes[offset + 23],
+            ]) as usize;
+            let cd_uncompressed_size = u32::from_le_bytes([
+                bytes[offset + 24],
+                bytes[offset + 25],
+                bytes[offset + 26],
+                bytes[offset + 27],
+            ]) as usize;
+            let filename_len =
+                u16::from_le_bytes([bytes[offset + 28], bytes[offset + 29]]) as usize;
+            let extra_len = u16::from_le_bytes([bytes[offset + 30], bytes[offset + 31]]) as usize;
+            let comment_len = u16::from_le_bytes([bytes[offset + 32], bytes[offset + 33]]) as usize;
+            let local_header_offset = u32::from_le_bytes([
+                bytes[offset + 42],
+                bytes[offset + 43],
+                bytes[offset + 44],
+                bytes[offset + 45],
+            ]) as usize;
+
+            let filename_start = offset + 46;
+            let filename_end = filename_start + filename_len;
+            if filename_end > bytes.len() {
+                return Err(ZipError::UnexpectedEof);
+            }
+            let filename =
+                String::from_utf8_lossy(&bytes[filename_start..filename_end]).to_string();
+
+            offset = filename_end + extra_len + comment_len;
+
+            // Extract entry from local header
+            if local_header_offset + 30 > bytes.len() {
+                continue;
+            }
+            let local_sig = u32::from_le_bytes([
+                bytes[local_header_offset],
+                bytes[local_header_offset + 1],
+                bytes[local_header_offset + 2],
+                bytes[local_header_offset + 3],
+            ]);
+            if local_sig != 0x04034b50 {
+                continue;
+            }
+            let local_fn_len = u16::from_le_bytes([
+                bytes[local_header_offset + 26],
+                bytes[local_header_offset + 27],
+            ]) as usize;
+            let local_extra_len = u16::from_le_bytes([
+                bytes[local_header_offset + 28],
+                bytes[local_header_offset + 29],
+            ]) as usize;
+            let local_compressed_size = u32::from_le_bytes([
+                bytes[local_header_offset + 18],
+                bytes[local_header_offset + 19],
+                bytes[local_header_offset + 20],
+                bytes[local_header_offset + 21],
+            ]) as usize;
+            let compressed_size = if cd_compressed_size != 0 {
+                cd_compressed_size
+            } else {
+                local_compressed_size
+            };
+            let uncompressed_size = cd_uncompressed_size;
+
+            let data_start = local_header_offset + 30 + local_fn_len + local_extra_len;
+            let Some(data_end) = data_start.checked_add(compressed_size) else {
+                continue;
+            };
+            if data_end > bytes.len() {
+                continue;
+            }
+
+            let normalized_path = if filename.starts_with('/') {
+                filename.clone()
+            } else {
+                format!("/{filename}")
+            };
+
+            if filename.ends_with('/') {
+                // Directory entry
+                let dir_path = normalized_path.trim_end_matches('/').to_string();
+                let dir_key = if dir_path.is_empty() {
+                    "/".to_string()
+                } else {
+                    dir_path
+                };
+                archive.add_directory_hierarchy(&dir_key);
+            } else {
+                // File entry
+                let compressed_data = &bytes[data_start..data_end];
+                let decompressed = match method {
+                    0 => compressed_data.to_vec(),
+                    8 => inflate(compressed_data, uncompressed_size)?,
+                    other => return Err(ZipError::UnsupportedCompression(other)),
+                };
+                archive.add_file(normalized_path, decompressed);
+            }
+        }
+
+        Ok(archive)
+    }
+
+    fn add_directory_hierarchy(&mut self, dir_path: &str) {
+        if !self.directories.contains_key(dir_path) {
+            self.directories.insert(dir_path.to_string(), Vec::new());
+        }
+        if dir_path != "/" {
+            let parent = match dir_path.rfind('/') {
+                Some(0) => "/",
+                Some(idx) => &dir_path[..idx],
+                None => "/",
+            };
+            let leaf = &dir_path[dir_path.rfind('/').map_or(0, |i| i + 1)..];
+            self.add_directory_hierarchy(parent);
+            if let Some(children) = self.directories.get_mut(parent)
+                && !children.iter().any(|c| c == leaf)
+            {
+                children.push(leaf.to_string());
+            }
+        }
+    }
+
+    fn add_file(&mut self, normalized_path: String, data: Vec<u8>) {
+        let parent = match normalized_path.rfind('/') {
+            Some(0) => "/",
+            Some(idx) => &normalized_path[..idx],
+            None => "/",
+        };
+        let leaf = normalized_path[normalized_path.rfind('/').map_or(0, |i| i + 1)..].to_string();
+        self.add_directory_hierarchy(parent);
+        if let Some(children) = self.directories.get_mut(parent)
+            && !children.iter().any(|c| c == &leaf)
+        {
+            children.push(leaf);
+        }
+        self.entries.insert(normalized_path, data);
+    }
+
+    pub fn is_directory(&self, path: &str) -> bool {
+        let norm = normalize_zip_path(path);
+        let decoded = percent_decode(&norm);
+        norm == "/"
+            || decoded == "/"
+            || self.directories.contains_key(&norm)
+            || self.directories.contains_key(&decoded)
+    }
+
+    pub fn is_file(&self, path: &str) -> bool {
+        let norm = normalize_zip_path(path);
+        let decoded = percent_decode(&norm);
+        self.entries.contains_key(&norm) || self.entries.contains_key(&decoded)
+    }
+
+    pub fn get(&self, path: &str) -> Option<&[u8]> {
+        let norm = normalize_zip_path(path);
+        if let Some(v) = self.entries.get(&norm) {
+            return Some(v.as_slice());
+        }
+        let decoded = percent_decode(&norm);
+        self.entries.get(&decoded).map(|v| v.as_slice())
+    }
+
+    pub fn read_bytes(&self, path: &str, allow_directories: bool) -> Result<Vec<u8>, ZipReadError> {
+        let norm = normalize_zip_path(path);
+        let decoded = percent_decode(&norm);
+        if let Some(data) = self
+            .entries
+            .get(&norm)
+            .or_else(|| self.entries.get(&decoded))
+        {
+            return Ok(data.clone());
+        }
+        if norm == "/"
+            || decoded == "/"
+            || self.directories.contains_key(&norm)
+            || self.directories.contains_key(&decoded)
+        {
+            if allow_directories {
+                let lookup_dir = if self.directories.contains_key(&decoded) {
+                    &decoded
+                } else if self.directories.contains_key(&norm) {
+                    &norm
+                } else {
+                    "/"
+                };
+                let mut children = self
+                    .directories
+                    .get(lookup_dir)
+                    .cloned()
+                    .unwrap_or_default();
+                children.sort();
+                let mut text = children.join("\n");
+                text.push('\n');
+                return Ok(text.into_bytes());
+            } else {
+                return Err(ZipReadError::IsADirectory);
+            }
+        }
+        Err(ZipReadError::NotFound)
+    }
+
+    pub fn has_element(&self, path: &str) -> bool {
+        let norm = normalize_zip_path(path);
+        let decoded = percent_decode(&norm);
+        norm == "/"
+            || decoded == "/"
+            || self.entries.contains_key(&norm)
+            || self.entries.contains_key(&decoded)
+            || self.directories.contains_key(&norm)
+            || self.directories.contains_key(&decoded)
+    }
+
+    pub fn list_elements(&self, path: &str) -> Vec<(String, bool)> {
+        let norm = normalize_zip_path(path);
+        let decoded = percent_decode(&norm);
+        let lookup_dir = if self.directories.contains_key(&decoded) {
+            decoded.as_str()
+        } else if self.directories.contains_key(&norm) {
+            norm.as_str()
+        } else if norm == "/" || decoded == "/" {
+            "/"
+        } else {
+            return Vec::new();
+        };
+        if let Some(children) = self.directories.get(lookup_dir) {
+            let mut result: Vec<(String, bool)> = children
+                .iter()
+                .map(|name| {
+                    let child_path = if lookup_dir == "/" {
+                        format!("/{name}")
+                    } else {
+                        format!("{lookup_dir}/{name}")
+                    };
+                    let is_dir = self.directories.contains_key(&child_path);
+                    (name.clone(), is_dir)
+                })
+                .collect();
+            result.sort_by(|a, b| a.0.cmp(&b.0));
+            result
+        } else {
+            Vec::new()
+        }
+    }
+}
+
+fn find_eocd(bytes: &[u8]) -> Result<usize, ZipError> {
+    let min_pos = bytes.len().saturating_sub(65536 + 22);
+    for pos in (min_pos..=bytes.len() - 22).rev() {
+        if bytes[pos] == 0x50
+            && bytes[pos + 1] == 0x4b
+            && bytes[pos + 2] == 0x05
+            && bytes[pos + 3] == 0x06
+        {
+            return Ok(pos);
+        }
+    }
+    Err(ZipError::InvalidSignature)
+}
+
+// ---------------------------------------------------------------------------
+// Pure safe Rust RFC 1951 DEFLATE decompressor (Inflate)
+// ---------------------------------------------------------------------------
+
+struct BitReader<'a> {
+    bytes: &'a [u8],
+    bit_pos: usize,
+}
+
+impl<'a> BitReader<'a> {
+    fn new(bytes: &'a [u8]) -> Self {
+        Self { bytes, bit_pos: 0 }
+    }
+
+    fn peek_bits(&self, count: usize) -> u32 {
+        let mut result = 0u32;
+        for i in 0..count {
+            let pos = self.bit_pos + i;
+            let byte_idx = pos / 8;
+            let bit_idx = pos % 8;
+            if byte_idx < self.bytes.len() {
+                let bit = (self.bytes[byte_idx] >> bit_idx) & 1;
+                result |= (bit as u32) << i;
+            }
+        }
+        result
+    }
+
+    fn consume_bits(&mut self, count: usize) {
+        self.bit_pos += count;
+    }
+
+    fn read_bits(&mut self, count: usize) -> Result<u32, ZipError> {
+        let mut result = 0u32;
+        for i in 0..count {
+            let byte_idx = self.bit_pos / 8;
+            let bit_idx = self.bit_pos % 8;
+            if byte_idx >= self.bytes.len() {
+                return Err(ZipError::UnexpectedEof);
+            }
+            let bit = (self.bytes[byte_idx] >> bit_idx) & 1;
+            result |= (bit as u32) << i;
+            self.bit_pos += 1;
+        }
+        Ok(result)
+    }
+
+    fn align_byte(&mut self) {
+        let rem = self.bit_pos % 8;
+        if rem != 0 {
+            self.bit_pos += 8 - rem;
+        }
+    }
+
+    fn read_u16(&mut self) -> Result<u16, ZipError> {
+        self.align_byte();
+        let idx = self.bit_pos / 8;
+        if idx + 2 > self.bytes.len() {
+            return Err(ZipError::UnexpectedEof);
+        }
+        let val = u16::from_le_bytes([self.bytes[idx], self.bytes[idx + 1]]);
+        self.bit_pos += 16;
+        Ok(val)
+    }
+
+    fn read_bytes(&mut self, len: usize) -> Result<&'a [u8], ZipError> {
+        self.align_byte();
+        let idx = self.bit_pos / 8;
+        if idx + len > self.bytes.len() {
+            return Err(ZipError::UnexpectedEof);
+        }
+        let slice = &self.bytes[idx..idx + len];
+        self.bit_pos += len * 8;
+        Ok(slice)
+    }
+}
+
+/// Fast lookup Huffman decoder (direct array lookup for <= 9 bits)
+struct FastHuffman {
+    lookup: Vec<u32>, // (symbol << 8) | len
+}
+
+impl FastHuffman {
+    fn from_code_lengths(lengths: &[u8]) -> Result<Self, ZipError> {
+        let mut max_len = 0;
+        let mut bl_count = [0u32; 16];
+        for &len in lengths {
+            if len > 15 {
+                return Err(ZipError::CorruptedData("Code length > 15"));
+            }
+            if len > 0 {
+                bl_count[len as usize] += 1;
+                max_len = max_len.max(len as usize);
+            }
+        }
+        if max_len == 0 {
+            return Ok(Self { lookup: Vec::new() });
+        }
+
+        let mut next_code = [0u32; 16];
+        let mut code = 0u32;
+        for bits in 1..=15 {
+            code = (code + bl_count[bits - 1]) << 1;
+            next_code[bits] = code;
+        }
+
+        let table_bits = max_len;
+        let table_size = 1usize << table_bits;
+        let mut lookup = vec![0u32; table_size];
+
+        for (symbol, &len) in lengths.iter().enumerate() {
+            if len > 0 {
+                let sym_code = next_code[len as usize];
+                next_code[len as usize] += 1;
+                let mut rev_code = 0usize;
+                for i in 0..len {
+                    rev_code |= (((sym_code >> (len - 1 - i)) & 1) as usize) << i;
+                }
+                let step = 1usize << len;
+                let entry = ((symbol as u32) << 8) | (len as u32);
+                let mut i = rev_code;
+                while i < table_size {
+                    lookup[i] = entry;
+                    i += step;
+                }
+            }
+        }
+
+        Ok(Self { lookup })
+    }
+
+    fn decode(&self, reader: &mut BitReader<'_>) -> Result<u16, ZipError> {
+        if self.lookup.is_empty() {
+            return Err(ZipError::CorruptedData("Empty Huffman table"));
+        }
+        let bits_needed = self.lookup.len().trailing_zeros() as usize;
+        let peek = reader.peek_bits(bits_needed);
+        let entry = self.lookup[peek as usize];
+        let len = (entry & 0xff) as usize;
+        let symbol = (entry >> 8) as u16;
+        if len == 0 || reader.bit_pos + len > reader.bytes.len() * 8 {
+            return Err(ZipError::CorruptedData("Invalid Huffman code"));
+        }
+        reader.consume_bits(len);
+        Ok(symbol)
+    }
+}
+
+const LENGTH_BASE: [u16; 29] = [
+    3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131,
+    163, 195, 227, 258,
+];
+const LENGTH_EXTRA: [u8; 29] = [
+    0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0,
+];
+
+const DISTANCE_BASE: [u16; 30] = [
+    1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537,
+    2049, 3073, 4097, 6145, 8193, 12289, 16385, 24577,
+];
+const DISTANCE_EXTRA: [u8; 30] = [
+    0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13,
+    13,
+];
+
+const CL_ORDER: [usize; 19] = [
+    16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15,
+];
+
+fn inflate(compressed: &[u8], expected_size: usize) -> Result<Vec<u8>, ZipError> {
+    let mut reader = BitReader::new(compressed);
+    let mut output = Vec::with_capacity(expected_size);
+    let mut is_final = false;
+
+    while !is_final {
+        is_final = reader.read_bits(1)? == 1;
+        let btype = reader.read_bits(2)?;
+
+        match btype {
+            0 => {
+                // Stored block
+                let len = reader.read_u16()? as usize;
+                let nlen = reader.read_u16()? as usize;
+                if len != (nlen ^ 0xffff) {
+                    return Err(ZipError::CorruptedData("Stored block length mismatch"));
+                }
+                let bytes = reader.read_bytes(len)?;
+                output.extend_from_slice(bytes);
+            }
+            1 => {
+                // Fixed Huffman
+                let lit_tree = fixed_literal_tree()?;
+                let dist_tree = fixed_distance_tree()?;
+                decode_huffman_block(&mut reader, &lit_tree, &dist_tree, &mut output)?;
+            }
+            2 => {
+                // Dynamic Huffman
+                let hlit = (reader.read_bits(5)? + 257) as usize;
+                let hdist = (reader.read_bits(5)? + 1) as usize;
+                let hclen = (reader.read_bits(4)? + 4) as usize;
+
+                let mut cl_lengths = [0u8; 19];
+                for i in 0..hclen {
+                    cl_lengths[CL_ORDER[i]] = reader.read_bits(3)? as u8;
+                }
+                let cl_tree = FastHuffman::from_code_lengths(&cl_lengths)?;
+
+                let mut lengths = Vec::with_capacity(hlit + hdist);
+                while lengths.len() < hlit + hdist {
+                    let sym = cl_tree.decode(&mut reader)?;
+                    match sym {
+                        0..=15 => lengths.push(sym as u8),
+                        16 => {
+                            let repeat = (reader.read_bits(2)? + 3) as usize;
+                            let prev = *lengths
+                                .last()
+                                .ok_or(ZipError::CorruptedData("No prev len"))?;
+                            for _ in 0..repeat {
+                                lengths.push(prev);
+                            }
+                        }
+                        17 => {
+                            let repeat = (reader.read_bits(3)? + 3) as usize;
+                            lengths.extend(std::iter::repeat_n(0, repeat));
+                        }
+                        18 => {
+                            let repeat = (reader.read_bits(7)? + 11) as usize;
+                            lengths.extend(std::iter::repeat_n(0, repeat));
+                        }
+                        _ => return Err(ZipError::CorruptedData("Invalid CL symbol")),
+                    }
+                }
+
+                let lit_tree = FastHuffman::from_code_lengths(&lengths[..hlit])?;
+                let dist_tree = FastHuffman::from_code_lengths(&lengths[hlit..])?;
+                decode_huffman_block(&mut reader, &lit_tree, &dist_tree, &mut output)?;
+            }
+            _ => return Err(ZipError::CorruptedData("Reserved block type")),
+        }
+    }
+
+    Ok(output)
+}
+
+fn fixed_literal_tree() -> Result<FastHuffman, ZipError> {
+    let mut lengths = [0u8; 288];
+    for item in lengths.iter_mut().take(143 + 1) {
+        *item = 8;
+    }
+    for item in lengths.iter_mut().take(255 + 1).skip(144) {
+        *item = 9;
+    }
+    for item in lengths.iter_mut().take(279 + 1).skip(256) {
+        *item = 7;
+    }
+    for item in lengths.iter_mut().skip(280) {
+        *item = 8;
+    }
+    FastHuffman::from_code_lengths(&lengths)
+}
+
+fn fixed_distance_tree() -> Result<FastHuffman, ZipError> {
+    let lengths = [5u8; 32];
+    FastHuffman::from_code_lengths(&lengths)
+}
+
+fn decode_huffman_block(
+    reader: &mut BitReader<'_>,
+    lit_tree: &FastHuffman,
+    dist_tree: &FastHuffman,
+    output: &mut Vec<u8>,
+) -> Result<(), ZipError> {
+    loop {
+        let sym = lit_tree.decode(reader)?;
+        match sym {
+            0..=255 => output.push(sym as u8),
+            256 => break, // End of block
+            257..=285 => {
+                let len_idx = (sym - 257) as usize;
+                let base_len = LENGTH_BASE[len_idx] as usize;
+                let extra_bits = LENGTH_EXTRA[len_idx] as usize;
+                let length = if extra_bits > 0 {
+                    base_len + reader.read_bits(extra_bits)? as usize
+                } else {
+                    base_len
+                };
+
+                let dist_sym = dist_tree.decode(reader)? as usize;
+                if dist_sym >= 30 {
+                    return Err(ZipError::CorruptedData("Invalid distance symbol"));
+                }
+                let base_dist = DISTANCE_BASE[dist_sym] as usize;
+                let dist_extra = DISTANCE_EXTRA[dist_sym] as usize;
+                let distance = if dist_extra > 0 {
+                    base_dist + reader.read_bits(dist_extra)? as usize
+                } else {
+                    base_dist
+                };
+
+                if distance > output.len() {
+                    return Err(ZipError::CorruptedData("Distance exceeds output"));
+                }
+                let start = output.len() - distance;
+                for i in 0..length {
+                    let b = output[start + i];
+                    output.push(b);
+                }
+            }
+            _ => return Err(ZipError::CorruptedData("Invalid literal/length symbol")),
+        }
+    }
+    Ok(())
+}
+
+/// Helper to pack entries into an uncompressed (method 0) ZIP archive.
+pub fn build_uncompressed_zip(entries: &[(&str, &[u8])]) -> Vec<u8> {
+    let mut zip = Vec::new();
+    let mut cd = Vec::new();
+
+    for (name, content) in entries {
+        let offset = zip.len() as u32;
+        let fn_bytes = name.as_bytes();
+        let fn_len = fn_bytes.len() as u16;
+        let size = content.len() as u32;
+        let crc = compute_crc32(content);
+
+        // Local header (30 bytes)
+        zip.extend_from_slice(&0x04034b50u32.to_le_bytes());
+        zip.extend_from_slice(&20u16.to_le_bytes()); // version
+        zip.extend_from_slice(&0u16.to_le_bytes()); // flags
+        zip.extend_from_slice(&0u16.to_le_bytes()); // method 0 (stored)
+        zip.extend_from_slice(&0u16.to_le_bytes()); // time
+        zip.extend_from_slice(&0u16.to_le_bytes()); // date
+        zip.extend_from_slice(&crc.to_le_bytes());
+        zip.extend_from_slice(&size.to_le_bytes()); // compressed size
+        zip.extend_from_slice(&size.to_le_bytes()); // uncompressed size
+        zip.extend_from_slice(&fn_len.to_le_bytes());
+        zip.extend_from_slice(&0u16.to_le_bytes()); // extra len
+        zip.extend_from_slice(fn_bytes);
+        zip.extend_from_slice(content);
+
+        // Central directory entry (46 bytes)
+        cd.extend_from_slice(&0x02014b50u32.to_le_bytes());
+        cd.extend_from_slice(&20u16.to_le_bytes()); // version made by
+        cd.extend_from_slice(&20u16.to_le_bytes()); // version needed
+        cd.extend_from_slice(&0u16.to_le_bytes()); // flags
+        cd.extend_from_slice(&0u16.to_le_bytes()); // method 0
+        cd.extend_from_slice(&0u16.to_le_bytes()); // time
+        cd.extend_from_slice(&0u16.to_le_bytes()); // date
+        cd.extend_from_slice(&crc.to_le_bytes());
+        cd.extend_from_slice(&size.to_le_bytes());
+        cd.extend_from_slice(&size.to_le_bytes());
+        cd.extend_from_slice(&fn_len.to_le_bytes());
+        cd.extend_from_slice(&0u16.to_le_bytes()); // extra len
+        cd.extend_from_slice(&0u16.to_le_bytes()); // comment len
+        cd.extend_from_slice(&0u16.to_le_bytes()); // disk start
+        cd.extend_from_slice(&0u16.to_le_bytes()); // internal attrs
+        cd.extend_from_slice(&0u32.to_le_bytes()); // external attrs
+        cd.extend_from_slice(&offset.to_le_bytes());
+        cd.extend_from_slice(fn_bytes);
+    }
+
+    let cd_offset = zip.len() as u32;
+    let cd_size = cd.len() as u32;
+    let num_entries = entries.len() as u16;
+
+    zip.extend_from_slice(&cd);
+
+    // EOCD (22 bytes)
+    zip.extend_from_slice(&0x06054b50u32.to_le_bytes());
+    zip.extend_from_slice(&0u16.to_le_bytes()); // disk num
+    zip.extend_from_slice(&0u16.to_le_bytes()); // cd start disk
+    zip.extend_from_slice(&num_entries.to_le_bytes());
+    zip.extend_from_slice(&num_entries.to_le_bytes());
+    zip.extend_from_slice(&cd_size.to_le_bytes());
+    zip.extend_from_slice(&cd_offset.to_le_bytes());
+    zip.extend_from_slice(&0u16.to_le_bytes()); // comment len
+
+    zip
+}
+
+fn compute_crc32(bytes: &[u8]) -> u32 {
+    let mut crc = 0xffffffffu32;
+    for &b in bytes {
+        crc ^= b as u32;
+        for _ in 0..8 {
+            let mask = (crc & 1) != 0;
+            crc >>= 1;
+            if mask {
+                crc ^= 0xedb88320;
+            }
+        }
+    }
+    !crc
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_zip_roundtrip_stored() {
+        let files = [
+            ("catalog/Swallow.pkl", b"swallow = 1\n".as_slice()),
+            ("Bird.pkl", b"bird = 2\n".as_slice()),
+        ];
+        let zip_bytes = build_uncompressed_zip(&files);
+        let archive = ZipArchive::parse(&zip_bytes).unwrap();
+        assert_eq!(archive.get("/Bird.pkl").unwrap(), b"bird = 2\n");
+        assert_eq!(
+            archive.get("/catalog/Swallow.pkl").unwrap(),
+            b"swallow = 1\n"
+        );
+        assert!(archive.has_element("/catalog"));
+        assert!(archive.has_element("/catalog/Swallow.pkl"));
+        let elements = archive.list_elements("/catalog");
+        assert_eq!(elements, vec![("Swallow.pkl".into(), false)]);
+    }
+
+    #[test]
+    fn test_zip_directory_reading_and_module_load_distinction() {
+        let files = [
+            ("catalog/Swallow.pkl", b"swallow = 1\n".as_slice()),
+            ("catalog/Ostrich.pkl", b"ostrich = 2\n".as_slice()),
+            ("Bird.pkl", b"bird = 3\n".as_slice()),
+        ];
+        let zip_bytes = build_uncompressed_zip(&files);
+        let archive = ZipArchive::parse(&zip_bytes).unwrap();
+
+        // Reading directory with allow_directories = true returns sorted child names joined by \n with trailing \n
+        let dir_bytes = archive.read_bytes("/catalog", true).unwrap();
+        assert_eq!(
+            String::from_utf8(dir_bytes).unwrap(),
+            "Ostrich.pkl\nSwallow.pkl\n"
+        );
+
+        let root_bytes = archive.read_bytes("/", true).unwrap();
+        assert_eq!(
+            String::from_utf8(root_bytes).unwrap(),
+            "Bird.pkl\ncatalog\n"
+        );
+
+        // Reading directory with allow_directories = false fails with IsADirectory
+        assert_eq!(
+            archive.read_bytes("/catalog", false),
+            Err(ZipReadError::IsADirectory)
+        );
+        assert_eq!(
+            archive.read_bytes("/", false),
+            Err(ZipReadError::IsADirectory)
+        );
+
+        // Missing entry returns NotFound
+        assert_eq!(
+            archive.read_bytes("/missing.pkl", false),
+            Err(ZipReadError::NotFound)
+        );
+    }
+
+    #[test]
+    fn test_normalize_zip_path_clamped_at_root() {
+        assert_eq!(normalize_zip_path(""), "/");
+        assert_eq!(normalize_zip_path("/"), "/");
+        assert_eq!(normalize_zip_path("/.."), "/");
+        assert_eq!(normalize_zip_path("/../../.."), "/");
+        assert_eq!(normalize_zip_path("/foo/../../penguin.pkl"), "/penguin.pkl");
+        assert_eq!(
+            normalize_zip_path("catalog/Swallow.pkl"),
+            "/catalog/Swallow.pkl"
+        );
+        assert_eq!(
+            normalize_zip_path("/catalog/../catalog/Ostrich.pkl"),
+            "/catalog/Ostrich.pkl"
+        );
+    }
+
+    #[test]
+    fn test_bit3_streaming_entry_reads_compressed_size_from_central_directory() {
+        let mut zip = Vec::new();
+        let content = b"streaming content here";
+        let crc = compute_crc32(content);
+        let fn_bytes = b"stream.txt";
+        let fn_len = fn_bytes.len() as u16;
+        let size = content.len() as u32;
+
+        let local_offset = zip.len() as u32;
+        // Local header with local_compressed_size = 0 and local_uncompressed_size = 0 (Bit 3 flag)
+        zip.extend_from_slice(&0x04034b50u32.to_le_bytes());
+        zip.extend_from_slice(&20u16.to_le_bytes()); // version
+        zip.extend_from_slice(&0x0008u16.to_le_bytes()); // flags: bit 3 set
+        zip.extend_from_slice(&0u16.to_le_bytes()); // method 0 (stored)
+        zip.extend_from_slice(&0u16.to_le_bytes()); // time
+        zip.extend_from_slice(&0u16.to_le_bytes()); // date
+        zip.extend_from_slice(&0u32.to_le_bytes()); // zero crc
+        zip.extend_from_slice(&0u32.to_le_bytes()); // zero compressed size in local header
+        zip.extend_from_slice(&0u32.to_le_bytes()); // zero uncompressed size in local header
+        zip.extend_from_slice(&fn_len.to_le_bytes());
+        zip.extend_from_slice(&0u16.to_le_bytes());
+        zip.extend_from_slice(fn_bytes);
+        zip.extend_from_slice(content);
+
+        // Central directory entry has the real sizes
+        let cd_offset = zip.len() as u32;
+        let mut cd = Vec::new();
+        cd.extend_from_slice(&0x02014b50u32.to_le_bytes());
+        cd.extend_from_slice(&20u16.to_le_bytes());
+        cd.extend_from_slice(&20u16.to_le_bytes());
+        cd.extend_from_slice(&0x0008u16.to_le_bytes());
+        cd.extend_from_slice(&0u16.to_le_bytes());
+        cd.extend_from_slice(&0u16.to_le_bytes());
+        cd.extend_from_slice(&0u16.to_le_bytes());
+        cd.extend_from_slice(&crc.to_le_bytes());
+        cd.extend_from_slice(&size.to_le_bytes()); // compressed size in CD
+        cd.extend_from_slice(&size.to_le_bytes()); // uncompressed size in CD
+        cd.extend_from_slice(&fn_len.to_le_bytes());
+        cd.extend_from_slice(&0u16.to_le_bytes());
+        cd.extend_from_slice(&0u16.to_le_bytes());
+        cd.extend_from_slice(&0u16.to_le_bytes());
+        cd.extend_from_slice(&0u16.to_le_bytes());
+        cd.extend_from_slice(&0u32.to_le_bytes());
+        cd.extend_from_slice(&local_offset.to_le_bytes());
+        cd.extend_from_slice(fn_bytes);
+
+        let cd_size = cd.len() as u32;
+        zip.extend_from_slice(&cd);
+
+        // EOCD
+        zip.extend_from_slice(&0x06054b50u32.to_le_bytes());
+        zip.extend_from_slice(&0u16.to_le_bytes());
+        zip.extend_from_slice(&0u16.to_le_bytes());
+        zip.extend_from_slice(&1u16.to_le_bytes());
+        zip.extend_from_slice(&1u16.to_le_bytes());
+        zip.extend_from_slice(&cd_size.to_le_bytes());
+        zip.extend_from_slice(&cd_offset.to_le_bytes());
+        zip.extend_from_slice(&0u16.to_le_bytes());
+
+        let archive = ZipArchive::parse(&zip).unwrap();
+        assert_eq!(archive.get("/stream.txt").unwrap(), content);
+    }
+
+    #[test]
+    fn test_trailing_bits_less_than_9_at_eof() {
+        // Huffman table with 3-bit code
+        let lengths = [3u8, 3, 3, 3, 3, 3, 3, 3];
+        let huffman = FastHuffman::from_code_lengths(&lengths).unwrap();
+        // A single byte containing 3 bits of symbol 0 followed by 5 unused bits
+        let data = [0b00000000u8];
+        let mut reader = BitReader::new(&data);
+        let sym = huffman.decode(&mut reader).unwrap();
+        assert_eq!(sym, 0);
+        assert_eq!(reader.bit_pos, 3);
+    }
+}

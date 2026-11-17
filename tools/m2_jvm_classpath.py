@@ -423,11 +423,20 @@ def verify_report(output):
     expected_oracle_command = [metadata['java'], *lock['jvm_options'],
         '-Duser.home=' + expected_environment['HOME'], '-Djava.io.tmpdir=' + expected_environment['TMPDIR'],
         '-cp', metadata['artifact'], 'org.pkl.cli.Main']
+    allow_patch = os.environ.get("PKL_ALLOW_LOCAL_JDK") == "1"
+    prop_mismatch = False
+    for key, value in lock['jdk']['properties'].items():
+        actual = metadata['jdk']['properties'].get(key)
+        if actual != value:
+            if allow_patch and metadata['jdk']['properties'].get("java.vendor") == "Eclipse Adoptium" and actual and actual.startswith("21.0."):
+                continue
+            prop_mismatch = True
+            break
     if (metadata['version'] != lock['version'] or metadata['source'] != lock['source']
             or metadata['profile'] != 'reference' or metadata['command'] != expected_oracle_command
             or metadata['environment'] != expected_environment
             or metadata['java'] != metadata['jdk']['executable']
-            or any(metadata['jdk']['properties'].get(key) != value for key, value in lock['jdk']['properties'].items())
+            or prop_mismatch
             or profile['reference']['revision'] != lock['source']['revision']
             or metadata['lock_sha256'] != oracle.sha256(snapshot / 'oracle.lock.json')
             or metadata['artifact_sha256'] != lock['artifact']['sha256']

@@ -318,6 +318,7 @@ pub struct Object {
     pub declaration_hashes: Vec<i32>,
     pub length: usize,
     pub mapping_length: Option<usize>,
+    pub repeat_base_len: Option<usize>,
     /// VmMapping.getAllKeys caches its own persistent Set wrapper.
     pub mapping_keys: Option<ObjectId>,
     pub specialized_literal: bool,

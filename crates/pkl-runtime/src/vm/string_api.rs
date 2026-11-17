@@ -376,8 +376,27 @@ impl Vm {
         name: &str,
     ) -> Result<bool, RuntimeError> {
         if name == "isGlobPattern" {
-            self.stack.push(Value::Bool(string_glob::valid(text)?));
-            return Ok(true);
+            match string_glob::valid(text) {
+                Ok(valid) => {
+                    self.stack.push(Value::Bool(valid));
+                    return Ok(true);
+                }
+                Err(mut error) => {
+                    let source = crate::stdlib_sources::base();
+                    let declaration = "external isGlobPattern: Boolean";
+                    let start = source
+                        .text
+                        .find(declaration)
+                        .expect("pinned String.isGlobPattern declaration");
+                    error.frames.push(RuntimeFrame {
+                        anonymous: false,
+                        source: Some(source),
+                        span: Span::new(start, start + declaration.len()),
+                        member: "#String.isGlobPattern".into(),
+                    });
+                    return Err(error);
+                }
+            }
         }
         if matches!(name, "md5" | "sha1" | "sha256" | "sha256Int") {
             return self.bytes_property(&text.to_java_utf8().as_bytes().to_vec().into(), name);

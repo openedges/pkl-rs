@@ -367,10 +367,11 @@ impl ResourceUri {
         if self.scheme.is_some() {
             return Ok(self);
         }
-        if self.path == "..." || self.path.starts_with(".../") || self.path.starts_with("@") {
-            return Err(unsupported(
-                "Resource dependency and triple-dot resolution is not implemented.",
-            ));
+        if self.path.starts_with("@") {
+            return Ok(self);
+        }
+        if self.path == "..." || self.path.starts_with(".../") {
+            return Err(unsupported("Triple-dot resolution is not implemented."));
         }
         let base = module_uri.ok_or_else(|| {
             unsupported("Relative resource reads require declaration module URI metadata.")
@@ -380,10 +381,37 @@ impl ResourceUri {
                 "The declaration module URI is not supported for relative resource resolution.",
             )
         })?;
-        if base.opaque || base.scheme.as_deref() != Some("file") {
+        let is_package = base.scheme.as_deref() == Some("package")
+            || base.scheme.as_deref() == Some("projectpackage");
+        if base.opaque || (!is_package && base.scheme.as_deref() != Some("file")) {
             return Err(unsupported(
-                "Relative resource resolution currently requires a hierarchical file module URI.",
+                "Relative resource resolution currently requires a hierarchical module URI.",
             ));
+        }
+        if is_package {
+            let authored_path = self.path;
+            self.scheme = base.scheme;
+            self.authority = base.authority;
+            self.path = base.path;
+            let base_frag = base
+                .fragment
+                .as_ref()
+                .and_then(PklString::as_str)
+                .unwrap_or("/");
+            let authored_str = authored_path.as_str().unwrap_or("");
+            let resolved_fragment = if authored_str.starts_with('/') {
+                crate::packages::zip::normalize_zip_path(authored_str)
+            } else {
+                let dir = match base_frag.rfind('/') {
+                    Some(idx) => &base_frag[..=idx],
+                    None => "/",
+                };
+                crate::packages::zip::normalize_zip_path(&format!("{dir}{authored_str}"))
+            };
+            let encoded_fragment = percent_encode_fragment(&resolved_fragment);
+            self.fragment = Some(encoded_fragment.into());
+            self.rebuild();
+            return Ok(self);
         }
         if self.authority.is_none() {
             self.authority.clone_from(&base.authority);
@@ -438,4 +466,32 @@ impl ResourceUri {
         }
         self.text = text.finish();
     }
+}
+
+pub fn percent_encode_fragment(fragment: &str) -> String {
+    let mut encoded = String::with_capacity(fragment.len());
+    let bytes = fragment.as_bytes();
+    let mut i = 0;
+    while i < bytes.len() {
+        let b = bytes[i];
+        if b == b'%'
+            && i + 2 < bytes.len()
+            && bytes[i + 1].is_ascii_hexdigit()
+            && bytes[i + 2].is_ascii_hexdigit()
+        {
+            encoded.push('%');
+            encoded.push(bytes[i + 1] as char);
+            encoded.push(bytes[i + 2] as char);
+            i += 3;
+            continue;
+        }
+        if b.is_ascii_alphanumeric() || b"-_.!~*'();/:@&=+$,?[]".contains(&b) {
+            encoded.push(b as char);
+        } else {
+            use std::fmt::Write;
+            write!(&mut encoded, "%{b:02X}").unwrap();
+        }
+        i += 1;
+    }
+    encoded
 }
