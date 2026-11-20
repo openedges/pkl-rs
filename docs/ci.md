@@ -58,7 +58,7 @@ GitHub's unspecified default shell does not enable `pipefail`.
 See the [GitHub shell contract](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#jobsjob_idstepsshell)
 and [recorded positive and negative shell controls](../reports/m1/graal-ci-shell-evidence.tar.gz).
 
-The Java job pins Python 3.12, Temurin `21.0.12.1+1`, and action revisions. Oracle
+The Java job pins Python 3.12, Temurin `21.0.13.1+2`, and action revisions. Oracle
 verification also checks the actual JDK vendor/build and Pkl artifact identity. A
 missing artifact, incompatible JDK, failed inventory check, missing case, corrupted
 capture, or byte mismatch fails the job. Reference checkouts are checked again after

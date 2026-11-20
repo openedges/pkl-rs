@@ -350,7 +350,7 @@ Provide filesystem, HTTP, package, process, and external reader capabilities thr
 
 Wasm uses facilities such as a browser VFS and asynchronous loaders. Explicitly identify capabilities that the Host does not provide, and do not count them as passing full compatibility tests. N-API must transfer large integers and bytes without loss, and performance measurements must include conversion costs between Node and Rust.
 
-The public scope includes the evaluator, CLI, REPL, server protocol, project and package features, formatter, pkldoc, and Java/Kotlin code generation. An adapter preserving existing JVM public APIs is a separate planned deliverable and will also use the Rust evaluation engine.
+The public scope includes the native Rust evaluator API, CLI, REPL, server protocol, project and package features, formatter, and pkldoc. Java/Kotlin code generation and a JVM public API compatibility adapter are explicitly out of scope (2026-11-20 intent update); Java 0.32.0 serves solely as the compatibility oracle and performance reference.
 
 ## Caching and Validation
 

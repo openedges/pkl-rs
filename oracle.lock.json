@@ -28,10 +28,10 @@
     "policy": "Require exact vendor and runtime build below; provision externally, select with PKL_ORACLE_JAVA; record executable, runtime modules, and release hashes per run. No automatic JDK installation.",
     "properties": {
       "java.vendor": "Eclipse Adoptium",
-      "java.version": "21.0.12.1",
-      "java.runtime.version": "21.0.12.1+1-LTS",
+      "java.version": "21.0.13.1",
+      "java.runtime.version": "21.0.13.1+2-LTS",
       "java.vm.name": "OpenJDK 64-Bit Server VM",
-      "java.vm.version": "21.0.12.1+1-LTS"
+      "java.vm.version": "21.0.13.1+2-LTS"
     },
     "license": "GPL-2.0-with-classpath-exception; see the selected JDK legal/ directory",
     "upstream_runtime_minimum": 17,

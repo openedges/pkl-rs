@@ -17,6 +17,8 @@
 
 ### 보존된 엄격 게이트 예외 및 다음 우선순위
 - `error-cycle` 콜드 Java `NoClassDefFoundError` 및 비결정적 반복 횟수(`reports/m2/cycle-complete.json`)로 인한 `--verify-full` Exit 1, `m2-protobuf-java04-full` 18건 `REFERENCE-NONPASS`(`java04_strict_full_compatibility_gate` `#[ignore]`, **M3** 이관), `11`건 `required: false` `rev1` 미매핑 항목(지원 라이브러리 8건 + 중복 별칭 3건), 미실행 과거 골든-픽스처 Python 스위트, Linux/Windows 호스티드 CI, 그리고 미구현 마일스톤 **M3–M7**은 그대로 개방 상태로 보존한다.
+- **범위 변경 결정 (2026-11-20)**: M5의 **Java/Kotlin codegen**과 **JVM 공개 API 어댑터**는 필수 제품 범위에서 명시적으로 제외했다([INTENT.md](INTENT.md), [TESTING.md](TESTING.md), [docs/architecture.md](docs/architecture.md)와 동기화).
+- **오라클 JDK 보안 패치 (2026-11-20)**: `CVE-2026-114938`–`114942` 대응으로 [oracle.lock.json](oracle.lock.json)과 [.github/workflows/ci.yml](.github/workflows/ci.yml)의 오라클 JDK 핀을 Eclipse Adoptium Temurin `21.0.12.1+1-LTS` → **`21.0.13.1+2-LTS`**로 업그레이드했다(`performance_jdk` GraalVM CE `25.0.1`은 업스트림 `25.0.5.1` CE 빌드 공개 대기 중이며 로컬 ARM64 전용·CI 미다운로드).
 - **다음 마일스톤**: **M3 — 표준 라이브러리와 출력**(`stdlib`/`builtin` 목록 전수 마감, 17종 renderer 및 Protobuf 18건 잔여 경계 정리).
 
 ## 이전 상태 — Stage160 GC 세이프포인트 핫패스 최적화·Protobuf 경계 시정 및 단일 명령 전체 워크스페이스 검증 완료
@@ -308,7 +310,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | M2 언어 런타임 | 개발 게이트 마감(엄격 게이트 예외 보존): [Stage161 체크포인트](reports/m2/stage161-m2-closure/README.md) 핀 JDK `21.0.12.1+1-LTS`(`exact_jdk_lock_match: true`) 전수 실측 완료(ready 4,575건 중 `4,574 pass / 1 oracle-error [error-cycle] / 0 mismatch`, `88/88` metamorphic, M1 `6,078/6,078`, 단일 명령 `cargo test --workspace --locked` `2,222 passed / 0 failed / 2 ignored`, `--verify-report`·`--verify-development` Exit 0). `error-cycle` 엄격 게이트(`--verify-full` Exit 1)·Protobuf 18건 참조 미통과(M3 이관)·Linux/Windows CI는 명시적 예외로 보존 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
-| M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
+| M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성(`pkldoc`) 구현(Java/Kotlin codegen·JVM 공개 API 어댑터는 2026-11-20 범위 제외); CLI·REPL·server·Rust API 수명주기 호환 |
 | M6 Wasm·N-API 완성 | 계획됨 | M1의 실행환경 실험과 M2–M5의 해당 공통 기능 | 비동기 Host·adapter·배포 패키지 완성; 실제 브라우저·Node의 대상 코퍼스 통과 |
 | M7 릴리스 검증 | 계획됨 | M0–M6의 필수 산출물 | 전체 Pantry 코퍼스·플랫폼 검증과 실행 시간·메모리 보고서; 필수 범위의 알려진 불일치 0, 성능·메모리 기준 충족 |
 
@@ -3618,17 +3620,17 @@ ready4,424·미구현71·미연결32 및 전체 M2·API·릴리스·성능 gate�
 
 - Rust evaluator API를 제공하고 CLI의 `eval`, `repl`, `server`, `test`, `project`, `download-package`, `analyze`, `format`, `run`, `shell-completion`을 구현합니다. 전체 옵션·기본값·help·종료 코드·파일 출력을 대조합니다.
 - REPL의 PTY 세션·입력 편집·상태 유지와 server protocol의 codec·callback·요청 순서·취소·종료를 검증합니다. `spec`·`minimal` test reporter도 포함합니다.
-- formatter, pkldoc, Java/Kotlin codegen을 구현하고 생성 결과를 바이트 비교합니다.
-- 기존 Java/Kotlin 공개 API를 유지하는 JVM adapter를 별도 산출물로 제공합니다. 클래스·메서드·공개 타입·예외·수명주기를 대조하고 실제 기존 client로 확인합니다. 평가는 Rust engine이 수행합니다.
+- formatter와 pkldoc을 구현하고 생성 결과를 바이트 비교합니다.
+- **범위 제외 (2026-11-20 결정):** Java/Kotlin codegen(`pkl-codegen-java`, `pkl-codegen-kotlin`)과 기존 Java/Kotlin 공개 API를 유지하는 JVM adapter는 필수 제품 범위에서 명시적으로 제외합니다([INTENT.md](INTENT.md), [TESTING.md](TESTING.md), [docs/architecture.md](docs/architecture.md)와 동기화). 업스트림 인벤토리(`compatibility/inventory.json`, `compatibility/corpus.json`)의 `java_api`·`kotlin_api`·codegen 항목은 참조용 센서스로만 보존하며 M5/M7 종료 조건에 포함하지 않습니다.
 
-**산출물·종료 조건:** 공개 API 목록의 누락이 없고 기존 호출·client·CLI transcript·REPL·server 세션 및 생성 도구 결과가 계약을 충족해야 합니다.
+**산출물·종료 조건:** 필수 Rust API·CLI·REPL·server·formatter·pkldoc 목록의 누락이 없고 CLI transcript·REPL·server 세션 및 생성 도구 결과가 계약을 충족해야 합니다.
 
 ## M6 — Wasm·N-API 제품 완성
 
 - M1에서 만든 adapter를 전체 공통 engine과 연결하고 실제 브라우저·Node에서 대상 코퍼스를 실행합니다.
 - Wasm에는 VFS·비동기 loader 등 Host 기능을 공급합니다. 필요한 기능과 제공 여부를 명시하고, 필수 기능을 제공하지 않는 환경의 사례를 전체 호환 통과로 집계하지 않습니다.
 - N-API에는 Node I/O, 비동기 평가·취소·close, 손실 없는 `BigInt`와 `Uint8Array` 전달을 구현합니다. JS와 Rust 사이의 변환도 결과와 성능 검증에 포함합니다.
-- Native 라이브러리·CLI, Wasm 배포물, npm 패키지와 JVM adapter의 빌드·설치·실행 절차를 검증하고 지원 플랫폼을 확정합니다.
+- Native 라이브러리·CLI, Wasm 배포물, npm 패키지의 빌드·설치·실행 절차를 검증하고 지원 플랫폼을 확정합니다.
 
 **산출물·종료 조건:** 배포 artifact를 통해 실제 호출한 결과·오류·수명주기가 일치하고 공통 코퍼스 실행 결과가 target별로 보고되어야 합니다. 문서의 지원 기능은 검증된 범위와 일치해야 합니다.
 

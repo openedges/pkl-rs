@@ -61,7 +61,7 @@ Preserve integers and bytes without loss across API boundaries. Implement the sa
 
 ## Product Scope
 
-The initial release target includes the complete 0.32.0 surface, not only source evaluation.
+The initial release target covers the 0.32.0 language, standard library, output, CLI, tooling, and Rust/Wasm/N-API product surface, not only source evaluation.
 
 | Area | Required scope |
 | --- | --- |
@@ -72,8 +72,10 @@ The initial release target includes the complete 0.32.0 surface, not only source
 | Projects and packages | Project configuration, evaluator settings, dependency resolution, lockfiles, checksums, caches, package creation, and retrieval |
 | CLI | All 0.32.0 commands, options, defaults, help text, completion, diagnostics, and exit behavior |
 | Interactive and server use | REPL sessions, server protocol, callbacks, request handling, and evaluator lifecycles |
-| Developer tools | Formatter, Pkl tests and reporters, documentation generation, and Java/Kotlin code generation |
-| Embedding | Native Rust evaluator API, Wasm and N-API bindings, and an adapter preserving existing JVM public APIs |
+| Developer tools | Formatter, Pkl tests and reporters, and documentation generation (`pkldoc`) |
+| Embedding | Native Rust evaluator API, and Wasm and N-API bindings |
+
+**Explicit scope exclusions (2026-11-20):** Java/Kotlin code generation (`pkl-codegen-java`, `pkl-codegen-kotlin`) and a JVM public API compatibility adapter preserving existing Java/Kotlin public APIs are explicitly excluded from the required product scope and release criteria. Upstream `java_api`, `kotlin_api`, and code-generation entries recorded in `compatibility/inventory.json` and `compatibility/corpus.json` remain reference census data only, not required implementation deliverables.
 
 Use inventories derived from the pinned sources to enumerate this scope. In particular, implement 0.32.0 name resolution, multiline string continuation, HTTP custom headers, resolved evaluator settings, external reader resolution, dependency notation, and test reporter behavior. Experimental features present in the chosen baseline remain in scope unless the project intent is explicitly changed.
 

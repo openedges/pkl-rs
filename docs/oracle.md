@@ -16,7 +16,8 @@ in [references.lock](../references.lock). No reference checkout is modified.
 ## Bootstrap and verification
 
 Requirements are Python 3.9 or newer, Git, and Eclipse Temurin OpenJDK
-`21.0.12.1+1-LTS` (`java.version=21.0.12.1`). Provision that exact JDK separately
+`21.0.13.1+2-LTS` (`java.version=21.0.13.1`, updated 2026-11-20 to address
+`CVE-2026-114938` through `CVE-2026-114942`). Provision that exact JDK separately
 from [Adoptium's official releases](https://adoptium.net/temurin/releases/).
 The tool does not install system software. Select its executable using
 `PKL_ORACLE_JAVA` when the pinned JDK is not the `java` on `PATH`:
@@ -49,7 +50,11 @@ explicit lock update and new evidence.
 
 The default `reference` profile uses externally provisioned Temurin 21 for the
 byte oracle. The `performance` profile downloads the separately pinned official
-GraalVM Community 25.0.1 archive into `.cache/oracle` and extracts it there.
+GraalVM Community 25.0.1 archive into `.cache/oracle` and extracts it there
+(as of 2026-11-20, `graalvm/graalvm-ce-builds` has not yet published a JDK
+`25.0.5.1` Community Edition build addressing `CVE-2026-114938`–`114942`; the
+`performance` profile is macOS arm64-only and not downloaded by default CI, and
+will be updated when a patched CE 25 release is published).
 It verifies the archive SHA-256 and installed Java launcher, runtime modules,
 release metadata, JVM library, Java library, and optimizing compiler library
 against locked hashes. Currently only macOS arm64 has a pinned performance

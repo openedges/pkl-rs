@@ -2031,3 +2031,5 @@ For Wasm and N-API, first define measurement boundaries that include the Host pr
 ## Release Criteria
 
 The required feature and API inventory must have no omissions, and there must be zero known mismatches within the required scope on target platforms. Completion cannot be declared while required tests remain unrun or unimplemented, or performance and memory measurements remain inconclusive. Do not document complete compatibility or guarantee performance equivalent to Java before these criteria are met.
+
+**Explicit scope exclusions (2026-11-20, matching [INTENT.md](INTENT.md) and [PLAN.md](PLAN.md)):** Java/Kotlin code generation (`pkl-codegen-java`, `pkl-codegen-kotlin`) and a JVM public API compatibility adapter are excluded from required product scope and release criteria. Upstream `java_api`, `kotlin_api`, and code-generation census entries retained in `compatibility/inventory.json` and `compatibility/corpus.json` remain reference provenance only and do not block release completion. The pinned Java 0.32.0 oracle remains the compatibility and performance reference for all required surfaces.
