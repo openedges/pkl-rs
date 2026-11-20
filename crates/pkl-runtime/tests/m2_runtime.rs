@@ -1219,3 +1219,92 @@ fn initialized_module(session: &mut pkl_runtime::host::HostSession) -> Value {
     }
     panic!("module initialization did not settle");
 }
+
+#[test]
+fn lazy_property_cycle_reports_stack_overflow_and_resets_state_for_retry() {
+    use pkl_runtime::heap::LazyState;
+
+    let (mut vm, object) = module("a = b\nb = a\nresult = a\n");
+    let object = object.as_object().unwrap();
+    for _ in 0..2 {
+        vm.start_member(object, "result").unwrap();
+        let error = done(&mut vm).unwrap_err();
+        assert_eq!(error.kind, ErrorKind::Cycle);
+        assert_eq!(error.message, "A stack overflow occurred.");
+        for name in ["result", "a", "b"] {
+            assert_eq!(
+                vm.member_state(object, name).unwrap(),
+                LazyState::Unevaluated
+            );
+        }
+    }
+
+    let (mut vm, object) = module("const local a = b\nconst local b = a\nresult = a\n");
+    let object = object.as_object().unwrap();
+    vm.start_member(object, "result").unwrap();
+    let error = done(&mut vm).unwrap_err();
+    assert_eq!(error.kind, ErrorKind::Cycle);
+    assert_eq!(error.message, "A stack overflow occurred.");
+    assert_eq!(
+        vm.member_state(object, "result").unwrap(),
+        LazyState::Unevaluated
+    );
+}
+
+#[test]
+fn pkl_test_catch_and_catch_or_null_capture_lazy_property_cycle_as_stack_overflow() {
+    use pkl_runtime::modules::default_completion;
+    use pkl_runtime::probe::SourceProbe;
+
+    let source = "import \"pkl:test\"\na = b\nb = a\ncaught = test.catch(() -> a)\ncaughtOrNull = test.catchOrNull(() -> a)\nstable = 42\n";
+    let expressions = ["caught", "caughtOrNull", "stable", "a", "caught"];
+    let mut probe = SourceProbe::new_expressions_text(
+        source,
+        "file:///lazy-cycle-catch.pkl",
+        "main",
+        &expressions.map(String::from),
+        "compact",
+        false,
+        false,
+        true,
+    )
+    .unwrap();
+    let expected_message: Vec<u16> = "A stack overflow occurred.".encode_utf16().collect();
+    let expected_stable: Vec<u16> = "42".encode_utf16().collect();
+    for (index, expression) in expressions.iter().enumerate() {
+        probe.start_path(index as u32, 0, None).unwrap();
+        let event = loop {
+            let event = probe.poll(0, 64).unwrap();
+            probe.collect();
+            if event.kind == "module-request" {
+                let token = event.token.as_deref().unwrap();
+                let request = probe.module_request(token).unwrap();
+                let completion =
+                    default_completion(&request).expect("standard pkl:test completion");
+                probe.complete_module(token, completion, 0).unwrap();
+                continue;
+            }
+            if event.kind != "yield" {
+                break event;
+            }
+        };
+        if *expression == "a" {
+            assert_eq!(event.kind, "error", "{expression}: {event:?}");
+            let rendered = String::from_utf16(&event.error.unwrap()).unwrap();
+            assert!(
+                rendered.starts_with("–– Pkl Error ––\nA stack overflow occurred.\n"),
+                "unexpected uncaught cycle error: {rendered:?}"
+            );
+        } else {
+            assert_eq!(event.kind, "value", "{expression}: {event:?}");
+            let expected = if *expression == "stable" {
+                &expected_stable
+            } else {
+                &expected_message
+            };
+            assert_eq!(event.value.as_ref().unwrap(), expected, "{expression}");
+        }
+    }
+    probe.close();
+    assert_eq!(probe.collect().slots, 0);
+}

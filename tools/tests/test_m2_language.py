@@ -87,7 +87,7 @@ class DevelopmentGateTests(unittest.TestCase):
         for runtime in ('java', 'rust'):
             (folder / f'{runtime}.stdout.bin').write_bytes(b'')
         (folder / 'java.stderr.bin').write_bytes(b'Exception in thread "main" java.lang.NoClassDefFoundError: Could not initialize class org.pkl.core.runtime.VmStackOverflowException\nremaining full stack\n')
-        (folder / 'rust.stderr.bin').write_bytes('–– Pkl Error ––\ncyclic forcing of a\nfull frames\n'.encode())
+        (folder / 'rust.stderr.bin').write_bytes('–– Pkl Error ––\nA stack overflow occurred.\nfull frames\n'.encode())
         self.cycle = dict(id='error-cycle', status='oracle-error', java=dict(exit_code=1, timed_out=False),
                           rust=dict(exit_code=1, timed_out=False))
         self.report = dict(results=[dict(id='other', status='pass'), self.cycle],

@@ -1,6 +1,7 @@
 """Explicit admission of eight pinned historical modules; no historical pass reuse."""
 from pathlib import Path
 import json
+import tempfile
 
 import compat
 import m2_module_eval
@@ -47,8 +48,19 @@ TRACKED_REGRESSIONS = {
 # The 21 standalone historical CLI regression candidates
 CLI_ADAPTER = 'historical-cli-module-eval'
 CLI_FIXTURES = Path('tests/fixtures/rev1-cli')
-CLI_PROFILE = 'pkl-0.32-historical-cli-no-cache-no-project-v1'
+CLI_PROFILE = 'pkl-0.32-historical-cli-no-cache-no-project-v2'
 CLI_ORIGINAL = 'crates/pkl-cli/tests/fixtures/'
+CLI_STAGED_DIR = Path('staged')
+CLI_ISOLATED_LIBS = {
+    't43_043_inherited_method_main.pkl': (
+        't43_043_inherited_method',
+        't43_043_inherited_method_lib.pkl',
+    ),
+    't43_064_imported_function_main.pkl': (
+        't43_064_imported_function',
+        't43_064_imported_function_lib.pkl',
+    ),
+}
 CLI_SELECTED = (
     'bytecode_compound_expression_frames/main.pkl',
     'nested_function_render_span/deeper.pkl',
@@ -250,6 +262,38 @@ def verify_case(root, output, context, case, row, metadata, binary, baseline):
     m2_module_eval.verify_case(root,Path(context['workspace']),case,wrapped,output,metadata,binary,baseline)
 
 
+def cli_resource_baseline(registry):
+    return resource_baseline({'resources': [*registry['resources'], *registry.get('staged_resources', [])]})
+
+
+def _cli_execution_case(case):
+    staged_input = case['upstream_case'].get('staged_input')
+    if staged_input is None:
+        return case
+    if case['upstream_case']['command'][-1] != staged_input:
+        raise ValueError('historical CLI staged input disagrees with command target')
+    return dict(case, input=staged_input)
+
+
+def _materialize_cli_tree(root, target, registry):
+    for resource in registry['resources']:
+        source, destination = root / resource['path'], target / resource['path']
+        raw = source.read_bytes()
+        if compat.digest(raw) != resource['sha256']:
+            raise ValueError('historical CLI fixture changed during staging: ' + resource['path'])
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes(raw)
+        destination.chmod(0o644)
+    for resource in registry.get('staged_resources', []):
+        source, destination = root / resource['source_path'], target / resource['path']
+        raw = source.read_bytes()
+        if compat.digest(raw) != resource['sha256']:
+            raise ValueError('historical CLI staged fixture changed during staging: ' + resource['path'])
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes(raw)
+        destination.chmod(0o644)
+
+
 def build_cli_registry(root):
     inventory = json.loads((root / 'compatibility/rev1-inventory.json').read_bytes())
     if inventory['repository'] != 'rev1' or inventory['revision'] != REVISION:
@@ -269,6 +313,22 @@ def build_cli_registry(root):
     actual = {p.relative_to(root).as_posix() for p in (root / CLI_FIXTURES).rglob('*') if p.is_file()}
     if actual != {x['path'] for x in resources} or any(p.is_symlink() for p in (root / CLI_FIXTURES).rglob('*')):
         raise ValueError('historical CLI fixture closure has missing/extra/symlink payloads')
+    by_path = {r['path']: r for r in resources}
+    staged_resources = []
+    isolated_case_resources = {}
+    for main_local, (stage_dir, lib_local) in CLI_ISOLATED_LIBS.items():
+        main_src = by_path[(CLI_FIXTURES / main_local).as_posix()]
+        lib_src = by_path[(CLI_FIXTURES / lib_local).as_posix()]
+        staged_main = (CLI_STAGED_DIR / stage_dir / Path(main_local).name).as_posix()
+        staged_lib = (CLI_STAGED_DIR / stage_dir / 'lib.pkl').as_posix()
+        entries = [
+            {'path': staged_main, 'source_path': main_src['path'], 'sha256': main_src['sha256'],
+             'kind': 'file', 'bytes': main_src['bytes'], 'original': main_src['original']},
+            {'path': staged_lib, 'source_path': lib_src['path'], 'sha256': lib_src['sha256'],
+             'kind': 'file', 'bytes': lib_src['bytes'], 'original': lib_src['original']},
+        ]
+        staged_resources.extend(entries)
+        isolated_case_resources[main_local] = (staged_main, entries)
     cases = []
     for local in CLI_SELECTED:
         original = CLI_ORIGINAL + local
@@ -276,21 +336,31 @@ def build_cli_registry(root):
             raise ValueError('historical input is not an original candidate')
         identifier = 'rev1-candidate:' + original
         path = (CLI_FIXTURES / local).as_posix()
+        if local in isolated_case_resources:
+            staged_main, case_staged = isolated_case_resources[local]
+            command_target = staged_main
+            case_resources = [{'path': r['path'], 'sha256': r['sha256']} for r in (*resources, *case_staged)]
+        else:
+            staged_main = None
+            command_target = path
+            case_resources = [{'path': r['path'], 'sha256': r['sha256']} for r in resources]
         contract = {'id': identifier, 'suite': 'historical-cli', 'source': {'repository': 'pkl-rs', 'path': path, 'sha256': source[original]['sha256']},
-            'command': ['eval', '--no-cache', '--no-project', '--settings', 'pkl:settings', path],
+            'command': ['eval', '--no-cache', '--no-project', '--settings', 'pkl:settings', command_target],
             'cwd': '.', 'environment': {}, 'output': None, 'expected_exit': [0, 1],
-            'resources': [{'path': r['path'], 'sha256': r['sha256']} for r in resources],
+            'resources': case_resources,
             'channels': ['stdout', 'stderr', 'exit_code', 'files', 'workspace_changes'],
             'execution': {'status': 'ready', 'reason': None},
             'contract_origin': 'Explicit new pinned Java 0.32 historical CLI profile.'}
+        if staged_main is not None:
+            contract['staged_input'] = staged_main
         cases.append({'id': identifier, 'input': path, 'input_sha256': source[original]['sha256'],
             'contract': contract, 'contract_sha256': compat.digest(compat.encoded(contract))})
     return {'schema_version': 1, 'adapter': CLI_ADAPTER, 'profile': CLI_PROFILE,
         'baseline': {'version': '0.32.0', 'revision': 'e51fb2f91774265666f94980ec630db794a4db2d'},
         'historical_revision': REVISION, 'snapshot_sha256': oracle.sha256(root / 'compatibility/rev1-inventory.json'),
-        'scope': 'Twenty-one historical CLI candidates admitted with differential comparison against Java 0.32.0 Oracle.',
+        'scope': 'Twenty-one historical CLI candidates admitted with differential comparison against Java 0.32.0 Oracle; multi-file t43_043 and t43_064 cases stage their respective support library as sibling lib.pkl in isolated directories.',
         'watchdog_seconds': m2_module_eval.CAPTURE_TIMEOUT_SECONDS,
-        'resources': resources, 'cases': cases}
+        'resources': resources, 'staged_resources': staged_resources, 'cases': cases}
 
 
 def cli_registry_cases(root):
@@ -306,13 +376,9 @@ def prepare_cli_workspace(root, workspace, output, registry):
     marker = {'schema_version': 1, 'repository': str(root.resolve()), 'workspace': str(workspace.resolve()),
         'historical_profile': CLI_PROFILE}
     compat.write_json(workspace / compat.MARKER, marker)
-    for resource in registry['resources']:
-        source, destination = root / resource['path'], workspace / resource['path']
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        destination.write_bytes(source.read_bytes())
-        destination.chmod(0o644)
+    _materialize_cli_tree(root, workspace, registry)
     baseline = compat.snapshot(workspace)
-    if baseline != resource_baseline(registry):
+    if baseline != cli_resource_baseline(registry):
         raise ValueError('historical CLI minimal workspace closure differs')
     return baseline
 
@@ -328,26 +394,39 @@ def acquire_cli(root, output, cases, metadata, binary, workspace=None):
     compat.write_json(output / 'historical-cli-workspace.json', baseline)
     compat.write_json(output / 'historical-cli-registry.json', registry)
     results = []
-    for case in cases:
-        if case['upstream_case'] != registered[case['id']]['contract'] or compat.snapshot(workspace) != baseline:
-            raise ValueError('historical CLI case or workspace changed before acquisition')
-        result = m2_module_eval.acquire_case(root, workspace, case, metadata, binary, output)
-        result['adapter'] = CLI_ADAPTER
-        results.append(result)
+    with tempfile.TemporaryDirectory() as reference_dir:
+        reference_root = Path(reference_dir).resolve(strict=True)
+        _materialize_cli_tree(root, reference_root, registry)
+        for case in cases:
+            if case['upstream_case'] != registered[case['id']]['contract'] or compat.snapshot(workspace) != baseline:
+                raise ValueError('historical CLI case or workspace changed before acquisition')
+            result = m2_module_eval.acquire_case(
+                reference_root, workspace, _cli_execution_case(case), metadata, binary, output)
+            result['adapter'] = CLI_ADAPTER
+            results.append(result)
     context = {'profile': CLI_PROFILE, 'workspace': str(workspace), 'workers': 1,
         'watchdog_seconds': m2_module_eval.CAPTURE_TIMEOUT_SECONDS,
+        'registry_sha256': oracle.sha256(output / 'historical-cli-registry.json'),
+        'baseline_sha256': oracle.sha256(output / 'historical-cli-workspace.json'),
         'files_boundary': 'Complete generated public files and unexpected workspace changes.',
         'prior_Stage90_three_channel_results_reused': False}
     return results, context
 
 
 def verify_cli_context(root, output, context):
-    registry = build_cli_registry(root)
+    registry_path = output / 'historical-cli-registry.json'
+    baseline_path = output / 'historical-cli-workspace.json'
+    registry = json.loads(registry_path.read_bytes())
+    if registry != build_cli_registry(root):
+        raise ValueError('historical CLI registry coverage/order/source/CLI contract differs')
     if (not isinstance(context, dict) or context.get('profile') != CLI_PROFILE or context.get('workers') != 1
-            or context.get('watchdog_seconds') != m2_module_eval.CAPTURE_TIMEOUT_SECONDS):
+            or context.get('watchdog_seconds') != m2_module_eval.CAPTURE_TIMEOUT_SECONDS
+            or context.get('registry_sha256') != oracle.sha256(registry_path)
+            or context.get('baseline_sha256') != oracle.sha256(baseline_path)
+            or context.get('prior_Stage90_three_channel_results_reused') is not False):
         raise ValueError('historical CLI context/profile changed')
-    baseline = json.loads((output / 'historical-cli-workspace.json').read_bytes())
-    if baseline != resource_baseline(registry):
+    baseline = json.loads(baseline_path.read_bytes())
+    if baseline != cli_resource_baseline(registry):
         raise ValueError('historical CLI baseline resource closure changed')
     return baseline
 
@@ -356,5 +435,6 @@ def verify_cli_case(root, output, context, case, row, metadata, binary, baseline
     if row.get('adapter') != CLI_ADAPTER or case.get('adapter') != CLI_ADAPTER:
         raise ValueError('historical CLI adapter identity differs')
     wrapped = dict(row, adapter=m2_module_eval.ADAPTER)
-    m2_module_eval.verify_case(root, Path(context['workspace']), case, wrapped, output, metadata, binary, baseline)
+    m2_module_eval.verify_case(
+        root, Path(context['workspace']), _cli_execution_case(case), wrapped, output, metadata, binary, baseline)
 

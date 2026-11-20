@@ -3356,9 +3356,7 @@ impl Vm {
         {
             return Err(RuntimeError::new(
                 ErrorKind::Cycle,
-                PklString::from("cyclic forcing of ")
-                    .concat(&name)
-                    .concat(&"".into()),
+                "A stack overflow occurred.",
             ));
         }
         if local
@@ -3373,9 +3371,7 @@ impl Vm {
         if stolen_value.is_none() && active && !direct_force_read && !callback_attempt {
             return Err(RuntimeError::new(
                 ErrorKind::Cycle,
-                PklString::from("cyclic forcing of ")
-                    .concat(&name)
-                    .concat(&"".into()),
+                "A stack overflow occurred.",
             ));
         }
         let mut collection_casts = Vec::new();

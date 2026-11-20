@@ -1,11 +1,11 @@
 # M2 language evidence
 
-The [Stage157 checkpoint](stage157-package-metadata/README.md) records shared
+The [Stage 161 M2 development-closure checkpoint](stage161-m2-closure/README.md) is the current canonical M2 report (`exact_jdk_lock_match: true`, pinned Temurin `21.0.12.1+1-LTS`, `4,574 pass / 1 oracle-error (error-cycle) / 0 mismatch` across `4,575` ready cases, `88/88` metamorphic, M1 `6,078/6,078`, single-command `cargo test --workspace --locked` `2,222 passed; 0 failed; 2 ignored`; strict-gate exceptions and Milestones M3–M7 remain explicitly open). Earlier canonical checkpoints include [Stage 160](stage160-gc-protobuf-remediation/README.md), [Stage 159](stage159-strict-gate-closure/README.md), and [Stage 158](stage158-m2-remediation/README.md).
+
+The earlier [Stage157 checkpoint](stage157-package-metadata/README.md) records shared
 package metadata acceptance, qualified fixtures and completed local Rust/M1
 verification. The [Stage156 baseline](stage156-baseline/README.md) retains the
-full-ready and strict completion results. M2 remains in progress; actual package
-Host acquisition is next. Full language/API, release-platform and performance
-gates remain open.
+full-ready and strict completion results.
 
 The checkpoint descriptions below retain their historical source and execution
 scope; they are not current-source reruns.

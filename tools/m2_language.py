@@ -814,7 +814,7 @@ def development_passes(report, directory: Path):
                    '–– Pkl Error ––\nA stack overflow occurred.\n'.encode()]
         if not any(java.startswith(header) for header in headers):
             return False
-        if not rust.startswith('–– Pkl Error ––\ncyclic forcing of a\n'.encode()):
+        if not rust.startswith('–– Pkl Error ––\nA stack overflow occurred.\n'.encode()):
             return False
     return True
 

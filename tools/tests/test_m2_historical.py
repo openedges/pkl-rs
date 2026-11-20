@@ -42,6 +42,41 @@ class HistoricalRegistryTests(unittest.TestCase):
         self.assertEqual({Path(x['path']).name for x in cli_reg['resources'] if x['original']['path'] in ('LICENSE', 'NOTICE')}, {'LICENSE', 'NOTICE'})
         self.assertTrue(all(c['contract']['channels'] == ['stdout', 'stderr', 'exit_code', 'files', 'workspace_changes'] for c in cli_reg['cases']))
 
+    def test_cli_isolated_t43_cases_stage_distinct_sibling_libs_without_changing_other_nineteen(self):
+        cli_reg = historical.build_cli_registry(self.root)
+        by_id = {c['id']: c for c in cli_reg['cases']}
+        res_sha = {r['path']: r['sha256'] for r in cli_reg['resources']}
+        self.assertEqual(len(cli_reg['staged_resources']), 4)
+        expected_pairs = {
+            'rev1-candidate:crates/pkl-cli/tests/fixtures/t43_043_inherited_method_main.pkl': (
+                'staged/t43_043_inherited_method/t43_043_inherited_method_main.pkl',
+                'staged/t43_043_inherited_method/lib.pkl',
+                'tests/fixtures/rev1-cli/t43_043_inherited_method_main.pkl',
+                'tests/fixtures/rev1-cli/t43_043_inherited_method_lib.pkl',
+            ),
+            'rev1-candidate:crates/pkl-cli/tests/fixtures/t43_064_imported_function_main.pkl': (
+                'staged/t43_064_imported_function/t43_064_imported_function_main.pkl',
+                'staged/t43_064_imported_function/lib.pkl',
+                'tests/fixtures/rev1-cli/t43_064_imported_function_main.pkl',
+                'tests/fixtures/rev1-cli/t43_064_imported_function_lib.pkl',
+            ),
+        }
+        for case_id, entry in by_id.items():
+            contract = entry['contract']
+            if case_id in expected_pairs:
+                staged_main, staged_lib, orig_main, orig_lib = expected_pairs[case_id]
+                self.assertEqual(entry['input'], orig_main)
+                self.assertEqual(contract['source']['path'], orig_main)
+                self.assertEqual(contract['staged_input'], staged_main)
+                self.assertEqual(contract['command'][-1], staged_main)
+                case_res = {r['path']: r['sha256'] for r in contract['resources']}
+                self.assertEqual(case_res[staged_main], res_sha[orig_main])
+                self.assertEqual(case_res[staged_lib], res_sha[orig_lib])
+            else:
+                self.assertNotIn('staged_input', contract)
+                self.assertEqual(contract['command'][-1], entry['input'])
+                self.assertEqual(len(contract['resources']), 25)
+
     def test_resource_only_map_and_tracked_regressions_census(self):
         self.assertEqual(len(historical.RESOURCE_ONLY_MAP), 8)
         self.assertEqual(len(historical.ALL_RESOURCE_ONLY), 8)
@@ -158,6 +193,121 @@ class RawCaptureTests(unittest.TestCase):
         self.assertEqual(captured['files']['workspace/unexpected.bin'],b'unexpected')
         self.assertFalse((self.workspace/'unexpected.bin').exists())
         self.assertEqual(m2_module_eval.status(process,process,captured,captured,[0]),'oracle-error')
+
+
+class CliIsolatedStagingTests(unittest.TestCase):
+    def _synthetic_root(self):
+        temp = tempfile.TemporaryDirectory()
+        self.addCleanup(temp.cleanup)
+        root = Path(temp.name).resolve(strict=True)
+        (root / 'compatibility').mkdir()
+        shutil.copyfile(m2_manifest.ROOT / 'compatibility/rev1-inventory.json', root / 'compatibility/rev1-inventory.json')
+        shutil.copytree(m2_manifest.ROOT / historical.CLI_FIXTURES, root / historical.CLI_FIXTURES)
+        return root
+
+    def test_acquire_and_verify_cli_isolated_staging_and_tamper_rejection(self):
+        root = self._synthetic_root()
+        output = root / 'target/cli-evidence'
+        output.mkdir(parents=True)
+        workspace = root / 'target/cli-workspace'
+        registry = historical.build_cli_registry(root)
+        cases = []
+        for entry in registry['cases']:
+            cases.append({
+                'id': entry['id'],
+                'adapter': historical.CLI_ADAPTER,
+                'input': entry['input'],
+                'input_sha256': entry['input_sha256'],
+                'upstream_case': entry['contract'],
+                'execution': {'state': 'ready', 'reason': None},
+            })
+        probe = root / 'synthetic-cli-probe.py'
+        probe.write_text(
+            "#!/usr/bin/env python3\n"
+            "import hashlib, pathlib, sys\n"
+            "target = pathlib.Path(sys.argv[-1])\n"
+            "sib = target.parent / 'lib.pkl'\n"
+            "sib_sha = hashlib.sha256(sib.read_bytes()).hexdigest() if sib.is_file() else 'MISSING'\n"
+            "sys.stdout.write(f'{target.as_posix()}|{sib_sha}\\n')\n",
+            encoding='utf-8',
+        )
+        probe.chmod(0o755)
+        metadata = {
+            'command': [sys.executable, str(probe)],
+            'environment': {'PATH': '/bin:/usr/bin', 'LANG': 'C', 'LC_ALL': 'C', 'TZ': 'UTC', 'TERM': 'dumb', 'NO_COLOR': '1'},
+        }
+        rows, context = historical.acquire_cli(root, output, cases, metadata, probe, workspace)
+        self.assertEqual(len(rows), 21)
+        self.assertTrue(all(r['status'] == 'pass' for r in rows))
+        baseline = historical.verify_cli_context(root, output, context)
+        by_id = {r['id']: r for r in rows}
+        for case in cases:
+            historical.verify_cli_case(root, output, context, case, by_id[case['id']], metadata, probe, baseline)
+
+        # Verify both t43 cases actually observed their distinct sibling lib.pkl bytes.
+        t43_043_id = 'rev1-candidate:crates/pkl-cli/tests/fixtures/t43_043_inherited_method_main.pkl'
+        t43_064_id = 'rev1-candidate:crates/pkl-cli/tests/fixtures/t43_064_imported_function_main.pkl'
+        sha_043_lib = compat.digest((root / historical.CLI_FIXTURES / 't43_043_inherited_method_lib.pkl').read_bytes())
+        sha_064_lib = compat.digest((root / historical.CLI_FIXTURES / 't43_064_imported_function_lib.pkl').read_bytes())
+        out_043 = (output / 'cases' / by_id[t43_043_id]['directory'] / 'rust/stdout.bin').read_text(encoding='utf-8').strip()
+        out_064 = (output / 'cases' / by_id[t43_064_id]['directory'] / 'rust/stdout.bin').read_text(encoding='utf-8').strip()
+        self.assertEqual(out_043, f'staged/t43_043_inherited_method/t43_043_inherited_method_main.pkl|{sha_043_lib}')
+        self.assertEqual(out_064, f'staged/t43_064_imported_function/t43_064_imported_function_main.pkl|{sha_064_lib}')
+
+        # Verify tamper rejection on staged_input, staged lib.pkl baseline hash, registry, and context.
+        t43_043_case = next(c for c in cases if c['id'] == t43_043_id)
+        bad_staged = copy.deepcopy(t43_043_case)
+        bad_staged['upstream_case']['staged_input'] = 'staged/other/main.pkl'
+        with self.assertRaisesRegex(ValueError, 'staged input disagrees'):
+            historical.verify_cli_case(root, output, context, bad_staged, by_id[t43_043_id], metadata, probe, baseline)
+
+        bad_baseline = copy.deepcopy(baseline)
+        bad_baseline['staged/t43_043_inherited_method/lib.pkl']['sha256'] = '0' * 64
+        with self.assertRaisesRegex(ValueError, 'resource baseline differs'):
+            historical.verify_cli_case(root, output, context, t43_043_case, by_id[t43_043_id], metadata, probe, bad_baseline)
+
+        bad_context = dict(context, baseline_sha256='0' * 64)
+        with self.assertRaisesRegex(ValueError, 'context/profile changed'):
+            historical.verify_cli_context(root, output, bad_context)
+
+        bad_reg_path = output / 'historical-cli-registry.json'
+        orig_reg_bytes = bad_reg_path.read_bytes()
+        tampered_reg = json.loads(orig_reg_bytes)
+        tampered_reg['staged_resources'][1]['sha256'] = '0' * 64
+        bad_reg_path.write_bytes(compat.encoded(tampered_reg))
+        with self.assertRaisesRegex(ValueError, 'CLI contract differs'):
+            historical.verify_cli_context(root, output, context)
+        bad_reg_path.write_bytes(orig_reg_bytes)
+
+    def test_mutated_staged_lib_is_restored_and_never_passes(self):
+        root = self._synthetic_root()
+        output = root / 'target/cli-mutate-evidence'
+        output.mkdir(parents=True)
+        workspace = root / 'target/cli-mutate-workspace'
+        registry = historical.build_cli_registry(root)
+        baseline = historical.prepare_cli_workspace(root, workspace, output, registry)
+        t43_043_entry = next(c for c in registry['cases'] if c['id'].endswith('t43_043_inherited_method_main.pkl'))
+        case = {
+            'id': t43_043_entry['id'],
+            'adapter': historical.CLI_ADAPTER,
+            'input': t43_043_entry['input'],
+            'input_sha256': t43_043_entry['input_sha256'],
+            'upstream_case': t43_043_entry['contract'],
+        }
+        exec_case = historical._cli_execution_case(case)
+        mutator = "from pathlib import Path; Path('staged/t43_043_inherited_method/lib.pkl').write_bytes(b'mutated')"
+        with tempfile.TemporaryDirectory() as ref_dir:
+            ref_root = Path(ref_dir).resolve(strict=True)
+            historical._materialize_cli_tree(root, ref_root, registry)
+            process, captured = m2_module_eval.capture_process(
+                ref_root, workspace, exec_case, [sys.executable, '-c', mutator],
+                {'PATH': '/bin:/usr/bin', 'LANG': 'C', 'LC_ALL': 'C', 'TZ': 'UTC', 'TERM': 'dumb', 'NO_COLOR': '1'},
+                output / 'mutated',
+            )
+        self.assertIn('staged/t43_043_inherited_method/lib.pkl', captured['workspace_changes'])
+        self.assertEqual(captured['files']['workspace/staged/t43_043_inherited_method/lib.pkl'], b'mutated')
+        self.assertEqual(compat.snapshot(workspace), baseline)
+        self.assertEqual(m2_module_eval.status(process, process, captured, captured, [0, 1]), 'oracle-error')
 
 
 class MainRunnerDispatchTests(unittest.TestCase):

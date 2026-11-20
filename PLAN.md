@@ -1,6 +1,25 @@
 # 구현 계획
 
-## 현재 상태 — Stage160 GC 세이프포인트 핫패스 최적화·Protobuf 경계 시정 및 단일 명령 전체 워크스페이스 검증 완료
+## 현재 상태 — Stage161 M2 개발 게이트 마감·핀 JDK(`21.0.12.1+1-LTS`) 전수 검증 완료
+
+[Stage161 체크포인트 보고서](reports/m2/stage161-m2-closure/README.md)는 지연 속성 순환 진단 정렬(`"A stack overflow occurred."`), `t43_043`·`t43_064` CLI 픽스처의 격리 `lib.pkl` 스테이징(`CLI_PROFILE v2`), 매니페스트 동기화, 그리고 `oracle.lock.json`에 정확히 일치하는 **Eclipse Adoptium Temurin `21.0.12.1+1-LTS`**(`exact_jdk_lock_match: true`, `PKL_ALLOW_LOCAL_JDK=1` 미사용) 프로비저닝을 완료하고, 동결 소스 기준 전체 M2(4,575건)·M1(6,078건)·단일 명령 워크스페이스(`2,222 passed; 0 failed; 2 ignored`) 검증을 마쳤다(로컬 macOS arm64, `rustc 1.98.1`). 이로써 **M2-01–M2-09 개발 게이트를 마감**하고 다음 단계로 **M3(표준 라이브러리와 출력)** 착수를 준비한다.
+
+### Stage 161 주요 변경 및 검증 요약
+1. **지연 속성 순환 진단 정렬 (`crates/pkl-runtime`, `tools/m2_language.py`)**: [vm.rs](crates/pkl-runtime/src/vm.rs)(`L3357–L3360`, `L3372–L3375`)의 지연 멤버 순환 메시지를 `"A stack overflow occurred."`로 정렬(`ErrorKind::Cycle`·`LazyState::Unevaluated` 롤백 유지), [m2_runtime.rs](crates/pkl-runtime/tests/m2_runtime.rs)에 회귀 테스트 2건 추가(`43/43` 통과), [m2_language.py](tools/m2_language.py)(`L817`) `development_passes()` 및 [test_m2_language.py](tools/tests/test_m2_language.py)(`L90`) 갱신(`status()`·`full_gate_failures()` 무변경).
+2. **`t43_043`·`t43_064` 격리 `lib.pkl` 스테이징 (`tools/m2_historical.py`, `compatibility/m2-language.json`)**: `CLI_PROFILE`을 `pkl-0.32-historical-cli-no-cache-no-project-v2`로 올리고 두 다중 파일 CLI 사례가 각자의 `t43_*_lib.pkl`을 격리된 `staged/<case>/lib.pkl`로 임포트하도록 수정(원본 `tests/fixtures/` 무변경, 나머지 19개 CLI 사례 유지, [test_m2_historical.py](tools/tests/test_m2_historical.py) 3건 추가), [m2-language.json](compatibility/m2-language.json) 재생성(`4,586`건: `4,575` ready / `11` unmapped, `475` 요구사항).
+3. **동결 소스 최종 검증 (`2026-11-19`, 핀 Temurin `21.0.12.1+1-LTS`, `exact_jdk_lock_match: true`, `PKL_ALLOW_LOCAL_JDK=1` 미사용)**:
+   - `cargo xtask verify`, `cargo fmt --all -- --check`, `cargo clippy --workspace --all-targets --locked -- -D warnings`, `cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked`, `tools/oracle.py verify`, 7종 Python `--check` 스크립트: 전원 **Exit 0**.
+   - **단일 명령 `cargo test --workspace --locked`**: **Exit 0** (**`2,222 passed; 0 failed; 2 ignored`** [`frontend_probe`, `java04_strict_full_compatibility_gate`], 337개 외부 타깃/doctest, 중첩 자식 13패스 제외; `m2_reflection_apis_lifecycle` `5/5` `45.63s`, `pkl-runtime --lib` `263/263` `21.22s`).
+   - **Python 단위 테스트**: `test_m2_*.py` `256`건 + 핵심 공용 도구 `166`건 = **`422 / 422` 통과** (미변경 과거 골든-픽스처 Python 스위트는 이번 에포크 미실행).
+   - **M1 멀티 타깃 (`target/m1/stage161-platforms --verify-contract`)**: **Exit 0**, `rust`/`node`(`v26.13.1`)/`browser`(Chromium `156.0.8078.4`) 각 **`6,078 / 6,078`** 일치, Node/브라우저 시나리오 각 `92`건 통과.
+   - **Protobuf 엄격 게이트 (`target/m2/stage161-protobuf-strict`)**: 계약상 **Exit 101** (`266/266` 실행, `240/240` regular, `8/8` pre-renderer, 정확히 `18`건 `REFERENCE-NONPASS`, harness 오류 `0`).
+   - **전체 4,575건 M2 재생 (`target/m2/stage161-full`, `recorded-build`, `exact_jdk_lock_match: true`)**: **`4,574 pass / 1 oracle-error (error-cycle) / 0 mismatch`**, metamorphic **`88 / 88`**, `historical-cli-module-eval` `21/21`(격리 `t43_043` `963/963 B`·`t43_064` `910/910 B` 원시 바이트 완전 일치), `package-project-eval` `68/68`(`188` HTTP 요청), `source_stability: true`, `artifact_stability: true`. 순차 3종 검증기: `--verify-report` **Exit 0**, `--verify-development` **Exit 0**, `--verify-full` 정직한 **Exit 1** (`full_gate_failures`: `semantic:lazy-evaluation`, `error-cycle`).
+
+### 보존된 엄격 게이트 예외 및 다음 우선순위
+- `error-cycle` 콜드 Java `NoClassDefFoundError` 및 비결정적 반복 횟수(`reports/m2/cycle-complete.json`)로 인한 `--verify-full` Exit 1, `m2-protobuf-java04-full` 18건 `REFERENCE-NONPASS`(`java04_strict_full_compatibility_gate` `#[ignore]`, **M3** 이관), `11`건 `required: false` `rev1` 미매핑 항목(지원 라이브러리 8건 + 중복 별칭 3건), 미실행 과거 골든-픽스처 Python 스위트, Linux/Windows 호스티드 CI, 그리고 미구현 마일스톤 **M3–M7**은 그대로 개방 상태로 보존한다.
+- **다음 마일스톤**: **M3 — 표준 라이브러리와 출력**(`stdlib`/`builtin` 목록 전수 마감, 17종 renderer 및 Protobuf 18건 잔여 경계 정리).
+
+## 이전 상태 — Stage160 GC 세이프포인트 핫패스 최적화·Protobuf 경계 시정 및 단일 명령 전체 워크스페이스 검증 완료
 
 [Stage160 체크포인트 보고서](reports/m2/stage160-gc-protobuf-remediation/README.md)는 `pkl:reflect` GC 세이프포인트 핫패스 병목(Stage 159에서 타임아웃되던 `m2_reflection_apis_lifecycle` 5/5 포함 단일 명령 `cargo test --workspace --locked` 완주 달성)과 Protobuf `no-complete-reference-nonpass` 4개 슬롯의 실제 러스트 런타임 결함 두 건을 수정하고, 동결 소스 기준 전체 워크스페이스·플랫폼·집중 차분 검증을 완료했다(로컬 macOS arm64, `rustc 1.98.1`, `PKL_ALLOW_LOCAL_JDK=1`, Temurin `21.0.13+9-LTS`).
 
@@ -286,7 +305,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: [Stage159 체크포인트](reports/m2/stage159-strict-gate-closure/README.md) 실측 완료(ready 4,575건 중 4,574 pass / 1 oracle-error[error-cycle] / 0 mismatch, M1 멀티 타깃 6,078/6,078 일치). 잔여 GC 스트레스 타임아웃·Protobuf 18건 참조 미통과·엄격 게이트 유지 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 개발 게이트 마감(엄격 게이트 예외 보존): [Stage161 체크포인트](reports/m2/stage161-m2-closure/README.md) 핀 JDK `21.0.12.1+1-LTS`(`exact_jdk_lock_match: true`) 전수 실측 완료(ready 4,575건 중 `4,574 pass / 1 oracle-error [error-cycle] / 0 mismatch`, `88/88` metamorphic, M1 `6,078/6,078`, 단일 명령 `cargo test --workspace --locked` `2,222 passed / 0 failed / 2 ignored`, `--verify-report`·`--verify-development` Exit 0). `error-cycle` 엄격 게이트(`--verify-full` Exit 1)·Protobuf 18건 참조 미통과(M3 이관)·Linux/Windows CI는 명시적 예외로 보존 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
