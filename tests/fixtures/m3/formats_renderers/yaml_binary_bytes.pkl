@@ -1,0 +1,6 @@
+res1 = Bytes()
+res2 = Bytes(1, 2, 3)
+res3 = IntSeq(0, 127).toList().toBytes()
+output {
+  renderer = new YamlRenderer { indentWidth = 2; omitNullProperties = true; isStream = false }
+}

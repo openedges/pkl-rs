@@ -1,0 +1,38 @@
+import "pkl:ref"
+import "pkl:test"
+
+class MyDomain extends ref.Domain {
+  function renderReference(reference) = "\(reference.getData()):\(reference.getPath().map((a) -> a.toString()).join("."))"
+}
+local d = new MyDomain {}
+
+class Foo {
+  name: String
+  count: Int
+}
+
+local strRef: ref.Reference<MyDomain, String> = ref.Reference(d, String, "s")
+local intRef: ref.Reference<MyDomain, Int> = ref.Reference(d, Int, "i")
+local listRef: ref.Reference<MyDomain, List> = ref.Reference(d, List, "l")
+local durRef: ref.Reference<MyDomain, Duration> = ref.Reference(d, Duration, "du")
+local clsRef: ref.Reference<MyDomain, Class> = ref.Reference(d, Class, "c")
+local fooRef: ref.Reference<MyDomain, Foo> = ref.Reference(d, Foo, "f")
+local resRef: ref.Reference<MyDomain, Resource> = ref.Reference(d, Resource, "r")
+local modRef: ref.Reference<MyDomain, Module> = ref.Reference(d, Module, "m")
+local dynRef: ref.Reference<MyDomain, Dynamic> = ref.Reference(d, Dynamic, "dy")
+local listingRef: ref.Reference<MyDomain, Listing> = ref.Reference(d, Listing, "li")
+local mappingRef: ref.Reference<MyDomain, Mapping> = ref.Reference(d, Mapping, "ma")
+
+okFooName = fooRef.name.toString()
+okResUri = resRef.uri.toString()
+okStrLength = strRef.length.toString()
+okStrMd5 = strRef.md5.toString()
+okIntAbs = intRef.abs.toString()
+okListIsNotEmpty = listRef.isNotEmpty.toString()
+okDurIsPositive = durRef.isPositive.toString()
+okClsSimpleName = clsRef.simpleName.toString()
+errModOutput = test.catch(() -> modRef.output)
+errDynDefault = test.catch(() -> dynRef.default)
+errListingDefault = test.catch(() -> listingRef.default)
+errMappingDefault = test.catch(() -> mappingRef.default)
+errStrUnknown = test.catch(() -> strRef.noSuchProp)

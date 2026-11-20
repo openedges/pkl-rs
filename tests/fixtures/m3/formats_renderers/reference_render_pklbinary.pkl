@@ -1,0 +1,16 @@
+import "pkl:ref"
+import "pkl:pklbinary"
+
+class MyDomain extends ref.Domain {
+  function renderReference(reference) = "my-ref(\(reference.getData()))"
+}
+local domain = new MyDomain {}
+
+class Foo {
+  x: Int
+}
+local fooRef = ref.Reference(domain, Foo, "data")
+output {
+  value = fooRef.x
+  renderer = new pklbinary.Renderer {}
+}

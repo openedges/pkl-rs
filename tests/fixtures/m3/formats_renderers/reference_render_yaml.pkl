@@ -1,0 +1,11 @@
+import "pkl:ref"
+
+class MyDomain extends ref.Domain {
+  function renderReference(reference) = "my-ref(\(reference.getData()))"
+}
+local domain = new MyDomain {}
+
+output {
+  value = ref.Reference(domain, String, "data")
+  renderer = new YamlRenderer {}
+}

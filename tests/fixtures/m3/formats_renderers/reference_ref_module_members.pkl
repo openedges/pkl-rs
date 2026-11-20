@@ -1,0 +1,8 @@
+import "pkl:ref"
+import "pkl:test"
+
+className = ref.getClass().simpleName
+hasReference = ref.hasProperty("Reference")
+hasDomain = ref.hasProperty("Domain")
+hasMissing = ref.hasProperty("noSuchMember")
+missingErr = test.catch(() -> ref.getProperty("noSuchMember"))

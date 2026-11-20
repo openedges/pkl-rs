@@ -317,7 +317,9 @@ impl Vm {
                 let mut elements = Vec::new();
                 let mut has_string = false;
                 for element in types {
-                    let Some(resolved) = self.protobuf_normalize_type(element, property_env, wrapper)? else {
+                    let Some(resolved) =
+                        self.protobuf_normalize_type(element, property_env, wrapper)?
+                    else {
                         return Ok(None);
                     };
                     let resolved = resolved.ok_or_else(|| RuntimeError::new(ErrorKind::Unsupported, "Pinned Protobuf union contains a null normalized collection node in wrapper context; Java internal-error projection remains unresolved."))?;
@@ -432,22 +434,80 @@ impl Vm {
         value: Value,
         context: &ProtoType,
     ) -> Result<(), RuntimeError> {
-        // resolveType creates a detached ListingTypeNode. Java04 confirms
-        // that a matching converted Listing reaches getRootNode().getName()
-        // and fails before forcing any elements. Do not claim a successful
-        // wrapper while the internal error and known-subtype fast path are
-        // unqualified. Nonmatching values still take the normal mismatch path.
-        let collection_kind = match ty.resolved() {
-            TypeCheck::ParameterizedCollection { kind, .. } | TypeCheck::Collection(kind)
-                if matches!(kind, CollectionKind::Listing | CollectionKind::Mapping) =>
-            {
-                Some(*kind)
+        let collection = match ty.resolved() {
+            TypeCheck::Collection(kind @ (CollectionKind::Listing | CollectionKind::Mapping)) => {
+                Some((*kind, None, None))
             }
+            TypeCheck::ParameterizedCollection {
+                kind: CollectionKind::Listing,
+                arguments,
+            } => Some((CollectionKind::Listing, None, Some(arguments[0].0.clone()))),
+            TypeCheck::ParameterizedCollection {
+                kind: CollectionKind::Mapping,
+                arguments,
+            } => Some((
+                CollectionKind::Mapping,
+                Some(arguments[0].0.clone()),
+                Some(arguments[1].0.clone()),
+            )),
             _ => None,
         };
-        if let Some(kind) = collection_kind
+        if let Some((kind, key_ty, value_ty)) = collection
             && TypeCheck::Collection(kind).accepts(&value, &self.heap)
         {
+            let Value::Object(id) = value else {
+                unreachable!("collection value is an object")
+            };
+            // MappingTypeNode.executeLazily eagerly checks all mapping keys
+            // before checking isValueTypeKnownSubtypeOf (TypeNode.java:1634).
+            if kind == CollectionKind::Mapping
+                && let Some(key_ty) = &key_ty
+                && !key_ty.noop()
+            {
+                let mut current = Some(id);
+                let mut seen = BTreeSet::new();
+                while let Some(owner) = current {
+                    if !seen.insert(owner) {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Cycle,
+                            "cyclic mapping parent chain",
+                        ));
+                    }
+                    let object = self.heap.get(owner)?;
+                    for member in &object.collection_members {
+                        if member.kind != CollectionMemberKind::Property
+                            && !key_ty.accepts(&member.key, &self.heap)
+                        {
+                            // Detached MappingTypeNode fails inside doEagerCheck's
+                            // catch block at getRootNode().getCallTarget() (TypeNode.java:1865).
+                            return Err(RuntimeError::foreign(
+                                crate::java_exception::provenance::ForeignOperation::ProtobufMappingKeyRootNullPointer,
+                                "Cannot invoke \"com.oracle.truffle.api.nodes.RootNode.getCallTarget()\" because the return value of \"org.pkl.core.ast.type.TypeNode$ListingOrMappingTypeNode.getRootNode()\" is null",
+                            ));
+                        }
+                    }
+                    current = object.parent;
+                }
+            }
+            // VmListingOrMapping.isValueTypeKnownSubtypeOf (VmListingOrMapping.java:131):
+            // elides getValueTypeCastNode() when valueTypeNode is a noop check or
+            // matches this object's own reified typeCastNode.
+            let known_subtype = match &value_ty {
+                None => true,
+                Some(value_ty) => {
+                    value_ty.noop()
+                        || self
+                            .heap
+                            .get(id)?
+                            .collection_cast
+                            .as_ref()
+                            .is_some_and(|cast| cast.ty.equivalent(value_ty))
+                }
+            };
+            if known_subtype {
+                self.stack.push(Value::Bool(true));
+                return Ok(());
+            }
             let is_mapping = kind == CollectionKind::Mapping;
             return Err(RuntimeError::foreign(
                 crate::java_exception::provenance::ForeignOperation::ProtobufListingOrMappingRootNullPointer {

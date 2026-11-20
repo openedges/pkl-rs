@@ -1,0 +1,7 @@
+local doc = new Dynamic {
+  foo { bar = 0; empty = null }
+}
+omitFalse = new JsonRenderer { indent = "  "; omitNullProperties = false }.renderDocument(doc)
+omitTrue = new JsonRenderer { indent = "  "; omitNullProperties = true }.renderDocument(doc)
+endsFalse = omitFalse.endsWith("\n")
+endsTrue = omitTrue.endsWith("\n")

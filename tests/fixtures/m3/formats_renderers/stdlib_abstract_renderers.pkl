@@ -1,0 +1,9 @@
+import "pkl:test"
+
+class BadValueRenderer extends ValueRenderer {}
+class BadBytesRenderer extends BytesRenderer {}
+
+errValDoc = test.catch(() -> new BadValueRenderer {}.renderDocument(1))
+errValVal = test.catch(() -> new BadValueRenderer {}.renderValue(1))
+errBytesDoc = test.catch(() -> new BadBytesRenderer {}.renderDocument(1))
+errBytesVal = test.catch(() -> new BadBytesRenderer {}.renderValue(1))

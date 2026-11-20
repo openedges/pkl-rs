@@ -165,6 +165,7 @@ fn append(
         id: unit,
         identity: Some(identity.clone()),
         standard_library: false,
+        singleton_cache_key: None,
         key: None,
         delegate_key: None,
         build: None,

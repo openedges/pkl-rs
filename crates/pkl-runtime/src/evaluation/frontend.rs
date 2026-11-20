@@ -2,6 +2,12 @@
 //!
 //! The frontend-only adapter stops explicitly after preparation. The output
 //! adapter evaluates the actual `output.bytes` property through the shared VM.
+pub use super::output_files::{
+    ModuleOutputFilesResult, OutputFileEntry, StreamingOutputFilesOutcome, check_path_spec,
+    evaluate_output_files, evaluate_output_files_streaming_with_hosts,
+    evaluate_output_files_with_glob_host, evaluate_output_files_with_host,
+    evaluate_output_files_with_hosts, evaluate_output_files_with_platform_and_hosts,
+};
 pub use crate::diagnostic::FailureDisposition;
 pub mod arguments;
 
@@ -511,15 +517,174 @@ pub fn evaluate_module_output_with_glob_host(
         -> Option<Result<crate::resources::ReadResult, crate::host::ReadFailure>>,
     glob_host: impl FnMut(&crate::glob::GlobRequest) -> Option<crate::glob::GlobCompletion>,
 ) -> ModuleOutputResult {
+    evaluate_module_output_with_platform_and_hosts(
+        input,
+        options,
+        None,
+        module_host,
+        resource_host,
+        glob_host,
+    )
+}
+
+/// Evaluate `Module.output.bytes` with explicit optional Host `PlatformMetadata`.
+pub fn evaluate_module_output_with_platform_and_hosts(
+    input: impl Into<LosslessModuleSourceInput>,
+    options: &ModuleEvalOptions,
+    platform_metadata: Option<crate::logging::PlatformMetadata>,
+    module_host: impl FnMut(&crate::modules::ModuleRequest) -> crate::modules::ModuleCompletion,
+    resource_host: impl FnMut(
+        &crate::vm::ReadRequest,
+    )
+        -> Option<Result<crate::resources::ReadResult, crate::host::ReadFailure>>,
+    glob_host: impl FnMut(&crate::glob::GlobRequest) -> Option<crate::glob::GlobCompletion>,
+) -> ModuleOutputResult {
     let input = input.into();
     evaluate_module_output_with_budget_and_hosts(
         input,
         options,
+        platform_metadata,
         1_048_576,
         module_host,
         resource_host,
         glob_host,
     )
+}
+
+/// Evaluate a CLI `-x`/`--expression` string (`EvaluatorImpl.evaluateExpressionString`)
+/// with optional Host `PlatformMetadata` and Host callbacks.
+pub fn evaluate_module_expression_with_platform_and_hosts(
+    input: impl Into<LosslessModuleSourceInput>,
+    expression: impl Into<SourceText>,
+    options: &ModuleEvalOptions,
+    platform_metadata: Option<crate::logging::PlatformMetadata>,
+    mut module_host: impl FnMut(&crate::modules::ModuleRequest) -> crate::modules::ModuleCompletion,
+    mut resource_host: impl FnMut(
+        &crate::vm::ReadRequest,
+    ) -> Option<
+        Result<crate::resources::ReadResult, crate::host::ReadFailure>,
+    >,
+    mut glob_host: impl FnMut(&crate::glob::GlobRequest) -> Option<crate::glob::GlobCompletion>,
+) -> ModuleOutputResult {
+    use super::session::{SourceSession, SourceSessionOptions};
+    use crate::host::HostPoll;
+    let input = input.into();
+    let mut session = match SourceSession::compile_output_expression_text(
+        input,
+        expression,
+        options,
+        SourceSessionOptions {
+            evaluation: super::EvaluationOptions {
+                power_assertions: true,
+            },
+            trace_mode: crate::packages::resolver::current_trace_mode()
+                .unwrap_or(crate::logging::TraceMode::Compact),
+            log_delivery: crate::logging::LogDelivery::Host,
+            frame_transformer: if options.diagnostic_profile
+                == DiagnosticProfile::CliBundledSettings
+            {
+                crate::logging::FrameTransformer::Host
+            } else {
+                crate::logging::FrameTransformer::Default
+            },
+            platform_data: options.diagnostic_profile == DiagnosticProfile::CliBundledSettings,
+        },
+    ) {
+        Ok(session) => session,
+        Err(error) => {
+            let error: ModuleFrontendResult = error.into();
+            return error.into();
+        }
+    };
+    if let Some(metadata) = platform_metadata {
+        session.set_platform_metadata(Some(metadata));
+    }
+    let mut stderr = Vec::new();
+    let mut budget_exhausted = false;
+    let run = (|| {
+        session.start_path(0, 0, None)?;
+        for _ in 0..1_048_576 {
+            match session.poll(0, 1024) {
+                HostPoll::Ready(result) => return result.and_then(SourceSession::result_string),
+                HostPoll::Yielded => {}
+                HostPoll::Module { token, request } => {
+                    session.complete_module(&token, module_host(&request), 0)?
+                }
+                HostPoll::Glob { token, request } => {
+                    let completion = glob_host(&request).unwrap_or_else(|| {
+                        crate::glob::configured_or_unsupported_completion(
+                            &request,
+                            &options.properties,
+                            &options.environment,
+                        )
+                    });
+                    session.complete_glob(&token, completion, 0)?;
+                }
+                HostPoll::Read { token, .. } => {
+                    let request = session.read_request(&token)?;
+                    if let Some(result) = resource_host(&request) {
+                        session.complete_read(&token, result, 0)?;
+                    } else {
+                        session.resume_default_read(
+                            &token,
+                            &options.properties,
+                            &options.environment,
+                            0,
+                        )?;
+                    }
+                }
+                HostPoll::TransformFrame { token, frame } => {
+                    let mut frame =
+                        crate::logging::FrameTransformer::Default.transform((*frame).clone());
+                    if frame.module_uri.to_java_utf8().starts_with("file:") {
+                        frame.module_uri = frame
+                            .module_uri
+                            .concat(&format!(", line {}", frame.start_line).into());
+                    }
+                    session.complete_frame_transform(&token, Ok(frame), 0)?;
+                }
+                HostPoll::Log { token, event } => {
+                    let level = match event.level {
+                        crate::logging::LogLevel::Trace => "TRACE",
+                        crate::logging::LogLevel::Warn => "WARN",
+                    };
+                    let uri = event.frame.module_uri.to_java_utf8();
+                    let message = event.message.to_java_utf8();
+                    let space = if message.ends_with('\n') { "" } else { " " };
+                    stderr.extend_from_slice(
+                        format!("pkl: {level}: {message}{space}({uri})\n").as_bytes(),
+                    );
+                    session.acknowledge_log(&token, Ok(()), 0)?;
+                }
+            }
+        }
+        budget_exhausted = true;
+        session.cancel();
+        Err(crate::value::RuntimeError::new(
+            crate::value::ErrorKind::Unsupported,
+            "Module output instruction budget exceeded.",
+        ))
+    })();
+    let mut result = match run {
+        Ok(text) => ModuleOutputResult {
+            phase: FrontendPhase::ModuleOutput,
+            disposition: None,
+            reason: None,
+            stdout: text.to_java_utf8().into_bytes(),
+            stderr: Vec::new(),
+            exit_code: 0,
+        },
+        Err(error) => session.output_expression_failure(error).into(),
+    };
+    if budget_exhausted {
+        result.disposition = Some(FailureDisposition::LimitExceeded);
+        result.reason = Some("instruction-budget");
+        result.exit_code = 3;
+    }
+    stderr.extend_from_slice(&result.stderr);
+    result.stderr = stderr;
+    session.close();
+    result
 }
 
 #[cfg(test)]
@@ -532,6 +697,7 @@ fn evaluate_module_output_with_budget(
     evaluate_module_output_with_budget_and_hosts(
         input,
         options,
+        None,
         poll_budget,
         crate::modules::default_or_unsupported_completion,
         |_| None,
@@ -542,6 +708,7 @@ fn evaluate_module_output_with_budget(
 fn evaluate_module_output_with_budget_and_hosts(
     input: impl Into<LosslessModuleSourceInput>,
     options: &ModuleEvalOptions,
+    platform_metadata: Option<crate::logging::PlatformMetadata>,
     poll_budget: usize,
     mut module_host: impl FnMut(&crate::modules::ModuleRequest) -> crate::modules::ModuleCompletion,
     mut resource_host: impl FnMut(
@@ -580,6 +747,9 @@ fn evaluate_module_output_with_budget_and_hosts(
         Ok(session) => session,
         Err(error) => return error.into(),
     };
+    if let Some(metadata) = platform_metadata {
+        session.set_platform_metadata(Some(metadata));
+    }
     let mut stderr = Vec::new();
     let mut budget_exhausted = false;
     let run = (|| {

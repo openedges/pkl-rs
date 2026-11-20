@@ -1,0 +1,20 @@
+foo = null
+bar = null
+baz {
+  qux = 42
+  quux = null
+  corge = new Listing {
+    null
+    1337
+    null
+    "Hello World"
+  }
+  grault = new Mapping {
+    ["garply"] = null
+    ["waldo"] = 42
+    ["pigeon"] = null
+  }
+}
+output {
+  renderer = new PcfRenderer { indent = "  "; omitNullProperties = false }
+}

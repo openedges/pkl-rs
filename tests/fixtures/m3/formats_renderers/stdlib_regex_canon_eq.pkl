@@ -1,0 +1,9 @@
+local composed = "\u{00E9}"
+local decomposed = "e\u{0301}"
+local reCanon = Regex("(?c)" + composed)
+local rePlain = Regex(composed)
+
+canonMatchesDecomposed = decomposed.matches(reCanon)
+canonMatchesComposed = composed.matches(reCanon)
+plainMatchesDecomposed = decomposed.matches(rePlain)
+multiCombining = ("a\u{0323}\u{0302}").matches(Regex("(?c)\u{1EA1}\u{0302}"))

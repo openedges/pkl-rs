@@ -1,0 +1,9 @@
+local r = new PcfRenderer {}
+propWrapped = r.renderDocument(new Dynamic {
+  a = new PcfRenderDirective { before = "/* before */ "; value = 42; after = " /* after */" }
+  b = new PcfRenderDirective { before = ""; value = List(1, 2); after = "" }
+  c = new Listing {
+    new PcfRenderDirective { before = "("; value = "hi"; after = ")" }
+  }
+})
+standalone = r.renderValue(new PcfRenderDirective { before = "<<"; value = new Dynamic { x = 1 }; after = ">>" })

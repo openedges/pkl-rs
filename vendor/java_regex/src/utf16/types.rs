@@ -1,5 +1,18 @@
-pub use crate::types::Flags;
 use alloc::{boxed::Box, string::String, vec::Vec};
+
+#[derive(Clone, Copy, Debug, Default)]
+pub struct Flags {
+    pub case_insensitive: bool, // i / CASE_INSENSITIVE
+    pub multiline: bool,        // m / MULTILINE
+    pub dotall: bool,           // s / DOTALL
+    pub comments: bool,         // x / COMMENTS
+    pub unicode_class: bool,    // U / UNICODE_CHARACTER_CLASS
+    pub unix_lines: bool,       // d / UNIX_LINES
+    pub unicode_case: bool,     // u / UNICODE_CASE
+    pub canon_eq: bool,         // c / CANON_EQ
+    pub literal: bool,          // LITERAL (no inline flag)
+}
+
 /// A pattern is an alternation of branches.
 #[derive(Clone, Debug)]
 pub struct Pattern {
@@ -12,6 +25,9 @@ pub enum Node {
     Dot,
     Anchor(AnchorKind),
     CharClass(CharClass),
+    /// OpenJDK `Pattern.NFCCharProperty`: matches a single code point or an
+    /// NFC-composed grapheme prefix when `CANON_EQ` (`(?c)`) is active.
+    NfcCharClass(CharClass),
     Quantified {
         inner: Box<Node>,
         min: u32,

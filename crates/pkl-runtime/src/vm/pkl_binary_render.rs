@@ -144,9 +144,9 @@ impl Vm {
                     return Ok(false);
                 }
                 if object.foreign_map_entry.is_some() {
-                    return Err(RuntimeError::new(
-                        ErrorKind::Unsupported,
-                        "Foreign Map.Entry rendering has a pinned Java internal-error protocol that remains unresolved.",
+                    return Err(RuntimeError::foreign(
+                        crate::java_exception::provenance::ForeignOperation::KeyValueHolderTypeVisitor { is_set: false },
+                        "Unknown VM value type: java.util.KeyValueHolder",
                     ));
                 }
                 let strict = matches!(

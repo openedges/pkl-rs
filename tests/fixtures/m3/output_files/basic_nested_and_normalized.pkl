@@ -1,0 +1,16 @@
+output {
+  files {
+    ["foo.yml"] {
+      text = "foo: foo text"
+    }
+    ["bar.yml"] {
+      text = "bar: bar text"
+    }
+    ["bar/biz.yml"] {
+      text = "biz: bar biz"
+    }
+    ["bar/../bark.yml"] {
+      text = "bark: bark bark"
+    }
+  }
+}

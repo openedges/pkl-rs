@@ -1,0 +1,4 @@
+local val = new Dynamic {}
+output {
+  text = new PropertiesRenderer {}.renderValue(val)
+}

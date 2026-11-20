@@ -21,6 +21,7 @@ pub(crate) struct ModuleUnit {
     pub id: UnitId,
     pub identity: Option<ModuleIdentity>,
     pub standard_library: bool,
+    pub singleton_cache_key: Option<&'static str>,
     pub key: Option<ModuleKey>,
     pub delegate_key: Option<ModuleKey>,
     pub build: Option<ModuleBuild>,
@@ -45,14 +46,18 @@ pub(crate) struct ModuleBuild {
 }
 
 impl ModuleUnit {
-    pub(super) fn is_singleton(&self) -> bool {
-        self.standard_library
-            && self.identity.as_ref().is_some_and(|identity| {
-                matches!(
-                    crate::modules::stdlib_kind(&identity.original_uri),
-                    Some(crate::modules::StdlibKind::Singleton(_))
-                )
+    pub(super) fn singleton_cache_key(&self) -> Option<&'static str> {
+        self.singleton_cache_key.or_else(|| {
+            if !self.standard_library {
+                return None;
+            }
+            self.identity.as_ref().and_then(|identity| {
+                match crate::modules::stdlib_kind(&identity.original_uri) {
+                    Some(crate::modules::StdlibKind::Singleton(canonical)) => Some(canonical),
+                    _ => None,
+                }
             })
+        })
     }
 }
 
@@ -130,6 +135,10 @@ impl ModuleCache {
     pub fn insert(&mut self, uri: PklString, value: CachedModule) {
         self.0
             .insert(crate::host::resources::cache_key(&uri), value);
+    }
+    pub fn remove(&mut self, uri: impl Into<PklString>) -> Option<CachedModule> {
+        self.0
+            .remove(&crate::host::resources::cache_key(&uri.into()))
     }
     pub fn clear(&mut self) {
         self.0.clear();

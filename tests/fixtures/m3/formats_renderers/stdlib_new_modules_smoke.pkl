@@ -1,0 +1,10 @@
+import "pkl:Command"
+import "pkl:DocPackageInfo"
+import "pkl:DocsiteInfo"
+import "pkl:settings"
+
+cmdClass = Command.getClass().simpleName
+docPkgClass = DocPackageInfo.getClass().simpleName
+docSiteClass = DocsiteInfo.getClass().simpleName
+settingsEditor = settings.editor.urlScheme
+ideaScheme = settings.Idea.urlScheme

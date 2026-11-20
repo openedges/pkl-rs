@@ -1,0 +1,32 @@
+import "pkl:pklbinary"
+
+output {
+  files {
+    ["foo.pcf"] {
+      value = new Dynamic {
+        ["bar"] = "baz"
+      }
+    }
+    ["bar/baz.json"] {
+      value = new Dynamic {
+        foo = "fooey"
+        bar = "barrey"
+      }
+      renderer = new JsonRenderer {}
+    }
+    ["qux.yaml"] {
+      value = new Dynamic {
+        enabled = true
+        count = 3
+      }
+      renderer = new YamlRenderer {}
+    }
+    ["buz.txt"] {
+      text = "buz"
+    }
+    ["raw.bin"] {
+      value = List(1, "two", Bytes(0, 255))
+      renderer = new pklbinary.Renderer {}
+    }
+  }
+}

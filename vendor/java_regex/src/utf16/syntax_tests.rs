@@ -31,10 +31,7 @@ fn syntax_validation_retains_flags_and_scans_past_supported_syntax() {
             CompileErrorKind::Syntax
         );
     }
-    assert_eq!(
-        compile("(?c)", "u").unwrap_err().kind,
-        CompileErrorKind::Unsupported
-    );
+    assert!(compile("(?c)", "u").is_ok());
     assert_eq!(
         compile("(?c)(", "u").unwrap_err().kind,
         CompileErrorKind::Syntax

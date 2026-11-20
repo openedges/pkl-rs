@@ -4,6 +4,7 @@
 use alloc::sync::Arc;
 use alloc::{collections::BTreeMap, format, string::String, vec, vec::Vec};
 use core::fmt;
+mod canon_eq;
 mod character_lookup;
 mod character_names;
 /// Character metadata captured from the pinned JDK 21 Unicode 15 provider.
@@ -109,6 +110,7 @@ impl Utf16Regex {
                 }
                 'd' => flags.unix_lines = true,
                 'u' => flags.unicode_case = true,
+                'c' => flags.canon_eq = true,
                 _ => {
                     return Err(CompileError::with_context(
                         format!("Unsupported flag: {flag}"),
@@ -118,8 +120,14 @@ impl Utf16Regex {
                 }
             }
         }
+        let normalized = if flags.canon_eq && !flags.literal {
+            Some(canon_eq::normalize_pattern(source)?)
+        } else {
+            None
+        };
+        let parse_source = normalized.as_deref().unwrap_or(source);
         let (pattern, group_count, named_groups, start_s) =
-            parser::Parser::new(source, flags).parse()?;
+            parser::Parser::new(parse_source, flags).parse()?;
         Ok(Self {
             source: source.to_vec(),
             pattern,

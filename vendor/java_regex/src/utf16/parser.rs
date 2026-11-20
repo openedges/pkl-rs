@@ -67,6 +67,7 @@ fn pattern_max_length(pattern: &Pattern) -> Option<usize> {
                 Node::Literal(_) | Node::Dot | Node::CharClass(_) => values.push(1),
                 Node::LinebreakMatcher => values.push(2),
                 Node::Anchor(_)
+                | Node::NfcCharClass(_)
                 | Node::SetFlags(_)
                 | Node::RestoreFlags(_)
                 | Node::Lookahead { .. }
@@ -187,7 +188,6 @@ pub struct Parser {
     pub group_count: usize,
     pub named_groups: BTreeMap<String, usize>,
     all_named_backrefs: Vec<String>,
-    deferred_capability: Option<String>,
 }
 
 impl Parser {
@@ -212,7 +212,6 @@ impl Parser {
             group_count: 0,
             named_groups: BTreeMap::new(),
             all_named_backrefs: Vec::new(),
-            deferred_capability: None,
         }
     }
 
@@ -232,9 +231,6 @@ impl Parser {
                 return Err(self.error(format!("Unknown named group: {}", name)));
             }
         }
-        if let Some(reason) = &self.deferred_capability {
-            return Err(self.unsupported(reason.clone()));
-        }
         let gc = self.group_count;
         let ng = self.named_groups;
         Ok((pattern, gc, ng, self.start_s))
@@ -251,11 +247,6 @@ impl Parser {
         PatternSyntaxError::with_context(message, self.source.clone(), index)
     }
 
-    fn unsupported(&self, message: String) -> PatternSyntaxError {
-        let mut error = self.error(message);
-        error.kind = super::CompileErrorKind::Unsupported;
-        error
-    }
     fn nesting_budget(&self, message: String) -> PatternSyntaxError {
         let mut error = self.error(message);
         error.kind = super::CompileErrorKind::NestingBudgetExceeded;
@@ -800,10 +791,15 @@ impl Parser {
 
     fn parse_unicode_property_node(&mut self, negated: bool) -> Result<Node, PatternSyntaxError> {
         let (name, neg) = self.parse_property_name(negated)?;
-        Ok(Node::CharClass(CharClass {
+        let cc = CharClass {
             negated: false,
             items: vec![CharClassItem::UnicodeProperty { name, negated: neg }],
-        }))
+        };
+        if self.flags.canon_eq && !self.flags.literal {
+            Ok(Node::NfcCharClass(cc))
+        } else {
+            Ok(Node::CharClass(cc))
+        }
     }
 
     /// Parse a unicode property name (shared between node and char class contexts).
@@ -971,14 +967,7 @@ impl Parser {
 
         loop {
             match self.peek() {
-                Some(0x63) => {
-                    self.advance();
-                    // A known valid flag cannot be classified as invalid syntax.
-                    // Continue parsing the entire suffix before reporting capability.
-                    self.deferred_capability =
-                        Some("Canonical equivalence matching is not supported".into());
-                }
-                Some(ch @ (0x69 | 0x6d | 0x73 | 0x78 | 0x55 | 0x64 | 0x75)) => {
+                Some(ch @ (0x63 | 0x69 | 0x6d | 0x73 | 0x78 | 0x55 | 0x64 | 0x75)) => {
                     self.advance();
                     let target = if clearing {
                         &mut clear_flags
@@ -986,6 +975,7 @@ impl Parser {
                         &mut set_flags
                     };
                     match ch {
+                        0x63 => target.canon_eq = true,
                         0x69 => target.case_insensitive = true,
                         0x6d => target.multiline = true,
                         0x73 => target.dotall = true,
@@ -993,14 +983,12 @@ impl Parser {
                         0x55 => target.unicode_class = true,
                         0x64 => target.unix_lines = true,
                         0x75 => target.unicode_case = true,
-                        // The outer arm at line 602 binds `ch` from the
-                        // exhaustive `'i' | 'm' | 's' | 'x' | 'U' | 'd' | 'u'`
-                        // pattern, so this catchall is structurally
-                        // unreachable. Kept to satisfy the exhaustiveness
-                        // checker on the inner `match ch`.
+                        // The outer arm binds `ch` from the exhaustive
+                        // `'c' | 'i' | 'm' | 's' | 'x' | 'U' | 'd' | 'u'`
+                        // pattern, so this catchall is structurally unreachable.
                         ch => unreachable!(
                             "inline-flag char {ch:?} not in the outer pattern \
-                             'i' | 'm' | 's' | 'x' | 'U' | 'd' | 'u'"
+                             'c' | 'i' | 'm' | 's' | 'x' | 'U' | 'd' | 'u'"
                         ),
                     }
                 }
@@ -1049,6 +1037,9 @@ impl Parser {
         if set.unicode_case {
             self.flags.unicode_case = true;
         }
+        if set.canon_eq {
+            self.flags.canon_eq = true;
+        }
         if clear.case_insensitive {
             self.flags.case_insensitive = false;
         }
@@ -1070,6 +1061,9 @@ impl Parser {
         }
         if clear.unicode_case {
             self.flags.unicode_case = false;
+        }
+        if clear.canon_eq {
+            self.flags.canon_eq = false;
         }
     }
 
@@ -1186,7 +1180,11 @@ impl Parser {
 
     fn parse_char_class_node(&mut self) -> Result<Node, PatternSyntaxError> {
         let cc = self.parse_char_class()?;
-        Ok(Node::CharClass(cc))
+        if self.flags.canon_eq && !self.flags.literal {
+            Ok(Node::NfcCharClass(cc))
+        } else {
+            Ok(Node::CharClass(cc))
+        }
     }
 
     fn parse_char_class(&mut self) -> Result<CharClass, PatternSyntaxError> {

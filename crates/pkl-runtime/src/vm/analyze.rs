@@ -282,6 +282,7 @@ impl Vm {
                             resolved_uri: glob.base_uri.clone(),
                         }),
                         standard_library: false,
+                        singleton_cache_key: None,
                         key: Some(global_key),
                         delegate_key: None,
                         build: None,

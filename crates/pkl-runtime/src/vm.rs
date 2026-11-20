@@ -88,6 +88,7 @@ pub enum Instruction {
     LoadJsonnetModule,
     LoadXmlModule,
     LoadProtobufModule,
+    LoadPklBinaryModule,
     ReflectCall(reflection::Operation),
     /// Execute the authored pkl:json Parser.parse external body.
     JsonParse,
@@ -2294,7 +2295,9 @@ impl Vm {
             }));
             let origin = ForeignOrigin {
                 activations,
-                primary_source: self.context.primary_source.clone(),
+                primary_source: self
+                    .public_primary_source()
+                    .or_else(|| self.context.primary_source.clone()),
                 power_assertions: self.power_assertions,
                 frame_transformer: self.context.frame_transformer,
                 platform_metadata: self.platform_metadata.clone(),
@@ -2831,11 +2834,9 @@ impl Vm {
                     error.module_failure_id = Some(modules::next_failure_id());
                     error.cached_module_frames = catch_boundary.is_none();
                 }
-                if unit.is_singleton() {
-                    self.modules_stdlib.insert(
-                        identity.original_uri.clone(),
-                        modules::CachedModule::Failed(error.clone()),
-                    );
+                if let Some(key) = unit.singleton_cache_key() {
+                    self.modules_stdlib
+                        .insert(key.into(), modules::CachedModule::Failed(error.clone()));
                 } else {
                     self.modules_original.insert(
                         identity.original_uri.clone(),
@@ -4830,6 +4831,8 @@ impl Vm {
             self.import_stdlib("pkl:base").map(|_| ())
         } else if matches!(instruction, Instruction::LoadProtobufModule) {
             self.import_stdlib("pkl:protobuf").map(|_| ())
+        } else if matches!(instruction, Instruction::LoadPklBinaryModule) {
+            self.import_stdlib("pkl:pklbinary").map(|_| ())
         } else if matches!(instruction, Instruction::LoadXmlModule) {
             self.import_stdlib("pkl:xml").map(|_| ())
         } else if matches!(instruction, Instruction::LoadJsonnetModule) {
@@ -5101,6 +5104,15 @@ impl Vm {
                     || self.class_member(&receiver, name, method)?
                     || self.primitive_member(&receiver, name, method)?
                 {
+                    return Ok(());
+                }
+                if method
+                    && name == "join"
+                    && (self.is_list(&receiver)
+                        || self.is_set(&receiver)
+                        || matches!(&receiver, Value::Object(id) if self.heap.get(*id)?.collection_kind == crate::heap::CollectionKind::Listing))
+                {
+                    self.collection_join_method(receiver);
                     return Ok(());
                 }
                 if matches!(receiver, Value::DataSize(_)) {
@@ -5513,7 +5525,8 @@ impl Vm {
             | Instruction::LoadRefModule
             | Instruction::LoadJsonnetModule
             | Instruction::LoadXmlModule
-            | Instruction::LoadProtobufModule => {
+            | Instruction::LoadProtobufModule
+            | Instruction::LoadPklBinaryModule => {
                 unreachable!("bundled module preparation is dispatched before this frame")
             }
 
@@ -6329,11 +6342,9 @@ impl Vm {
                 if let Some(unit) = &module {
                     self.frames.last_mut().unwrap().module_receiver = Some(object);
                     if let Some(identity) = &unit.identity {
-                        if unit.is_singleton() {
-                            self.modules_stdlib.insert(
-                                identity.original_uri.clone(),
-                                modules::CachedModule::Value(object),
-                            );
+                        if let Some(key) = unit.singleton_cache_key() {
+                            self.modules_stdlib
+                                .insert(key.into(), modules::CachedModule::Value(object));
                         } else {
                             self.modules_original.insert(
                                 identity.original_uri.clone(),
@@ -7537,6 +7548,7 @@ fn compile_unit_body_at(
         id: unit,
         identity: compiler.identity,
         standard_library: false,
+        singleton_cache_key: None,
         key: None,
         delegate_key: None,
         build: None,

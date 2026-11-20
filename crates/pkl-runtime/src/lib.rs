@@ -20,6 +20,7 @@ pub mod modules;
 pub mod numeric;
 pub mod packages;
 pub mod parser;
+pub mod pkl_binary_decode;
 mod pkl_regex;
 mod pkl_string;
 mod power_assertions;

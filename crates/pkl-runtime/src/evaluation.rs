@@ -1,6 +1,7 @@
 //! Experimental expression-string boundary shared by development adapters.
 //! This does not implement the full evaluator API or general REPL/module loading.
 pub mod frontend;
+pub mod output_files;
 pub mod session;
 use crate::diagnostic::{RenderFrame, render_error_text};
 use crate::source::{Source, SourceMap, SourceText, Span};
@@ -405,6 +406,9 @@ pub(crate) fn runtime_error_text_with_profile(
     let expression = &expression;
 
     if let Some(rendered) = &error.rendered_diagnostic {
+        if let Some(foreign) = &error.foreign_exception {
+            return foreign.project_pkl_bug_with_profile(rendered, profile);
+        }
         return rendered.clone();
     }
     let foreign = error.foreign_exception.clone();

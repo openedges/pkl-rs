@@ -1,0 +1,22 @@
+stream = new Listing {
+  new Dynamic {
+    name = "Pigeon"
+    age = 42
+  }
+  new Listing {
+    "one"
+    "two"
+    "three"
+  }
+  new Mapping {
+    ["one"] = 1
+    ["two"] = 2
+    ["three"] = 3
+  }
+  "Blue Rock Ltd."
+  12345
+}
+output {
+  value = stream
+  renderer = new YamlRenderer { indentWidth = 2; omitNullProperties = true; isStream = true }
+}

@@ -92,6 +92,12 @@ enum Task {
         receiver: ObjectId,
         path: Vec<PathPart>,
     },
+    PcfDirective {
+        receiver: ObjectId,
+        depth: usize,
+        path: Vec<PathPart>,
+        stage: u8,
+    },
     Visit {
         value: Value,
         depth: usize,
@@ -160,6 +166,11 @@ enum Await {
         receiver: ObjectId,
         path: Vec<PathPart>,
     },
+    PcfDirective {
+        receiver: ObjectId,
+        path: Vec<PathPart>,
+        stage: u8,
+    },
 }
 pub(super) struct RenderRun {
     receiver: ObjectId,
@@ -198,6 +209,7 @@ impl RenderRun {
         self.protobuf.roots(roots);
         if let Some(
             Await::Directive { receiver, path }
+            | Await::PcfDirective { receiver, path, .. }
             | Await::JsonnetWrapper { receiver, path, .. }
             | Await::XmlRead { receiver, path, .. },
         ) = &self.await_
@@ -216,7 +228,8 @@ impl RenderRun {
                     roots.push(key.clone())
                 }
                 Task::PropertiesKey { path, .. } => path_roots(path, roots),
-                Task::PropertiesDirective { receiver, path } => {
+                Task::PropertiesDirective { receiver, path }
+                | Task::PcfDirective { receiver, path, .. } => {
                     roots.push(Value::Object(*receiver));
                     path_roots(path, roots);
                 }
@@ -371,15 +384,8 @@ impl Vm {
             let Some(original) = &run.document_original else {
                 continue;
             };
-            match same_render_reference(original, &run.root) {
-                Some(true) => continue,
-                None => {
-                    return Err(RuntimeError::new(
-                        ErrorKind::Unsupported,
-                        "Java reference identity for this unchanged scalar or byte-payload conversion is not preserved; renderDocument conversion hints are not implemented for this boundary.",
-                    ));
-                }
-                Some(false) => (),
+            if same_render_reference(original, &run.root) {
+                continue;
             }
             let render = |value: &Value| {
                 crate::diagnostic_values::render_string(
@@ -413,6 +419,7 @@ impl Vm {
             let path = match &run.await_ {
                 Some(
                     Await::Directive { receiver, path }
+                    | Await::PcfDirective { receiver, path, .. }
                     | Await::JsonnetWrapper { receiver, path, .. }
                     | Await::XmlRead {
                         receiver,
@@ -547,7 +554,7 @@ impl Vm {
         document: bool,
         format: Format,
     ) -> Result<(), RuntimeError> {
-        let root = self.pop()?;
+        let root = self.pop()?.boxed();
         let receiver = if matches!(
             format,
             Format::Jsonnet | Format::Xml | Format::PklBinary | Format::Protobuf
@@ -688,7 +695,7 @@ impl Vm {
                     }
                 }
                 Await::ConverterVisit => {
-                    let converted = self.pop()?;
+                    let converted = self.pop()?.boxed();
                     let Some(Task::Visit { value, .. }) = run.tasks.last_mut() else {
                         return Err(invalid("converted visit"));
                     };
@@ -721,6 +728,33 @@ impl Vm {
                     run.append_value(&text);
                     if run.format == Format::Properties && run.properties_document {
                         run.append("\n");
+                    }
+                }
+                Await::PcfDirective {
+                    receiver, stage, ..
+                } => {
+                    let value = self.pop()?;
+                    match stage {
+                        0 => {
+                            if let Value::String(text) = value {
+                                run.append_value(&text);
+                            }
+                        }
+                        1 => {
+                            let Some(Task::PcfDirective { depth, path, .. }) = run.tasks.last()
+                            else {
+                                return Err(invalid("pcf directive continuation"));
+                            };
+                            let (depth, path) = (*depth, path.clone());
+                            run.value(value, depth, false, false, false, path);
+                        }
+                        2 => {
+                            if let Value::String(text) = value {
+                                run.append_value(&text);
+                            }
+                            run.active.remove(&receiver);
+                        }
+                        _ => return Err(invalid("pcf directive stage")),
                     }
                 }
                 Await::KeyEquality => {
@@ -1029,6 +1063,36 @@ impl Vm {
                 run.await_ = Some(Await::Directive { receiver, path });
                 self.force(receiver, receiver, "text".into(), false, true, false)?;
             }
+            Task::PcfDirective {
+                receiver,
+                depth,
+                path,
+                stage,
+            } => match stage {
+                1 => {
+                    run.tasks.push(Task::PcfDirective {
+                        receiver,
+                        depth,
+                        path: path.clone(),
+                        stage: 2,
+                    });
+                    run.await_ = Some(Await::PcfDirective {
+                        receiver,
+                        path,
+                        stage: 1,
+                    });
+                    self.force(receiver, receiver, "value".into(), false, true, false)?;
+                }
+                2 => {
+                    run.await_ = Some(Await::PcfDirective {
+                        receiver,
+                        path,
+                        stage: 2,
+                    });
+                    self.force(receiver, receiver, "after".into(), false, true, false)?;
+                }
+                _ => return Err(invalid("pcf directive task stage")),
+            },
             Task::RestoreSource(source) => {
                 run.source = source;
             }
@@ -1343,6 +1407,30 @@ impl Vm {
                             }
                             run.await_ = Some(Await::Directive { receiver: id, path });
                             self.force(id, id, "text".into(), false, true, false)?;
+                            return Ok(false);
+                        }
+                        if run.format == Format::Pcf && self.is_pcf_render_directive(id)? {
+                            if !run.active.insert(id) {
+                                return Err(RuntimeError::new(
+                                    ErrorKind::Cycle,
+                                    "cyclic value rendering",
+                                ));
+                            }
+                            if standalone {
+                                run.append("new ");
+                            }
+                            run.tasks.push(Task::PcfDirective {
+                                receiver: id,
+                                depth,
+                                path: path.clone(),
+                                stage: 1,
+                            });
+                            run.await_ = Some(Await::PcfDirective {
+                                receiver: id,
+                                path,
+                                stage: 0,
+                            });
+                            self.force(id, id, "before".into(), false, true, false)?;
                             return Ok(false);
                         }
                         if self.heap.get(id)?.foreign_map_entry.is_some() {
@@ -2334,6 +2422,10 @@ impl Vm {
         Ok(collections::typed_class(&self.heap, id)?
             .is_some_and(|class| class.id == output::RENDER_DIRECTIVE))
     }
+    fn is_pcf_render_directive(&self, id: ObjectId) -> Result<bool, RuntimeError> {
+        Ok(collections::typed_class(&self.heap, id)?
+            .is_some_and(|class| class.id == output::PCF_RENDER_DIRECTIVE))
+    }
     fn plist_non_string_key(&self, receiver: ObjectId, key: &Value) -> Result<bool, RuntimeError> {
         let map = self.heap.get(receiver)?.collection_kind == CollectionKind::Map;
         let render = |value: &Value| {
@@ -2417,8 +2509,11 @@ impl Vm {
 }
 
 /// Reference identity is independent of Pkl payload equality and backing buffers.
-fn same_render_reference(left: &Value, right: &Value) -> Option<bool> {
-    Some(left.reference()? == right.reference()?)
+fn same_render_reference(left: &Value, right: &Value) -> bool {
+    match (left.reference(), right.reference()) {
+        (Some(left), Some(right)) => left == right,
+        _ => left.clone().boxed().reference() == right.clone().boxed().reference(),
+    }
 }
 
 /// The pinned JsonEscaper operates on Java chars, including unpaired surrogates.

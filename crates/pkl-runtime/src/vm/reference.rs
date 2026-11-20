@@ -198,6 +198,7 @@ pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &PklString) -> PklS
                 output.push_value(value);
                 output.push('"');
             }
+            TypeCheck::Parameter { name, .. } => output.push_value(name),
             _ => output.push_value(&super::type_name_value(ty, module)),
         }
         pending.extend(sequence.into_iter().rev());
@@ -852,17 +853,9 @@ impl Vm {
                     id: ACCESS_ID,
                     name: "Access".into(),
                 }),
-                // The module still inherits ordinary Module methods. Ref's
-                // specialized members must not intercept Typed.toString.
-                (Some("toString"), true) => return Ok(false),
-                _ => {
-                    return Err(RuntimeError::new(
-                        ErrorKind::Unsupported,
-                        PklString::from("pkl:ref member `")
-                            .concat(name)
-                            .concat(&"` is not implemented".into()),
-                    ));
-                }
+                // Ordinary Module/Typed/Any members and missing-member
+                // diagnostics fall through to standard object dispatch.
+                _ => return Ok(false),
             };
             self.stack.push(value);
             return Ok(true);
@@ -1267,11 +1260,14 @@ impl Vm {
                 } else if property == "default"
                     && matches!(
                         failed,
-                        TypeCheck::Collection(CollectionKind::Dynamic)
-                            | TypeCheck::ParameterizedCollection {
-                                kind: CollectionKind::Listing | CollectionKind::Mapping,
-                                ..
-                            }
+                        TypeCheck::Collection(
+                            CollectionKind::Dynamic
+                                | CollectionKind::Listing
+                                | CollectionKind::Mapping
+                        ) | TypeCheck::ParameterizedCollection {
+                            kind: CollectionKind::Listing | CollectionKind::Mapping,
+                            ..
+                        }
                     )
                 {
                     let name = match failed {
@@ -1403,6 +1399,48 @@ impl Vm {
             }
             TypeCheck::Class { id, .. } if property.is_some() => {
                 let name = property.expect("property access");
+                if *id == ACCESS_ID {
+                    return Ok(match scalar_property {
+                        Some("property") => Candidate::Type(normalize(
+                            &TypeCheck::Nullable(Box::new(TypeCheck::String)),
+                            &self.program.module_name,
+                        )),
+                        Some("key") => Candidate::Type(TypeCheck::Any),
+                        _ => Candidate::Unavailable,
+                    });
+                }
+                if let Some(TypeCheck::Class { id: ds_id, .. }) = classes::named_type("DataSize")
+                    && *id == ds_id
+                {
+                    return Ok(match scalar_property {
+                        Some("value") => Candidate::Type(TypeCheck::Number),
+                        Some("unit") => Candidate::Type(string_literal_union(&[
+                            "b", "gb", "gib", "kb", "kib", "mb", "mib", "pb", "pib", "tb", "tib",
+                        ])),
+                        Some("isPositive" | "isBinaryUnit" | "isDecimalUnit") => {
+                            Candidate::Type(TypeCheck::Boolean)
+                        }
+                        _ => Candidate::Unavailable,
+                    });
+                }
+                if *id == classes::REGEX {
+                    return Ok(match scalar_property {
+                        Some("pattern") => Candidate::Type(TypeCheck::String),
+                        Some("groupCount") => Candidate::Type(TypeCheck::Int),
+                        _ => Candidate::Unavailable,
+                    });
+                }
+                if let Some(TypeCheck::Class { id: seq_id, .. }) = classes::named_type("IntSeq")
+                    && *id == seq_id
+                {
+                    return Ok(match scalar_property {
+                        Some("start" | "end" | "step") => Candidate::Type(TypeCheck::Int),
+                        _ => Candidate::Unavailable,
+                    });
+                }
+                if self.heap.find_class(*id).is_none() && builtins::name(*id).is_some() {
+                    let _ = self.builtin_class(builtins::ty(*id));
+                }
                 let mut current = self
                     .heap
                     .find_class(*id)
@@ -1467,54 +1505,215 @@ impl Vm {
                     _ => return Ok(Candidate::Unavailable),
                 }
             }
-            TypeCheck::Collection(
-                CollectionKind::List | CollectionKind::Set | CollectionKind::Map,
-            )
+            // Note: Upstream VmModifier.export only exports Modifier.EXTERNAL on
+            // classes, never on properties (VmModifier.java:174), so PClass.Property
+            // .isExternal() is always false in Pkl 0.32.0 and all builtin properties
+            // below are referenceable (only Listing/Mapping reject property access).
+            TypeCheck::Collection(CollectionKind::List)
             | TypeCheck::ParameterizedCollection {
-                kind: CollectionKind::List | CollectionKind::Set | CollectionKind::Map,
+                kind: CollectionKind::List,
                 ..
-            } if scalar_property == Some("isNotEmpty") => TypeCheck::Boolean,
-            TypeCheck::String if matches!(scalar_property, Some("length" | "lastIndex")) => {
-                TypeCheck::Int
-            }
-            TypeCheck::Int
-                if matches!(scalar_property, Some("sign" | "abs" | "ceil" | "floor")) =>
-            {
-                TypeCheck::Int
-            }
-            TypeCheck::Float
-                if matches!(scalar_property, Some("sign" | "abs" | "ceil" | "floor")) =>
-            {
-                TypeCheck::Float
-            }
-            TypeCheck::Number
-                if matches!(scalar_property, Some("sign" | "abs" | "ceil" | "floor")) =>
-            {
-                TypeCheck::Number
-            }
-            TypeCheck::String
-                if matches!(
-                    scalar_property,
-                    Some(
-                        "isEmpty"
-                            | "isNotEmpty"
-                            | "isBlank"
-                            | "isNotBlank"
-                            | "isBase64"
-                            | "isRegex"
+            } if property.is_some() => {
+                let elem = builtin_type_param(usize::MAX - 501, "Element");
+                let nullable = |inner: TypeCheck| {
+                    normalize(
+                        &TypeCheck::Nullable(Box::new(inner)),
+                        &self.program.module_name,
                     )
-                ) =>
-            {
-                TypeCheck::Boolean
+                };
+                match scalar_property {
+                    Some("length" | "lastIndex") => TypeCheck::Int,
+                    Some("isEmpty" | "isNotEmpty" | "isDistinct") => TypeCheck::Boolean,
+                    Some("first" | "last" | "single" | "min" | "minOrNull" | "max") => elem,
+                    Some("firstOrNull" | "lastOrNull" | "singleOrNull" | "maxOrNull") => {
+                        nullable(elem)
+                    }
+                    Some("rest" | "distinct") => {
+                        parameterized_collection(CollectionKind::List, vec![elem])
+                    }
+                    Some("restOrNull") => {
+                        nullable(parameterized_collection(CollectionKind::List, vec![elem]))
+                    }
+                    _ => return Ok(Candidate::Unavailable),
+                }
             }
-            TypeCheck::String if matches!(scalar_property, Some("base64" | "base64Decoded")) => {
+            TypeCheck::Collection(CollectionKind::Set)
+            | TypeCheck::ParameterizedCollection {
+                kind: CollectionKind::Set,
+                ..
+            } if property.is_some() => {
+                let elem = builtin_type_param(usize::MAX - 502, "Element");
+                let nullable = |inner: TypeCheck| {
+                    normalize(
+                        &TypeCheck::Nullable(Box::new(inner)),
+                        &self.program.module_name,
+                    )
+                };
+                match scalar_property {
+                    Some("length") => TypeCheck::Int,
+                    Some("isEmpty" | "isNotEmpty") => TypeCheck::Boolean,
+                    Some("first" | "last" | "single" | "min" | "minOrNull" | "max") => elem,
+                    Some("firstOrNull" | "lastOrNull" | "singleOrNull" | "maxOrNull") => {
+                        nullable(elem)
+                    }
+                    Some("rest") => parameterized_collection(CollectionKind::Set, vec![elem]),
+                    Some("restOrNull") => {
+                        nullable(parameterized_collection(CollectionKind::Set, vec![elem]))
+                    }
+                    _ => return Ok(Candidate::Unavailable),
+                }
+            }
+            TypeCheck::Collection(CollectionKind::Map)
+            | TypeCheck::ParameterizedCollection {
+                kind: CollectionKind::Map,
+                ..
+            } if property.is_some() => {
+                let key = builtin_type_param(usize::MAX - 503, "Key");
+                let value = builtin_type_param(usize::MAX - 504, "Value");
+                match scalar_property {
+                    Some("length") => TypeCheck::Int,
+                    Some("isEmpty" | "isNotEmpty") => TypeCheck::Boolean,
+                    Some("keys") => parameterized_collection(CollectionKind::Set, vec![key]),
+                    Some("values") => parameterized_collection(CollectionKind::List, vec![value]),
+                    Some("entries") => parameterized_collection(
+                        CollectionKind::List,
+                        vec![TypeCheck::Pair {
+                            arguments: vec![(key, Span::new(0, 0)), (value, Span::new(0, 0))],
+                        }],
+                    ),
+                    _ => return Ok(Candidate::Unavailable),
+                }
+            }
+            TypeCheck::CollectionBase { .. } if property.is_some() => {
+                let elem = builtin_type_param(usize::MAX - 500, "Element");
+                let nullable = |inner: TypeCheck| {
+                    normalize(
+                        &TypeCheck::Nullable(Box::new(inner)),
+                        &self.program.module_name,
+                    )
+                };
+                let rest = || TypeCheck::CollectionBase {
+                    arguments: vec![(elem.clone(), Span::new(0, 0))],
+                };
+                match scalar_property {
+                    Some("length") => TypeCheck::Int,
+                    Some("isEmpty" | "isNotEmpty") => TypeCheck::Boolean,
+                    Some("first" | "last" | "single" | "min" | "max" | "maxOrNull") => elem,
+                    Some("firstOrNull" | "lastOrNull" | "singleOrNull" | "minOrNull") => {
+                        nullable(elem)
+                    }
+                    Some("rest") => rest(),
+                    Some("restOrNull") => nullable(rest()),
+                    _ => return Ok(Candidate::Unavailable),
+                }
+            }
+            TypeCheck::Pair { .. } if property.is_some() => match scalar_property {
+                Some("first" | "key") => builtin_type_param(usize::MAX - 505, "First"),
+                Some("second" | "value") => builtin_type_param(usize::MAX - 506, "Second"),
+                _ => return Ok(Candidate::Unavailable),
+            },
+            TypeCheck::String if property.is_some() => match scalar_property {
+                Some("length" | "lastIndex" | "sha256Int") => TypeCheck::Int,
+                Some(
+                    "isEmpty" | "isNotEmpty" | "isBlank" | "isNotBlank" | "isRegex"
+                    | "isGlobPattern" | "isBase64",
+                ) => TypeCheck::Boolean,
+                Some("md5" | "sha1" | "sha256" | "base64" | "base64Decoded") => TypeCheck::String,
+                Some("base64DecodedBytes") => TypeCheck::Bytes,
+                Some("chars") => {
+                    parameterized_collection(CollectionKind::List, vec![TypeCheck::String])
+                }
+                Some("codePoints") => {
+                    parameterized_collection(CollectionKind::List, vec![TypeCheck::Int])
+                }
+                _ => return Ok(Candidate::Unavailable),
+            },
+            TypeCheck::Int if property.is_some() => match scalar_property {
+                Some("ns" | "us" | "ms" | "s" | "min" | "h" | "d") => TypeCheck::Duration,
+                Some(
+                    "b" | "kb" | "mb" | "gb" | "tb" | "pb" | "kib" | "mib" | "gib" | "tib" | "pib",
+                ) => classes::named_type("DataSize").expect("DataSize class"),
+                Some("sign" | "abs" | "ceil" | "floor" | "inv") => TypeCheck::Int,
+                Some(
+                    "isPositive" | "isFinite" | "isInfinite" | "isNaN" | "isEven" | "isOdd"
+                    | "isNonZero",
+                ) => TypeCheck::Boolean,
+                _ => return Ok(Candidate::Unavailable),
+            },
+            TypeCheck::Float if property.is_some() => match scalar_property {
+                Some("ns" | "us" | "ms" | "s" | "min" | "h" | "d") => TypeCheck::Duration,
+                Some(
+                    "b" | "kb" | "mb" | "gb" | "tb" | "pb" | "kib" | "mib" | "gib" | "tib" | "pib",
+                ) => classes::named_type("DataSize").expect("DataSize class"),
+                Some("sign" | "abs" | "ceil" | "floor") => TypeCheck::Float,
+                Some("isPositive" | "isFinite" | "isInfinite" | "isNaN" | "isNonZero") => {
+                    TypeCheck::Boolean
+                }
+                _ => return Ok(Candidate::Unavailable),
+            },
+            TypeCheck::Number if property.is_some() => match scalar_property {
+                Some("ns" | "us" | "ms" | "s" | "min" | "h" | "d") => TypeCheck::Duration,
+                Some(
+                    "b" | "kb" | "mb" | "gb" | "tb" | "pb" | "kib" | "mib" | "gib" | "tib" | "pib",
+                ) => classes::named_type("DataSize").expect("DataSize class"),
+                Some("sign" | "abs" | "ceil" | "floor") => TypeCheck::Number,
+                Some("isPositive" | "isFinite" | "isInfinite" | "isNaN" | "isNonZero") => {
+                    TypeCheck::Boolean
+                }
+                _ => return Ok(Candidate::Unavailable),
+            },
+            TypeCheck::Duration if property.is_some() => match scalar_property {
+                Some("value") => TypeCheck::Number,
+                Some("isoString") => TypeCheck::String,
+                Some("unit") => string_literal_union(&["d", "h", "min", "ms", "ns", "s", "us"]),
+                Some("isPositive") => TypeCheck::Boolean,
+                _ => return Ok(Candidate::Unavailable),
+            },
+            TypeCheck::Bytes if property.is_some() => match scalar_property {
+                Some("length" | "sha256Int") => TypeCheck::Int,
+                Some("size") => classes::named_type("DataSize").expect("DataSize class"),
+                Some("base64" | "hex" | "md5" | "sha1" | "sha256") => TypeCheck::String,
+                _ => return Ok(Candidate::Unavailable),
+            },
+            TypeCheck::MetaClass(name)
+                if property.is_some()
+                    && name == "Class"
+                    && scalar_property == Some("simpleName") =>
+            {
                 TypeCheck::String
             }
-            TypeCheck::String if scalar_property == Some("base64DecodedBytes") => TypeCheck::Bytes,
             _ => return Ok(Candidate::Unavailable),
         };
         Ok(Candidate::Type(candidate))
     }
+}
+fn builtin_type_param(block: usize, name: &str) -> TypeCheck {
+    TypeCheck::Parameter {
+        block,
+        name: name.into(),
+    }
+}
+fn parameterized_collection(kind: CollectionKind, arguments: Vec<TypeCheck>) -> TypeCheck {
+    TypeCheck::ParameterizedCollection {
+        kind,
+        arguments: arguments
+            .into_iter()
+            .map(|ty| (ty, Span::new(0, 0)))
+            .collect(),
+    }
+}
+fn string_literal_union(literals: &[&str]) -> TypeCheck {
+    TypeCheck::Union {
+        string_literals: false,
+        types: literals
+            .iter()
+            .map(|literal| TypeCheck::StringLiteral((*literal).into()))
+            .collect(),
+        spans: Vec::new(),
+        labels: Vec::new(),
+        default: None,
+    }
+    .shared()
 }
 fn reference_key_matches(ty: &TypeCheck, key: &Value, heap: &Heap) -> bool {
     let mut pending = vec![ty];

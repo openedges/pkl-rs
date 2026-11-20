@@ -22,9 +22,6 @@ production document does not change those original records.
 
 ## Explicitly unsupported branches
 
-- Pinned Java non-ASCII digit classification and parseInt behavior in version
-  and indentation indicators and URI escape digits.
-- Exact malformed UTF-8 tag URI decoding error lengths and messages.
 - Exact PercentEscaper errors for invalid UTF-16 tag input, malformed tag-escape
   buffer overflow and unexpected internal parser state-list rendering.
 - Nonterminating explicit-merge expansion, pending the pinned Java lifecycle
@@ -37,11 +34,11 @@ at its YAML error boundary.
 
 ## Remaining verification and lifecycle work
 
-The backend is synchronous within a document. It preserves parseAll document
-boundaries but does not yield within long tokens, scanner lookahead, large
-documents or merge expansion. VM budgets for node construction, hashing and
-callbacks do not establish parser cancellation responsiveness. A resumable
-scanner/parser/composer budget interface remains required.
+The backend exposes a cooperative step-budgeted `Backend::step(budget)` interface
+that yields across scanner lookahead, comment/whitespace runs, parser events,
+document graph composition, and explicit-merge expansion so VM polls observe
+cancellation and GC safepoints mid-document. Mid-scalar-token yielding inside a
+single multi-megabyte scalar remains open.
 
 Exhaustive and generated Java grammar, graph, resolver and diagnostic comparisons
 remain necessary. Selected supplementary refill controls preserve complete

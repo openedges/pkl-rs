@@ -1,0 +1,43 @@
+local doc = new Dynamic {
+  property = 1
+  prop1 {
+    prop2 {
+      prop3 = 2
+    }
+    ["key1"] = new Dynamic {
+      anyProp {
+        ["key2"] = new Dynamic {
+          prop2 = new Listing { 99 }
+        }
+      }
+    }
+  }
+  ["key"] = 3
+  ["key1"] = new Mapping {
+    ["key2"] = new Mapping {
+      ["key3"] = 4
+    }
+  }
+  list = List(10, 20)
+}
+local r = new PcfRenderer {
+  converters {
+    ["^property"] = (v) -> "top:\(v)"
+    ["^prop1.prop2.prop3"] = (v) -> v * 10
+    ["^[key]"] = (v) -> "k:\(v)"
+    ["^[key1][key2][key3]"] = (v) -> v + 100
+    ["^prop1[key1].*[key2].prop2[*]"] = (v) -> v + 1
+    ["^list[*]"] = (v) -> v * 2
+  }
+}
+rendered = r.renderDocument(doc)
+rootConv = new PcfRenderer {
+  converters {
+    [""] = (_) -> "empty-path-root"
+  }
+}.renderValue(123)
+caretConv = new PcfRenderer {
+  converters {
+    ["^"] = (_) -> "caret-root"
+  }
+}.renderValue(456)

@@ -1,0 +1,7 @@
+output {
+  files {
+    ["bar.pcf"] {
+      value = new Dynamic { ["bar"] = "baz" }
+    }
+  }
+}

@@ -47,7 +47,7 @@ fn pattern_min_length(p: &Pattern) -> usize {
 
 fn node_min_length(n: &Node) -> usize {
     match n {
-        Node::Literal(_) | Node::Dot | Node::CharClass(_) => 1,
+        Node::Literal(_) | Node::Dot | Node::CharClass(_) | Node::NfcCharClass(_) => 1,
         Node::LinebreakMatcher => 1, // \R minimum is 1 (single char)
         Node::Anchor(_)
         | Node::GraphemeBoundary
@@ -117,6 +117,7 @@ fn node_java_max(n: &Node) -> i32 {
         Node::Literal(_) | Node::Dot | Node::CharClass(_) => 1,
         Node::LinebreakMatcher => 2,
         Node::Anchor(_)
+        | Node::NfcCharClass(_)
         | Node::GraphemeBoundary
         | Node::SetFlags(_)
         | Node::RestoreFlags(_)
@@ -157,7 +158,7 @@ fn node_java_max(n: &Node) -> i32 {
 
 fn node_max_length(n: &Node) -> Option<usize> {
     match n {
-        Node::Literal(_) | Node::Dot | Node::CharClass(_) => Some(1),
+        Node::Literal(_) | Node::Dot | Node::CharClass(_) | Node::NfcCharClass(_) => Some(1),
         Node::LinebreakMatcher => Some(2),
         Node::Anchor(_)
         | Node::GraphemeBoundary
@@ -217,6 +218,7 @@ fn node_is_deterministic(n: &Node) -> bool {
         Node::Quantified {
             inner, min, max, ..
         } => min == max && node_is_deterministic(inner),
+        Node::NfcCharClass(_) => false,
         _ => true,
     }
 }
@@ -424,6 +426,34 @@ impl<'a> Engine<'a> {
                 } else {
                     false
                 }
+            }
+
+            Node::NfcCharClass(cc) => {
+                let limit = self.text_len();
+                if pos < limit {
+                    let ch0 = self.input.at(pos);
+                    let n = if ch0 >= 0x10000 { 2 } else { 1 };
+                    let mut j = super::canon_eq::next_grapheme_boundary(self.input.0, pos, limit);
+                    if pos + n == j {
+                        if self.match_char_class(cc, ch0) {
+                            return self.match_nodes(&nodes[1..], j, state);
+                        }
+                    } else {
+                        while pos + n < j {
+                            if let Some(cp) =
+                                super::canon_eq::nfc_single_codepoint(&self.input.0[pos..j])
+                            {
+                                if self.match_char_class(cc, cp)
+                                    && self.match_nodes(&nodes[1..], j, state)
+                                {
+                                    return true;
+                                }
+                            }
+                            j = self.input.previous(j);
+                        }
+                    }
+                }
+                false
             }
 
             Node::Group { index, inner, .. } => {

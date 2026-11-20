@@ -94,19 +94,42 @@ impl Parser {
             event: None,
         }
     }
-    pub fn peek(&mut self) -> Result<Event, YamlError> {
-        if self.event.is_none() {
-            self.event = Some(self.produce()?);
+    /// Cooperative step-budgeted event peek: yields (`Ok(None)`) when scanner
+    /// lookahead or event production exhausts `budget`.
+    pub fn step_peek(&mut self, budget: &mut usize) -> Result<Option<Event>, YamlError> {
+        if let Some(event) = &self.event {
+            return Ok(Some(event.clone()));
         }
-        Ok(self.event.as_ref().unwrap().clone())
+        if *budget == 0 {
+            return Ok(None);
+        }
+        if self.scanner.step_peek(budget)?.is_none() {
+            return Ok(None);
+        }
+        if *budget == 0 {
+            return Ok(None);
+        }
+        *budget -= 1;
+        let event = self.produce()?;
+        self.event = Some(event.clone());
+        Ok(Some(event))
     }
-    pub fn next(&mut self) -> Result<Event, YamlError> {
-        let event = self.peek()?;
+    pub fn step_next(&mut self, budget: &mut usize) -> Result<Option<Event>, YamlError> {
+        let Some(event) = self.step_peek(budget)? else {
+            return Ok(None);
+        };
         self.event = None;
-        Ok(event)
+        Ok(Some(event))
     }
-    pub fn check(&mut self, id: EventId) -> Result<bool, YamlError> {
-        Ok(self.peek()?.id == id)
+    pub fn take_peeked(&mut self) -> Event {
+        self.event.take().expect("peeked event")
+    }
+    pub fn step_check(
+        &mut self,
+        id: EventId,
+        budget: &mut usize,
+    ) -> Result<Option<bool>, YamlError> {
+        Ok(self.step_peek(budget)?.map(|event| event.id == id))
     }
     fn resume(&mut self) {
         self.state = self.states.pop().expect("parser production stack");

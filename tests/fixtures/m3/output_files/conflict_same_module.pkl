@@ -1,0 +1,6 @@
+output {
+  files {
+    ["foo.txt"] { text = "bar" }
+    ["./foo.txt"] { text = "bar" }
+  }
+}

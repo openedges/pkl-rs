@@ -8,7 +8,12 @@ use crate::heap::{CollectionKind, CollectionMember, CollectionMemberKind};
 mod backend;
 #[path = "yaml_parser/scalars.rs"]
 mod scalars;
-use backend::{Backend, Document, Mode, NodeId, NodeKind, Settings, Text};
+use backend::{Backend, Document, Mode, NodeId, NodeKind, Settings, StepOutcome, Text};
+
+/// Cooperative backend work units per VM step so large documents, scanner
+/// lookahead, comment blocks, and merge expansions remain responsive to
+/// Host budgets, cancellation, and GC safepoints.
+const BACKEND_STEP_BUDGET: usize = 32;
 
 #[derive(Clone)]
 struct MapWork {
@@ -16,7 +21,7 @@ struct MapWork {
     object: ObjectId,
     path: Vec<PathPart>,
     index: usize,
-    keys: Vec<(Value, i32)>,
+    keys: Vec<(Value, Option<i32>)>,
 }
 enum Task {
     Construct(NodeId, Vec<PathPart>),
@@ -128,6 +133,7 @@ enum Await {
     MaxAliases,
     Converted,
     Compared,
+    DuplicateKeyString(NodeId, NodeId),
 }
 pub(super) struct Run {
     receiver: ObjectId,
@@ -142,6 +148,7 @@ pub(super) struct Run {
     use_mapping: bool,
     max_aliases: usize,
     all: bool,
+    doc_started: bool,
     backend: Option<Backend>,
     document: Option<Document>,
     cache: Vec<Option<Value>>,
@@ -259,6 +266,25 @@ fn engine_error(error: backend::YamlError, max: usize) -> RuntimeError {
     }
     parse_error(text(&error.message()))
 }
+fn duplicate_key_error(
+    run: &Run,
+    mapping_id: NodeId,
+    key_id: NodeId,
+    name: PklString,
+) -> Result<RuntimeError, RuntimeError> {
+    let document = run.document()?;
+    let node = document.node(mapping_id);
+    let key_node = document.node(key_id);
+    let problem = PklString::from("found duplicate key ").concat(&name);
+    let error = backend::YamlError::marked(
+        backend::diagnostic::ErrorKind::Engine,
+        Some("while constructing a mapping"),
+        Some(node.start.clone()),
+        backend_text(&problem),
+        Some(key_node.start.clone()),
+    );
+    Ok(engine_error(error, run.max_aliases))
+}
 impl Vm {
     pub(super) fn begin_yaml_parse(&mut self, all: bool) -> Result<(), RuntimeError> {
         let receiver = self.this_receiver()?.as_object()?;
@@ -281,6 +307,7 @@ impl Vm {
             use_mapping: false,
             max_aliases: 50,
             all,
+            doc_started: false,
             backend: None,
             document: None,
             cache: Vec::new(),
@@ -421,6 +448,12 @@ impl Vm {
                     };
                     run.returned = Some(equal);
                 }
+                Await::DuplicateKeyString(mapping_id, key_id) => {
+                    let Value::String(name) = value else {
+                        return Err(invalid("YAML duplicate key string"));
+                    };
+                    return Err(duplicate_key_error(run, mapping_id, key_id, name)?);
+                }
             }
         }
         match run.phase {
@@ -486,10 +519,11 @@ impl Vm {
                     return Err(invalid("YAML text"));
                 };
                 // Java source creation calls URI.create outside its parse catch.
-                // Nonstandard invalid labels need typed Java cause projection.
-                crate::host::resources::glob::parse_base(&run.uri).map_err(|_| {
-                    unsupported("Resource URI.create failure projection or unsupported URI syntax")
-                })?;
+                // Preserve exact UriCreateCause provenance when a Resource URI
+                // fails Java URI syntax validation.
+                if run.resource.is_some() {
+                    crate::host::resources::glob::validate_opaque_list_uri(&run.uri)?;
+                }
                 run.backend = Some(Backend::new(
                     backend_text(source),
                     Settings {
@@ -498,6 +532,7 @@ impl Vm {
                         label: backend_text(&run.uri),
                     },
                 ));
+                run.doc_started = false;
                 run.phase = 8;
                 return Ok(false);
             }
@@ -527,18 +562,32 @@ impl Vm {
                 return Ok(true);
             }
             run.documents.push(result);
+            run.doc_started = false;
             run.phase = 8;
         }
         let backend = run
             .backend
             .as_mut()
             .ok_or_else(|| invalid("YAML backend"))?;
-        let document = if run.all {
-            backend.next_document()
-        } else {
-            backend.single_document()
+        if !run.doc_started {
+            if run.all {
+                backend.start_next_document()
+            } else {
+                backend.start_single_document()
+            }
+            .map_err(|e| engine_error(e, run.max_aliases))?;
+            run.doc_started = true;
         }
-        .map_err(|e| engine_error(e, run.max_aliases))?;
+        let document = match backend
+            .step(BACKEND_STEP_BUDGET)
+            .map_err(|e| engine_error(e, run.max_aliases))?
+        {
+            StepOutcome::Yielded => return Ok(false),
+            StepOutcome::Document(doc) => {
+                run.doc_started = false;
+                doc
+            }
+        };
         let Some(document) = document else {
             if run.all {
                 let object = self.heap.allocate(Object {
@@ -806,16 +855,15 @@ impl Vm {
                 key,
                 scan,
             } => {
-                let hash = self.java_hash(&key)?.ok_or_else(|| {
-                    unsupported("identity-based Java hash for converter-produced key")
-                })?;
+                let hash = self.java_hash(&key)?;
                 if scan == 0
-                    && work.keys.iter().filter(|(_, h)| *h == hash).count() >= 7
+                    && let Some(h) = hash
+                    && work.keys.iter().filter(|(_, ch)| *ch == Some(h)).count() >= 7
                     && (matches!(key, Value::Object(_))
                         || work
                             .keys
                             .iter()
-                            .any(|(k, h)| *h == hash && matches!(k, Value::Object(_))))
+                            .any(|(k, ch)| *ch == Some(h) && matches!(k, Value::Object(_))))
                 {
                     return Err(unsupported(
                         "HashMap tree-bin duplicate-key comparison order for colliding guest objects",
@@ -827,7 +875,9 @@ impl Vm {
                         key: key.clone(),
                         scan,
                     });
-                    if hash != candidate_hash {
+                    if let (Some(h1), Some(h2)) = (hash, candidate_hash)
+                        && h1 != h2
+                    {
                         run.returned = Some(false);
                     } else {
                         run.awaiting = Some(Await::Compared);
@@ -845,31 +895,27 @@ impl Vm {
                     .take()
                     .ok_or_else(|| invalid("YAML duplicate comparison"))?
                 {
-                    let node = run.document()?.node(work.node);
-                    let NodeKind::Mapping { entries, .. } = &node.kind else {
-                        unreachable!()
+                    let key_id = {
+                        let node = run.document()?.node(work.node);
+                        let NodeKind::Mapping { entries, .. } = &node.kind else {
+                            unreachable!()
+                        };
+                        entries[work.index].0
                     };
-                    let key_node = run.document()?.node(entries[work.index].0);
-                    let name = match &key {
-                        Value::String(s) => s.clone(),
-                        Value::Int(n) => n.get().to_string().into(),
-                        Value::Bool(b) => b.to_string().into(),
-                        Value::Null => "null".into(),
-                        _ => {
-                            return Err(unsupported(
-                                "duplicate-key Java toString for non-scalar key",
-                            ));
-                        }
+                    let direct_name = match &key {
+                        Value::String(s) => Some(s.clone()),
+                        Value::Int(n) => Some(n.get().to_string().into()),
+                        Value::Float(f) => Some(crate::numeric::double_to_string(f.get()).into()),
+                        Value::Bool(b) => Some(b.to_string().into()),
+                        Value::Null => Some("null".into()),
+                        _ => None,
                     };
-                    let problem = PklString::from("found duplicate key ").concat(&name);
-                    let error = backend::YamlError::marked(
-                        backend::diagnostic::ErrorKind::Engine,
-                        Some("while constructing a mapping"),
-                        Some(node.start.clone()),
-                        backend_text(&problem),
-                        Some(key_node.start.clone()),
-                    );
-                    return Err(engine_error(error, run.max_aliases));
+                    if let Some(name) = direct_name {
+                        return Err(duplicate_key_error(run, work.node, key_id, name)?);
+                    }
+                    run.awaiting = Some(Await::DuplicateKeyString(work.node, key_id));
+                    self.java_value_string(key)?;
+                    return Ok(());
                 }
                 run.tasks.push(Task::Duplicate {
                     work,

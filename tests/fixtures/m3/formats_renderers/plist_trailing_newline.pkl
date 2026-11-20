@@ -1,0 +1,3 @@
+local doc = new Dynamic { foo { bar = 0 } }
+rendered = new PListRenderer { indent = "  " }.renderDocument(doc)
+endsWithNewline = rendered.endsWith("\n")

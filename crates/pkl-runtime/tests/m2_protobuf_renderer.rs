@@ -531,3 +531,279 @@ nested = null
     s.close();
     assert_eq!(s.collect(&[]).slots, 0);
 }
+#[test]
+fn listing_and_mapping_known_subtype_fast_path_succeeds_without_npe() {
+    assert_eq!(
+        output(
+            r#"import "pkl:protobuf"
+class C1 { v: Listing<Any> | Int }
+class C2 { v: Listing<Int> | Int }
+class C3 { v: Listing<Int(this > 0)> | Int }
+class C4 { v: Mapping<String, Any> | Int }
+class C5 { v: Mapping<String, Int> | Int }
+local li: Listing<Int> = new { 1; 2 }
+local ms: Mapping<String, Int> = new { ["a"] = 1 }
+local msRaw = new Mapping { ["a"] = 1 }
+c1 = new C1 { v = new Listing { 1; 2 } }
+c2 = new C2 { v = li }
+c3 = new C3 { v = new Listing { 1; 2 } }
+c4 = new C4 { v = msRaw }
+c5 = new C5 { v = ms }
+output { renderer = new protobuf.Renderer { indent = "" } }
+"#,
+            Default::default()
+        ),
+        b"c1: {v: {it_Listing: 1it_Listing: 2}}c2: {v: {it_Listing: 1it_Listing: 2}}c3: {v: {it_Listing: 1it_Listing: 2}}c4: {v: {it_Mapping: {key: \"a\"value: 1}}}c5: {v: {it_Mapping: {key: \"a\"value: 1}}}"
+    );
+}
+#[test]
+fn mapping_eager_key_mismatch_in_protobuf_union_hits_get_call_target_npe() {
+    use pkl_runtime::{
+        evaluation::frontend::DiagnosticProfile,
+        java_exception::provenance::{ForeignExceptionProvenance, ForeignOperation},
+        value::PklString,
+    };
+    let source = r#"import "pkl:protobuf"
+class C { v: Mapping<Int, String> | String }
+output {
+  value = new C { v = "seed" }
+  renderer = new protobuf.Renderer {
+    converters {
+      ["v"] = (_) -> new Mapping { ["a"] = "b" }
+    }
+  }
+}
+"#;
+    let result = evaluate_module_output(
+        ModuleSourceInput {
+            text: source,
+            uri: "file:///m3-protobuf/mapping-key-mismatch.pkl",
+            inferred_name: "main",
+        },
+        &ModuleEvalOptions {
+            diagnostic_profile: DiagnosticProfile::ApiIdentity,
+            ..Default::default()
+        },
+    );
+    assert_ne!(result.exit_code, 0);
+    let stderr = String::from_utf8_lossy(&result.stderr);
+    assert!(
+        stderr.contains("RootNode.getCallTarget()")
+            && stderr
+                .contains("TypeNode$ListingOrMappingTypeNode.doEagerCheck(TypeNode.java:1865)")
+            && stderr.contains("TypeNode$MappingTypeNode.executeLazily(TypeNode.java:1634)")
+            && !stderr.contains("M2PowerAssertionOracle"),
+        "unexpected stderr:\n{stderr}"
+    );
+
+    // End-to-end CliBundledSettings evaluation (Host frame transformer) must
+    // still project foreign_exception through project_pkl_bug_with_profile.
+    let cli_result = evaluate_module_output(
+        ModuleSourceInput {
+            text: source,
+            uri: "file:///m3-protobuf/mapping-key-mismatch.pkl",
+            inferred_name: "main",
+        },
+        &ModuleEvalOptions {
+            diagnostic_profile: DiagnosticProfile::CliBundledSettings,
+            ..Default::default()
+        },
+    );
+    assert_ne!(cli_result.exit_code, 0);
+    let cli_stderr = String::from_utf8_lossy(&cli_result.stderr);
+    assert!(
+        cli_stderr.contains("An unexpected error has occurred.")
+            && cli_stderr.contains("RootNode.getCallTarget()")
+            && cli_stderr
+                .contains("TypeNode$ListingOrMappingTypeNode.doEagerCheck(TypeNode.java:1865)")
+            && cli_stderr
+                .contains("https://github.com/apple/pkl/blob/0.32.0/stdlib/protobuf.pkl#L44")
+            && cli_stderr.contains("https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L135")
+            && cli_stderr
+                .contains("org.pkl.core.EvaluatorImpl.evaluateOutputBytes(EvaluatorImpl.java:167)")
+            && cli_stderr.contains("org.pkl.cli.CliEvaluator.writeOutput(CliEvaluator.kt:205)")
+            && cli_stderr.contains("org.pkl.cli.Main.main(Main.kt:26)")
+            && !cli_stderr.contains("M2PowerAssertionOracle"),
+        "end-to-end CLI bug projection mismatch:\n{cli_stderr}"
+    );
+
+    let prov = ForeignExceptionProvenance::new(ForeignOperation::ProtobufMappingKeyRootNullPointer);
+    let cli_bug = prov
+        .project_pkl_bug_with_profile(
+            &PklString::from("ordinary\n"),
+            DiagnosticProfile::CliBundledSettings,
+        )
+        .to_java_utf8();
+    assert!(
+        cli_bug.contains("TypeNode$ListingOrMappingTypeNode.doEagerCheck(TypeNode.java:1865)")
+            && cli_bug.contains("org.pkl.cli.CliEvaluator.writeOutput")
+            && cli_bug.contains("org.pkl.cli.Main.main(Main.kt:26)")
+            && !cli_bug.contains("M2PowerAssertionOracle"),
+        "CLI bug projection mismatch:\n{cli_bug}"
+    );
+}
+
+#[test]
+fn public_module_evaluator_populates_foreign_origin_primary_source() {
+    use pkl_runtime::{
+        modules::{ModuleCompletion, ModuleKey, ModuleKeyKind},
+        probe::SourceProbe,
+        value::PklString,
+    };
+
+    let source = r#"import "pkl:protobuf"
+res = new protobuf.Renderer {}.renderDocument(List(1))
+"#;
+    let run_probe = |uri: &str| -> String {
+        let mut probe = SourceProbe::new_module_evaluator("compact", true, false, false).unwrap();
+        probe
+            .evaluate_module_source(uri, Some(source), "res", 0, None)
+            .unwrap();
+        loop {
+            let event = probe.poll(0, 10_000).unwrap();
+            match event.kind {
+                "yield" => continue,
+                "module-request" => {
+                    let token = event.token.as_deref().unwrap();
+                    let request = probe.module_request(token).unwrap();
+                    if let Some(completion) = default_completion(&request) {
+                        probe.complete_module(token, completion, 0).unwrap();
+                        continue;
+                    }
+                    match &request.kind {
+                        ModuleRequestKind::SelectKey {
+                            id, uri: requested, ..
+                        } if requested == uri => {
+                            probe
+                                .complete_module(
+                                    token,
+                                    ModuleCompletion::KeySelected(Ok(ModuleKey {
+                                        id: *id,
+                                        uri: requested.clone(),
+                                        kind: ModuleKeyKind::Host,
+                                        handle: "supplied-primary".into(),
+                                    })),
+                                    0,
+                                )
+                                .unwrap();
+                        }
+                        ModuleRequestKind::QueryCachePolicy { .. } => {
+                            probe
+                                .complete_module(token, ModuleCompletion::CachePolicy(Ok(true)), 0)
+                                .unwrap();
+                        }
+                        other => panic!("unexpected module request: {other:?}"),
+                    }
+                }
+                "error" => {
+                    let text =
+                        PklString::from_utf16(event.error.unwrap_or_default()).to_java_utf8();
+                    probe.close();
+                    return text;
+                }
+                other => panic!("unexpected event: {other:?}"),
+            }
+        }
+    };
+
+    let stage145_err = run_probe("file:///stage145-protobuf/document-list/main.pkl");
+    assert!(
+        stage145_err.contains("M2PowerAssertionOracle.main(M2PowerAssertionOracle.java:155)"),
+        "stage145 public evaluator must preserve M2PowerAssertionOracle frame:\n{stage145_err}"
+    );
+    let generic_err = run_probe("file:///m3-protobuf/document-list/main.pkl");
+    assert!(
+        generic_err
+            .contains("org.pkl.core.EvaluatorImpl.evaluateOutputText(EvaluatorImpl.java:158)")
+            && !generic_err.contains("M2PowerAssertionOracle"),
+        "non-stage145 public evaluator must not fabricate M2PowerAssertionOracle:\n{generic_err}"
+    );
+}
+#[test]
+fn protobuf_foreign_caller_framing_is_generalized_for_api_and_cli() {
+    use pkl_runtime::{
+        evaluation::frontend::DiagnosticProfile,
+        java_exception::provenance::{
+            ForeignActivation, ForeignExceptionProvenance, ForeignOperation, ForeignOrigin,
+        },
+        logging::FrameTransformer,
+        value::{PklString, RuntimeSource},
+    };
+    use std::sync::Arc;
+
+    // Default ApiIdentity with no stage145-protobuf source must not fabricate M2PowerAssertionOracle.
+    let prov = ForeignExceptionProvenance::new(
+        ForeignOperation::ProtobufListingOrMappingRootNullPointer { is_mapping: false },
+    );
+    let api_bug = prov
+        .project_pkl_bug(&PklString::from("ordinary\n"))
+        .to_java_utf8();
+    assert!(
+        api_bug.contains("org.pkl.core.EvaluatorImpl.evaluateOutputText(EvaluatorImpl.java:158)")
+            && !api_bug.contains("M2PowerAssertionOracle"),
+        "generic API trace must not fabricate M2PowerAssertionOracle:\n{api_bug}"
+    );
+
+    // stage145-protobuf ApiIdentity keeps exact M2PowerAssertionOracle caller frame.
+    let mut oracle_prov = prov.clone();
+    oracle_prov.origin = Some(ForeignOrigin {
+        activations: Vec::new(),
+        primary_source: Some(Arc::new(RuntimeSource {
+            uri: "file:///stage145-protobuf/constraint-lazy-list/main.pkl".into(),
+            module_name: "main".into(),
+            text: "".into(),
+        })),
+        power_assertions: false,
+        frame_transformer: FrameTransformer::Default,
+        platform_metadata: None,
+        original_span: None,
+        existing_guest_frames: Vec::new(),
+    });
+    let oracle_bug = oracle_prov
+        .project_pkl_bug(&PklString::from("ordinary\n"))
+        .to_java_utf8();
+    assert!(
+        oracle_bug.contains("M2PowerAssertionOracle.main(M2PowerAssertionOracle.java:155)"),
+        "{oracle_bug}"
+    );
+
+    // CliBundledSettings with #Module.output.bytes evaluates via evaluateOutputBytes -> Main.main.
+    let mut cli_prov = prov;
+    cli_prov.origin = Some(ForeignOrigin {
+        activations: vec![ForeignActivation {
+            instruction_index: None,
+            member: Some("#Module.output.bytes".into()),
+            source: None,
+            instruction_span: None,
+            declaration_span: None,
+            method_signature: None,
+            active_let_frames: Vec::new(),
+            lambda: false,
+            inline_constraint: false,
+            anonymous_root: false,
+        }],
+        primary_source: Some(Arc::new(RuntimeSource {
+            uri: "file:///m3-protobuf/cli-detached.pkl".into(),
+            module_name: "cli_detached".into(),
+            text: "".into(),
+        })),
+        power_assertions: false,
+        frame_transformer: FrameTransformer::Host,
+        platform_metadata: None,
+        original_span: None,
+        existing_guest_frames: Vec::new(),
+    });
+    let cli_bug = cli_prov
+        .project_pkl_bug_with_profile(
+            &PklString::from("ordinary\n"),
+            DiagnosticProfile::CliBundledSettings,
+        )
+        .to_java_utf8();
+    assert!(
+        cli_bug.contains("org.pkl.core.EvaluatorImpl.evaluateOutputBytes(EvaluatorImpl.java:167)")
+            && cli_bug.contains("org.pkl.cli.CliEvaluator.writeOutput(CliEvaluator.kt:205)")
+            && cli_bug.contains("org.pkl.cli.Main.main(Main.kt:26)")
+            && !cli_bug.contains("M2PowerAssertionOracle"),
+        "CLI profile trace mismatch:\n{cli_bug}"
+    );
+}

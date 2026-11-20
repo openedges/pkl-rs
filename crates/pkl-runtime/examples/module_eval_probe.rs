@@ -1,7 +1,11 @@
 //! Development-only original module-output operation, not a complete product CLI.
 use pkl_runtime::evaluation::frontend::{
-    ModuleSourceInput, arguments::parse_module_eval_args, evaluate_module_output_with_glob_host,
+    ModuleSourceInput, StreamingOutputFilesOutcome, arguments::parse_module_eval_args,
+    check_path_spec, evaluate_module_expression_with_platform_and_hosts,
+    evaluate_module_output_with_glob_host, evaluate_module_output_with_platform_and_hosts,
+    evaluate_output_files_streaming_with_hosts,
 };
+use pkl_runtime::logging::PlatformMetadata;
 use pkl_runtime::modules::ModuleHostError;
 use pkl_runtime::packages::PackageUri;
 use pkl_runtime::packages::project::{
@@ -9,9 +13,9 @@ use pkl_runtime::packages::project::{
 };
 use pkl_runtime::packages::zip::ZipArchive;
 use pkl_runtime::value::PklString;
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, HashMap, HashSet};
 use std::io::Write;
-use std::path::{Path, PathBuf};
+use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
 
 #[path = "module_eval_probe/environment.rs"]
@@ -31,18 +35,18 @@ use package_cache::HostPackageCache;
 use package_transport::PackageTransportClient;
 
 #[derive(Debug)]
-enum ProbeError {
+pub enum ProbeError {
     Unsupported(String),
     Internal(String),
 }
 impl ProbeError {
-    fn exit_code(&self) -> i32 {
+    pub fn exit_code(&self) -> i32 {
         match self {
             Self::Unsupported(_) => 2,
             Self::Internal(_) => 4,
         }
     }
-    fn message(&self) -> &str {
+    pub fn message(&self) -> &str {
         match self {
             Self::Unsupported(message) | Self::Internal(message) => message,
         }
@@ -578,18 +582,208 @@ impl pkl_runtime::packages::resolver::PackageHost for NativePackageHost {
     }
 }
 
+fn detect_os_name() -> String {
+    #[cfg(target_os = "macos")]
+    {
+        "macOS".to_string()
+    }
+    #[cfg(target_os = "linux")]
+    {
+        "Linux".to_string()
+    }
+    #[cfg(not(any(target_os = "macos", target_os = "linux")))]
+    {
+        std::env::consts::OS.to_string()
+    }
+}
+
+fn detect_os_version() -> String {
+    #[cfg(target_os = "macos")]
+    {
+        if let Ok(output) = std::process::Command::new("/usr/bin/sw_vers")
+            .arg("-productVersion")
+            .output()
+            && output.status.success()
+        {
+            let version = String::from_utf8_lossy(&output.stdout).trim().to_string();
+            if !version.is_empty() {
+                return version;
+            }
+        }
+    }
+    #[cfg(target_os = "linux")]
+    {
+        if let Ok(output) = std::process::Command::new("uname").arg("-r").output()
+            && output.status.success()
+        {
+            let version = String::from_utf8_lossy(&output.stdout).trim().to_string();
+            if !version.is_empty() {
+                return version;
+            }
+        }
+    }
+    "unknown".to_string()
+}
+
+fn detect_java_version() -> String {
+    if let Ok(version) = std::env::var("PKL_ORACLE_JAVA_VERSION") {
+        let trimmed = version.trim();
+        if !trimmed.is_empty() {
+            return trimmed.to_string();
+        }
+    }
+    let java_bin = std::env::var("PKL_ORACLE_JAVA").unwrap_or_else(|_| "java".to_string());
+    if let Ok(output) = std::process::Command::new(java_bin)
+        .args(["-XshowSettings:properties", "-version"])
+        .output()
+    {
+        let text = String::from_utf8_lossy(&output.stderr);
+        for line in text.lines() {
+            if let Some(rest) = line.trim().strip_prefix("java.version = ") {
+                let version = rest.trim();
+                if !version.is_empty() {
+                    return version.to_string();
+                }
+            }
+        }
+    }
+    "unknown".to_string()
+}
+
+fn detect_platform_metadata() -> PlatformMetadata {
+    PlatformMetadata {
+        os_name: detect_os_name().into(),
+        os_version: detect_os_version().into(),
+        cpu_architecture: std::env::consts::ARCH.into(),
+        java_version: detect_java_version().into(),
+    }
+}
+
 fn normalize_path(path: &Path) -> PathBuf {
     let mut components = Vec::new();
     for comp in path.components() {
         match comp {
-            std::path::Component::CurDir => {}
-            std::path::Component::ParentDir => {
-                components.pop();
-            }
+            Component::CurDir => {}
+            Component::ParentDir => match components.last() {
+                Some(Component::Normal(_)) => {
+                    components.pop();
+                }
+                Some(Component::RootDir | Component::Prefix(_)) => {}
+                _ => components.push(comp),
+            },
             c => components.push(c),
         }
     }
     components.into_iter().collect()
+}
+
+/// Relative path from `base` to `path`, matching `IoUtils.relativize` / `Path.relativize`.
+fn relativize(path: &Path, base: &Path) -> PathBuf {
+    let path_comps: Vec<_> = path.components().collect();
+    let base_comps: Vec<_> = base.components().collect();
+    #[cfg(windows)]
+    {
+        if let (Some(Component::Prefix(a)), Some(Component::Prefix(b))) =
+            (path_comps.first(), base_comps.first())
+            && a != b
+        {
+            return path.to_path_buf();
+        }
+    }
+    let common = path_comps
+        .iter()
+        .zip(&base_comps)
+        .take_while(|(a, b)| a == b)
+        .count();
+    let mut result = PathBuf::new();
+    for _ in common..base_comps.len() {
+        result.push("..");
+    }
+    for comp in &path_comps[common..] {
+        result.push(comp.as_os_str());
+    }
+    result
+}
+
+/// Component-wise symlink-aware path resolution matching `CliEvaluator.resolveRealPath`.
+fn resolve_real_path(base: &Path, path_spec: &str) -> (PathBuf, PathBuf) {
+    let mut resolved = base.to_path_buf();
+    let mut real = base.to_path_buf();
+    for comp in Path::new(path_spec).components() {
+        match comp {
+            Component::RootDir | Component::Prefix(_) => continue,
+            c => {
+                resolved.push(c.as_os_str());
+                real.push(c.as_os_str());
+                if real.exists()
+                    && let Ok(canon) = std::fs::canonicalize(&real)
+                {
+                    real = canon;
+                }
+            }
+        }
+    }
+    (normalize_path(&real), normalize_path(&resolved))
+}
+
+fn resolve_output_path(
+    working_dir: &Path,
+    template: &str,
+    module_path: &Path,
+    inferred_name: &str,
+    output_format: Option<&str>,
+) -> PathBuf {
+    let module_dir = module_path
+        .parent()
+        .map(|parent| {
+            let rel = relativize(parent, working_dir);
+            if rel.as_os_str().is_empty() {
+                ".".to_owned()
+            } else {
+                rel.to_string_lossy().into_owned()
+            }
+        })
+        .unwrap_or_else(|| ".".to_owned());
+    let substituted = template
+        .replace("%{moduleName}", inferred_name)
+        .replace(
+            "%{outputFormat}",
+            output_format.unwrap_or("%{outputFormat}"),
+        )
+        .replace("%{moduleDir}", &module_dir);
+    normalize_path(&working_dir.join(substituted))
+}
+
+struct ResolvedSourceModule {
+    path: PathBuf,
+    uri: String,
+    inferred_name: String,
+}
+
+enum MultiFileConsumerError {
+    Cli(String),
+    Io(String),
+    Eval,
+}
+
+fn write_stderr_bytes(
+    stderr: &mut dyn Write,
+    bytes: &[u8],
+    test_mode: bool,
+) -> Result<(), ProbeError> {
+    if bytes.is_empty() {
+        return Ok(());
+    }
+    let adjusted;
+    let out = if test_mode {
+        adjusted = adjust_test_mode_stderr(bytes);
+        adjusted.as_slice()
+    } else {
+        bytes
+    };
+    stderr
+        .write_all(out)
+        .map_err(|error| ProbeError::Internal(error.to_string()))
 }
 
 fn canonical_or_lexical_path(path: &Path) -> PathBuf {
@@ -625,6 +819,19 @@ fn is_pattern_allowed(patterns: &[String], uri_str: &str) -> bool {
 }
 
 fn run(arguments: &[String]) -> Result<i32, ProbeError> {
+    let working_dir =
+        std::env::current_dir().map_err(|error| ProbeError::Internal(error.to_string()))?;
+    let mut stdout = std::io::stdout();
+    let mut stderr = std::io::stderr();
+    run_with_io(arguments, &working_dir, &mut stdout, &mut stderr)
+}
+
+pub fn run_with_io(
+    arguments: &[String],
+    working_dir: &Path,
+    stdout: &mut dyn Write,
+    stderr: &mut dyn Write,
+) -> Result<i32, ProbeError> {
     // Extract probe-specific arguments before parse_module_eval_args
     let mut filtered_args = Vec::new();
     let mut ca_certificates = None;
@@ -632,10 +839,19 @@ fn run(arguments: &[String]) -> Result<i32, ProbeError> {
     let mut test_mode = false;
     let mut cache_dir = None;
     let mut cli_trace_mode = None;
+    let mut end_of_options = false;
 
     let mut iter = arguments.iter();
     while let Some(arg) = iter.next() {
+        if end_of_options {
+            filtered_args.push(arg.clone());
+            continue;
+        }
         match arg.as_str() {
+            "--" => {
+                end_of_options = true;
+                filtered_args.push(arg.clone());
+            }
             "--ca-certificates" => {
                 if let Some(ca) = iter.next() {
                     ca_certificates = Some(PathBuf::from(ca));
@@ -670,25 +886,41 @@ fn run(arguments: &[String]) -> Result<i32, ProbeError> {
     }
 
     let invocation = parse_module_eval_args(&filtered_args).map_err(ProbeError::Unsupported)?;
+    if let Err(message) = invocation.validate_cli() {
+        writeln!(stderr, "{message}").map_err(|error| ProbeError::Internal(error.to_string()))?;
+        return Ok(1);
+    }
 
-    let path = std::path::absolute(&invocation.source_path)
-        .map_err(|error| ProbeError::Internal(error.to_string()))?;
-    let text =
-        std::fs::read_to_string(&path).map_err(|error| ProbeError::Internal(error.to_string()))?;
-    let uri = file_uri(&path)?;
-    let inferred_name = path
-        .file_stem()
-        .and_then(|value| value.to_str())
-        .ok_or_else(|| {
-            ProbeError::Unsupported("module-eval adapter requires a UTF-8 module name".into())
-        })?;
+    let working_dir = normalize_path(working_dir);
 
+    let mut modules = Vec::with_capacity(invocation.source_paths.len());
+    for source_path in &invocation.source_paths {
+        let path = normalize_path(&working_dir.join(source_path));
+        let uri = file_uri(&path)?;
+        let inferred_name = path
+            .file_stem()
+            .and_then(|value| value.to_str())
+            .ok_or_else(|| {
+                ProbeError::Unsupported("module-eval adapter requires a UTF-8 module name".into())
+            })?
+            .to_owned();
+        modules.push(ResolvedSourceModule {
+            path,
+            uri,
+            inferred_name,
+        });
+    }
+    // Upstream `CliBaseOptions.normalizedSourceModules`: sort modules by URI
+    // so CLI output is independent of source module argument order.
+    modules.sort_by(|a, b| a.uri.cmp(&b.uri));
+
+    let primary_path = &modules[0].path;
     let explicit_project_dir = if let Some(dir) = &invocation.project_dir {
-        std::path::absolute(dir).ok()
+        Some(normalize_path(&working_dir.join(dir)))
     } else if invocation.options.no_project {
         None
     } else {
-        let mut cur = path.clone();
+        let mut cur = primary_path.clone();
         let mut found = None;
         while cur.pop() {
             if cur.join("PklProject").is_file() {
@@ -701,6 +933,11 @@ fn run(arguments: &[String]) -> Result<i32, ProbeError> {
 
     let cli_env = invocation.options.environment.clone();
     let cli_props = invocation.options.properties.clone();
+    let output_format = invocation.output_format.clone();
+    let output_path = invocation.output_path.clone();
+    let multiple_file_output_path = invocation.multiple_file_output_path.clone();
+    let expression = invocation.expression.clone();
+    let module_output_separator = invocation.module_output_separator.clone();
 
     let transport = PackageTransportClient::new(ca_certificates, test_port);
     let cache = HostPackageCache::new(cache_dir, invocation.options.no_cache);
@@ -726,26 +963,12 @@ fn run(arguments: &[String]) -> Result<i32, ProbeError> {
                 } else {
                     format!("–– Pkl Error ––\n{clean_msg}\n")
                 };
-                let stderr = if test_mode {
-                    adjust_test_mode_stderr(err_out.as_bytes())
-                } else {
-                    err_out.into_bytes()
-                };
-                std::io::stderr()
-                    .write_all(&stderr)
-                    .map_err(|error| ProbeError::Internal(error.to_string()))?;
+                write_stderr_bytes(stderr, err_out.as_bytes(), test_mode)?;
                 return Ok(1);
             }
             Err(err) => {
                 let err_out = format!("–– Pkl Error ––\n{err:?}\n");
-                let stderr = if test_mode {
-                    adjust_test_mode_stderr(err_out.as_bytes())
-                } else {
-                    err_out.into_bytes()
-                };
-                std::io::stderr()
-                    .write_all(&stderr)
-                    .map_err(|error| ProbeError::Internal(error.to_string()))?;
+                write_stderr_bytes(stderr, err_out.as_bytes(), test_mode)?;
                 return Ok(1);
             }
         }
@@ -759,7 +982,7 @@ fn run(arguments: &[String]) -> Result<i32, ProbeError> {
     }
 
     // Apply precedence rules:
-    // 1. Properties: settings overridden by CLI
+    // 1. Properties: settings overridden by CLI `-p`, overridden by `-f`/`--format` (`VmContext.java:91-94`)
     let mut effective_props = settings_opt
         .as_ref()
         .map(|s| s.external_properties.clone())
@@ -770,6 +993,10 @@ fn run(arguments: &[String]) -> Result<i32, ProbeError> {
         } else {
             effective_props.push((k, v));
         }
+    }
+    if let Some(format) = &output_format {
+        effective_props.retain(|(k, _)| k != "pkl.outputFormat");
+        effective_props.push(("pkl.outputFormat".into(), format.clone()));
     }
     options.properties = effective_props;
 
@@ -808,132 +1035,370 @@ fn run(arguments: &[String]) -> Result<i32, ProbeError> {
         .as_ref()
         .and_then(|s| s.root_dir.as_ref())
         .map(|p| canonical_or_lexical_path(p));
-    let root_for_mod = effective_root.clone();
+    let platform_metadata = detect_platform_metadata();
 
-    let result = pkl_runtime::packages::resolver::with_package_host(host, move || {
-        let mod_host = move |request: &pkl_runtime::modules::ModuleRequest| -> pkl_runtime::modules::ModuleCompletion {
-            match &request.kind {
-                pkl_runtime::modules::ModuleRequestKind::ResolveKey { key, .. } => {
-                    let authored = key.uri.as_str().unwrap_or("");
-                    if let Some(root_dir) = &root_for_mod
-                        && authored.starts_with("file:") && !is_under_root_dir(authored, root_dir) {
+    let make_mod_host = {
+        let root_for_mod = effective_root.clone();
+        move || {
+            let root_for_mod = root_for_mod.clone();
+            move |request: &pkl_runtime::modules::ModuleRequest| -> pkl_runtime::modules::ModuleCompletion {
+                match &request.kind {
+                    pkl_runtime::modules::ModuleRequestKind::ResolveKey { key, .. } => {
+                        let authored = key.uri.as_str().unwrap_or("");
+                        if let Some(root_dir) = &root_for_mod
+                            && authored.starts_with("file:")
+                            && !is_under_root_dir(authored, root_dir)
+                        {
                             return pkl_runtime::modules::ModuleCompletion::KeyResolved(Err(
                                 pkl_runtime::modules::ModuleHostError::SecurityManagerException {
                                     message: Some(format!("Refusing to load module `{authored}` because it is not within the root directory (`--root-dir`).").into()),
-                                }
+                                },
                             ));
-                    }
-                    if let Some(allowed) = pkl_runtime::packages::resolver::current_allowed_modules()
-                        && !is_pattern_allowed(&allowed, authored) {
+                        }
+                        if let Some(allowed) =
+                            pkl_runtime::packages::resolver::current_allowed_modules()
+                            && !is_pattern_allowed(&allowed, authored)
+                        {
                             return pkl_runtime::modules::ModuleCompletion::KeyResolved(Err(
                                 pkl_runtime::modules::ModuleHostError::SecurityManagerException {
                                     message: Some(format!("Refusing to load module `{authored}` because it does not match any entry in the module allowlist (`--allowed-modules`).").into()),
-                                }
+                                },
                             ));
+                        }
                     }
-                }
-                pkl_runtime::modules::ModuleRequestKind::Resolve { key, .. } => {
-                    let authored = key.uri.as_str().unwrap_or("");
-                    if let Some(root_dir) = &root_for_mod
-                        && authored.starts_with("file:") && !is_under_root_dir(authored, root_dir) {
+                    pkl_runtime::modules::ModuleRequestKind::Resolve { key, .. } => {
+                        let authored = key.uri.as_str().unwrap_or("");
+                        if let Some(root_dir) = &root_for_mod
+                            && authored.starts_with("file:")
+                            && !is_under_root_dir(authored, root_dir)
+                        {
                             return pkl_runtime::modules::ModuleCompletion::Resolved(Err(
                                 pkl_runtime::modules::ModuleHostError::SecurityManagerException {
                                     message: Some(format!("Refusing to load module `{authored}` because it is not within the root directory (`--root-dir`).").into()),
-                                }
+                                },
                             ));
-                    }
-                    if let Some(allowed) = pkl_runtime::packages::resolver::current_allowed_modules()
-                        && !is_pattern_allowed(&allowed, authored) {
+                        }
+                        if let Some(allowed) =
+                            pkl_runtime::packages::resolver::current_allowed_modules()
+                            && !is_pattern_allowed(&allowed, authored)
+                        {
                             return pkl_runtime::modules::ModuleCompletion::Resolved(Err(
                                 pkl_runtime::modules::ModuleHostError::SecurityManagerException {
                                     message: Some(format!("Refusing to load module `{authored}` because it does not match any entry in the module allowlist (`--allowed-modules`).").into()),
-                                }
+                                },
                             ));
+                        }
                     }
-                }
-                pkl_runtime::modules::ModuleRequestKind::SelectKey { id, uri, .. }
-                    if uri.starts_with("modulepath:") => {
+                    pkl_runtime::modules::ModuleRequestKind::SelectKey { id, uri, .. }
+                        if uri.starts_with("modulepath:") =>
+                    {
                         return pkl_runtime::modules::ModuleCompletion::KeySelected(Ok(
                             pkl_runtime::modules::ModuleKey {
                                 id: *id,
                                 uri: uri.clone(),
                                 kind: pkl_runtime::modules::ModuleKeyKind::StandardGenericUrl,
                                 handle: "".into(),
-                            }
+                            },
                         ));
+                    }
+                    _ => {}
                 }
-                _ => {}
+                module_host::complete(request)
             }
-            module_host::complete(request)
-        };
-
-        let root_for_res = effective_root.clone();
-        let res_host = move |request: &pkl_runtime::vm::ReadRequest| -> Option<
-            Result<pkl_runtime::resources::ReadResult, pkl_runtime::host::ReadFailure>,
-        > {
-            let req_uri = request.uri.as_str().unwrap_or("");
-            if let Some(allowed) = pkl_runtime::packages::resolver::current_allowed_resources()
-                && !is_pattern_allowed(&allowed, req_uri)
-            {
-                return Some(Err(pkl_runtime::host::ReadFailure::SecurityManagerException {
-                        message: Some(format!("Refusing to read resource `{req_uri}` because it does not match any entry in the resource allowlist (`--allowed-resources`).").into()),
-                    }));
-            }
-            if let Some(root_dir) = &root_for_res
-                && req_uri.starts_with("file:")
-                && !is_under_root_dir(req_uri, root_dir)
-            {
-                return Some(Err(pkl_runtime::host::ReadFailure::SecurityManagerException {
-                        message: Some(format!("Refusing to read resource `{req_uri}` because it is not within the root directory (`--root-dir`).").into()),
-                    }));
-            }
-            resource_host::complete(request)
-        };
-
-        Ok::<_, String>(evaluate_module_output_with_glob_host(
-            ModuleSourceInput {
-                text: &text,
-                uri: &uri,
-                inferred_name,
-            },
-            &options,
-            mod_host,
-            res_host,
-            file_glob_host::complete,
-        ))
-    });
-
-    let (stdout, stderr, exit_code) = match result {
-        Ok(eval_res) => {
-            let stderr = if test_mode {
-                adjust_test_mode_stderr(&eval_res.stderr)
-            } else {
-                eval_res.stderr
-            };
-            (eval_res.stdout, stderr, eval_res.exit_code)
-        }
-        Err(msg) => {
-            let err_out = if msg.starts_with("–– Pkl Error ––") {
-                format!("{msg}\n")
-            } else {
-                format!("–– Pkl Error ––\n{msg}\n")
-            };
-            let stderr = if test_mode {
-                adjust_test_mode_stderr(err_out.as_bytes())
-            } else {
-                err_out.into_bytes()
-            };
-            (Vec::new(), stderr, 1)
         }
     };
 
-    std::io::stdout()
-        .write_all(&stdout)
-        .map_err(|error| ProbeError::Internal(error.to_string()))?;
-    std::io::stderr()
-        .write_all(&stderr)
-        .map_err(|error| ProbeError::Internal(error.to_string()))?;
-    Ok(exit_code)
+    let make_res_host = {
+        let root_for_res = effective_root.clone();
+        move || {
+            let root_for_res = root_for_res.clone();
+            move |request: &pkl_runtime::vm::ReadRequest| -> Option<
+                Result<pkl_runtime::resources::ReadResult, pkl_runtime::host::ReadFailure>,
+            > {
+                let req_uri = request.uri.as_str().unwrap_or("");
+                if let Some(allowed) = pkl_runtime::packages::resolver::current_allowed_resources()
+                    && !is_pattern_allowed(&allowed, req_uri)
+                {
+                    return Some(Err(
+                        pkl_runtime::host::ReadFailure::SecurityManagerException {
+                            message: Some(format!("Refusing to read resource `{req_uri}` because it does not match any entry in the resource allowlist (`--allowed-resources`).").into()),
+                        },
+                    ));
+                }
+                if let Some(root_dir) = &root_for_res
+                    && req_uri.starts_with("file:")
+                    && !is_under_root_dir(req_uri, root_dir)
+                {
+                    return Some(Err(
+                        pkl_runtime::host::ReadFailure::SecurityManagerException {
+                            message: Some(format!("Refusing to read resource `{req_uri}` because it is not within the root directory (`--root-dir`).").into()),
+                        },
+                    ));
+                }
+                resource_host::complete(request)
+            }
+        }
+    };
+
+    pkl_runtime::packages::resolver::with_package_host(host, move || {
+        // Mode 1: `-m` / `--multiple-file-output-path` (`CliEvaluator.writeMultipleFileOutput`)
+        if let Some(multi_template) = &multiple_file_output_path {
+            let mut seen_uris = HashSet::new();
+            let mut written_files: HashMap<PathBuf, (String, String)> = HashMap::new();
+            #[cfg(windows)]
+            const LINE_SEP: &str = "\r\n";
+            #[cfg(not(windows))]
+            const LINE_SEP: &str = "\n";
+
+            for module in &modules {
+                if !seen_uris.insert(module.uri.clone()) {
+                    continue;
+                }
+                let output_dir = resolve_output_path(
+                    &working_dir,
+                    multi_template,
+                    &module.path,
+                    &module.inferred_name,
+                    output_format.as_deref(),
+                );
+                if output_dir.exists() && !output_dir.is_dir() {
+                    let message = format!(
+                        "Output path `{}` exists and is not a directory.\n",
+                        output_dir.display()
+                    );
+                    write_stderr_bytes(stderr, message.as_bytes(), test_mode)?;
+                    return Ok(1);
+                }
+                let text = std::fs::read_to_string(&module.path)
+                    .map_err(|error| ProbeError::Internal(error.to_string()))?;
+                let real_output_dir = if output_dir.exists() {
+                    std::fs::canonicalize(&output_dir).unwrap_or_else(|_| output_dir.clone())
+                } else {
+                    output_dir.clone()
+                };
+
+                let outcome = evaluate_output_files_streaming_with_hosts(
+                    ModuleSourceInput {
+                        text: &text,
+                        uri: &module.uri,
+                        inferred_name: &module.inferred_name,
+                    },
+                    &options,
+                    Some(platform_metadata.clone()),
+                    make_mod_host(),
+                    make_res_host(),
+                    file_glob_host::complete,
+                    |path_spec, eval_bytes| {
+                        if let Err(message) = check_path_spec(path_spec, cfg!(windows)) {
+                            return Err(MultiFileConsumerError::Cli(message.to_java_utf8()));
+                        }
+                        let path_spec_str = path_spec.to_java_utf8();
+                        let (real_path, resolved_path) =
+                            resolve_real_path(&real_output_dir, &path_spec_str);
+                        if !real_path.starts_with(&real_output_dir) {
+                            return Err(MultiFileConsumerError::Cli(format!(
+                                "Output file conflict: `output.files` entry `\"{path_spec_str}\"` in module `{}` resolves to file path `{}`, which is outside output directory `{}`.",
+                                module.uri,
+                                real_path.display(),
+                                real_output_dir.display()
+                            )));
+                        }
+                        if let Some((prev_spec, prev_uri)) = written_files.get(&real_path) {
+                            return Err(MultiFileConsumerError::Cli(format!(
+                                "Output file conflict: `output.files` entries `\"{prev_spec}\"` in module `{prev_uri}` and `\"{path_spec_str}\"` in module `{}` resolve to the same file path `{}`.",
+                                module.uri,
+                                real_path.display()
+                            )));
+                        }
+                        if real_path.is_dir() {
+                            return Err(MultiFileConsumerError::Cli(format!(
+                                "Output file conflict: `output.files` entry `\"{path_spec_str}\"` in module `{}` resolves to file path `{}`, which is a directory.",
+                                module.uri,
+                                real_path.display()
+                            )));
+                        }
+                        written_files
+                            .insert(real_path.clone(), (path_spec_str, module.uri.clone()));
+                        if let Some(parent) = real_path.parent()
+                            && !parent.as_os_str().is_empty()
+                        {
+                            std::fs::create_dir_all(parent)
+                                .map_err(|error| MultiFileConsumerError::Io(error.to_string()))?;
+                        }
+                        let bytes = eval_bytes().map_err(|_| MultiFileConsumerError::Eval)?;
+                        std::fs::write(&real_path, &bytes)
+                            .map_err(|error| MultiFileConsumerError::Io(error.to_string()))?;
+                        let relative = relativize(&resolved_path, &working_dir);
+                        let line = format!("{}{LINE_SEP}", relative.display());
+                        stdout
+                            .write_all(line.as_bytes())
+                            .and_then(|()| stdout.flush())
+                            .map_err(|error| MultiFileConsumerError::Io(error.to_string()))?;
+                        Ok(())
+                    },
+                );
+
+                match outcome {
+                    StreamingOutputFilesOutcome::Ok { stderr: eval_err } => {
+                        write_stderr_bytes(stderr, &eval_err, test_mode)?;
+                    }
+                    StreamingOutputFilesOutcome::EvalFailure(failure) => {
+                        write_stderr_bytes(stderr, &failure.stderr, test_mode)?;
+                        return Ok(failure.exit_code);
+                    }
+                    StreamingOutputFilesOutcome::ConsumerError {
+                        error,
+                        stderr: eval_err,
+                    } => {
+                        write_stderr_bytes(stderr, &eval_err, test_mode)?;
+                        match error {
+                            MultiFileConsumerError::Cli(message) => {
+                                let line = format!("{message}\n");
+                                write_stderr_bytes(stderr, line.as_bytes(), test_mode)?;
+                                return Ok(1);
+                            }
+                            MultiFileConsumerError::Io(message) => {
+                                return Err(ProbeError::Internal(message));
+                            }
+                            MultiFileConsumerError::Eval => {
+                                return Ok(1);
+                            }
+                        }
+                    }
+                }
+            }
+            return Ok(0);
+        }
+
+        // Mode 2: `-o` / `--output-path` (`CliEvaluator.writeOutput` file branch)
+        if let Some(out_template) = &output_path {
+            let mut seen_uris = HashSet::new();
+            let mut written_non_empty: HashSet<PathBuf> = HashSet::new();
+            for module in &modules {
+                if !seen_uris.insert(module.uri.clone()) {
+                    continue;
+                }
+                let output_file = resolve_output_path(
+                    &working_dir,
+                    out_template,
+                    &module.path,
+                    &module.inferred_name,
+                    output_format.as_deref(),
+                );
+                if output_file.is_dir() {
+                    let message = format!(
+                        "Output file `{}` is a directory. Did you mean `--multiple-file-output-path`?\n",
+                        output_file.display()
+                    );
+                    write_stderr_bytes(stderr, message.as_bytes(), test_mode)?;
+                    return Ok(1);
+                }
+                let text = std::fs::read_to_string(&module.path)
+                    .map_err(|error| ProbeError::Internal(error.to_string()))?;
+                let input = ModuleSourceInput {
+                    text: &text,
+                    uri: &module.uri,
+                    inferred_name: &module.inferred_name,
+                };
+                let eval_res = if let Some(expr) = &expression {
+                    evaluate_module_expression_with_platform_and_hosts(
+                        input,
+                        expr.as_str(),
+                        &options,
+                        Some(platform_metadata.clone()),
+                        make_mod_host(),
+                        make_res_host(),
+                        file_glob_host::complete,
+                    )
+                } else {
+                    evaluate_module_output_with_platform_and_hosts(
+                        input,
+                        &options,
+                        Some(platform_metadata.clone()),
+                        make_mod_host(),
+                        make_res_host(),
+                        file_glob_host::complete,
+                    )
+                };
+                write_stderr_bytes(stderr, &eval_res.stderr, test_mode)?;
+                if eval_res.exit_code != 0 {
+                    return Ok(eval_res.exit_code);
+                }
+                if let Some(parent) = output_file.parent()
+                    && !parent.as_os_str().is_empty()
+                {
+                    std::fs::create_dir_all(parent)
+                        .map_err(|error| ProbeError::Internal(error.to_string()))?;
+                }
+                if !written_non_empty.contains(&output_file) {
+                    std::fs::write(&output_file, &eval_res.stdout)
+                        .map_err(|error| ProbeError::Internal(error.to_string()))?;
+                    if !eval_res.stdout.is_empty() {
+                        written_non_empty.insert(output_file);
+                    }
+                } else if !eval_res.stdout.is_empty() {
+                    let mut file = std::fs::OpenOptions::new()
+                        .append(true)
+                        .open(&output_file)
+                        .map_err(|error| ProbeError::Internal(error.to_string()))?;
+                    file.write_all(format!("{module_output_separator}\n").as_bytes())
+                        .and_then(|()| file.write_all(&eval_res.stdout))
+                        .map_err(|error| ProbeError::Internal(error.to_string()))?;
+                }
+            }
+            return Ok(0);
+        }
+
+        // Mode 3: stdout (`CliEvaluator.writeOutput` console branch)
+        let mut output_written = false;
+        for module in &modules {
+            let text = std::fs::read_to_string(&module.path)
+                .map_err(|error| ProbeError::Internal(error.to_string()))?;
+            let input = ModuleSourceInput {
+                text: &text,
+                uri: &module.uri,
+                inferred_name: &module.inferred_name,
+            };
+            let eval_res = if let Some(expr) = &expression {
+                evaluate_module_expression_with_platform_and_hosts(
+                    input,
+                    expr.as_str(),
+                    &options,
+                    Some(platform_metadata.clone()),
+                    make_mod_host(),
+                    make_res_host(),
+                    file_glob_host::complete,
+                )
+            } else {
+                evaluate_module_output_with_platform_and_hosts(
+                    input,
+                    &options,
+                    Some(platform_metadata.clone()),
+                    make_mod_host(),
+                    make_res_host(),
+                    file_glob_host::complete,
+                )
+            };
+            if eval_res.exit_code != 0 {
+                write_stderr_bytes(stderr, &eval_res.stderr, test_mode)?;
+                return Ok(eval_res.exit_code);
+            }
+            if !eval_res.stdout.is_empty() {
+                if output_written {
+                    stdout
+                        .write_all(format!("{module_output_separator}\n").as_bytes())
+                        .map_err(|error| ProbeError::Internal(error.to_string()))?;
+                }
+                stdout
+                    .write_all(&eval_res.stdout)
+                    .and_then(|()| stdout.flush())
+                    .map_err(|error| ProbeError::Internal(error.to_string()))?;
+                output_written = true;
+            }
+            write_stderr_bytes(stderr, &eval_res.stderr, test_mode)?;
+        }
+        Ok(0)
+    })
 }
 
 fn adjust_test_mode_stderr(stderr: &[u8]) -> Vec<u8> {
@@ -966,7 +1431,7 @@ fn adjust_test_mode_stderr(stderr: &[u8]) -> Vec<u8> {
     }
 }
 
-fn main() {
+pub fn main() {
     let arguments = std::env::args_os()
         .skip(1)
         .map(|argument| {

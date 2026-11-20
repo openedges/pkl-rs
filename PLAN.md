@@ -1,6 +1,22 @@
 # 구현 계획
 
-## 현재 상태 — Stage161 M2 개발 게이트 마감·핀 JDK(`21.0.12.1+1-LTS`) 전수 검증 완료
+## 현재 상태 — M3 표준 라이브러리·출력 개발 게이트 마감·핀 JDK(`21.0.13.1+2-LTS`) 동결 검증 완료
+
+[M3 체크포인트 보고서](reports/m3/README.md)는 Apple Pkl 0.32.0 기준 **M3(표준 라이브러리와 출력)** 전 트랙(23/23 `pkl:*` 표준 라이브러리 바이트 동일 번들링·반사, 542개 external builtin, 9종 `output.renderer` 및 `PcfRenderDirective`, `output.files`/`output.bytes` 다중 파일 출력, 19-태그 `PklBinaryDecoder`, `vendor/java_regex` `(?c)`/`CANON_EQ`, YAML 파서 `Unsupported` 정리·협력적 yield, 그리고 1,781항목 기계적 커버리지 게이트 + 118건 3-레인 차분 하네스)을 완료하고, 동결 소스 기준 로컬 macOS arm64(`rustc 1.98.1`, 핀 Eclipse Adoptium Temurin **`21.0.13.1+2-LTS`**, `exact_jdk_lock_match: true`, `PKL_ALLOW_LOCAL_JDK=1` 미사용, 호스티드 CI 아님)에서 최종 검증을 마쳤다. 상세 실행 명령·아티팩트 SHA-256·보존된 재시도 이력은 [reports/m3/README.md](reports/m3/README.md)에 통합 기록한다.
+
+### M3 주요 완료 내용 및 동결 검증 요약
+- **표준 라이브러리·런타임 모듈**: `Command.pkl`·`DocPackageInfo.pkl`·`DocsiteInfo.pkl`·`settings.pkl` 번들 추가로 23/23 `pkl:*` 바이트 일치 달성, `"pkl:project"` 싱글톤 캐시 키와 정본 `ModuleIdentity`(`"pkl:Project"`) 분리(`reflect.Module(import("pkl:project")).uri == "pkl:Project"` 및 양방향 임포트 순서 정합)·한정 `base.List`/`Set`/`Map`/`Bytes` `VarArgs` 의미론·`pkl:base` 반사 `imports` 및 합성 멤버 어노테이션(`math#atan2`, `base#Bytes`) 정렬, `release.commitId`(`e51fb2f`)·협력적 `pkl:semver`, `Benchmark.{Micro,Output,Parser}benchmark.run` 협력적 GC-루트 상태 머신 및 `ModuleCache::remove` 캐시 정리 완료.
+- **렌더러·`Reference`·`converters`·Protobuf**: 9종 포맷(`json`, `jsonnet`, `pcf`, `plist`, `properties`, `textproto`, `xml`, `yaml`, `pkl-binary`) 및 `Instruction::LoadPklBinaryModule`, `ValueRenderer`/`BytesRenderer` 추상 메서드, `ModuleOutput.files` 기본값, `Listing.join` 암시적 수신자, 재개 가능한 `PcfRenderDirective`, `Reference` 69개 `base.pkl` 클래스 속성(0.32.0 `VmModifier.java:174` 정합), `converters` `[*]` 와일드카드, `MappingTypeNode` 즉시 키 검사·일반화된 `protobuf_caller_frames`·`evaluation.rs:408` `CliBundledSettings` `foreign_exception` 투영·`vm.rs:2298` `public_primary_source()` 폴백 구현.
+- **`output.files`·`PklBinaryDecoder`·Regex `(?c)`·YAML**: 순수 Wasm `evaluation/output_files.rs` 및 `-m`/`-f`/`-o`/`-x`/다중 모듈 CLI·심볼릭 링크 인식 검증, 반복적 19-태그 `pkl_binary_decode.rs`(JDK 21 `UTF_8$Decoder` 치환 정합), JDK 21 Unicode 15.0.0 테이블 기반 `CANON_EQ`/`(?c)`, YAML 파서 `Unsupported` 해소·협력적 yield 완료.
+- **동결 소스 최종 검증 (`2026-11-20`)**: 정적 검사(`cargo xtask verify`, `cargo fmt --all -- --check`, `cargo clippy --workspace --all-targets --locked -- -D warnings`, `cargo clippy -p java_regex --lib --locked -- -D warnings`, `cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked`, `tools/oracle.py verify`), 8종 Python `--check` 스크립트(`m3_manifest.py` 포함) 전원 **Exit 0**; 단일 명령 `cargo test --workspace --locked` **`2,298` 외부 통과(`345` 타깃/doctest, 중첩 자식 `13`패스 제외 / 원시 `2,311` passed); `0` failed; `2` ignored**; M1 멀티 타깃(`m3-closeout-platforms-04`) **`6,078/6,078`**(`92/92` 시나리오); M3 기계적 커버리지 게이트(`m3-closeout-census-02.json`) **`1,781/1,781` (`failure_count: 0`)**(`stdlib` 1,214 구현 + 8 M5 이연, `builtin` 542, `renderer` 18); M3 3-레인 차분 게이트(`m3-closeout-diff-02`) **`118/118 pass`**(`--verify-report`·`--verify-strict` Exit 0); Protobuf 엄격 게이트(`m3-closeout-protobuf-strict-02`) 계약상 Exit 101(`240/240` regular, `8/8` pre-renderer, 정확히 `18`건 `REFERENCE-NONPASS`, `strict-failures.txt` 정확히 `18`줄·바이트 불일치 `0`); Python 단위 테스트(시정 후 `test_m3_*.py` `12/12` + `test_m2_mappings.py` `8/8`, 미변경 도구 기준 Wave 3B `434/434` 및 집중 M2 4-어댑터 회귀 `m3-closeout-selected-02` `100/100 pass`).
+
+### 결정·보존된 예외 및 다음 우선순위
+- **명시적 M5 이연**: `external/pkl/stdlib/doc-package-info.pkl`(인벤토리 8항목)은 업스트림 `pkl-core.gradle.kts:106` 기준 `pkl:*` 런타임 모듈이 아니므로(`pkldoc`용 `pkl:DocPackageInfo` amend) `compatibility/m3-stdlib-output.json`에서 `deferred`로 유지하고 **M5(`pkldoc`)**로 이연한다.
+- **보존된 예외 및 미검증 범위**: `m2-protobuf-java04-full`의 업스트림 `18`건 `REFERENCE-NONPASS`(`experiment_contract_pass: true`, `strict_compatible: false`, `14`건 NPE 투영 채널 0바이트 일치 복원), `error-cycle` M2 엄격 게이트 예외·`11`건 `required: false` `rev1` 미매핑, Stage 161 이후 미재실행된 전체 4,575건 M2 재생 및 Wave 3B 스냅샷 기준 100건 M2 부분집합/434건 전체 Python 스위트(77개 과거 골든-픽스처 스위트 미실행), Windows 호스트 심볼릭 링크 실측 및 Linux/Windows 호스티드 CI는 [reports/m3/README.md](reports/m3/README.md)에 명시적으로 보존한다.
+- **범위 변경 결정 (2026-11-20 유지)**: M5의 **Java/Kotlin codegen**과 **JVM 공개 API 어댑터**는 필수 제품 범위에서 제외한다.
+- **다음 우선순위**: **M4 — 모듈·리소스·프로젝트·패키지**(전체 Host I/O, HTTP 커스텀 헤더·redirect·proxy·CA, external reader, `PklProject`·lockfile·캐시·패키지 생성·Pantry 실측) 착수.
+
+## 이전 상태 — Stage161 M2 개발 게이트 마감·핀 JDK(`21.0.12.1+1-LTS`) 전수 검증 완료
 
 [Stage161 체크포인트 보고서](reports/m2/stage161-m2-closure/README.md)는 지연 속성 순환 진단 정렬(`"A stack overflow occurred."`), `t43_043`·`t43_064` CLI 픽스처의 격리 `lib.pkl` 스테이징(`CLI_PROFILE v2`), 매니페스트 동기화, 그리고 `oracle.lock.json`에 정확히 일치하는 **Eclipse Adoptium Temurin `21.0.12.1+1-LTS`**(`exact_jdk_lock_match: true`, `PKL_ALLOW_LOCAL_JDK=1` 미사용) 프로비저닝을 완료하고, 동결 소스 기준 전체 M2(4,575건)·M1(6,078건)·단일 명령 워크스페이스(`2,222 passed; 0 failed; 2 ignored`) 검증을 마쳤다(로컬 macOS arm64, `rustc 1.98.1`). 이로써 **M2-01–M2-09 개발 게이트를 마감**하고 다음 단계로 **M3(표준 라이브러리와 출력)** 착수를 준비한다.
 
@@ -308,8 +324,8 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
 | M2 언어 런타임 | 개발 게이트 마감(엄격 게이트 예외 보존): [Stage161 체크포인트](reports/m2/stage161-m2-closure/README.md) 핀 JDK `21.0.12.1+1-LTS`(`exact_jdk_lock_match: true`) 전수 실측 완료(ready 4,575건 중 `4,574 pass / 1 oracle-error [error-cycle] / 0 mismatch`, `88/88` metamorphic, M1 `6,078/6,078`, 단일 명령 `cargo test --workspace --locked` `2,222 passed / 0 failed / 2 ignored`, `--verify-report`·`--verify-development` Exit 0). `error-cycle` 엄격 게이트(`--verify-full` Exit 1)·Protobuf 18건 참조 미통과(M3 이관)·Linux/Windows CI는 명시적 예외로 보존 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
-| M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
-| M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
+| M3 표준 라이브러리·출력 | 완료 (로컬 검증·명시적 예외 보존): [M3 체크포인트 보고서](reports/m3/README.md) 핀 JDK `21.0.13.1+2-LTS`(`exact_jdk_lock_match: true`) 동결 검증 완료 — 1,781항목 기계적 커버리지 `failure_count: 0`(`pkl:*` 23/23 바이트 일치, `stdlib` 1,214 구현 + `doc-package-info.pkl` 8항목 M5 이연, `builtin` 542/542, `renderer` 18/18), 3-레인 차분 `118/118 pass`(`--verify-strict` Exit 0), 단일 명령 `cargo test --workspace --locked` `2,309/0/2`, M1 `6,078/6,078`, 집중 M2 `100/100`. Protobuf 18건 `REFERENCE-NONPASS`·Windows 호스트 심볼릭 링크·Linux/Windows CI는 명시적 예외로 보존 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
+| M4 외부 기능 | 다음 우선순위 (계획됨) | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성(`pkldoc`) 구현(Java/Kotlin codegen·JVM 공개 API 어댑터는 2026-11-20 범위 제외); CLI·REPL·server·Rust API 수명주기 호환 |
 | M6 Wasm·N-API 완성 | 계획됨 | M1의 실행환경 실험과 M2–M5의 해당 공통 기능 | 비동기 Host·adapter·배포 패키지 완성; 실제 브라우저·Node의 대상 코퍼스 통과 |
 | M7 릴리스 검증 | 계획됨 | M0–M6의 필수 산출물 | 전체 Pantry 코퍼스·플랫폼 검증과 실행 시간·메모리 보고서; 필수 범위의 알려진 불일치 0, 성능·메모리 기준 충족 |
@@ -3601,11 +3617,13 @@ ready4,424·미구현71·미연결32 및 전체 M2·API·릴리스·성능 gate�
 
 ## M3 — 표준 라이브러리와 출력
 
-- 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.
-- PCF, JSON, YAML, XML, Properties, Plist, JSONnet, protobuf, Pkl Binary를 구현합니다. `output.bytes`, `output.files`, converter와 `Reference`의 렌더링·binary 표현을 포함합니다.
-- escaping, 숫자 표현, 순서, 공백·개행, 잘못된 값과 형식의 오류, reflection을 비교합니다. 생성 파일의 경로 집합과 각 파일 바이트도 검증합니다.
+**상태: 완료 (로컬 macOS arm64 검증·명시적 예외 보존) — [M3 체크포인트 보고서](reports/m3/README.md)**
 
-**산출물·종료 조건:** stdlib 공개 멤버와 builtin 누락이 없고, 각 renderer의 성공·오류·경계값 코퍼스와 binary 비교가 통과해야 합니다.
+- 고정된 Pkl 0.32.0 표준 라이브러리 소스 23개 `pkl:*` 모듈을 바이트 단위로 번들링하고 모든 542개 external builtin과 1,214개 필수 공개/로컬 선언을 구현했습니다(`stdlib/doc-package-info.pkl` 8항목은 업스트림 `pkl-core.gradle.kts:106` 기준 `pkldoc` 대상이므로 **M5**로 명시 이연). [tools/m3_manifest.py](tools/m3_manifest.py)와 [m3_coverage_probe.rs](crates/pkl-runtime/examples/m3_coverage_probe.rs)가 [compatibility/inventory.json](compatibility/inventory.json)의 전체 1,781항목을 1:1 기계 대조합니다(`failure_count: 0`, [compatibility/m3-stdlib-output.json](compatibility/m3-stdlib-output.json)).
+- PCF(`PcfRenderDirective` 포함), JSON, YAML, XML, Properties, Plist, JSONnet, protobuf(`textproto`), Pkl Binary(인코더 및 19-태그 `PklBinaryDecoder`) 9종 포맷, `output.bytes`, `output.files`(`-m` 다중 파일 출력 및 경로·심볼릭 링크 탈출/충돌 검사), `converters` `[*]` 와일드카드, `Reference` 69개 클래스 속성, `Benchmark` 협력적 상태 머신, Regex `(?c)`/`CANON_EQ`, YAML 협력적 yield를 공유 엔진(`wasm32-unknown-unknown` 순수 컴파일·`unsafe` 0)에 통합했습니다.
+- [tools/m3_differential.py](tools/m3_differential.py)의 3-레인 118건 원시 바이트·생성 파일 차분 게이트(`formats-renderers` 77, `output-files` 13, `pklbinary-decode` 28)가 핀 Temurin `21.0.13.1+2-LTS` 기준 `118/118 pass`(`--verify-strict` Exit 0)로 통과했습니다. 보존된 Protobuf 18건 `REFERENCE-NONPASS` 및 미검증 범위는 [reports/m3/README.md](reports/m3/README.md)에 기록합니다.
+
+**산출물·종료 조건:** stdlib 공개 멤버와 builtin 누락이 없고, 각 renderer의 성공·오류·경계값 코퍼스와 binary 비교가 통과해야 합니다. *(로컬 macOS arm64 기준 충족; Linux/Windows 호스티드 CI 및 M5 이연 항목은 릴리스 기준에서 계속 추적합니다.)*
 
 ## M4 — 모듈·리소스·프로젝트·패키지
 

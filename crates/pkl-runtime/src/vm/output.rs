@@ -231,6 +231,75 @@ impl Definitions<'_> {
             fixed: false,
         }
     }
+    pub(super) fn abstract_method(&mut self, class: &str, name: &str) -> Member {
+        let start = self
+            .source
+            .text
+            .find(&format!("class {class}"))
+            .expect("class");
+        let start = start
+            + self
+                .source
+                .text
+                .entire()
+                .range(start..)
+                .find(&format!("abstract function {name}("))
+                .expect("abstract method");
+        let end = start + self.source.text.entire().range(start..).find("\n").unwrap();
+        let decl_span = Span::new(start, end);
+        let member_name: PklString = format!("#{class}.{name}").into();
+        let body_block = self.blocks.len();
+        self.blocks.push(vec![
+            Instruction::LoadLocal(0),
+            Instruction::BindLocal {
+                depth: Some(0),
+                ty: TypeCheck::Any,
+            },
+            Instruction::AbstractMember {
+                name: member_name.clone(),
+                method: true,
+            },
+            Instruction::Return,
+        ]);
+        self.metadata.push(BlockMetadata {
+            source: Some(self.source.clone()),
+            member: member_name.clone(),
+            declaration: Some(decl_span),
+            method_signature: Some((format!("{name}(value)").into(), 1)),
+            spans: vec![None, None, Some(decl_span), None],
+            ..Default::default()
+        });
+        let block = self.blocks.len();
+        self.blocks.push(vec![
+            Instruction::MakeFunction {
+                block: body_block,
+                arity: 1,
+                method: true,
+                capture_custom_this: false,
+            },
+            Instruction::Return,
+        ]);
+        self.metadata.push(BlockMetadata {
+            source: Some(self.source.clone()),
+            member: member_name,
+            declaration: Some(decl_span),
+            method_signature: Some((format!("{name}(value)").into(), 1)),
+            spans: vec![None; 2],
+            ..Default::default()
+        });
+        Member {
+            flags: crate::syntax::ModifierKind::Abstract.flag(),
+            entry: false,
+            name: name.into(),
+            code: block,
+            local: false,
+            method: true,
+            ty: None,
+            type_span: None,
+            constant: false,
+            fixed: false,
+        }
+    }
 }
 
 pub(super) fn builtin_members(
@@ -361,19 +430,50 @@ pub(super) fn builtin_members(
         spans[check] = member.type_span;
         d.metadata[member.code].spans = spans;
     }
-    let files = d.member(
+    let files_decl_start = d
+        .source
+        .text
+        .find("files: Mapping<String, FileOutput>?")
+        .expect("ModuleOutput.files");
+    let files_key_start = files_decl_start + "files: Mapping<".len();
+    let files_val_start = files_decl_start + "files: Mapping<String, ".len();
+    let files_key_span = Span::new(files_key_start, files_key_start + "String".len());
+    let files_val_span = Span::new(files_val_start, files_val_start + "FileOutput".len());
+    let mut files = d.member(
         "ModuleOutput",
         "files",
         TypeCheck::Nullable(Box::new(TypeCheck::ParameterizedCollection {
             kind: crate::heap::CollectionKind::Mapping,
             arguments: vec![
-                (TypeCheck::String, Span::new(0, 0)),
-                (builtins::ty(FILE_OUTPUT), Span::new(0, 0)),
+                (TypeCheck::String, files_key_span),
+                (builtins::ty(FILE_OUTPUT), files_val_span),
             ],
         })),
-        vec![Instruction::Constant(Value::Null)],
+        vec![
+            Instruction::BeginCollection {
+                kind: crate::heap::CollectionKind::Mapping,
+                has_parent: false,
+                specialized: true,
+            },
+            Instruction::SetCollectionTypeDefault {
+                ty: builtins::ty(FILE_OUTPUT),
+                origin: Some(RuntimeFrame {
+                    anonymous: false,
+                    source: Some(d.source.clone()),
+                    span: files_val_span,
+                    member: "#ModuleOutput.files.default".into(),
+                }),
+            },
+            Instruction::EndCollection,
+            Instruction::WrapNullableDefault { defined: true },
+        ],
         false,
     );
+    // NullableTypeNode reports the underlying Mapping<String, FileOutput> section.
+    let files_type_span = files.type_span.as_mut().unwrap();
+    files_type_span.end -= 1;
+    let files_check = d.metadata[files.code].property_typecheck.unwrap();
+    d.metadata[files.code].spans[files_check] = Some(*files_type_span);
     let output_value = d.member(
         "Module",
         "output",
@@ -400,79 +500,182 @@ pub(super) fn builtin_members(
     let mut m = value.clone();
     m.code = vblock;
     let rblock = d.blocks.len();
-    d.blocks.push(vec![
+    enum OutputFormatTarget {
+        Builtin {
+            class: usize,
+            class_name: &'static str,
+            expr: &'static str,
+        },
+        Module {
+            load: fn() -> Instruction,
+            ref_name: &'static str,
+            expr: &'static str,
+        },
+    }
+    let format_branches: [(&'static str, &'static str, &'static str, OutputFormatTarget); 9] = [
+        (
+            "json",
+            "\"json\"",
+            "format == \"json\"",
+            OutputFormatTarget::Builtin {
+                class: JSON_RENDERER,
+                class_name: "JsonRenderer",
+                expr: "new JsonRenderer {}",
+            },
+        ),
+        (
+            "jsonnet",
+            "\"jsonnet\"",
+            "format == \"jsonnet\"",
+            OutputFormatTarget::Module {
+                load: || Instruction::LoadJsonnetModule,
+                ref_name: "jsonnet.Renderer",
+                expr: "new jsonnet.Renderer {}",
+            },
+        ),
+        (
+            "pcf",
+            "\"pcf\"",
+            "format == \"pcf\"",
+            OutputFormatTarget::Builtin {
+                class: PCF_RENDERER,
+                class_name: "PcfRenderer",
+                expr: "new PcfRenderer {}",
+            },
+        ),
+        (
+            "plist",
+            "\"plist\"",
+            "format == \"plist\"",
+            OutputFormatTarget::Builtin {
+                class: PLIST_RENDERER,
+                class_name: "PListRenderer",
+                expr: "new PListRenderer {}",
+            },
+        ),
+        (
+            "properties",
+            "\"properties\"",
+            "format == \"properties\"",
+            OutputFormatTarget::Builtin {
+                class: PROPERTIES_RENDERER,
+                class_name: "PropertiesRenderer",
+                expr: "new PropertiesRenderer {}",
+            },
+        ),
+        (
+            "textproto",
+            "\"textproto\"",
+            "format == \"textproto\"",
+            OutputFormatTarget::Module {
+                load: || Instruction::LoadProtobufModule,
+                ref_name: "protobuf.Renderer",
+                expr: "new protobuf.Renderer {}",
+            },
+        ),
+        (
+            "xml",
+            "\"xml\"",
+            "format == \"xml\"",
+            OutputFormatTarget::Module {
+                load: || Instruction::LoadXmlModule,
+                ref_name: "xml.Renderer",
+                expr: "new xml.Renderer {}",
+            },
+        ),
+        (
+            "yaml",
+            "\"yaml\"",
+            "format == \"yaml\"",
+            OutputFormatTarget::Builtin {
+                class: YAML_RENDERER,
+                class_name: "YamlRenderer",
+                expr: "new YamlRenderer {}",
+            },
+        ),
+        (
+            "pkl-binary",
+            "\"pkl-binary\"",
+            "format == \"pkl-binary\"",
+            OutputFormatTarget::Module {
+                load: || Instruction::LoadPklBinaryModule,
+                ref_name: "pklbinary.Renderer",
+                expr: "new pklbinary.Renderer {}",
+            },
+        ),
+    ];
+    let mut rcode = vec![
         Instruction::Constant(Value::string("prop:pkl.outputFormat")),
         Instruction::ReadResourceOrNull,
         Instruction::Duplicate,
-        Instruction::Constant(Value::string("jsonnet")),
-        Instruction::Equal,
-        Instruction::JumpIfFalse(11),
+        Instruction::JumpIfNotNull(6),
         Instruction::Pop,
-        Instruction::LoadJsonnetModule,
-        Instruction::GetMember("Renderer".into()),
-        Instruction::MakeBuiltinInstance { template: empty },
-        Instruction::Jump(30),
-        Instruction::Duplicate,
-        Instruction::Constant(Value::string("xml")),
-        Instruction::Equal,
-        Instruction::JumpIfFalse(20),
-        Instruction::Pop,
-        Instruction::LoadXmlModule,
-        Instruction::GetMember("Renderer".into()),
-        Instruction::MakeBuiltinInstance { template: empty },
-        Instruction::Jump(30),
-        Instruction::Duplicate,
-        Instruction::Constant(Value::string("textproto")),
-        Instruction::Equal,
-        Instruction::JumpIfFalse(29),
-        Instruction::Pop,
-        Instruction::LoadProtobufModule,
-        Instruction::GetMember("Renderer".into()),
-        Instruction::MakeBuiltinInstance { template: empty },
-        Instruction::Jump(30),
-        Instruction::OutputRenderer,
-        Instruction::Return,
-    ]);
+        Instruction::Constant(Value::string("pcf")),
+    ];
+    let mut rspan_names = vec![
+        "\"prop:pkl.outputFormat\"",
+        "read?(\"prop:pkl.outputFormat\")",
+        "read?(\"prop:pkl.outputFormat\") ?? \"pcf\"",
+        "read?(\"prop:pkl.outputFormat\") ?? \"pcf\"",
+        "",
+        "\"pcf\"",
+    ];
+    let mut end_jumps = Vec::new();
+    for (format, lit_span, eq_span, target) in format_branches {
+        rcode.push(Instruction::Duplicate);
+        rspan_names.push("format");
+        rcode.push(Instruction::Constant(Value::string(format)));
+        rspan_names.push(lit_span);
+        rcode.push(Instruction::Equal);
+        rspan_names.push(eq_span);
+        let branch_jump = rcode.len();
+        rcode.push(Instruction::JumpIfFalse(0));
+        rspan_names.push(eq_span);
+        rcode.push(Instruction::Pop);
+        rspan_names.push("");
+        match target {
+            OutputFormatTarget::Builtin {
+                class,
+                class_name,
+                expr,
+            } => {
+                rcode.push(Instruction::BuiltinClass(builtins::ty(class)));
+                rspan_names.push(class_name);
+                rcode.push(Instruction::MakeBuiltinInstance { template: empty });
+                rspan_names.push(expr);
+            }
+            OutputFormatTarget::Module {
+                load,
+                ref_name,
+                expr,
+            } => {
+                rcode.push(load());
+                rspan_names.push(ref_name);
+                rcode.push(Instruction::GetMember("Renderer".into()));
+                rspan_names.push(ref_name);
+                rcode.push(Instruction::MakeBuiltinInstance { template: empty });
+                rspan_names.push(expr);
+            }
+        }
+        end_jumps.push(rcode.len());
+        rcode.push(Instruction::Jump(0));
+        rspan_names.push("");
+        let next_branch = rcode.len();
+        rcode[branch_jump] = Instruction::JumpIfFalse(next_branch);
+    }
+    rcode.push(Instruction::OutputRenderer);
+    rspan_names.push("throw(\n            \"Unknown output format:");
+    let return_pc = rcode.len();
+    for jump_pc in end_jumps {
+        rcode[jump_pc] = Instruction::Jump(return_pc);
+    }
+    rcode.push(Instruction::Return);
+    rspan_names.push("");
+    d.blocks.push(rcode);
     d.metadata.push(BlockMetadata {
         source: Some(d.source.clone()),
         member: "#Module.output.renderer".into(),
-        spans: d.expression_spans(
-            module_start,
-            &d.blocks[rblock],
-            &[
-                "\"prop:pkl.outputFormat\"",
-                "read?(\"prop:pkl.outputFormat\")",
-                "format",
-                "\"jsonnet\"",
-                "format == \"jsonnet\"",
-                "format == \"jsonnet\"",
-                "",
-                "jsonnet.Renderer",
-                "jsonnet.Renderer",
-                "new jsonnet.Renderer {}",
-                "",
-                "format",
-                "\"xml\"",
-                "format == \"xml\"",
-                "format == \"xml\"",
-                "",
-                "xml.Renderer",
-                "xml.Renderer",
-                "new xml.Renderer {}",
-                "",
-                "format",
-                "\"textproto\"",
-                "format == \"textproto\"",
-                "format == \"textproto\"",
-                "",
-                "protobuf.Renderer",
-                "protobuf.Renderer",
-                "new protobuf.Renderer {}",
-                "",
-                "throw(\n            \"Unknown output format:",
-                "",
-            ],
-        ),
+        spans: d.expression_spans(module_start, &d.blocks[rblock], &rspan_names),
         ..Default::default()
     });
     let let_start = module_start
@@ -490,7 +693,7 @@ pub(super) fn builtin_members(
             .find("\n    text =")
             .unwrap();
     d.metadata[rblock].let_scopes.push(LetScope {
-        body: 2..30,
+        body: 6..return_pc,
         frame: RuntimeFrame {
             anonymous: false,
             source: Some(d.source.clone()),
@@ -843,14 +1046,24 @@ pub(super) fn builtin_members(
     for block in [relative_path.code, relative_body] {
         d.metadata[block].method_signature = Some(("relativePathTo(other)".into(), 1));
     }
+    let value_render_document = d.abstract_method("ValueRenderer", "renderDocument");
+    let value_render_value = d.abstract_method("ValueRenderer", "renderValue");
+    let bytes_render_document = d.abstract_method("BytesRenderer", "renderDocument");
+    let bytes_render_value = d.abstract_method("BytesRenderer", "renderValue");
     BTreeMap::from([
         (MODULE, vec![output_value, relative_path]),
         (CONVERT_PROPERTY, vec![render]),
         (FILE_OUTPUT, vec![value, renderer, text, bytes]),
         (MODULE_OUTPUT, vec![files]),
         (BASE_RENDERER, vec![converters, transformers, extension]),
-        (VALUE_RENDERER, vec![]),
-        (BYTES_RENDERER, vec![]),
+        (
+            VALUE_RENDERER,
+            vec![value_render_document, value_render_value],
+        ),
+        (
+            BYTES_RENDERER,
+            vec![bytes_render_document, bytes_render_value],
+        ),
         (
             JSON_RENDERER,
             vec![
@@ -926,40 +1139,9 @@ impl Vm {
     }
     pub(super) fn output_renderer(&mut self) -> Result<(), RuntimeError> {
         let format = self.pop()?;
-        if format.is_null()
-            || format == Value::string("pcf")
-            || format == Value::string("json")
-            || format == Value::string("yaml")
-        {
-            let renderer = if format == Value::string("yaml") {
-                YAML_RENDERER
-            } else if format == Value::string("json") {
-                JSON_RENDERER
-            } else {
-                PCF_RENDERER
-            };
-            let value = self.builtin_class(builtins::ty(renderer));
-            self.stack.push(Value::Object(
-                self.heap
-                    .get_class(value.heap_id().expect("class"))?
-                    .prototype,
-            ));
-            return Ok(());
-        }
         let Value::String(format) = format else {
             return Err(invalid("output format is not a String"));
         };
-        if matches!(
-            format.as_str(),
-            Some("jsonnet" | "plist" | "properties" | "textproto" | "xml" | "yaml" | "pkl-binary")
-        ) {
-            return Err(RuntimeError::new(
-                ErrorKind::Unsupported,
-                PklString::from("The `")
-                    .concat(&format)
-                    .concat(&"` output renderer is not implemented.".into()),
-            ));
-        }
         Err(RuntimeError::new(
             ErrorKind::Type,
             PklString::from("Unknown output format: `")

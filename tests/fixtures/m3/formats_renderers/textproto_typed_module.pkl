@@ -1,0 +1,10 @@
+class Item {
+  name: String
+  count: Int
+}
+title: String = "hello"
+enabled: Boolean = true
+items: Listing<Item> = new {
+  new { name = "alpha"; count = 1 }
+  new { name = "beta"; count = 2 }
+}

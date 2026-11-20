@@ -1,0 +1,4 @@
+local val = Map()
+output {
+  text = new PropertiesRenderer {}.renderValue(val)
+}

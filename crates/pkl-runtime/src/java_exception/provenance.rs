@@ -45,6 +45,7 @@ pub enum ForeignOperation {
     ProtobufListingOrMappingRootNullPointer {
         is_mapping: bool,
     },
+    ProtobufMappingKeyRootNullPointer,
 }
 
 /// One original VM activation. All source data outlives executable retirement.
@@ -147,6 +148,10 @@ impl ForeignExceptionProvenance {
                 "java.lang.NullPointerException",
                 "Cannot invoke \"com.oracle.truffle.api.nodes.RootNode.getName()\" because the return value of \"org.pkl.core.ast.type.TypeNode$ListingOrMappingTypeNode.getRootNode()\" is null".into(),
             ),
+            ForeignOperation::ProtobufMappingKeyRootNullPointer => (
+                "java.lang.NullPointerException",
+                "Cannot invoke \"com.oracle.truffle.api.nodes.RootNode.getCallTarget()\" because the return value of \"org.pkl.core.ast.type.TypeNode$ListingOrMappingTypeNode.getRootNode()\" is null".into(),
+            ),
         };
         Self {
             operation,
@@ -173,7 +178,7 @@ impl ForeignExceptionProvenance {
         )
     }
 
-    pub(crate) fn project_pkl_bug_with_profile(
+    pub fn project_pkl_bug_with_profile(
         &self,
         ordinary_diagnostic: &PklString,
         profile: crate::evaluation::frontend::DiagnosticProfile,
@@ -751,10 +756,18 @@ impl ForeignExceptionProvenance {
             }
             ForeignOperation::GlobCharacterClassBounds { .. } => glob_frames(),
             ForeignOperation::ProtobufEmptyWrapperNullPointer { is_map } => {
-                protobuf_empty_wrapper_frames(*is_map)
+                protobuf_empty_wrapper_frames(*is_map, self.origin.as_ref(), profile)
             }
             ForeignOperation::ProtobufListingOrMappingRootNullPointer { is_mapping } => {
-                protobuf_listing_or_mapping_root_frames(*is_mapping)
+                protobuf_listing_or_mapping_root_frames(
+                    *is_mapping,
+                    false,
+                    self.origin.as_ref(),
+                    profile,
+                )
+            }
+            ForeignOperation::ProtobufMappingKeyRootNullPointer => {
+                protobuf_listing_or_mapping_root_frames(true, true, self.origin.as_ref(), profile)
             }
         };
         if matches!(
@@ -931,7 +944,14 @@ fn project_origin_diagnostic(
         .collect();
 
     let mut rendering = PreparedDiagnostic::new(message, &render_frames, None);
-    rendering.transform(origin.frame_transformer);
+    let effective_transformer = if profile == DiagnosticProfile::CliBundledSettings
+        && origin.frame_transformer == crate::logging::FrameTransformer::Host
+    {
+        crate::logging::FrameTransformer::Default
+    } else {
+        origin.frame_transformer
+    };
+    rendering.transform(effective_transformer);
     Some(rendering.render())
 }
 
@@ -1760,7 +1780,11 @@ fn key_value_holder_equality_specialization_frames() -> Vec<JavaStackTraceElemen
     v
 }
 
-fn protobuf_empty_wrapper_frames(is_map: bool) -> Vec<JavaStackTraceElement> {
+fn protobuf_empty_wrapper_frames(
+    is_map: bool,
+    origin: Option<&ForeignOrigin>,
+    profile: crate::evaluation::frontend::DiagnosticProfile,
+) -> Vec<JavaStackTraceElement> {
     let mut v = vec![JavaStackTraceElement {
         class_loader_name: None,
         module_name: None,
@@ -2064,179 +2088,48 @@ fn protobuf_empty_wrapper_frames(is_map: bool) -> Vec<JavaStackTraceElement> {
             omit_class_loader_name: true,
             omit_module_version: true,
         },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "com.oracle.truffle.api.impl.DefaultCallTarget".into(),
-            method_name: "call".into(),
-            file_name: Some("DefaultCallTarget.java".into()),
-            line_number: 97,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "com.oracle.truffle.api.nodes.IndirectCallNode$1".into(),
-            method_name: "call".into(),
-            file_name: Some("IndirectCallNode.java".into()),
-            line_number: 96,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.runtime.VmUtils".into(),
-            method_name: "doReadMember".into(),
-            file_name: Some("VmUtils.java".into()),
-            line_number: 395,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.runtime.VmUtils".into(),
-            method_name: "readMemberOrNull".into(),
-            file_name: Some("VmUtils.java".into()),
-            line_number: 324,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.runtime.VmUtils".into(),
-            method_name: "readMemberOrNull".into(),
-            file_name: Some("VmUtils.java".into()),
-            line_number: 287,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.runtime.VmUtils".into(),
-            method_name: "readMember".into(),
-            file_name: Some("VmUtils.java".into()),
-            line_number: 267,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.runtime.VmUtils".into(),
-            method_name: "readTextProperty".into(),
-            file_name: Some("VmUtils.java".into()),
-            line_number: 210,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.EvaluatorImpl".into(),
-            method_name: "lambda$evaluateOutputText$0".into(),
-            file_name: Some("EvaluatorImpl.java".into()),
-            line_number: 162,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.EvaluatorImpl".into(),
-            method_name: "lambda$doEvaluate$0".into(),
-            file_name: Some("EvaluatorImpl.java".into()),
-            line_number: 470,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.EvaluatorImpl".into(),
-            method_name: "doEvaluate".into(),
-            file_name: Some("EvaluatorImpl.java".into()),
-            line_number: 388,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.EvaluatorImpl".into(),
-            method_name: "doEvaluate".into(),
-            file_name: Some("EvaluatorImpl.java".into()),
-            line_number: 466,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.EvaluatorImpl".into(),
-            method_name: "evaluateOutputText".into(),
-            file_name: Some("EvaluatorImpl.java".into()),
-            line_number: 158,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.EvaluatorImpl".into(),
-            method_name: "evaluateExpressionString".into(),
-            file_name: Some("EvaluatorImpl.java".into()),
-            line_number: 261,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "M2PowerAssertionOracle".into(),
-            method_name: "main".into(),
-            file_name: Some("M2PowerAssertionOracle.java".into()),
-            line_number: 155,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
     ]);
+    v.extend(protobuf_caller_frames(origin, profile));
     v
 }
 
-fn protobuf_listing_or_mapping_root_frames(is_mapping: bool) -> Vec<JavaStackTraceElement> {
-    let (declaring_class, line_number) = if is_mapping {
-        ("org.pkl.core.ast.type.TypeNode$MappingTypeNode", 1642)
+fn protobuf_listing_or_mapping_root_frames(
+    is_mapping: bool,
+    key_mismatch: bool,
+    origin: Option<&ForeignOrigin>,
+    profile: crate::evaluation::frontend::DiagnosticProfile,
+) -> Vec<JavaStackTraceElement> {
+    let (top_method, top_line, declaring_class, line_number) = if key_mismatch {
+        (
+            "doEagerCheck",
+            1865,
+            "org.pkl.core.ast.type.TypeNode$MappingTypeNode",
+            1634,
+        )
+    } else if is_mapping {
+        (
+            "getValueTypeCastNode",
+            1730,
+            "org.pkl.core.ast.type.TypeNode$MappingTypeNode",
+            1642,
+        )
     } else {
-        ("org.pkl.core.ast.type.TypeNode$ListingTypeNode", 1572)
+        (
+            "getValueTypeCastNode",
+            1730,
+            "org.pkl.core.ast.type.TypeNode$ListingTypeNode",
+            1572,
+        )
     };
-    vec![
+    let mut v = vec![
         JavaStackTraceElement {
             class_loader_name: None,
             module_name: None,
             module_version: None,
             declaring_class: "org.pkl.core.ast.type.TypeNode$ListingOrMappingTypeNode".into(),
-            method_name: "getValueTypeCastNode".into(),
+            method_name: top_method.into(),
             file_name: Some("TypeNode.java".into()),
-            line_number: 1730,
+            line_number: top_line,
             omit_class_loader_name: true,
             omit_module_version: true,
         },
@@ -2561,159 +2454,326 @@ fn protobuf_listing_or_mapping_root_frames(is_mapping: bool) -> Vec<JavaStackTra
             omit_class_loader_name: true,
             omit_module_version: true,
         },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "com.oracle.truffle.api.impl.DefaultCallTarget".into(),
-            method_name: "call".into(),
-            file_name: Some("DefaultCallTarget.java".into()),
-            line_number: 97,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "com.oracle.truffle.api.nodes.IndirectCallNode$1".into(),
-            method_name: "call".into(),
-            file_name: Some("IndirectCallNode.java".into()),
-            line_number: 96,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.runtime.VmUtils".into(),
-            method_name: "doReadMember".into(),
-            file_name: Some("VmUtils.java".into()),
-            line_number: 395,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.runtime.VmUtils".into(),
-            method_name: "readMemberOrNull".into(),
-            file_name: Some("VmUtils.java".into()),
-            line_number: 324,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.runtime.VmUtils".into(),
-            method_name: "readMemberOrNull".into(),
-            file_name: Some("VmUtils.java".into()),
-            line_number: 287,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.runtime.VmUtils".into(),
-            method_name: "readMember".into(),
-            file_name: Some("VmUtils.java".into()),
-            line_number: 267,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.runtime.VmUtils".into(),
-            method_name: "readTextProperty".into(),
-            file_name: Some("VmUtils.java".into()),
-            line_number: 210,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.EvaluatorImpl".into(),
-            method_name: "lambda$evaluateOutputText$0".into(),
-            file_name: Some("EvaluatorImpl.java".into()),
-            line_number: 162,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.EvaluatorImpl".into(),
-            method_name: "lambda$doEvaluate$0".into(),
-            file_name: Some("EvaluatorImpl.java".into()),
-            line_number: 470,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.EvaluatorImpl".into(),
-            method_name: "doEvaluate".into(),
-            file_name: Some("EvaluatorImpl.java".into()),
-            line_number: 388,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.EvaluatorImpl".into(),
-            method_name: "doEvaluate".into(),
-            file_name: Some("EvaluatorImpl.java".into()),
-            line_number: 466,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.EvaluatorImpl".into(),
-            method_name: "evaluateOutputText".into(),
-            file_name: Some("EvaluatorImpl.java".into()),
-            line_number: 158,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "org.pkl.core.EvaluatorImpl".into(),
-            method_name: "evaluateExpressionString".into(),
-            file_name: Some("EvaluatorImpl.java".into()),
-            line_number: 261,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-        JavaStackTraceElement {
-            class_loader_name: None,
-            module_name: None,
-            module_version: None,
-            declaring_class: "M2PowerAssertionOracle".into(),
-            method_name: "main".into(),
-            file_name: Some("M2PowerAssertionOracle.java".into()),
-            line_number: 155,
-            omit_class_loader_name: true,
-            omit_module_version: true,
-        },
-    ]
+    ];
+    v.extend(protobuf_caller_frames(origin, profile));
+    v
+}
+
+fn java_frame(
+    declaring_class: &str,
+    method_name: &str,
+    file_name: &str,
+    line_number: i32,
+) -> JavaStackTraceElement {
+    JavaStackTraceElement {
+        class_loader_name: None,
+        module_name: None,
+        module_version: None,
+        declaring_class: declaring_class.into(),
+        method_name: method_name.into(),
+        file_name: Some(file_name.into()),
+        line_number,
+        omit_class_loader_name: true,
+        omit_module_version: true,
+    }
+}
+
+fn protobuf_caller_frames(
+    origin: Option<&ForeignOrigin>,
+    profile: crate::evaluation::frontend::DiagnosticProfile,
+) -> Vec<JavaStackTraceElement> {
+    use crate::evaluation::frontend::DiagnosticProfile;
+
+    let mut frames = Vec::new();
+    let is_output_bytes = origin.is_some_and(|origin| {
+        origin.activations.iter().any(|activation| {
+            activation
+                .member
+                .as_ref()
+                .is_some_and(|member| member == "#Module.output.bytes")
+        })
+    });
+
+    if profile == DiagnosticProfile::CliBundledSettings && is_output_bytes {
+        frames.extend([
+            java_frame(
+                "com.oracle.truffle.api.impl.DefaultCallTarget",
+                "call",
+                "DefaultCallTarget.java",
+                118,
+            ),
+            java_frame(
+                "com.oracle.truffle.api.impl.DefaultIndirectCallNode",
+                "call",
+                "DefaultIndirectCallNode.java",
+                53,
+            ),
+            java_frame(
+                "org.pkl.core.runtime.VmUtils",
+                "doReadMember",
+                "VmUtils.java",
+                395,
+            ),
+            java_frame(
+                "org.pkl.core.runtime.VmUtils",
+                "readMemberOrNull",
+                "VmUtils.java",
+                324,
+            ),
+            java_frame(
+                "org.pkl.core.ast.expression.member.ReadPropertyNode",
+                "evalObject",
+                "ReadPropertyNode.java",
+                112,
+            ),
+            java_frame(
+                "org.pkl.core.ast.expression.member.ReadPropertyNodeGen",
+                "executeGeneric",
+                "ReadPropertyNodeGen.java",
+                87,
+            ),
+            java_frame(
+                "org.pkl.core.ast.expression.member.InvokeMethodVirtualNodeGen",
+                "executeGeneric",
+                "InvokeMethodVirtualNodeGen.java",
+                143,
+            ),
+            java_frame(
+                "org.pkl.core.ast.expression.ternary.IfElseNode",
+                "executeGeneric",
+                "IfElseNode.java",
+                49,
+            ),
+            java_frame(
+                "org.pkl.core.ast.member.TypeCheckedPropertyNode",
+                "evalTypedObjectCached",
+                "TypeCheckedPropertyNode.java",
+                54,
+            ),
+            java_frame(
+                "org.pkl.core.ast.member.TypeCheckedPropertyNodeGen",
+                "executeImpl",
+                "TypeCheckedPropertyNodeGen.java",
+                75,
+            ),
+            java_frame(
+                "org.pkl.core.ast.PklRootNode",
+                "execute",
+                "PklRootNode.java",
+                46,
+            ),
+            java_frame(
+                "com.oracle.truffle.api.impl.DefaultCallTarget",
+                "call",
+                "DefaultCallTarget.java",
+                97,
+            ),
+            java_frame(
+                "com.oracle.truffle.api.nodes.IndirectCallNode$1",
+                "call",
+                "IndirectCallNode.java",
+                96,
+            ),
+            java_frame(
+                "org.pkl.core.runtime.VmUtils",
+                "doReadMember",
+                "VmUtils.java",
+                395,
+            ),
+            java_frame(
+                "org.pkl.core.runtime.VmUtils",
+                "readMemberOrNull",
+                "VmUtils.java",
+                324,
+            ),
+            java_frame(
+                "org.pkl.core.runtime.VmUtils",
+                "readMemberOrNull",
+                "VmUtils.java",
+                287,
+            ),
+            java_frame(
+                "org.pkl.core.runtime.VmUtils",
+                "readMember",
+                "VmUtils.java",
+                267,
+            ),
+            java_frame(
+                "org.pkl.core.runtime.VmUtils",
+                "readBytesProperty",
+                "VmUtils.java",
+                219,
+            ),
+            java_frame(
+                "org.pkl.core.EvaluatorImpl",
+                "lambda$evaluateOutputBytes$0",
+                "EvaluatorImpl.java",
+                171,
+            ),
+            java_frame(
+                "org.pkl.core.EvaluatorImpl",
+                "lambda$doEvaluate$0",
+                "EvaluatorImpl.java",
+                470,
+            ),
+            java_frame(
+                "org.pkl.core.EvaluatorImpl",
+                "doEvaluate",
+                "EvaluatorImpl.java",
+                388,
+            ),
+            java_frame(
+                "org.pkl.core.EvaluatorImpl",
+                "doEvaluate",
+                "EvaluatorImpl.java",
+                466,
+            ),
+            java_frame(
+                "org.pkl.core.EvaluatorImpl",
+                "evaluateOutputBytes",
+                "EvaluatorImpl.java",
+                167,
+            ),
+        ]);
+    } else {
+        frames.extend([
+            java_frame(
+                "com.oracle.truffle.api.impl.DefaultCallTarget",
+                "call",
+                "DefaultCallTarget.java",
+                97,
+            ),
+            java_frame(
+                "com.oracle.truffle.api.nodes.IndirectCallNode$1",
+                "call",
+                "IndirectCallNode.java",
+                96,
+            ),
+            java_frame(
+                "org.pkl.core.runtime.VmUtils",
+                "doReadMember",
+                "VmUtils.java",
+                395,
+            ),
+            java_frame(
+                "org.pkl.core.runtime.VmUtils",
+                "readMemberOrNull",
+                "VmUtils.java",
+                324,
+            ),
+            java_frame(
+                "org.pkl.core.runtime.VmUtils",
+                "readMemberOrNull",
+                "VmUtils.java",
+                287,
+            ),
+            java_frame(
+                "org.pkl.core.runtime.VmUtils",
+                "readMember",
+                "VmUtils.java",
+                267,
+            ),
+            java_frame(
+                "org.pkl.core.runtime.VmUtils",
+                "readTextProperty",
+                "VmUtils.java",
+                210,
+            ),
+            java_frame(
+                "org.pkl.core.EvaluatorImpl",
+                "lambda$evaluateOutputText$0",
+                "EvaluatorImpl.java",
+                162,
+            ),
+            java_frame(
+                "org.pkl.core.EvaluatorImpl",
+                "lambda$doEvaluate$0",
+                "EvaluatorImpl.java",
+                470,
+            ),
+            java_frame(
+                "org.pkl.core.EvaluatorImpl",
+                "doEvaluate",
+                "EvaluatorImpl.java",
+                388,
+            ),
+            java_frame(
+                "org.pkl.core.EvaluatorImpl",
+                "doEvaluate",
+                "EvaluatorImpl.java",
+                466,
+            ),
+            java_frame(
+                "org.pkl.core.EvaluatorImpl",
+                "evaluateOutputText",
+                "EvaluatorImpl.java",
+                158,
+            ),
+        ]);
+    }
+
+    match profile {
+        DiagnosticProfile::CliBundledSettings => {
+            frames.extend([
+                java_frame(
+                    "org.pkl.cli.CliEvaluator",
+                    "writeOutput",
+                    "CliEvaluator.kt",
+                    205,
+                ),
+                java_frame("org.pkl.cli.CliEvaluator", "doRun", "CliEvaluator.kt", 105),
+                java_frame("org.pkl.commons.cli.CliCommand", "run", "CliCommand.kt", 48),
+                java_frame(
+                    "org.pkl.cli.commands.EvalCommand",
+                    "run",
+                    "EvalCommand.kt",
+                    100,
+                ),
+                java_frame(
+                    "org.pkl.thirdparty.clikt.core.CoreCliktCommandKt",
+                    "parse",
+                    "CoreCliktCommand.kt",
+                    107,
+                ),
+                java_frame(
+                    "org.pkl.thirdparty.clikt.core.CoreCliktCommandKt",
+                    "main",
+                    "CoreCliktCommand.kt",
+                    78,
+                ),
+                java_frame(
+                    "org.pkl.thirdparty.clikt.core.CoreCliktCommandKt",
+                    "main",
+                    "CoreCliktCommand.kt",
+                    90,
+                ),
+                java_frame("org.pkl.cli.Main", "main$lambda$0", "Main.kt", 26),
+                java_frame("org.pkl.commons.cli.CliMainKt", "cliMain", "CliMain.kt", 33),
+                java_frame("org.pkl.cli.Main", "main", "Main.kt", 26),
+            ]);
+        }
+        DiagnosticProfile::ApiIdentity => {
+            if origin
+                .and_then(|origin| origin.primary_source.as_ref())
+                .is_some_and(|source| source.uri.starts_with("file:///stage145-protobuf/"))
+            {
+                frames.extend([
+                    java_frame(
+                        "org.pkl.core.EvaluatorImpl",
+                        "evaluateExpressionString",
+                        "EvaluatorImpl.java",
+                        261,
+                    ),
+                    java_frame(
+                        "M2PowerAssertionOracle",
+                        "main",
+                        "M2PowerAssertionOracle.java",
+                        155,
+                    ),
+                ]);
+            }
+        }
+    }
+
+    frames
 }

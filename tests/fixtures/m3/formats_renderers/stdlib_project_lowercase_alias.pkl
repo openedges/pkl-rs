@@ -1,0 +1,10 @@
+import "pkl:Project" as Upper
+import "pkl:project" as Lower
+import "pkl:reflect"
+
+sameClass = Upper.getClass() == Lower.getClass()
+samePkgClass = Upper.Package == Lower.Package
+lowerUri = reflect.Module(Lower).uri
+upperUri = reflect.Module(Upper).uri
+lowerName = reflect.Module(Lower).name
+lowerLoc = reflect.Module(Lower).location.displayUri

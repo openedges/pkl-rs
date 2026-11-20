@@ -1,0 +1,7 @@
+output {
+  files {
+    ["data.out"] {
+      value = new Dynamic { a = 1; b = "two" }
+    }
+  }
+}

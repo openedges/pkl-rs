@@ -4,12 +4,38 @@ use crate::heap::CollectionKind;
 
 impl Vm {
     pub(super) fn release_current(&mut self) -> Result<(), RuntimeError> {
+        // If we cooperatively resumed after initializing `pkl:semver`, discard
+        // the module value left on the operand stack by its initializer frame.
+        let base = self
+            .frames
+            .last()
+            .ok_or_else(|| invalid("release current frame"))?
+            .base;
+        while self.stack.len() > base {
+            self.pop()?;
+        }
+
         if self.platform_metadata.is_none() {
             return Err(RuntimeError::new(
                 ErrorKind::Unsupported,
                 "This standard-library current value requires explicit platform/release Host data.",
             ));
         }
+
+        // 1. Ensure `pkl:semver` is initialized cooperatively before reading `Version`.
+        let semver_module_id = match self.modules_stdlib.get("pkl:semver").cloned() {
+            Some(modules::CachedModule::Value(id)) => id,
+            Some(modules::CachedModule::Failed(error)) => return Err(error),
+            None => {
+                self.frames
+                    .last_mut()
+                    .ok_or_else(|| invalid("release current frame"))?
+                    .pc -= 1;
+                self.import_stdlib("pkl:semver")?;
+                return Ok(());
+            }
+        };
+
         let module_id = self
             .frames
             .last()
@@ -26,18 +52,6 @@ impl Vm {
             })
             .ok_or_else(|| invalid("release module receiver"))?;
 
-        // 1. semver.Version from pkl:semver
-        let semver_module_id = match self.modules_stdlib.get("pkl:semver") {
-            Some(modules::CachedModule::Value(id)) => *id,
-            _ => {
-                // If not yet imported, import it
-                self.import_stdlib("pkl:semver")?;
-                match self.modules_stdlib.get("pkl:semver") {
-                    Some(modules::CachedModule::Value(id)) => *id,
-                    _ => return Err(invalid("missing pkl:semver module")),
-                }
-            }
-        };
         let version_class = self.get_or_create_module_class(semver_module_id, "Version")?;
         let version_obj = self.instantiate_typed(
             version_class,
@@ -88,9 +102,15 @@ impl Vm {
             self.instantiate_typed(stdlib_class, vec![("modules", Value::Object(set_obj))])?;
 
         let platform_meta = self.platform_metadata.as_ref().unwrap();
-        let os_name = platform_meta.os_name.as_str().unwrap_or("macOS");
-        let os_version = platform_meta.os_version.as_str().unwrap_or("unknown");
-        let version_info = format!("Pkl 0.32.0 ({os_name} {os_version}, pkl-rust 0.32.0)");
+        let os_name = platform_meta.os_name.to_java_utf8();
+        let os_version = platform_meta.os_version.to_java_utf8();
+        let java_version = platform_meta.java_version.to_java_utf8();
+        let flavor = if java_version.is_empty() || java_version == "native" {
+            "native".to_owned()
+        } else {
+            format!("Java {java_version}")
+        };
+        let version_info = format!("Pkl 0.32.0 ({os_name} {os_version}, {flavor})");
 
         // 5. Release
         let rel_class = self.get_or_create_module_class(module_id, "Release")?;
@@ -99,10 +119,7 @@ impl Vm {
             vec![
                 ("version", Value::Object(version_obj)),
                 ("versionInfo", Value::string(version_info)),
-                (
-                    "commitId",
-                    Value::string("e51fb2f9d5040ffb08bbcd8d1e1f79b3628004f0"),
-                ),
+                ("commitId", Value::string("e51fb2f")),
                 ("sourceCode", Value::Object(sc)),
                 ("documentation", Value::Object(doc)),
                 ("standardLibrary", Value::Object(stdlib)),

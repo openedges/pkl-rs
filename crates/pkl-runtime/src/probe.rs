@@ -316,6 +316,14 @@ impl From<SourceFrame> for crate::logging::LogFrame {
     }
 }
 
+/// One ordered `Module.output.files` entry for shared native/JS transports.
+/// Path specs preserve all Java UTF-16 code units; bytes are exact raw output bytes.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct SourceOutputFile {
+    pub path_spec: Vec<u16>,
+    pub bytes: Vec<u8>,
+}
+
 #[derive(Clone, Debug, Default)]
 pub struct SourceEvent {
     pub kind: &'static str,
@@ -323,6 +331,7 @@ pub struct SourceEvent {
     pub uri: Option<String>,
     pub value: Option<Vec<u16>>,
     pub bytes: Option<Vec<u8>>,
+    pub files: Option<Vec<SourceOutputFile>>,
     pub error: Option<Vec<u16>>,
     pub error_bytes: Option<Vec<u8>>,
     pub log: Option<SourceLog>,
@@ -432,6 +441,7 @@ impl TryFrom<SourceTextEvent> for SourceEvent {
             uri: e.uri.map(scalar_probe_text).transpose()?,
             value: e.value,
             bytes: e.bytes,
+            files: e.files,
             error: e.error,
             error_bytes: e.error_bytes,
             log: e.log,
@@ -453,6 +463,7 @@ pub struct SourceTextEvent {
     pub uri: Option<PklString>,
     pub value: Option<Vec<u16>>,
     pub bytes: Option<Vec<u8>>,
+    pub files: Option<Vec<SourceOutputFile>>,
     pub error: Option<Vec<u16>>,
     pub error_bytes: Option<Vec<u8>>,
     pub log: Option<SourceLog>,
@@ -724,6 +735,7 @@ impl SourceTextEvent {
             uri: None,
             value: None,
             bytes: None,
+            files: None,
             error: None,
             error_bytes: None,
             log: None,
@@ -1068,6 +1080,23 @@ impl SourceProbe {
         self.session
             .reenter_output_bytes(token, now.into(), timeout.map(Into::into))
     }
+    pub fn start_output_files(
+        &mut self,
+        now: u32,
+        timeout: Option<u32>,
+    ) -> Result<(), RuntimeError> {
+        self.session
+            .start_output_files(now.into(), timeout.map(Into::into))
+    }
+    pub fn reenter_output_files(
+        &mut self,
+        token: &str,
+        now: u32,
+        timeout: Option<u32>,
+    ) -> Result<(), RuntimeError> {
+        self.session
+            .reenter_output_files(token, now.into(), timeout.map(Into::into))
+    }
     pub fn start_module(&mut self, now: u32, timeout: Option<u32>) -> Result<(), RuntimeError> {
         self.session
             .start_module(now.into(), timeout.map(Into::into))
@@ -1165,6 +1194,23 @@ impl SourceProbe {
             HostPoll::Ready(Ok(Value::Bytes(bytes))) => {
                 let mut event = SourceTextEvent::new("bytes");
                 event.bytes = Some(bytes.to_vec());
+                event.exit_code = Some(0);
+                event.phase =
+                    Some(crate::evaluation::frontend::FrontendPhase::ModuleOutput.as_str());
+                event
+            }
+            HostPoll::Ready(Ok(value)) if self.session.last_call_was_output_files() => {
+                let files = crate::evaluation::session::SourceSession::result_output_files(value)?;
+                let mut event = SourceTextEvent::new("files");
+                event.files = Some(
+                    files
+                        .into_iter()
+                        .map(|entry| SourceOutputFile {
+                            path_spec: entry.path_spec.encode_utf16().collect(),
+                            bytes: entry.bytes.to_vec(),
+                        })
+                        .collect(),
+                );
                 event.exit_code = Some(0);
                 event.phase =
                     Some(crate::evaluation::frontend::FrontendPhase::ModuleOutput.as_str());

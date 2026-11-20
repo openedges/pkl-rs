@@ -1,0 +1,3 @@
+local doc = new Dynamic { foo { bar = 0 } }
+rendered = new PcfRenderer { indent = "  "; omitNullProperties = false }.renderDocument(doc)
+endsWithNewline = rendered.endsWith("\n")

@@ -1,0 +1,13 @@
+import "pkl:test"
+
+local allBytes = IntSeq(0, 255).toList().toBytes()
+local oneKb = "a".repeat(1000).encodeToBytes("UTF-8")
+local over1Kb = "a".repeat(123467).encodeToBytes("UTF-8")
+local oneTenth = "a".repeat(1100).encodeToBytes("UTF-8")
+
+nullDefault = Null(new Dynamic { x = 1 }).toString()
+nullPlain = null.toString()
+errBytes256 = test.catch(() -> (allBytes as String))
+errBytes1kb = test.catch(() -> (oneKb as String))
+errBytesOver1kb = test.catch(() -> (over1Kb as String))
+errBytes1_1kb = test.catch(() -> (oneTenth as String))

@@ -1,0 +1,6 @@
+local doc = new Dynamic { foo { bar = 0; empty = null; uni = "café" } }
+r00 = new PropertiesRenderer { omitNullProperties = false; restrictCharset = false }.renderDocument(doc)
+r01 = new PropertiesRenderer { omitNullProperties = false; restrictCharset = true }.renderDocument(doc)
+r10 = new PropertiesRenderer { omitNullProperties = true; restrictCharset = false }.renderDocument(doc)
+r11 = new PropertiesRenderer { omitNullProperties = true; restrictCharset = true }.renderDocument(doc)
+checks = List(r00.endsWith("\n"), r01.endsWith("\n"), r10.endsWith("\n"), r11.endsWith("\n"))

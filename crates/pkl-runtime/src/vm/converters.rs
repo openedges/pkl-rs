@@ -122,9 +122,12 @@ impl Converters {
                             SpecPart::AnyProperty,
                             PathPart::Property(_) | PathPart::WildcardProperty,
                         )
-                        | (SpecPart::AnyEntry, PathPart::Entry(_) | PathPart::WildcardElement) => {
-                            true
-                        }
+                        | (
+                            SpecPart::AnyEntry,
+                            PathPart::Entry(_)
+                            | PathPart::WildcardElement
+                            | PathPart::WildcardProperty,
+                        ) => true,
                         _ => false,
                     })
             {

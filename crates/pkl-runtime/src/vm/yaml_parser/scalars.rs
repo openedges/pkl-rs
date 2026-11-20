@@ -21,6 +21,23 @@ fn digit(u: u16, radix: i64) -> Option<i64> {
     };
     (n < radix).then_some(n)
 }
+fn float_error(units: &[u16]) -> RuntimeError {
+    // FloatingDecimal trims UTF-16 code units <= U+0020 before
+    // choosing its empty-input or invalid-input diagnostic.
+    let start = units.iter().position(|&u| u > 0x20).unwrap_or(units.len());
+    let end = units
+        .iter()
+        .rposition(|&u| u > 0x20)
+        .map_or(start, |i| i + 1);
+    let message = if start == end {
+        "empty String".into()
+    } else {
+        PklString::from("For input string: \"")
+            .concat(&PklString::from_utf16(units[start..end].to_vec()))
+            .concat(&"\"".into())
+    };
+    foreign("java.lang.NumberFormatException", message)
+}
 fn integer(value: &Text, mode: Mode) -> Result<Value, RuntimeError> {
     let units = value
         .units()
@@ -29,7 +46,10 @@ fn integer(value: &Text, mode: Mode) -> Result<Value, RuntimeError> {
         .filter(|u| *u != 0x5f)
         .collect::<Vec<_>>();
     let Some(first) = units.first() else {
-        return Err(unsupported("explicit empty integer constructor exception"));
+        return Err(foreign(
+            "java.lang.StringIndexOutOfBoundsException",
+            "Index 0 out of bounds for length 0".into(),
+        ));
     };
     let negative = *first == 0x2d;
     let mut offset = usize::from(negative || *first == 0x2b);
@@ -40,10 +60,15 @@ fn integer(value: &Text, mode: Mode) -> Result<Value, RuntimeError> {
             pieces.pop();
         }
         for part in pieces {
-            let segment =
-                string_parse::integer(&PklString::from_utf16(part.to_vec())).ok_or_else(|| {
-                    unsupported("Long.parseLong(String) base60 invalid-segment message")
-                })?;
+            let part_text = PklString::from_utf16(part.to_vec());
+            let segment = string_parse::integer(&part_text).ok_or_else(|| {
+                foreign(
+                    "java.lang.NumberFormatException",
+                    PklString::from("For input string: \"")
+                        .concat(&part_text)
+                        .concat(&"\"".into()),
+                )
+            })?;
             value = value
                 .checked_mul(60)
                 .and_then(|n| n.checked_add(segment))
@@ -68,8 +93,9 @@ fn integer(value: &Text, mode: Mode) -> Result<Value, RuntimeError> {
         ));
     }
     if offset >= units.len() {
-        return Err(unsupported(
-            "explicit sign-only integer constructor exception",
+        return Err(foreign(
+            "java.lang.StringIndexOutOfBoundsException",
+            format!("Index {offset} out of bounds for length {}", units.len()).into(),
         ));
     }
     let mut radix = 10i64;
@@ -159,7 +185,7 @@ fn floating(value: &Text) -> Result<Value, RuntimeError> {
         }
         for part in parts {
             let segment = string_parse::float(&PklString::from_utf16(part.to_vec()))
-                .ok_or_else(|| unsupported("Double.parseDouble base60 invalid-segment message"))?;
+                .ok_or_else(|| float_error(part))?;
             result = result * 60.0 + segment;
         }
         return Ok(Value::Float(
@@ -168,23 +194,7 @@ fn floating(value: &Text) -> Result<Value, RuntimeError> {
     }
     string_parse::float(&cleaned)
         .map(|v| Value::Float(v.into()))
-        .ok_or_else(|| {
-            // FloatingDecimal trims UTF-16 code units <= U+0020 before
-            // choosing its empty-input or invalid-input diagnostic.
-            let start = units.iter().position(|&u| u > 0x20).unwrap_or(units.len());
-            let end = units
-                .iter()
-                .rposition(|&u| u > 0x20)
-                .map_or(start, |i| i + 1);
-            let message = if start == end {
-                "empty String".into()
-            } else {
-                PklString::from("For input string: \"")
-                    .concat(&PklString::from_utf16(units[start..end].to_vec()))
-                    .concat(&"\"".into())
-            };
-            foreign("java.lang.NumberFormatException", message)
-        })
+        .ok_or_else(|| float_error(&units))
 }
 pub(super) fn construct(tag: &Text, value: &Text, mode: Mode) -> Result<Value, RuntimeError> {
     if tag.is_ascii("tag:yaml.org,2002:null") {
@@ -221,9 +231,13 @@ pub(super) fn construct(tag: &Text, value: &Text, mode: Mode) -> Result<Value, R
             .map(|bytes| Value::Bytes(bytes.into()))
             .map_err(|m| foreign("java.lang.IllegalArgumentException", m.into()));
     }
-    Err(unsupported(
-        "explicit scalar tag/node-kind constructor mismatch",
-    ))
+    if tag.is_ascii("tag:yaml.org,2002:seq") {
+        return Err(constructor_node_cast("ScalarNode", "SequenceNode"));
+    }
+    if tag.is_ascii("tag:yaml.org,2002:map") || tag.is_ascii("tag:yaml.org,2002:set") {
+        return Err(constructor_node_cast("ScalarNode", "MappingNode"));
+    }
+    Err(constructor_node_cast("ScalarNode", "ScalarNode"))
 }
 #[cfg(test)]
 mod tests {

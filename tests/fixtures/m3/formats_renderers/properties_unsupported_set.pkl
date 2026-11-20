@@ -1,0 +1,4 @@
+local val = Set()
+output {
+  text = new PropertiesRenderer {}.renderValue(val)
+}

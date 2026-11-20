@@ -1,0 +1,15 @@
+import "pkl:ref"
+import "pkl:protobuf"
+
+class MyDomain extends ref.Domain {
+  function renderReference(reference) = "my-ref(\(reference.getData()))"
+}
+local domain = new MyDomain {}
+
+class Holder {
+  r: ref.Reference<MyDomain, String>
+}
+output {
+  value = new Holder { r = ref.Reference(domain, String, "data") }
+  renderer = new protobuf.Renderer {}
+}

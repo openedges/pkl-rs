@@ -1,0 +1,9 @@
+num1 = "50"
+num2 = "50.123"
+`60.123` = "60.123"
+yes = "yes"
+truth = "true"
+octalNumber = "0777"
+output {
+  renderer = new YamlRenderer { indentWidth = 2; omitNullProperties = true; isStream = false }
+}

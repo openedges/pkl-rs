@@ -21,7 +21,7 @@ impl Vm {
             Some("pkl:reflect") => crate::stdlib_sources::reflect(),
             Some("pkl:semver") => crate::stdlib_sources::semver(),
             Some("pkl:EvaluatorSettings") => crate::stdlib_sources::evaluator_settings(),
-            Some("pkl:Project") => crate::stdlib_sources::project(),
+            Some("pkl:Project" | "pkl:project") => crate::stdlib_sources::project(),
             Some("pkl:platform") => crate::stdlib_sources::platform(),
             Some("pkl:release") => crate::stdlib_sources::release(),
             Some("pkl:shell") => crate::stdlib_sources::shell(),
@@ -33,6 +33,10 @@ impl Vm {
             Some("pkl:yaml") => crate::stdlib_sources::yaml(),
             Some("pkl:math") => crate::stdlib_sources::math(),
             Some("pkl:Benchmark") => crate::stdlib_sources::benchmark(),
+            Some("pkl:Command") => crate::stdlib_sources::command(),
+            Some("pkl:DocPackageInfo") => crate::stdlib_sources::doc_package_info(),
+            Some("pkl:DocsiteInfo") => crate::stdlib_sources::docsite_info(),
+            Some("pkl:settings") => crate::stdlib_sources::settings(),
             _ if uri.starts_with("pkl:") => {
                 if crate::modules::stdlib_kind(uri) != Some(crate::modules::StdlibKind::Missing) {
                     return Err(RuntimeError::new(
@@ -139,12 +143,18 @@ fn append_definition(
     source: Arc<crate::value::RuntimeSource>,
     power_assertions: bool,
 ) -> Result<UnitId, RuntimeError> {
+    let singleton_cache_key = match crate::modules::stdlib_kind(&uri.into()) {
+        Some(crate::modules::StdlibKind::Singleton(canonical)) => Some(canonical),
+        _ => None,
+    };
     if let Some(unit) = program.units.iter().find(|unit| {
         unit.standard_library
-            && unit
-                .identity
-                .as_ref()
-                .is_some_and(|identity| identity.original_uri == uri)
+            && unit.singleton_cache_key == singleton_cache_key
+            && (singleton_cache_key.is_some()
+                || unit
+                    .identity
+                    .as_ref()
+                    .is_some_and(|identity| identity.original_uri == uri))
     }) {
         return Ok(unit.id);
     }
@@ -156,7 +166,9 @@ fn append_definition(
     })?;
     let checkpoint = modules::ArenaCheckpoint::new(program);
     let result = append_members(program, uri, source, &parsed, power_assertions).inspect(|unit| {
-        program.units[unit.0 as usize].standard_library = true;
+        let entry = &mut program.units[unit.0 as usize];
+        entry.standard_library = true;
+        entry.singleton_cache_key = singleton_cache_key;
     });
     if result.is_err() {
         checkpoint.rollback(program);
@@ -171,8 +183,16 @@ fn append_members(
     parsed: &crate::syntax::Module,
     power_assertions: bool,
 ) -> Result<UnitId, RuntimeError> {
-    let cached_settings = matches!(uri, "pkl:EvaluatorSettings" | "pkl:Project");
-    if cached_settings
+    let lazy_class_bootstrap = matches!(
+        uri,
+        "pkl:EvaluatorSettings"
+            | "pkl:Project"
+            | "pkl:project"
+            | "pkl:DocPackageInfo"
+            | "pkl:DocsiteInfo"
+            | "pkl:Benchmark"
+    );
+    if lazy_class_bootstrap
         || matches!(
             uri,
             "pkl:analyze"
@@ -187,7 +207,8 @@ fn append_members(
                 | "pkl:yaml"
                 | "pkl:shell"
                 | "pkl:pklbinary"
-                | "pkl:Benchmark"
+                | "pkl:Command"
+                | "pkl:settings"
         )
     {
         // Compile the actual module, including distinct class/property and
@@ -196,6 +217,7 @@ fn append_members(
         // StdLibModule.doLoad does for the JVM's statically shared modules.
         let resolved = crate::resolver::resolve_stdlib_module(parsed)
             .map_err(|error| RuntimeError::new(ErrorKind::Unsupported, error.message))?;
+        let identity_uri = source.uri.clone();
         let unit = compile_unit_into(
             program,
             &resolved,
@@ -205,14 +227,15 @@ fn append_members(
             power_assertions,
             Some(source),
             Some(ModuleIdentity {
-                original_uri: uri.into(),
-                resolved_uri: uri.into(),
+                original_uri: identity_uri.clone(),
+                resolved_uri: identity_uri,
             }),
         )?;
-        // ModuleCache does not load these cached modules through StdLibModule.
-        // Their ordinary properties remain lazy: Project.resolvedEvaluatorSettings
-        // must not require platform.current merely because its schema is imported.
-        if !cached_settings {
+        // These modules declare classes eagerly while keeping ordinary module
+        // properties lazy: Project.resolvedEvaluatorSettings and Benchmark.report
+        // must not require platform.current merely because the module is imported,
+        // and DocPackageInfo/DocsiteInfo retain undefined template properties.
+        if !lazy_class_bootstrap {
             append_bootstrap(program, unit, uri);
         } else {
             append_class_bootstrap(program, unit, parsed);
@@ -223,18 +246,12 @@ fn append_members(
     // bodies are bound below; they are not rewritten into Pkl source strings.
     let mut header = parsed.clone();
     // Pure Pkl declarations keep their actual bodies, annotations, class identity
-    // and source owners. JSON uses the full authored branch above.
+    // and source owners. Keep `pkl:base`'s import clauses too so reflection
+    // (`reflect.Module(import("pkl:base")).imports`) sees their prepared URIs.
     header.members.retain(|member| {
-        (matches!(uri, "pkl:json" | "pkl:yaml")
-            && matches!(
-                member
-                    .name
-                    .as_str()
-                    .expect("pinned bundled declaration name"),
-                "Property" | "Value"
-            ))
-            || (uri == "pkl:base"
-                && matches!(
+        uri == "pkl:base"
+            && (matches!(member.expr.kind, ExprKind::Import { .. })
+                || matches!(
                     member
                         .name
                         .as_str()
@@ -269,35 +286,40 @@ fn append_members(
     // from initial_members. Preserve their compiled bodies from the template.
     let compiled_members = program.objects[program.units[unit.0 as usize].template].clone();
     let mut members = Vec::new();
-    for declaration in &parsed.members {
-        if let Some(member) = compiled_members
-            .iter()
-            .find(|member| member.name == declaration.name)
-        {
-            members.push(member.clone());
-            continue;
-        }
+    let mut synthetic_annotated = Vec::new();
+    for (index, declaration) in parsed.members.iter().enumerate() {
         let method = matches!(
             declaration.expr.kind,
             ExprKind::Function { method: true, .. }
         );
+        let is_import = matches!(declaration.expr.kind, ExprKind::Import { .. });
+        if let Some(member) = compiled_members.iter().find(|member| {
+            member.name == declaration.name
+                && member.method == method
+                && member.import() == is_import
+        }) {
+            members.push(member.clone());
+            continue;
+        }
         let mut ty = None;
         let mut type_span = None;
         let mut body = if uri == "pkl:base" {
-            base_binding(declaration)
+            base_binding(program, unit, source.clone(), declaration)?
         } else if uri == "pkl:math" {
             match primitives::math_module::binding(program, unit, source.clone(), declaration)? {
                 Some(body) => body,
                 None => math_binding(declaration),
             }
-        } else if matches!(uri, "pkl:json" | "pkl:yaml") {
-            unsupported_binding(uri, declaration)
         } else if uri == "pkl:ref" {
             match declaration
                 .name
                 .as_str()
                 .expect("pinned bundled declaration name")
             {
+                "Reference" if method => vec![
+                    Instruction::LoadRefModule,
+                    Instruction::GetMethod("Reference".into()),
+                ],
                 "Reference" if !method => vec![Instruction::BuiltinClass(TypeCheck::Reference {
                     domain: Box::new(TypeCheck::Any),
                     referent: Box::new(TypeCheck::Any),
@@ -409,6 +431,14 @@ fn append_members(
         program
             .declaration_sources
             .insert(block, declaration.declaration_source());
+        if !declaration.annotations.is_empty()
+            && !matches!(
+                declaration.expr.kind,
+                ExprKind::Class { .. } | ExprKind::TypeAlias { .. }
+            )
+        {
+            synthetic_annotated.push((index, block, method));
+        }
         members.push(Member {
             flags: Member::declaration_flags(declaration),
             entry: false,
@@ -433,8 +463,8 @@ fn append_members(
     program.objects[definition.template] = members.clone();
     definition.initial_members = members;
     definition.syntax = Some(Arc::new(parsed.clone()));
+    compile_reflection_annotations(program, unit, uri, source, parsed, &synthetic_annotated)?;
     append_bootstrap(program, unit, uri);
-    compile_reflection_annotations(program, unit, uri, source, parsed)?;
     Ok(unit)
 }
 
@@ -486,29 +516,72 @@ fn append_class_bootstrap(program: &mut Program, unit: UnitId, parsed: &crate::s
     }
 }
 
-fn base_binding(declaration: &crate::syntax::Member) -> Vec<Instruction> {
+fn base_binding(
+    program: &mut Program,
+    unit: UnitId,
+    source: Arc<RuntimeSource>,
+    declaration: &crate::syntax::Member,
+) -> Result<Vec<Instruction>, RuntimeError> {
     let name = declaration
         .name
         .as_str()
         .expect("pinned bundled declaration name");
     match &declaration.expr.kind {
         ExprKind::Function { method: true, .. } if name == "Regex" => {
-            return vec![Instruction::RegexConstructor];
+            return Ok(vec![Instruction::RegexConstructor]);
         }
         ExprKind::Function { method: true, .. } if name == "Pair" => {
-            return vec![Instruction::PairConstructor];
+            return Ok(vec![Instruction::PairConstructor]);
         }
         ExprKind::Function { method: true, .. } if name == "IntSeq" => {
-            return vec![Instruction::IntSeqConstructor];
+            return Ok(vec![Instruction::IntSeqConstructor]);
         }
         ExprKind::Function { method: true, .. } if name == "Null" => {
-            return vec![Instruction::NullConstructor];
+            return Ok(vec![Instruction::NullConstructor]);
+        }
+        // Qualified calls (e.g. `import("pkl:base").List(...)`) do not expand
+        // VarArgs in Pkl 0.32.0: they invoke a 1-arg method whose parameter
+        // type check rejects `VarArgs` outside stdlib expansion (BaseNodes.java).
+        ExprKind::Function {
+            method: true,
+            parameters,
+            header_span,
+            ..
+        } if matches!(name, "List" | "Set" | "Map" | "Bytes") => {
+            let argument_span = parameters[0]
+                .ty
+                .as_ref()
+                .expect("pinned VarArgs constructor parameter")
+                .span;
+            let block = program.alloc_block(
+                vec![
+                    Instruction::Fail(RuntimeError::new(
+                        ErrorKind::Type,
+                        "Class `VarArgs` can only be used by the standard library.",
+                    )),
+                    Instruction::Return,
+                ],
+                BlockMetadata {
+                    unit: Some(unit),
+                    source: Some(source),
+                    member: format!("#{name}").into(),
+                    declaration: Some(*header_span),
+                    spans: vec![Some(argument_span), None],
+                    ..Default::default()
+                },
+            )?;
+            return Ok(vec![Instruction::MakeFunction {
+                block,
+                arity: 1,
+                method: true,
+                capture_custom_this: false,
+            }]);
         }
         ExprKind::Class { .. } => {
             if let Some(ty) =
                 reference::base_type(name).or_else(|| builtins::id(name).map(builtins::ty))
             {
-                return vec![Instruction::BuiltinClass(ty)];
+                return Ok(vec![Instruction::BuiltinClass(ty)]);
             }
         }
         ExprKind::TypeAlias { .. }
@@ -517,18 +590,20 @@ fn base_binding(declaration: &crate::syntax::Member) -> Vec<Instruction> {
                 "NonNull" | "Int8" | "Int16" | "Int32" | "UInt8" | "UInt16" | "UInt32" | "UInt"
             ) =>
         {
-            return vec![Instruction::BuiltinTypeAlias(name.into())];
+            return Ok(vec![Instruction::BuiltinTypeAlias(name.into())]);
         }
         _ if matches!(name, "NaN" | "Infinity") => {
-            return vec![Instruction::Constant(Value::Float(if name == "NaN" {
-                f64::NAN.into()
-            } else {
-                f64::INFINITY.into()
-            }))];
+            return Ok(vec![Instruction::Constant(Value::Float(
+                if name == "NaN" {
+                    f64::NAN.into()
+                } else {
+                    f64::INFINITY.into()
+                },
+            ))]);
         }
         _ => {}
     }
-    unsupported_binding("pkl:base", declaration)
+    Ok(unsupported_binding("pkl:base", declaration))
 }
 
 // Every property constant declared by pinned MathNodes. External methods are
@@ -589,6 +664,7 @@ fn compile_reflection_annotations(
     uri: &str,
     source: Arc<RuntimeSource>,
     parsed: &crate::syntax::Module,
+    synthetic_annotated: &[(usize, usize, bool)],
 ) -> Result<(), RuntimeError> {
     let resolved = crate::resolver::resolve_stdlib_module(parsed)
         .map_err(|error| RuntimeError::new(ErrorKind::Unsupported, error.message))?;
@@ -613,7 +689,7 @@ fn compile_reflection_annotations(
         super_method_allowed: false,
         module_annotation: false,
         let_members: Vec::new(),
-        type_scopes: Vec::new(),
+        type_scopes: vec![resolved.module.members.clone()],
         runtime_type_owner: true,
         runtime_type_fallback: None,
         modifiers: Vec::new(),
@@ -632,6 +708,27 @@ fn compile_reflection_annotations(
         function_names: BTreeMap::new(),
         instrument: false,
     };
+    if !synthetic_annotated.is_empty() {
+        let mut publish = Code::default();
+        for &(index, code, method) in synthetic_annotated {
+            let member = &resolved.module.members[index];
+            compiler.member_annotations(member, &mut publish, false)?;
+            if method {
+                publish.push(Instruction::InitializeDeprecation);
+                publish.push(Instruction::StoreDeprecation);
+            }
+            publish.push(Instruction::PublishMemberAnnotations { code });
+        }
+        let entry = compiler.program.units[unit.0 as usize].entry;
+        let finish = compiler.program.blocks[entry]
+            .iter()
+            .position(|instruction| matches!(instruction, Instruction::FinishModule))
+            .expect("ordinary module initializer");
+        compiler.program.metadata[entry]
+            .spans
+            .splice(finish..finish, publish.spans);
+        compiler.program.blocks[entry].splice(finish..finish, publish.instructions);
+    }
     let mut pending: Vec<_> = parsed
         .members
         .iter()

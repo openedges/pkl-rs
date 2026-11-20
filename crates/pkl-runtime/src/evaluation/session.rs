@@ -5,6 +5,10 @@ use super::frontend::{
     ModuleEvalOptions, ModuleFrontendFailure, ModuleFrontendResult, prepare_module_text,
     render_module_runtime_failure_text,
 };
+use super::output_files::{
+    OutputFileEntry, append_output_file_bytes_entry, append_output_file_keys_entry,
+    append_output_files_entry, decode_output_file_keys, decode_output_files,
+};
 use super::{EvaluationOptions, compile_program_text, runtime_error_text};
 use crate::{
     heap::HeapStats,
@@ -26,13 +30,25 @@ pub struct SourceSessionOptions {
     pub platform_data: bool,
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum EntryKind {
+    Path,
+    OutputText,
+    OutputBytes,
+}
+
+#[derive(Clone, Copy, PartialEq, Eq)]
 enum Call {
     Module,
     Path(usize),
     InitialPath(usize),
     OutputBytes,
     InitialOutputBytes,
+    OutputFiles,
+    InitialOutputFiles,
+    OutputFileKeys,
+    InitialOutputFileKeys,
+    OutputFileBytes,
     OutputText,
     InitialOutputText,
 }
@@ -57,8 +73,11 @@ pub struct SourceSession {
     name: PklString,
     paths: Vec<SourceText>,
     entries: Vec<usize>,
-    output_text_entries: Vec<bool>,
+    entry_kinds: Vec<EntryKind>,
     output_entry: Option<usize>,
+    output_files_entry: Option<usize>,
+    output_file_keys_entry: Option<usize>,
+    output_file_bytes_entry: Option<usize>,
     output_profile: DiagnosticProfile,
     module_entry: usize,
     module: Option<Value>,
@@ -66,6 +85,7 @@ pub struct SourceSession {
     setup_failure: Option<RuntimeError>,
     initialization_failed: bool,
     calls: Vec<Call>,
+    last_completed_call: Option<Call>,
     last_expression: Option<usize>,
 }
 
@@ -98,8 +118,11 @@ impl SourceSession {
             name: "".into(),
             paths: Vec::new(),
             entries: Vec::new(),
-            output_text_entries: Vec::new(),
+            entry_kinds: Vec::new(),
             output_entry: None,
+            output_files_entry: None,
+            output_file_keys_entry: None,
+            output_file_bytes_entry: None,
             output_profile: DiagnosticProfile::ApiIdentity,
             module_entry: 0,
             module: None,
@@ -107,6 +130,7 @@ impl SourceSession {
             setup_failure: None,
             initialization_failed: false,
             calls: Vec::new(),
+            last_completed_call: None,
             last_expression: None,
         }
     }
@@ -337,8 +361,62 @@ impl SourceSession {
         })
     }
 
+    /// Prepare a single CLI `-x`/`--expression` evaluation (`EvaluatorImpl.evaluateExpressionString`)
+    /// on the shared output-session profile. `"output.text"` fast-paths without a synthetic REPL
+    /// frame while all other expressions (including `"output.bytes"`) evaluate through `ToString`.
+    pub fn compile_output_expression_text(
+        input: impl Into<LosslessModuleSourceInput>,
+        expression: impl Into<SourceText>,
+        module_options: &ModuleEvalOptions,
+        options: SourceSessionOptions,
+    ) -> Result<Self, ModuleFrontendFailure> {
+        let input = input.into();
+        let prepared = prepare_module_text(input.clone(), module_options)?;
+        Self::from_program_with_mode(
+            prepared.program,
+            prepared.source,
+            input.uri,
+            prepared.name,
+            &[expression.into()],
+            options,
+            Some(module_options.diagnostic_profile),
+            true,
+            false,
+        )
+        .map_err(|message| ModuleFrontendFailure {
+            phase: FrontendPhase::Configuration,
+            disposition: FailureDisposition::Unsupported,
+            reason: Some("source-session-output-expression"),
+            text: crate::diagnostic::render_error_text(&message, &[], None),
+        })
+    }
+
     #[allow(clippy::too_many_arguments)]
     fn from_program(
+        program: Arc<Program>,
+        source: Source,
+        uri: impl Into<PklString>,
+        name: PklString,
+        property_paths: &[SourceText],
+        options: SourceSessionOptions,
+        output_profile: Option<DiagnosticProfile>,
+        parsed_expressions: bool,
+    ) -> Result<Self, PklString> {
+        Self::from_program_with_mode(
+            program,
+            source,
+            uri,
+            name,
+            property_paths,
+            options,
+            output_profile,
+            parsed_expressions,
+            true,
+        )
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn from_program_with_mode(
         mut program: Arc<Program>,
         source: Source,
         uri: impl Into<PklString>,
@@ -347,6 +425,7 @@ impl SourceSession {
         options: SourceSessionOptions,
         output_profile: Option<DiagnosticProfile>,
         parsed_expressions: bool,
+        fast_path_output_bytes: bool,
     ) -> Result<Self, PklString> {
         let uri = uri.into();
 
@@ -364,17 +443,24 @@ impl SourceSession {
             None
         };
         let mut entries = Vec::with_capacity(property_paths.len());
-        let mut output_text_entries = Vec::with_capacity(property_paths.len());
+        let mut entry_kinds = Vec::with_capacity(property_paths.len());
         for expression in property_paths {
-            // EvaluatorImpl.evaluateExpressionString routes this exact API
-            // expression to evaluateOutputText before creating a REPL root.
-            let output_text = expression.original() == "output.text";
-            output_text_entries.push(output_text);
-            if output_text {
+            // EvaluatorImpl.evaluateExpressionString / evaluateExpression fast-path
+            // `output.text` and `output.bytes` before creating a REPL root.
+            if expression.original() == "output.text" {
+                entry_kinds.push(EntryKind::OutputText);
                 entries
                     .push(append_output_entry(program_mut, "text").map_err(|error| error.message)?);
                 continue;
             }
+            if fast_path_output_bytes && expression.original() == "output.bytes" {
+                entry_kinds.push(EntryKind::OutputBytes);
+                entries.push(
+                    append_output_entry(program_mut, "bytes").map_err(|error| error.message)?,
+                );
+                continue;
+            }
+            entry_kinds.push(EntryKind::Path);
             if parsed_expressions {
                 let entry = match crate::vm::compile_session_expression(
                     program_mut,
@@ -486,6 +572,18 @@ impl SourceSession {
             .map(|_| append_output_entry(program_mut, "bytes"))
             .transpose()
             .map_err(|error| error.message)?;
+        let output_files_entry = output_profile
+            .map(|_| append_output_files_entry(program_mut))
+            .transpose()
+            .map_err(|error| error.message)?;
+        let output_file_keys_entry = output_profile
+            .map(|_| append_output_file_keys_entry(program_mut))
+            .transpose()
+            .map_err(|error| error.message)?;
+        let output_file_bytes_entry = output_profile
+            .map(|_| append_output_file_bytes_entry(program_mut))
+            .transpose()
+            .map_err(|error| error.message)?;
         let text = source.text();
         let context = EvaluationContext {
             primary_source: Some(Arc::new(RuntimeSource {
@@ -524,8 +622,11 @@ impl SourceSession {
             name,
             paths: property_paths.to_vec(),
             entries,
-            output_text_entries,
+            entry_kinds,
             output_entry,
+            output_files_entry,
+            output_file_keys_entry,
+            output_file_bytes_entry,
             output_profile: output_profile.unwrap_or(DiagnosticProfile::ApiIdentity),
             module_entry,
             module: None,
@@ -533,6 +634,7 @@ impl SourceSession {
             setup_failure: None,
             initialization_failed: false,
             calls: Vec::new(),
+            last_completed_call: None,
             last_expression: None,
         })
     }
@@ -567,10 +669,10 @@ impl SourceSession {
     ) -> Result<(), RuntimeError> {
         self.open()?;
         let entry = self.entry(index)?;
-        let (call, initial) = if self.output_text_entries[index] {
-            (Call::OutputText, Call::InitialOutputText)
-        } else {
-            (Call::Path(index), Call::InitialPath(index))
+        let (call, initial) = match self.entry_kinds[index] {
+            EntryKind::OutputText => (Call::OutputText, Call::InitialOutputText),
+            EntryKind::OutputBytes => (Call::OutputBytes, Call::InitialOutputBytes),
+            EntryKind::Path => (Call::Path(index), Call::InitialPath(index)),
         };
         self.start_operation(entry, call, initial, now_ms, timeout_ms)
     }
@@ -591,6 +693,74 @@ impl SourceSession {
             now_ms,
             timeout_ms,
         )
+    }
+
+    /// Run module initialization and `Module.output.files` evaluation in one admitted
+    /// operation, returning an encoded ordered `(path_spec, bytes)` payload decoded by
+    /// `SourceSession::result_output_files`.
+    pub fn start_output_files(
+        &mut self,
+        now_ms: u64,
+        timeout_ms: Option<u64>,
+    ) -> Result<(), RuntimeError> {
+        self.open()?;
+        let entry = self.output_files_entry()?;
+        self.start_operation(
+            entry,
+            Call::OutputFiles,
+            Call::InitialOutputFiles,
+            now_ms,
+            timeout_ms,
+        )
+    }
+
+    /// Shallow-force `Module.output.files` entries and return ordered path-spec keys
+    /// without evaluating `FileOutput.bytes` (matching `VmUtils.readFilesProperty`).
+    pub fn start_output_file_keys(
+        &mut self,
+        now_ms: u64,
+        timeout_ms: Option<u64>,
+    ) -> Result<(), RuntimeError> {
+        self.open()?;
+        let entry = self.output_file_keys_entry()?;
+        self.start_operation(
+            entry,
+            Call::OutputFileKeys,
+            Call::InitialOutputFileKeys,
+            now_ms,
+            timeout_ms,
+        )
+    }
+
+    /// Lazily evaluate `FileOutput.bytes` for one key after `start_output_file_keys`
+    /// has initialized the module and shallow-forced `output.files`.
+    pub fn start_output_file_bytes(
+        &mut self,
+        path_spec: PklString,
+        now_ms: u64,
+        timeout_ms: Option<u64>,
+    ) -> Result<(), RuntimeError> {
+        self.open()?;
+        let entry = self.output_file_bytes_entry()?;
+        if let Some(error) = &self.setup_failure {
+            self.host.start_failed(error.clone(), now_ms, timeout_ms)?;
+            self.calls.push(Call::OutputFileBytes);
+            self.last_expression = None;
+            return Ok(());
+        }
+        let module = self
+            .module
+            .clone()
+            .ok_or_else(|| error("module setup has not completed"))?;
+        self.host.start(
+            entry,
+            vec![module, Value::String(path_spec)],
+            now_ms,
+            timeout_ms,
+        )?;
+        self.calls.push(Call::OutputFileBytes);
+        self.last_expression = None;
+        Ok(())
     }
 
     fn start_operation(
@@ -635,10 +805,10 @@ impl SourceSession {
     ) -> Result<(), RuntimeError> {
         self.open()?;
         let entry = self.entry(index)?;
-        let call = if self.output_text_entries[index] {
-            Call::OutputText
-        } else {
-            Call::Path(index)
+        let call = match self.entry_kinds[index] {
+            EntryKind::OutputText => Call::OutputText,
+            EntryKind::OutputBytes => Call::OutputBytes,
+            EntryKind::Path => Call::Path(index),
         };
         self.reenter_operation(parent_token, entry, call, now_ms, timeout_ms)
     }
@@ -652,6 +822,17 @@ impl SourceSession {
         self.open()?;
         let entry = self.output_entry()?;
         self.reenter_operation(parent_token, entry, Call::OutputBytes, now_ms, timeout_ms)
+    }
+
+    pub fn reenter_output_files(
+        &mut self,
+        parent_token: &str,
+        now_ms: u64,
+        timeout_ms: Option<u64>,
+    ) -> Result<(), RuntimeError> {
+        self.open()?;
+        let entry = self.output_files_entry()?;
+        self.reenter_operation(parent_token, entry, Call::OutputFiles, now_ms, timeout_ms)
     }
 
     fn reenter_operation(
@@ -679,6 +860,7 @@ impl SourceSession {
     }
 
     pub fn poll(&mut self, now_ms: u64, budget: usize) -> HostPoll {
+        self.last_completed_call = None;
         if self.public_lifecycle {
             self.last_expression = self.public_queries.last().copied().flatten();
         }
@@ -722,6 +904,7 @@ impl SourceSession {
         if let HostPoll::Ready(result) = &event {
             let completed = self.host.context_depth() < previous_depth;
             if let Some(call) = completed.then(|| self.calls.pop()).flatten() {
+                self.last_completed_call = Some(call);
                 if self.public_lifecycle {
                     self.last_expression = self.public_queries.pop().flatten();
                 }
@@ -750,6 +933,11 @@ impl SourceSession {
                     }
                     Call::OutputBytes
                     | Call::InitialOutputBytes
+                    | Call::OutputFiles
+                    | Call::InitialOutputFiles
+                    | Call::OutputFileKeys
+                    | Call::InitialOutputFileKeys
+                    | Call::OutputFileBytes
                     | Call::OutputText
                     | Call::InitialOutputText => self.last_expression = None,
                     Call::InitialPath(index) => {
@@ -953,6 +1141,18 @@ impl SourceSession {
             )),
         }
     }
+    pub fn result_output_files(value: Value) -> Result<Vec<OutputFileEntry>, RuntimeError> {
+        decode_output_files(value)
+    }
+    pub fn result_output_file_keys(value: Value) -> Result<Vec<PklString>, RuntimeError> {
+        decode_output_file_keys(value)
+    }
+    pub(crate) fn last_call_was_output_files(&self) -> bool {
+        matches!(
+            self.last_completed_call,
+            Some(Call::OutputFiles | Call::InitialOutputFiles)
+        )
+    }
     pub fn output_failure_text(&self, error: RuntimeError) -> ModuleFrontendFailure {
         render_module_runtime_failure_text(
             &self.source,
@@ -964,6 +1164,27 @@ impl SourceSession {
     }
     pub fn output_failure(&self, error: RuntimeError) -> ModuleFrontendResult {
         self.output_failure_text(error).into()
+    }
+    /// Render a CLI `-x`/`--expression` failure using the session's configured
+    /// diagnostic profile while supplying the active expression text for `repl:text`.
+    pub fn output_expression_failure(&self, error: RuntimeError) -> ModuleFrontendResult {
+        let mut failure = self.output_failure_text(error.clone());
+        if let Some(expression) = self
+            .last_expression
+            .and_then(|index| self.paths.get(index))
+            .cloned()
+        {
+            failure.text = super::runtime_error_text_with_profile(
+                &self.source,
+                &self.uri,
+                &self.name,
+                expression,
+                error,
+                None,
+                self.output_profile,
+            );
+        }
+        failure.into()
     }
     /// A callback property path still belongs to the expression-string API,
     /// even when its suspended parent is an output operation.
@@ -1001,11 +1222,36 @@ impl SourceSession {
             )
         })
     }
+    fn output_files_entry(&self) -> Result<usize, RuntimeError> {
+        self.output_files_entry.ok_or_else(|| {
+            RuntimeError::new(
+                ErrorKind::Unsupported,
+                "this source session was not compiled for module output",
+            )
+        })
+    }
+    fn output_file_keys_entry(&self) -> Result<usize, RuntimeError> {
+        self.output_file_keys_entry.ok_or_else(|| {
+            RuntimeError::new(
+                ErrorKind::Unsupported,
+                "this source session was not compiled for module output",
+            )
+        })
+    }
+    fn output_file_bytes_entry(&self) -> Result<usize, RuntimeError> {
+        self.output_file_bytes_entry.ok_or_else(|| {
+            RuntimeError::new(
+                ErrorKind::Unsupported,
+                "this source session was not compiled for module output",
+            )
+        })
+    }
     fn release_module(&mut self) {
         self.module = None;
         self.calls.clear();
         self.public_queries.clear();
         self.setup_failure = None;
+        self.last_completed_call = None;
         self.last_expression = None;
         if self.public_lifecycle {
             self.paths.clear();

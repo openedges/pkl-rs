@@ -1,0 +1,5 @@
+output {
+  files {
+    ["outside/foo.txt"] { text = "bar" }
+  }
+}

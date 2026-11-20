@@ -1,0 +1,3963 @@
+{
+  "baseline": {
+    "checkout": "external/pkl",
+    "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "source_url_template": "https://github.com/apple/pkl/blob/e51fb2f91774265666f94980ec630db794a4db2d/{path}#L{line}",
+    "url": "https://github.com/apple/pkl.git",
+    "version": "0.32.0"
+  },
+  "cases": [
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-f",
+        "pcf",
+        "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:format:pcf-renderer-test",
+      "inputs": [
+        {
+          "path": "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.pkl",
+          "sha256": "466bf168714dd68f9d9d114b5617e499c0ad39f89185aa5df428f83e17673383"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "EvaluateOutputTextTest.kt / CliEvaluatorTest.kt / {Json,Pcf,Yaml,PList}RendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-f",
+        "json",
+        "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:format:json-renderer-test",
+      "inputs": [
+        {
+          "path": "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.pkl",
+          "sha256": "466bf168714dd68f9d9d114b5617e499c0ad39f89185aa5df428f83e17673383"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "EvaluateOutputTextTest.kt / CliEvaluatorTest.kt / {Json,Pcf,Yaml,PList}RendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-f",
+        "yaml",
+        "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:format:yaml-renderer-test",
+      "inputs": [
+        {
+          "path": "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.pkl",
+          "sha256": "466bf168714dd68f9d9d114b5617e499c0ad39f89185aa5df428f83e17673383"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "EvaluateOutputTextTest.kt / CliEvaluatorTest.kt / {Json,Pcf,Yaml,PList}RendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-f",
+        "plist",
+        "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:format:plist-renderer-test",
+      "inputs": [
+        {
+          "path": "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.pkl",
+          "sha256": "466bf168714dd68f9d9d114b5617e499c0ad39f89185aa5df428f83e17673383"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "EvaluateOutputTextTest.kt / CliEvaluatorTest.kt / {Json,Pcf,Yaml,PList}RendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-f",
+        "xml",
+        "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:format:xml-renderer-test",
+      "inputs": [
+        {
+          "path": "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.pkl",
+          "sha256": "466bf168714dd68f9d9d114b5617e499c0ad39f89185aa5df428f83e17673383"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "EvaluateOutputTextTest.kt / CliEvaluatorTest.kt / {Json,Pcf,Yaml,PList}RendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-f",
+        "jsonnet",
+        "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:format:jsonnet-renderer-test",
+      "inputs": [
+        {
+          "path": "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.pkl",
+          "sha256": "466bf168714dd68f9d9d114b5617e499c0ad39f89185aa5df428f83e17673383"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "EvaluateOutputTextTest.kt / CliEvaluatorTest.kt / {Json,Pcf,Yaml,PList}RendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-f",
+        "pkl-binary",
+        "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:format:pkl-binary-renderer-test",
+      "inputs": [
+        {
+          "path": "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.pkl",
+          "sha256": "466bf168714dd68f9d9d114b5617e499c0ad39f89185aa5df428f83e17673383"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "EvaluateOutputTextTest.kt / CliEvaluatorTest.kt / {Json,Pcf,Yaml,PList}RendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-f",
+        "properties",
+        "external/pkl/pkl-core/src/test/resources/org/pkl/core/propertiesRendererTest.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:format:properties-renderer-test",
+      "inputs": [
+        {
+          "path": "external/pkl/pkl-core/src/test/resources/org/pkl/core/propertiesRendererTest.pkl",
+          "sha256": "29385f2d8de53addf3091c5515f6933b40cd53ee0d49512093254f527a4f7642"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "PropertiesRendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-f",
+        "textproto",
+        "tests/fixtures/m3/formats_renderers/textproto_typed_module.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:format:textproto-typed-module",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/textproto_typed_module.pkl",
+          "sha256": "527a346b470b96982c67830bcc4b270c62fff45ae553efd9d6dc1c857f1c696f"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "OutputFormat.TEXTPROTO / protobuf.Renderer"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-f",
+        "bogus",
+        "tests/fixtures/m3/formats_renderers/simple_kv.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:format:unknown-flag-error",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/simple_kv.pkl",
+          "sha256": "f9bb91d58315475bffbc55e53697dfdc96558e723ba1ec489c982a785c77a2b1"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "CliEvaluatorTest.kt (`unknown output format`)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "pkl.outputFormat=bogus",
+        "tests/fixtures/m3/formats_renderers/simple_kv.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:format:unknown-prop-error",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/simple_kv.pkl",
+          "sha256": "f9bb91d58315475bffbc55e53697dfdc96558e723ba1ec489c982a785c77a2b1"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "base.pkl:126 Module.output.renderer"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "pkl.outputFormat=yaml",
+        "-f",
+        "json",
+        "tests/fixtures/m3/formats_renderers/simple_kv.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:format:flag-overrides-property",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/simple_kv.pkl",
+          "sha256": "f9bb91d58315475bffbc55e53697dfdc96558e723ba1ec489c982a785c77a2b1"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "VmContext.java:91-94 -f precedence over -p pkl.outputFormat"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "pkl.outputFormat=plist",
+        "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:format:prop-plist",
+      "inputs": [
+        {
+          "path": "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.pkl",
+          "sha256": "466bf168714dd68f9d9d114b5617e499c0ad39f89185aa5df428f83e17673383"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "base.pkl:113 prop:pkl.outputFormat=plist"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "pkl.outputFormat=properties",
+        "external/pkl/pkl-core/src/test/resources/org/pkl/core/propertiesRendererTest.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:format:prop-properties",
+      "inputs": [
+        {
+          "path": "external/pkl/pkl-core/src/test/resources/org/pkl/core/propertiesRendererTest.pkl",
+          "sha256": "29385f2d8de53addf3091c5515f6933b40cd53ee0d49512093254f527a4f7642"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "base.pkl:115 prop:pkl.outputFormat=properties"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "pkl.outputFormat=pkl-binary",
+        "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:format:prop-pkl-binary",
+      "inputs": [
+        {
+          "path": "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.pkl",
+          "sha256": "466bf168714dd68f9d9d114b5617e499c0ad39f89185aa5df428f83e17673383"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "base.pkl:123 prop:pkl.outputFormat=pkl-binary"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/json_trailing_newline.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:renderer:json-trailing-newline",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/json_trailing_newline.pkl",
+          "sha256": "3bf35e5b3f137a50db3a29e17b48bdc222b560f9854d4df8e09251131656f315"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "JsonRendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/pcf_null_properties_omit_true.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:renderer:pcf-null-properties-omit-true",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/pcf_null_properties_omit_true.pkl",
+          "sha256": "b13cccefe798a254f9f60810e7e9a16100860dc8c30d731424008c112ec76e7a"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "PcfRendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/pcf_null_properties_omit_false.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:renderer:pcf-null-properties-omit-false",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/pcf_null_properties_omit_false.pkl",
+          "sha256": "877f0e5e75701c4f24f0093ab620e2b7db36bcaf6b3fbb67c97ace68653c0b41"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "PcfRendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/pcf_trailing_newline.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:renderer:pcf-trailing-newline",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/pcf_trailing_newline.pkl",
+          "sha256": "1212b14b5c33eaad75899765008ef50938cae6a0929527ef9b51f2bdbcfbdbab"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "PcfRendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/pcf_render_directive.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:renderer:pcf-render-directive",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/pcf_render_directive.pkl",
+          "sha256": "927e98cfb1d0a2dd59cba5bb0c7748926b38ae6d37de9f79b570e431bbe96aa9"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "PcfRenderer.java:71,137-147"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/yaml_stream.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:renderer:yaml-stream",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/yaml_stream.pkl",
+          "sha256": "e238e9c2f95a87a144ad833f84c2213fd2a995aa58d3d9aa0f44484c01e9bf31"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "YamlRendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/yaml_truthy_octals_numbers.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:renderer:yaml-truthy-octals-numbers",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/yaml_truthy_octals_numbers.pkl",
+          "sha256": "d0ad9ef7d980f4aeffeddae37b601e09a880582b294a2f15947f4ecdf9631df6"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "YamlRendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/yaml_binary_bytes.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:renderer:yaml-binary-bytes",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/yaml_binary_bytes.pkl",
+          "sha256": "801611ea300c730c237113fd999be97255d3119b49f0dbe52e716c44434d611c"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "YamlRendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/yaml_trailing_newline_matrix.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:renderer:yaml-trailing-newline-matrix",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/yaml_trailing_newline_matrix.pkl",
+          "sha256": "a02990a90445ef9ab4c48304fbfda11231739b6ff178483684fc216d771d65db"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "YamlRendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/plist_trailing_newline.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:renderer:plist-trailing-newline",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/plist_trailing_newline.pkl",
+          "sha256": "eaa89ae2947b730265cbaa8f6c32aebbca3b1a0e9709d73daa52358972b28796"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "PListRendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/properties_trailing_newline_matrix.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:renderer:properties-trailing-newline-matrix",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/properties_trailing_newline_matrix.pkl",
+          "sha256": "82423cebeda0cadd090447df74c01c121920ddaac3768ebe44377cbae6f95929"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "PropertiesRendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/properties_unsupported_dynamic.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:renderer:properties-unsupported-dynamic",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/properties_unsupported_dynamic.pkl",
+          "sha256": "3796ad0a8371a4bde493101a8b8af851c661b97f1c896d1112a7ecb91e69d50e"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "PropertiesRendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/properties_unsupported_list.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:renderer:properties-unsupported-list",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/properties_unsupported_list.pkl",
+          "sha256": "31477a4f524497f53ce8bb20a6cbf2dc1b8ed2290bb569d22596e3a80b54ed37"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "PropertiesRendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/properties_unsupported_listing.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:renderer:properties-unsupported-listing",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/properties_unsupported_listing.pkl",
+          "sha256": "b8f8e6f8bd9737cd18e66677892274e8aaaf763c06626407a5d509d85a8b2f4a"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "PropertiesRendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/properties_unsupported_map.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:renderer:properties-unsupported-map",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/properties_unsupported_map.pkl",
+          "sha256": "5e6d34f25255bc49e89e3f88abff251699b049ac5f7c69b48bb08e85a56acf1c"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "PropertiesRendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/properties_unsupported_mapping.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:renderer:properties-unsupported-mapping",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/properties_unsupported_mapping.pkl",
+          "sha256": "915a0f42488b33951f3d4dc8356e3f0ce20015c76513d93b22ee129097e797a3"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "PropertiesRendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/properties_unsupported_renderer.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:renderer:properties-unsupported-renderer",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/properties_unsupported_renderer.pkl",
+          "sha256": "a07ceaed23b97322be539f80d23505073150368e5c3ca50b253326a03f896aa9"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "PropertiesRendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/properties_unsupported_set.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:renderer:properties-unsupported-set",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/properties_unsupported_set.pkl",
+          "sha256": "3dd10719e1ad837dbf9fefb8fcbffa2c0cc13831dd7aae7cccd17f0fd42d4f1d"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "PropertiesRendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/vm_value_renderer_null_and_bytes.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:renderer:vm-value-renderer-null-and-bytes",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/vm_value_renderer_null_and_bytes.pkl",
+          "sha256": "fd7754bd6dac73664e20fe5e44794337218a64783c909d57e9e140445eb356ff"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "VmValueRendererTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/converters_valid_path_specs.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:converters:valid-path-specs",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/converters_valid_path_specs.pkl",
+          "sha256": "bf89278329cce6700ba941a7a791ea1ec594d41fb795e6a9f1a7d5a6eb893228"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "PathSpecParserTest.kt / PathConverterSupportTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/converters_invalid_path_specs.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:converters:invalid-path-specs",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/converters_invalid_path_specs.pkl",
+          "sha256": "a59157ec93907b2e811090f112e54e2bc779ee311fda9dfe15df9ccb45f1e551"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "PathSpecParserTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/converters_yaml_wildcard_entry.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:converters:yaml-wildcard-entry",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/converters_yaml_wildcard_entry.pkl",
+          "sha256": "3b9be0ba299580bb63261575ba1a0dd75913620db98b9eaf5f0d004f2d185fb0"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "PathConverterSupport.java:38-42"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_analyze.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-analyze",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_analyze.pkl",
+          "sha256": "ee530d525fa04f243c5bf727b47844daeaf9c94685e21e5acf6c04bb67dd396b"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_base.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-base",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_base.pkl",
+          "sha256": "f36580fef9cb202551c6ffd22ee951415832d4b7f4968bb050df2be8f7006f66"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_Benchmark.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-Benchmark",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_Benchmark.pkl",
+          "sha256": "88cd2d62337f476776d0902f8a6c67a84a56d90a808dd12cded9a932ac6a4a82"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_Command.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-Command",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_Command.pkl",
+          "sha256": "63eb32e54699f553526815884e6cf0d727956456a18a58b157028ff4bdbd039c"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_DocPackageInfo.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-DocPackageInfo",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_DocPackageInfo.pkl",
+          "sha256": "45a8acbf346fea6d089357370074fb2070af4df3250cf88e2294255092405738"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_DocsiteInfo.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-DocsiteInfo",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_DocsiteInfo.pkl",
+          "sha256": "20c14a95d7d9fc8893b0361ef1eeb909722d8529f84e8dd4010ae1627ea03073"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_EvaluatorSettings.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-EvaluatorSettings",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_EvaluatorSettings.pkl",
+          "sha256": "74acc651b8fbbb05c38531a2775257dde459a4336afc2d7abadb0809417972e7"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_json.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-json",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_json.pkl",
+          "sha256": "59e1697ab384404d43765991a977fb2a653f65f64bd75a57041f1bd6a3cd011b"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_jsonnet.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-jsonnet",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_jsonnet.pkl",
+          "sha256": "2cb9ce32d5818c53f1b9d301be010cd07d8f4689eba52113646daf91735f5ce7"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_math.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-math",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_math.pkl",
+          "sha256": "4c6bc44d86554283b91984156a5753b27f865233be4a538b1bc49d9dbedd9399"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_pklbinary.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-pklbinary",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_pklbinary.pkl",
+          "sha256": "199126a6914dbe7cc7436a6906ed6ff175df9fd8e9c4f5d065883df012fe589b"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_platform.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-platform",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_platform.pkl",
+          "sha256": "5eef4d692a191968e243e513400502b42c6bda35bff43a49f68c6018bf9ca930"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_Project.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-Project",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_Project.pkl",
+          "sha256": "8252fb89ce75edeaf30e2e1dac4eadfe7934b23ade0d978773823278f6cfe3d6"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_protobuf.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-protobuf",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_protobuf.pkl",
+          "sha256": "79c6dc932d0ff254c8c1c9b16f1b634db98fcbb4948e4e5a9c42458b0352a133"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_ref.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-ref",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_ref.pkl",
+          "sha256": "cf6da7bd1cb7ae4e4162e82569caa255c43ff3bcd88f43769b4ab9a07283b137"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_reflect.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-reflect",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_reflect.pkl",
+          "sha256": "118eedddcfb2b4ce113528f9e0fefd4478f2e20e5bf5d603ab48e355ba11bc0c"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_release.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-release",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_release.pkl",
+          "sha256": "275e1f0c2c71bb53011a8ba9ed7d1e52904b2bc430cfc9804bdb2997a842900c"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_semver.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-semver",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_semver.pkl",
+          "sha256": "bf1cc3d88453e61c400faff7d5a7fe6e0345986f0182ff1c868eb50fdbb221b5"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_shell.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-shell",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_shell.pkl",
+          "sha256": "b5dc81f6f43f1bd14ca3d6450bc0df2041e2cd02c85e0187fd79685893daee0c"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_settings.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-settings",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_settings.pkl",
+          "sha256": "32901a41cc90c1854f59f8ed3f3c792315b080d23fcf69237f83ce63da5a615e"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_test.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-test",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_test.pkl",
+          "sha256": "8cea670fe63b3b4c4694a93db12ad0c5eda9dbadbf7548035d20cd3a55f4a80a"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_xml.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-xml",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_xml.pkl",
+          "sha256": "fe951dad3ae8f1f946c3a2e887e76697dbe804e27690e3fa240080a2a163fcc5"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reflect_stdlib_yaml.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reflect:stdlib-yaml",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reflect_stdlib_yaml.pkl",
+          "sha256": "19cc729de36a12ce988355db237561301d81e21dae4a83f4466245a9d2165ca6"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ReflectModuleTest.kt (expanded to all 23 pkl:* modules)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reference_render_json.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:reference:render-json",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reference_render_json.pkl",
+          "sha256": "58eda502276f04037eed6562745faf39a5b04de96253699445972132d1a2b123"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "Reference rendering via json"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reference_render_jsonnet.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:reference:render-jsonnet",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reference_render_jsonnet.pkl",
+          "sha256": "60c65e7744bdd00787ff74a5daabc010af949bd3bf00000662ab1c9368890dda"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "Reference rendering via jsonnet"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reference_render_pcf.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:reference:render-pcf",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reference_render_pcf.pkl",
+          "sha256": "6959c272811337820773f13a14513f465602742b2673723414edec7e1fd830da"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "Reference rendering via pcf"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reference_render_pklbinary.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reference:render-pklbinary",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reference_render_pklbinary.pkl",
+          "sha256": "5719f5b49a47b7ae5f5f57ec84f4362cf63c6ee5ec99bb3077cd65232914caa6"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "Reference rendering via pklbinary"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reference_render_plist.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:reference:render-plist",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reference_render_plist.pkl",
+          "sha256": "b5e446975b372cff87b11f31a5a8ab246a7ae84824d410b6c98951b17782037d"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "Reference rendering via plist"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reference_render_properties.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:reference:render-properties",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reference_render_properties.pkl",
+          "sha256": "d7d6b11ec44d53bf3186c5a3b072a993760b1af9be06a9c6b72c2f4a02398d2b"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "Reference rendering via properties"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reference_render_textproto.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reference:render-textproto",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reference_render_textproto.pkl",
+          "sha256": "45612ce82b39e4321b723aee7913fa0577066a27c7fd2ec3332a4fb5c0158f8a"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "Reference rendering via textproto"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reference_render_xml.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:reference:render-xml",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reference_render_xml.pkl",
+          "sha256": "dd0ecab85458c99df537366cb1cef92b408fbb0880283204c9cd272b92273867"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "Reference rendering via xml"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reference_render_yaml.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:reference:render-yaml",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reference_render_yaml.pkl",
+          "sha256": "71a0e4a06aa30c4ed72ede47403d54520cbfd5be3ef41064f2e5e9b47a7d7a52"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "Reference rendering via yaml"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reference_external_property_rules.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reference:external-property-rules",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reference_external_property_rules.pkl",
+          "sha256": "1c3548b5333a1396dfeab3a59e9460d9718b3904c884ef82a054dad1bc2444d5"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "VmReference.java:242 / ReadPropertyNode.java:75"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/reference_ref_module_members.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:reference:ref-module-members",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/reference_ref_module_members.pkl",
+          "sha256": "da08cb57d48046874363aff4fc1bf093deaa7eec05266af65e475538b1de91c4"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "pkl:ref Module/Typed/Any dispatch"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/stdlib_base_qualified_varargs.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:stdlib:base-qualified-varargs",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/stdlib_base_qualified_varargs.pkl",
+          "sha256": "3b7b335701540cb1adf3b13c22b013dac43d237d73387debcc30717923948f6a"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "stdlib/base.pkl qualified List/Set/Map/Bytes"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/stdlib_project_lowercase_alias.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:stdlib:project-lowercase-alias",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/stdlib_project_lowercase_alias.pkl",
+          "sha256": "91c16ab036da1b6c255d1310c8b1605cc0675d646afc1d91225135fcb1d29c6f"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "ModuleCache.java:105 pkl:project alias"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/stdlib_regex_canon_eq.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:stdlib:regex-canon-eq",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/stdlib_regex_canon_eq.pkl",
+          "sha256": "255e72970f7013cd860d76cdd33d9f53e522a36db84d2f556e9ed9126eedf375"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "Java Pattern.CANON_EQ / (?c)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/stdlib_abstract_renderers.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:stdlib:abstract-renderers",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/stdlib_abstract_renderers.pkl",
+          "sha256": "d97262ee8ec4c05ad1b051cb1c2ea7c1f4539d3b9ec170d078758e68e17541c2"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "base.pkl ValueRenderer/BytesRenderer abstract methods"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/stdlib_listing_implicit_join.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:stdlib:listing-implicit-join",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/stdlib_listing_implicit_join.pkl",
+          "sha256": "38e4a12ae7e1e626a7c3a398e773c552a11df0fd3bd993c8ce97ea4652879107"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "Listing.join implicit receiver"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m3/formats_renderers/stdlib_new_modules_smoke.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:stdlib:new-modules-smoke",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/formats_renderers/stdlib_new_modules_smoke.pkl",
+          "sha256": "ab902c07facd07372130908cfcae4fd99281e0bf8c2af0a03172ec68a5b614be"
+        }
+      ],
+      "lane": "formats-renderers",
+      "upstream_origin": "pkl:Command/DocPackageInfo/DocsiteInfo/settings"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-m",
+        "{output_dir}",
+        "tests/fixtures/m3/output_files/basic_nested_and_normalized.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:output-files:basic-nested-and-normalized",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/output_files/basic_nested_and_normalized.pkl",
+          "sha256": "1b63328125e4e01d40dd72b6b4d8a2f8bcace03455468969107a7aa0a40d779b"
+        }
+      ],
+      "lane": "output-files",
+      "upstream_origin": "EvaluateMultipleFileOutputTest.kt / EvaluatorTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-m",
+        "{output_dir}",
+        "tests/fixtures/m3/output_files/renderers_text_and_binary.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:output-files:renderers-text-and-binary",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/output_files/renderers_text_and_binary.pkl",
+          "sha256": "811cdfc2e299b59537aecc02261f0f39ec3e1aa51961b04463543967c4243d6f"
+        }
+      ],
+      "lane": "output-files",
+      "upstream_origin": "EvaluateMultipleFileOutputTest.kt / CliEvaluatorTest.kt"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-m",
+        "{output_dir}",
+        "tests/fixtures/m3/output_files/null_output_files.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:output-files:null-writes-nothing",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/output_files/null_output_files.pkl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "lane": "output-files",
+      "upstream_origin": "CliEvaluatorTest.kt (`writes nothing if output files is null`)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-m",
+        "{output_dir}",
+        "tests/fixtures/m3/output_files/empty_output_files.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:output-files:empty-mapping-writes-nothing",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/output_files/empty_output_files.pkl",
+          "sha256": "73fcd7c95b147ec9c53db7d25da1ef61151152d5a34a41122de671a2f1b2206f"
+        }
+      ],
+      "lane": "output-files",
+      "upstream_origin": "CliEvaluatorTest.kt empty output.files"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-m",
+        "{output_dir}",
+        "tests/fixtures/m3/output_files/multi_module_a.pkl",
+        "tests/fixtures/m3/output_files/multi_module_b.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:output-files:multi-module-disjoint",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/output_files/multi_module_a.pkl",
+          "sha256": "66119bbc2eddbadcee9b2f3ae03b931b63616db4afcd86e8e71b65d2cb5f3f71"
+        },
+        {
+          "path": "tests/fixtures/m3/output_files/multi_module_b.pkl",
+          "sha256": "2eb8b50d789c037fb3366e3ae04a0e2001443e1532f293bda9eaf4045960f888"
+        }
+      ],
+      "lane": "output-files",
+      "upstream_origin": "CliEvaluatorTest.kt (`writes multiple modules to the output path`)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-m",
+        "{output_dir}",
+        "tests/fixtures/m3/output_files/conflict_cross_a.pkl",
+        "tests/fixtures/m3/output_files/conflict_cross_b.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:output-files:conflict-cross-module",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/output_files/conflict_cross_a.pkl",
+          "sha256": "fd8de3060df0e7749f42335b234a06c495c9def1d10d672240ad5ab42c1e526c"
+        },
+        {
+          "path": "tests/fixtures/m3/output_files/conflict_cross_b.pkl",
+          "sha256": "9c44ddbcc4e644e27eb137a3791bb25a885f1b9d3c05c0b554f3a64c1a754d10"
+        }
+      ],
+      "lane": "output-files",
+      "upstream_origin": "CliEvaluatorTest.kt (`throws on conflicting files`)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-m",
+        "{output_dir}",
+        "tests/fixtures/m3/output_files/conflict_same_module.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:output-files:conflict-same-module",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/output_files/conflict_same_module.pkl",
+          "sha256": "0588bdceecafa953dfb1c9e6b9b097d01c52fec8c71a8ca0804c2dadc3ebcd35"
+        }
+      ],
+      "lane": "output-files",
+      "upstream_origin": "CliEvaluatorTest.kt (`throws on conflicting files within the same module`)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-m",
+        "{output_dir}",
+        "tests/fixtures/m3/output_files/escape_parent_dir.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:output-files:escape-parent-dir",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/output_files/escape_parent_dir.pkl",
+          "sha256": "465b1dd35e0dc7be9d992781856c01a780e151db3f4deee65294f57372c0bebb"
+        }
+      ],
+      "lane": "output-files",
+      "upstream_origin": "CliEvaluatorTest.kt (`throws if files are written outside the base path`)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-m",
+        "{output_dir}/out",
+        "tests/fixtures/m3/output_files/escape_symlink.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:output-files:escape-symlink",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/output_files/escape_symlink.pkl",
+          "sha256": "2a73e99aafb70d99ae4a2e21097172099a0063e641563c264c387070d95d04f8"
+        }
+      ],
+      "lane": "output-files",
+      "setup": {
+        "dirs": [
+          "out",
+          "outside_target"
+        ],
+        "symlinks": [
+          [
+            "out/outside",
+            "../outside_target"
+          ]
+        ]
+      },
+      "upstream_origin": "CliEvaluatorTest.kt (`throws if files are written outside the base path via symlink`)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-m",
+        "{output_dir}",
+        "tests/fixtures/m3/output_files/target_is_dot_dir.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:output-files:target-is-dot-dir",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/output_files/target_is_dot_dir.pkl",
+          "sha256": "e76de30c1cdf91a646686335e9d8adeb4013c769e04a5ae98982f54d5729ac9d"
+        }
+      ],
+      "lane": "output-files",
+      "upstream_origin": "CliEvaluatorTest.kt (`throws if file path is a directory` `.`)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-m",
+        "{output_dir}",
+        "tests/fixtures/m3/output_files/target_is_existing_dir.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:output-files:target-is-existing-dir",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/output_files/target_is_existing_dir.pkl",
+          "sha256": "2194c40b28c8033396b8ae7ae8340aa1f0641639f04442b56f37f8ed5f2bf038"
+        }
+      ],
+      "lane": "output-files",
+      "setup": {
+        "dirs": [
+          "myDir"
+        ]
+      },
+      "upstream_origin": "CliEvaluatorTest.kt (`throws if file path is a directory` `myDir`)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-m",
+        "{output_dir}/link_out",
+        "tests/fixtures/m3/output_files/symlink_output_dir.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:output-files:symlink-output-dir",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/output_files/symlink_output_dir.pkl",
+          "sha256": "fbdc6e91279176c5630fc9f2e0905795c9d9d7cf2280fbd416947191349065de"
+        }
+      ],
+      "lane": "output-files",
+      "setup": {
+        "dirs": [
+          "real_out"
+        ],
+        "symlinks": [
+          [
+            "link_out",
+            "real_out"
+          ]
+        ]
+      },
+      "upstream_origin": "CliEvaluatorTest.kt (`works with symlinked output directory`)"
+    },
+    {
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "-f",
+        "json",
+        "-m",
+        "{output_dir}",
+        "tests/fixtures/m3/output_files/with_format_flag.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:output-files:with-format-flag",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/output_files/with_format_flag.pkl",
+          "sha256": "5a72c40ca92b27a206c37b9b17667b10357ecc7c02df5f43341c97575b592194"
+        }
+      ],
+      "lane": "output-files",
+      "upstream_origin": "CliEvaluatorTest.kt -f + -m combined"
+    },
+    {
+      "command": [
+        "external/pkl/pkl-core/src/test/resources/org/pkl/core/pklBinaryDecoderTest.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:pklbinary-decode:upstream-full",
+      "inputs": [
+        {
+          "path": "external/pkl/pkl-core/src/test/resources/org/pkl/core/pklBinaryDecoderTest.msgpack",
+          "sha256": "cb57f1951b018675e3c26e5504c8c6d0f74c54d637c889b496a3538603df38e0"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt (`decoding succeeds`)"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_class_blank_name.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-class-blank-name",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_class_blank_name.msgpack",
+          "sha256": "f5b2119bb9420f67e7d276bca134dfa1fbd5f0d1230a32e362d581e2fb1d27f2"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_class_blank_uri.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-class-blank-uri",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_class_blank_uri.msgpack",
+          "sha256": "1728f0b3e3ec4a23bac4cdd0d808e82c1cb6ee59ba20b65293dbcd6cf215f49b"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_empty_array.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-empty-array",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_empty_array.msgpack",
+          "sha256": "9e076ceaf246b6003d9c2680a2b4cf0bffd069805902b0b5edeebf49039fe4bd"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_eof_empty_stream.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-eof-empty-stream",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_eof_empty_stream.msgpack",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_eof_list_element.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-eof-list-element",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_eof_list_element.msgpack",
+          "sha256": "85da40d3a864abdfc1b2bc9cf9ab6b17be78d0a15d098037fa792112ba020ae0"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_eof_missing_slot.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-eof-missing-slot",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_eof_missing_slot.msgpack",
+          "sha256": "16e3a33591998da185cf2b145054081e7a5d4a9eeed5838f099aca47d09cab1c"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_invalid_datasize_unit.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-invalid-datasize-unit",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_invalid_datasize_unit.msgpack",
+          "sha256": "1250a106144c5f2eb448e9bbf9f07688568709b9cb1f5f827bb1bfab5d13e62c"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_invalid_duration_unit.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-invalid-duration-unit",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_invalid_duration_unit.msgpack",
+          "sha256": "bacce8af2fd88cd0c1151743d705c7f3cea6a67a06a14724af2d9e11ff0aec49"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_msgpack_bin.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-msgpack-bin",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_msgpack_bin.msgpack",
+          "sha256": "6f2013565ba20b1a3247080cb8b2ec85189d499eb46adc089b4c01a122ec4397"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_msgpack_ext.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-msgpack-ext",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_msgpack_ext.msgpack",
+          "sha256": "df0274cf3678b975da463dece84a636c98ef7cd96627a3a3daa1edc90c844557"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_msgpack_map.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-msgpack-map",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_msgpack_map.msgpack",
+          "sha256": "76be8b528d0075f7aae98d6fa57a6d3c83ae480a8469e668d7b0af968995ac71"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_object_blank_class.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-object-blank-class",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_object_blank_class.msgpack",
+          "sha256": "19f2b99c73743bd4a9fe48cfa3b5b9f5bee88cdb816fe395bc617da151f4f15d"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_object_blank_uri.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-object-blank-uri",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_object_blank_uri.msgpack",
+          "sha256": "6cbfa20ff6138057c3d2f95896b744c3d3a5f09d240b3623cf72fdf1e5ba0c64"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_object_member_len.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-object-member-len",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_object_member_len.msgpack",
+          "sha256": "eba39009c84f15d44b1199667afaa0cba73de5fb27a5466c9b9dda445307e95a"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_object_member_object_code.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-object-member-object-code",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_object_member_object_code.msgpack",
+          "sha256": "6890425f57879a2044e75773f8d78434071f82c75c9f5a8a0c91ee764dd62960"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_object_member_unrecognized_code.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-object-member-unrecognized-code",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_object_member_unrecognized_code.msgpack",
+          "sha256": "803e992828a0474cb6db22e6a4c7f3faefb3bfc8c857a98cfd98f4403dd479c7"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_object_too_few_slots.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-object-too-few-slots",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_object_too_few_slots.msgpack",
+          "sha256": "cdca8b98b1dc607bbdc15ba076869dc8b8d9f26d207114ce1983bf74717f6401"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_reference_code_0x20.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-reference-code-0x20",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_reference_code_0x20.msgpack",
+          "sha256": "54ec05dd1811a8addf91615327b6a51029957b7dcd9852f8ffa8f12ad4aad815"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_typealias_blank_name.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-typealias-blank-name",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_typealias_blank_name.msgpack",
+          "sha256": "18f9b3a049db4055f62940c766092dddcc14ace8aab85990aad913311b71d03b"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_typealias_blank_uri.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-typealias-blank-uri",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_typealias_blank_uri.msgpack",
+          "sha256": "424360edd36fca96574df32b1bb94b843a1e98661900a15d2d4855967ee2bbcb"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_unrecognized_code.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-unrecognized-code",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_unrecognized_code.msgpack",
+          "sha256": "7153c16979b7a39a24d501aa6491a49c068db9c85f29376467abfd5c1a8efd8c"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_unrecognized_object_code_element.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-unrecognized-object-code-element",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_unrecognized_object_code_element.msgpack",
+          "sha256": "8579e9d0593a1cf0c87f596c000351f8d536b873e2af0795205d9d7f82c97678"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_unsupported_class.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-unsupported-class",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_unsupported_class.msgpack",
+          "sha256": "c07def2592a074d3e111ccd374e97175cd576a318e73d93ffae739a262285a94"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_unsupported_function.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-unsupported-function",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_unsupported_function.msgpack",
+          "sha256": "0144541b9726b389c69769dd6d66d8cfddd5b85fa54b41dcebaca0d78a7fe19a"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_unsupported_intseq.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-unsupported-intseq",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_unsupported_intseq.msgpack",
+          "sha256": "b02feef363891067975d9045932202da042a8394d9f48549313a7f7fc23db362"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/err_unsupported_typealias.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m3:pklbinary-decode:err-unsupported-typealias",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/err_unsupported_typealias.msgpack",
+          "sha256": "2489a1e8874fc675ea3dbba106681ec89b2229d8bf1ada1b7a0b01c3e4e5e0c8"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    },
+    {
+      "command": [
+        "tests/fixtures/m3/pklbinary_decode/valid_primitives_and_containers.msgpack"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m3:pklbinary-decode:valid-primitives-and-containers",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m3/pklbinary_decode/valid_primitives_and_containers.msgpack",
+          "sha256": "24c419c941619556d875bdd242d0964b989a780ee49923b4585175d85485ee8f"
+        }
+      ],
+      "lane": "pklbinary-decode",
+      "upstream_origin": "PklBinaryDecoderTest.kt"
+    }
+  ],
+  "counts": {
+    "builtin_total": 542,
+    "inventory_total_m3_category_items": 1781,
+    "m3_differential_cases": 118,
+    "m3_differential_cases_by_lane": {
+      "formats-renderers": 77,
+      "output-files": 13,
+      "pklbinary-decode": 28
+    },
+    "probe_plan_rows": 560,
+    "renderer_total": 17,
+    "stdlib_by_visibility": {
+      "local": 21,
+      "public": 1201
+    },
+    "stdlib_deferred": 8,
+    "stdlib_m3_required": 1214,
+    "stdlib_total": 1222
+  },
+  "coverage_gate": null,
+  "deferred_sources": [
+    {
+      "milestone": "M5",
+      "path": "stdlib/doc-package-info.pkl",
+      "reason": "Pkldoc package descriptor amending pkl:DocPackageInfo; excluded from pkl:* stdlib modules in upstream external/pkl/pkl-core/pkl-core.gradle.kts:106."
+    }
+  ],
+  "module_links": {
+    "pkl:Benchmark": {
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/benchmarkModule.pkl",
+        "m3:reflect:stdlib-Benchmark"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/platform.rs",
+          "sha256": "3bcf46c8545ec76368ef2ecc144211557a46fc9987ace74c344d1b21b5b15777",
+          "symbol": "benchmark"
+        }
+      ]
+    },
+    "pkl:Command": {
+      "case_ids": [
+        "m3:reflect:stdlib-Command",
+        "m3:stdlib:new-modules-smoke"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
+          "sha256": "bc7aff4856f7456cb9ccadaf7d5a1cd6885b2dc7a604902f4505f51c617bb616",
+          "symbol": "stdlib_source"
+        }
+      ]
+    },
+    "pkl:DocPackageInfo": {
+      "case_ids": [
+        "m3:reflect:stdlib-DocPackageInfo",
+        "m3:stdlib:new-modules-smoke"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
+          "sha256": "bc7aff4856f7456cb9ccadaf7d5a1cd6885b2dc7a604902f4505f51c617bb616",
+          "symbol": "stdlib_source"
+        }
+      ]
+    },
+    "pkl:DocsiteInfo": {
+      "case_ids": [
+        "m3:reflect:stdlib-DocsiteInfo",
+        "m3:stdlib:new-modules-smoke"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
+          "sha256": "bc7aff4856f7456cb9ccadaf7d5a1cd6885b2dc7a604902f4505f51c617bb616",
+          "symbol": "stdlib_source"
+        }
+      ]
+    },
+    "pkl:EvaluatorSettings": {
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/evaluatorSettings.pkl",
+        "m3:reflect:stdlib-EvaluatorSettings"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/settings_paths.rs",
+          "sha256": "8fc7038191bc158c58e85bbb4cb06cf4fd75a07843d789e230184c3d77133a9b",
+          "symbol": "resolve_path"
+        }
+      ]
+    },
+    "pkl:Project": {
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/project1.pkl",
+        "m3:reflect:stdlib-Project",
+        "m3:stdlib:project-lowercase-alias"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
+          "sha256": "bc7aff4856f7456cb9ccadaf7d5a1cd6885b2dc7a604902f4505f51c617bb616",
+          "symbol": "stdlib_source"
+        }
+      ]
+    },
+    "pkl:analyze": {
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/analyze1.pkl",
+        "m3:reflect:stdlib-analyze"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/analyze.rs",
+          "sha256": "f01d1dd22e595ab99735e0e32230ae3838c11087249f1bb81fa496ab340994cc",
+          "symbol": "analysis_error"
+        }
+      ]
+    },
+    "pkl:base": {
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/baseModule.pkl",
+        "m3:reflect:stdlib-base",
+        "m3:stdlib:base-qualified-varargs",
+        "m3:stdlib:abstract-renderers",
+        "m3:stdlib:listing-implicit-join",
+        "m3:stdlib:regex-canon-eq"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/primitives.rs",
+          "sha256": "16384ff288c8541f8b12655708db058ccd11673262520a8cac61170774643d63",
+          "symbol": "Operation"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm/output.rs",
+          "sha256": "a576d36c96aa4b7733cd0aa9cff1d2d1c6da8dd6c77b36965071931b0860bc2b",
+          "symbol": "output_renderer"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm/rendering.rs",
+          "sha256": "765064f14c1b2c6b158476f404ea0917732411f2fcbbdfd4a5e23b841323990a",
+          "symbol": "PcfRenderer"
+        }
+      ]
+    },
+    "pkl:json": {
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/jsonParser1.pkl",
+        "m3:reflect:stdlib-json"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/json_parser.rs",
+          "sha256": "fbccb4e2023b79417f31bbedf41896ca4eb418bef0fadb4b271d3d6db0fd2ebe",
+          "symbol": "parse_error"
+        }
+      ]
+    },
+    "pkl:jsonnet": {
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/jsonnetRenderer1.jsonnet.pkl",
+        "m3:reflect:stdlib-jsonnet",
+        "m3:format:jsonnet-renderer-test"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/jsonnet.rs",
+          "sha256": "2d534265ac51ea7d654293b029e33267f4532faa3d446b2c320a783f25fc7f72",
+          "symbol": "field_name"
+        }
+      ]
+    },
+    "pkl:math": {
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/mathModule.pkl",
+        "m3:reflect:stdlib-math"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/math_module.rs",
+          "sha256": "a885cec8052a8e104013ce526ba294842790aa1bb2bd0361d379c13190e68461",
+          "symbol": "Operation"
+        }
+      ]
+    },
+    "pkl:pklbinary": {
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pklbinary1.msgpack.yaml.pkl",
+        "m3:reflect:stdlib-pklbinary",
+        "m3:format:pkl-binary-renderer-test",
+        "m3:reference:render-pklbinary",
+        "m3:pklbinary-decode:upstream-full"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/pkl_binary_render.rs",
+          "sha256": "f6f5719cc2be23e7b5674dc3be9e1371441dfd0cfbe88495c79f7aebc313610f",
+          "symbol": "begin_pkl_binary_render"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm/pkl_binary_wire.rs",
+          "sha256": "f2ee834d55de0b46308d5b401d896af3f153bf1bce55eb98333367094fb654ed",
+          "symbol": "BinaryWire"
+        }
+      ]
+    },
+    "pkl:platform": {
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/platformModule.pkl",
+        "m3:reflect:stdlib-platform"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/platform.rs",
+          "sha256": "3bcf46c8545ec76368ef2ecc144211557a46fc9987ace74c344d1b21b5b15777",
+          "symbol": "platform"
+        }
+      ]
+    },
+    "pkl:protobuf": {
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/protobuf.pkl",
+        "m3:reflect:stdlib-protobuf",
+        "m3:format:textproto-typed-module",
+        "m3:reference:render-textproto"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/protobuf_rendering.rs",
+          "sha256": "92de3f46e8b7ac9284e245e2e562dc3aba18052b92d9b934b8c822c4f5a46cb1",
+          "symbol": "protobuf"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm/protobuf_types.rs",
+          "sha256": "86bf5149a009382b0d86cfd2e9c538c3d8a039035e49b0d57998e92e2e417275",
+          "symbol": "protobuf"
+        }
+      ]
+    },
+    "pkl:ref": {
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/reference.pkl",
+        "m3:reflect:stdlib-ref",
+        "m3:reference:external-property-rules",
+        "m3:reference:ref-module-members"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/reference.rs",
+          "sha256": "5ca3006dbda8e4b2678528b892ed5b5b150526ea7677b8876144bb96e9f709c3",
+          "symbol": "Reference"
+        }
+      ]
+    },
+    "pkl:reflect": {
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/reflect1.pkl",
+        "m3:reflect:stdlib-reflect"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/reflection.rs",
+          "sha256": "767f6565ef9fea16aab694baae56f8261691fdae25a11ade529a9b4550ed1654",
+          "symbol": "reflect"
+        }
+      ]
+    },
+    "pkl:release": {
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/releaseModule.pkl",
+        "m3:reflect:stdlib-release"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/release.rs",
+          "sha256": "3e8b821095022d40abd037188dfa206bebd2bce4d8c94fd0befc0061c7dac151",
+          "symbol": "release"
+        }
+      ]
+    },
+    "pkl:semver": {
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/semverModule.pkl",
+        "m3:reflect:stdlib-semver"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
+          "sha256": "bc7aff4856f7456cb9ccadaf7d5a1cd6885b2dc7a604902f4505f51c617bb616",
+          "symbol": "stdlib_source"
+        }
+      ]
+    },
+    "pkl:settings": {
+      "case_ids": [
+        "m3:reflect:stdlib-settings",
+        "m3:stdlib:new-modules-smoke"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
+          "sha256": "bc7aff4856f7456cb9ccadaf7d5a1cd6885b2dc7a604902f4505f51c617bb616",
+          "symbol": "stdlib_source"
+        }
+      ]
+    },
+    "pkl:shell": {
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/shellModule.pkl",
+        "m3:reflect:stdlib-shell"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
+          "sha256": "bc7aff4856f7456cb9ccadaf7d5a1cd6885b2dc7a604902f4505f51c617bb616",
+          "symbol": "stdlib_source"
+        }
+      ]
+    },
+    "pkl:test": {
+      "case_ids": [
+        "m3:reflect:stdlib-test"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
+          "sha256": "bc7aff4856f7456cb9ccadaf7d5a1cd6885b2dc7a604902f4505f51c617bb616",
+          "symbol": "stdlib_source"
+        }
+      ]
+    },
+    "pkl:xml": {
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/xmlRenderer1.xml.pkl",
+        "m3:reflect:stdlib-xml",
+        "m3:format:xml-renderer-test"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/xml_rendering.rs",
+          "sha256": "5fbc690e4892360f0ff0e16b71163b64bff10707c0251f0f7168ba661dc414e6",
+          "symbol": "xml"
+        }
+      ]
+    },
+    "pkl:yaml": {
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/yamlParser1Compat.pkl",
+        "m3:reflect:stdlib-yaml",
+        "m3:format:yaml-renderer-test",
+        "m3:converters:yaml-wildcard-entry"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/vm/yaml_parser.rs",
+          "sha256": "84ce405620cfddd45e24c48822432fb1955b96b5a4ea6df330ea8b78955574f1",
+          "symbol": "parse_error"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm/yaml.rs",
+          "sha256": "b76f596175a83f6fc21eff6c6544cb8e0e43f3ed28ebd838c65f3afa753eb4ab",
+          "symbol": "Emitter"
+        }
+      ]
+    }
+  },
+  "output_surface_links": {
+    "converters": [
+      "m3:converters:valid-path-specs",
+      "m3:converters:invalid-path-specs",
+      "m3:converters:yaml-wildcard-entry"
+    ],
+    "output.files": [
+      "m3:output-files:basic-nested-and-normalized",
+      "m3:output-files:renderers-text-and-binary",
+      "m3:output-files:null-writes-nothing",
+      "m3:output-files:empty-mapping-writes-nothing",
+      "m3:output-files:multi-module-disjoint",
+      "m3:output-files:conflict-cross-module",
+      "m3:output-files:conflict-same-module",
+      "m3:output-files:escape-parent-dir",
+      "m3:output-files:escape-symlink",
+      "m3:output-files:target-is-dot-dir",
+      "m3:output-files:target-is-existing-dir",
+      "m3:output-files:symlink-output-dir",
+      "m3:output-files:with-format-flag"
+    ],
+    "pklbinary-decoder": [
+      "m3:pklbinary-decode:upstream-full",
+      "m3:pklbinary-decode:valid-primitives-and-containers",
+      "m3:pklbinary-decode:err-reference-code-0x20"
+    ]
+  },
+  "renderer_links": {
+    "json": [
+      "m3:format:json-renderer-test",
+      "m3:renderer:json-trailing-newline",
+      "m3:reference:render-json"
+    ],
+    "jsonnet": [
+      "m3:format:jsonnet-renderer-test",
+      "m3:reference:render-jsonnet"
+    ],
+    "pcf": [
+      "m3:format:pcf-renderer-test",
+      "m3:renderer:pcf-null-properties-omit-true",
+      "m3:renderer:pcf-null-properties-omit-false",
+      "m3:renderer:pcf-render-directive",
+      "m3:reference:render-pcf"
+    ],
+    "pkl-binary": [
+      "m3:format:pkl-binary-renderer-test",
+      "m3:format:prop-pkl-binary",
+      "m3:reference:render-pklbinary",
+      "m3:pklbinary-decode:upstream-full"
+    ],
+    "plist": [
+      "m3:format:plist-renderer-test",
+      "m3:format:prop-plist",
+      "m3:renderer:plist-trailing-newline",
+      "m3:reference:render-plist"
+    ],
+    "properties": [
+      "m3:format:properties-renderer-test",
+      "m3:format:prop-properties",
+      "m3:renderer:properties-trailing-newline-matrix",
+      "m3:reference:render-properties"
+    ],
+    "textproto": [
+      "m3:format:textproto-typed-module",
+      "m3:reference:render-textproto"
+    ],
+    "xml": [
+      "m3:format:xml-renderer-test",
+      "m3:reference:render-xml"
+    ],
+    "yaml": [
+      "m3:format:yaml-renderer-test",
+      "m3:renderer:yaml-stream",
+      "m3:renderer:yaml-truthy-octals-numbers",
+      "m3:renderer:yaml-binary-bytes",
+      "m3:reference:render-yaml"
+    ]
+  },
+  "schema_version": 1,
+  "scope": "Complete M3 standard-library, external-builtin, renderer, parser, binary, and output.files accounting. Source mappings and case registrations do not claim compatibility passes; live census and Java 0.32.0 differential reports are separate.",
+  "sources": {
+    "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
+    "compatibility/m3-mappings.json": "e7548638c77b93b54ca26904228f03b364d1cd5463c127faa749c69d7f410157",
+    "crates/pkl-runtime/src/stdlib/modules.txt": "fd672bc13ca686b55f367ce2c4538a8ce6e96016a13280e7b23552e19698bf01",
+    "tests/fixtures/m3/cases.json": "a9ac5d21df0e66f2c622f4e4a75de5f6ccfcd92ac7d92dd4a136ebbcdcb5aacb"
+  }
+}

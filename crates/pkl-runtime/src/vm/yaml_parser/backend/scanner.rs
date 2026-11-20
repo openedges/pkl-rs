@@ -168,6 +168,23 @@ impl Scanner {
             .cloned()
             .ok_or_else(|| YamlError::plain(ErrorKind::Engine, "No more tokens"))
     }
+    /// Cooperative step-budgeted peek: yields (`Ok(None)`) when `budget` reaches 0
+    /// while skipping whitespace/comments or fetching lookahead tokens.
+    pub fn step_peek(&mut self, budget: &mut usize) -> Result<Option<Token>, YamlError> {
+        while self.need_more()? {
+            if *budget == 0 {
+                return Ok(None);
+            }
+            if !self.step_fetch(budget)? {
+                return Ok(None);
+            }
+        }
+        self.tokens
+            .first()
+            .cloned()
+            .map(Some)
+            .ok_or_else(|| YamlError::plain(ErrorKind::Engine, "No more tokens"))
+    }
     pub fn next(&mut self) -> Result<Token, YamlError> {
         let t = self.peek()?;
         self.taken += 1;
@@ -291,13 +308,29 @@ impl Scanner {
         Ok(())
     }
     fn fetch(&mut self) -> Result<(), YamlError> {
+        let mut unlimited = usize::MAX;
+        let done = self.step_fetch(&mut unlimited)?;
+        debug_assert!(done);
+        Ok(())
+    }
+    fn step_fetch(&mut self, budget: &mut usize) -> Result<bool, YamlError> {
         if self.reader.document_index > 3 * 1024 * 1024 {
             return Err(YamlError::plain(
                 ErrorKind::Engine,
                 "The incoming YAML document exceeds the limit: 3145728 code points.",
             ));
         }
-        self.skip()?;
+        if !self.step_skip(budget)? {
+            return Ok(false);
+        }
+        if *budget == 0 {
+            return Ok(false);
+        }
+        *budget -= 1;
+        self.fetch_after_skip()?;
+        Ok(true)
+    }
+    fn fetch_after_skip(&mut self) -> Result<(), YamlError> {
         self.stale_keys()?;
         self.unwind(self.reader.column as i32);
         let c = self.reader.peek(0)?;
@@ -512,14 +545,25 @@ impl Scanner {
             !blank(n) && !contains(",]", n) && contains("-?", c)
         })
     }
-    fn skip(&mut self) -> Result<(), YamlError> {
+    fn step_skip(&mut self, budget: &mut usize) -> Result<bool, YamlError> {
         if self.reader.index == 0 && self.reader.peek(0)? == 0xfeff {
             self.reader.forward(1)?;
         }
         loop {
+            if *budget == 0 {
+                return Ok(false);
+            }
+            *budget -= 1;
             let mut n = 0;
             while self.reader.peek(n)? == 32 {
                 n += 1;
+                if n >= 256 {
+                    break;
+                }
+            }
+            if n >= 256 {
+                self.reader.forward(n)?;
+                continue;
             }
             if self.reader.peek(n)? == 9 && self.flow != 0 {
                 n += 1;
@@ -539,7 +583,7 @@ impl Scanner {
                     self.allow_key = true;
                 }
             } else {
-                return Ok(());
+                return Ok(true);
             }
         }
     }

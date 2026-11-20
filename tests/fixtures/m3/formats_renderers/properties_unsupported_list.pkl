@@ -1,0 +1,4 @@
+local val = List()
+output {
+  text = new PropertiesRenderer {}.renderValue(val)
+}

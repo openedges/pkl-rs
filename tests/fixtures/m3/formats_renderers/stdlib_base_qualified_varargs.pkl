@@ -1,0 +1,14 @@
+import "pkl:base"
+import "pkl:test"
+
+l = List(1, 2, 3)
+s = Set("a", "b")
+m = Map("k1", 1, "k2", 2)
+b = Bytes(0x41, 0x42, 0x43)
+
+errQualList0 = test.catch(() -> base.List())
+errQualList1 = test.catch(() -> base.List(1))
+errQualList2 = test.catch(() -> base.List(1, 2))
+errQualSet1 = test.catch(() -> base.Set(1))
+errQualMap2 = test.catch(() -> base.Map("a", 1))
+errQualBytes1 = test.catch(() -> base.Bytes(65))

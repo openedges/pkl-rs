@@ -1,0 +1,10 @@
+import "pkl:yaml"
+
+local parsed = new yaml.Parser {
+  useMapping = true
+  converters {
+    ["[*]"] = (v) -> if (v is Int) v + 100 else v
+  }
+}.parse("1: 10\n2: 20\n")
+
+result = parsed

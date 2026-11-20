@@ -9,7 +9,7 @@ mod parser;
 mod reader;
 pub mod resolve;
 mod scanner;
-pub use composer::Backend;
+pub use composer::{Backend, StepOutcome};
 pub use diagnostic::{Mark, YamlError};
 pub use nodes::{Document, Node, NodeId, NodeKind, ScalarStyle, Text};
 

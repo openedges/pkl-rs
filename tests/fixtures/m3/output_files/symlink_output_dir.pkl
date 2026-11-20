@@ -1,0 +1,5 @@
+output {
+  files {
+    ["nested/ok.txt"] { text = "through-symlink" }
+  }
+}

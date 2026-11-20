@@ -1,0 +1,282 @@
+{
+  "schema_version": 1,
+  "baseline": {
+    "version": "0.32.0",
+    "revision": "e51fb2f91774265666f94980ec630db794a4db2d"
+  },
+  "scope": "Reviewed M3 standard-library, builtin, renderer, parser, binary, and output-surface provenance mappings. Non-M3 items are explicitly separated rather than counted as passes.",
+  "deferred_sources": [
+    {
+      "path": "stdlib/doc-package-info.pkl",
+      "milestone": "M5",
+      "reason": "Pkldoc package descriptor amending pkl:DocPackageInfo; excluded from pkl:* stdlib modules in upstream external/pkl/pkl-core/pkl-core.gradle.kts:106."
+    }
+  ],
+  "module_links": {
+    "pkl:analyze": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/analyze.rs", "symbol": "analysis_error" }
+      ],
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/analyze1.pkl",
+        "m3:reflect:stdlib-analyze"
+      ]
+    },
+    "pkl:base": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/primitives.rs", "symbol": "Operation" },
+        { "path": "crates/pkl-runtime/src/vm/output.rs", "symbol": "output_renderer" },
+        { "path": "crates/pkl-runtime/src/vm/rendering.rs", "symbol": "PcfRenderer" }
+      ],
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/baseModule.pkl",
+        "m3:reflect:stdlib-base",
+        "m3:stdlib:base-qualified-varargs",
+        "m3:stdlib:abstract-renderers",
+        "m3:stdlib:listing-implicit-join",
+        "m3:stdlib:regex-canon-eq"
+      ]
+    },
+    "pkl:Benchmark": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/platform.rs", "symbol": "benchmark" }
+      ],
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/benchmarkModule.pkl",
+        "m3:reflect:stdlib-Benchmark"
+      ]
+    },
+    "pkl:Command": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs", "symbol": "stdlib_source" }
+      ],
+      "case_ids": [
+        "m3:reflect:stdlib-Command",
+        "m3:stdlib:new-modules-smoke"
+      ]
+    },
+    "pkl:DocPackageInfo": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs", "symbol": "stdlib_source" }
+      ],
+      "case_ids": [
+        "m3:reflect:stdlib-DocPackageInfo",
+        "m3:stdlib:new-modules-smoke"
+      ]
+    },
+    "pkl:DocsiteInfo": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs", "symbol": "stdlib_source" }
+      ],
+      "case_ids": [
+        "m3:reflect:stdlib-DocsiteInfo",
+        "m3:stdlib:new-modules-smoke"
+      ]
+    },
+    "pkl:EvaluatorSettings": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/settings_paths.rs", "symbol": "resolve_path" }
+      ],
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/evaluatorSettings.pkl",
+        "m3:reflect:stdlib-EvaluatorSettings"
+      ]
+    },
+    "pkl:json": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/json_parser.rs", "symbol": "parse_error" }
+      ],
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/jsonParser1.pkl",
+        "m3:reflect:stdlib-json"
+      ]
+    },
+    "pkl:jsonnet": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/jsonnet.rs", "symbol": "field_name" }
+      ],
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/jsonnetRenderer1.jsonnet.pkl",
+        "m3:reflect:stdlib-jsonnet",
+        "m3:format:jsonnet-renderer-test"
+      ]
+    },
+    "pkl:math": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/math_module.rs", "symbol": "Operation" }
+      ],
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/mathModule.pkl",
+        "m3:reflect:stdlib-math"
+      ]
+    },
+    "pkl:pklbinary": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/pkl_binary_render.rs", "symbol": "begin_pkl_binary_render" },
+        { "path": "crates/pkl-runtime/src/vm/pkl_binary_wire.rs", "symbol": "BinaryWire" }
+      ],
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pklbinary1.msgpack.yaml.pkl",
+        "m3:reflect:stdlib-pklbinary",
+        "m3:format:pkl-binary-renderer-test",
+        "m3:reference:render-pklbinary",
+        "m3:pklbinary-decode:upstream-full"
+      ]
+    },
+    "pkl:platform": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/platform.rs", "symbol": "platform" }
+      ],
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/platformModule.pkl",
+        "m3:reflect:stdlib-platform"
+      ]
+    },
+    "pkl:Project": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs", "symbol": "stdlib_source" }
+      ],
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/project1.pkl",
+        "m3:reflect:stdlib-Project",
+        "m3:stdlib:project-lowercase-alias"
+      ]
+    },
+    "pkl:protobuf": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/protobuf_rendering.rs", "symbol": "protobuf" },
+        { "path": "crates/pkl-runtime/src/vm/protobuf_types.rs", "symbol": "protobuf" }
+      ],
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/protobuf.pkl",
+        "m3:reflect:stdlib-protobuf",
+        "m3:format:textproto-typed-module",
+        "m3:reference:render-textproto"
+      ]
+    },
+    "pkl:ref": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/reference.rs", "symbol": "Reference" }
+      ],
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/reference.pkl",
+        "m3:reflect:stdlib-ref",
+        "m3:reference:external-property-rules",
+        "m3:reference:ref-module-members"
+      ]
+    },
+    "pkl:reflect": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/reflection.rs", "symbol": "reflect" }
+      ],
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/reflect1.pkl",
+        "m3:reflect:stdlib-reflect"
+      ]
+    },
+    "pkl:release": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/release.rs", "symbol": "release" }
+      ],
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/releaseModule.pkl",
+        "m3:reflect:stdlib-release"
+      ]
+    },
+    "pkl:semver": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs", "symbol": "stdlib_source" }
+      ],
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/semverModule.pkl",
+        "m3:reflect:stdlib-semver"
+      ]
+    },
+    "pkl:settings": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs", "symbol": "stdlib_source" }
+      ],
+      "case_ids": [
+        "m3:reflect:stdlib-settings",
+        "m3:stdlib:new-modules-smoke"
+      ]
+    },
+    "pkl:shell": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs", "symbol": "stdlib_source" }
+      ],
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/shellModule.pkl",
+        "m3:reflect:stdlib-shell"
+      ]
+    },
+    "pkl:test": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs", "symbol": "stdlib_source" }
+      ],
+      "case_ids": [
+        "m3:reflect:stdlib-test"
+      ]
+    },
+    "pkl:xml": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/xml_rendering.rs", "symbol": "xml" }
+      ],
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/xmlRenderer1.xml.pkl",
+        "m3:reflect:stdlib-xml",
+        "m3:format:xml-renderer-test"
+      ]
+    },
+    "pkl:yaml": {
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/vm/yaml_parser.rs", "symbol": "parse_error" },
+        { "path": "crates/pkl-runtime/src/vm/yaml.rs", "symbol": "Emitter" }
+      ],
+      "case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/yamlParser1Compat.pkl",
+        "m3:reflect:stdlib-yaml",
+        "m3:format:yaml-renderer-test",
+        "m3:converters:yaml-wildcard-entry"
+      ]
+    }
+  },
+  "renderer_links": {
+    "json": ["m3:format:json-renderer-test", "m3:renderer:json-trailing-newline", "m3:reference:render-json"],
+    "jsonnet": ["m3:format:jsonnet-renderer-test", "m3:reference:render-jsonnet"],
+    "pcf": ["m3:format:pcf-renderer-test", "m3:renderer:pcf-null-properties-omit-true", "m3:renderer:pcf-null-properties-omit-false", "m3:renderer:pcf-render-directive", "m3:reference:render-pcf"],
+    "plist": ["m3:format:plist-renderer-test", "m3:format:prop-plist", "m3:renderer:plist-trailing-newline", "m3:reference:render-plist"],
+    "properties": ["m3:format:properties-renderer-test", "m3:format:prop-properties", "m3:renderer:properties-trailing-newline-matrix", "m3:reference:render-properties"],
+    "textproto": ["m3:format:textproto-typed-module", "m3:reference:render-textproto"],
+    "xml": ["m3:format:xml-renderer-test", "m3:reference:render-xml"],
+    "yaml": ["m3:format:yaml-renderer-test", "m3:renderer:yaml-stream", "m3:renderer:yaml-truthy-octals-numbers", "m3:renderer:yaml-binary-bytes", "m3:reference:render-yaml"],
+    "pkl-binary": ["m3:format:pkl-binary-renderer-test", "m3:format:prop-pkl-binary", "m3:reference:render-pklbinary", "m3:pklbinary-decode:upstream-full"]
+  },
+  "output_surface_links": {
+    "output.files": [
+      "m3:output-files:basic-nested-and-normalized",
+      "m3:output-files:renderers-text-and-binary",
+      "m3:output-files:null-writes-nothing",
+      "m3:output-files:empty-mapping-writes-nothing",
+      "m3:output-files:multi-module-disjoint",
+      "m3:output-files:conflict-cross-module",
+      "m3:output-files:conflict-same-module",
+      "m3:output-files:escape-parent-dir",
+      "m3:output-files:escape-symlink",
+      "m3:output-files:target-is-dot-dir",
+      "m3:output-files:target-is-existing-dir",
+      "m3:output-files:symlink-output-dir",
+      "m3:output-files:with-format-flag"
+    ],
+    "converters": [
+      "m3:converters:valid-path-specs",
+      "m3:converters:invalid-path-specs",
+      "m3:converters:yaml-wildcard-entry"
+    ],
+    "pklbinary-decoder": [
+      "m3:pklbinary-decode:upstream-full",
+      "m3:pklbinary-decode:valid-primitives-and-containers",
+      "m3:pklbinary-decode:err-reference-code-0x20"
+    ]
+  }
+}

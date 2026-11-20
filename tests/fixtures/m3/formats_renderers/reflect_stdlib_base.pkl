@@ -1,0 +1,4 @@
+import "pkl:reflect"
+output {
+  text = reflect.Module(import("pkl:base")).toString()
+}

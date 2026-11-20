@@ -153,7 +153,11 @@ impl Scanner {
             ));
         }
         let mut n = 0;
-        while decimal_digit(self.reader.peek(n)?)?.is_some() {
+        let mut value = 0i32;
+        while let Some(d) = decimal_digit(self.reader.peek(n)?)? {
+            if n < 3 {
+                value = value * 10 + d as i32;
+            }
             n += 1;
         }
         let number = self.reader.prefix_forward(n)?;
@@ -167,9 +171,7 @@ impl Scanner {
                 ),
             ));
         }
-        Ok(text_string(&number)
-            .parse()
-            .expect("ASCII directive digits"))
+        Ok(value)
     }
     pub(super) fn tag(&mut self) -> Result<Token, YamlError> {
         let start = self.reader.mark();
@@ -293,16 +295,9 @@ impl Scanner {
         while self.reader.peek(0)? == 37 {
             self.reader.forward(1)?;
             let hex = self.reader.prefix(2)?;
-            if hex.units().iter().any(|u| *u > 127) {
-                return Err(YamlError::plain(
-                    ErrorKind::Unsupported,
-                    "Pinned Java Unicode digit handling in URI escapes is not ported",
-                ));
-            }
-            let parsed = i32::from_str_radix(&text_string(&hex), 16);
-            let code = match parsed {
-                Ok(v) => v,
-                Err(_) => {
+            let code = match parse_java_hex_i32(hex.units()) {
+                Some(v) => v,
+                None => {
                     let c1 = self.reader.peek(0)?;
                     let c2 = self.reader.peek(1)?;
                     return Err(self.error(Some(&format!("while scanning a {name}")),Some(start.clone()),format!("expected URI escape sequence of 2 hexadecimal numbers, but found {}({c1}) and {}({c2})",point(c1),point(c2))));
@@ -317,19 +312,122 @@ impl Scanner {
             bytes.push(code as u8);
             self.reader.forward(2)?;
         }
-        match String::from_utf8(bytes) {
+        match String::from_utf8(bytes.clone()) {
             Ok(s) => Ok(Text::from(s)),
             Err(_) => {
-                // Java UTF-8 decoder reports a specific malformed subsequence length.
-                // Rust's Utf8Error length is not assumed equivalent.
+                let bad_len = java_utf8_malformed_length(&bytes);
                 Err(YamlError::marked(
-                    ErrorKind::Unsupported,
+                    ErrorKind::Scanner,
                     Some(&format!("while scanning a {name}")),
                     Some(start.clone()),
-                    "Exact Java UTF-8 tag URI decoding error length is not ported",
+                    format!("expected URI in UTF-8: Input length = {bad_len}"),
                     Some(beginning),
                 ))
             }
         }
     }
+}
+
+/// Exact port of `Integer.parseInt(hex, 16)` on a 2-unit (or 1-unit at EOF) slice.
+fn parse_java_hex_i32(units: &[u16]) -> Option<i32> {
+    if units.is_empty() {
+        return None;
+    }
+    let mut i = 0;
+    let negative = match units[0] {
+        0x2d => {
+            i = 1;
+            true
+        }
+        0x2b => {
+            i = 1;
+            false
+        }
+        _ => false,
+    };
+    if i >= units.len() {
+        return None;
+    }
+    let mut acc: i32 = 0;
+    while i < units.len() {
+        let u = units[i];
+        let cp = if (0xd800..=0xdbff).contains(&u)
+            && i + 1 < units.len()
+            && (0xdc00..=0xdfff).contains(&units[i + 1])
+        {
+            i += 1;
+            0x10000 + ((u32::from(u) - 0xd800) << 10) + (u32::from(units[i]) - 0xdc00)
+        } else {
+            u32::from(u)
+        };
+        let digit = match cp {
+            0x30..=0x39 => cp - 0x30,
+            0x41..=0x46 => cp - 0x41 + 10,
+            0x61..=0x66 => cp - 0x61 + 10,
+            0xff21..=0xff26 => cp - 0xff21 + 10,
+            0xff41..=0xff46 => cp - 0xff41 + 10,
+            _ => super::scalar::decimal_digit(cp).ok().flatten()?,
+        };
+        acc = acc.checked_mul(16)?.checked_add(digit as i32)?;
+        i += 1;
+    }
+    Some(if negative { acc.wrapping_neg() } else { acc })
+}
+
+/// Exact JDK 21 `sun.nio.cs.UTF_8$Decoder` `MalformedInputException.getInputLength()`.
+/// Note that JDK 21 reports length 3 for 3-byte UTF-8 encoded surrogates (`ED A0..BF 80..BF`).
+fn java_utf8_malformed_length(bytes: &[u8]) -> usize {
+    let mut i = 0;
+    let n = bytes.len();
+    while i < n {
+        let b1 = bytes[i];
+        if b1 < 0x80 {
+            i += 1;
+        } else if (b1 >> 5) == 0b110 {
+            if (b1 & 0x1e) == 0 || i + 1 >= n || (bytes[i + 1] & 0xc0) != 0x80 {
+                return 1;
+            }
+            i += 2;
+        } else if (b1 >> 4) == 0b1110 {
+            if i + 1 >= n {
+                return 1;
+            }
+            let b2 = bytes[i + 1];
+            if (b1 == 0xe0 && (b2 & 0xe0) == 0x80) || (b2 & 0xc0) != 0x80 {
+                return 1;
+            }
+            if i + 2 >= n || (bytes[i + 2] & 0xc0) != 0x80 {
+                return 2;
+            }
+            let c = (u32::from(b1 & 0x0f) << 12)
+                | (u32::from(b2 & 0x3f) << 6)
+                | u32::from(bytes[i + 2] & 0x3f);
+            if (0xd800..=0xdfff).contains(&c) {
+                return 3;
+            }
+            i += 3;
+        } else if (b1 >> 3) == 0b11110 {
+            if i + 1 >= n {
+                return 1;
+            }
+            let b2 = bytes[i + 1];
+            if (b2 & 0xc0) != 0x80
+                || (b1 == 0xf0 && b2 < 0x90)
+                || (b1 == 0xf4 && b2 >= 0x90)
+                || b1 > 0xf4
+            {
+                return 1;
+            }
+            if i + 2 >= n || (bytes[i + 2] & 0xc0) != 0x80 {
+                return 2;
+            }
+            if i + 3 >= n || (bytes[i + 3] & 0xc0) != 0x80 {
+                return 3;
+            }
+            i += 4;
+        } else {
+            return 1;
+        }
+    }
+    1
 }
