@@ -1,0 +1,8 @@
+amends "pkl:Project"
+
+package {
+  name = "local_lib"
+  baseUri = "package://localhost:0/local_lib"
+  version = "1.0.0"
+  packageZipUrl = "https://localhost:0/local_lib@1.0.0/local_lib@1.0.0.zip"
+}

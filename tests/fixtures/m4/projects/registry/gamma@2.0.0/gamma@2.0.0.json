@@ -1,0 +1,19 @@
+{
+  "name": "gamma",
+  "packageUri": "package://localhost:0/gamma@2.0.0",
+  "version": "2.0.0",
+  "packageZipUrl": "https://localhost:0/gamma@2.0.0/gamma@2.0.0.zip",
+  "packageZipChecksums": {
+    "sha256": "96f785ad9eddb4bc1d30bf028401cbd4a5720c2116ffe208cf03018b3f35673a"
+  },
+  "dependencies": {
+    "alpha": {
+      "uri": "package://localhost:0/alpha@1.1.0",
+      "checksums": {
+        "sha256": "5e90cecf89f4b49f0e5405202e599b94665906f2a46945180eaaa85bfe099ff2"
+      }
+    }
+  },
+  "authors": [],
+  "annotations": []
+}

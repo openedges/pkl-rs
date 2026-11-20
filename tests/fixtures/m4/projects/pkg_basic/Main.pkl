@@ -1,0 +1,3 @@
+module samplepkg.Main
+answer = 42
+textData = read("assets/note.txt").text

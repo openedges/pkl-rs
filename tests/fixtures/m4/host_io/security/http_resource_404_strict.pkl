@@ -1,0 +1,2 @@
+local baseUrl = read("prop:m4.baseUrl")
+x = read("\(baseUrl)/status/404")

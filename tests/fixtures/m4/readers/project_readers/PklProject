@@ -1,0 +1,23 @@
+amends "pkl:Project"
+
+evaluatorSettings {
+  externalModuleReaders {
+    ["extmod"] {
+      executable = "../m4_ext_reader.py"
+      arguments {
+        "--tag"
+        "from-project-rel"
+        "arg1"
+      }
+    }
+  }
+  externalResourceReaders {
+    ["extres"] {
+      executable = "m4_ext_reader.py"
+      arguments {
+        "--tag"
+        "from-project-path"
+      }
+    }
+  }
+}

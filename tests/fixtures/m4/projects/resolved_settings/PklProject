@@ -1,0 +1,20 @@
+amends "pkl:Project"
+
+projectFileUri = "file:///virtual/workspace/PklProject"
+
+evaluatorSettings {
+  rootDir = "."
+  moduleCacheDir = "cache/"
+  modulePath {
+    "mp1/"
+    "mp2/"
+  }
+  externalModuleReaders {
+    ["myrel"] {
+      executable = "./bin/reader"
+    }
+    ["mypath"] {
+      executable = "plain-reader"
+    }
+  }
+}

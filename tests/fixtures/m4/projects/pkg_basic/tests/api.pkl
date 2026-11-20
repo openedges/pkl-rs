@@ -1,0 +1,11 @@
+amends "pkl:test"
+import "../Main.pkl"
+
+facts {
+  ["answer is 42"] {
+    Main.answer == 42
+  }
+  ["asset read works"] {
+    Main.textData == "bundled-asset-ok"
+  }
+}

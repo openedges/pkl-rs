@@ -1,0 +1,3 @@
+import "hello.pkl"
+res = read("sibling.txt").text
+val = hello.num

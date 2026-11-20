@@ -1,0 +1,389 @@
+{
+  "schema_version": 1,
+  "baseline": {
+    "version": "0.32.0",
+    "revision": "e51fb2f91774265666f94980ec630db794a4db2d"
+  },
+  "scope": "Reviewed M4 Host I/O, URI, modulepath, HTTP/HTTPS/CA/redirect/proxy/headers/rewrites, security/rootDir, external readers (0x26-0x32), PklProject/settings/resolve/package/cache, and offline Pantry dev+packaged provenance mappings. Non-M4/M5/JVM-only items are explicitly separated and never counted as passes.",
+  "deferred_categories": {
+    "resource_deferred": [
+      {
+        "prefix": "pkl-doc/src/main/resources/",
+        "milestone": "M5",
+        "reason": "Pkldoc static web assets (fonts/images/scripts/styles) belong to M5 pkldoc."
+      }
+    ],
+    "resource_non_applicable": [
+      {
+        "prefix": "build-logic/src/main/resources/",
+        "reason": "Upstream Gradle build-logic license header templates (non-runtime)."
+      },
+      {
+        "prefix": "pkl-core/src/main/resources/META-INF/services/",
+        "reason": "JVM ServiceLoader SPI descriptors excluded under the 2026-11-20 non-JVM product scope decision."
+      }
+    ],
+    "protocol_tag_deferred": {
+      "milestone": "M5",
+      "symbols": [
+        "CLOSE_EVALUATOR",
+        "CREATE_EVALUATOR_REQUEST",
+        "CREATE_EVALUATOR_RESPONSE",
+        "EVALUATE_REQUEST",
+        "EVALUATE_RESPONSE",
+        "LOG_MESSAGE"
+      ],
+      "reason": "Message codes 0x20-0x25 belong to pkl-server evaluator session protocol (M5); M4 external readers use 0x26-0x32."
+    },
+    "protocol_field_deferred": {
+      "milestone": "M5",
+      "module": "pkl-server",
+      "reason": "ServerMessagePack{Encoder,Decoder} fields belong to M5 pkl-server."
+    },
+    "cli_command_deferred": {
+      "milestone": "M5",
+      "symbols": [
+        "format",
+        "pkl",
+        "pkldoc",
+        "repl",
+        "run",
+        "server",
+        "shell-completion"
+      ],
+      "reason": "Full product CLI commands, formatter, REPL, server, and pkldoc belong to M5."
+    },
+    "cli_command_excluded": {
+      "symbols": [
+        "pkl-codegen-java",
+        "pkl-codegen-kotlin"
+      ],
+      "reason": "Java/Kotlin codegen explicitly excluded from required product scope (2026-11-20 PLAN.md decision)."
+    }
+  },
+  "m4_cli_commands": [
+    "analyze",
+    "download-package",
+    "eval",
+    "imports",
+    "package",
+    "project",
+    "resolve",
+    "test"
+  ],
+  "m4_cli_options": [
+    "--allowed-modules",
+    "--allowed-resources",
+    "--ca-certificates",
+    "--cache-dir",
+    "--env-var",
+    "--external-module-reader",
+    "--external-resource-reader",
+    "--http-header",
+    "--http-no-proxy",
+    "--http-proxy",
+    "--http-rewrite",
+    "--module-path",
+    "--no-cache",
+    "--no-project",
+    "--no-transitive",
+    "--omit-project-settings",
+    "--project-dir",
+    "--property",
+    "--root-dir",
+    "--settings",
+    "--skip-publish-check",
+    "--test-mode",
+    "--test-port",
+    "--timeout",
+    "--working-dir",
+    "-e",
+    "-p",
+    "-t",
+    "-w"
+  ],
+  "m4_functional_stdlib_sources": [
+    "stdlib/EvaluatorSettings.pkl",
+    "stdlib/Project.pkl",
+    "stdlib/analyze.pkl",
+    "stdlib/settings.pkl",
+    "stdlib/test.pkl"
+  ],
+  "requirements": {
+    "m4:host:http-basic-and-resources": {
+      "lane": "host-io-http-security",
+      "description": "Plain HTTP module/resource fetching, relative hierarchical HTTP reads, 404 read?->null vs read->error vs 500->IOException",
+      "case_ids": [
+        "m4:http:get-module-plain",
+        "m4:http:relative-import-and-read",
+        "m4:http:resource-read-200-and-404-nullable",
+        "m4:http:resource-read-404-strict",
+        "m4:http:resource-read-500-nullable",
+        "m4:http:module-404-error"
+      ],
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/host/http.rs", "symbol": "ParsedHttpUri" },
+        { "path": "crates/pkl-runtime/src/host/resources.rs", "symbol": "try_configured_scalar_read_with_policy" },
+        { "path": "crates/pkl-host-native/src/http.rs", "symbol": "NativeHttpClient" },
+        { "path": "crates/pkl-host-native/src/driver.rs", "symbol": "NativeHost" }
+      ]
+    },
+    "m4:host:http-redirects-and-downgrade": {
+      "lane": "host-io-http-security",
+      "description": "HTTP 301/302/307/308 redirects, relative Location, 20-hop boundary vs 21-hop/loop/missing/invalid errors, HTTP->HTTPS upgrade, HTTPS->HTTP downgrade denial",
+      "case_ids": [
+        "m4:http:redirect-301",
+        "m4:http:redirect-307-relative",
+        "m4:http:redirect-chain-20-ok",
+        "m4:http:redirect-chain-21-too-many",
+        "m4:http:redirect-loop",
+        "m4:http:redirect-no-location",
+        "m4:http:redirect-invalid-location",
+        "m4:http:redirect-upgrade-http-to-https",
+        "m4:https:redirect-downgrade-https-to-http"
+      ],
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/host/http.rs", "symbol": "RewritingHttpClient" },
+        { "path": "crates/pkl-host-native/src/http.rs", "symbol": "NativeHttpTransport" }
+      ]
+    },
+    "m4:host:http-headers-and-rewrites": {
+      "lane": "host-io-http-security",
+      "description": "Custom HTTP headers with glob scoping, multi-value order, User-Agent override, per-hop redirect header isolation, and longest-prefix URI rewrites across redirects",
+      "case_ids": [
+        "m4:http:custom-headers-and-redirect-scoping",
+        "m4:http:custom-user-agent-override",
+        "m4:http:rewrite-longest-prefix",
+        "m4:http:rewrite-across-redirect"
+      ],
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/host/http.rs", "symbol": "RewriteRule" },
+        { "path": "crates/pkl-runtime/src/host/http.rs", "symbol": "HeaderRule" },
+        { "path": "crates/pkl-runtime/src/host/http.rs", "symbol": "HeaderGlobMatcher" }
+      ]
+    },
+    "m4:host:https-ca-certificates": {
+      "lane": "host-io-http-security",
+      "description": "Custom CA certificates via --ca-certificates and ~/.pkl/cacerts/, missing CA SSL handshake error, empty/random/truncated PEM diagnostics",
+      "case_ids": [
+        "m4:https:custom-ca-cli-ok",
+        "m4:https:custom-ca-home-cacerts-ok",
+        "m4:https:missing-ca-ssl-error",
+        "m4:https:ca-empty-file-error",
+        "m4:https:ca-random-text-error",
+        "m4:https:ca-truncated-pem-error"
+      ],
+      "implementation_links": [
+        { "path": "crates/pkl-host-native/src/certs.rs", "symbol": "CaCertSource" },
+        { "path": "crates/pkl-host-native/src/http.rs", "symbol": "NativeHttpTransport" }
+      ]
+    },
+    "m4:host:http-proxy-and-no-proxy": {
+      "lane": "host-io-http-security",
+      "description": "HTTP forward proxy, HTTPS CONNECT tunneling, --http-no-proxy bypass, and settings.pkl vs PklProject proxy precedence",
+      "case_ids": [
+        "m4:http:proxy-plain-cli",
+        "m4:http:proxy-https-connect",
+        "m4:http:proxy-no-proxy-bypass",
+        "m4:http:proxy-settings-file",
+        "m4:http:proxy-project-beats-settings"
+      ],
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/host/http.rs", "symbol": "ProxyConfig" },
+        { "path": "crates/pkl-runtime/src/host/http.rs", "symbol": "NoProxyRule" },
+        { "path": "crates/pkl-host-native/src/http.rs", "symbol": "NativeHttpTransport" }
+      ]
+    },
+    "m4:host:security-allowlist-and-rootdir": {
+      "lane": "host-io-http-security",
+      "description": "Custom allowedModules/allowedResources, unregistered-scheme check ordering, rootDir enforcement for existing/non-existent files, symlink escapes, and glob symlink escapes",
+      "case_ids": [
+        "m4:security:allowlist-module-deny",
+        "m4:security:allowlist-resource-env-prop-deny",
+        "m4:security:unregistered-resource-denied-before-no-reader",
+        "m4:security:unregistered-resource-allowed-gives-no-reader",
+        "m4:security:rootdir-allow-inside",
+        "m4:security:rootdir-deny-import-outside",
+        "m4:security:rootdir-deny-nonexistent-outside",
+        "m4:security:rootdir-deny-read-outside",
+        "m4:security:rootdir-deny-import-symlink-escape",
+        "m4:security:rootdir-deny-read-symlink-escape",
+        "m4:security:rootdir-deny-glob-symlink-escape"
+      ],
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/host/security.rs", "symbol": "SecurityPolicy" },
+        { "path": "crates/pkl-host-native/src/fs.rs", "symbol": "NativeFs" },
+        { "path": "crates/pkl-host-native/src/fs.rs", "symbol": "open_file_nofollow" }
+      ]
+    },
+    "m4:host:modulepath-and-jar": {
+      "lane": "host-io-http-security",
+      "description": "Multi-entry --module-path (dirs + JAR/ZIP + missing entries), first-wins precedence, triple-dot lookup, .class filtering, missing leading slash & non-globbable errors",
+      "case_ids": [
+        "m4:modulepath:multi-entry-dirs-and-jar",
+        "m4:modulepath:missing-leading-slash-error",
+        "m4:modulepath:glob-unsupported-error"
+      ],
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/host/modulepath.rs", "symbol": "parse_modulepath_uri" },
+        { "path": "crates/pkl-host-native/src/modulepath.rs", "symbol": "NativeModulePathResolver" },
+        { "path": "crates/pkl-host-native/src/zip_archive.rs", "symbol": "ZipReader" }
+      ]
+    },
+    "m4:host:analyze-and-timeout": {
+      "lane": "host-io-http-security",
+      "description": "Import graph analysis (cycles, triple-dot, globs, syntax errors) and evaluation/HTTP stall timeout cancellation & resource cleanup",
+      "case_ids": [
+        "m4:analyze:imports-graph-complex",
+        "m4:analyze:imports-syntax-error",
+        "m4:lifecycle:timeout-eval",
+        "m4:lifecycle:timeout-http-slow"
+      ],
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/modules/analyze.rs", "symbol": "ImportGraphAnalysis" },
+        { "path": "crates/pkl-runtime/src/host.rs", "symbol": "format_timeout_message" },
+        { "path": "crates/pkl-host-native/src/http.rs", "symbol": "CancelFlag" },
+        { "path": "crates/pkl-host-native/src/driver.rs", "symbol": "CleanupReport" }
+      ]
+    },
+    "m4:ext:protocol-and-readers": {
+      "lane": "external-readers",
+      "description": "External module & resource reader MessagePack protocol (0x26-0x32), hierarchical/opaque/glob/triple-dot/missing-resource semantics, unsupported schemes, non-globbable errors, and CloseExternalProcess lifecycle",
+      "case_ids": [
+        "m4:ext:all-schemes-cli-and-lifecycle",
+        "m4:ext:module-read-error",
+        "m4:ext:resource-read-error",
+        "m4:ext:resource-missing-strict",
+        "m4:ext:unsupported-module-scheme",
+        "m4:ext:unsupported-resource-scheme",
+        "m4:ext:non-globbable-module-error",
+        "m4:ext:non-globbable-resource-error"
+      ],
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/external_reader/messages.rs", "symbol": "MessageType" },
+        { "path": "crates/pkl-runtime/src/external_reader/codec.rs", "symbol": "write_message" },
+        { "path": "crates/pkl-runtime/src/external_reader/transport.rs", "symbol": "ExternalReaderRegistry" },
+        { "path": "crates/pkl-runtime/src/external_reader/process.rs", "symbol": "NativeExternalReaderProcess" }
+      ]
+    },
+    "m4:ext:project-paths-cwd-precedence": {
+      "lane": "external-readers",
+      "description": "PklProject external reader relative executable & PATH resolution, default project workingDir, CLI full-map replacement, and --omit-project-settings",
+      "case_ids": [
+        "m4:ext:project-readers-rel-and-path-and-cwd",
+        "m4:ext:cli-replaces-project-readers",
+        "m4:ext:omit-project-settings"
+      ],
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/external_reader/messages.rs", "symbol": "ExternalReaderConfig" },
+        { "path": "crates/pkl-runtime/src/external_reader/messages.rs", "symbol": "shlex" },
+        { "path": "crates/pkl-runtime/src/packages/project.rs", "symbol": "EvaluatorSettings" }
+      ]
+    },
+    "m4:project:settings-precedence-and-resolved": {
+      "lane": "projects-packages-cache",
+      "description": "PklProject evaluatorSettings application, CLI -p replacement, --omit-project-settings, empty env {} non-fallback, and Project.resolvedEvaluatorSettings",
+      "case_ids": [
+        "m4:project:settings-from-project",
+        "m4:project:settings-cli-p-replaces-project-props",
+        "m4:project:settings-omit-project-settings",
+        "m4:project:settings-empty-env-no-host-fallback",
+        "m4:project:resolved-evaluator-settings"
+      ],
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/packages/project.rs", "symbol": "PklSettings" },
+        { "path": "crates/pkl-runtime/src/packages/project.rs", "symbol": "EvaluatorSettings" },
+        { "path": "crates/pkl-host-native/src/cli.rs", "symbol": "ParsedCliOptions" }
+      ]
+    },
+    "m4:project:resolve-mvs-and-cycles": {
+      "lane": "projects-packages-cache",
+      "description": "pkl project resolve (transitive remote, MVS diamond, local+remote, local overridden by remote warning, circular local dep error, bad declared checksum) and byte-exact PklProject.deps.json",
+      "case_ids": [
+        "m4:project:resolve-basic",
+        "m4:project:resolve-diamond-mvs",
+        "m4:project:resolve-local-and-remote",
+        "m4:project:resolve-local-overridden-by-remote",
+        "m4:project:resolve-cycle-error",
+        "m4:project:resolve-bad-declared-checksum"
+      ],
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/packages/mvs.rs", "symbol": "ProjectDependenciesResolver" },
+        { "path": "crates/pkl-runtime/src/packages/cycles.rs", "symbol": "find_import_cycles" },
+        { "path": "crates/pkl-runtime/src/packages.rs", "symbol": "CanonicalPackageUri" }
+      ]
+    },
+    "m4:project:package-creation-and-validation": {
+      "lane": "projects-packages-cache",
+      "description": "pkl project package (deterministic ZIP/JSON/SHA-256, empty ZIP exact SHA-256, excludes, apiTests pass/fail, local dep closure, import-escape rejection, missing package section, Java cross-interop)",
+      "case_ids": [
+        "m4:project:package-basic",
+        "m4:project:package-empty-exact-zip-sha",
+        "m4:project:package-local-dep-closure",
+        "m4:project:package-missing-local-dep-arg",
+        "m4:project:package-failing-api-tests",
+        "m4:project:package-import-escape-error",
+        "m4:project:package-missing-package-section"
+      ],
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/packages/packager.rs", "symbol": "ProjectPackager" },
+        { "path": "crates/pkl-runtime/src/packages/packager.rs", "symbol": "java_hashmap_order" },
+        { "path": "crates/pkl-runtime/src/packages/zip.rs", "symbol": "build_deterministic_package_zip" },
+        { "path": "crates/pkl-runtime/src/packages/metadata.rs", "symbol": "DependencyMetadata" },
+        { "path": "crates/pkl-runtime/src/packages/test_runner.rs", "symbol": "render_spec_report" },
+        { "path": "crates/pkl-host-native/src/package_host.rs", "symbol": "NativePackagerHost" }
+      ]
+    },
+    "m4:package:cache-download-and-corruption": {
+      "lane": "projects-packages-cache",
+      "description": "pkl download-package (transitive & --no-transitive, --no-cache error), package-2 path encoding (localhost(3a)0), warm offline cache, --no-cache non-writing, corrupt cached .json deletion, corrupt .zip, lockfile checksum mismatch, non-HTTPS zip URL rejection",
+      "case_ids": [
+        "m4:cache:download-package-transitive",
+        "m4:cache:download-package-no-transitive",
+        "m4:cache:download-package-no-cache-error",
+        "m4:cache:eval-warm-cache-no-network",
+        "m4:cache:no-cache-skips-writing-cache-dir",
+        "m4:cache:corrupt-cached-json-deleted",
+        "m4:cache:corrupt-cached-zip-error",
+        "m4:cache:lockfile-checksum-mismatch",
+        "m4:cache:non-https-zip-url-error"
+      ],
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/packages/cache.rs", "symbol": "encode_cache_path" },
+        { "path": "crates/pkl-runtime/src/packages/resolver.rs", "symbol": "PackageResolver" },
+        { "path": "crates/pkl-runtime/src/packages/zip.rs", "symbol": "ZipArchive" },
+        { "path": "crates/pkl-runtime/src/packages/http.rs", "symbol": "PackageTransport" },
+        { "path": "crates/pkl-host-native/src/package_host.rs", "symbol": "NativePackageTransport" },
+        { "path": "crates/pkl-host-native/src/package_host.rs", "symbol": "DiskPackageCache" }
+      ]
+    },
+    "m4:pantry:development-tree": {
+      "lane": "pantry-dev",
+      "description": "All 29 Pantry packages in development tree form: 29 package-api-tests, 44 project-test, 1 module-names, 51 example candidates, and 1 pkl.tar shell suite (126 offline executions)",
+      "dynamic_lane": "pantry-dev",
+      "expected_dynamic_count": 126,
+      "case_ids": [],
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/packages/packager.rs", "symbol": "ProjectPackager" },
+        { "path": "crates/pkl-runtime/src/packages/test_runner.rs", "symbol": "TestResults" },
+        { "path": "crates/pkl-host-native/src/driver.rs", "symbol": "NativeHost" },
+        { "path": "crates/pkl-host-native/src/cli.rs", "symbol": "run_cli" },
+        { "path": "crates/pkl-host-native/src/bin/pkl_m4_cli.rs", "symbol": "main" }
+      ]
+    },
+    "m4:pantry:packaged-distribution": {
+      "lane": "pantry-packaged",
+      "description": "All 29 generated Pantry packages in distributed ZIP form: 206 package:// modules (--no-project), 4 -m multi-file retries, 2 configured generators, and 5 cold-cache offline HTTPS mirror targets (217 offline executions)",
+      "dynamic_lane": "pantry-packaged",
+      "expected_dynamic_count": 217,
+      "case_ids": [],
+      "implementation_links": [
+        { "path": "crates/pkl-runtime/src/packages/resolver.rs", "symbol": "PackageResolver" },
+        { "path": "crates/pkl-runtime/src/packages/cache.rs", "symbol": "PackageCacheStore" },
+        { "path": "crates/pkl-host-native/src/http.rs", "symbol": "NativeHttpClient" },
+        { "path": "crates/pkl-host-native/src/package_host.rs", "symbol": "NativePackageTransport" },
+        { "path": "crates/pkl-host-native/src/package_host.rs", "symbol": "DiskPackageCache" }
+      ]
+    }
+  }
+}

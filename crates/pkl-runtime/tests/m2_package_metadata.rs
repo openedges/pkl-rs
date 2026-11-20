@@ -98,12 +98,12 @@ fn optional_metadata_failure_precedes_https_zip_validation() {
 }
 
 #[test]
-fn unsupported_annotations_and_uri_projection_never_become_successful_metadata() {
+fn invalid_annotations_and_bad_uri_projection_never_become_successful_metadata() {
     let fruit = String::from_utf8(FRUIT.to_vec()).unwrap();
     let annotated = fruit.replacen('{', "{\"annotations\":[{}],", 1);
     assert!(matches!(
         accept(annotated.as_bytes(), None, false),
-        Err(MetadataFailure::Unsupported { .. })
+        Err(MetadataFailure::InvalidDependencyMetadata { .. })
     ));
     let bad_uri = fruit.replace(
         "https://example.com/fruit",
@@ -113,6 +113,87 @@ fn unsupported_annotations_and_uri_projection_never_become_successful_metadata()
         accept(bad_uri.as_bytes(), None, false),
         Err(MetadataFailure::Unsupported { .. })
     ));
+}
+
+#[test]
+fn valid_metadata_annotations_parse_typed_values() {
+    use pkl_runtime::packages::metadata::{MetadataAnnotation, MetadataClassInfo, MetadataValue};
+
+    let fruit = String::from_utf8(FRUIT.to_vec()).unwrap();
+    let annotation_json = r#""annotations":[{"type":"PObject","classInfo":{"moduleName":"pkl.base","class":"Deprecated","moduleUri":"pkl:base"},"properties":{"since":"1.0.0","message":null,"count":3,"flag":true,"tags":{"type":"Set","value":["a","b"]},"meta":{"type":"Map","value":[{"key":"k","value":42}]},"regex":{"type":"Pattern","value":"^foo$"},"size":{"type":"DataSize","value":5.5,"unit":"mb"},"ttl":{"type":"Duration","value":2.0,"unit":"s"},"pair":{"type":"Pair","first":"x","second":[1,2]},"nested":{"type":"PObject","classInfo":{"moduleName":"pkl.base","class":"Since","moduleUri":"pkl:base"},"properties":{"version":"0.32.0"}}}}],"#;
+    let annotated = fruit.replacen('{', &format!("{{{annotation_json}"), 1);
+    let parsed = accept(annotated.as_bytes(), None, false).unwrap();
+    assert_eq!(parsed.annotations.len(), 1);
+    let ann = &parsed.annotations[0];
+    assert_eq!(
+        ann.class_info,
+        MetadataClassInfo {
+            module_name: "pkl.base".into(),
+            class_name: "Deprecated".into(),
+            module_uri: "pkl:base".into(),
+        }
+    );
+    let prop = |name: &str| {
+        ann.properties
+            .iter()
+            .find(|(k, _)| k.as_str() == Some(name))
+            .map(|(_, v)| v)
+            .expect("annotation property")
+    };
+    assert_eq!(prop("since"), &MetadataValue::String("1.0.0".into()));
+    assert_eq!(prop("message"), &MetadataValue::Null);
+    assert_eq!(prop("count"), &MetadataValue::Int(3));
+    assert_eq!(prop("flag"), &MetadataValue::Bool(true));
+    assert_eq!(
+        prop("tags"),
+        &MetadataValue::Set(vec![
+            MetadataValue::String("a".into()),
+            MetadataValue::String("b".into()),
+        ])
+    );
+    assert_eq!(
+        prop("meta"),
+        &MetadataValue::Map(vec![(
+            MetadataValue::String("k".into()),
+            MetadataValue::Int(42),
+        )])
+    );
+    assert_eq!(prop("regex"), &MetadataValue::Pattern("^foo$".into()));
+    assert_eq!(
+        prop("size"),
+        &MetadataValue::DataSize {
+            value: 5.5,
+            unit: "mb".into(),
+        }
+    );
+    assert_eq!(
+        prop("ttl"),
+        &MetadataValue::Duration {
+            value: 2.0,
+            unit: "s".into(),
+        }
+    );
+    assert_eq!(
+        prop("pair"),
+        &MetadataValue::Pair(
+            Box::new(MetadataValue::String("x".into())),
+            Box::new(MetadataValue::List(vec![
+                MetadataValue::Int(1),
+                MetadataValue::Int(2),
+            ])),
+        )
+    );
+    assert_eq!(
+        prop("nested"),
+        &MetadataValue::PObject(MetadataAnnotation {
+            class_info: MetadataClassInfo {
+                module_name: "pkl.base".into(),
+                class_name: "Since".into(),
+                module_uri: "pkl:base".into(),
+            },
+            properties: vec![("version".into(), MetadataValue::String("0.32.0".into()))],
+        })
+    );
 }
 
 #[test]

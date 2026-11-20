@@ -1,0 +1,19 @@
+{
+  "name": "beta",
+  "packageUri": "package://localhost:0/beta@0.5.0",
+  "version": "0.5.0",
+  "packageZipUrl": "https://localhost:0/beta@0.5.0/beta@0.5.0.zip",
+  "packageZipChecksums": {
+    "sha256": "691095ca2af1c84f066126386fd5640cbbc16767f7341434b74f49fde0fb4313"
+  },
+  "dependencies": {
+    "alpha": {
+      "uri": "package://localhost:0/alpha@1.0.0",
+      "checksums": {
+        "sha256": "de20d7d5924559bfb7df4fdd129e3b365418161fdc27f7798d8f297fabe15327"
+      }
+    }
+  },
+  "authors": [],
+  "annotations": []
+}

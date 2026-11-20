@@ -1,0 +1,20 @@
+amends "pkl:Project"
+
+package {
+  name = "samplepkg"
+  baseUri = "package://localhost:0/samplepkg"
+  version = "1.0.0"
+  packageZipUrl = "https://localhost:0/samplepkg@1.0.0/samplepkg@1.0.0.zip"
+  description = "M4 basic package fixture"
+  authors {
+    "Test Author <test@example.com>"
+  }
+  license = "Apache-2.0"
+  exclude {
+    "tests/**"
+    "*.secret"
+  }
+  apiTests {
+    "tests/api.pkl"
+  }
+}

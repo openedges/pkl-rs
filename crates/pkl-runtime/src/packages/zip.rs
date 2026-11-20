@@ -104,10 +104,13 @@ pub struct ZipArchive {
     pub entries: BTreeMap<String, Vec<u8>>,
     /// Set of directory paths (e.g. "/catalog", "/").
     pub directories: BTreeMap<String, Vec<String>>,
+    /// Per-entry `(dos_time, dos_date)` recorded from the central directory.
+    pub dos_mtimes: BTreeMap<String, (u16, u16)>,
 }
 
 impl ZipArchive {
-    /// Parses a ZIP archive from raw bytes.
+    /// Parses and strictly validates a ZIP archive from raw bytes (EOCD, central directory,
+    /// local headers, compression, uncompressed size, and CRC-32).
     pub fn parse(bytes: &[u8]) -> Result<Self, ZipError> {
         let mut archive = ZipArchive::default();
         archive.directories.insert("/".into(), Vec::new());
@@ -117,7 +120,6 @@ impl ZipArchive {
             return Err(ZipError::UnexpectedEof);
         }
 
-        // Try reading central directory first
         let eocd_pos = find_eocd(bytes)?;
         let num_entries = u16::from_le_bytes([bytes[eocd_pos + 10], bytes[eocd_pos + 11]]) as usize;
         let cd_size = u32::from_le_bytes([
@@ -133,14 +135,17 @@ impl ZipArchive {
             bytes[eocd_pos + 19],
         ]) as usize;
 
-        if cd_offset + cd_size > bytes.len() {
+        let Some(cd_end) = cd_offset.checked_add(cd_size) else {
+            return Err(ZipError::CorruptedData("Central directory offset overflow"));
+        };
+        if cd_end > eocd_pos || cd_end > bytes.len() {
             return Err(ZipError::CorruptedData("Central directory out of bounds"));
         }
 
         let mut offset = cd_offset;
         for _ in 0..num_entries {
-            if offset + 46 > bytes.len() {
-                break;
+            if offset + 46 > cd_end {
+                return Err(ZipError::UnexpectedEof);
             }
             let sig = u32::from_le_bytes([
                 bytes[offset],
@@ -149,10 +154,18 @@ impl ZipArchive {
                 bytes[offset + 3],
             ]);
             if sig != 0x02014b50 {
-                break;
+                return Err(ZipError::InvalidSignature);
             }
 
             let method = u16::from_le_bytes([bytes[offset + 10], bytes[offset + 11]]);
+            let dos_time = u16::from_le_bytes([bytes[offset + 12], bytes[offset + 13]]);
+            let dos_date = u16::from_le_bytes([bytes[offset + 14], bytes[offset + 15]]);
+            let cd_crc32 = u32::from_le_bytes([
+                bytes[offset + 16],
+                bytes[offset + 17],
+                bytes[offset + 18],
+                bytes[offset + 19],
+            ]);
             let cd_compressed_size = u32::from_le_bytes([
                 bytes[offset + 20],
                 bytes[offset + 21],
@@ -177,18 +190,29 @@ impl ZipArchive {
             ]) as usize;
 
             let filename_start = offset + 46;
-            let filename_end = filename_start + filename_len;
-            if filename_end > bytes.len() {
+            let Some(filename_end) = filename_start.checked_add(filename_len) else {
+                return Err(ZipError::UnexpectedEof);
+            };
+            let Some(next_offset) = filename_end
+                .checked_add(extra_len)
+                .and_then(|n| n.checked_add(comment_len))
+            else {
+                return Err(ZipError::UnexpectedEof);
+            };
+            if next_offset > cd_end {
                 return Err(ZipError::UnexpectedEof);
             }
             let filename =
                 String::from_utf8_lossy(&bytes[filename_start..filename_end]).to_string();
 
-            offset = filename_end + extra_len + comment_len;
+            offset = next_offset;
 
-            // Extract entry from local header
-            if local_header_offset + 30 > bytes.len() {
-                continue;
+            // Validate and extract entry from local file header
+            let Some(local_fixed_end) = local_header_offset.checked_add(30) else {
+                return Err(ZipError::UnexpectedEof);
+            };
+            if local_fixed_end > bytes.len() {
+                return Err(ZipError::UnexpectedEof);
             }
             let local_sig = u32::from_le_bytes([
                 bytes[local_header_offset],
@@ -197,7 +221,7 @@ impl ZipArchive {
                 bytes[local_header_offset + 3],
             ]);
             if local_sig != 0x04034b50 {
-                continue;
+                return Err(ZipError::InvalidSignature);
             }
             let local_fn_len = u16::from_le_bytes([
                 bytes[local_header_offset + 26],
@@ -207,25 +231,20 @@ impl ZipArchive {
                 bytes[local_header_offset + 28],
                 bytes[local_header_offset + 29],
             ]) as usize;
-            let local_compressed_size = u32::from_le_bytes([
-                bytes[local_header_offset + 18],
-                bytes[local_header_offset + 19],
-                bytes[local_header_offset + 20],
-                bytes[local_header_offset + 21],
-            ]) as usize;
-            let compressed_size = if cd_compressed_size != 0 {
-                cd_compressed_size
-            } else {
-                local_compressed_size
-            };
+            let compressed_size = cd_compressed_size;
             let uncompressed_size = cd_uncompressed_size;
 
-            let data_start = local_header_offset + 30 + local_fn_len + local_extra_len;
+            let Some(data_start) = local_fixed_end
+                .checked_add(local_fn_len)
+                .and_then(|n| n.checked_add(local_extra_len))
+            else {
+                return Err(ZipError::UnexpectedEof);
+            };
             let Some(data_end) = data_start.checked_add(compressed_size) else {
-                continue;
+                return Err(ZipError::UnexpectedEof);
             };
             if data_end > bytes.len() {
-                continue;
+                return Err(ZipError::UnexpectedEof);
             }
 
             let normalized_path = if filename.starts_with('/') {
@@ -247,15 +266,40 @@ impl ZipArchive {
                 // File entry
                 let compressed_data = &bytes[data_start..data_end];
                 let decompressed = match method {
-                    0 => compressed_data.to_vec(),
+                    0 => {
+                        if compressed_data.len() != uncompressed_size {
+                            return Err(ZipError::CorruptedData("Stored entry size mismatch"));
+                        }
+                        compressed_data.to_vec()
+                    }
                     8 => inflate(compressed_data, uncompressed_size)?,
                     other => return Err(ZipError::UnsupportedCompression(other)),
                 };
+                if decompressed.len() != uncompressed_size {
+                    return Err(ZipError::CorruptedData("Decompressed entry size mismatch"));
+                }
+                if compute_crc32(&decompressed) != cd_crc32 {
+                    return Err(ZipError::CorruptedData("Entry CRC-32 mismatch"));
+                }
+                archive
+                    .dos_mtimes
+                    .insert(normalized_path.clone(), (dos_time, dos_date));
                 archive.add_file(normalized_path, decompressed);
             }
         }
 
+        if offset != cd_end {
+            return Err(ZipError::CorruptedData(
+                "Central directory size does not match entry count",
+            ));
+        }
+
         Ok(archive)
+    }
+
+    pub fn entry_dos_mtime(&self, path: &str) -> Option<(u16, u16)> {
+        let norm = normalize_zip_path(path);
+        self.dos_mtimes.get(&norm).copied()
     }
 
     fn add_directory_hierarchy(&mut self, dir_path: &str) {
@@ -409,7 +453,10 @@ fn find_eocd(bytes: &[u8]) -> Result<usize, ZipError> {
             && bytes[pos + 2] == 0x05
             && bytes[pos + 3] == 0x06
         {
-            return Ok(pos);
+            let comment_len = u16::from_le_bytes([bytes[pos + 20], bytes[pos + 21]]) as usize;
+            if pos + 22 + comment_len == bytes.len() {
+                return Ok(pos);
+            }
         }
     }
     Err(ZipError::InvalidSignature)
@@ -727,6 +774,312 @@ fn decode_huffman_block(
         }
     }
     Ok(())
+}
+
+/// Fixed DOS mtime `1980-02-01 00:00:00` matching `ProjectPackager.ZIP_ENTRY_MTIME`.
+pub const PACKAGE_ZIP_DOS_TIME: u16 = 0x0000;
+/// DOS date `((1980 - 1980) << 9) | (2 << 5) | 1 = 0x0041` (`1980-02-01`).
+pub const PACKAGE_ZIP_DOS_DATE: u16 = 0x0041;
+
+/// Helper to pack entries into a deterministic RFC 1951 DEFLATE (method 8) ZIP archive
+/// with fixed DOS mtime `1980-02-01 00:00:00`, UTF-8 filenames, sorted normalized relative
+/// paths, and no directory entries (matching `ProjectPackager.createPackageZipAndComputeChecksum`).
+///
+/// Empty input emits the exact 22-byte EOCD record (`SHA-256 = 8739c76e...76d85`).
+pub fn build_deterministic_package_zip(entries: &[(&str, &[u8])]) -> Vec<u8> {
+    let mut sorted: Vec<(String, &[u8])> = entries
+        .iter()
+        .map(|(name, bytes)| {
+            let clean = name.replace('\\', "/");
+            let trimmed = clean.trim_start_matches('/').to_string();
+            (trimmed, *bytes)
+        })
+        .collect();
+    sorted.sort_by(|(a, _), (b, _)| a.cmp(b));
+
+    let mut zip = Vec::new();
+    let mut cd = Vec::new();
+    const UTF8_FLAG: u16 = 0x0800;
+
+    for (name, content) in &sorted {
+        let offset = zip.len() as u32;
+        let fn_bytes = name.as_bytes();
+        let fn_len = fn_bytes.len() as u16;
+        let uncompressed_size = content.len() as u32;
+        let crc = compute_crc32(content);
+        let compressed = deflate_raw(content);
+        let compressed_size = compressed.len() as u32;
+
+        // Local header (30 bytes)
+        zip.extend_from_slice(&0x04034b50u32.to_le_bytes());
+        zip.extend_from_slice(&20u16.to_le_bytes()); // version needed (2.0 for DEFLATE)
+        zip.extend_from_slice(&UTF8_FLAG.to_le_bytes());
+        zip.extend_from_slice(&8u16.to_le_bytes()); // method 8 (DEFLATE)
+        zip.extend_from_slice(&PACKAGE_ZIP_DOS_TIME.to_le_bytes());
+        zip.extend_from_slice(&PACKAGE_ZIP_DOS_DATE.to_le_bytes());
+        zip.extend_from_slice(&crc.to_le_bytes());
+        zip.extend_from_slice(&compressed_size.to_le_bytes());
+        zip.extend_from_slice(&uncompressed_size.to_le_bytes());
+        zip.extend_from_slice(&fn_len.to_le_bytes());
+        zip.extend_from_slice(&0u16.to_le_bytes()); // extra len
+        zip.extend_from_slice(fn_bytes);
+        zip.extend_from_slice(&compressed);
+
+        // Central directory entry (46 bytes)
+        cd.extend_from_slice(&0x02014b50u32.to_le_bytes());
+        cd.extend_from_slice(&20u16.to_le_bytes()); // version made by
+        cd.extend_from_slice(&20u16.to_le_bytes()); // version needed
+        cd.extend_from_slice(&UTF8_FLAG.to_le_bytes());
+        cd.extend_from_slice(&8u16.to_le_bytes()); // method 8 (DEFLATE)
+        cd.extend_from_slice(&PACKAGE_ZIP_DOS_TIME.to_le_bytes());
+        cd.extend_from_slice(&PACKAGE_ZIP_DOS_DATE.to_le_bytes());
+        cd.extend_from_slice(&crc.to_le_bytes());
+        cd.extend_from_slice(&compressed_size.to_le_bytes());
+        cd.extend_from_slice(&uncompressed_size.to_le_bytes());
+        cd.extend_from_slice(&fn_len.to_le_bytes());
+        cd.extend_from_slice(&0u16.to_le_bytes()); // extra len
+        cd.extend_from_slice(&0u16.to_le_bytes()); // comment len
+        cd.extend_from_slice(&0u16.to_le_bytes()); // disk start
+        cd.extend_from_slice(&0u16.to_le_bytes()); // internal attrs
+        cd.extend_from_slice(&0u32.to_le_bytes()); // external attrs
+        cd.extend_from_slice(&offset.to_le_bytes());
+        cd.extend_from_slice(fn_bytes);
+    }
+
+    let cd_offset = zip.len() as u32;
+    let cd_size = cd.len() as u32;
+    let num_entries = sorted.len() as u16;
+
+    zip.extend_from_slice(&cd);
+
+    // EOCD (22 bytes)
+    zip.extend_from_slice(&0x06054b50u32.to_le_bytes());
+    zip.extend_from_slice(&0u16.to_le_bytes()); // disk num
+    zip.extend_from_slice(&0u16.to_le_bytes()); // cd start disk
+    zip.extend_from_slice(&num_entries.to_le_bytes());
+    zip.extend_from_slice(&num_entries.to_le_bytes());
+    zip.extend_from_slice(&cd_size.to_le_bytes());
+    zip.extend_from_slice(&cd_offset.to_le_bytes());
+    zip.extend_from_slice(&0u16.to_le_bytes()); // comment len
+
+    zip
+}
+
+/// Deterministic pure-Rust RFC 1951 raw DEFLATE encoder (LZ77 + Fixed Huffman, with
+/// automatic stored-block fallback when uncompressed DEFLATE blocks are smaller).
+pub fn deflate_raw(input: &[u8]) -> Vec<u8> {
+    if input.is_empty() {
+        // BFINAL=1, BTYPE=01 (fixed Huffman), EOB symbol 256 (7 zero bits)
+        return vec![0x03, 0x00];
+    }
+    let fixed = deflate_fixed_huffman(input);
+    let stored_size = input.len() + input.len().div_ceil(65535) * 5;
+    if fixed.len() <= stored_size {
+        fixed
+    } else {
+        deflate_stored(input)
+    }
+}
+
+fn deflate_stored(input: &[u8]) -> Vec<u8> {
+    let mut out = Vec::with_capacity(input.len() + input.len().div_ceil(65535) * 5);
+    let mut offset = 0;
+    while offset < input.len() {
+        let chunk_len = (input.len() - offset).min(65535);
+        let is_final = offset + chunk_len == input.len();
+        out.push(if is_final { 0x01 } else { 0x00 }); // BFINAL, BTYPE=00
+        let len = chunk_len as u16;
+        let nlen = !len;
+        out.extend_from_slice(&len.to_le_bytes());
+        out.extend_from_slice(&nlen.to_le_bytes());
+        out.extend_from_slice(&input[offset..offset + chunk_len]);
+        offset += chunk_len;
+    }
+    out
+}
+
+struct BitWriter {
+    out: Vec<u8>,
+    bit_buf: u32,
+    bit_count: u32,
+}
+
+impl BitWriter {
+    fn with_capacity(cap: usize) -> Self {
+        Self {
+            out: Vec::with_capacity(cap),
+            bit_buf: 0,
+            bit_count: 0,
+        }
+    }
+
+    #[inline]
+    fn write_bits_lsb(&mut self, value: u32, count: u32) {
+        self.bit_buf |= value << self.bit_count;
+        self.bit_count += count;
+        while self.bit_count >= 8 {
+            self.out.push((self.bit_buf & 0xff) as u8);
+            self.bit_buf >>= 8;
+            self.bit_count -= 8;
+        }
+    }
+
+    #[inline]
+    fn write_huffman_msb(&mut self, code: u32, len: u32) {
+        let rev = (code.reverse_bits()) >> (32 - len);
+        self.write_bits_lsb(rev, len);
+    }
+
+    #[inline]
+    fn write_fixed_litlen(&mut self, sym: u16) {
+        match sym {
+            0..=143 => self.write_huffman_msb(0x30 + u32::from(sym), 8),
+            144..=255 => self.write_huffman_msb(0x190 + u32::from(sym - 144), 9),
+            256..=279 => self.write_huffman_msb(u32::from(sym - 256), 7),
+            280..=287 => self.write_huffman_msb(0xc0 + u32::from(sym - 280), 8),
+            _ => unreachable!("valid RFC 1951 litlen symbol"),
+        }
+    }
+
+    #[inline]
+    fn write_fixed_dist(&mut self, sym: u16) {
+        self.write_huffman_msb(u32::from(sym), 5);
+    }
+
+    fn finish(mut self) -> Vec<u8> {
+        if self.bit_count > 0 {
+            self.out.push((self.bit_buf & 0xff) as u8);
+            self.bit_buf = 0;
+            self.bit_count = 0;
+        }
+        self.out
+    }
+}
+
+fn deflate_fixed_huffman(input: &[u8]) -> Vec<u8> {
+    const WINDOW_SIZE: usize = 32768;
+    const HASH_BITS: usize = 14;
+    const HASH_SIZE: usize = 1 << HASH_BITS;
+    const HASH_MASK: usize = HASH_SIZE - 1;
+    const MAX_CHAIN: usize = 32;
+    const MAX_MATCH: usize = 258;
+    const MIN_MATCH: usize = 3;
+    const NIL: usize = usize::MAX;
+
+    let mut head = vec![NIL; HASH_SIZE];
+    let mut prev = vec![NIL; WINDOW_SIZE];
+    let mut bw = BitWriter::with_capacity(input.len() / 2 + 16);
+
+    // BFINAL=1, BTYPE=01 (fixed Huffman)
+    bw.write_bits_lsb(1, 1);
+    bw.write_bits_lsb(1, 2);
+
+    let hash3 = |pos: usize| -> usize {
+        let a = usize::from(input[pos]);
+        let b = usize::from(input[pos + 1]);
+        let c = usize::from(input[pos + 2]);
+        ((a << 10) ^ (b << 5) ^ c) & HASH_MASK
+    };
+
+    let mut pos = 0;
+    while pos < input.len() {
+        let mut best_len = 0usize;
+        let mut best_dist = 0usize;
+
+        if pos + MIN_MATCH <= input.len() {
+            let h = hash3(pos);
+            let mut cand = head[h];
+            prev[pos & (WINDOW_SIZE - 1)] = cand;
+            head[h] = pos;
+
+            let max_len = (input.len() - pos).min(MAX_MATCH);
+            let mut chain = 0;
+            while cand != NIL && chain < MAX_CHAIN {
+                let dist = pos - cand;
+                if dist == 0 || dist > WINDOW_SIZE {
+                    break;
+                }
+                if input[cand + best_len] == input[pos + best_len]
+                    && input[cand] == input[pos]
+                    && input[cand + 1] == input[pos + 1]
+                    && input[cand + 2] == input[pos + 2]
+                {
+                    let mut mlen = MIN_MATCH;
+                    while mlen < max_len && input[cand + mlen] == input[pos + mlen] {
+                        mlen += 1;
+                    }
+                    if mlen > best_len {
+                        best_len = mlen;
+                        best_dist = dist;
+                        if best_len == max_len {
+                            break;
+                        }
+                    }
+                }
+                let next = prev[cand & (WINDOW_SIZE - 1)];
+                if next >= cand {
+                    break;
+                }
+                cand = next;
+                chain += 1;
+            }
+        }
+
+        if best_len >= MIN_MATCH {
+            emit_length_distance(&mut bw, best_len as u16, best_dist as u16);
+            // Insert intermediate positions into hash chain
+            let end = (pos + best_len).min(input.len());
+            let mut p = pos + 1;
+            while p < end {
+                if p + MIN_MATCH <= input.len() {
+                    let h = hash3(p);
+                    prev[p & (WINDOW_SIZE - 1)] = head[h];
+                    head[h] = p;
+                }
+                p += 1;
+            }
+            pos += best_len;
+        } else {
+            bw.write_fixed_litlen(u16::from(input[pos]));
+            pos += 1;
+        }
+    }
+
+    // End of block (256)
+    bw.write_fixed_litlen(256);
+    bw.finish()
+}
+
+fn emit_length_distance(bw: &mut BitWriter, length: u16, distance: u16) {
+    let mut len_idx = 0usize;
+    while len_idx + 1 < LENGTH_BASE.len() && LENGTH_BASE[len_idx + 1] <= length {
+        len_idx += 1;
+    }
+    // Special case length == 258 uses symbol 285 (index 28, 0 extra bits)
+    if length == 258 {
+        len_idx = 28;
+    }
+    bw.write_fixed_litlen(257 + len_idx as u16);
+    let len_extra = LENGTH_EXTRA[len_idx];
+    if len_extra > 0 {
+        bw.write_bits_lsb(
+            u32::from(length - LENGTH_BASE[len_idx]),
+            u32::from(len_extra),
+        );
+    }
+
+    let mut dist_idx = 0usize;
+    while dist_idx + 1 < DISTANCE_BASE.len() && DISTANCE_BASE[dist_idx + 1] <= distance {
+        dist_idx += 1;
+    }
+    bw.write_fixed_dist(dist_idx as u16);
+    let dist_extra = DISTANCE_EXTRA[dist_idx];
+    if dist_extra > 0 {
+        bw.write_bits_lsb(
+            u32::from(distance - DISTANCE_BASE[dist_idx]),
+            u32::from(dist_extra),
+        );
+    }
 }
 
 /// Helper to pack entries into an uncompressed (method 0) ZIP archive.

@@ -1,18 +1,390 @@
 //! Pure package and project resolution logic inside `pkl-runtime`.
 //!
-//! Networking and filesystem I/O are completely delegated to the Host adapter outside `pkl-runtime`.
+//! Provides both:
+//! - First-class, session-owned [`PackageResolver`] (zero `thread_local!`, Wasm-pure,
+//!   supports disk-cache metadata+ZIP reads, corrupt-cache eviction, strict checksums,
+//!   `download_package`, `close()`, and [`MetadataChecksumProvider`] for MVS resolution).
+//! - Thin compatibility shims for M2 probes/tests (`with_package_host`, etc.) until Wave 2
+//!   unifies `module_eval_probe.rs` onto the session-owned resolver.
 use crate::modules::{ModuleHostError, ModuleSource, ResolvedModule};
-use crate::packages::cache::PackageCache;
-use crate::packages::metadata::{DependencyMetadata, accept_metadata};
+use crate::packages::cache::{PackageCache, PackageCacheStore};
+use crate::packages::http::{PackageTransport, RequestMetrics};
+use crate::packages::metadata::{
+    DependencyMetadata, accept_metadata, parse_metadata_bytes, sha256_hex,
+};
+use crate::packages::mvs::MetadataChecksumProvider;
 use crate::packages::project::{PklProject, resolve_project_dependency};
 use crate::packages::zip::ZipArchive;
-use crate::packages::{PackageAssetUri, PackageUri};
+use crate::packages::{CanonicalPackageUri, PackageAssetUri, PackageUri};
 use crate::value::PklString;
-use sha2::{Digest, Sha256};
 use std::cell::RefCell;
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
-use std::sync::Arc;
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::{Arc, RwLock};
+
+// ---------------------------------------------------------------------------
+// First-class, session-owned, Wasm-pure PackageResolver (M4)
+// ---------------------------------------------------------------------------
+
+/// Session-owned package resolver matching `PackageResolvers.{InMemory,DiskCached}PackageResolver`
+/// (`PackageResolvers.java:67-687`).
+///
+/// Uses zero `thread_local!` state, zero `unsafe`, and zero OS I/O (delegated via
+/// [`PackageTransport`] and optional [`PackageCacheStore`]).
+pub struct PackageResolver {
+    transport: Arc<dyn PackageTransport>,
+    cache_store: Option<Arc<dyn PackageCacheStore>>,
+    test_mode: bool,
+    metrics: RequestMetrics,
+    memory_cache: RwLock<PackageCache>,
+    closed: AtomicBool,
+}
+
+impl PackageResolver {
+    /// Creates an in-memory-only resolver (`--no-cache` or `ProjectPackager` publish check).
+    pub fn in_memory(transport: Arc<dyn PackageTransport>, test_mode: bool) -> Self {
+        Self {
+            transport,
+            cache_store: None,
+            test_mode,
+            metrics: RequestMetrics::new(),
+            memory_cache: RwLock::new(PackageCache::new()),
+            closed: AtomicBool::new(false),
+        }
+    }
+
+    /// Creates a disk-cached resolver backed by `cache_store`.
+    pub fn disk_cached(
+        transport: Arc<dyn PackageTransport>,
+        cache_store: Arc<dyn PackageCacheStore>,
+        test_mode: bool,
+    ) -> Self {
+        Self {
+            transport,
+            cache_store: Some(cache_store),
+            test_mode,
+            metrics: RequestMetrics::new(),
+            memory_cache: RwLock::new(PackageCache::new()),
+            closed: AtomicBool::new(false),
+        }
+    }
+
+    pub fn metrics(&self) -> &RequestMetrics {
+        &self.metrics
+    }
+
+    pub fn has_persistent_cache(&self) -> bool {
+        self.cache_store.is_some()
+    }
+
+    pub fn is_closed(&self) -> bool {
+        self.closed.load(Ordering::Acquire)
+    }
+
+    /// Closes this resolver and releases all in-memory archive caches (`PackageResolvers.java:677-686`).
+    pub fn close(&self) {
+        self.closed.store(true, Ordering::Release);
+        self.memory_cache
+            .write()
+            .unwrap_or_else(|e| e.into_inner())
+            .clear();
+    }
+
+    fn ensure_open(&self) -> Result<(), ModuleHostError> {
+        if self.is_closed() {
+            return Err(ModuleHostError::Io(
+                "Package resolver has been closed.".into(),
+            ));
+        }
+        Ok(())
+    }
+
+    /// Loads `DependencyMetadata` (and optionally returns raw metadata bytes) obeying
+    /// Pkl 0.32 disk-cache precedence, checksum checks, and corrupt-`.json` eviction.
+    pub fn get_dependency_metadata(
+        &self,
+        package: &PackageUri,
+        expected_checksum: Option<&PklString>,
+    ) -> Result<DependencyMetadata, ModuleHostError> {
+        let (meta, _) = self.load_metadata_and_bytes(package, expected_checksum, true)?;
+        Ok(meta)
+    }
+
+    fn load_metadata_and_bytes(
+        &self,
+        package: &PackageUri,
+        expected_checksum: Option<&PklString>,
+        write_disk_cache: bool,
+    ) -> Result<(DependencyMetadata, Vec<u8>), ModuleHostError> {
+        self.ensure_open()?;
+        let request_uri = crate::packages::http::get_metadata_request_uri(package);
+        let effective_expected = expected_checksum.or(package.sha256.as_ref());
+        {
+            let guard = self.memory_cache.read().unwrap_or_else(|e| e.into_inner());
+            if let (Some(meta), Some(bytes)) = (
+                guard.get_metadata(package),
+                guard.get_metadata_bytes(package),
+            ) {
+                if let Some(expected) = effective_expected {
+                    accept_metadata(
+                        package,
+                        &request_uri,
+                        &bytes,
+                        Some(expected),
+                        self.test_mode,
+                    )
+                    .map_err(|failure| {
+                        ModuleHostError::SecurityManagerException {
+                            message: Some(failure.message()),
+                        }
+                    })?;
+                }
+                return Ok((meta, bytes));
+            }
+        }
+
+        // 1. Check persistent disk cache first (`PackageResolvers.java:512-556`)
+        if let Some(store) = &self.cache_store
+            && let Some(cached_bytes) = store.read_metadata_bytes(package)?
+        {
+            match parse_metadata_bytes(package, &request_uri, &cached_bytes) {
+                Ok(meta) => {
+                    let mut guard = self.memory_cache.write().unwrap_or_else(|e| e.into_inner());
+                    guard.insert_metadata(package, meta.clone());
+                    guard.insert_metadata_bytes(package, cached_bytes.clone());
+                    return Ok((meta, cached_bytes));
+                }
+                Err(failure) => {
+                    // Delete corrupt cached `.json` file matching `PackageResolvers.java:544,553`
+                    let _ = store.delete_metadata(package);
+                    return Err(ModuleHostError::SecurityManagerException {
+                        message: Some(failure.message()),
+                    });
+                }
+            }
+        }
+
+        // 2. Cache miss -> fetch over HTTPS & verify metadata checksum BEFORE caching/parsing
+        crate::packages::http::validate_metadata_url(request_uri.as_str().unwrap_or(""))?;
+        self.metrics.record_metadata();
+        let metadata_bytes = self.transport.fetch_metadata(package, &request_uri)?;
+
+        let meta = accept_metadata(
+            package,
+            &request_uri,
+            &metadata_bytes,
+            effective_expected,
+            self.test_mode,
+        )
+        .map_err(|failure| ModuleHostError::SecurityManagerException {
+            message: Some(failure.message()),
+        })?;
+
+        if write_disk_cache && let Some(store) = &self.cache_store {
+            store.write_metadata_bytes(package, &metadata_bytes)?;
+        }
+        {
+            let mut guard = self.memory_cache.write().unwrap_or_else(|e| e.into_inner());
+            guard.insert_metadata(package, meta.clone());
+            guard.insert_metadata_bytes(package, metadata_bytes.clone());
+        }
+        Ok((meta, metadata_bytes))
+    }
+
+    /// Loads and verifies the package ZIP archive (never skips ZIP SHA-256 verification).
+    pub fn get_archive(
+        &self,
+        package: &PackageUri,
+        expected_checksum: Option<&PklString>,
+    ) -> Result<(DependencyMetadata, ZipArchive), ModuleHostError> {
+        self.ensure_open()?;
+        let metadata = self.get_dependency_metadata(package, expected_checksum)?;
+
+        if let Some(archive) = self
+            .memory_cache
+            .read()
+            .unwrap_or_else(|e| e.into_inner())
+            .get_archive(package)
+        {
+            return Ok((metadata, archive));
+        }
+
+        // 1. Check persistent disk cache (corrupt cached ZIP propagates error!)
+        if let Some(store) = &self.cache_store
+            && let Some(archive) = store.read_zip_archive(package)?
+        {
+            self.memory_cache
+                .write()
+                .unwrap_or_else(|e| e.into_inner())
+                .insert_archive(package, archive.clone());
+            return Ok((metadata, archive));
+        }
+
+        // 2. Download ZIP over HTTPS & strictly verify SHA-256 (`PackageResolvers.java:181-194`)
+        self.metrics.record_zip();
+        let zip_bytes = self
+            .transport
+            .fetch_zip(package, &metadata.package_zip_url)?;
+
+        verify_zip_checksum(package, &metadata, &zip_bytes)?;
+
+        // 3. Strictly parse ZIP (CRC-32, decompressed length, EOCD/CD bounds)
+        let archive = ZipArchive::parse(&zip_bytes).map_err(|err| {
+            ModuleHostError::Io(format!("Failed to parse ZIP archive: {err}").into())
+        })?;
+
+        if let Some(store) = &self.cache_store {
+            store.write_zip_bytes(package, &zip_bytes)?;
+        }
+        self.memory_cache
+            .write()
+            .unwrap_or_else(|e| e.into_inner())
+            .insert_archive(package, archive.clone());
+
+        Ok((metadata, archive))
+    }
+
+    /// Reads an asset file or directory listing inside a package.
+    pub fn get_bytes(
+        &self,
+        asset_uri: &PackageAssetUri,
+        allow_directories: bool,
+        expected_checksum: Option<&PklString>,
+    ) -> Result<Vec<u8>, ModuleHostError> {
+        let (_, archive) = self.get_archive(&asset_uri.package, expected_checksum)?;
+        let asset_path = asset_uri.asset_path.as_str().unwrap_or("");
+        match archive.read_bytes(asset_path, allow_directories) {
+            Ok(bytes) => Ok(bytes),
+            Err(crate::packages::zip::ZipReadError::IsADirectory) => Err(ModuleHostError::Io(
+                crate::host::IoFailure::from("Is a directory"),
+            )),
+            Err(crate::packages::zip::ZipReadError::NotFound) => Err(ModuleHostError::NotFound),
+        }
+    }
+
+    pub fn has_element(
+        &self,
+        asset_uri: &PackageAssetUri,
+        expected_checksum: Option<&PklString>,
+    ) -> Result<bool, ModuleHostError> {
+        let (_, archive) = self.get_archive(&asset_uri.package, expected_checksum)?;
+        Ok(archive.has_element(asset_uri.asset_path.as_str().unwrap_or("")))
+    }
+
+    pub fn list_elements(
+        &self,
+        asset_uri: &PackageAssetUri,
+        expected_checksum: Option<&PklString>,
+    ) -> Result<Vec<crate::glob::PathElement>, ModuleHostError> {
+        let (_, archive) = self.get_archive(&asset_uri.package, expected_checksum)?;
+        let entries = archive.list_elements(asset_uri.asset_path.as_str().unwrap_or(""));
+        Ok(entries
+            .into_iter()
+            .map(|(name, is_directory)| crate::glob::PathElement {
+                name: name.into(),
+                is_directory,
+            })
+            .collect())
+    }
+
+    /// Downloads a package (and optionally its transitive dependencies) into the persistent cache
+    /// (`PackageResolvers.java:610-620`, `CliPackageDownloader.kt:24-63`).
+    pub fn download_package(
+        &self,
+        package: &PackageUri,
+        expected_checksum: Option<&PklString>,
+        no_transitive: bool,
+    ) -> Result<Vec<PackageUri>, ModuleHostError> {
+        self.ensure_open()?;
+        if self.cache_store.is_none() {
+            return Err(ModuleHostError::EvalError {
+                message: "Cannot download packages because caching is disabled.".into(),
+                hint: None,
+            });
+        }
+        let mut visited = BTreeSet::new();
+        let mut downloaded = Vec::new();
+        self.download_recursive(
+            package,
+            expected_checksum,
+            no_transitive,
+            &mut visited,
+            &mut downloaded,
+        )?;
+        Ok(downloaded)
+    }
+
+    fn download_recursive(
+        &self,
+        package: &PackageUri,
+        expected_checksum: Option<&PklString>,
+        no_transitive: bool,
+        visited: &mut BTreeSet<PackageUri>,
+        downloaded: &mut Vec<PackageUri>,
+    ) -> Result<(), ModuleHostError> {
+        let key = package.to_external_package_uri().without_checksums();
+        if !visited.insert(key) {
+            return Ok(());
+        }
+        let (metadata, _) = self.get_archive(package, expected_checksum)?;
+        downloaded.push(package.to_external_package_uri().without_checksums());
+        if !no_transitive {
+            for dep in &metadata.dependencies {
+                let dep_expected = if dep.sha256.is_empty() {
+                    None
+                } else {
+                    Some(&dep.sha256)
+                };
+                self.download_recursive(
+                    &dep.package_uri,
+                    dep_expected,
+                    false,
+                    visited,
+                    downloaded,
+                )?;
+            }
+        }
+        Ok(())
+    }
+}
+
+impl MetadataChecksumProvider for PackageResolver {
+    fn get_dependency_metadata_and_checksum(
+        &self,
+        package_uri: &PackageUri,
+    ) -> Result<(DependencyMetadata, PklString), ModuleHostError> {
+        // Matches `PackageResolvers.java:102-107, 623-632`: read disk cache if present,
+        // otherwise fetch over HTTPS without writing `.json` back into disk cache.
+        let (meta, raw_bytes) = self.load_metadata_and_bytes(package_uri, None, false)?;
+        let digest = PklString::from(sha256_hex(&raw_bytes).as_str());
+        Ok((meta, digest))
+    }
+}
+
+fn verify_zip_checksum(
+    package: &PackageUri,
+    metadata: &DependencyMetadata,
+    zip_bytes: &[u8],
+) -> Result<(), ModuleHostError> {
+    let computed_sha256 = sha256_hex(zip_bytes);
+    let expected_zip_sha256 = metadata.package_zip_sha256.as_str().unwrap_or("");
+    if computed_sha256 != expected_zip_sha256 {
+        let display = package.display_name();
+        let msg = format!(
+            "Cannot download package `{display}` because the computed checksum does not match the expected checksum.\n\nComputed checksum: \"{computed_sha256}\"\nExpected checksum: \"{expected_zip_sha256}\"\nAsset URL: \"{}\"",
+            metadata.package_zip_url
+        );
+        return Err(ModuleHostError::SecurityManagerException {
+            message: Some(msg.into()),
+        });
+    }
+    Ok(())
+}
+
+// ---------------------------------------------------------------------------
+// Backwards-compatible M2 thread-local shim (upgraded with M4 bug fixes)
+// ---------------------------------------------------------------------------
 
 /// Host interface required for package fetching, caching, and project loading.
 pub trait PackageHost: Send + Sync {
@@ -28,6 +400,27 @@ pub trait PackageHost: Send + Sync {
 
     /// Check if disk cache has archive for package.
     fn read_disk_archive(&self, package: &PackageUri) -> Option<ZipArchive>;
+
+    /// Checked disk-cache ZIP read: returns `Err` on corrupt/truncated ZIP instead of swallowing.
+    fn read_disk_archive_checked(
+        &self,
+        package: &PackageUri,
+    ) -> Result<Option<ZipArchive>, ModuleHostError> {
+        Ok(self.read_disk_archive(package))
+    }
+
+    /// Read cached metadata `.json` bytes from disk cache if present.
+    fn read_disk_metadata(
+        &self,
+        _package: &PackageUri,
+    ) -> Result<Option<Vec<u8>>, ModuleHostError> {
+        Ok(None)
+    }
+
+    /// Delete corrupt cached metadata `.json` from disk cache.
+    fn delete_disk_metadata(&self, _package: &PackageUri) -> Result<(), ModuleHostError> {
+        Ok(())
+    }
 
     /// Write archive to disk cache.
     fn write_disk_archive(
@@ -54,7 +447,7 @@ pub trait PackageHost: Send + Sync {
     /// List directory elements for globbing.
     fn list_dir(&self, path: &Path) -> Result<Vec<crate::glob::PathElement>, ModuleHostError>;
 
-    /// Whether test mode is active (allowing $skipChecksumVerification and $computedChecksum).
+    /// Whether test mode is active (allowing `$skipChecksumVerification` on metadata).
     fn is_test_mode(&self) -> bool;
 
     /// Whether project mode is active (explicit project dir or project found).
@@ -139,38 +532,44 @@ pub fn get_stored_source(uri: &str) -> Option<PklString> {
     SESSION_SOURCES.with(|s| s.borrow().get(uri).cloned())
 }
 
-/// Ensure that package metadata and archive are downloaded and cached.
-pub fn ensure_package_loaded(
+/// Ensure that package metadata is loaded (without downloading the ZIP archive).
+pub fn ensure_package_metadata_loaded(
     package: &PackageUri,
     expected_checksum: Option<&PklString>,
-) -> Result<(DependencyMetadata, ZipArchive), ModuleHostError> {
-    // 1. Check session in-memory cache
-    if let (Some(archive), Some(metadata)) = (
-        SESSION_CACHE.with(|c| c.borrow().get_archive(package)),
-        SESSION_CACHE.with(|c| c.borrow().get_metadata(package)),
-    ) {
-        return Ok((metadata, archive));
+) -> Result<(DependencyMetadata, Option<Vec<u8>>), ModuleHostError> {
+    if let Some(metadata) = SESSION_CACHE.with(|c| c.borrow().get_metadata(package)) {
+        let bytes = SESSION_CACHE.with(|c| c.borrow().get_metadata_bytes(package));
+        return Ok((metadata, bytes));
     }
 
-    // 2. Check disk cache if available
     let host_opt = CURRENT_HOST.with(|h| h.borrow().clone());
+    let metadata_request_uri = crate::packages::http::get_metadata_request_uri(package);
+
+    // 1. Check disk cache for metadata JSON first
     if let Some(host) = &host_opt
-        && let (Some(archive), Some(metadata)) = (
-            host.read_disk_archive(package),
-            SESSION_CACHE.with(|c| c.borrow().get_metadata(package)),
-        )
+        && let Some(cached_bytes) = host.read_disk_metadata(package)?
     {
-        SESSION_CACHE.with(|c| c.borrow_mut().insert_archive(package, archive.clone()));
-        return Ok((metadata, archive));
+        match parse_metadata_bytes(package, &metadata_request_uri, &cached_bytes) {
+            Ok(meta) => {
+                SESSION_CACHE.with(|c| {
+                    let mut cache = c.borrow_mut();
+                    cache.insert_metadata(package, meta.clone());
+                    cache.insert_metadata_bytes(package, cached_bytes.clone());
+                });
+                return Ok((meta, Some(cached_bytes)));
+            }
+            Err(failure) => {
+                let _ = host.delete_disk_metadata(package);
+                return Err(ModuleHostError::SecurityManagerException {
+                    message: Some(failure.message()),
+                });
+            }
+        }
     }
 
-    // 3. Metadata acquisition & verification sequence:
-    // Module/resource policy -> HTTP response -> checksum -> parser -> ZIP URL check
-    let metadata_request_uri = crate::packages::http::get_metadata_request_uri(package);
+    // 2. Fetch over HTTPS
     crate::packages::http::validate_metadata_url(metadata_request_uri.as_str().unwrap_or(""))?;
-
     crate::packages::http::record_metadata_request();
-
     let is_test_mode = host_opt.as_ref().is_some_and(|h| h.is_test_mode());
 
     let metadata_bytes = if let Some(host) = &host_opt {
@@ -187,20 +586,51 @@ pub fn ensure_package_loaded(
         });
     };
 
-    let metadata = match accept_metadata(
+    let metadata = accept_metadata(
         package,
         &metadata_request_uri,
         &metadata_bytes,
         expected_checksum.or(package.sha256.as_ref()),
         is_test_mode,
+    )
+    .map_err(|failure| ModuleHostError::SecurityManagerException {
+        message: Some(failure.message()),
+    })?;
+
+    SESSION_CACHE.with(|c| {
+        let mut cache = c.borrow_mut();
+        cache.insert_metadata(package, metadata.clone());
+        cache.insert_metadata_bytes(package, metadata_bytes.clone());
+    });
+
+    Ok((metadata, Some(metadata_bytes)))
+}
+
+/// Ensure that package metadata and archive are downloaded and cached.
+pub fn ensure_package_loaded(
+    package: &PackageUri,
+    expected_checksum: Option<&PklString>,
+) -> Result<(DependencyMetadata, ZipArchive), ModuleHostError> {
+    // 1. Check session in-memory cache
+    if let (Some(archive), Some(metadata)) = (
+        SESSION_CACHE.with(|c| c.borrow().get_archive(package)),
+        SESSION_CACHE.with(|c| c.borrow().get_metadata(package)),
     ) {
-        Ok(m) => m,
-        Err(failure) => {
-            return Err(ModuleHostError::SecurityManagerException {
-                message: Some(failure.message()),
-            });
-        }
-    };
+        return Ok((metadata, archive));
+    }
+
+    // 2. Ensure metadata is loaded (checks disk cache before network!)
+    let (metadata, metadata_bytes_opt) =
+        ensure_package_metadata_loaded(package, expected_checksum)?;
+
+    // 3. Check disk cache for ZIP archive (propagating corrupt ZIP errors!)
+    let host_opt = CURRENT_HOST.with(|h| h.borrow().clone());
+    if let Some(host) = &host_opt
+        && let Some(archive) = host.read_disk_archive_checked(package)?
+    {
+        SESSION_CACHE.with(|c| c.borrow_mut().insert_archive(package, archive.clone()));
+        return Ok((metadata, archive));
+    }
 
     // 4. Download package ZIP (only reached if metadata is valid!)
     crate::packages::http::record_zip_request();
@@ -213,37 +643,18 @@ pub fn ensure_package_loaded(
         ));
     };
 
-    // 5. Verify ZIP SHA-256 checksum
-    let computed_sha256: String = Sha256::digest(&zip_bytes)
-        .iter()
-        .map(|b| format!("{b:02x}"))
-        .collect();
-    let expected_zip_sha256 = metadata.package_zip_sha256.as_str().unwrap_or("");
-    let skip_zip_verification = (is_test_mode
-        && (expected_zip_sha256 == "$skipChecksumVerification"
-            || expected_zip_sha256 == "$computedChecksum"))
-        || expected_zip_sha256 == "$computedChecksum";
+    // 5. Verify ZIP SHA-256 checksum strictly (`PackageResolvers.java:181-194`)
+    verify_zip_checksum(package, &metadata, &zip_bytes)?;
 
-    if !skip_zip_verification && computed_sha256 != expected_zip_sha256 {
-        let display = metadata.package_uri.uri.as_str().unwrap_or("");
-        let msg = format!(
-            "Cannot download package `{display}` because the computed checksum does not match the expected checksum.\n\nComputed checksum: \"{computed_sha256}\"\nExpected checksum: \"{expected_zip_sha256}\"\nAsset URL: \"{}\"",
-            metadata.package_zip_url
-        );
-        return Err(ModuleHostError::SecurityManagerException {
-            message: Some(msg.into()),
-        });
-    }
-
-    // 6. Parse ZIP archive
-    let archive =
-        ZipArchive::parse(&zip_bytes).map_err(|err| ModuleHostError::SecurityManagerException {
-            message: Some(format!("Failed to parse ZIP archive: {err}").into()),
-        })?;
+    // 6. Strictly parse ZIP archive (CRC-32, length, EOCD/CD bounds)
+    let archive = ZipArchive::parse(&zip_bytes)
+        .map_err(|err| ModuleHostError::Io(format!("Failed to parse ZIP archive: {err}").into()))?;
 
     // 7. Store in caches
-    if let Some(host) = &host_opt {
-        let _ = host.write_disk_archive(package, &metadata_bytes, &zip_bytes);
+    if let Some(host) = &host_opt
+        && let Some(ref metadata_bytes) = metadata_bytes_opt
+    {
+        let _ = host.write_disk_archive(package, metadata_bytes, &zip_bytes);
     }
     SESSION_CACHE.with(|c| {
         let mut cache = c.borrow_mut();
@@ -272,31 +683,7 @@ pub fn file_uri_from_path(path: &Path) -> Result<String, ModuleHostError> {
 }
 
 pub fn percent_encode_fragment(fragment: &str) -> String {
-    let mut encoded = String::with_capacity(fragment.len());
-    let bytes = fragment.as_bytes();
-    let mut i = 0;
-    while i < bytes.len() {
-        let b = bytes[i];
-        if b == b'%'
-            && i + 2 < bytes.len()
-            && bytes[i + 1].is_ascii_hexdigit()
-            && bytes[i + 2].is_ascii_hexdigit()
-        {
-            encoded.push('%');
-            encoded.push(bytes[i + 1] as char);
-            encoded.push(bytes[i + 2] as char);
-            i += 3;
-            continue;
-        }
-        if b.is_ascii_alphanumeric() || b"-_.!~*'();/:@&=+$,?[]".contains(&b) {
-            encoded.push(b as char);
-        } else {
-            use std::fmt::Write;
-            let _ = write!(&mut encoded, "%{b:02X}");
-        }
-        i += 1;
-    }
-    encoded
+    crate::packages::zip::percent_encode_fragment(fragment)
 }
 
 fn map_package_uri_error(failure: crate::packages::PackageUriError) -> ModuleHostError {
@@ -329,6 +716,28 @@ pub fn normalize_local_subpath(raw_asset_path: &str) -> PathBuf {
     path
 }
 
+/// Finds the resolved project dependency entry for a `projectpackage:` URI using
+/// exact `CanonicalPackageUri` matching (preserving major-version separation).
+fn lookup_project_dep_by_canonical<'a>(
+    project: &'a PklProject,
+    package: &PackageUri,
+) -> Option<&'a crate::packages::project::ResolvedProjectDep> {
+    let canonical: CanonicalPackageUri = package.to_canonical();
+    if let Some(key) = canonical.as_str()
+        && let Some(dep) = project.dependencies.get(key)
+    {
+        return Some(dep);
+    }
+    for dep in project.dependencies.values() {
+        if let Ok(dep_pkg) = PackageUri::parse(dep.uri.clone())
+            && dep_pkg.to_canonical() == canonical
+        {
+            return Some(dep);
+        }
+    }
+    None
+}
+
 /// Returns the local filesystem PathBuf if the URI is a local project dependency.
 pub fn get_local_project_file_path(uri: &PklString) -> Option<PathBuf> {
     let raw_uri = uri.as_str().unwrap_or("");
@@ -342,17 +751,14 @@ pub fn get_local_project_file_path(uri: &PklString) -> Option<PathBuf> {
     if !project.deps_loaded {
         let _ = host_opt.load_project_dependencies(&mut project);
     }
-    for dep in project.dependencies.values() {
-        let dep_uri_str = dep.uri.as_str().unwrap_or("");
-        if raw_uri.starts_with(dep_uri_str)
-            && dep.dep_type == "local"
-            && let Some(rel_path) = &dep.path
-        {
-            let local_root = project.project_dir.join(rel_path);
-            let raw_subpath = asset_uri.asset_path.as_str().unwrap_or("");
-            let local_subpath = normalize_local_subpath(raw_subpath);
-            return Some(local_root.join(local_subpath));
-        }
+    let dep = lookup_project_dep_by_canonical(&project, &asset_uri.package)?;
+    if dep.dep_type == "local"
+        && let Some(rel_path) = &dep.path
+    {
+        let local_root = project.project_dir.join(rel_path);
+        let raw_subpath = asset_uri.asset_path.as_str().unwrap_or("");
+        let local_subpath = normalize_local_subpath(raw_subpath);
+        return Some(local_root.join(local_subpath));
     }
     None
 }
@@ -366,7 +772,6 @@ pub fn resolve_package_module(uri: &PklString) -> Result<ResolvedModule, ModuleH
     }
 
     let asset_uri = PackageAssetUri::parse(uri.clone()).map_err(map_package_uri_error)?;
-
     let (_, archive) = ensure_package_loaded(&asset_uri.package, None)?;
 
     let asset_path = asset_uri.asset_path.as_str().unwrap_or("");
@@ -390,127 +795,148 @@ pub fn resolve_package_module(uri: &PklString) -> Result<ResolvedModule, ModuleH
     })
 }
 
-/// Resolves a projectpackage: module URI (which can be local or remote).
+/// Resolves a `projectpackage:` module URI (local or remote with mandatory lockfile lookup & checksum).
 pub fn resolve_projectpackage_module(uri: &PklString) -> Result<ResolvedModule, ModuleHostError> {
     let raw_uri = uri.as_str().unwrap_or("");
     let asset_uri = PackageAssetUri::parse(uri.clone()).map_err(map_package_uri_error)?;
 
-    // Check project dependencies if host is available
     let host_opt = CURRENT_HOST.with(|h| h.borrow().clone());
     if let Some(host) = &host_opt
         && let Some(project_dir) = host.find_project_dir(&PathBuf::from("."))
         && let Ok(mut project) = host.load_project(&project_dir)
     {
         if !project.deps_loaded {
-            let _ = host.load_project_dependencies(&mut project);
+            host.load_project_dependencies(&mut project)?;
         }
-        for dep in project.dependencies.values() {
-            let dep_uri_str = dep.uri.as_str().unwrap_or("");
-            if dep_uri_str.starts_with(
-                asset_uri
-                    .package
-                    .path_without_version
-                    .as_str()
-                    .unwrap_or(""),
-            ) || raw_uri.starts_with(dep_uri_str)
-            {
-                if dep.dep_type == "local"
-                    && let Some(rel_path) = &dep.path
-                {
-                    let local_root = project.project_dir.join(rel_path);
-                    let raw_subpath = asset_uri.asset_path.as_str().unwrap_or("");
-                    let local_subpath = normalize_local_subpath(raw_subpath);
-                    let file_path = local_root.join(&local_subpath);
-                    let bytes = host.read_file(&file_path)?;
-                    let text_str = std::str::from_utf8(&bytes).map_err(|_| {
-                        ModuleHostError::Unsupported("Project module must be valid UTF-8".into())
-                    })?;
-                    let text_pkl = PklString::from(text_str);
-                    store_source(raw_uri, text_pkl.clone());
-                    let resolved_file_uri = file_uri_from_path(&file_path)?;
-                    store_source(&resolved_file_uri, text_pkl);
-                    return Ok(ResolvedModule {
-                        original_uri: uri.clone(),
-                        resolved_uri: resolved_file_uri.into(),
-                        source_uri: uri.clone(),
-                    });
-                } else if dep.dep_type == "remote" {
-                    let (_, archive) =
-                        ensure_package_loaded(&asset_uri.package, dep.sha256.as_ref())?;
-                    let asset_path = asset_uri.asset_path.as_str().unwrap_or("");
-                    if archive.is_directory(asset_path) {
-                        return Err(ModuleHostError::Io(crate::host::IoFailure::from(
-                            "Is a directory",
-                        )));
-                    }
-                    let bytes = archive.get(asset_path).ok_or(ModuleHostError::NotFound)?;
-                    let text_str = std::str::from_utf8(bytes).map_err(|_| {
-                        ModuleHostError::Unsupported("Package module must be valid UTF-8".into())
-                    })?;
-                    let text = PklString::from(text_str);
-                    store_source(raw_uri, text);
-                    return Ok(ResolvedModule {
-                        original_uri: uri.clone(),
-                        resolved_uri: uri.clone(),
-                        source_uri: uri.clone(),
-                    });
-                }
+        let Some(dep) = lookup_project_dep_by_canonical(&project, &asset_uri.package) else {
+            return Err(ModuleHostError::SecurityManagerException {
+                message: Some(
+                    format!(
+                        "Did not find a resolved dependency for package `{}`.\n\nRun `pkl project resolve` to update resolved dependencies.",
+                        asset_uri.package.uri
+                    )
+                    .into(),
+                ),
+            });
+        };
+        if dep.dep_type == "local"
+            && let Some(rel_path) = &dep.path
+        {
+            let local_root = project.project_dir.join(rel_path);
+            let raw_subpath = asset_uri.asset_path.as_str().unwrap_or("");
+            let local_subpath = normalize_local_subpath(raw_subpath);
+            let file_path = local_root.join(&local_subpath);
+            let bytes = host.read_file(&file_path)?;
+            let text_str = std::str::from_utf8(&bytes).map_err(|_| {
+                ModuleHostError::Unsupported("Project module must be valid UTF-8".into())
+            })?;
+            let text_pkl = PklString::from(text_str);
+            store_source(raw_uri, text_pkl.clone());
+            let resolved_file_uri = file_uri_from_path(&file_path)?;
+            store_source(&resolved_file_uri, text_pkl);
+            return Ok(ResolvedModule {
+                original_uri: uri.clone(),
+                resolved_uri: resolved_file_uri.into(),
+                source_uri: uri.clone(),
+            });
+        } else {
+            let (_, archive) = ensure_package_loaded(&asset_uri.package, dep.sha256.as_ref())?;
+            let asset_path = asset_uri.asset_path.as_str().unwrap_or("");
+            if archive.is_directory(asset_path) {
+                return Err(ModuleHostError::Io(crate::host::IoFailure::from(
+                    "Is a directory",
+                )));
             }
+            let bytes = archive.get(asset_path).ok_or(ModuleHostError::NotFound)?;
+            let text_str = std::str::from_utf8(bytes).map_err(|_| {
+                ModuleHostError::Unsupported("Package module must be valid UTF-8".into())
+            })?;
+            let text = PklString::from(text_str);
+            store_source(raw_uri, text);
+            return Ok(ResolvedModule {
+                original_uri: uri.clone(),
+                resolved_uri: uri.clone(),
+                source_uri: uri.clone(),
+            });
         }
     }
 
-    // Fallback to loading as regular package
-    let (_, archive) = ensure_package_loaded(&asset_uri.package, None)?;
-    let asset_path = asset_uri.asset_path.as_str().unwrap_or("");
-    if archive.is_directory(asset_path) {
-        return Err(ModuleHostError::Io(crate::host::IoFailure::from(
-            "Is a directory",
-        )));
-    }
-    let bytes = archive.get(asset_path).ok_or(ModuleHostError::NotFound)?;
-    let text_str = std::str::from_utf8(bytes)
-        .map_err(|_| ModuleHostError::Unsupported("Package module must be valid UTF-8".into()))?;
-    let text = PklString::from(text_str);
-    store_source(raw_uri, text);
-
-    Ok(ResolvedModule {
-        original_uri: uri.clone(),
-        resolved_uri: uri.clone(),
-        source_uri: uri.clone(),
+    Err(ModuleHostError::SecurityManagerException {
+        message: Some(
+            format!(
+                "Did not find a resolved dependency for package `{}`.\n\nRun `pkl project resolve` to update resolved dependencies.",
+                asset_uri.package.uri
+            )
+            .into(),
+        ),
     })
 }
 
-/// Resolves raw resource bytes for `read("package:...")` or `read("projectpackage:...")`.
+/// Helper for `projectpackage:` resource/glob/has_element: resolves local path OR mandatory remote checksum.
+enum ProjectPackageTarget {
+    LocalPath(PathBuf),
+    Remote { expected_sha256: Option<PklString> },
+}
+
+fn resolve_projectpackage_target(
+    asset_uri: &PackageAssetUri,
+) -> Result<ProjectPackageTarget, ModuleHostError> {
+    let host_opt = CURRENT_HOST.with(|h| h.borrow().clone());
+    if let Some(host) = &host_opt
+        && let Some(project_dir) = host.find_project_dir(&PathBuf::from("."))
+        && let Ok(mut project) = host.load_project(&project_dir)
+    {
+        if !project.deps_loaded {
+            host.load_project_dependencies(&mut project)?;
+        }
+        if let Some(dep) = lookup_project_dep_by_canonical(&project, &asset_uri.package) {
+            if dep.dep_type == "local"
+                && let Some(rel_path) = &dep.path
+            {
+                let local_root = project.project_dir.join(rel_path);
+                let raw_subpath = asset_uri.asset_path.as_str().unwrap_or("");
+                let local_subpath = normalize_local_subpath(raw_subpath);
+                return Ok(ProjectPackageTarget::LocalPath(
+                    local_root.join(local_subpath),
+                ));
+            }
+            return Ok(ProjectPackageTarget::Remote {
+                expected_sha256: dep.sha256.clone(),
+            });
+        }
+    }
+    Err(ModuleHostError::SecurityManagerException {
+        message: Some(
+            format!(
+                "Did not find a resolved dependency for package `{}`.\n\nRun `pkl project resolve` to update resolved dependencies.",
+                asset_uri.package.uri
+            )
+            .into(),
+        ),
+    })
+}
+
+/// Resolves raw resource bytes for `read("package:...")` or `read("projectpackage:...")`
+/// (enforcing lockfile SHA-256 on remote `projectpackage:` resources).
 pub fn resolve_package_resource(uri: &PklString) -> Result<Vec<u8>, ModuleHostError> {
     let raw_uri = uri.as_str().unwrap_or("");
     let asset_uri = PackageAssetUri::parse(uri.clone()).map_err(map_package_uri_error)?;
 
-    if raw_uri.starts_with("projectpackage:") {
-        let host_opt = CURRENT_HOST.with(|h| h.borrow().clone());
-        if let Some(host) = &host_opt
-            && let Some(project_dir) = host.find_project_dir(&PathBuf::from("."))
-            && let Ok(mut project) = host.load_project(&project_dir)
-        {
-            if !project.deps_loaded {
-                let _ = host.load_project_dependencies(&mut project);
+    let expected_checksum = if raw_uri.starts_with("projectpackage:") {
+        match resolve_projectpackage_target(&asset_uri)? {
+            ProjectPackageTarget::LocalPath(file_path) => {
+                let host = CURRENT_HOST
+                    .with(|h| h.borrow().clone())
+                    .ok_or(ModuleHostError::NotFound)?;
+                return host.read_file(&file_path);
             }
-            for dep in project.dependencies.values() {
-                let dep_uri_str = dep.uri.as_str().unwrap_or("");
-                if raw_uri.starts_with(dep_uri_str)
-                    && dep.dep_type == "local"
-                    && let Some(rel_path) = &dep.path
-                {
-                    let local_root = project.project_dir.join(rel_path);
-                    let raw_subpath = asset_uri.asset_path.as_str().unwrap_or("");
-                    let local_subpath = normalize_local_subpath(raw_subpath);
-                    let file_path = local_root.join(&local_subpath);
-                    return host.read_file(&file_path);
-                }
-            }
+            ProjectPackageTarget::Remote { expected_sha256 } => expected_sha256,
         }
-    }
+    } else {
+        None
+    };
 
-    let (_, archive) = ensure_package_loaded(&asset_uri.package, None)?;
+    let (_, archive) = ensure_package_loaded(&asset_uri.package, expected_checksum.as_ref())?;
     let asset_path = asset_uri.asset_path.as_str().unwrap_or("");
     match archive.read_bytes(asset_path, true) {
         Ok(bytes) => Ok(bytes),
@@ -548,6 +974,8 @@ pub fn resolve_import_uri(
         {
             let host_opt = CURRENT_HOST.with(|h| h.borrow().clone());
             let mut local_match = None;
+            let mut remote_expected_sha: Option<PklString> = None;
+
             // In Java Pkl, only `projectpackage:` scheme consults ProjectDependenciesManager.
             // Absolute `package:` scheme imports resolve dependencies strictly from package metadata.
             if base_str.starts_with("projectpackage:")
@@ -558,10 +986,8 @@ pub fn resolve_import_uri(
                 if !project.deps_loaded {
                     let _ = host.load_project_dependencies(&mut project);
                 }
-                for dep in project.dependencies.values() {
-                    let dep_uri_str = dep.uri.as_str().unwrap_or("");
-                    if base_str.starts_with(dep_uri_str)
-                        && dep.dep_type == "local"
+                if let Some(dep) = lookup_project_dep_by_canonical(&project, &asset_uri.package) {
+                    if dep.dep_type == "local"
                         && let Some(rel_path) = &dep.path
                     {
                         let local_root = project.project_dir.join(rel_path);
@@ -570,8 +996,9 @@ pub fn resolve_import_uri(
                                 let _ = host.load_project_dependencies(&mut local_proj);
                             }
                             local_match = Some((project, local_proj));
-                            break;
                         }
+                    } else {
+                        remote_expected_sha = dep.sha256.clone();
                     }
                 }
             }
@@ -590,8 +1017,7 @@ pub fn resolve_import_uri(
                     let encoded_asset = percent_encode_fragment(asset_path);
                     return Ok(format!("{resolved_base}#{encoded_asset}").into());
                 } else {
-                    let pkg_display = asset_uri.package.uri.as_str().unwrap_or("");
-                    let clean_pkg_uri = pkg_display.replace("projectpackage:", "package:");
+                    let clean_pkg_uri = asset_uri.package.display_name();
                     let msg = format!(
                         "Cannot find dependency named `{dep_name}`, because it was not declared in package `{clean_pkg_uri}`."
                     );
@@ -601,11 +1027,12 @@ pub fn resolve_import_uri(
                 }
             }
 
-            let (meta, _) = ensure_package_loaded(&asset_uri.package, None)?;
+            // Metadata-only fetch (never requires downloading the ZIP just to rewrite `@dep`)
+            let (meta, _) =
+                ensure_package_metadata_loaded(&asset_uri.package, remote_expected_sha.as_ref())?;
             for dep in &meta.dependencies {
                 if dep.name == dep_name {
                     let target_base = dep.package_uri.uri.as_str().unwrap_or("");
-                    let host_opt = CURRENT_HOST.with(|h| h.borrow().clone());
                     let mut resolved_base = target_base.to_string();
                     if base_str.starts_with("projectpackage:")
                         && let Some(host) = &host_opt
@@ -615,44 +1042,58 @@ pub fn resolve_import_uri(
                         if !project.deps_loaded {
                             let _ = host.load_project_dependencies(&mut project);
                         }
-                        if let Some(matching) = crate::packages::project::find_matching_resolved(
+                        let Some(matching) = crate::packages::project::find_matching_resolved(
                             target_base,
                             dep_name,
                             &project.dependencies,
-                        ) {
-                            let resolved_uri_str = matching.uri.as_str().unwrap_or("");
-                            let dec_ver =
-                                crate::packages::project::extract_version_from_uri(target_base);
-                            let res_ver = crate::packages::project::extract_version_from_uri(
-                                resolved_uri_str,
+                        ) else {
+                            return Err(ModuleHostError::SecurityManagerException {
+                                message: Some(
+                                    format!(
+                                        "Did not find a resolved dependency for package `{target_base}`.\n\nRun `pkl project resolve` to update resolved dependencies."
+                                    )
+                                    .into(),
+                                ),
+                            });
+                        };
+                        let resolved_uri_str = matching.uri.as_str().unwrap_or("");
+                        let dec_ver =
+                            crate::packages::project::extract_version_from_uri(target_base);
+                        let res_ver =
+                            crate::packages::project::extract_version_from_uri(resolved_uri_str);
+                        if let (Some(dv), Some(rv)) = (dec_ver, res_ver)
+                            && crate::packages::project::compare_dep_versions(dv, rv)
+                                == std::cmp::Ordering::Greater
+                        {
+                            let clean_res_uri =
+                                resolved_uri_str.replace("projectpackage:", "package:");
+                            let clean_pkg_uri = asset_uri.package.display_name();
+                            let msg = format!(
+                                "Transitive dependency declared by package `{clean_pkg_uri}` is newer than what is declared in `PklProject.deps.json`.\n\nDeclared: `{target_base}`\nResolved: `{clean_res_uri}`\n\nRun `pkl project resolve` to update resolved dependencies."
                             );
-                            if let (Some(dv), Some(rv)) = (dec_ver, res_ver)
-                                && crate::packages::project::compare_dep_versions(dv, rv)
-                                    == std::cmp::Ordering::Greater
-                            {
-                                let pkg_display = asset_uri.package.uri.as_str().unwrap_or("");
-                                let clean_res_uri =
-                                    resolved_uri_str.replace("projectpackage:", "package:");
-                                let clean_pkg_uri =
-                                    pkg_display.replace("projectpackage:", "package:");
-                                let msg = format!(
-                                    "Transitive dependency declared by package `{clean_pkg_uri}` is newer than what is declared in `PklProject.deps.json`.\n\nDeclared: `{target_base}`\nResolved: `{clean_res_uri}`\n\nRun `pkl project resolve` to update resolved dependencies."
-                                );
-                                return Err(ModuleHostError::SecurityManagerException {
-                                    message: Some(msg.into()),
-                                });
-                            }
-                            resolved_base = resolved_uri_str.to_string();
+                            return Err(ModuleHostError::SecurityManagerException {
+                                message: Some(msg.into()),
+                            });
                         }
+                        resolved_base = resolved_uri_str.to_string();
                     }
                     let encoded_asset = percent_encode_fragment(asset_path);
                     return Ok(format!("{resolved_base}#{encoded_asset}").into());
                 }
             }
-            let pkg_display = asset_uri.package.uri.as_str().unwrap_or("");
-            let clean_pkg_uri = pkg_display.replace("projectpackage:", "package:");
+            let clean_pkg_uri = asset_uri.package.display_name();
             let msg = format!(
                 "Cannot find dependency named `{dep_name}`, because it was not declared in package `{clean_pkg_uri}`."
+            );
+            return Err(ModuleHostError::SecurityManagerException {
+                message: Some(msg.into()),
+            });
+        }
+
+        // Guard opaque/non-hierarchical URIs (`repl:text`, etc.) per `IoUtils.java:406-414`
+        if !base_str.contains("://") && !base_str.starts_with("file:/") {
+            let msg = format!(
+                "Cannot resolve dependency because project URI `{base_str}` does not have a hierarchical path."
             );
             return Err(ModuleHostError::SecurityManagerException {
                 message: Some(msg.into()),
@@ -662,30 +1103,26 @@ pub fn resolve_import_uri(
         // Otherwise resolve from project
         let host_opt = CURRENT_HOST.with(|h| h.borrow().clone());
         let base_path = if base_str.starts_with("file://") {
-            PathBuf::from(base_str.strip_prefix("file://").unwrap_or(base_str))
+            PathBuf::from(crate::packages::zip::percent_decode(
+                base_str.strip_prefix("file://").unwrap_or(base_str),
+            ))
         } else {
             PathBuf::from(".")
         };
 
-        if let Some(host) = &host_opt {
-            if let Some(project_dir) = host.find_project_dir(&base_path) {
-                let mut project = host.load_project(&project_dir)?;
-                if !project.deps_loaded {
-                    host.load_project_dependencies(&mut project)?;
-                }
-                return resolve_project_dependency(&project, authored_str);
-            } else {
-                let msg = "Cannot resolve dependency because there is no project found.\n\nIf you meant to import a path that starts with `@`, prefix the path with `./` (e.g. `import \"./@myPath\").\nIf you meant to import a dependency, ensure that this file is within a directory that contains a PklProject module.";
-                return Err(ModuleHostError::SecurityManagerException {
-                    message: Some(msg.into()),
-                });
+        if let Some(host) = &host_opt
+            && let Some(project_dir) = host.find_project_dir(&base_path)
+        {
+            let mut project = host.load_project(&project_dir)?;
+            if !project.deps_loaded {
+                host.load_project_dependencies(&mut project)?;
             }
-        } else {
-            let msg = "Cannot resolve dependency because there is no project found.\n\nIf you meant to import a path that starts with `@`, prefix the path with `./` (e.g. `import \"./@myPath\").\nIf you meant to import a dependency, ensure that this file is within a directory that contains a PklProject module.";
-            return Err(ModuleHostError::SecurityManagerException {
-                message: Some(msg.into()),
-            });
+            return resolve_project_dependency(&project, authored_str);
         }
+        let msg = "Cannot resolve dependency because there is no project found.\n\nIf you meant to import a path that starts with `@`, prefix the path with `./` (e.g. `import \"./@myPath\").\nIf you meant to import a dependency, ensure that this file is within a directory that contains a PklProject module.";
+        return Err(ModuleHostError::SecurityManagerException {
+            message: Some(msg.into()),
+        });
     }
 
     // 2. Fragment relative path in package/projectpackage URIs
@@ -721,37 +1158,26 @@ pub fn resolve_relative_path(base_path: &str, relative: &str) -> String {
     }
 }
 
-/// List elements in package directory for globbing.
+/// List elements in package directory for globbing (enforces lockfile SHA-256 for `projectpackage:`).
 pub fn list_elements(uri: &PklString) -> Result<Vec<crate::glob::PathElement>, ModuleHostError> {
     let raw_uri = uri.as_str().unwrap_or("");
     let asset_uri = PackageAssetUri::parse(uri.clone()).map_err(map_package_uri_error)?;
 
-    if raw_uri.starts_with("projectpackage:") {
-        let host_opt = CURRENT_HOST.with(|h| h.borrow().clone());
-        if let Some(host) = &host_opt
-            && let Some(project_dir) = host.find_project_dir(&PathBuf::from("."))
-            && let Ok(mut project) = host.load_project(&project_dir)
-        {
-            if !project.deps_loaded {
-                let _ = host.load_project_dependencies(&mut project);
+    let expected_checksum = if raw_uri.starts_with("projectpackage:") {
+        match resolve_projectpackage_target(&asset_uri)? {
+            ProjectPackageTarget::LocalPath(dir_path) => {
+                let host = CURRENT_HOST
+                    .with(|h| h.borrow().clone())
+                    .ok_or(ModuleHostError::NotFound)?;
+                return host.list_dir(&dir_path);
             }
-            for dep in project.dependencies.values() {
-                let dep_uri_str = dep.uri.as_str().unwrap_or("");
-                if raw_uri.starts_with(dep_uri_str)
-                    && dep.dep_type == "local"
-                    && let Some(rel_path) = &dep.path
-                {
-                    let local_root = project.project_dir.join(rel_path);
-                    let raw_subpath = asset_uri.asset_path.as_str().unwrap_or("");
-                    let local_subpath = normalize_local_subpath(raw_subpath);
-                    let dir_path = local_root.join(local_subpath);
-                    return host.list_dir(&dir_path);
-                }
-            }
+            ProjectPackageTarget::Remote { expected_sha256 } => expected_sha256,
         }
-    }
+    } else {
+        None
+    };
 
-    let (_, archive) = ensure_package_loaded(&asset_uri.package, None)?;
+    let (_, archive) = ensure_package_loaded(&asset_uri.package, expected_checksum.as_ref())?;
     let asset_path = asset_uri.asset_path.as_str().unwrap_or("");
     let entries = archive.list_elements(asset_path);
     let elements = entries
@@ -764,39 +1190,26 @@ pub fn list_elements(uri: &PklString) -> Result<Vec<crate::glob::PathElement>, M
     Ok(elements)
 }
 
-/// Checks if an element exists in a package for globbing.
+/// Checks if an element exists in a package for globbing (enforces lockfile SHA-256 for `projectpackage:`).
 pub fn has_element(uri: &PklString) -> Result<bool, ModuleHostError> {
     let raw_uri = uri.as_str().unwrap_or("");
     let asset_uri = PackageAssetUri::parse(uri.clone()).map_err(map_package_uri_error)?;
 
-    if raw_uri.starts_with("projectpackage:") {
-        let host_opt = CURRENT_HOST.with(|h| h.borrow().clone());
-        if let Some(host) = &host_opt
-            && let Some(project_dir) = host.find_project_dir(&PathBuf::from("."))
-            && let Ok(mut project) = host.load_project(&project_dir)
-        {
-            if !project.deps_loaded {
-                let _ = host.load_project_dependencies(&mut project);
+    let expected_checksum = if raw_uri.starts_with("projectpackage:") {
+        match resolve_projectpackage_target(&asset_uri)? {
+            ProjectPackageTarget::LocalPath(file_path) => {
+                let host = CURRENT_HOST
+                    .with(|h| h.borrow().clone())
+                    .ok_or(ModuleHostError::NotFound)?;
+                return Ok(host.read_file(&file_path).is_ok() || host.list_dir(&file_path).is_ok());
             }
-            for dep in project.dependencies.values() {
-                let dep_uri_str = dep.uri.as_str().unwrap_or("");
-                if raw_uri.starts_with(dep_uri_str)
-                    && dep.dep_type == "local"
-                    && let Some(rel_path) = &dep.path
-                {
-                    let local_root = project.project_dir.join(rel_path);
-                    let raw_subpath = asset_uri.asset_path.as_str().unwrap_or("");
-                    let local_subpath = normalize_local_subpath(raw_subpath);
-                    let file_path = local_root.join(local_subpath);
-                    return Ok(
-                        host.read_file(&file_path).is_ok() || host.list_dir(&file_path).is_ok()
-                    );
-                }
-            }
+            ProjectPackageTarget::Remote { expected_sha256 } => expected_sha256,
         }
-    }
+    } else {
+        None
+    };
 
-    let (_, archive) = ensure_package_loaded(&asset_uri.package, None)?;
+    let (_, archive) = ensure_package_loaded(&asset_uri.package, expected_checksum.as_ref())?;
     let asset_path = asset_uri.asset_path.as_str().unwrap_or("");
     Ok(archive.has_element(asset_path))
 }

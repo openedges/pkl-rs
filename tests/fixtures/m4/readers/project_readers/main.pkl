@@ -1,0 +1,5 @@
+import "extmod:///info.pkl"
+resInfo = read("extres:///info.txt").text
+modTag = info.tag
+modCwdName = info.cwdName
+modArgs = info.extraArgs

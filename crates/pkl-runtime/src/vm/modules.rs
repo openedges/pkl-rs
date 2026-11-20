@@ -1252,6 +1252,36 @@ impl Vm {
         });
     }
 
+    /// Break cyclic module-import reads while a cached import's module
+    /// initializer is already on the active call stack, matching Java
+    /// `ModuleCache.doLoad` (`ModuleCache.java:180-185`) +
+    /// `ImportNode.executeGeneric` (`ImportNode.java:57`).
+    pub(super) fn active_cached_import_receiver(
+        &self,
+        receiver: ObjectId,
+        owner: ObjectId,
+        name: &PklString,
+    ) -> Option<ObjectId> {
+        self.frames.iter().rev().find_map(|frame| {
+            let force = frame.force.as_ref()?;
+            if force.entry
+                || force.method
+                || force.receiver != receiver
+                || force.owner != owner
+                || &force.name != name
+            {
+                return None;
+            }
+            let run = frame.module_load.as_ref()?;
+            (run.purpose == ModulePurpose::Import
+                && run.cached
+                && run.initializing
+                && run.phase == ModulePhase::Initializer)
+                .then_some(run.receiver)
+                .flatten()
+        })
+    }
+
     pub(super) fn step_module(&mut self) -> Result<(), RuntimeError> {
         let run = self
             .frames

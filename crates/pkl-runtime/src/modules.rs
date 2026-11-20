@@ -2,7 +2,7 @@
 //! cache boundaries; neither is a resource read or an evaluation in another VM.
 pub mod analyze;
 mod standard_keys;
-pub use standard_keys::standard_key_completion;
+pub use standard_keys::{standard_key_completion, standard_key_completion_with_policy};
 
 use crate::source::SourceText;
 use std::sync::Arc;
@@ -188,6 +188,11 @@ pub enum ModuleHostError {
     SecurityManagerException {
         message: Option<PklString>,
     },
+    /// Typed `org.pkl.core.http.HttpClientException` rendered directly via `withCause(e)`
+    /// (`ModuleCache.java:203-204`).
+    HttpClientException {
+        message: Option<PklString>,
+    },
     /// Explicit evalError message and hint (e.g. invalidProjectDepsJson, cannotLoadProjectDepsJson).
     EvalError {
         message: PklString,
@@ -256,7 +261,7 @@ impl ModuleHostError {
             }
             Self::Io(cause) => cause.into_runtime("loading module", uri),
             Self::Denied(message) => RuntimeError::new(ErrorKind::Host, message),
-            Self::SecurityManagerException { message } => {
+            Self::SecurityManagerException { message } | Self::HttpClientException { message } => {
                 let text = message.unwrap_or_else(|| "None (cause has no message)".into());
                 RuntimeError::host_language(text)
             }

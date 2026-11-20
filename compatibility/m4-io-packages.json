@@ -1,0 +1,877 @@
+{
+  "baseline": {
+    "checkout": "external/pkl",
+    "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "source_url_template": "https://github.com/apple/pkl/blob/e51fb2f91774265666f94980ec630db794a4db2d/{path}#L{line}",
+    "url": "https://github.com/apple/pkl.git",
+    "version": "0.32.0"
+  },
+  "counts": {
+    "bundled_ca_roots_exact_match": true,
+    "functional_stdlib_items": 104,
+    "inventory_cli_command_dispositions": {
+      "deferred:M5": 7,
+      "excluded": 2,
+      "m4-exercised": 8
+    },
+    "inventory_cli_command_total": 17,
+    "inventory_cli_option_dispositions": {
+      "deferred:M5": 23,
+      "excluded": 19,
+      "m3-covered": 13,
+      "m4-required": 31
+    },
+    "inventory_cli_option_total": 86,
+    "inventory_protocol_field_dispositions": {
+      "deferred:M5": 82,
+      "m4-required": 37
+    },
+    "inventory_protocol_field_total": 119,
+    "inventory_protocol_tag_dispositions": {
+      "deferred:M5": 6,
+      "m4-required": 13
+    },
+    "inventory_protocol_tag_total": 19,
+    "inventory_resource_dispositions": {
+      "deferred:M5": 17,
+      "m4-required": 3,
+      "non-applicable": 4,
+      "shared-core": 3
+    },
+    "inventory_resource_total": 27,
+    "m4_requirement_groups": 16,
+    "m4_static_cases": 86,
+    "m4_static_cases_by_lane": {
+      "external-readers": 11,
+      "host-io-http-security": 48,
+      "projects-packages-cache": 27
+    },
+    "m4_total_5lane_cases": 429,
+    "pantry_dev_cases": 126,
+    "pantry_packaged_cases": 217,
+    "pantry_unfixed_external_inputs": 2,
+    "pantry_verified_offline_remote_packages": 7
+  },
+  "coverage_gate": null,
+  "inventory_accounting": {
+    "cli_command": {
+      "counts": {
+        "deferred:M5": 7,
+        "excluded": 2,
+        "m4-exercised": 8
+      },
+      "total": 17
+    },
+    "cli_option": {
+      "counts": {
+        "deferred:M5": 23,
+        "excluded": 19,
+        "m3-covered": 13,
+        "m4-required": 31
+      },
+      "total": 86
+    },
+    "functional_stdlib": {
+      "by_source": {
+        "stdlib/EvaluatorSettings.pkl": 41,
+        "stdlib/Project.pkl": 39,
+        "stdlib/analyze.pkl": 7,
+        "stdlib/settings.pkl": 12,
+        "stdlib/test.pkl": 5
+      },
+      "total": 104
+    },
+    "protocol_field": {
+      "counts": {
+        "deferred:M5": 82,
+        "m4-required": 37
+      },
+      "total": 119
+    },
+    "protocol_tag": {
+      "counts": {
+        "deferred:M5": 6,
+        "m4-required": 13
+      },
+      "total": 19
+    },
+    "resource": {
+      "counts": {
+        "deferred:M5": 17,
+        "m4-required": 3,
+        "non-applicable": 4,
+        "shared-core": 3
+      },
+      "ledger": [
+        {
+          "disposition": "non-applicable",
+          "id": "resource:build-logic/src/main/resources/license-header.line-comment.txt:build-logic/src/main/resources/license-header.line-comment.txt",
+          "note": "Upstream Gradle build-logic license header templates (non-runtime).",
+          "path": "build-logic/src/main/resources/license-header.line-comment.txt"
+        },
+        {
+          "disposition": "non-applicable",
+          "id": "resource:build-logic/src/main/resources/license-header.star-block.txt:build-logic/src/main/resources/license-header.star-block.txt",
+          "note": "Upstream Gradle build-logic license header templates (non-runtime).",
+          "path": "build-logic/src/main/resources/license-header.star-block.txt"
+        },
+        {
+          "disposition": "m4-required",
+          "id": "resource:pkl-commons-cli/src/main/resources/org/pkl/commons/cli/PklCARoots.pem:pkl-commons-cli/src/main/resources/org/pkl/commons/cli/PklCARoots.pem",
+          "note": "Bundled CA roots / CLI project fixture",
+          "path": "pkl-commons-cli/src/main/resources/org/pkl/commons/cli/PklCARoots.pem"
+        },
+        {
+          "disposition": "m4-required",
+          "id": "resource:pkl-commons-cli/src/main/resources/org/pkl/commons/cli/project1/PklProject.deps.json:pkl-commons-cli/src/main/resources/org/pkl/commons/cli/project1/PklProject.deps.json",
+          "note": "Bundled CA roots / CLI project fixture",
+          "path": "pkl-commons-cli/src/main/resources/org/pkl/commons/cli/project1/PklProject.deps.json"
+        },
+        {
+          "disposition": "m4-required",
+          "id": "resource:pkl-commons-cli/src/main/resources/org/pkl/commons/cli/project1/PklProject:pkl-commons-cli/src/main/resources/org/pkl/commons/cli/project1/PklProject",
+          "note": "Bundled CA roots / CLI project fixture",
+          "path": "pkl-commons-cli/src/main/resources/org/pkl/commons/cli/project1/PklProject"
+        },
+        {
+          "disposition": "non-applicable",
+          "id": "resource:pkl-core/src/main/resources/META-INF/services/java.nio.file.spi.FileTypeDetector:pkl-core/src/main/resources/META-INF/services/java.nio.file.spi.FileTypeDetector",
+          "note": "JVM ServiceLoader SPI descriptors excluded under the 2026-11-20 non-JVM product scope decision.",
+          "path": "pkl-core/src/main/resources/META-INF/services/java.nio.file.spi.FileTypeDetector"
+        },
+        {
+          "disposition": "non-applicable",
+          "id": "resource:pkl-core/src/main/resources/META-INF/services/org.pkl.executor.spi.v1.ExecutorSpi:pkl-core/src/main/resources/META-INF/services/org.pkl.executor.spi.v1.ExecutorSpi",
+          "note": "JVM ServiceLoader SPI descriptors excluded under the 2026-11-20 non-JVM product scope decision.",
+          "path": "pkl-core/src/main/resources/META-INF/services/org.pkl.executor.spi.v1.ExecutorSpi"
+        },
+        {
+          "disposition": "shared-core",
+          "id": "resource:pkl-core/src/main/resources/org/pkl/core/Release.properties:pkl-core/src/main/resources/org/pkl/core/Release.properties",
+          "note": "Core release/errorMessages resource shared across M2-M4",
+          "path": "pkl-core/src/main/resources/org/pkl/core/Release.properties"
+        },
+        {
+          "disposition": "shared-core",
+          "id": "resource:pkl-core/src/main/resources/org/pkl/core/errorMessages.properties:pkl-core/src/main/resources/org/pkl/core/errorMessages.properties",
+          "note": "Core release/errorMessages resource shared across M2-M4",
+          "path": "pkl-core/src/main/resources/org/pkl/core/errorMessages.properties"
+        },
+        {
+          "disposition": "deferred:M5",
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/fonts/MaterialIcons-Regular.woff2:pkl-doc/src/main/resources/org/pkl/doc/fonts/MaterialIcons-Regular.woff2",
+          "note": "Pkldoc static web assets (fonts/images/scripts/styles) belong to M5 pkldoc.",
+          "path": "pkl-doc/src/main/resources/org/pkl/doc/fonts/MaterialIcons-Regular.woff2"
+        },
+        {
+          "disposition": "deferred:M5",
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/fonts/lato-v14-latin_latin-ext-700.woff2:pkl-doc/src/main/resources/org/pkl/doc/fonts/lato-v14-latin_latin-ext-700.woff2",
+          "note": "Pkldoc static web assets (fonts/images/scripts/styles) belong to M5 pkldoc.",
+          "path": "pkl-doc/src/main/resources/org/pkl/doc/fonts/lato-v14-latin_latin-ext-700.woff2"
+        },
+        {
+          "disposition": "deferred:M5",
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/fonts/lato-v14-latin_latin-ext-regular.woff2:pkl-doc/src/main/resources/org/pkl/doc/fonts/lato-v14-latin_latin-ext-regular.woff2",
+          "note": "Pkldoc static web assets (fonts/images/scripts/styles) belong to M5 pkldoc.",
+          "path": "pkl-doc/src/main/resources/org/pkl/doc/fonts/lato-v14-latin_latin-ext-regular.woff2"
+        },
+        {
+          "disposition": "deferred:M5",
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-700.woff2:pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-700.woff2",
+          "note": "Pkldoc static web assets (fonts/images/scripts/styles) belong to M5 pkldoc.",
+          "path": "pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-700.woff2"
+        },
+        {
+          "disposition": "deferred:M5",
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-700italic.woff2:pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-700italic.woff2",
+          "note": "Pkldoc static web assets (fonts/images/scripts/styles) belong to M5 pkldoc.",
+          "path": "pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-700italic.woff2"
+        },
+        {
+          "disposition": "deferred:M5",
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-italic.woff2:pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-italic.woff2",
+          "note": "Pkldoc static web assets (fonts/images/scripts/styles) belong to M5 pkldoc.",
+          "path": "pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-italic.woff2"
+        },
+        {
+          "disposition": "deferred:M5",
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-regular.woff2:pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-regular.woff2",
+          "note": "Pkldoc static web assets (fonts/images/scripts/styles) belong to M5 pkldoc.",
+          "path": "pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-regular.woff2"
+        },
+        {
+          "disposition": "deferred:M5",
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/fonts/source-code-pro-v7-latin_latin-ext-700.woff2:pkl-doc/src/main/resources/org/pkl/doc/fonts/source-code-pro-v7-latin_latin-ext-700.woff2",
+          "note": "Pkldoc static web assets (fonts/images/scripts/styles) belong to M5 pkldoc.",
+          "path": "pkl-doc/src/main/resources/org/pkl/doc/fonts/source-code-pro-v7-latin_latin-ext-700.woff2"
+        },
+        {
+          "disposition": "deferred:M5",
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/fonts/source-code-pro-v7-latin_latin-ext-regular.woff2:pkl-doc/src/main/resources/org/pkl/doc/fonts/source-code-pro-v7-latin_latin-ext-regular.woff2",
+          "note": "Pkldoc static web assets (fonts/images/scripts/styles) belong to M5 pkldoc.",
+          "path": "pkl-doc/src/main/resources/org/pkl/doc/fonts/source-code-pro-v7-latin_latin-ext-regular.woff2"
+        },
+        {
+          "disposition": "deferred:M5",
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/images/apple-touch-icon.png:pkl-doc/src/main/resources/org/pkl/doc/images/apple-touch-icon.png",
+          "note": "Pkldoc static web assets (fonts/images/scripts/styles) belong to M5 pkldoc.",
+          "path": "pkl-doc/src/main/resources/org/pkl/doc/images/apple-touch-icon.png"
+        },
+        {
+          "disposition": "deferred:M5",
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/images/favicon-16x16.png:pkl-doc/src/main/resources/org/pkl/doc/images/favicon-16x16.png",
+          "note": "Pkldoc static web assets (fonts/images/scripts/styles) belong to M5 pkldoc.",
+          "path": "pkl-doc/src/main/resources/org/pkl/doc/images/favicon-16x16.png"
+        },
+        {
+          "disposition": "deferred:M5",
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/images/favicon-32x32.png:pkl-doc/src/main/resources/org/pkl/doc/images/favicon-32x32.png",
+          "note": "Pkldoc static web assets (fonts/images/scripts/styles) belong to M5 pkldoc.",
+          "path": "pkl-doc/src/main/resources/org/pkl/doc/images/favicon-32x32.png"
+        },
+        {
+          "disposition": "deferred:M5",
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/images/favicon.svg:pkl-doc/src/main/resources/org/pkl/doc/images/favicon.svg",
+          "note": "Pkldoc static web assets (fonts/images/scripts/styles) belong to M5 pkldoc.",
+          "path": "pkl-doc/src/main/resources/org/pkl/doc/images/favicon.svg"
+        },
+        {
+          "disposition": "deferred:M5",
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/scripts/pkldoc.js:pkl-doc/src/main/resources/org/pkl/doc/scripts/pkldoc.js",
+          "note": "Pkldoc static web assets (fonts/images/scripts/styles) belong to M5 pkldoc.",
+          "path": "pkl-doc/src/main/resources/org/pkl/doc/scripts/pkldoc.js"
+        },
+        {
+          "disposition": "deferred:M5",
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/scripts/scroll-into-view.min.js:pkl-doc/src/main/resources/org/pkl/doc/scripts/scroll-into-view.min.js",
+          "note": "Pkldoc static web assets (fonts/images/scripts/styles) belong to M5 pkldoc.",
+          "path": "pkl-doc/src/main/resources/org/pkl/doc/scripts/scroll-into-view.min.js"
+        },
+        {
+          "disposition": "deferred:M5",
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/scripts/search-worker.js:pkl-doc/src/main/resources/org/pkl/doc/scripts/search-worker.js",
+          "note": "Pkldoc static web assets (fonts/images/scripts/styles) belong to M5 pkldoc.",
+          "path": "pkl-doc/src/main/resources/org/pkl/doc/scripts/search-worker.js"
+        },
+        {
+          "disposition": "deferred:M5",
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/styles/pkldoc.css:pkl-doc/src/main/resources/org/pkl/doc/styles/pkldoc.css",
+          "note": "Pkldoc static web assets (fonts/images/scripts/styles) belong to M5 pkldoc.",
+          "path": "pkl-doc/src/main/resources/org/pkl/doc/styles/pkldoc.css"
+        },
+        {
+          "disposition": "shared-core",
+          "id": "resource:pkl-parser/src/main/resources/org/pkl/parser/errorMessages.properties:pkl-parser/src/main/resources/org/pkl/parser/errorMessages.properties",
+          "note": "Core release/errorMessages resource shared across M2-M4",
+          "path": "pkl-parser/src/main/resources/org/pkl/parser/errorMessages.properties"
+        }
+      ],
+      "total": 27
+    }
+  },
+  "pantry_offline_remote_packages": {
+    "package://pkg.pkl-lang.org/pkl-k8s/k8s@1.0.1": {
+      "metadata_sha256": "75c6d66d94c335417a3c502e107aaeadf7a60b4e1d34b2c979afe11193205a1a",
+      "zip_sha256": "92e198429d36c49103eea24302dc6117820d9f4429766fb3e4d7a1f47e684142"
+    },
+    "package://pkg.pkl-lang.org/pkl-k8s/k8s@1.2.0": {
+      "metadata_sha256": "5a37ac359c21442ddba07e339fa211b0db8999104715e891e7d2dab0228ace47",
+      "zip_sha256": "173a144942d15d391d9c79d87ea19477fa80ad44a02ac03f20e7c3826d64b5b9"
+    },
+    "package://pkg.pkl-lang.org/pkl-k8s/k8s@1.3.0": {
+      "metadata_sha256": "1d948c9fc41e188fcd18ebb656b5d9ddc5f377cb16158bb421be7752bb913926",
+      "zip_sha256": "d4d81170316ddaa481b081b6aea7d9715db8769dc813340af4500a35b6e6052c"
+    },
+    "package://pkg.pkl-lang.org/pkl-pantry/com.github.dependabot@1.0.4": {
+      "metadata_sha256": "c7391119f946d7761d0ca0cc358ed8fe2bdfc691411087ccac89637bd96fec4a",
+      "zip_sha256": "7adac7ce1876715eb3ebcfb5c2c434d1e88736218c58816c2c11bb71ab634f5b"
+    },
+    "package://pkg.pkl-lang.org/pkl-pantry/pkl.experimental.deepToTyped@1.2.1": {
+      "metadata_sha256": "6e752d1e84aff24c3a1801658f27f12af70840c39b3fe7bac509c8178d566d25",
+      "zip_sha256": "085e55fdfff300ec1567904c4ae336ce8e19603748f712085586aa75365e9933"
+    },
+    "package://pkg.pkl-lang.org/pkl-pantry/pkl.github.dependabotManagedActions@1.1.9": {
+      "metadata_sha256": "467b91559f31ad7401c78d3df9569b5ec7aa4e1b49209f9f22d02bd72971e0bd",
+      "zip_sha256": "3eaa8382e7331c29fcc261ee734bb4091e714a775fa1de07355f51ecd915b031"
+    },
+    "package://pkg.pkl-lang.org/pkl-project-commons/pkl.impl.ghactions@1.8.2": {
+      "metadata_sha256": "12cca6326806ec37abc790a6707b6d907b4f8ba97628f2bc7fb327b5a6f68b49",
+      "zip_sha256": "5a53b50a535ee47e428645d0d0b1a1c15a93b75c99641efa04f5d0d294fb72b3"
+    }
+  },
+  "pantry_unfixed_external_inputs": [
+    {
+      "kind": "dynamic-https-response",
+      "reason": "CLI action generation discovers live manifests/types; programmatic test fixtures supply action data, but the CLI network path still needs pinned response fixtures.",
+      "response_sha256": null,
+      "source": "external/pkl-pantry/packages/com.github.actions.contrib/ActionGenerator.pkl",
+      "status": "unfixed",
+      "uri_templates": [
+        "https://raw.githubusercontent.com/{owner}/{repo}/refs/{tags|heads}/{version}/.../action.yml",
+        "https://raw.githubusercontent.com/{owner}/{repo}/refs/tags/{version}/.../action-types.yml",
+        "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/refs/heads/main/typings/.../action-types.yml"
+      ]
+    },
+    {
+      "kind": "dynamic-https-response",
+      "reason": "Live GitHub refs are not pinned response bytes; testMode and hermetic fixture coverage must be verified.",
+      "response_sha256": null,
+      "source": "external/pkl-pantry/packages/pkl.github.dependabotManagedActions/internal/LockfileGenerator.pkl",
+      "status": "unfixed",
+      "uri_template": "https://github.com/{owner}/{repo}.git/info/refs?service=git-upload-pack"
+    }
+  ],
+  "requirements": {
+    "m4:ext:project-paths-cwd-precedence": {
+      "case_ids": [
+        "m4:ext:project-readers-rel-and-path-and-cwd",
+        "m4:ext:cli-replaces-project-readers",
+        "m4:ext:omit-project-settings"
+      ],
+      "description": "PklProject external reader relative executable & PATH resolution, default project workingDir, CLI full-map replacement, and --omit-project-settings",
+      "dynamic_lane": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/external_reader/messages.rs",
+          "sha256": "156a4ce24963f2ddcda84af7a81ba051e93f3bbf4122a11f241248e079b0ae0b",
+          "symbol": "ExternalReaderConfig"
+        },
+        {
+          "path": "crates/pkl-runtime/src/external_reader/messages.rs",
+          "sha256": "156a4ce24963f2ddcda84af7a81ba051e93f3bbf4122a11f241248e079b0ae0b",
+          "symbol": "shlex"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/project.rs",
+          "sha256": "0e741eae28a5d61799a8beb04588d7cf4f9bbf043f767f967c6adbec26c409e1",
+          "symbol": "EvaluatorSettings"
+        }
+      ],
+      "lane": "external-readers"
+    },
+    "m4:ext:protocol-and-readers": {
+      "case_ids": [
+        "m4:ext:all-schemes-cli-and-lifecycle",
+        "m4:ext:module-read-error",
+        "m4:ext:resource-read-error",
+        "m4:ext:resource-missing-strict",
+        "m4:ext:unsupported-module-scheme",
+        "m4:ext:unsupported-resource-scheme",
+        "m4:ext:non-globbable-module-error",
+        "m4:ext:non-globbable-resource-error"
+      ],
+      "description": "External module & resource reader MessagePack protocol (0x26-0x32), hierarchical/opaque/glob/triple-dot/missing-resource semantics, unsupported schemes, non-globbable errors, and CloseExternalProcess lifecycle",
+      "dynamic_lane": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/external_reader/messages.rs",
+          "sha256": "156a4ce24963f2ddcda84af7a81ba051e93f3bbf4122a11f241248e079b0ae0b",
+          "symbol": "MessageType"
+        },
+        {
+          "path": "crates/pkl-runtime/src/external_reader/codec.rs",
+          "sha256": "38c78b4a18a5ba6bc40c9134b7f745541f07b1d1d8f902b68746e7bd81349956",
+          "symbol": "write_message"
+        },
+        {
+          "path": "crates/pkl-runtime/src/external_reader/transport.rs",
+          "sha256": "f478cada1bc5ae896e9e512c161b60606f23d2b1b5bfdafc66bbe4a420676767",
+          "symbol": "ExternalReaderRegistry"
+        },
+        {
+          "path": "crates/pkl-runtime/src/external_reader/process.rs",
+          "sha256": "3f88ef996aa7c68565fc653160395c3e109c80a3cae8697324fcd26033498331",
+          "symbol": "NativeExternalReaderProcess"
+        }
+      ],
+      "lane": "external-readers"
+    },
+    "m4:host:analyze-and-timeout": {
+      "case_ids": [
+        "m4:analyze:imports-graph-complex",
+        "m4:analyze:imports-syntax-error",
+        "m4:lifecycle:timeout-eval",
+        "m4:lifecycle:timeout-http-slow"
+      ],
+      "description": "Import graph analysis (cycles, triple-dot, globs, syntax errors) and evaluation/HTTP stall timeout cancellation & resource cleanup",
+      "dynamic_lane": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/modules/analyze.rs",
+          "sha256": "964b71d9cd7cda543328a988091fed91d65f1de331733869ac9a621e6672cd00",
+          "symbol": "ImportGraphAnalysis"
+        },
+        {
+          "path": "crates/pkl-runtime/src/host.rs",
+          "sha256": "a7f49c891bcfbc22a7b28e87dbe0a6158496491276ca4826ee4191037ec63858",
+          "symbol": "format_timeout_message"
+        },
+        {
+          "path": "crates/pkl-host-native/src/http.rs",
+          "sha256": "1ed4744bb100a47e3366114ed4c7752d32336ec60640767ea9c906f7fc287fc3",
+          "symbol": "CancelFlag"
+        },
+        {
+          "path": "crates/pkl-host-native/src/driver.rs",
+          "sha256": "b39df637a03b3b2799a358c69245faaa0a5a51211a1d0a190854e93f0c5afbd4",
+          "symbol": "CleanupReport"
+        }
+      ],
+      "lane": "host-io-http-security"
+    },
+    "m4:host:http-basic-and-resources": {
+      "case_ids": [
+        "m4:http:get-module-plain",
+        "m4:http:relative-import-and-read",
+        "m4:http:resource-read-200-and-404-nullable",
+        "m4:http:resource-read-404-strict",
+        "m4:http:resource-read-500-nullable",
+        "m4:http:module-404-error"
+      ],
+      "description": "Plain HTTP module/resource fetching, relative hierarchical HTTP reads, 404 read?->null vs read->error vs 500->IOException",
+      "dynamic_lane": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/host/http.rs",
+          "sha256": "6754033b67f04b7ad5e45055f98c9435cfc9d601f857ecce126084ce0a6dd1b4",
+          "symbol": "ParsedHttpUri"
+        },
+        {
+          "path": "crates/pkl-runtime/src/host/resources.rs",
+          "sha256": "dbae82dd9944fb5f8c9f05313cf12e51164d3cea070edd766472a30cc582b134",
+          "symbol": "try_configured_scalar_read_with_policy"
+        },
+        {
+          "path": "crates/pkl-host-native/src/http.rs",
+          "sha256": "1ed4744bb100a47e3366114ed4c7752d32336ec60640767ea9c906f7fc287fc3",
+          "symbol": "NativeHttpClient"
+        },
+        {
+          "path": "crates/pkl-host-native/src/driver.rs",
+          "sha256": "b39df637a03b3b2799a358c69245faaa0a5a51211a1d0a190854e93f0c5afbd4",
+          "symbol": "NativeHost"
+        }
+      ],
+      "lane": "host-io-http-security"
+    },
+    "m4:host:http-headers-and-rewrites": {
+      "case_ids": [
+        "m4:http:custom-headers-and-redirect-scoping",
+        "m4:http:custom-user-agent-override",
+        "m4:http:rewrite-longest-prefix",
+        "m4:http:rewrite-across-redirect"
+      ],
+      "description": "Custom HTTP headers with glob scoping, multi-value order, User-Agent override, per-hop redirect header isolation, and longest-prefix URI rewrites across redirects",
+      "dynamic_lane": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/host/http.rs",
+          "sha256": "6754033b67f04b7ad5e45055f98c9435cfc9d601f857ecce126084ce0a6dd1b4",
+          "symbol": "RewriteRule"
+        },
+        {
+          "path": "crates/pkl-runtime/src/host/http.rs",
+          "sha256": "6754033b67f04b7ad5e45055f98c9435cfc9d601f857ecce126084ce0a6dd1b4",
+          "symbol": "HeaderRule"
+        },
+        {
+          "path": "crates/pkl-runtime/src/host/http.rs",
+          "sha256": "6754033b67f04b7ad5e45055f98c9435cfc9d601f857ecce126084ce0a6dd1b4",
+          "symbol": "HeaderGlobMatcher"
+        }
+      ],
+      "lane": "host-io-http-security"
+    },
+    "m4:host:http-proxy-and-no-proxy": {
+      "case_ids": [
+        "m4:http:proxy-plain-cli",
+        "m4:http:proxy-https-connect",
+        "m4:http:proxy-no-proxy-bypass",
+        "m4:http:proxy-settings-file",
+        "m4:http:proxy-project-beats-settings"
+      ],
+      "description": "HTTP forward proxy, HTTPS CONNECT tunneling, --http-no-proxy bypass, and settings.pkl vs PklProject proxy precedence",
+      "dynamic_lane": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/host/http.rs",
+          "sha256": "6754033b67f04b7ad5e45055f98c9435cfc9d601f857ecce126084ce0a6dd1b4",
+          "symbol": "ProxyConfig"
+        },
+        {
+          "path": "crates/pkl-runtime/src/host/http.rs",
+          "sha256": "6754033b67f04b7ad5e45055f98c9435cfc9d601f857ecce126084ce0a6dd1b4",
+          "symbol": "NoProxyRule"
+        },
+        {
+          "path": "crates/pkl-host-native/src/http.rs",
+          "sha256": "1ed4744bb100a47e3366114ed4c7752d32336ec60640767ea9c906f7fc287fc3",
+          "symbol": "NativeHttpTransport"
+        }
+      ],
+      "lane": "host-io-http-security"
+    },
+    "m4:host:http-redirects-and-downgrade": {
+      "case_ids": [
+        "m4:http:redirect-301",
+        "m4:http:redirect-307-relative",
+        "m4:http:redirect-chain-20-ok",
+        "m4:http:redirect-chain-21-too-many",
+        "m4:http:redirect-loop",
+        "m4:http:redirect-no-location",
+        "m4:http:redirect-invalid-location",
+        "m4:http:redirect-upgrade-http-to-https",
+        "m4:https:redirect-downgrade-https-to-http"
+      ],
+      "description": "HTTP 301/302/307/308 redirects, relative Location, 20-hop boundary vs 21-hop/loop/missing/invalid errors, HTTP->HTTPS upgrade, HTTPS->HTTP downgrade denial",
+      "dynamic_lane": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/host/http.rs",
+          "sha256": "6754033b67f04b7ad5e45055f98c9435cfc9d601f857ecce126084ce0a6dd1b4",
+          "symbol": "RewritingHttpClient"
+        },
+        {
+          "path": "crates/pkl-host-native/src/http.rs",
+          "sha256": "1ed4744bb100a47e3366114ed4c7752d32336ec60640767ea9c906f7fc287fc3",
+          "symbol": "NativeHttpTransport"
+        }
+      ],
+      "lane": "host-io-http-security"
+    },
+    "m4:host:https-ca-certificates": {
+      "case_ids": [
+        "m4:https:custom-ca-cli-ok",
+        "m4:https:custom-ca-home-cacerts-ok",
+        "m4:https:missing-ca-ssl-error",
+        "m4:https:ca-empty-file-error",
+        "m4:https:ca-random-text-error",
+        "m4:https:ca-truncated-pem-error"
+      ],
+      "description": "Custom CA certificates via --ca-certificates and ~/.pkl/cacerts/, missing CA SSL handshake error, empty/random/truncated PEM diagnostics",
+      "dynamic_lane": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-host-native/src/certs.rs",
+          "sha256": "8dc3839e2c8fc848f16d3080f41733df077bc44d44cdf916f69cd3e4a18486d9",
+          "symbol": "CaCertSource"
+        },
+        {
+          "path": "crates/pkl-host-native/src/http.rs",
+          "sha256": "1ed4744bb100a47e3366114ed4c7752d32336ec60640767ea9c906f7fc287fc3",
+          "symbol": "NativeHttpTransport"
+        }
+      ],
+      "lane": "host-io-http-security"
+    },
+    "m4:host:modulepath-and-jar": {
+      "case_ids": [
+        "m4:modulepath:multi-entry-dirs-and-jar",
+        "m4:modulepath:missing-leading-slash-error",
+        "m4:modulepath:glob-unsupported-error"
+      ],
+      "description": "Multi-entry --module-path (dirs + JAR/ZIP + missing entries), first-wins precedence, triple-dot lookup, .class filtering, missing leading slash & non-globbable errors",
+      "dynamic_lane": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/host/modulepath.rs",
+          "sha256": "4abbbae1384601516bbda663b6211ea2e1f69656edb601df7763d0b5610c0165",
+          "symbol": "parse_modulepath_uri"
+        },
+        {
+          "path": "crates/pkl-host-native/src/modulepath.rs",
+          "sha256": "3d21971e7ebd8d81664842283fcca1b2e9b00246f54354ba4121e7f2f006bf6c",
+          "symbol": "NativeModulePathResolver"
+        },
+        {
+          "path": "crates/pkl-host-native/src/zip_archive.rs",
+          "sha256": "0a9100039f7d947e7a9b78f4e0d256623d22920fdc947b781a29f1818bd57073",
+          "symbol": "ZipReader"
+        }
+      ],
+      "lane": "host-io-http-security"
+    },
+    "m4:host:security-allowlist-and-rootdir": {
+      "case_ids": [
+        "m4:security:allowlist-module-deny",
+        "m4:security:allowlist-resource-env-prop-deny",
+        "m4:security:unregistered-resource-denied-before-no-reader",
+        "m4:security:unregistered-resource-allowed-gives-no-reader",
+        "m4:security:rootdir-allow-inside",
+        "m4:security:rootdir-deny-import-outside",
+        "m4:security:rootdir-deny-nonexistent-outside",
+        "m4:security:rootdir-deny-read-outside",
+        "m4:security:rootdir-deny-import-symlink-escape",
+        "m4:security:rootdir-deny-read-symlink-escape",
+        "m4:security:rootdir-deny-glob-symlink-escape"
+      ],
+      "description": "Custom allowedModules/allowedResources, unregistered-scheme check ordering, rootDir enforcement for existing/non-existent files, symlink escapes, and glob symlink escapes",
+      "dynamic_lane": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/host/security.rs",
+          "sha256": "bc1e285e54e1d33ef21e8311b3267da190a5d3716ed0df6e7c9d84d70e786849",
+          "symbol": "SecurityPolicy"
+        },
+        {
+          "path": "crates/pkl-host-native/src/fs.rs",
+          "sha256": "b91622d1f529cfde86d6bd4255333137ca3bf2fc900d6ba4b4bbdbe24434ba7b",
+          "symbol": "NativeFs"
+        },
+        {
+          "path": "crates/pkl-host-native/src/fs.rs",
+          "sha256": "b91622d1f529cfde86d6bd4255333137ca3bf2fc900d6ba4b4bbdbe24434ba7b",
+          "symbol": "open_file_nofollow"
+        }
+      ],
+      "lane": "host-io-http-security"
+    },
+    "m4:package:cache-download-and-corruption": {
+      "case_ids": [
+        "m4:cache:download-package-transitive",
+        "m4:cache:download-package-no-transitive",
+        "m4:cache:download-package-no-cache-error",
+        "m4:cache:eval-warm-cache-no-network",
+        "m4:cache:no-cache-skips-writing-cache-dir",
+        "m4:cache:corrupt-cached-json-deleted",
+        "m4:cache:corrupt-cached-zip-error",
+        "m4:cache:lockfile-checksum-mismatch",
+        "m4:cache:non-https-zip-url-error"
+      ],
+      "description": "pkl download-package (transitive & --no-transitive, --no-cache error), package-2 path encoding (localhost(3a)0), warm offline cache, --no-cache non-writing, corrupt cached .json deletion, corrupt .zip, lockfile checksum mismatch, non-HTTPS zip URL rejection",
+      "dynamic_lane": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/packages/cache.rs",
+          "sha256": "44ca20c751c3c9a56ac6003758f3803f6d6eaa373ef0e0051d8f6357a3fffb6d",
+          "symbol": "encode_cache_path"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/resolver.rs",
+          "sha256": "559e781cfe4f5ccebf2cc15e04ec8284eb02e163a4315e31367d30fd87451271",
+          "symbol": "PackageResolver"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/zip.rs",
+          "sha256": "03d11d8e8696343e0d651015caeebc9f4233b147448268261599de53bf9026b4",
+          "symbol": "ZipArchive"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/http.rs",
+          "sha256": "cc06ef522652645ea23eb40de075a608297fc9ddaffaf86117eb94a01270596d",
+          "symbol": "PackageTransport"
+        },
+        {
+          "path": "crates/pkl-host-native/src/package_host.rs",
+          "sha256": "5590cd8ff9ff6ad6bca5fc41c47e93e1362feb5f699c12f70c4bc05bbec2a7f8",
+          "symbol": "NativePackageTransport"
+        },
+        {
+          "path": "crates/pkl-host-native/src/package_host.rs",
+          "sha256": "5590cd8ff9ff6ad6bca5fc41c47e93e1362feb5f699c12f70c4bc05bbec2a7f8",
+          "symbol": "DiskPackageCache"
+        }
+      ],
+      "lane": "projects-packages-cache"
+    },
+    "m4:pantry:development-tree": {
+      "case_ids": [],
+      "description": "All 29 Pantry packages in development tree form: 29 package-api-tests, 44 project-test, 1 module-names, 51 example candidates, and 1 pkl.tar shell suite (126 offline executions)",
+      "dynamic_lane": "pantry-dev",
+      "expected_dynamic_count": 126,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/packages/packager.rs",
+          "sha256": "157bc3d8c842678fd0d28e66fb7ba5cf9c5725c44388caecc0ed520295bd3312",
+          "symbol": "ProjectPackager"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/test_runner.rs",
+          "sha256": "75e4083aba04e86023102257960d8a366aec984557d0cdf9e23ccc5cff53fc64",
+          "symbol": "TestResults"
+        },
+        {
+          "path": "crates/pkl-host-native/src/driver.rs",
+          "sha256": "b39df637a03b3b2799a358c69245faaa0a5a51211a1d0a190854e93f0c5afbd4",
+          "symbol": "NativeHost"
+        },
+        {
+          "path": "crates/pkl-host-native/src/cli.rs",
+          "sha256": "4df4458c8f406c18795635b06a2170dab0dedb47e7633ab03de1c4bcc7dddf07",
+          "symbol": "run_cli"
+        },
+        {
+          "path": "crates/pkl-host-native/src/bin/pkl_m4_cli.rs",
+          "sha256": "e9eede0ee6651f45eddfd96d4a38441cc82327dae53571495fe2bf5b47cd945e",
+          "symbol": "main"
+        }
+      ],
+      "lane": "pantry-dev"
+    },
+    "m4:pantry:packaged-distribution": {
+      "case_ids": [],
+      "description": "All 29 generated Pantry packages in distributed ZIP form: 206 package:// modules (--no-project), 4 -m multi-file retries, 2 configured generators, and 5 cold-cache offline HTTPS mirror targets (217 offline executions)",
+      "dynamic_lane": "pantry-packaged",
+      "expected_dynamic_count": 217,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/packages/resolver.rs",
+          "sha256": "559e781cfe4f5ccebf2cc15e04ec8284eb02e163a4315e31367d30fd87451271",
+          "symbol": "PackageResolver"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/cache.rs",
+          "sha256": "44ca20c751c3c9a56ac6003758f3803f6d6eaa373ef0e0051d8f6357a3fffb6d",
+          "symbol": "PackageCacheStore"
+        },
+        {
+          "path": "crates/pkl-host-native/src/http.rs",
+          "sha256": "1ed4744bb100a47e3366114ed4c7752d32336ec60640767ea9c906f7fc287fc3",
+          "symbol": "NativeHttpClient"
+        },
+        {
+          "path": "crates/pkl-host-native/src/package_host.rs",
+          "sha256": "5590cd8ff9ff6ad6bca5fc41c47e93e1362feb5f699c12f70c4bc05bbec2a7f8",
+          "symbol": "NativePackageTransport"
+        },
+        {
+          "path": "crates/pkl-host-native/src/package_host.rs",
+          "sha256": "5590cd8ff9ff6ad6bca5fc41c47e93e1362feb5f699c12f70c4bc05bbec2a7f8",
+          "symbol": "DiskPackageCache"
+        }
+      ],
+      "lane": "pantry-packaged"
+    },
+    "m4:project:package-creation-and-validation": {
+      "case_ids": [
+        "m4:project:package-basic",
+        "m4:project:package-empty-exact-zip-sha",
+        "m4:project:package-local-dep-closure",
+        "m4:project:package-missing-local-dep-arg",
+        "m4:project:package-failing-api-tests",
+        "m4:project:package-import-escape-error",
+        "m4:project:package-missing-package-section"
+      ],
+      "description": "pkl project package (deterministic ZIP/JSON/SHA-256, empty ZIP exact SHA-256, excludes, apiTests pass/fail, local dep closure, import-escape rejection, missing package section, Java cross-interop)",
+      "dynamic_lane": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/packages/packager.rs",
+          "sha256": "157bc3d8c842678fd0d28e66fb7ba5cf9c5725c44388caecc0ed520295bd3312",
+          "symbol": "ProjectPackager"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/packager.rs",
+          "sha256": "157bc3d8c842678fd0d28e66fb7ba5cf9c5725c44388caecc0ed520295bd3312",
+          "symbol": "java_hashmap_order"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/zip.rs",
+          "sha256": "03d11d8e8696343e0d651015caeebc9f4233b147448268261599de53bf9026b4",
+          "symbol": "build_deterministic_package_zip"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/metadata.rs",
+          "sha256": "c8402180b1a93f3b7f9512ae5b959220620124dadb018ed3fca099db743395e8",
+          "symbol": "DependencyMetadata"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/test_runner.rs",
+          "sha256": "75e4083aba04e86023102257960d8a366aec984557d0cdf9e23ccc5cff53fc64",
+          "symbol": "render_spec_report"
+        },
+        {
+          "path": "crates/pkl-host-native/src/package_host.rs",
+          "sha256": "5590cd8ff9ff6ad6bca5fc41c47e93e1362feb5f699c12f70c4bc05bbec2a7f8",
+          "symbol": "NativePackagerHost"
+        }
+      ],
+      "lane": "projects-packages-cache"
+    },
+    "m4:project:resolve-mvs-and-cycles": {
+      "case_ids": [
+        "m4:project:resolve-basic",
+        "m4:project:resolve-diamond-mvs",
+        "m4:project:resolve-local-and-remote",
+        "m4:project:resolve-local-overridden-by-remote",
+        "m4:project:resolve-cycle-error",
+        "m4:project:resolve-bad-declared-checksum"
+      ],
+      "description": "pkl project resolve (transitive remote, MVS diamond, local+remote, local overridden by remote warning, circular local dep error, bad declared checksum) and byte-exact PklProject.deps.json",
+      "dynamic_lane": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/packages/mvs.rs",
+          "sha256": "3029fd44de84311d754f15db0ec289f795a10c7c491adc0f53c001511810e993",
+          "symbol": "ProjectDependenciesResolver"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/cycles.rs",
+          "sha256": "52c9a1c6a466e1132c4246061d1957fc5f40282cbefcbe135b0647f3d59c6787",
+          "symbol": "find_import_cycles"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages.rs",
+          "sha256": "f60f2430bc6d4cddcffead096eca4c6a6c1561e9b7c4fb40ea44959908d0c6e8",
+          "symbol": "CanonicalPackageUri"
+        }
+      ],
+      "lane": "projects-packages-cache"
+    },
+    "m4:project:settings-precedence-and-resolved": {
+      "case_ids": [
+        "m4:project:settings-from-project",
+        "m4:project:settings-cli-p-replaces-project-props",
+        "m4:project:settings-omit-project-settings",
+        "m4:project:settings-empty-env-no-host-fallback",
+        "m4:project:resolved-evaluator-settings"
+      ],
+      "description": "PklProject evaluatorSettings application, CLI -p replacement, --omit-project-settings, empty env {} non-fallback, and Project.resolvedEvaluatorSettings",
+      "dynamic_lane": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/packages/project.rs",
+          "sha256": "0e741eae28a5d61799a8beb04588d7cf4f9bbf043f767f967c6adbec26c409e1",
+          "symbol": "PklSettings"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/project.rs",
+          "sha256": "0e741eae28a5d61799a8beb04588d7cf4f9bbf043f767f967c6adbec26c409e1",
+          "symbol": "EvaluatorSettings"
+        },
+        {
+          "path": "crates/pkl-host-native/src/cli.rs",
+          "sha256": "4df4458c8f406c18795635b06a2170dab0dedb47e7633ab03de1c4bcc7dddf07",
+          "symbol": "ParsedCliOptions"
+        }
+      ],
+      "lane": "projects-packages-cache"
+    }
+  },
+  "schema_version": 1,
+  "scope": "Complete M4 Host I/O, URI, modulepath, HTTP/HTTPS/CA/redirect/proxy/headers/rewrites, security/rootDir, external readers (0x26-0x32), PklProject/settings/resolve/package/cache, and offline Pantry dev+packaged inventory & case manifest. Freshness checks never claim runtime compatibility passes (`coverage_gate: null`).",
+  "sources": {
+    "compatibility/corpus.json": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
+    "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
+    "compatibility/m4-mappings.json": "548c449f3335129fa1b24fe5ba68e0fcc7a906ecaa6814f5ad86c26589fd4714",
+    "crates/pkl-host-native/assets/PklCARoots.pem": "6ef329901b9cccb93100d5da54424b0f9a1df871a5c17d8437c4982eea3a02fe",
+    "reports/m0/pantry-evidence.tar.gz": "7794a0721c935696291fd62bf6936ebe40f9bccf47c26111fd0226a577d2549d",
+    "tests/fixtures/m4/cases.json": "3a51adc9f2360574b8d757c82b9588ad318bb6cb579f126949262176b9045610",
+    "tests/fixtures/m4/readers/m4_ext_reader.py": "4014892c06a898537cd31e8826dfd8a058acd84fd27189681c855620ce4b8837",
+    "tools/java/M4HttpFixtureServer.java": "c24cce9a9dbc5e9d6cd33d8129e32da8a0357017f5d295ba6cf422643f3b6f86"
+  }
+}

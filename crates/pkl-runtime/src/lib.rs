@@ -10,6 +10,7 @@ mod diagnostic_values;
 pub mod duration;
 mod economic_map;
 pub mod evaluation;
+pub mod external_reader;
 pub mod glob;
 pub mod heap;
 pub mod host;

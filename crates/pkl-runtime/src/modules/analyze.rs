@@ -91,6 +91,17 @@ enum Action {
         node: Box<Node>,
         entry: collect::Entry,
     },
+    TripleDotCapabilities {
+        node: Box<Node>,
+        entry: collect::Entry,
+        suffix: PklString,
+    },
+    TripleDotProbe {
+        node: Box<Node>,
+        entry: collect::Entry,
+        candidate: PklString,
+        remaining: VecDeque<PklString>,
+    },
 }
 struct Pending {
     request: ModuleRequest,
@@ -258,6 +269,37 @@ impl ImportGraphAnalysis {
                 );
                 return;
             }
+            match crate::host::resources::import_triple_path(&entry.uri) {
+                Ok(Some(suffix)) => {
+                    let module = ModuleIdentity {
+                        original_uri: node.target.key.module.original_uri.clone(),
+                        resolved_uri: node.target.key.module.resolved_uri.clone(),
+                    };
+                    let key = Some(node.target.key.key.clone());
+                    self.emit(
+                        ModuleRequestKind::Capabilities { key, module },
+                        Action::TripleDotCapabilities {
+                            node,
+                            entry,
+                            suffix,
+                        },
+                    );
+                    return;
+                }
+                Err(error) => {
+                    self.fail(
+                        "import URI",
+                        node.target.uri.text.clone(),
+                        Some(Self::site(&node, &entry)),
+                        FailureCause::Host(ModuleHostError::EvalError {
+                            message: error.message.clone(),
+                            hint: error.hint.clone(),
+                        }),
+                    );
+                    return;
+                }
+                Ok(None) => {}
+            }
             self.emit(
                 ModuleRequestKind::ResolveImportUri {
                     key: node.target.key.key.clone(),
@@ -381,6 +423,8 @@ impl ImportGraphAnalysis {
             (ModuleRequestKind::ResolveKey { .. }, ModuleCompletion::KeyResolved(Err(_))) => {}
             (ModuleRequestKind::LoadSource { .. }, ModuleCompletion::Source(_)) => {}
             (ModuleRequestKind::ResolveImportUri { .. }, ModuleCompletion::ImportUri(_)) => {}
+            (ModuleRequestKind::Capabilities { .. }, ModuleCompletion::Capabilities(_)) => {}
+            (ModuleRequestKind::HasElement { .. }, ModuleCompletion::HasElement(_)) => {}
             _ => return Err("analysis completion kind or key identity differs"),
         }
         let pending = self.pending.take().unwrap();
@@ -506,6 +550,123 @@ impl ImportGraphAnalysis {
                     ),
                 }
             }
+            (
+                Action::TripleDotCapabilities {
+                    node,
+                    entry,
+                    suffix,
+                },
+                ModuleCompletion::Capabilities(result),
+            ) => match result {
+                Ok(caps) => match crate::host::resources::triple_candidates(
+                    &node.target.key.key.uri,
+                    &suffix,
+                    caps,
+                ) {
+                    Ok(candidates) => {
+                        let mut remaining: VecDeque<PklString> = candidates.into();
+                        if let Some(candidate) = remaining.pop_front() {
+                            let module = ModuleIdentity {
+                                original_uri: node.target.key.module.original_uri.clone(),
+                                resolved_uri: node.target.key.module.resolved_uri.clone(),
+                            };
+                            let key = Some(node.target.key.key.clone());
+                            self.emit(
+                                ModuleRequestKind::HasElement {
+                                    key,
+                                    module,
+                                    element_uri: candidate.clone(),
+                                },
+                                Action::TripleDotProbe {
+                                    node,
+                                    entry,
+                                    candidate,
+                                    remaining,
+                                },
+                            );
+                        } else {
+                            self.fail(
+                                "import URI",
+                                node.target.uri.text.clone(),
+                                Some(Self::site(&node, &entry)),
+                                FailureCause::Host(ModuleHostError::NotFound),
+                            );
+                        }
+                    }
+                    Err(error) => self.fail(
+                        "import URI",
+                        node.target.uri.text.clone(),
+                        Some(Self::site(&node, &entry)),
+                        FailureCause::Host(ModuleHostError::EvalError {
+                            message: error.message.clone(),
+                            hint: error.hint.clone(),
+                        }),
+                    ),
+                },
+                Err(error) => self.fail(
+                    "import URI",
+                    node.target.uri.text.clone(),
+                    Some(Self::site(&node, &entry)),
+                    FailureCause::Host(error),
+                ),
+            },
+            (
+                Action::TripleDotProbe {
+                    node,
+                    entry,
+                    candidate,
+                    mut remaining,
+                },
+                ModuleCompletion::HasElement(result),
+            ) => match result {
+                Ok(true) => match Uri::parse(candidate.clone()) {
+                    Ok(uri) => self.select(uri, Some(node), Some(entry)),
+                    Err(reason) => self.fail(
+                        "import URI",
+                        node.target.uri.text.clone(),
+                        Some(Self::site(&node, &entry)),
+                        FailureCause::Uri {
+                            input: candidate,
+                            reason,
+                        },
+                    ),
+                },
+                Ok(false) => {
+                    if let Some(next_candidate) = remaining.pop_front() {
+                        let module = ModuleIdentity {
+                            original_uri: node.target.key.module.original_uri.clone(),
+                            resolved_uri: node.target.key.module.resolved_uri.clone(),
+                        };
+                        let key = Some(node.target.key.key.clone());
+                        self.emit(
+                            ModuleRequestKind::HasElement {
+                                key,
+                                module,
+                                element_uri: next_candidate.clone(),
+                            },
+                            Action::TripleDotProbe {
+                                node,
+                                entry,
+                                candidate: next_candidate,
+                                remaining,
+                            },
+                        );
+                    } else {
+                        self.fail(
+                            "import URI",
+                            node.target.uri.text.clone(),
+                            Some(Self::site(&node, &entry)),
+                            FailureCause::Host(ModuleHostError::NotFound),
+                        );
+                    }
+                }
+                Err(error) => self.fail(
+                    "import URI",
+                    node.target.uri.text.clone(),
+                    Some(Self::site(&node, &entry)),
+                    FailureCause::Host(error),
+                ),
+            },
             _ => unreachable!("completion validated before state change"),
         }
         Ok(())

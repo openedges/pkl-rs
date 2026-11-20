@@ -1,0 +1,2 @@
+local function spin(n: Int): Int = if (n <= 0) 0 else spin(n - 1) + spin(n - 1)
+res = spin(40)

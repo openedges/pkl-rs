@@ -1,0 +1,12 @@
+amends "pkl:Project"
+
+package {
+  name = "cyc2"
+  baseUri = "package://localhost:0/cyc2"
+  version = "1.0.0"
+  packageZipUrl = "https://localhost:0/cyc2@1.0.0/cyc2@1.0.0.zip"
+}
+
+dependencies {
+  ["cyc1"] = import("../cyc1/PklProject")
+}

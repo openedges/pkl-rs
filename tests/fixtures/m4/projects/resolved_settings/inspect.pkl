@@ -1,0 +1,9 @@
+import "PklProject"
+s = PklProject.resolvedEvaluatorSettings
+rootDir = s.rootDir
+cacheDir = s.moduleCacheDir
+modulePath = s.modulePath
+relExec = s.externalModuleReaders["myrel"].executable
+relWd = s.externalModuleReaders["myrel"].workingDir
+pathExec = s.externalModuleReaders["mypath"].executable
+pathWd = s.externalModuleReaders["mypath"].workingDir

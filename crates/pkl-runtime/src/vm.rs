@@ -3341,6 +3341,25 @@ impl Vm {
             self.stack.push(Value::TypeAlias(id));
             return Ok(());
         }
+        if active_here
+            && local
+            && member.ty.is_none()
+            && matches!(
+                self.program.blocks.get(member.code).map(Vec::as_slice),
+                Some(
+                    [Instruction::ImportModule(_), Instruction::Return]
+                        | [
+                            Instruction::ImportModule(_),
+                            Instruction::Observe(_),
+                            Instruction::Return,
+                        ]
+                )
+            )
+            && let Some(id) = self.active_cached_import_receiver(receiver, owner, &name)
+        {
+            self.stack.push(Value::Object(id));
+            return Ok(());
+        }
         let direct_force_read = self
             .frames
             .last()
@@ -3442,11 +3461,31 @@ impl Vm {
                 })
                 .cloned();
         }
-        let implicit_default_type = if !local && !method && !entry && name == "default" {
-            self.object_default_type(receiver)?
-        } else {
-            None
-        };
+        let owner_object = self.heap.get(owner)?;
+        let owner_is_dynamic = !owner_object.is_module
+            && owner_object.reference.is_none()
+            && owner_object.pair.is_none()
+            && owner_object.collection_kind == crate::heap::CollectionKind::Dynamic
+            && collections::typed_class(&self.heap, owner)?.is_none();
+        let is_constant_member = constant_value.is_some()
+            || self
+                .program
+                .metadata
+                .get(member.code)
+                .is_some_and(|metadata| metadata.constant_member);
+        // Java `TypeCheckedPropertyNode` (`@Specialization eval(VirtualFrame, VmDynamic)`)
+        // and `VmClass.getTypedToDynamicMembers()` (`UntypedObjectMemberNode`) skip
+        // inherited property type checks when `owner` is a `VmDynamic`, while
+        // `VmUtils.doReadMember` still checks `ConstantNode` properties against
+        // `Dynamic.default: (unknown) -> Any`.
+        let skip_dynamic_property_typecheck = owner_is_dynamic && !is_constant_member;
+        let implicit_default_type =
+            if !skip_dynamic_property_typecheck && !local && !method && !entry && name == "default"
+            {
+                self.object_default_type(receiver)?
+            } else {
+                None
+            };
         if let Some(value) = &constant_value {
             if collection_casts.is_empty() && implicit_default_type.is_none() {
                 if memoize {
@@ -3466,6 +3505,7 @@ impl Vm {
         }
         let mut inherited_types = Vec::new();
         if stolen_value.is_none()
+            && !skip_dynamic_property_typecheck
             && !local
             && !method
             && member.ty.is_none()

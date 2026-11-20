@@ -1,0 +1,4 @@
+p1 = read?("prop:k1")
+p2 = read?("prop:k2")
+e1 = read?("env:E1")
+eHost = read?("env:M4_HOST_ENV")

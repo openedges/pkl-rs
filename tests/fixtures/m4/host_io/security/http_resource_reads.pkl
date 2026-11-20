@@ -1,0 +1,3 @@
+local baseUrl = read("prop:m4.baseUrl")
+ok = read("\(baseUrl)/resources/data.txt").text
+notFoundNullable = read?("\(baseUrl)/status/404")

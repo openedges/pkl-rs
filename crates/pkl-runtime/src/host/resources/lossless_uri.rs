@@ -335,6 +335,25 @@ impl ResourceUri {
             return Self::parse(&view.range(..bang + 1).to_pkl_string().concat(&path.text))
                 .map_err(|_| unsupported("Invalid resolved jar module URI."));
         }
+        if base.scheme.as_deref().is_some_and(|scheme| {
+            scheme.eq_ignore_ascii_case("package") || scheme.eq_ignore_ascii_case("projectpackage")
+        }) && let Some(fragment) = base.fragment.as_ref()
+        {
+            // Mirrors `IoUtils.resolve` (`IoUtils.java:344-348`) for schemes with
+            // `hasFragmentPaths() == true` (`package:` and `projectpackage:`):
+            // resolve relative module imports against the URI fragment path rather than
+            // the package path.
+            let resolved_fragment = self.resolve_module(Some(fragment))?;
+            let normalized_fragment = normalize_path(&resolved_fragment.text);
+            let source = SourceText::from(base_text.clone());
+            let view = source.entire();
+            let prefix = view
+                .find("#")
+                .map_or(view, |hash| view.range(..hash))
+                .to_pkl_string();
+            return Self::parse(&prefix.concat(&"#".into()).concat(&normalized_fragment))
+                .map_err(|_| unsupported("Invalid resolved package module URI."));
+        }
         if base.opaque {
             return Ok(self);
         }
@@ -373,17 +392,41 @@ impl ResourceUri {
         if self.path == "..." || self.path.starts_with(".../") {
             return Err(unsupported("Triple-dot resolution is not implemented."));
         }
-        let base = module_uri.ok_or_else(|| {
+        let base_text = module_uri.ok_or_else(|| {
             unsupported("Relative resource reads require declaration module URI metadata.")
         })?;
-        let base = Self::parse(base).map_err(|_| {
+        let base = Self::parse(base_text).map_err(|_| {
             unsupported(
                 "The declaration module URI is not supported for relative resource resolution.",
             )
         })?;
+        if base
+            .scheme
+            .as_deref()
+            .is_some_and(|scheme| scheme.eq_ignore_ascii_case("jar"))
+        {
+            let source = SourceText::from(base_text.clone());
+            let view = source.entire();
+            let bang = view
+                .find("!")
+                .ok_or_else(|| unsupported("Invalid jar module URI (missing `!`)."))?;
+            let inner = view.range(bang + 1..).to_pkl_string();
+            let resolved_inner = self.resolve_module(Some(&inner))?;
+            return Self::parse(
+                &view
+                    .range(..bang + 1)
+                    .to_pkl_string()
+                    .concat(&resolved_inner.text),
+            )
+            .map_err(|_| unsupported("Invalid resolved jar resource URI."));
+        }
         let is_package = base.scheme.as_deref() == Some("package")
             || base.scheme.as_deref() == Some("projectpackage");
-        if base.opaque || (!is_package && base.scheme.as_deref() != Some("file")) {
+        let is_builtin_hierarchical = matches!(
+            base.scheme.as_deref(),
+            Some("file" | "http" | "https" | "modulepath")
+        );
+        if base.opaque || (!is_package && !is_builtin_hierarchical) {
             return Err(unsupported(
                 "Relative resource resolution currently requires a hierarchical module URI.",
             ));
@@ -421,7 +464,13 @@ impl ResourceUri {
                 let directory = view
                     .rfind("/")
                     .map_or(SourceSlice::from_utf8(""), |slash| view.range(..slash + 1));
-                self.path = directory.to_pkl_string().concat(&self.path);
+                let mut path = PklStringBuilder::default();
+                directory.append_to(&mut path);
+                if directory.is_empty() && self.authority.is_some() {
+                    path.push('/');
+                }
+                path.push_value(&self.path);
+                self.path = path.finish();
             }
         }
         self.scheme = base.scheme;

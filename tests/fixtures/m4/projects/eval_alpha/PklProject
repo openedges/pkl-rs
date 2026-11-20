@@ -1,0 +1,7 @@
+amends "pkl:Project"
+
+dependencies {
+  ["alpha"] {
+    uri = "package://localhost:0/alpha@1.0.0"
+  }
+}

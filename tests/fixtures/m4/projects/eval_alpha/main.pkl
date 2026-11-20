@@ -1,0 +1,3 @@
+import "@alpha/Alpha.pkl"
+ver = Alpha.ver
+data = read("@alpha/data.txt").text

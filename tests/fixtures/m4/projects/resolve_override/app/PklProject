@@ -1,0 +1,8 @@
+amends "pkl:Project"
+
+dependencies {
+  ["alpha"] = import("../local_alpha/PklProject")
+  ["gamma"] {
+    uri = "package://localhost:0/gamma@2.0.0"
+  }
+}

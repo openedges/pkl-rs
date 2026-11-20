@@ -837,7 +837,8 @@ impl Vm {
             .transpose()?
             .or(self.heap.get(id)?.is_module.then_some(id))
         {
-            // VmClass.getAllRegularPropertyNames excludes external declarations.
+            // VmClass.getAllRegularPropertyNames excludes external declarations
+            // as well as class/typealias prototype definitions.
             // Their native getters need not have a cached value after force().
             // Union each class's own regular names with its inherited names, so
             // a regular superclass property survives an external override too.
@@ -846,7 +847,12 @@ impl Vm {
             while let Some(id) = owner {
                 let object = self.heap.get(id)?;
                 for member in &object.members {
-                    if !member.local && !member.method && !member.entry && !member.external() {
+                    if !member.local
+                        && !member.method
+                        && !member.entry
+                        && !member.external()
+                        && !member.definition()
+                    {
                         regular.insert(member.name.clone());
                     }
                 }
@@ -862,8 +868,10 @@ impl Vm {
                 };
                 if object.members.iter().any(|m| {
                     !m.entry
+                        && !m.local
                         && m.name == descriptor.name
-                        && self.program.metadata.get(m.code).is_some_and(|m| m.hidden)
+                        && (m.hidden()
+                            || self.program.metadata.get(m.code).is_some_and(|m| m.hidden))
                 }) {
                     return false;
                 }
@@ -953,6 +961,7 @@ impl Vm {
                     if !member.local
                         && !member.method
                         && !member.entry
+                        && !member.definition()
                         && let Some(descriptor) = members
                             .iter()
                             .find(|candidate| candidate.name == member.name)
@@ -1969,42 +1978,50 @@ impl Vm {
                                 }
                                 _ => Some(false),
                             }
-                        } else if x.collection_kind != y.collection_kind
-                            || self.class_identity(*a)? != self.class_identity(*b)?
-                            || x.is_module != y.is_module
-                            || (matches!(
-                                x.collection_kind,
-                                CollectionKind::Listing | CollectionKind::List
-                            ) && x.length != y.length)
-                            || (matches!(
-                                x.collection_kind,
-                                CollectionKind::Map | CollectionKind::Set
-                            ) && x.map_index().len() != y.map_index().len())
-                        {
-                            Some(false)
-                        } else if x.collection_kind == CollectionKind::Set {
-                            // AbstractUnmodSet.equals iterates the right table and
-                            // performs contains on the left table.
-                            run.tasks.push(Task::SetNext(*a, *b, 0));
-                            None
-                        } else if x.collection_kind == CollectionKind::Map {
-                            run.tasks.push(Task::MapNext(*a, *b, 0));
-                            None
-                        } else if x.collection_kind == CollectionKind::List {
-                            let lhs = collections::ordered_members(&self.heap, *a)?;
-                            let rhs = collections::ordered_members(&self.heap, *b)?;
-                            for (l, r) in lhs.iter().zip(&rhs).rev() {
-                                let l = self.cached_equality_member(*a, l)?;
-                                let r = self.cached_equality_member(*b, r)?;
-                                run.roots.extend([l.clone(), r.clone()]);
-                                run.tasks.push(Task::Compare(l, r, false));
-                            }
-                            None
                         } else {
-                            run.tasks.push(Task::CompareMembers(*a, *b));
-                            run.tasks.push(Task::Deep(right));
-                            run.tasks.push(Task::Deep(left));
-                            None
+                            // `VmTyped.equals` compares `clazz == other.clazz` without
+                            // requiring matching `isModuleObject()`, so e.g.
+                            // `Map(...).toTyped(OpenMod.getClass()) == new OpenMod {}`
+                            // succeeds when both share the same `class_identity`.
+                            let left_class = self.class_identity(*a)?;
+                            let right_class = self.class_identity(*b)?;
+                            if x.collection_kind != y.collection_kind
+                                || left_class != right_class
+                                || (left_class.is_none() && x.is_module != y.is_module)
+                                || (matches!(
+                                    x.collection_kind,
+                                    CollectionKind::Listing | CollectionKind::List
+                                ) && x.length != y.length)
+                                || (matches!(
+                                    x.collection_kind,
+                                    CollectionKind::Map | CollectionKind::Set
+                                ) && x.map_index().len() != y.map_index().len())
+                            {
+                                Some(false)
+                            } else if x.collection_kind == CollectionKind::Set {
+                                // AbstractUnmodSet.equals iterates the right table and
+                                // performs contains on the left table.
+                                run.tasks.push(Task::SetNext(*a, *b, 0));
+                                None
+                            } else if x.collection_kind == CollectionKind::Map {
+                                run.tasks.push(Task::MapNext(*a, *b, 0));
+                                None
+                            } else if x.collection_kind == CollectionKind::List {
+                                let lhs = collections::ordered_members(&self.heap, *a)?;
+                                let rhs = collections::ordered_members(&self.heap, *b)?;
+                                for (l, r) in lhs.iter().zip(&rhs).rev() {
+                                    let l = self.cached_equality_member(*a, l)?;
+                                    let r = self.cached_equality_member(*b, r)?;
+                                    run.roots.extend([l.clone(), r.clone()]);
+                                    run.tasks.push(Task::Compare(l, r, false));
+                                }
+                                None
+                            } else {
+                                run.tasks.push(Task::CompareMembers(*a, *b));
+                                run.tasks.push(Task::Deep(right));
+                                run.tasks.push(Task::Deep(left));
+                                None
+                            }
                         }
                     }
                     _ => Some(same_key(&self.heap, &left, &right)),

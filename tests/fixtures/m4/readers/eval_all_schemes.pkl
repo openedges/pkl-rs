@@ -1,0 +1,17 @@
+import "extmod:///root.pkl"
+import "extmod:///dir/sub/child.pkl"
+import "extmod:///info.pkl"
+import* "extmod:///glob/**.pkl" as globMods
+import* "extmodopaque:*" as opaqueMods
+resText = read("extres:///hello.txt").text
+resMissing = read?("extres:///missing.txt")
+resGlob = read*("extres:///items/*.txt").toMap().mapValues((_, v) -> v.text)
+resOpaque = read*("extresopaque:*").toMap().mapValues((_, v) -> v.text)
+resNoGlob = read("extresnoglob:///single.txt").text
+rootVal = root.val
+fromBase = child.fromBase
+fromSibling = child.fromSibling
+readerTag = info.tag
+extraArgs = info.extraArgs
+globKeys = globMods.keys
+opaqueKeys = opaqueMods.keys

@@ -1,0 +1,14 @@
+import "modulepath:/shared.pkl"
+import "modulepath:/only1.pkl"
+import "modulepath:/only2.pkl"
+import "modulepath:/sub/child.pkl"
+import "modulepath:/jarmod/hello.pkl"
+res1 = read("modulepath:/data.txt").text
+resJar = read("modulepath:/jarmod/res.txt").text
+resMissing = read?("modulepath:/missing.txt")
+w = shared.winner
+o1 = only1.from1
+o2 = only2.from2
+childVal = child.val
+jarVal = hello.jarVal
+jarRelRes = hello.res

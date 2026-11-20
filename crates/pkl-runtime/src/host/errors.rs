@@ -2,9 +2,18 @@
 use crate::value::{PklString, RuntimeError};
 use std::sync::Arc;
 
-/// The supported base `java.io.IOException` failure. A missing message and an
-/// empty message are distinct. Other Java exception classes are not relabeled
-/// as this type; they require their own supported Host failure variant.
+/// Supported Java `IOException` subclass simple names recognized by [`IoFailure::with_class`].
+const KNOWN_IO_SUBCLASS_PREFIXES: &[&str] = &[
+    "ConnectException: ",
+    "SSLHandshakeException: ",
+    "SSLException: ",
+    "ZipException: ",
+    "FileNotFoundException: ",
+    "SocketTimeoutException: ",
+];
+
+/// The supported base `java.io.IOException` failure (and subclasses created via
+/// [`IoFailure::with_class`]). A missing message and an empty message are distinct.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct IoFailure {
     pub message: Option<PklString>,
@@ -15,13 +24,34 @@ impl IoFailure {
         Self { message }
     }
 
+    /// Creates an `IoFailure` retaining a specific Java `IOException` subclass simple name
+    /// (such as `"SSLHandshakeException"`, `"ZipException"`, or `"ConnectException"`), so
+    /// `VmExceptionRenderer` (`cause.getClass().getSimpleName() + ": " + causeMessage`)
+    /// preserves the exact exception class name instead of relabeling it as `IOException`.
+    pub fn with_class(class_name: &str, message: impl Into<PklString>) -> Self {
+        let cause = message.into();
+        let prefixed = PklString::from(format!("{class_name}: ")).concat(&cause);
+        Self {
+            message: Some(prefixed),
+        }
+    }
+
     pub(crate) fn into_runtime(self, operation: &str, uri: impl Into<PklString>) -> RuntimeError {
         let headline = PklString::from(format!("I/O error {operation} `"))
             .concat(&uri.into())
             .concat(&"`.".into());
         let message = match self.message {
             Some(cause) if cause != headline => {
-                headline.concat(&"\nIOException: ".into()).concat(&cause)
+                let has_known_class = cause.as_str().is_some_and(|s| {
+                    KNOWN_IO_SUBCLASS_PREFIXES
+                        .iter()
+                        .any(|prefix| s.starts_with(prefix))
+                });
+                if has_known_class {
+                    headline.concat(&"\n".into()).concat(&cause)
+                } else {
+                    headline.concat(&"\nIOException: ".into()).concat(&cause)
+                }
             }
             _ => headline,
         };
@@ -59,6 +89,15 @@ pub enum ReadFailure {
     SecurityManagerException {
         message: Option<PklString>,
     },
+    /// Typed `org.pkl.core.http.HttpClientException` rendered directly via `withCause(e)`.
+    HttpClientException {
+        message: Option<PklString>,
+    },
+    /// Typed `org.pkl.core.externalreader.ExternalReaderProcessException` rendered directly
+    /// via `withCause(e)` (`ResourceManager.java:91-92`).
+    ExternalReaderProcess {
+        message: Option<PklString>,
+    },
     UriSyntax {
         reason: PklString,
     },
@@ -73,7 +112,9 @@ impl ReadFailure {
         let uri = uri.into();
         match self {
             Self::Io(failure) => failure.into_runtime("reading resource", uri),
-            Self::SecurityManagerException { message } => RuntimeError::host_language(
+            Self::SecurityManagerException { message }
+            | Self::HttpClientException { message }
+            | Self::ExternalReaderProcess { message } => RuntimeError::host_language(
                 message.unwrap_or_else(|| "None (cause has no message)".into()),
             ),
             Self::UriSyntax { reason } => {

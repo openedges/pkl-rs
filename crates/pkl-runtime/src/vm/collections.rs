@@ -1623,10 +1623,22 @@ impl Vm {
             object.length += 1;
         }
         if let Some(value) = value {
+            // Defer caching synthetic `default` properties on Dynamic/Listing/Mapping
+            // so the first read runs `VmUtils.doReadMember`'s `default: (unknown) -> Any`
+            // type check (e.g. `Map("default", null).toDynamic().default`), while
+            // rendering the object without reading `default` stays unaffected.
+            let defer_default_cache = kind == CollectionMemberKind::Property
+                && cache_key.name == "default"
+                && matches!(
+                    collection_kind,
+                    CollectionKind::Dynamic | CollectionKind::Listing | CollectionKind::Mapping
+                );
             object
                 .member_values
                 .insert(cache_key.clone(), value.clone());
-            self.complete_cache(target, cache_key, value)?;
+            if !defer_default_cache {
+                self.complete_cache(target, cache_key, value)?;
+            }
         }
         self.update_declaration_index(target)?;
         Ok(())

@@ -1,0 +1,4067 @@
+{
+  "baseline": "0.32.0",
+  "cases": [
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "http://127.0.0.1:{http_port}/modules/hello.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:http:get-module-plain",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/modules/hello.pkl",
+          "sha256": "ab4cec05d9b90a2ca4b11071cd4c35a744d21bf1081654ca6c485fd1192e4c2d"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "HttpClientTest.kt / ModuleKeysTest.kt"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "http://127.0.0.1:{http_port}/modules/relative_base.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:http:relative-import-and-read",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/modules/relative_base.pkl",
+          "sha256": "0dd2ea8086b8778b576fcb4443f65f78972f342879ffbe43aef067be724a73e7"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/modules/hello.pkl",
+          "sha256": "ab4cec05d9b90a2ca4b11071cd4c35a744d21bf1081654ca6c485fd1192e4c2d"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/modules/sibling.txt",
+          "sha256": "e80f54eafb5f2fe1e953f02605665d1fcb824131c5bef71e0594b63b57865627"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "IoUtils.java / ResourceReaders.java (relative hierarchical HTTP read)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "-p",
+        "m4.baseUrl=http://127.0.0.1:{http_port}",
+        "tests/fixtures/m4/host_io/security/http_resource_reads.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:http:resource-read-200-and-404-nullable",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/security/http_resource_reads.pkl",
+          "sha256": "89dc0cf86a685b6f0edd718e5e0ea2ae521daef306426f44684883214cbfa574"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/resources/data.txt",
+          "sha256": "4153c749f73f0b449c470304e2313d23cd0b1b72358b33abfdf5298fc07ab403"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "ResourceReaders.java (200 ok + 404 read? -> null)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "-p",
+        "m4.baseUrl=http://127.0.0.1:{http_port}",
+        "tests/fixtures/m4/host_io/security/http_resource_404_strict.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:http:resource-read-404-strict",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/security/http_resource_404_strict.pkl",
+          "sha256": "b540c839346f4711f5483bea5260ebfdb3b23b7d4b6d1a30bdb7e31f1e9124ca"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "ResourceReaders.java (404 read -> cannotFindResource)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "-p",
+        "m4.baseUrl=http://127.0.0.1:{http_port}",
+        "tests/fixtures/m4/host_io/security/http_resource_500_nullable.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:http:resource-read-500-nullable",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/security/http_resource_500_nullable.pkl",
+          "sha256": "9ffe463e2680180776384041da79288196cda150c727eae2c1c61ea5288c63de"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "ResourceReaders.java (500 read? -> IOException badHttpStatusCode)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "http://127.0.0.1:{http_port}/status/404"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:http:module-404-error",
+      "inputs": [],
+      "lane": "host-io-http-security",
+      "upstream_origin": "ModuleKeys.java (HTTP module 404 -> IOException badHttpStatusCode)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "http://127.0.0.1:{http_port}/redirect/301/modules/redirect_target.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:http:redirect-301",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/modules/redirect_target.pkl",
+          "sha256": "b18e3ca31561928c9a8875ef258d3fc07e71a8c929caf6eda4d98e71815d1db8"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "HttpClientTest.kt::follows redirects"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "http://127.0.0.1:{http_port}/redirect-rel/307/../../modules/redirect_target.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:http:redirect-307-relative",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/modules/redirect_target.pkl",
+          "sha256": "b18e3ca31561928c9a8875ef258d3fc07e71a8c929caf6eda4d98e71815d1db8"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "RequestRewritingClient.java (relative Location resolution)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "http://127.0.0.1:{http_port}/redirect-chain/20/modules/redirect_target.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:http:redirect-chain-20-ok",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/modules/redirect_target.pkl",
+          "sha256": "b18e3ca31561928c9a8875ef258d3fc07e71a8c929caf6eda4d98e71815d1db8"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "RequestRewritingClient.java (MAX_HTTP_REDIRECTS = 20 boundary)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "http://127.0.0.1:{http_port}/redirect-chain/21/modules/redirect_target.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:http:redirect-chain-21-too-many",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/modules/redirect_target.pkl",
+          "sha256": "b18e3ca31561928c9a8875ef258d3fc07e71a8c929caf6eda4d98e71815d1db8"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "RequestRewritingClient.java (21st hop -> httpTooManyRedirects)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "http://127.0.0.1:{http_port}/redirect-loop/a"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:http:redirect-loop",
+      "inputs": [],
+      "lane": "host-io-http-security",
+      "upstream_origin": "HttpClientTest.kt::infinite redirects fail with VmException"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "http://127.0.0.1:{http_port}/redirect-no-location"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:http:redirect-no-location",
+      "inputs": [],
+      "lane": "host-io-http-security",
+      "upstream_origin": "RequestRewritingClient.java (httpRedirectNoLocation)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "http://127.0.0.1:{http_port}/redirect-invalid-location"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:http:redirect-invalid-location",
+      "inputs": [],
+      "lane": "host-io-http-security",
+      "upstream_origin": "HttpClientTest.kt::invalid redirect URI fails with VmException"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "--ca-certificates",
+        "{ca_cert}",
+        "http://127.0.0.1:{http_port}/redirect-to-https/modules/https_only.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:http:redirect-upgrade-http-to-https",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/modules/https_only.pkl",
+          "sha256": "a9aed3d30ea6fbb6ef82795a05c51982169d4d9cf68ce5b5f806a0e040c0c646"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "HttpClientTest.kt::can upgrade HTTP to HTTPS"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "--ca-certificates",
+        "{ca_cert}",
+        "https://localhost:{https_port}/redirect-to-http/modules/hello.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:https:redirect-downgrade-https-to-http",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/modules/hello.pkl",
+          "sha256": "ab4cec05d9b90a2ca4b11071cd4c35a744d21bf1081654ca6c485fd1192e4c2d"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "HttpClientTest.kt::cannot downgrade HTTPS to HTTP"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "--http-header",
+        "**/redirect-cross-path/start=X-Only-Start:secret-start",
+        "--http-header",
+        "**/redirect-cross-path/end=X-Only-End:visible-end",
+        "--http-header",
+        "**=X-Global:val-a",
+        "--http-header",
+        "**=X-Global:val-b",
+        "http://127.0.0.1:{http_port}/redirect-cross-path/start"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:http:custom-headers-and-redirect-scoping",
+      "inputs": [],
+      "lane": "host-io-http-security",
+      "upstream_origin": "HttpClientTest.kt::redirects only carry their specifically configured headers / CliEvaluatorTest.kt::eval configured http headers"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "--http-header",
+        "**=user-agent:CustomM4Agent/1.0",
+        "http://127.0.0.1:{http_port}/echo-ua"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:http:custom-user-agent-override",
+      "inputs": [],
+      "lane": "host-io-http-security",
+      "upstream_origin": "RequestRewritingClientTest.kt::User-Agent from configured headers takes precedence"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "--http-rewrite",
+        "http://127.0.0.1:{http_port}/orig/=http://127.0.0.1:{http_port}/rewritten/",
+        "--http-rewrite",
+        "http://127.0.0.1:{http_port}/orig/sub/=http://127.0.0.1:{http_port}/rewritten_long/",
+        "http://127.0.0.1:{http_port}/orig/sub/item.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:http:rewrite-longest-prefix",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/rewritten_long/item.pkl",
+          "sha256": "82a00b5fd9ea09f233f9027fe351f35dd669d5ef440f414493cc5fb2bf10e0cc"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "RequestRewritingClientTest.kt::rewrites URIs - longest rewrite wins"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "--http-rewrite",
+        "http://127.0.0.1:{http_port}/orig/=http://127.0.0.1:{http_port}/rewritten/",
+        "http://127.0.0.1:{http_port}/redirect/301/orig/item.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:http:rewrite-across-redirect",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/rewritten/item.pkl",
+          "sha256": "aa79a2c1462bc538e45bf108672a36f72bba8b19f6e1a058887e2eabf5ddcdf7"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "HttpClientTest.kt::respects configured rewrites across redirects"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--ca-certificates",
+        "{ca_cert}",
+        "https://localhost:{https_port}/modules/https_only.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:https:custom-ca-cli-ok",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/modules/https_only.pkl",
+          "sha256": "a9aed3d30ea6fbb6ef82795a05c51982169d4d9cf68ce5b5f806a0e040c0c646"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "HttpClientTest.kt::can load certificates from regular file"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "https://localhost:{https_port}/modules/https_only.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:https:custom-ca-home-cacerts-ok",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/modules/https_only.pkl",
+          "sha256": "a9aed3d30ea6fbb6ef82795a05c51982169d4d9cf68ce5b5f806a0e040c0c646"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "setup": {
+        "seed_home_files": [
+          [
+            ".pkl/cacerts/local.pem",
+            "{ca_cert}"
+          ]
+        ]
+      },
+      "upstream_origin": "CliCommand.kt (~/.pkl/cacerts/ auto-discovery)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "https://localhost:{https_port}/modules/https_only.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:https:missing-ca-ssl-error",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/modules/https_only.pkl",
+          "sha256": "a9aed3d30ea6fbb6ef82795a05c51982169d4d9cf68ce5b5f806a0e040c0c646"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "CliEvaluatorTest.kt::gives decent error message if CLI doesn't have the required CA certificate"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--ca-certificates",
+        "tests/fixtures/m4/certs/empty.pem",
+        "https://localhost:{https_port}/modules/https_only.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:https:ca-empty-file-error",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/certs/empty.pem",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/modules/https_only.pkl",
+          "sha256": "a9aed3d30ea6fbb6ef82795a05c51982169d4d9cf68ce5b5f806a0e040c0c646"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "CliEvaluatorTest.kt::gives decent error message if certificate file is empty"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--ca-certificates",
+        "tests/fixtures/m4/certs/random.pem",
+        "https://localhost:{https_port}/modules/https_only.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:https:ca-random-text-error",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/certs/random.pem",
+          "sha256": "48279f78c0f1bbdd22c9ed7c654ae3a078a9bb38c8065b249e5a79e703cba1a4"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/modules/https_only.pkl",
+          "sha256": "a9aed3d30ea6fbb6ef82795a05c51982169d4d9cf68ce5b5f806a0e040c0c646"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "CliEvaluatorTest.kt::gives decent error message if certificate file contains random text"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--ca-certificates",
+        "tests/fixtures/m4/certs/truncated.pem",
+        "https://localhost:{https_port}/modules/https_only.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:https:ca-truncated-pem-error",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/certs/truncated.pem",
+          "sha256": "7475e0e612eb4eb925270e699fe68e2f5ae77610e7bf0bac41d49991ddfeca46"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/modules/https_only.pkl",
+          "sha256": "a9aed3d30ea6fbb6ef82795a05c51982169d4d9cf68ce5b5f806a0e040c0c646"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "CliEvaluatorTest.kt::gives decent error message if certificate cannot be parsed"
+    },
+    {
+      "assertions": {
+        "proxy_hit": true
+      },
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "--http-proxy",
+        "http://127.0.0.1:{proxy_port}",
+        "http://not.a.valid.host/bar.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:http:proxy-plain-cli",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/proxy/bar.pkl",
+          "sha256": "1785189ffbd00411dc0e024a8d6139ef9878e99c29d7fbb1acb7f3661605331b"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "CliEvaluatorTest.kt::eval http module from proxy"
+    },
+    {
+      "assertions": {
+        "proxy_hit": true
+      },
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--ca-certificates",
+        "{ca_cert}",
+        "--http-proxy",
+        "http://127.0.0.1:{proxy_port}",
+        "https://localhost:{https_port}/modules/https_only.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:http:proxy-https-connect",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/modules/https_only.pkl",
+          "sha256": "a9aed3d30ea6fbb6ef82795a05c51982169d4d9cf68ce5b5f806a0e040c0c646"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "ProxySelector.java (HTTPS CONNECT tunnel)"
+    },
+    {
+      "assertions": {
+        "proxy_bypassed": true
+      },
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "--http-proxy",
+        "http://127.0.0.1:{proxy_port}",
+        "--http-no-proxy",
+        "127.0.0.1,localhost",
+        "http://127.0.0.1:{http_port}/modules/hello.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:http:proxy-no-proxy-bypass",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/modules/hello.pkl",
+          "sha256": "ab4cec05d9b90a2ca4b11071cd4c35a744d21bf1081654ca6c485fd1192e4c2d"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "NoProxyRuleTest.kt / CliEvaluatorTest.kt::eval https -- no proxy"
+    },
+    {
+      "assertions": {
+        "proxy_hit": true
+      },
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "--settings",
+        "{work_dir}/settings.pkl",
+        "http://not.a.valid.host/bar.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:http:proxy-settings-file",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/proxy/bar.pkl",
+          "sha256": "1785189ffbd00411dc0e024a8d6139ef9878e99c29d7fbb1acb7f3661605331b"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "setup": {
+        "templates": [
+          [
+            "settings.pkl",
+            "amends \"pkl:settings\"\nhttp {\n  proxy {\n    address = \"http://127.0.0.1:{proxy_port}\"\n  }\n}\n"
+          ]
+        ]
+      },
+      "upstream_origin": "CliEvaluatorTest.kt::eval http module from proxy -- configured in settings"
+    },
+    {
+      "assertions": {
+        "proxy_hit": true
+      },
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "--project-dir",
+        "{work_dir}/proj",
+        "--settings",
+        "{work_dir}/settings.pkl",
+        "http://not.a.valid.host/bar.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:http:proxy-project-beats-settings",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/proxy/bar.pkl",
+          "sha256": "1785189ffbd00411dc0e024a8d6139ef9878e99c29d7fbb1acb7f3661605331b"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "setup": {
+        "templates": [
+          [
+            "settings.pkl",
+            "amends \"pkl:settings\"\nhttp {\n  proxy {\n    address = \"http://invalid.proxy.address\"\n  }\n}\n"
+          ],
+          [
+            "proj/PklProject",
+            "amends \"pkl:Project\"\nevaluatorSettings {\n  http {\n    proxy {\n      address = \"http://127.0.0.1:{proxy_port}\"\n    }\n  }\n}\n"
+          ]
+        ]
+      },
+      "upstream_origin": "CliEvaluatorTest.kt::eval http module from proxy -- PklProject beats user settings"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:",
+        "http://127.0.0.1:{http_port}/modules/hello.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:security:allowlist-module-deny",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/modules/hello.pkl",
+          "sha256": "ab4cec05d9b90a2ca4b11071cd4c35a744d21bf1081654ca6c485fd1192e4c2d"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "SecurityManagersTest.kt::checkResolveModule"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-resources",
+        "prop:",
+        "-e",
+        "M4_TEST_ENV=v",
+        "-p",
+        "m4.prop=p",
+        "tests/fixtures/m4/host_io/security/env_prop_read.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:security:allowlist-resource-env-prop-deny",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/security/env_prop_read.pkl",
+          "sha256": "0f00977ed4497c0bf9921ba9d3a6e4286a61ae5bf0963edb3383c5d51a1aa1cc"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "SecurityManagersTest.kt::checkReadResource (custom allowedResources)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m4/host_io/security/unregistered_resource.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:security:unregistered-resource-denied-before-no-reader",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/security/unregistered_resource.pkl",
+          "sha256": "959c6b204c85313fa72a55f2891a36446eecceeb1301eaaeea62bb755be7d1a9"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "ResourceManager.java:98-119 (SecurityManager checked before noResourceReaderRegistered)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-resources",
+        "prop:,nosuchscheme:",
+        "tests/fixtures/m4/host_io/security/unregistered_resource.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:security:unregistered-resource-allowed-gives-no-reader",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/security/unregistered_resource.pkl",
+          "sha256": "959c6b204c85313fa72a55f2891a36446eecceeb1301eaaeea62bb755be7d1a9"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "ResourceManager.java:98-119 (allowed unregistered scheme -> noResourceReaderRegistered)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--root-dir",
+        "tests/fixtures/m4/host_io/rootdir/allowed",
+        "tests/fixtures/m4/host_io/rootdir/allowed/ok.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:security:rootdir-allow-inside",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/rootdir/allowed/ok.pkl",
+          "sha256": "c7ce58a3e31fb2b257cd36c10fffe6f5b8c5e692aa18e9f88916b5d8c345221b"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "SecurityManagersTest.kt::can resolve modules and resources under root dir"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--root-dir",
+        "tests/fixtures/m4/host_io/rootdir/allowed",
+        "tests/fixtures/m4/host_io/rootdir/allowed/import_outside.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:security:rootdir-deny-import-outside",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/rootdir/allowed/import_outside.pkl",
+          "sha256": "041df7a7ef1db9d1e26e745ef6364c414587a048401a4bf9fadb527d895999c5"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/rootdir/secret.pkl",
+          "sha256": "a715d249a5a57b007b935b42f58e7d0c5c5cb2caf950135d76ca45771e9d0f6f"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "EvaluatorTest.kt::cannot import module located outside root dir"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--root-dir",
+        "tests/fixtures/m4/host_io/rootdir/allowed",
+        "tests/fixtures/m4/host_io/rootdir/allowed/import_missing_outside.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:security:rootdir-deny-nonexistent-outside",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/rootdir/allowed/import_missing_outside.pkl",
+          "sha256": "362c23ab8ef6c3c35dbfda05871b160c7d92d9dd47de2572fc37e8d17b771d24"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "SecurityManagersTest.kt::cannot resolve modules and resources outside root dir - files don't exist"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-resources",
+        "file:,env:,prop:",
+        "--root-dir",
+        "tests/fixtures/m4/host_io/rootdir/allowed",
+        "tests/fixtures/m4/host_io/rootdir/allowed/read_outside.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:security:rootdir-deny-read-outside",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/rootdir/allowed/read_outside.pkl",
+          "sha256": "dc1305f6582a423e89bfd55e14234799e2d6961379e53cb76bbd5141ffd3bbb1"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/rootdir/secret.txt",
+          "sha256": "ed80692733dd8323eda987e9b76e98b15429c44365bff2c7979b38a3d0e34385"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "EvaluatorTest.kt::cannot read resource located outside root dir"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--root-dir",
+        "{work_dir}/rootdir/allowed",
+        "{work_dir}/rootdir/allowed/import_symlink_escape.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:security:rootdir-deny-import-symlink-escape",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/rootdir/allowed/import_symlink_escape.pkl",
+          "sha256": "d99afc30ae5d7cd2c2b1e195d345aae661ca13d9d1339eef340786563708cbd7"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/rootdir/secret.pkl",
+          "sha256": "a715d249a5a57b007b935b42f58e7d0c5c5cb2caf950135d76ca45771e9d0f6f"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m4/host_io/rootdir",
+            "rootdir"
+          ]
+        ],
+        "symlinks": [
+          [
+            "rootdir/allowed/escape_link.pkl",
+            "../secret.pkl"
+          ]
+        ]
+      },
+      "upstream_origin": "ModuleKeys.java:339-360 (symlink escape outside rootDir)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-resources",
+        "file:,env:,prop:",
+        "--root-dir",
+        "{work_dir}/rootdir/allowed",
+        "{work_dir}/rootdir/allowed/read_symlink_escape.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:security:rootdir-deny-read-symlink-escape",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/rootdir/allowed/read_symlink_escape.pkl",
+          "sha256": "c359e60aed5adf513cc805a90a7d0a0d88be1f13df94d7712e162babf2777e5c"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/rootdir/secret.txt",
+          "sha256": "ed80692733dd8323eda987e9b76e98b15429c44365bff2c7979b38a3d0e34385"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m4/host_io/rootdir",
+            "rootdir"
+          ]
+        ],
+        "symlinks": [
+          [
+            "rootdir/allowed/escape_link.txt",
+            "../secret.txt"
+          ]
+        ]
+      },
+      "upstream_origin": "ResourceReaders.java:260-279 (FileResource symlink escape outside rootDir)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--root-dir",
+        "{work_dir}/rootdir/allowed",
+        "{work_dir}/rootdir/allowed/glob_symlink_escape.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:security:rootdir-deny-glob-symlink-escape",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/rootdir/allowed/glob_symlink_escape.pkl",
+          "sha256": "4920230b45d01183bf0508b808dffefb448e4bc2fc47fb84e77b6e1c23e21703"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/rootdir/outside_dir/hidden.pkl",
+          "sha256": "7a17a4e1fdb711434875b732b111d2e7ffc58ec143188775f9703ed598ca8320"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m4/host_io/rootdir",
+            "rootdir"
+          ]
+        ],
+        "symlinks": [
+          [
+            "rootdir/allowed/escape_dir",
+            "../outside_dir"
+          ]
+        ]
+      },
+      "upstream_origin": "FileResolver.java / GlobResolver.java (glob symlink base dir escape outside rootDir)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-resources",
+        "modulepath:,env:,prop:,package:,projectpackage:",
+        "--module-path",
+        "tests/fixtures/m4/host_io/modulepath/dir1:tests/fixtures/m4/host_io/modulepath/mp.jar:tests/fixtures/m4/host_io/modulepath/dir2:tests/fixtures/m4/host_io/modulepath/missing.jar",
+        "tests/fixtures/m4/host_io/security/mp_eval.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:modulepath:multi-entry-dirs-and-jar",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/security/mp_eval.pkl",
+          "sha256": "5bfc220322a9f9cd045ea4675792263cd88994042fa0afc545ce7d798d46b987"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/modulepath/dir1/shared.pkl",
+          "sha256": "256a14bbfd2e588ac091dde6a4e67a7c3a1bb358c077a2ca82944ba672b22384"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/modulepath/dir1/only1.pkl",
+          "sha256": "3d6c45139a52fa673fb75dc06830ee65a494631f9d5f9fc98ad468361e240642"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/modulepath/dir1/base.pkl",
+          "sha256": "77081ca50a5a70d8f3b3497e1898fe65f85210a8fb96c8b6d63646f6e0265c67"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/modulepath/dir1/sub/child.pkl",
+          "sha256": "c403ec2f1d73b2e39844ebfe077744c6539a3bb61a15a1acb7cf3c139556e837"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/modulepath/dir1/data.txt",
+          "sha256": "a95ce96874adc81248bca3821e943b134ced73b1f42c6b697e91f43dcaec1275"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/modulepath/dir2/shared.pkl",
+          "sha256": "8f5865c3633e3cba8ad1361b068c26aa71f36e81ffdeb350b5808c7c1da258ae"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/modulepath/dir2/only2.pkl",
+          "sha256": "8f54b746f832c63970162ba885e47b11da7801236026cddbc9a0fb590f786ecd"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/modulepath/mp.jar",
+          "sha256": "771fe34407c989f4797680295e596db87da30a302b9c1785b7bb04df0b187160"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "ModuleKeyFactoriesTest.kt / ResourceReadersEvaluatorTest.kt (dirs + jar + missing + precedence + triple-dot)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-resources",
+        "modulepath:,prop:",
+        "--module-path",
+        "tests/fixtures/m4/host_io/modulepath/dir1",
+        "tests/fixtures/m4/host_io/security/mp_missing_slash.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:modulepath:missing-leading-slash-error",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/security/mp_missing_slash.pkl",
+          "sha256": "c24c3a277108c470e125c9f89cc2004047ba86920c5dd80b74f1bd5d2157c03b"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "ModuleKeysTest.kt::module path - missing leading slash"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--module-path",
+        "tests/fixtures/m4/host_io/modulepath/dir1",
+        "tests/fixtures/m4/host_io/security/mp_glob_error.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:modulepath:glob-unsupported-error",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/security/mp_glob_error.pkl",
+          "sha256": "716b40fd9f239a37056e25a8c78520b40edfe8bc7ef0fe0b83e929d3e7440770"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "ModuleKeys.java (ModulePath isGlobbable=false)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "analyze",
+        "imports",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m4/host_io/analyze/root.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:analyze:imports-graph-complex",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/analyze/root.pkl",
+          "sha256": "42ad1a3dbcaf4d98790e44e8cbe0a3832a4c3b966cd01c6b27811dd2702f3fff"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/analyze/base.pkl",
+          "sha256": "8145ffb7ae49189a29786d78eb695e736fcb0834b0d93195ad8137160ca8b4a9"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/analyze/cyc_a.pkl",
+          "sha256": "7d43670b93918379c905503df890721cd964b7e65e61b9fbb05e0e9f29788090"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/analyze/cyc_b.pkl",
+          "sha256": "67fa983655ed9d7a89765ca895ace86c471b08da78b992ea672d70def3a276cc"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/analyze/sub/leaf.pkl",
+          "sha256": "db2aa2d3cab63d95a03e81055343a04a4414d9ee8e381b169db573949359f040"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/analyze/glob/one.pkl",
+          "sha256": "008025913b0594080b151570ad35566897145a30c4c733296749f48449234275"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/analyze/glob/two.pkl",
+          "sha256": "b28128b9bd4f9c6be65ec8e5e36d4926431e1bc246cd87de65e66588a2659639"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "AnalyzerTest.kt / CliImportAnalyzerTest.kt (cycles + triple-dot + glob)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "analyze",
+        "imports",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m4/host_io/analyze/syntax_err.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:analyze:imports-syntax-error",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/analyze/syntax_err.pkl",
+          "sha256": "31814d5361ee7535c3b9acbc6ac4ecab56a8b6adc57fd196f24c32943fc01c2f"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "CliImportAnalyzerTest.kt::invalid syntax in module"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--timeout",
+        "1",
+        "tests/fixtures/m4/host_io/security/slow_eval.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:lifecycle:timeout-eval",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/security/slow_eval.pkl",
+          "sha256": "2aea1894dd0a2c8c80b54d5c676a47ddb85f0da103da8048ff71777f6443fd85"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "CliEvaluatorTest.kt::evaluation timeout"
+    },
+    {
+      "assertions": {
+        "http_timeout_fast": true
+      },
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--allowed-modules",
+        "pkl:,file:,modulepath:,http:,https:,package:,projectpackage:",
+        "--allowed-resources",
+        "env:,prop:,file:,http:,https:,package:,projectpackage:",
+        "--timeout",
+        "1",
+        "http://127.0.0.1:{http_port}/slow/8000/modules/hello.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:lifecycle:timeout-http-slow",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/modules/hello.pkl",
+          "sha256": "ab4cec05d9b90a2ca4b11071cd4c35a744d21bf1081654ca6c485fd1192e4c2d"
+        }
+      ],
+      "lane": "host-io-http-security",
+      "upstream_origin": "EvaluatorImpl.java / CliEvaluator.kt (HTTP stall timeout & socket abort)"
+    },
+    {
+      "assertions": {
+        "reader_closed": true,
+        "reader_single_process": true
+      },
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--external-module-reader",
+        "extmod={reader_bin} --lifecycle-log {lifecycle_log} --tag cli-all extraA extraB",
+        "--external-module-reader",
+        "extmodopaque={reader_bin} --lifecycle-log {lifecycle_log} --tag cli-all extraA extraB",
+        "--external-resource-reader",
+        "extres={reader_bin} --lifecycle-log {lifecycle_log} --tag cli-all extraA extraB",
+        "--external-resource-reader",
+        "extresopaque={reader_bin} --lifecycle-log {lifecycle_log} --tag cli-all extraA extraB",
+        "--external-resource-reader",
+        "extresnoglob={reader_bin} --lifecycle-log {lifecycle_log} --tag cli-all extraA extraB",
+        "tests/fixtures/m4/readers/eval_all_schemes.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:ext:all-schemes-cli-and-lifecycle",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/readers/msgpack_ipc.py",
+          "sha256": "09cf8d9bb3575123408acaa2a20a423e88b9038df9138a468f79f8d87a5dadbd"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/m4_ext_reader.py",
+          "sha256": "4014892c06a898537cd31e8826dfd8a058acd84fd27189681c855620ce4b8837"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/eval_all_schemes.pkl",
+          "sha256": "7d5c2e81b0eddb0e0e83137b1a2125638d3aad95fce13a5d25d04b21c6ff5cf4"
+        }
+      ],
+      "lane": "external-readers",
+      "upstream_origin": "ModuleKeyFactoriesTest.kt / ResourceReadersTest.kt / ExternalReaderProcessImpl.java"
+    },
+    {
+      "assertions": {
+        "reader_closed": true
+      },
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--external-module-reader",
+        "extmod={reader_bin} --lifecycle-log {lifecycle_log}",
+        "tests/fixtures/m4/readers/eval_module_error.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:ext:module-read-error",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/readers/msgpack_ipc.py",
+          "sha256": "09cf8d9bb3575123408acaa2a20a423e88b9038df9138a468f79f8d87a5dadbd"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/m4_ext_reader.py",
+          "sha256": "4014892c06a898537cd31e8826dfd8a058acd84fd27189681c855620ce4b8837"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/eval_module_error.pkl",
+          "sha256": "7b2b69e06e2d25328cda16c84508d92074277d8339074a60465991283b5cdd74"
+        }
+      ],
+      "lane": "external-readers",
+      "upstream_origin": "ExternalModuleResolverImpl.java (error response)"
+    },
+    {
+      "assertions": {
+        "reader_closed": true
+      },
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--external-resource-reader",
+        "extres={reader_bin} --lifecycle-log {lifecycle_log}",
+        "tests/fixtures/m4/readers/eval_resource_error.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:ext:resource-read-error",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/readers/msgpack_ipc.py",
+          "sha256": "09cf8d9bb3575123408acaa2a20a423e88b9038df9138a468f79f8d87a5dadbd"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/m4_ext_reader.py",
+          "sha256": "4014892c06a898537cd31e8826dfd8a058acd84fd27189681c855620ce4b8837"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/eval_resource_error.pkl",
+          "sha256": "3244dc9b87d7ee4a8496b59b78055c7843dd77f4e66e255c7a2f6b5545e00f51"
+        }
+      ],
+      "lane": "external-readers",
+      "upstream_origin": "ExternalResourceResolverImpl.java / ResourceManager.java:91-92"
+    },
+    {
+      "assertions": {
+        "reader_closed": true
+      },
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--external-resource-reader",
+        "extres={reader_bin} --lifecycle-log {lifecycle_log}",
+        "tests/fixtures/m4/readers/eval_resource_missing_strict.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:ext:resource-missing-strict",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/readers/msgpack_ipc.py",
+          "sha256": "09cf8d9bb3575123408acaa2a20a423e88b9038df9138a468f79f8d87a5dadbd"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/m4_ext_reader.py",
+          "sha256": "4014892c06a898537cd31e8826dfd8a058acd84fd27189681c855620ce4b8837"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/eval_resource_missing_strict.pkl",
+          "sha256": "5662055950ec51c25fef57db1facd9da49c5e3c5688201bdf046ddf33a314e8c"
+        }
+      ],
+      "lane": "external-readers",
+      "upstream_origin": "ExternalResourceResolverImpl.java:50-53 (absent contents & error -> Missing)"
+    },
+    {
+      "assertions": {
+        "reader_closed": true
+      },
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--external-module-reader",
+        "extunknown={reader_bin} --lifecycle-log {lifecycle_log}",
+        "tests/fixtures/m4/readers/eval_unsupported_mod_scheme.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:ext:unsupported-module-scheme",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/readers/msgpack_ipc.py",
+          "sha256": "09cf8d9bb3575123408acaa2a20a423e88b9038df9138a468f79f8d87a5dadbd"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/m4_ext_reader.py",
+          "sha256": "4014892c06a898537cd31e8826dfd8a058acd84fd27189681c855620ce4b8837"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/eval_unsupported_mod_scheme.pkl",
+          "sha256": "31d41dda440e92d4ed456c46d25f9e31ea2f2097734afe95c3acb8288ba2f93d"
+        }
+      ],
+      "lane": "external-readers",
+      "upstream_origin": "ModuleKeyFactories.java:291-295 (absent spec -> unsupported scheme)"
+    },
+    {
+      "assertions": {
+        "reader_closed": true
+      },
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--external-resource-reader",
+        "extunknown={reader_bin} --lifecycle-log {lifecycle_log}",
+        "tests/fixtures/m4/readers/eval_unsupported_res_scheme.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:ext:unsupported-resource-scheme",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/readers/msgpack_ipc.py",
+          "sha256": "09cf8d9bb3575123408acaa2a20a423e88b9038df9138a468f79f8d87a5dadbd"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/m4_ext_reader.py",
+          "sha256": "4014892c06a898537cd31e8826dfd8a058acd84fd27189681c855620ce4b8837"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/eval_unsupported_res_scheme.pkl",
+          "sha256": "cd6abd499d3dbb876a77fe50b6ce796c0c85d2edfb0402209c28e7a91ee67de6"
+        }
+      ],
+      "lane": "external-readers",
+      "upstream_origin": "ResourceReaders.java:677-681 (absent spec -> unsupported scheme)"
+    },
+    {
+      "assertions": {
+        "reader_closed": true
+      },
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--external-module-reader",
+        "extmodremote={reader_bin} --lifecycle-log {lifecycle_log}",
+        "tests/fixtures/m4/readers/eval_noglob_module.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:ext:non-globbable-module-error",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/readers/msgpack_ipc.py",
+          "sha256": "09cf8d9bb3575123408acaa2a20a423e88b9038df9138a468f79f8d87a5dadbd"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/m4_ext_reader.py",
+          "sha256": "4014892c06a898537cd31e8826dfd8a058acd84fd27189681c855620ce4b8837"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/eval_noglob_module.pkl",
+          "sha256": "5af3c0c704f3fdfe69419aab9f69e3c1b51eb31d76883afd61362ea2f77c2d32"
+        }
+      ],
+      "lane": "external-readers",
+      "upstream_origin": "ExternalModuleResolverImpl.java (isGlobbable=false)"
+    },
+    {
+      "assertions": {
+        "reader_closed": true
+      },
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--external-resource-reader",
+        "extresnoglob={reader_bin} --lifecycle-log {lifecycle_log}",
+        "tests/fixtures/m4/readers/eval_noglob_resource.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:ext:non-globbable-resource-error",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/readers/msgpack_ipc.py",
+          "sha256": "09cf8d9bb3575123408acaa2a20a423e88b9038df9138a468f79f8d87a5dadbd"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/m4_ext_reader.py",
+          "sha256": "4014892c06a898537cd31e8826dfd8a058acd84fd27189681c855620ce4b8837"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/eval_noglob_resource.pkl",
+          "sha256": "61cc0e2d80d2aaf4cf1319e9ab77949f9332627ff2c1404daccac759f3a69e83"
+        }
+      ],
+      "lane": "external-readers",
+      "upstream_origin": "ExternalResourceResolverImpl.java (isGlobbable=false)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--project-dir",
+        "tests/fixtures/m4/readers/project_readers",
+        "tests/fixtures/m4/readers/project_readers/main.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:ext:project-readers-rel-and-path-and-cwd",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/readers/msgpack_ipc.py",
+          "sha256": "09cf8d9bb3575123408acaa2a20a423e88b9038df9138a468f79f8d87a5dadbd"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/m4_ext_reader.py",
+          "sha256": "4014892c06a898537cd31e8826dfd8a058acd84fd27189681c855620ce4b8837"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/project_readers/PklProject",
+          "sha256": "c2914281357d39a9c256af6832c4f9eb2cf6c6bb4c1ba433c17bc19338af773d"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/project_readers/main.pkl",
+          "sha256": "13fe283f583c65756d3c9968330ec8c6f76b67d63d4e0f9fbfd6647be2a6a3de"
+        }
+      ],
+      "lane": "external-readers",
+      "setup": {
+        "prepend_path_dir": "tests/fixtures/m4/readers"
+      },
+      "upstream_origin": "ProjectTest.kt::external readers (relative to project dir + PATH simple name + default workingDir)"
+    },
+    {
+      "assertions": {
+        "reader_closed": true
+      },
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--project-dir",
+        "tests/fixtures/m4/readers/project_readers",
+        "--external-module-reader",
+        "extmod={reader_bin} --lifecycle-log {lifecycle_log} --tag cli-override",
+        "tests/fixtures/m4/readers/project_readers/main.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:ext:cli-replaces-project-readers",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/readers/msgpack_ipc.py",
+          "sha256": "09cf8d9bb3575123408acaa2a20a423e88b9038df9138a468f79f8d87a5dadbd"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/m4_ext_reader.py",
+          "sha256": "4014892c06a898537cd31e8826dfd8a058acd84fd27189681c855620ce4b8837"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/project_readers/PklProject",
+          "sha256": "c2914281357d39a9c256af6832c4f9eb2cf6c6bb4c1ba433c17bc19338af773d"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/project_readers/main.pkl",
+          "sha256": "13fe283f583c65756d3c9968330ec8c6f76b67d63d4e0f9fbfd6647be2a6a3de"
+        }
+      ],
+      "lane": "external-readers",
+      "setup": {
+        "prepend_path_dir": "tests/fixtures/m4/readers"
+      },
+      "upstream_origin": "CliCommandTest.kt::--external-module-reader blows away PklProject externalModuleReaders"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--project-dir",
+        "tests/fixtures/m4/readers/project_readers",
+        "--omit-project-settings",
+        "tests/fixtures/m4/readers/project_readers/main.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:ext:omit-project-settings",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/readers/msgpack_ipc.py",
+          "sha256": "09cf8d9bb3575123408acaa2a20a423e88b9038df9138a468f79f8d87a5dadbd"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/m4_ext_reader.py",
+          "sha256": "4014892c06a898537cd31e8826dfd8a058acd84fd27189681c855620ce4b8837"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/project_readers/PklProject",
+          "sha256": "c2914281357d39a9c256af6832c4f9eb2cf6c6bb4c1ba433c17bc19338af773d"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/project_readers/main.pkl",
+          "sha256": "13fe283f583c65756d3c9968330ec8c6f76b67d63d4e0f9fbfd6647be2a6a3de"
+        }
+      ],
+      "lane": "external-readers",
+      "upstream_origin": "ProjectOptions.kt (--omit-project-settings ignores project readers)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--project-dir",
+        "tests/fixtures/m4/projects/settings_precedence",
+        "tests/fixtures/m4/projects/settings_precedence/main.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "M4_HOST_ENV": "host-val",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:project:settings-from-project",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/settings_precedence/PklProject",
+          "sha256": "0b2bc1bbef3dc722161664495c42c218b03a17355bcae0cb200557c03005924f"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/settings_precedence/main.pkl",
+          "sha256": "847cf7816a1f3dc9e0460af77b59d8c5421981d513d2214374164fda180ab7a0"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "upstream_origin": "CliEvaluatorTest.kt::settings from PklProject file"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--project-dir",
+        "tests/fixtures/m4/projects/settings_precedence",
+        "-p",
+        "k1=from-cli",
+        "tests/fixtures/m4/projects/settings_precedence/main.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "M4_HOST_ENV": "host-val",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:project:settings-cli-p-replaces-project-props",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/settings_precedence/PklProject",
+          "sha256": "0b2bc1bbef3dc722161664495c42c218b03a17355bcae0cb200557c03005924f"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/settings_precedence/main.pkl",
+          "sha256": "847cf7816a1f3dc9e0460af77b59d8c5421981d513d2214374164fda180ab7a0"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "upstream_origin": "CliCommand.kt (-p replaces evaluatorSettings.externalProperties)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--project-dir",
+        "tests/fixtures/m4/projects/settings_precedence",
+        "--omit-project-settings",
+        "tests/fixtures/m4/projects/settings_precedence/main.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "M4_HOST_ENV": "host-val",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:project:settings-omit-project-settings",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/settings_precedence/PklProject",
+          "sha256": "0b2bc1bbef3dc722161664495c42c218b03a17355bcae0cb200557c03005924f"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/settings_precedence/main.pkl",
+          "sha256": "847cf7816a1f3dc9e0460af77b59d8c5421981d513d2214374164fda180ab7a0"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "upstream_origin": "CliEvaluatorTest.kt::skip PklProject file / --omit-project-settings"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--project-dir",
+        "tests/fixtures/m4/projects/settings_empty_env",
+        "tests/fixtures/m4/projects/settings_empty_env/main.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "M4_HOST_ENV": "must-not-leak",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:project:settings-empty-env-no-host-fallback",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/settings_empty_env/PklProject",
+          "sha256": "94531453eedbdc1fc556ae2d2058a476b3bbc2074742e767a7596881e50ff160"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/settings_empty_env/main.pkl",
+          "sha256": "2e2573a845a1c18c5c5a815f5a35f12fc93d02960fa2737ec0b922e64ee3ace9"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "upstream_origin": "CliCommand.kt (empty env {} is non-null, does not fall back to host env)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "tests/fixtures/m4/projects/resolved_settings/inspect.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:project:resolved-evaluator-settings",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/resolved_settings/PklProject",
+          "sha256": "a12693635fc10d2b062ed72908a2233fbfd612e96d9e9c386e8dede40c95dd04"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/resolved_settings/inspect.pkl",
+          "sha256": "6e32f2beabf5b3262dacfa2e59fc899136d9727d3fee2bc6fbaa5831a7cbc75c"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "upstream_origin": "ProjectTest.kt::loadFromPath() resolvedEvaluatorSettings"
+    },
+    {
+      "collect_files": "work_dir_changes",
+      "command": [
+        "project",
+        "resolve",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--ca-certificates",
+        "{ca_cert}",
+        "--test-port",
+        "{https_port}",
+        "{work_dir}/proj"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:project:resolve-basic",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/resolve_basic/PklProject",
+          "sha256": "3e7411275714b50b59a35d03da5c34305e768ef4bdc6ba3dc902a3704f4e40e2"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.json",
+          "sha256": "de20d7d5924559bfb7df4fdd129e3b365418161fdc27f7798d8f297fabe15327"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.zip",
+          "sha256": "0eb8377ae9794c71ab3cbd9372d29bed72821251d1fef905a3a6f2993a159ab5"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.json",
+          "sha256": "5e90cecf89f4b49f0e5405202e599b94665906f2a46945180eaaa85bfe099ff2"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.zip",
+          "sha256": "2fe107e65d7bca3a94229627b66256a713def44052a3a8f09689bdcabde7fa3e"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.json",
+          "sha256": "44a96b521e46307c007b7a159e9a7fd515f683a4e6cd51a0f86c439c973ce64b"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.zip",
+          "sha256": "691095ca2af1c84f066126386fd5640cbbc16767f7341434b74f49fde0fb4313"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.json",
+          "sha256": "26a4114c24278580160d35bcf00071c0fc20c5c3e6f296b5efd7124ece8b71f3"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.zip",
+          "sha256": "96f785ad9eddb4bc1d30bf028401cbd4a5720c2116ffe208cf03018b3f35673a"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.json",
+          "sha256": "8f7d0b4a3885c10b395d4efc2fc9fc270752b4665fc4128e44ad218e50875b7d"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.zip",
+          "sha256": "1cc22d844e24c898352542c50ac13533cc83a4eae161ae83c0e2b88605e2d25e"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m4/projects/resolve_basic",
+            "proj"
+          ]
+        ]
+      },
+      "upstream_origin": "CliProjectResolverTest.kt::basic project"
+    },
+    {
+      "collect_files": "work_dir_changes",
+      "command": [
+        "project",
+        "resolve",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--ca-certificates",
+        "{ca_cert}",
+        "--test-port",
+        "{https_port}",
+        "{work_dir}/proj"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:project:resolve-diamond-mvs",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/resolve_diamond/PklProject",
+          "sha256": "4c36b74bafe079cd3caae35cd066945abdee48e67f13672d2eadaf30699b4760"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.json",
+          "sha256": "de20d7d5924559bfb7df4fdd129e3b365418161fdc27f7798d8f297fabe15327"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.zip",
+          "sha256": "0eb8377ae9794c71ab3cbd9372d29bed72821251d1fef905a3a6f2993a159ab5"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.json",
+          "sha256": "5e90cecf89f4b49f0e5405202e599b94665906f2a46945180eaaa85bfe099ff2"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.zip",
+          "sha256": "2fe107e65d7bca3a94229627b66256a713def44052a3a8f09689bdcabde7fa3e"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.json",
+          "sha256": "44a96b521e46307c007b7a159e9a7fd515f683a4e6cd51a0f86c439c973ce64b"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.zip",
+          "sha256": "691095ca2af1c84f066126386fd5640cbbc16767f7341434b74f49fde0fb4313"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.json",
+          "sha256": "26a4114c24278580160d35bcf00071c0fc20c5c3e6f296b5efd7124ece8b71f3"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.zip",
+          "sha256": "96f785ad9eddb4bc1d30bf028401cbd4a5720c2116ffe208cf03018b3f35673a"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.json",
+          "sha256": "8f7d0b4a3885c10b395d4efc2fc9fc270752b4665fc4128e44ad218e50875b7d"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.zip",
+          "sha256": "1cc22d844e24c898352542c50ac13533cc83a4eae161ae83c0e2b88605e2d25e"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m4/projects/resolve_diamond",
+            "proj"
+          ]
+        ]
+      },
+      "upstream_origin": "ProjectDependenciesResolverTest.kt (MVS diamond selects alpha@1.1.0)"
+    },
+    {
+      "collect_files": "work_dir_changes",
+      "command": [
+        "project",
+        "resolve",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--ca-certificates",
+        "{ca_cert}",
+        "--test-port",
+        "{https_port}",
+        "{work_dir}/tree/app"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:project:resolve-local-and-remote",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/resolve_local/app/PklProject",
+          "sha256": "1c2519493c1bf43571933b8060eb0042c3db410145b23034d6734b7d9833c63c"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/resolve_local/local_lib/PklProject",
+          "sha256": "51781dfe4642d1f74ed52c17eac0c23cea5837199f8305bdf3b0a1a1d9775482"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.json",
+          "sha256": "de20d7d5924559bfb7df4fdd129e3b365418161fdc27f7798d8f297fabe15327"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.zip",
+          "sha256": "0eb8377ae9794c71ab3cbd9372d29bed72821251d1fef905a3a6f2993a159ab5"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.json",
+          "sha256": "5e90cecf89f4b49f0e5405202e599b94665906f2a46945180eaaa85bfe099ff2"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.zip",
+          "sha256": "2fe107e65d7bca3a94229627b66256a713def44052a3a8f09689bdcabde7fa3e"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.json",
+          "sha256": "44a96b521e46307c007b7a159e9a7fd515f683a4e6cd51a0f86c439c973ce64b"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.zip",
+          "sha256": "691095ca2af1c84f066126386fd5640cbbc16767f7341434b74f49fde0fb4313"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.json",
+          "sha256": "26a4114c24278580160d35bcf00071c0fc20c5c3e6f296b5efd7124ece8b71f3"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.zip",
+          "sha256": "96f785ad9eddb4bc1d30bf028401cbd4a5720c2116ffe208cf03018b3f35673a"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.json",
+          "sha256": "8f7d0b4a3885c10b395d4efc2fc9fc270752b4665fc4128e44ad218e50875b7d"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.zip",
+          "sha256": "1cc22d844e24c898352542c50ac13533cc83a4eae161ae83c0e2b88605e2d25e"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m4/projects/resolve_local",
+            "tree"
+          ]
+        ]
+      },
+      "upstream_origin": "CliProjectResolverTest.kt::local dependencies"
+    },
+    {
+      "collect_files": "work_dir_changes",
+      "command": [
+        "project",
+        "resolve",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--ca-certificates",
+        "{ca_cert}",
+        "--test-port",
+        "{https_port}",
+        "{work_dir}/tree/app"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:project:resolve-local-overridden-by-remote",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/resolve_override/app/PklProject",
+          "sha256": "ab02260dd16bdd3bc39ba159fdbabbbb20a45c7ce48107ea9b616fa997173f8b"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/resolve_override/local_alpha/PklProject",
+          "sha256": "08d2abda876dce3ddf9e38138f0e32746c59f74b08e783aeafa2e6f9dd307d9a"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.json",
+          "sha256": "de20d7d5924559bfb7df4fdd129e3b365418161fdc27f7798d8f297fabe15327"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.zip",
+          "sha256": "0eb8377ae9794c71ab3cbd9372d29bed72821251d1fef905a3a6f2993a159ab5"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.json",
+          "sha256": "5e90cecf89f4b49f0e5405202e599b94665906f2a46945180eaaa85bfe099ff2"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.zip",
+          "sha256": "2fe107e65d7bca3a94229627b66256a713def44052a3a8f09689bdcabde7fa3e"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.json",
+          "sha256": "44a96b521e46307c007b7a159e9a7fd515f683a4e6cd51a0f86c439c973ce64b"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.zip",
+          "sha256": "691095ca2af1c84f066126386fd5640cbbc16767f7341434b74f49fde0fb4313"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.json",
+          "sha256": "26a4114c24278580160d35bcf00071c0fc20c5c3e6f296b5efd7124ece8b71f3"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.zip",
+          "sha256": "96f785ad9eddb4bc1d30bf028401cbd4a5720c2116ffe208cf03018b3f35673a"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.json",
+          "sha256": "8f7d0b4a3885c10b395d4efc2fc9fc270752b4665fc4128e44ad218e50875b7d"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.zip",
+          "sha256": "1cc22d844e24c898352542c50ac13533cc83a4eae161ae83c0e2b88605e2d25e"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m4/projects/resolve_override",
+            "tree"
+          ]
+        ]
+      },
+      "upstream_origin": "CliProjectResolverTest.kt::local dependency overridden by remote dependency"
+    },
+    {
+      "collect_files": "work_dir_changes",
+      "command": [
+        "project",
+        "resolve",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "{work_dir}/tree/cyc1"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:project:resolve-cycle-error",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/resolve_cycle/cyc1/PklProject",
+          "sha256": "49a3705cf8857e66433c7434e5dea28e540b44526fc1a0a5fdb49df4a1e46030"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/resolve_cycle/cyc2/PklProject",
+          "sha256": "369dcb26d88d9f6acf95b772117ca4e09233966e7fa0934e8fb607ccf2371d8c"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m4/projects/resolve_cycle",
+            "tree"
+          ]
+        ]
+      },
+      "upstream_origin": "ProjectTest.kt::fails if project has cyclical dependencies"
+    },
+    {
+      "collect_files": "work_dir_changes",
+      "command": [
+        "project",
+        "resolve",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--ca-certificates",
+        "{ca_cert}",
+        "--test-port",
+        "{https_port}",
+        "{work_dir}/proj"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:project:resolve-bad-declared-checksum",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/resolve_bad_checksum/PklProject",
+          "sha256": "319f3ac8213f4aec78294c4244f7bec42554840bc287247bc8346330d9a3d6b0"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.json",
+          "sha256": "de20d7d5924559bfb7df4fdd129e3b365418161fdc27f7798d8f297fabe15327"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.zip",
+          "sha256": "0eb8377ae9794c71ab3cbd9372d29bed72821251d1fef905a3a6f2993a159ab5"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.json",
+          "sha256": "5e90cecf89f4b49f0e5405202e599b94665906f2a46945180eaaa85bfe099ff2"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.zip",
+          "sha256": "2fe107e65d7bca3a94229627b66256a713def44052a3a8f09689bdcabde7fa3e"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.json",
+          "sha256": "44a96b521e46307c007b7a159e9a7fd515f683a4e6cd51a0f86c439c973ce64b"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.zip",
+          "sha256": "691095ca2af1c84f066126386fd5640cbbc16767f7341434b74f49fde0fb4313"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.json",
+          "sha256": "26a4114c24278580160d35bcf00071c0fc20c5c3e6f296b5efd7124ece8b71f3"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.zip",
+          "sha256": "96f785ad9eddb4bc1d30bf028401cbd4a5720c2116ffe208cf03018b3f35673a"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.json",
+          "sha256": "8f7d0b4a3885c10b395d4efc2fc9fc270752b4665fc4128e44ad218e50875b7d"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.zip",
+          "sha256": "1cc22d844e24c898352542c50ac13533cc83a4eae161ae83c0e2b88605e2d25e"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m4/projects/resolve_bad_checksum",
+            "proj"
+          ]
+        ]
+      },
+      "upstream_origin": "ProjectDependenciesResolverTest.kt::fails if project declares a package with an incorrect checksum"
+    },
+    {
+      "assertions": {
+        "cross_interop_modules": [
+          "package://localhost:0/samplepkg@1.0.0#/Main.pkl"
+        ]
+      },
+      "collect_files": "output_dir",
+      "command": [
+        "project",
+        "package",
+        "--skip-publish-check",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--output-path",
+        "{output_dir}/%{name}@%{version}",
+        "{work_dir}/proj"
+      ],
+      "comparison_mode": "package-archive",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:project:package-basic",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/pkg_basic/PklProject",
+          "sha256": "a7fefa6d3b94d5439c976931014b6799c572df11c9c55541d3c8246185c38ba5"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/pkg_basic/Main.pkl",
+          "sha256": "1af889bf58747c4b936a56ac99b7b918844d55bcad66ed3dced5c7063fc8e052"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/pkg_basic/assets/note.txt",
+          "sha256": "698491e1550c19059ac601a1e226e57abd978aebea10d151d48076f76f93ef27"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/pkg_basic/ignored.secret",
+          "sha256": "47e3fe4770572fcf368fc79c1b1e6c02f19aced25bfad9a54909b271ad2213ff"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/pkg_basic/tests/api.pkl",
+          "sha256": "7f3bd50e23cae8bac6de32e9d768778445da0dc9e97ead26d52153c5c07e7784"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m4/projects/pkg_basic",
+            "proj"
+          ]
+        ]
+      },
+      "upstream_origin": "CliProjectPackagerTest.kt::generate package / passing apiTests / excludes"
+    },
+    {
+      "assertions": {
+        "expect_empty_zip_sha256": "8739c76e681f900923b900c9df0ef75cf421d39cabb54650c4b9ad19b6a76d85"
+      },
+      "collect_files": "output_dir",
+      "command": [
+        "project",
+        "package",
+        "--skip-publish-check",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--output-path",
+        "{output_dir}/%{name}@%{version}",
+        "{work_dir}/proj"
+      ],
+      "comparison_mode": "package-archive",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:project:package-empty-exact-zip-sha",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/pkg_empty/PklProject",
+          "sha256": "16d5d7e8527f91bcaa551f264176d88d1ddb0cade0a13557b4739d33dd3ef1f3"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m4/projects/pkg_empty",
+            "proj"
+          ]
+        ]
+      },
+      "upstream_origin": "ProjectPackager.java (deterministic empty ZIP exact SHA-256)"
+    },
+    {
+      "assertions": {
+        "cross_interop_modules": [
+          "package://localhost:0/consumer@1.0.0#/Use.pkl"
+        ]
+      },
+      "collect_files": "output_dir",
+      "command": [
+        "project",
+        "package",
+        "--skip-publish-check",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--output-path",
+        "{output_dir}/%{name}@%{version}",
+        "{work_dir}/pair/dep",
+        "{work_dir}/pair/consumer"
+      ],
+      "comparison_mode": "package-archive",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:project:package-local-dep-closure",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/pkg_local_pair/dep/PklProject",
+          "sha256": "596c251588b737f5a7872fc1ebfb84f941a66fa75e903851dce091401b18c713"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/pkg_local_pair/dep/Dep.pkl",
+          "sha256": "34bb6717a28f4ce70fc02be5e402a7b3ec548b9c9758aba2cc0c6cfbbf5f7ccd"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/pkg_local_pair/consumer/PklProject",
+          "sha256": "c5dd85edde57c7eaabc075f65d8b9dce25272c67aa2e34a5cdb007292e56f86f"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/pkg_local_pair/consumer/PklProject.deps.json",
+          "sha256": "b39fd26f42d78ef89230c343fbb8bb76e52f6589b9b5a3f677ea377633e6a754"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/pkg_local_pair/consumer/Use.pkl",
+          "sha256": "0cab5cf522cb7d486e24e0c41c0eee00cb3cc56519ced46944fe17fc71dbd5a8"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m4/projects/pkg_local_pair",
+            "pair"
+          ]
+        ]
+      },
+      "upstream_origin": "CliProjectPackagerTest.kt::generate packages with local dependencies"
+    },
+    {
+      "collect_files": "output_dir",
+      "command": [
+        "project",
+        "package",
+        "--skip-publish-check",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--output-path",
+        "{output_dir}/%{name}@%{version}",
+        "{work_dir}/pair/consumer"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:project:package-missing-local-dep-arg",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/pkg_local_pair/dep/PklProject",
+          "sha256": "596c251588b737f5a7872fc1ebfb84f941a66fa75e903851dce091401b18c713"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/pkg_local_pair/consumer/PklProject",
+          "sha256": "c5dd85edde57c7eaabc075f65d8b9dce25272c67aa2e34a5cdb007292e56f86f"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/pkg_local_pair/consumer/PklProject.deps.json",
+          "sha256": "b39fd26f42d78ef89230c343fbb8bb76e52f6589b9b5a3f677ea377633e6a754"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m4/projects/pkg_local_pair",
+            "pair"
+          ]
+        ]
+      },
+      "upstream_origin": "CliProjectPackagerTest.kt::generate package with local dependencies fails if local dep is not included"
+    },
+    {
+      "collect_files": "output_dir",
+      "command": [
+        "project",
+        "package",
+        "--skip-publish-check",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--output-path",
+        "{output_dir}/%{name}@%{version}",
+        "{work_dir}/proj"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:project:package-failing-api-tests",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/pkg_api_fail/PklProject",
+          "sha256": "b310679745cea58d126a60d8088400c47697fa74adb7dfbb2db328fefb52fc8f"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/pkg_api_fail/fail_test.pkl",
+          "sha256": "8c1d9dc81bb2e9925fc70de240f3104b3bfb850a6a4b9783b0a4342cf9bfa613"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m4/projects/pkg_api_fail",
+            "proj"
+          ]
+        ]
+      },
+      "upstream_origin": "CliProjectPackagerTest.kt::failing apiTests"
+    },
+    {
+      "collect_files": "output_dir",
+      "command": [
+        "project",
+        "package",
+        "--skip-publish-check",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--output-path",
+        "{output_dir}/%{name}@%{version}",
+        "{work_dir}/tree/proj"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:project:package-import-escape-error",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/pkg_escape_import/outside.pkl",
+          "sha256": "9e26bf369911c45c243c684147b23fc9e1dcfcf257d299a1c632016a6fcd33f4"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/pkg_escape_import/proj/PklProject",
+          "sha256": "d2c7163940ea6c5268355c714ee7d3493a57447916bcc9e43c037a1643533f5a"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/pkg_escape_import/proj/Bad.pkl",
+          "sha256": "ec992dd9eb9f69d0d6d236500008926bfb9cb3e2ce899f9f4d022ee15308ae68"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m4/projects/pkg_escape_import",
+            "tree"
+          ]
+        ]
+      },
+      "upstream_origin": "CliProjectPackagerTest.kt::import path verification -- relative path outside project dir"
+    },
+    {
+      "collect_files": "output_dir",
+      "command": [
+        "project",
+        "package",
+        "--skip-publish-check",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--output-path",
+        "{output_dir}/%{name}@%{version}",
+        "{work_dir}/proj"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:project:package-missing-package-section",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/pkg_no_package/PklProject",
+          "sha256": "b3dbc5a3dae89c031913f161e5f8764f9cf57c9e595b2680c28bf97d37c1179e"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m4/projects/pkg_no_package",
+            "proj"
+          ]
+        ]
+      },
+      "upstream_origin": "CliProjectPackagerTest.kt::PklProject missing package section"
+    },
+    {
+      "collect_files": "cache_dir",
+      "command": [
+        "download-package",
+        "--settings",
+        "pkl:settings",
+        "--cache-dir",
+        "{cache_dir}",
+        "--ca-certificates",
+        "{ca_cert}",
+        "--test-port",
+        "{https_port}",
+        "package://localhost:0/beta@0.5.0"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:cache:download-package-transitive",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.json",
+          "sha256": "de20d7d5924559bfb7df4fdd129e3b365418161fdc27f7798d8f297fabe15327"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.zip",
+          "sha256": "0eb8377ae9794c71ab3cbd9372d29bed72821251d1fef905a3a6f2993a159ab5"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.json",
+          "sha256": "5e90cecf89f4b49f0e5405202e599b94665906f2a46945180eaaa85bfe099ff2"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.zip",
+          "sha256": "2fe107e65d7bca3a94229627b66256a713def44052a3a8f09689bdcabde7fa3e"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.json",
+          "sha256": "44a96b521e46307c007b7a159e9a7fd515f683a4e6cd51a0f86c439c973ce64b"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.zip",
+          "sha256": "691095ca2af1c84f066126386fd5640cbbc16767f7341434b74f49fde0fb4313"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.json",
+          "sha256": "26a4114c24278580160d35bcf00071c0fc20c5c3e6f296b5efd7124ece8b71f3"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.zip",
+          "sha256": "96f785ad9eddb4bc1d30bf028401cbd4a5720c2116ffe208cf03018b3f35673a"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.json",
+          "sha256": "8f7d0b4a3885c10b395d4efc2fc9fc270752b4665fc4128e44ad218e50875b7d"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.zip",
+          "sha256": "1cc22d844e24c898352542c50ac13533cc83a4eae161ae83c0e2b88605e2d25e"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "upstream_origin": "CliPackageDownloaderTest.kt::download package, including transitive dependencies"
+    },
+    {
+      "collect_files": "cache_dir",
+      "command": [
+        "download-package",
+        "--no-transitive",
+        "--settings",
+        "pkl:settings",
+        "--cache-dir",
+        "{cache_dir}",
+        "--ca-certificates",
+        "{ca_cert}",
+        "--test-port",
+        "{https_port}",
+        "package://localhost:0/beta@0.5.0"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:cache:download-package-no-transitive",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.json",
+          "sha256": "de20d7d5924559bfb7df4fdd129e3b365418161fdc27f7798d8f297fabe15327"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.zip",
+          "sha256": "0eb8377ae9794c71ab3cbd9372d29bed72821251d1fef905a3a6f2993a159ab5"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.json",
+          "sha256": "5e90cecf89f4b49f0e5405202e599b94665906f2a46945180eaaa85bfe099ff2"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.zip",
+          "sha256": "2fe107e65d7bca3a94229627b66256a713def44052a3a8f09689bdcabde7fa3e"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.json",
+          "sha256": "44a96b521e46307c007b7a159e9a7fd515f683a4e6cd51a0f86c439c973ce64b"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.zip",
+          "sha256": "691095ca2af1c84f066126386fd5640cbbc16767f7341434b74f49fde0fb4313"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.json",
+          "sha256": "26a4114c24278580160d35bcf00071c0fc20c5c3e6f296b5efd7124ece8b71f3"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.zip",
+          "sha256": "96f785ad9eddb4bc1d30bf028401cbd4a5720c2116ffe208cf03018b3f35673a"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.json",
+          "sha256": "8f7d0b4a3885c10b395d4efc2fc9fc270752b4665fc4128e44ad218e50875b7d"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.zip",
+          "sha256": "1cc22d844e24c898352542c50ac13533cc83a4eae161ae83c0e2b88605e2d25e"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "upstream_origin": "CliPackageDownloaderTest.kt (--no-transitive)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "download-package",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "package://localhost:0/alpha@1.0.0"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:cache:download-package-no-cache-error",
+      "inputs": [],
+      "lane": "projects-packages-cache",
+      "upstream_origin": "CliPackageDownloaderTest.kt::disabling caching is an error"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--cache-dir",
+        "{cache_dir}",
+        "tests/fixtures/m4/projects/eval_direct_beta/main.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:cache:eval-warm-cache-no-network",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/eval_direct_beta/main.pkl",
+          "sha256": "3a432e6153aa233f6cefdc8c287b0a7b7976c2bbfccd5ab4dcedc180274de4db"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.json",
+          "sha256": "de20d7d5924559bfb7df4fdd129e3b365418161fdc27f7798d8f297fabe15327"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.zip",
+          "sha256": "0eb8377ae9794c71ab3cbd9372d29bed72821251d1fef905a3a6f2993a159ab5"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.json",
+          "sha256": "5e90cecf89f4b49f0e5405202e599b94665906f2a46945180eaaa85bfe099ff2"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.zip",
+          "sha256": "2fe107e65d7bca3a94229627b66256a713def44052a3a8f09689bdcabde7fa3e"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.json",
+          "sha256": "44a96b521e46307c007b7a159e9a7fd515f683a4e6cd51a0f86c439c973ce64b"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.zip",
+          "sha256": "691095ca2af1c84f066126386fd5640cbbc16767f7341434b74f49fde0fb4313"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.json",
+          "sha256": "26a4114c24278580160d35bcf00071c0fc20c5c3e6f296b5efd7124ece8b71f3"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.zip",
+          "sha256": "96f785ad9eddb4bc1d30bf028401cbd4a5720c2116ffe208cf03018b3f35673a"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.json",
+          "sha256": "8f7d0b4a3885c10b395d4efc2fc9fc270752b4665fc4128e44ad218e50875b7d"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.zip",
+          "sha256": "1cc22d844e24c898352542c50ac13533cc83a4eae161ae83c0e2b88605e2d25e"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "setup": {
+        "seed_cache_files": [
+          [
+            "package-2/localhost(3a)0/alpha@1.0.0/alpha@1.0.0.json",
+            "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.json"
+          ],
+          [
+            "package-2/localhost(3a)0/alpha@1.0.0/alpha@1.0.0.zip",
+            "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.zip"
+          ],
+          [
+            "package-2/localhost(3a)0/beta@0.5.0/beta@0.5.0.json",
+            "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.json"
+          ],
+          [
+            "package-2/localhost(3a)0/beta@0.5.0/beta@0.5.0.zip",
+            "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.zip"
+          ]
+        ]
+      },
+      "upstream_origin": "PackageResolvers.java (warm package-2 cache with localhost(3a)0 encoding, zero network)"
+    },
+    {
+      "assertions": {
+        "cache_empty": true
+      },
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-project",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--cache-dir",
+        "{cache_dir}",
+        "--ca-certificates",
+        "{ca_cert}",
+        "--test-port",
+        "{https_port}",
+        "tests/fixtures/m4/projects/eval_direct_beta/main.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        0
+      ],
+      "id": "m4:cache:no-cache-skips-writing-cache-dir",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/eval_direct_beta/main.pkl",
+          "sha256": "3a432e6153aa233f6cefdc8c287b0a7b7976c2bbfccd5ab4dcedc180274de4db"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.json",
+          "sha256": "de20d7d5924559bfb7df4fdd129e3b365418161fdc27f7798d8f297fabe15327"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.zip",
+          "sha256": "0eb8377ae9794c71ab3cbd9372d29bed72821251d1fef905a3a6f2993a159ab5"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.json",
+          "sha256": "5e90cecf89f4b49f0e5405202e599b94665906f2a46945180eaaa85bfe099ff2"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.zip",
+          "sha256": "2fe107e65d7bca3a94229627b66256a713def44052a3a8f09689bdcabde7fa3e"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.json",
+          "sha256": "44a96b521e46307c007b7a159e9a7fd515f683a4e6cd51a0f86c439c973ce64b"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.zip",
+          "sha256": "691095ca2af1c84f066126386fd5640cbbc16767f7341434b74f49fde0fb4313"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.json",
+          "sha256": "26a4114c24278580160d35bcf00071c0fc20c5c3e6f296b5efd7124ece8b71f3"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.zip",
+          "sha256": "96f785ad9eddb4bc1d30bf028401cbd4a5720c2116ffe208cf03018b3f35673a"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.json",
+          "sha256": "8f7d0b4a3885c10b395d4efc2fc9fc270752b4665fc4128e44ad218e50875b7d"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.zip",
+          "sha256": "1cc22d844e24c898352542c50ac13533cc83a4eae161ae83c0e2b88605e2d25e"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "upstream_origin": "CliEvaluatorTest.kt::setting noCache will skip writing to the cache dir"
+    },
+    {
+      "assertions": {
+        "deleted_cache_paths": [
+          "package-2/localhost(3a)0/alpha@1.0.0/alpha@1.0.0.json"
+        ]
+      },
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--settings",
+        "pkl:settings",
+        "--project-dir",
+        "tests/fixtures/m4/projects/eval_alpha",
+        "--cache-dir",
+        "{cache_dir}",
+        "--ca-certificates",
+        "{ca_cert}",
+        "--test-port",
+        "{https_port}",
+        "tests/fixtures/m4/projects/eval_alpha/main.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:cache:corrupt-cached-json-deleted",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/eval_alpha/PklProject",
+          "sha256": "274786080fd208361431427ecbcad9c453873eb2dba3f35ae30ddf057696765d"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/eval_alpha/PklProject.deps.json",
+          "sha256": "89e2b7df4b55475f083717d399f998ce61c3f45673d2fa313eee5a703bd1171d"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/eval_alpha/main.pkl",
+          "sha256": "7a881ef04b9ceacefa72dd468073e216fab3ac2f9ce1d73a6c7bc3bbbc6e9703"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "setup": {
+        "seed_cache_files": [
+          [
+            "package-2/localhost(3a)0/alpha@1.0.0/alpha@1.0.0.json",
+            "literal:{corrupt-json"
+          ]
+        ]
+      },
+      "upstream_origin": "PackageResolvers.java (corrupt cached .json deleted on parse error)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--settings",
+        "pkl:settings",
+        "--project-dir",
+        "tests/fixtures/m4/projects/eval_alpha",
+        "--cache-dir",
+        "{cache_dir}",
+        "--ca-certificates",
+        "{ca_cert}",
+        "--test-port",
+        "{https_port}",
+        "tests/fixtures/m4/projects/eval_alpha/main.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:cache:corrupt-cached-zip-error",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/eval_alpha/PklProject",
+          "sha256": "274786080fd208361431427ecbcad9c453873eb2dba3f35ae30ddf057696765d"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/eval_alpha/PklProject.deps.json",
+          "sha256": "89e2b7df4b55475f083717d399f998ce61c3f45673d2fa313eee5a703bd1171d"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/eval_alpha/main.pkl",
+          "sha256": "7a881ef04b9ceacefa72dd468073e216fab3ac2f9ce1d73a6c7bc3bbbc6e9703"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.json",
+          "sha256": "de20d7d5924559bfb7df4fdd129e3b365418161fdc27f7798d8f297fabe15327"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "setup": {
+        "seed_cache_files": [
+          [
+            "package-2/localhost(3a)0/alpha@1.0.0/alpha@1.0.0.json",
+            "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.json"
+          ],
+          [
+            "package-2/localhost(3a)0/alpha@1.0.0/alpha@1.0.0.zip",
+            "hex:504b0304000102030405"
+          ]
+        ]
+      },
+      "upstream_origin": "PackageResolvers.java / ZipArchive (corrupt truncated cached ZIP error)"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--settings",
+        "pkl:settings",
+        "--project-dir",
+        "tests/fixtures/m4/projects/eval_alpha_bad_lock",
+        "--ca-certificates",
+        "{ca_cert}",
+        "--test-port",
+        "{https_port}",
+        "tests/fixtures/m4/projects/eval_alpha_bad_lock/main.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:cache:lockfile-checksum-mismatch",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/eval_alpha_bad_lock/PklProject",
+          "sha256": "274786080fd208361431427ecbcad9c453873eb2dba3f35ae30ddf057696765d"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/eval_alpha_bad_lock/PklProject.deps.json",
+          "sha256": "7b2d5a31785ccad887dd9de74850bea6115749022865d36dd0e161bfae085ef1"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/eval_alpha_bad_lock/main.pkl",
+          "sha256": "8a816a33b54911b04b407ce8beed57fc35398670c7ee7b2901ae82bf0bef2b64"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.json",
+          "sha256": "de20d7d5924559bfb7df4fdd129e3b365418161fdc27f7798d8f297fabe15327"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.zip",
+          "sha256": "0eb8377ae9794c71ab3cbd9372d29bed72821251d1fef905a3a6f2993a159ab5"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.json",
+          "sha256": "5e90cecf89f4b49f0e5405202e599b94665906f2a46945180eaaa85bfe099ff2"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.zip",
+          "sha256": "2fe107e65d7bca3a94229627b66256a713def44052a3a8f09689bdcabde7fa3e"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.json",
+          "sha256": "44a96b521e46307c007b7a159e9a7fd515f683a4e6cd51a0f86c439c973ce64b"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.zip",
+          "sha256": "691095ca2af1c84f066126386fd5640cbbc16767f7341434b74f49fde0fb4313"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.json",
+          "sha256": "26a4114c24278580160d35bcf00071c0fc20c5c3e6f296b5efd7124ece8b71f3"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.zip",
+          "sha256": "96f785ad9eddb4bc1d30bf028401cbd4a5720c2116ffe208cf03018b3f35673a"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.json",
+          "sha256": "8f7d0b4a3885c10b395d4efc2fc9fc270752b4665fc4128e44ad218e50875b7d"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.zip",
+          "sha256": "1cc22d844e24c898352542c50ac13533cc83a4eae161ae83c0e2b88605e2d25e"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "upstream_origin": "ProjectTest.kt::evaluate project module -- invalid checksum"
+    },
+    {
+      "collect_files": "none",
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--ca-certificates",
+        "{ca_cert}",
+        "--test-port",
+        "{https_port}",
+        "tests/fixtures/m4/projects/eval_badzipurl/main.pkl"
+      ],
+      "comparison_mode": "raw",
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "expected_exit": [
+        1
+      ],
+      "id": "m4:cache:non-https-zip-url-error",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/eval_badzipurl/main.pkl",
+          "sha256": "4516573a1b280cdbac352def282e81155e7ebcfe0424a9dbd7c0ecc2f46c2ca7"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.json",
+          "sha256": "de20d7d5924559bfb7df4fdd129e3b365418161fdc27f7798d8f297fabe15327"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.zip",
+          "sha256": "0eb8377ae9794c71ab3cbd9372d29bed72821251d1fef905a3a6f2993a159ab5"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.json",
+          "sha256": "5e90cecf89f4b49f0e5405202e599b94665906f2a46945180eaaa85bfe099ff2"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.1.0/alpha@1.1.0.zip",
+          "sha256": "2fe107e65d7bca3a94229627b66256a713def44052a3a8f09689bdcabde7fa3e"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.json",
+          "sha256": "44a96b521e46307c007b7a159e9a7fd515f683a4e6cd51a0f86c439c973ce64b"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/beta@0.5.0/beta@0.5.0.zip",
+          "sha256": "691095ca2af1c84f066126386fd5640cbbc16767f7341434b74f49fde0fb4313"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.json",
+          "sha256": "26a4114c24278580160d35bcf00071c0fc20c5c3e6f296b5efd7124ece8b71f3"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/gamma@2.0.0/gamma@2.0.0.zip",
+          "sha256": "96f785ad9eddb4bc1d30bf028401cbd4a5720c2116ffe208cf03018b3f35673a"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.json",
+          "sha256": "8f7d0b4a3885c10b395d4efc2fc9fc270752b4665fc4128e44ad218e50875b7d"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/badzipurl@1.0.0/badzipurl@1.0.0.zip",
+          "sha256": "1cc22d844e24c898352542c50ac13533cc83a4eae161ae83c0e2b88605e2d25e"
+        }
+      ],
+      "lane": "projects-packages-cache",
+      "upstream_origin": "PackageResolversTest.kt::requires package zip to be an HTTPS URI"
+    }
+  ],
+  "lanes": [
+    "host-io-http-security",
+    "external-readers",
+    "projects-packages-cache"
+  ],
+  "pantry_dynamic_lanes": [
+    "pantry-dev",
+    "pantry-packaged"
+  ],
+  "schema_version": 1
+}

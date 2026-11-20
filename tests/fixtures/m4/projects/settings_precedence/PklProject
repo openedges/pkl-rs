@@ -1,0 +1,11 @@
+amends "pkl:Project"
+
+evaluatorSettings {
+  externalProperties {
+    ["k1"] = "from-project"
+    ["k2"] = "from-project-only"
+  }
+  env {
+    ["E1"] = "env-from-project"
+  }
+}

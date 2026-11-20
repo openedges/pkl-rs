@@ -1,0 +1,8 @@
+amends "pkl:Project"
+
+package {
+  name = "emptypkg"
+  baseUri = "package://localhost:0/emptypkg"
+  version = "1.0.0"
+  packageZipUrl = "https://localhost:0/emptypkg@1.0.0/emptypkg@1.0.0.zip"
+}

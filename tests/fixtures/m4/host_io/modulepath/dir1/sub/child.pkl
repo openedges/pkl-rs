@@ -1,0 +1,4 @@
+import ".../base.pkl"
+import "modulepath:/shared.pkl"
+val = base.fromParent
+w = shared.winner

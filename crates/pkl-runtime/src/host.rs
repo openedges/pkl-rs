@@ -1,16 +1,74 @@
 //! Cooperative Host boundary. Platform adapters supply a monotonic clock and I/O.
 mod errors;
+pub mod http;
+pub mod modulepath;
 pub(crate) mod resources;
+pub mod security;
 use crate::{
     logging::{EvaluationContext, LogEvent, LoggerFailure},
     value::{ErrorKind, RuntimeError, Value},
     vm::{PendingRequest, Program, Vm, VmPoll},
 };
 pub use errors::{IoFailure, ReadFailure};
+pub use resources::try_configured_scalar_read_with_policy;
+pub use security::SecurityPolicy;
 use std::sync::{
     Arc,
     atomic::{AtomicU64, Ordering},
 };
+
+/// Formats a millisecond timeout duration using Java `MessageFormat` `{0,number,#.##}`
+/// semantics (seconds rounded half-even to at most 2 decimal places, no trailing zeros).
+pub fn format_timeout_seconds(timeout_ms: u64) -> String {
+    // Convert ms to hundredths of a second using exact integer half-even rounding:
+    // ms / 1000.0 * 100 = ms / 10.
+    let quotient = timeout_ms / 10;
+    let remainder = timeout_ms % 10;
+    let hundredths = if remainder > 5 || (remainder == 5 && quotient % 2 == 1) {
+        quotient + 1
+    } else {
+        quotient
+    };
+    let whole = hundredths / 100;
+    let frac = hundredths % 100;
+    if frac == 0 {
+        whole.to_string()
+    } else if frac % 10 == 0 {
+        format!("{whole}.{}", frac / 10)
+    } else {
+        format!("{whole}.{frac:02}")
+    }
+}
+
+/// Formats Pkl 0.32.0's `evaluationTimedOut` message (`errorMessages.properties:807-808`).
+pub fn format_timeout_message(timeout_ms: u64) -> String {
+    format!(
+        "Evaluation timed out after {} second(s).",
+        format_timeout_seconds(timeout_ms)
+    )
+}
+
+/// Resolves an authored module/resource URI against a declaration module URI using the
+/// shared lossless UTF-16 URI engine.
+pub fn resolve_module_key_uri(
+    authored: &crate::value::PklString,
+    base_module_uri: &crate::value::PklString,
+) -> Result<crate::value::PklString, RuntimeError> {
+    resources::resolve_module_key_uri(authored, base_module_uri)
+}
+
+/// Resolves a relative or absolute resource read URI against an optional declaration module URI.
+pub fn resolve_resource_read_uri(
+    authored: &crate::value::PklString,
+    base_module_uri: Option<&crate::value::PklString>,
+) -> Result<crate::value::PklString, RuntimeError> {
+    resources::resolve_authored_resource_uri(authored, base_module_uri)
+}
+
+/// Percent-encodes a filesystem path segment sequence following Pkl `IoUtils.toUri` rules.
+pub fn quote_uri_path(path: &crate::value::PklString) -> crate::value::PklString {
+    resources::quote_path(path)
+}
 
 static NEXT_SESSION: AtomicU64 = AtomicU64::new(1);
 
@@ -42,6 +100,7 @@ pub enum HostPoll {
 
 struct HostContext {
     id: u64,
+    timeout_ms: Option<u64>,
     deadline: Option<u64>,
     next_entry: Option<usize>,
 }
@@ -644,6 +703,7 @@ impl HostSession {
             .ok_or_else(|| error(ErrorKind::Host, "context IDs exhausted"))?;
         Ok(HostContext {
             id,
+            timeout_ms: timeout,
             deadline,
             next_entry: None,
         })
@@ -672,12 +732,16 @@ impl HostSession {
     }
     fn expire(&mut self, now: u64) -> bool {
         if self.active
-            && self
+            && let Some(expired) = self
                 .contexts
                 .iter()
-                .any(|context| context.deadline.is_some_and(|deadline| now >= deadline))
+                .find(|context| context.deadline.is_some_and(|deadline| now >= deadline))
         {
-            self.terminate(ErrorKind::Timeout, "evaluation timed out");
+            let message = match expired.timeout_ms {
+                Some(ms) => format_timeout_message(ms),
+                None => "Evaluation timed out.".to_string(),
+            };
+            self.terminate(ErrorKind::Timeout, &message);
             true
         } else {
             false

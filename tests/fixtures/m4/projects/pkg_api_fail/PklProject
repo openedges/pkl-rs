@@ -1,0 +1,9 @@
+amends "pkl:Project"
+
+package {
+  name = "failpkg"
+  baseUri = "package://localhost:0/failpkg"
+  version = "1.0.0"
+  packageZipUrl = "https://localhost:0/failpkg@1.0.0/failpkg@1.0.0.zip"
+  apiTests { "fail_test.pkl" }
+}

@@ -65,6 +65,160 @@ fn owned(key: &ModuleKey) -> bool {
     )
 }
 
+/// Policy-aware standard key profile supporting `file:`, `modulepath:`, `http:`, `https:`,
+/// `jar:`, `package:`, and `projectpackage:`.
+///
+/// Returns `None` when actual platform I/O (filesystem, modulepath archive/dir lookup,
+/// HTTP transport, or generic URL I/O) is needed.
+pub fn standard_key_completion_with_policy(
+    request: &ModuleRequest,
+    policy: &crate::host::security::SecurityPolicy,
+) -> Option<ModuleCompletion> {
+    match &request.kind {
+        ModuleRequestKind::SelectKey { id, uri, .. } => {
+            let source = SourceText::from(uri.clone());
+            if let Some((scheme, _)) = source.entire().split_once(":")
+                && scheme
+                    .as_str()
+                    .is_some_and(|s| s.eq_ignore_ascii_case("modulepath"))
+            {
+                return match crate::host::modulepath::parse_modulepath_uri(uri) {
+                    Ok(_) => Some(ModuleCompletion::KeySelected(Ok(ModuleKey {
+                        id: *id,
+                        uri: uri.clone(),
+                        kind: ModuleKeyKind::Host,
+                        handle: "builtin:modulepath".into(),
+                    }))),
+                    Err(reason) => Some(ModuleCompletion::KeySelected(Err(
+                        ModuleHostError::UriSyntax { reason },
+                    ))),
+                };
+            }
+            match selected_kind(uri) {
+                Ok(Some(kind)) => Some(ModuleCompletion::KeySelected(Ok(ModuleKey {
+                    id: *id,
+                    uri: uri.clone(),
+                    kind,
+                    handle: PklString::default(),
+                }))),
+                Ok(None) => None,
+                Err(error) => Some(ModuleCompletion::KeySelected(Err(error))),
+            }
+        }
+        ModuleRequestKind::QueryCachePolicy { key }
+            if owned(key) || key.handle == "builtin:modulepath" =>
+        {
+            Some(ModuleCompletion::CachePolicy(Ok(true)))
+        }
+        ModuleRequestKind::QueryFragmentPaths { key }
+            if owned(key) || key.handle == "builtin:modulepath" =>
+        {
+            let has_fragment =
+                key.uri.starts_with("package:") || key.uri.starts_with("projectpackage:");
+            Some(ModuleCompletion::FragmentPaths(Ok(has_fragment)))
+        }
+        ModuleRequestKind::Capabilities { module, key } => {
+            let uri = key.as_ref().map(|k| &k.uri).unwrap_or(&module.original_uri);
+            if uri.starts_with("package:") || uri.starts_with("projectpackage:") {
+                return Some(ModuleCompletion::Capabilities(Ok(
+                    crate::modules::ModuleCapabilities {
+                        local: true,
+                        hierarchical: true,
+                        fragment_paths: true,
+                    },
+                )));
+            }
+            if key
+                .as_ref()
+                .is_some_and(|k| k.handle == "builtin:modulepath")
+                || uri.starts_with("modulepath:")
+            {
+                return Some(ModuleCompletion::Capabilities(Ok(
+                    crate::modules::ModuleCapabilities {
+                        local: true,
+                        hierarchical: true,
+                        fragment_paths: false,
+                    },
+                )));
+            }
+            if key
+                .as_ref()
+                .is_some_and(|k| k.kind == ModuleKeyKind::StandardFile)
+                || uri.starts_with("file:")
+            {
+                return Some(ModuleCompletion::Capabilities(Ok(
+                    crate::modules::ModuleCapabilities {
+                        local: true,
+                        hierarchical: true,
+                        fragment_paths: false,
+                    },
+                )));
+            }
+            if key
+                .as_ref()
+                .is_some_and(|k| k.kind == ModuleKeyKind::StandardHttp)
+                || uri.starts_with("http:")
+                || uri.starts_with("https:")
+            {
+                return Some(ModuleCompletion::Capabilities(Ok(
+                    crate::modules::ModuleCapabilities {
+                        local: false,
+                        hierarchical: true,
+                        fragment_paths: false,
+                    },
+                )));
+            }
+            None
+        }
+        ModuleRequestKind::Resolve { key, .. } | ModuleRequestKind::ResolveKey { key, .. }
+            if owned(key) || key.handle == "builtin:modulepath" =>
+        {
+            let is_resolve_key = matches!(request.kind, ModuleRequestKind::ResolveKey { .. });
+            let err_completion = |error: ModuleHostError| {
+                if is_resolve_key {
+                    ModuleCompletion::KeyResolved(Err(error))
+                } else {
+                    ModuleCompletion::Resolved(Err(error))
+                }
+            };
+            if key.uri.starts_with("package:") || key.uri.starts_with("projectpackage:") {
+                if let Err(error) = policy.check_resolve_module(&key.uri) {
+                    return Some(err_completion(error));
+                }
+                let result = crate::packages::resolver::resolve_package_module(&key.uri);
+                if let ModuleRequestKind::ResolveKey {
+                    resolved_key_id, ..
+                } = &request.kind
+                {
+                    return Some(ModuleCompletion::KeyResolved(result.map(|module| {
+                        ResolvedModuleKey {
+                            id: *resolved_key_id,
+                            key: key.clone(),
+                            handle: PklString::default(),
+                            module,
+                        }
+                    })));
+                }
+                return Some(ModuleCompletion::Resolved(result));
+            }
+            // StandardHttp checks security AFTER rewrites and on every redirect hop inside HttpClient.
+            // For local `file:` / `jar:file:` delegated to a native Host, enforce allowlist here
+            // and let the native Host enforce canonical real-path `rootDir` (handling OS symlinks
+            // like macOS `/var -> /private/var` accurately).
+            if key.kind != ModuleKeyKind::StandardHttp
+                && let Err(msg) = policy.check_allowlist_only(&key.uri, false)
+            {
+                return Some(err_completion(ModuleHostError::SecurityManagerException {
+                    message: Some(msg),
+                }));
+            }
+            // Delegate actual I/O (file, modulepath, http, jar:file:) to platform Host.
+            None
+        }
+        _ => standard_key_completion(request),
+    }
+}
+
 /// Explicit standard factory/capability profile with no I/O. Callers can use
 /// `default_completion` for bundled keys and import trust first. `None` means
 /// this helper cannot complete the operation, not a successful resolution.

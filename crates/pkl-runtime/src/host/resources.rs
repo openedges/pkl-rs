@@ -18,8 +18,15 @@ pub(crate) fn resolved_uri(request: &ReadRequest) -> Result<PklString, RuntimeEr
     if let Some(uri) = &request.resolved_uri {
         return Ok(uri.clone());
     }
-    Ok(ResourceUri::from_authored(&request.uri)?
-        .resolve(request.module_uri.as_ref())?
+    resolve_authored_resource_uri(&request.uri, request.module_uri.as_ref())
+}
+
+pub(crate) fn resolve_authored_resource_uri(
+    authored: &PklString,
+    module_uri: Option<&PklString>,
+) -> Result<PklString, RuntimeError> {
+    Ok(ResourceUri::from_authored(authored)?
+        .resolve(module_uri)?
         .normalize()
         .text)
 }
@@ -247,6 +254,59 @@ pub(crate) fn configured_read(
         .concat(&uri.text)
         .concat(&"`).".into()),
     ))
+}
+
+/// Evaluates `env:` / `prop:` scalar reads and policy validation against an explicit
+/// `SecurityPolicy`, following `ResourceManager.java:98-119` ordering.
+/// Returns `Ok(None)` when the scheme requires an external/native reader (e.g. `file:`,
+/// `http:`, `https:`, `modulepath:`, `package:`, `projectpackage:`, or custom schemes).
+pub fn try_configured_scalar_read_with_policy(
+    resolved_uri: &PklString,
+    properties: &[(String, String)],
+    environment: &[(String, String)],
+    policy: &crate::host::security::SecurityPolicy,
+) -> Result<Option<crate::resources::ReadResult>, crate::host::errors::ReadFailure> {
+    let parsed = ResourceUri::parse(resolved_uri).map_err(|err| match err {
+        ParseError::Syntax(reason) => crate::host::errors::ReadFailure::UriSyntax {
+            reason: reason.into(),
+        },
+        ParseError::Unsupported(reason) => crate::host::errors::ReadFailure::EvalError {
+            message: reason.into(),
+            hint: None,
+        },
+    })?;
+    let scheme = parsed.scheme.as_deref().unwrap_or("");
+    let is_http = scheme.eq_ignore_ascii_case("http") || scheme.eq_ignore_ascii_case("https");
+    if !is_http {
+        if scheme.eq_ignore_ascii_case("file") || scheme.eq_ignore_ascii_case("jar") {
+            // Allowlist check here; native FS performs canonical real-path `rootDir` verification
+            // (handling OS symlinks such as macOS `/var -> /private/var`).
+            policy
+                .check_allowlist_only(resolved_uri, true)
+                .map_err(
+                    |msg| crate::host::errors::ReadFailure::SecurityManagerException {
+                        message: Some(msg),
+                    },
+                )?;
+        } else {
+            policy.check_read_resource(resolved_uri)?;
+        }
+    }
+    if scheme.eq_ignore_ascii_case("env") || scheme.eq_ignore_ascii_case("prop") {
+        let key = decoded_scheme_specific_part(resolved_uri).unwrap_or_default();
+        let entries = if scheme.eq_ignore_ascii_case("prop") {
+            properties
+        } else {
+            environment
+        };
+        if let Some((_, value)) = entries.iter().rev().find(|(name, _)| key == name.as_str()) {
+            return Ok(Some(crate::resources::ReadResult::Text(
+                value.as_str().into(),
+            )));
+        }
+        return Ok(Some(crate::resources::ReadResult::Missing));
+    }
+    Ok(None)
 }
 
 /// Java URI equality is distinct from the spelling passed to a resource reader.

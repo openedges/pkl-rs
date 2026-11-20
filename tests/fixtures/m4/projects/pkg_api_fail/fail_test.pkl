@@ -1,0 +1,6 @@
+amends "pkl:test"
+facts {
+  ["must fail"] {
+    1 == 2
+  }
+}

@@ -111,34 +111,24 @@ pub fn check_default_resolve(
     uri: impl Into<PklString>,
     resource: bool,
 ) -> Result<(), ModuleHostError> {
+    check_resolve_with_policy(
+        &crate::host::security::SecurityPolicy::default_standard(),
+        uri,
+        resource,
+    )
+}
+
+/// Configurable SecurityPolicy resolution check (`checkResolveModule` / `checkResolveResource`).
+pub fn check_resolve_with_policy(
+    policy: &crate::host::security::SecurityPolicy,
+    uri: impl Into<PklString>,
+    resource: bool,
+) -> Result<(), ModuleHostError> {
     let uri = uri.into();
-    let text = SourceText::from(uri.clone());
-    let scheme = text
-        .entire()
-        .find(":")
-        .and_then(|end| text.entire().range(..end).as_str());
-    let allowed = if resource {
-        matches!(
-            scheme,
-            Some("env" | "prop" | "file" | "modulepath" | "package" | "projectpackage" | "https")
-        )
+    if resource {
+        policy.check_resolve_resource(&uri)
     } else {
-        matches!(
-            scheme,
-            Some("repl" | "file" | "modulepath" | "package" | "projectpackage" | "https" | "pkl")
-        ) || uri.starts_with("jar:file:")
-            || uri.starts_with("jar:nested:")
-    };
-    if allowed {
-        Ok(())
-    } else {
-        let (verb, noun, option) = if resource {
-            ("read", "resource", "resources")
-        } else {
-            ("load", "module", "modules")
-        };
-        Err(ModuleHostError::SecurityManagerException { message: Some(PklString::from(format!("Refusing to {verb} {noun} `")).concat(&uri)
-            .concat(&format!("` because it does not match any entry in the {noun} allowlist (`--allowed-{option}`).").into())) })
+        policy.check_resolve_module(&uri)
     }
 }
 
@@ -166,6 +156,21 @@ pub fn configured_completion(
     request: &GlobRequest,
     properties: &[(String, String)],
     environment: &[(String, String)],
+) -> Option<GlobCompletion> {
+    configured_completion_with_policy(
+        request,
+        properties,
+        environment,
+        &crate::host::security::SecurityPolicy::default_standard(),
+    )
+}
+
+/// Policy-aware configured glob completion (`env:`, `prop:`, builtin capability metadata).
+pub fn configured_completion_with_policy(
+    request: &GlobRequest,
+    properties: &[(String, String)],
+    environment: &[(String, String)],
+    policy: &crate::host::security::SecurityPolicy,
 ) -> Option<GlobCompletion> {
     match &request.kind {
         GlobRequestKind::SelectResource { id, uri } => {
@@ -201,12 +206,10 @@ pub fn configured_completion(
         }
         GlobRequestKind::IsGlobbable {
             reader: GlobReader::Resource(reader),
-        } if is_default_reader(reader) && reader.scheme != "modulepath" => {
-            Some(GlobCompletion::Globbable(Ok(!matches!(
-                reader.scheme.as_str(),
-                Some("http" | "https")
-            ))))
-        }
+        } if is_default_reader(reader) => Some(GlobCompletion::Globbable(Ok(!matches!(
+            reader.scheme.as_str(),
+            Some("http" | "https" | "modulepath")
+        )))),
         GlobRequestKind::IsHierarchical {
             reader: GlobReader::Resource(reader),
         } if is_default_reader(reader) => Some(GlobCompletion::Hierarchical(Ok(!matches!(
@@ -227,6 +230,7 @@ pub fn configured_completion(
                 crate::modules::ModuleKeyKind::StandardHttp
                     | crate::modules::ModuleKeyKind::StandardGenericUrl
             )
+            || key.handle == "builtin:modulepath"
             || (key.handle == "builtin:url" && {
                 let text = SourceText::from(key.uri.clone());
                 text.entire()
@@ -246,7 +250,7 @@ pub fn configured_completion(
             && matches!(reader.scheme.as_str(), Some("env" | "prop")) =>
         {
             Some(GlobCompletion::Elements(
-                check_default_resolve(uri, true)
+                check_resolve_with_policy(policy, uri.clone(), true)
                     .map(|()| {
                         let entries = if reader.scheme == "prop" {
                             properties

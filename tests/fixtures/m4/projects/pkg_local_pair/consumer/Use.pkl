@@ -1,0 +1,3 @@
+module consumer.Use
+import "@dep/Dep.pkl"
+combined = "use:" + Dep.msg

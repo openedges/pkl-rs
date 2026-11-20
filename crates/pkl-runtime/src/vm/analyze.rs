@@ -118,6 +118,19 @@ impl Run {
                     authored_uri: authored_uri.clone(),
                 }
             }
+            ModuleRequestKind::Capabilities { key, module } => ModuleRequestKind::Capabilities {
+                key: key.as_ref().map(|k| self.key(k)).transpose()?,
+                module: module.clone(),
+            },
+            ModuleRequestKind::HasElement {
+                key,
+                module,
+                element_uri,
+            } => ModuleRequestKind::HasElement {
+                key: key.as_ref().map(|k| self.key(k)).transpose()?,
+                module: module.clone(),
+                element_uri: element_uri.clone(),
+            },
             ModuleRequestKind::LoadSource { key, resolved } => {
                 let mut global = key.clone();
                 global.key = self.key(&key.key)?;
@@ -352,9 +365,18 @@ impl Vm {
                 let mapping = self.pop()?.as_object()?;
                 let mut matched_uris = Vec::new();
                 let object = self.heap.get(mapping)?;
+                let is_package_base =
+                    base_uri.starts_with("package:") || base_uri.starts_with("projectpackage:");
                 for member in &object.collection_members {
                     if let Value::String(path) = &member.key {
-                        let uri = crate::host::resources::resolve_module_key_uri(path, &base_uri)?;
+                        let uri = if is_package_base && !path.contains(":") {
+                            crate::host::resources::resolve_authored_resource_uri(
+                                path,
+                                Some(&base_uri),
+                            )?
+                        } else {
+                            crate::host::resources::resolve_module_key_uri(path, &base_uri)?
+                        };
                         matched_uris.push(uri);
                     }
                 }
@@ -500,7 +522,31 @@ impl Vm {
         Ok(())
     }
 }
+fn attach_analysis_site_frame(
+    error: &mut RuntimeError,
+    site: Option<&crate::modules::analyze::ImportSite>,
+    root: Option<&BlockMetadata>,
+) {
+    if let (Some(site), Some(root)) = (site, root) {
+        error.frames.push(RuntimeFrame {
+            anonymous: root.anonymous_root,
+            member: root.member.clone(),
+            span: site.span,
+            source: Some(Arc::new(crate::value::RuntimeSource {
+                text: site.source.clone(),
+                uri: site.source_uri.clone(),
+                module_name: root
+                    .source
+                    .as_ref()
+                    .map(|s| s.module_name.clone())
+                    .unwrap_or_else(|| "pkl.analyze".into()),
+            })),
+        });
+    }
+}
+
 fn analysis_error(failure: AnalysisFailure, root: Option<&BlockMetadata>) -> RuntimeError {
+    use crate::modules::ModuleHostError;
     use crate::modules::analyze::UriFailure;
     let mut error = match &failure.cause {
         FailureCause::Uri {
@@ -534,7 +580,7 @@ fn analysis_error(failure: AnalysisFailure, root: Option<&BlockMetadata>) -> Run
             );
             error
         }
-        FailureCause::Host(crate::modules::ModuleHostError::NotFound)
+        FailureCause::Host(ModuleHostError::NotFound)
             if matches!(failure.phase, "resolve" | "import URI")
                 && failure
                     .site
@@ -543,8 +589,7 @@ fn analysis_error(failure: AnalysisFailure, root: Option<&BlockMetadata>) -> Run
                 && root.is_some_and(|root| root.source.is_some()) =>
         {
             let site = failure.site.as_ref().expect("checked import site");
-            let root = root.expect("checked analyzer root");
-            let mut error = crate::modules::ModuleHostError::NotFound.into_runtime(
+            let mut error = ModuleHostError::NotFound.into_runtime(
                 site.authored_uri
                     .as_ref()
                     .expect("checked authored URI")
@@ -553,43 +598,104 @@ fn analysis_error(failure: AnalysisFailure, root: Option<&BlockMetadata>) -> Run
             // StackTraceGenerator replaces the external method's source section
             // with the imported string section, while retaining its actual root
             // name. The imported module is parsed only; it has no guest frame.
-            error.frames.push(RuntimeFrame {
-                anonymous: root.anonymous_root,
-                member: root.member.clone(),
-                span: site.span,
-                source: Some(Arc::new(crate::value::RuntimeSource {
-                    text: site.source.clone(),
-                    uri: site.source_uri.clone(),
-                    module_name: root
-                        .source
-                        .as_ref()
-                        .expect("checked root source")
-                        .module_name
-                        .clone(),
-                })),
-            });
+            attach_analysis_site_frame(&mut error, Some(site), root);
+            error
+        }
+        FailureCause::Host(
+            host_err @ (ModuleHostError::HttpClientException { .. }
+            | ModuleHostError::Io(_)
+            | ModuleHostError::ExternalReaderProcess { .. }
+            | ModuleHostError::NoLoader
+            | ModuleHostError::UriSyntax { .. }
+            | ModuleHostError::EvalError { .. }),
+        ) => {
+            let display_uri = failure
+                .site
+                .as_ref()
+                .and_then(|s| s.authored_uri.as_ref())
+                .unwrap_or(&failure.module_uri);
+            let mut error = host_err.clone().into_runtime(display_uri.clone());
+            if let Some(site) = failure.site.as_ref().filter(|s| !s.parent_clause) {
+                attach_analysis_site_frame(&mut error, Some(site), root);
+            }
+            error
+        }
+        FailureCause::Host(
+            host_err @ ModuleHostError::SecurityManagerException { message: Some(msg) },
+        ) if msg.starts_with("Refusing to ") => {
+            let display_uri = failure
+                .site
+                .as_ref()
+                .and_then(|s| s.authored_uri.as_ref())
+                .unwrap_or(&failure.module_uri);
+            let mut error = host_err.clone().into_runtime(display_uri.clone());
+            if let Some(site) = failure.site.as_ref().filter(|s| !s.parent_clause) {
+                attach_analysis_site_frame(&mut error, Some(site), root);
+            }
+            error
+        }
+        FailureCause::Syntax(diag) => {
+            let display_uri = failure
+                .site
+                .as_ref()
+                .map(|s| &s.source_uri)
+                .unwrap_or(&failure.module_uri);
+            let mut error = RuntimeError::host_language(
+                PklString::from("Found a syntax error when parsing module `")
+                    .concat(display_uri)
+                    .concat(&"`.".into()),
+            );
+            let nested = if let Some(site) = failure.site.as_ref() {
+                let mut map = crate::source::SourceMap::default();
+                let source_id = map.add(display_uri.clone(), site.source.clone());
+                let source = map.get(source_id).expect("source just inserted");
+                let fragment_paths = display_uri
+                    .as_str()
+                    .is_some_and(|u| u.starts_with("package:") || u.starts_with("projectpackage:"));
+                let module_name =
+                    crate::host::resources::infer_module_name(display_uri, fragment_paths)
+                        .unwrap_or_else(|_| PklString::from("<unknown>"));
+                let frame_uri = if display_uri.starts_with("file:") {
+                    display_uri.concat(
+                        &format!(
+                            ", line {}",
+                            source
+                                .position(diag.span.start)
+                                .map_or(1, |position| position.line)
+                        )
+                        .into(),
+                    )
+                } else {
+                    display_uri.clone()
+                };
+                let frame = crate::diagnostic::RenderFrame {
+                    source,
+                    uri: frame_uri,
+                    member: &module_name,
+                    span: diag.span,
+                    highlight_length_utf16: diag.highlight_length_utf16,
+                };
+                let rendered =
+                    crate::diagnostic::render_frontend_error_text(diag, &[frame]).to_java_utf8();
+                let body = rendered
+                    .strip_prefix("–– Pkl Error ––\n")
+                    .unwrap_or(&rendered);
+                let body = body.strip_suffix('\n').unwrap_or(body);
+                body.split('\n')
+                    .map(|line| format!(">\t{line}"))
+                    .collect::<Vec<_>>()
+                    .join("\n")
+            } else {
+                format!(">\t{}", diag.message)
+            };
+            error.hint = Some(PklString::from(nested));
             error
         }
         FailureCause::Unsupported(message)
             if message == "Cannot combine glob imports with triple-dot module URIs." =>
         {
             let mut error = RuntimeError::new(ErrorKind::Type, message.clone());
-            if let (Some(site), Some(root)) = (&failure.site, root) {
-                error.frames.push(RuntimeFrame {
-                    anonymous: root.anonymous_root,
-                    member: root.member.clone(),
-                    span: site.span,
-                    source: Some(Arc::new(crate::value::RuntimeSource {
-                        text: site.source.clone(),
-                        uri: site.source_uri.clone(),
-                        module_name: root
-                            .source
-                            .as_ref()
-                            .map(|s| s.module_name.clone())
-                            .unwrap_or_else(|| "pkl.analyze".into()),
-                    })),
-                });
-            }
+            attach_analysis_site_frame(&mut error, failure.site.as_ref(), root);
             error
         }
         _ => RuntimeError::new(
@@ -852,10 +958,14 @@ mod diagnostic_tests {
         assert_eq!(site.authored_uri, None);
         assert_eq!(site.source_uri, "file:///provider/main.pkl");
         assert_eq!(site.source, SourceText::from(source));
+        let projected = analysis_error(failure, Some(&analyzer_root()));
+        assert_eq!(projected.kind, ErrorKind::Host);
+        assert!(projected.host_language_exception);
         assert_eq!(
-            analysis_error(failure, Some(&analyzer_root())).kind,
-            ErrorKind::Unsupported
+            projected.message,
+            "Found a syntax error when parsing module `file:///provider/main.pkl`."
         );
+        assert!(projected.hint.is_some());
     }
     #[test]
     fn parent_clause_span_gap_remains_explicit() {
