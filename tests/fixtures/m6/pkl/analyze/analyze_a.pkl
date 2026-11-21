@@ -1,0 +1,4 @@
+import "analyze_b.pkl"
+import "pkl:math"
+
+v = analyze_b.x + math.gcd(6, 9)

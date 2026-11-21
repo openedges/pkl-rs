@@ -1,0 +1,30 @@
+module demo.M6Lossless
+
+import "pkl:math"
+
+nullVal = null
+boolTrue = true
+boolFalse = false
+intZero = 0
+intNegOne = -1
+intMax = math.maxInt
+intMin = math.minInt
+intAboveSafe = 9007199254740993
+intBelowSafe = -9007199254740993
+floatNormal = 3.141592653589793
+floatNegZero = -0.0
+floatInf = Infinity
+floatNegInf = -Infinity
+floatNaN = NaN
+strAscii = "hello"
+strUnicode = "🚀😀한국어\n\t\"quote\""
+rawBytes = Bytes(0, 1, 127, 128, 200, 255)
+dur = 45.5.ms
+size = 16.mib
+pairVal = Pair("left", math.maxInt)
+regexVal = Regex(#"^pkl-[0-9]+$"#)
+seqVal = IntSeq(1, 10).step(3)
+listVal = List(1, "two", Bytes(9, 8))
+setVal = Set("a", "b", "c")
+mapVal = Map("k1", math.minInt, "k2", true)
+clsVal = String

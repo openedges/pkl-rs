@@ -1,0 +1,3 @@
+envVal = read("env:M6_ENV_KEY")
+propVal = read("prop:m6.prop.key")
+optMissing = read?("env:M6_MISSING_ENV_KEY")

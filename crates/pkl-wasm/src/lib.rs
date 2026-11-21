@@ -1488,3 +1488,5 @@ impl SourceSession {
         self.inner.close();
     }
 }
+
+pub mod product;

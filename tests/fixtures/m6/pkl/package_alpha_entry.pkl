@@ -1,0 +1,4 @@
+import "package://localhost:0/alpha@1.0.0#/Alpha.pkl"
+
+ver = Alpha.ver
+data = read("package://localhost:0/alpha@1.0.0#/data.txt").text

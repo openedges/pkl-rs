@@ -1,0 +1,6 @@
+import "vfs_helper.pkl"
+import* "vfs_items/*.pkl" as items
+
+helperVal = vfs_helper.greeting
+itemNames = items.keys.toList()
+itemSum = items.toMap().values.fold(0, (acc, m) -> acc + m.n)

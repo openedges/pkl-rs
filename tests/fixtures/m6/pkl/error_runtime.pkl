@@ -1,0 +1,5 @@
+module demo.M6Error
+
+function inner(x) = throw("m6-boom-\(x)")
+function caller() = inner(42)
+result = caller()

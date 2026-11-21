@@ -1,0 +1,10 @@
+import "memmod:/a.pkl" as a
+import* "memmod:/**/*.pkl" as allMods
+
+greeting = a.greeting
+val = a.value
+legacy = a.oldFn()
+modCount = allMods.length
+secret = read("memres:/secret.txt").text
+missing = read?("memres:/nope.txt")
+globRes = read*("memres:/items/*.txt").toMap().mapValues((_, v) -> v.text)

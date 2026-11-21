@@ -1,0 +1,3394 @@
+{
+  "schema_version": 1,
+  "baseline": "0.32.0",
+  "scope": "Milestone M6 Wasm & N-API 5-lane offline differential, cross-target parity, capability honesty, and packaging fixture catalog",
+  "cases": [
+    {
+      "id": "m6:wasm-browser:eval-pcf",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-source-text",
+        "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "--format=pcf"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/core_all_types.pkl",
+          "sha256": "eb50abca99b6aea22ccd10bc4de1b8359b7d5b14a0e2c19d5aae6ba8f5cb2543"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "target_options": {
+          "outputFormat": "pcf"
+        }
+      }
+    },
+    {
+      "id": "m6:wasm-browser:eval-json",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-source-text",
+        "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "--format=json"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/core_all_types.pkl",
+          "sha256": "eb50abca99b6aea22ccd10bc4de1b8359b7d5b14a0e2c19d5aae6ba8f5cb2543"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "target_options": {
+          "outputFormat": "json"
+        }
+      }
+    },
+    {
+      "id": "m6:wasm-browser:eval-yaml",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-source-text",
+        "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "--format=yaml"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/core_all_types.pkl",
+          "sha256": "eb50abca99b6aea22ccd10bc4de1b8359b7d5b14a0e2c19d5aae6ba8f5cb2543"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "target_options": {
+          "outputFormat": "yaml"
+        }
+      }
+    },
+    {
+      "id": "m6:wasm-browser:eval-xml",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-source-text",
+        "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "--format=xml"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/core_all_types.pkl",
+          "sha256": "eb50abca99b6aea22ccd10bc4de1b8359b7d5b14a0e2c19d5aae6ba8f5cb2543"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "target_options": {
+          "outputFormat": "xml"
+        }
+      }
+    },
+    {
+      "id": "m6:wasm-browser:eval-properties",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-source-text",
+        "{root}/tests/fixtures/m6/pkl/properties_sample.pkl",
+        "--format=properties"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/properties_sample.pkl",
+          "sha256": "f66e7c71b35e913b4bed776cab22cc66c74ce4490707894998e8252b61cab923"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/properties_sample.pkl",
+        "target_options": {
+          "outputFormat": "properties"
+        }
+      }
+    },
+    {
+      "id": "m6:wasm-browser:eval-plist",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-source-text",
+        "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "--format=plist"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/core_all_types.pkl",
+          "sha256": "eb50abca99b6aea22ccd10bc4de1b8359b7d5b14a0e2c19d5aae6ba8f5cb2543"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "target_options": {
+          "outputFormat": "plist"
+        }
+      }
+    },
+    {
+      "id": "m6:wasm-browser:eval-jsonnet",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-source-text",
+        "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "--format=jsonnet"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/core_all_types.pkl",
+          "sha256": "eb50abca99b6aea22ccd10bc4de1b8359b7d5b14a0e2c19d5aae6ba8f5cb2543"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "target_options": {
+          "outputFormat": "jsonnet"
+        }
+      }
+    },
+    {
+      "id": "m6:wasm-browser:eval-textproto",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-source-text",
+        "{root}/tests/fixtures/m6/pkl/textproto_sample.pkl",
+        "--format=textproto"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/textproto_sample.pkl",
+          "sha256": "44afe767ae4e024fad6f859dbb82f9351589deb9bf58c9f0f0277376b3bfc2af"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/textproto_sample.pkl",
+        "target_options": {
+          "outputFormat": "textproto"
+        }
+      }
+    },
+    {
+      "id": "m6:wasm-browser:eval-pkl-binary",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-expr-pkl-binary",
+        "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "output.value",
+        "--uri=repl:text"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/core_all_types.pkl",
+          "sha256": "eb50abca99b6aea22ccd10bc4de1b8359b7d5b14a0e2c19d5aae6ba8f5cb2543"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_output_bytes",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "target_options": {
+          "outputFormat": "pkl-binary"
+        }
+      }
+    },
+    {
+      "id": "m6:wasm-browser:eval-stdlib-suite",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-source-text",
+        "{root}/tests/fixtures/m6/pkl/stdlib_suite.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/stdlib_suite.pkl",
+          "sha256": "b20d4d9d9e4f22c156d00f6eb49987db74b792d3de2ce17e870372a0afe97c54"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/stdlib_suite.pkl"
+      }
+    },
+    {
+      "id": "m6:wasm-browser:eval-output-bytes",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-output-bytes",
+        "{root}/tests/fixtures/m6/pkl/output_bytes.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/output_bytes.pkl",
+          "sha256": "11f03f64053f54d13c07f3360d7be9ec9a3724ece656366de0ac1150d24d2ae3"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_output_bytes",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/output_bytes.pkl"
+      }
+    },
+    {
+      "id": "m6:wasm-browser:eval-output-files",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-output-files",
+        "{root}/tests/fixtures/m6/pkl/output_files.pkl",
+        "{output_dir}"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "output_dir",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/output_files.pkl",
+          "sha256": "60c5a77b647f7d3e6d7551dc86ccce39c2b8eeed08bd535d7a69e9557a2a39c3"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_output_files",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/output_files.pkl"
+      },
+      "assertions": {
+        "min_generated_files": 3
+      }
+    },
+    {
+      "id": "m6:wasm-browser:eval-expr-and-binary",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-source-text",
+        "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "--expr=server.host + \":\" + server.port.toString()"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/core_all_types.pkl",
+          "sha256": "eb50abca99b6aea22ccd10bc4de1b8359b7d5b14a0e2c19d5aae6ba8f5cb2543"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_expr_and_binary",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "expr": "server.host + \":\" + server.port.toString()",
+        "binary": false
+      }
+    },
+    {
+      "id": "m6:wasm-browser:eval-error-diagnostic",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-source-text",
+        "{root}/tests/fixtures/m6/pkl/error_runtime.pkl"
+      ],
+      "expected_exit": [
+        1
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/error_runtime.pkl",
+          "sha256": "5d787edabf1c17c392df79107997f7b319fc72d2f104f458d4de11167c617b43"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/error_runtime.pkl"
+      }
+    },
+    {
+      "id": "m6:wasm-browser:format-v1-v2-idempotent",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-format",
+        "{root}/tests/fixtures/m6/pkl/format_unformatted.pkl",
+        "--grammar-version=2"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/format_unformatted.pkl",
+          "sha256": "c83136e38d9da5444f0b08a25640c5192b496afafe3773081c0a0f127f7e411c"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_format",
+        "format_input_file": "{root}/tests/fixtures/m6/pkl/format_unformatted.pkl",
+        "grammarVersion": 2
+      }
+    },
+    {
+      "id": "m6:wasm-browser:evaluate-schema",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-schema",
+        "{root}/tests/fixtures/m6/pkl/schema_demo.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/schema_demo.pkl",
+          "sha256": "7a80cf0321056a0cc94c76ddf022bc75a7d96cb6715a4b3c91c7553b801049dd"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_schema",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/schema_demo.pkl"
+      }
+    },
+    {
+      "id": "m6:wasm-browser:repl-stateful-session",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-repl",
+        "{work_dir}",
+        "{root}/tests/fixtures/m6/pkl/repl_script.txt"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/repl_script.txt",
+          "sha256": "eeb339a633d13fc69d1d60a1118ae6dac44255b19e980f59f1e12a34f261587b"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_repl",
+        "repl_script_file": "{root}/tests/fixtures/m6/pkl/repl_script.txt"
+      }
+    },
+    {
+      "id": "m6:wasm-browser:analyze-import-graph",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-analyze",
+        "{work_dir}/analyze",
+        "{work_dir}/analyze/analyze_a.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m6/pkl/analyze",
+            "analyze"
+          ]
+        ]
+      },
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/analyze/analyze_a.pkl",
+          "sha256": "ba25fa74fc7de76d515af7b33640e297108b51f4ec135d0952abf74462e7cb82"
+        },
+        {
+          "path": "tests/fixtures/m6/pkl/analyze/analyze_b.pkl",
+          "sha256": "90ac19d6400d3c4f0cb8c67a1e6941c5753b42ccf57edbc22c96a14065982b81"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_analyze",
+        "analyzeUris": [
+          "file://{work_dir}/analyze/analyze_a.pkl"
+        ],
+        "analyzeBaseUriPrefix": "file://{work_dir}/analyze/",
+        "target_options": {
+          "vfs_file_sources": {
+            "{work_dir}/analyze/analyze_a.pkl": "{root}/tests/fixtures/m6/pkl/analyze/analyze_a.pkl",
+            "{work_dir}/analyze/analyze_b.pkl": "{root}/tests/fixtures/m6/pkl/analyze/analyze_b.pkl"
+          }
+        }
+      }
+    },
+    {
+      "id": "m6:wasm-browser:evaluate-test-spec",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "cli",
+      "oracle_command": [
+        "test",
+        "--no-project",
+        "--color=never",
+        "{work_dir}/test_suite_pass.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "setup": {
+        "copy_file": [
+          [
+            "tests/fixtures/m6/pkl/test_suite_pass.pkl",
+            "test_suite_pass.pkl"
+          ]
+        ]
+      },
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/test_suite_pass.pkl",
+          "sha256": "55aa9ae43a09bd46db0076d5d386ce7fa6eb9a27002da007ec5e6648de6e47f4"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_test",
+        "source_kind": "path",
+        "source_path": "{work_dir}/test_suite_pass.pkl",
+        "reporter": "spec",
+        "target_options": {
+          "vfs_file_sources": {
+            "{work_dir}/test_suite_pass.pkl": "{root}/tests/fixtures/m6/pkl/test_suite_pass.pkl"
+          }
+        }
+      }
+    },
+    {
+      "id": "m6:wasm-browser:vfs-imports-and-glob",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-text",
+        "{work_dir}/vfs/vfs_entry.pkl",
+        "--root-dir={work_dir}/vfs"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m6/pkl/vfs",
+            "vfs"
+          ]
+        ]
+      },
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/vfs/vfs_entry.pkl",
+          "sha256": "130dd0cfeae788b369b13734438502f6d484e73507eab19131320c6d883c72a2"
+        },
+        {
+          "path": "tests/fixtures/m6/pkl/vfs/vfs_helper.pkl",
+          "sha256": "2b63ce4057bf2deaa0c62e8494f4bb3190cad294b49b27ca957be152d06bd5bb"
+        },
+        {
+          "path": "tests/fixtures/m6/pkl/vfs/vfs_items/a.pkl",
+          "sha256": "a6e91879a9c90ed9af099608661182dc654be8ab5e1fef0b9948cc903a2240f4"
+        },
+        {
+          "path": "tests/fixtures/m6/pkl/vfs/vfs_items/b.pkl",
+          "sha256": "33b79b3611bbd3f78eec50b866c21ae74c2b85027646a6b7f5d96f8abb29f31f"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "path",
+        "source_path": "{work_dir}/vfs/vfs_entry.pkl",
+        "target_options": {
+          "rootDir": "{work_dir}/vfs",
+          "vfsRootDir": "{work_dir}/vfs",
+          "vfs_file_sources": {
+            "{work_dir}/vfs/vfs_entry.pkl": "{root}/tests/fixtures/m6/pkl/vfs/vfs_entry.pkl",
+            "{work_dir}/vfs/vfs_helper.pkl": "{root}/tests/fixtures/m6/pkl/vfs/vfs_helper.pkl",
+            "{work_dir}/vfs/vfs_items/a.pkl": "{root}/tests/fixtures/m6/pkl/vfs/vfs_items/a.pkl",
+            "{work_dir}/vfs/vfs_items/b.pkl": "{root}/tests/fixtures/m6/pkl/vfs/vfs_items/b.pkl"
+          }
+        }
+      }
+    },
+    {
+      "id": "m6:wasm-browser:vfs-rootdir-escape-denied",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-text",
+        "{work_dir}/vfs/vfs_escape.pkl",
+        "--root-dir={work_dir}/vfs"
+      ],
+      "expected_exit": [
+        1
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m6/pkl/vfs",
+            "vfs"
+          ]
+        ],
+        "copy_file": [
+          [
+            "tests/fixtures/m6/pkl/secret_outside.pkl",
+            "secret_outside.pkl"
+          ]
+        ]
+      },
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/vfs/vfs_escape.pkl",
+          "sha256": "9a0cf884c6020f7153e9d5e082aa018f4ec588a3d08708d80bf1136470cbc1f9"
+        },
+        {
+          "path": "tests/fixtures/m6/pkl/secret_outside.pkl",
+          "sha256": "a46ed1ec1776a1855ad8881642f8433ad5dba513094dd804d6aadc69c25c925d"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "path",
+        "source_path": "{work_dir}/vfs/vfs_escape.pkl",
+        "target_options": {
+          "rootDir": "{work_dir}/vfs",
+          "vfsRootDir": "{work_dir}/vfs",
+          "vfs_file_sources": {
+            "{work_dir}/vfs/vfs_escape.pkl": "{root}/tests/fixtures/m6/pkl/vfs/vfs_escape.pkl",
+            "{work_dir}/secret_outside.pkl": "{root}/tests/fixtures/m6/pkl/secret_outside.pkl"
+          }
+        }
+      }
+    },
+    {
+      "id": "m6:wasm-browser:async-custom-module-resource-readers",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-custom-spi",
+        "{root}/tests/fixtures/m6/pkl/custom_spi_entry.pkl",
+        "--uri=repl:text",
+        "--with-logs"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/custom_spi_entry.pkl",
+          "sha256": "8deb780660838b37c2627092a50378bab44d6d3d4909c17cb7cb3b2420abe1a2"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_custom_spi",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/custom_spi_entry.pkl",
+        "withLogs": true
+      }
+    },
+    {
+      "id": "m6:wasm-browser:async-http-fetch",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-text",
+        "{work_dir}/http_entry.pkl",
+        "--allow-http"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": true,
+      "collect_files": "none",
+      "setup": {
+        "templates": [
+          [
+            "http_entry.pkl",
+            "import \"http://127.0.0.1:{http_port}/modules/hello.pkl\"\ngreeting = hello.greeting\nnum = hello.num\nres = read(\"http://127.0.0.1:{http_port}/resources/data.txt\").text\n"
+          ]
+        ]
+      },
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/modules/hello.pkl",
+          "sha256": "ab4cec05d9b90a2ca4b11071cd4c35a744d21bf1081654ca6c485fd1192e4c2d"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/resources/data.txt",
+          "sha256": "4153c749f73f0b449c470304e2313d23cd0b1b72358b33abfdf5298fc07ab403"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{work_dir}/http_entry.pkl",
+        "target_options": {
+          "enableHttpFetch": true,
+          "allowedModules": [
+            "pkl:",
+            "repl:",
+            "http:"
+          ],
+          "allowedResources": [
+            "prop:",
+            "http:"
+          ]
+        }
+      },
+      "assertions": {
+        "http_server_hit": true
+      }
+    },
+    {
+      "id": "m6:wasm-browser:pure-wasm-package-archive",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-text",
+        "{root}/tests/fixtures/m6/pkl/package_alpha_entry.pkl",
+        "--ca-cert={ca_cert}",
+        "--http-rewrite=https://localhost:0/=https://localhost:{https_port}/",
+        "--cache-dir={cache_dir}"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": true,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/package_alpha_entry.pkl",
+          "sha256": "33fcaec945b47622f971be8866d799f1489cf7fa876cefb89e1c9e28dc92b3b4"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.json",
+          "sha256": "de20d7d5924559bfb7df4fdd129e3b365418161fdc27f7798d8f297fabe15327"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.zip",
+          "sha256": "0eb8377ae9794c71ab3cbd9372d29bed72821251d1fef905a3a6f2993a159ab5"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/package_alpha_entry.pkl",
+        "target_options": {
+          "enablePackageTransport": true,
+          "enableHttpFetch": true,
+          "allowedModules": [
+            "pkl:",
+            "repl:",
+            "package:"
+          ],
+          "allowedResources": [
+            "prop:",
+            "package:"
+          ]
+        }
+      },
+      "assertions": {
+        "http_server_hit": true
+      }
+    },
+    {
+      "id": "m6:wasm-browser:lossless-bigint-bytes-utf16-values",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-decode-values",
+        "{root}/tests/fixtures/m6/pkl/lossless_values.pkl",
+        "--uri=repl:text"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/lossless_values.pkl",
+          "sha256": "a7e7dae090a467247cd496f8386e0a285445e008b5c90d820e6666148e60a661"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_decode_values",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/lossless_values.pkl"
+      }
+    },
+    {
+      "id": "m6:wasm-browser:clock64-timeout-boundary",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-source-text",
+        "{root}/tests/fixtures/m6/pkl/fast_value.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/fast_value.pkl",
+          "sha256": "56e0e4915566af7ee84e87cf5a928ec83ec5d4245849d0f3505a8f69ffdad28e"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_clock64",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/fast_value.pkl"
+      }
+    },
+    {
+      "id": "m6:wasm-browser:lifecycle-cancel-abort-close-zero-leak",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-lifecycle",
+        "{root}/tests/fixtures/m6/pkl/fast_value.pkl",
+        "{root}/tests/fixtures/m6/pkl/slow_loop.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/fast_value.pkl",
+          "sha256": "56e0e4915566af7ee84e87cf5a928ec83ec5d4245849d0f3505a8f69ffdad28e"
+        },
+        {
+          "path": "tests/fixtures/m6/pkl/slow_loop.pkl",
+          "sha256": "8497098c05da78b4f401340859173e5edf35e9fe2457c6c5061939d8b689e0d3"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_lifecycle",
+        "fast_source_file": "{root}/tests/fixtures/m6/pkl/fast_value.pkl",
+        "slow_source_file": "{root}/tests/fixtures/m6/pkl/slow_loop.pkl"
+      }
+    },
+    {
+      "id": "m6:wasm-browser:conversion-telemetry",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-decode-values",
+        "{root}/tests/fixtures/m6/pkl/telemetry_payload.pkl",
+        "--uri=repl:text"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/telemetry_payload.pkl",
+          "sha256": "a7bbfbf258877ae2a2ced07c86f4bfd1ba82224aa1aecf1888366be8e4da6cff"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_conversion_telemetry",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/telemetry_payload.pkl",
+        "iterations": 20
+      },
+      "assertions": {
+        "telemetry_required": true
+      }
+    },
+    {
+      "id": "m6:wasm-browser:capabilities-map",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-version"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [],
+      "target_spec": {
+        "action": "capabilities",
+        "expected_capabilities": {
+          "vfs": true,
+          "asyncModuleLoader": true,
+          "asyncResourceLoader": true,
+          "nativeFs": false,
+          "nativeHttp": false,
+          "externalReaders": false,
+          "modulePathJar": false,
+          "projectResolution": false,
+          "packageCache": false,
+          "formatter": true,
+          "repl": true,
+          "schema": true,
+          "analyzeImports": true,
+          "bigint64": true,
+          "uint8ArrayBytes": true,
+          "clock64Bit": true,
+          "platform": "browser",
+          "runtime": "wasm-browser",
+          "arch": "wasm32"
+        }
+      }
+    },
+    {
+      "id": "m6:wasm-browser:cap-gap-native-fs",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-text",
+        "{root}/tests/fixtures/m6/pkl/fast_value.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": true,
+      "expected_capability": "nativeFs",
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/fast_value.pkl",
+          "sha256": "56e0e4915566af7ee84e87cf5a928ec83ec5d4245849d0f3505a8f69ffdad28e"
+        }
+      ],
+      "target_spec": {
+        "action": "capability_gap",
+        "expected_capability": "nativeFs",
+        "source_kind": "path",
+        "source_path": "{root}/tests/fixtures/m6/pkl/fast_value.pkl"
+      }
+    },
+    {
+      "id": "m6:wasm-browser:cap-gap-external-readers",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "cli",
+      "oracle_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "--allowed-modules",
+        "pkl:,file:,extmod:",
+        "--allowed-resources",
+        "env:,prop:,extres:",
+        "--external-module-reader",
+        "extmod={reader_bin}",
+        "--external-resource-reader",
+        "extres={reader_bin}",
+        "{root}/tests/fixtures/m4/readers/eval_info_only.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": true,
+      "expected_capability": "externalReaders",
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/readers/eval_info_only.pkl",
+          "sha256": "13fe283f583c65756d3c9968330ec8c6f76b67d63d4e0f9fbfd6647be2a6a3de"
+        }
+      ],
+      "target_spec": {
+        "action": "capability_gap",
+        "expected_capability": "externalReaders",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m4/readers/eval_info_only.pkl",
+        "target_options": {
+          "externalModuleReaders": {
+            "extmod": {
+              "executable": "{reader_bin}"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "m6:wasm-browser:cap-gap-native-http",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-text",
+        "{work_dir}/http_raw.pkl",
+        "--allow-http"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": true,
+      "expected_capability": "nativeHttp",
+      "requires_http_server": true,
+      "collect_files": "none",
+      "setup": {
+        "templates": [
+          [
+            "http_raw.pkl",
+            "import \"http://127.0.0.1:{http_port}/modules/hello.pkl\"\nval = hello.num\n"
+          ]
+        ]
+      },
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/modules/hello.pkl",
+          "sha256": "ab4cec05d9b90a2ca4b11071cd4c35a744d21bf1081654ca6c485fd1192e4c2d"
+        }
+      ],
+      "target_spec": {
+        "action": "capability_gap",
+        "expected_capability": "nativeHttp",
+        "source_kind": "text",
+        "source_file": "{work_dir}/http_raw.pkl",
+        "target_options": {
+          "allowedModules": [
+            "pkl:",
+            "repl:",
+            "http:"
+          ]
+        }
+      }
+    },
+    {
+      "id": "m6:wasm-browser:cap-gap-modulepath-jar",
+      "lane": "wasm-browser",
+      "target": "wasm-browser",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-text",
+        "{work_dir}/mp_entry.pkl",
+        "--module-path={work_dir}/mp.jar"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": true,
+      "expected_capability": "modulePathJar",
+      "requires_http_server": false,
+      "collect_files": "none",
+      "setup": {
+        "jars": [
+          [
+            "mp.jar",
+            {
+              "jarmod.pkl": "origin = \"jar\"\n"
+            }
+          ]
+        ],
+        "templates": [
+          [
+            "mp_entry.pkl",
+            "import \"modulepath:/jarmod.pkl\"\nv = jarmod.origin\n"
+          ]
+        ]
+      },
+      "inputs": [],
+      "target_spec": {
+        "action": "capability_gap",
+        "expected_capability": "modulePathJar",
+        "source_kind": "text",
+        "source_file": "{work_dir}/mp_entry.pkl",
+        "target_options": {
+          "modulePaths": [
+            "{work_dir}/mp.jar"
+          ]
+        }
+      }
+    },
+    {
+      "id": "m6:wasm-node:eval-renderers-and-stdlib",
+      "lane": "wasm-node",
+      "target": "wasm-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-source-text",
+        "{root}/tests/fixtures/m6/pkl/stdlib_suite.pkl",
+        "--format=json"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/stdlib_suite.pkl",
+          "sha256": "b20d4d9d9e4f22c156d00f6eb49987db74b792d3de2ce17e870372a0afe97c54"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/stdlib_suite.pkl",
+        "target_options": {
+          "outputFormat": "json"
+        }
+      }
+    },
+    {
+      "id": "m6:wasm-node:eval-output-bytes-and-files",
+      "lane": "wasm-node",
+      "target": "wasm-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-output-files",
+        "{root}/tests/fixtures/m6/pkl/output_files.pkl",
+        "{output_dir}"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "output_dir",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/output_files.pkl",
+          "sha256": "60c5a77b647f7d3e6d7551dc86ccce39c2b8eeed08bd535d7a69e9557a2a39c3"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_output_files",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/output_files.pkl"
+      },
+      "assertions": {
+        "min_generated_files": 3
+      }
+    },
+    {
+      "id": "m6:wasm-node:format-v2-idempotent",
+      "lane": "wasm-node",
+      "target": "wasm-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-format",
+        "{root}/tests/fixtures/m6/pkl/format_unformatted.pkl",
+        "--grammar-version=2"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/format_unformatted.pkl",
+          "sha256": "c83136e38d9da5444f0b08a25640c5192b496afafe3773081c0a0f127f7e411c"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_format",
+        "format_input_file": "{root}/tests/fixtures/m6/pkl/format_unformatted.pkl",
+        "grammarVersion": 2
+      }
+    },
+    {
+      "id": "m6:wasm-node:vfs-and-async-loaders",
+      "lane": "wasm-node",
+      "target": "wasm-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-custom-spi",
+        "{root}/tests/fixtures/m6/pkl/custom_spi_entry.pkl",
+        "--uri=repl:text",
+        "--with-logs"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/custom_spi_entry.pkl",
+          "sha256": "8deb780660838b37c2627092a50378bab44d6d3d4909c17cb7cb3b2420abe1a2"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_custom_spi",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/custom_spi_entry.pkl",
+        "withLogs": true
+      }
+    },
+    {
+      "id": "m6:wasm-node:async-http-fetch-and-package",
+      "lane": "wasm-node",
+      "target": "wasm-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-text",
+        "{root}/tests/fixtures/m6/pkl/package_alpha_entry.pkl",
+        "--ca-cert={ca_cert}",
+        "--http-rewrite=https://localhost:0/=https://localhost:{https_port}/",
+        "--cache-dir={cache_dir}"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": true,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/package_alpha_entry.pkl",
+          "sha256": "33fcaec945b47622f971be8866d799f1489cf7fa876cefb89e1c9e28dc92b3b4"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.json",
+          "sha256": "de20d7d5924559bfb7df4fdd129e3b365418161fdc27f7798d8f297fabe15327"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.zip",
+          "sha256": "0eb8377ae9794c71ab3cbd9372d29bed72821251d1fef905a3a6f2993a159ab5"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/package_alpha_entry.pkl",
+        "target_options": {
+          "enablePackageTransport": true,
+          "enableHttpFetch": true,
+          "allowedModules": [
+            "pkl:",
+            "repl:",
+            "package:"
+          ],
+          "allowedResources": [
+            "prop:",
+            "package:"
+          ]
+        }
+      },
+      "assertions": {
+        "http_server_hit": true
+      }
+    },
+    {
+      "id": "m6:wasm-node:lossless-values-and-clock64",
+      "lane": "wasm-node",
+      "target": "wasm-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-decode-values",
+        "{root}/tests/fixtures/m6/pkl/lossless_values.pkl",
+        "--uri=repl:text"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/lossless_values.pkl",
+          "sha256": "a7e7dae090a467247cd496f8386e0a285445e008b5c90d820e6666148e60a661"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_decode_values",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/lossless_values.pkl"
+      }
+    },
+    {
+      "id": "m6:wasm-node:lifecycle-cancel-timeout-close",
+      "lane": "wasm-node",
+      "target": "wasm-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-lifecycle",
+        "{root}/tests/fixtures/m6/pkl/fast_value.pkl",
+        "{root}/tests/fixtures/m6/pkl/slow_loop.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/fast_value.pkl",
+          "sha256": "56e0e4915566af7ee84e87cf5a928ec83ec5d4245849d0f3505a8f69ffdad28e"
+        },
+        {
+          "path": "tests/fixtures/m6/pkl/slow_loop.pkl",
+          "sha256": "8497098c05da78b4f401340859173e5edf35e9fe2457c6c5061939d8b689e0d3"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_lifecycle",
+        "fast_source_file": "{root}/tests/fixtures/m6/pkl/fast_value.pkl",
+        "slow_source_file": "{root}/tests/fixtures/m6/pkl/slow_loop.pkl"
+      }
+    },
+    {
+      "id": "m6:wasm-node:capabilities-map",
+      "lane": "wasm-node",
+      "target": "wasm-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-version"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [],
+      "target_spec": {
+        "action": "capabilities",
+        "expected_capabilities": {
+          "vfs": true,
+          "asyncModuleLoader": true,
+          "asyncResourceLoader": true,
+          "nativeFs": false,
+          "nativeHttp": false,
+          "externalReaders": false,
+          "modulePathJar": false,
+          "projectResolution": false,
+          "packageCache": false,
+          "formatter": true,
+          "repl": true,
+          "schema": true,
+          "analyzeImports": true,
+          "bigint64": true,
+          "uint8ArrayBytes": true,
+          "clock64Bit": true,
+          "runtime": "wasm-node",
+          "arch": "wasm32"
+        }
+      }
+    },
+    {
+      "id": "m6:wasm-node:cap-gap-native-fs",
+      "lane": "wasm-node",
+      "target": "wasm-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-text",
+        "{root}/tests/fixtures/m6/pkl/fast_value.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": true,
+      "expected_capability": "nativeFs",
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/fast_value.pkl",
+          "sha256": "56e0e4915566af7ee84e87cf5a928ec83ec5d4245849d0f3505a8f69ffdad28e"
+        }
+      ],
+      "target_spec": {
+        "action": "capability_gap",
+        "expected_capability": "nativeFs",
+        "source_kind": "path",
+        "source_path": "{root}/tests/fixtures/m6/pkl/fast_value.pkl"
+      }
+    },
+    {
+      "id": "m6:wasm-node:cap-gap-external-readers",
+      "lane": "wasm-node",
+      "target": "wasm-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "cli",
+      "oracle_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "--allowed-modules",
+        "pkl:,file:,extmod:",
+        "--allowed-resources",
+        "env:,prop:,extres:",
+        "--external-module-reader",
+        "extmod={reader_bin}",
+        "--external-resource-reader",
+        "extres={reader_bin}",
+        "{root}/tests/fixtures/m4/readers/eval_info_only.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": true,
+      "expected_capability": "externalReaders",
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/readers/eval_info_only.pkl",
+          "sha256": "13fe283f583c65756d3c9968330ec8c6f76b67d63d4e0f9fbfd6647be2a6a3de"
+        }
+      ],
+      "target_spec": {
+        "action": "capability_gap",
+        "expected_capability": "externalReaders",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m4/readers/eval_info_only.pkl",
+        "target_options": {
+          "externalModuleReaders": {
+            "extmod": {
+              "executable": "{reader_bin}"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "m6:napi-node:esm-and-cjs-exports-capabilities",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-version"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [],
+      "target_spec": {
+        "action": "capabilities",
+        "check_dual_esm_cjs": true,
+        "expected_capabilities": {
+          "vfs": false,
+          "asyncModuleLoader": true,
+          "asyncResourceLoader": true,
+          "nativeFs": true,
+          "nativeHttp": true,
+          "externalReaders": true,
+          "modulePathJar": true,
+          "projectResolution": true,
+          "packageCache": true,
+          "formatter": true,
+          "repl": true,
+          "schema": true,
+          "analyzeImports": true,
+          "bigint64": true,
+          "uint8ArrayBytes": true,
+          "clock64Bit": true,
+          "runtime": "napi-node"
+        }
+      }
+    },
+    {
+      "id": "m6:napi-node:eval-json-cjs",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-text",
+        "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "--format=json"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/core_all_types.pkl",
+          "sha256": "eb50abca99b6aea22ccd10bc4de1b8359b7d5b14a0e2c19d5aae6ba8f5cb2543"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "module_format": "cjs",
+        "source_kind": "path",
+        "source_path": "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "target_options": {
+          "outputFormat": "json"
+        }
+      }
+    },
+    {
+      "id": "m6:napi-node:eval-output-bytes",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-output-bytes",
+        "{root}/tests/fixtures/m6/pkl/output_bytes.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/output_bytes.pkl",
+          "sha256": "11f03f64053f54d13c07f3360d7be9ec9a3724ece656366de0ac1150d24d2ae3"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_output_bytes",
+        "source_kind": "path",
+        "source_path": "{root}/tests/fixtures/m6/pkl/output_bytes.pkl"
+      }
+    },
+    {
+      "id": "m6:napi-node:eval-output-files",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-output-files",
+        "{root}/tests/fixtures/m6/pkl/output_files.pkl",
+        "{output_dir}"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "output_dir",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/output_files.pkl",
+          "sha256": "60c5a77b647f7d3e6d7551dc86ccce39c2b8eeed08bd535d7a69e9557a2a39c3"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_output_files",
+        "source_kind": "path",
+        "source_path": "{root}/tests/fixtures/m6/pkl/output_files.pkl"
+      },
+      "assertions": {
+        "min_generated_files": 3
+      }
+    },
+    {
+      "id": "m6:napi-node:eval-error-diagnostic",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-source-text",
+        "{root}/tests/fixtures/m6/pkl/error_runtime.pkl"
+      ],
+      "expected_exit": [
+        1
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/error_runtime.pkl",
+          "sha256": "5d787edabf1c17c392df79107997f7b319fc72d2f104f458d4de11167c617b43"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/error_runtime.pkl"
+      }
+    },
+    {
+      "id": "m6:napi-node:format-v1-v2-idempotent",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-format",
+        "{root}/tests/fixtures/m6/pkl/format_unformatted.pkl",
+        "--grammar-version=1"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/format_unformatted.pkl",
+          "sha256": "c83136e38d9da5444f0b08a25640c5192b496afafe3773081c0a0f127f7e411c"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_format",
+        "format_input_file": "{root}/tests/fixtures/m6/pkl/format_unformatted.pkl",
+        "grammarVersion": 1
+      }
+    },
+    {
+      "id": "m6:napi-node:evaluate-schema",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-schema",
+        "{root}/tests/fixtures/m6/pkl/schema_demo.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/schema_demo.pkl",
+          "sha256": "7a80cf0321056a0cc94c76ddf022bc75a7d96cb6715a4b3c91c7553b801049dd"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_schema",
+        "source_kind": "path",
+        "source_path": "{root}/tests/fixtures/m6/pkl/schema_demo.pkl"
+      }
+    },
+    {
+      "id": "m6:napi-node:repl-stateful-session",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-repl",
+        "{work_dir}",
+        "{root}/tests/fixtures/m6/pkl/repl_script.txt"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/repl_script.txt",
+          "sha256": "eeb339a633d13fc69d1d60a1118ae6dac44255b19e980f59f1e12a34f261587b"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_repl",
+        "repl_script_file": "{root}/tests/fixtures/m6/pkl/repl_script.txt"
+      }
+    },
+    {
+      "id": "m6:napi-node:evaluate-test-spec",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "cli",
+      "oracle_command": [
+        "test",
+        "--no-project",
+        "--color=never",
+        "{work_dir}/test_suite_pass.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "setup": {
+        "copy_file": [
+          [
+            "tests/fixtures/m6/pkl/test_suite_pass.pkl",
+            "test_suite_pass.pkl"
+          ]
+        ]
+      },
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/test_suite_pass.pkl",
+          "sha256": "55aa9ae43a09bd46db0076d5d386ce7fa6eb9a27002da007ec5e6648de6e47f4"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_test",
+        "source_kind": "path",
+        "source_path": "{work_dir}/test_suite_pass.pkl",
+        "reporter": "spec"
+      }
+    },
+    {
+      "id": "m6:napi-node:native-fs-imports-and-glob",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-text",
+        "{work_dir}/vfs/vfs_entry.pkl",
+        "--root-dir={work_dir}/vfs"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m6/pkl/vfs",
+            "vfs"
+          ]
+        ]
+      },
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/vfs/vfs_entry.pkl",
+          "sha256": "130dd0cfeae788b369b13734438502f6d484e73507eab19131320c6d883c72a2"
+        },
+        {
+          "path": "tests/fixtures/m6/pkl/vfs/vfs_helper.pkl",
+          "sha256": "2b63ce4057bf2deaa0c62e8494f4bb3190cad294b49b27ca957be152d06bd5bb"
+        },
+        {
+          "path": "tests/fixtures/m6/pkl/vfs/vfs_items/a.pkl",
+          "sha256": "a6e91879a9c90ed9af099608661182dc654be8ab5e1fef0b9948cc903a2240f4"
+        },
+        {
+          "path": "tests/fixtures/m6/pkl/vfs/vfs_items/b.pkl",
+          "sha256": "33b79b3611bbd3f78eec50b866c21ae74c2b85027646a6b7f5d96f8abb29f31f"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "path",
+        "source_path": "{work_dir}/vfs/vfs_entry.pkl",
+        "target_options": {
+          "rootDir": "{work_dir}/vfs"
+        }
+      }
+    },
+    {
+      "id": "m6:napi-node:rootdir-confinement-denied",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-text",
+        "{work_dir}/vfs/vfs_escape.pkl",
+        "--root-dir={work_dir}/vfs"
+      ],
+      "expected_exit": [
+        1
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m6/pkl/vfs",
+            "vfs"
+          ]
+        ],
+        "copy_file": [
+          [
+            "tests/fixtures/m6/pkl/secret_outside.pkl",
+            "secret_outside.pkl"
+          ]
+        ]
+      },
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/vfs/vfs_escape.pkl",
+          "sha256": "9a0cf884c6020f7153e9d5e082aa018f4ec588a3d08708d80bf1136470cbc1f9"
+        },
+        {
+          "path": "tests/fixtures/m6/pkl/secret_outside.pkl",
+          "sha256": "a46ed1ec1776a1855ad8881642f8433ad5dba513094dd804d6aadc69c25c925d"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "path",
+        "source_path": "{work_dir}/vfs/vfs_escape.pkl",
+        "target_options": {
+          "rootDir": "{work_dir}/vfs"
+        }
+      }
+    },
+    {
+      "id": "m6:napi-node:env-and-prop-readers",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-text",
+        "{root}/tests/fixtures/m6/pkl/env_prop_entry.pkl",
+        "--env=M6_ENV_KEY=env-hello-m6",
+        "--prop=m6.prop.key=prop-hello-m6"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/env_prop_entry.pkl",
+          "sha256": "bb7db75fee8c731c23569c9def65a51776727219e544564eb6af0484678612cb"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "path",
+        "source_path": "{root}/tests/fixtures/m6/pkl/env_prop_entry.pkl",
+        "target_options": {
+          "env": {
+            "M6_ENV_KEY": "env-hello-m6"
+          },
+          "properties": {
+            "m6.prop.key": "prop-hello-m6"
+          }
+        }
+      }
+    },
+    {
+      "id": "m6:napi-node:modulepath-dir-and-jar",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-text",
+        "{root}/tests/fixtures/m6/pkl/modulepath_entry.pkl",
+        "--module-path={work_dir}/mpdir",
+        "--module-path={work_dir}/mp.jar"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "setup": {
+        "templates": [
+          [
+            "mpdir/dirmod.pkl",
+            "origin = \"from-dir\"\n"
+          ]
+        ],
+        "jars": [
+          [
+            "mp.jar",
+            {
+              "jarmod.pkl": "origin = \"from-jar\"\n"
+            }
+          ]
+        ]
+      },
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/modulepath_entry.pkl",
+          "sha256": "3b246145ade37f9273a525f59a3a468abd44672cd25931b30cb5a029816d694d"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "path",
+        "source_path": "{root}/tests/fixtures/m6/pkl/modulepath_entry.pkl",
+        "target_options": {
+          "modulePaths": [
+            "{work_dir}/mpdir",
+            "{work_dir}/mp.jar"
+          ]
+        }
+      }
+    },
+    {
+      "id": "m6:napi-node:analyze-import-graph-native",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-analyze",
+        "{work_dir}/analyze",
+        "{work_dir}/analyze/analyze_a.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m6/pkl/analyze",
+            "analyze"
+          ]
+        ]
+      },
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/analyze/analyze_a.pkl",
+          "sha256": "ba25fa74fc7de76d515af7b33640e297108b51f4ec135d0952abf74462e7cb82"
+        },
+        {
+          "path": "tests/fixtures/m6/pkl/analyze/analyze_b.pkl",
+          "sha256": "90ac19d6400d3c4f0cb8c67a1e6941c5753b42ccf57edbc22c96a14065982b81"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_analyze",
+        "analyzeUris": [
+          "file://{work_dir}/analyze/analyze_a.pkl"
+        ],
+        "analyzeBaseUriPrefix": "file://{work_dir}/analyze/"
+      }
+    },
+    {
+      "id": "m6:napi-node:http-https-ca-headers-rewrites",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "cli",
+      "oracle_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "--ca-certificates",
+        "{ca_cert}",
+        "--http-rewrite",
+        "https://example.invalid/=https://localhost:{https_port}/",
+        "--http-header",
+        "https://localhost:{https_port}/echo-headers=X-M6-Token: secret-m6",
+        "{work_dir}/https_entry.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": true,
+      "collect_files": "none",
+      "setup": {
+        "templates": [
+          [
+            "https_entry.pkl",
+            "import \"https://example.invalid/modules/https_only.pkl\"\nimport \"https://localhost:{https_port}/echo-headers\" as echoed\ntls = https_only.tls\ntok = echoed.headers[\"x-m6-token\"]\n"
+          ]
+        ]
+      },
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/modules/https_only.pkl",
+          "sha256": "a9aed3d30ea6fbb6ef82795a05c51982169d4d9cf68ce5b5f806a0e040c0c646"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "path",
+        "source_path": "{work_dir}/https_entry.pkl",
+        "target_options": {
+          "http": {
+            "caCertificateFiles": [
+              "{ca_cert}"
+            ],
+            "rewrites": {
+              "https://example.invalid/": "https://localhost:{https_port}/"
+            },
+            "headers": {
+              "https://localhost:{https_port}/echo-headers": {
+                "X-M6-Token": "secret-m6"
+              }
+            }
+          }
+        }
+      },
+      "assertions": {
+        "http_server_hit": true
+      }
+    },
+    {
+      "id": "m6:napi-node:http-proxy-and-noproxy",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-text",
+        "{work_dir}/proxy_entry.pkl",
+        "--allow-http",
+        "--ca-cert={ca_cert}",
+        "--http-proxy=http://127.0.0.1:{proxy_port}",
+        "--http-no-proxy=127.0.0.1"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": true,
+      "collect_files": "none",
+      "setup": {
+        "templates": [
+          [
+            "proxy_entry.pkl",
+            "import \"https://localhost:{https_port}/modules/https_only.pkl\"\nimport \"http://127.0.0.1:{http_port}/modules/hello.pkl\"\nproxied = https_only.tls\ndirect = hello.greeting\n"
+          ]
+        ]
+      },
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/modules/https_only.pkl",
+          "sha256": "a9aed3d30ea6fbb6ef82795a05c51982169d4d9cf68ce5b5f806a0e040c0c646"
+        },
+        {
+          "path": "tests/fixtures/m4/host_io/modules/hello.pkl",
+          "sha256": "ab4cec05d9b90a2ca4b11071cd4c35a744d21bf1081654ca6c485fd1192e4c2d"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "path",
+        "source_path": "{work_dir}/proxy_entry.pkl",
+        "target_options": {
+          "allowedModules": [
+            "pkl:",
+            "file:",
+            "http:",
+            "https:"
+          ],
+          "http": {
+            "caCertificateFiles": [
+              "{ca_cert}"
+            ],
+            "proxy": {
+              "address": "http://127.0.0.1:{proxy_port}",
+              "noProxy": [
+                "127.0.0.1"
+              ]
+            }
+          }
+        }
+      },
+      "assertions": {
+        "proxy_hit": true
+      }
+    },
+    {
+      "id": "m6:napi-node:project-load-and-package-deps",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-text",
+        "{work_dir}/proj/main.pkl",
+        "--project-dir={work_dir}/proj",
+        "--ca-cert={ca_cert}",
+        "--http-rewrite=https://localhost:0/=https://localhost:{https_port}/",
+        "--cache-dir={cache_dir}"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": true,
+      "collect_files": "none",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m4/projects/eval_alpha",
+            "proj"
+          ]
+        ]
+      },
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/projects/eval_alpha/main.pkl",
+          "sha256": "7a881ef04b9ceacefa72dd468073e216fab3ac2f9ce1d73a6c7bc3bbbc6e9703"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/eval_alpha/PklProject",
+          "sha256": "274786080fd208361431427ecbcad9c453873eb2dba3f35ae30ddf057696765d"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/eval_alpha/PklProject.deps.json",
+          "sha256": "89e2b7df4b55475f083717d399f998ce61c3f45673d2fa313eee5a703bd1171d"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_project_load",
+        "projectDir": "{work_dir}/proj",
+        "cacheDir": "{cache_dir}",
+        "http_ca_cert_files": [
+          "{ca_cert}"
+        ],
+        "http": {
+          "rewrites": {
+            "https://localhost:0/": "https://localhost:{https_port}/"
+          }
+        },
+        "source_kind": "path",
+        "source_path": "{work_dir}/proj/main.pkl"
+      },
+      "assertions": {
+        "http_server_hit": true
+      }
+    },
+    {
+      "id": "m6:napi-node:package-uri-and-disk-cache",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-text",
+        "{root}/tests/fixtures/m6/pkl/package_alpha_entry.pkl",
+        "--ca-cert={ca_cert}",
+        "--http-rewrite=https://localhost:0/=https://localhost:{https_port}/",
+        "--cache-dir={cache_dir}"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": true,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/package_alpha_entry.pkl",
+          "sha256": "33fcaec945b47622f971be8866d799f1489cf7fa876cefb89e1c9e28dc92b3b4"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.json",
+          "sha256": "de20d7d5924559bfb7df4fdd129e3b365418161fdc27f7798d8f297fabe15327"
+        },
+        {
+          "path": "tests/fixtures/m4/projects/registry/alpha@1.0.0/alpha@1.0.0.zip",
+          "sha256": "0eb8377ae9794c71ab3cbd9372d29bed72821251d1fef905a3a6f2993a159ab5"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "path",
+        "source_path": "{root}/tests/fixtures/m6/pkl/package_alpha_entry.pkl",
+        "target_options": {
+          "cacheDir": "{cache_dir}",
+          "http": {
+            "caCertificateFiles": [
+              "{ca_cert}"
+            ],
+            "rewrites": {
+              "https://localhost:0/": "https://localhost:{https_port}/"
+            }
+          }
+        }
+      },
+      "assertions": {
+        "http_server_hit": true
+      }
+    },
+    {
+      "id": "m6:napi-node:external-readers-lifecycle-zero-orphans",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "cli",
+      "oracle_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "--allowed-modules",
+        "pkl:,file:,extmod:,extmodopaque:",
+        "--allowed-resources",
+        "env:,prop:,extres:,extresopaque:,extresnoglob:",
+        "--external-module-reader",
+        "extmod={reader_bin} --lifecycle-log {lifecycle_log} --tag m6",
+        "--external-module-reader",
+        "extmodopaque={reader_bin} --lifecycle-log {lifecycle_log} --tag m6",
+        "--external-resource-reader",
+        "extres={reader_bin} --lifecycle-log {lifecycle_log} --tag m6",
+        "--external-resource-reader",
+        "extresopaque={reader_bin} --lifecycle-log {lifecycle_log} --tag m6",
+        "--external-resource-reader",
+        "extresnoglob={reader_bin} --lifecycle-log {lifecycle_log} --tag m6",
+        "{root}/tests/fixtures/m4/readers/eval_all_schemes.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/readers/eval_all_schemes.pkl",
+          "sha256": "7d5c2e81b0eddb0e0e83137b1a2125638d3aad95fce13a5d25d04b21c6ff5cf4"
+        },
+        {
+          "path": "tests/fixtures/m4/readers/m4_ext_reader.py",
+          "sha256": "4014892c06a898537cd31e8826dfd8a058acd84fd27189681c855620ce4b8837"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "path",
+        "source_path": "{root}/tests/fixtures/m4/readers/eval_all_schemes.pkl",
+        "target_options": {
+          "allowedModules": [
+            "pkl:",
+            "file:",
+            "extmod:",
+            "extmodopaque:"
+          ],
+          "allowedResources": [
+            "env:",
+            "prop:",
+            "extres:",
+            "extresopaque:",
+            "extresnoglob:"
+          ],
+          "externalModuleReaders": {
+            "extmod": {
+              "executable": "{reader_bin}",
+              "arguments": [
+                "--lifecycle-log",
+                "{lifecycle_log}",
+                "--tag",
+                "m6"
+              ]
+            },
+            "extmodopaque": {
+              "executable": "{reader_bin}",
+              "arguments": [
+                "--lifecycle-log",
+                "{lifecycle_log}",
+                "--tag",
+                "m6"
+              ]
+            }
+          },
+          "externalResourceReaders": {
+            "extres": {
+              "executable": "{reader_bin}",
+              "arguments": [
+                "--lifecycle-log",
+                "{lifecycle_log}",
+                "--tag",
+                "m6"
+              ]
+            },
+            "extresopaque": {
+              "executable": "{reader_bin}",
+              "arguments": [
+                "--lifecycle-log",
+                "{lifecycle_log}",
+                "--tag",
+                "m6"
+              ]
+            },
+            "extresnoglob": {
+              "executable": "{reader_bin}",
+              "arguments": [
+                "--lifecycle-log",
+                "{lifecycle_log}",
+                "--tag",
+                "m6"
+              ]
+            }
+          }
+        }
+      },
+      "assertions": {
+        "reader_closed": true
+      }
+    },
+    {
+      "id": "m6:napi-node:custom-js-async-readers-logger-frame",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-custom-spi",
+        "{root}/tests/fixtures/m6/pkl/custom_spi_entry.pkl",
+        "--uri=repl:text",
+        "--with-logs"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/custom_spi_entry.pkl",
+          "sha256": "8deb780660838b37c2627092a50378bab44d6d3d4909c17cb7cb3b2420abe1a2"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_custom_spi",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/custom_spi_entry.pkl",
+        "withLogs": true
+      }
+    },
+    {
+      "id": "m6:napi-node:custom-js-security-manager",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-custom-security",
+        "{root}/tests/fixtures/m6/pkl/custom_security_entry.pkl",
+        "--uri=repl:text"
+      ],
+      "expected_exit": [
+        1
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/custom_security_entry.pkl",
+          "sha256": "a0bc014cf5059d100ec18486ce151008b1ef50c68dfd93383588f8fecd522fd3"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_custom_security",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/custom_security_entry.pkl"
+      }
+    },
+    {
+      "id": "m6:napi-node:async-nonblocking-event-loop",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-text",
+        "{work_dir}/slow_http.pkl",
+        "--allow-http"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": true,
+      "collect_files": "none",
+      "setup": {
+        "templates": [
+          [
+            "slow_http.pkl",
+            "import \"http://127.0.0.1:{http_port}/slow/150/modules/hello.pkl\"\ngreeting = hello.greeting\n"
+          ]
+        ]
+      },
+      "inputs": [
+        {
+          "path": "tests/fixtures/m4/host_io/modules/hello.pkl",
+          "sha256": "ab4cec05d9b90a2ca4b11071cd4c35a744d21bf1081654ca6c485fd1192e4c2d"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_nonblocking",
+        "source_kind": "path",
+        "source_path": "{work_dir}/slow_http.pkl",
+        "target_options": {
+          "allowedModules": [
+            "pkl:",
+            "file:",
+            "http:",
+            "https:"
+          ]
+        }
+      },
+      "assertions": {
+        "http_server_hit": true
+      }
+    },
+    {
+      "id": "m6:napi-node:lifecycle-cancel-abort-timeout-close",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-lifecycle",
+        "{root}/tests/fixtures/m6/pkl/fast_value.pkl",
+        "{root}/tests/fixtures/m6/pkl/slow_loop.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/fast_value.pkl",
+          "sha256": "56e0e4915566af7ee84e87cf5a928ec83ec5d4245849d0f3505a8f69ffdad28e"
+        },
+        {
+          "path": "tests/fixtures/m6/pkl/slow_loop.pkl",
+          "sha256": "8497098c05da78b4f401340859173e5edf35e9fe2457c6c5061939d8b689e0d3"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_lifecycle",
+        "fast_source_file": "{root}/tests/fixtures/m6/pkl/fast_value.pkl",
+        "slow_source_file": "{root}/tests/fixtures/m6/pkl/slow_loop.pkl"
+      }
+    },
+    {
+      "id": "m6:napi-node:clock64-timeout-boundary",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-source-text",
+        "{root}/tests/fixtures/m6/pkl/fast_value.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/fast_value.pkl",
+          "sha256": "56e0e4915566af7ee84e87cf5a928ec83ec5d4245849d0f3505a8f69ffdad28e"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_clock64",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/fast_value.pkl"
+      }
+    },
+    {
+      "id": "m6:napi-node:lossless-bigint-bytes-utf16-values",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-decode-values",
+        "{root}/tests/fixtures/m6/pkl/lossless_values.pkl",
+        "--uri=repl:text"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/lossless_values.pkl",
+          "sha256": "a7e7dae090a467247cd496f8386e0a285445e008b5c90d820e6666148e60a661"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_decode_values",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/lossless_values.pkl"
+      }
+    },
+    {
+      "id": "m6:napi-node:conversion-telemetry",
+      "lane": "napi-node",
+      "target": "napi-node",
+      "exec_mode": "js_api",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-decode-values",
+        "{root}/tests/fixtures/m6/pkl/telemetry_payload.pkl",
+        "--uri=repl:text"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/telemetry_payload.pkl",
+          "sha256": "a7bbfbf258877ae2a2ced07c86f4bfd1ba82224aa1aecf1888366be8e4da6cff"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_conversion_telemetry",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/telemetry_payload.pkl",
+        "iterations": 25
+      },
+      "assertions": {
+        "telemetry_required": true
+      }
+    },
+    {
+      "id": "m6:parity:language-core-pcf",
+      "lane": "cross-target-parity",
+      "target": "cross-target",
+      "exec_mode": "cross_target_parity",
+      "oracle_mode": "cli",
+      "oracle_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-f",
+        "pcf",
+        "-"
+      ],
+      "native_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-f",
+        "pcf",
+        "-"
+      ],
+      "oracle_stdin_file": "tests/fixtures/m6/pkl/core_all_types.pkl",
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/core_all_types.pkl",
+          "sha256": "eb50abca99b6aea22ccd10bc4de1b8359b7d5b14a0e2c19d5aae6ba8f5cb2543"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "target_options": {
+          "outputFormat": "pcf"
+        }
+      }
+    },
+    {
+      "id": "m6:parity:stdlib-math-semver-regex",
+      "lane": "cross-target-parity",
+      "target": "cross-target",
+      "exec_mode": "cross_target_parity",
+      "oracle_mode": "cli",
+      "oracle_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-f",
+        "pcf",
+        "-"
+      ],
+      "native_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-f",
+        "pcf",
+        "-"
+      ],
+      "oracle_stdin_file": "tests/fixtures/m6/pkl/stdlib_suite.pkl",
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/stdlib_suite.pkl",
+          "sha256": "b20d4d9d9e4f22c156d00f6eb49987db74b792d3de2ce17e870372a0afe97c54"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/stdlib_suite.pkl",
+        "target_options": {
+          "outputFormat": "pcf"
+        }
+      }
+    },
+    {
+      "id": "m6:parity:renderer-json",
+      "lane": "cross-target-parity",
+      "target": "cross-target",
+      "exec_mode": "cross_target_parity",
+      "oracle_mode": "cli",
+      "oracle_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-f",
+        "json",
+        "-"
+      ],
+      "native_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-f",
+        "json",
+        "-"
+      ],
+      "oracle_stdin_file": "tests/fixtures/m6/pkl/core_all_types.pkl",
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/core_all_types.pkl",
+          "sha256": "eb50abca99b6aea22ccd10bc4de1b8359b7d5b14a0e2c19d5aae6ba8f5cb2543"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "target_options": {
+          "outputFormat": "json"
+        }
+      }
+    },
+    {
+      "id": "m6:parity:renderer-yaml",
+      "lane": "cross-target-parity",
+      "target": "cross-target",
+      "exec_mode": "cross_target_parity",
+      "oracle_mode": "cli",
+      "oracle_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-f",
+        "yaml",
+        "-"
+      ],
+      "native_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-f",
+        "yaml",
+        "-"
+      ],
+      "oracle_stdin_file": "tests/fixtures/m6/pkl/core_all_types.pkl",
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/core_all_types.pkl",
+          "sha256": "eb50abca99b6aea22ccd10bc4de1b8359b7d5b14a0e2c19d5aae6ba8f5cb2543"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "target_options": {
+          "outputFormat": "yaml"
+        }
+      }
+    },
+    {
+      "id": "m6:parity:renderer-xml",
+      "lane": "cross-target-parity",
+      "target": "cross-target",
+      "exec_mode": "cross_target_parity",
+      "oracle_mode": "cli",
+      "oracle_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-f",
+        "xml",
+        "-"
+      ],
+      "native_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-f",
+        "xml",
+        "-"
+      ],
+      "oracle_stdin_file": "tests/fixtures/m6/pkl/core_all_types.pkl",
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/core_all_types.pkl",
+          "sha256": "eb50abca99b6aea22ccd10bc4de1b8359b7d5b14a0e2c19d5aae6ba8f5cb2543"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "target_options": {
+          "outputFormat": "xml"
+        }
+      }
+    },
+    {
+      "id": "m6:parity:renderer-properties",
+      "lane": "cross-target-parity",
+      "target": "cross-target",
+      "exec_mode": "cross_target_parity",
+      "oracle_mode": "cli",
+      "oracle_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-f",
+        "properties",
+        "-"
+      ],
+      "native_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-f",
+        "properties",
+        "-"
+      ],
+      "oracle_stdin_file": "tests/fixtures/m6/pkl/properties_sample.pkl",
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/properties_sample.pkl",
+          "sha256": "f66e7c71b35e913b4bed776cab22cc66c74ce4490707894998e8252b61cab923"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/properties_sample.pkl",
+        "target_options": {
+          "outputFormat": "properties"
+        }
+      }
+    },
+    {
+      "id": "m6:parity:renderer-plist",
+      "lane": "cross-target-parity",
+      "target": "cross-target",
+      "exec_mode": "cross_target_parity",
+      "oracle_mode": "cli",
+      "oracle_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-f",
+        "plist",
+        "-"
+      ],
+      "native_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-f",
+        "plist",
+        "-"
+      ],
+      "oracle_stdin_file": "tests/fixtures/m6/pkl/core_all_types.pkl",
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/core_all_types.pkl",
+          "sha256": "eb50abca99b6aea22ccd10bc4de1b8359b7d5b14a0e2c19d5aae6ba8f5cb2543"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "target_options": {
+          "outputFormat": "plist"
+        }
+      }
+    },
+    {
+      "id": "m6:parity:renderer-jsonnet",
+      "lane": "cross-target-parity",
+      "target": "cross-target",
+      "exec_mode": "cross_target_parity",
+      "oracle_mode": "cli",
+      "oracle_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-f",
+        "jsonnet",
+        "-"
+      ],
+      "native_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-f",
+        "jsonnet",
+        "-"
+      ],
+      "oracle_stdin_file": "tests/fixtures/m6/pkl/core_all_types.pkl",
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/core_all_types.pkl",
+          "sha256": "eb50abca99b6aea22ccd10bc4de1b8359b7d5b14a0e2c19d5aae6ba8f5cb2543"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "target_options": {
+          "outputFormat": "jsonnet"
+        }
+      }
+    },
+    {
+      "id": "m6:parity:renderer-textproto",
+      "lane": "cross-target-parity",
+      "target": "cross-target",
+      "exec_mode": "cross_target_parity",
+      "oracle_mode": "cli",
+      "oracle_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-f",
+        "textproto",
+        "-"
+      ],
+      "native_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-f",
+        "textproto",
+        "-"
+      ],
+      "oracle_stdin_file": "tests/fixtures/m6/pkl/textproto_sample.pkl",
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/textproto_sample.pkl",
+          "sha256": "44afe767ae4e024fad6f859dbb82f9351589deb9bf58c9f0f0277376b3bfc2af"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_text",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/textproto_sample.pkl",
+        "target_options": {
+          "outputFormat": "textproto"
+        }
+      }
+    },
+    {
+      "id": "m6:parity:renderer-pkl-binary",
+      "lane": "cross-target-parity",
+      "target": "cross-target",
+      "exec_mode": "cross_target_parity",
+      "oracle_mode": "cli",
+      "oracle_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-f",
+        "pkl-binary",
+        "-"
+      ],
+      "native_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-f",
+        "pkl-binary",
+        "-"
+      ],
+      "oracle_stdin_file": "tests/fixtures/m6/pkl/core_all_types.pkl",
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/core_all_types.pkl",
+          "sha256": "eb50abca99b6aea22ccd10bc4de1b8359b7d5b14a0e2c19d5aae6ba8f5cb2543"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_output_bytes",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/core_all_types.pkl",
+        "target_options": {
+          "outputFormat": "pkl-binary"
+        }
+      }
+    },
+    {
+      "id": "m6:parity:output-bytes-raw",
+      "lane": "cross-target-parity",
+      "target": "cross-target",
+      "exec_mode": "cross_target_parity",
+      "oracle_mode": "cli",
+      "oracle_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-"
+      ],
+      "native_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-"
+      ],
+      "oracle_stdin_file": "tests/fixtures/m6/pkl/output_bytes.pkl",
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/output_bytes.pkl",
+          "sha256": "11f03f64053f54d13c07f3360d7be9ec9a3724ece656366de0ac1150d24d2ae3"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_output_bytes",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/output_bytes.pkl"
+      }
+    },
+    {
+      "id": "m6:parity:error-diagnostic-exact",
+      "lane": "cross-target-parity",
+      "target": "cross-target",
+      "exec_mode": "cross_target_parity",
+      "oracle_mode": "cli",
+      "oracle_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-"
+      ],
+      "native_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "-"
+      ],
+      "oracle_stdin_file": "tests/fixtures/m6/pkl/error_runtime.pkl",
+      "expected_exit": [
+        1
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/error_runtime.pkl",
+          "sha256": "5d787edabf1c17c392df79107997f7b319fc72d2f104f458d4de11167c617b43"
+        }
+      ],
+      "target_spec": {
+        "action": "eval_output_bytes",
+        "source_kind": "text",
+        "source_file": "{root}/tests/fixtures/m6/pkl/error_runtime.pkl"
+      }
+    },
+    {
+      "id": "m6:pack:native-pkl-and-pkldoc-binaries",
+      "lane": "packaging-and-install",
+      "target": "packaging",
+      "exec_mode": "packaging_native",
+      "oracle_mode": "cli",
+      "oracle_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "{root}/tests/fixtures/m6/pkl/core_all_types.pkl"
+      ],
+      "sample_pkl": "tests/fixtures/m6/pkl/core_all_types.pkl",
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/core_all_types.pkl",
+          "sha256": "eb50abca99b6aea22ccd10bc4de1b8359b7d5b14a0e2c19d5aae6ba8f5cb2543"
+        }
+      ]
+    },
+    {
+      "id": "m6:pack:downstream-rust-crate-links-pkl",
+      "lane": "packaging-and-install",
+      "target": "packaging",
+      "exec_mode": "packaging_rust_crate",
+      "oracle_mode": "cli",
+      "oracle_command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "{root}/tests/fixtures/m6/pkl/core_all_types.pkl"
+      ],
+      "sample_pkl": "tests/fixtures/m6/pkl/core_all_types.pkl",
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/core_all_types.pkl",
+          "sha256": "eb50abca99b6aea22ccd10bc4de1b8359b7d5b14a0e2c19d5aae6ba8f5cb2543"
+        }
+      ]
+    },
+    {
+      "id": "m6:pack:wasm-npm-pack-clean-install-node-and-browser",
+      "lane": "packaging-and-install",
+      "target": "packaging",
+      "exec_mode": "packaging_wasm",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-source-text",
+        "{root}/tests/fixtures/m6/pkl/core_all_types.pkl"
+      ],
+      "sample_pkl": "tests/fixtures/m6/pkl/core_all_types.pkl",
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/core_all_types.pkl",
+          "sha256": "eb50abca99b6aea22ccd10bc4de1b8359b7d5b14a0e2c19d5aae6ba8f5cb2543"
+        }
+      ]
+    },
+    {
+      "id": "m6:pack:napi-npm-pack-clean-install-esm-and-cjs",
+      "lane": "packaging-and-install",
+      "target": "packaging",
+      "exec_mode": "packaging_napi",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-source-text",
+        "{root}/tests/fixtures/m6/pkl/core_all_types.pkl"
+      ],
+      "sample_pkl": "tests/fixtures/m6/pkl/core_all_types.pkl",
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/core_all_types.pkl",
+          "sha256": "eb50abca99b6aea22ccd10bc4de1b8359b7d5b14a0e2c19d5aae6ba8f5cb2543"
+        }
+      ]
+    },
+    {
+      "id": "m6:pack:platform-support-matrix-metadata",
+      "lane": "packaging-and-install",
+      "target": "packaging",
+      "exec_mode": "packaging_matrix",
+      "oracle_mode": "probe",
+      "oracle_command": [
+        "eval-version"
+      ],
+      "sample_pkl": "tests/fixtures/m6/pkl/fast_value.pkl",
+      "expected_exit": [
+        0
+      ],
+      "capability_boundary": false,
+      "expected_capability": null,
+      "requires_http_server": false,
+      "collect_files": "none",
+      "inputs": [
+        {
+          "path": "tests/fixtures/m6/pkl/fast_value.pkl",
+          "sha256": "56e0e4915566af7ee84e87cf5a928ec83ec5d4245849d0f3505a8f69ffdad28e"
+        }
+      ]
+    }
+  ]
+}

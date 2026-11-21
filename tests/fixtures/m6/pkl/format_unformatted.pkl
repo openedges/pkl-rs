@@ -1,0 +1,11 @@
+module   demo.M6Format
+
+import "pkl:semver"
+import "pkl:math"
+
+a=1+2
+b {
+x="hi"
+  y=List(1,2,3)
+}
+function add(x:Int,y:Int):Int=x+y

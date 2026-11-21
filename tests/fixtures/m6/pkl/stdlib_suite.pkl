@@ -1,0 +1,17 @@
+module demo.M6Stdlib
+
+import "pkl:math"
+import "pkl:semver"
+import "pkl:json"
+import "pkl:reflect"
+
+piFloor = (math.pi * 1000).floor / 1000
+gcdVal = math.gcd(48, 18)
+maxInt = math.maxInt
+minInt = math.minInt
+parsedVer = semver.Version("0.32.0").major
+parsedJson = (new json.Parser {}).parse(#"{"k":[1,2,3],"ok":true}"#)
+regexMatch = Regex(#"([a-z]+)-(\d+)"#).findMatchesIn("pkl-320").first.groups[2].value
+reflectedName = reflect.Module(module).name
+utf16Len = "🚀한국어".length
+codePoints = "🚀한국어".chars.length

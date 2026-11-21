@@ -1,0 +1,17 @@
+output {
+  files {
+    ["first.txt"] {
+      text = "one\n"
+    }
+    ["nested/second.json"] {
+      value {
+        ok = true
+        count = 2
+      }
+      renderer = new JsonRenderer {}
+    }
+    ["raw.bin"] {
+      bytes = Bytes(0, 255, 42)
+    }
+  }
+}

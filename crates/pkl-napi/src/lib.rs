@@ -1,4 +1,11 @@
-//! Node experiment; no separate evaluator or Java fallback.
+//! Node.js N-API bindings for the shared Pkl 0.32.0 runtime and native host; no Java fallback.
+pub mod bridge;
+pub mod error;
+pub mod product;
+pub mod repl;
+pub mod schema;
+pub mod values;
+
 use napi::{
     Env, Error, Result,
     bindgen_prelude::{BigInt, JsObjectValue, Uint8Array, Utf16String},

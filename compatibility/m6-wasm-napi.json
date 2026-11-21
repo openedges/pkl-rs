@@ -1,0 +1,923 @@
+{
+  "api_contract": {
+    "capability_keys": [
+      "vfs",
+      "asyncModuleLoader",
+      "asyncResourceLoader",
+      "nativeFs",
+      "nativeHttp",
+      "externalReaders",
+      "modulePathJar",
+      "projectResolution",
+      "packageCache",
+      "formatter",
+      "repl",
+      "schema",
+      "analyzeImports",
+      "bigint64",
+      "uint8ArrayBytes",
+      "clock64Bit",
+      "platform",
+      "runtime",
+      "arch"
+    ],
+    "common_exports": [
+      "PKL_VERSION",
+      "capabilities",
+      "createEvaluator",
+      "ModuleSource",
+      "PklError",
+      "decodePklBinary",
+      "PklDuration",
+      "PklDataSize",
+      "PklPair",
+      "PklRegex",
+      "PklObject",
+      "PklClass",
+      "PklTypeAlias",
+      "PklIntSeq",
+      "PklFunction",
+      "PklReference",
+      "format",
+      "createRepl",
+      "analyzeImportGraph"
+    ],
+    "napi_package": "@pkl-rs/napi",
+    "napi_specific_exports": [
+      "Project"
+    ],
+    "version": "0.32.0",
+    "wasm_package": "@pkl-rs/wasm",
+    "wasm_specific_exports": [
+      "init",
+      "VirtualFileSystem"
+    ]
+  },
+  "baseline": {
+    "checkout": "external/pkl",
+    "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "source_url_template": "https://github.com/apple/pkl/blob/e51fb2f91774265666f94980ec630db794a4db2d/{path}#L{line}",
+    "url": "https://github.com/apple/pkl.git",
+    "version": "0.32.0"
+  },
+  "capability_matrix": {
+    "napi-node": {
+      "analyzeImports": true,
+      "asyncModuleLoader": true,
+      "asyncResourceLoader": true,
+      "bigint64": true,
+      "clock64Bit": true,
+      "externalReaders": true,
+      "formatter": true,
+      "modulePathJar": true,
+      "nativeFs": true,
+      "nativeHttp": true,
+      "packageCache": true,
+      "projectResolution": true,
+      "repl": true,
+      "schema": true,
+      "uint8ArrayBytes": true,
+      "vfs": false
+    },
+    "wasm-browser": {
+      "analyzeImports": true,
+      "asyncModuleLoader": true,
+      "asyncResourceLoader": true,
+      "bigint64": true,
+      "clock64Bit": true,
+      "externalReaders": false,
+      "formatter": true,
+      "modulePathJar": false,
+      "nativeFs": false,
+      "nativeHttp": false,
+      "packageCache": false,
+      "projectResolution": false,
+      "repl": true,
+      "schema": true,
+      "uint8ArrayBytes": true,
+      "vfs": true
+    },
+    "wasm-node": {
+      "analyzeImports": true,
+      "asyncModuleLoader": true,
+      "asyncResourceLoader": true,
+      "bigint64": true,
+      "clock64Bit": true,
+      "externalReaders": false,
+      "formatter": true,
+      "modulePathJar": false,
+      "nativeFs": false,
+      "nativeHttp": false,
+      "packageCache": false,
+      "projectResolution": false,
+      "repl": true,
+      "schema": true,
+      "uint8ArrayBytes": true,
+      "vfs": true
+    }
+  },
+  "counts": {
+    "m6_capability_boundary_cases": 6,
+    "m6_capability_boundary_cases_by_lane": {
+      "wasm-browser": 4,
+      "wasm-node": 2
+    },
+    "m6_capability_keys": 19,
+    "m6_cases_by_lane": {
+      "cross-target-parity": 12,
+      "napi-node": 26,
+      "packaging-and-install": 5,
+      "wasm-browser": 33,
+      "wasm-node": 10
+    },
+    "m6_common_js_exports": 19,
+    "m6_executable_cases": 80,
+    "m6_executable_cases_by_lane": {
+      "cross-target-parity": 12,
+      "napi-node": 26,
+      "packaging-and-install": 5,
+      "wasm-browser": 29,
+      "wasm-node": 8
+    },
+    "m6_requirement_groups": 14,
+    "m6_requirement_impl_status": {
+      "linked": 14
+    },
+    "m6_total_cases": 86
+  },
+  "coverage_gate": null,
+  "requirements": {
+    "m6:cross-target:four-way-raw-byte-parity": {
+      "capability_boundary_case_ids": [],
+      "case_ids": [
+        "m6:parity:language-core-pcf",
+        "m6:parity:stdlib-math-semver-regex",
+        "m6:parity:renderer-json",
+        "m6:parity:renderer-yaml",
+        "m6:parity:renderer-xml",
+        "m6:parity:renderer-properties",
+        "m6:parity:renderer-plist",
+        "m6:parity:renderer-jsonnet",
+        "m6:parity:renderer-textproto",
+        "m6:parity:renderer-pkl-binary",
+        "m6:parity:output-bytes-raw",
+        "m6:parity:error-diagnostic-exact"
+      ],
+      "description": "4-way / 5-endpoint raw-byte parity on shared portable corpus: Java 0.32.0 == Native Rust pkl == Node N-API == Wasm Node == Wasm Browser (per-target reporting without masking gaps)",
+      "executable_case_ids": [
+        "m6:parity:language-core-pcf",
+        "m6:parity:stdlib-math-semver-regex",
+        "m6:parity:renderer-json",
+        "m6:parity:renderer-yaml",
+        "m6:parity:renderer-xml",
+        "m6:parity:renderer-properties",
+        "m6:parity:renderer-plist",
+        "m6:parity:renderer-jsonnet",
+        "m6:parity:renderer-textproto",
+        "m6:parity:renderer-pkl-binary",
+        "m6:parity:output-bytes-raw",
+        "m6:parity:error-diagnostic-exact"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/evaluation/session.rs",
+          "sha256": "9f1bf12a9e5431d8651a7c154efeead77a0db89d26a74ba29040bf11b078c453",
+          "symbol": "SourceSession"
+        },
+        {
+          "path": "crates/pkl-cli/src/eval_cmd.rs",
+          "sha256": "fd50ec893a5198e9d10924f5e4862e807b357eedb7abe0c6e2513d4aa253b9f1",
+          "symbol": "cmd_eval"
+        },
+        {
+          "path": "crates/pkl-wasm/src/product/evaluator.rs",
+          "sha256": "dec2403008b20c831ab9a0e3f548f947fe76ee51310b3feee4a9c3a8b92a6dc3",
+          "symbol": "WasmEvaluator"
+        },
+        {
+          "path": "crates/pkl-napi/src/product.rs",
+          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "symbol": "NativeEvaluator"
+        },
+        {
+          "path": "packages/pkl-wasm/src/index.mjs",
+          "sha256": "623a22b1779f45afc2864805fd387c681a3165fe75ef4216cc678b1b7a347ce4",
+          "symbol": "createEvaluator"
+        },
+        {
+          "path": "packages/pkl-napi/src/index.mjs",
+          "sha256": "a25cc23a89f55af0f90aeff79ddf67bca7814fb61e46b2f3ca9dbe7f9cbb8c7d",
+          "symbol": "createEvaluator"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "cross-target-parity"
+    },
+    "m6:napi-node:async-nonblocking-lifecycle-lossless-telemetry": {
+      "capability_boundary_case_ids": [],
+      "case_ids": [
+        "m6:napi-node:async-nonblocking-event-loop",
+        "m6:napi-node:lifecycle-cancel-abort-timeout-close",
+        "m6:napi-node:clock64-timeout-boundary",
+        "m6:napi-node:lossless-bigint-bytes-utf16-values",
+        "m6:napi-node:conversion-telemetry"
+      ],
+      "description": "Node.js N-API non-blocking off-event-loop async Promises, AbortSignal/cancel/timeout/close lifecycle, 64-bit clock, lossless BigInt/Uint8Array/UTF-16 & typed wrappers, and JS<->Rust conversion telemetry",
+      "executable_case_ids": [
+        "m6:napi-node:async-nonblocking-event-loop",
+        "m6:napi-node:lifecycle-cancel-abort-timeout-close",
+        "m6:napi-node:clock64-timeout-boundary",
+        "m6:napi-node:lossless-bigint-bytes-utf16-values",
+        "m6:napi-node:conversion-telemetry"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-napi/src/product.rs",
+          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "symbol": "EvalAsyncTask"
+        },
+        {
+          "path": "crates/pkl-napi/src/product.rs",
+          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "symbol": "EvalCloseTask"
+        },
+        {
+          "path": "crates/pkl-napi/src/product.rs",
+          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "symbol": "product_monotonic_clock_ms"
+        },
+        {
+          "path": "crates/pkl-napi/src/error.rs",
+          "sha256": "b4d416003472d54e1cd7db789e0e4b578a598dcc19e6496aada7d8ff7356eb18",
+          "symbol": "parse_i64_bigint"
+        },
+        {
+          "path": "crates/pkl-napi/src/values.rs",
+          "sha256": "d4ca5ec2ac1245136c1cb65d54144bdf44e3c0be52cd94ba4ec32795bdbb6aba",
+          "symbol": "product_decode_pkl_binary"
+        },
+        {
+          "path": "crates/pkl-napi/src/values.rs",
+          "sha256": "d4ca5ec2ac1245136c1cb65d54144bdf44e3c0be52cd94ba4ec32795bdbb6aba",
+          "symbol": "product_measure_conversion"
+        },
+        {
+          "path": "packages/pkl-napi/src/runtime.cjs",
+          "sha256": "9a0acbc0a34efc8239b951cd967ffd67b19f94d61c0031a1855ef1430a9ff819",
+          "symbol": "parseTimeoutMs"
+        },
+        {
+          "path": "packages/pkl-napi/src/runtime.cjs",
+          "sha256": "9a0acbc0a34efc8239b951cd967ffd67b19f94d61c0031a1855ef1430a9ff819",
+          "symbol": "measureConversion"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "napi-node"
+    },
+    "m6:napi-node:core-renderers-tools-esm-cjs": {
+      "capability_boundary_case_ids": [],
+      "case_ids": [
+        "m6:napi-node:esm-and-cjs-exports-capabilities",
+        "m6:napi-node:eval-json-cjs",
+        "m6:napi-node:eval-output-bytes",
+        "m6:napi-node:eval-output-files",
+        "m6:napi-node:eval-error-diagnostic",
+        "m6:napi-node:format-v1-v2-idempotent",
+        "m6:napi-node:evaluate-schema",
+        "m6:napi-node:repl-stateful-session",
+        "m6:napi-node:evaluate-test-spec"
+      ],
+      "description": "Node.js N-API dual ESM import & CJS require exports, capabilities(), renderers, output.bytes/files, PklError diagnostics, formatter, ModuleSchema, REPL, and pkl:test",
+      "executable_case_ids": [
+        "m6:napi-node:esm-and-cjs-exports-capabilities",
+        "m6:napi-node:eval-json-cjs",
+        "m6:napi-node:eval-output-bytes",
+        "m6:napi-node:eval-output-files",
+        "m6:napi-node:eval-error-diagnostic",
+        "m6:napi-node:format-v1-v2-idempotent",
+        "m6:napi-node:evaluate-schema",
+        "m6:napi-node:repl-stateful-session",
+        "m6:napi-node:evaluate-test-spec"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-napi/src/product.rs",
+          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "symbol": "NativeEvaluator"
+        },
+        {
+          "path": "crates/pkl-napi/src/product.rs",
+          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "symbol": "product_format"
+        },
+        {
+          "path": "crates/pkl-napi/src/schema.rs",
+          "sha256": "48761c5ac9b87d159b8a521e1e64cbd93b101c0d689cf39ebb7c12c794d74f04",
+          "symbol": "module_schema_to_js"
+        },
+        {
+          "path": "crates/pkl-napi/src/repl.rs",
+          "sha256": "337efc272cafd925da4234ae9c8d3111ee5f46d81a03c90f7f2932eab5657cf6",
+          "symbol": "NativeReplSession"
+        },
+        {
+          "path": "crates/pkl-napi/src/error.rs",
+          "sha256": "b4d416003472d54e1cd7db789e0e4b578a598dcc19e6496aada7d8ff7356eb18",
+          "symbol": "NativeError"
+        },
+        {
+          "path": "packages/pkl-napi/src/runtime.cjs",
+          "sha256": "9a0acbc0a34efc8239b951cd967ffd67b19f94d61c0031a1855ef1430a9ff819",
+          "symbol": "capabilities"
+        },
+        {
+          "path": "packages/pkl-napi/src/index.mjs",
+          "sha256": "a25cc23a89f55af0f90aeff79ddf67bca7814fb61e46b2f3ca9dbe7f9cbb8c7d",
+          "symbol": "createEvaluator"
+        },
+        {
+          "path": "packages/pkl-napi/src/index.d.ts",
+          "sha256": "11b879e6d64f0f90643010084d769fada05b0f84ae1bb5a7a42569372fce8084",
+          "symbol": "PklError"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "napi-node"
+    },
+    "m6:napi-node:external-and-custom-js-readers": {
+      "capability_boundary_case_ids": [],
+      "case_ids": [
+        "m6:napi-node:external-readers-lifecycle-zero-orphans",
+        "m6:napi-node:custom-js-async-readers-logger-frame",
+        "m6:napi-node:custom-js-security-manager"
+      ],
+      "description": "Node.js N-API external module & resource readers (0x26-0x32 with 0x32 graceful close & zero orphan PIDs) plus custom async JS module/resource readers, logger, frameTransformer, and securityManager",
+      "executable_case_ids": [
+        "m6:napi-node:external-readers-lifecycle-zero-orphans",
+        "m6:napi-node:custom-js-async-readers-logger-frame",
+        "m6:napi-node:custom-js-security-manager"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-napi/src/bridge.rs",
+          "sha256": "f034f37bfa7594add08efa29377b0d367eb322fbb298e3a68028585912413d6e",
+          "symbol": "JsBridge"
+        },
+        {
+          "path": "crates/pkl-napi/src/bridge.rs",
+          "sha256": "f034f37bfa7594add08efa29377b0d367eb322fbb298e3a68028585912413d6e",
+          "symbol": "JsModuleReaderAdapter"
+        },
+        {
+          "path": "crates/pkl-napi/src/bridge.rs",
+          "sha256": "f034f37bfa7594add08efa29377b0d367eb322fbb298e3a68028585912413d6e",
+          "symbol": "JsResourceReaderAdapter"
+        },
+        {
+          "path": "crates/pkl-napi/src/bridge.rs",
+          "sha256": "f034f37bfa7594add08efa29377b0d367eb322fbb298e3a68028585912413d6e",
+          "symbol": "JsSecurityAdapter"
+        },
+        {
+          "path": "crates/pkl-napi/src/bridge.rs",
+          "sha256": "f034f37bfa7594add08efa29377b0d367eb322fbb298e3a68028585912413d6e",
+          "symbol": "JsFrameTransformerAdapter"
+        },
+        {
+          "path": "crates/pkl-napi/src/product.rs",
+          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "symbol": "NativeExternalReaderOption"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "napi-node"
+    },
+    "m6:napi-node:http-https-proxy-projects-packages": {
+      "capability_boundary_case_ids": [],
+      "case_ids": [
+        "m6:napi-node:http-https-ca-headers-rewrites",
+        "m6:napi-node:http-proxy-and-noproxy",
+        "m6:napi-node:project-load-and-package-deps",
+        "m6:napi-node:package-uri-and-disk-cache"
+      ],
+      "description": "Node.js N-API localhost HTTP/HTTPS with custom CA certs, custom headers, rewrites, proxy/noProxy, Project.load + PklProject.deps.json, and package:// with package-2 disk cache",
+      "executable_case_ids": [
+        "m6:napi-node:http-https-ca-headers-rewrites",
+        "m6:napi-node:http-proxy-and-noproxy",
+        "m6:napi-node:project-load-and-package-deps",
+        "m6:napi-node:package-uri-and-disk-cache"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl/src/project.rs",
+          "sha256": "eea81f1e77387ef61dc3e82bdd9b3d649ee0cfa459f2ef6593dd67116ca7fd3d",
+          "symbol": "Project"
+        },
+        {
+          "path": "crates/pkl-host-native/src/http.rs",
+          "sha256": "1ed4744bb100a47e3366114ed4c7752d32336ec60640767ea9c906f7fc287fc3",
+          "symbol": "NativeHttpClient"
+        },
+        {
+          "path": "crates/pkl-napi/src/product.rs",
+          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "symbol": "NativeProject"
+        },
+        {
+          "path": "crates/pkl-napi/src/product.rs",
+          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "symbol": "NativeHttpOptions"
+        },
+        {
+          "path": "packages/pkl-napi/src/runtime.cjs",
+          "sha256": "9a0acbc0a34efc8239b951cd967ffd67b19f94d61c0031a1855ef1430a9ff819",
+          "symbol": "Project"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "napi-node"
+    },
+    "m6:napi-node:native-fs-env-prop-modulepath-security": {
+      "capability_boundary_case_ids": [],
+      "case_ids": [
+        "m6:napi-node:native-fs-imports-and-glob",
+        "m6:napi-node:rootdir-confinement-denied",
+        "m6:napi-node:env-and-prop-readers",
+        "m6:napi-node:modulepath-dir-and-jar",
+        "m6:napi-node:analyze-import-graph-native"
+      ],
+      "description": "Node.js N-API native filesystem imports & globs, rootDir confinement, env:/prop: readers, modulepath: directories + JAR/ZIP, and native import graph analysis",
+      "executable_case_ids": [
+        "m6:napi-node:native-fs-imports-and-glob",
+        "m6:napi-node:rootdir-confinement-denied",
+        "m6:napi-node:env-and-prop-readers",
+        "m6:napi-node:modulepath-dir-and-jar",
+        "m6:napi-node:analyze-import-graph-native"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-host-native/src/driver.rs",
+          "sha256": "95cd08a4f09f7e37546a4194af85cfa1a7d629f89f23d168de9d90ba2cf65e83",
+          "symbol": "NativeHost"
+        },
+        {
+          "path": "crates/pkl/src/analyzer.rs",
+          "sha256": "e55574a625107ec2bdb68ef04cff51fce433ea5f580b46069e3776822ed63947",
+          "symbol": "Analyzer"
+        },
+        {
+          "path": "crates/pkl-napi/src/product.rs",
+          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "symbol": "NativeAnalyzer"
+        },
+        {
+          "path": "crates/pkl-napi/src/product.rs",
+          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "symbol": "AnalyzeImportGraphTask"
+        },
+        {
+          "path": "packages/pkl-napi/src/runtime.cjs",
+          "sha256": "9a0acbc0a34efc8239b951cd967ffd67b19f94d61c0031a1855ef1430a9ff819",
+          "symbol": "buildNativeOptions"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "napi-node"
+    },
+    "m6:packaging:native-binaries-and-rust-crate": {
+      "capability_boundary_case_ids": [],
+      "case_ids": [
+        "m6:pack:native-pkl-and-pkldoc-binaries",
+        "m6:pack:downstream-rust-crate-links-pkl"
+      ],
+      "description": "Reproducible native pkl/pkldoc release binaries and clean standalone downstream Rust consumer crate linking crates/pkl",
+      "executable_case_ids": [
+        "m6:pack:native-pkl-and-pkldoc-binaries",
+        "m6:pack:downstream-rust-crate-links-pkl"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl/src/lib.rs",
+          "sha256": "1720b3fc93af20123ed1dcd5d532d534dfef5bb8d03758def230286ec07b79ce",
+          "symbol": "Evaluator"
+        },
+        {
+          "path": "crates/pkl-cli/src/lib.rs",
+          "sha256": "6b5d3cec99bcad9651762ba91c28b1404accb85832212d683d9157d344772ba3",
+          "symbol": "run_cli"
+        },
+        {
+          "path": "crates/pkl-doc/src/lib.rs",
+          "sha256": "ad4eb80efae38dcda36e16c2b6d4bc2a1b2b269eaebd949ad2a2ce341c32d3e9",
+          "symbol": "DocGenerator"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "packaging-and-install"
+    },
+    "m6:packaging:wasm-and-napi-npm-tarballs-and-matrix": {
+      "capability_boundary_case_ids": [],
+      "case_ids": [
+        "m6:pack:wasm-npm-pack-clean-install-node-and-browser",
+        "m6:pack:napi-npm-pack-clean-install-esm-and-cjs",
+        "m6:pack:platform-support-matrix-metadata"
+      ],
+      "description": "Reproducible npm pack + clean isolated temp directory install & live execution of @pkl-rs/wasm (Node + Chromium), @pkl-rs/napi (ESM + CJS), and platform support matrix metadata",
+      "executable_case_ids": [
+        "m6:pack:wasm-npm-pack-clean-install-node-and-browser",
+        "m6:pack:napi-npm-pack-clean-install-esm-and-cjs",
+        "m6:pack:platform-support-matrix-metadata"
+      ],
+      "implementation_links": [
+        {
+          "path": "packages/pkl-wasm/package.json",
+          "sha256": "9777e4fcbac9032f29efe721fc51fbec1f4f1138f7af113b2956c23100079cc5",
+          "symbol": "pklPlatformSupport"
+        },
+        {
+          "path": "packages/pkl-wasm/scripts/build.mjs",
+          "sha256": "224f650015cfa4905983599a65963b223c72f1ff7a3465c6f745aed84d61f2ba",
+          "symbol": "resolveExecutable"
+        },
+        {
+          "path": "packages/pkl-wasm/src/index.d.ts",
+          "sha256": "a185f994b7b11d3871c2b8bca89d7a4bfe017b570d219a2ba43678095e8c3023",
+          "symbol": "VirtualFileSystem"
+        },
+        {
+          "path": "packages/pkl-napi/package.json",
+          "sha256": "c2bae6052c22a1f4d12ee793db9d2955c8fd7aa663d3d0ee0c07884f7e25bb1c",
+          "symbol": "pklPlatformSupport"
+        },
+        {
+          "path": "packages/pkl-napi/scripts/build.mjs",
+          "sha256": "0ea60edb2f4bf5c5327fb8db8ac562afa5698c04fdee39b9ecaae95908e4f495",
+          "symbol": "platformBinaryName"
+        },
+        {
+          "path": "packages/pkl-napi/src/index.d.ts",
+          "sha256": "11b879e6d64f0f90643010084d769fada05b0f84ae1bb5a7a42569372fce8084",
+          "symbol": "createEvaluator"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "packaging-and-install"
+    },
+    "m6:wasm-browser:capability-honesty": {
+      "capability_boundary_case_ids": [
+        "m6:wasm-browser:cap-gap-native-fs",
+        "m6:wasm-browser:cap-gap-external-readers",
+        "m6:wasm-browser:cap-gap-native-http",
+        "m6:wasm-browser:cap-gap-modulepath-jar"
+      ],
+      "case_ids": [
+        "m6:wasm-browser:capabilities-map",
+        "m6:wasm-browser:cap-gap-native-fs",
+        "m6:wasm-browser:cap-gap-external-readers",
+        "m6:wasm-browser:cap-gap-native-http",
+        "m6:wasm-browser:cap-gap-modulepath-jar"
+      ],
+      "description": "Explicit browser capabilities() reporting and honest capability-unavailable rejection for unsupported native host operations (classified strictly as capability-blocked, never pass)",
+      "executable_case_ids": [
+        "m6:wasm-browser:capabilities-map"
+      ],
+      "implementation_links": [
+        {
+          "path": "packages/pkl-wasm/src/runtime.mjs",
+          "sha256": "d37e1536928263f4dc541913662db5d238f94254010108add85b31701a9a8a57",
+          "symbol": "capabilities"
+        },
+        {
+          "path": "packages/pkl-wasm/src/host.mjs",
+          "sha256": "d93b24ebd4961c09fd39e4133720c0501e5d58bcc8e4cd25b79e69191b096e27",
+          "symbol": "getDeferredWasmCapabilityError"
+        },
+        {
+          "path": "packages/pkl-wasm/src/errors.mjs",
+          "sha256": "d04befc352edaddf7954baf76f1b9de20f80b30d95b092444c5e117a252b2947",
+          "symbol": "PklError"
+        },
+        {
+          "path": "crates/pkl-wasm/src/product/host_core.rs",
+          "sha256": "61453c7cb90f7fc11fc803efc62fb387619ea5a9a8b10c39a0fe484e67c3aeb9",
+          "symbol": "WasmHostCore"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "wasm-browser"
+    },
+    "m6:wasm-browser:language-stdlib-renderers": {
+      "capability_boundary_case_ids": [],
+      "case_ids": [
+        "m6:wasm-browser:eval-pcf",
+        "m6:wasm-browser:eval-json",
+        "m6:wasm-browser:eval-yaml",
+        "m6:wasm-browser:eval-xml",
+        "m6:wasm-browser:eval-properties",
+        "m6:wasm-browser:eval-plist",
+        "m6:wasm-browser:eval-jsonnet",
+        "m6:wasm-browser:eval-textproto",
+        "m6:wasm-browser:eval-pkl-binary",
+        "m6:wasm-browser:eval-stdlib-suite",
+        "m6:wasm-browser:eval-output-bytes",
+        "m6:wasm-browser:eval-output-files",
+        "m6:wasm-browser:eval-expr-and-binary",
+        "m6:wasm-browser:eval-error-diagnostic"
+      ],
+      "description": "Real Chromium Wasm execution of language core, stdlib, all 9 renderers, output.bytes, output.files, expressions, and raw PklError diagnostics",
+      "executable_case_ids": [
+        "m6:wasm-browser:eval-pcf",
+        "m6:wasm-browser:eval-json",
+        "m6:wasm-browser:eval-yaml",
+        "m6:wasm-browser:eval-xml",
+        "m6:wasm-browser:eval-properties",
+        "m6:wasm-browser:eval-plist",
+        "m6:wasm-browser:eval-jsonnet",
+        "m6:wasm-browser:eval-textproto",
+        "m6:wasm-browser:eval-pkl-binary",
+        "m6:wasm-browser:eval-stdlib-suite",
+        "m6:wasm-browser:eval-output-bytes",
+        "m6:wasm-browser:eval-output-files",
+        "m6:wasm-browser:eval-expr-and-binary",
+        "m6:wasm-browser:eval-error-diagnostic"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/evaluation/session.rs",
+          "sha256": "9f1bf12a9e5431d8651a7c154efeead77a0db89d26a74ba29040bf11b078c453",
+          "symbol": "SourceSession"
+        },
+        {
+          "path": "crates/pkl-wasm/src/product/evaluator.rs",
+          "sha256": "dec2403008b20c831ab9a0e3f548f947fe76ee51310b3feee4a9c3a8b92a6dc3",
+          "symbol": "WasmEvaluator"
+        },
+        {
+          "path": "packages/pkl-wasm/src/index.mjs",
+          "sha256": "623a22b1779f45afc2864805fd387c681a3165fe75ef4216cc678b1b7a347ce4",
+          "symbol": "createEvaluator"
+        },
+        {
+          "path": "packages/pkl-wasm/src/index.mjs",
+          "sha256": "623a22b1779f45afc2864805fd387c681a3165fe75ef4216cc678b1b7a347ce4",
+          "symbol": "Evaluator"
+        },
+        {
+          "path": "packages/pkl-wasm/src/errors.mjs",
+          "sha256": "d04befc352edaddf7954baf76f1b9de20f80b30d95b092444c5e117a252b2947",
+          "symbol": "PklError"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "wasm-browser"
+    },
+    "m6:wasm-browser:lossless-values-clock64-lifecycle": {
+      "capability_boundary_case_ids": [],
+      "case_ids": [
+        "m6:wasm-browser:lossless-bigint-bytes-utf16-values",
+        "m6:wasm-browser:clock64-timeout-boundary",
+        "m6:wasm-browser:lifecycle-cancel-abort-close-zero-leak",
+        "m6:wasm-browser:conversion-telemetry"
+      ],
+      "description": "Browser lossless BigInt (i64), owned Uint8Array, UTF-16 & typed value wrappers, 64-bit monotonic clock/timeout, AbortSignal/cancel/close zero-leak lifecycle, and JS<->Wasm conversion telemetry",
+      "executable_case_ids": [
+        "m6:wasm-browser:lossless-bigint-bytes-utf16-values",
+        "m6:wasm-browser:clock64-timeout-boundary",
+        "m6:wasm-browser:lifecycle-cancel-abort-close-zero-leak",
+        "m6:wasm-browser:conversion-telemetry"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/pkl_binary_decode.rs",
+          "sha256": "f4ec94812a9d948e35237dc59940201bfa5a584364b64583c76abcf3f8fa1343",
+          "symbol": "DecodedValue"
+        },
+        {
+          "path": "crates/pkl-wasm/src/product/decode.rs",
+          "sha256": "6dc0bb19ec91a125de4bb78e35883024ff3d030500ddccf2a4c1b4014a8006e1",
+          "symbol": "decode_pkl_binary_to_js"
+        },
+        {
+          "path": "crates/pkl-wasm/src/product/mod.rs",
+          "sha256": "3701355f1e54315c69ce6a00a42d10c0eb1b10c3541d22a6ca6ce47a78842012",
+          "symbol": "wasm_validate_clock_ms"
+        },
+        {
+          "path": "crates/pkl-wasm/src/product/mod.rs",
+          "sha256": "3701355f1e54315c69ce6a00a42d10c0eb1b10c3541d22a6ca6ce47a78842012",
+          "symbol": "wasm_validate_int64"
+        },
+        {
+          "path": "packages/pkl-wasm/src/values.mjs",
+          "sha256": "baea6d0ffb486348393f9551004766b339d4345e03dd4c8adf8a2a6b42bc1e31",
+          "symbol": "PklObject"
+        },
+        {
+          "path": "packages/pkl-wasm/src/host.mjs",
+          "sha256": "d93b24ebd4961c09fd39e4133720c0501e5d58bcc8e4cd25b79e69191b096e27",
+          "symbol": "normalizeTimeoutMs"
+        },
+        {
+          "path": "packages/pkl-wasm/src/index.mjs",
+          "sha256": "623a22b1779f45afc2864805fd387c681a3165fe75ef4216cc678b1b7a347ce4",
+          "symbol": "measureConversion"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "wasm-browser"
+    },
+    "m6:wasm-browser:tools-formatter-schema-repl-analyze": {
+      "capability_boundary_case_ids": [],
+      "case_ids": [
+        "m6:wasm-browser:format-v1-v2-idempotent",
+        "m6:wasm-browser:evaluate-schema",
+        "m6:wasm-browser:repl-stateful-session",
+        "m6:wasm-browser:analyze-import-graph",
+        "m6:wasm-browser:evaluate-test-spec"
+      ],
+      "description": "Real Chromium Wasm execution of pure-Wasm formatter, ModuleSchema, stateful REPL, import graph analyzer, and pkl:test runner",
+      "executable_case_ids": [
+        "m6:wasm-browser:format-v1-v2-idempotent",
+        "m6:wasm-browser:evaluate-schema",
+        "m6:wasm-browser:repl-stateful-session",
+        "m6:wasm-browser:analyze-import-graph",
+        "m6:wasm-browser:evaluate-test-spec"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-formatter/src/lib.rs",
+          "sha256": "9d89303ac1936c6493310c3ed5a19578042295c9c01807d8e8a1c58a0403aae2",
+          "symbol": "Formatter"
+        },
+        {
+          "path": "crates/pkl-wasm/src/product/mod.rs",
+          "sha256": "3701355f1e54315c69ce6a00a42d10c0eb1b10c3541d22a6ca6ce47a78842012",
+          "symbol": "wasm_format"
+        },
+        {
+          "path": "crates/pkl-wasm/src/product/schema.rs",
+          "sha256": "e1cd80749dde9812613b27435a23eb6fefd981b9b70110696b63af9a47401654",
+          "symbol": "module_schema_to_js"
+        },
+        {
+          "path": "crates/pkl-wasm/src/product/repl.rs",
+          "sha256": "b2a2a060dadc33f5f9c5662c91fa6458cba376e7fd7018382c9590d1f4a993fe",
+          "symbol": "WasmReplSession"
+        },
+        {
+          "path": "crates/pkl-wasm/src/product/analyzer.rs",
+          "sha256": "a6cf07c45d6a5da3f25eb744f548b33ef82fbaa462da456f0351594fa0b7bd86",
+          "symbol": "WasmImportAnalyzer"
+        },
+        {
+          "path": "crates/pkl-wasm/src/product/test_runner.rs",
+          "sha256": "3c71a5d0fdecc2ae75b71500b8a506eef346c4aeb97d9a2db01203db6d3de973",
+          "symbol": "render_test_report_js"
+        },
+        {
+          "path": "packages/pkl-wasm/src/index.mjs",
+          "sha256": "623a22b1779f45afc2864805fd387c681a3165fe75ef4216cc678b1b7a347ce4",
+          "symbol": "createRepl"
+        },
+        {
+          "path": "packages/pkl-wasm/src/index.mjs",
+          "sha256": "623a22b1779f45afc2864805fd387c681a3165fe75ef4216cc678b1b7a347ce4",
+          "symbol": "analyzeImportGraph"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "wasm-browser"
+    },
+    "m6:wasm-browser:vfs-async-loaders-http-packages": {
+      "capability_boundary_case_ids": [],
+      "case_ids": [
+        "m6:wasm-browser:vfs-imports-and-glob",
+        "m6:wasm-browser:vfs-rootdir-escape-denied",
+        "m6:wasm-browser:async-custom-module-resource-readers",
+        "m6:wasm-browser:async-http-fetch",
+        "m6:wasm-browser:pure-wasm-package-archive"
+      ],
+      "description": "Browser VirtualFileSystem with rootDir confinement, async custom module/resource readers + logger/frameTransformer, localhost HTTP fetch, and pure-Wasm package archive loading",
+      "executable_case_ids": [
+        "m6:wasm-browser:vfs-imports-and-glob",
+        "m6:wasm-browser:vfs-rootdir-escape-denied",
+        "m6:wasm-browser:async-custom-module-resource-readers",
+        "m6:wasm-browser:async-http-fetch",
+        "m6:wasm-browser:pure-wasm-package-archive"
+      ],
+      "implementation_links": [
+        {
+          "path": "crates/pkl-runtime/src/host/security.rs",
+          "sha256": "bc1e285e54e1d33ef21e8311b3267da190a5d3716ed0df6e7c9d84d70e786849",
+          "symbol": "SecurityPolicy"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/zip.rs",
+          "sha256": "03d11d8e8696343e0d651015caeebc9f4233b147448268261599de53bf9026b4",
+          "symbol": "ZipArchive"
+        },
+        {
+          "path": "crates/pkl-wasm/src/product/host_core.rs",
+          "sha256": "61453c7cb90f7fc11fc803efc62fb387619ea5a9a8b10c39a0fe484e67c3aeb9",
+          "symbol": "WasmHostCore"
+        },
+        {
+          "path": "crates/pkl-wasm/src/product/host_core.rs",
+          "sha256": "61453c7cb90f7fc11fc803efc62fb387619ea5a9a8b10c39a0fe484e67c3aeb9",
+          "symbol": "WasmPackageCache"
+        },
+        {
+          "path": "packages/pkl-wasm/src/vfs.mjs",
+          "sha256": "14853247163022e5524ecd08ac21b828bdfd4dd6f0cf121e18316684fb6a1e5a",
+          "symbol": "VirtualFileSystem"
+        },
+        {
+          "path": "packages/pkl-wasm/src/vfs.mjs",
+          "sha256": "14853247163022e5524ecd08ac21b828bdfd4dd6f0cf121e18316684fb6a1e5a",
+          "symbol": "isUnderRootDir"
+        },
+        {
+          "path": "packages/pkl-wasm/src/host.mjs",
+          "sha256": "d93b24ebd4961c09fd39e4133720c0501e5d58bcc8e4cd25b79e69191b096e27",
+          "symbol": "driveWasmSession"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "wasm-browser"
+    },
+    "m6:wasm-node:packed-install-and-core": {
+      "capability_boundary_case_ids": [
+        "m6:wasm-node:cap-gap-native-fs",
+        "m6:wasm-node:cap-gap-external-readers"
+      ],
+      "case_ids": [
+        "m6:wasm-node:eval-renderers-and-stdlib",
+        "m6:wasm-node:eval-output-bytes-and-files",
+        "m6:wasm-node:format-v2-idempotent",
+        "m6:wasm-node:vfs-and-async-loaders",
+        "m6:wasm-node:async-http-fetch-and-package",
+        "m6:wasm-node:lossless-values-and-clock64",
+        "m6:wasm-node:lifecycle-cancel-timeout-close",
+        "m6:wasm-node:capabilities-map",
+        "m6:wasm-node:cap-gap-native-fs",
+        "m6:wasm-node:cap-gap-external-readers"
+      ],
+      "description": "Node.js clean-installed packed @pkl-rs/wasm execution: auto-init, renderers, output.files, formatter, VFS/async loaders, pure-Wasm package loading, lossless values, 64-bit clock/lifecycle, and capability-gap honesty",
+      "executable_case_ids": [
+        "m6:wasm-node:eval-renderers-and-stdlib",
+        "m6:wasm-node:eval-output-bytes-and-files",
+        "m6:wasm-node:format-v2-idempotent",
+        "m6:wasm-node:vfs-and-async-loaders",
+        "m6:wasm-node:async-http-fetch-and-package",
+        "m6:wasm-node:lossless-values-and-clock64",
+        "m6:wasm-node:lifecycle-cancel-timeout-close",
+        "m6:wasm-node:capabilities-map"
+      ],
+      "implementation_links": [
+        {
+          "path": "packages/pkl-wasm/src/runtime.mjs",
+          "sha256": "d37e1536928263f4dc541913662db5d238f94254010108add85b31701a9a8a57",
+          "symbol": "init"
+        },
+        {
+          "path": "packages/pkl-wasm/src/runtime.mjs",
+          "sha256": "d37e1536928263f4dc541913662db5d238f94254010108add85b31701a9a8a57",
+          "symbol": "isNodeRuntime"
+        },
+        {
+          "path": "packages/pkl-wasm/src/index.mjs",
+          "sha256": "623a22b1779f45afc2864805fd387c681a3165fe75ef4216cc678b1b7a347ce4",
+          "symbol": "format"
+        },
+        {
+          "path": "packages/pkl-wasm/src/index.mjs",
+          "sha256": "623a22b1779f45afc2864805fd387c681a3165fe75ef4216cc678b1b7a347ce4",
+          "symbol": "decodePklBinary"
+        },
+        {
+          "path": "crates/pkl-wasm/src/product/evaluator.rs",
+          "sha256": "dec2403008b20c831ab9a0e3f548f947fe76ee51310b3feee4a9c3a8b92a6dc3",
+          "symbol": "WasmEvaluator"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "wasm-node"
+    }
+  },
+  "schema_version": 1,
+  "scope": "Complete M6 Wasm & N-API Product Completion manifest: unified `@pkl-rs/wasm` (browser + Node, VFS, async loaders, pure-Wasm package archives) and `@pkl-rs/napi` (dual ESM+CJS, native FS/HTTP/HTTPS/CA/proxy/projects/packages/external readers, non-blocking async + cancel/timeout/close), lossless BigInt/Uint8Array/UTF-16 & 64-bit clock, 4-way cross-target raw-byte parity (Java == Native == N-API == Wasm), clean-install packaging verification, and explicit capability-gap honesty (`capability-blocked` separated and never counted as compatibility passes). Freshness checks never claim runtime compatibility passes (`coverage_gate: null`).",
+  "sources": {
+    "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
+    "compatibility/m6-mappings.json": "933a7c0a0a3d8945a6dea1c0538da04bae4c5d427f8b38e05d11d039bbd74a4a",
+    "tests/fixtures/m6/cases.json": "1d403337fca5aeea4c7ff9863d6e9804ecc0baf50b8cc936a31f6b734bca6f04",
+    "tests/fixtures/m6/oracle/M6OracleProbe.java": "9e2525a08382b98fcd5ee5cd8a9a8d2a035db925ae973641220869311ed76a1f",
+    "tests/fixtures/m6/runners/canonical_value.mjs": "cf227ed499da5d21400668963d2053f03d001a78d30dde7b3c8ad4566925acb7",
+    "tests/fixtures/m6/runners/case_executor.mjs": "ab04f435158482a775790b6c108586cf2d1a37b7f67c0cf70dc2f34dc8eb4143",
+    "tests/fixtures/m6/runners/run_napi_node.mjs": "f7b3c3691ec892a93ce30f407debd985357003694ec69ceb20cdc68b91106a80",
+    "tests/fixtures/m6/runners/run_packaging_check.mjs": "9351fc526131b56f10bf63bd30aace5a7de9904961201c5e5674a24c8162011a",
+    "tests/fixtures/m6/runners/run_wasm_browser.mjs": "b65d1afa6a03f8b9f1c9649e0996ea68dc1d24fda082e2e7c904685ec69d376d",
+    "tests/fixtures/m6/runners/run_wasm_node.mjs": "cf269be87e33a9b69b2243ac506d38180c5c40ec2b24d02f326563d3573b4f6e",
+    "tools/platform/package.json": "803c8d50727edfe67dc349b657824a76157e6dc4b1af0b8ebbe22976ca91d51c"
+  }
+}

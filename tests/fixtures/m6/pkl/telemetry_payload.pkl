@@ -1,0 +1,13 @@
+module demo.M6Telemetry
+
+import "pkl:math"
+
+items = List(
+  new Dynamic { id = 1; big = math.maxInt; payload = Bytes(1, 2, 3, 4); text = "alpha-🚀" },
+  new Dynamic { id = 2; big = math.minInt; payload = Bytes(5, 6, 7, 8); text = "beta-한국어" },
+  new Dynamic { id = 3; big = 9007199254740995; payload = Bytes(255, 0, 128, 64); text = "gamma-m6" },
+  new Dynamic { id = 4; big = -9007199254740995; payload = Bytes(42, 43, 44, 45); text = "delta-m6" }
+)
+counts = Map("a", 100, "b", 200, "c", 300)
+flag = true
+ratio = 1.5

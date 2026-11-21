@@ -1,0 +1,19 @@
+/// Schema documentation for M6
+module demo.M6Schema
+
+import "pkl:math"
+
+typealias Port = Int(isBetween(1, 65535))
+
+open class Endpoint {
+  host: String
+  port: Port
+  function url(): String = "https://\(host):\(port)"
+}
+
+abstract class BaseNode {
+  id: Int
+}
+
+defaultPort: Port = 8443
+function twice(n: Int): Int = n * 2

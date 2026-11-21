@@ -1,0 +1,56 @@
+{
+  "name": "@pkl-rs/napi",
+  "version": "0.32.0",
+  "description": "Node.js N-API bindings for the shared pure-Rust Apple Pkl 0.32.0 engine",
+  "license": "Apache-2.0",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "native",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "arm64",
+    "x64"
+  ],
+  "pklPlatformSupport": {
+    "runtime": "napi-node",
+    "napiVersion": 8,
+    "targets": [
+      "darwin-arm64",
+      "darwin-x64",
+      "linux-x64-gnu",
+      "linux-arm64-gnu",
+      "win32-x64-msvc"
+    ]
+  },
+  "scripts": {
+    "build": "node ./scripts/build.mjs",
+    "test": "node ./test/run.mjs"
+  },
+  "keywords": [
+    "pkl",
+    "apple-pkl",
+    "configuration",
+    "napi",
+    "rust",
+    "nodejs"
+  ]
+}

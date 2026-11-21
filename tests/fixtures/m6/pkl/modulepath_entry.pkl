@@ -1,0 +1,5 @@
+import "modulepath:/dirmod.pkl"
+import "modulepath:/jarmod.pkl"
+
+fromDir = dirmod.origin
+fromJar = jarmod.origin

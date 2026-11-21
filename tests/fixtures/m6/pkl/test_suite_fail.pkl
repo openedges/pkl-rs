@@ -1,0 +1,7 @@
+amends "pkl:test"
+
+facts {
+  ["failing-math"] {
+    1 + 1 == 3
+  }
+}

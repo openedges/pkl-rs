@@ -1,0 +1,41 @@
+{
+  "name": "@pkl-rs/wasm",
+  "version": "0.32.0",
+  "description": "WebAssembly bindings for the Apple Pkl 0.32.0 Rust runtime and formatter (browser and Node.js)",
+  "license": "Apache-2.0",
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=20.16.0"
+  },
+  "pklPlatformSupport": {
+    "runtimes": [
+      "wasm-browser",
+      "wasm-node"
+    ],
+    "arch": "wasm32",
+    "target": "wasm32-unknown-unknown",
+    "wasmBindgen": "0.2.108"
+  },
+  "keywords": [
+    "pkl",
+    "wasm",
+    "webassembly",
+    "configuration",
+    "pkl-rs"
+  ]
+}

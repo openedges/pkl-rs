@@ -1,0 +1,6 @@
+module demo.M6Textproto
+
+name: String = "pkl-rs"
+count: Int = 32
+enabled: Boolean = true
+tags: Listing<String> = new { "wasm"; "napi" }

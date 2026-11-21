@@ -1,0 +1,7 @@
+EVAL a = 21
+EVAL a * 2
+EVAL b = "hello-\(a)"
+EVAL b
+COMPLETE a
+RESET
+EVAL a

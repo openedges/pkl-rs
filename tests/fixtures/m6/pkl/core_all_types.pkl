@@ -1,0 +1,21 @@
+module demo.M6Core
+
+name = "pkl-rs-m6"
+version = 32
+enabled = true
+ratio = 3.25
+
+tags {
+  "wasm"
+  "napi"
+  "native"
+}
+
+server {
+  host = "127.0.0.1"
+  port = 8080
+  tls = false
+}
+
+numbers = List(1, 2, 3, 42)
+sum = numbers.fold(0, (acc, n) -> acc + n)

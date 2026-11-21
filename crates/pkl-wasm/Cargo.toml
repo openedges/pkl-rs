@@ -1,6 +1,6 @@
 [package]
 name = "pkl-wasm"
-description = "M1 browser adapter for the shared Pkl runtime"
+description = "WebAssembly bindings for the shared Pkl 0.32.0 runtime and formatter"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -11,6 +11,7 @@ publish.workspace = true
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
+pkl-formatter = { path = "../pkl-formatter" }
 pkl-runtime = { path = "../pkl-runtime" }
 wasm-bindgen = "=0.2.108"
 js-sys = "=0.3.85"

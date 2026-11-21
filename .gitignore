@@ -6,3 +6,7 @@ __pycache__/
 *.pyc
 .DS_Store
 node_modules/
+/packages/pkl-wasm/dist/
+/packages/pkl-napi/dist/
+/packages/pkl-napi/native/
+packages/*/*.tgz

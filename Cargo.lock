@@ -334,6 +334,9 @@ dependencies = [
  "napi-derive",
  "napi-derive-backend",
  "napi-sys",
+ "pkl",
+ "pkl-formatter",
+ "pkl-host-native",
  "pkl-runtime",
 ]
 
@@ -370,6 +373,7 @@ name = "pkl-wasm"
 version = "0.1.0"
 dependencies = [
  "js-sys",
+ "pkl-formatter",
  "pkl-runtime",
  "wasm-bindgen",
 ]

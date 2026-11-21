@@ -1,6 +1,6 @@
 [package]
 name = "pkl-napi"
-description = "M1 Node adapter for the shared Pkl runtime"
+description = "Node.js N-API bindings for the shared Pkl 0.32.0 runtime and native host"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -13,6 +13,9 @@ test = false
 doctest = false
 
 [dependencies]
+pkl = { path = "../pkl" }
+pkl-formatter = { path = "../pkl-formatter" }
+pkl-host-native = { path = "../pkl-host-native" }
 pkl-runtime = { path = "../pkl-runtime" }
 napi = { version = "=3.4.0", default-features = false, features = ["dyn-symbols", "napi8"] }
 napi-derive = "=3.3.0"

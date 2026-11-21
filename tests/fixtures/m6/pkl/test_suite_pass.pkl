@@ -1,0 +1,11 @@
+amends "pkl:test"
+
+facts {
+  ["arithmetic"] {
+    1 + 1 == 2
+    2 * 3 == 6
+  }
+  ["strings"] {
+    "pkl".length == 3
+  }
+}
