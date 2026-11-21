@@ -1,0 +1,19 @@
+amends "pkl:test"
+
+facts {
+  ["mixed facts"] {
+    1 + 1 == 2
+    1 + 2 == 4
+  }
+  ["thrown fact"] {
+    throw("boom in fact")
+  }
+}
+
+examples {
+  ["mismatch example"] {
+    new {
+      actual = 42
+    }
+  }
+}

@@ -1,0 +1,14 @@
+amends "pkl:test"
+
+facts {
+  ["math holds"] {
+    1 + 1 == 2
+    "pkl".length == 3
+  }
+}
+
+examples {
+  ["greeting"] {
+    "hello, world"
+  }
+}

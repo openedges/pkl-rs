@@ -372,7 +372,7 @@
         },
         {
           "path": "crates/pkl-runtime/src/external_reader/codec.rs",
-          "sha256": "38c78b4a18a5ba6bc40c9134b7f745541f07b1d1d8f902b68746e7bd81349956",
+          "sha256": "31dc502661971e54b4f5e36ca613934ec32b52e3a97263688bdd8e874bc48059",
           "symbol": "write_message"
         },
         {
@@ -406,7 +406,7 @@
         },
         {
           "path": "crates/pkl-runtime/src/host.rs",
-          "sha256": "a7f49c891bcfbc22a7b28e87dbe0a6158496491276ca4826ee4191037ec63858",
+          "sha256": "690f2fdb5c8f2c7e00099d96314595d0e753e419ac18a2df4e4c7d1597fd7ead",
           "symbol": "format_timeout_message"
         },
         {
@@ -416,7 +416,7 @@
         },
         {
           "path": "crates/pkl-host-native/src/driver.rs",
-          "sha256": "b39df637a03b3b2799a358c69245faaa0a5a51211a1d0a190854e93f0c5afbd4",
+          "sha256": "95cd08a4f09f7e37546a4194af85cfa1a7d629f89f23d168de9d90ba2cf65e83",
           "symbol": "CleanupReport"
         }
       ],
@@ -452,7 +452,7 @@
         },
         {
           "path": "crates/pkl-host-native/src/driver.rs",
-          "sha256": "b39df637a03b3b2799a358c69245faaa0a5a51211a1d0a190854e93f0c5afbd4",
+          "sha256": "95cd08a4f09f7e37546a4194af85cfa1a7d629f89f23d168de9d90ba2cf65e83",
           "symbol": "NativeHost"
         }
       ],
@@ -659,7 +659,7 @@
         },
         {
           "path": "crates/pkl-runtime/src/packages/resolver.rs",
-          "sha256": "559e781cfe4f5ccebf2cc15e04ec8284eb02e163a4315e31367d30fd87451271",
+          "sha256": "66574f3e27abc091ff9624165f7a577e63439ffe0fb0e2f848861db61d0a6f08",
           "symbol": "PackageResolver"
         },
         {
@@ -698,12 +698,12 @@
         },
         {
           "path": "crates/pkl-runtime/src/packages/test_runner.rs",
-          "sha256": "75e4083aba04e86023102257960d8a366aec984557d0cdf9e23ccc5cff53fc64",
+          "sha256": "6b72075ce2ff2323ad1c094bcdd1cc3d6ddf4ee92ee3179820ded81b07cfb2ea",
           "symbol": "TestResults"
         },
         {
           "path": "crates/pkl-host-native/src/driver.rs",
-          "sha256": "b39df637a03b3b2799a358c69245faaa0a5a51211a1d0a190854e93f0c5afbd4",
+          "sha256": "95cd08a4f09f7e37546a4194af85cfa1a7d629f89f23d168de9d90ba2cf65e83",
           "symbol": "NativeHost"
         },
         {
@@ -727,7 +727,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/packages/resolver.rs",
-          "sha256": "559e781cfe4f5ccebf2cc15e04ec8284eb02e163a4315e31367d30fd87451271",
+          "sha256": "66574f3e27abc091ff9624165f7a577e63439ffe0fb0e2f848861db61d0a6f08",
           "symbol": "PackageResolver"
         },
         {
@@ -789,7 +789,7 @@
         },
         {
           "path": "crates/pkl-runtime/src/packages/test_runner.rs",
-          "sha256": "75e4083aba04e86023102257960d8a366aec984557d0cdf9e23ccc5cff53fc64",
+          "sha256": "6b72075ce2ff2323ad1c094bcdd1cc3d6ddf4ee92ee3179820ded81b07cfb2ea",
           "symbol": "render_spec_report"
         },
         {

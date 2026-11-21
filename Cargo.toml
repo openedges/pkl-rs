@@ -1,5 +1,17 @@
 [workspace]
-members = ["crates/pkl-runtime", "crates/pkl-host-native", "crates/pkl-wasm", "crates/pkl-napi", "xtask"]
+members = [
+    "crates/pkl-runtime",
+    "crates/pkl-host-native",
+    "crates/pkl",
+    "crates/pkl-cli",
+    "crates/pkl-formatter",
+    "crates/pkl-server",
+    "crates/pkl-repl",
+    "crates/pkl-doc",
+    "crates/pkl-wasm",
+    "crates/pkl-napi",
+    "xtask",
+]
 resolver = "3"
 exclude = ["vendor/java_regex"]
 

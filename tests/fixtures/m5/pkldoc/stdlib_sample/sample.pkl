@@ -1,0 +1,8 @@
+/// Sample stdlib-namespace module exercising external/pkl/stdlib/doc-package-info.pkl (`importUri = "pkl:/"`).
+module pkl.sample
+
+/// A documented greeting property.
+greeting: String = "hello"
+
+/// Doubles an integer.
+function double(n: Int): Int = n * 2

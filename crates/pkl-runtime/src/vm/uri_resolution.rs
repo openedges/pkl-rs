@@ -459,7 +459,11 @@ impl Vm {
                             .update_import_uris(current.spec.unit, |span| {
                                 (span == current.spec.span).then_some(&prepared)
                             });
-                        if current.clause {
+                        if current.clause
+                            && self.program.units[current.spec.unit.0 as usize]
+                                .build
+                                .is_some()
+                        {
                             return self.start_clause_selection(module, current, remaining);
                         }
                         continue;
@@ -696,7 +700,14 @@ impl Vm {
         let entry = program.units[unit.0 as usize].entry;
         let frame = self.frames.last_mut().unwrap();
         frame.block = entry;
-        frame.pc = if unit.0 == 0 { 2 } else { 0 };
+        frame.pc = if matches!(
+            program.blocks[entry].first(),
+            Some(Instruction::LoadBaseModule)
+        ) {
+            2
+        } else {
+            0
+        };
         Ok(())
     }
 
@@ -787,7 +798,11 @@ impl Vm {
                 Arc::make_mut(&mut self.program).update_import_uris(current.spec.unit, |span| {
                     (span == current.spec.span).then_some(&prepared)
                 });
-                if current.clause {
+                if current.clause
+                    && self.program.units[current.spec.unit.0 as usize]
+                        .build
+                        .is_some()
+                {
                     let mut current = current;
                     current.spec.absolute_uri = absolute;
                     current.spec.original_uri = original;

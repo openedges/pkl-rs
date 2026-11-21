@@ -1,0 +1,10 @@
+amends "pkl:test"
+
+examples {
+  ["generated example"] {
+    new {
+      version = 2
+      items = List("a", "b")
+    }
+  }
+}

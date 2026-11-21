@@ -3,7 +3,8 @@
 //! Observations come from VM execution. Parsing here only associates authored
 //! expressions with display positions; it never evaluates the source.
 use crate::diagnostic::PowerAssertionValue;
-use crate::pkl_string::{PklString, PklStringBuilder};
+use crate::diagnostic::ansi::{AnsiCode, AnsiStringBuilder};
+use crate::pkl_string::PklString;
 use crate::source::{Source, SourceCharacter, SourceSlice, Span};
 use crate::syntax::{Expr, ExprKind, ObjectMember};
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
@@ -13,6 +14,7 @@ struct Entry {
     line: usize,
     column: usize,
     text: PklString,
+    is_marker: bool,
 }
 
 impl Entry {
@@ -23,17 +25,34 @@ impl Entry {
     fn marker(&self) -> Self {
         Self {
             text: "│".into(),
+            is_marker: true,
             ..self.clone()
         }
     }
 }
 
+#[cfg(test)]
 pub(crate) fn render(
     source: &Source,
     body: Span,
     observations: &[PowerAssertionValue],
     indent: &str,
 ) -> PklString {
+    let mut out = AnsiStringBuilder::new(false);
+    render_to_ansi(&mut out, source, body, observations, indent, None);
+    out.finish_pkl()
+}
+
+/// Renders a power-assertion diagram into an [`AnsiStringBuilder`], mirroring
+/// `PowerAssertions.render(out, indent, sourceSection, trackedValues, firstFrameSuffix)`.
+pub fn render_to_ansi(
+    out: &mut AnsiStringBuilder,
+    source: &Source,
+    body: Span,
+    observations: &[PowerAssertionValue],
+    indent: &str,
+    first_line_suffix: Option<&dyn Fn(&mut AnsiStringBuilder)>,
+) {
     let text = source
         .slice(body)
         .unwrap_or_else(|| SourceSlice::from_utf8(""));
@@ -55,6 +74,7 @@ pub(crate) fn render(
                 line: position.line,
                 column: position.column_utf16,
                 text: item.value.clone(),
+                is_marker: false,
             })
         })
         .collect();
@@ -73,57 +93,68 @@ pub(crate) fn render(
             .min()
             .unwrap_or(0)
     };
-    let mut output = PklStringBuilder::default();
-    let mut had_markers = false;
-    for (index, (start, text)) in lines.iter().enumerate() {
-        if had_markers {
-            output.push_str("\n\n");
-        }
-        let Some(position) = source.position(*start) else {
-            continue;
-        };
-        let trim = if index == 0 {
-            position.column_utf16 - 1
-        } else {
-            indentation
-        };
-        let trim_bytes: usize = text
-            .characters()
-            .take(trim)
-            .take_while(|(_, ch)| ch.scalar().is_some_and(crate::diagnostic::java_whitespace))
-            .map(|(_, ch)| ch.len_bytes())
-            .sum();
-        output.push_str(indent);
-        output.push_value(
-            &text
-                .get(trim_bytes..)
-                .expect("whitespace boundary")
-                .to_pkl_string(),
-        );
-        output.push('\n');
-        let layers = layers(
-            entries
-                .iter()
-                .filter(|entry| entry.line == position.line)
-                .cloned()
-                .collect(),
-        );
-        had_markers = !layers.is_empty();
-        for (index, layer) in layers.iter().enumerate() {
-            if index > 0 {
-                output.push('\n');
+    out.append_sandboxed(|out| {
+        let mut had_markers = false;
+        for (index, (start, text)) in lines.iter().enumerate() {
+            if had_markers {
+                out.append_str("\n\n");
             }
-            output.push_str(indent);
-            let mut cursor = 0;
-            for entry in layer {
-                let offset = entry.column.saturating_sub(1 + trim + cursor);
-                output.push_str(&" ".repeat(offset));
-                output.push_value(&entry.text);
-                cursor += offset + entry.width();
+            let Some(position) = source.position(*start) else {
+                continue;
+            };
+            let trim = if index == 0 {
+                position.column_utf16 - 1
+            } else {
+                indentation
+            };
+            let trim_bytes: usize = text
+                .characters()
+                .take(trim)
+                .take_while(|(_, ch)| ch.scalar().is_some_and(crate::diagnostic::java_whitespace))
+                .map(|(_, ch)| ch.len_bytes())
+                .sum();
+            out.append_str(indent);
+            out.append_pkl(
+                &text
+                    .get(trim_bytes..)
+                    .expect("whitespace boundary")
+                    .to_pkl_string(),
+            );
+            if index == 0
+                && let Some(suffix) = first_line_suffix
+            {
+                suffix(out);
+            }
+            out.append_char('\n');
+            let layers = layers(
+                entries
+                    .iter()
+                    .filter(|entry| entry.line == position.line)
+                    .cloned()
+                    .collect(),
+            );
+            had_markers = !layers.is_empty();
+            for (layer_idx, layer) in layers.iter().enumerate() {
+                if layer_idx > 0 {
+                    out.append_char('\n');
+                }
+                out.append_str(indent);
+                let mut cursor = 0;
+                for entry in layer {
+                    let offset = entry.column.saturating_sub(1 + trim + cursor);
+                    out.append_str(&" ".repeat(offset));
+                    if entry.is_marker {
+                        out.append_styled(AnsiCode::Faint, "│");
+                    } else if out.using_color() {
+                        crate::diagnostic::highlight::write_to(out, &entry.text);
+                    } else {
+                        out.append_pkl(&entry.text);
+                    }
+                    cursor += offset + entry.width();
+                }
             }
         }
-    }
-    output.finish()
+    });
 }
 
 fn source_lines(source: &Source, span: Span) -> Vec<(usize, SourceSlice<'_>)> {

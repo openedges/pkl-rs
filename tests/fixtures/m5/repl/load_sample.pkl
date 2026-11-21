@@ -1,0 +1,3 @@
+loadedGreeting = "hello from file"
+loadedCount = 99
+function doubleIt(n: Int): Int = n * 2

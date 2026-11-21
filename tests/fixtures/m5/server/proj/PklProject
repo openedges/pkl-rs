@@ -1,0 +1,5 @@
+amends "pkl:Project"
+
+dependencies {
+  ["localDep"] = import("local_dep/PklProject")
+}

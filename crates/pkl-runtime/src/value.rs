@@ -175,6 +175,8 @@ pub struct RuntimeErrorDetails {
     pub(crate) frame_transformer: crate::logging::FrameTransformer,
     /// Completed Host diagnostic rendering, retaining the original UTF-16 units.
     pub(crate) rendered_diagnostic: Option<PklString>,
+    /// Completed Host diagnostic rendering with ANSI color codes enabled.
+    pub(crate) rendered_diagnostic_colored: Option<PklString>,
     /// An uncaught Java URI.create failure whose JVM rendering is not implemented.
     pub uri_create_cause: Option<UriCreateCause>,
     /// A source-backed foreign cause; complete Java stack projection is pending.
@@ -243,6 +245,7 @@ static EMPTY_ERROR_DETAILS: RuntimeErrorDetails = RuntimeErrorDetails {
     callback_origin: None,
     frame_transformer: crate::logging::FrameTransformer::Default,
     rendered_diagnostic: None,
+    rendered_diagnostic_colored: None,
     uri_create_cause: None,
     foreign_exception: None,
     java_exception_message: None,

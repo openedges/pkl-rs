@@ -1,0 +1,10 @@
+output {
+  files {
+    ["a.txt"] {
+      text = "alpha\n"
+    }
+    ["sub/b.txt"] {
+      text = "beta\n"
+    }
+  }
+}

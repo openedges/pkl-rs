@@ -417,6 +417,29 @@ fn append_members(
         };
         body.push(Instruction::Return);
         let spans = vec![Some(declaration.name_span); body.len()];
+        let method_signature = if let ExprKind::Function {
+            parameters,
+            method: true,
+            ..
+        } = &declaration.expr.kind
+        {
+            Some((
+                declaration
+                    .name
+                    .concat(&"(".into())
+                    .concat(&PklString::join(
+                        &parameters
+                            .iter()
+                            .map(|p| p.name.clone())
+                            .collect::<Vec<_>>(),
+                        ", ",
+                    ))
+                    .concat(&")".into()),
+                parameters.len(),
+            ))
+        } else {
+            None
+        };
         let block = program.alloc_block(
             body,
             BlockMetadata {
@@ -424,6 +447,7 @@ fn append_members(
                 source: Some(source.clone()),
                 member: format!("#{}", declaration.name).into(),
                 declaration: Some(declaration.name_span),
+                method_signature,
                 spans,
                 ..Default::default()
             },

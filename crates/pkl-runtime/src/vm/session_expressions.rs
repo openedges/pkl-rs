@@ -35,6 +35,45 @@ pub(super) fn compile_session_expression_for_unit(
     power_assertions: bool,
     primary: crate::modules::UnitId,
 ) -> Result<usize, SessionExpressionError> {
+    compile_session_expression_inner(
+        program,
+        module,
+        expression_source,
+        options,
+        power_assertions,
+        primary,
+        true,
+    )
+}
+
+pub(super) fn compile_session_expression_value_for_unit(
+    program: &mut Program,
+    module: &crate::syntax::Module,
+    expression_source: impl Into<crate::source::SourceText>,
+    options: CompileOptions,
+    power_assertions: bool,
+    primary: crate::modules::UnitId,
+) -> Result<usize, SessionExpressionError> {
+    compile_session_expression_inner(
+        program,
+        module,
+        expression_source,
+        options,
+        power_assertions,
+        primary,
+        false,
+    )
+}
+
+fn compile_session_expression_inner(
+    program: &mut Program,
+    module: &crate::syntax::Module,
+    expression_source: impl Into<crate::source::SourceText>,
+    options: CompileOptions,
+    power_assertions: bool,
+    primary: crate::modules::UnitId,
+    stringify: bool,
+) -> Result<usize, SessionExpressionError> {
     let expression_source = expression_source.into();
     let parsed = crate::parser::parse_expression_for_evaluation(&expression_source)
         .map_err(|error| SessionExpressionError::Frontend(Box::new(error)))?;
@@ -53,10 +92,12 @@ pub(super) fn compile_session_expression_for_unit(
         options,
         power_assertions,
         primary,
+        stringify,
     )
     .map_err(|error| SessionExpressionError::Runtime(Box::new(error)))
 }
 
+#[allow(clippy::too_many_arguments)]
 fn append_guarded(
     program: &mut Program,
     resolved: &crate::resolver::ResolvedModule,
@@ -65,6 +106,7 @@ fn append_guarded(
     options: CompileOptions,
     power_assertions: bool,
     primary: crate::modules::UnitId,
+    stringify: bool,
 ) -> Result<usize, RuntimeError> {
     let checkpoint = modules::ArenaCheckpoint::new(program);
     let result = append(
@@ -75,6 +117,7 @@ fn append_guarded(
         options,
         power_assertions,
         primary,
+        stringify,
     );
     if result.is_err() {
         checkpoint.rollback(program);
@@ -82,6 +125,7 @@ fn append_guarded(
     result
 }
 
+#[allow(clippy::too_many_arguments)]
 fn append(
     program: &mut Program,
     resolved: &crate::resolver::ResolvedModule,
@@ -90,6 +134,7 @@ fn append(
     options: CompileOptions,
     instrument: bool,
     primary: crate::modules::UnitId,
+    stringify: bool,
 ) -> Result<usize, RuntimeError> {
     let primary = program
         .units
@@ -148,7 +193,9 @@ fn append(
     if resolved.preparation_failure.is_none() {
         compiler.expression(expression, &mut code)?;
     }
-    code.push(Instruction::ToString);
+    if stringify {
+        code.push(Instruction::ToString);
+    }
     code.push(Instruction::Return);
     let entry = compiler.block(code, Some(expression.span))?;
     compiler.program.metadata[entry].module_receiver_input = Some(0);
@@ -228,6 +275,7 @@ mod tests {
             CompileOptions::default(),
             false,
             crate::modules::UnitId(0),
+            true,
         )
         .unwrap_err();
         assert_eq!(error.kind, ErrorKind::InvalidBytecode);
@@ -257,6 +305,7 @@ mod tests {
                 CompileOptions::default(),
                 false,
                 crate::modules::UnitId(0),
+                true,
             )
             .is_err()
         );

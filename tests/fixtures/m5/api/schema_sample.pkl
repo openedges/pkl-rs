@@ -1,0 +1,19 @@
+/// Sample schema module
+module demo.SampleSchema
+
+import "pkl:math"
+
+typealias Port = Int(isBetween(1, 65535))
+
+open class Server {
+  host: String
+  port: Port
+  function endpoint(): String = "\(host):\(port)"
+}
+
+abstract class BaseItem {
+  id: Int
+}
+
+defaultPort: Port = 8080
+function double(n: Int): Int = n * 2

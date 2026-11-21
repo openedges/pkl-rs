@@ -1,0 +1,11 @@
+/// Minimal package for non-test-mode release 0.32.0 pkldoc parity.
+amends "pkl:DocPackageInfo"
+
+name = "com.example.minimal"
+version = "1.0.0"
+importUri = "https://example.com/minimal/"
+authors {
+  "dev@example.com"
+}
+sourceCode = "https://example.com/minimal/src/"
+issueTracker = "https://example.com/minimal/issues"

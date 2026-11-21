@@ -1,0 +1,13 @@
+import "memmod:/a.pkl" as a
+import* "memmod:/dir/*.pkl" as dirMods
+
+res = read("memres:/secret.txt").text
+globRes = new Mapping {
+  for (k, r in read*("memres:/items/*.txt")) {
+    [k] = r.text
+  }
+}
+val = a.value
+dep = a.oldFn()
+greeting = a.greeting
+nested = dirMods["memmod:/dir/b.pkl"].nested

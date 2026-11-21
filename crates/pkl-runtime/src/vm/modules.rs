@@ -192,6 +192,7 @@ enum ModulePurpose {
     Import,
     Primary,
     Query,
+    RawQuery,
 }
 
 impl ModuleRun {
@@ -241,6 +242,85 @@ impl Vm {
             code.push(Instruction::EvaluateQuery(expression));
         }
         code.push(Instruction::Return);
+        let entry = program.alloc_block(code, BlockMetadata::default())?;
+        program.seal_code_segment();
+        self.public_operation_entries.insert(entry);
+        Ok(entry)
+    }
+
+    /// Appends a public operation matching `EvaluatorImpl.evaluateExpressionPklBinary`:
+    /// loads the primary module (using cache), evaluates `module` / `output.text` /
+    /// `output.value` / `output.bytes` / arbitrary expression, and encodes the forced
+    /// value into `pkl-binary` (`Value::Bytes`).
+    pub(crate) fn append_public_pkl_binary_operation(
+        &mut self,
+        source: crate::modules::ModuleSourceSpec,
+        expression: SourceText,
+    ) -> Result<usize, RuntimeError> {
+        crate::host::resources::validate_module_key_uri(&source.uri)?;
+        let program = Arc::make_mut(&mut self.program);
+        program.seal_code_segment();
+        let mut code = vec![Instruction::LoadPrimary(Arc::new(source))];
+        match expression.original().as_str() {
+            Some("module") => {}
+            Some("output.text") => code.extend([
+                Instruction::GetMember("output".into()),
+                Instruction::CheckModuleOutput,
+                Instruction::GetMember("text".into()),
+            ]),
+            Some("output.value") => code.extend([
+                Instruction::GetMember("output".into()),
+                Instruction::CheckModuleOutput,
+                Instruction::GetMember("value".into()),
+            ]),
+            Some("output.bytes") => code.extend([
+                Instruction::GetMember("output".into()),
+                Instruction::CheckModuleOutput,
+                Instruction::GetMember("bytes".into()),
+            ]),
+            _ => code.push(Instruction::EvaluateRawQuery(expression)),
+        }
+        code.push(Instruction::EncodePklBinary);
+        code.push(Instruction::Return);
+        let entry = program.alloc_block(code, BlockMetadata::default())?;
+        program.seal_code_segment();
+        self.public_operation_entries.insert(entry);
+        Ok(entry)
+    }
+
+    /// Appends a public operation returning a module's `output.bytes` directly.
+    pub(crate) fn append_public_output_bytes_operation(
+        &mut self,
+        source: crate::modules::ModuleSourceSpec,
+    ) -> Result<usize, RuntimeError> {
+        crate::host::resources::validate_module_key_uri(&source.uri)?;
+        let program = Arc::make_mut(&mut self.program);
+        program.seal_code_segment();
+        let code = vec![
+            Instruction::LoadPrimary(Arc::new(source)),
+            Instruction::GetMember("output".into()),
+            Instruction::CheckModuleOutput,
+            Instruction::GetMember("bytes".into()),
+            Instruction::Return,
+        ];
+        let entry = program.alloc_block(code, BlockMetadata::default())?;
+        program.seal_code_segment();
+        self.public_operation_entries.insert(entry);
+        Ok(entry)
+    }
+
+    /// Appends a public operation loading a primary module and returning the module object itself.
+    pub(crate) fn append_public_load_module_operation(
+        &mut self,
+        source: crate::modules::ModuleSourceSpec,
+    ) -> Result<usize, RuntimeError> {
+        crate::host::resources::validate_module_key_uri(&source.uri)?;
+        let program = Arc::make_mut(&mut self.program);
+        program.seal_code_segment();
+        let code = vec![
+            Instruction::LoadPrimary(Arc::new(source)),
+            Instruction::Return,
+        ];
         let entry = program.alloc_block(code, BlockMetadata::default())?;
         program.seal_code_segment();
         self.public_operation_entries.insert(entry);
@@ -312,9 +392,18 @@ impl Vm {
         })
     }
     pub(super) fn begin_query(&mut self, expression: SourceText) -> Result<(), RuntimeError> {
+        self.begin_query_with_purpose(expression, ModulePurpose::Query)
+    }
+    pub(super) fn begin_raw_query(&mut self, expression: SourceText) -> Result<(), RuntimeError> {
+        self.begin_query_with_purpose(expression, ModulePurpose::RawQuery)
+    }
+    fn begin_query_with_purpose(
+        &mut self,
+        expression: SourceText,
+        purpose: ModulePurpose,
+    ) -> Result<(), RuntimeError> {
         let receiver = self.pop()?.as_object()?;
-        let mut run =
-            self.fresh_module_run("repl:text".into(), ModulePurpose::Query, Some(expression));
+        let mut run = self.fresh_module_run("repl:text".into(), purpose, Some(expression));
         run.receiver = Some(receiver);
         run.phase = ModulePhase::Resolve;
         run.internal_key = true;
@@ -340,6 +429,7 @@ impl Vm {
             .module_load
             .take()
             .ok_or_else(|| invalid("missing query continuation"))?;
+        let raw_value = run.purpose == ModulePurpose::RawQuery;
         let receiver = run
             .receiver
             .ok_or_else(|| invalid("missing query receiver"))?;
@@ -366,16 +456,29 @@ impl Vm {
             .ok_or_else(|| invalid("missing query source"))?;
         let program = Arc::make_mut(&mut self.program);
         let arena = query_lifecycle::CodeArena::begin(program);
-        let entry = session_expressions::compile_session_expression_for_unit(
-            program,
-            &module,
-            &expression,
-            CompileOptions {
-                fuse_constant_add: true,
-            },
-            self.power_assertions,
-            unit,
-        )
+        let entry = if raw_value {
+            session_expressions::compile_session_expression_value_for_unit(
+                program,
+                &module,
+                &expression,
+                CompileOptions {
+                    fuse_constant_add: true,
+                },
+                self.power_assertions,
+                unit,
+            )
+        } else {
+            session_expressions::compile_session_expression_for_unit(
+                program,
+                &module,
+                &expression,
+                CompileOptions {
+                    fuse_constant_add: true,
+                },
+                self.power_assertions,
+                unit,
+            )
+        }
         .map_err(|failure| match failure {
             SessionExpressionError::Frontend(error) => imported_diagnostic(
                 *error,
@@ -936,7 +1039,7 @@ impl Vm {
         if resolved.original_uri != run.spec.original_uri {
             return Err(invalid("module resolver changed original key"));
         }
-        if run.purpose == ModulePurpose::Query {
+        if matches!(run.purpose, ModulePurpose::Query | ModulePurpose::RawQuery) {
             return self.compile_public_query();
         }
         if run.cached

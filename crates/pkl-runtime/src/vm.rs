@@ -32,6 +32,8 @@ mod map_ops;
 mod mapping_ops;
 pub(crate) mod reflection;
 mod regex;
+pub(crate) mod repl;
+pub(crate) mod schema;
 mod set_order;
 mod set_sequence;
 mod string_transforms;
@@ -110,6 +112,7 @@ pub enum Instruction {
     ImportModule(modules::ImportSpec),
     LoadPrimary(Arc<crate::modules::ModuleSourceSpec>),
     EvaluateQuery(crate::source::SourceText),
+    EvaluateRawQuery(crate::source::SourceText),
     PrepareModuleImports(crate::modules::UnitId),
     CheckModuleOutput,
     /// Eager initialization in the private standard-library profile.
@@ -118,6 +121,7 @@ pub enum Instruction {
     ReadModuleVersion,
     CheckModuleVersion,
     EncodeUtf8,
+    EncodePklBinary,
     OutputRenderer,
     RenderPcf {
         document: bool,
@@ -5357,6 +5361,7 @@ impl Vm {
             Instruction::PrepareModuleImports(unit) => self.prepare_module_imports(unit)?,
             Instruction::LoadPrimary(source) => self.begin_primary(source)?,
             Instruction::EvaluateQuery(expression) => self.begin_query(expression)?,
+            Instruction::EvaluateRawQuery(expression) => self.begin_raw_query(expression)?,
             Instruction::InitializeModuleParent => self.initialize_module_parent()?,
             Instruction::CheckModuleOutput => self.check_module_output()?,
             Instruction::BootstrapStdlib => self.bootstrap_stdlib()?,
@@ -5376,6 +5381,9 @@ impl Vm {
                 };
                 self.stack
                     .push(Value::Bytes(value.to_java_utf8().into_bytes().into()));
+            }
+            Instruction::EncodePklBinary => {
+                self.begin_pkl_binary_encode_value()?;
             }
             Instruction::ResourceProperty(property) => self.resource_property(property)?,
             Instruction::ResolveEvaluatorSettingsPath => self.resolve_evaluator_settings_path()?,
@@ -7457,8 +7465,12 @@ fn compile_unit_body_at(
                 .as_ref()
                 .map_or_else(PklString::default, |source| source.module_name.clone())
         });
+    let is_base_module = compiler.identity.as_ref().is_some_and(|identity| {
+        identity.original_uri == "pkl:base" || identity.resolved_uri == "pkl:base"
+    });
+    let is_primary_root = unit.0 == 0 && !is_base_module;
     let template = compiler.object_template(&resolved.module.members, false, false)?;
-    if unit.0 == 0 {
+    if is_primary_root {
         compiler.program.module_template = Some(template);
         compiler.program.module_name = module_name.clone();
     }
@@ -7497,7 +7509,7 @@ fn compile_unit_body_at(
             crate::syntax::modifier_flags(&declaration.modifiers)
         });
     let mut entry = Code::default();
-    if unit.0 == 0 {
+    if is_primary_root {
         // Java initializes and eagerly forces the private base module before a
         // user module runs. Its output also initializes PcfRenderer's shared
         // method slots through an ordinary Module-valued renderDocument call.
@@ -7576,7 +7588,7 @@ fn compile_unit_body_at(
     compiler.type_scopes.pop();
     entry.push(Instruction::Return);
     let entry = compiler.block(entry, None)?;
-    if unit.0 == 0 {
+    if is_primary_root {
         compiler.program.entry = entry;
         compiler.program.initial_module_members = initial_module_members.clone();
     }
@@ -7601,7 +7613,7 @@ fn compile_unit_body_at(
         import_order: uri_resolution::module_import_order(resolved),
         mode,
         modifiers,
-        class_id: if unit.0 == 0 {
+        class_id: if is_primary_root {
             reference::MODULE_ID
         } else {
             declaration_base + resolved.module.source.len_bytes() + 1

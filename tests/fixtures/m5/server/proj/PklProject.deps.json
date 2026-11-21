@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "resolvedDependencies": {
+    "package://example.com/localDep@1": {
+      "type": "local",
+      "uri": "package://example.com/localDep@1.0.0",
+      "path": "local_dep"
+    }
+  }
+}

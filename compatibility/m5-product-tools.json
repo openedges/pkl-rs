@@ -1,0 +1,1346 @@
+{
+  "baseline": {
+    "checkout": "external/pkl",
+    "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "source_url_template": "https://github.com/apple/pkl/blob/e51fb2f91774265666f94980ec630db794a4db2d/{path}#L{line}",
+    "url": "https://github.com/apple/pkl.git",
+    "version": "0.32.0"
+  },
+  "counts": {
+    "corpus_formatter_snippet_cases": 30,
+    "excluded_2026_11_20_java_api": 8239,
+    "excluded_2026_11_20_kotlin_api": 597,
+    "functional_stdlib_items": 121,
+    "inventory_cli_argument_total": 6,
+    "inventory_cli_command_dispositions": {
+      "excluded": 2,
+      "m4-exercised-and-m5-product": 8,
+      "m5-new": 7
+    },
+    "inventory_cli_command_total": 17,
+    "inventory_cli_option_dispositions": {
+      "excluded": 19,
+      "m3-covered": 12,
+      "m4-exercised": 29,
+      "m5-new": 26
+    },
+    "inventory_cli_option_m5_new_breakdown": {
+      "m5:cli-other": 15,
+      "m5:format": 6,
+      "m5:pkldoc": 5
+    },
+    "inventory_cli_option_total": 86,
+    "inventory_protocol_field_dispositions": {
+      "m4-required": 37,
+      "m5-required": 82
+    },
+    "inventory_protocol_field_total": 119,
+    "inventory_protocol_tag_dispositions": {
+      "m4-and-m5-callbacks": 13,
+      "m5-required": 6
+    },
+    "inventory_protocol_tag_total": 19,
+    "inventory_resource_dispositions": {
+      "excluded-jvm-spi": 2,
+      "m4-required": 3,
+      "m5-pkldoc": 17,
+      "non-applicable-build": 2,
+      "shared-core": 3
+    },
+    "inventory_resource_total": 27,
+    "m5_cases_by_lane": {
+      "formatter": 43,
+      "pkldoc": 15,
+      "repl": 12,
+      "rust-api-and-cli": 50,
+      "server": 22
+    },
+    "m5_dynamic_formatter_snippet_cases": 30,
+    "m5_requirement_groups": 16,
+    "m5_requirement_impl_status": {
+      "linked": 16
+    },
+    "m5_static_cases": 112,
+    "m5_total_5lane_cases": 142,
+    "pkldoc_vendored_assets_exact_matches": 17,
+    "pkldoc_vendored_assets_status": "exact-match",
+    "stdlib_doc_package_info_items": 8
+  },
+  "coverage_gate": null,
+  "formatter_snippets": [
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/class-bodies.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/class-bodies.pkl",
+      "golden_sha256": "91433e93c8ce0411a8bc58e02f9ce2524576330ecca033162d761a5dd6259a5d",
+      "id": "m5:format:snippet:class-bodies.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/class-bodies.pkl",
+      "input_sha256": "4d28d66e547ae1e0791ad828f41fe896b894dabae8117836dcd427bf11d9f675"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/comma-termination.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/comma-termination.pkl",
+      "golden_sha256": "3cf214ee718f2e95c0496803f23fbcbc00bc3d3d79b7968e6601e84281b47958",
+      "id": "m5:format:snippet:comma-termination.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/comma-termination.pkl",
+      "input_sha256": "d6b17228b5526ca21e41009e8daf4660cba4f56ef28efb29043d055832d9d3de"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/comment-interleaved.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/comment-interleaved.pkl",
+      "golden_sha256": "e7d374db7491ca51879a61519d9d0a1981fb2c625625185b5ff392e401d45af3",
+      "id": "m5:format:snippet:comment-interleaved.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/comment-interleaved.pkl",
+      "input_sha256": "dfb48a5bc815a837d946e55d3a46660bd2a7794a2f5bde0f2dcd6e0f810687e3"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/dangling-doc-comment.pkl",
+      "expected_exit": [
+        0
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/dangling-doc-comment.pkl",
+      "golden_sha256": "6423740552414354cf5e0f0fbe13a028bd92bbdb37fc75c495033b9b43b96b77",
+      "id": "m5:format:snippet:dangling-doc-comment.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/dangling-doc-comment.pkl",
+      "input_sha256": "6423740552414354cf5e0f0fbe13a028bd92bbdb37fc75c495033b9b43b96b77"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/doc-comments.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/doc-comments.pkl",
+      "golden_sha256": "162f566e257b10d9cbc98ba8ede322bc8ca62bd136e5651b73ffbb030299e2d2",
+      "id": "m5:format:snippet:doc-comments.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/doc-comments.pkl",
+      "input_sha256": "b9e510060862dd0b280bae44de0d233fffff96a2cb6e6811f05de2488fc3a3e0"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/expr-binary.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/expr-binary.pkl",
+      "golden_sha256": "56929e2453e9b6c117a52977ff6489c18a2f14f3858eb43b5ddbb18716a4ec5d",
+      "id": "m5:format:snippet:expr-binary.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/expr-binary.pkl",
+      "input_sha256": "e138f47b86b608d5c06f7397197106b568fda09d7d75b55abb4ef489b6221463"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/expr-chain-grouping.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/expr-chain-grouping.pkl",
+      "golden_sha256": "fcae5c116c253c8930da7bcb3fdb1616513bf7fbbda1a8bd069762f529bf02fc",
+      "id": "m5:format:snippet:expr-chain-grouping.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/expr-chain-grouping.pkl",
+      "input_sha256": "d00b328c3c1075a5ca701cc2f79eb83512d510f12657250d63ee41316238e82c"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/expr-chain.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/expr-chain.pkl",
+      "golden_sha256": "41dbccea87f37836f5c51ea3b50ac04436b2916dc9794c75a138f6cdda76f664",
+      "id": "m5:format:snippet:expr-chain.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/expr-chain.pkl",
+      "input_sha256": "48bae7fbb8cf8e8dfba88694585c8f1370ce166ea43240b97ae987f846789e27"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/expr-if.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/expr-if.pkl",
+      "golden_sha256": "0b0d4b4d5980713ccfc1e838816b0f4a4733d4d1138b0ad21124b2b6c5fa27a9",
+      "id": "m5:format:snippet:expr-if.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/expr-if.pkl",
+      "input_sha256": "b597e924a8f8cc1965a71e17badd7ee72d532ad39d6854827dfa824f70c72b9b"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/expr-let.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/expr-let.pkl",
+      "golden_sha256": "c811d94402ee9df555d9517734257440c4e6707b32f2eafc4fb84bdaa3171651",
+      "id": "m5:format:snippet:expr-let.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/expr-let.pkl",
+      "input_sha256": "c19f278f9411a9d3918bb8df82dd97b63f3df2d983f0a4e3bcfbbf2baedcffcf"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/imports.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/imports.pkl",
+      "golden_sha256": "aad78a9d92d0cf39c34631cc4e2f804bbedf3be6ea6946823e6dab5cc0108549",
+      "id": "m5:format:snippet:imports.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/imports.pkl",
+      "input_sha256": "2a5cb4c6e5e2a505ed94177d83d2e31bd91443a2611dc77bd92a4188e22a40c7"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/indentation.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/indentation.pkl",
+      "golden_sha256": "e5197fdb547cd3c08a424c71cd94b73dabd1f62053ebdabf584129ce3785f162",
+      "id": "m5:format:snippet:indentation.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/indentation.pkl",
+      "input_sha256": "4975b3cb1b1dfa739340d02e56055a27fbc7cc98f796a81744be5e18139cbd83"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/line-breaks.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/line-breaks.pkl",
+      "golden_sha256": "7491fb33a7d17643b130e2005bf1ad527c17f5b540015f03cc4b8f80beddf4ce",
+      "id": "m5:format:snippet:line-breaks.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/line-breaks.pkl",
+      "input_sha256": "15bbf8fe2ac835413f895f64f03616bd775a590aa9adfcd7aa90b7eff342bac8"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/line-breaks2.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/line-breaks2.pkl",
+      "golden_sha256": "25ad45da97b51225c6cc3a9d361f9a7a59300f6948e16c7835bc72893543330e",
+      "id": "m5:format:snippet:line-breaks2.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/line-breaks2.pkl",
+      "input_sha256": "b1d7aac67b6b99761176e7f732b8e3c232d16df2e4f76197cb67b50cceac1c42"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/line-breaks3.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/line-breaks3.pkl",
+      "golden_sha256": "27b2d586fe7c5f1edc6d8b01acd033a822a4b1fd1f5df59fa59978f0c9bbf93c",
+      "id": "m5:format:snippet:line-breaks3.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/line-breaks3.pkl",
+      "input_sha256": "463624f66f88fc559379409584abd5af513b1761f0eb8cf73bed496a39726ae0"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/line-width.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/line-width.pkl",
+      "golden_sha256": "b4e6cc4dc45ed06c885f4585e12d611319fca94164c30fc8d522922a6279079a",
+      "id": "m5:format:snippet:line-width.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/line-width.pkl",
+      "input_sha256": "d054e73b74e5f5faf374051d0a71ee5a6411c92fc65521592f6e614921f220f1"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/map-function.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/map-function.pkl",
+      "golden_sha256": "a0929b4cd55ad0179daef46fa8881c8e81e9d0cba825ef74ecc7e9fffddb5256",
+      "id": "m5:format:snippet:map-function.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/map-function.pkl",
+      "input_sha256": "7068e094d250b7d707fcf1f8a881d5262ab6a0dd4e44a81c8ca3c5d20e2ff581"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/method-call-trailing-lambdas.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/method-call-trailing-lambdas.pkl",
+      "golden_sha256": "5c93c2827f1590686cb06e1a7d249635306f232a2ab4f1c7b7eb0cf414771d4a",
+      "id": "m5:format:snippet:method-call-trailing-lambdas.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/method-call-trailing-lambdas.pkl",
+      "input_sha256": "976d9085fdcf28a21c8f75efcb6e2869bac699ddc9015e7866faee8302ea76c9"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/modifiers.pkl",
+      "expected_exit": [
+        0
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/modifiers.pkl",
+      "golden_sha256": "5ead5954d2eaf5a656a69d7cca40e2a27a06fa1b4b757341dcd0e19cabaaa294",
+      "id": "m5:format:snippet:modifiers.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/modifiers.pkl",
+      "input_sha256": "5ead5954d2eaf5a656a69d7cca40e2a27a06fa1b4b757341dcd0e19cabaaa294"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/module-definitions.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/module-definitions.pkl",
+      "golden_sha256": "c133401c7b3a3ed7e2ee1894636bb67aeff6fa8b8fff8df348bbe59bc41fe9b4",
+      "id": "m5:format:snippet:module-definitions.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/module-definitions.pkl",
+      "input_sha256": "6d7a1465352236d5ca0ab2bc9ede049403fd7296c40dcdb816150d41dc518f98"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/module.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/module.pkl",
+      "golden_sha256": "e338d50ad09da670dfc37587d6431773625c1816054909adc251262c33f9e3cd",
+      "id": "m5:format:snippet:module.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/module.pkl",
+      "input_sha256": "5fcd69ec9003eca8a3968e73e34a9f5a11f7c76bbbed08878a5eaba8c93337a0"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/multi-line-strings.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/multi-line-strings.pkl",
+      "golden_sha256": "3a93b7de9aba55f0a2297d67bed6e1efa1e9f7b2d4a871ca7969d8dc83eb2577",
+      "id": "m5:format:snippet:multi-line-strings.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/multi-line-strings.pkl",
+      "input_sha256": "c28f05f370448c23d6dda53243d6806d0d83ba87c95d144166ed900c4fd9619e"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/object-members.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/object-members.pkl",
+      "golden_sha256": "ee9100d359a196fbd2e9fefd25ad3ad1c6a2260275c632d719f0790d39bf8ecd",
+      "id": "m5:format:snippet:object-members.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/object-members.pkl",
+      "input_sha256": "5329d43d5e1e7f017f962491885405abe85b735d3debe37fad7cdac15c57fd8e"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/prefixes.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/prefixes.pkl",
+      "golden_sha256": "246626ab7f2b0ce84e4bdf484da396b893d8e7cca2c6923145538b8c53898c4f",
+      "id": "m5:format:snippet:prefixes.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/prefixes.pkl",
+      "input_sha256": "d8b5a539d6642045daf3add0b42be5c1bd6dba9376fce8e5f7a5a5f757386a5a"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/single-line-strings.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/single-line-strings.pkl",
+      "golden_sha256": "0325c15c6f39c9928f3af58fa2b105049e860a6975fdb90f9eec695961143c7c",
+      "id": "m5:format:snippet:single-line-strings.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/single-line-strings.pkl",
+      "input_sha256": "d072955839fbd8eb20af19d9adbfc133ab04280c3e784bce9bb69af5865bebfe"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/spaces.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/spaces.pkl",
+      "golden_sha256": "7ce1dc2b41a4e68b8c08159cf787cf915c65e7419c8f7ffe215b64167b28d729",
+      "id": "m5:format:snippet:spaces.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/spaces.pkl",
+      "input_sha256": "7436c641ee0ac710cf0fd88983d2024f1efc3e3869a54ca9c2f26a8e0e748d6e"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/string-interpolation.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/string-interpolation.pkl",
+      "golden_sha256": "bfb353f4d8bfa973c21a4bf5b9ef2b9200cef883f1485f30641a712ac20f2ebd",
+      "id": "m5:format:snippet:string-interpolation.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/string-interpolation.pkl",
+      "input_sha256": "c4f381b99b3fe4e9ad630b1f95825770df17d95c1951ed4f339ef6ae1ee1517e"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/trailing-objects.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/trailing-objects.pkl",
+      "golden_sha256": "6919bfd0ad586cb7df76194cd9f9cd6c084d4a3aef7c0ec27216a74db0b8c074",
+      "id": "m5:format:snippet:trailing-objects.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/trailing-objects.pkl",
+      "input_sha256": "6c44b3b1027a17406aff4cfd1a49fb8ee2500fbc2583ad814dd12814f9d2afcb"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/type-aliases.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/type-aliases.pkl",
+      "golden_sha256": "127befb30d30b8b9df63af6c7b9f78f9433c4e274f5517e7dd2df4458dc0cda0",
+      "id": "m5:format:snippet:type-aliases.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/type-aliases.pkl",
+      "input_sha256": "6269ad8d048de8d96e599fa8568d1fe59e1afd9f42712934aba5840c38406f2b"
+    },
+    {
+      "corpus_case_id": "pkl:formatter-snippet:pkl-formatter/src/test/files/FormatterSnippetTests/input/when.pkl",
+      "expected_exit": [
+        11
+      ],
+      "golden_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/output/when.pkl",
+      "golden_sha256": "0ce5f6ca8986ee4634afe4f97a0f11cc90118e5e9b085e56bbc0e803f426ba22",
+      "id": "m5:format:snippet:when.pkl",
+      "input_path": "external/pkl/pkl-formatter/src/test/files/FormatterSnippetTests/input/when.pkl",
+      "input_sha256": "e104c3ff53b09dc9d7e9a1f0cddd42af705fe247ba22588fbb1f509d78f9bb07"
+    }
+  ],
+  "inventory_accounting": {
+    "cli_argument": {
+      "by_module": {
+        "pkl-cli": 4,
+        "pkl-commons-cli": 1,
+        "pkl-doc": 1
+      },
+      "total": 6
+    },
+    "cli_command": {
+      "counts": {
+        "excluded": 2,
+        "m4-exercised-and-m5-product": 8,
+        "m5-new": 7
+      },
+      "total": 17
+    },
+    "cli_option": {
+      "counts": {
+        "excluded": 19,
+        "m3-covered": 12,
+        "m4-exercised": 29,
+        "m5-new": 26
+      },
+      "m5_new_breakdown": {
+        "m5:cli-other": 15,
+        "m5:format": 6,
+        "m5:pkldoc": 5
+      },
+      "total": 86
+    },
+    "excluded_2026_11_20_census": {
+      "codegen_cli_commands": 2,
+      "codegen_cli_options": 19,
+      "excluded_corpus_jvm_test_files": 58,
+      "java_api_by_scope": {
+        "internal-source-candidate": 5190,
+        "source-candidate": 3049
+      },
+      "java_api_total": 8239,
+      "jvm_binding_spec_headings": 73,
+      "jvm_spi_resources": 2,
+      "kotlin_api_by_scope": {
+        "source-candidate": 597
+      },
+      "kotlin_api_total": 597,
+      "policy": "Explicit 2026-11-20 PLAN.md/INTENT.md/TESTING.md scope decision: Java/Kotlin codegen (pkl-codegen-java, pkl-codegen-kotlin) and JVM public API compatibility adapters (java_api, kotlin_api, JVM SPI resources, JVM binding specs) are excluded from M5/M7 exit criteria and retained solely as reference inventory census."
+    },
+    "functional_stdlib": {
+      "by_source": {
+        "stdlib/Command.pkl": 35,
+        "stdlib/DocPackageInfo.pkl": 23,
+        "stdlib/DocsiteInfo.pkl": 5,
+        "stdlib/EvaluatorSettings.pkl": 41,
+        "stdlib/settings.pkl": 12,
+        "stdlib/test.pkl": 5
+      },
+      "total": 121
+    },
+    "protocol_field": {
+      "counts": {
+        "m4-required": 37,
+        "m5-required": 82
+      },
+      "total": 119
+    },
+    "protocol_tag": {
+      "counts": {
+        "m4-and-m5-callbacks": 13,
+        "m5-required": 6
+      },
+      "total": 19
+    },
+    "resource": {
+      "counts": {
+        "excluded-jvm-spi": 2,
+        "m4-required": 3,
+        "m5-pkldoc": 17,
+        "non-applicable-build": 2,
+        "shared-core": 3
+      },
+      "pkldoc_assets": [
+        {
+          "bytes": 44300,
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/fonts/MaterialIcons-Regular.woff2:pkl-doc/src/main/resources/org/pkl/doc/fonts/MaterialIcons-Regular.woff2",
+          "relative_asset": "fonts/MaterialIcons-Regular.woff2",
+          "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/fonts/MaterialIcons-Regular.woff2",
+          "upstream_sha256": "a87d66c91b2e7dc5530aef76c03bd6a3d25ea5826110bf4803b561b811cc8726",
+          "vendored_sha256": "a87d66c91b2e7dc5530aef76c03bd6a3d25ea5826110bf4803b561b811cc8726",
+          "vendored_state": "exact-match"
+        },
+        {
+          "bytes": 24488,
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/fonts/lato-v14-latin_latin-ext-700.woff2:pkl-doc/src/main/resources/org/pkl/doc/fonts/lato-v14-latin_latin-ext-700.woff2",
+          "relative_asset": "fonts/lato-v14-latin_latin-ext-700.woff2",
+          "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/fonts/lato-v14-latin_latin-ext-700.woff2",
+          "upstream_sha256": "fefa9f00668720df39f013b8fa87f9d43f48863260bba6367ff060e83900d951",
+          "vendored_sha256": "fefa9f00668720df39f013b8fa87f9d43f48863260bba6367ff060e83900d951",
+          "vendored_state": "exact-match"
+        },
+        {
+          "bytes": 24904,
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/fonts/lato-v14-latin_latin-ext-regular.woff2:pkl-doc/src/main/resources/org/pkl/doc/fonts/lato-v14-latin_latin-ext-regular.woff2",
+          "relative_asset": "fonts/lato-v14-latin_latin-ext-regular.woff2",
+          "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/fonts/lato-v14-latin_latin-ext-regular.woff2",
+          "upstream_sha256": "eb95689abe841ec957053d1fadaea511657c676a54e774e0683828bd41d667bd",
+          "vendored_sha256": "eb95689abe841ec957053d1fadaea511657c676a54e774e0683828bd41d667bd",
+          "vendored_state": "exact-match"
+        },
+        {
+          "bytes": 19504,
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-700.woff2:pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-700.woff2",
+          "relative_asset": "fonts/open-sans-v15-latin_latin-ext-700.woff2",
+          "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-700.woff2",
+          "upstream_sha256": "b41570405890d4f995da7b265ceb5cfb50246a940f9489525a8f526cfd160356",
+          "vendored_sha256": "b41570405890d4f995da7b265ceb5cfb50246a940f9489525a8f526cfd160356",
+          "vendored_state": "exact-match"
+        },
+        {
+          "bytes": 17952,
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-700italic.woff2:pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-700italic.woff2",
+          "relative_asset": "fonts/open-sans-v15-latin_latin-ext-700italic.woff2",
+          "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-700italic.woff2",
+          "upstream_sha256": "7ec48069e80d48c99b3b8542ac083aa8b32e3e814a3cecd994a0d21c599e5343",
+          "vendored_sha256": "7ec48069e80d48c99b3b8542ac083aa8b32e3e814a3cecd994a0d21c599e5343",
+          "vendored_state": "exact-match"
+        },
+        {
+          "bytes": 18072,
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-italic.woff2:pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-italic.woff2",
+          "relative_asset": "fonts/open-sans-v15-latin_latin-ext-italic.woff2",
+          "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-italic.woff2",
+          "upstream_sha256": "d19240db8ad56c528dec609e35e6c5bff30cb7e6e55e9fc98f0810965b401d25",
+          "vendored_sha256": "d19240db8ad56c528dec609e35e6c5bff30cb7e6e55e9fc98f0810965b401d25",
+          "vendored_state": "exact-match"
+        },
+        {
+          "bytes": 18876,
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-regular.woff2:pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-regular.woff2",
+          "relative_asset": "fonts/open-sans-v15-latin_latin-ext-regular.woff2",
+          "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/fonts/open-sans-v15-latin_latin-ext-regular.woff2",
+          "upstream_sha256": "557116ee5706daa3b6cb2f52e7490e22db9c30ebfc447a5c85458a5fa0f6f84b",
+          "vendored_sha256": "557116ee5706daa3b6cb2f52e7490e22db9c30ebfc447a5c85458a5fa0f6f84b",
+          "vendored_state": "exact-match"
+        },
+        {
+          "bytes": 18816,
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/fonts/source-code-pro-v7-latin_latin-ext-700.woff2:pkl-doc/src/main/resources/org/pkl/doc/fonts/source-code-pro-v7-latin_latin-ext-700.woff2",
+          "relative_asset": "fonts/source-code-pro-v7-latin_latin-ext-700.woff2",
+          "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/fonts/source-code-pro-v7-latin_latin-ext-700.woff2",
+          "upstream_sha256": "c005018b22039a2440bdcfbd9e657407a877cfb00cd8872ce861f8115e2943e3",
+          "vendored_sha256": "c005018b22039a2440bdcfbd9e657407a877cfb00cd8872ce861f8115e2943e3",
+          "vendored_state": "exact-match"
+        },
+        {
+          "bytes": 19188,
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/fonts/source-code-pro-v7-latin_latin-ext-regular.woff2:pkl-doc/src/main/resources/org/pkl/doc/fonts/source-code-pro-v7-latin_latin-ext-regular.woff2",
+          "relative_asset": "fonts/source-code-pro-v7-latin_latin-ext-regular.woff2",
+          "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/fonts/source-code-pro-v7-latin_latin-ext-regular.woff2",
+          "upstream_sha256": "5dba2121e154471b91be5cb9da7782ac8cdf85717811de857422d3f003f94c19",
+          "vendored_sha256": "5dba2121e154471b91be5cb9da7782ac8cdf85717811de857422d3f003f94c19",
+          "vendored_state": "exact-match"
+        },
+        {
+          "bytes": 10782,
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/images/apple-touch-icon.png:pkl-doc/src/main/resources/org/pkl/doc/images/apple-touch-icon.png",
+          "relative_asset": "images/apple-touch-icon.png",
+          "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/images/apple-touch-icon.png",
+          "upstream_sha256": "c25ed144e0dfa4ccdf8047f68cceb872eb1721ccf90720e277507776b9dffc30",
+          "vendored_sha256": "c25ed144e0dfa4ccdf8047f68cceb872eb1721ccf90720e277507776b9dffc30",
+          "vendored_state": "exact-match"
+        },
+        {
+          "bytes": 780,
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/images/favicon-16x16.png:pkl-doc/src/main/resources/org/pkl/doc/images/favicon-16x16.png",
+          "relative_asset": "images/favicon-16x16.png",
+          "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/images/favicon-16x16.png",
+          "upstream_sha256": "aa2e7853373a4d8fa63c3dbba3c3254d313dbbe76fdb5e89856707783b6ac4fe",
+          "vendored_sha256": "aa2e7853373a4d8fa63c3dbba3c3254d313dbbe76fdb5e89856707783b6ac4fe",
+          "vendored_state": "exact-match"
+        },
+        {
+          "bytes": 1802,
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/images/favicon-32x32.png:pkl-doc/src/main/resources/org/pkl/doc/images/favicon-32x32.png",
+          "relative_asset": "images/favicon-32x32.png",
+          "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/images/favicon-32x32.png",
+          "upstream_sha256": "7b6039dbaa90284d3ecc853ccb459aa2cf1953c47a4c5102df8313c2172372fa",
+          "vendored_sha256": "7b6039dbaa90284d3ecc853ccb459aa2cf1953c47a4c5102df8313c2172372fa",
+          "vendored_state": "exact-match"
+        },
+        {
+          "bytes": 2551,
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/images/favicon.svg:pkl-doc/src/main/resources/org/pkl/doc/images/favicon.svg",
+          "relative_asset": "images/favicon.svg",
+          "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/images/favicon.svg",
+          "upstream_sha256": "734375cbe48acc79525c53f6262734a2de5b60af25448462dba153a0926e2488",
+          "vendored_sha256": "734375cbe48acc79525c53f6262734a2de5b60af25448462dba153a0926e2488",
+          "vendored_state": "exact-match"
+        },
+        {
+          "bytes": 24067,
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/scripts/pkldoc.js:pkl-doc/src/main/resources/org/pkl/doc/scripts/pkldoc.js",
+          "relative_asset": "scripts/pkldoc.js",
+          "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/scripts/pkldoc.js",
+          "upstream_sha256": "85883c16a27b1c9082bdbcde340c672a239b6b1bfbe6036428fa4607fc93574a",
+          "vendored_sha256": "85883c16a27b1c9082bdbcde340c672a239b6b1bfbe6036428fa4607fc93574a",
+          "vendored_state": "exact-match"
+        },
+        {
+          "bytes": 5217,
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/scripts/scroll-into-view.min.js:pkl-doc/src/main/resources/org/pkl/doc/scripts/scroll-into-view.min.js",
+          "relative_asset": "scripts/scroll-into-view.min.js",
+          "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/scripts/scroll-into-view.min.js",
+          "upstream_sha256": "2e9ad231051a754e3075b05ffe1baab13f2ffb43024cc96c7d4fa62acc11b8f0",
+          "vendored_sha256": "2e9ad231051a754e3075b05ffe1baab13f2ffb43024cc96c7d4fa62acc11b8f0",
+          "vendored_state": "exact-match"
+        },
+        {
+          "bytes": 9338,
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/scripts/search-worker.js:pkl-doc/src/main/resources/org/pkl/doc/scripts/search-worker.js",
+          "relative_asset": "scripts/search-worker.js",
+          "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/scripts/search-worker.js",
+          "upstream_sha256": "6cd2ebd6c923938ee9a5258a00ef5a14b3d9d4a1ca0c71aca652de047a808bcd",
+          "vendored_sha256": "6cd2ebd6c923938ee9a5258a00ef5a14b3d9d4a1ca0c71aca652de047a808bcd",
+          "vendored_state": "exact-match"
+        },
+        {
+          "bytes": 12625,
+          "id": "resource:pkl-doc/src/main/resources/org/pkl/doc/styles/pkldoc.css:pkl-doc/src/main/resources/org/pkl/doc/styles/pkldoc.css",
+          "relative_asset": "styles/pkldoc.css",
+          "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/styles/pkldoc.css",
+          "upstream_sha256": "76c48342aeb97599fe5461d7752a221e2a2dd4705d822af5239846ede0fdb92e",
+          "vendored_sha256": "76c48342aeb97599fe5461d7752a221e2a2dd4705d822af5239846ede0fdb92e",
+          "vendored_state": "exact-match"
+        }
+      ],
+      "pkldoc_assets_exact_matches": 17,
+      "pkldoc_assets_status": "exact-match",
+      "total": 27
+    },
+    "specification": {
+      "excluded_jvm_bindings": {
+        "java-binding": 47,
+        "kotlin-binding": 26
+      },
+      "excluded_jvm_bindings_total": 73,
+      "m5_relevant": {
+        "bindings-specification": 37,
+        "pkl-cli": 155,
+        "pkl-doc": 24
+      },
+      "m5_relevant_total": 216,
+      "total": 487
+    },
+    "stdlib_doc_package_info": {
+      "symbols": [
+        "pkl.doc-package-info",
+        "pkl.doc-package-info#authors",
+        "pkl.doc-package-info#current",
+        "pkl.doc-package-info#importUri",
+        "pkl.doc-package-info#issueTracker",
+        "pkl.doc-package-info#name",
+        "pkl.doc-package-info#sourceCode",
+        "pkl.doc-package-info#version"
+      ],
+      "total": 8
+    }
+  },
+  "requirements": {
+    "m5:api:evaluator-core-and-outputs": {
+      "case_ids": [
+        "m5:api:eval-text-json-props-env",
+        "m5:api:eval-text-color-always-error",
+        "m5:api:eval-source-text-module",
+        "m5:api:eval-source-text-expr",
+        "m5:api:eval-output-bytes",
+        "m5:api:eval-output-files",
+        "m5:api:eval-expr-pkl-binary"
+      ],
+      "description": "Public Rust EvaluatorBuilder/Evaluator core evaluation modes: output text/bytes/files, ModuleSource.text, expression string, expression Pkl-binary, format/props/env/color",
+      "dynamic_mode": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl/src/evaluator.rs",
+          "sha256": "14ef778445d2188d0783c02f691096766aafa372e3ba15cd470b107abe9959f5",
+          "symbol": "EvaluatorBuilder"
+        },
+        {
+          "path": "crates/pkl/src/evaluator.rs",
+          "sha256": "14ef778445d2188d0783c02f691096766aafa372e3ba15cd470b107abe9959f5",
+          "symbol": "Evaluator"
+        },
+        {
+          "path": "crates/pkl/src/evaluator.rs",
+          "sha256": "14ef778445d2188d0783c02f691096766aafa372e3ba15cd470b107abe9959f5",
+          "symbol": "evaluate_output_text"
+        },
+        {
+          "path": "crates/pkl/src/evaluator.rs",
+          "sha256": "14ef778445d2188d0783c02f691096766aafa372e3ba15cd470b107abe9959f5",
+          "symbol": "evaluate_output_bytes"
+        },
+        {
+          "path": "crates/pkl/src/evaluator.rs",
+          "sha256": "14ef778445d2188d0783c02f691096766aafa372e3ba15cd470b107abe9959f5",
+          "symbol": "evaluate_output_files"
+        },
+        {
+          "path": "crates/pkl/src/evaluator.rs",
+          "sha256": "14ef778445d2188d0783c02f691096766aafa372e3ba15cd470b107abe9959f5",
+          "symbol": "evaluate_expression_pkl_binary"
+        },
+        {
+          "path": "crates/pkl/src/module_source.rs",
+          "sha256": "ed7e8991294d561a5284bd06db2e8aaf7842d9328eb32d2ea7fab3e2ccb19aa3",
+          "symbol": "ModuleSource"
+        },
+        {
+          "path": "crates/pkl/src/settings.rs",
+          "sha256": "efe0309fd67349a009f1b1254e4e08759e31a4c53d8dcaa4cf3a177df9fe3238",
+          "symbol": "OutputFormat"
+        },
+        {
+          "path": "crates/pkl/src/value.rs",
+          "sha256": "6c72ef28122cd3bb1ef074815ed5ade4d8b40e03fcd3476ec77057bc664679ee",
+          "symbol": "PModule"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "rust-api-and-cli"
+    },
+    "m5:api:extensibility-spi-and-lifecycle": {
+      "case_ids": [
+        "m5:api:eval-custom-spi-ok",
+        "m5:api:eval-custom-spi-error",
+        "m5:api:eval-custom-security-deny",
+        "m5:api:eval-schema",
+        "m5:api:project-and-analyzer",
+        "m5:api:lifecycle-reuse-timeout-close"
+      ],
+      "description": "Public Rust SPIs (ModuleKeyFactory, ResourceReader, Logger trace+warn, StackFrameTransformer, custom SecurityManager), ModuleSchema reflection, Project + Analyzer, and Evaluator reuse/timeout/idempotent-close lifecycle",
+      "dynamic_mode": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl/src/reader.rs",
+          "sha256": "74e54a9df9f918db1f081f84b72de745b410ad34cee8dba99875a021ef6a6c31",
+          "symbol": "ModuleKeyFactory"
+        },
+        {
+          "path": "crates/pkl/src/reader.rs",
+          "sha256": "74e54a9df9f918db1f081f84b72de745b410ad34cee8dba99875a021ef6a6c31",
+          "symbol": "ResourceReader"
+        },
+        {
+          "path": "crates/pkl/src/logger.rs",
+          "sha256": "fd9a092ba74b99d947665cdeb80237a2b1cd45e8ae4dced83972a3366ba17988",
+          "symbol": "BufferedLogger"
+        },
+        {
+          "path": "crates/pkl/src/frame.rs",
+          "sha256": "c929eb9f12119dfec9dcb6039c861b29a7410dd1f2b500791be762f410753beb",
+          "symbol": "StackFrameTransformer"
+        },
+        {
+          "path": "crates/pkl/src/security.rs",
+          "sha256": "673969c2dbb0420a36f0ce95f74f06129160c277e4228a3b1fc3c5e372698093",
+          "symbol": "SecurityManager"
+        },
+        {
+          "path": "crates/pkl/src/project.rs",
+          "sha256": "eea81f1e77387ef61dc3e82bdd9b3d649ee0cfa459f2ef6593dd67116ca7fd3d",
+          "symbol": "Project"
+        },
+        {
+          "path": "crates/pkl/src/analyzer.rs",
+          "sha256": "e55574a625107ec2bdb68ef04cff51fce433ea5f580b46069e3776822ed63947",
+          "symbol": "AnalyzerBuilder"
+        },
+        {
+          "path": "crates/pkl/src/evaluator.rs",
+          "sha256": "14ef778445d2188d0783c02f691096766aafa372e3ba15cd470b107abe9959f5",
+          "symbol": "evaluate_schema"
+        },
+        {
+          "path": "crates/pkl-runtime/src/schema.rs",
+          "sha256": "ab981c5aba3bebe9c818521c9fc62da3098492c87512046683c5e672e74153dc",
+          "symbol": "ModuleSchema"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm/schema.rs",
+          "sha256": "9799337639315b1fd9afb15001e502c711dcaefd714e4f832fb2464f1b2ffd8e",
+          "symbol": "VmSchemaExtractor"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "rust-api-and-cli"
+    },
+    "m5:cli:eval-product-options-and-docpkginfo": {
+      "case_ids": [
+        "m5:cli:eval-color-always-error",
+        "m5:cli:eval-power-assertions-on",
+        "m5:cli:eval-power-assertions-off",
+        "m5:cli:eval-trace-mode-pretty",
+        "m5:cli:eval-multi-separator-and-output-path",
+        "m5:cli:eval-stdlib-doc-package-info",
+        "m5:cli:analyze-imports-output-file"
+      ],
+      "description": "Full product `pkl eval` flags (--color, --power-assertions/--no-power-assertions, --trace-mode, --module-output-separator, -o), analyze imports -o, and direct evaluation of deferred external/pkl/stdlib/doc-package-info.pkl (8 items)",
+      "dynamic_mode": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-cli/src/eval_cmd.rs",
+          "sha256": "fd50ec893a5198e9d10924f5e4862e807b357eedb7abe0c6e2513d4aa253b9f1",
+          "symbol": "cmd_eval"
+        },
+        {
+          "path": "crates/pkl-cli/src/eval_cmd.rs",
+          "sha256": "fd50ec893a5198e9d10924f5e4862e807b357eedb7abe0c6e2513d4aa253b9f1",
+          "symbol": "cmd_analyze_imports"
+        },
+        {
+          "path": "crates/pkl-runtime/src/diagnostic/ansi.rs",
+          "sha256": "2ce3d40ecbbc211aa04347026d61d13290aeeb76269fabdd15d157a1b2d78a27",
+          "symbol": "AnsiStringBuilder"
+        },
+        {
+          "path": "crates/pkl-host-native/src/driver.rs",
+          "sha256": "95cd08a4f09f7e37546a4194af85cfa1a7d629f89f23d168de9d90ba2cf65e83",
+          "symbol": "NativeHost"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "rust-api-and-cli"
+    },
+    "m5:cli:help-version-and-dispatch": {
+      "case_ids": [
+        "m5:cli:version-long",
+        "m5:cli:version-short",
+        "m5:cli:help-root",
+        "m5:cli:help-eval",
+        "m5:cli:help-test",
+        "m5:cli:help-repl",
+        "m5:cli:help-server",
+        "m5:cli:help-format",
+        "m5:cli:help-run",
+        "m5:cli:help-shell-completion",
+        "m5:cli:help-project",
+        "m5:cli:help-download-package",
+        "m5:cli:help-analyze",
+        "m5:cli:unknown-subcommand-error"
+      ],
+      "description": "Root & subcommand --help verbatim parity, honest native-flavor --version/-v contract, and invalid subcommand error handling",
+      "dynamic_mode": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-cli/src/lib.rs",
+          "sha256": "6b5d3cec99bcad9651762ba91c28b1404accb85832212d683d9157d344772ba3",
+          "symbol": "run_cli"
+        },
+        {
+          "path": "crates/pkl-cli/src/help.rs",
+          "sha256": "e6040963ca9c7732c94cd874d257060ad91306bcd205c77decd893485be9fd2e",
+          "symbol": "HELP_ROOT"
+        },
+        {
+          "path": "crates/pkl-cli/src/options.rs",
+          "sha256": "32eac236f7ad8f5717e51173fbac79a55ff26b85a9c4861c729512d9b9af1f23",
+          "symbol": "ParsedCliOptions"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "rust-api-and-cli"
+    },
+    "m5:cli:run-command-runner": {
+      "case_ids": [
+        "m5:cli:run-help",
+        "m5:cli:run-flags-and-args",
+        "m5:cli:run-missing-required-flag",
+        "m5:cli:run-convert-error"
+      ],
+      "description": "`pkl run` (`pkl:Command` 35 stdlib items): command help, primitive/boolean/counted/enum/list/map/duration flags & positional args, missing required flag and custom convert errors",
+      "dynamic_mode": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-cli/src/run_cmd.rs",
+          "sha256": "de24167ce2e8b2b20aa3521e8177ce8ec6341fe238e4a2691709c0be9c05702f",
+          "symbol": "cmd_run"
+        },
+        {
+          "path": "crates/pkl-runtime/src/evaluation/command.rs",
+          "sha256": "a1aaa138b8187d4d088cab2987e4b6e510b4690db75092268c7b112494ad7ae0",
+          "symbol": "CommandSpec"
+        },
+        {
+          "path": "crates/pkl-runtime/src/evaluation/command.rs",
+          "sha256": "a1aaa138b8187d4d088cab2987e4b6e510b4690db75092268c7b112494ad7ae0",
+          "symbol": "parse_command_invocation"
+        },
+        {
+          "path": "crates/pkl-runtime/src/evaluation/command.rs",
+          "sha256": "a1aaa138b8187d4d088cab2987e4b6e510b4690db75092268c7b112494ad7ae0",
+          "symbol": "render_command_help"
+        },
+        {
+          "path": "crates/pkl/src/evaluator.rs",
+          "sha256": "14ef778445d2188d0783c02f691096766aafa372e3ba15cd470b107abe9959f5",
+          "symbol": "evaluate_command_execution"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "rust-api-and-cli"
+    },
+    "m5:cli:shell-completion": {
+      "case_ids": [
+        "m5:cli:shell-completion-bash",
+        "m5:cli:shell-completion-zsh",
+        "m5:cli:shell-completion-fish",
+        "m5:cli:shell-completion-invalid"
+      ],
+      "description": "`pkl shell-completion` byte-exact script generation for bash, zsh, and fish plus invalid shell error",
+      "dynamic_mode": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-cli/src/lib.rs",
+          "sha256": "6b5d3cec99bcad9651762ba91c28b1404accb85832212d683d9157d344772ba3",
+          "symbol": "run_cli"
+        },
+        {
+          "path": "crates/pkl-cli/src/help.rs",
+          "sha256": "e6040963ca9c7732c94cd874d257060ad91306bcd205c77decd893485be9fd2e",
+          "symbol": "COMPLETION_BASH"
+        },
+        {
+          "path": "crates/pkl-cli/src/help.rs",
+          "sha256": "e6040963ca9c7732c94cd874d257060ad91306bcd205c77decd893485be9fd2e",
+          "symbol": "COMPLETION_ZSH"
+        },
+        {
+          "path": "crates/pkl-cli/src/help.rs",
+          "sha256": "e6040963ca9c7732c94cd874d257060ad91306bcd205c77decd893485be9fd2e",
+          "symbol": "COMPLETION_FISH"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "rust-api-and-cli"
+    },
+    "m5:cli:test-reporters-junit-overwrite": {
+      "case_ids": [
+        "m5:cli:test-spec-pass",
+        "m5:cli:test-minimal-pass",
+        "m5:cli:test-spec-fail-power-assertions",
+        "m5:cli:test-minimal-fail-color",
+        "m5:cli:test-junit-per-module",
+        "m5:cli:test-junit-aggregate",
+        "m5:cli:test-overwrite",
+        "m5:cli:test-no-modules-error"
+      ],
+      "description": "Full `pkl test` CLI: spec and minimal reporters, ANSI color, fact power assertions, per-module and aggregate JUnit XML reports, --overwrite expected file generation, exit codes 0/10/1",
+      "dynamic_mode": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-cli/src/test_cmd.rs",
+          "sha256": "c2b17c9e752838e7be425dad2b5885fc8c391561a4ae1548141bea21c864a838",
+          "symbol": "cmd_test"
+        },
+        {
+          "path": "crates/pkl-cli/src/test_cmd.rs",
+          "sha256": "c2b17c9e752838e7be425dad2b5885fc8c391561a4ae1548141bea21c864a838",
+          "symbol": "run_test_suite"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/test_runner.rs",
+          "sha256": "6b72075ce2ff2323ad1c094bcdd1cc3d6ddf4ee92ee3179820ded81b07cfb2ea",
+          "symbol": "render_spec_report_colored"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/test_runner.rs",
+          "sha256": "6b72075ce2ff2323ad1c094bcdd1cc3d6ddf4ee92ee3179820ded81b07cfb2ea",
+          "symbol": "render_minimal_report"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/test_runner.rs",
+          "sha256": "6b72075ce2ff2323ad1c094bcdd1cc3d6ddf4ee92ee3179820ded81b07cfb2ea",
+          "symbol": "render_junit_report"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/test_runner.rs",
+          "sha256": "6b72075ce2ff2323ad1c094bcdd1cc3d6ddf4ee92ee3179820ded81b07cfb2ea",
+          "symbol": "render_junit_aggregate_report"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "rust-api-and-cli"
+    },
+    "m5:format:cli-modes-grammar-versions-and-errors": {
+      "case_ids": [
+        "m5:format:already-formatted-exit0",
+        "m5:format:stdin-unformatted-exit11",
+        "m5:format:stdin-already-formatted-exit0",
+        "m5:format:stdin-write-error",
+        "m5:format:write-in-place",
+        "m5:format:diff-name-only",
+        "m5:format:silent-write",
+        "m5:format:grammar-version-1",
+        "m5:format:grammar-version-2",
+        "m5:format:dir-walk-pkl-and-pklproject",
+        "m5:format:whitespace-only",
+        "m5:format:parse-error-non-bug",
+        "m5:format:multiline-string-errors"
+      ],
+      "description": "`pkl format` CLI contract: stdin `-`, `-w`/`--write`, `--diff-name-only`, `-s`/`--silent`, `--grammar-version=1|2`, recursive `.pkl`/`PklProject` dir walk, whitespace-only, non-bug parse & multiline string errors, exit codes 0/1/11",
+      "dynamic_mode": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-cli/src/format_cmd.rs",
+          "sha256": "f06b12e659ce84fbdc290d08a8af2901ac98018231a8569dec9fbebd9c5fa4b2",
+          "symbol": "cmd_format"
+        },
+        {
+          "path": "crates/pkl-formatter/src/cli.rs",
+          "sha256": "9c94557eb9f962d6e7ef06d6006008fe4a14b2c34c146918e7089582278d99d0",
+          "symbol": "run_cli"
+        },
+        {
+          "path": "crates/pkl-formatter/src/lib.rs",
+          "sha256": "9d89303ac1936c6493310c3ed5a19578042295c9c01807d8e8a1c58a0403aae2",
+          "symbol": "GrammarVersion"
+        },
+        {
+          "path": "crates/pkl-formatter/src/lib.rs",
+          "sha256": "9d89303ac1936c6493310c3ed5a19578042295c9c01807d8e8a1c58a0403aae2",
+          "symbol": "FormatError"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "formatter"
+    },
+    "m5:format:corpus-30-goldens-and-idempotency": {
+      "case_ids": [],
+      "description": "All 30 upstream FormatterSnippetTests golden input/output pairs in compatibility/corpus.json plus 2nd-pass idempotency verification (rc=0)",
+      "dynamic_mode": "format_snippet",
+      "expected_dynamic_count": 30,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-formatter/src/lib.rs",
+          "sha256": "9d89303ac1936c6493310c3ed5a19578042295c9c01807d8e8a1c58a0403aae2",
+          "symbol": "Formatter"
+        },
+        {
+          "path": "crates/pkl-formatter/src/generator.rs",
+          "sha256": "726d843ab549f102f3eb92d2cb2f295b357000e9bc909256d4f08350017b1cfd",
+          "symbol": "Generator"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "formatter"
+    },
+    "m5:pkldoc:stdlib-docpkginfo-release-migrate-and-cli": {
+      "case_ids": [
+        "m5:pkldoc:version",
+        "m5:pkldoc:help",
+        "m5:pkldoc:stdlib-doc-package-info",
+        "m5:pkldoc:non-test-mode-release-032",
+        "m5:pkldoc:migrate-v1",
+        "m5:pkldoc:error-legacy-without-migrate",
+        "m5:pkldoc:error-missing-doc-package-info",
+        "m5:pkldoc:error-multiple-docsite-info",
+        "m5:pkldoc:error-package-fragment"
+      ],
+      "description": "`pkldoc` deferred external/pkl/stdlib/doc-package-info.pkl (`importUri = \"pkl:/\"`), non-test-mode 0.32.0 release links, `--migrate` from v1 docsite, `--help`/`--version`, and CLI validation errors",
+      "dynamic_mode": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-doc/src/cli.rs",
+          "sha256": "bf35c95a621ba33eca06dc4fbafd1e510e1b11feb86db616dad140eb6988486b",
+          "symbol": "CliDocGenerator"
+        },
+        {
+          "path": "crates/pkl-doc/src/cli.rs",
+          "sha256": "bf35c95a621ba33eca06dc4fbafd1e510e1b11feb86db616dad140eb6988486b",
+          "symbol": "pkldoc_version_info"
+        },
+        {
+          "path": "crates/pkl-doc/src/migrator.rs",
+          "sha256": "4c924e964f24a2d4ab4d72e9a30b45844c2e3411e44528fc0cb774b8549693e6",
+          "symbol": "DocMigrator"
+        },
+        {
+          "path": "crates/pkl-doc/src/generator.rs",
+          "sha256": "a16ac645acd6baebeef3ea7b1f01f6f46f6232df327f8afa5847b0542349d268",
+          "symbol": "determine_current_packages"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "pkldoc"
+    },
+    "m5:pkldoc:upstream-docsite-and-incremental": {
+      "case_ids": [
+        "m5:pkldoc:single-package-test",
+        "m5:pkldoc:doc-generator-run1",
+        "m5:pkldoc:doc-generator-run1-then-run2",
+        "m5:pkldoc:older-version-no-overwrite",
+        "m5:pkldoc:idempotent-rerun",
+        "m5:pkldoc:no-symlinks-copy"
+      ],
+      "description": "Standalone `pkldoc` byte-for-byte HTML/JSON/search-index/static-asset/symlink parity on upstream SinglePackageTest, DocGeneratorTest run-1 & incremental run-2, older-version non-overwrite, idempotent rerun, and --no-symlinks",
+      "dynamic_mode": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-doc/src/generator.rs",
+          "sha256": "a16ac645acd6baebeef3ea7b1f01f6f46f6232df327f8afa5847b0542349d268",
+          "symbol": "DocGenerator"
+        },
+        {
+          "path": "crates/pkl-doc/src/pages.rs",
+          "sha256": "79ac1cb28a8b0ba5f5f5cbe15fad1b531f296c8cafde30d7651edaafcdda82fa",
+          "symbol": "HtmlGenerator"
+        },
+        {
+          "path": "crates/pkl-doc/src/assets.rs",
+          "sha256": "5646f10b3a63ece6c6a140fc2fddfdabb66c13e7076472459fb501c97330e509",
+          "symbol": "write_all_static_resources"
+        },
+        {
+          "path": "crates/pkl-doc/src/package_data.rs",
+          "sha256": "22f07064475cce0d0814e0e8e9d632f487b0cacbd8026fef9e95cfd21d0ae9e6",
+          "symbol": "PackageRef"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "pkldoc"
+    },
+    "m5:repl:pipe-commands-state-and-options": {
+      "case_ids": [
+        "m5:repl:pipe-welcome-help-examples-quit",
+        "m5:repl:pipe-stateful-untyped-to-typed",
+        "m5:repl:pipe-multiline-and-force",
+        "m5:repl:pipe-load-reset-clear",
+        "m5:repl:pipe-command-prefixes-and-unknown",
+        "m5:repl:pipe-error-preamble-and-recovery",
+        "m5:repl:pipe-cli-options-props-env-trace",
+        "m5:repl:pipe-color-always"
+      ],
+      "description": "`pkl repl` non-TTY pipe sessions: welcome banner, :help/:examples/:load/:reset/:force/:quit, prefix resolution, untyped->typed replacement, multiline input, error preamble stripping, CLI options (-p/-e/--trace-mode/--color=always)",
+      "dynamic_mode": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-cli/src/repl_cmd.rs",
+          "sha256": "6b3604afe6fab169dc038a886607dfb694149c9186b2b55d27ffc1502bc4d50e",
+          "symbol": "cmd_repl"
+        },
+        {
+          "path": "crates/pkl-repl/src/runner.rs",
+          "sha256": "787ffa1bf3b975996ccf0dc438fb657b468b3393cb6306d07057ccb4b4f8dbac",
+          "symbol": "run_io"
+        },
+        {
+          "path": "crates/pkl-runtime/src/repl/session.rs",
+          "sha256": "b750101027e7697722dc8c96341e626dc6d683818e07972b3222337ce2d07a15",
+          "symbol": "ReplSession"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "repl"
+    },
+    "m5:repl:pty-interactive-session": {
+      "case_ids": [
+        "m5:repl:pty-basic-and-quit",
+        "m5:repl:pty-ctrl-d-eof",
+        "m5:repl:pty-color-auto-tty",
+        "m5:repl:pty-multiline-and-reset"
+      ],
+      "description": "`pkl repl` real POSIX PTY sessions (`TERM=dumb`, 80x24, `TIOCSCTTY`, `stderr=PIPE`): TTY echo & line endings, `:quit`, Ctrl-D EOF, automatic TTY `--color=auto` syntax highlighting, multiline & `:reset`",
+      "dynamic_mode": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-repl/src/runner.rs",
+          "sha256": "787ffa1bf3b975996ccf0dc438fb657b468b3393cb6306d07057ccb4b4f8dbac",
+          "symbol": "run_cli"
+        },
+        {
+          "path": "crates/pkl-repl/src/terminal.rs",
+          "sha256": "34fabf8e27ea6378018b7e5096c828279fe49e2c9c5438b5ccb1c09a0b111060",
+          "symbol": "LineEditor"
+        },
+        {
+          "path": "crates/pkl-repl/src/terminal.rs",
+          "sha256": "34fabf8e27ea6378018b7e5096c828279fe49e2c9c5438b5ccb1c09a0b111060",
+          "symbol": "is_dumb_terminal"
+        },
+        {
+          "path": "crates/pkl-runtime/src/repl/session.rs",
+          "sha256": "b750101027e7697722dc8c96341e626dc6d683818e07972b3222337ce2d07a15",
+          "symbol": "ReplSessionOptions"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "repl"
+    },
+    "m5:server:client-and-external-readers": {
+      "case_ids": [
+        "m5:server:client-resource-read-ok-null-error",
+        "m5:server:client-resource-glob-ok-null-error",
+        "m5:server:client-module-read-ok-null-error",
+        "m5:server:client-module-glob-ok-null-error",
+        "m5:server:client-module-triple-dot",
+        "m5:server:external-readers-and-lifecycle"
+      ],
+      "description": "`pkl server` bidirectional 0x26-0x2d client module/resource reader callbacks (read/glob/null/error/triple-dot) and 0x2e-0x32 external reader delegation with graceful close & zero orphan PIDs",
+      "dynamic_mode": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-server/src/server.rs",
+          "sha256": "1dafb9a1f0545de8f7bc676eaf69a86665614b28d4c94ad46be8547a5094ff90",
+          "symbol": "run_stream_server"
+        },
+        {
+          "path": "crates/pkl-server/src/evaluator.rs",
+          "sha256": "1c60acc6442d9c3f10e46b4d99372e077b89f42765241039518c126ceed8df3f",
+          "symbol": "ServerEvaluator"
+        },
+        {
+          "path": "crates/pkl-runtime/src/server/client_callbacks.rs",
+          "sha256": "25766cd89b8f2707a2c0b41de368b602d6a39b95a01464de75b0bd427d888be0",
+          "symbol": "ClientCallbackRegistry"
+        },
+        {
+          "path": "crates/pkl-host-native/src/driver.rs",
+          "sha256": "95cd08a4f09f7e37546a4194af85cfa1a7d629f89f23d168de9d90ba2cf65e83",
+          "symbol": "NativeHost"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "server"
+    },
+    "m5:server:host-project-http-and-concurrency": {
+      "case_ids": [
+        "m5:server:env-properties-rootdir-workingdir",
+        "m5:server:module-paths-dir-and-jar",
+        "m5:server:project-local-deps",
+        "m5:server:timeout-seconds",
+        "m5:server:http-ca-headers-rewrites",
+        "m5:server:http-proxy-and-no-proxy",
+        "m5:server:pipelined-fifo-same-evaluator",
+        "m5:server:interleaved-create-while-blocked"
+      ],
+      "description": "`pkl server` env/properties/rootDir/workingDir, modulePaths (dir+JAR), project local dependencies, timeoutSeconds, HTTP (caCertificates/rewrites/headers/proxy/noProxy), FIFO pipelining, and non-blocking interleaved CreateEvaluator while blocked on callback",
+      "dynamic_mode": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-server/src/server.rs",
+          "sha256": "1dafb9a1f0545de8f7bc676eaf69a86665614b28d4c94ad46be8547a5094ff90",
+          "symbol": "run_stream_server"
+        },
+        {
+          "path": "crates/pkl-server/src/evaluator.rs",
+          "sha256": "1c60acc6442d9c3f10e46b4d99372e077b89f42765241039518c126ceed8df3f",
+          "symbol": "CreateEvaluatorParams"
+        },
+        {
+          "path": "crates/pkl-runtime/src/server/client_callbacks.rs",
+          "sha256": "25766cd89b8f2707a2c0b41de368b602d6a39b95a01464de75b0bd427d888be0",
+          "symbol": "to_declared_dependencies_tree"
+        },
+        {
+          "path": "crates/pkl-host-native/src/driver.rs",
+          "sha256": "95cd08a4f09f7e37546a4194af85cfa1a7d629f89f23d168de9d90ba2cf65e83",
+          "symbol": "NativeHostConfig"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "server"
+    },
+    "m5:server:protocol-lifecycle-eval-logs": {
+      "case_ids": [
+        "m5:server:eof-empty",
+        "m5:server:create-and-close",
+        "m5:server:evaluate-binary-and-output-format",
+        "m5:server:evaluate-error-and-unknown-evaluator",
+        "m5:server:create-invalid-config-errors",
+        "m5:server:logs-trace-compact-pretty-and-warn",
+        "m5:server:multi-evaluator-isolation",
+        "m5:server:unhandled-ext-code-rejected"
+      ],
+      "description": "`pkl server` MessagePack 0x20-0x25 lifecycle, Pkl-binary & outputFormat evaluation, invalid config/evaluator errors, trace (compact/pretty) & warn 0x25 LogMessages, multi-evaluator isolation, unhandled external code rejection, clean EOF",
+      "dynamic_mode": null,
+      "expected_dynamic_count": null,
+      "implementation_links": [
+        {
+          "path": "crates/pkl-server/src/server.rs",
+          "sha256": "1dafb9a1f0545de8f7bc676eaf69a86665614b28d4c94ad46be8547a5094ff90",
+          "symbol": "run_stream_server"
+        },
+        {
+          "path": "crates/pkl-server/src/evaluator.rs",
+          "sha256": "1c60acc6442d9c3f10e46b4d99372e077b89f42765241039518c126ceed8df3f",
+          "symbol": "ServerEvaluator"
+        },
+        {
+          "path": "crates/pkl-runtime/src/server/messages.rs",
+          "sha256": "c7d87d75cd17fc9ce749a94f31bb82ef2c9a8a3da71f4bd5325f519a52e32929",
+          "symbol": "ServerMessage"
+        },
+        {
+          "path": "crates/pkl-runtime/src/server/codec.rs",
+          "sha256": "f1234f65a303426cabf970539c56d68b3d37e179a7e0820fb175680ec8e3340b",
+          "symbol": "write_message"
+        },
+        {
+          "path": "crates/pkl-runtime/src/server/codec.rs",
+          "sha256": "f1234f65a303426cabf970539c56d68b3d37e179a7e0820fb175680ec8e3340b",
+          "symbol": "read_message"
+        }
+      ],
+      "implementation_status": "linked",
+      "lane": "server"
+    }
+  },
+  "schema_version": 1,
+  "scope": "Complete M5 Product APIs & Tools manifest: Rust public evaluator API, full product `pkl` CLI (eval/test/run/shell-completion/project/download-package/analyze/--help/--version), `pkl repl` (pipe + POSIX PTY), `pkl server` (MessagePack 0x20-0x32), `pkl format` (30 corpus goldens + CLI + V1/V2), and standalone `pkldoc` (HTML/JSON/symlinks/17 static web assets/stdlib doc-package-info.pkl). 2026-11-20 JVM/codegen exclusions are preserved as census-only items. Freshness checks never claim runtime compatibility passes (`coverage_gate: null`).",
+  "sources": {
+    "compatibility/corpus.json": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
+    "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
+    "compatibility/m5-mappings.json": "d826287b55030150f63e777e5b082cb7f24102694535f3930946bb1609a823f0",
+    "tests/fixtures/m5/cases.json": "a4bd9dbbb273aad32aade5f850bd8ffa476c6bb62f208033105eb27a85fa431f",
+    "tools/java/M5ApiOracleProbe.java": "4cf720f83fd162a1be4e9db62796a35caac0cb5c10cdd99e63529ea435993bab",
+    "tools/m5_pkldoc_tree.py": "83ac982c415fa37d6b797dcbcb11b5c5e36650ff21e26f0a3b451554040de813",
+    "tools/m5_repl_driver.py": "ed39a7d586f68084d186706b58cd89143317a0ed394ebfa2243eec22016afb05",
+    "tools/m5_server_client.py": "e77af198a9aa64680ee3a3509a4266b7f9bbfb83bf8d53136986219a77ae23b2"
+  }
+}

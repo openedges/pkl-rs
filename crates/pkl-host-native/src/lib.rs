@@ -17,8 +17,9 @@ pub mod zip_archive;
 
 pub use certs::{BUNDLED_PKL_CA_ROOTS_PEM, CaCertSource};
 pub use driver::{
-    CleanupReport, NativeHost, NativeHostConfig, NativeStreamingOutputFilesOutcome,
-    PrimaryModuleSource,
+    CleanupReport, CustomModuleReader, CustomResourceReader, CustomSecurityChecker,
+    HostFrameTransformer, HostLogger, NativeHost, NativeHostConfig, NativeHostExtensions,
+    NativeStreamingOutputFilesOutcome, PrimaryModuleSource,
 };
 pub use fs::{NativeFs, canonicalize_root_dir, file_uri_to_path, path_to_file_uri};
 pub use http::{CancelFlag, NativeHttpClient, NativeHttpTransport};

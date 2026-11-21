@@ -1,0 +1,19 @@
+[package]
+name = "pkl-doc"
+description = "HTML documentation generator (`pkldoc`) for Pkl 0.32.0"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[[bin]]
+name = "pkldoc"
+path = "src/bin/pkldoc.rs"
+
+[dependencies]
+pkl-host-native = { path = "../pkl-host-native" }
+pkl-runtime = { path = "../pkl-runtime" }
+
+[lints]
+workspace = true

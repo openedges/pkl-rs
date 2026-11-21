@@ -15,9 +15,17 @@
 //! to `next` omit intervening whitespace. Keep that behavior separate from source
 //! positions and the parser, and discard the entire replay on a lexical error.
 
+use super::ansi::{AnsiStringBuilder, theme};
+
 #[derive(Clone, Copy, PartialEq, Eq)]
 enum Token {
     Other,
+    Constant,
+    Operator,
+    Control,
+    Keyword,
+    Comment,
+    Number,
     Start,
     End,
     Part,
@@ -47,7 +55,14 @@ pub(super) fn uncolored(source: &str) -> String {
     uncolored_text(&source.into()).to_java_utf8()
 }
 
+#[cfg(test)]
 pub(super) fn uncolored_text(source: &crate::value::PklString) -> crate::value::PklString {
+    let mut out = AnsiStringBuilder::new(false);
+    write_to(&mut out, source);
+    out.finish_pkl()
+}
+
+pub(crate) fn write_to(out: &mut AnsiStringBuilder, source: &crate::value::PklString) {
     let units: Vec<_> = source.encode_utf16().collect();
     let mut lexer = Lexer {
         source: &units,
@@ -58,19 +73,24 @@ pub(super) fn uncolored_text(source: &crate::value::PklString) -> crate::value::
         escape: false,
         scopes: Vec::new(),
     };
-    let mut output = Vec::with_capacity(units.len());
-    if replay(&mut output, &mut lexer).is_err() {
-        source.clone()
-    } else {
-        crate::value::PklString::from_utf16(output)
+    let prev_len = out.len();
+    let saved = out.clone();
+    if replay(out, &mut lexer).is_err() {
+        *out = saved;
+        out.set_length(prev_len);
+        out.append_pkl(source);
     }
 }
-fn advance(output: &mut Vec<u16>, lexer: &mut Lexer<'_>) -> LexResult<Token> {
+
+fn advance(out: &mut AnsiStringBuilder, lexer: &mut Lexer<'_>) -> LexResult<Token> {
     let previous = lexer.cursor;
     let token = lexer.next()?;
-    output.extend_from_slice(&lexer.source[previous..lexer.start]);
+    if lexer.start > previous {
+        out.append_utf16(&lexer.source[previous..lexer.start]);
+    }
     Ok(token)
 }
+
 // The Java implementation recurses between normal and string highlighting.
 // An explicit stack also renders parser depth-limit failures safely.
 enum Traversal {
@@ -78,8 +98,11 @@ enum Traversal {
     NormalAdvance(Token),
     String(Token),
     AfterInterpolation,
+    EndStringScope(super::ansi::AnsiCodeSet),
+    EndSandbox(super::ansi::AnsiCodeSet, super::ansi::AnsiCodeSet),
 }
-fn replay(output: &mut Vec<u16>, lexer: &mut Lexer<'_>) -> LexResult<()> {
+
+fn replay(out: &mut AnsiStringBuilder, lexer: &mut Lexer<'_>) -> LexResult<()> {
     let mut work = vec![Traversal::Normal(lexer.next()?, Token::Eof)];
     while let Some(step) = work.pop() {
         match step {
@@ -88,32 +111,66 @@ fn replay(output: &mut Vec<u16>, lexer: &mut Lexer<'_>) -> LexResult<()> {
                     continue;
                 }
                 work.push(Traversal::NormalAdvance(end));
-                if token == Token::Start {
-                    work.push(Traversal::String(token));
-                } else {
-                    output.extend_from_slice(lexer.text());
+                match token {
+                    Token::Constant => {
+                        out.append_styled_utf16(theme::SYNTAX_CONSTANT, lexer.text());
+                    }
+                    Token::Operator => {
+                        out.append_styled_utf16(theme::SYNTAX_OPERATOR, lexer.text());
+                    }
+                    Token::Control => {
+                        out.append_styled_utf16(theme::SYNTAX_CONTROL, lexer.text());
+                    }
+                    Token::Keyword => {
+                        out.append_styled_utf16(theme::SYNTAX_KEYWORD, lexer.text());
+                    }
+                    Token::Comment => {
+                        out.append_styled_utf16(theme::SYNTAX_COMMENT, lexer.text());
+                    }
+                    Token::Number => {
+                        out.append_styled_utf16(theme::SYNTAX_NUMBER, lexer.text());
+                    }
+                    Token::Start => {
+                        let prev = out.enter_scope(theme::SYNTAX_STRING);
+                        work.push(Traversal::EndStringScope(prev));
+                        work.push(Traversal::String(token));
+                    }
+                    _ => {
+                        out.append_utf16(lexer.text());
+                    }
                 }
             }
             Traversal::NormalAdvance(end) => {
-                work.push(Traversal::Normal(advance(output, lexer)?, end));
+                work.push(Traversal::Normal(advance(out, lexer)?, end));
             }
             Traversal::String(token) => {
                 if token == Token::End || token == Token::Eof {
-                    output.extend_from_slice(lexer.text());
+                    out.append_utf16(lexer.text());
+                } else if token == Token::Escape {
+                    out.append_styled_utf16(theme::SYNTAX_STRING_ESCAPE, lexer.text());
+                    work.push(Traversal::String(advance(out, lexer)?));
                 } else if token == Token::Interpolation {
-                    output.extend_from_slice(lexer.text());
+                    out.append_styled_utf16(theme::SYNTAX_STRING_ESCAPE, lexer.text());
+                    let (saved_cur, saved_decl) = out.enter_sandbox();
                     work.push(Traversal::AfterInterpolation);
+                    work.push(Traversal::EndSandbox(saved_cur, saved_decl));
                     work.push(Traversal::Normal(lexer.next()?, Token::RightParen));
                 } else {
-                    output.extend_from_slice(lexer.text());
-                    work.push(Traversal::String(advance(output, lexer)?));
+                    out.append_utf16(lexer.text());
+                    work.push(Traversal::String(advance(out, lexer)?));
                 }
             }
+            Traversal::EndSandbox(saved_cur, saved_decl) => {
+                out.exit_sandbox(saved_cur, saved_decl);
+            }
             Traversal::AfterInterpolation => {
-                output.extend_from_slice(lexer.text());
+                out.append_styled_utf16(theme::SYNTAX_STRING_ESCAPE, lexer.text());
                 lexer.next()?;
-                output.extend_from_slice(lexer.text());
-                work.push(Traversal::String(advance(output, lexer)?));
+                out.append_utf16(lexer.text());
+                work.push(Traversal::String(advance(out, lexer)?));
+            }
+            Traversal::EndStringScope(prev) => {
+                out.exit_scope(prev);
             }
         }
     }
@@ -180,6 +237,7 @@ impl Lexer<'_> {
             '#' => {
                 if self.consume("!") {
                     self.line_comment();
+                    return Ok(Token::Comment);
                 } else {
                     let mut pounds = 1;
                     while self.consume("#") {
@@ -205,6 +263,7 @@ impl Lexer<'_> {
             '/' => {
                 if self.consume("/") {
                     self.line_comment();
+                    return Ok(Token::Comment);
                 } else if self.consume("*") {
                     let Some(end) = self.source[self.cursor..]
                         .windows(2)
@@ -217,17 +276,22 @@ impl Lexer<'_> {
                     if self.cursor == self.source.len() {
                         return Err(());
                     }
+                    return Ok(Token::Comment);
+                } else {
+                    return Ok(Token::Operator);
                 }
             }
             '&' => {
                 if !self.consume("&") {
                     return Err(());
                 }
+                return Ok(Token::Operator);
             }
             '~' => {
                 if !self.consume("/") {
                     return Err(());
                 }
+                return Ok(Token::Operator);
             }
             '.' => {
                 if self.consume(".") {
@@ -237,19 +301,83 @@ impl Lexer<'_> {
                     self.consume("?");
                 } else if self.peek().is_some_and(|ch| ch.is_ascii_digit()) {
                     self.number('.')?;
+                    return Ok(Token::Number);
                 }
             }
-            ';' | '{' | '}' | ',' | '@' | ':' | '+' | '%' | '[' | ']' | '=' | '>' | '<' | '-'
-            | '!' | '?' | '|' | '*' => {}
-            ch if is_digit(ch) => self.number(ch)?,
+            ';' | '{' | '}' | ',' | '@' | ':' | '[' | ']' => {}
+            '+' | '%' => return Ok(Token::Operator),
+            '-' => {
+                if !self.consume(">") {
+                    return Ok(Token::Operator);
+                }
+            }
+            '*' => {
+                self.consume("*");
+                return Ok(Token::Operator);
+            }
+            '|' => {
+                self.consume("|");
+                return Ok(Token::Operator);
+            }
+            '<' | '>' => {
+                self.consume("=");
+                return Ok(Token::Operator);
+            }
+            '=' => {
+                if self.consume("=") {
+                    return Ok(Token::Operator);
+                }
+            }
+            '!' => {
+                if self.consume("!") {
+                    // `!!` is NON_NULL, not in SyntaxHighlighter.operator
+                } else {
+                    self.consume("=");
+                    return Ok(Token::Operator);
+                }
+            }
+            '?' => {
+                if self.consume("?") {
+                    return Ok(Token::Operator);
+                }
+            }
+            ch if is_digit(ch) => {
+                self.number(ch)?;
+                return Ok(Token::Number);
+            }
             ch if crate::parser::is_identifier_start(ch) => {
                 while self.peek().is_some_and(crate::parser::is_identifier_part) {
                     self.take();
                 }
+                return Ok(self.classify_identifier());
             }
             _ => return Err(()),
         }
         Ok(Token::Other)
+    }
+    fn classify_identifier(&mut self) -> Token {
+        let slice = self.text();
+        let Some(word) = String::from_utf16(slice).ok() else {
+            return Token::Other;
+        };
+        match word.as_str() {
+            "true" | "false" | "null" => Token::Constant,
+            "new" | "if" | "else" | "when" | "for" | "in" | "out" | "let" => Token::Control,
+            "import" => {
+                self.consume("*");
+                Token::Keyword
+            }
+            "read" => {
+                if !self.consume("*") {
+                    self.consume("?");
+                }
+                Token::Keyword
+            }
+            "amends" | "as" | "extends" | "class" | "typealias" | "function" | "module"
+            | "trace" | "throw" | "unknown" | "nothing" | "outer" | "super" | "this" | "hidden"
+            | "abstract" | "const" | "fixed" | "local" | "open" => Token::Keyword,
+            _ => Token::Other,
+        }
     }
     fn line_comment(&mut self) {
         while self.peek().is_some_and(|ch| !matches!(ch, '\n' | '\r')) {

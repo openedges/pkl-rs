@@ -1,0 +1,3357 @@
+{
+  "schema_version": 1,
+  "baseline": "0.32.0",
+  "cases": [
+    {
+      "id": "m5:api:eval-text-json-props-env",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "api_probe",
+      "command": [
+        "eval-text",
+        "{root}/tests/fixtures/m5/api/basic.pkl",
+        "--format=json",
+        "--prop=who=pkl",
+        "--env=GREET=hi"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/api/basic.pkl",
+          "sha256": "d2c63074ee83640f3d6b78da39daaadeeb85d60c1c584e68d97396a3a2fbdc2d"
+        }
+      ]
+    },
+    {
+      "id": "m5:api:eval-text-color-always-error",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "api_probe",
+      "command": [
+        "eval-text",
+        "{root}/tests/fixtures/m5/cli/eval_color_err.pkl",
+        "--color=always"
+      ],
+      "expected_exit": [
+        1
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/cli/eval_color_err.pkl",
+          "sha256": "4508f519e5cb2eb7d8a7dda4d87f242d54bf6a2ad38367d1ffbd8d6bf0fb2d49"
+        }
+      ]
+    },
+    {
+      "id": "m5:api:eval-source-text-module",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "api_probe",
+      "command": [
+        "eval-source-text",
+        "{root}/tests/fixtures/m5/api/source_text.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/api/source_text.pkl",
+          "sha256": "d42b6b86ebc0b32c82bd4c4c42df39a056f221c96a2c84a5eedb4718058a177e"
+        }
+      ]
+    },
+    {
+      "id": "m5:api:eval-source-text-expr",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "api_probe",
+      "command": [
+        "eval-source-text",
+        "{root}/tests/fixtures/m5/api/source_text.pkl",
+        "--expr=a * 10"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/api/source_text.pkl",
+          "sha256": "d42b6b86ebc0b32c82bd4c4c42df39a056f221c96a2c84a5eedb4718058a177e"
+        }
+      ]
+    },
+    {
+      "id": "m5:api:eval-output-bytes",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "api_probe",
+      "command": [
+        "eval-output-bytes",
+        "{root}/tests/fixtures/m5/api/output_bytes.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/api/output_bytes.pkl",
+          "sha256": "857888c51a151c2910e3102cd708aee5bcc85d475b4b3bc1513ddcbb9862ead5"
+        }
+      ]
+    },
+    {
+      "id": "m5:api:eval-output-files",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "api_probe",
+      "command": [
+        "eval-output-files",
+        "{root}/tests/fixtures/m5/api/output_files.pkl",
+        "{output_dir}"
+      ],
+      "collect_files": "output_dir",
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/api/output_files.pkl",
+          "sha256": "f4010e33ddafb0d1bdb06f9e641e7c926480109ddb4619c055625780fa9a0c6d"
+        }
+      ]
+    },
+    {
+      "id": "m5:api:eval-expr-pkl-binary",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "api_probe",
+      "command": [
+        "eval-expr-pkl-binary",
+        "{root}/tests/fixtures/m5/api/source_text.pkl",
+        "items"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/api/source_text.pkl",
+          "sha256": "d42b6b86ebc0b32c82bd4c4c42df39a056f221c96a2c84a5eedb4718058a177e"
+        }
+      ]
+    },
+    {
+      "id": "m5:api:eval-custom-spi-ok",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "api_probe",
+      "command": [
+        "eval-custom-spi",
+        "{root}/tests/fixtures/m5/api/custom_spi.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/api/custom_spi.pkl",
+          "sha256": "99d0a86e0cd2548ae18515a2560bf77837bfa09321dd30472a6a637e71a0c197"
+        }
+      ]
+    },
+    {
+      "id": "m5:api:eval-custom-spi-error",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "api_probe",
+      "command": [
+        "eval-custom-spi",
+        "{root}/tests/fixtures/m5/api/custom_spi_error.pkl"
+      ],
+      "expected_exit": [
+        1
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/api/custom_spi_error.pkl",
+          "sha256": "a9a38f4b65e46fcd37879631070cdc6d19e8ae1c0bfeadd0028da0e333474c55"
+        }
+      ]
+    },
+    {
+      "id": "m5:api:eval-custom-security-deny",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "api_probe",
+      "command": [
+        "eval-custom-security",
+        "{root}/tests/fixtures/m5/api/custom_security_deny.pkl"
+      ],
+      "expected_exit": [
+        1
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/api/custom_security_deny.pkl",
+          "sha256": "7ea1d761218f3e2cb9f149d4929c6b0a052f3b05de955b98f714c79ce9216f20"
+        }
+      ]
+    },
+    {
+      "id": "m5:api:eval-schema",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "api_probe",
+      "command": [
+        "eval-schema",
+        "{root}/tests/fixtures/m5/api/schema_sample.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/api/schema_sample.pkl",
+          "sha256": "d672d1dde3d3aca04b18e85f89282ce2262852109e45cbd6b0c5bb63be27ff44"
+        }
+      ]
+    },
+    {
+      "id": "m5:api:project-and-analyzer",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "api_probe",
+      "command": [
+        "project-and-analyzer",
+        "{root}/tests/fixtures/m5/api/project_sample",
+        "{root}/tests/fixtures/m5/api/project_sample/main.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/api/project_sample/PklProject",
+          "sha256": "1cdd3b9cdf49e301216bec9656f5108ca222a941e273c9bb62c29964a90a186a"
+        },
+        {
+          "path": "tests/fixtures/m5/api/project_sample/helper.pkl",
+          "sha256": "1f209c9a44fb085b7e2e15de3474eefca2cc5c59e7344dc06fd1ac577fb54d7f"
+        },
+        {
+          "path": "tests/fixtures/m5/api/project_sample/main.pkl",
+          "sha256": "6c551d4578762a6c88136b07b52283e50b6408a50ff040142ebe08d80a202951"
+        }
+      ]
+    },
+    {
+      "id": "m5:api:lifecycle-reuse-timeout-close",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "api_probe",
+      "command": [
+        "lifecycle-reuse-timeout-close",
+        "{root}/tests/fixtures/m5/api/fast.pkl",
+        "{root}/tests/fixtures/m5/api/slow.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/api/fast.pkl",
+          "sha256": "2ea3354057731bab6f93134910049af0105d67b127c0d07cd9699e037db4b14b"
+        },
+        {
+          "path": "tests/fixtures/m5/api/slow.pkl",
+          "sha256": "8497098c05da78b4f401340859173e5edf35e9fe2457c6c5061939d8b689e0d3"
+        }
+      ]
+    },
+    {
+      "id": "m5:cli:version-long",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "--version"
+      ],
+      "comparison_mode": "native-version",
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:cli:version-short",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "-v"
+      ],
+      "comparison_mode": "native-version",
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:cli:help-root",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "--help"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:cli:help-eval",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "eval",
+        "--help"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:cli:help-test",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "test",
+        "--help"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:cli:help-repl",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "repl",
+        "--help"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:cli:help-server",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "server",
+        "--help"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:cli:help-format",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "format",
+        "--help"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:cli:help-run",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "run",
+        "--help"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:cli:help-shell-completion",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "shell-completion",
+        "--help"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:cli:help-project",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "project",
+        "--help"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:cli:help-download-package",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "download-package",
+        "--help"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:cli:help-analyze",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "analyze",
+        "--help"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:cli:unknown-subcommand-error",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "bogus-cmd"
+      ],
+      "expected_exit": [
+        1
+      ]
+    },
+    {
+      "id": "m5:cli:eval-color-always-error",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "eval",
+        "--no-project",
+        "--color=always",
+        "{root}/tests/fixtures/m5/cli/eval_color_err.pkl"
+      ],
+      "expected_exit": [
+        1
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/cli/eval_color_err.pkl",
+          "sha256": "4508f519e5cb2eb7d8a7dda4d87f242d54bf6a2ad38367d1ffbd8d6bf0fb2d49"
+        }
+      ]
+    },
+    {
+      "id": "m5:cli:eval-power-assertions-on",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "--power-assertions",
+        "{root}/tests/fixtures/m5/cli/eval_color_err.pkl"
+      ],
+      "expected_exit": [
+        1
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/cli/eval_color_err.pkl",
+          "sha256": "4508f519e5cb2eb7d8a7dda4d87f242d54bf6a2ad38367d1ffbd8d6bf0fb2d49"
+        }
+      ]
+    },
+    {
+      "id": "m5:cli:eval-power-assertions-off",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "--no-power-assertions",
+        "{root}/tests/fixtures/m5/cli/eval_color_err.pkl"
+      ],
+      "expected_exit": [
+        1
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/cli/eval_color_err.pkl",
+          "sha256": "4508f519e5cb2eb7d8a7dda4d87f242d54bf6a2ad38367d1ffbd8d6bf0fb2d49"
+        }
+      ]
+    },
+    {
+      "id": "m5:cli:eval-trace-mode-pretty",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "--trace-mode=pretty",
+        "{root}/tests/fixtures/m5/cli/eval_trace.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/cli/eval_trace.pkl",
+          "sha256": "b4d34527fa4b259f7f2575d47be9e9d75bf6bc02f0998200d58977a60e051657"
+        }
+      ]
+    },
+    {
+      "id": "m5:cli:eval-multi-separator-and-output-path",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "--module-output-separator=//SEP//",
+        "-o",
+        "{output_dir}/combined.pcf",
+        "{root}/tests/fixtures/m5/cli/eval_multi_a.pkl",
+        "{root}/tests/fixtures/m5/cli/eval_multi_b.pkl"
+      ],
+      "collect_files": "output_dir",
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/cli/eval_multi_a.pkl",
+          "sha256": "1abe04149e732ba71b774c7464a4392c5005e789895ad8bc316e27492c56ddb3"
+        },
+        {
+          "path": "tests/fixtures/m5/cli/eval_multi_b.pkl",
+          "sha256": "45a21baef60fbf7b34e4d76570cbdc2ac323e5b33689db11d574d613d51abbc7"
+        }
+      ]
+    },
+    {
+      "id": "m5:cli:eval-stdlib-doc-package-info",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "eval",
+        "--no-project",
+        "--color=never",
+        "{root}/external/pkl/stdlib/doc-package-info.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "external/pkl/stdlib/doc-package-info.pkl",
+          "sha256": "34936596d96b7ee9ee853b1cc89491ca708618f5e02570e9fb327f21be929dc7"
+        }
+      ]
+    },
+    {
+      "id": "m5:cli:test-spec-pass",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "test",
+        "--no-project",
+        "--color=never",
+        "--test-reporter=spec",
+        "{root}/tests/fixtures/m5/cli/test_pass.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/cli/test_pass.pkl",
+          "sha256": "a578b9b01e55da61479c0d56ac1503e992dfefbe03aeb2b1ecdb9aa7dc2d0536"
+        },
+        {
+          "path": "tests/fixtures/m5/cli/test_pass.pkl-expected.pcf",
+          "sha256": "10f2147aa7649be62601eff06e5a2183ee7f5326066e384983ec6cc72eb1cd44"
+        }
+      ]
+    },
+    {
+      "id": "m5:cli:test-minimal-pass",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "test",
+        "--no-project",
+        "--color=never",
+        "--test-reporter=minimal",
+        "{root}/tests/fixtures/m5/cli/test_pass.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/cli/test_pass.pkl",
+          "sha256": "a578b9b01e55da61479c0d56ac1503e992dfefbe03aeb2b1ecdb9aa7dc2d0536"
+        },
+        {
+          "path": "tests/fixtures/m5/cli/test_pass.pkl-expected.pcf",
+          "sha256": "10f2147aa7649be62601eff06e5a2183ee7f5326066e384983ec6cc72eb1cd44"
+        }
+      ]
+    },
+    {
+      "id": "m5:cli:test-spec-fail-power-assertions",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "setup": {
+        "copy_file": [
+          [
+            "tests/fixtures/m5/cli/test_fail.pkl",
+            "test_fail.pkl"
+          ],
+          [
+            "tests/fixtures/m5/cli/test_fail.pkl-expected.pcf",
+            "test_fail.pkl-expected.pcf"
+          ]
+        ]
+      },
+      "command": [
+        "test",
+        "--no-project",
+        "--color=never",
+        "--test-reporter=spec",
+        "--power-assertions",
+        "{work_dir}/test_fail.pkl"
+      ],
+      "collect_files": "work_dir_changes",
+      "expected_exit": [
+        1
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/cli/test_fail.pkl",
+          "sha256": "265c41d6938e09cc4baab217a5a69b06c875d34a17a6711c2e70e6274fa74980"
+        },
+        {
+          "path": "tests/fixtures/m5/cli/test_fail.pkl-expected.pcf",
+          "sha256": "4a7523291427bf32f3e73558d3d66f1d4a98c0cdf2e993cdc87405177bd4a33a"
+        }
+      ]
+    },
+    {
+      "id": "m5:cli:test-minimal-fail-color",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "setup": {
+        "copy_file": [
+          [
+            "tests/fixtures/m5/cli/test_fail.pkl",
+            "test_fail.pkl"
+          ],
+          [
+            "tests/fixtures/m5/cli/test_fail.pkl-expected.pcf",
+            "test_fail.pkl-expected.pcf"
+          ]
+        ]
+      },
+      "command": [
+        "test",
+        "--no-project",
+        "--color=always",
+        "--test-reporter=minimal",
+        "{work_dir}/test_fail.pkl"
+      ],
+      "expected_exit": [
+        1
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/cli/test_fail.pkl",
+          "sha256": "265c41d6938e09cc4baab217a5a69b06c875d34a17a6711c2e70e6274fa74980"
+        },
+        {
+          "path": "tests/fixtures/m5/cli/test_fail.pkl-expected.pcf",
+          "sha256": "4a7523291427bf32f3e73558d3d66f1d4a98c0cdf2e993cdc87405177bd4a33a"
+        }
+      ]
+    },
+    {
+      "id": "m5:cli:test-junit-per-module",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "setup": {
+        "copy_file": [
+          [
+            "tests/fixtures/m5/cli/test_pass.pkl",
+            "test_pass.pkl"
+          ],
+          [
+            "tests/fixtures/m5/cli/test_pass.pkl-expected.pcf",
+            "test_pass.pkl-expected.pcf"
+          ],
+          [
+            "tests/fixtures/m5/cli/test_fail.pkl",
+            "test_fail.pkl"
+          ],
+          [
+            "tests/fixtures/m5/cli/test_fail.pkl-expected.pcf",
+            "test_fail.pkl-expected.pcf"
+          ]
+        ]
+      },
+      "command": [
+        "test",
+        "--no-project",
+        "--color=never",
+        "--junit-reports",
+        "{output_dir}",
+        "{work_dir}/test_pass.pkl",
+        "{work_dir}/test_fail.pkl"
+      ],
+      "collect_files": "output_dir",
+      "expected_exit": [
+        1
+      ]
+    },
+    {
+      "id": "m5:cli:test-junit-aggregate",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "setup": {
+        "copy_file": [
+          [
+            "tests/fixtures/m5/cli/test_pass.pkl",
+            "test_pass.pkl"
+          ],
+          [
+            "tests/fixtures/m5/cli/test_pass.pkl-expected.pcf",
+            "test_pass.pkl-expected.pcf"
+          ],
+          [
+            "tests/fixtures/m5/cli/test_fail.pkl",
+            "test_fail.pkl"
+          ],
+          [
+            "tests/fixtures/m5/cli/test_fail.pkl-expected.pcf",
+            "test_fail.pkl-expected.pcf"
+          ]
+        ]
+      },
+      "command": [
+        "test",
+        "--no-project",
+        "--color=never",
+        "--junit-reports",
+        "{output_dir}",
+        "--junit-aggregate-reports",
+        "--junit-aggregate-suite-name",
+        "M5Suite",
+        "{work_dir}/test_pass.pkl",
+        "{work_dir}/test_fail.pkl"
+      ],
+      "collect_files": "output_dir",
+      "expected_exit": [
+        1
+      ]
+    },
+    {
+      "id": "m5:cli:test-overwrite",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "setup": {
+        "copy_file": [
+          [
+            "tests/fixtures/m5/cli/test_overwrite.pkl",
+            "test_overwrite.pkl"
+          ]
+        ]
+      },
+      "command": [
+        "test",
+        "--no-project",
+        "--color=never",
+        "--overwrite",
+        "{work_dir}/test_overwrite.pkl"
+      ],
+      "collect_files": "work_dir_changes",
+      "expected_exit": [
+        10
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/cli/test_overwrite.pkl",
+          "sha256": "29809263095d5209320c0b978002219e3dc9a18bcae36b96871cb74e4402fce2"
+        }
+      ]
+    },
+    {
+      "id": "m5:cli:test-no-modules-error",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "test",
+        "--no-project"
+      ],
+      "expected_exit": [
+        1
+      ]
+    },
+    {
+      "id": "m5:cli:run-help",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "run",
+        "--no-project",
+        "{root}/tests/fixtures/m5/cli/cmd_basic.pkl",
+        "--help"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/cli/cmd_basic.pkl",
+          "sha256": "2bc734f9e80515b97169d753ea2a720e6fdf3a0a5f99fef61e87f2287bc6b947"
+        }
+      ]
+    },
+    {
+      "id": "m5:cli:run-flags-and-args",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "run",
+        "--no-project",
+        "--color=never",
+        "{root}/tests/fixtures/m5/cli/cmd_basic.pkl",
+        "-n",
+        "Alice",
+        "--count=3",
+        "--mode=safe",
+        "--dry-run",
+        "-vv",
+        "--delay=12.s",
+        "--tag=a",
+        "--tag=b",
+        "--label=k1=v1",
+        "--label=k2=v2",
+        "pos1",
+        "pos2"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/cli/cmd_basic.pkl",
+          "sha256": "2bc734f9e80515b97169d753ea2a720e6fdf3a0a5f99fef61e87f2287bc6b947"
+        }
+      ]
+    },
+    {
+      "id": "m5:cli:run-missing-required-flag",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "run",
+        "--no-project",
+        "--color=never",
+        "{root}/tests/fixtures/m5/cli/cmd_error.pkl"
+      ],
+      "expected_exit": [
+        1
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/cli/cmd_error.pkl",
+          "sha256": "22f505d7b6b409c96137e9c9b64fab77b68143b3d34cadd002813fdf1b0f327d"
+        }
+      ]
+    },
+    {
+      "id": "m5:cli:run-convert-error",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "run",
+        "--no-project",
+        "--color=never",
+        "{root}/tests/fixtures/m5/cli/cmd_error.pkl",
+        "--requiredFlag=ok",
+        "--checked=bad"
+      ],
+      "expected_exit": [
+        1
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/cli/cmd_error.pkl",
+          "sha256": "22f505d7b6b409c96137e9c9b64fab77b68143b3d34cadd002813fdf1b0f327d"
+        }
+      ]
+    },
+    {
+      "id": "m5:cli:shell-completion-bash",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "shell-completion",
+        "bash"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:cli:shell-completion-zsh",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "shell-completion",
+        "zsh"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:cli:shell-completion-fish",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "shell-completion",
+        "fish"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:cli:shell-completion-invalid",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "shell-completion",
+        "powershell"
+      ],
+      "expected_exit": [
+        1
+      ]
+    },
+    {
+      "id": "m5:cli:analyze-imports-output-file",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "command": [
+        "analyze",
+        "imports",
+        "--no-project",
+        "-o",
+        "{output_dir}/imports.pcf",
+        "{root}/tests/fixtures/m5/api/project_sample/main.pkl"
+      ],
+      "collect_files": "output_dir",
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:repl:pipe-welcome-help-examples-quit",
+      "lane": "repl",
+      "exec_mode": "repl_pipe",
+      "command": [
+        "repl",
+        "--no-project",
+        "--color=never"
+      ],
+      "lines": [
+        ":help\n",
+        ":examples\n",
+        ":quit\n"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:repl:pipe-stateful-untyped-to-typed",
+      "lane": "repl",
+      "exec_mode": "repl_pipe",
+      "command": [
+        "repl",
+        "--no-project",
+        "--color=never"
+      ],
+      "lines": [
+        "timeout = 5.ms; timeout\n",
+        "timeout = 10; timeout\n",
+        "timeout: Duration = 8.ms; timeout\n",
+        "timeout = 12; timeout\n",
+        "function greet(name) = \"Hello, \\(name)!\"\n",
+        "greet(\"Pkl\")\n",
+        "function greet(name: String): String = \"Hi, \\(name)\"\n",
+        "greet(42)\n",
+        ":quit\n"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:repl:pipe-multiline-and-force",
+      "lane": "repl",
+      "exec_mode": "repl_pipe",
+      "command": [
+        "repl",
+        "--no-project",
+        "--color=never"
+      ],
+      "lines": [
+        "obj = new Dynamic { a = 1; b = a + 2 }\n",
+        "obj\n",
+        ":force obj\n",
+        "broken = new {\n",
+        "obj.b\n",
+        ":quit\n"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:repl:pipe-load-reset-clear",
+      "lane": "repl",
+      "exec_mode": "repl_pipe",
+      "setup": {
+        "copy_file": [
+          [
+            "tests/fixtures/m5/repl/load_sample.pkl",
+            "load_sample.pkl"
+          ]
+        ]
+      },
+      "command": [
+        "repl",
+        "--no-project",
+        "--color=never"
+      ],
+      "lines": [
+        ":load {work_dir}/load_sample.pkl\n",
+        "loadedGreeting\n",
+        "doubleIt(loadedCount)\n",
+        ":reset\n",
+        "loadedGreeting\n",
+        ":quit\n"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/repl/load_sample.pkl",
+          "sha256": "075d405539b9c20690d9b0cee9948f6f22fb68c36d22bb66db6496d245aae503"
+        }
+      ]
+    },
+    {
+      "id": "m5:repl:pipe-command-prefixes-and-unknown",
+      "lane": "repl",
+      "exec_mode": "repl_pipe",
+      "command": [
+        "repl",
+        "--no-project",
+        "--color=never"
+      ],
+      "lines": [
+        ":h\n",
+        ":bogus\n",
+        ":q\n"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:repl:pipe-error-preamble-and-recovery",
+      "lane": "repl",
+      "exec_mode": "repl_pipe",
+      "command": [
+        "repl",
+        "--no-project",
+        "--color=never"
+      ],
+      "lines": [
+        "foo\n",
+        "1 + 2\n",
+        ":quit\n"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:repl:pipe-cli-options-props-env-trace",
+      "lane": "repl",
+      "exec_mode": "repl_pipe",
+      "command": [
+        "repl",
+        "--no-project",
+        "--color=never",
+        "-p",
+        "who=repl",
+        "-e",
+        "GREET=hello",
+        "--trace-mode=pretty"
+      ],
+      "lines": [
+        "read(\"prop:who\")\n",
+        "read(\"env:GREET\")\n",
+        "trace(new Dynamic { a = 1; b = 2 })\n",
+        ":quit\n"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:repl:pipe-color-always",
+      "lane": "repl",
+      "exec_mode": "repl_pipe",
+      "command": [
+        "repl",
+        "--no-project",
+        "--color=always"
+      ],
+      "lines": [
+        "5.ms\n",
+        "\"hello\"\n",
+        "foo\n",
+        ":quit\n"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:repl:pty-basic-and-quit",
+      "lane": "repl",
+      "exec_mode": "repl_pty",
+      "command": [
+        "repl",
+        "--no-project",
+        "--color=never"
+      ],
+      "interactions": [
+        {
+          "expect": "pkl0> ",
+          "send": "x = 1 + 2\r"
+        },
+        {
+          "expect": "pkl1> ",
+          "send": "x * 10\r"
+        },
+        {
+          "expect": "pkl2> ",
+          "send": ":quit\r"
+        }
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:repl:pty-ctrl-d-eof",
+      "lane": "repl",
+      "exec_mode": "repl_pty",
+      "command": [
+        "repl",
+        "--no-project",
+        "--color=never"
+      ],
+      "interactions": [
+        {
+          "expect": "pkl0> ",
+          "send": "x = 21\r"
+        },
+        {
+          "expect": "pkl1> ",
+          "send": "x * 2\r"
+        },
+        {
+          "expect": "pkl2> ",
+          "send": "\u0004"
+        }
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:repl:pty-color-auto-tty",
+      "lane": "repl",
+      "exec_mode": "repl_pty",
+      "command": [
+        "repl",
+        "--no-project"
+      ],
+      "interactions": [
+        {
+          "expect": "pkl0> ",
+          "send": "5.ms\r"
+        },
+        {
+          "expect": "pkl1> ",
+          "send": "\"hi\"\r"
+        },
+        {
+          "expect": "pkl2> ",
+          "send": ":quit\r"
+        }
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:repl:pty-multiline-and-reset",
+      "lane": "repl",
+      "exec_mode": "repl_pty",
+      "command": [
+        "repl",
+        "--no-project",
+        "--color=never"
+      ],
+      "interactions": [
+        {
+          "expect": "pkl0> ",
+          "send": "v = new Dynamic { k = 7 }\r"
+        },
+        {
+          "expect": "pkl1> ",
+          "send": "v.k\r"
+        },
+        {
+          "expect": "pkl2> ",
+          "send": ":force v\r"
+        },
+        {
+          "expect": "pkl3> ",
+          "send": ":reset\r"
+        },
+        {
+          "expect": "pkl0> ",
+          "send": "v\r"
+        },
+        {
+          "expect": "pkl1> ",
+          "send": ":quit\r"
+        }
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:eof-empty",
+      "lane": "server",
+      "exec_mode": "server",
+      "scenario": {
+        "steps": []
+      },
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:create-and-close",
+      "lane": "server",
+      "exec_mode": "server",
+      "scenario": {
+        "steps": [
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:0",
+            "body": {
+              "requestId": 1,
+              "allowedModules": [
+                "pkl:",
+                "repl:"
+              ],
+              "allowedResources": [
+                "prop:"
+              ]
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:0"
+            }
+          }
+        ]
+      },
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:evaluate-binary-and-output-format",
+      "lane": "server",
+      "exec_mode": "server",
+      "scenario": {
+        "steps": [
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:0",
+            "body": {
+              "requestId": 1,
+              "allowedModules": [
+                "pkl:",
+                "repl:"
+              ],
+              "allowedResources": [
+                "prop:"
+              ],
+              "outputFormat": "json"
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 2,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "repl:text",
+              "moduleText": "a = 42\nb = List(\"x\", true, null)\n"
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 3,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "repl:text",
+              "moduleText": "a = 42\nb = List(\"x\", true, null)\n",
+              "expr": "output.text"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:0"
+            }
+          }
+        ]
+      },
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:evaluate-error-and-unknown-evaluator",
+      "lane": "server",
+      "exec_mode": "server",
+      "scenario": {
+        "steps": [
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:0",
+            "body": {
+              "requestId": 1,
+              "allowedModules": [
+                "pkl:",
+                "repl:"
+              ],
+              "allowedResources": [
+                "prop:"
+              ]
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 2,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "repl:text",
+              "moduleText": "x = throw(\"server-eval-err\")\n"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:0"
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 3,
+              "evaluatorId": 999999999,
+              "moduleUri": "repl:text",
+              "moduleText": "x = 1"
+            }
+          }
+        ]
+      },
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:create-invalid-config-errors",
+      "lane": "server",
+      "exec_mode": "server",
+      "scenario": {
+        "steps": [
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:bad1",
+            "body": {
+              "requestId": 1,
+              "allowedModules": [
+                "pkl:"
+              ],
+              "http": {
+                "rewrites": {
+                  "https://example.com/no-slash": "https://other.com/"
+                }
+              }
+            }
+          },
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:ok",
+            "body": {
+              "requestId": 2,
+              "allowedModules": [
+                "pkl:",
+                "repl:"
+              ],
+              "allowedResources": [
+                "prop:"
+              ]
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 3,
+              "evaluatorId": "$eval:ok",
+              "moduleUri": "repl:text",
+              "moduleText": "ok = true",
+              "expr": "ok"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:ok"
+            }
+          }
+        ]
+      },
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:logs-trace-compact-pretty-and-warn",
+      "lane": "server",
+      "exec_mode": "server",
+      "scenario": {
+        "steps": [
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:c",
+            "body": {
+              "requestId": 1,
+              "allowedModules": [
+                "pkl:",
+                "repl:"
+              ],
+              "allowedResources": [
+                "prop:"
+              ],
+              "traceMode": "compact"
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 2,
+              "evaluatorId": "$eval:c",
+              "moduleUri": "repl:text",
+              "moduleText": "@Deprecated { message = \"use bar\" }\nfunction foo() = 5\nx = trace(new { a = 1; b = 2 })\ny = foo()\n"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:c"
+            }
+          },
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:p",
+            "body": {
+              "requestId": 3,
+              "allowedModules": [
+                "pkl:",
+                "repl:"
+              ],
+              "allowedResources": [
+                "prop:"
+              ],
+              "traceMode": "pretty"
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 4,
+              "evaluatorId": "$eval:p",
+              "moduleUri": "repl:text",
+              "moduleText": "x = trace(new { a = 1; b = 2 })\n"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:p"
+            }
+          }
+        ]
+      },
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:client-resource-read-ok-null-error",
+      "lane": "server",
+      "exec_mode": "server",
+      "scenario": {
+        "callbacks": {
+          "read_resource": {
+            "cbres:/ok.txt": {
+              "contents_utf8": "hello-cb-resource"
+            },
+            "cbres:/missing.txt": {
+              "missing": true
+            },
+            "cbres:/err.txt": {
+              "error": "boom reading cbres"
+            }
+          }
+        },
+        "steps": [
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:0",
+            "body": {
+              "requestId": 1,
+              "allowedModules": [
+                "pkl:",
+                "repl:"
+              ],
+              "allowedResources": [
+                "cbres:"
+              ],
+              "clientResourceReaders": [
+                {
+                  "scheme": "cbres",
+                  "hasHierarchicalUris": true,
+                  "isGlobbable": false
+                }
+              ]
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 2,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "repl:text",
+              "moduleText": "ok = read(\"cbres:/ok.txt\").text\nmiss = read?(\"cbres:/missing.txt\")\n",
+              "expr": "List(ok, miss)"
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 3,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "repl:text",
+              "moduleText": "x = read(\"cbres:/missing.txt\")"
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 4,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "repl:text",
+              "moduleText": "x = read(\"cbres:/err.txt\")"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:0"
+            }
+          }
+        ]
+      },
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:client-resource-glob-ok-null-error",
+      "lane": "server",
+      "exec_mode": "server",
+      "scenario": {
+        "callbacks": {
+          "list_resources": {
+            "cbres:/": {
+              "pathElements": [
+                {
+                  "name": "a.txt",
+                  "isDirectory": false
+                },
+                {
+                  "name": "b.txt",
+                  "isDirectory": false
+                }
+              ]
+            },
+            "cbres:/empty/": {
+              "missing": true
+            },
+            "cbres:/err/": {
+              "error": "list resources boom"
+            }
+          },
+          "read_resource": {
+            "cbres:/a.txt": {
+              "contents_utf8": "A"
+            },
+            "cbres:/b.txt": {
+              "contents_utf8": "B"
+            }
+          }
+        },
+        "steps": [
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:0",
+            "body": {
+              "requestId": 1,
+              "allowedModules": [
+                "pkl:",
+                "repl:"
+              ],
+              "allowedResources": [
+                "cbres:"
+              ],
+              "clientResourceReaders": [
+                {
+                  "scheme": "cbres",
+                  "hasHierarchicalUris": true,
+                  "isGlobbable": true
+                }
+              ]
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 2,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "repl:text",
+              "moduleText": "res = read*(\"cbres:/*.txt\").toMap().mapValues((_, r) -> r.text)",
+              "expr": "res"
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 3,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "repl:text",
+              "moduleText": "res = read*(\"cbres:/empty/*.txt\").toMap()",
+              "expr": "res"
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 4,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "repl:text",
+              "moduleText": "res = read*(\"cbres:/err/*.txt\")"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:0"
+            }
+          }
+        ]
+      },
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:client-module-read-ok-null-error",
+      "lane": "server",
+      "exec_mode": "server",
+      "scenario": {
+        "callbacks": {
+          "read_module": {
+            "cbmod:/main.pkl": {
+              "contents": "import \"sub/leaf.pkl\"\nval = leaf.n + 1\n"
+            },
+            "cbmod:/sub/leaf.pkl": {
+              "contents": "n = 41\n"
+            },
+            "cbmod:/missing.pkl": {
+              "missing": true
+            },
+            "cbmod:/err.pkl": {
+              "error": "boom reading cbmod"
+            }
+          }
+        },
+        "steps": [
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:0",
+            "body": {
+              "requestId": 1,
+              "allowedModules": [
+                "pkl:",
+                "repl:",
+                "cbmod:"
+              ],
+              "allowedResources": [
+                "prop:"
+              ],
+              "clientModuleReaders": [
+                {
+                  "scheme": "cbmod",
+                  "hasHierarchicalUris": true,
+                  "isGlobbable": false,
+                  "isLocal": false
+                }
+              ]
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 2,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "cbmod:/main.pkl",
+              "expr": "val"
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 3,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "cbmod:/missing.pkl"
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 4,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "cbmod:/err.pkl"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:0"
+            }
+          }
+        ]
+      },
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:client-module-glob-ok-null-error",
+      "lane": "server",
+      "exec_mode": "server",
+      "scenario": {
+        "callbacks": {
+          "list_modules": {
+            "cbmod:/": {
+              "pathElements": [
+                {
+                  "name": "m1.pkl",
+                  "isDirectory": false
+                },
+                {
+                  "name": "m2.pkl",
+                  "isDirectory": false
+                }
+              ]
+            },
+            "cbmod:/empty/": {
+              "missing": true
+            },
+            "cbmod:/err/": {
+              "error": "list modules boom"
+            }
+          },
+          "read_module": {
+            "cbmod:/m1.pkl": {
+              "contents": "v = 1\n"
+            },
+            "cbmod:/m2.pkl": {
+              "contents": "v = 2\n"
+            }
+          }
+        },
+        "steps": [
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:0",
+            "body": {
+              "requestId": 1,
+              "allowedModules": [
+                "pkl:",
+                "repl:",
+                "cbmod:"
+              ],
+              "allowedResources": [
+                "prop:"
+              ],
+              "clientModuleReaders": [
+                {
+                  "scheme": "cbmod",
+                  "hasHierarchicalUris": true,
+                  "isGlobbable": true,
+                  "isLocal": false
+                }
+              ]
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 2,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "repl:text",
+              "moduleText": "import* \"cbmod:/*.pkl\" as ms\nsum = ms.values.fold(0, (a, m) -> a + m.v)\n",
+              "expr": "sum"
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 3,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "repl:text",
+              "moduleText": "import* \"cbmod:/empty/*.pkl\" as ms\ncount = ms.length\n",
+              "expr": "count"
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 4,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "repl:text",
+              "moduleText": "import* \"cbmod:/err/*.pkl\" as ms\n"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:0"
+            }
+          }
+        ]
+      },
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:client-module-triple-dot",
+      "lane": "server",
+      "exec_mode": "server",
+      "scenario": {
+        "callbacks": {
+          "list_modules": {
+            "cbmod:/a/": {
+              "pathElements": [
+                {
+                  "name": "b",
+                  "isDirectory": true
+                }
+              ]
+            },
+            "cbmod:/": {
+              "pathElements": [
+                {
+                  "name": "a",
+                  "isDirectory": true
+                },
+                {
+                  "name": "shared.pkl",
+                  "isDirectory": false
+                }
+              ]
+            }
+          },
+          "read_module": {
+            "cbmod:/a/b/child.pkl": {
+              "contents": "import \".../shared.pkl\"\nval = shared.x\n"
+            },
+            "cbmod:/shared.pkl": {
+              "contents": "x = 77\n"
+            }
+          }
+        },
+        "steps": [
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:0",
+            "body": {
+              "requestId": 1,
+              "allowedModules": [
+                "pkl:",
+                "cbmod:"
+              ],
+              "allowedResources": [
+                "prop:"
+              ],
+              "clientModuleReaders": [
+                {
+                  "scheme": "cbmod",
+                  "hasHierarchicalUris": true,
+                  "isGlobbable": true,
+                  "isLocal": true
+                }
+              ]
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 2,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "cbmod:/a/b/child.pkl",
+              "expr": "val"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:0"
+            }
+          }
+        ]
+      },
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:external-readers-and-lifecycle",
+      "lane": "server",
+      "exec_mode": "server",
+      "scenario": {
+        "steps": [
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:0",
+            "body": {
+              "requestId": 1,
+              "allowedModules": [
+                "pkl:",
+                "repl:",
+                "extmod:"
+              ],
+              "allowedResources": [
+                "extres:"
+              ],
+              "externalModuleReaders": {
+                "extmod": {
+                  "executable": "/opt/homebrew/bin/python3.14",
+                  "arguments": [
+                    "-B",
+                    "{reader_bin}",
+                    "--lifecycle-log",
+                    "{lifecycle_log}"
+                  ]
+                }
+              },
+              "externalResourceReaders": {
+                "extres": {
+                  "executable": "/opt/homebrew/bin/python3.14",
+                  "arguments": [
+                    "-B",
+                    "{reader_bin}",
+                    "--lifecycle-log",
+                    "{lifecycle_log}"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 2,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "repl:text",
+              "moduleText": "import \"extmod:/a.pkl\" as m\nr = read(\"extres:/hello.txt\").text\n",
+              "expr": "List(m.greeting, r)"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:0"
+            }
+          }
+        ]
+      },
+      "assertions": {
+        "reader_closed": true
+      },
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:env-properties-rootdir-workingdir",
+      "lane": "server",
+      "exec_mode": "server",
+      "setup": {
+        "templates": [
+          [
+            "inside/mod.pkl",
+            "p = read(\"prop:k\")\ne = read(\"env:E\")\n"
+          ],
+          [
+            "outside.pkl",
+            "secret = 1\n"
+          ]
+        ]
+      },
+      "scenario": {
+        "steps": [
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:0",
+            "body": {
+              "requestId": 1,
+              "allowedModules": [
+                "pkl:",
+                "file:"
+              ],
+              "allowedResources": [
+                "prop:",
+                "env:",
+                "file:"
+              ],
+              "env": {
+                "E": "env-ok"
+              },
+              "properties": {
+                "k": "prop-ok"
+              },
+              "rootDir": "{work_dir}/inside",
+              "workingDir": "{work_dir}/inside"
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 2,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "file://{work_dir}/inside/mod.pkl",
+              "expr": "List(p, e)"
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 3,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "file://{work_dir}/outside.pkl"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:0"
+            }
+          }
+        ]
+      },
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:module-paths-dir-and-jar",
+      "lane": "server",
+      "exec_mode": "server",
+      "setup": {
+        "templates": [
+          [
+            "mp_dir/from_dir.pkl",
+            "src = \"dir\"\n"
+          ]
+        ],
+        "jars": [
+          [
+            "mp.jar",
+            {
+              "from_jar.pkl": "src = \"jar\"\n"
+            }
+          ]
+        ]
+      },
+      "scenario": {
+        "steps": [
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:0",
+            "body": {
+              "requestId": 1,
+              "allowedModules": [
+                "pkl:",
+                "repl:",
+                "modulepath:"
+              ],
+              "allowedResources": [
+                "prop:"
+              ],
+              "modulePaths": [
+                "{work_dir}/mp_dir",
+                "{work_dir}/mp.jar"
+              ]
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 2,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "repl:text",
+              "moduleText": "import \"modulepath:/from_dir.pkl\" as d\nimport \"modulepath:/from_jar.pkl\" as j\n",
+              "expr": "List(d.src, j.src)"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:0"
+            }
+          }
+        ]
+      },
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:project-local-deps",
+      "lane": "server",
+      "exec_mode": "server",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m5/server/proj",
+            "proj"
+          ]
+        ]
+      },
+      "scenario": {
+        "steps": [
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:0",
+            "body": {
+              "requestId": 1,
+              "allowedModules": [
+                "pkl:",
+                "file:",
+                "projectpackage:"
+              ],
+              "allowedResources": [
+                "prop:",
+                "file:"
+              ],
+              "project": {
+                "projectFileUri": "file://{work_dir}/proj/PklProject",
+                "dependencies": {
+                  "localDep": {
+                    "type": "local",
+                    "packageUri": "package://example.com/localDep@1.0.0",
+                    "projectFileUri": "file://{work_dir}/proj/local_dep/PklProject",
+                    "dependencies": {}
+                  }
+                }
+              }
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 2,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "file://{work_dir}/proj/main.pkl",
+              "expr": "value"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:0"
+            }
+          }
+        ]
+      },
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/server/proj/PklProject",
+          "sha256": "f825513d716f4368a9db027d61d0fcbd3ed2e985386ca6572b288d795aecb56c"
+        },
+        {
+          "path": "tests/fixtures/m5/server/proj/PklProject.deps.json",
+          "sha256": "06da19eae8bae77ca00952d449a1662cde4026f97ce31988231727961acd8d6c"
+        },
+        {
+          "path": "tests/fixtures/m5/server/proj/local_dep/PklProject",
+          "sha256": "134d43a56df65e0a3fc25edfa94c5e5545268951b45ce1af886ba07b2e51c7b5"
+        },
+        {
+          "path": "tests/fixtures/m5/server/proj/local_dep/lib.pkl",
+          "sha256": "5495352729f4b51ae60adb16938983a4c2c21f8ff75c726b3259c93ab3065085"
+        },
+        {
+          "path": "tests/fixtures/m5/server/proj/main.pkl",
+          "sha256": "315714b0fbba76000693011a3e72416a8cf2791dab086cf41154c7313da7af62"
+        }
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:timeout-seconds",
+      "lane": "server",
+      "exec_mode": "server",
+      "scenario": {
+        "steps": [
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:0",
+            "body": {
+              "requestId": 1,
+              "allowedModules": [
+                "pkl:",
+                "repl:"
+              ],
+              "allowedResources": [
+                "prop:"
+              ],
+              "timeoutSeconds": 1
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 2,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "repl:text",
+              "moduleText": "function busy(n) = if (n <= 0) 0 else busy(n - 1) + busy(n - 2)\nx = busy(40)\n"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:0"
+            }
+          }
+        ]
+      },
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:http-ca-headers-rewrites",
+      "lane": "server",
+      "exec_mode": "server",
+      "requires_http_server": true,
+      "scenario": {
+        "steps": [
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:0",
+            "body": {
+              "requestId": 1,
+              "allowedModules": [
+                "pkl:",
+                "repl:",
+                "https:"
+              ],
+              "allowedResources": [
+                "https:",
+                "prop:"
+              ],
+              "http": {
+                "caCertificates": {
+                  "__bytes_file__": "{ca_cert}"
+                },
+                "rewrites": {
+                  "https://virtual.example.test/": "https://localhost:{https_port}/"
+                },
+                "headers": {
+                  "https://localhost:{https_port}/*": {
+                    "X-Server-Header": [
+                      "m5-ok"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 2,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "repl:text",
+              "moduleText": "import \"https://virtual.example.test/modules/https_only.pkl\" as m\ntls = m.tls\necho = read(\"https://virtual.example.test/echo-headers\").text\nhasHeader = echo.contains(\"x-server-header: m5-ok\")\n",
+              "expr": "List(tls, hasHeader)"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:0"
+            }
+          }
+        ]
+      },
+      "assertions": {
+        "http_server_hit": true
+      },
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:http-proxy-and-no-proxy",
+      "lane": "server",
+      "exec_mode": "server",
+      "requires_http_server": true,
+      "scenario": {
+        "steps": [
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:0",
+            "body": {
+              "requestId": 1,
+              "allowedModules": [
+                "pkl:",
+                "repl:",
+                "http:"
+              ],
+              "allowedResources": [
+                "http:",
+                "prop:"
+              ],
+              "http": {
+                "proxy": {
+                  "address": "http://127.0.0.1:{proxy_port}",
+                  "noProxy": [
+                    "127.0.0.1"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 2,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "repl:text",
+              "moduleText": "import \"http://not.a.valid.host/bar.pkl\" as p\nimport \"http://127.0.0.1:{http_port}/modules/hello.pkl\" as direct\nproxied = p.proxied\ndirectGreeting = direct.greeting\n",
+              "expr": "List(proxied, directGreeting)"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:0"
+            }
+          }
+        ]
+      },
+      "assertions": {
+        "proxy_hit": true
+      },
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:pipelined-fifo-same-evaluator",
+      "lane": "server",
+      "exec_mode": "server",
+      "scenario": {
+        "callbacks": {
+          "read_module": {
+            "bird:/pigeon.pkl": {
+              "contents": "name = \"Pigeon\"\n"
+            },
+            "bird:/parrot.pkl": {
+              "contents": "name = \"Parrot\"\n"
+            }
+          }
+        },
+        "steps": [
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:0",
+            "body": {
+              "requestId": 1,
+              "allowedModules": [
+                "pkl:",
+                "bird:"
+              ],
+              "allowedResources": [
+                "prop:"
+              ],
+              "clientModuleReaders": [
+                {
+                  "scheme": "bird",
+                  "hasHierarchicalUris": true,
+                  "isGlobbable": false,
+                  "isLocal": false
+                }
+              ]
+            }
+          },
+          {
+            "op": "evaluate_pipelined",
+            "requests": [
+              {
+                "requestId": 10,
+                "evaluatorId": "$eval:0",
+                "moduleUri": "bird:/pigeon.pkl",
+                "expr": "output.text"
+              },
+              {
+                "requestId": 11,
+                "evaluatorId": "$eval:0",
+                "moduleUri": "bird:/parrot.pkl",
+                "expr": "output.text"
+              }
+            ]
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:0"
+            }
+          }
+        ]
+      },
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:interleaved-create-while-blocked",
+      "lane": "server",
+      "exec_mode": "server",
+      "scenario": {
+        "callbacks": {
+          "read_resource": {
+            "cbres:/gate.txt": {
+              "contents_utf8": "unblocked"
+            }
+          }
+        },
+        "steps": [
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:0",
+            "body": {
+              "requestId": 1,
+              "allowedModules": [
+                "pkl:",
+                "repl:"
+              ],
+              "allowedResources": [
+                "cbres:"
+              ],
+              "clientResourceReaders": [
+                {
+                  "scheme": "cbres",
+                  "hasHierarchicalUris": true,
+                  "isGlobbable": false
+                }
+              ]
+            }
+          },
+          {
+            "op": "evaluate_interleaved_create",
+            "gate_uri": "cbres:/gate.txt",
+            "first": {
+              "requestId": 10,
+              "evaluatorId": "$eval:0",
+              "moduleUri": "repl:text",
+              "moduleText": "v = read(\"cbres:/gate.txt\").text",
+              "expr": "v"
+            },
+            "create_slot": "$eval:1",
+            "create_while_blocked": {
+              "requestId": 2,
+              "allowedModules": [
+                "pkl:",
+                "repl:"
+              ],
+              "allowedResources": [
+                "prop:"
+              ]
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 11,
+              "evaluatorId": "$eval:1",
+              "moduleUri": "repl:text",
+              "moduleText": "ok = 2 + 2",
+              "expr": "ok"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:0"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:1"
+            }
+          }
+        ]
+      },
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:multi-evaluator-isolation",
+      "lane": "server",
+      "exec_mode": "server",
+      "scenario": {
+        "steps": [
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:a",
+            "body": {
+              "requestId": 1,
+              "allowedModules": [
+                "pkl:",
+                "repl:"
+              ],
+              "allowedResources": [
+                "prop:"
+              ],
+              "properties": {
+                "who": "A"
+              }
+            }
+          },
+          {
+            "op": "create_evaluator",
+            "slot": "$eval:b",
+            "body": {
+              "requestId": 2,
+              "allowedModules": [
+                "pkl:",
+                "repl:"
+              ],
+              "allowedResources": [
+                "prop:"
+              ],
+              "properties": {
+                "who": "B"
+              }
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 3,
+              "evaluatorId": "$eval:a",
+              "moduleUri": "repl:text",
+              "moduleText": "w = read(\"prop:who\")",
+              "expr": "w"
+            }
+          },
+          {
+            "op": "evaluate",
+            "body": {
+              "requestId": 4,
+              "evaluatorId": "$eval:b",
+              "moduleUri": "repl:text",
+              "moduleText": "w = read(\"prop:who\")",
+              "expr": "w"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:a"
+            }
+          },
+          {
+            "op": "close_evaluator",
+            "body": {
+              "evaluatorId": "$eval:b"
+            }
+          }
+        ]
+      },
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:server:unhandled-ext-code-rejected",
+      "lane": "server",
+      "exec_mode": "server",
+      "scenario": {
+        "steps": [
+          {
+            "op": "send_raw",
+            "code": 46,
+            "body": {
+              "requestId": 1,
+              "scheme": "extmod"
+            }
+          }
+        ]
+      },
+      "expected_exit": [
+        1
+      ]
+    },
+    {
+      "id": "m5:format:already-formatted-exit0",
+      "lane": "formatter",
+      "exec_mode": "cli",
+      "command": [
+        "format",
+        "{root}/tests/fixtures/m5/format/already_formatted.pkl"
+      ],
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/format/already_formatted.pkl",
+          "sha256": "55741486e5ad44ab556647880e6aa933a99b725f76e53f98b8494e86dc1728f0"
+        }
+      ]
+    },
+    {
+      "id": "m5:format:stdin-unformatted-exit11",
+      "lane": "formatter",
+      "exec_mode": "cli",
+      "command": [
+        "format",
+        "-"
+      ],
+      "stdin_file": "tests/fixtures/m5/format/unformatted.pkl",
+      "expected_exit": [
+        11
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/format/unformatted.pkl",
+          "sha256": "c1cad414bae859a728aff6233de8c97743cfe901efdd12b54865762b72fa9ce8"
+        }
+      ]
+    },
+    {
+      "id": "m5:format:stdin-already-formatted-exit0",
+      "lane": "formatter",
+      "exec_mode": "cli",
+      "command": [
+        "format",
+        "-"
+      ],
+      "stdin_file": "tests/fixtures/m5/format/already_formatted.pkl",
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:format:stdin-write-error",
+      "lane": "formatter",
+      "exec_mode": "cli",
+      "command": [
+        "format",
+        "-w",
+        "-"
+      ],
+      "stdin_utf8": "a=1\n",
+      "expected_exit": [
+        1
+      ]
+    },
+    {
+      "id": "m5:format:write-in-place",
+      "lane": "formatter",
+      "exec_mode": "cli",
+      "setup": {
+        "copy_file": [
+          [
+            "tests/fixtures/m5/format/unformatted.pkl",
+            "target.pkl"
+          ]
+        ]
+      },
+      "command": [
+        "format",
+        "-w",
+        "{work_dir}/target.pkl"
+      ],
+      "collect_files": "work_dir_changes",
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:format:diff-name-only",
+      "lane": "formatter",
+      "exec_mode": "cli",
+      "command": [
+        "format",
+        "--diff-name-only",
+        "{root}/tests/fixtures/m5/format/unformatted.pkl",
+        "{root}/tests/fixtures/m5/format/already_formatted.pkl"
+      ],
+      "expected_exit": [
+        11
+      ]
+    },
+    {
+      "id": "m5:format:silent-write",
+      "lane": "formatter",
+      "exec_mode": "cli",
+      "setup": {
+        "copy_file": [
+          [
+            "tests/fixtures/m5/format/unformatted.pkl",
+            "target.pkl"
+          ]
+        ]
+      },
+      "command": [
+        "format",
+        "-s",
+        "--write",
+        "{work_dir}/target.pkl"
+      ],
+      "collect_files": "work_dir_changes",
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:format:grammar-version-1",
+      "lane": "formatter",
+      "exec_mode": "cli",
+      "command": [
+        "format",
+        "--grammar-version=1",
+        "{root}/tests/fixtures/m5/format/grammar_trailing_comma.pkl"
+      ],
+      "expected_exit": [
+        11
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/format/grammar_trailing_comma.pkl",
+          "sha256": "6f333bb90ac74bc05aec18aab9227c53a8a12ecb802637982d42b0d5d9ce7b65"
+        }
+      ]
+    },
+    {
+      "id": "m5:format:grammar-version-2",
+      "lane": "formatter",
+      "exec_mode": "cli",
+      "command": [
+        "format",
+        "--grammar-version=2",
+        "{root}/tests/fixtures/m5/format/grammar_trailing_comma.pkl"
+      ],
+      "expected_exit": [
+        11
+      ]
+    },
+    {
+      "id": "m5:format:dir-walk-pkl-and-pklproject",
+      "lane": "formatter",
+      "exec_mode": "cli",
+      "setup": {
+        "copy_dir": [
+          [
+            "tests/fixtures/m5/format/dir_walk",
+            "dir_walk"
+          ]
+        ]
+      },
+      "command": [
+        "format",
+        "-w",
+        "{work_dir}/dir_walk"
+      ],
+      "collect_files": "work_dir_changes",
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/format/dir_walk/a.pkl",
+          "sha256": "fe3209d6d4f51935b391288a43df48d9ddece1a992597ae53387ca16611a9179"
+        },
+        {
+          "path": "tests/fixtures/m5/format/dir_walk/sub/b.pkl",
+          "sha256": "9bc63f3e495030aa3f5f79539e766bf76251cf19dde377a844e5f4f5d1a14bb8"
+        },
+        {
+          "path": "tests/fixtures/m5/format/dir_walk/PklProject",
+          "sha256": "837da5b614d3b5bdf078ed472532ce7e1e447a95dede2ed86bcb7811a7dfbe83"
+        },
+        {
+          "path": "tests/fixtures/m5/format/dir_walk/ignore.txt",
+          "sha256": "c9ab0600904b8f2263afe2a3c9139a960708770b59542dc4547081ac1917ed94"
+        }
+      ]
+    },
+    {
+      "id": "m5:format:whitespace-only",
+      "lane": "formatter",
+      "exec_mode": "cli",
+      "command": [
+        "format",
+        "{root}/tests/fixtures/m5/format/whitespace_only.pkl"
+      ],
+      "expected_exit": [
+        11
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/format/whitespace_only.pkl",
+          "sha256": "19cad0aa18385795cbb2b56615029d259f2531924622dcbe45cc6c95960d4b49"
+        }
+      ]
+    },
+    {
+      "id": "m5:format:parse-error-non-bug",
+      "lane": "formatter",
+      "exec_mode": "cli",
+      "command": [
+        "format",
+        "{root}/tests/fixtures/m5/format/parse_error.pkl"
+      ],
+      "expected_exit": [
+        1
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/format/parse_error.pkl",
+          "sha256": "c32b6eb7497d739f4105d0328b036544f8506ac5eb7d5923d36d298adb5ded01"
+        }
+      ]
+    },
+    {
+      "id": "m5:format:multiline-string-errors",
+      "lane": "formatter",
+      "exec_mode": "cli",
+      "command": [
+        "format",
+        "{root}/tests/fixtures/m5/format/multiline_err_start.pkl",
+        "{root}/tests/fixtures/m5/format/multiline_err_end.pkl",
+        "{root}/tests/fixtures/m5/format/multiline_err_indent.pkl"
+      ],
+      "expected_exit": [
+        1
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/format/multiline_err_start.pkl",
+          "sha256": "7c343302f3f41c2e1d6ce0850a2ae08ccfaa169166eb613c84e1fbabb09eb4d1"
+        },
+        {
+          "path": "tests/fixtures/m5/format/multiline_err_end.pkl",
+          "sha256": "1f95b59343326ec4ae2e24f99b52e0e5a00c7a75e52806b019c168b59e7e2cc7"
+        },
+        {
+          "path": "tests/fixtures/m5/format/multiline_err_indent.pkl",
+          "sha256": "8722081fc62947f9ae1d7ab7e69882d38f76b3b4392eceda7d3539fcd9981819"
+        }
+      ]
+    },
+    {
+      "id": "m5:pkldoc:version",
+      "lane": "pkldoc",
+      "exec_mode": "pkldoc",
+      "command": [
+        "--version"
+      ],
+      "comparison_mode": "native-version",
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:pkldoc:help",
+      "lane": "pkldoc",
+      "exec_mode": "pkldoc",
+      "command": [
+        "--help"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:pkldoc:single-package-test",
+      "lane": "pkldoc",
+      "exec_mode": "pkldoc",
+      "command": [
+        "--output-dir",
+        "{output_dir}",
+        "--cache-dir",
+        "{cache_dir}",
+        "--no-symlinks",
+        "--test-mode",
+        "glob_all:external/pkl/pkl-doc/src/test/files/SinglePackageTest/input"
+      ],
+      "collect_files": "pkldoc_tree",
+      "assertions": {
+        "min_generated_files": 44,
+        "expect_no_symlinks": true
+      },
+      "comparison_mode": "pkldoc-progress",
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:pkldoc:doc-generator-run1",
+      "lane": "pkldoc",
+      "exec_mode": "pkldoc",
+      "setup": {
+        "seed_pkldoc_cache": true
+      },
+      "command": [
+        "--output-dir",
+        "{output_dir}",
+        "--cache-dir",
+        "{cache_dir}",
+        "--test-mode",
+        "{root}/external/pkl/pkl-doc/src/test/files/DocGeneratorTest/input/docsite-info.pkl",
+        "glob_pkl:external/pkl/pkl-doc/src/test/files/DocGeneratorTest/input/com.package1",
+        "glob_pkl:external/pkl/pkl-doc/src/test/files/DocGeneratorTest/input/com.package2",
+        "package://localhost:0/birds@0.5.0",
+        "package://localhost:0/fruit@1.1.0",
+        "package://localhost:0/unlisted@1.0.0",
+        "package://localhost:0/deprecated@1.0.0"
+      ],
+      "collect_files": "pkldoc_tree",
+      "assertions": {
+        "min_generated_files": 348,
+        "min_symlinks": 5,
+        "expect_symlinks": {
+          "com.package1/current": "1.2.3",
+          "com.package2/current": "4.5.6",
+          "localhost(3a)0/birds/current": "0.5.0",
+          "localhost(3a)0/fruit/current": "1.1.0",
+          "localhost(3a)0/deprecated/current": "1.0.0"
+        }
+      },
+      "comparison_mode": "pkldoc-progress",
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:pkldoc:doc-generator-run1-then-run2",
+      "lane": "pkldoc",
+      "exec_mode": "pkldoc",
+      "setup": {
+        "seed_pkldoc_cache": true
+      },
+      "steps": [
+        {
+          "command": [
+            "--output-dir",
+            "{output_dir}",
+            "--cache-dir",
+            "{cache_dir}",
+            "--test-mode",
+            "{root}/external/pkl/pkl-doc/src/test/files/DocGeneratorTest/input/docsite-info.pkl",
+            "glob_pkl:external/pkl/pkl-doc/src/test/files/DocGeneratorTest/input/com.package1",
+            "glob_pkl:external/pkl/pkl-doc/src/test/files/DocGeneratorTest/input/com.package2",
+            "package://localhost:0/birds@0.5.0",
+            "package://localhost:0/fruit@1.1.0",
+            "package://localhost:0/unlisted@1.0.0",
+            "package://localhost:0/deprecated@1.0.0"
+          ]
+        },
+        {
+          "command": [
+            "--output-dir",
+            "{output_dir}",
+            "--cache-dir",
+            "{cache_dir}",
+            "--test-mode",
+            "{root}/external/pkl/pkl-doc/src/test/files/DocGeneratorTest/input/docsite-info.pkl",
+            "package://localhost:0/birds@0.6.0",
+            "package://localhost:0/birds@0.7.0"
+          ]
+        }
+      ],
+      "collect_files": "pkldoc_tree",
+      "assertions": {
+        "min_generated_files": 368,
+        "min_symlinks": 5,
+        "expect_symlinks": {
+          "localhost(3a)0/birds/current": "0.7.0"
+        }
+      },
+      "comparison_mode": "pkldoc-progress",
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:pkldoc:older-version-no-overwrite",
+      "lane": "pkldoc",
+      "exec_mode": "pkldoc",
+      "setup": {
+        "seed_pkldoc_cache": true
+      },
+      "steps": [
+        {
+          "command": [
+            "--output-dir",
+            "{output_dir}",
+            "--cache-dir",
+            "{cache_dir}",
+            "--test-mode",
+            "package://localhost:0/birds@0.6.0"
+          ]
+        },
+        {
+          "command": [
+            "--output-dir",
+            "{output_dir}",
+            "--cache-dir",
+            "{cache_dir}",
+            "--test-mode",
+            "package://localhost:0/birds@0.5.0"
+          ]
+        }
+      ],
+      "collect_files": "pkldoc_tree",
+      "assertions": {
+        "expect_symlinks": {
+          "localhost(3a)0/birds/current": "0.6.0"
+        }
+      },
+      "comparison_mode": "pkldoc-progress",
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:pkldoc:idempotent-rerun",
+      "lane": "pkldoc",
+      "exec_mode": "pkldoc",
+      "setup": {
+        "seed_pkldoc_cache": true
+      },
+      "steps": [
+        {
+          "command": [
+            "--output-dir",
+            "{output_dir}",
+            "--cache-dir",
+            "{cache_dir}",
+            "--no-symlinks",
+            "--test-mode",
+            "package://localhost:0/birds@0.5.0"
+          ]
+        },
+        {
+          "command": [
+            "--output-dir",
+            "{output_dir}",
+            "--cache-dir",
+            "{cache_dir}",
+            "--no-symlinks",
+            "--test-mode",
+            "package://localhost:0/birds@0.5.0"
+          ]
+        }
+      ],
+      "collect_files": "pkldoc_tree",
+      "assertions": {
+        "expect_no_symlinks": true
+      },
+      "comparison_mode": "pkldoc-progress",
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:pkldoc:no-symlinks-copy",
+      "lane": "pkldoc",
+      "exec_mode": "pkldoc",
+      "command": [
+        "--output-dir",
+        "{output_dir}",
+        "--cache-dir",
+        "{cache_dir}",
+        "--no-symlinks",
+        "--test-mode",
+        "glob_pkl:external/pkl/pkl-doc/src/test/files/DocGeneratorTest/input/com.package1"
+      ],
+      "collect_files": "pkldoc_tree",
+      "assertions": {
+        "expect_no_symlinks": true,
+        "min_generated_files": 40
+      },
+      "comparison_mode": "pkldoc-progress",
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:pkldoc:stdlib-doc-package-info",
+      "lane": "pkldoc",
+      "exec_mode": "pkldoc",
+      "setup": {
+        "copy_file": [
+          [
+            "external/pkl/stdlib/doc-package-info.pkl",
+            "stdlib_pkg/doc-package-info.pkl"
+          ],
+          [
+            "tests/fixtures/m5/pkldoc/stdlib_sample/sample.pkl",
+            "stdlib_pkg/sample.pkl"
+          ]
+        ]
+      },
+      "command": [
+        "--output-dir",
+        "{output_dir}",
+        "--cache-dir",
+        "{cache_dir}",
+        "--test-mode",
+        "{work_dir}/stdlib_pkg/doc-package-info.pkl",
+        "{work_dir}/stdlib_pkg/sample.pkl"
+      ],
+      "collect_files": "pkldoc_tree",
+      "assertions": {
+        "min_generated_files": 25,
+        "expect_symlinks": {
+          "pkl/current": "0.32.0"
+        }
+      },
+      "comparison_mode": "pkldoc-progress",
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "external/pkl/stdlib/doc-package-info.pkl",
+          "sha256": "34936596d96b7ee9ee853b1cc89491ca708618f5e02570e9fb327f21be929dc7"
+        },
+        {
+          "path": "tests/fixtures/m5/pkldoc/stdlib_sample/sample.pkl",
+          "sha256": "4f775114fb0157783d2bb2bfc17cd97e6763c0ccf5642dd5ea4ccc87805b74da"
+        }
+      ]
+    },
+    {
+      "id": "m5:pkldoc:non-test-mode-release-032",
+      "lane": "pkldoc",
+      "exec_mode": "pkldoc",
+      "command": [
+        "--output-dir",
+        "{output_dir}",
+        "--cache-dir",
+        "{cache_dir}",
+        "{root}/tests/fixtures/m5/pkldoc/minimal_pkg/doc-package-info.pkl",
+        "{root}/tests/fixtures/m5/pkldoc/minimal_pkg/Alpha.pkl"
+      ],
+      "collect_files": "pkldoc_tree",
+      "assertions": {
+        "min_generated_files": 25,
+        "expect_symlinks": {
+          "com.example.minimal/current": "1.0.0"
+        }
+      },
+      "comparison_mode": "pkldoc-progress",
+      "expected_exit": [
+        0
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/m5/pkldoc/minimal_pkg/doc-package-info.pkl",
+          "sha256": "1d550d32c22063ed89dc8da2d5c412d8fab4a34b18d7160422527cc8a1e2346b"
+        },
+        {
+          "path": "tests/fixtures/m5/pkldoc/minimal_pkg/Alpha.pkl",
+          "sha256": "7ce68c92605ada8880380d79cfb93c81c88ac0a6738652331e6770108aa3c7a0"
+        }
+      ]
+    },
+    {
+      "id": "m5:pkldoc:migrate-v1",
+      "lane": "pkldoc",
+      "exec_mode": "pkldoc",
+      "setup": {
+        "copy_to_output_dir": [
+          [
+            "external/pkl/pkl-doc/src/test/files/DocMigratorTest/input/version-1",
+            "."
+          ]
+        ]
+      },
+      "command": [
+        "--migrate",
+        "--output-dir",
+        "{output_dir}"
+      ],
+      "collect_files": "pkldoc_tree",
+      "assertions": {
+        "min_generated_files": 350
+      },
+      "comparison_mode": "pkldoc-progress",
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:pkldoc:error-legacy-without-migrate",
+      "lane": "pkldoc",
+      "exec_mode": "pkldoc",
+      "setup": {
+        "copy_to_output_dir": [
+          [
+            "external/pkl/pkl-doc/src/test/files/DocMigratorTest/input/version-1",
+            "."
+          ]
+        ]
+      },
+      "command": [
+        "--output-dir",
+        "{output_dir}",
+        "--cache-dir",
+        "{cache_dir}",
+        "--test-mode",
+        "{root}/tests/fixtures/m5/pkldoc/minimal_pkg/doc-package-info.pkl",
+        "{root}/tests/fixtures/m5/pkldoc/minimal_pkg/Alpha.pkl"
+      ],
+      "expected_exit": [
+        1
+      ]
+    },
+    {
+      "id": "m5:pkldoc:error-missing-doc-package-info",
+      "lane": "pkldoc",
+      "exec_mode": "pkldoc",
+      "command": [
+        "--output-dir",
+        "{output_dir}",
+        "--test-mode",
+        "{root}/tests/fixtures/m5/pkldoc/minimal_pkg/Alpha.pkl"
+      ],
+      "expected_exit": [
+        1
+      ]
+    },
+    {
+      "id": "m5:pkldoc:error-multiple-docsite-info",
+      "lane": "pkldoc",
+      "exec_mode": "pkldoc",
+      "setup": {
+        "templates": [
+          [
+            "d1/docsite-info.pkl",
+            "amends \"pkl:DocsiteInfo\"\n"
+          ],
+          [
+            "d2/docsite-info.pkl",
+            "amends \"pkl:DocsiteInfo\"\n"
+          ]
+        ]
+      },
+      "command": [
+        "--output-dir",
+        "{output_dir}",
+        "--test-mode",
+        "{work_dir}/d1/docsite-info.pkl",
+        "{work_dir}/d2/docsite-info.pkl"
+      ],
+      "expected_exit": [
+        1
+      ]
+    },
+    {
+      "id": "m5:pkldoc:error-package-fragment",
+      "lane": "pkldoc",
+      "exec_mode": "pkldoc",
+      "command": [
+        "--output-dir",
+        "{output_dir}",
+        "--test-mode",
+        "package://localhost:0/birds@0.5.0#/Bird.pkl"
+      ],
+      "expected_exit": [
+        1
+      ]
+    }
+  ]
+}

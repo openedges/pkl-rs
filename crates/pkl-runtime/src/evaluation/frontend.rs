@@ -181,6 +181,15 @@ fn resolve_input(
     options: &ModuleEvalOptions,
     defer_ast: bool,
 ) -> Result<(crate::resolver::ResolvedModule, PklString), ModuleFrontendFailure> {
+    resolve_input_colored(input, options, defer_ast, false)
+}
+
+fn resolve_input_colored(
+    input: impl Into<LosslessModuleSourceInput>,
+    options: &ModuleEvalOptions,
+    defer_ast: bool,
+    use_color: bool,
+) -> Result<(crate::resolver::ResolvedModule, PklString), ModuleFrontendFailure> {
     let input = input.into();
     // Java's moduleCacheDir controls package: caching (EvaluatorBuilder), while
     // File ModuleKey resolves the file directly. Preserve the original enabled
@@ -202,18 +211,20 @@ fn resolve_input(
     let module = match crate::parser::parse_module_for_evaluation(&input.text) {
         Ok(module) => module,
         Err(failure) => {
-            return Err(render_module_parse_failure_text(
+            return Err(render_module_parse_failure_text_colored(
                 input,
                 options.diagnostic_profile,
                 *failure,
+                use_color,
             ));
         }
     };
     if !defer_ast && let Some(error) = module.deferred_diagnostics.first() {
-        return Err(render_failure_text(
+        return Err(render_failure_text_colored(
             input,
             options.diagnostic_profile,
             error.clone(),
+            use_color,
         ));
     }
     let declared_name = module
@@ -229,7 +240,12 @@ fn resolve_input(
         crate::resolver::resolve_module_for_evaluation(&module)
     } else {
         crate::resolver::resolve_module(&module).map_err(|error| {
-            render_failure_text(resolved_input.clone(), options.diagnostic_profile, error)
+            render_failure_text_colored(
+                resolved_input.clone(),
+                options.diagnostic_profile,
+                error,
+                use_color,
+            )
         })?
     };
     Ok((resolved, resolved_input.inferred_name.to_owned()))
@@ -249,19 +265,29 @@ pub fn prepare_module_text(
     input: impl Into<LosslessModuleSourceInput>,
     options: &ModuleEvalOptions,
 ) -> Result<PreparedModule, ModuleFrontendFailure> {
+    prepare_module_text_colored(input, options, false)
+}
+
+/// Prepare execution with optional ANSI-colored frontend diagnostics.
+pub fn prepare_module_text_colored(
+    input: impl Into<LosslessModuleSourceInput>,
+    options: &ModuleEvalOptions,
+    use_color: bool,
+) -> Result<PreparedModule, ModuleFrontendFailure> {
     let input = input.into();
-    let (resolved, name) = resolve_input(input.clone(), options, true)?;
+    let (resolved, name) = resolve_input_colored(input.clone(), options, true, use_color)?;
     let mut sources = SourceMap::default();
     let id = sources.add(input.uri.clone(), input.text.clone());
     let source = sources.get(id).expect("source inserted").clone();
     let mut program =
         crate::vm::compile_module_with_power_assertions(&resolved).map_err(|error| {
-            let mut result = render_module_runtime_failure_text(
+            let mut result = render_module_runtime_failure_text_colored(
                 &source,
                 &input.uri,
                 &name,
                 options.diagnostic_profile,
                 error,
+                use_color,
             );
             result.phase = FrontendPhase::Compilation;
             result
@@ -279,12 +305,13 @@ pub fn prepare_module_text(
             },
         )
         .map_err(|error| {
-            render_module_runtime_failure_text(
+            render_module_runtime_failure_text_colored(
                 &source,
                 &input.uri,
                 &name,
                 options.diagnostic_profile,
                 error,
+                use_color,
             )
         })?;
     Ok(PreparedModule {
@@ -316,6 +343,18 @@ pub fn render_module_runtime_failure_text(
     profile: DiagnosticProfile,
     error: crate::value::RuntimeError,
 ) -> ModuleFrontendFailure {
+    render_module_runtime_failure_text_colored(source, uri, name, profile, error, false)
+}
+
+/// Retain diagnostic code units with optional ANSI color codes for a module-operation failure.
+pub fn render_module_runtime_failure_text_colored(
+    source: &crate::source::Source,
+    uri: impl Into<PklString>,
+    name: impl Into<PklString>,
+    profile: DiagnosticProfile,
+    error: crate::value::RuntimeError,
+    use_color: bool,
+) -> ModuleFrontendFailure {
     let uri = uri.into();
     let name = name.into();
 
@@ -336,8 +375,8 @@ pub fn render_module_runtime_failure_text(
             phase,
             disposition,
             reason: frontend.diagnostic.provenance.reason,
-            text: super::runtime_error_text_with_profile(
-                source, &uri, &name, "", error, None, profile,
+            text: super::runtime_error_text_with_profile_and_color(
+                source, &uri, &name, "", error, None, profile, use_color,
             ),
         };
     }
@@ -357,34 +396,39 @@ pub fn render_module_runtime_failure_text(
         phase: FrontendPhase::ModuleOutput,
         disposition,
         reason,
-        text: super::runtime_error_text_with_profile(source, &uri, &name, "", error, None, profile),
+        text: super::runtime_error_text_with_profile_and_color(
+            source, &uri, &name, "", error, None, profile, use_color,
+        ),
     }
 }
 
-fn render_module_parse_failure_text(
+fn render_module_parse_failure_text_colored(
     input: LosslessModuleSourceInput,
     profile: DiagnosticProfile,
     failure: crate::parser::ModuleParseFailure,
+    use_color: bool,
 ) -> ModuleFrontendFailure {
     if let Some(error) = failure.minimum_version_error(&input.inferred_name) {
         let mut sources = SourceMap::default();
         let id = sources.add(input.uri.clone(), input.text);
         let source = sources.get(id).expect("source inserted");
-        return render_module_runtime_failure_text(
+        return render_module_runtime_failure_text_colored(
             source,
             input.uri,
             input.inferred_name,
             profile,
             error,
+            use_color,
         );
     }
-    render_failure_text(input, profile, failure.diagnostic)
+    render_failure_text_colored(input, profile, failure.diagnostic, use_color)
 }
 
-fn render_failure_text(
+fn render_failure_text_colored(
     input: impl Into<LosslessModuleSourceInput>,
     profile: DiagnosticProfile,
     error: Diagnostic,
+    use_color: bool,
 ) -> ModuleFrontendFailure {
     let input = input.into();
     let phase = match error.provenance.origin {
@@ -429,7 +473,7 @@ fn render_failure_text(
         phase,
         disposition: error.provenance.disposition,
         reason: error.provenance.reason,
-        text: crate::diagnostic::render_frontend_error_text(
+        text: crate::diagnostic::render_frontend_error_text_colored(
             &error,
             &[RenderFrame {
                 source,
@@ -438,6 +482,7 @@ fn render_failure_text(
                 span: error.span,
                 highlight_length_utf16: error.highlight_length_utf16,
             }],
+            use_color,
         ),
     }
 }

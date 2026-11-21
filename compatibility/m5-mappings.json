@@ -1,0 +1,656 @@
+{
+  "schema_version": 1,
+  "baseline": {
+    "version": "0.32.0",
+    "revision": "e51fb2f91774265666f94980ec630db794a4db2d"
+  },
+  "scope": "Complete M5 Product APIs & Tools requirement-to-evidence mappings (Rust public Evaluator API, full product `pkl` CLI, `pkl repl` pipe+PTY, `pkl server` MessagePack 0x20-0x32, `pkl format` 30 corpus goldens + CLI, standalone `pkldoc` + 17 static web assets + stdlib/doc-package-info.pkl). 2026-11-20 JVM/codegen exclusions are preserved strictly as inventory-only census items.",
+  "pkldoc_vendored_assets_dir": "crates/pkl-doc/assets",
+  "cli_commands_m4_and_m5": [
+    "analyze",
+    "download-package",
+    "eval",
+    "imports",
+    "package",
+    "project",
+    "resolve",
+    "test"
+  ],
+  "cli_commands_m5_new": [
+    "format",
+    "pkl",
+    "pkldoc",
+    "repl",
+    "run",
+    "server",
+    "shell-completion"
+  ],
+  "cli_options_m3_symbols": [
+    "-f",
+    "--format",
+    "-m",
+    "--multiple-file-output-path",
+    "-o",
+    "--output-path",
+    "-x",
+    "--expression",
+    "--module-output-separator"
+  ],
+  "cli_options_m4_symbols": [
+    "--allowed-modules",
+    "--allowed-resources",
+    "--ca-certificates",
+    "--cache-dir",
+    "--env-var",
+    "--external-module-reader",
+    "--external-resource-reader",
+    "--http-header",
+    "--http-no-proxy",
+    "--http-proxy",
+    "--http-rewrite",
+    "--module-path",
+    "--no-cache",
+    "--no-project",
+    "--no-transitive",
+    "--omit-project-settings",
+    "--project-dir",
+    "--property",
+    "--root-dir",
+    "--settings",
+    "--skip-publish-check",
+    "--test-mode",
+    "--test-port",
+    "--timeout",
+    "--working-dir",
+    "-e",
+    "-p",
+    "-t",
+    "-w"
+  ],
+  "protocol_tags_m5": [
+    "CLOSE_EVALUATOR",
+    "CREATE_EVALUATOR_REQUEST",
+    "CREATE_EVALUATOR_RESPONSE",
+    "EVALUATE_REQUEST",
+    "EVALUATE_RESPONSE",
+    "LOG_MESSAGE"
+  ],
+  "m5_functional_stdlib_sources": [
+    "stdlib/Command.pkl",
+    "stdlib/DocPackageInfo.pkl",
+    "stdlib/DocsiteInfo.pkl",
+    "stdlib/EvaluatorSettings.pkl",
+    "stdlib/settings.pkl",
+    "stdlib/test.pkl"
+  ],
+  "excluded_2026_11_20": {
+    "policy": "Explicit 2026-11-20 PLAN.md/INTENT.md/TESTING.md scope decision: Java/Kotlin codegen (pkl-codegen-java, pkl-codegen-kotlin) and JVM public API compatibility adapters (java_api, kotlin_api, JVM SPI resources, JVM binding specs) are excluded from M5/M7 exit criteria and retained solely as reference inventory census.",
+    "cli_commands": [
+      "pkl-codegen-java",
+      "pkl-codegen-kotlin"
+    ],
+    "cli_option_modules": [
+      "pkl-codegen-java",
+      "pkl-codegen-kotlin"
+    ]
+  },
+  "requirements": {
+    "m5:api:evaluator-core-and-outputs": {
+      "lane": "rust-api-and-cli",
+      "description": "Public Rust EvaluatorBuilder/Evaluator core evaluation modes: output text/bytes/files, ModuleSource.text, expression string, expression Pkl-binary, format/props/env/color",
+      "case_ids": [
+        "m5:api:eval-text-json-props-env",
+        "m5:api:eval-text-color-always-error",
+        "m5:api:eval-source-text-module",
+        "m5:api:eval-source-text-expr",
+        "m5:api:eval-output-bytes",
+        "m5:api:eval-output-files",
+        "m5:api:eval-expr-pkl-binary"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {
+          "path": "crates/pkl/src/evaluator.rs",
+          "symbol": "EvaluatorBuilder"
+        },
+        {
+          "path": "crates/pkl/src/evaluator.rs",
+          "symbol": "Evaluator"
+        },
+        {
+          "path": "crates/pkl/src/evaluator.rs",
+          "symbol": "evaluate_output_text"
+        },
+        {
+          "path": "crates/pkl/src/evaluator.rs",
+          "symbol": "evaluate_output_bytes"
+        },
+        {
+          "path": "crates/pkl/src/evaluator.rs",
+          "symbol": "evaluate_output_files"
+        },
+        {
+          "path": "crates/pkl/src/evaluator.rs",
+          "symbol": "evaluate_expression_pkl_binary"
+        },
+        {
+          "path": "crates/pkl/src/module_source.rs",
+          "symbol": "ModuleSource"
+        },
+        {
+          "path": "crates/pkl/src/settings.rs",
+          "symbol": "OutputFormat"
+        },
+        {
+          "path": "crates/pkl/src/value.rs",
+          "symbol": "PModule"
+        }
+      ]
+    },
+    "m5:api:extensibility-spi-and-lifecycle": {
+      "lane": "rust-api-and-cli",
+      "description": "Public Rust SPIs (ModuleKeyFactory, ResourceReader, Logger trace+warn, StackFrameTransformer, custom SecurityManager), ModuleSchema reflection, Project + Analyzer, and Evaluator reuse/timeout/idempotent-close lifecycle",
+      "case_ids": [
+        "m5:api:eval-custom-spi-ok",
+        "m5:api:eval-custom-spi-error",
+        "m5:api:eval-custom-security-deny",
+        "m5:api:eval-schema",
+        "m5:api:project-and-analyzer",
+        "m5:api:lifecycle-reuse-timeout-close"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {
+          "path": "crates/pkl/src/reader.rs",
+          "symbol": "ModuleKeyFactory"
+        },
+        {
+          "path": "crates/pkl/src/reader.rs",
+          "symbol": "ResourceReader"
+        },
+        {
+          "path": "crates/pkl/src/logger.rs",
+          "symbol": "BufferedLogger"
+        },
+        {
+          "path": "crates/pkl/src/frame.rs",
+          "symbol": "StackFrameTransformer"
+        },
+        {
+          "path": "crates/pkl/src/security.rs",
+          "symbol": "SecurityManager"
+        },
+        {
+          "path": "crates/pkl/src/project.rs",
+          "symbol": "Project"
+        },
+        {
+          "path": "crates/pkl/src/analyzer.rs",
+          "symbol": "AnalyzerBuilder"
+        },
+        {
+          "path": "crates/pkl/src/evaluator.rs",
+          "symbol": "evaluate_schema"
+        },
+        {
+          "path": "crates/pkl-runtime/src/schema.rs",
+          "symbol": "ModuleSchema"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm/schema.rs",
+          "symbol": "VmSchemaExtractor"
+        }
+      ]
+    },
+    "m5:cli:help-version-and-dispatch": {
+      "lane": "rust-api-and-cli",
+      "description": "Root & subcommand --help verbatim parity, honest native-flavor --version/-v contract, and invalid subcommand error handling",
+      "case_ids": [
+        "m5:cli:version-long",
+        "m5:cli:version-short",
+        "m5:cli:help-root",
+        "m5:cli:help-eval",
+        "m5:cli:help-test",
+        "m5:cli:help-repl",
+        "m5:cli:help-server",
+        "m5:cli:help-format",
+        "m5:cli:help-run",
+        "m5:cli:help-shell-completion",
+        "m5:cli:help-project",
+        "m5:cli:help-download-package",
+        "m5:cli:help-analyze",
+        "m5:cli:unknown-subcommand-error"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {
+          "path": "crates/pkl-cli/src/lib.rs",
+          "symbol": "run_cli"
+        },
+        {
+          "path": "crates/pkl-cli/src/help.rs",
+          "symbol": "HELP_ROOT"
+        },
+        {
+          "path": "crates/pkl-cli/src/options.rs",
+          "symbol": "ParsedCliOptions"
+        }
+      ]
+    },
+    "m5:cli:eval-product-options-and-docpkginfo": {
+      "lane": "rust-api-and-cli",
+      "description": "Full product `pkl eval` flags (--color, --power-assertions/--no-power-assertions, --trace-mode, --module-output-separator, -o), analyze imports -o, and direct evaluation of deferred external/pkl/stdlib/doc-package-info.pkl (8 items)",
+      "case_ids": [
+        "m5:cli:eval-color-always-error",
+        "m5:cli:eval-power-assertions-on",
+        "m5:cli:eval-power-assertions-off",
+        "m5:cli:eval-trace-mode-pretty",
+        "m5:cli:eval-multi-separator-and-output-path",
+        "m5:cli:eval-stdlib-doc-package-info",
+        "m5:cli:analyze-imports-output-file"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {
+          "path": "crates/pkl-cli/src/eval_cmd.rs",
+          "symbol": "cmd_eval"
+        },
+        {
+          "path": "crates/pkl-cli/src/eval_cmd.rs",
+          "symbol": "cmd_analyze_imports"
+        },
+        {
+          "path": "crates/pkl-runtime/src/diagnostic/ansi.rs",
+          "symbol": "AnsiStringBuilder"
+        },
+        {
+          "path": "crates/pkl-host-native/src/driver.rs",
+          "symbol": "NativeHost"
+        }
+      ]
+    },
+    "m5:cli:test-reporters-junit-overwrite": {
+      "lane": "rust-api-and-cli",
+      "description": "Full `pkl test` CLI: spec and minimal reporters, ANSI color, fact power assertions, per-module and aggregate JUnit XML reports, --overwrite expected file generation, exit codes 0/10/1",
+      "case_ids": [
+        "m5:cli:test-spec-pass",
+        "m5:cli:test-minimal-pass",
+        "m5:cli:test-spec-fail-power-assertions",
+        "m5:cli:test-minimal-fail-color",
+        "m5:cli:test-junit-per-module",
+        "m5:cli:test-junit-aggregate",
+        "m5:cli:test-overwrite",
+        "m5:cli:test-no-modules-error"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {
+          "path": "crates/pkl-cli/src/test_cmd.rs",
+          "symbol": "cmd_test"
+        },
+        {
+          "path": "crates/pkl-cli/src/test_cmd.rs",
+          "symbol": "run_test_suite"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/test_runner.rs",
+          "symbol": "render_spec_report_colored"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/test_runner.rs",
+          "symbol": "render_minimal_report"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/test_runner.rs",
+          "symbol": "render_junit_report"
+        },
+        {
+          "path": "crates/pkl-runtime/src/packages/test_runner.rs",
+          "symbol": "render_junit_aggregate_report"
+        }
+      ]
+    },
+    "m5:cli:run-command-runner": {
+      "lane": "rust-api-and-cli",
+      "description": "`pkl run` (`pkl:Command` 35 stdlib items): command help, primitive/boolean/counted/enum/list/map/duration flags & positional args, missing required flag and custom convert errors",
+      "case_ids": [
+        "m5:cli:run-help",
+        "m5:cli:run-flags-and-args",
+        "m5:cli:run-missing-required-flag",
+        "m5:cli:run-convert-error"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {
+          "path": "crates/pkl-cli/src/run_cmd.rs",
+          "symbol": "cmd_run"
+        },
+        {
+          "path": "crates/pkl-runtime/src/evaluation/command.rs",
+          "symbol": "CommandSpec"
+        },
+        {
+          "path": "crates/pkl-runtime/src/evaluation/command.rs",
+          "symbol": "parse_command_invocation"
+        },
+        {
+          "path": "crates/pkl-runtime/src/evaluation/command.rs",
+          "symbol": "render_command_help"
+        },
+        {
+          "path": "crates/pkl/src/evaluator.rs",
+          "symbol": "evaluate_command_execution"
+        }
+      ]
+    },
+    "m5:cli:shell-completion": {
+      "lane": "rust-api-and-cli",
+      "description": "`pkl shell-completion` byte-exact script generation for bash, zsh, and fish plus invalid shell error",
+      "case_ids": [
+        "m5:cli:shell-completion-bash",
+        "m5:cli:shell-completion-zsh",
+        "m5:cli:shell-completion-fish",
+        "m5:cli:shell-completion-invalid"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {
+          "path": "crates/pkl-cli/src/lib.rs",
+          "symbol": "run_cli"
+        },
+        {
+          "path": "crates/pkl-cli/src/help.rs",
+          "symbol": "COMPLETION_BASH"
+        },
+        {
+          "path": "crates/pkl-cli/src/help.rs",
+          "symbol": "COMPLETION_ZSH"
+        },
+        {
+          "path": "crates/pkl-cli/src/help.rs",
+          "symbol": "COMPLETION_FISH"
+        }
+      ]
+    },
+    "m5:repl:pipe-commands-state-and-options": {
+      "lane": "repl",
+      "description": "`pkl repl` non-TTY pipe sessions: welcome banner, :help/:examples/:load/:reset/:force/:quit, prefix resolution, untyped->typed replacement, multiline input, error preamble stripping, CLI options (-p/-e/--trace-mode/--color=always)",
+      "case_ids": [
+        "m5:repl:pipe-welcome-help-examples-quit",
+        "m5:repl:pipe-stateful-untyped-to-typed",
+        "m5:repl:pipe-multiline-and-force",
+        "m5:repl:pipe-load-reset-clear",
+        "m5:repl:pipe-command-prefixes-and-unknown",
+        "m5:repl:pipe-error-preamble-and-recovery",
+        "m5:repl:pipe-cli-options-props-env-trace",
+        "m5:repl:pipe-color-always"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {
+          "path": "crates/pkl-cli/src/repl_cmd.rs",
+          "symbol": "cmd_repl"
+        },
+        {
+          "path": "crates/pkl-repl/src/runner.rs",
+          "symbol": "run_io"
+        },
+        {
+          "path": "crates/pkl-runtime/src/repl/session.rs",
+          "symbol": "ReplSession"
+        }
+      ]
+    },
+    "m5:repl:pty-interactive-session": {
+      "lane": "repl",
+      "description": "`pkl repl` real POSIX PTY sessions (`TERM=dumb`, 80x24, `TIOCSCTTY`, `stderr=PIPE`): TTY echo & line endings, `:quit`, Ctrl-D EOF, automatic TTY `--color=auto` syntax highlighting, multiline & `:reset`",
+      "case_ids": [
+        "m5:repl:pty-basic-and-quit",
+        "m5:repl:pty-ctrl-d-eof",
+        "m5:repl:pty-color-auto-tty",
+        "m5:repl:pty-multiline-and-reset"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {
+          "path": "crates/pkl-repl/src/runner.rs",
+          "symbol": "run_cli"
+        },
+        {
+          "path": "crates/pkl-repl/src/terminal.rs",
+          "symbol": "LineEditor"
+        },
+        {
+          "path": "crates/pkl-repl/src/terminal.rs",
+          "symbol": "is_dumb_terminal"
+        },
+        {
+          "path": "crates/pkl-runtime/src/repl/session.rs",
+          "symbol": "ReplSessionOptions"
+        }
+      ]
+    },
+    "m5:server:protocol-lifecycle-eval-logs": {
+      "lane": "server",
+      "description": "`pkl server` MessagePack 0x20-0x25 lifecycle, Pkl-binary & outputFormat evaluation, invalid config/evaluator errors, trace (compact/pretty) & warn 0x25 LogMessages, multi-evaluator isolation, unhandled external code rejection, clean EOF",
+      "case_ids": [
+        "m5:server:eof-empty",
+        "m5:server:create-and-close",
+        "m5:server:evaluate-binary-and-output-format",
+        "m5:server:evaluate-error-and-unknown-evaluator",
+        "m5:server:create-invalid-config-errors",
+        "m5:server:logs-trace-compact-pretty-and-warn",
+        "m5:server:multi-evaluator-isolation",
+        "m5:server:unhandled-ext-code-rejected"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {
+          "path": "crates/pkl-server/src/server.rs",
+          "symbol": "run_stream_server"
+        },
+        {
+          "path": "crates/pkl-server/src/evaluator.rs",
+          "symbol": "ServerEvaluator"
+        },
+        {
+          "path": "crates/pkl-runtime/src/server/messages.rs",
+          "symbol": "ServerMessage"
+        },
+        {
+          "path": "crates/pkl-runtime/src/server/codec.rs",
+          "symbol": "write_message"
+        },
+        {
+          "path": "crates/pkl-runtime/src/server/codec.rs",
+          "symbol": "read_message"
+        }
+      ]
+    },
+    "m5:server:client-and-external-readers": {
+      "lane": "server",
+      "description": "`pkl server` bidirectional 0x26-0x2d client module/resource reader callbacks (read/glob/null/error/triple-dot) and 0x2e-0x32 external reader delegation with graceful close & zero orphan PIDs",
+      "case_ids": [
+        "m5:server:client-resource-read-ok-null-error",
+        "m5:server:client-resource-glob-ok-null-error",
+        "m5:server:client-module-read-ok-null-error",
+        "m5:server:client-module-glob-ok-null-error",
+        "m5:server:client-module-triple-dot",
+        "m5:server:external-readers-and-lifecycle"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {
+          "path": "crates/pkl-server/src/server.rs",
+          "symbol": "run_stream_server"
+        },
+        {
+          "path": "crates/pkl-server/src/evaluator.rs",
+          "symbol": "ServerEvaluator"
+        },
+        {
+          "path": "crates/pkl-runtime/src/server/client_callbacks.rs",
+          "symbol": "ClientCallbackRegistry"
+        },
+        {
+          "path": "crates/pkl-host-native/src/driver.rs",
+          "symbol": "NativeHost"
+        }
+      ]
+    },
+    "m5:server:host-project-http-and-concurrency": {
+      "lane": "server",
+      "description": "`pkl server` env/properties/rootDir/workingDir, modulePaths (dir+JAR), project local dependencies, timeoutSeconds, HTTP (caCertificates/rewrites/headers/proxy/noProxy), FIFO pipelining, and non-blocking interleaved CreateEvaluator while blocked on callback",
+      "case_ids": [
+        "m5:server:env-properties-rootdir-workingdir",
+        "m5:server:module-paths-dir-and-jar",
+        "m5:server:project-local-deps",
+        "m5:server:timeout-seconds",
+        "m5:server:http-ca-headers-rewrites",
+        "m5:server:http-proxy-and-no-proxy",
+        "m5:server:pipelined-fifo-same-evaluator",
+        "m5:server:interleaved-create-while-blocked"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {
+          "path": "crates/pkl-server/src/server.rs",
+          "symbol": "run_stream_server"
+        },
+        {
+          "path": "crates/pkl-server/src/evaluator.rs",
+          "symbol": "CreateEvaluatorParams"
+        },
+        {
+          "path": "crates/pkl-runtime/src/server/client_callbacks.rs",
+          "symbol": "to_declared_dependencies_tree"
+        },
+        {
+          "path": "crates/pkl-host-native/src/driver.rs",
+          "symbol": "NativeHostConfig"
+        }
+      ]
+    },
+    "m5:format:corpus-30-goldens-and-idempotency": {
+      "lane": "formatter",
+      "description": "All 30 upstream FormatterSnippetTests golden input/output pairs in compatibility/corpus.json plus 2nd-pass idempotency verification (rc=0)",
+      "dynamic_mode": "format_snippet",
+      "expected_dynamic_count": 30,
+      "case_ids": [],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {
+          "path": "crates/pkl-formatter/src/lib.rs",
+          "symbol": "Formatter"
+        },
+        {
+          "path": "crates/pkl-formatter/src/generator.rs",
+          "symbol": "Generator"
+        }
+      ]
+    },
+    "m5:format:cli-modes-grammar-versions-and-errors": {
+      "lane": "formatter",
+      "description": "`pkl format` CLI contract: stdin `-`, `-w`/`--write`, `--diff-name-only`, `-s`/`--silent`, `--grammar-version=1|2`, recursive `.pkl`/`PklProject` dir walk, whitespace-only, non-bug parse & multiline string errors, exit codes 0/1/11",
+      "case_ids": [
+        "m5:format:already-formatted-exit0",
+        "m5:format:stdin-unformatted-exit11",
+        "m5:format:stdin-already-formatted-exit0",
+        "m5:format:stdin-write-error",
+        "m5:format:write-in-place",
+        "m5:format:diff-name-only",
+        "m5:format:silent-write",
+        "m5:format:grammar-version-1",
+        "m5:format:grammar-version-2",
+        "m5:format:dir-walk-pkl-and-pklproject",
+        "m5:format:whitespace-only",
+        "m5:format:parse-error-non-bug",
+        "m5:format:multiline-string-errors"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {
+          "path": "crates/pkl-cli/src/format_cmd.rs",
+          "symbol": "cmd_format"
+        },
+        {
+          "path": "crates/pkl-formatter/src/cli.rs",
+          "symbol": "run_cli"
+        },
+        {
+          "path": "crates/pkl-formatter/src/lib.rs",
+          "symbol": "GrammarVersion"
+        },
+        {
+          "path": "crates/pkl-formatter/src/lib.rs",
+          "symbol": "FormatError"
+        }
+      ]
+    },
+    "m5:pkldoc:upstream-docsite-and-incremental": {
+      "lane": "pkldoc",
+      "description": "Standalone `pkldoc` byte-for-byte HTML/JSON/search-index/static-asset/symlink parity on upstream SinglePackageTest, DocGeneratorTest run-1 & incremental run-2, older-version non-overwrite, idempotent rerun, and --no-symlinks",
+      "case_ids": [
+        "m5:pkldoc:single-package-test",
+        "m5:pkldoc:doc-generator-run1",
+        "m5:pkldoc:doc-generator-run1-then-run2",
+        "m5:pkldoc:older-version-no-overwrite",
+        "m5:pkldoc:idempotent-rerun",
+        "m5:pkldoc:no-symlinks-copy"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {
+          "path": "crates/pkl-doc/src/generator.rs",
+          "symbol": "DocGenerator"
+        },
+        {
+          "path": "crates/pkl-doc/src/pages.rs",
+          "symbol": "HtmlGenerator"
+        },
+        {
+          "path": "crates/pkl-doc/src/assets.rs",
+          "symbol": "write_all_static_resources"
+        },
+        {
+          "path": "crates/pkl-doc/src/package_data.rs",
+          "symbol": "PackageRef"
+        }
+      ]
+    },
+    "m5:pkldoc:stdlib-docpkginfo-release-migrate-and-cli": {
+      "lane": "pkldoc",
+      "description": "`pkldoc` deferred external/pkl/stdlib/doc-package-info.pkl (`importUri = \"pkl:/\"`), non-test-mode 0.32.0 release links, `--migrate` from v1 docsite, `--help`/`--version`, and CLI validation errors",
+      "case_ids": [
+        "m5:pkldoc:version",
+        "m5:pkldoc:help",
+        "m5:pkldoc:stdlib-doc-package-info",
+        "m5:pkldoc:non-test-mode-release-032",
+        "m5:pkldoc:migrate-v1",
+        "m5:pkldoc:error-legacy-without-migrate",
+        "m5:pkldoc:error-missing-doc-package-info",
+        "m5:pkldoc:error-multiple-docsite-info",
+        "m5:pkldoc:error-package-fragment"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {
+          "path": "crates/pkl-doc/src/cli.rs",
+          "symbol": "CliDocGenerator"
+        },
+        {
+          "path": "crates/pkl-doc/src/cli.rs",
+          "symbol": "pkldoc_version_info"
+        },
+        {
+          "path": "crates/pkl-doc/src/migrator.rs",
+          "symbol": "DocMigrator"
+        },
+        {
+          "path": "crates/pkl-doc/src/generator.rs",
+          "symbol": "determine_current_packages"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,5 @@
+data = new {
+  alpha = 1
+  beta = List("x", "y")
+}
+res = trace(data)

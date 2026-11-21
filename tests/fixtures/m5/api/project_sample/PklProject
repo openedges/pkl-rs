@@ -1,0 +1,7 @@
+amends "pkl:Project"
+
+evaluatorSettings {
+  externalProperties {
+    ["mode"] = "from-project"
+  }
+}

@@ -111,6 +111,18 @@ impl PackageResolver {
         Ok(meta)
     }
 
+    /// Loads `DependencyMetadata` together with the SHA-256 hex digest of its raw JSON bytes,
+    /// matching `PackageResolvers.getDependencyMetadataAndComputeChecksum`.
+    pub fn get_dependency_metadata_and_compute_checksum(
+        &self,
+        package: &PackageUri,
+        expected_checksum: Option<&PklString>,
+    ) -> Result<(DependencyMetadata, PklString), ModuleHostError> {
+        let (meta, raw_bytes) = self.load_metadata_and_bytes(package, expected_checksum, true)?;
+        let digest = PklString::from(sha256_hex(&raw_bytes).as_str());
+        Ok((meta, digest))
+    }
+
     fn load_metadata_and_bytes(
         &self,
         package: &PackageUri,

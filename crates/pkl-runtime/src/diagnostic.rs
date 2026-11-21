@@ -1,8 +1,8 @@
 //! Structured diagnostics before product-specific rendering.
+pub mod ansi;
 mod frames;
-mod highlight;
+pub(crate) mod highlight;
 
-use crate::pkl_string::PklStringBuilder;
 use crate::source::{Source, SourceId, Span};
 use crate::value::PklString;
 use std::fmt;
@@ -130,11 +130,16 @@ impl TypeDiagnostic {
     }
 
     pub fn render(&self, source: &Source) -> (PklString, Option<PklString>) {
-        self.render_indented(source, "", true)
+        self.render_indented(source, "", true, false, ansi::AnsiCodeSet::EMPTY)
+    }
+
+    pub(crate) fn render_colored(&self, source: &Source) -> (PklString, Option<PklString>) {
+        self.render_indented(source, "", true, true, ansi::theme::ERROR_MESSAGE)
     }
 
     pub(crate) fn render_without_power(&self, source: &Source) -> PklString {
-        self.render_indented(source, "", false).0
+        self.render_indented(source, "", false, false, ansi::AnsiCodeSet::EMPTY)
+            .0
     }
 
     fn render_indented(
@@ -142,23 +147,42 @@ impl TypeDiagnostic {
         source: &Source,
         indent: &str,
         power: bool,
+        use_color: bool,
+        outer_style: ansi::AnsiCodeSet,
     ) -> (PklString, Option<PklString>) {
-        let mut message_text = PklStringBuilder::default();
+        let mut msg = ansi::AnsiStringBuilder::new(use_color);
+        let mut hint_out: Option<PklString> = None;
+        msg.append_scoped(outer_style, |out| {
+            hint_out = self.render_indented_into(source, indent, power, use_color, out);
+        });
+        (msg.finish_pkl(), hint_out)
+    }
+
+    fn render_indented_into(
+        &self,
+        source: &Source,
+        indent: &str,
+        power: bool,
+        use_color: bool,
+        out: &mut ansi::AnsiStringBuilder,
+    ) -> Option<PklString> {
         match self {
             Self::AtSource {
                 section,
                 diagnostic,
-            } => section.with_source(|source| diagnostic.render_indented(source, indent, power)),
+            } => section.with_source(|source| {
+                diagnostic.render_indented_into(source, indent, power, use_color, out)
+            }),
             Self::Simple { message, .. } => {
                 let units: Vec<_> = message.encode_utf16().collect();
                 for (index, line) in units.split(|unit| *unit == 10).enumerate() {
                     if index > 0 {
-                        message_text.push('\n');
+                        out.append_char('\n');
                     }
-                    message_text.push_str(indent);
-                    message_text.push_value(&PklString::from_utf16(line.to_vec()));
+                    out.append_str(indent);
+                    out.append_utf16(line);
                 }
-                (message_text.finish(), None)
+                None
             }
             Self::Constraint {
                 span,
@@ -170,21 +194,23 @@ impl TypeDiagnostic {
                     .slice(*span)
                     .map(|text| text.to_pkl_string())
                     .unwrap_or_default();
-                message_text.push_str(indent);
-                message_text.push_str("Type constraint `");
-                message_text.push_value(&expression);
-                message_text.push_str(&format!("` violated.\n{indent}Value: "));
-                message_text.push_value(value);
+                out.append_str(indent);
+                out.append_str("Type constraint `");
+                out.append_pkl(&expression);
+                out.append_str(&format!("` violated.\n{indent}Value: "));
+                out.append_pkl(value);
                 if power && let Some(observations) = observations {
-                    message_text.push_str("\n\n");
-                    message_text.push_value(&crate::power_assertions::render(
+                    out.append_str("\n\n");
+                    crate::power_assertions::render_to_ansi(
+                        out,
                         source,
                         *body_span,
                         observations,
                         &format!("{indent}    "),
-                    ));
+                        None,
+                    );
                 }
-                (message_text.finish(), None)
+                None
             }
             Self::Union {
                 span,
@@ -209,15 +235,21 @@ impl TypeDiagnostic {
                         .concat(actual_type)
                         .concat(&"`".into())
                 };
-                message_text.push_str(&format!("{indent}Expected value of type `"));
-                message_text.push_value(&expected);
-                message_text.push_str("`, but got ");
-                message_text.push_value(&actual);
-                message_text.push_str(&format!(".\n{indent}Value: "));
-                message_text.push_value(value);
-                let hints: Vec<_> = nontrivial
-                    .into_iter()
-                    .map(|child| {
+                out.append_str(&format!("{indent}Expected value of type `"));
+                out.append_pkl(&expected);
+                out.append_str("`, but got ");
+                out.append_pkl(&actual);
+                out.append_str(&format!(".\n{indent}Value: "));
+                out.append_pkl(value);
+                if nontrivial.is_empty() {
+                    return None;
+                }
+                let mut hint_builder = ansi::AnsiStringBuilder::new(use_color);
+                hint_builder.append_scoped(ansi::theme::ERROR_MESSAGE_HINT, |hout| {
+                    for (idx, child) in nontrivial.into_iter().enumerate() {
+                        if idx > 0 {
+                            hout.append_str("\n\n");
+                        }
                         let expected = match &child.type_source {
                             Some(section) => section
                                 .text()
@@ -229,26 +261,23 @@ impl TypeDiagnostic {
                                 .map(|text| text.to_pkl_string())
                                 .unwrap_or_default(),
                         };
-                        let (message, hint) =
-                            child
-                                .diagnostic
-                                .render_indented(source, &format!("{indent}  "), power);
-                        let mut text = PklStringBuilder::default();
-                        text.push_str(&format!("{indent}* Value is not of type `"));
-                        text.push_value(&expected);
-                        text.push_str("` because:\n");
-                        text.push_value(&message);
-                        if let Some(hint) = hint {
-                            text.push_str("\n\n");
-                            text.push_value(&hint);
+                        hout.append_str(&format!("{indent}* Value is not of type `"));
+                        hout.append_pkl(&expected);
+                        hout.append_str("` because:\n");
+                        let child_hint = child.diagnostic.render_indented_into(
+                            source,
+                            &format!("{indent}  "),
+                            power,
+                            use_color,
+                            hout,
+                        );
+                        if let Some(sub_hint) = child_hint {
+                            hout.append_str("\n\n");
+                            hout.append_pkl(&sub_hint);
                         }
-                        text.finish()
-                    })
-                    .collect();
-                (
-                    message_text.finish(),
-                    (!hints.is_empty()).then(|| PklString::join(&hints, "\n\n")),
-                )
+                    }
+                });
+                Some(hint_builder.finish_pkl())
             }
         }
     }
@@ -425,14 +454,32 @@ pub fn render_error_text(
     frames: &[RenderFrame<'_>],
     hint: Option<&PklString>,
 ) -> PklString {
+    render_error_text_colored(message, frames, hint, false)
+}
+
+/// Canonical diagnostic text with optional ANSI color codes matching Pkl 0.32.0 `AnsiTheme`.
+pub fn render_error_text_colored(
+    message: &PklString,
+    frames: &[RenderFrame<'_>],
+    hint: Option<&PklString>,
+    use_color: bool,
+) -> PklString {
     let mut rendering = PreparedDiagnostic::new(message, frames, hint);
     rendering.transform(crate::logging::FrameTransformer::Default);
-    rendering.render()
+    rendering.render_colored(use_color)
 }
 
 pub(crate) fn render_frontend_error_text(
     error: &Diagnostic,
     frames: &[RenderFrame<'_>],
+) -> PklString {
+    render_frontend_error_text_colored(error, frames, false)
+}
+
+pub(crate) fn render_frontend_error_text_colored(
+    error: &Diagnostic,
+    frames: &[RenderFrame<'_>],
+    use_color: bool,
 ) -> PklString {
     let mut rendering = PreparedDiagnostic::new_frontend(
         &error.message,
@@ -441,7 +488,7 @@ pub(crate) fn render_frontend_error_text(
         error.highlight_offset_utf16(),
     );
     rendering.transform(crate::logging::FrameTransformer::Default);
-    rendering.render()
+    rendering.render_colored(use_color)
 }
 
 /// Detached rendering continuation. Frame compression precedes transformation,
@@ -450,6 +497,8 @@ pub(crate) fn render_frontend_error_text(
 pub(crate) struct PreparedDiagnostic {
     message: PklString,
     hint: Option<PklString>,
+    colored_message: Option<PklString>,
+    colored_hint: Option<PklString>,
     frames: frames::DiagnosticFrames,
 }
 impl PreparedDiagnostic {
@@ -461,6 +510,8 @@ impl PreparedDiagnostic {
         Self {
             message: message.clone(),
             hint: hint.cloned(),
+            colored_message: None,
+            colored_hint: None,
             frames: frames::DiagnosticFrames::new(frames),
         }
     }
@@ -476,8 +527,14 @@ impl PreparedDiagnostic {
         Self {
             message: message.clone(),
             hint: hint.cloned(),
+            colored_message: None,
+            colored_hint: None,
             frames: frames::DiagnosticFrames::new_with_first_offset(frames, first_offset_utf16),
         }
+    }
+    pub(crate) fn set_colored_override(&mut self, message: PklString, hint: Option<PklString>) {
+        self.colored_message = Some(message);
+        self.colored_hint = hint;
     }
     pub(crate) fn next_frame(&self) -> Option<&crate::logging::LogFrame> {
         self.frames.next()
@@ -491,18 +548,36 @@ impl PreparedDiagnostic {
         }
     }
     pub(crate) fn render(&self) -> PklString {
-        let mut output = PklStringBuilder::default();
-        output.push_str("–– Pkl Error ––\n");
-        output.push_value(&self.message);
-        output.push('\n');
-        if !self.frames.is_empty() {
-            output.push('\n');
-            self.frames.render(&mut output, self.hint.as_ref());
-        } else if let Some(hint) = &self.hint {
-            output.push('\n');
-            output.push_value(hint);
+        self.render_colored(false)
+    }
+
+    pub(crate) fn render_colored(&self, use_color: bool) -> PklString {
+        let mut out = ansi::AnsiStringBuilder::new(use_color);
+        out.append_styled(ansi::theme::ERROR_HEADER, "–– Pkl Error ––")
+            .append_char('\n');
+        if use_color && let Some(precolored) = &self.colored_message {
+            out.append_pkl(precolored);
+        } else {
+            out.append_styled_pkl(ansi::theme::ERROR_MESSAGE, &self.message);
         }
-        output.finish()
+        out.append_char('\n');
+        if !self.frames.is_empty() {
+            out.append_char('\n');
+            if use_color && let Some(precolored_hint) = &self.colored_hint {
+                self.frames
+                    .render_ansi_precolored_hint(&mut out, precolored_hint);
+            } else {
+                self.frames.render_ansi(&mut out, self.hint.as_ref());
+            }
+        } else if let Some(hint) = &self.hint {
+            out.append_char('\n');
+            if use_color && let Some(precolored_hint) = &self.colored_hint {
+                out.append_pkl(precolored_hint);
+            } else {
+                out.append_styled_pkl(ansi::theme::ERROR_MESSAGE_HINT, hint);
+            }
+        }
+        out.finish_pkl()
     }
 }
 
@@ -555,31 +630,37 @@ fn frame_line(frame: &crate::logging::LogFrame) -> Result<FrameLine, PklString> 
     })
 }
 
-fn render_log_frame(output: &mut PklStringBuilder, frame: &crate::logging::LogFrame, margin: &str) {
-    use std::fmt::Write;
+fn render_log_frame_ansi(
+    out: &mut ansi::AnsiStringBuilder,
+    frame: &crate::logging::LogFrame,
+    margin: &str,
+) {
     // Invalid authored locations retain the legacy renderer omission. Host
     // replacements are validated by the continuation before reaching this code.
     let Ok(line) = frame_line(frame) else {
         return;
     };
-    write!(output, "{margin}{} | ", frame.start_line).unwrap();
-    output.push_value(&highlight::uncolored_text(&line.stripped));
-    writeln!(
-        output,
-        "\n{margin}{}{}",
-        " ".repeat(line.padding),
-        "^".repeat(line.width)
-    )
-    .unwrap();
-    write!(output, "{margin}at ").unwrap();
-    if let Some(member) = &frame.member_name {
-        output.push_value(member);
-    } else {
-        output.push_str("<unknown>");
-    }
-    output.push_str(" (");
-    output.push_value(&frame.module_uri);
-    output.push_str(")\n");
+    let prefix = format!("{} | ", frame.start_line);
+    out.append_styled(ansi::theme::STACK_TRACE_MARGIN, margin)
+        .append_styled(ansi::theme::STACK_TRACE_LINE_NUMBER, &prefix);
+    highlight::write_to(out, &line.stripped);
+    out.append_char('\n')
+        .append_styled(ansi::theme::STACK_TRACE_MARGIN, margin)
+        .append_str(&" ".repeat(line.padding))
+        .append_styled(ansi::theme::STACK_TRACE_CARET, &"^".repeat(line.width))
+        .append_char('\n');
+    out.append_styled(ansi::theme::STACK_TRACE_MARGIN, margin)
+        .append_scoped(ansi::theme::STACK_FRAME, |out| {
+            out.append_str("at ");
+            if let Some(member) = &frame.member_name {
+                out.append_pkl(member);
+            } else {
+                out.append_str("<unknown>");
+            }
+            out.append_str(" (")
+                .append_untrusted_pkl(&frame.module_uri)
+                .append_str(")\n");
+        });
 }
 
 // Java Character.isWhitespace deliberately excludes the non-breaking spaces.

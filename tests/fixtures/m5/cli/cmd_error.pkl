@@ -1,0 +1,14 @@
+extends "pkl:Command"
+
+options: Options
+
+class Options {
+  /// Required flag with no default.
+  requiredFlag: String
+
+  /// Converted integer that fails on bad input.
+  @Flag { convert = (s) -> if (s == "bad") throw("invalid custom value") else s }
+  checked: String = "ok"
+}
+
+value = "\(options.requiredFlag):\(options.checked)"

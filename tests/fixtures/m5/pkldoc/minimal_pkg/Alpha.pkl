@@ -1,0 +1,13 @@
+/// Minimal module in com.example.minimal.
+module com.example.minimal.Alpha
+
+/// A sample configuration class.
+class Config {
+  /// Hostname to bind.
+  host: String = "localhost"
+
+  /// Port number.
+  port: Int = 8080
+}
+
+defaultConfig: Config = new {}

@@ -2940,6 +2940,192 @@ pub(crate) fn parse_expression_for_evaluation<'a>(
     })
 }
 
+/// A single top-level item parsed from interactive Pkl REPL input (`ParserImpl.parseReplInput`).
+#[derive(Clone, Debug)]
+pub enum ReplItem {
+    Import {
+        member: Member,
+        span: Span,
+    },
+    ModuleDecl {
+        declaration: ModuleDeclaration,
+        span: Span,
+    },
+    Class {
+        member: Member,
+        span: Span,
+    },
+    TypeAlias {
+        member: Member,
+        span: Span,
+    },
+    Method {
+        member: Member,
+        span: Span,
+    },
+    Property {
+        member: Member,
+        span: Span,
+    },
+    Expr {
+        expr: Expr,
+        span: Span,
+    },
+}
+
+impl ReplItem {
+    pub fn span(&self) -> Span {
+        match self {
+            Self::Import { span, .. }
+            | Self::ModuleDecl { span, .. }
+            | Self::Class { span, .. }
+            | Self::TypeAlias { span, .. }
+            | Self::Method { span, .. }
+            | Self::Property { span, .. }
+            | Self::Expr { span, .. } => *span,
+        }
+    }
+}
+
+/// Parsed REPL input sequence retaining deferred diagnostics and span tables.
+#[derive(Clone, Debug)]
+pub struct ParsedReplInput {
+    pub items: Vec<ReplItem>,
+    pub deferred_diagnostics: Vec<Diagnostic>,
+    pub folded_integer_spans: std::collections::BTreeMap<Span, Span>,
+    pub interpolation_spans: std::collections::BTreeMap<Span, Span>,
+}
+
+fn repl_header_span(
+    doc_comment: &Option<DocComment>,
+    annotations: &[Expr],
+    modifiers: &[Modifier],
+) -> Option<Span> {
+    if let Some(doc) = doc_comment
+        && let (Some(first), Some(last)) = (doc.sections.first(), doc.sections.last())
+    {
+        return Some(Span::new(first.start, last.end));
+    }
+    if let Some(first) = annotations.first() {
+        return Some(first.span);
+    }
+    if let Some(first) = modifiers.first() {
+        return Some(first.span);
+    }
+    None
+}
+
+fn ensure_empty_repl_headers(
+    doc_comment: &Option<DocComment>,
+    annotations: &[Expr],
+    modifiers: &[Modifier],
+    fallback_span: Span,
+    kind: &str,
+) -> Result<(), Diagnostic> {
+    if let Some(span) = repl_header_span(doc_comment, annotations, modifiers) {
+        return Err(Diagnostic::language(
+            DiagnosticOrigin::Parser,
+            DiagnosticKind::Syntax,
+            span,
+            format!("{kind} cannot have doc comments, annotations or modifiers."),
+        ));
+    }
+    let _ = fallback_span;
+    Ok(())
+}
+
+/// Parses a sequence of REPL declarations and expressions following Pkl 0.32.0
+/// `ParserImpl.parseReplInput` (`ParserImpl.java:159-203`).
+pub fn parse_repl_input<'a>(
+    source: impl Into<SourceSlice<'a>>,
+) -> Result<ParsedReplInput, Diagnostic> {
+    let mut parser = Parser::new(source)?;
+    let mut items = Vec::new();
+    while parser.token.kind != Kind::Eof {
+        let doc_comment = parser.doc_comment()?;
+        let annotations = parser.annotations()?;
+        let modifiers = parser.modifiers()?;
+        let item_start = repl_header_span(&doc_comment, &annotations, &modifiers)
+            .map_or(parser.token.span.start, |s| s.start);
+
+        if parser.is_name("import") {
+            ensure_empty_repl_headers(
+                &doc_comment,
+                &annotations,
+                &modifiers,
+                parser.token.span,
+                "Imports",
+            )?;
+            let member = parser.import()?;
+            let span = Span::new(item_start, parser.previous_end);
+            items.push(ReplItem::Import { member, span });
+        } else if parser.is_name("module") || parser.is_name("amends") || parser.is_name("extends")
+        {
+            let declaration = parser
+                .module_declaration(modifiers, annotations, doc_comment)?
+                .expect("module/amends/extends always produces ModuleDeclaration");
+            let span = Span::new(item_start, parser.previous_end);
+            items.push(ReplItem::ModuleDecl { declaration, span });
+        } else if parser.is_name("class") {
+            let member = parser.member(
+                MemberContext::Module,
+                Some((modifiers, annotations, doc_comment)),
+            )?;
+            let span = Span::new(item_start, parser.previous_end);
+            items.push(ReplItem::Class { member, span });
+        } else if parser.is_name("typealias") {
+            let member = parser.member(
+                MemberContext::Module,
+                Some((modifiers, annotations, doc_comment)),
+            )?;
+            let span = Span::new(item_start, parser.previous_end);
+            items.push(ReplItem::TypeAlias { member, span });
+        } else if parser.is_name("function") {
+            let member = parser.member(
+                MemberContext::Module,
+                Some((modifiers, annotations, doc_comment)),
+            )?;
+            let span = Span::new(item_start, parser.previous_end);
+            items.push(ReplItem::Method { member, span });
+        } else {
+            let is_ident = matches!(&parser.token.kind, Kind::QuotedName(_))
+                || matches!(&parser.token.kind, Kind::Name(name) if !is_keyword(name) && name != "_");
+            if is_ident {
+                let saved = parser.clone();
+                parser.advance()?;
+                let is_property =
+                    parser.is_symbol(':') || parser.is_symbol('=') || parser.is_symbol('{');
+                parser = saved;
+                if is_property {
+                    let member = parser.member(
+                        MemberContext::Module,
+                        Some((modifiers, annotations, doc_comment)),
+                    )?;
+                    let span = Span::new(item_start, parser.previous_end);
+                    items.push(ReplItem::Property { member, span });
+                    continue;
+                }
+            }
+            ensure_empty_repl_headers(
+                &doc_comment,
+                &annotations,
+                &modifiers,
+                parser.token.span,
+                "Expressions",
+            )?;
+            let expr = parser.expression(0)?;
+            let span = Span::new(item_start, parser.previous_end);
+            items.push(ReplItem::Expr { expr, span });
+        }
+    }
+    Ok(ParsedReplInput {
+        items,
+        deferred_diagnostics: parser.pending,
+        folded_integer_spans: parser.folded_integer_spans,
+        interpolation_spans: parser.interpolation_spans,
+    })
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

@@ -423,14 +423,14 @@ fn decode_body(
     Ok(Some(msg))
 }
 
-fn malformed_body(code: i32, cause: impl Into<String>) -> ExternalReaderError {
+pub(crate) fn malformed_body(code: i32, cause: impl Into<String>) -> ExternalReaderError {
     ExternalReaderError::Decode {
         message: format!("Malformed message body for message with code `{code}`."),
         cause: Some(cause.into()),
     }
 }
 
-fn missing_param(key: &str) -> ExternalReaderError {
+pub(crate) fn missing_param(key: &str) -> ExternalReaderError {
     // Exact template in `errorMessages.properties:1095-1096` (no trailing period).
     ExternalReaderError::Decode {
         message: format!("Missing message parameter `{key}`"),
@@ -501,7 +501,7 @@ fn unpack_path_elements(
 
 /// Validates RFC 2396 / `java.net.URI(String)` syntax (accepting both relative
 /// and absolute URIs, matching `BaseMessagePackDecoder.java:46,57,68,79`).
-fn validate_java_uri(uri: &str) -> Result<(), String> {
+pub(crate) fn validate_java_uri(uri: &str) -> Result<(), String> {
     let bytes = uri.as_bytes();
     let mut i = 0;
     while i < bytes.len() {
@@ -557,7 +557,7 @@ fn validate_java_uri(uri: &str) -> Result<(), String> {
 // ============================================================================
 
 #[derive(Clone, Debug, PartialEq)]
-enum MsgPackValue {
+pub(crate) enum MsgPackValue {
     Nil,
     Bool(bool),
     Int(i64),
@@ -570,29 +570,29 @@ enum MsgPackValue {
     Ext(i8, Vec<u8>),
 }
 
-struct MapView<'a> {
+pub(crate) struct MapView<'a> {
     entries: &'a [(MsgPackValue, MsgPackValue)],
 }
 
 impl<'a> MapView<'a> {
-    fn new(entries: &'a [(MsgPackValue, MsgPackValue)]) -> Self {
+    pub(crate) fn new(entries: &'a [(MsgPackValue, MsgPackValue)]) -> Self {
         Self { entries }
     }
 
     /// Look up by string key; if duplicate keys appear, the last one wins
     /// (matching `msgpack-java` `MapValue` insertion semantics).
-    fn opt(&self, key: &str) -> Option<&'a MsgPackValue> {
+    pub(crate) fn opt(&self, key: &str) -> Option<&'a MsgPackValue> {
         self.entries.iter().rev().find_map(|(k, v)| match k {
             MsgPackValue::Str(s) if s == key => Some(v),
             _ => None,
         })
     }
 
-    fn req(&self, key: &str) -> Result<&'a MsgPackValue, ExternalReaderError> {
+    pub(crate) fn req(&self, key: &str) -> Result<&'a MsgPackValue, ExternalReaderError> {
         self.opt(key).ok_or_else(|| missing_param(key))
     }
 
-    fn req_i64(&self, key: &str, code: i32) -> Result<i64, ExternalReaderError> {
+    pub(crate) fn req_i64(&self, key: &str, code: i32) -> Result<i64, ExternalReaderError> {
         match self.req(key)? {
             MsgPackValue::Int(v) => Ok(*v),
             MsgPackValue::Uint(v) => i64::try_from(*v)
@@ -604,7 +604,7 @@ impl<'a> MapView<'a> {
         }
     }
 
-    fn req_str(&self, key: &str, code: i32) -> Result<String, ExternalReaderError> {
+    pub(crate) fn req_str(&self, key: &str, code: i32) -> Result<String, ExternalReaderError> {
         match self.req(key)? {
             MsgPackValue::Str(s) => Ok(s.clone()),
             other => Err(malformed_body(
@@ -614,13 +614,13 @@ impl<'a> MapView<'a> {
         }
     }
 
-    fn req_uri(&self, key: &str, code: i32) -> Result<String, ExternalReaderError> {
+    pub(crate) fn req_uri(&self, key: &str, code: i32) -> Result<String, ExternalReaderError> {
         let uri = self.req_str(key, code)?;
         validate_java_uri(&uri).map_err(|reason| malformed_body(code, reason))?;
         Ok(uri)
     }
 
-    fn req_bool(&self, key: &str, code: i32) -> Result<bool, ExternalReaderError> {
+    pub(crate) fn req_bool(&self, key: &str, code: i32) -> Result<bool, ExternalReaderError> {
         match self.req(key)? {
             MsgPackValue::Bool(b) => Ok(*b),
             other => Err(malformed_body(
@@ -630,7 +630,11 @@ impl<'a> MapView<'a> {
         }
     }
 
-    fn opt_str(&self, key: &str, code: i32) -> Result<Option<String>, ExternalReaderError> {
+    pub(crate) fn opt_str(
+        &self,
+        key: &str,
+        code: i32,
+    ) -> Result<Option<String>, ExternalReaderError> {
         let Some(value) = self.opt(key) else {
             return Ok(None);
         };
@@ -645,7 +649,11 @@ impl<'a> MapView<'a> {
         }
     }
 
-    fn opt_bin(&self, key: &str, code: i32) -> Result<Option<Vec<u8>>, ExternalReaderError> {
+    pub(crate) fn opt_bin(
+        &self,
+        key: &str,
+        code: i32,
+    ) -> Result<Option<Vec<u8>>, ExternalReaderError> {
         let Some(value) = self.opt(key) else {
             return Ok(None);
         };
@@ -663,12 +671,12 @@ impl<'a> MapView<'a> {
 // Low-Level Streaming MessagePack Writer (matches msgpack-core compact rules)
 // ============================================================================
 
-struct MsgPackWriter<'a, W: Write> {
+pub(crate) struct MsgPackWriter<'a, W: Write> {
     out: &'a mut W,
 }
 
 impl<'a, W: Write> MsgPackWriter<'a, W> {
-    fn new(out: &'a mut W) -> Self {
+    pub(crate) fn new(out: &'a mut W) -> Self {
         Self { out }
     }
 
@@ -678,7 +686,7 @@ impl<'a, W: Write> MsgPackWriter<'a, W> {
             .map_err(|e| ExternalReaderError::Io(e.to_string()))
     }
 
-    fn flush(&mut self) -> Result<(), ExternalReaderError> {
+    pub(crate) fn flush(&mut self) -> Result<(), ExternalReaderError> {
         self.out
             .flush()
             .map_err(|e| ExternalReaderError::Io(e.to_string()))
@@ -689,15 +697,15 @@ impl<'a, W: Write> MsgPackWriter<'a, W> {
             .map_err(|_| ExternalReaderError::Protocol("MessagePack length exceeds u32".into()))
     }
 
-    fn pack_bool(&mut self, value: bool) -> Result<(), ExternalReaderError> {
+    pub(crate) fn pack_bool(&mut self, value: bool) -> Result<(), ExternalReaderError> {
         self.write_all(&[if value { 0xc3 } else { 0xc2 }])
     }
 
-    fn pack_i32(&mut self, value: i32) -> Result<(), ExternalReaderError> {
+    pub(crate) fn pack_i32(&mut self, value: i32) -> Result<(), ExternalReaderError> {
         self.pack_i64(i64::from(value))
     }
 
-    fn pack_i64(&mut self, value: i64) -> Result<(), ExternalReaderError> {
+    pub(crate) fn pack_i64(&mut self, value: i64) -> Result<(), ExternalReaderError> {
         if (0..=127).contains(&value) || (-32..=-1).contains(&value) {
             return self.write_all(&[value as u8]);
         }
@@ -729,7 +737,7 @@ impl<'a, W: Write> MsgPackWriter<'a, W> {
         }
     }
 
-    fn pack_array_header(&mut self, len: usize) -> Result<(), ExternalReaderError> {
+    pub(crate) fn pack_array_header(&mut self, len: usize) -> Result<(), ExternalReaderError> {
         let len = Self::len32(len)?;
         if len <= 15 {
             self.write_all(&[0x90 | (len as u8)])
@@ -742,7 +750,7 @@ impl<'a, W: Write> MsgPackWriter<'a, W> {
         }
     }
 
-    fn pack_map_header(&mut self, len: usize) -> Result<(), ExternalReaderError> {
+    pub(crate) fn pack_map_header(&mut self, len: usize) -> Result<(), ExternalReaderError> {
         let len = Self::len32(len)?;
         if len <= 15 {
             self.write_all(&[0x80 | (len as u8)])
@@ -755,7 +763,7 @@ impl<'a, W: Write> MsgPackWriter<'a, W> {
         }
     }
 
-    fn pack_str(&mut self, s: &str) -> Result<(), ExternalReaderError> {
+    pub(crate) fn pack_str(&mut self, s: &str) -> Result<(), ExternalReaderError> {
         let bytes = s.as_bytes();
         let len = Self::len32(bytes.len())?;
         if len <= 31 {
@@ -772,7 +780,7 @@ impl<'a, W: Write> MsgPackWriter<'a, W> {
         self.write_all(bytes)
     }
 
-    fn pack_bin(&mut self, bytes: &[u8]) -> Result<(), ExternalReaderError> {
+    pub(crate) fn pack_bin(&mut self, bytes: &[u8]) -> Result<(), ExternalReaderError> {
         let len = Self::len32(bytes.len())?;
         if len <= u32::from(u8::MAX) {
             self.write_all(&[0xc4, len as u8])?;
@@ -786,22 +794,34 @@ impl<'a, W: Write> MsgPackWriter<'a, W> {
         self.write_all(bytes)
     }
 
-    fn pack_kv_i64(&mut self, key: &str, value: i64) -> Result<(), ExternalReaderError> {
+    pub(crate) fn pack_kv_i64(&mut self, key: &str, value: i64) -> Result<(), ExternalReaderError> {
         self.pack_str(key)?;
         self.pack_i64(value)
     }
 
-    fn pack_kv_str(&mut self, key: &str, value: &str) -> Result<(), ExternalReaderError> {
+    pub(crate) fn pack_kv_str(
+        &mut self,
+        key: &str,
+        value: &str,
+    ) -> Result<(), ExternalReaderError> {
         self.pack_str(key)?;
         self.pack_str(value)
     }
 
-    fn pack_kv_bin(&mut self, key: &str, value: &[u8]) -> Result<(), ExternalReaderError> {
+    pub(crate) fn pack_kv_bin(
+        &mut self,
+        key: &str,
+        value: &[u8],
+    ) -> Result<(), ExternalReaderError> {
         self.pack_str(key)?;
         self.pack_bin(value)
     }
 
-    fn pack_kv_bool(&mut self, key: &str, value: bool) -> Result<(), ExternalReaderError> {
+    pub(crate) fn pack_kv_bool(
+        &mut self,
+        key: &str,
+        value: bool,
+    ) -> Result<(), ExternalReaderError> {
         self.pack_str(key)?;
         self.pack_bool(value)
     }
@@ -811,16 +831,16 @@ impl<'a, W: Write> MsgPackWriter<'a, W> {
 // Low-Level Streaming MessagePack Reader
 // ============================================================================
 
-struct MsgPackReader<'a, R: Read> {
+pub(crate) struct MsgPackReader<'a, R: Read> {
     input: &'a mut R,
 }
 
 impl<'a, R: Read> MsgPackReader<'a, R> {
-    fn new(input: &'a mut R) -> Self {
+    pub(crate) fn new(input: &'a mut R) -> Self {
         Self { input }
     }
 
-    fn read_first_byte_or_eof(&mut self) -> Result<Option<u8>, ExternalReaderError> {
+    pub(crate) fn read_first_byte_or_eof(&mut self) -> Result<Option<u8>, ExternalReaderError> {
         let mut buf = [0u8; 1];
         loop {
             match self.input.read(&mut buf) {
@@ -871,7 +891,7 @@ impl<'a, R: Read> MsgPackReader<'a, R> {
         Ok(buf)
     }
 
-    fn unpack_array_header_from_byte(&mut self, b: u8) -> Result<usize, String> {
+    pub(crate) fn unpack_array_header_from_byte(&mut self, b: u8) -> Result<usize, String> {
         match b {
             0x90..=0x9f => Ok(usize::from(b & 0x0f)),
             0xdc => Ok(usize::from(self.read_u16()?)),
@@ -883,7 +903,7 @@ impl<'a, R: Read> MsgPackReader<'a, R> {
         }
     }
 
-    fn unpack_i32(&mut self) -> Result<i32, String> {
+    pub(crate) fn unpack_i32(&mut self) -> Result<i32, String> {
         let b = self.read_byte()?;
         match self.unpack_int_from_byte(b)? {
             IntValue::Signed(v) => {
@@ -930,7 +950,7 @@ impl<'a, R: Read> MsgPackReader<'a, R> {
         }
     }
 
-    fn unpack_value(&mut self, depth: usize) -> Result<MsgPackValue, String> {
+    pub(crate) fn unpack_value(&mut self, depth: usize) -> Result<MsgPackValue, String> {
         if depth > MAX_NESTING_DEPTH {
             return Err("MessagePack nesting depth exceeded".into());
         }

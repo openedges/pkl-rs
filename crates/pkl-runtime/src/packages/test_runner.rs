@@ -1,12 +1,17 @@
-//! Minimal Wasm-pure `pkl:test` runner & `SpecReporter` formatter needed for
-//! `ProjectPackager` `apiTests` and Pantry `project-test` verification.
-//!
-//! Full CLI `pkl test` options (`--junit-reports`, `minimal` reporter, power assertion
-//! sub-expression diagrams) remain M5 scope.
+//! Wasm-pure `pkl:test` runner & reporters (`SpecReporter`, `MinimalReporter`, `JUnitReporter`)
+//! with ANSI color support and power-assertion diagrams matching Apple Pkl 0.32.0.
+use crate::diagnostic::ansi::{AnsiCode, AnsiStringBuilder, strip_ansi_codes, theme};
 use crate::pkl_binary_decode::DecodedValue;
-use crate::source::SourceText;
+use crate::source::{SourceText, Span};
 use crate::syntax::{ExprKind, ObjectMember};
 use std::collections::BTreeMap;
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum TestReporterKind {
+    #[default]
+    Spec,
+    Minimal,
+}
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum TestSectionName {
@@ -139,6 +144,15 @@ impl TestResults {
 /// Extracts `(source_expression, one_based_line)` for each element expression inside
 /// `facts { ["group"] { ... } }` from the test module source (`TestRunner.java:105-120, 406-427`).
 pub fn extract_fact_locations(source: &str) -> BTreeMap<String, Vec<(String, usize)>> {
+    extract_fact_spans(source)
+        .into_iter()
+        .map(|(k, v)| (k, v.into_iter().map(|(s, l, _)| (s, l)).collect()))
+        .collect()
+}
+
+/// Extracts `(source_expression, one_based_line, byte_span)` for each element expression inside
+/// `facts { ["group"] { ... } }`.
+pub fn extract_fact_spans(source: &str) -> BTreeMap<String, Vec<(String, usize, Span)>> {
     let mut map = BTreeMap::new();
     let Ok(parsed) = crate::parser::parse_module(source) else {
         return map;
@@ -149,29 +163,126 @@ pub fn extract_fact_locations(source: &str) -> BTreeMap<String, Vec<(String, usi
         if member.name.as_str() != Some("facts") {
             continue;
         }
-        collect_fact_groups_from_expr(&member.expr, source, &index, &mut map);
+        collect_section_groups_from_expr(&member.expr, source, &index, &mut map);
     }
     map
 }
 
-fn collect_fact_groups_from_expr(
+/// Extracts `(group_line, Vec<element_line>)` for each group in `examples { ["group"] { ... } }`
+/// (works on both test modules and generated `*-expected.pcf` / `*-actual.pcf` files).
+pub fn extract_example_locations(source: &str) -> BTreeMap<String, (usize, Vec<usize>)> {
+    let mut map = BTreeMap::new();
+    let Ok(parsed) = crate::parser::parse_module(source) else {
+        return map;
+    };
+    let source_text = SourceText::from(source);
+    let index = source_text.index();
+    for member in &parsed.members {
+        if member.name.as_str() != Some("examples") {
+            continue;
+        }
+        collect_example_group_lines(&member.expr, &index, &mut map);
+    }
+    map
+}
+
+fn collect_example_group_lines(
     expr: &crate::syntax::Expr,
-    source: &str,
     index: &crate::source::SourceTextIndex,
-    out: &mut BTreeMap<String, Vec<(String, usize)>>,
+    out: &mut BTreeMap<String, (usize, Vec<usize>)>,
 ) {
     let members: &[ObjectMember] = match &expr.kind {
         ExprKind::Object {
             parent, members, ..
         } => {
             if let Some(p) = parent {
-                collect_fact_groups_from_expr(p, source, index, out);
+                collect_example_group_lines(p, index, out);
             }
             members
         }
         ExprKind::New { members, .. } => members,
         ExprKind::Parenthesized(inner) => {
-            collect_fact_groups_from_expr(inner, source, index, out);
+            collect_example_group_lines(inner, index, out);
+            return;
+        }
+        _ => return,
+    };
+    for m in members {
+        match m {
+            ObjectMember::Entry {
+                key, value, span, ..
+            } => {
+                if let ExprKind::String(group_name) = &key.kind
+                    && let Some(group) = group_name.as_str()
+                {
+                    let group_line = index.position(span.start).map_or(1, |pos| pos.line);
+                    let entry = out
+                        .entry(group.to_string())
+                        .or_insert_with(|| (group_line, Vec::new()));
+                    collect_element_lines(value, index, &mut entry.1);
+                }
+            }
+            ObjectMember::Property(prop) => {
+                if let Some(group) = prop.name.as_str() {
+                    let group_line = index.position(prop.span.start).map_or(1, |pos| pos.line);
+                    let entry = out
+                        .entry(group.to_string())
+                        .or_insert_with(|| (group_line, Vec::new()));
+                    collect_element_lines(&prop.expr, index, &mut entry.1);
+                }
+            }
+            _ => {}
+        }
+    }
+}
+
+fn collect_element_lines(
+    expr: &crate::syntax::Expr,
+    index: &crate::source::SourceTextIndex,
+    out: &mut Vec<usize>,
+) {
+    let members: &[ObjectMember] = match &expr.kind {
+        ExprKind::Object {
+            parent, members, ..
+        } => {
+            if let Some(p) = parent {
+                collect_element_lines(p, index, out);
+            }
+            members
+        }
+        ExprKind::New { members, .. } => members,
+        ExprKind::Parenthesized(inner) => {
+            collect_element_lines(inner, index, out);
+            return;
+        }
+        _ => return,
+    };
+    for m in members {
+        if let ObjectMember::Element { value, .. } = m {
+            let line = index.position(value.span.start).map_or(1, |pos| pos.line);
+            out.push(line);
+        }
+    }
+}
+
+fn collect_section_groups_from_expr(
+    expr: &crate::syntax::Expr,
+    source: &str,
+    index: &crate::source::SourceTextIndex,
+    out: &mut BTreeMap<String, Vec<(String, usize, Span)>>,
+) {
+    let members: &[ObjectMember] = match &expr.kind {
+        ExprKind::Object {
+            parent, members, ..
+        } => {
+            if let Some(p) = parent {
+                collect_section_groups_from_expr(p, source, index, out);
+            }
+            members
+        }
+        ExprKind::New { members, .. } => members,
+        ExprKind::Parenthesized(inner) => {
+            collect_section_groups_from_expr(inner, source, index, out);
             return;
         }
         _ => return,
@@ -191,7 +302,7 @@ fn collect_fact_elements_from_expr(
     expr: &crate::syntax::Expr,
     source: &str,
     index: &crate::source::SourceTextIndex,
-    out: &mut Vec<(String, usize)>,
+    out: &mut Vec<(String, usize, Span)>,
 ) {
     let members: &[ObjectMember] = match &expr.kind {
         ExprKind::Object {
@@ -214,8 +325,162 @@ fn collect_fact_elements_from_expr(
             && let Some(expr_src) = source.get(value.span.start..value.span.end)
         {
             let line = index.position(value.span.start).map_or(1, |pos| pos.line);
-            out.push((expr_src.to_string(), line));
+            out.push((expr_src.to_string(), line, value.span));
         }
+    }
+}
+
+/// Formats a location `(<location>)` matching `TestRunner.appendLocation`.
+pub fn append_location(sb: &mut AnsiStringBuilder, location: &str) {
+    sb.append_scoped(theme::STACK_FRAME, |sb| {
+        sb.append_char('(')
+            .append_untrusted_str(location)
+            .append_char(')');
+    });
+}
+
+/// Formats a failing fact message (optionally with a power-assertion diagram),
+/// matching `TestRunner.factFailure`.
+pub fn format_fact_failure(expr_text: &str, location: &str, use_color: bool) -> TestFailure {
+    let mut sb = AnsiStringBuilder::new(use_color);
+    sb.append_str(expr_text).append_char(' ');
+    append_location(&mut sb, location);
+    TestFailure {
+        kind: "Fact Failure".to_string(),
+        message: sb.finish_string(),
+    }
+}
+
+/// Formats a failing fact with captured power-assertion observations,
+/// matching `TestRunner.factFailure` + `PowerAssertions.render`.
+pub fn format_fact_failure_with_power_assertions(
+    source: &crate::source::Source,
+    body_span: Span,
+    observations: &[crate::diagnostic::PowerAssertionValue],
+    location: &str,
+    use_color: bool,
+) -> TestFailure {
+    let mut sb = AnsiStringBuilder::new(use_color);
+    let suffix = |out: &mut AnsiStringBuilder| {
+        out.append_char(' ');
+        append_location(out, location);
+    };
+    crate::power_assertions::render_to_ansi(
+        &mut sb,
+        source,
+        body_span,
+        observations,
+        "",
+        Some(&suffix),
+    );
+    TestFailure {
+        kind: "Fact Failure".to_string(),
+        message: sb.finish_string(),
+    }
+}
+
+/// Formats an example value mismatch failure matching `TestRunner.exampleFailure`.
+pub fn format_example_failure(
+    location: &str,
+    expected_location: &str,
+    expected_value: &str,
+    actual_location: &str,
+    actual_value: &str,
+    example_number: usize,
+    use_color: bool,
+) -> TestFailure {
+    let mut sb = AnsiStringBuilder::new(use_color);
+    sb.append_styled(theme::TEST_NAME, &format!("#{example_number}: "));
+    sb.append_scoped(theme::TEST_FAILURE_MESSAGE, |sb| {
+        append_location(sb, location);
+        sb.append_str("\n  Expected: ");
+        append_location(sb, expected_location);
+        sb.append_str("\n  ");
+        sb.append_styled(
+            theme::TEST_EXAMPLE_OUTPUT,
+            &expected_value.replace('\n', "\n  "),
+        );
+        sb.append_str("\n  Actual: ");
+        append_location(sb, actual_location);
+        sb.append_str("\n  ");
+        sb.append_styled(
+            theme::TEST_EXAMPLE_OUTPUT,
+            &actual_value.replace('\n', "\n  "),
+        );
+    });
+    TestFailure {
+        kind: "Example Failure".to_string(),
+        message: sb.finish_string(),
+    }
+}
+
+/// Formats an example length mismatch failure matching `TestRunner.exampleLengthMismatchFailure`.
+pub fn format_example_length_mismatch(
+    location: &str,
+    property: &str,
+    expected_len: usize,
+    actual_len: usize,
+    use_color: bool,
+) -> TestFailure {
+    let mut sb = AnsiStringBuilder::new(use_color);
+    append_location(&mut sb, location);
+    sb.append_char('\n')
+        .append_scoped(theme::TEST_FAILURE_MESSAGE, |sb| {
+            sb.append_str("Output mismatch: Expected \"")
+                .append_str(property)
+                .append_str("\" to contain ")
+                .append_usize(expected_len)
+                .append_str(" examples, but found ")
+                .append_usize(actual_len);
+        });
+    TestFailure {
+        kind: "Output Mismatch (Length)".to_string(),
+        message: sb.finish_string(),
+    }
+}
+
+/// Formats a missing example group failure matching `TestRunner.examplePropertyMismatchFailure`.
+pub fn format_example_property_mismatch(
+    location: &str,
+    property: &str,
+    is_missing_in_expected: bool,
+    use_color: bool,
+) -> TestFailure {
+    let (exists_in, missing_in) = if is_missing_in_expected {
+        ("actual", "expected")
+    } else {
+        ("expected", "actual")
+    };
+    let mut sb = AnsiStringBuilder::new(use_color);
+    append_location(&mut sb, location);
+    sb.append_char('\n')
+        .append_scoped(theme::TEST_FAILURE_MESSAGE, |sb| {
+            sb.append_str("Output mismatch: \"")
+                .append_str(property)
+                .append_str("\" exists in ")
+                .append_str(exists_in)
+                .append_str(" but not in ")
+                .append_str(missing_in)
+                .append_str(" output");
+        });
+    TestFailure {
+        kind: "Output Mismatch".to_string(),
+        message: sb.finish_string(),
+    }
+}
+
+/// Formats a newly-written example notice matching `TestRunner.writtenExampleOutputFailure`.
+pub fn format_example_written(test_name: &str, location: &str, use_color: bool) -> TestFailure {
+    let mut sb = AnsiStringBuilder::new(use_color);
+    append_location(&mut sb, location);
+    sb.append_styled(
+        theme::TEST_FAILURE_MESSAGE,
+        "\nWrote expected output for test ",
+    )
+    .append_str(test_name);
+    TestFailure {
+        kind: "Example Output Written".to_string(),
+        message: sb.finish_string(),
     }
 }
 
@@ -288,6 +553,36 @@ pub fn evaluate_examples_rendered(
     actual_uri: &str,
     full_actual_pcf_doc: Option<String>,
 ) -> (TestSectionResults, Option<String>, Option<String>) {
+    evaluate_examples_rendered_detailed(
+        actual_groups,
+        expected_groups,
+        display_uri,
+        expected_uri,
+        actual_uri,
+        full_actual_pcf_doc,
+        None,
+        None,
+        false,
+        |uri, _| uri.to_string(),
+    )
+}
+
+/// Full-fidelity `examples` evaluator with exact per-group and per-element line numbers
+/// (reloading line numbers from the test module, expected `.pcf`, and generated actual `.pcf`)
+/// and optional ANSI color codes (`TestRunner.java:181-344`).
+#[allow(clippy::too_many_arguments)]
+pub fn evaluate_examples_rendered_detailed(
+    actual_groups: &[(String, Vec<String>)],
+    expected_groups: Option<&[(String, Vec<String>)]>,
+    display_uri: &str,
+    expected_uri: &str,
+    actual_uri: &str,
+    full_actual_pcf_doc: Option<String>,
+    test_source: Option<&str>,
+    expected_source: Option<&str>,
+    use_color: bool,
+    format_location: impl Fn(&str, Option<usize>) -> String,
+) -> (TestSectionResults, Option<String>, Option<String>) {
     if actual_groups.is_empty() {
         return (
             TestSectionResults::empty(TestSectionName::Examples),
@@ -296,19 +591,31 @@ pub fn evaluate_examples_rendered(
         );
     }
 
+    let test_locs = test_source
+        .map(extract_example_locations)
+        .unwrap_or_default();
+    let expected_locs = expected_source
+        .map(extract_example_locations)
+        .unwrap_or_default();
+    let actual_pcf_locs = full_actual_pcf_doc
+        .as_deref()
+        .map(extract_example_locations)
+        .unwrap_or_default();
+
     let Some(expected) = expected_groups else {
         // Expected file does not exist -> write expected output (`doRunAndWriteExamples`)
         let results = actual_groups
             .iter()
-            .map(|(name, _)| TestResult {
-                name: name.clone(),
-                total_asserts: 0,
-                failures: vec![TestFailure {
-                    kind: "Example Output Written".to_string(),
-                    message: format!("({display_uri})\nWrote expected output for test {name}"),
-                }],
-                errors: Vec::new(),
-                is_example_written: true,
+            .map(|(name, _)| {
+                let line = test_locs.get(name).map(|(l, _)| *l);
+                let loc = format_location(display_uri, line);
+                TestResult {
+                    name: name.clone(),
+                    total_asserts: 0,
+                    failures: vec![format_example_written(name, &loc, use_color)],
+                    errors: Vec::new(),
+                    is_example_written: true,
+                }
             })
             .collect();
         return (
@@ -325,17 +632,17 @@ pub fn evaluate_examples_rendered(
     let mut any_mismatch = false;
 
     for (name, actual_items) in actual_groups {
+        let test_group_loc = test_locs.get(name);
+        let group_loc = format_location(display_uri, test_group_loc.map(|(l, _)| *l));
+
         let Some((_, expected_items)) = expected.iter().find(|(k, _)| k == name) else {
             any_mismatch = true;
             results.push(TestResult {
                 name: name.clone(),
                 total_asserts: 1,
-                failures: vec![TestFailure {
-                    kind: "Output Mismatch".to_string(),
-                    message: format!(
-                        "({display_uri})\nOutput mismatch: \"{name}\" exists in actual but not in expected output"
-                    ),
-                }],
+                failures: vec![format_example_property_mismatch(
+                    &group_loc, name, true, use_color,
+                )],
                 errors: Vec::new(),
                 is_example_written: false,
             });
@@ -347,34 +654,50 @@ pub fn evaluate_examples_rendered(
             results.push(TestResult {
                 name: name.clone(),
                 total_asserts: 1,
-                failures: vec![TestFailure {
-                    kind: "Output Mismatch (Length)".to_string(),
-                    message: format!(
-                        "({display_uri})\nOutput mismatch: Expected \"{name}\" to contain {} examples, but found {}",
-                        expected_items.len(),
-                        actual_items.len()
-                    ),
-                }],
+                failures: vec![format_example_length_mismatch(
+                    &group_loc,
+                    name,
+                    expected_items.len(),
+                    actual_items.len(),
+                    use_color,
+                )],
                 errors: Vec::new(),
                 is_example_written: false,
             });
             continue;
         }
 
+        let exp_group_loc = expected_locs.get(name);
+        let act_group_loc = actual_pcf_locs.get(name);
+
         let mut total_asserts = 0usize;
         let mut failures = Vec::new();
         for (idx, (act, exp)) in actual_items.iter().zip(expected_items.iter()).enumerate() {
+            let example_num = total_asserts;
             total_asserts += 1;
             if act != exp {
                 any_mismatch = true;
-                let exp_indented = exp.replace('\n', "\n  ");
-                let act_indented = act.replace('\n', "\n  ");
-                failures.push(TestFailure {
-                    kind: "Example Failure".to_string(),
-                    message: format!(
-                        "#{idx}: ({display_uri})\n  Expected: ({expected_uri})\n  {exp_indented}\n  Actual: ({actual_uri})\n  {act_indented}"
-                    ),
-                });
+                let item_loc = format_location(
+                    display_uri,
+                    test_group_loc.and_then(|(_, items)| items.get(idx).copied()),
+                );
+                let exp_loc = format_location(
+                    expected_uri,
+                    exp_group_loc.and_then(|(_, items)| items.get(idx).copied()),
+                );
+                let act_loc = format_location(
+                    actual_uri,
+                    act_group_loc.and_then(|(_, items)| items.get(idx).copied()),
+                );
+                failures.push(format_example_failure(
+                    &item_loc,
+                    &exp_loc,
+                    exp,
+                    &act_loc,
+                    act,
+                    example_num,
+                    use_color,
+                ));
             }
         }
         results.push(TestResult {
@@ -389,15 +712,13 @@ pub fn evaluate_examples_rendered(
     for (name, _) in expected {
         if !actual_groups.iter().any(|(k, _)| k == name) {
             any_mismatch = true;
+            let exp_loc = format_location(expected_uri, expected_locs.get(name).map(|(l, _)| *l));
             results.push(TestResult {
                 name: name.clone(),
                 total_asserts: 1,
-                failures: vec![TestFailure {
-                    kind: "Output Mismatch".to_string(),
-                    message: format!(
-                        "({expected_uri})\nOutput mismatch: \"{name}\" exists in expected but not in actual output"
-                    ),
-                }],
+                failures: vec![format_example_property_mismatch(
+                    &exp_loc, name, false, use_color,
+                )],
                 errors: Vec::new(),
                 is_example_written: false,
             });
@@ -422,82 +743,137 @@ pub fn evaluate_examples_rendered(
 
 /// Renders one module's test results matching `SpecReporter.java` (`useColor = false`).
 pub fn render_spec_report(results: &TestResults) -> String {
-    let mut out = String::new();
-    out.push_str("module ");
-    out.push_str(&results.module_name);
-    out.push('\n');
+    render_spec_report_colored(results, false)
+}
+
+/// Renders one module's test results matching `SpecReporter.java` with optional ANSI color.
+pub fn render_spec_report_colored(results: &TestResults, use_color: bool) -> String {
+    let mut out = AnsiStringBuilder::new(use_color);
+    out.append_str("module ")
+        .append_str(&results.module_name)
+        .append_char('\n');
 
     if let Some(ref err) = results.error {
-        append_padded(&mut out, &err.rendered, "  ");
-        out.push('\n');
+        append_padded_ansi(&mut out, &err.rendered, "  ");
+        out.append_char('\n');
     } else {
-        render_section(&mut out, &results.facts);
-        render_section(&mut out, &results.examples);
+        render_section_ansi(&mut out, &results.facts, &results.facts.results);
+        render_section_ansi(&mut out, &results.examples, &results.examples.results);
     }
-    out
+    out.finish_string()
 }
 
-fn render_section(out: &mut String, section: &TestSectionResults) {
-    if section.results.is_empty() {
+/// Renders one module's test results matching `MinimalReporter.java` (failures/errors only).
+pub fn render_minimal_report(results: &TestResults, use_color: bool) -> String {
+    let mut out = AnsiStringBuilder::new(use_color);
+    if let Some(ref err) = results.error {
+        out.append_str("module ")
+            .append_str(&results.module_name)
+            .append_char('\n');
+        append_padded_ansi(&mut out, &err.rendered, "  ");
+        out.append_char('\n');
+    } else {
+        let fact_failures: Vec<TestResult> = results
+            .facts
+            .results
+            .iter()
+            .filter(|r| r.is_failure())
+            .cloned()
+            .collect();
+        let example_failures: Vec<TestResult> = results
+            .examples
+            .results
+            .iter()
+            .filter(|r| r.is_failure())
+            .cloned()
+            .collect();
+        if !fact_failures.is_empty() || !example_failures.is_empty() {
+            out.append_str("module ")
+                .append_str(&results.module_name)
+                .append_char('\n');
+            render_section_ansi(&mut out, &results.facts, &fact_failures);
+            render_section_ansi(&mut out, &results.examples, &example_failures);
+        }
+    }
+    out.finish_string()
+}
+
+/// Renders one module's test results using the selected reporter (`spec` or `minimal`).
+pub fn render_report(reporter: TestReporterKind, results: &TestResults, use_color: bool) -> String {
+    match reporter {
+        TestReporterKind::Spec => render_spec_report_colored(results, use_color),
+        TestReporterKind::Minimal => render_minimal_report(results, use_color),
+    }
+}
+
+fn render_section_ansi(
+    out: &mut AnsiStringBuilder,
+    section: &TestSectionResults,
+    items: &[TestResult],
+) {
+    if items.is_empty() {
         return;
     }
-    out.push_str("  ");
-    out.push_str(section.name.as_str());
-    out.push('\n');
-    for (idx, res) in section.results.iter().enumerate() {
+    out.append_str("  ")
+        .append_str(section.name.as_str())
+        .append_char('\n');
+    for (idx, res) in items.iter().enumerate() {
         if idx > 0 {
-            out.push('\n');
+            out.append_char('\n');
         }
-        render_result(out, res);
+        render_result_ansi(out, res);
     }
-    out.push('\n');
+    out.append_char('\n');
 }
 
-fn render_result(out: &mut String, result: &TestResult) {
-    out.push_str("    ");
+fn render_result_ansi(out: &mut AnsiStringBuilder, result: &TestResult) {
+    out.append_str("    ");
     if result.is_example_written {
-        out.push_str("✍️ ");
-        out.push_str(&result.name);
+        out.append_str("✍️ ").append_str(&result.name);
         return;
     }
     if result.is_failure() {
-        out.push_str("✘ ");
+        out.append_styled(theme::FAILING_TEST_MARK, "✘ ");
     } else {
-        out.push_str("✔ ");
+        out.append_styled(theme::PASSING_TEST_MARK, "✔ ");
     }
-    out.push_str(&result.name);
+    out.append_styled(theme::TEST_NAME, &result.name);
     if result.is_failure() {
         let padding = "       ";
-        out.push('\n');
+        out.append_char('\n');
         for (idx, failure) in result.failures.iter().enumerate() {
             if idx > 0 {
-                out.push('\n');
+                out.append_char('\n');
             }
-            append_padded(out, &failure.message, padding);
+            append_padded_ansi(out, &failure.message, padding);
         }
         for (idx, error) in result.errors.iter().enumerate() {
-            if idx > 0 || !result.failures.is_empty() {
-                out.push('\n');
+            if idx > 0 {
+                out.append_char('\n');
             }
-            append_padded(out, &error.rendered, padding);
+            append_padded_ansi(out, &error.rendered, padding);
         }
     }
 }
 
-fn append_padded(out: &mut String, text: &str, padding: &str) {
+fn append_padded_ansi(out: &mut AnsiStringBuilder, text: &str, padding: &str) {
     for (idx, line) in text.lines().enumerate() {
         if idx > 0 {
-            out.push('\n');
+            out.append_char('\n');
         }
         if !line.is_empty() {
-            out.push_str(padding);
-            out.push_str(line);
+            out.append_str(padding).append_str(line);
         }
     }
 }
 
-/// Renders the final summary line matching `BaseReporter.summarize` (`BaseReporter.java:43-72,113-134`).
+/// Renders the final summary line matching `BaseReporter.summarize` (`useColor = false`).
 pub fn render_spec_summary(all_results: &[TestResults]) -> String {
+    render_summary_colored(all_results, false)
+}
+
+/// Renders the final summary line matching `BaseReporter.summarize` with optional ANSI color.
+pub fn render_summary_colored(all_results: &[TestResults], use_color: bool) -> String {
     let mut total_tests = 0usize;
     let mut total_failed_tests = 0usize;
     let mut total_asserts = 0usize;
@@ -519,32 +895,38 @@ pub fn render_spec_summary(all_results: &[TestResults]) -> String {
         total_failed_asserts += r.total_asserts_failed();
     }
 
-    let mut out = String::new();
+    let mut out = AnsiStringBuilder::new(use_color);
     if is_failed && is_example_written_failure {
-        use std::fmt::Write;
-        let _ = writeln!(&mut out, "{total_failed_tests} examples written");
+        out.append_usize(total_failed_tests)
+            .append_str(" examples written");
     } else {
-        append_stats_line(
+        append_stats_line_ansi(
             &mut out,
             "tests",
             total_tests,
             total_failed_tests,
             is_failed,
         );
-        out.push_str(", ");
-        append_stats_line(
+        out.append_str(", ");
+        append_stats_line_ansi(
             &mut out,
             "asserts",
             total_asserts,
             total_failed_asserts,
             is_failed,
         );
-        out.push('\n');
     }
-    out
+    out.append_char('\n');
+    out.finish_string()
 }
 
-fn append_stats_line(out: &mut String, kind: &str, total: usize, failed: usize, is_failed: bool) {
+fn append_stats_line_ansi(
+    out: &mut AnsiStringBuilder,
+    kind: &str,
+    total: usize,
+    failed: usize,
+    is_failed: bool,
+) {
     let passed = total.saturating_sub(failed);
     // Exact RoundingMode.DOWN to 1 decimal place (`BaseReporter.java:121-122`):
     // tenths = floor(1000 * passed / total)
@@ -554,12 +936,163 @@ fn append_stats_line(out: &mut String, kind: &str, total: usize, failed: usize, 
         let tenths = (passed as u128 * 1000) / (total as u128);
         format!("{}.{}", tenths / 10, tenths % 10)
     };
-    use std::fmt::Write;
-    let _ = write!(out, "{pass_rate}% {kind} pass");
-    if is_failed {
-        let _ = write!(out, " [{failed}/{total} failed]");
+    let pass_rate_line = format!("{pass_rate}% {kind} pass");
+    let color = if is_failed {
+        AnsiCode::Red
     } else {
-        let _ = write!(out, " [{passed} passed]");
+        AnsiCode::Green
+    };
+    out.append_scoped(color, |sb| {
+        sb.append_str(&pass_rate_line);
+    });
+    if is_failed {
+        out.append_str(" [")
+            .append_usize(failed)
+            .append_char('/')
+            .append_usize(total)
+            .append_str(" failed]");
+    } else {
+        out.append_str(" [")
+            .append_usize(passed)
+            .append_str(" passed]");
+    }
+}
+
+// =============================================================================
+// JUnit XML Reporter (`JUnitReporter.java`)
+// =============================================================================
+
+/// Renders a single-module JUnit XML report matching `JUnitReporter.report`.
+pub fn render_junit_report(results: &TestResults) -> String {
+    let mut out = String::from("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+    write_junit_testsuite(&mut out, results, 0);
+    out.push('\n');
+    out
+}
+
+/// Renders an aggregated JUnit XML report matching `JUnitReporter.summarize`.
+pub fn render_junit_aggregate_report(suite_name: &str, all_results: &[TestResults]) -> String {
+    let total_tests: usize = all_results.iter().map(TestResults::total_tests).sum();
+    let total_failures: usize = all_results.iter().map(TestResults::total_failures).sum();
+    let mut out = String::from("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+    out.push_str("<testsuites name=\"");
+    push_xml_escaped(&mut out, suite_name);
+    out.push_str(&format!(
+        "\" tests=\"{total_tests}\" failures=\"{total_failures}\">"
+    ));
+    if !all_results.is_empty() {
+        out.push('\n');
+        for res in all_results {
+            write_junit_testsuite(&mut out, res, 1);
+            out.push('\n');
+        }
+    }
+    out.push_str("</testsuites>\n");
+    out
+}
+
+fn write_junit_testsuite(out: &mut String, results: &TestResults, depth: usize) {
+    let indent = "    ".repeat(depth);
+    let child_indent = "    ".repeat(depth + 1);
+    let leaf_indent = "    ".repeat(depth + 2);
+
+    if let Some(ref err) = results.error {
+        out.push_str(&indent);
+        out.push_str("<testsuite name=\"");
+        push_xml_escaped(out, &results.module_name);
+        out.push_str("\" tests=\"1\" failures=\"1\">\n");
+        out.push_str(&child_indent);
+        out.push_str("<testcase classname=\"");
+        push_xml_escaped(out, &results.module_name);
+        out.push_str("\" name=\"");
+        push_xml_escaped(out, &results.module_name);
+        out.push_str("\">\n");
+        out.push_str(&leaf_indent);
+        out.push_str("<error message=\"");
+        push_xml_escaped(out, &err.message);
+        out.push_str("\">");
+        let body = strip_ansi_codes(&format!("\n{}", err.rendered));
+        push_xml_escaped(out, &body);
+        out.push_str("</error>\n");
+        out.push_str(&child_indent);
+        out.push_str("</testcase>\n");
+        out.push_str(&indent);
+        out.push_str("</testsuite>");
+        return;
+    }
+
+    let has_logs = !results.logs.trim().is_empty();
+    let has_children =
+        !results.facts.results.is_empty() || !results.examples.results.is_empty() || has_logs;
+
+    out.push_str(&indent);
+    out.push_str("<testsuite name=\"");
+    push_xml_escaped(out, &results.module_name);
+    out.push_str(&format!(
+        "\" tests=\"{}\" failures=\"{}\">",
+        results.total_tests(),
+        results.total_failures()
+    ));
+
+    if has_children {
+        out.push('\n');
+        for section in [&results.facts, &results.examples] {
+            for res in &section.results {
+                let classname = format!("{}.{}", results.module_name, section.name.as_str());
+                out.push_str(&child_indent);
+                out.push_str("<testcase classname=\"");
+                push_xml_escaped(out, &classname);
+                out.push_str("\" name=\"");
+                push_xml_escaped(out, &res.name);
+                out.push_str("\">");
+                if res.failures.is_empty() && res.errors.is_empty() {
+                    out.push_str("</testcase>\n");
+                } else {
+                    out.push('\n');
+                    for fail in &res.failures {
+                        out.push_str(&leaf_indent);
+                        out.push_str("<failure message=\"");
+                        push_xml_escaped(out, &fail.kind);
+                        out.push_str("\">");
+                        let body = strip_ansi_codes(&fail.message);
+                        push_xml_escaped(out, &body);
+                        out.push_str("</failure>\n");
+                    }
+                    for error in &res.errors {
+                        out.push_str(&leaf_indent);
+                        out.push_str("<error message=\"");
+                        push_xml_escaped(out, &error.message);
+                        out.push_str("\">");
+                        let body = strip_ansi_codes(&error.rendered);
+                        push_xml_escaped(out, &body);
+                        out.push_str("</error>\n");
+                    }
+                    out.push_str(&child_indent);
+                    out.push_str("</testcase>\n");
+                }
+            }
+        }
+        if has_logs {
+            out.push_str(&child_indent);
+            out.push_str("<system-err><![CDATA[");
+            out.push_str(&results.logs.replace("]]>", "]]]]><![CDATA[>"));
+            out.push_str("]]></system-err>\n");
+        }
+        out.push_str(&indent);
+    }
+    out.push_str("</testsuite>");
+}
+
+fn push_xml_escaped(out: &mut String, text: &str) {
+    for ch in text.chars() {
+        match ch {
+            '"' => out.push_str("&quot;"),
+            '\'' => out.push_str("&apos;"),
+            '<' => out.push_str("&lt;"),
+            '>' => out.push_str("&gt;"),
+            '&' => out.push_str("&amp;"),
+            other => out.push(other),
+        }
     }
 }
 

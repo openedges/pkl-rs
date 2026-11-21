@@ -9,8 +9,8 @@
 // specific language governing permissions and limitations under the License.
 
 use super::RenderFrame;
-use crate::pkl_string::{PklString, PklStringBuilder};
-use std::fmt::Write;
+use super::ansi::{AnsiStringBuilder, theme};
+use crate::pkl_string::PklString;
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 enum Group {
@@ -246,24 +246,43 @@ impl DiagnosticFrames {
     pub(super) fn is_empty(&self) -> bool {
         self.frames.is_empty()
     }
-    pub(super) fn render(&self, output: &mut PklStringBuilder, hint: Option<&PklString>) {
-        render_groups(output, &self.frames, &self.groups, hint, "", true);
+    pub(super) fn render_ansi(&self, out: &mut AnsiStringBuilder, hint: Option<&PklString>) {
+        render_groups_ansi(out, &self.frames, &self.groups, hint, false, "", true);
+    }
+
+    pub(super) fn render_ansi_precolored_hint(
+        &self,
+        out: &mut AnsiStringBuilder,
+        hint: &PklString,
+    ) {
+        render_groups_ansi(out, &self.frames, &self.groups, Some(hint), true, "", true);
     }
 }
 
-fn render_hint(output: &mut PklStringBuilder, hint: Option<&PklString>, margin: &str) {
+fn render_hint_ansi(
+    out: &mut AnsiStringBuilder,
+    hint: Option<&PklString>,
+    precolored: bool,
+    margin: &str,
+) {
     if let Some(hint) = hint {
-        write!(output, "\n{margin}").unwrap();
-        output.push_value(hint);
-        output.push('\n');
+        out.append_char('\n')
+            .append_styled(theme::STACK_TRACE_MARGIN, margin);
+        if precolored {
+            out.append_pkl(hint);
+        } else {
+            out.append_styled_pkl(theme::ERROR_MESSAGE_HINT, hint);
+        }
+        out.append_char('\n');
     }
 }
 
-fn render_groups(
-    output: &mut PklStringBuilder,
+fn render_groups_ansi(
+    out: &mut AnsiStringBuilder,
     frames: &[Option<crate::logging::LogFrame>],
     groups: &[Group],
     hint: Option<&PklString>,
+    precolored_hint: bool,
     margin: &str,
     mut first: bool,
 ) {
@@ -272,34 +291,40 @@ fn render_groups(
             Group::Loop {
                 frames: nested,
                 count: 1,
-            } => render_groups(output, frames, nested, None, margin, first),
+            } => render_groups_ansi(out, frames, nested, None, false, margin, first),
             Group::Loop {
                 frames: nested,
                 count,
             } => {
                 if !first {
-                    writeln!(output, "{margin}").unwrap();
+                    out.append_styled(theme::STACK_TRACE_MARGIN, margin)
+                        .append_char('\n');
                 }
-                writeln!(output, "{margin}┌─ {count} repetitions of:").unwrap();
+                out.append_styled(theme::STACK_TRACE_MARGIN, margin)
+                    .append_styled(theme::STACK_TRACE_MARGIN, "┌─ ")
+                    .append_styled_usize(theme::STACK_TRACE_LOOP_COUNT, *count)
+                    .append_str(" repetitions of:\n");
                 let nested_margin = format!("{margin}│ ");
-                render_groups(output, frames, nested, None, &nested_margin, first);
+                render_groups_ansi(out, frames, nested, None, false, &nested_margin, first);
                 if first {
-                    render_hint(output, hint, &nested_margin);
+                    render_hint_ansi(out, hint, precolored_hint, &nested_margin);
                     first = false;
                 }
-                writeln!(output, "{margin}└─").unwrap();
+                out.append_styled(theme::STACK_TRACE_MARGIN, &format!("{margin}└─"))
+                    .append_char('\n');
             }
             Group::Frame(index) => {
                 if !first {
-                    writeln!(output, "{margin}").unwrap();
+                    out.append_styled(theme::STACK_TRACE_MARGIN, margin)
+                        .append_char('\n');
                 }
                 if let Some(frame) = &frames[*index] {
-                    super::render_log_frame(output, frame, margin);
+                    super::render_log_frame_ansi(out, frame, margin);
                 }
             }
         }
         if first {
-            render_hint(output, hint, margin);
+            render_hint_ansi(out, hint, precolored_hint, margin);
             first = false;
         }
     }

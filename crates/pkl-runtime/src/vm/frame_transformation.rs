@@ -212,6 +212,7 @@ impl Vm {
                     )?;
                 } else {
                     error.rendered_diagnostic = Some(rendering.render());
+                    error.rendered_diagnostic_colored = Some(rendering.render_colored(true));
                     self.state = State::Finished(Err(error));
                 }
             }
@@ -237,6 +238,7 @@ impl Vm {
         }
         if error.rendered_diagnostic.is_some() {
             error.rendered_diagnostic = None;
+            error.rendered_diagnostic_colored = None;
         }
         if self.context.frame_transformer != FrameTransformer::Host
             || matches!(
@@ -281,6 +283,7 @@ impl Vm {
             }
         } else {
             error.rendered_diagnostic = Some(rendering.render());
+            error.rendered_diagnostic_colored = Some(rendering.render_colored(true));
             self.state = State::Finished(Err(error));
         }
     }

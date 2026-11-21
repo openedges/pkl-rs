@@ -1,0 +1,16 @@
+function veryLongFunctionNameForTestingTrailingCommaBehavior(
+  firstLongParameterName: String,
+  secondLongParameterName: Int,
+  thirdLongParameterName: Boolean
+): String =
+  someLongCallName(
+    firstLongParameterName,
+    secondLongParameterName,
+    thirdLongParameterName
+  )
+
+typealias LongGenericType<
+  FirstVeryLongTypeParameterName,
+  SecondVeryLongTypeParameterName,
+  ThirdVeryLongTypeParameterName
+> = Map<FirstVeryLongTypeParameterName, Pair<SecondVeryLongTypeParameterName, ThirdVeryLongTypeParameterName>>

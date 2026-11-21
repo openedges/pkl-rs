@@ -34,7 +34,7 @@ use pkl_runtime::host::{
     HostPoll, HostSession, IoFailure, ReadFailure, format_timeout_message,
     try_configured_scalar_read_with_policy,
 };
-use pkl_runtime::logging::{FrameTransformer, LogDelivery, LogFrame, TraceMode};
+use pkl_runtime::logging::{FrameTransformer, LogDelivery, LogFrame, LogLevel, TraceMode};
 use pkl_runtime::modules::analyze::{
     AnalysisFailure, AnalysisPoll, ImportGraph, ImportGraphAnalysis,
 };
@@ -55,6 +55,7 @@ use pkl_runtime::resources::{ReadResult, Resource};
 use pkl_runtime::source::SourceText;
 use pkl_runtime::value::{ErrorKind, PklString, RuntimeError, Value};
 use std::collections::BTreeMap;
+use std::fmt;
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Condvar, Mutex};
@@ -114,6 +115,201 @@ impl Default for NativeHostConfig {
             editor_url_scheme: DEFAULT_EDITOR_URL_SCHEME.to_string(),
             internal_pkl_binary_eval: false,
         }
+    }
+}
+
+/// Custom log sink for `trace()` and `warn()` messages emitted during evaluation.
+pub trait HostLogger: Send + Sync {
+    fn log(&self, level: LogLevel, message: &PklString, frame: &LogFrame);
+}
+
+/// Custom stack-frame transformer applied to diagnostic and log stack frames.
+pub trait HostFrameTransformer: Send + Sync {
+    fn transform(&self, frame: LogFrame) -> LogFrame;
+}
+
+/// Custom security manager hook overriding default `SecurityPolicy` checks.
+pub trait CustomSecurityChecker: Send + Sync {
+    fn check_resolve_module(&self, uri: &PklString) -> Result<(), PklString>;
+    fn check_import_module(
+        &self,
+        importing_module: &PklString,
+        imported_module: &PklString,
+    ) -> Result<(), PklString>;
+    fn check_read_resource(&self, resource: &PklString) -> Result<(), PklString>;
+    fn check_resolve_resource(&self, resource: &PklString) -> Result<(), PklString> {
+        self.check_read_resource(resource)
+    }
+}
+
+/// Custom in-process or remote (e.g. `pkl server` client) module key factory/reader.
+pub trait CustomModuleReader: Send + Sync {
+    /// Returns `true` if this reader claims the given URI during `SelectKey`.
+    fn matches_uri(&self, uri: &PklString) -> bool;
+    /// Whether URIs under this reader are hierarchical (support relative imports/reads).
+    fn is_hierarchical(&self, uri: &PklString) -> bool;
+    /// Whether modules under this reader are local (for import trust checks).
+    fn is_local(&self, _uri: &PklString) -> bool {
+        false
+    }
+    /// Whether this reader supports glob imports/reads (`import*`).
+    fn is_globbable(&self, _uri: &PklString) -> bool {
+        false
+    }
+    /// Whether resolved modules are cached by the evaluator (default `true`).
+    fn is_cached(&self, _uri: &PklString) -> bool {
+        true
+    }
+    /// Whether this reader stores asset paths in URI fragments (like `package:`).
+    fn has_fragment_paths(&self, _uri: &PklString) -> bool {
+        false
+    }
+    /// Resolves a module URI and loads its source text. Security checks have already run.
+    fn resolve_module(
+        &self,
+        uri: &PklString,
+    ) -> Result<(ResolvedModule, ModuleSource), ModuleHostError>;
+    /// Checks whether a module element exists at `element_uri` (used by `...` and globbing).
+    fn has_element(&self, _element_uri: &PklString) -> Result<bool, ModuleHostError> {
+        Ok(false)
+    }
+    /// Lists child elements under `base_uri` when `is_globbable` returns `true`.
+    fn list_elements(&self, _base_uri: &PklString) -> Result<Vec<PathElement>, ModuleHostError> {
+        Err(ModuleHostError::Unsupported(
+            "Module reader does not support listElements.".into(),
+        ))
+    }
+    /// Optional cleanup hook invoked by [`NativeHost::close`].
+    fn close(&self) {}
+}
+
+/// Custom in-process or remote (e.g. `pkl server` client) resource reader.
+pub trait CustomResourceReader: Send + Sync {
+    /// URI scheme without trailing `:` (matched case-insensitively).
+    fn scheme(&self) -> &str;
+    /// Whether URIs under this scheme are hierarchical.
+    fn has_hierarchical_uris(&self) -> bool {
+        false
+    }
+    /// Whether this reader supports glob reads (`read*`).
+    fn is_globbable(&self) -> bool {
+        false
+    }
+    /// Reads the resource at `uri`. Return `Ok(ReadResult::Missing)` if absent.
+    fn read(&self, uri: &PklString) -> Result<ReadResult, ReadFailure>;
+    /// Checks whether a resource element exists at `uri`.
+    fn has_element(&self, uri: &PklString) -> Result<bool, ModuleHostError> {
+        match self.read(uri) {
+            Ok(ReadResult::Missing) => Ok(false),
+            Ok(_) => Ok(true),
+            Err(err) => Err(read_failure_to_module_err(err)),
+        }
+    }
+    /// Lists child elements under `base_uri` when `is_globbable` returns `true`.
+    fn list_elements(&self, _base_uri: &PklString) -> Result<Vec<PathElement>, ModuleHostError> {
+        Err(ModuleHostError::Unsupported(
+            "Resource reader does not support listElements.".into(),
+        ))
+    }
+    /// Optional cleanup hook invoked by [`NativeHost::close`].
+    fn close(&self) {}
+}
+
+/// Optional M5 extensions passed to [`NativeHost::with_extensions`].
+///
+/// Kept separate from [`NativeHostConfig`] so existing M4 callers remain source-compatible.
+#[derive(Default)]
+pub struct NativeHostExtensions {
+    pub use_color: bool,
+    pub output_format: Option<String>,
+    pub logger: Option<Arc<dyn HostLogger>>,
+    pub frame_transformer: Option<Arc<dyn HostFrameTransformer>>,
+    pub skip_default_frame_transform: bool,
+    pub custom_security: Option<Arc<dyn CustomSecurityChecker>>,
+    pub custom_module_readers: Vec<Arc<dyn CustomModuleReader>>,
+    pub custom_resource_readers: Vec<Arc<dyn CustomResourceReader>>,
+    pub http_client: Option<Arc<NativeHttpClient>>,
+    pub extra_allowed_module_schemes: Vec<String>,
+    pub extra_allowed_resource_schemes: Vec<String>,
+}
+
+impl fmt::Debug for NativeHostExtensions {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("NativeHostExtensions")
+            .field("use_color", &self.use_color)
+            .field("output_format", &self.output_format)
+            .field("has_logger", &self.logger.is_some())
+            .field("has_frame_transformer", &self.frame_transformer.is_some())
+            .field(
+                "skip_default_frame_transform",
+                &self.skip_default_frame_transform,
+            )
+            .field("has_custom_security", &self.custom_security.is_some())
+            .field(
+                "custom_module_readers_count",
+                &self.custom_module_readers.len(),
+            )
+            .field(
+                "custom_resource_readers_count",
+                &self.custom_resource_readers.len(),
+            )
+            .field("has_shared_http_client", &self.http_client.is_some())
+            .field(
+                "extra_allowed_module_schemes",
+                &self.extra_allowed_module_schemes,
+            )
+            .field(
+                "extra_allowed_resource_schemes",
+                &self.extra_allowed_resource_schemes,
+            )
+            .finish()
+    }
+}
+
+impl NativeHostExtensions {
+    pub fn with_color(mut self, use_color: bool) -> Self {
+        self.use_color = use_color;
+        self
+    }
+
+    pub fn with_output_format(mut self, output_format: impl Into<String>) -> Self {
+        self.output_format = Some(output_format.into());
+        self
+    }
+
+    pub fn with_logger(mut self, logger: Arc<dyn HostLogger>) -> Self {
+        self.logger = Some(logger);
+        self
+    }
+
+    pub fn with_frame_transformer(
+        mut self,
+        transformer: Arc<dyn HostFrameTransformer>,
+        skip_default: bool,
+    ) -> Self {
+        self.frame_transformer = Some(transformer);
+        self.skip_default_frame_transform = skip_default;
+        self
+    }
+
+    pub fn with_custom_security(mut self, checker: Arc<dyn CustomSecurityChecker>) -> Self {
+        self.custom_security = Some(checker);
+        self
+    }
+
+    pub fn with_custom_module_reader(mut self, reader: Arc<dyn CustomModuleReader>) -> Self {
+        self.custom_module_readers.push(reader);
+        self
+    }
+
+    pub fn with_custom_resource_reader(mut self, reader: Arc<dyn CustomResourceReader>) -> Self {
+        self.custom_resource_readers.push(reader);
+        self
+    }
+
+    pub fn with_http_client(mut self, client: Arc<NativeHttpClient>) -> Self {
+        self.http_client = Some(client);
+        self
     }
 }
 
@@ -238,10 +434,12 @@ pub struct NativeHost {
     fs: NativeFs,
     modulepath: NativeModulePathResolver,
     http: Arc<NativeHttpClient>,
+    owns_http_client: bool,
     external_readers: Arc<ExternalReaderRegistry>,
     package_resolver: Arc<PackageResolver>,
     project_deps: Option<ProjectDependenciesManager>,
     cancel_flag: Arc<CancelFlag>,
+    clock_epoch: Instant,
     properties: Vec<(String, String)>,
     environment: Vec<(String, String)>,
     timeout_ms: Option<u64>,
@@ -250,12 +448,28 @@ pub struct NativeHost {
     power_assertions: bool,
     editor_url_scheme: String,
     internal_pkl_binary_eval: bool,
+    use_color: bool,
+    logger: Option<Arc<dyn HostLogger>>,
+    frame_transformer: Option<Arc<dyn HostFrameTransformer>>,
+    skip_default_frame_transform: bool,
+    custom_security: Option<Arc<dyn CustomSecurityChecker>>,
+    custom_module_readers: Vec<Arc<dyn CustomModuleReader>>,
+    custom_resource_readers: Vec<Arc<dyn CustomResourceReader>>,
     /// Loaded module bytes staged between `Resolve`/`ResolveKey` and `LoadSource`.
     staged_sources: Mutex<BTreeMap<PklString, Vec<u8>>>,
+    /// Loaded custom module sources staged between `Resolve`/`ResolveKey` and `LoadSource`.
+    staged_custom_sources: Mutex<BTreeMap<PklString, ModuleSource>>,
 }
 
 impl NativeHost {
     pub fn new(config: NativeHostConfig) -> Result<Self, String> {
+        Self::with_extensions(config, NativeHostExtensions::default())
+    }
+
+    pub fn with_extensions(
+        config: NativeHostConfig,
+        ext: NativeHostExtensions,
+    ) -> Result<Self, String> {
         let normalized_root = match &config.root_dir {
             Some(dir) => {
                 let real = canonicalize_root_dir(dir).map_err(|err| {
@@ -267,7 +481,11 @@ impl NativeHost {
         };
 
         let mut ext_mod_schemes = config.external_module_schemes.clone();
-        for scheme in config.external_module_readers.keys() {
+        for scheme in config
+            .external_module_readers
+            .keys()
+            .chain(ext.extra_allowed_module_schemes.iter())
+        {
             if !ext_mod_schemes
                 .iter()
                 .any(|s| s.eq_ignore_ascii_case(scheme))
@@ -276,19 +494,28 @@ impl NativeHost {
             }
         }
         let mut ext_res_schemes = config.external_resource_schemes.clone();
-        for scheme in config.external_resource_readers.keys() {
+        for scheme in config
+            .external_resource_readers
+            .keys()
+            .chain(ext.extra_allowed_resource_schemes.iter())
+        {
             if !ext_res_schemes.iter().any(|s| s == scheme) {
                 ext_res_schemes.push(scheme.clone());
             }
         }
 
-        let policy = SecurityPolicy::new(
-            config.allowed_modules.as_deref(),
-            config.allowed_resources.as_deref(),
-            normalized_root,
-        )?
-        .with_external_module_schemes(&ext_mod_schemes)?
-        .with_external_resource_schemes(&ext_res_schemes)?;
+        let policy = if ext.custom_security.is_some() {
+            let allow_all = vec![".*".to_string()];
+            SecurityPolicy::new(Some(&allow_all), Some(&allow_all), None)?
+        } else {
+            SecurityPolicy::new(
+                config.allowed_modules.as_deref(),
+                config.allowed_resources.as_deref(),
+                normalized_root,
+            )?
+            .with_external_module_schemes(&ext_mod_schemes)?
+            .with_external_resource_schemes(&ext_res_schemes)?
+        };
 
         let mut http_cfg = config.http;
         if let Some(ms) = config.timeout_ms {
@@ -297,11 +524,17 @@ impl NativeHost {
         }
 
         let cancel_flag = CancelFlag::new();
-        let http = Arc::new(NativeHttpClient::new(
-            http_cfg,
-            config.ca_certs,
-            cancel_flag.clone(),
-        ));
+        let (http, owns_http_client) = match ext.http_client {
+            Some(shared) => (shared, false),
+            None => (
+                Arc::new(NativeHttpClient::new(
+                    http_cfg,
+                    config.ca_certs,
+                    cancel_flag.clone(),
+                )),
+                true,
+            ),
+        };
 
         let req_timeout = config.timeout_ms.map(Duration::from_millis);
         let mut registry = ExternalReaderRegistry::new(0);
@@ -338,15 +571,26 @@ impl NativeHost {
             None => PackageResolver::in_memory(pkg_transport, config.test_mode),
         });
 
+        let mut properties = config.properties;
+        if let Some(output_format) = ext.output_format {
+            if let Some(entry) = properties.iter_mut().find(|(k, _)| k == "pkl.outputFormat") {
+                entry.1 = output_format;
+            } else {
+                properties.push(("pkl.outputFormat".to_string(), output_format));
+            }
+        }
+
         Ok(Self {
             fs: NativeFs::new(policy),
             modulepath: NativeModulePathResolver::new(config.module_paths),
             http,
+            owns_http_client,
             external_readers,
             package_resolver,
             project_deps: config.project_dependencies,
             cancel_flag,
-            properties: config.properties,
+            clock_epoch: Instant::now(),
+            properties,
             environment: config.environment,
             timeout_ms: config.timeout_ms,
             test_mode: config.test_mode,
@@ -354,7 +598,15 @@ impl NativeHost {
             power_assertions: config.power_assertions,
             editor_url_scheme: config.editor_url_scheme,
             internal_pkl_binary_eval: config.internal_pkl_binary_eval,
+            use_color: ext.use_color,
+            logger: ext.logger,
+            frame_transformer: ext.frame_transformer,
+            skip_default_frame_transform: ext.skip_default_frame_transform,
+            custom_security: ext.custom_security,
+            custom_module_readers: ext.custom_module_readers,
+            custom_resource_readers: ext.custom_resource_readers,
             staged_sources: Mutex::new(BTreeMap::new()),
+            staged_custom_sources: Mutex::new(BTreeMap::new()),
         })
     }
 
@@ -382,64 +634,171 @@ impl NativeHost {
         self.cancel_flag.clone()
     }
 
+    pub fn clock_ms(&self) -> u64 {
+        self.clock_epoch.elapsed().as_millis().min(u64::MAX as u128) as u64
+    }
+
+    pub fn use_color(&self) -> bool {
+        self.use_color
+    }
+
+    pub fn timeout_ms(&self) -> Option<u64> {
+        self.timeout_ms
+    }
+
+    pub fn project_dependencies(&self) -> Option<&ProjectDependenciesManager> {
+        self.project_deps.as_ref()
+    }
+
     pub fn cancel(&self) {
         self.cancel_flag.cancel();
         self.external_readers.cancel_all();
     }
 
     pub fn is_closed(&self) -> bool {
-        self.http.is_closed() && self.modulepath.is_closed()
+        if self.owns_http_client {
+            self.http.is_closed() && self.modulepath.is_closed()
+        } else {
+            self.modulepath.is_closed() && self.cancel_flag.is_cancelled()
+        }
     }
 
-    /// Closes all owned native resources (HTTP client, external readers, package resolver,
-    /// modulepath archive handles, staged buffers).
+    /// Closes all owned native resources (HTTP client if owned, external & custom readers,
+    /// package resolver, modulepath archive handles, staged buffers).
     pub fn close(&self) {
         self.cancel_flag.cancel();
         self.external_readers.close_all();
+        for reader in &self.custom_module_readers {
+            reader.close();
+        }
+        for reader in &self.custom_resource_readers {
+            reader.close();
+        }
         self.package_resolver.close();
-        self.http.close();
+        if self.owns_http_client {
+            self.http.close();
+        }
         self.modulepath.close();
         let mut staged = self
             .staged_sources
             .lock()
             .unwrap_or_else(|e| e.into_inner());
         staged.clear();
+        let mut custom_staged = self
+            .staged_custom_sources
+            .lock()
+            .unwrap_or_else(|e| e.into_inner());
+        custom_staged.clear();
+    }
+
+    fn check_resolve_module(&self, uri: &PklString) -> Result<(), ModuleHostError> {
+        if let Some(ref checker) = self.custom_security {
+            checker
+                .check_resolve_module(uri)
+                .map_err(|msg| ModuleHostError::SecurityManagerException { message: Some(msg) })
+        } else {
+            self.fs.policy().check_resolve_module(uri)
+        }
+    }
+
+    fn check_import_module(
+        &self,
+        importer: &PklString,
+        import_uri: &PklString,
+    ) -> Result<(), ModuleHostError> {
+        if let Some(ref checker) = self.custom_security {
+            checker
+                .check_import_module(importer, import_uri)
+                .map_err(|msg| ModuleHostError::SecurityManagerException { message: Some(msg) })
+        } else {
+            self.fs.policy().check_import_module(importer, import_uri)
+        }
+    }
+
+    fn check_read_resource(&self, uri: &PklString) -> Result<(), ReadFailure> {
+        if let Some(ref checker) = self.custom_security {
+            checker
+                .check_read_resource(uri)
+                .map_err(|msg| ReadFailure::SecurityManagerException { message: Some(msg) })
+        } else {
+            self.fs
+                .check_uri(uri, true)
+                .map_err(|msg| ReadFailure::SecurityManagerException { message: Some(msg) })
+        }
+    }
+
+    fn check_resolve_resource_for_glob(&self, uri: &PklString) -> Result<(), ModuleHostError> {
+        if let Some(ref checker) = self.custom_security {
+            checker
+                .check_resolve_resource(uri)
+                .map_err(|msg| ModuleHostError::SecurityManagerException { message: Some(msg) })
+        } else {
+            self.fs
+                .check_uri(uri, true)
+                .map_err(|msg| ModuleHostError::SecurityManagerException { message: Some(msg) })
+        }
+    }
+
+    fn emit_log_event(&self, event: &pkl_runtime::logging::LogEvent, stderr: &mut Vec<u8>) {
+        if let Some(ref logger) = self.logger {
+            logger.log(event.level, &event.message, &event.frame);
+        } else {
+            let level = match event.level {
+                LogLevel::Trace => "TRACE",
+                LogLevel::Warn => "WARN",
+            };
+            let uri = event.frame.module_uri.to_java_utf8();
+            let message = event.message.to_java_utf8();
+            let space = if message.ends_with('\n') { "" } else { " " };
+            stderr.extend_from_slice(format!("pkl: {level}: {message}{space}({uri})\n").as_bytes());
+        }
     }
 
     fn transform_log_frame(&self, frame: LogFrame) -> LogFrame {
-        if self.test_mode {
-            return frame;
+        if self.skip_default_frame_transform {
+            return match &self.frame_transformer {
+                Some(custom) => custom.transform(frame),
+                None => frame,
+            };
         }
-        let mut transformed = FrameTransformer::Default.transform(frame);
-        let uri_str = transformed.module_uri.to_java_utf8();
-        if uri_str.starts_with("file:") {
-            let formatted = self
-                .editor_url_scheme
-                .replace("%{url}", &uri_str)
-                .replace("%{line}", &transformed.start_line.to_string());
-            transformed.module_uri = PklString::from(formatted);
-        } else if uri_str.len() >= 8
-            && uri_str[..8].eq_ignore_ascii_case("package:")
-            && let Ok(asset_uri) = PackageAssetUri::parse(transformed.module_uri.clone())
-            && let Ok(meta) = self
-                .package_resolver
-                .get_dependency_metadata(&asset_uri.package, None)
-            && let Some(ref scheme) = meta.source_code_url_scheme
-        {
-            // Mirrors `StackFrameTransformers.replacePackageUriWithSourceCodeUrl`
-            // (`StackFrameTransformers.java:47-88`).
-            let path = asset_uri.asset_path.to_java_utf8();
-            let formatted = scheme
-                .to_java_utf8()
-                .replace("%{path}", &path)
-                .replace("%{url}", &uri_str)
-                .replace("%{line}", &transformed.start_line.to_string())
-                .replace("%{endLine}", &transformed.end_line.to_string())
-                .replace("%{column}", &transformed.start_column.to_string())
-                .replace("%{endColumn}", &transformed.end_column.to_string());
-            transformed.module_uri = PklString::from(formatted);
+        let transformed = if self.test_mode {
+            frame
+        } else {
+            let mut transformed = FrameTransformer::Default.transform(frame);
+            let uri_str = transformed.module_uri.to_java_utf8();
+            if uri_str.starts_with("file:") {
+                let formatted = self
+                    .editor_url_scheme
+                    .replace("%{url}", &uri_str)
+                    .replace("%{line}", &transformed.start_line.to_string());
+                transformed.module_uri = PklString::from(formatted);
+            } else if uri_str.len() >= 8
+                && uri_str[..8].eq_ignore_ascii_case("package:")
+                && let Ok(asset_uri) = PackageAssetUri::parse(transformed.module_uri.clone())
+                && let Ok(meta) = self
+                    .package_resolver
+                    .get_dependency_metadata(&asset_uri.package, None)
+                && let Some(ref scheme) = meta.source_code_url_scheme
+            {
+                // Mirrors `StackFrameTransformers.replacePackageUriWithSourceCodeUrl`
+                // (`StackFrameTransformers.java:47-88`).
+                let path = asset_uri.asset_path.to_java_utf8();
+                let formatted = scheme
+                    .to_java_utf8()
+                    .replace("%{path}", &path)
+                    .replace("%{url}", &uri_str)
+                    .replace("%{line}", &transformed.start_line.to_string())
+                    .replace("%{endLine}", &transformed.end_line.to_string())
+                    .replace("%{column}", &transformed.start_column.to_string())
+                    .replace("%{endColumn}", &transformed.end_column.to_string());
+                transformed.module_uri = PklString::from(formatted);
+            }
+            transformed
+        };
+        match &self.frame_transformer {
+            Some(custom) => custom.transform(transformed),
+            None => transformed,
         }
-        transformed
     }
 
     fn format_timeout_output(&self, timeout_ms: u64) -> ModuleOutputResult {
@@ -461,12 +820,223 @@ impl NativeHost {
             },
             trace_mode: self.trace_mode,
             log_delivery: LogDelivery::Host,
-            frame_transformer: if diagnostic_profile == DiagnosticProfile::CliBundledSettings {
+            frame_transformer: if diagnostic_profile == DiagnosticProfile::CliBundledSettings
+                || self.frame_transformer.is_some()
+                || self.skip_default_frame_transform
+            {
                 FrameTransformer::Host
             } else {
                 FrameTransformer::Default
             },
             platform_data: diagnostic_profile == DiagnosticProfile::CliBundledSettings,
+        }
+    }
+
+    /// Creates a reusable public `SourceSession` (shared module cache across calls)
+    /// configured with this host's evaluation, tracing, color, and frame-transformer settings.
+    pub fn new_public_session(&self, diagnostic_profile: DiagnosticProfile) -> SourceSession {
+        SourceSession::module_evaluator(self.session_options(diagnostic_profile))
+            .with_color(self.use_color)
+    }
+
+    /// Normalizes a top-level [`ModuleSourceSpec`], expanding `@dep/...` URIs when
+    /// project dependencies are configured and no inline contents are provided.
+    pub fn resolve_module_source_spec(
+        &self,
+        spec: ModuleSourceSpec,
+    ) -> Result<ModuleSourceSpec, ModuleHostError> {
+        if spec.contents.is_none()
+            && let Some(raw) = spec.uri.as_str()
+            && raw.starts_with('@')
+        {
+            let resolved = self.resolve_top_level_dependency_uri(raw)?;
+            return Ok(ModuleSourceSpec {
+                uri: resolved,
+                contents: None,
+            });
+        }
+        Ok(spec)
+    }
+
+    /// Drives an already-started operation on a reusable `SourceSession` using this host's
+    /// monotonic clock, custom/external/built-in handlers, and per-call timeout watchdog,
+    /// without closing `session` or `self`.
+    pub fn drive_public_session(
+        &self,
+        session: &mut SourceSession,
+        stderr: &mut Vec<u8>,
+    ) -> Result<Value, RuntimeError> {
+        let eval_cancel = CancelFlag::new();
+        let watchdog =
+            TimeoutWatchdog::start(self.timeout_ms, eval_cancel, self.external_readers.clone());
+        let now_ms = || self.clock_ms();
+        let result = self.drive_source_session(session, &now_ms, &watchdog, stderr);
+        let timed_out = watchdog.stop();
+        match result {
+            Ok(value) => Ok(value),
+            Err(err) if timed_out && err.kind != ErrorKind::Timeout => Err(RuntimeError::new(
+                ErrorKind::Timeout,
+                format_timeout_message(self.timeout_ms.unwrap_or(0)),
+            )),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Evaluates an expression against `source` on a persistent `SourceSession` and returns
+    /// `pkl-binary` MessagePack bytes (shared by `pkl-server`, `crates/pkl`, and `pkl-doc`).
+    pub fn evaluate_expression_pkl_binary_on(
+        &self,
+        session: &mut SourceSession,
+        source: ModuleSourceSpec,
+        expression: &str,
+    ) -> Result<Vec<u8>, String> {
+        let spec = match self.resolve_module_source_spec(source) {
+            Ok(spec) => spec,
+            Err(err) => {
+                let res = self.render_primary_load_error("", err, &ModuleEvalOptions::default());
+                return Err(String::from_utf8_lossy(&res.stderr)
+                    .trim_end_matches('\n')
+                    .to_string());
+            }
+        };
+        let mut stderr = Vec::new();
+        let outcome = (|| -> Result<Vec<u8>, RuntimeError> {
+            session.start_evaluation_pkl_binary(
+                spec,
+                expression,
+                self.clock_ms(),
+                self.timeout_ms,
+            )?;
+            let val = self.drive_public_session(session, &mut stderr)?;
+            SourceSession::result_bytes(val).map(|b| b.to_vec())
+        })();
+        match outcome {
+            Ok(bytes) => Ok(bytes),
+            Err(err) if err.kind == ErrorKind::Timeout => {
+                Err(format_timeout_message(self.timeout_ms.unwrap_or(0)))
+            }
+            Err(err) => Err(session.format_error(err)),
+        }
+    }
+
+    /// Convenience one-shot wrapper around [`Self::evaluate_expression_pkl_binary_on`].
+    pub fn evaluate_expression_pkl_binary(
+        &self,
+        source: ModuleSourceSpec,
+        expression: &str,
+    ) -> Result<Vec<u8>, String> {
+        let mut session = self.new_public_session(DiagnosticProfile::ApiIdentity);
+        let result = self.evaluate_expression_pkl_binary_on(&mut session, source, expression);
+        session.close();
+        result
+    }
+
+    /// Evaluates `output.text` on a persistent `SourceSession`.
+    pub fn evaluate_output_text_on(
+        &self,
+        session: &mut SourceSession,
+        source: ModuleSourceSpec,
+    ) -> Result<String, String> {
+        let spec = self.resolve_module_source_spec(source).map_err(|err| {
+            let res = self.render_primary_load_error("", err, &ModuleEvalOptions::default());
+            String::from_utf8_lossy(&res.stderr)
+                .trim_end_matches('\n')
+                .to_string()
+        })?;
+        let mut stderr = Vec::new();
+        let outcome = (|| -> Result<String, RuntimeError> {
+            session.start_evaluation(spec, "output.text", self.clock_ms(), self.timeout_ms)?;
+            let val = self.drive_public_session(session, &mut stderr)?;
+            SourceSession::result_string(val).map(|s| s.to_java_utf8())
+        })();
+        match outcome {
+            Ok(text) => Ok(text),
+            Err(err) if err.kind == ErrorKind::Timeout => {
+                Err(format_timeout_message(self.timeout_ms.unwrap_or(0)))
+            }
+            Err(err) => Err(session.format_error(err)),
+        }
+    }
+
+    /// Evaluates `output.bytes` on a persistent `SourceSession`.
+    pub fn evaluate_output_bytes_on(
+        &self,
+        session: &mut SourceSession,
+        source: ModuleSourceSpec,
+    ) -> Result<Vec<u8>, String> {
+        let spec = self.resolve_module_source_spec(source).map_err(|err| {
+            let res = self.render_primary_load_error("", err, &ModuleEvalOptions::default());
+            String::from_utf8_lossy(&res.stderr)
+                .trim_end_matches('\n')
+                .to_string()
+        })?;
+        let mut stderr = Vec::new();
+        let outcome = (|| -> Result<Vec<u8>, RuntimeError> {
+            session.start_evaluation_output_bytes(spec, self.clock_ms(), self.timeout_ms)?;
+            let val = self.drive_public_session(session, &mut stderr)?;
+            SourceSession::result_bytes(val).map(|b| b.to_vec())
+        })();
+        match outcome {
+            Ok(bytes) => Ok(bytes),
+            Err(err) if err.kind == ErrorKind::Timeout => {
+                Err(format_timeout_message(self.timeout_ms.unwrap_or(0)))
+            }
+            Err(err) => Err(session.format_error(err)),
+        }
+    }
+
+    /// Evaluates an expression as a string (`ToString`) on a persistent `SourceSession`.
+    pub fn evaluate_expression_string_on(
+        &self,
+        session: &mut SourceSession,
+        source: ModuleSourceSpec,
+        expression: &str,
+    ) -> Result<String, String> {
+        let spec = self.resolve_module_source_spec(source).map_err(|err| {
+            let res = self.render_primary_load_error("", err, &ModuleEvalOptions::default());
+            String::from_utf8_lossy(&res.stderr)
+                .trim_end_matches('\n')
+                .to_string()
+        })?;
+        let mut stderr = Vec::new();
+        let outcome = (|| -> Result<String, RuntimeError> {
+            session.start_evaluation(spec, expression, self.clock_ms(), self.timeout_ms)?;
+            let val = self.drive_public_session(session, &mut stderr)?;
+            SourceSession::result_string(val).map(|s| s.to_java_utf8())
+        })();
+        match outcome {
+            Ok(text) => Ok(text),
+            Err(err) if err.kind == ErrorKind::Timeout => {
+                Err(format_timeout_message(self.timeout_ms.unwrap_or(0)))
+            }
+            Err(err) => Err(session.format_error(err)),
+        }
+    }
+
+    /// Loads and returns the raw module `Value` on a persistent `SourceSession`
+    /// (shared by `pkl-doc` / schema extraction and `crates/pkl`).
+    pub fn load_module_on(
+        &self,
+        session: &mut SourceSession,
+        source: ModuleSourceSpec,
+    ) -> Result<Value, String> {
+        let spec = self.resolve_module_source_spec(source).map_err(|err| {
+            let res = self.render_primary_load_error("", err, &ModuleEvalOptions::default());
+            String::from_utf8_lossy(&res.stderr)
+                .trim_end_matches('\n')
+                .to_string()
+        })?;
+        let mut stderr = Vec::new();
+        let outcome = (|| -> Result<Value, RuntimeError> {
+            session.start_load_module(spec, self.clock_ms(), self.timeout_ms)?;
+            self.drive_public_session(session, &mut stderr)
+        })();
+        match outcome {
+            Ok(val) => Ok(val),
+            Err(err) if err.kind == ErrorKind::Timeout => {
+                Err(format_timeout_message(self.timeout_ms.unwrap_or(0)))
+            }
+            Err(err) => Err(session.format_error(err)),
         }
     }
 
@@ -528,7 +1098,10 @@ impl NativeHost {
                         }
                         session.complete_glob(&token, completion, t)?;
                     }
-                    HostPoll::Log { token, .. } => {
+                    HostPoll::Log { token, event } => {
+                        if let Some(ref logger) = self.logger {
+                            logger.log(event.level, &event.message, &event.frame);
+                        }
                         session.acknowledge_log(&token, Ok(()), now_ms())?;
                     }
                     HostPoll::TransformFrame { token, frame } => {
@@ -665,11 +1238,12 @@ impl NativeHost {
             inferred_name: primary.inferred_name,
         };
 
-        let mut session = match SourceSession::compile_output(
+        let mut session = match SourceSession::compile_output_colored(
             input,
             &[],
             &sanitized,
             self.session_options(sanitized.diagnostic_profile),
+            self.use_color,
         ) {
             Ok(s) => s,
             Err(error) => return NativeStreamingOutputFilesOutcome::EvalFailure(error.into()),
@@ -795,7 +1369,8 @@ impl NativeHost {
             expressions,
             self.session_options(DiagnosticProfile::CliBundledSettings),
         )
-        .map_err(|e| e.to_java_utf8())?;
+        .map_err(|e| e.to_java_utf8())?
+        .with_color(self.use_color);
 
         let mut logs = Vec::new();
         let mut values = Vec::with_capacity(expressions.len());
@@ -862,7 +1437,8 @@ impl NativeHost {
             expressions,
             self.session_options(DiagnosticProfile::CliBundledSettings),
         )
-        .map_err(|e| e.to_java_utf8())?;
+        .map_err(|e| e.to_java_utf8())?
+        .with_color(self.use_color);
 
         let mut logs = Vec::new();
         let mut results = Vec::with_capacity(expressions.len());
@@ -1028,7 +1604,8 @@ impl NativeHost {
         options: &ModuleEvalOptions,
     ) -> ModuleOutputResult {
         let mut session =
-            SourceSession::module_evaluator(self.session_options(options.diagnostic_profile));
+            SourceSession::module_evaluator(self.session_options(options.diagnostic_profile))
+                .with_color(self.use_color);
         let spec = ModuleSourceSpec {
             uri: PklString::from(uri),
             contents: None,
@@ -1130,11 +1707,12 @@ impl NativeHost {
     ) -> (ModuleOutputResult, Vec<String>, Vec<String>, Vec<String>) {
         let session_opts = self.session_options(options.diagnostic_profile);
         let mut session = match expression {
-            Some(expr) => match SourceSession::compile_output_expression_text(
+            Some(expr) => match SourceSession::compile_output_expression_text_colored(
                 input,
                 expr,
                 options,
                 session_opts,
+                self.use_color,
             ) {
                 Ok(s) => s,
                 Err(error) => {
@@ -1142,7 +1720,13 @@ impl NativeHost {
                     return (res.into(), Vec::new(), Vec::new(), Vec::new());
                 }
             },
-            None => match SourceSession::compile_output(input, &[], options, session_opts) {
+            None => match SourceSession::compile_output_colored(
+                input,
+                &[],
+                options,
+                session_opts,
+                self.use_color,
+            ) {
                 Ok(s) => s,
                 Err(error) => return (error.into(), Vec::new(), Vec::new(), Vec::new()),
             },
@@ -1265,16 +1849,7 @@ impl NativeHost {
                     session.complete_frame_transform(&token, Ok(transformed), now_ms())?;
                 }
                 HostPoll::Log { token, event } => {
-                    let level = match event.level {
-                        pkl_runtime::logging::LogLevel::Trace => "TRACE",
-                        pkl_runtime::logging::LogLevel::Warn => "WARN",
-                    };
-                    let uri = event.frame.module_uri.to_java_utf8();
-                    let message = event.message.to_java_utf8();
-                    let space = if message.ends_with('\n') { "" } else { " " };
-                    stderr.extend_from_slice(
-                        format!("pkl: {level}: {message}{space}({uri})\n").as_bytes(),
-                    );
+                    self.emit_log_event(&event, stderr);
                     session.acknowledge_log(&token, Ok(()), now_ms())?;
                 }
             }
@@ -1524,7 +2099,7 @@ impl NativeHost {
         &self,
         uri: &PklString,
     ) -> Result<ResolvedModule, ModuleHostError> {
-        self.fs.policy().check_resolve_module(uri)?;
+        self.check_resolve_module(uri)?;
         let raw_uri = uri.as_str().unwrap_or("");
         let asset_uri = PackageAssetUri::parse(uri.clone()).map_err(map_package_uri_error)?;
 
@@ -1578,7 +2153,7 @@ impl NativeHost {
     }
 
     fn read_package_resource(&self, resolved_uri: &PklString) -> Result<ReadResult, ReadFailure> {
-        self.fs.policy().check_read_resource(resolved_uri)?;
+        self.check_read_resource(resolved_uri)?;
 
         let raw_uri = resolved_uri.as_str().unwrap_or("");
         let asset_uri = PackageAssetUri::parse(resolved_uri.clone())
@@ -1639,8 +2214,10 @@ impl NativeHost {
         uri: &PklString,
         is_resource: bool,
     ) -> Result<bool, ModuleHostError> {
-        if let Err(msg) = self.fs.policy().check_allowlist_only(uri, is_resource) {
-            return Err(ModuleHostError::SecurityManagerException { message: Some(msg) });
+        if is_resource {
+            self.check_resolve_resource_for_glob(uri)?;
+        } else {
+            self.check_resolve_module(uri)?;
         }
         let raw_uri = uri.as_str().unwrap_or("");
         let asset_uri = PackageAssetUri::parse(uri.clone()).map_err(map_package_uri_error)?;
@@ -1668,8 +2245,10 @@ impl NativeHost {
         uri: &PklString,
         is_resource: bool,
     ) -> Result<Vec<PathElement>, ModuleHostError> {
-        if let Err(msg) = self.fs.policy().check_allowlist_only(uri, is_resource) {
-            return Err(ModuleHostError::SecurityManagerException { message: Some(msg) });
+        if is_resource {
+            self.check_resolve_resource_for_glob(uri)?;
+        } else {
+            self.check_resolve_module(uri)?;
         }
         let raw_uri = uri.as_str().unwrap_or("");
         let asset_uri = PackageAssetUri::parse(uri.clone()).map_err(map_package_uri_error)?;
@@ -1692,12 +2271,343 @@ impl NativeHost {
             .list_elements(&asset_uri, expected_sha.as_ref())
     }
 
+    fn custom_module_reader_by_handle(
+        &self,
+        handle: &PklString,
+    ) -> Option<&Arc<dyn CustomModuleReader>> {
+        let idx = handle
+            .as_str()
+            .and_then(|s| s.strip_prefix("custom:module:"))
+            .and_then(|n| n.parse::<usize>().ok())?;
+        self.custom_module_readers.get(idx)
+    }
+
+    fn find_custom_module_reader_by_uri(
+        &self,
+        uri: &PklString,
+    ) -> Option<(usize, &Arc<dyn CustomModuleReader>)> {
+        self.custom_module_readers
+            .iter()
+            .enumerate()
+            .find(|(_, reader)| reader.matches_uri(uri))
+    }
+
+    fn find_custom_resource_reader(
+        &self,
+        scheme: &str,
+    ) -> Option<(usize, &Arc<dyn CustomResourceReader>)> {
+        self.custom_resource_readers
+            .iter()
+            .enumerate()
+            .rev()
+            .find(|(_, reader)| reader.scheme().eq_ignore_ascii_case(scheme))
+    }
+
+    fn custom_resource_reader_by_handle(
+        &self,
+        handle: &PklString,
+    ) -> Option<&Arc<dyn CustomResourceReader>> {
+        let idx = handle
+            .as_str()
+            .and_then(|s| s.strip_prefix("custom:resource:"))
+            .and_then(|n| n.parse::<usize>().ok())?;
+        self.custom_resource_readers.get(idx)
+    }
+
+    fn stage_custom_source(&self, resolved: &ResolvedModule, source: ModuleSource) {
+        let mut staged = self
+            .staged_custom_sources
+            .lock()
+            .unwrap_or_else(|e| e.into_inner());
+        staged.insert(resolved.resolved_uri.clone(), source.clone());
+        if resolved.original_uri != resolved.resolved_uri {
+            staged.insert(resolved.original_uri.clone(), source);
+        }
+    }
+
+    fn try_handle_custom_module_request(
+        &self,
+        request: &ModuleRequest,
+    ) -> Option<ModuleCompletion> {
+        if self.custom_module_readers.is_empty() {
+            return None;
+        }
+        match &request.kind {
+            ModuleRequestKind::SelectKey { id, uri, .. } => {
+                let (idx, _) = self.find_custom_module_reader_by_uri(uri)?;
+                Some(ModuleCompletion::KeySelected(Ok(ModuleKey {
+                    id: *id,
+                    uri: uri.clone(),
+                    kind: ModuleKeyKind::Host,
+                    handle: format!("custom:module:{idx}").into(),
+                })))
+            }
+            ModuleRequestKind::Capabilities { key, module } => {
+                let reader = key
+                    .as_ref()
+                    .and_then(|k| self.custom_module_reader_by_handle(&k.handle))
+                    .or_else(|| {
+                        let uri = key.as_ref().map(|k| &k.uri).unwrap_or(&module.original_uri);
+                        self.find_custom_module_reader_by_uri(uri).map(|(_, r)| r)
+                    })?;
+                let uri = key.as_ref().map(|k| &k.uri).unwrap_or(&module.original_uri);
+                Some(ModuleCompletion::Capabilities(Ok(ModuleCapabilities {
+                    local: reader.is_local(uri),
+                    hierarchical: reader.is_hierarchical(uri),
+                    fragment_paths: reader.has_fragment_paths(uri),
+                })))
+            }
+            ModuleRequestKind::QueryCachePolicy { key } => {
+                let reader = self
+                    .custom_module_reader_by_handle(&key.handle)
+                    .or_else(|| {
+                        self.find_custom_module_reader_by_uri(&key.uri)
+                            .map(|(_, r)| r)
+                    })?;
+                Some(ModuleCompletion::CachePolicy(
+                    Ok(reader.is_cached(&key.uri)),
+                ))
+            }
+            ModuleRequestKind::Resolve { key, .. } => {
+                let reader = self.custom_module_reader_by_handle(&key.handle)?;
+                if let Err(err) = self.check_resolve_module(&key.uri) {
+                    return Some(ModuleCompletion::Resolved(Err(err)));
+                }
+                match reader.resolve_module(&key.uri) {
+                    Ok((resolved, source)) => {
+                        self.stage_custom_source(&resolved, source);
+                        Some(ModuleCompletion::Resolved(Ok(resolved)))
+                    }
+                    Err(err) => Some(ModuleCompletion::Resolved(Err(err))),
+                }
+            }
+            ModuleRequestKind::ResolveKey {
+                key,
+                resolved_key_id,
+                ..
+            } => {
+                let reader = self.custom_module_reader_by_handle(&key.handle)?;
+                if let Err(err) = self.check_resolve_module(&key.uri) {
+                    return Some(ModuleCompletion::KeyResolved(Err(err)));
+                }
+                match reader.resolve_module(&key.uri) {
+                    Ok((resolved, source)) => {
+                        self.stage_custom_source(&resolved, source);
+                        Some(ModuleCompletion::KeyResolved(Ok(ResolvedModuleKey {
+                            id: *resolved_key_id,
+                            key: key.clone(),
+                            handle: key.handle.clone(),
+                            module: resolved,
+                        })))
+                    }
+                    Err(err) => Some(ModuleCompletion::KeyResolved(Err(err))),
+                }
+            }
+            ModuleRequestKind::LoadSource { key, resolved } => {
+                if self.custom_module_reader_by_handle(&key.handle).is_none()
+                    && self
+                        .custom_module_reader_by_handle(&key.key.handle)
+                        .is_none()
+                {
+                    return None;
+                }
+                let staged = self
+                    .staged_custom_sources
+                    .lock()
+                    .unwrap_or_else(|e| e.into_inner());
+                if let Some(src) = staged
+                    .get(&resolved.resolved_uri)
+                    .or_else(|| staged.get(&resolved.original_uri))
+                    .cloned()
+                {
+                    return Some(ModuleCompletion::Source(Ok(src)));
+                }
+                drop(staged);
+                let reader = self
+                    .custom_module_reader_by_handle(&key.handle)
+                    .or_else(|| self.custom_module_reader_by_handle(&key.key.handle))?;
+                match reader.resolve_module(&resolved.original_uri) {
+                    Ok((_, src)) => Some(ModuleCompletion::Source(Ok(src))),
+                    Err(err) => Some(ModuleCompletion::Source(Err(err))),
+                }
+            }
+            ModuleRequestKind::HasElement {
+                key,
+                module,
+                element_uri,
+            } => {
+                let reader = key
+                    .as_ref()
+                    .and_then(|k| self.custom_module_reader_by_handle(&k.handle))
+                    .or_else(|| {
+                        self.find_custom_module_reader_by_uri(element_uri)
+                            .or_else(|| self.find_custom_module_reader_by_uri(&module.original_uri))
+                            .map(|(_, r)| r)
+                    })?;
+                if let Err(err) = self.check_resolve_module(element_uri) {
+                    return Some(ModuleCompletion::HasElement(Err(err)));
+                }
+                Some(ModuleCompletion::HasElement(
+                    reader.has_element(element_uri),
+                ))
+            }
+            ModuleRequestKind::ResolveImportUri { key, authored_uri } => {
+                let reader = self.custom_module_reader_by_handle(&key.handle)?;
+                if authored_uri.starts_with("@") {
+                    return Some(ModuleCompletion::ImportUri(
+                        self.resolve_package_or_dep_import_uri(
+                            &key.uri,
+                            reader.is_hierarchical(&key.uri),
+                            authored_uri,
+                        ),
+                    ));
+                }
+                if !has_uri_scheme(authored_uri.as_str().unwrap_or("")) {
+                    if !reader.is_hierarchical(&key.uri) {
+                        return Some(ModuleCompletion::ImportUri(Err(
+                            ModuleHostError::EvalError {
+                                message: format!(
+                                    "Cannot resolve relative module URI `{authored_uri}` because enclosing module `{}` does not have hierarchical URIs.",
+                                    key.uri
+                                )
+                                .into(),
+                                hint: None,
+                            },
+                        )));
+                    }
+                    return Some(ModuleCompletion::ImportUri(
+                        pkl_runtime::host::resolve_module_key_uri(authored_uri, &key.uri)
+                            .map_err(|err| ModuleHostError::Unsupported(err.message)),
+                    ));
+                }
+                None
+            }
+            _ => None,
+        }
+    }
+
+    fn try_handle_custom_glob_request(&self, request: &GlobRequest) -> Option<GlobCompletion> {
+        if self.custom_module_readers.is_empty() && self.custom_resource_readers.is_empty() {
+            return None;
+        }
+        match &request.kind {
+            GlobRequestKind::SelectResource { id, uri } => {
+                let raw = uri.to_java_utf8();
+                let (scheme, _) = raw.split_once(':')?;
+                let (idx, reader) = self.find_custom_resource_reader(scheme)?;
+                Some(GlobCompletion::Resource(Ok(ResourceReader {
+                    id: *id,
+                    scheme: reader.scheme().into(),
+                    handle: format!("custom:resource:{idx}").into(),
+                })))
+            }
+            GlobRequestKind::IsGlobbable { reader } => match reader {
+                GlobReader::Module(key) => {
+                    let r = self
+                        .custom_module_reader_by_handle(&key.handle)
+                        .or_else(|| {
+                            self.find_custom_module_reader_by_uri(&key.uri)
+                                .map(|(_, r)| r)
+                        })?;
+                    Some(GlobCompletion::Globbable(Ok(r.is_globbable(&key.uri))))
+                }
+                GlobReader::Resource(res) => {
+                    let r = self
+                        .custom_resource_reader_by_handle(&res.handle)
+                        .or_else(|| {
+                            self.find_custom_resource_reader(res.scheme.as_str().unwrap_or(""))
+                                .map(|(_, r)| r)
+                        })?;
+                    Some(GlobCompletion::Globbable(Ok(r.is_globbable())))
+                }
+            },
+            GlobRequestKind::IsHierarchical { reader } => match reader {
+                GlobReader::Module(key) => {
+                    let r = self
+                        .custom_module_reader_by_handle(&key.handle)
+                        .or_else(|| {
+                            self.find_custom_module_reader_by_uri(&key.uri)
+                                .map(|(_, r)| r)
+                        })?;
+                    Some(GlobCompletion::Hierarchical(
+                        Ok(r.is_hierarchical(&key.uri)),
+                    ))
+                }
+                GlobReader::Resource(res) => {
+                    let r = self
+                        .custom_resource_reader_by_handle(&res.handle)
+                        .or_else(|| {
+                            self.find_custom_resource_reader(res.scheme.as_str().unwrap_or(""))
+                                .map(|(_, r)| r)
+                        })?;
+                    Some(GlobCompletion::Hierarchical(Ok(r.has_hierarchical_uris())))
+                }
+            },
+            GlobRequestKind::FragmentPaths { reader } => {
+                let (_, r) =
+                    self.find_custom_resource_reader(reader.scheme.as_str().unwrap_or(""))?;
+                let _ = r;
+                Some(GlobCompletion::FragmentPaths(Ok(false)))
+            }
+            GlobRequestKind::HasElement { reader, uri } => {
+                let r = self
+                    .custom_resource_reader_by_handle(&reader.handle)
+                    .or_else(|| {
+                        let scheme = uri
+                            .as_str()
+                            .and_then(|s| s.split_once(':'))
+                            .map(|(s, _)| s)
+                            .unwrap_or(reader.scheme.as_str().unwrap_or(""));
+                        self.find_custom_resource_reader(scheme).map(|(_, r)| r)
+                    })?;
+                if let Err(err) = self.check_resolve_resource_for_glob(uri) {
+                    return Some(GlobCompletion::HasElement(Err(err.into())));
+                }
+                Some(GlobCompletion::HasElement(
+                    r.has_element(uri).map_err(Into::into),
+                ))
+            }
+            GlobRequestKind::ListElements { reader, uri } => match reader {
+                GlobReader::Module(key) => {
+                    let r = self
+                        .custom_module_reader_by_handle(&key.handle)
+                        .or_else(|| self.find_custom_module_reader_by_uri(uri).map(|(_, r)| r))?;
+                    if let Err(err) = self.check_resolve_module(uri) {
+                        return Some(GlobCompletion::Elements(Err(err.into())));
+                    }
+                    Some(GlobCompletion::Elements(
+                        r.list_elements(uri).map_err(Into::into),
+                    ))
+                }
+                GlobReader::Resource(res) => {
+                    let r = self
+                        .custom_resource_reader_by_handle(&res.handle)
+                        .or_else(|| {
+                            let scheme = uri
+                                .as_str()
+                                .and_then(|s| s.split_once(':'))
+                                .map(|(s, _)| s)
+                                .unwrap_or(res.scheme.as_str().unwrap_or(""));
+                            self.find_custom_resource_reader(scheme).map(|(_, r)| r)
+                        })?;
+                    if let Err(err) = self.check_resolve_resource_for_glob(uri) {
+                        return Some(GlobCompletion::Elements(Err(err.into())));
+                    }
+                    Some(GlobCompletion::Elements(
+                        r.list_elements(uri).map_err(Into::into),
+                    ))
+                }
+            },
+        }
+    }
+
     // =========================================================================
     // Unified Host Effect Dispatchers (`Read`, `Module`, `Glob`)
     // =========================================================================
 
-    /// Handles a resource read request across external readers, `@dep`, `package:`,
-    /// `projectpackage:`, `http:`, `https:`, `env:`, `prop:`, `file:`, `modulepath:`, `jar:file:`.
+    /// Handles a resource read request across custom readers, external readers, `@dep`,
+    /// `package:`, `projectpackage:`, `http:`, `https:`, `env:`, `prop:`, `file:`,
+    /// `modulepath:`, `jar:file:`.
     pub fn handle_read(
         &self,
         authored_uri: &PklString,
@@ -1712,14 +2622,37 @@ impl NativeHost {
             return Ok(ReadResult::Text(PklString::from("pkl-binary")));
         }
 
-        // 0. `@dep/...` dependency notation or relative read from hierarchical external-reader module
+        // 0. `@dep/...` dependency notation or relative read from hierarchical custom/external module
         let resolved_uri = if authored_raw.starts_with('@') {
             let empty_base = PklString::default();
             let base = module_uri.unwrap_or(&empty_base);
             let base_str = base.as_str().unwrap_or("");
-            let hierarchical = base_str.contains("://") || base_str.starts_with("file:/");
+            let hierarchical = self
+                .find_custom_module_reader_by_uri(base)
+                .map(|(_, r)| r.is_hierarchical(base))
+                .unwrap_or_else(|| base_str.contains("://") || base_str.starts_with("file:/"));
             self.resolve_package_or_dep_import_uri(base, hierarchical, authored_uri)
                 .map_err(module_err_to_read_failure)?
+        } else if !has_uri_scheme(&authored_raw)
+            && let Some(base) = module_uri
+            && let Some((_, custom_mod)) = self.find_custom_module_reader_by_uri(base)
+        {
+            if !custom_mod.is_hierarchical(base) {
+                return Err(ReadFailure::EvalError {
+                    message: format!(
+                        "Cannot resolve relative resource URI `{authored_raw}` because enclosing module `{}` does not have hierarchical URIs.",
+                        base.to_java_utf8()
+                    )
+                    .into(),
+                    hint: None,
+                });
+            }
+            pkl_runtime::host::resolve_module_key_uri(authored_uri, base).map_err(|err| {
+                ReadFailure::EvalError {
+                    message: err.message.clone(),
+                    hint: err.hint.clone(),
+                }
+            })?
         } else if !has_uri_scheme(&authored_raw)
             && let Some(base) = module_uri
             && let Some((base_scheme, _)) = base.as_str().and_then(|s| s.split_once(':'))
@@ -1741,7 +2674,7 @@ impl NativeHost {
             };
             let is_hierarchical = match self
                 .external_readers
-                .try_complete_module(&cap_req, |uri| self.fs.policy().check_resolve_module(uri))
+                .try_complete_module(&cap_req, |uri| self.check_resolve_module(uri))
             {
                 Some(ModuleCompletion::Capabilities(Ok(caps))) => caps.hierarchical,
                 Some(ModuleCompletion::Capabilities(Err(err))) => {
@@ -1774,20 +2707,22 @@ impl NativeHost {
             )?
         };
 
+        let raw = resolved_uri.to_java_utf8();
+        let scheme = raw.split_once(':').map(|(s, _)| s).unwrap_or("");
+
+        // 0b. Custom resource readers FIRST (highest precedence: client/SPI readers can override built-ins).
+        if let Some((_, custom_reader)) = self.find_custom_resource_reader(scheme) {
+            self.check_read_resource(&resolved_uri)?;
+            return custom_reader.read(&resolved_uri);
+        }
+
         // 1. Registered external resource readers (last-registration precedence in `ResourceManager`)
         if let Some(ext_result) = self
             .external_readers
-            .try_complete_read(&resolved_uri, |uri| {
-                self.fs
-                    .check_uri(uri, true)
-                    .map_err(|msg| ReadFailure::SecurityManagerException { message: Some(msg) })
-            })
+            .try_complete_read(&resolved_uri, |uri| self.check_read_resource(uri))
         {
             return ext_result;
         }
-
-        let raw = resolved_uri.to_java_utf8();
-        let scheme = raw.split_once(':').map(|(s, _)| s).unwrap_or("");
 
         // 2. `package:` / `projectpackage:`
         if scheme.eq_ignore_ascii_case("package") || scheme.eq_ignore_ascii_case("projectpackage") {
@@ -1798,7 +2733,14 @@ impl NativeHost {
         if scheme.eq_ignore_ascii_case("http") || scheme.eq_ignore_ascii_case("https") {
             let bytes = self.http.fetch_resource(&raw, |hop_uri| {
                 let hop_pkl: PklString = hop_uri.into();
-                self.fs.check_uri(&hop_pkl, true)
+                match self.check_read_resource(&hop_pkl) {
+                    Ok(()) => Ok(()),
+                    Err(ReadFailure::SecurityManagerException { message }) => Err(message
+                        .unwrap_or_else(|| {
+                            format!("Refusing to read resource `{hop_uri}`.").into()
+                        })),
+                    Err(other) => Err(format!("{other:?}").into()),
+                }
             })?;
             return Ok(match bytes {
                 Some(b) => ReadResult::Resource(Resource {
@@ -1807,6 +2749,10 @@ impl NativeHost {
                 }),
                 None => ReadResult::Missing,
             });
+        }
+
+        if self.custom_security.is_some() {
+            self.check_read_resource(&resolved_uri)?;
         }
 
         // 4. Scalar `env:` / `prop:` + SecurityPolicy check BEFORE `noResourceReaderRegistered` (`ResourceManager.java:105-118`).
@@ -1861,13 +2807,18 @@ impl NativeHost {
         })
     }
 
-    /// Handles a typed `ModuleRequest` across external readers, `pkl:`, `package:`,
-    /// `projectpackage:`, `file:`, `modulepath:`, `jar:file:`, `http:`, `https:`.
+    /// Handles a typed `ModuleRequest` across custom readers, external readers, `pkl:`,
+    /// `package:`, `projectpackage:`, `file:`, `modulepath:`, `jar:file:`, `http:`, `https:`.
     pub fn handle_module_request(&self, request: &ModuleRequest) -> ModuleCompletion {
-        // 1. Registered external module readers FIRST (`CliCommand.kt:264-275`).
+        // 0. Custom in-process / client module readers FIRST.
+        if let Some(completion) = self.try_handle_custom_module_request(request) {
+            return completion;
+        }
+
+        // 1. Registered external module readers (`CliCommand.kt:264-275`).
         if let Some(completion) = self
             .external_readers
-            .try_complete_module(request, |uri| self.fs.policy().check_resolve_module(uri))
+            .try_complete_module(request, |uri| self.check_resolve_module(uri))
         {
             return completion;
         }
@@ -1912,16 +2863,14 @@ impl NativeHost {
             }
         }
 
-        // 4. Import trust-level check via configurable SecurityPolicy.
+        // 4. Import trust-level check via configurable SecurityPolicy or CustomSecurityChecker.
         if let ModuleRequestKind::CheckImport {
             importer,
             import_uri,
         } = &request.kind
         {
             return ModuleCompletion::ImportChecked(
-                self.fs
-                    .policy()
-                    .check_import_module(&importer.original_uri, import_uri),
+                self.check_import_module(&importer.original_uri, import_uri),
             );
         }
 
@@ -1980,17 +2929,30 @@ impl NativeHost {
             _ => {}
         }
 
-        // 6. Builtin stdlib (`pkl:`) and default URI resolution.
+        // 6. Synthetic inline/query modules (`ModuleKeys.Synthetic.resolve`, `ModuleKeys.java:250-254`)
+        // must pass `SecurityManager.checkResolveModule(uri)` before `default_completion` resolves them.
+        match &request.kind {
+            ModuleRequestKind::Resolve { key, .. } | ModuleRequestKind::ResolveKey { key, .. }
+                if key.kind == ModuleKeyKind::Synthetic =>
+            {
+                if let Err(err) = self.check_resolve_module(&key.uri) {
+                    return ModuleCompletion::Resolved(Err(err));
+                }
+            }
+            _ => {}
+        }
+
+        // 7. Builtin stdlib (`pkl:`) and default URI resolution.
         if let Some(completion) = default_completion(request) {
             return completion;
         }
 
-        // 7. Policy-aware standard key selection & capabilities.
+        // 8. Policy-aware standard key selection & capabilities.
         if let Some(completion) = standard_key_completion_with_policy(request, self.fs.policy()) {
             return completion;
         }
 
-        // 8. Native I/O phases.
+        // 9. Native I/O phases.
         match &request.kind {
             ModuleRequestKind::SelectKey { .. } => {
                 ModuleCompletion::KeySelected(Err(ModuleHostError::NoLoader))
@@ -2017,6 +2979,11 @@ impl NativeHost {
                 module,
                 element_uri,
             } => {
+                if self.custom_security.is_some()
+                    && let Err(err) = self.check_resolve_module(element_uri)
+                {
+                    return ModuleCompletion::HasElement(Err(err));
+                }
                 let is_modulepath = key
                     .as_ref()
                     .is_some_and(|k| k.handle == "builtin:modulepath")
@@ -2056,6 +3023,9 @@ impl NativeHost {
     fn resolve_module_key(&self, key: &ModuleKey) -> Result<ResolvedModule, ModuleHostError> {
         // `modulepath:`
         if key.handle == "builtin:modulepath" || key.uri.starts_with("modulepath:") {
+            if self.custom_security.is_some() {
+                self.check_resolve_module(&key.uri)?;
+            }
             let (resolved, bytes) = self.modulepath.resolve_module(&key.uri, &self.fs)?;
             self.stage_source(&resolved.resolved_uri, bytes);
             return Ok(resolved);
@@ -2063,7 +3033,13 @@ impl NativeHost {
 
         // `file:`
         if key.kind == ModuleKeyKind::StandardFile || key.uri.starts_with("file:") {
+            if self.custom_security.is_some() {
+                self.check_resolve_module(&key.uri)?;
+            }
             let (resolved, real_path) = self.fs.resolve_file_module(&key.uri)?;
+            if self.custom_security.is_some() && resolved.resolved_uri != key.uri {
+                self.check_resolve_module(&resolved.resolved_uri)?;
+            }
             let bytes = self.fs.read_file_module_bytes(&real_path)?;
             self.stage_source(&resolved.resolved_uri, bytes);
             return Ok(resolved);
@@ -2077,7 +3053,12 @@ impl NativeHost {
             let raw = key.uri.to_java_utf8();
             let bytes = self.http.fetch_module(&raw, |hop_uri| {
                 let hop_pkl: PklString = hop_uri.into();
-                self.fs.check_uri(&hop_pkl, false)
+                match self.check_resolve_module(&hop_pkl) {
+                    Ok(()) => Ok(()),
+                    Err(ModuleHostError::SecurityManagerException { message }) => Err(message
+                        .unwrap_or_else(|| format!("Refusing to load module `{hop_uri}`.").into())),
+                    Err(other) => Err(format!("{other:?}").into()),
+                }
             })?;
             // `ModuleKeys.Http.resolve` keeps original `uri` (`ResolvedModuleKeys.virtual(this, uri, ...)`).
             let resolved = ResolvedModule {
@@ -2096,6 +3077,9 @@ impl NativeHost {
             .to_ascii_lowercase()
             .starts_with("jar:file:")
         {
+            if self.custom_security.is_some() {
+                self.check_resolve_module(&key.uri)?;
+            }
             let (resolved, bytes) = resolve_generic_jar_module(&key.uri, &self.fs)?;
             self.stage_source(&resolved.resolved_uri, bytes);
             return Ok(resolved);
@@ -2149,18 +3133,19 @@ impl NativeHost {
         })
     }
 
-    /// Handles a typed `GlobRequest` across external readers, `package:`, `projectpackage:`,
-    /// `file:`, `env:`, `prop:`, `modulepath:`, `http:`, `https:`.
+    /// Handles a typed `GlobRequest` across custom readers, external readers, `package:`,
+    /// `projectpackage:`, `file:`, `env:`, `prop:`, `modulepath:`, `http:`, `https:`.
     pub fn handle_glob_request(&self, request: &GlobRequest) -> GlobCompletion {
-        // 1. Registered external module/resource readers FIRST.
+        // 0. Custom in-process / client module and resource readers FIRST.
+        if let Some(completion) = self.try_handle_custom_glob_request(request) {
+            return completion;
+        }
+
+        // 1. Registered external module/resource readers.
         if let Some(completion) = self.external_readers.try_complete_glob(
             request,
-            |uri| self.fs.policy().check_resolve_module(uri),
-            |uri| {
-                self.fs
-                    .check_uri(uri, true)
-                    .map_err(|msg| ModuleHostError::SecurityManagerException { message: Some(msg) })
-            },
+            |uri| self.check_resolve_module(uri),
+            |uri| self.check_resolve_resource_for_glob(uri),
         ) {
             return completion;
         }
@@ -2252,6 +3237,11 @@ impl NativeHost {
                 GlobCompletion::Hierarchical(Ok(hierarchical))
             }
             GlobRequestKind::HasElement { uri, .. } => {
+                if self.custom_security.is_some()
+                    && let Err(err) = self.check_resolve_resource_for_glob(uri)
+                {
+                    return GlobCompletion::HasElement(Err(err.into()));
+                }
                 let result = if uri.starts_with("file:") {
                     self.fs.has_element(uri, true).map_err(Into::into)
                 } else if uri.starts_with("modulepath:") {
@@ -2267,6 +3257,16 @@ impl NativeHost {
             }
             GlobRequestKind::ListElements { reader, uri } => {
                 let is_resource = matches!(reader, GlobReader::Resource(_));
+                if self.custom_security.is_some() {
+                    let check = if is_resource {
+                        self.check_resolve_resource_for_glob(uri)
+                    } else {
+                        self.check_resolve_module(uri)
+                    };
+                    if let Err(err) = check {
+                        return GlobCompletion::Elements(Err(err.into()));
+                    }
+                }
                 let result = if uri.starts_with("file:") {
                     self.fs.list_elements(uri, is_resource).map_err(Into::into)
                 } else {
@@ -2328,6 +3328,23 @@ fn map_package_uri_error(failure: PackageUriError) -> ModuleHostError {
         _ => ModuleHostError::UriSyntax {
             reason: failure.reason(),
         },
+    }
+}
+
+fn read_failure_to_module_err(err: ReadFailure) -> ModuleHostError {
+    match err {
+        ReadFailure::SecurityManagerException { message } => {
+            ModuleHostError::SecurityManagerException { message }
+        }
+        ReadFailure::HttpClientException { message } => {
+            ModuleHostError::HttpClientException { message }
+        }
+        ReadFailure::ExternalReaderProcess { message } => {
+            ModuleHostError::ExternalReaderProcess { message }
+        }
+        ReadFailure::UriSyntax { reason } => ModuleHostError::UriSyntax { reason },
+        ReadFailure::EvalError { message, hint } => ModuleHostError::EvalError { message, hint },
+        ReadFailure::Io(io) => ModuleHostError::Io(io),
     }
 }
 

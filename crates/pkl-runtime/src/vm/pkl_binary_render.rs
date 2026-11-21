@@ -12,6 +12,49 @@ impl Vm {
         self.begin_render(document, Format::PklBinary)
     }
 
+    /// Encodes the top-of-stack `Value` directly as a `pkl-binary` document
+    /// (`Value::Bytes`) with no converters, matching `EvaluatorImpl.evaluateExpressionPklBinary`.
+    pub(super) fn begin_pkl_binary_encode_value(&mut self) -> Result<(), RuntimeError> {
+        let root = self.pop()?.boxed();
+        let receiver = self.canonical_builtin_class(classes::BuiltinClass::Any);
+        self.frames.last_mut().expect("renderer frame").pcf_render = Some(RenderRun {
+            receiver,
+            root: root.clone(),
+            document_original: None,
+            document: true,
+            format: Format::PklBinary,
+            // Skip `converters` / `convertPropertyTransformers` reads on `receiver`.
+            option: 4,
+            options: Vec::new(),
+            await_: None,
+            tasks: vec![Task::Visit {
+                value: root,
+                depth: 0,
+                standalone: false,
+                root: true,
+                string_element: false,
+                path: vec![PathPart::Root],
+                converted: false,
+            }],
+            active: BTreeSet::new(),
+            output: Default::default(),
+            binary: Default::default(),
+            protobuf: Default::default(),
+            indent: Default::default(),
+            omit_null: false,
+            restrict_charset: false,
+            properties_document: false,
+            yaml: None,
+            yaml_stream: false,
+            xml_line: 0,
+            custom: false,
+            started: true,
+            converters: Converters::default(),
+            source: None,
+        });
+        Ok(())
+    }
+
     fn binary_class_identity(
         &mut self,
         value: &Value,

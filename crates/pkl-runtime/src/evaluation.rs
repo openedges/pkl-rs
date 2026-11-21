@@ -1,5 +1,6 @@
 //! Experimental expression-string boundary shared by development adapters.
 //! This does not implement the full evaluator API or general REPL/module loading.
+pub mod command;
 pub mod frontend;
 pub mod output_files;
 pub mod session;
@@ -398,6 +399,29 @@ pub(crate) fn runtime_error_text_with_profile(
     expression_end: Option<usize>,
     profile: frontend::DiagnosticProfile,
 ) -> PklString {
+    runtime_error_text_with_profile_and_color(
+        source,
+        uri,
+        module,
+        expression,
+        error,
+        expression_end,
+        profile,
+        false,
+    )
+}
+
+#[allow(clippy::too_many_arguments)]
+pub(crate) fn runtime_error_text_with_profile_and_color(
+    source: &Source,
+    uri: impl Into<PklString>,
+    module: impl Into<PklString>,
+    expression: impl Into<SourceText>,
+    error: RuntimeError,
+    expression_end: Option<usize>,
+    profile: frontend::DiagnosticProfile,
+    use_color: bool,
+) -> PklString {
     let uri = uri.into();
     let uri = &uri;
     let module = module.into();
@@ -405,6 +429,12 @@ pub(crate) fn runtime_error_text_with_profile(
     let expression = expression.into();
     let expression = &expression;
 
+    if use_color && let Some(colored) = &error.rendered_diagnostic_colored {
+        if let Some(foreign) = &error.foreign_exception {
+            return foreign.project_pkl_bug_with_profile(colored, profile);
+        }
+        return colored.clone();
+    }
     if let Some(rendered) = &error.rendered_diagnostic {
         if let Some(foreign) = &error.foreign_exception {
             return foreign.project_pkl_bug_with_profile(rendered, profile);
@@ -423,7 +453,7 @@ pub(crate) fn runtime_error_text_with_profile(
         profile,
     );
     rendering.transform(policy);
-    let ordinary = rendering.render();
+    let ordinary = rendering.render_colored(use_color);
     if let Some(foreign) = foreign {
         return foreign.project_pkl_bug_with_profile(&ordinary, profile);
     }
@@ -483,10 +513,15 @@ pub(crate) fn prepare_runtime_error(
             .concat(&"`".into()),
         );
     }
+    let mut colored_type_message: Option<PklString> = None;
+    let mut colored_type_hint: Option<PklString> = None;
     if let Some(diagnostic) = &error.type_diagnostic {
         let (message, hint) = diagnostic.render(diagnostic_source);
+        let (c_message, c_hint) = diagnostic.render_colored(diagnostic_source);
         error.message = message;
         error.hint = hint;
+        colored_type_message = Some(c_message);
+        colored_type_hint = c_hint;
     }
     if error.kind == ErrorKind::MissingType {
         let module = error.type_lookup_module.as_ref().unwrap_or_else(|| {
@@ -604,7 +639,7 @@ pub(crate) fn prepare_runtime_error(
             highlight_length_utf16: None,
         });
     }
-    crate::diagnostic::PreparedDiagnostic::new_frontend(
+    let mut prepared = crate::diagnostic::PreparedDiagnostic::new_frontend(
         &error.message,
         &frames,
         error.hint.as_ref(),
@@ -612,5 +647,9 @@ pub(crate) fn prepare_runtime_error(
             .frontend
             .as_ref()
             .map_or(0, |frontend| frontend.diagnostic.highlight_offset_utf16()),
-    )
+    );
+    if let Some(c_message) = colored_type_message {
+        prepared.set_colored_override(c_message, colored_type_hint);
+    }
+    prepared
 }

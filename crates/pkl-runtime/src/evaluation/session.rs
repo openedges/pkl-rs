@@ -2,8 +2,8 @@
 //! this is not a general REPL. Module I/O is supplied through typed Host effects.
 use super::frontend::{
     DiagnosticProfile, FailureDisposition, FrontendPhase, LosslessModuleSourceInput,
-    ModuleEvalOptions, ModuleFrontendFailure, ModuleFrontendResult, prepare_module_text,
-    render_module_runtime_failure_text,
+    ModuleEvalOptions, ModuleFrontendFailure, ModuleFrontendResult, prepare_module_text_colored,
+    render_module_runtime_failure_text_colored,
 };
 use super::output_files::{
     OutputFileEntry, append_output_file_bytes_entry, append_output_file_keys_entry,
@@ -87,6 +87,7 @@ pub struct SourceSession {
     calls: Vec<Call>,
     last_completed_call: Option<Call>,
     last_expression: Option<usize>,
+    use_color: bool,
 }
 
 impl SourceSession {
@@ -132,7 +133,151 @@ impl SourceSession {
             calls: Vec::new(),
             last_completed_call: None,
             last_expression: None,
+            use_color: false,
         }
+    }
+
+    /// Enables or disables ANSI color rendering for diagnostics emitted by this session.
+    pub fn set_use_color(&mut self, use_color: bool) {
+        self.use_color = use_color;
+    }
+
+    /// Builder-style helper to set ANSI color rendering on this session.
+    pub fn with_color(mut self, use_color: bool) -> Self {
+        self.use_color = use_color;
+        self
+    }
+
+    /// Returns whether ANSI color rendering is enabled on this session.
+    pub fn use_color(&self) -> bool {
+        self.use_color
+    }
+
+    /// Read-only access to the underlying cooperative `HostSession`.
+    pub fn host_session(&self) -> &HostSession {
+        &self.host
+    }
+
+    /// Mutable access to the underlying cooperative `HostSession`.
+    pub fn host_session_mut(&mut self) -> &mut HostSession {
+        &mut self.host
+    }
+
+    #[allow(dead_code)]
+    pub(crate) fn vm(&self) -> &crate::vm::Vm {
+        self.host.vm()
+    }
+
+    #[allow(dead_code)]
+    pub(crate) fn vm_mut(&mut self) -> &mut crate::vm::Vm {
+        self.host.vm_mut()
+    }
+
+    /// Starts a cached-module evaluation that encodes the result of `expression`
+    /// (`"module"`, `"output.text"`, `"output.value"`, `"output.bytes"`, or an arbitrary
+    /// Pkl expression) into Pkl 0.32.0 `pkl-binary` (`Value::Bytes`).
+    pub fn start_evaluation_pkl_binary(
+        &mut self,
+        source: crate::modules::ModuleSourceSpec,
+        expression: impl Into<SourceText>,
+        now_ms: u64,
+        timeout_ms: Option<u64>,
+    ) -> Result<(), RuntimeError> {
+        let expression = expression.into();
+        self.open()?;
+        if !self.public_lifecycle {
+            return Err(error(
+                "ModuleSource operations require the public lifecycle profile",
+            ));
+        }
+        let entry = self
+            .host
+            .append_public_pkl_binary_operation(source.clone(), expression.clone())?;
+        self.host.start(entry, Vec::new(), now_ms, timeout_ms)?;
+        self.retain_active_query_text();
+        let mut sources = SourceMap::default();
+        let id = sources.add(
+            source.uri.clone(),
+            source.contents.clone().unwrap_or_else(|| "".into()),
+        );
+        self.source = sources.get(id).unwrap().clone();
+        self.uri = source.uri.clone();
+        self.name = PklString::default();
+        let index = self.paths.len();
+        self.paths.push(expression.clone());
+        let call = match expression.original().as_str() {
+            Some("output.text") => Call::OutputText,
+            Some("output.bytes" | "module" | "output.value") => Call::OutputBytes,
+            _ => Call::Path(index),
+        };
+        self.calls.push(call);
+        self.public_queries.push(None);
+        self.last_expression = None;
+        Ok(())
+    }
+
+    /// Starts a cached-module evaluation returning `output.bytes` (`Value::Bytes`).
+    pub fn start_evaluation_output_bytes(
+        &mut self,
+        source: crate::modules::ModuleSourceSpec,
+        now_ms: u64,
+        timeout_ms: Option<u64>,
+    ) -> Result<(), RuntimeError> {
+        self.open()?;
+        if !self.public_lifecycle {
+            return Err(error(
+                "ModuleSource operations require the public lifecycle profile",
+            ));
+        }
+        let entry = self
+            .host
+            .append_public_output_bytes_operation(source.clone())?;
+        self.host.start(entry, Vec::new(), now_ms, timeout_ms)?;
+        self.retain_active_query_text();
+        let mut sources = SourceMap::default();
+        let id = sources.add(
+            source.uri.clone(),
+            source.contents.clone().unwrap_or_else(|| "".into()),
+        );
+        self.source = sources.get(id).unwrap().clone();
+        self.uri = source.uri.clone();
+        self.name = PklString::default();
+        self.calls.push(Call::OutputBytes);
+        self.public_queries.push(None);
+        self.last_expression = None;
+        Ok(())
+    }
+
+    /// Starts loading a primary module (using cache) and returns the module `Value`.
+    pub fn start_load_module(
+        &mut self,
+        source: crate::modules::ModuleSourceSpec,
+        now_ms: u64,
+        timeout_ms: Option<u64>,
+    ) -> Result<(), RuntimeError> {
+        self.open()?;
+        if !self.public_lifecycle {
+            return Err(error(
+                "ModuleSource operations require the public lifecycle profile",
+            ));
+        }
+        let entry = self
+            .host
+            .append_public_load_module_operation(source.clone())?;
+        self.host.start(entry, Vec::new(), now_ms, timeout_ms)?;
+        self.retain_active_query_text();
+        let mut sources = SourceMap::default();
+        let id = sources.add(
+            source.uri.clone(),
+            source.contents.clone().unwrap_or_else(|| "".into()),
+        );
+        self.source = sources.get(id).unwrap().clone();
+        self.uri = source.uri.clone();
+        self.name = PklString::default();
+        self.calls.push(Call::Module);
+        self.public_queries.push(None);
+        self.last_expression = None;
+        Ok(())
     }
 
     pub fn start_evaluation(
@@ -326,7 +471,19 @@ impl SourceSession {
         module_options: &ModuleEvalOptions,
         options: SourceSessionOptions,
     ) -> Result<Self, ModuleFrontendResult> {
-        Self::compile_output_text(input, property_paths, module_options, options)
+        Self::compile_output_text_colored(input, property_paths, module_options, options, false)
+            .map_err(Into::into)
+    }
+
+    /// Prepare real module output with explicit ANSI color setting for frontend and runtime errors.
+    pub fn compile_output_colored(
+        input: impl Into<LosslessModuleSourceInput>,
+        property_paths: &[String],
+        module_options: &ModuleEvalOptions,
+        options: SourceSessionOptions,
+        use_color: bool,
+    ) -> Result<Self, ModuleFrontendResult> {
+        Self::compile_output_text_colored(input, property_paths, module_options, options, use_color)
             .map_err(Into::into)
     }
 
@@ -338,8 +495,18 @@ impl SourceSession {
         module_options: &ModuleEvalOptions,
         options: SourceSessionOptions,
     ) -> Result<Self, ModuleFrontendFailure> {
+        Self::compile_output_text_colored(input, property_paths, module_options, options, false)
+    }
+
+    pub fn compile_output_text_colored(
+        input: impl Into<LosslessModuleSourceInput>,
+        property_paths: &[String],
+        module_options: &ModuleEvalOptions,
+        options: SourceSessionOptions,
+        use_color: bool,
+    ) -> Result<Self, ModuleFrontendFailure> {
         let input = input.into();
-        let prepared = prepare_module_text(input.clone(), module_options)?;
+        let prepared = prepare_module_text_colored(input.clone(), module_options, use_color)?;
         Self::from_program(
             prepared.program,
             prepared.source,
@@ -353,11 +520,12 @@ impl SourceSession {
             Some(module_options.diagnostic_profile),
             false,
         )
+        .map(|s| s.with_color(use_color))
         .map_err(|message| ModuleFrontendFailure {
             phase: FrontendPhase::Configuration,
             disposition: FailureDisposition::Unsupported,
             reason: Some("source-session-callback-expression"),
-            text: crate::diagnostic::render_error_text(&message, &[], None),
+            text: crate::diagnostic::render_error_text_colored(&message, &[], None, use_color),
         })
     }
 
@@ -370,8 +538,24 @@ impl SourceSession {
         module_options: &ModuleEvalOptions,
         options: SourceSessionOptions,
     ) -> Result<Self, ModuleFrontendFailure> {
+        Self::compile_output_expression_text_colored(
+            input,
+            expression,
+            module_options,
+            options,
+            false,
+        )
+    }
+
+    pub fn compile_output_expression_text_colored(
+        input: impl Into<LosslessModuleSourceInput>,
+        expression: impl Into<SourceText>,
+        module_options: &ModuleEvalOptions,
+        options: SourceSessionOptions,
+        use_color: bool,
+    ) -> Result<Self, ModuleFrontendFailure> {
         let input = input.into();
-        let prepared = prepare_module_text(input.clone(), module_options)?;
+        let prepared = prepare_module_text_colored(input.clone(), module_options, use_color)?;
         Self::from_program_with_mode(
             prepared.program,
             prepared.source,
@@ -383,11 +567,12 @@ impl SourceSession {
             true,
             false,
         )
+        .map(|s| s.with_color(use_color))
         .map_err(|message| ModuleFrontendFailure {
             phase: FrontendPhase::Configuration,
             disposition: FailureDisposition::Unsupported,
             reason: Some("source-session-output-expression"),
-            text: crate::diagnostic::render_error_text(&message, &[], None),
+            text: crate::diagnostic::render_error_text_colored(&message, &[], None, use_color),
         })
     }
 
@@ -636,6 +821,7 @@ impl SourceSession {
             calls: Vec::new(),
             last_completed_call: None,
             last_expression: None,
+            use_color: false,
         })
     }
 
@@ -1120,7 +1306,16 @@ impl SourceSession {
             .and_then(|index| self.paths.get(index))
             .cloned()
             .unwrap_or_else(|| "".into());
-        runtime_error_text(&self.source, &self.uri, &self.name, expression, error, None)
+        super::runtime_error_text_with_profile_and_color(
+            &self.source,
+            &self.uri,
+            &self.name,
+            expression,
+            error,
+            None,
+            DiagnosticProfile::ApiIdentity,
+            self.use_color,
+        )
     }
     /// Legacy byte-oriented diagnostic convenience wrapper.
     pub fn format_error(&self, error: RuntimeError) -> String {
@@ -1154,12 +1349,13 @@ impl SourceSession {
         )
     }
     pub fn output_failure_text(&self, error: RuntimeError) -> ModuleFrontendFailure {
-        render_module_runtime_failure_text(
+        render_module_runtime_failure_text_colored(
             &self.source,
             &self.uri,
             &self.name,
             self.output_profile,
             error,
+            self.use_color,
         )
     }
     pub fn output_failure(&self, error: RuntimeError) -> ModuleFrontendResult {
@@ -1174,7 +1370,7 @@ impl SourceSession {
             .and_then(|index| self.paths.get(index))
             .cloned()
         {
-            failure.text = super::runtime_error_text_with_profile(
+            failure.text = super::runtime_error_text_with_profile_and_color(
                 &self.source,
                 &self.uri,
                 &self.name,
@@ -1182,6 +1378,7 @@ impl SourceSession {
                 error,
                 None,
                 self.output_profile,
+                self.use_color,
             );
         }
         failure.into()

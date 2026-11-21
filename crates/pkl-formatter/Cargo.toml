@@ -1,0 +1,13 @@
+[package]
+name = "pkl-formatter"
+description = "Pure-Rust Wasm-compatible Pkl 0.32.0 code formatter"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+
+[lints]
+workspace = true

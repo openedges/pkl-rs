@@ -155,6 +155,46 @@ impl HostSession {
         }
         self.vm.append_public_operation(source, expression)
     }
+    pub(crate) fn append_public_pkl_binary_operation(
+        &mut self,
+        source: crate::modules::ModuleSourceSpec,
+        expression: crate::source::SourceText,
+    ) -> Result<usize, RuntimeError> {
+        self.open()?;
+        if self.active {
+            return Err(error(ErrorKind::Busy, "evaluation is already active"));
+        }
+        self.vm
+            .append_public_pkl_binary_operation(source, expression)
+    }
+    pub(crate) fn append_public_output_bytes_operation(
+        &mut self,
+        source: crate::modules::ModuleSourceSpec,
+    ) -> Result<usize, RuntimeError> {
+        self.open()?;
+        if self.active {
+            return Err(error(ErrorKind::Busy, "evaluation is already active"));
+        }
+        self.vm.append_public_output_bytes_operation(source)
+    }
+    pub(crate) fn append_public_load_module_operation(
+        &mut self,
+        source: crate::modules::ModuleSourceSpec,
+    ) -> Result<usize, RuntimeError> {
+        self.open()?;
+        if self.active {
+            return Err(error(ErrorKind::Busy, "evaluation is already active"));
+        }
+        self.vm.append_public_load_module_operation(source)
+    }
+    #[allow(dead_code)]
+    pub(crate) fn vm(&self) -> &Vm {
+        &self.vm
+    }
+    #[allow(dead_code)]
+    pub(crate) fn vm_mut(&mut self) -> &mut Vm {
+        &mut self.vm
+    }
     pub(crate) fn reenter_public_operation(
         &mut self,
         token: &str,
@@ -723,6 +763,10 @@ impl HostSession {
             Ok(())
         }
     }
+    pub(crate) fn last_clock(&self) -> u64 {
+        self.last_clock
+    }
+
     fn clock(&mut self, now: u64) -> Result<(), RuntimeError> {
         if now < self.last_clock {
             return Err(error(ErrorKind::Host, "monotonic clock moved backwards"));

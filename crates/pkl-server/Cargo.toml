@@ -1,0 +1,15 @@
+[package]
+name = "pkl-server"
+description = "Native stdio MessagePack IPC server (`pkl server`) for Pkl 0.32.0"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+pkl-host-native = { path = "../pkl-host-native" }
+pkl-runtime = { path = "../pkl-runtime" }
+
+[lints]
+workspace = true

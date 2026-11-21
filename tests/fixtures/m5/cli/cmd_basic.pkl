@@ -1,0 +1,50 @@
+/// Sample pkl:Command CLI tool for M5 verification.
+extends "pkl:Command"
+
+options: Options
+
+class Options {
+  /// Greeting target name.
+  @Flag { shortName = "n" }
+  name: String = "world"
+
+  /// Repeat count.
+  count: Int = 1
+
+  /// Execution mode.
+  mode: "fast" | "safe" = "fast"
+
+  /// Enable dry-run behavior.
+  @BooleanFlag
+  `dry-run`: Boolean = false
+
+  /// Log verbosity.
+  @CountedFlag { shortName = "v" }
+  verbose: Int
+
+  /// Delay duration.
+  @Flag { convert = module.convertDuration; metavar = "duration" }
+  delay: Duration = 5.s
+
+  /// Tags list.
+  tag: List<String> = List()
+
+  /// Key-value labels.
+  label: Map<String, String> = Map()
+
+  /// Positional inputs.
+  @Argument
+  inputs: Listing<String>
+}
+
+result {
+  greeting = "hello, \(options.name)"
+  count = options.count
+  mode = options.mode
+  dryRun = options.`dry-run`
+  verbose = options.verbose
+  delay = options.delay
+  tags = options.tag
+  labels = options.label
+  inputs = options.inputs
+}
