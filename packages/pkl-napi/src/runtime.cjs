@@ -3,9 +3,39 @@
 const { existsSync } = require("node:fs");
 const { resolve } = require("node:path");
 
+function detectLinuxLibc() {
+  if (process.platform !== "linux") return null;
+  try {
+    const report =
+      process.report && typeof process.report.getReport === "function"
+        ? process.report.getReport()
+        : null;
+    if (report && report.header && report.header.glibcVersionRuntime) {
+      return "gnu";
+    }
+    const shared = report && Array.isArray(report.sharedObjects) ? report.sharedObjects : [];
+    if (shared.some((s) => typeof s === "string" && (s.includes("musl") || s.includes("ld-musl")))) {
+      return "musl";
+    }
+  } catch {
+    // Fall through to filesystem probe
+  }
+  if (
+    existsSync("/lib/ld-musl-x86_64.so.1") ||
+    existsSync("/lib/ld-musl-aarch64.so.1")
+  ) {
+    return "musl";
+  }
+  return "gnu";
+}
+
 function loadNativeAddon() {
+  const linuxLibc = detectLinuxLibc();
   const candidates = [
     process.env.PKL_NAPI_ADDON_PATH,
+    linuxLibc
+      ? resolve(__dirname, "..", "native", `pkl_napi.linux-${process.arch}-${linuxLibc}.node`)
+      : null,
     resolve(__dirname, "..", "native", `pkl_napi.${process.platform}-${process.arch}.node`),
     resolve(__dirname, "..", "native", "pkl_napi.node"),
   ].filter(Boolean);
@@ -16,7 +46,7 @@ function loadNativeAddon() {
     }
   }
   throw new Error(
-    `Unable to load native @pkl-rs/napi addon for ${process.platform}-${process.arch}. Checked: ${candidates.join(", ")}`,
+    `Unable to load native @pkl-rs/napi addon for ${process.platform}-${process.arch}${linuxLibc ? `-${linuxLibc}` : ""}. Checked: ${candidates.join(", ")}`,
   );
 }
 

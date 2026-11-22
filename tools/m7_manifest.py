@@ -325,20 +325,24 @@ def _detect_platforms(
             continue
         sys_name = None
         arch = None
+        libc = None
         if "machine_start" in rep:
             sys_name = rep["machine_start"].get("system")
             arch = rep["machine_start"].get("machine")
+            libc = rep["machine_start"].get("libc")
         elif "host" in rep:
             sys_name = rep["host"].get("system")
             arch = rep["host"].get("machine")
+            libc = rep["host"].get("libc")
+        linux_abi = "musl" if libc == "musl" else "gnu"
         if sys_name == "Darwin" and arch == "arm64":
             observed_hosts.add("darwin-arm64")
         elif sys_name == "Darwin" and arch == "x86_64":
             observed_hosts.add("darwin-x64")
         elif sys_name == "Linux" and arch in ("x86_64", "amd64"):
-            observed_hosts.add("linux-x64-gnu")
+            observed_hosts.add(f"linux-x64-{linux_abi}")
         elif sys_name == "Linux" and arch in ("aarch64", "arm64"):
-            observed_hosts.add("linux-arm64-gnu")
+            observed_hosts.add(f"linux-arm64-{linux_abi}")
         elif sys_name == "Windows" and arch in ("AMD64", "x86_64"):
             observed_hosts.add("win32-x64-msvc")
 

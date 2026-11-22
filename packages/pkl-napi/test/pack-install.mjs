@@ -46,9 +46,18 @@ try {
   assert.ok(existsSync(join(installedRoot, "dist", "index.d.ts")), "dist/index.d.ts missing");
   assert.ok(existsSync(join(installedRoot, "dist", "index.mjs")), "dist/index.mjs missing");
   assert.ok(existsSync(join(installedRoot, "dist", "index.cjs")), "dist/index.cjs missing");
+  const addonCandidates = [
+    process.platform === "linux"
+      ? join(installedRoot, "native", `pkl_napi.linux-${process.arch}-musl.node`)
+      : null,
+    process.platform === "linux"
+      ? join(installedRoot, "native", `pkl_napi.linux-${process.arch}-gnu.node`)
+      : null,
+    join(installedRoot, "native", `pkl_napi.${process.platform}-${process.arch}.node`),
+  ].filter(Boolean);
   assert.ok(
-    existsSync(join(installedRoot, "native", `pkl_napi.${process.platform}-${process.arch}.node`)),
-    "native platform .node addon missing",
+    addonCandidates.some((p) => existsSync(p)),
+    `native platform .node addon missing (checked: ${addonCandidates.join(", ")})`,
   );
 
   // Clean ESM consumer probe

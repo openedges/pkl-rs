@@ -574,6 +574,159 @@ jobs:
         if: ${{ always() }}
         run: cargo xtask verify
 
+  linux-portable-builds:
+    name: Portable Linux glibc 2.28 + static musl builds & multi-distro smoke (${{ matrix.arch }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            arch: x86_64
+            node_arch: x64
+          - os: ubuntu-24.04-arm
+            arch: aarch64
+            node_arch: arm64
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 75
+    steps:
+      - name: Preserve reference fixture line endings
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          submodules: recursive
+      - name: Build glibc 2.28 compatible pkl, pkldoc, and @pkl-rs/napi (manylinux_2_28)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p target/dist-linux-gnu-228
+          HOST_UID="$(id -u)"
+          HOST_GID="$(id -g)"
+          docker run --rm \
+            -e HOST_UID="$HOST_UID" \
+            -e HOST_GID="$HOST_GID" \
+            -e NODE_ARCH="${{ matrix.node_arch }}" \
+            -v "$PWD:/work:ro" \
+            -v "$PWD/target/dist-linux-gnu-228:/out" \
+            "quay.io/pypa/manylinux_2_28_${{ matrix.arch }}" \
+            bash -euo pipefail -c '
+              export RUSTUP_HOME=/tmp/rustup CARGO_HOME=/tmp/cargo CARGO_TARGET_DIR=/tmp/target
+              curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.98.1 --profile minimal
+              export PATH="/tmp/cargo/bin:$PATH"
+              cp -a /work /tmp/src
+              cd /tmp/src
+              cargo build --release --locked -p pkl-cli -p pkl-doc -p pkl-napi
+              cp /tmp/target/release/pkl /out/pkl
+              cp /tmp/target/release/pkldoc /out/pkldoc
+              cp /tmp/target/release/libpkl_napi.so "/out/pkl_napi.linux-${NODE_ARCH}-gnu.node"
+              python3 /tmp/src/tools/check_linux_glibc.py --max-glibc 2.28 /out/pkl /out/pkldoc "/out/pkl_napi.linux-${NODE_ARCH}-gnu.node"
+              chown -R "${HOST_UID}:${HOST_GID}" /out
+            '
+      - name: Build static musl pkl, pkldoc, and Alpine musl @pkl-rs/napi (alpine:3.21)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p target/dist-linux-musl
+          HOST_UID="$(id -u)"
+          HOST_GID="$(id -g)"
+          docker run --rm \
+            -e HOST_UID="$HOST_UID" \
+            -e HOST_GID="$HOST_GID" \
+            -e NODE_ARCH="${{ matrix.node_arch }}" \
+            -v "$PWD:/work:ro" \
+            -v "$PWD/target/dist-linux-musl:/out" \
+            node:22-alpine3.21 \
+            sh -eu -c '
+              apk add --no-cache bash curl gcc musl-dev binutils
+              export RUSTUP_HOME=/tmp/rustup CARGO_HOME=/tmp/cargo CARGO_TARGET_DIR=/tmp/target
+              curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.98.1 --profile minimal
+              export PATH="/tmp/cargo/bin:$PATH"
+              cp -a /work /tmp/src
+              cd /tmp/src
+              RUSTFLAGS="-C target-feature=+crt-static" cargo build --release --locked -p pkl-cli -p pkl-doc
+              cp /tmp/target/release/pkl /out/pkl
+              cp /tmp/target/release/pkldoc /out/pkldoc
+              if readelf -l /out/pkl | grep -q INTERP; then
+                echo "ERROR: musl pkl binary is not statically linked" >&2
+                exit 1
+              fi
+              if readelf -l /out/pkldoc | grep -q INTERP; then
+                echo "ERROR: musl pkldoc binary is not statically linked" >&2
+                exit 1
+              fi
+              RUSTFLAGS="-C target-feature=-crt-static" CARGO_TARGET_DIR=/tmp/target-napi node packages/pkl-napi/scripts/build.mjs
+              node packages/pkl-napi/test/run.mjs
+              cp "packages/pkl-napi/native/pkl_napi.linux-${NODE_ARCH}-musl.node" "/out/pkl_napi.linux-${NODE_ARCH}-musl.node"
+              chown -R "${HOST_UID}:${HOST_GID}" /out
+            '
+      - name: Smoke-test glibc 2.28 & static musl binaries across Debian 12, Rocky Linux 9, Ubuntu 22.04, and Alpine 3.21
+        shell: bash
+        run: |
+          set -euo pipefail
+          NODE_ARCH="${{ matrix.node_arch }}"
+          for IMG in node:22-bookworm-slim rockylinux:9-minimal ubuntu:22.04; do
+            echo "=== Testing glibc 2.28 + static musl CLI on $IMG ==="
+            docker run --rm \
+              -v "$PWD/target/dist-linux-gnu-228:/gnu:ro" \
+              -v "$PWD/target/dist-linux-musl:/musl:ro" \
+              "$IMG" sh -eu -c '
+                /gnu/pkl --version
+                /gnu/pkldoc --version
+                OUT_GNU=$(printf "a = 1 + 2\n" | /gnu/pkl eval -f json -)
+                echo "$OUT_GNU" | grep -q "\"a\": 3"
+                /musl/pkl --version
+                /musl/pkldoc --version
+                OUT_MUSL=$(printf "a = 20 + 22\n" | /musl/pkl eval -f json -)
+                echo "$OUT_MUSL" | grep -q "\"a\": 42"
+                echo "CLI_OK"
+              '
+          done
+          echo "=== Testing glibc 2.28 @pkl-rs/napi on Debian 12 (node:22-bookworm-slim) ==="
+          docker run --rm \
+            -e NODE_ARCH="$NODE_ARCH" \
+            -v "$PWD:/work:ro" \
+            -v "$PWD/target/dist-linux-gnu-228:/gnu:ro" \
+            node:22-bookworm-slim \
+            sh -eu -c '
+              cp -a /work/packages/pkl-napi /tmp/pkl-napi
+              mkdir -p /tmp/pkl-napi/dist /tmp/pkl-napi/native
+              cp /tmp/pkl-napi/src/runtime.cjs /tmp/pkl-napi/dist/index.cjs
+              cp /tmp/pkl-napi/src/index.mjs /tmp/pkl-napi/dist/index.mjs
+              cp /tmp/pkl-napi/src/index.d.ts /tmp/pkl-napi/dist/index.d.ts
+              cp "/gnu/pkl_napi.linux-${NODE_ARCH}-gnu.node" "/tmp/pkl-napi/native/pkl_napi.linux-${NODE_ARCH}-gnu.node"
+              node /tmp/pkl-napi/test/run.mjs
+            '
+          echo "=== Testing static musl CLI + musl @pkl-rs/napi on Alpine 3.21 ==="
+          docker run --rm \
+            -e NODE_ARCH="$NODE_ARCH" \
+            -v "$PWD:/work:ro" \
+            -v "$PWD/target/dist-linux-musl:/musl:ro" \
+            node:22-alpine3.21 \
+            sh -eu -c '
+              /musl/pkl --version
+              /musl/pkldoc --version
+              printf "a = 6 * 7\n" | /musl/pkl eval -f json - | grep -q "\"a\": 42"
+              cp -a /work/packages/pkl-napi /tmp/pkl-napi
+              mkdir -p /tmp/pkl-napi/dist /tmp/pkl-napi/native
+              cp /tmp/pkl-napi/src/runtime.cjs /tmp/pkl-napi/dist/index.cjs
+              cp /tmp/pkl-napi/src/index.mjs /tmp/pkl-napi/dist/index.mjs
+              cp /tmp/pkl-napi/src/index.d.ts /tmp/pkl-napi/dist/index.d.ts
+              cp "/musl/pkl_napi.linux-${NODE_ARCH}-musl.node" "/tmp/pkl-napi/native/pkl_napi.linux-${NODE_ARCH}-musl.node"
+              node /tmp/pkl-napi/test/run.mjs
+            '
+      - name: Confirm reference checkouts remain clean
+        if: ${{ always() }}
+        run: cargo xtask verify
+      - name: Retain portable Linux binaries
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: linux-portable-${{ matrix.node_arch }}
+          path: |
+            target/dist-linux-gnu-228
+            target/dist-linux-musl
+          if-no-files-found: error
+          retention-days: 14
+
   m6-cross-browser:
     name: Cross-browser @pkl-rs/wasm (${{ matrix.browser }})
     strategy:

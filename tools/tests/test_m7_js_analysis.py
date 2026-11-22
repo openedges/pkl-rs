@@ -10,10 +10,19 @@ TOOLS = Path(__file__).resolve().parents[1]
 if str(TOOLS) not in sys.path:
     sys.path.insert(0, str(TOOLS))
 
+import check_linux_glibc
 import m7_js_analysis
 
 
 class M7JsAnalysisTests(unittest.TestCase):
+    def test_linux_glibc_version_parser(self):
+        sample_ok = "  0x0010: Name: GLIBC_2.17  Flags: none\n  0x0020: Name: GLIBC_2.28  Flags: none\n"
+        self.assertEqual(check_linux_glibc.max_glibc_version(sample_ok), (2, 28, 0))
+        self.assertLessEqual(check_linux_glibc.max_glibc_version(sample_ok), check_linux_glibc.parse_version("2.28"))
+        sample_bad = sample_ok + "  0x0030: Name: GLIBC_2.39  Flags: none\n"
+        self.assertEqual(check_linux_glibc.max_glibc_version(sample_bad), (2, 39, 0))
+        self.assertGreater(check_linux_glibc.max_glibc_version(sample_bad), check_linux_glibc.parse_version("2.28"))
+
     def test_format_helpers(self):
         self.assertEqual(m7_js_analysis.fmt_ns(None), "—")
         self.assertEqual(m7_js_analysis.fmt_ns(500.0), "500 ns")

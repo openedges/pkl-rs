@@ -28,7 +28,7 @@ class M7ManifestTests(unittest.TestCase):
         self.assertEqual(counts["m7_benchmark_workload_modes"], 34)
         self.assertEqual(counts["m7_soak_target_scenarios"], 18)
         self.assertEqual(counts["m7_fuzz_categories"], 7)
-        self.assertEqual(counts["platform_matrix_entries"], 9)
+        self.assertEqual(counts["platform_matrix_entries"], 11)
         self.assertEqual(counts["excluded_scope_entries"], 3)
 
     def test_validate_mappings_rejects_unmapped_and_missing_symbol(self):
@@ -100,6 +100,7 @@ class M7ManifestTests(unittest.TestCase):
                 # Linux/Windows/Firefox/WebKit/hosted-CI are unverified -> release_ready MUST be False!
                 self.assertFalse(verdict["release_ready"])
                 self.assertIn("linux-x64-gnu", verdict["unverified_platforms"])
+                self.assertIn("linux-x64-musl", verdict["unverified_platforms"])
                 self.assertIn("hosted-ci", verdict["unverified_platforms"])
 
             # Unmet performance ratio on one workload must flip local_strict_gates_passed to False

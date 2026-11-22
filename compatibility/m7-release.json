@@ -21,7 +21,7 @@
       "soak": 2
     },
     "m7_soak_target_scenarios": 18,
-    "platform_matrix_entries": 9,
+    "platform_matrix_entries": 11,
     "prior_milestone_manifests": 6,
     "unpinned_optional_references": 1
   },
@@ -59,6 +59,16 @@
     {
       "category": "native-os",
       "id": "linux-arm64-gnu",
+      "required_for_release": true
+    },
+    {
+      "category": "native-os",
+      "id": "linux-x64-musl",
+      "required_for_release": true
+    },
+    {
+      "category": "native-os",
+      "id": "linux-arm64-musl",
       "required_for_release": true
     },
     {
@@ -347,7 +357,7 @@
       "description": "14 requirement groups, 80 executable + 6 capability-blocked Wasm/N-API & packaging cases",
       "manifest": "compatibility/m6-wasm-napi.json",
       "milestone": "M6",
-      "sha256": "7fafae5f1162d921e3096192806a79f80ae67789f7a21ebf42417ce748ad7116"
+      "sha256": "530b37441d10eda20c1bf6e8923a3dc3acb8e0fd44f25b1a51d234ff1e5e8b71"
     }
   ],
   "requirements": {
@@ -507,7 +517,7 @@
         },
         {
           "path": "packages/pkl-napi/src/runtime.cjs",
-          "sha256": "bce127d37b255388055f389f8333e16ac7ebcbdd566a873d7bfbba7ceaf7a68f",
+          "sha256": "9f3cb6a5770f10c19dd46533e5d14a97b52f3532ecf566ded813ba2118b32c27",
           "symbol": "tryDecodePklBinaryFast"
         }
       ],
@@ -608,12 +618,12 @@
       "implementation_links": [
         {
           "path": "tools/m7_manifest.py",
-          "sha256": "f4a6b0f8352f2cd0500266522fed75898c574cf2ca7381385ff5c8ba6a9a4c5b",
+          "sha256": "3654c42c9d12db50aa1216762043b7a52f19186e99697bb3ae8c085019e47c34",
           "symbol": "verify_release"
         },
         {
           "path": ".github/workflows/ci.yml",
-          "sha256": "001db6b9b737814dd14d242ede8be135976c981361514e21484cbdd32bb307d7",
+          "sha256": "724c5b363a9ea886de626a34911fd84b921eacb21b263c8a6b3be0bf1e7e6557",
           "symbol": "compatibility-tooling"
         }
       ],
@@ -701,8 +711,8 @@
     "compatibility/m3-stdlib-output.json": "d5331f3fc114ab53fe28e4597f8fed90dffbc636b4155d26fd6d32b6249a33fa",
     "compatibility/m4-io-packages.json": "3b9d42ea5c83a8277de92d0746126a40d9ededac6bebcf6d2e20ba566a4e0558",
     "compatibility/m5-product-tools.json": "8e95dfe52708b72ed1bc1af7d65ac2ec75649955f58a0333a3b7fac98d9c1c6d",
-    "compatibility/m6-wasm-napi.json": "7fafae5f1162d921e3096192806a79f80ae67789f7a21ebf42417ce748ad7116",
-    "compatibility/m7-mappings.json": "6b2a109a4a26523851d0c4db1d24299b6bc506d397161f764e18d021f3efd316",
+    "compatibility/m6-wasm-napi.json": "530b37441d10eda20c1bf6e8923a3dc3acb8e0fd44f25b1a51d234ff1e5e8b71",
+    "compatibility/m7-mappings.json": "5202ffbc726efd63bf602f20be673997afdb0f15b916bd25fd1f582f9f36da9c",
     "oracle.lock.json": "035fa94a2706344b29d94c8cd3d233d2447007bad0a1a52f8911756e460f0bbc",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
     "reports/m0/benchmarks.json": "ecab898e432e0fcd0ae81e1cda44fa2789df20c6a158531b6d42389173251914",

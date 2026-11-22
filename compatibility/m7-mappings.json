@@ -31,6 +31,8 @@
     {"id": "darwin-x64", "category": "native-os", "required_for_release": true},
     {"id": "linux-x64-gnu", "category": "native-os", "required_for_release": true},
     {"id": "linux-arm64-gnu", "category": "native-os", "required_for_release": true},
+    {"id": "linux-x64-musl", "category": "native-os", "required_for_release": true},
+    {"id": "linux-arm64-musl", "category": "native-os", "required_for_release": true},
     {"id": "win32-x64-msvc", "category": "native-os", "required_for_release": true},
     {"id": "browser-chromium", "category": "wasm-browser", "required_for_release": true},
     {"id": "browser-firefox", "category": "wasm-browser", "required_for_release": true},

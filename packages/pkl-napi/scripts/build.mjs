@@ -12,9 +12,45 @@ const srcDir = resolve(pkgDir, "src");
 const distDir = resolve(pkgDir, "dist");
 const nativeDir = resolve(pkgDir, "native");
 
-const args = new Set(process.argv.slice(2));
+const argv = process.argv.slice(2);
+const args = new Set(argv);
 const skipCargo = args.has("--skip-cargo");
 const debugProfile = args.has("--debug");
+const targetIdx = argv.indexOf("--target");
+const rustTarget = targetIdx >= 0 ? argv[targetIdx + 1] : process.env.PKL_NAPI_RUST_TARGET || null;
+
+function detectLinuxLibc() {
+  if (rustTarget) {
+    if (rustTarget.includes("musl")) return "musl";
+    if (rustTarget.includes("gnu")) return "gnu";
+  }
+  if (process.platform !== "linux") return null;
+  try {
+    const report =
+      process.report && typeof process.report.getReport === "function"
+        ? process.report.getReport()
+        : null;
+    if (report && report.header && report.header.glibcVersionRuntime) return "gnu";
+    const shared = report && Array.isArray(report.sharedObjects) ? report.sharedObjects : [];
+    if (shared.some((s) => typeof s === "string" && (s.includes("musl") || s.includes("ld-musl")))) {
+      return "musl";
+    }
+  } catch {
+    // Fall through
+  }
+  if (existsSync("/lib/ld-musl-x86_64.so.1") || existsSync("/lib/ld-musl-aarch64.so.1")) {
+    return "musl";
+  }
+  return "gnu";
+}
+
+function targetArchForName() {
+  if (rustTarget) {
+    if (rustTarget.startsWith("x86_64-")) return "x64";
+    if (rustTarget.startsWith("aarch64-")) return "arm64";
+  }
+  return process.arch;
+}
 
 function resolveCargoBin() {
   const exe = process.platform === "win32" ? "cargo.exe" : "cargo";
@@ -45,11 +81,19 @@ function sharedLibName() {
 }
 
 function platformBinaryName() {
-  return `pkl_napi.${process.platform}-${process.arch}.node`;
+  const arch = targetArchForName();
+  if (process.platform === "linux" || (rustTarget && rustTarget.includes("linux"))) {
+    const libc = detectLinuxLibc() || "gnu";
+    return `pkl_napi.linux-${arch}-${libc}.node`;
+  }
+  return `pkl_napi.${process.platform}-${arch}.node`;
 }
 
 if (!skipCargo) {
   const cargoArgs = ["build", "-p", "pkl-napi", "--locked"];
+  if (rustTarget) {
+    cargoArgs.push("--target", rustTarget);
+  }
   if (!debugProfile) {
     cargoArgs.push("--release");
   }
@@ -63,7 +107,9 @@ const targetBase = process.env.CARGO_TARGET_DIR
   ? resolve(repoRoot, process.env.CARGO_TARGET_DIR)
   : resolve(repoRoot, "target");
 const profileDir = debugProfile ? "debug" : "release";
-const builtLib = resolve(targetBase, profileDir, sharedLibName());
+const builtLib = rustTarget
+  ? resolve(targetBase, rustTarget, profileDir, sharedLibName())
+  : resolve(targetBase, profileDir, sharedLibName());
 
 if (!existsSync(builtLib)) {
   throw new Error(`Built pkl-napi library not found at ${builtLib}`);

@@ -90,9 +90,19 @@ await test("dual ESM/CJS identity and capabilities", async () => {
 
 await test("M1 exports preserved on built .node addon", async () => {
   const here = fileURLToPath(new URL(".", import.meta.url));
-  const addon = require(
-    resolve(here, "..", "native", `pkl_napi.${process.platform}-${process.arch}.node`),
-  );
+  const nativeDir = resolve(here, "..", "native");
+  const candidates = [
+    process.platform === "linux"
+      ? resolve(nativeDir, `pkl_napi.linux-${process.arch}-musl.node`)
+      : null,
+    process.platform === "linux"
+      ? resolve(nativeDir, `pkl_napi.linux-${process.arch}-gnu.node`)
+      : null,
+    resolve(nativeDir, `pkl_napi.${process.platform}-${process.arch}.node`),
+  ].filter(Boolean);
+  const addonPath = candidates.find((p) => existsSync(p));
+  assert.ok(addonPath, `Built .node addon not found in ${candidates.join(", ")}`);
+  const addon = require(addonPath);
   for (const sym of [
     "primitive",
     "evaluate",
