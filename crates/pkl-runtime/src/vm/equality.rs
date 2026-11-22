@@ -100,8 +100,15 @@ fn atom(heap: &Heap, value: &Value) -> Result<Atom, RuntimeError> {
         ),
     })
 }
-fn string_hash(value: impl Into<PklString>) -> i32 {
-    let value = value.into();
+#[inline]
+fn string_hash(value: &PklString) -> i32 {
+    if let Some(s) = value.as_str()
+        && s.is_ascii()
+    {
+        return s.bytes().fold(0i32, |hash, byte| {
+            hash.wrapping_mul(31).wrapping_add(i32::from(byte))
+        });
+    }
     value.encode_utf16().fold(0i32, |hash, unit| {
         hash.wrapping_mul(31).wrapping_add(i32::from(unit))
     })
@@ -137,7 +144,7 @@ pub(crate) fn java_hash_on_heap(heap: &Heap, value: &Value) -> Result<Option<i32
             if name.contains("#") {
                 string_hash(name)
             } else {
-                string_hash(PklString::from("pkl.base#").concat(name))
+                string_hash(&PklString::from("pkl.base#").concat(name))
             }
         }),
         Value::Class(id) => Some(string_hash(&heap.class_qualified_name(*id)?)),
@@ -167,14 +174,45 @@ pub(super) fn identical_key(heap: &Heap, left: &Value, right: &Value) -> bool {
     }
 }
 
+#[inline]
 pub(crate) fn same_key(heap: &Heap, left: &Value, right: &Value) -> bool {
-    if let (Value::Object(a), Value::Object(b)) = (left, right) {
-        if a == b {
-            return true;
+    match (left, right) {
+        (Value::String(a), Value::String(b)) => a == b,
+        (Value::Int(a), Value::Int(b)) => a.get() == b.get(),
+        (Value::Bool(a), Value::Bool(b)) => a == b,
+        (Value::Null | Value::NullWithDefault(_), Value::Null | Value::NullWithDefault(_)) => true,
+        (Value::Float(a), Value::Float(b)) => {
+            let ab = if a.is_nan() {
+                f64::NAN.to_bits()
+            } else {
+                a.to_bits()
+            };
+            let bb = if b.is_nan() {
+                f64::NAN.to_bits()
+            } else {
+                b.to_bits()
+            };
+            ab == bb
         }
-        return heap.key_equalities.contains(&(*a, *b));
+        (Value::Object(a), Value::Object(b)) => a == b || heap.key_equalities.contains(&(*a, *b)),
+        (
+            Value::String(_)
+            | Value::Int(_)
+            | Value::Bool(_)
+            | Value::Null
+            | Value::NullWithDefault(_)
+            | Value::Float(_)
+            | Value::Object(_),
+            Value::String(_)
+            | Value::Int(_)
+            | Value::Bool(_)
+            | Value::Null
+            | Value::NullWithDefault(_)
+            | Value::Float(_)
+            | Value::Object(_),
+        ) => false,
+        _ => matches!((atom(heap, left), atom(heap, right)), (Ok(a), Ok(b)) if a == b),
     }
-    matches!((atom(heap, left), atom(heap, right)), (Ok(a), Ok(b)) if a == b)
 }
 /// Parent-first member iteration for a failed String-key lookup. The visited
 /// set observes key hashing and boxed equality before String filtering.
@@ -478,6 +516,96 @@ impl Vm {
         self.complete_cache_probe(receiver, key, value, probe)
     }
 
+    fn all_cache_slots_non_object(&self, id: ObjectId) -> Result<bool, RuntimeError> {
+        let object = self.heap.get(id)?;
+        for slot in &object.cache_slots {
+            if let Some(entry_key) = &slot.entry_key {
+                if matches!(entry_key, Value::Object(_)) {
+                    return Ok(false);
+                }
+            } else if slot.key.entry
+                && slot.key.owner.is_none()
+                && matches!(
+                    collections::cache_entry_key(&self.heap, id, &slot.key)?,
+                    Some(Value::Object(_))
+                )
+            {
+                return Ok(false);
+            }
+        }
+        Ok(true)
+    }
+
+    fn rebuild_cache_index_sync(&mut self, id: ObjectId) -> Result<(), RuntimeError> {
+        let len = self.heap.get(id)?.cache_slots.len();
+        let mut hashes = Vec::with_capacity(len);
+        {
+            let object = self.heap.get(id)?;
+            for slot in &object.cache_slots {
+                let hash = if let Some(entry_key) = &slot.entry_key {
+                    java_hash_on_heap(&self.heap, entry_key)?.unwrap_or(0)
+                } else if slot.key.entry && slot.key.owner.is_none() {
+                    if let Some(probe) = collections::cache_entry_key(&self.heap, id, &slot.key)? {
+                        java_hash_on_heap(&self.heap, &probe)?.unwrap_or(0)
+                    } else {
+                        string_hash(&slot.key.name)
+                    }
+                } else {
+                    string_hash(&slot.key.name)
+                        ^ slot.key.owner.map_or(0, |owner| owner.index as i32)
+                };
+                hashes.push(hash);
+            }
+        }
+        let object = self.heap.get_mut(id)?;
+        let range = object.cache_index.start_rehash();
+        for index in range {
+            let _ = object.cache_index.put_hash(index, hashes[index], false);
+        }
+        Ok(())
+    }
+
+    pub(super) fn lookup_non_object_cache_entry(
+        &self,
+        receiver: ObjectId,
+        probe: &Value,
+    ) -> Result<Option<Value>, RuntimeError> {
+        let object = self.heap.get(receiver)?;
+        let check_slot = |index: usize| -> Result<Option<Value>, RuntimeError> {
+            let Some(slot) = object.cache_slots.get(index) else {
+                return Ok(None);
+            };
+            if !slot.key.entry || slot.key.owner.is_some() || slot.key.method {
+                return Ok(None);
+            }
+            let matched = if let Some(stored) = &slot.entry_key {
+                identical_key(&self.heap, probe, stored)
+            } else if let Some(stored) =
+                collections::cache_entry_key(&self.heap, receiver, &slot.key)?
+            {
+                identical_key(&self.heap, probe, &stored)
+            } else {
+                false
+            };
+            Ok(matched.then(|| slot.value.clone()))
+        };
+        if object.cache_index.has_hash() {
+            let hash = java_hash_on_heap(&self.heap, probe)?.unwrap_or(0);
+            for index in object.cache_index.candidates(Some(hash)) {
+                if let Some(value) = check_slot(index)? {
+                    return Ok(Some(value));
+                }
+            }
+        } else {
+            for index in 0..object.cache_slots.len() {
+                if let Some(value) = check_slot(index)? {
+                    return Ok(Some(value));
+                }
+            }
+        }
+        Ok(None)
+    }
+
     pub(super) fn complete_cache_probe(
         &mut self,
         receiver: ObjectId,
@@ -485,6 +613,128 @@ impl Vm {
         value: Value,
         probe: Option<Value>,
     ) -> Result<(), RuntimeError> {
+        let sync_probe = match &probe {
+            Some(Value::Object(_)) => false,
+            Some(_) => true,
+            None => !key.entry || key.owner.is_some(),
+        };
+        if sync_probe {
+            {
+                let object = self.heap.get_mut(receiver)?;
+                while object.cache_index.len() < object.cache_slots.len() {
+                    object.cache_index.grow_before_append();
+                    object.cache_index.push();
+                }
+            }
+            let hash = if let Some(ref probe_val) = probe {
+                java_hash_on_heap(&self.heap, probe_val)?.unwrap_or(0)
+            } else {
+                string_hash(&key.name) ^ key.owner.map_or(0, |owner| owner.index as i32)
+            };
+            let existing = {
+                let object = self.heap.get(receiver)?;
+                let check = |index: usize| -> Result<bool, RuntimeError> {
+                    let slot = &object.cache_slots[index];
+                    if let Some(ref probe_val) = probe {
+                        if slot.key.entry && slot.key.owner.is_none() && !slot.key.method {
+                            if let Some(stored) = &slot.entry_key {
+                                return Ok(identical_key(&self.heap, probe_val, stored));
+                            }
+                            if let Some(stored) =
+                                collections::cache_entry_key(&self.heap, receiver, &slot.key)?
+                            {
+                                return Ok(identical_key(&self.heap, probe_val, &stored));
+                            }
+                        }
+                        Ok(false)
+                    } else {
+                        Ok(slot.key == key)
+                    }
+                };
+                let mut found = None;
+                if object.cache_index.has_hash() {
+                    for index in object.cache_index.candidates(Some(hash)) {
+                        if check(index)? {
+                            found = Some(index);
+                            break;
+                        }
+                    }
+                } else {
+                    for index in 0..object.cache_slots.len() {
+                        if check(index)? {
+                            found = Some(index);
+                            break;
+                        }
+                    }
+                }
+                found
+            };
+            if let Some(index) = existing {
+                let object = self.heap.get_mut(receiver)?;
+                object.cache_slots[index].value = value.clone();
+                object.cache.insert(key, LazyState::Completed(value));
+                return Ok(());
+            }
+            if self
+                .heap
+                .get_mut(receiver)?
+                .cache_index
+                .grow_before_append()
+            {
+                if self.all_cache_slots_non_object(receiver)? {
+                    self.rebuild_cache_index_sync(receiver)?;
+                } else {
+                    self.heap.get_mut(receiver)?.cache_index.start_rehash();
+                    let mut roots = vec![Value::Object(receiver), value.clone()];
+                    roots.extend(probe.clone());
+                    self.schedule_tasks(
+                        vec![
+                            Task::AppendCache(receiver, key, value, probe),
+                            Task::CacheRebuild(receiver, 0),
+                        ],
+                        roots,
+                    );
+                    return Ok(());
+                }
+            }
+            if key.owner.is_some()
+                || matches!(
+                    self.heap.get(receiver)?.cache.get(&key),
+                    Some(LazyState::Completed(_))
+                )
+            {
+                self.heap.key_equalities.clear();
+            }
+            let need_rehash = {
+                let object = self.heap.get_mut(receiver)?;
+                let index = object.cache_index.push();
+                object.completed_cache_order.push(key.clone());
+                object.cache_slots.push(crate::heap::CacheSlot {
+                    key: key.clone(),
+                    entry_key: probe,
+                    value: value.clone(),
+                });
+                object.cache.insert(key, LazyState::Completed(value));
+                if object.cache_index.has_hash() {
+                    let should = object.cache_index.should_rehash();
+                    object.cache_index.put_hash(index, hash, should)
+                } else {
+                    object.cache_index.len() > 4
+                }
+            };
+            if need_rehash {
+                if self.all_cache_slots_non_object(receiver)? {
+                    self.rebuild_cache_index_sync(receiver)?;
+                } else {
+                    self.heap.get_mut(receiver)?.cache_index.start_rehash();
+                    self.schedule_tasks(
+                        vec![Task::CacheRebuild(receiver, 0)],
+                        vec![Value::Object(receiver)],
+                    );
+                }
+            }
+            return Ok(());
+        }
         let mut tasks = vec![Task::PublishCache(
             receiver,
             key,
@@ -522,6 +772,16 @@ impl Vm {
         if object.cache_slots.is_empty() {
             return Ok(false);
         }
+        if let Some(ref probe_val) = probe
+            && !matches!(probe_val, Value::Object(_))
+        {
+            if let Some(value) = self.lookup_non_object_cache_entry(receiver, probe_val)? {
+                self.stack.push(value);
+                return Ok(true);
+            }
+            return Ok(false);
+        }
+        let has_hash = object.cache_index.has_hash();
         let request = Box::new(CacheRead {
             receiver,
             owner,
@@ -535,7 +795,7 @@ impl Vm {
         });
         if let Some(probe) = probe {
             let mut tasks = vec![Task::ResumeForce(request)];
-            if object.cache_index.has_hash() {
+            if has_hash {
                 tasks.push(Task::Prepare(probe.clone()));
             }
             self.schedule_tasks(
@@ -575,6 +835,24 @@ impl Vm {
         let query = self
             .cache_value_key(receiver, &key)?
             .ok_or_else(|| invalid("force entry key"))?;
+        if !matches!(query, Value::Object(_)) {
+            if let Some(value) = self.lookup_non_object_cache_entry(receiver, &query)? {
+                self.stack.push(value);
+                return Ok(());
+            }
+            return self.force_key_mode_prepared(
+                receiver,
+                owner,
+                member.name.clone(),
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                Some(member),
+            );
+        }
         let mut tasks = vec![Task::ForceCached(receiver, owner, member, None, 0)];
         if self.heap.get(receiver)?.cache_index.has_hash() {
             tasks.push(Task::Prepare(query.clone()));
@@ -765,6 +1043,9 @@ impl Vm {
         candidates: Vec<Value>,
     ) -> Result<bool, RuntimeError> {
         let frame = self.frames.last_mut().expect("active frame");
+        if frame.key_search.is_none() && !matches!(key, Value::Object(_)) {
+            return Ok(false);
+        }
         let mut search = frame.key_search.take().unwrap_or(KeySearch {
             key: key.clone(),
             candidates,
@@ -812,9 +1093,13 @@ impl Vm {
             .hide_callsite = false;
     }
     pub(super) fn prepare_keys(&mut self, keys: Vec<Value>) -> Result<bool, RuntimeError> {
+        if !keys.iter().any(|key| matches!(key, Value::Object(_))) {
+            return Ok(false);
+        }
         // One bytecode instruction can prepare a probe and then a larger set
         // of insertion keys. Keep all completed preparations across its retries;
         // the scheduler clears them only when that instruction completes.
+        // Only `Value::Object` keys can ever require lazy key-hash preparation.
         let mut prepared = self
             .frames
             .last()
@@ -824,16 +1109,19 @@ impl Vm {
             .unwrap_or_default();
         let mut pending = Vec::new();
         for key in keys {
+            let Value::Object(id) = key else {
+                continue;
+            };
             if prepared
                 .iter()
-                .any(|old| identical_key(&self.heap, old, &key))
+                .any(|old| matches!(old, Value::Object(old_id) if *old_id == id))
             {
                 continue;
             }
-            if matches!(&key, Value::Object(id) if self.needs_key_hash(*id)?) {
-                pending.push(key.clone());
+            if self.needs_key_hash(id)? {
+                pending.push(Value::Object(id));
             }
-            prepared.push(key);
+            prepared.push(Value::Object(id));
         }
         if pending.is_empty() {
             self.frames

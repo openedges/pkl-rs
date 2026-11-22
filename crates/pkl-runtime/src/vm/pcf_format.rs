@@ -5,6 +5,46 @@ pub(super) fn string(value: &PklString, indent: &PklString, custom: bool) -> Pkl
     format_string(value, indent, custom, true)
 }
 
+/// Fast UTF-8 direct PCF string writer. Returns `false` only on unpaired UTF-16 surrogates.
+#[inline]
+#[cfg(not(target_arch = "wasm32"))]
+pub(super) fn write_string(
+    out: &mut String,
+    value: &PklString,
+    indent: &str,
+    depth: usize,
+    custom: bool,
+) -> bool {
+    let Some(s) = value.as_str() else {
+        return false;
+    };
+    if !s
+        .as_bytes()
+        .iter()
+        .any(|&b| matches!(b, b'\n' | b'\r' | b'\t' | b'\\' | b'"'))
+    {
+        out.push('"');
+        out.push_str(s);
+        out.push('"');
+        return true;
+    }
+    let indent_pkl = if s.as_bytes().contains(&b'\n') {
+        let mut ind = String::with_capacity(indent.len() * depth);
+        for _ in 0..depth {
+            ind.push_str(indent);
+        }
+        PklString::from(ind)
+    } else {
+        PklString::default()
+    };
+    let formatted = format_string(value, &indent_pkl, custom, true);
+    let Some(formatted_str) = formatted.as_str() else {
+        return false;
+    };
+    out.push_str(formatted_str);
+    true
+}
+
 /// VmRegex.toString uses ValueFormatter(false, true), even for newline patterns.
 pub(super) fn single_line_custom_string(value: &PklString) -> PklString {
     format_string(value, &"".into(), true, false)

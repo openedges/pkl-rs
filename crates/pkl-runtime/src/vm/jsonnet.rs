@@ -70,40 +70,99 @@ pub(super) fn string(value: &PklString, indent: &PklString, current: &PklString)
     PklString::from_utf16(result)
 }
 
+#[inline]
+fn is_regular_field_name(text: &str) -> bool {
+    let mut bytes = text.bytes();
+    let initial = bytes
+        .next()
+        .is_some_and(|b| b == b'_' || b.is_ascii_alphabetic());
+    initial
+        && bytes.all(|b| b == b'_' || b.is_ascii_alphanumeric())
+        && !matches!(
+            text,
+            "assert"
+                | "else"
+                | "error"
+                | "false"
+                | "for"
+                | "function"
+                | "if"
+                | "import"
+                | "importstr"
+                | "in"
+                | "local"
+                | "null"
+                | "self"
+                | "super"
+                | "tailstrict"
+                | "then"
+                | "true"
+        )
+}
+
 pub(super) fn field_name(value: &PklString, indent: &PklString, current: &PklString) -> PklString {
-    let regular = value.as_str().is_some_and(|text| {
-        let mut bytes = text.bytes();
-        let initial = bytes
-            .next()
-            .is_some_and(|b| b == b'_' || b.is_ascii_alphabetic());
-        initial
-            && bytes.all(|b| b == b'_' || b.is_ascii_alphanumeric())
-            && !matches!(
-                text,
-                "assert"
-                    | "else"
-                    | "error"
-                    | "false"
-                    | "for"
-                    | "function"
-                    | "if"
-                    | "import"
-                    | "importstr"
-                    | "in"
-                    | "local"
-                    | "null"
-                    | "self"
-                    | "super"
-                    | "tailstrict"
-                    | "then"
-                    | "true"
-            )
-    });
-    if regular {
+    if value.as_str().is_some_and(is_regular_field_name) {
         value.clone()
     } else {
         string(value, indent, current)
     }
+}
+
+/// Fast UTF-8 direct Jsonnet string writer. Returns `false` only on unpaired UTF-16 surrogates.
+#[inline]
+#[cfg(not(target_arch = "wasm32"))]
+pub(super) fn write_string(
+    out: &mut String,
+    value: &PklString,
+    indent: &str,
+    depth: usize,
+) -> bool {
+    let Some(s) = value.as_str() else {
+        return false;
+    };
+    if !s
+        .as_bytes()
+        .iter()
+        .any(|&b| b < 0x20 || b == b'\\' || b == b'\'' || b == 0xc2)
+    {
+        out.push('\'');
+        out.push_str(s);
+        out.push('\'');
+        return true;
+    }
+    let indent_pkl = PklString::from(indent);
+    let current_pkl = if !indent.is_empty() && s.as_bytes().contains(&b'\n') {
+        let mut cur = String::with_capacity(indent.len() * depth);
+        for _ in 0..depth {
+            cur.push_str(indent);
+        }
+        PklString::from(cur)
+    } else {
+        PklString::default()
+    };
+    let formatted = string(value, &indent_pkl, &current_pkl);
+    let Some(formatted_str) = formatted.as_str() else {
+        return false;
+    };
+    out.push_str(formatted_str);
+    true
+}
+
+#[inline]
+#[cfg(not(target_arch = "wasm32"))]
+pub(super) fn write_field_name(
+    out: &mut String,
+    value: &PklString,
+    indent: &str,
+    depth: usize,
+) -> bool {
+    if let Some(s) = value.as_str()
+        && is_regular_field_name(s)
+    {
+        out.push_str(s);
+        return true;
+    }
+    write_string(out, value, indent, depth)
 }
 
 #[cfg(test)]

@@ -37,6 +37,16 @@ impl BinaryWire {
         self.bytes
     }
 
+    #[inline]
+    pub(super) fn len(&self) -> usize {
+        self.bytes.len()
+    }
+
+    #[inline]
+    pub(super) fn truncate(&mut self, len: usize) {
+        self.bytes.truncate(len);
+    }
+
     pub(super) fn null(&mut self) -> Result<(), WireError> {
         self.put(&[0xc0])
     }
@@ -167,13 +177,13 @@ impl BinaryWire {
                 self.array(3)?;
                 self.integer(0x07)?;
                 self.float(value.value())?;
-                self.string(&PklString::from(value.unit().symbol()))
+                self.str_bytes(value.unit().symbol())
             }
             Value::DataSize(value) => {
                 self.array(3)?;
                 self.integer(0x08)?;
                 self.float(value.value())?;
-                self.string(&PklString::from(value.unit().symbol()))
+                self.str_bytes(value.unit().symbol())
             }
             Value::Bytes(value) => {
                 self.array(2)?;

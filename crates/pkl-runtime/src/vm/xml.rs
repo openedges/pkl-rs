@@ -1,8 +1,37 @@
 //! UTF-16 lexical rules of the pinned Pkl XML renderer and XML validators.
 use super::*;
 include!("xml_names.rs");
+#[inline]
+pub(super) fn valid_name_ascii(s: &str) -> bool {
+    let mut bytes = s.bytes();
+    let Some(first) = bytes.next() else {
+        return false;
+    };
+    if !(first == b':' || first == b'_' || first.is_ascii_alphabetic()) {
+        return false;
+    }
+    bytes.all(|b| b == b'-' || b == b'.' || b == b':' || b == b'_' || b.is_ascii_alphanumeric())
+}
+
+#[cfg(not(target_arch = "wasm32"))]
+pub(super) fn valid_name_str(s: &str, version11: bool) -> bool {
+    if s.is_ascii() {
+        return valid_name_ascii(s);
+    }
+    valid_name_units(&s.encode_utf16().collect::<Vec<_>>(), version11)
+}
+
 pub(super) fn valid_name(text: &PklString, version11: bool) -> bool {
+    if let Some(s) = text.as_str()
+        && s.is_ascii()
+    {
+        return valid_name_ascii(s);
+    }
     let units: Vec<_> = text.encode_utf16().collect();
+    valid_name_units(&units, version11)
+}
+
+fn valid_name_units(units: &[u16], version11: bool) -> bool {
     if units.is_empty() {
         return false;
     }

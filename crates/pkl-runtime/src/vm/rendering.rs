@@ -118,6 +118,17 @@ enum Task {
     Member(MemberRun),
     Property(PropertyRun),
     Members(Members),
+    FastList {
+        receiver: ObjectId,
+        index: usize,
+        depth: usize,
+        path: Vec<PathPart>,
+    },
+    #[cfg(not(target_arch = "wasm32"))]
+    ForcePlainObject {
+        receiver: ObjectId,
+        index: usize,
+    },
     Text(PklString),
     RestoreSource(Option<RuntimeFrame>),
     Close {
@@ -195,6 +206,7 @@ pub(super) struct RenderRun {
     xml_line: usize,
     custom: bool,
     started: bool,
+    has_value_converters: bool,
     converters: Converters,
     source: Option<RuntimeFrame>,
 }
@@ -237,11 +249,13 @@ impl RenderRun {
                     roots.push(value.clone());
                     path_roots(path, roots);
                 }
-                Task::OpenObject { receiver, path, .. } => {
+                Task::OpenObject { receiver, path, .. } | Task::FastList { receiver, path, .. } => {
                     roots.push(Value::Object(*receiver));
                     path_roots(path, roots);
                 }
                 Task::Close { receiver, .. } => roots.push(Value::Object(*receiver)),
+                #[cfg(not(target_arch = "wasm32"))]
+                Task::ForcePlainObject { receiver, .. } => roots.push(Value::Object(*receiver)),
                 Task::Members(m) => {
                     path_roots(&m.path, roots);
                     roots.push(Value::Object(m.receiver));
@@ -437,7 +451,16 @@ impl Vm {
                     vec![PathPart::Property(force.name.clone())]
                 }
                 Some(Await::Shallow) => {
-                    let (receiver, path) = match run.tasks.last() {
+                    let target_task = match run.tasks.last() {
+                        #[cfg(not(target_arch = "wasm32"))]
+                        Some(Task::ForcePlainObject { .. }) => run
+                            .tasks
+                            .len()
+                            .checked_sub(2)
+                            .and_then(|i| run.tasks.get(i)),
+                        other => other,
+                    };
+                    let (receiver, path) = match target_task {
                         Some(Task::OpenObject { receiver, path, .. }) => (receiver, path),
                         Some(Task::Xml(XmlTask {
                             value: Value::Object(receiver),
@@ -563,6 +586,24 @@ impl Vm {
         } else {
             self.scope(0)?.receiver
         };
+        if format != Format::Protobuf && self.is_unmodified_default_renderer(receiver, format) {
+            #[cfg(not(target_arch = "wasm32"))]
+            if let Value::Object(root_id) = root
+                && (format != Format::Properties || document)
+                && self.heap.get_fast(root_id).is_some_and(|o| {
+                    o.collection_kind == CollectionKind::Dynamic
+                        && !o.forced
+                        && o.cache_slots.len() < o.members.len()
+                })
+                && self.is_plain_shallow_forceable(root_id)
+            {
+                let _ = self.try_force_plain_object_sync(root_id)?;
+            }
+            if let Some(rendered) = self.try_fast_render_default_document(format, document, &root) {
+                self.stack.push(rendered);
+                return Ok(());
+            }
+        }
         self.frames.last_mut().expect("renderer frame").pcf_render = Some(RenderRun {
             receiver,
             root,
@@ -586,6 +627,7 @@ impl Vm {
             xml_line: 0,
             custom: false,
             started: false,
+            has_value_converters: true,
             converters: Converters::default(),
             source: None,
         });
@@ -697,7 +739,9 @@ impl Vm {
             return Ok(false);
         }
         if !run.started {
-            self.advance_pcf_start(run, names.len())?;
+            if self.advance_pcf_start(run, names.len())? {
+                return Ok(true);
+            }
             return Ok(false);
         }
         let Some(task) = run.tasks.pop() else {
@@ -752,6 +796,16 @@ impl Vm {
                 self.advance_pcf_open_or_close(run, task)
             }
             Task::Members(m) => self.advance_pcf_members(run, m),
+            Task::FastList {
+                receiver,
+                index,
+                depth,
+                path,
+            } => self.advance_fast_list(run, receiver, index, depth, path),
+            #[cfg(not(target_arch = "wasm32"))]
+            Task::ForcePlainObject { receiver, index } => {
+                self.advance_force_plain_object(run, receiver, index)
+            }
             Task::Member(member) => self.advance_pcf_member(run, member),
             Task::Property(p) => self.advance_pcf_property(run, p),
         }
@@ -930,7 +984,7 @@ impl Vm {
         &mut self,
         run: &mut RenderRun,
         names_len: usize,
-    ) -> Result<(), RuntimeError> {
+    ) -> Result<bool, RuntimeError> {
         run.started = true;
         if run.format == Format::PklBinary {
             // BytesRenderer has no text formatting or omission options.
@@ -1010,7 +1064,11 @@ impl Vm {
         else {
             return Err(invalid("renderer mappings"));
         };
+        run.has_value_converters = !collections::ordered_members(&self.heap, *mapping)?.is_empty();
         run.converters = Converters::load(&self.heap, *mapping, *transformers)?;
+        if !run.has_value_converters && self.try_fast_render_document(run) {
+            return Ok(true);
+        }
         run.tasks.push(Task::Visit {
             value: run.root.clone(),
             depth: 0,
@@ -1020,7 +1078,7 @@ impl Vm {
             path: vec![PathPart::Root],
             converted: false,
         });
-        Ok(())
+        Ok(false)
     }
 
     #[cfg_attr(target_arch = "wasm32", inline(never))]
@@ -1217,8 +1275,7 @@ impl Vm {
                     stream: true,
                 });
                 if self.heap.get(id)?.collection_kind == CollectionKind::Listing {
-                    run.await_ = Some(Await::Shallow);
-                    self.force_shallow_frame(Value::Object(id))?;
+                    self.begin_shallow_force_for_render(run, id)?;
                 }
                 return Ok(false);
             }
@@ -1517,6 +1574,47 @@ impl Vm {
                     if run.format == Format::Properties && array {
                         return self.pcf_unrenderable(run, &Value::Object(id));
                     }
+                    #[cfg(not(target_arch = "wasm32"))]
+                    if !run.has_value_converters
+                        && kind == CollectionKind::List
+                        && matches!(
+                            run.format,
+                            Format::Pcf
+                                | Format::Json
+                                | Format::Jsonnet
+                                | Format::Yaml
+                                | Format::Plist
+                        )
+                        && self
+                            .heap
+                            .get_fast(id)
+                            .is_some_and(|obj| obj.parent.is_none() && obj.list_elements.is_some())
+                        && (run.format == Format::Yaml
+                            && run.yaml.as_ref().is_some_and(super::yaml::Emitter::is_utf8)
+                            || run.format != Format::Yaml && run.indent.as_str().is_some())
+                    {
+                        if self.try_fast_render_open_object(run, id, depth, standalone, root, &path)
+                        {
+                            run.active.remove(&id);
+                            return Ok(false);
+                        }
+                        if run.format == Format::Yaml {
+                            run.yaml.as_mut().unwrap().start(true);
+                        } else if run.format == Format::Plist {
+                            run.append("<array>\n");
+                        } else if matches!(run.format, Format::Json | Format::Jsonnet) {
+                            run.append("[");
+                        } else {
+                            run.append("List(");
+                        }
+                        run.tasks.push(Task::FastList {
+                            receiver: id,
+                            index: 0,
+                            depth,
+                            path,
+                        });
+                        return Ok(false);
+                    }
                     if run.format == Format::Yaml {
                         run.yaml.as_mut().unwrap().start(array);
                     } else if !matches!(
@@ -1571,8 +1669,7 @@ impl Vm {
                         path,
                         stream: false,
                     });
-                    run.await_ = Some(Await::Shallow);
-                    self.force_shallow_frame(Value::Object(id))?;
+                    self.begin_shallow_force_for_render(run, id)?;
                 }
             }
             value => return self.pcf_unrenderable(run, &value),
@@ -1595,6 +1692,15 @@ impl Vm {
                 path,
                 stream,
             } => {
+                if !run.has_value_converters
+                    && !stream
+                    && run.format != Format::Protobuf
+                    && self
+                        .try_fast_render_open_object(run, receiver, depth, standalone, root, &path)
+                {
+                    run.active.remove(&receiver);
+                    return Ok(false);
+                }
                 if run.format == Format::Properties
                     && self.heap.get(receiver)?.collection_kind == CollectionKind::Listing
                 {
@@ -2671,6 +2777,4354 @@ fn yaml_scalar(value: &Value) -> Result<PklString, RuntimeError> {
         Value::Float(value) if **value == f64::NEG_INFINITY => "-.Inf".into(),
         _ => scalar_string(value)?,
     })
+}
+
+#[derive(Clone, Copy)]
+enum FastMember<'a> {
+    Property(&'a PklString, &'a Value),
+    Entry(&'a Value, &'a Value),
+    Element(i64, &'a Value),
+}
+
+enum FastObjectKind<'a> {
+    StrictList(&'a [Value]),
+    EmptyList,
+    StrictSet(usize),
+    StrictMap(usize),
+    PlainDynamic {
+        count: usize,
+        #[cfg_attr(target_arch = "wasm32", allow(dead_code))]
+        has_elements: bool,
+        #[cfg_attr(target_arch = "wasm32", allow(dead_code))]
+        has_keyed: bool,
+    },
+    PlainListing(usize),
+    PlainMapping(usize),
+    PlainModule {
+        class: ObjectId,
+        count: usize,
+    },
+}
+
+#[inline(always)]
+fn fast_lookup_member_cached<'a>(
+    obj: &'a Object,
+    name: &PklString,
+    entry: bool,
+) -> Option<&'a Value> {
+    if obj.cache_slots.len() <= 16 {
+        for slot in &obj.cache_slots {
+            if slot.key.entry == entry
+                && !slot.key.method
+                && slot.key.owner.is_none()
+                && slot.key.name == *name
+            {
+                return Some(&slot.value);
+            }
+        }
+        return None;
+    }
+    let key = CacheKey {
+        entry,
+        owner: None,
+        name: name.clone(),
+        method: false,
+    };
+    match obj.cache.get(&key) {
+        Some(LazyState::Completed(val)) => Some(val),
+        _ => None,
+    }
+}
+
+#[cfg(not(target_arch = "wasm32"))]
+#[inline]
+fn push_indent_str(buf: &mut String, indent: &str, depth: usize) {
+    if depth == 0 || indent.is_empty() {
+        return;
+    }
+    if indent == "  " {
+        const SPACES: &str = "                                ";
+        let mut n = depth * 2;
+        while n > 0 {
+            let chunk = n.min(SPACES.len());
+            buf.push_str(&SPACES[..chunk]);
+            n -= chunk;
+        }
+        return;
+    }
+    for _ in 0..depth {
+        buf.push_str(indent);
+    }
+}
+
+#[cfg(not(target_arch = "wasm32"))]
+#[inline]
+fn write_json_str(out: &mut String, s: &str) {
+    out.push('"');
+    let bytes = s.as_bytes();
+    let mut start = 0;
+    let mut i = 0;
+    while i < bytes.len() {
+        let b = bytes[i];
+        if b >= 0x20 && b != b'"' && b != b'\\' && b != 0xe2 {
+            i += 1;
+            continue;
+        }
+        if b == 0xe2 {
+            if i + 2 < bytes.len() && bytes[i + 1] == 0x80 && matches!(bytes[i + 2], 0xa8 | 0xa9) {
+                out.push_str(&s[start..i]);
+                out.push_str(if bytes[i + 2] == 0xa8 {
+                    "\\u2028"
+                } else {
+                    "\\u2029"
+                });
+                i += 3;
+                start = i;
+            } else {
+                i += 1;
+            }
+            continue;
+        }
+        out.push_str(&s[start..i]);
+        match b {
+            b'"' => out.push_str("\\\""),
+            b'\\' => out.push_str("\\\\"),
+            8 => out.push_str("\\b"),
+            9 => out.push_str("\\t"),
+            10 => out.push_str("\\n"),
+            12 => out.push_str("\\f"),
+            13 => out.push_str("\\r"),
+            _ => {
+                const HEX: &[u8; 16] = b"0123456789abcdef";
+                out.push_str("\\u00");
+                out.push(HEX[(b >> 4) as usize] as char);
+                out.push(HEX[(b & 0xf) as usize] as char);
+            }
+        }
+        i += 1;
+        start = i;
+    }
+    out.push_str(&s[start..]);
+    out.push('"');
+}
+
+#[cfg(not(target_arch = "wasm32"))]
+fn write_properties_str(out: &mut String, s: &str, key: bool, restrict: bool) {
+    let bytes = s.as_bytes();
+    let fast_clean = if restrict {
+        bytes.iter().enumerate().all(|(i, &b)| {
+            (32..=126).contains(&b)
+                && !matches!(b, b'!' | b'#' | b':' | b'=' | b'\\')
+                && (b != b' ' || (!key && i > 0))
+        })
+    } else {
+        bytes.iter().enumerate().all(|(i, &b)| {
+            !matches!(b, 9 | 10 | 12 | 13 | b'!' | b'#' | b':' | b'=' | b'\\')
+                && (b != b' ' || (!key && i > 0))
+        })
+    };
+    if fast_clean {
+        out.push_str(s);
+        return;
+    }
+    if !restrict {
+        for (i, ch) in s.chars().enumerate() {
+            let esc = match ch {
+                '\t' => Some('t'),
+                '\n' => Some('n'),
+                '\x0c' => Some('f'),
+                '\r' => Some('r'),
+                ' ' if key || i == 0 => Some(' '),
+                '!' | '#' | ':' | '=' | '\\' => Some(ch),
+                _ => None,
+            };
+            if let Some(e) = esc {
+                out.push('\\');
+                out.push(e);
+            } else {
+                out.push(ch);
+            }
+        }
+    } else {
+        for (index, unit) in s.encode_utf16().enumerate() {
+            let escape = match unit {
+                9 => Some(b't'),
+                10 => Some(b'n'),
+                12 => Some(b'f'),
+                13 => Some(b'r'),
+                32 if key || index == 0 => Some(b' '),
+                33 | 35 | 58 | 61 | 92 => Some(unit as u8),
+                _ => None,
+            };
+            if let Some(escaped) = escape {
+                out.push('\\');
+                out.push(escaped as char);
+            } else if !(32..=126).contains(&unit) {
+                const HEX: &[u8; 16] = b"0123456789ABCDEF";
+                out.push_str("\\u");
+                for shift in [12, 8, 4, 0] {
+                    out.push(HEX[((unit >> shift) & 15) as usize] as char);
+                }
+            } else {
+                out.push(unit as u8 as char);
+            }
+        }
+    }
+}
+
+#[cfg(not(target_arch = "wasm32"))]
+#[inline]
+fn write_fast_scalar_text(out: &mut String, value: &Value) -> bool {
+    match value {
+        Value::Bool(v) => out.push_str(if *v { "true" } else { "false" }),
+        Value::Int(v) => {
+            let mut buf = [0u8; 24];
+            out.push_str(super::format_i64_buf(v.get(), &mut buf));
+        }
+        Value::Float(v) => out.push_str(&crate::numeric::double_to_string(**v)),
+        Value::String(s) => {
+            let Some(text) = s.as_str() else {
+                return false;
+            };
+            out.push_str(text);
+        }
+        _ => return false,
+    }
+    true
+}
+
+impl Vm {
+    fn instance_class_is_none_or_builtin(
+        &self,
+        instance_class: Option<ObjectId>,
+        expected: classes::BuiltinClass,
+    ) -> bool {
+        match instance_class {
+            None => true,
+            Some(cls) => {
+                self.heap
+                    .get_class(cls)
+                    .ok()
+                    .and_then(|c| self.heap.get_fast(c.prototype))
+                    .and_then(|p| p.builtin_type.as_ref())
+                    .and_then(classes::BuiltinClass::from_type)
+                    == Some(expected)
+            }
+        }
+    }
+
+    fn parent_is_empty_builtin(
+        &self,
+        parent: Option<ObjectId>,
+        kind: CollectionKind,
+        expected: classes::BuiltinClass,
+    ) -> bool {
+        let mut cur = parent;
+        let mut hops = 0u8;
+        while let Some(p) = cur {
+            hops += 1;
+            if hops > 4 {
+                return false;
+            }
+            let Some(pobj) = self.heap.get_fast(p) else {
+                return false;
+            };
+            if pobj.collection_kind != kind
+                || pobj.is_module
+                || !pobj.collection_members.is_empty()
+                || !pobj.member_annotations.is_empty()
+            {
+                return false;
+            }
+            if pobj
+                .builtin_type
+                .as_ref()
+                .and_then(classes::BuiltinClass::from_type)
+                == Some(expected)
+            {
+                return true;
+            }
+            if pobj.instance_class.is_some() || !pobj.members.is_empty() {
+                return false;
+            }
+            cur = pobj.parent;
+        }
+        true
+    }
+
+    #[cfg(not(target_arch = "wasm32"))]
+    fn is_pure_shallow_member_block(&self, obj: &Object, code: usize) -> bool {
+        if code == usize::MAX {
+            return true;
+        }
+        let Some(instructions) = self.program.blocks.get(code) else {
+            return false;
+        };
+        let is_scalar = |val: &Value| {
+            matches!(
+                val,
+                Value::Null
+                    | Value::Bool(_)
+                    | Value::Int(_)
+                    | Value::Float(_)
+                    | Value::String(_)
+                    | Value::Duration(_)
+                    | Value::DataSize(_)
+                    | Value::Bytes(_)
+            )
+        };
+        let mut produced_object = false;
+        for instr in instructions {
+            match instr {
+                Instruction::Constant(val) if is_scalar(val) => {}
+                Instruction::LoadLocal(slot)
+                    if obj.environment.locals.get(*slot).is_some_and(is_scalar) => {}
+                Instruction::Observe(_)
+                | Instruction::ObserveNativeLiteral { .. }
+                | Instruction::Duplicate
+                | Instruction::Pop
+                | Instruction::Swap
+                | Instruction::Return
+                | Instruction::Add
+                | Instruction::AddIntConstant(_)
+                | Instruction::Subtract
+                | Instruction::Multiply
+                | Instruction::Divide
+                | Instruction::IntegerDivide
+                | Instruction::Remainder
+                | Instruction::Power
+                | Instruction::Negate
+                | Instruction::Not
+                | Instruction::Less
+                | Instruction::LessEqual
+                | Instruction::Greater
+                | Instruction::GreaterEqual
+                | Instruction::CheckBoolean
+                | Instruction::CheckLogicalLeft { .. }
+                | Instruction::CheckLogicalRight { .. }
+                | Instruction::Jump(_)
+                | Instruction::JumpIfFalse(_)
+                | Instruction::JumpIfNull(_)
+                | Instruction::JumpIfNotNull(_)
+                | Instruction::NonNull
+                | Instruction::CheckByte
+                | Instruction::MakeBytes { .. } => {}
+                Instruction::Equal
+                | Instruction::NotEqual
+                | Instruction::CheckInterpolate
+                | Instruction::FinishInterpolation(_)
+                | Instruction::PrepareSetElement
+                | Instruction::AddSetElement
+                | Instruction::PrepareMapEntry
+                | Instruction::AddMapEntry
+                | Instruction::BeginCollection {
+                    kind: CollectionKind::List | CollectionKind::Set | CollectionKind::Map,
+                    has_parent: false,
+                    ..
+                } if !produced_object => {}
+                Instruction::GetMember(_) if !produced_object => {
+                    produced_object = true;
+                }
+                Instruction::MakeList { .. }
+                | Instruction::MakePair
+                | Instruction::EndCollection => {
+                    produced_object = true;
+                }
+                _ => return false,
+            }
+        }
+        true
+    }
+
+    #[cfg(not(target_arch = "wasm32"))]
+    fn is_plain_shallow_forceable(&self, id: ObjectId) -> bool {
+        if self.in_stdlib_bootstrap() {
+            return false;
+        }
+        let Some(obj) = self.heap.get_fast(id) else {
+            return false;
+        };
+        let expected = match obj.collection_kind {
+            CollectionKind::Dynamic => classes::BuiltinClass::Dynamic,
+            CollectionKind::Listing => classes::BuiltinClass::Listing,
+            CollectionKind::Mapping => classes::BuiltinClass::Mapping,
+            _ => return false,
+        };
+        !obj.is_module
+            && obj.pair.is_none()
+            && obj.reference.is_none()
+            && obj.foreign_map_entry.is_none()
+            && obj.function.is_none()
+            && obj.native_function.is_none()
+            && self.instance_class_is_none_or_builtin(obj.instance_class, expected)
+            && self.parent_is_empty_builtin(obj.parent, obj.collection_kind, expected)
+            && obj.members.iter().all(|m| {
+                m.local
+                    || m.method
+                    || m.external()
+                    || m.abstract_member()
+                    || m.hidden()
+                    || (!m.entry && m.name.as_str() == Some("default"))
+                    || self.is_pure_shallow_member_block(obj, m.code)
+            })
+    }
+
+    fn begin_shallow_force_for_render(
+        &mut self,
+        run: &mut RenderRun,
+        receiver: ObjectId,
+    ) -> Result<(), RuntimeError> {
+        #[cfg(not(target_arch = "wasm32"))]
+        if self.is_plain_shallow_forceable(receiver) {
+            if self.heap.get(receiver)?.forced {
+                return Ok(());
+            }
+            self.advance_force_plain_object(run, receiver, 0)?;
+            return Ok(());
+        }
+        run.await_ = Some(Await::Shallow);
+        self.force_shallow_frame(Value::Object(receiver))
+    }
+
+    #[cfg(not(target_arch = "wasm32"))]
+    fn build_pure_scalar_set(&mut self, values: Vec<Value>) -> Option<ObjectId> {
+        let len = values.len();
+        if len == 0 {
+            return Some(self.empty_strict_collection(CollectionKind::Set));
+        }
+        if len > 4 {
+            return None;
+        }
+        let mut hashes = Vec::with_capacity(len);
+        for v in &values {
+            hashes.push(self.java_hash(v).ok()?);
+        }
+        let id = self.heap.allocate(Object {
+            collection_kind: CollectionKind::Set,
+            length: len,
+            set_entries: values.clone(),
+            map_index: Some(Box::default()),
+            ..Object::default()
+        });
+        {
+            let map_index = self.heap.get_mut(id).ok()?.map_index.as_mut()?;
+            for i in 0..len {
+                map_index.insert(hashes[..=i].to_vec(), true);
+            }
+        }
+        let mut cache_index = crate::economic_map::EconomicMapIndex::with_capacity(0);
+        let mut collection_members = Vec::with_capacity(len);
+        let mut members = Vec::with_capacity(len);
+        let mut completed_cache_order = Vec::with_capacity(len);
+        let mut cache_slots = Vec::with_capacity(len);
+        let mut member_values = BTreeMap::new();
+        let mut cache = BTreeMap::new();
+        for (idx, val) in values.into_iter().enumerate() {
+            let name = PklString::from(format!("\0{}:{}", id.index, idx));
+            let key_int = Value::Int((idx as i64).into());
+            collection_members.push(CollectionMember {
+                key: key_int.clone(),
+                name: name.clone(),
+                kind: CollectionMemberKind::Element,
+            });
+            members.push(Member {
+                flags: 0,
+                entry: true,
+                name: name.clone(),
+                code: usize::MAX,
+                local: false,
+                method: false,
+                ty: None,
+                type_span: None,
+                constant: false,
+                fixed: false,
+            });
+            let cache_key = CacheKey {
+                owner: None,
+                name,
+                method: false,
+                entry: true,
+            };
+            cache_index.grow_before_append();
+            cache_index.push();
+            completed_cache_order.push(cache_key.clone());
+            cache_slots.push(crate::heap::CacheSlot {
+                key: cache_key.clone(),
+                entry_key: Some(key_int),
+                value: val.clone(),
+            });
+            member_values.insert(cache_key.clone(), val.clone());
+            cache.insert(cache_key, LazyState::Completed(val));
+        }
+        let obj = self.heap.get_mut(id).ok()?;
+        obj.collection_members = collection_members;
+        obj.members = members.into();
+        obj.completed_cache_order = completed_cache_order;
+        obj.cache_slots = cache_slots;
+        obj.cache_index = cache_index;
+        obj.member_values = member_values;
+        obj.cache = cache;
+        Some(id)
+    }
+
+    #[cfg(not(target_arch = "wasm32"))]
+    fn try_eval_pure_member(
+        &mut self,
+        receiver: ObjectId,
+        member: &Member,
+        cache_key: &CacheKey,
+    ) -> Option<Value> {
+        if self.active_type_trackers != 0 || member.ty.is_some() || member.code == usize::MAX {
+            return None;
+        }
+        let instructions_len = self.program.blocks.get(member.code)?.len();
+        if instructions_len == 0 || instructions_len > 64 {
+            return None;
+        }
+        let (locals_len, restore_for_bindings) = {
+            let object = self.heap.get_fast(receiver)?;
+            if object.collection_cast.is_some() || !object.member_values.is_empty() {
+                return None;
+            }
+            if object.cache.contains_key(cache_key) {
+                return None;
+            }
+            let env = object
+                .member_environments
+                .get(cache_key)
+                .unwrap_or(&object.environment);
+            (env.locals.len(), env.restore_for_bindings)
+        };
+        let trailing_is_return = |instructions: &[Instruction], mut j: usize| -> bool {
+            while j < instructions.len() {
+                match &instructions[j] {
+                    Instruction::Observe(_) | Instruction::ObserveNativeLiteral { .. } => j += 1,
+                    Instruction::Return => return j + 1 == instructions.len(),
+                    _ => return false,
+                }
+            }
+            false
+        };
+        let mut stack: Vec<Value> = Vec::with_capacity(8);
+        let mut building_set: Option<Vec<Value>> = None;
+        for idx in 0..instructions_len {
+            let instr = &self.program.blocks[member.code][idx];
+            match instr {
+                Instruction::Observe(_) | Instruction::ObserveNativeLiteral { .. } => {}
+                Instruction::Constant(val) => stack.push(val.clone()),
+                Instruction::LoadLocal(slot) => {
+                    if *slot >= locals_len {
+                        return None;
+                    }
+                    let val = {
+                        let object = self.heap.get_fast(receiver)?;
+                        let env = object
+                            .member_environments
+                            .get(cache_key)
+                            .unwrap_or(&object.environment);
+                        env.locals.get(*slot)?.clone()
+                    };
+                    stack.push(val);
+                }
+                Instruction::Duplicate => {
+                    let top = stack.last()?.clone();
+                    stack.push(top);
+                }
+                Instruction::Pop => {
+                    stack.pop()?;
+                }
+                Instruction::Swap => {
+                    let len = stack.len();
+                    if len < 2 {
+                        return None;
+                    }
+                    stack.swap(len - 2, len - 1);
+                }
+                Instruction::AddIntConstant(k) => {
+                    let Value::Int(a) = stack.pop()? else {
+                        return None;
+                    };
+                    let sum = crate::numeric::add(a.get(), *k).ok()?;
+                    stack.push(Value::Int(sum.into()));
+                }
+                Instruction::Add => {
+                    let right = stack.pop()?;
+                    let left = stack.pop()?;
+                    let res = match (left, right) {
+                        (Value::Int(a), Value::Int(b)) => {
+                            Value::Int(crate::numeric::add(a.get(), b.get()).ok()?.into())
+                        }
+                        (Value::Int(a), Value::Float(b)) => {
+                            Value::Float((a.get() as f64 + b.get()).into())
+                        }
+                        (Value::Float(a), Value::Int(b)) => {
+                            Value::Float((a.get() + b.get() as f64).into())
+                        }
+                        (Value::Float(a), Value::Float(b)) => {
+                            Value::Float((a.get() + b.get()).into())
+                        }
+                        (Value::String(a), Value::String(b)) => Value::string(a.concat(&b)),
+                        _ => return None,
+                    };
+                    stack.push(res);
+                }
+                Instruction::Subtract => {
+                    let right = stack.pop()?;
+                    let left = stack.pop()?;
+                    let res = match (left, right) {
+                        (Value::Int(a), Value::Int(b)) => {
+                            Value::Int(crate::numeric::subtract(a.get(), b.get()).ok()?.into())
+                        }
+                        (Value::Int(a), Value::Float(b)) => {
+                            Value::Float((a.get() as f64 - b.get()).into())
+                        }
+                        (Value::Float(a), Value::Int(b)) => {
+                            Value::Float((a.get() - b.get() as f64).into())
+                        }
+                        (Value::Float(a), Value::Float(b)) => {
+                            Value::Float((a.get() - b.get()).into())
+                        }
+                        _ => return None,
+                    };
+                    stack.push(res);
+                }
+                Instruction::Multiply => {
+                    let right = stack.pop()?;
+                    let left = stack.pop()?;
+                    let res = match (left, right) {
+                        (Value::Int(a), Value::Int(b)) => {
+                            Value::Int(crate::numeric::multiply(a.get(), b.get()).ok()?.into())
+                        }
+                        (Value::Int(a), Value::Float(b)) => {
+                            Value::Float((a.get() as f64 * b.get()).into())
+                        }
+                        (Value::Float(a), Value::Int(b)) => {
+                            Value::Float((a.get() * b.get() as f64).into())
+                        }
+                        (Value::Float(a), Value::Float(b)) => {
+                            Value::Float((a.get() * b.get()).into())
+                        }
+                        _ => return None,
+                    };
+                    stack.push(res);
+                }
+                Instruction::Divide => {
+                    let right = stack.pop()?;
+                    let left = stack.pop()?;
+                    let (a, b) = match (left, right) {
+                        (Value::Int(a), Value::Int(b)) => (a.get() as f64, b.get() as f64),
+                        (Value::Int(a), Value::Float(b)) => (a.get() as f64, b.get()),
+                        (Value::Float(a), Value::Int(b)) => (a.get(), b.get() as f64),
+                        (Value::Float(a), Value::Float(b)) => (a.get(), b.get()),
+                        _ => return None,
+                    };
+                    if b == 0.0 {
+                        return None;
+                    }
+                    stack.push(Value::Float((a / b).into()));
+                }
+                Instruction::Remainder => {
+                    let right = stack.pop()?;
+                    let left = stack.pop()?;
+                    let Value::Int(a) = left else {
+                        return None;
+                    };
+                    let Value::Int(b) = right else {
+                        return None;
+                    };
+                    let rem = crate::numeric::remainder(a.get(), b.get()).ok()?;
+                    stack.push(Value::Int(rem.into()));
+                }
+                Instruction::Equal | Instruction::NotEqual => {
+                    let neg = matches!(instr, Instruction::NotEqual);
+                    let right = stack.pop()?;
+                    let left = stack.pop()?;
+                    let eq = match (&left, &right) {
+                        (Value::Int(a), Value::Int(b)) => a.get() == b.get(),
+                        (Value::Bool(a), Value::Bool(b)) => a == b,
+                        (Value::String(a), Value::String(b)) => a == b,
+                        _ => return None,
+                    };
+                    stack.push(Value::Bool(eq ^ neg));
+                }
+                Instruction::CheckInterpolate => {
+                    if !matches!(stack.last(), Some(Value::String(_) | Value::Int(_))) {
+                        return None;
+                    }
+                }
+                Instruction::FinishInterpolation(count) => {
+                    let count = *count;
+                    if stack.len() < count {
+                        return None;
+                    }
+                    let start = stack.len() - count;
+                    self.scratch_utf8.clear();
+                    for part in &stack[start..] {
+                        match part {
+                            Value::String(s) => {
+                                let text = s.as_str()?;
+                                self.scratch_utf8.push_str(text);
+                            }
+                            Value::Int(n) => {
+                                let mut buf = [0u8; 24];
+                                self.scratch_utf8
+                                    .push_str(super::format_i64_buf(n.get(), &mut buf));
+                            }
+                            _ => return None,
+                        }
+                    }
+                    stack.truncate(start);
+                    let result = PklString::from(self.scratch_utf8.as_str());
+                    stack.push(Value::string(result));
+                }
+                Instruction::CheckByte => {
+                    let Some(Value::Int(n)) = stack.last() else {
+                        return None;
+                    };
+                    if !(0..=255).contains(&n.get()) {
+                        return None;
+                    }
+                }
+                Instruction::MakeBytes { length } => {
+                    let length = *length;
+                    if stack.len() < length {
+                        return None;
+                    }
+                    let start = stack.len() - length;
+                    let mut bytes = Vec::with_capacity(length);
+                    for v in stack.drain(start..) {
+                        let Value::Int(n) = v else {
+                            return None;
+                        };
+                        bytes.push(n.get() as u8);
+                    }
+                    stack.push(Value::Bytes(bytes.into()));
+                }
+                Instruction::GetMember(name) => {
+                    let name_str = name.as_str()?;
+                    let val = stack.pop()?;
+                    let num = match val {
+                        Value::Int(n) => n.get() as f64,
+                        Value::Float(f) => f.get(),
+                        _ => return None,
+                    };
+                    if let Some(unit) = crate::duration::DurationUnit::parse(name_str) {
+                        stack.push(Value::Duration(crate::duration::Duration::new(num, unit)));
+                    } else {
+                        let unit = crate::data_size::DataSizeUnit::parse(name_str)?;
+                        stack.push(Value::DataSize(crate::data_size::DataSize::new(num, unit)));
+                    }
+                }
+                Instruction::BeginCollection {
+                    kind: CollectionKind::Set,
+                    has_parent: false,
+                    ..
+                } if !restore_for_bindings && building_set.is_none() => {
+                    building_set = Some(Vec::with_capacity(4));
+                }
+                Instruction::PrepareSetElement if building_set.is_some() => {
+                    if !matches!(
+                        stack.last(),
+                        Some(Value::String(_) | Value::Int(_) | Value::Bool(_) | Value::Float(_))
+                    ) {
+                        return None;
+                    }
+                }
+                Instruction::AddSetElement if building_set.is_some() => {
+                    let val = stack.pop()?;
+                    let set = building_set.as_mut()?;
+                    if !set
+                        .iter()
+                        .any(|old| equality::same_key(&self.heap, &val, old))
+                    {
+                        if set.len() >= 4 {
+                            return None;
+                        }
+                        set.push(val);
+                    }
+                }
+                Instruction::EndCollection
+                    if building_set.is_some()
+                        && trailing_is_return(&self.program.blocks[member.code], idx + 1) =>
+                {
+                    let elems = building_set.take()?;
+                    let id = self.build_pure_scalar_set(elems)?;
+                    stack.push(Value::Object(id));
+                }
+                Instruction::MakeList { length }
+                    if !restore_for_bindings
+                        && building_set.is_none()
+                        && trailing_is_return(&self.program.blocks[member.code], idx + 1) =>
+                {
+                    let length = *length;
+                    if stack.len() < length {
+                        return None;
+                    }
+                    let start = stack.len() - length;
+                    let values: Vec<Value> = stack.drain(start..).collect();
+                    let id = self.build_strict_list(values);
+                    stack.push(Value::Object(id));
+                }
+                Instruction::Return => {
+                    if building_set.is_none() && stack.len() == 1 {
+                        return stack.pop();
+                    }
+                    return None;
+                }
+                _ => return None,
+            }
+        }
+        None
+    }
+
+    #[cfg(not(target_arch = "wasm32"))]
+    fn try_force_plain_object_sync(&mut self, receiver: ObjectId) -> Result<bool, RuntimeError> {
+        let len = self.heap.get(receiver)?.members.len();
+        for idx in 0..len {
+            let next_member = {
+                let object = self.heap.get(receiver)?;
+                if object.forced {
+                    return Ok(true);
+                }
+                let member = &object.members[idx];
+                if member.local
+                    || member.method
+                    || member.external()
+                    || member.abstract_member()
+                    || member.hidden()
+                    || (!member.entry && member.name.as_str() == Some("default"))
+                {
+                    continue;
+                }
+                if !member.entry && fast_lookup_member_cached(object, &member.name, false).is_some()
+                {
+                    continue;
+                }
+                member.clone()
+            };
+            let cache_key = CacheKey {
+                owner: None,
+                name: next_member.name.clone(),
+                method: false,
+                entry: next_member.entry,
+            };
+            let entry_probe = if next_member.entry {
+                self.cache_value_key(receiver, &cache_key)?
+            } else {
+                None
+            };
+            if let Some(ref probe) = entry_probe
+                && !matches!(probe, Value::Object(_))
+                && self
+                    .lookup_non_object_cache_entry(receiver, probe)?
+                    .is_some()
+            {
+                continue;
+            }
+            if entry_probe
+                .as_ref()
+                .is_none_or(|p| !matches!(p, Value::Object(_)))
+                && let Some(val) = self.try_eval_pure_member(receiver, &next_member, &cache_key)
+            {
+                self.complete_cache_probe(receiver, cache_key, val, entry_probe)?;
+                continue;
+            }
+            return Ok(false);
+        }
+        Ok(true)
+    }
+
+    #[cfg(not(target_arch = "wasm32"))]
+    fn advance_force_plain_object(
+        &mut self,
+        run: &mut RenderRun,
+        receiver: ObjectId,
+        mut index: usize,
+    ) -> Result<bool, RuntimeError> {
+        let len = self.heap.get(receiver)?.members.len();
+        while index < len {
+            let next_member = {
+                let object = self.heap.get(receiver)?;
+                if object.forced {
+                    return Ok(false);
+                }
+                let member = &object.members[index];
+                index += 1;
+                if member.local
+                    || member.method
+                    || member.external()
+                    || member.abstract_member()
+                    || member.hidden()
+                    || (!member.entry && member.name.as_str() == Some("default"))
+                {
+                    continue;
+                }
+                if !member.entry && fast_lookup_member_cached(object, &member.name, false).is_some()
+                {
+                    continue;
+                }
+                member.clone()
+            };
+            let cache_key = CacheKey {
+                owner: None,
+                name: next_member.name.clone(),
+                method: false,
+                entry: next_member.entry,
+            };
+            let entry_probe = if next_member.entry {
+                self.cache_value_key(receiver, &cache_key)?
+            } else {
+                None
+            };
+            if let Some(ref probe) = entry_probe
+                && !matches!(probe, Value::Object(_))
+                && self
+                    .lookup_non_object_cache_entry(receiver, probe)?
+                    .is_some()
+            {
+                continue;
+            }
+            if entry_probe
+                .as_ref()
+                .is_none_or(|p| !matches!(p, Value::Object(_)))
+                && let Some(val) = self.try_eval_pure_member(receiver, &next_member, &cache_key)
+            {
+                self.complete_cache_probe(receiver, cache_key, val, entry_probe)?;
+                continue;
+            }
+            let pushed = index < len;
+            if pushed {
+                run.tasks.push(Task::ForcePlainObject { receiver, index });
+            }
+            run.await_ = Some(Await::Shallow);
+            let frames_before = self.frames.len();
+            let stack_before = self.stack.len();
+            self.force_declaration_member(receiver, receiver, next_member)?;
+            if self.frames.len() == frames_before
+                && self.stack.len() == stack_before + 1
+                && self.frames[frames_before - 1].equality_run.is_none()
+                && self.frames[frames_before - 1].type_run.is_none()
+            {
+                self.stack.pop();
+                run.await_ = None;
+                if pushed {
+                    run.tasks.pop();
+                }
+                continue;
+            }
+            return Ok(false);
+        }
+        Ok(false)
+    }
+
+    fn is_plain_unforced_dynamic(&self, id: ObjectId) -> bool {
+        let Some(obj) = self.heap.get_fast(id) else {
+            return false;
+        };
+        obj.collection_kind == CollectionKind::Dynamic
+            && !obj.is_module
+            && obj.pair.is_none()
+            && obj.reference.is_none()
+            && obj.foreign_map_entry.is_none()
+            && obj.function.is_none()
+            && obj.native_function.is_none()
+            && self.instance_class_is_none_or_builtin(
+                obj.instance_class,
+                classes::BuiltinClass::Dynamic,
+            )
+            && self.parent_is_empty_builtin(
+                obj.parent,
+                CollectionKind::Dynamic,
+                classes::BuiltinClass::Dynamic,
+            )
+    }
+
+    fn extract_fast_object<'a>(
+        &'a self,
+        id: ObjectId,
+        scratch: &mut Vec<FastMember<'a>>,
+        check_xml_marker: bool,
+    ) -> Option<FastObjectKind<'a>> {
+        let obj = self.heap.get_fast(id)?;
+        if obj.pair.is_some()
+            || obj.reference.is_some()
+            || obj.foreign_map_entry.is_some()
+            || obj.function.is_some()
+            || obj.native_function.is_some()
+        {
+            return None;
+        }
+        match obj.collection_kind {
+            CollectionKind::List if obj.parent.is_none() => {
+                if let Some(elems) = &obj.list_elements {
+                    return Some(FastObjectKind::StrictList(elems.as_slice()));
+                }
+                if obj.length == 0 && obj.collection_members.is_empty() {
+                    return Some(FastObjectKind::EmptyList);
+                }
+                return None;
+            }
+            CollectionKind::Set if obj.parent.is_none() => {
+                if obj.length != obj.collection_members.len() {
+                    return None;
+                }
+                let base = scratch.len();
+                let slots_aligned = obj.cache_slots.len() == obj.collection_members.len();
+                for (idx, cm) in obj.collection_members.iter().enumerate() {
+                    if cm.kind != CollectionMemberKind::Element {
+                        scratch.truncate(base);
+                        return None;
+                    }
+                    let val = if slots_aligned
+                        && obj.cache_slots[idx].key.entry
+                        && !obj.cache_slots[idx].key.method
+                        && obj.cache_slots[idx].key.owner.is_none()
+                        && obj.cache_slots[idx].key.name == cm.name
+                    {
+                        &obj.cache_slots[idx].value
+                    } else if let Some(val) = fast_lookup_member_cached(obj, &cm.name, true) {
+                        val
+                    } else {
+                        scratch.truncate(base);
+                        return None;
+                    };
+                    scratch.push(FastMember::Element(idx as i64, val));
+                }
+                return Some(FastObjectKind::StrictSet(obj.collection_members.len()));
+            }
+            CollectionKind::Map if obj.parent.is_none() => {
+                let base = scratch.len();
+                if let Some(order) = &obj.map_key_order {
+                    if order.len() != obj.length {
+                        return None;
+                    }
+                    for cm in order {
+                        let Some(val) = fast_lookup_member_cached(obj, &cm.name, true) else {
+                            scratch.truncate(base);
+                            return None;
+                        };
+                        scratch.push(FastMember::Entry(&cm.key, val));
+                    }
+                    return Some(FastObjectKind::StrictMap(order.len()));
+                }
+                let order = obj.map_index().insertion_order();
+                if order.len() != obj.length {
+                    return None;
+                }
+                let slots_aligned = obj.cache_slots.len() == obj.collection_members.len();
+                for &slot_idx in order {
+                    let Some(cm) = obj.collection_members.get(slot_idx) else {
+                        scratch.truncate(base);
+                        return None;
+                    };
+                    let val = if slots_aligned
+                        && obj.cache_slots[slot_idx].key.entry
+                        && !obj.cache_slots[slot_idx].key.method
+                        && obj.cache_slots[slot_idx].key.owner.is_none()
+                        && obj.cache_slots[slot_idx].key.name == cm.name
+                    {
+                        &obj.cache_slots[slot_idx].value
+                    } else if let Some(val) = fast_lookup_member_cached(obj, &cm.name, true) {
+                        val
+                    } else {
+                        scratch.truncate(base);
+                        return None;
+                    };
+                    scratch.push(FastMember::Entry(&cm.key, val));
+                }
+                return Some(FastObjectKind::StrictMap(order.len()));
+            }
+            CollectionKind::List | CollectionKind::Set | CollectionKind::Map => return None,
+            CollectionKind::Dynamic | CollectionKind::Listing | CollectionKind::Mapping => {}
+        }
+
+        if !obj.member_annotations.is_empty() {
+            return None;
+        }
+
+        if !obj.is_module {
+            let expected_builtin = match obj.collection_kind {
+                CollectionKind::Dynamic => classes::BuiltinClass::Dynamic,
+                CollectionKind::Listing => classes::BuiltinClass::Listing,
+                CollectionKind::Mapping => classes::BuiltinClass::Mapping,
+                _ => return None,
+            };
+            if !self.instance_class_is_none_or_builtin(obj.instance_class, expected_builtin)
+                || !self.parent_is_empty_builtin(obj.parent, obj.collection_kind, expected_builtin)
+            {
+                return None;
+            }
+            let mut non_local_non_method = 0usize;
+            for m in obj.members.iter() {
+                if m.local || m.method {
+                    continue;
+                }
+                if m.hidden()
+                    || m.external()
+                    || m.definition()
+                    || m.import()
+                    || (!m.entry && m.name == "default")
+                    || (check_xml_marker && !m.entry && m.name == "_isXmlElement")
+                {
+                    return None;
+                }
+                non_local_non_method += 1;
+            }
+            let base = scratch.len();
+            let mut has_elements = false;
+            let mut has_keyed = false;
+            if !obj.collection_members.is_empty() {
+                if non_local_non_method != obj.collection_members.len() {
+                    return None;
+                }
+                let slots_aligned = obj.cache_slots.len() == obj.collection_members.len();
+                for (idx, cm) in obj.collection_members.iter().enumerate() {
+                    let is_entry = cm.kind != CollectionMemberKind::Property;
+                    let aligned_hit = slots_aligned
+                        && obj.cache_slots[idx].key.entry == is_entry
+                        && !obj.cache_slots[idx].key.method
+                        && obj.cache_slots[idx].key.owner.is_none()
+                        && obj.cache_slots[idx].key.name == cm.name;
+                    let val = if aligned_hit {
+                        &obj.cache_slots[idx].value
+                    } else if let Some(val) = fast_lookup_member_cached(obj, &cm.name, is_entry) {
+                        val
+                    } else {
+                        scratch.truncate(base);
+                        return None;
+                    };
+                    match cm.kind {
+                        CollectionMemberKind::Property => {
+                            if cm.name == "default"
+                                || (check_xml_marker && cm.name == "_isXmlElement")
+                            {
+                                scratch.truncate(base);
+                                return None;
+                            }
+                            if !aligned_hit
+                                && (scratch.len() - base > 32
+                                    || scratch[base..].iter().any(|prev| {
+                                        matches!(prev, FastMember::Property(n, _) if *n == &cm.name)
+                                    }))
+                            {
+                                scratch.truncate(base);
+                                return None;
+                            }
+                            has_keyed = true;
+                            scratch.push(FastMember::Property(&cm.name, val));
+                        }
+                        CollectionMemberKind::Entry => {
+                            if !matches!(
+                                &cm.key,
+                                Value::String(_) | Value::Int(_) | Value::Bool(_) | Value::Float(_)
+                            ) {
+                                scratch.truncate(base);
+                                return None;
+                            }
+                            has_keyed = true;
+                            scratch.push(FastMember::Entry(&cm.key, val));
+                        }
+                        CollectionMemberKind::Element => {
+                            let Value::Int(i) = &cm.key else {
+                                scratch.truncate(base);
+                                return None;
+                            };
+                            has_elements = true;
+                            scratch.push(FastMember::Element(i.get(), val));
+                        }
+                    }
+                }
+            } else {
+                let slots_aligned = obj.cache_slots.len() == obj.members.len();
+                for (idx, m) in obj.members.iter().enumerate() {
+                    if m.local || m.method {
+                        continue;
+                    }
+                    if m.entry {
+                        scratch.truncate(base);
+                        return None;
+                    }
+                    let aligned_hit = slots_aligned
+                        && !obj.cache_slots[idx].key.entry
+                        && !obj.cache_slots[idx].key.method
+                        && obj.cache_slots[idx].key.owner.is_none()
+                        && obj.cache_slots[idx].key.name == m.name;
+                    let val = if aligned_hit {
+                        &obj.cache_slots[idx].value
+                    } else if let Some(val) = fast_lookup_member_cached(obj, &m.name, false) {
+                        val
+                    } else {
+                        scratch.truncate(base);
+                        return None;
+                    };
+                    if !aligned_hit
+                        && (scratch.len() - base > 32
+                            || scratch[base..].iter().any(
+                                |prev| matches!(prev, FastMember::Property(n, _) if *n == &m.name),
+                            ))
+                    {
+                        scratch.truncate(base);
+                        return None;
+                    }
+                    has_keyed = true;
+                    scratch.push(FastMember::Property(&m.name, val));
+                }
+            }
+            let count = scratch.len() - base;
+            return match obj.collection_kind {
+                CollectionKind::Dynamic => {
+                    if let Some(expected) = obj.dynamic_regular_member_count
+                        && expected != count
+                    {
+                        scratch.truncate(base);
+                        return None;
+                    }
+                    Some(FastObjectKind::PlainDynamic {
+                        count,
+                        has_elements,
+                        has_keyed,
+                    })
+                }
+                CollectionKind::Listing => {
+                    if has_keyed || count != obj.length {
+                        scratch.truncate(base);
+                        return None;
+                    }
+                    Some(FastObjectKind::PlainListing(count))
+                }
+                CollectionKind::Mapping => {
+                    if has_elements {
+                        scratch.truncate(base);
+                        return None;
+                    }
+                    Some(FastObjectKind::PlainMapping(count))
+                }
+                _ => unreachable!(),
+            };
+        }
+
+        // Plain top-level module whose parent is None, `pkl.base#Module` prototype, or `pkl:base`.
+        if obj.collection_kind != CollectionKind::Dynamic
+            || self.is_render_directive(id).ok() != Some(false)
+        {
+            return None;
+        }
+        let parent_ok = match obj.parent {
+            None => true,
+            Some(p) => self.heap.get_fast(p).is_some_and(|pobj| {
+                pobj.member_annotations.is_empty()
+                    && (pobj
+                        .builtin_type
+                        .as_ref()
+                        .and_then(classes::BuiltinClass::from_type)
+                        == Some(classes::BuiltinClass::Ordinary(output::MODULE))
+                        || pobj
+                            .module_unit
+                            .and_then(|u| self.program.units.get(u.0 as usize))
+                            .and_then(|u| u.identity.as_ref())
+                            .is_some_and(|ident| ident.original_uri == "pkl:base"))
+            }),
+        };
+        if !parent_ok {
+            return None;
+        }
+        let Ok(Some(class)) = self.heap.object_class(id) else {
+            return None;
+        };
+        let base = scratch.len();
+        if !obj.collection_members.is_empty() {
+            let mut non_local_non_method = 0usize;
+            for m in obj.members.iter() {
+                if !m.local && !m.method {
+                    if m.entry || m.external() || m.definition() || m.import() {
+                        return None;
+                    }
+                    non_local_non_method += 1;
+                }
+            }
+            if non_local_non_method != obj.collection_members.len() {
+                return None;
+            }
+            for cm in &obj.collection_members {
+                if cm.kind != CollectionMemberKind::Property {
+                    scratch.truncate(base);
+                    return None;
+                }
+                match collections::hidden_property(&self.heap, id, &cm.name, false) {
+                    Ok(true) => continue,
+                    Ok(false) => {}
+                    Err(_) => {
+                        scratch.truncate(base);
+                        return None;
+                    }
+                }
+                if scratch[base..]
+                    .iter()
+                    .any(|prev| matches!(prev, FastMember::Property(n, _) if *n == &cm.name))
+                {
+                    scratch.truncate(base);
+                    return None;
+                }
+                let Some(val) = fast_lookup_member_cached(obj, &cm.name, false) else {
+                    scratch.truncate(base);
+                    return None;
+                };
+                scratch.push(FastMember::Property(&cm.name, val));
+            }
+        } else {
+            for m in obj.members.iter() {
+                if m.local
+                    || m.method
+                    || m.entry
+                    || m.definition()
+                    || m.import()
+                    || m.external()
+                    || m.hidden()
+                {
+                    continue;
+                }
+                match collections::hidden_property(&self.heap, id, &m.name, false) {
+                    Ok(true) => continue,
+                    Ok(false) => {}
+                    Err(_) => {
+                        scratch.truncate(base);
+                        return None;
+                    }
+                }
+                if scratch[base..]
+                    .iter()
+                    .any(|prev| matches!(prev, FastMember::Property(n, _) if *n == &m.name))
+                {
+                    scratch.truncate(base);
+                    return None;
+                }
+                let Some(val) = fast_lookup_member_cached(obj, &m.name, false) else {
+                    scratch.truncate(base);
+                    return None;
+                };
+                scratch.push(FastMember::Property(&m.name, val));
+            }
+        }
+        let count = scratch.len() - base;
+        Some(FastObjectKind::PlainModule { class, count })
+    }
+
+    fn is_unmodified_default_renderer(&self, receiver: ObjectId, format: Format) -> bool {
+        let Some(obj) = self.heap.get_fast(receiver) else {
+            return false;
+        };
+        if !obj.members.is_empty() || !obj.collection_members.is_empty() {
+            return false;
+        }
+        let Some(parent) = obj.parent else {
+            return false;
+        };
+        let Some(pobj) = self.heap.get_fast(parent) else {
+            return false;
+        };
+        match format {
+            Format::Pcf => pobj
+                .class_definition
+                .as_ref()
+                .is_some_and(|c| c.id == output::PCF_RENDERER),
+            Format::Json => pobj
+                .class_definition
+                .as_ref()
+                .is_some_and(|c| c.id == output::JSON_RENDERER),
+            Format::Yaml => pobj
+                .class_definition
+                .as_ref()
+                .is_some_and(|c| c.id == output::YAML_RENDERER),
+            Format::Plist => pobj
+                .class_definition
+                .as_ref()
+                .is_some_and(|c| c.id == output::PLIST_RENDERER),
+            Format::Properties => pobj
+                .class_definition
+                .as_ref()
+                .is_some_and(|c| c.id == output::PROPERTIES_RENDERER),
+            Format::Xml | Format::Jsonnet | Format::PklBinary => {
+                let uri = match format {
+                    Format::Xml => "pkl:xml",
+                    Format::Jsonnet => "pkl:jsonnet",
+                    Format::PklBinary => "pkl:pklbinary",
+                    _ => unreachable!(),
+                };
+                let Some(modules::CachedModule::Value(module_id)) = self.modules_stdlib.get(uri)
+                else {
+                    return false;
+                };
+                let Some(module) = self.heap.get_fast(*module_id) else {
+                    return false;
+                };
+                let Some(Value::Class(expected_class)) =
+                    fast_lookup_member_cached(module, &PklString::from("Renderer"), false)
+                else {
+                    return false;
+                };
+                self.heap
+                    .get_class(*expected_class)
+                    .ok()
+                    .is_some_and(|cls| cls.prototype == parent)
+            }
+            Format::Protobuf => false,
+        }
+    }
+
+    #[cfg(target_arch = "wasm32")]
+    #[inline(never)]
+    fn try_fast_render_default_document(
+        &self,
+        format: Format,
+        _document: bool,
+        root: &Value,
+    ) -> Option<Value> {
+        match format {
+            Format::PklBinary => self
+                .try_fast_encode_pkl_binary(root)
+                .map(|bytes| Value::Bytes(bytes.into())),
+            _ => None,
+        }
+    }
+
+    #[cfg(not(target_arch = "wasm32"))]
+    fn try_fast_render_default_document(
+        &self,
+        format: Format,
+        document: bool,
+        root: &Value,
+    ) -> Option<Value> {
+        let mut active = Vec::with_capacity(8);
+        let mut scratch = Vec::with_capacity(32);
+        match format {
+            Format::PklBinary => self
+                .try_fast_encode_pkl_binary(root)
+                .map(|bytes| Value::Bytes(bytes.into())),
+            Format::Pcf => {
+                if document && self.pcf_document_value(root).ok() != Some(true) {
+                    return None;
+                }
+                let mut buf = String::with_capacity(4096);
+                let ok = self.write_fast_pcf_value(
+                    root,
+                    &mut buf,
+                    "  ",
+                    false,
+                    false,
+                    document,
+                    0,
+                    false,
+                    true,
+                    false,
+                    false,
+                    None,
+                    &mut active,
+                    &mut scratch,
+                );
+                if !ok {
+                    return None;
+                }
+                if document && !buf.is_empty() {
+                    buf.push('\n');
+                }
+                Some(Value::String(PklString::from(buf)))
+            }
+            Format::Json => {
+                let mut buf = String::with_capacity(4096);
+                let ok = self.write_fast_json_value(
+                    root,
+                    &mut buf,
+                    "  ",
+                    true,
+                    0,
+                    None,
+                    &mut active,
+                    &mut scratch,
+                );
+                if !ok {
+                    return None;
+                }
+                if document {
+                    buf.push('\n');
+                }
+                Some(Value::String(PklString::from(buf)))
+            }
+            Format::Jsonnet => {
+                let mut buf = String::with_capacity(4096);
+                let ok = self.write_fast_jsonnet_value(
+                    root,
+                    &mut buf,
+                    "  ",
+                    true,
+                    0,
+                    None,
+                    &mut active,
+                    &mut scratch,
+                );
+                if !ok {
+                    return None;
+                }
+                if document {
+                    buf.push('\n');
+                }
+                Some(Value::String(PklString::from(buf)))
+            }
+            Format::Yaml => {
+                let mut yaml = super::yaml::Emitter::new(super::yaml::Mode::Compat, 2);
+                let ok = self.write_fast_yaml_value(
+                    root,
+                    &mut yaml,
+                    true,
+                    None,
+                    &mut active,
+                    &mut scratch,
+                );
+                if !ok {
+                    return None;
+                }
+                if document {
+                    yaml.newline();
+                }
+                Some(Value::String(yaml.finish()))
+            }
+            Format::Plist => {
+                if document {
+                    let valid = matches!(root, Value::Object(id) if self.heap.get_fast(*id).is_some_and(|o| o.pair.is_none() && o.reference.is_none()));
+                    if !valid {
+                        return None;
+                    }
+                }
+                let mut buf = String::with_capacity(4096);
+                if document {
+                    buf.push_str(super::plist::DOCUMENT_HEADER);
+                }
+                let ok = self.write_fast_plist_value(
+                    root,
+                    &mut buf,
+                    "  ",
+                    0,
+                    None,
+                    &mut active,
+                    &mut scratch,
+                );
+                if !ok {
+                    return None;
+                }
+                if document {
+                    buf.push_str("\n</plist>\n");
+                }
+                Some(Value::String(PklString::from(buf)))
+            }
+            Format::Xml => {
+                let mut buf = String::with_capacity(4096);
+                let mut xml_line = 0usize;
+                if document {
+                    buf.push_str("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<root>");
+                    xml_line = 1;
+                    if !self.write_fast_xml_visit(
+                        root,
+                        &mut buf,
+                        "  ",
+                        false,
+                        1,
+                        &mut xml_line,
+                        true,
+                        None,
+                        &mut active,
+                        &mut scratch,
+                    ) {
+                        return None;
+                    }
+                    if 1 < xml_line {
+                        buf.push('\n');
+                    }
+                    buf.push_str("</root>\n");
+                } else if !self.write_fast_xml_visit(
+                    root,
+                    &mut buf,
+                    "  ",
+                    false,
+                    0,
+                    &mut xml_line,
+                    false,
+                    None,
+                    &mut active,
+                    &mut scratch,
+                ) {
+                    return None;
+                }
+                Some(Value::String(PklString::from(buf)))
+            }
+            Format::Properties => {
+                if !document {
+                    return None;
+                }
+                let Value::Object(root_id) = *root else {
+                    return None;
+                };
+                if self.properties_document_value(root).ok() != Some(true)
+                    || self.is_render_directive(root_id).ok() != Some(false)
+                {
+                    return None;
+                }
+                let mut buf = String::with_capacity(4096);
+                let mut prefix = String::with_capacity(64);
+                active.push(root_id);
+                let ok = self.write_fast_properties_object(
+                    root_id,
+                    &mut buf,
+                    &mut prefix,
+                    true,
+                    false,
+                    None,
+                    &mut active,
+                    &mut scratch,
+                );
+                active.pop();
+                if !ok {
+                    return None;
+                }
+                Some(Value::String(PklString::from(buf)))
+            }
+            Format::Protobuf => None,
+        }
+    }
+
+    #[cfg(target_arch = "wasm32")]
+    #[inline(never)]
+    fn try_fast_render_document(&self, run: &mut RenderRun) -> bool {
+        if run.format == Format::PklBinary
+            && let Some(bytes) = self.try_fast_encode_pkl_binary(&run.root)
+        {
+            run.binary = super::pkl_binary_wire::BinaryWire::default();
+            return run.binary.raw(&bytes).is_ok();
+        }
+        false
+    }
+
+    #[cfg(not(target_arch = "wasm32"))]
+    fn try_fast_render_document(&self, run: &mut RenderRun) -> bool {
+        match run.format {
+            Format::PklBinary => {
+                if let Some(bytes) = self.try_fast_encode_pkl_binary(&run.root) {
+                    run.binary = super::pkl_binary_wire::BinaryWire::default();
+                    return run.binary.raw(&bytes).is_ok();
+                }
+                false
+            }
+            Format::Pcf => {
+                let Some(indent) = run.indent.as_str() else {
+                    return false;
+                };
+                if run.document && self.pcf_document_value(&run.root).ok() != Some(true) {
+                    return false;
+                }
+                let mut buf = String::with_capacity(4096);
+                let mut active = Vec::with_capacity(8);
+                let mut scratch = Vec::with_capacity(16);
+                let ok = self.write_fast_pcf_value(
+                    &run.root,
+                    &mut buf,
+                    indent,
+                    run.omit_null,
+                    run.custom,
+                    run.document,
+                    0,
+                    false,
+                    true,
+                    false,
+                    false,
+                    None,
+                    &mut active,
+                    &mut scratch,
+                );
+                if !ok {
+                    return false;
+                }
+                if run.document && !buf.is_empty() {
+                    buf.push('\n');
+                }
+                run.output.push_str(&buf);
+                true
+            }
+            Format::Json => {
+                let Some(indent) = run.indent.as_str() else {
+                    return false;
+                };
+                let mut buf = String::with_capacity(4096);
+                let mut active = Vec::with_capacity(8);
+                let mut scratch = Vec::with_capacity(16);
+                let ok = self.write_fast_json_value(
+                    &run.root,
+                    &mut buf,
+                    indent,
+                    run.omit_null,
+                    0,
+                    None,
+                    &mut active,
+                    &mut scratch,
+                );
+                if !ok {
+                    return false;
+                }
+                if run.document {
+                    buf.push('\n');
+                }
+                run.output.push_str(&buf);
+                true
+            }
+            Format::Jsonnet => {
+                let Some(indent) = run.indent.as_str() else {
+                    return false;
+                };
+                let mut buf = String::with_capacity(4096);
+                let mut active = Vec::with_capacity(8);
+                let mut scratch = Vec::with_capacity(16);
+                let ok = self.write_fast_jsonnet_value(
+                    &run.root,
+                    &mut buf,
+                    indent,
+                    run.omit_null,
+                    0,
+                    None,
+                    &mut active,
+                    &mut scratch,
+                );
+                if !ok {
+                    return false;
+                }
+                if run.document {
+                    buf.push('\n');
+                }
+                run.output.push_str(&buf);
+                true
+            }
+            Format::Yaml => {
+                if run.document && run.yaml_stream {
+                    return false;
+                }
+                let Some(yaml) = run.yaml.as_mut() else {
+                    return false;
+                };
+                if !yaml.is_utf8() {
+                    return false;
+                }
+                let cp = yaml.checkpoint();
+                let mut active = Vec::with_capacity(8);
+                let mut scratch = Vec::with_capacity(16);
+                let ok = self.write_fast_yaml_value(
+                    &run.root,
+                    yaml,
+                    run.omit_null,
+                    None,
+                    &mut active,
+                    &mut scratch,
+                );
+                if !ok {
+                    yaml.rollback(cp);
+                    return false;
+                }
+                if run.document {
+                    yaml.newline();
+                }
+                true
+            }
+            Format::Plist => {
+                let Some(indent) = run.indent.as_str() else {
+                    return false;
+                };
+                if run.document {
+                    let valid = matches!(&run.root, Value::Object(id) if self.heap.get_fast(*id).is_some_and(|o| o.pair.is_none() && o.reference.is_none()));
+                    if !valid {
+                        return false;
+                    }
+                }
+                let mut buf = String::with_capacity(4096);
+                if run.document {
+                    buf.push_str(super::plist::DOCUMENT_HEADER);
+                }
+                let mut active = Vec::with_capacity(8);
+                let mut scratch = Vec::with_capacity(16);
+                let ok = self.write_fast_plist_value(
+                    &run.root,
+                    &mut buf,
+                    indent,
+                    0,
+                    None,
+                    &mut active,
+                    &mut scratch,
+                );
+                if !ok {
+                    return false;
+                }
+                if run.document {
+                    buf.push_str("\n</plist>\n");
+                }
+                run.output.push_str(&buf);
+                true
+            }
+            Format::Xml => self.try_fast_render_xml_document(run),
+            Format::Properties => {
+                if !run.document {
+                    return false;
+                }
+                let Value::Object(root_id) = run.root else {
+                    return false;
+                };
+                if self.properties_document_value(&run.root).ok() != Some(true)
+                    || self.is_render_directive(root_id).ok() != Some(false)
+                {
+                    return false;
+                }
+                let mut buf = String::with_capacity(4096);
+                let mut prefix = String::with_capacity(64);
+                let mut active = Vec::with_capacity(8);
+                let mut scratch = Vec::with_capacity(64);
+                active.push(root_id);
+                let ok = self.write_fast_properties_object(
+                    root_id,
+                    &mut buf,
+                    &mut prefix,
+                    run.omit_null,
+                    run.restrict_charset,
+                    None,
+                    &mut active,
+                    &mut scratch,
+                );
+                active.pop();
+                if !ok {
+                    return false;
+                }
+                run.output.push_str(&buf);
+                true
+            }
+            Format::Protobuf => false,
+        }
+    }
+
+    #[cfg(not(target_arch = "wasm32"))]
+    fn try_fast_render_xml_document(&self, run: &mut RenderRun) -> bool {
+        let Some(indent) = run.indent.as_str() else {
+            return false;
+        };
+        let Some(Value::String(version)) = run.options.get(1) else {
+            return false;
+        };
+        let Some(version_str) = version.as_str() else {
+            return false;
+        };
+        let version11 = version_str == "1.1";
+        let mut buf = String::with_capacity(4096);
+        let mut active = Vec::with_capacity(8);
+        let mut scratch = Vec::with_capacity(16);
+        let mut xml_line = 0usize;
+        if run.document {
+            let (Some(Value::String(root_name)), Some(Value::Object(attrs_id))) =
+                (run.options.get(2), run.options.get(3))
+            else {
+                return false;
+            };
+            let Some(root_name_str) = root_name.as_str() else {
+                return false;
+            };
+            if !super::xml::valid_name_str(root_name_str, version11) {
+                return false;
+            }
+            // Only take fast path when rootElementAttributes is an empty Mapping (default).
+            let Some(attrs_obj) = self.heap.get_fast(*attrs_id) else {
+                return false;
+            };
+            if attrs_obj.collection_kind != CollectionKind::Mapping
+                || !attrs_obj.collection_members.is_empty()
+                || !attrs_obj.members.is_empty()
+                || !self.parent_is_empty_builtin(
+                    attrs_obj.parent,
+                    CollectionKind::Mapping,
+                    classes::BuiltinClass::Mapping,
+                )
+            {
+                return false;
+            }
+            buf.push_str("<?xml version=\"");
+            super::plist::write_escaped_str(&mut buf, version_str);
+            buf.push_str("\" encoding=\"UTF-8\"?>\n<");
+            buf.push_str(root_name_str);
+            buf.push('>');
+            xml_line = 1;
+            let open_line = xml_line;
+            if !self.write_fast_xml_visit(
+                &run.root,
+                &mut buf,
+                indent,
+                version11,
+                1,
+                &mut xml_line,
+                true,
+                None,
+                &mut active,
+                &mut scratch,
+            ) {
+                return false;
+            }
+            if open_line < xml_line {
+                buf.push('\n');
+            }
+            buf.push_str("</");
+            buf.push_str(root_name_str);
+            buf.push_str(">\n");
+        } else if !self.write_fast_xml_visit(
+            &run.root,
+            &mut buf,
+            indent,
+            version11,
+            0,
+            &mut xml_line,
+            false,
+            None,
+            &mut active,
+            &mut scratch,
+        ) {
+            return false;
+        }
+        run.output.push_str(&buf);
+        true
+    }
+
+    #[cfg(target_arch = "wasm32")]
+    #[allow(clippy::too_many_arguments)]
+    #[inline(never)]
+    fn try_fast_render_open_object(
+        &self,
+        run: &mut RenderRun,
+        receiver: ObjectId,
+        _depth: usize,
+        _standalone: bool,
+        _root: bool,
+        _path: &[PathPart],
+    ) -> bool {
+        if run.format != Format::PklBinary {
+            return false;
+        }
+        let mut active = Vec::with_capacity(8);
+        let mut scratch = Vec::with_capacity(32);
+        let cp = run.binary.len();
+        if self.try_fast_encode_binary_object(
+            receiver,
+            &mut run.binary,
+            Some(&run.active),
+            &mut active,
+            &mut scratch,
+        ) {
+            true
+        } else {
+            run.binary.truncate(cp);
+            false
+        }
+    }
+
+    #[cfg(not(target_arch = "wasm32"))]
+    #[allow(clippy::too_many_arguments)]
+    fn try_fast_render_open_object(
+        &self,
+        run: &mut RenderRun,
+        receiver: ObjectId,
+        depth: usize,
+        standalone: bool,
+        root: bool,
+        path: &[PathPart],
+    ) -> bool {
+        let mut active = Vec::with_capacity(8);
+        let mut scratch = Vec::with_capacity(32);
+        match run.format {
+            Format::PklBinary => {
+                let cp = run.binary.len();
+                if self.try_fast_encode_binary_object(
+                    receiver,
+                    &mut run.binary,
+                    Some(&run.active),
+                    &mut active,
+                    &mut scratch,
+                ) {
+                    true
+                } else {
+                    run.binary.truncate(cp);
+                    false
+                }
+            }
+            Format::Pcf => {
+                let Some(indent) = run.indent.as_str() else {
+                    return false;
+                };
+                let mut buf = String::with_capacity(256);
+                let ok = self.write_fast_pcf_object(
+                    receiver,
+                    &mut buf,
+                    indent,
+                    run.omit_null,
+                    run.custom,
+                    run.document,
+                    depth,
+                    standalone,
+                    root,
+                    !run.output_empty(),
+                    Some(&run.active),
+                    &mut active,
+                    &mut scratch,
+                );
+                if ok {
+                    run.output.push_str(&buf);
+                }
+                ok
+            }
+            Format::Json => {
+                let Some(indent) = run.indent.as_str() else {
+                    return false;
+                };
+                let mut buf = String::with_capacity(256);
+                let ok = self.write_fast_json_object(
+                    receiver,
+                    &mut buf,
+                    indent,
+                    run.omit_null,
+                    depth,
+                    Some(&run.active),
+                    &mut active,
+                    &mut scratch,
+                );
+                if ok {
+                    run.output.push_str(&buf);
+                }
+                ok
+            }
+            Format::Jsonnet => {
+                let Some(indent) = run.indent.as_str() else {
+                    return false;
+                };
+                let mut buf = String::with_capacity(256);
+                let ok = self.write_fast_jsonnet_object(
+                    receiver,
+                    &mut buf,
+                    indent,
+                    run.omit_null,
+                    depth,
+                    Some(&run.active),
+                    &mut active,
+                    &mut scratch,
+                );
+                if ok {
+                    run.output.push_str(&buf);
+                }
+                ok
+            }
+            Format::Yaml => {
+                let Some(yaml) = run.yaml.as_mut() else {
+                    return false;
+                };
+                if !yaml.is_utf8() {
+                    return false;
+                }
+                let cp = yaml.checkpoint();
+                let ok = self.write_fast_yaml_object(
+                    receiver,
+                    yaml,
+                    run.omit_null,
+                    Some(&run.active),
+                    &mut active,
+                    &mut scratch,
+                );
+                if !ok {
+                    yaml.rollback(cp);
+                }
+                ok
+            }
+            Format::Plist => {
+                let Some(indent) = run.indent.as_str() else {
+                    return false;
+                };
+                let mut buf = String::with_capacity(256);
+                let ok = self.write_fast_plist_object(
+                    receiver,
+                    &mut buf,
+                    indent,
+                    depth,
+                    Some(&run.active),
+                    &mut active,
+                    &mut scratch,
+                );
+                if ok {
+                    run.output.push_str(&buf);
+                }
+                ok
+            }
+            Format::Xml => {
+                let Some(indent) = run.indent.as_str() else {
+                    return false;
+                };
+                let Some(Value::String(version)) = run.options.get(1) else {
+                    return false;
+                };
+                let Some(version_str) = version.as_str() else {
+                    return false;
+                };
+                let version11 = version_str == "1.1";
+                let mut buf = String::with_capacity(256);
+                let mut xml_line = run.xml_line;
+                let ok = self.write_fast_xml_object(
+                    receiver,
+                    &mut buf,
+                    indent,
+                    version11,
+                    depth,
+                    &mut xml_line,
+                    !run.output_empty(),
+                    Some(&run.active),
+                    &mut active,
+                    &mut scratch,
+                );
+                if ok {
+                    run.output.push_str(&buf);
+                    run.xml_line = xml_line;
+                }
+                ok
+            }
+            Format::Properties => {
+                if !run.properties_document {
+                    return false;
+                }
+                let mut prefix = String::with_capacity(64);
+                for part in path {
+                    match part {
+                        PathPart::Root => {}
+                        PathPart::Property(name) => {
+                            let Some(s) = name.as_str() else {
+                                return false;
+                            };
+                            if !prefix.is_empty() {
+                                prefix.push('.');
+                            }
+                            write_properties_str(&mut prefix, s, true, run.restrict_charset);
+                        }
+                        PathPart::Entry(Value::String(name)) => {
+                            let Some(s) = name.as_str() else {
+                                return false;
+                            };
+                            if !prefix.is_empty() {
+                                prefix.push('.');
+                            }
+                            write_properties_str(&mut prefix, s, true, run.restrict_charset);
+                        }
+                        _ => return false,
+                    }
+                }
+                let mut buf = String::with_capacity(1024);
+                let ok = self.write_fast_properties_object(
+                    receiver,
+                    &mut buf,
+                    &mut prefix,
+                    run.omit_null,
+                    run.restrict_charset,
+                    Some(&run.active),
+                    &mut active,
+                    &mut scratch,
+                );
+                if ok {
+                    run.output.push_str(&buf);
+                }
+                ok
+            }
+            Format::Protobuf => false,
+        }
+    }
+
+    #[cfg(target_arch = "wasm32")]
+    #[inline(never)]
+    fn advance_fast_list(
+        &mut self,
+        run: &mut RenderRun,
+        receiver: ObjectId,
+        mut index: usize,
+        depth: usize,
+        path: Vec<PathPart>,
+    ) -> Result<bool, RuntimeError> {
+        let len = self
+            .heap
+            .get_fast(receiver)
+            .and_then(|o| o.list_elements.as_ref())
+            .map_or(0, Vec::len);
+        let mut local_active = Vec::with_capacity(8);
+        let mut scratch = Vec::with_capacity(16);
+        let mut pending: Option<(usize, Value)> = None;
+        while index < len {
+            let Some(elem) = self
+                .heap
+                .get_fast(receiver)
+                .and_then(|o| o.list_elements.as_ref())
+                .and_then(|e| e.get(index))
+            else {
+                return Err(invalid("fast list element"));
+            };
+            let cp = run.binary.len();
+            local_active.clear();
+            scratch.clear();
+            if self.try_fast_encode_binary_value(
+                elem,
+                &mut run.binary,
+                Some(&run.active),
+                &mut local_active,
+                &mut scratch,
+            ) {
+                index += 1;
+                continue;
+            }
+            run.binary.truncate(cp);
+            pending = Some((index, elem.clone()));
+            break;
+        }
+        if let Some((elem_idx, elem)) = pending {
+            let mut elem_path = path.clone();
+            elem_path.push(PathPart::Entry(Value::Int((elem_idx as i64).into())));
+            run.tasks.push(Task::FastList {
+                receiver,
+                index: elem_idx + 1,
+                depth,
+                path,
+            });
+            if let Value::Object(child_id) = elem
+                && !run.active.contains(&child_id)
+                && self.is_plain_unforced_dynamic(child_id)
+            {
+                run.active.insert(child_id);
+                run.tasks.push(Task::OpenObject {
+                    receiver: child_id,
+                    depth,
+                    standalone: false,
+                    root: false,
+                    path: elem_path,
+                    stream: false,
+                });
+                self.begin_shallow_force_for_render(run, child_id)?;
+            } else {
+                run.value(elem, depth, false, false, false, elem_path);
+            }
+            return Ok(false);
+        }
+        run.active.remove(&receiver);
+        Ok(false)
+    }
+
+    #[cfg(not(target_arch = "wasm32"))]
+    fn advance_fast_list(
+        &mut self,
+        run: &mut RenderRun,
+        receiver: ObjectId,
+        mut index: usize,
+        depth: usize,
+        path: Vec<PathPart>,
+    ) -> Result<bool, RuntimeError> {
+        let len = self
+            .heap
+            .get_fast(receiver)
+            .and_then(|o| o.list_elements.as_ref())
+            .map_or(0, Vec::len);
+        let format = run.format;
+        let child_depth = depth
+            + usize::from(matches!(
+                format,
+                Format::Json | Format::Jsonnet | Format::Plist
+            ));
+        let standalone = format == Format::Pcf;
+        let mut local_active = Vec::with_capacity(8);
+        let mut text_buf = String::new();
+        let mut pending: Option<(usize, Value)> = None;
+
+        while index < len {
+            if let Some(child_id) = self
+                .heap
+                .get_fast(receiver)
+                .and_then(|o| o.list_elements.as_ref())
+                .and_then(|e| e.get(index))
+                .and_then(|v| match v {
+                    Value::Object(id) => Some(*id),
+                    _ => None,
+                })
+                && !run.active.contains(&child_id)
+                && self
+                    .heap
+                    .get_fast(child_id)
+                    .is_some_and(|o| !o.forced && o.cache_slots.len() < o.members.len())
+                && self.is_plain_shallow_forceable(child_id)
+            {
+                let _ = self.try_force_plain_object_sync(child_id)?;
+            }
+            let mut scratch = Vec::with_capacity(16);
+            let Some(elem) = self
+                .heap
+                .get_fast(receiver)
+                .and_then(|o| o.list_elements.as_ref())
+                .and_then(|e| e.get(index))
+            else {
+                return Err(invalid("fast list element"));
+            };
+            match format {
+                Format::PklBinary => {
+                    let cp = run.binary.len();
+                    local_active.clear();
+                    scratch.clear();
+                    if self.try_fast_encode_binary_value(
+                        elem,
+                        &mut run.binary,
+                        Some(&run.active),
+                        &mut local_active,
+                        &mut scratch,
+                    ) {
+                        index += 1;
+                        continue;
+                    }
+                    run.binary.truncate(cp);
+                    pending = Some((index, elem.clone()));
+                    break;
+                }
+                Format::Yaml => {
+                    let yaml = run.yaml.as_mut().unwrap();
+                    yaml.member(true, index == 0);
+                    let cp = yaml.checkpoint();
+                    local_active.clear();
+                    scratch.clear();
+                    if yaml.is_utf8()
+                        && self.write_fast_yaml_value(
+                            elem,
+                            yaml,
+                            run.omit_null,
+                            Some(&run.active),
+                            &mut local_active,
+                            &mut scratch,
+                        )
+                    {
+                        index += 1;
+                        continue;
+                    }
+                    yaml.rollback(cp);
+                    pending = Some((index, elem.clone()));
+                    break;
+                }
+                Format::Pcf | Format::Json | Format::Jsonnet | Format::Plist => {
+                    let indent = run.indent.as_str().unwrap_or("");
+                    match format {
+                        Format::Pcf => {
+                            if index > 0 {
+                                text_buf.push_str(", ");
+                            }
+                        }
+                        Format::Json => {
+                            if index > 0 {
+                                text_buf.push(',');
+                            }
+                            if !indent.is_empty() {
+                                text_buf.push('\n');
+                                push_indent_str(&mut text_buf, indent, child_depth);
+                            }
+                        }
+                        Format::Jsonnet => {
+                            if index > 0 {
+                                text_buf.push(',');
+                            }
+                            if !indent.is_empty() {
+                                text_buf.push('\n');
+                                push_indent_str(&mut text_buf, indent, child_depth);
+                            } else if index > 0 {
+                                text_buf.push(' ');
+                            }
+                        }
+                        Format::Plist => {
+                            push_indent_str(&mut text_buf, indent, child_depth);
+                        }
+                        _ => unreachable!(),
+                    }
+                    let cp = text_buf.len();
+                    local_active.clear();
+                    scratch.clear();
+                    let ok = match format {
+                        Format::Pcf => self.write_fast_pcf_value(
+                            elem,
+                            &mut text_buf,
+                            indent,
+                            run.omit_null,
+                            run.custom,
+                            run.document,
+                            child_depth,
+                            true,
+                            false,
+                            false,
+                            true,
+                            Some(&run.active),
+                            &mut local_active,
+                            &mut scratch,
+                        ),
+                        Format::Json => self.write_fast_json_value(
+                            elem,
+                            &mut text_buf,
+                            indent,
+                            run.omit_null,
+                            child_depth,
+                            Some(&run.active),
+                            &mut local_active,
+                            &mut scratch,
+                        ),
+                        Format::Jsonnet => self.write_fast_jsonnet_value(
+                            elem,
+                            &mut text_buf,
+                            indent,
+                            run.omit_null,
+                            child_depth,
+                            Some(&run.active),
+                            &mut local_active,
+                            &mut scratch,
+                        ),
+                        Format::Plist => {
+                            let ok = self.write_fast_plist_value(
+                                elem,
+                                &mut text_buf,
+                                indent,
+                                child_depth,
+                                Some(&run.active),
+                                &mut local_active,
+                                &mut scratch,
+                            );
+                            if ok {
+                                text_buf.push('\n');
+                            }
+                            ok
+                        }
+                        _ => unreachable!(),
+                    };
+                    if ok {
+                        index += 1;
+                        continue;
+                    }
+                    text_buf.truncate(cp);
+                    pending = Some((index, elem.clone()));
+                    break;
+                }
+                _ => unreachable!("fast list format"),
+            }
+        }
+
+        if !text_buf.is_empty() {
+            run.output.push_str(&text_buf);
+        }
+
+        if let Some((elem_idx, elem)) = pending {
+            let mut elem_path = path.clone();
+            elem_path.push(PathPart::Entry(Value::Int((elem_idx as i64).into())));
+            run.tasks.push(Task::FastList {
+                receiver,
+                index: elem_idx + 1,
+                depth,
+                path,
+            });
+            if format == Format::Plist {
+                run.tasks.push(Task::Text("\n".into()));
+            }
+            if let Value::Object(child_id) = elem
+                && !run.active.contains(&child_id)
+                && self.is_plain_unforced_dynamic(child_id)
+            {
+                run.active.insert(child_id);
+                run.tasks.push(Task::OpenObject {
+                    receiver: child_id,
+                    depth: child_depth,
+                    standalone,
+                    root: false,
+                    path: elem_path,
+                    stream: false,
+                });
+                self.begin_shallow_force_for_render(run, child_id)?;
+            } else {
+                run.value(elem, child_depth, standalone, false, false, elem_path);
+            }
+            return Ok(false);
+        }
+
+        match format {
+            Format::PklBinary => {}
+            Format::Yaml => {
+                run.yaml.as_mut().unwrap().close(len == 0);
+            }
+            Format::Pcf => run.append(")"),
+            Format::Json => {
+                if len > 0 {
+                    run.json_newline(depth);
+                }
+                run.append("]");
+            }
+            Format::Jsonnet => {
+                if len > 0 && !run.indent.is_empty() {
+                    run.append(",");
+                    run.json_newline(depth);
+                }
+                run.append("]");
+            }
+            Format::Plist => {
+                let indent = run.indent.as_str().unwrap_or("");
+                let mut close = String::with_capacity(indent.len() * depth + 8);
+                push_indent_str(&mut close, indent, depth);
+                close.push_str("</array>");
+                run.output.push_str(&close);
+            }
+            _ => unreachable!(),
+        }
+        run.active.remove(&receiver);
+        Ok(false)
+    }
+}
+
+#[cfg(not(target_arch = "wasm32"))]
+impl Vm {
+    #[allow(clippy::too_many_arguments)]
+    fn write_fast_pcf_value<'a>(
+        &'a self,
+        value: &'a Value,
+        buf: &mut String,
+        indent: &str,
+        omit_null: bool,
+        custom: bool,
+        document: bool,
+        depth: usize,
+        standalone: bool,
+        root: bool,
+        string_element: bool,
+        output_was_non_empty: bool,
+        outer_active: Option<&BTreeSet<ObjectId>>,
+        active: &mut Vec<ObjectId>,
+        scratch: &mut Vec<FastMember<'a>>,
+    ) -> bool {
+        match value {
+            Value::Null | Value::NullWithDefault(_) => buf.push_str("null"),
+            Value::Bool(v) => buf.push_str(if *v { "true" } else { "false" }),
+            Value::Int(v) => {
+                let mut num = [0u8; 24];
+                buf.push_str(super::format_i64_buf(v.get(), &mut num));
+            }
+            Value::Float(v) => buf.push_str(&crate::numeric::double_to_string(**v)),
+            Value::Duration(v) => {
+                use std::fmt::Write;
+                let _ = write!(buf, "{v}");
+            }
+            Value::DataSize(v) => {
+                use std::fmt::Write;
+                let _ = write!(buf, "{v}");
+            }
+            Value::IntSeq(v) => {
+                use std::fmt::Write;
+                let _ = write!(buf, "{v}");
+            }
+            Value::String(s) => {
+                return super::pcf_format::write_string(
+                    buf,
+                    s,
+                    indent,
+                    depth + usize::from(!string_element),
+                    custom,
+                );
+            }
+            Value::Bytes(bytes) => {
+                buf.push_str("Bytes(");
+                let mut num = [0u8; 24];
+                for (i, &b) in bytes.iter().enumerate() {
+                    if i != 0 {
+                        buf.push_str(", ");
+                    }
+                    buf.push_str(super::format_i64_buf(i64::from(b), &mut num));
+                }
+                buf.push(')');
+            }
+            Value::Object(id) => {
+                if active.len() >= 32
+                    || active.contains(id)
+                    || outer_active.is_some_and(|set| set.contains(id))
+                {
+                    return false;
+                }
+                let Some(obj) = self.heap.get_fast(*id) else {
+                    return false;
+                };
+                if let Some(pair) = obj.pair.as_deref() {
+                    buf.push_str("Pair(");
+                    if !self.write_fast_pcf_value(
+                        &pair[0],
+                        buf,
+                        indent,
+                        omit_null,
+                        custom,
+                        document,
+                        depth,
+                        true,
+                        false,
+                        false,
+                        true,
+                        outer_active,
+                        active,
+                        scratch,
+                    ) {
+                        return false;
+                    }
+                    buf.push_str(", ");
+                    if !self.write_fast_pcf_value(
+                        &pair[1],
+                        buf,
+                        indent,
+                        omit_null,
+                        custom,
+                        document,
+                        depth,
+                        true,
+                        false,
+                        false,
+                        true,
+                        outer_active,
+                        active,
+                        scratch,
+                    ) {
+                        return false;
+                    }
+                    buf.push(')');
+                    return true;
+                }
+                active.push(*id);
+                let ok = self.write_fast_pcf_object(
+                    *id,
+                    buf,
+                    indent,
+                    omit_null,
+                    custom,
+                    document,
+                    depth,
+                    standalone,
+                    root,
+                    output_was_non_empty,
+                    outer_active,
+                    active,
+                    scratch,
+                );
+                active.pop();
+                return ok;
+            }
+            _ => return false,
+        }
+        true
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn write_fast_pcf_object<'a>(
+        &'a self,
+        id: ObjectId,
+        buf: &mut String,
+        indent: &str,
+        omit_null: bool,
+        custom: bool,
+        document: bool,
+        depth: usize,
+        standalone: bool,
+        root: bool,
+        output_was_non_empty: bool,
+        outer_active: Option<&BTreeSet<ObjectId>>,
+        active: &mut Vec<ObjectId>,
+        scratch: &mut Vec<FastMember<'a>>,
+    ) -> bool {
+        let base = scratch.len();
+        let Some(kind) = self.extract_fast_object(id, scratch, false) else {
+            return false;
+        };
+        let ok = match kind {
+            FastObjectKind::StrictList(elems) => {
+                buf.push_str("List(");
+                let mut ok = true;
+                for (i, elem) in elems.iter().enumerate() {
+                    if i > 0 {
+                        buf.push_str(", ");
+                    }
+                    if !self.write_fast_pcf_value(
+                        elem,
+                        buf,
+                        indent,
+                        omit_null,
+                        custom,
+                        document,
+                        depth,
+                        true,
+                        false,
+                        false,
+                        true,
+                        outer_active,
+                        active,
+                        scratch,
+                    ) {
+                        ok = false;
+                        break;
+                    }
+                }
+                buf.push(')');
+                ok
+            }
+            FastObjectKind::EmptyList => {
+                buf.push_str("List()");
+                true
+            }
+            FastObjectKind::StrictSet(count) => {
+                let end = base + count;
+                buf.push_str("Set(");
+                let mut ok = true;
+                for i in base..end {
+                    if i > base {
+                        buf.push_str(", ");
+                    }
+                    let FastMember::Element(_, elem) = scratch[i] else {
+                        ok = false;
+                        break;
+                    };
+                    if !self.write_fast_pcf_value(
+                        elem,
+                        buf,
+                        indent,
+                        omit_null,
+                        custom,
+                        document,
+                        depth,
+                        true,
+                        false,
+                        false,
+                        true,
+                        outer_active,
+                        active,
+                        scratch,
+                    ) {
+                        ok = false;
+                        break;
+                    }
+                }
+                buf.push(')');
+                ok
+            }
+            FastObjectKind::StrictMap(count) => {
+                let end = base + count;
+                buf.push_str("Map(");
+                let mut ok = true;
+                for i in base..end {
+                    if i > base {
+                        buf.push_str(", ");
+                    }
+                    let FastMember::Entry(k, v) = scratch[i] else {
+                        ok = false;
+                        break;
+                    };
+                    if !self.write_fast_pcf_value(
+                        k,
+                        buf,
+                        indent,
+                        omit_null,
+                        custom,
+                        document,
+                        depth,
+                        true,
+                        false,
+                        false,
+                        true,
+                        outer_active,
+                        active,
+                        scratch,
+                    ) {
+                        ok = false;
+                        break;
+                    }
+                    buf.push_str(", ");
+                    if !self.write_fast_pcf_value(
+                        v,
+                        buf,
+                        indent,
+                        omit_null,
+                        custom,
+                        document,
+                        depth,
+                        true,
+                        false,
+                        false,
+                        true,
+                        outer_active,
+                        active,
+                        scratch,
+                    ) {
+                        ok = false;
+                        break;
+                    }
+                }
+                buf.push(')');
+                ok
+            }
+            FastObjectKind::PlainDynamic { count, .. }
+            | FastObjectKind::PlainListing(count)
+            | FastObjectKind::PlainMapping(count)
+            | FastObjectKind::PlainModule { count, .. } => {
+                let end = base + count;
+                let doc = document && root;
+                if !doc {
+                    if standalone {
+                        buf.push_str("new ");
+                    }
+                    buf.push('{');
+                }
+                let child_depth = depth + usize::from(!doc);
+                let mut emitted = false;
+                let mut ok = true;
+                for i in base..end {
+                    match scratch[i] {
+                        FastMember::Property(name, val) => {
+                            if omit_null && val.is_null() {
+                                continue;
+                            }
+                            let Some(name_str) = name.as_str() else {
+                                ok = false;
+                                break;
+                            };
+                            if output_was_non_empty || !buf.is_empty() {
+                                buf.push('\n');
+                                push_indent_str(buf, indent, child_depth);
+                            }
+                            if crate::parser::is_regular_identifier(name_str) {
+                                buf.push_str(name_str);
+                            } else {
+                                buf.push('`');
+                                buf.push_str(name_str);
+                                buf.push('`');
+                            }
+                            let Ok(obj_like) = self.pcf_object_like(val) else {
+                                ok = false;
+                                break;
+                            };
+                            buf.push_str(if obj_like { " " } else { " = " });
+                            emitted = true;
+                            if !self.write_fast_pcf_value(
+                                val,
+                                buf,
+                                indent,
+                                omit_null,
+                                custom,
+                                document,
+                                child_depth,
+                                false,
+                                false,
+                                false,
+                                true,
+                                outer_active,
+                                active,
+                                scratch,
+                            ) {
+                                ok = false;
+                                break;
+                            }
+                        }
+                        FastMember::Element(_, val) => {
+                            buf.push('\n');
+                            push_indent_str(buf, indent, child_depth);
+                            emitted = true;
+                            if !self.write_fast_pcf_value(
+                                val,
+                                buf,
+                                indent,
+                                omit_null,
+                                custom,
+                                document,
+                                child_depth,
+                                true,
+                                false,
+                                true,
+                                true,
+                                outer_active,
+                                active,
+                                scratch,
+                            ) {
+                                ok = false;
+                                break;
+                            }
+                        }
+                        FastMember::Entry(key, val) => {
+                            buf.push('\n');
+                            push_indent_str(buf, indent, child_depth);
+                            buf.push('[');
+                            if !self.write_fast_pcf_value(
+                                key,
+                                buf,
+                                indent,
+                                omit_null,
+                                custom,
+                                document,
+                                child_depth,
+                                true,
+                                false,
+                                false,
+                                true,
+                                outer_active,
+                                active,
+                                scratch,
+                            ) {
+                                ok = false;
+                                break;
+                            }
+                            let Ok(obj_like) = self.pcf_object_like(val) else {
+                                ok = false;
+                                break;
+                            };
+                            buf.push_str(if obj_like { "] " } else { "] = " });
+                            emitted = true;
+                            if !self.write_fast_pcf_value(
+                                val,
+                                buf,
+                                indent,
+                                omit_null,
+                                custom,
+                                document,
+                                child_depth,
+                                false,
+                                false,
+                                false,
+                                true,
+                                outer_active,
+                                active,
+                                scratch,
+                            ) {
+                                ok = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if ok && !doc {
+                    if emitted {
+                        buf.push('\n');
+                        push_indent_str(buf, indent, depth);
+                    }
+                    buf.push('}');
+                }
+                ok
+            }
+        };
+        scratch.truncate(base);
+        ok
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn write_fast_json_value<'a>(
+        &'a self,
+        value: &'a Value,
+        buf: &mut String,
+        indent: &str,
+        omit_null: bool,
+        depth: usize,
+        outer_active: Option<&BTreeSet<ObjectId>>,
+        active: &mut Vec<ObjectId>,
+        scratch: &mut Vec<FastMember<'a>>,
+    ) -> bool {
+        match value {
+            Value::Null | Value::NullWithDefault(_) => buf.push_str("null"),
+            Value::Bool(v) => buf.push_str(if *v { "true" } else { "false" }),
+            Value::Int(v) => {
+                let mut num = [0u8; 24];
+                buf.push_str(super::format_i64_buf(v.get(), &mut num));
+            }
+            Value::Float(v) => {
+                if !v.is_finite() {
+                    return false;
+                }
+                buf.push_str(&crate::numeric::double_to_string(**v));
+            }
+            Value::String(s) => {
+                let Some(text) = s.as_str() else {
+                    return false;
+                };
+                write_json_str(buf, text);
+            }
+            Value::Object(id) => {
+                if active.len() >= 32
+                    || active.contains(id)
+                    || outer_active.is_some_and(|set| set.contains(id))
+                {
+                    return false;
+                }
+                active.push(*id);
+                let ok = self.write_fast_json_object(
+                    *id,
+                    buf,
+                    indent,
+                    omit_null,
+                    depth,
+                    outer_active,
+                    active,
+                    scratch,
+                );
+                active.pop();
+                return ok;
+            }
+            _ => return false,
+        }
+        true
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn write_fast_json_object<'a>(
+        &'a self,
+        id: ObjectId,
+        buf: &mut String,
+        indent: &str,
+        omit_null: bool,
+        depth: usize,
+        outer_active: Option<&BTreeSet<ObjectId>>,
+        active: &mut Vec<ObjectId>,
+        scratch: &mut Vec<FastMember<'a>>,
+    ) -> bool {
+        let base = scratch.len();
+        let Some(kind) = self.extract_fast_object(id, scratch, false) else {
+            return false;
+        };
+        let child_depth = depth + 1;
+        let colon = if indent.is_empty() { ":" } else { ": " };
+        let ok = match kind {
+            FastObjectKind::StrictList(elems) => {
+                buf.push('[');
+                let mut ok = true;
+                for (i, elem) in elems.iter().enumerate() {
+                    if i > 0 {
+                        buf.push(',');
+                    }
+                    if !indent.is_empty() {
+                        buf.push('\n');
+                        push_indent_str(buf, indent, child_depth);
+                    }
+                    if !self.write_fast_json_value(
+                        elem,
+                        buf,
+                        indent,
+                        omit_null,
+                        child_depth,
+                        outer_active,
+                        active,
+                        scratch,
+                    ) {
+                        ok = false;
+                        break;
+                    }
+                }
+                if ok && !elems.is_empty() && !indent.is_empty() {
+                    buf.push('\n');
+                    push_indent_str(buf, indent, depth);
+                }
+                buf.push(']');
+                ok
+            }
+            FastObjectKind::EmptyList => {
+                buf.push_str("[]");
+                true
+            }
+            FastObjectKind::StrictSet(count) | FastObjectKind::PlainListing(count) => {
+                let end = base + count;
+                buf.push('[');
+                let mut ok = true;
+                for i in base..end {
+                    if i > base {
+                        buf.push(',');
+                    }
+                    if !indent.is_empty() {
+                        buf.push('\n');
+                        push_indent_str(buf, indent, child_depth);
+                    }
+                    let FastMember::Element(_, elem) = scratch[i] else {
+                        ok = false;
+                        break;
+                    };
+                    if !self.write_fast_json_value(
+                        elem,
+                        buf,
+                        indent,
+                        omit_null,
+                        child_depth,
+                        outer_active,
+                        active,
+                        scratch,
+                    ) {
+                        ok = false;
+                        break;
+                    }
+                }
+                if ok && count > 0 && !indent.is_empty() {
+                    buf.push('\n');
+                    push_indent_str(buf, indent, depth);
+                }
+                buf.push(']');
+                ok
+            }
+            FastObjectKind::PlainDynamic {
+                count,
+                has_elements: true,
+                has_keyed: false,
+            } => {
+                let end = base + count;
+                buf.push('[');
+                let mut ok = true;
+                for i in base..end {
+                    if i > base {
+                        buf.push(',');
+                    }
+                    if !indent.is_empty() {
+                        buf.push('\n');
+                        push_indent_str(buf, indent, child_depth);
+                    }
+                    let FastMember::Element(_, elem) = scratch[i] else {
+                        ok = false;
+                        break;
+                    };
+                    if !self.write_fast_json_value(
+                        elem,
+                        buf,
+                        indent,
+                        omit_null,
+                        child_depth,
+                        outer_active,
+                        active,
+                        scratch,
+                    ) {
+                        ok = false;
+                        break;
+                    }
+                }
+                if ok && count > 0 && !indent.is_empty() {
+                    buf.push('\n');
+                    push_indent_str(buf, indent, depth);
+                }
+                buf.push(']');
+                ok
+            }
+            FastObjectKind::PlainDynamic {
+                has_elements: true,
+                has_keyed: true,
+                ..
+            } => false,
+            FastObjectKind::StrictMap(count)
+            | FastObjectKind::PlainMapping(count)
+            | FastObjectKind::PlainDynamic {
+                count,
+                has_elements: false,
+                ..
+            }
+            | FastObjectKind::PlainModule { count, .. } => {
+                let is_strict_map = matches!(kind, FastObjectKind::StrictMap(_));
+                let end = base + count;
+                buf.push('{');
+                let mut emitted = false;
+                let mut ok = true;
+                for i in base..end {
+                    let (key_str, val) = match scratch[i] {
+                        FastMember::Property(name, val) => (name.as_str(), val),
+                        FastMember::Entry(Value::String(name), val) => (name.as_str(), val),
+                        _ => {
+                            ok = false;
+                            break;
+                        }
+                    };
+                    if omit_null && val.is_null() {
+                        continue;
+                    }
+                    let Some(key_str) = key_str else {
+                        ok = false;
+                        break;
+                    };
+                    if emitted {
+                        buf.push(',');
+                    }
+                    if !indent.is_empty() {
+                        buf.push('\n');
+                        push_indent_str(buf, indent, child_depth);
+                    }
+                    emitted = true;
+                    write_json_str(buf, key_str);
+                    buf.push_str(colon);
+                    if !self.write_fast_json_value(
+                        val,
+                        buf,
+                        indent,
+                        omit_null,
+                        child_depth,
+                        outer_active,
+                        active,
+                        scratch,
+                    ) {
+                        ok = false;
+                        break;
+                    }
+                }
+                if ok && is_strict_map && count > 0 && !emitted {
+                    ok = false;
+                }
+                if ok && emitted && !indent.is_empty() {
+                    buf.push('\n');
+                    push_indent_str(buf, indent, depth);
+                }
+                buf.push('}');
+                ok
+            }
+        };
+        scratch.truncate(base);
+        ok
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn write_fast_jsonnet_value<'a>(
+        &'a self,
+        value: &'a Value,
+        buf: &mut String,
+        indent: &str,
+        omit_null: bool,
+        depth: usize,
+        outer_active: Option<&BTreeSet<ObjectId>>,
+        active: &mut Vec<ObjectId>,
+        scratch: &mut Vec<FastMember<'a>>,
+    ) -> bool {
+        match value {
+            Value::Null | Value::NullWithDefault(_) => buf.push_str("null"),
+            Value::Bool(v) => buf.push_str(if *v { "true" } else { "false" }),
+            Value::Int(v) => {
+                let mut num = [0u8; 24];
+                buf.push_str(super::format_i64_buf(v.get(), &mut num));
+            }
+            Value::Float(v) => buf.push_str(&crate::numeric::double_to_string(**v)),
+            Value::String(s) => return super::jsonnet::write_string(buf, s, indent, depth),
+            Value::Object(id) => {
+                if active.len() >= 32
+                    || active.contains(id)
+                    || outer_active.is_some_and(|set| set.contains(id))
+                {
+                    return false;
+                }
+                active.push(*id);
+                let ok = self.write_fast_jsonnet_object(
+                    *id,
+                    buf,
+                    indent,
+                    omit_null,
+                    depth,
+                    outer_active,
+                    active,
+                    scratch,
+                );
+                active.pop();
+                return ok;
+            }
+            _ => return false,
+        }
+        true
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn write_fast_jsonnet_object<'a>(
+        &'a self,
+        id: ObjectId,
+        buf: &mut String,
+        indent: &str,
+        omit_null: bool,
+        depth: usize,
+        outer_active: Option<&BTreeSet<ObjectId>>,
+        active: &mut Vec<ObjectId>,
+        scratch: &mut Vec<FastMember<'a>>,
+    ) -> bool {
+        let base = scratch.len();
+        let Some(kind) = self.extract_fast_object(id, scratch, false) else {
+            return false;
+        };
+        let child_depth = depth + 1;
+        let ok = match kind {
+            FastObjectKind::StrictList(elems) => {
+                buf.push('[');
+                let mut ok = true;
+                for (i, elem) in elems.iter().enumerate() {
+                    if i > 0 {
+                        buf.push(',');
+                    }
+                    if !indent.is_empty() {
+                        buf.push('\n');
+                        push_indent_str(buf, indent, child_depth);
+                    } else if i > 0 {
+                        buf.push(' ');
+                    }
+                    if !self.write_fast_jsonnet_value(
+                        elem,
+                        buf,
+                        indent,
+                        omit_null,
+                        child_depth,
+                        outer_active,
+                        active,
+                        scratch,
+                    ) {
+                        ok = false;
+                        break;
+                    }
+                }
+                if ok && !elems.is_empty() && !indent.is_empty() {
+                    buf.push(',');
+                    buf.push('\n');
+                    push_indent_str(buf, indent, depth);
+                }
+                buf.push(']');
+                ok
+            }
+            FastObjectKind::EmptyList => {
+                buf.push_str("[]");
+                true
+            }
+            FastObjectKind::StrictSet(count)
+            | FastObjectKind::PlainListing(count)
+            | FastObjectKind::PlainDynamic {
+                count,
+                has_elements: true,
+                has_keyed: false,
+            } => {
+                let end = base + count;
+                buf.push('[');
+                let mut ok = true;
+                for i in base..end {
+                    if i > base {
+                        buf.push(',');
+                    }
+                    if !indent.is_empty() {
+                        buf.push('\n');
+                        push_indent_str(buf, indent, child_depth);
+                    } else if i > base {
+                        buf.push(' ');
+                    }
+                    let FastMember::Element(_, elem) = scratch[i] else {
+                        ok = false;
+                        break;
+                    };
+                    if !self.write_fast_jsonnet_value(
+                        elem,
+                        buf,
+                        indent,
+                        omit_null,
+                        child_depth,
+                        outer_active,
+                        active,
+                        scratch,
+                    ) {
+                        ok = false;
+                        break;
+                    }
+                }
+                if ok && count > 0 && !indent.is_empty() {
+                    buf.push(',');
+                    buf.push('\n');
+                    push_indent_str(buf, indent, depth);
+                }
+                buf.push(']');
+                ok
+            }
+            FastObjectKind::PlainDynamic {
+                has_elements: true,
+                has_keyed: true,
+                ..
+            } => false,
+            FastObjectKind::StrictMap(count)
+            | FastObjectKind::PlainMapping(count)
+            | FastObjectKind::PlainDynamic {
+                count,
+                has_elements: false,
+                ..
+            }
+            | FastObjectKind::PlainModule { count, .. } => {
+                let is_strict_map = matches!(kind, FastObjectKind::StrictMap(_));
+                let end = base + count;
+                buf.push('{');
+                let mut emitted = false;
+                let mut ok = true;
+                for i in base..end {
+                    let (key, val) = match scratch[i] {
+                        FastMember::Property(name, val) => (name, val),
+                        FastMember::Entry(Value::String(name), val) => (name, val),
+                        _ => {
+                            ok = false;
+                            break;
+                        }
+                    };
+                    if omit_null && val.is_null() {
+                        continue;
+                    }
+                    if emitted {
+                        buf.push(',');
+                    }
+                    if !indent.is_empty() {
+                        buf.push('\n');
+                        push_indent_str(buf, indent, child_depth);
+                    } else {
+                        buf.push(' ');
+                    }
+                    emitted = true;
+                    if !super::jsonnet::write_field_name(buf, key, indent, child_depth) {
+                        ok = false;
+                        break;
+                    }
+                    buf.push_str(": ");
+                    if !self.write_fast_jsonnet_value(
+                        val,
+                        buf,
+                        indent,
+                        omit_null,
+                        child_depth,
+                        outer_active,
+                        active,
+                        scratch,
+                    ) {
+                        ok = false;
+                        break;
+                    }
+                }
+                if ok && is_strict_map && count > 0 && !emitted {
+                    ok = false;
+                }
+                if ok && emitted {
+                    if !indent.is_empty() {
+                        buf.push(',');
+                        buf.push('\n');
+                        push_indent_str(buf, indent, depth);
+                    } else {
+                        buf.push(' ');
+                    }
+                }
+                buf.push('}');
+                ok
+            }
+        };
+        scratch.truncate(base);
+        ok
+    }
+
+    fn write_fast_yaml_value<'a>(
+        &'a self,
+        value: &'a Value,
+        yaml: &mut super::yaml::Emitter,
+        omit_null: bool,
+        outer_active: Option<&BTreeSet<ObjectId>>,
+        active: &mut Vec<ObjectId>,
+        scratch: &mut Vec<FastMember<'a>>,
+    ) -> bool {
+        match value {
+            Value::Null | Value::NullWithDefault(_) => yaml.scalar_str("null"),
+            Value::Bool(v) => yaml.scalar_str(if *v { "true" } else { "false" }),
+            Value::Int(v) => {
+                let mut num = [0u8; 24];
+                yaml.scalar_str(super::format_i64_buf(v.get(), &mut num));
+            }
+            Value::Float(v) => {
+                if v.is_nan() {
+                    yaml.scalar_str(".NaN");
+                } else if **v == f64::INFINITY {
+                    yaml.scalar_str(".Inf");
+                } else if **v == f64::NEG_INFINITY {
+                    yaml.scalar_str("-.Inf");
+                } else {
+                    yaml.scalar_str(&crate::numeric::double_to_string(**v));
+                }
+            }
+            Value::String(s) => {
+                if s.as_str().is_none() {
+                    return false;
+                }
+                yaml.string_value(s);
+            }
+            Value::Bytes(bytes) => yaml.bytes(bytes),
+            Value::Object(id) => {
+                if active.len() >= 32
+                    || active.contains(id)
+                    || outer_active.is_some_and(|set| set.contains(id))
+                {
+                    return false;
+                }
+                active.push(*id);
+                let ok = self.write_fast_yaml_object(
+                    *id,
+                    yaml,
+                    omit_null,
+                    outer_active,
+                    active,
+                    scratch,
+                );
+                active.pop();
+                return ok;
+            }
+            _ => return false,
+        }
+        true
+    }
+
+    fn write_fast_yaml_object<'a>(
+        &'a self,
+        id: ObjectId,
+        yaml: &mut super::yaml::Emitter,
+        omit_null: bool,
+        outer_active: Option<&BTreeSet<ObjectId>>,
+        active: &mut Vec<ObjectId>,
+        scratch: &mut Vec<FastMember<'a>>,
+    ) -> bool {
+        let base = scratch.len();
+        let Some(kind) = self.extract_fast_object(id, scratch, false) else {
+            return false;
+        };
+        let ok = match kind {
+            FastObjectKind::StrictList(elems) => {
+                yaml.start(true);
+                let mut ok = true;
+                for (i, elem) in elems.iter().enumerate() {
+                    yaml.member(true, i == 0);
+                    if !self.write_fast_yaml_value(
+                        elem,
+                        yaml,
+                        omit_null,
+                        outer_active,
+                        active,
+                        scratch,
+                    ) {
+                        ok = false;
+                        break;
+                    }
+                }
+                if ok {
+                    yaml.close(elems.is_empty());
+                }
+                ok
+            }
+            FastObjectKind::EmptyList => {
+                yaml.start(true);
+                yaml.close(true);
+                true
+            }
+            FastObjectKind::StrictSet(count)
+            | FastObjectKind::PlainListing(count)
+            | FastObjectKind::PlainDynamic {
+                count,
+                has_elements: true,
+                has_keyed: false,
+            } => {
+                let end = base + count;
+                yaml.start(true);
+                let mut ok = true;
+                for i in base..end {
+                    yaml.member(true, i == base);
+                    let FastMember::Element(_, elem) = scratch[i] else {
+                        ok = false;
+                        break;
+                    };
+                    if !self.write_fast_yaml_value(
+                        elem,
+                        yaml,
+                        omit_null,
+                        outer_active,
+                        active,
+                        scratch,
+                    ) {
+                        ok = false;
+                        break;
+                    }
+                }
+                if ok {
+                    yaml.close(count == 0);
+                }
+                ok
+            }
+            FastObjectKind::PlainDynamic {
+                has_elements: true,
+                has_keyed: true,
+                ..
+            } => false,
+            FastObjectKind::StrictMap(count)
+            | FastObjectKind::PlainMapping(count)
+            | FastObjectKind::PlainDynamic {
+                count,
+                has_elements: false,
+                ..
+            }
+            | FastObjectKind::PlainModule { count, .. } => {
+                let is_strict_map = matches!(kind, FastObjectKind::StrictMap(_));
+                let end = base + count;
+                yaml.start(false);
+                let mut emitted = false;
+                let mut ok = true;
+                for i in base..end {
+                    match scratch[i] {
+                        FastMember::Property(name, val) => {
+                            if omit_null && val.is_null() {
+                                continue;
+                            }
+                            if name.as_str().is_none() {
+                                ok = false;
+                                break;
+                            }
+                            yaml.member(false, !emitted);
+                            emitted = true;
+                            yaml.string(name, true);
+                            yaml.text(":");
+                            if !self.write_fast_yaml_value(
+                                val,
+                                yaml,
+                                omit_null,
+                                outer_active,
+                                active,
+                                scratch,
+                            ) {
+                                ok = false;
+                                break;
+                            }
+                        }
+                        FastMember::Entry(key, val) => {
+                            if !matches!(
+                                key,
+                                Value::Null
+                                    | Value::NullWithDefault(_)
+                                    | Value::String(_)
+                                    | Value::Bool(_)
+                                    | Value::Int(_)
+                                    | Value::Float(_)
+                            ) {
+                                ok = false;
+                                break;
+                            }
+                            if omit_null && val.is_null() {
+                                continue;
+                            }
+                            yaml.member(false, !emitted);
+                            emitted = true;
+                            match key {
+                                Value::String(s) => {
+                                    if s.as_str().is_none() {
+                                        ok = false;
+                                        break;
+                                    }
+                                    yaml.string(s, true);
+                                }
+                                Value::Null | Value::NullWithDefault(_) => yaml.text("null"),
+                                Value::Bool(v) => yaml.text(if *v { "true" } else { "false" }),
+                                Value::Int(v) => {
+                                    let mut num = [0u8; 24];
+                                    yaml.text(super::format_i64_buf(v.get(), &mut num));
+                                }
+                                Value::Float(v) => {
+                                    if v.is_nan() {
+                                        yaml.text(".NaN");
+                                    } else if **v == f64::INFINITY {
+                                        yaml.text(".Inf");
+                                    } else if **v == f64::NEG_INFINITY {
+                                        yaml.text("-.Inf");
+                                    } else {
+                                        yaml.text(&crate::numeric::double_to_string(**v));
+                                    }
+                                }
+                                _ => unreachable!(),
+                            }
+                            yaml.text(":");
+                            if !self.write_fast_yaml_value(
+                                val,
+                                yaml,
+                                omit_null,
+                                outer_active,
+                                active,
+                                scratch,
+                            ) {
+                                ok = false;
+                                break;
+                            }
+                        }
+                        FastMember::Element(..) => {
+                            ok = false;
+                            break;
+                        }
+                    }
+                }
+                if ok && is_strict_map && count > 0 && !emitted {
+                    ok = false;
+                }
+                if ok {
+                    yaml.close(!emitted);
+                }
+                ok
+            }
+        };
+        scratch.truncate(base);
+        ok
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn write_fast_plist_value<'a>(
+        &'a self,
+        value: &'a Value,
+        buf: &mut String,
+        indent: &str,
+        depth: usize,
+        outer_active: Option<&BTreeSet<ObjectId>>,
+        active: &mut Vec<ObjectId>,
+        scratch: &mut Vec<FastMember<'a>>,
+    ) -> bool {
+        if let Value::Object(id) = value {
+            if active.len() >= 32
+                || active.contains(id)
+                || outer_active.is_some_and(|set| set.contains(id))
+            {
+                return false;
+            }
+            active.push(*id);
+            let ok = self.write_fast_plist_object(
+                *id,
+                buf,
+                indent,
+                depth,
+                outer_active,
+                active,
+                scratch,
+            );
+            active.pop();
+            return ok;
+        }
+        super::plist::write_scalar(buf, value)
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn write_fast_plist_object<'a>(
+        &'a self,
+        id: ObjectId,
+        buf: &mut String,
+        indent: &str,
+        depth: usize,
+        outer_active: Option<&BTreeSet<ObjectId>>,
+        active: &mut Vec<ObjectId>,
+        scratch: &mut Vec<FastMember<'a>>,
+    ) -> bool {
+        let base = scratch.len();
+        let Some(kind) = self.extract_fast_object(id, scratch, false) else {
+            return false;
+        };
+        let child_depth = depth + 1;
+        let ok = match kind {
+            FastObjectKind::StrictList(elems) => {
+                if elems.is_empty() {
+                    push_indent_str(buf, indent, depth);
+                    buf.push_str("<array/>");
+                    true
+                } else {
+                    buf.push_str("<array>\n");
+                    let mut ok = true;
+                    for elem in elems {
+                        push_indent_str(buf, indent, child_depth);
+                        if !self.write_fast_plist_value(
+                            elem,
+                            buf,
+                            indent,
+                            child_depth,
+                            outer_active,
+                            active,
+                            scratch,
+                        ) {
+                            ok = false;
+                            break;
+                        }
+                        buf.push('\n');
+                    }
+                    if ok {
+                        push_indent_str(buf, indent, depth);
+                        buf.push_str("</array>");
+                    }
+                    ok
+                }
+            }
+            FastObjectKind::EmptyList => {
+                push_indent_str(buf, indent, depth);
+                buf.push_str("<array/>");
+                true
+            }
+            FastObjectKind::StrictSet(count)
+            | FastObjectKind::PlainListing(count)
+            | FastObjectKind::PlainDynamic {
+                count,
+                has_elements: true,
+                has_keyed: false,
+            } => {
+                if count == 0 {
+                    push_indent_str(buf, indent, depth);
+                    buf.push_str("<array/>");
+                    true
+                } else {
+                    let end = base + count;
+                    buf.push_str("<array>\n");
+                    let mut ok = true;
+                    for i in base..end {
+                        let FastMember::Element(_, elem) = scratch[i] else {
+                            ok = false;
+                            break;
+                        };
+                        push_indent_str(buf, indent, child_depth);
+                        if !self.write_fast_plist_value(
+                            elem,
+                            buf,
+                            indent,
+                            child_depth,
+                            outer_active,
+                            active,
+                            scratch,
+                        ) {
+                            ok = false;
+                            break;
+                        }
+                        buf.push('\n');
+                    }
+                    if ok {
+                        push_indent_str(buf, indent, depth);
+                        buf.push_str("</array>");
+                    }
+                    ok
+                }
+            }
+            FastObjectKind::PlainDynamic {
+                has_elements: true,
+                has_keyed: true,
+                ..
+            } => false,
+            FastObjectKind::StrictMap(count)
+            | FastObjectKind::PlainMapping(count)
+            | FastObjectKind::PlainDynamic {
+                count,
+                has_elements: false,
+                ..
+            }
+            | FastObjectKind::PlainModule { count, .. } => {
+                let is_strict_map = matches!(kind, FastObjectKind::StrictMap(_));
+                let end = base + count;
+                let mut emitted = false;
+                let mut ok = true;
+                for i in base..end {
+                    let (key_str, val) = match scratch[i] {
+                        FastMember::Property(name, val) => (name.as_str(), val),
+                        FastMember::Entry(Value::String(name), val) => (name.as_str(), val),
+                        _ => {
+                            ok = false;
+                            break;
+                        }
+                    };
+                    if val.is_null() {
+                        continue;
+                    }
+                    let Some(key_str) = key_str else {
+                        ok = false;
+                        break;
+                    };
+                    if !emitted {
+                        buf.push_str("<dict>\n");
+                        emitted = true;
+                    }
+                    push_indent_str(buf, indent, child_depth);
+                    buf.push_str("<key>");
+                    super::plist::write_escaped_str(buf, key_str);
+                    buf.push_str("</key>\n");
+                    push_indent_str(buf, indent, child_depth);
+                    if !self.write_fast_plist_value(
+                        val,
+                        buf,
+                        indent,
+                        child_depth,
+                        outer_active,
+                        active,
+                        scratch,
+                    ) {
+                        ok = false;
+                        break;
+                    }
+                    buf.push('\n');
+                }
+                if ok && is_strict_map && count > 0 && !emitted {
+                    ok = false;
+                }
+                if ok {
+                    push_indent_str(buf, indent, depth);
+                    buf.push_str(if emitted { "</dict>" } else { "<dict/>" });
+                }
+                ok
+            }
+        };
+        scratch.truncate(base);
+        ok
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn write_fast_xml_visit<'a>(
+        &'a self,
+        value: &'a Value,
+        buf: &mut String,
+        indent: &str,
+        version11: bool,
+        depth: usize,
+        xml_line: &mut usize,
+        output_non_empty: bool,
+        outer_active: Option<&BTreeSet<ObjectId>>,
+        active: &mut Vec<ObjectId>,
+        scratch: &mut Vec<FastMember<'a>>,
+    ) -> bool {
+        match value {
+            Value::String(s) => {
+                let Some(text) = s.as_str() else {
+                    return false;
+                };
+                super::plist::write_escaped_str(buf, text);
+                true
+            }
+            Value::Bool(_) | Value::Int(_) | Value::Float(_) => write_fast_scalar_text(buf, value),
+            Value::Object(id) => {
+                if active.len() >= 32
+                    || active.contains(id)
+                    || outer_active.is_some_and(|set| set.contains(id))
+                {
+                    return false;
+                }
+                active.push(*id);
+                let ok = self.write_fast_xml_object(
+                    *id,
+                    buf,
+                    indent,
+                    version11,
+                    depth,
+                    xml_line,
+                    output_non_empty,
+                    outer_active,
+                    active,
+                    scratch,
+                );
+                active.pop();
+                ok
+            }
+            _ => false,
+        }
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn write_fast_xml_element<'a>(
+        &'a self,
+        value: &'a Value,
+        buf: &mut String,
+        indent: &str,
+        version11: bool,
+        depth: usize,
+        xml_line: &mut usize,
+        output_non_empty: bool,
+        outer_active: Option<&BTreeSet<ObjectId>>,
+        active: &mut Vec<ObjectId>,
+        scratch: &mut Vec<FastMember<'a>>,
+    ) -> bool {
+        if value.is_null() {
+            return true;
+        }
+        match value {
+            Value::String(s) => {
+                let Some(text) = s.as_str() else {
+                    return false;
+                };
+                super::plist::write_escaped_str(buf, text);
+                true
+            }
+            Value::Bool(_) | Value::Int(_) | Value::Float(_) => write_fast_scalar_text(buf, value),
+            Value::Object(id) => {
+                if active.len() >= 32
+                    || active.contains(id)
+                    || outer_active.is_some_and(|set| set.contains(id))
+                {
+                    return false;
+                }
+                let base = scratch.len();
+                let Some(kind) = self.extract_fast_object(*id, scratch, true) else {
+                    return false;
+                };
+                let tag: PklString;
+                let tag_str = match &kind {
+                    FastObjectKind::StrictList(_) | FastObjectKind::EmptyList => "List",
+                    FastObjectKind::StrictSet(_) => "Set",
+                    FastObjectKind::StrictMap(_) => "Map",
+                    FastObjectKind::PlainDynamic { .. } => "Dynamic",
+                    FastObjectKind::PlainListing(_) => "Listing",
+                    FastObjectKind::PlainMapping(_) => "Mapping",
+                    FastObjectKind::PlainModule { class, .. } => {
+                        let Ok(name) = self.heap.class_simple_name(*class) else {
+                            scratch.truncate(base);
+                            return false;
+                        };
+                        tag = name;
+                        let Some(s) = tag.as_str() else {
+                            scratch.truncate(base);
+                            return false;
+                        };
+                        if !super::xml::valid_name_str(s, version11) {
+                            scratch.truncate(base);
+                            return false;
+                        }
+                        s
+                    }
+                };
+                if output_non_empty || !buf.is_empty() {
+                    *xml_line += 1;
+                    buf.push('\n');
+                    push_indent_str(buf, indent, depth);
+                }
+                buf.push('<');
+                buf.push_str(tag_str);
+                buf.push('>');
+                let open_line = *xml_line;
+                active.push(*id);
+                let ok = self.write_fast_xml_object_members(
+                    kind,
+                    base,
+                    buf,
+                    indent,
+                    version11,
+                    depth + 1,
+                    xml_line,
+                    true,
+                    outer_active,
+                    active,
+                    scratch,
+                );
+                active.pop();
+                scratch.truncate(base);
+                if !ok {
+                    return false;
+                }
+                if open_line < *xml_line {
+                    *xml_line += 1;
+                    buf.push('\n');
+                    push_indent_str(buf, indent, depth);
+                }
+                buf.push_str("</");
+                buf.push_str(tag_str);
+                buf.push('>');
+                true
+            }
+            _ => false,
+        }
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn write_fast_xml_object<'a>(
+        &'a self,
+        id: ObjectId,
+        buf: &mut String,
+        indent: &str,
+        version11: bool,
+        depth: usize,
+        xml_line: &mut usize,
+        output_non_empty: bool,
+        outer_active: Option<&BTreeSet<ObjectId>>,
+        active: &mut Vec<ObjectId>,
+        scratch: &mut Vec<FastMember<'a>>,
+    ) -> bool {
+        let base = scratch.len();
+        let Some(kind) = self.extract_fast_object(id, scratch, true) else {
+            return false;
+        };
+        let ok = self.write_fast_xml_object_members(
+            kind,
+            base,
+            buf,
+            indent,
+            version11,
+            depth,
+            xml_line,
+            output_non_empty,
+            outer_active,
+            active,
+            scratch,
+        );
+        scratch.truncate(base);
+        ok
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn write_fast_xml_object_members<'a>(
+        &'a self,
+        kind: FastObjectKind<'a>,
+        base: usize,
+        buf: &mut String,
+        indent: &str,
+        version11: bool,
+        depth: usize,
+        xml_line: &mut usize,
+        output_non_empty: bool,
+        outer_active: Option<&BTreeSet<ObjectId>>,
+        active: &mut Vec<ObjectId>,
+        scratch: &mut Vec<FastMember<'a>>,
+    ) -> bool {
+        match kind {
+            FastObjectKind::StrictList(elems) => elems.iter().all(|elem| {
+                self.write_fast_xml_element(
+                    elem,
+                    buf,
+                    indent,
+                    version11,
+                    depth,
+                    xml_line,
+                    output_non_empty,
+                    outer_active,
+                    active,
+                    scratch,
+                )
+            }),
+            FastObjectKind::EmptyList => true,
+            FastObjectKind::StrictSet(count)
+            | FastObjectKind::PlainListing(count)
+            | FastObjectKind::PlainDynamic {
+                count,
+                has_elements: true,
+                has_keyed: false,
+            } => {
+                let end = base + count;
+                for i in base..end {
+                    let FastMember::Element(_, elem) = scratch[i] else {
+                        return false;
+                    };
+                    if !self.write_fast_xml_element(
+                        elem,
+                        buf,
+                        indent,
+                        version11,
+                        depth,
+                        xml_line,
+                        output_non_empty,
+                        outer_active,
+                        active,
+                        scratch,
+                    ) {
+                        return false;
+                    }
+                }
+                true
+            }
+            FastObjectKind::PlainDynamic {
+                has_elements: true,
+                has_keyed: true,
+                ..
+            } => false,
+            FastObjectKind::StrictMap(count)
+            | FastObjectKind::PlainMapping(count)
+            | FastObjectKind::PlainDynamic {
+                count,
+                has_elements: false,
+                ..
+            }
+            | FastObjectKind::PlainModule { count, .. } => {
+                let end = base + count;
+                for i in base..end {
+                    let (key_str, val) = match scratch[i] {
+                        FastMember::Property(name, val) => (name.as_str(), val),
+                        FastMember::Entry(Value::String(name), val) => (name.as_str(), val),
+                        _ => return false,
+                    };
+                    if val.is_null() {
+                        continue;
+                    }
+                    let Some(key_str) = key_str else {
+                        return false;
+                    };
+                    if !super::xml::valid_name_str(key_str, version11) {
+                        return false;
+                    }
+                    if output_non_empty || !buf.is_empty() {
+                        *xml_line += 1;
+                        buf.push('\n');
+                        push_indent_str(buf, indent, depth);
+                    }
+                    buf.push('<');
+                    buf.push_str(key_str);
+                    buf.push('>');
+                    let open_line = *xml_line;
+                    if !self.write_fast_xml_visit(
+                        val,
+                        buf,
+                        indent,
+                        version11,
+                        depth + 1,
+                        xml_line,
+                        true,
+                        outer_active,
+                        active,
+                        scratch,
+                    ) {
+                        return false;
+                    }
+                    if open_line < *xml_line {
+                        *xml_line += 1;
+                        buf.push('\n');
+                        push_indent_str(buf, indent, depth);
+                    }
+                    buf.push_str("</");
+                    buf.push_str(key_str);
+                    buf.push('>');
+                }
+                true
+            }
+        }
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn write_fast_properties_object<'a>(
+        &'a self,
+        id: ObjectId,
+        buf: &mut String,
+        prefix: &mut String,
+        omit_null: bool,
+        restrict_charset: bool,
+        outer_active: Option<&BTreeSet<ObjectId>>,
+        active: &mut Vec<ObjectId>,
+        scratch: &mut Vec<FastMember<'a>>,
+    ) -> bool {
+        let base = scratch.len();
+        let Some(kind) = self.extract_fast_object(id, scratch, false) else {
+            return false;
+        };
+        let count = match kind {
+            FastObjectKind::StrictMap(count)
+            | FastObjectKind::PlainMapping(count)
+            | FastObjectKind::PlainModule { count, .. } => count,
+            FastObjectKind::PlainDynamic {
+                count,
+                has_elements: false,
+                ..
+            } => {
+                if self.heap.get_fast(id).is_none_or(|o| o.length != 0) {
+                    scratch.truncate(base);
+                    return false;
+                }
+                count
+            }
+            _ => {
+                scratch.truncate(base);
+                return false;
+            }
+        };
+        let end = base + count;
+        let mut ok = true;
+        for i in base..end {
+            let (key_is_prop, key_val, val) = match scratch[i] {
+                FastMember::Property(name, val) => (true, Ok(name), val),
+                FastMember::Entry(key, val) => (false, Err(key), val),
+                FastMember::Element(..) => {
+                    ok = false;
+                    break;
+                }
+            };
+            if omit_null && val.is_null() {
+                continue;
+            }
+            let saved_prefix = prefix.len();
+            if !prefix.is_empty() {
+                prefix.push('.');
+            }
+            if key_is_prop {
+                let Ok(name) = key_val else { unreachable!() };
+                let Some(s) = name.as_str() else {
+                    prefix.truncate(saved_prefix);
+                    ok = false;
+                    break;
+                };
+                write_properties_str(prefix, s, true, restrict_charset);
+            } else {
+                let Err(key) = key_val else { unreachable!() };
+                match key {
+                    Value::String(s) => {
+                        let Some(s) = s.as_str() else {
+                            prefix.truncate(saved_prefix);
+                            ok = false;
+                            break;
+                        };
+                        write_properties_str(prefix, s, true, restrict_charset);
+                    }
+                    Value::Bool(_) | Value::Int(_) | Value::Float(_) => {
+                        let mut tmp = String::new();
+                        if !write_fast_scalar_text(&mut tmp, key) {
+                            prefix.truncate(saved_prefix);
+                            ok = false;
+                            break;
+                        }
+                        write_properties_str(prefix, &tmp, true, restrict_charset);
+                    }
+                    _ => {
+                        prefix.truncate(saved_prefix);
+                        ok = false;
+                        break;
+                    }
+                }
+            }
+            match val {
+                Value::Null | Value::NullWithDefault(_) => {
+                    buf.push_str(prefix);
+                    buf.push_str(" = \n");
+                }
+                Value::String(s) => {
+                    let Some(s) = s.as_str() else {
+                        prefix.truncate(saved_prefix);
+                        ok = false;
+                        break;
+                    };
+                    buf.push_str(prefix);
+                    buf.push_str(" = ");
+                    write_properties_str(buf, s, false, restrict_charset);
+                    buf.push('\n');
+                }
+                Value::Bool(_) | Value::Int(_) | Value::Float(_) => {
+                    buf.push_str(prefix);
+                    buf.push_str(" = ");
+                    let mut tmp = String::new();
+                    if !write_fast_scalar_text(&mut tmp, val) {
+                        prefix.truncate(saved_prefix);
+                        ok = false;
+                        break;
+                    }
+                    write_properties_str(buf, &tmp, false, restrict_charset);
+                    buf.push('\n');
+                }
+                Value::Object(child_id) => {
+                    if active.len() >= 32
+                        || active.contains(child_id)
+                        || outer_active.is_some_and(|set| set.contains(child_id))
+                    {
+                        prefix.truncate(saved_prefix);
+                        ok = false;
+                        break;
+                    }
+                    active.push(*child_id);
+                    let child_ok = self.write_fast_properties_object(
+                        *child_id,
+                        buf,
+                        prefix,
+                        omit_null,
+                        restrict_charset,
+                        outer_active,
+                        active,
+                        scratch,
+                    );
+                    active.pop();
+                    if !child_ok {
+                        prefix.truncate(saved_prefix);
+                        ok = false;
+                        break;
+                    }
+                }
+                _ => {
+                    prefix.truncate(saved_prefix);
+                    ok = false;
+                    break;
+                }
+            }
+            prefix.truncate(saved_prefix);
+        }
+        scratch.truncate(base);
+        ok
+    }
 }
 
 include!("xml_rendering.rs");

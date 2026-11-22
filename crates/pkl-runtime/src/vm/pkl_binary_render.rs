@@ -53,6 +53,7 @@ impl Vm {
             xml_line: 0,
             custom: false,
             started: true,
+            has_value_converters: false,
             converters: Converters::default(),
             source: None,
         });
@@ -208,6 +209,37 @@ impl Vm {
                         "cyclic value rendering",
                     ));
                 }
+                if !run.has_value_converters
+                    && object.collection_kind == CollectionKind::List
+                    && object.parent.is_none()
+                    && let Some(elems) = &object.list_elements
+                {
+                    let len = elems.len();
+                    let checkpoint = run.binary.len();
+                    let mut local_active = Vec::with_capacity(8);
+                    let mut scratch = Vec::with_capacity(16);
+                    if self.try_fast_encode_binary_object(
+                        receiver,
+                        &mut run.binary,
+                        Some(&run.active),
+                        &mut local_active,
+                        &mut scratch,
+                    ) {
+                        run.active.remove(&receiver);
+                        return Ok(false);
+                    }
+                    run.binary.truncate(checkpoint);
+                    run.binary.array(2)?;
+                    run.binary.integer(0x04)?;
+                    run.binary.array(len)?;
+                    run.tasks.push(Task::FastList {
+                        receiver,
+                        index: 0,
+                        depth,
+                        path,
+                    });
+                    return Ok(false);
+                }
                 run.tasks.push(Task::OpenObject {
                     receiver,
                     depth,
@@ -217,8 +249,7 @@ impl Vm {
                     stream: false,
                 });
                 if !strict {
-                    run.await_ = Some(Await::Shallow);
-                    self.force_shallow_frame(Value::Object(receiver))?;
+                    self.begin_shallow_force_for_render(run, receiver)?;
                 }
             }
             value => run.binary.scalar(&value)?,
@@ -393,15 +424,16 @@ impl Vm {
         Ok(())
     }
 
-    /// Direct zero-task `pkl-binary` encoder for already-forced acyclic scalar / strict-List /
-    /// plain-Dynamic / top-level-Module values. Returns `None` whenever any member needs
-    /// evaluation, inheritance traversal, cycle diagnostics, or special collection handling,
+    /// Direct zero-task `pkl-binary` encoder for already-forced acyclic scalars,
+    /// Pairs, strict Lists/Sets/Maps, plain Dynamics/Listings/Mappings, and
+    /// top-level Modules. Returns `None` whenever any member needs evaluation,
+    /// inheritance traversal, cycle diagnostics, converters, or special handling,
     /// falling back to the full resumable `RenderRun` with zero side effects.
     fn try_fast_encode_pkl_binary(&self, root: &Value) -> Option<Vec<u8>> {
         let mut wire = super::pkl_binary_wire::BinaryWire::with_capacity(4096);
         let mut active = Vec::with_capacity(8);
-        let mut scratch: Vec<(&PklString, &Value)> = Vec::with_capacity(16);
-        if self.try_fast_encode_binary_value(root, &mut wire, &mut active, &mut scratch) {
+        let mut scratch: Vec<FastMember<'_>> = Vec::with_capacity(16);
+        if self.try_fast_encode_binary_value(root, &mut wire, None, &mut active, &mut scratch) {
             Some(wire.into_bytes())
         } else {
             None
@@ -412,8 +444,9 @@ impl Vm {
         &'a self,
         value: &'a Value,
         wire: &mut super::pkl_binary_wire::BinaryWire,
+        outer_active: Option<&BTreeSet<ObjectId>>,
         active: &mut Vec<ObjectId>,
-        scratch: &mut Vec<(&'a PklString, &'a Value)>,
+        scratch: &mut Vec<FastMember<'a>>,
     ) -> bool {
         match value {
             Value::Null
@@ -430,324 +463,236 @@ impl Vm {
             | Value::Function(_) => wire.scalar(value).is_ok(),
             Value::Class(_) | Value::TypeAlias(_) => false,
             Value::Object(id) => {
-                if active.len() >= 32 || active.contains(id) {
+                if active.len() >= 32
+                    || active.contains(id)
+                    || outer_active.is_some_and(|set| set.contains(id))
+                {
                     return false;
                 }
                 let Some(obj) = self.heap.get_fast(*id) else {
                     return false;
                 };
-                if obj.pair.is_some()
-                    || obj.reference.is_some()
-                    || obj.foreign_map_entry.is_some()
-                    || obj.function.is_some()
-                    || obj.native_function.is_some()
-                {
-                    return false;
+                if let Some(pair) = obj.pair.as_deref() {
+                    if wire.array(3).is_err() || wire.integer(0x09).is_err() {
+                        return false;
+                    }
+                    return self.try_fast_encode_binary_value(
+                        &pair[0],
+                        wire,
+                        outer_active,
+                        active,
+                        scratch,
+                    ) && self.try_fast_encode_binary_value(
+                        &pair[1],
+                        wire,
+                        outer_active,
+                        active,
+                        scratch,
+                    );
                 }
-                if obj.collection_kind == CollectionKind::List && obj.parent.is_none() {
-                    let Some(elems) = &obj.list_elements else {
-                        return false;
-                    };
-                    if wire.array(2).is_err()
-                        || wire.integer(0x04).is_err()
-                        || wire.array(elems.len()).is_err()
-                    {
-                        return false;
-                    }
-                    active.push(*id);
-                    for elem in elems {
-                        if !self.try_fast_encode_binary_value(elem, wire, active, scratch) {
-                            active.pop();
-                            return false;
-                        }
-                    }
-                    active.pop();
-                    return true;
-                }
-                if obj.collection_kind != CollectionKind::Dynamic
-                    || !obj.member_annotations.is_empty()
-                    || obj
-                        .collection_members
-                        .iter()
-                        .any(|cm| cm.kind != CollectionMemberKind::Property)
-                {
-                    return false;
-                }
-                // Case 1: plain un-amended `new Dynamic { prop = val; ... }`
-                let instance_class_is_none_or_dynamic = match obj.instance_class {
-                    None => true,
-                    Some(cls) => self
-                        .heap
-                        .get_class(cls)
-                        .ok()
-                        .and_then(|c| self.heap.get_fast(c.prototype))
-                        .and_then(|p| p.builtin_type.as_ref())
-                        .and_then(classes::BuiltinClass::from_type)
-                        == Some(classes::BuiltinClass::Dynamic),
-                };
-                let parent_is_empty_dynamic = {
-                    let mut cur = obj.parent;
-                    let mut hops = 0u8;
-                    let mut ok = true;
-                    while let Some(p) = cur {
-                        hops += 1;
-                        if hops > 4 {
-                            ok = false;
-                            break;
-                        }
-                        let Some(pobj) = self.heap.get_fast(p) else {
-                            ok = false;
-                            break;
-                        };
-                        if pobj.collection_kind != CollectionKind::Dynamic
-                            || pobj.is_module
-                            || !pobj.collection_members.is_empty()
-                        {
-                            ok = false;
-                            break;
-                        }
-                        if pobj
-                            .builtin_type
-                            .as_ref()
-                            .and_then(classes::BuiltinClass::from_type)
-                            == Some(classes::BuiltinClass::Dynamic)
-                        {
-                            break;
-                        }
-                        if pobj.instance_class.is_some() || !pobj.members.is_empty() {
-                            ok = false;
-                            break;
-                        }
-                        cur = pobj.parent;
-                    }
-                    ok
-                };
-                if !obj.is_module && instance_class_is_none_or_dynamic && parent_is_empty_dynamic {
-                    if obj.members.iter().any(|m| {
-                        m.entry
-                            || m.hidden()
-                            || (!m.local
-                                && !m.method
-                                && !m.definition()
-                                && !m.import()
-                                && !m.external()
-                                && m.name == "default")
-                    }) {
-                        return false;
-                    }
-                    let base = scratch.len();
-                    if !obj.collection_members.is_empty() {
-                        let slots_aligned = obj.cache_slots.len() == obj.collection_members.len();
-                        for (idx, cm) in obj.collection_members.iter().enumerate() {
-                            if cm.name == "default" {
-                                scratch.truncate(base);
-                                return false;
-                            }
-                            if scratch[base..].iter().any(|(prev, _)| *prev == &cm.name) {
-                                scratch.truncate(base);
-                                return false;
-                            }
-                            let val = if slots_aligned
-                                && !obj.cache_slots[idx].key.entry
-                                && !obj.cache_slots[idx].key.method
-                                && obj.cache_slots[idx].key.owner.is_none()
-                                && obj.cache_slots[idx].key.name == cm.name
-                            {
-                                &obj.cache_slots[idx].value
-                            } else if let Some(val) =
-                                super::fast_lookup_cached(obj, None, &cm.name, false)
-                            {
-                                val
-                            } else {
-                                scratch.truncate(base);
-                                return false;
-                            };
-                            scratch.push((&cm.name, val));
-                        }
-                    } else {
-                        let slots_aligned = obj.cache_slots.len() == obj.members.len();
-                        for (idx, m) in obj.members.iter().enumerate() {
-                            if m.local
-                                || m.method
-                                || m.entry
-                                || m.definition()
-                                || m.import()
-                                || m.external()
-                                || m.hidden()
-                            {
-                                continue;
-                            }
-                            if scratch[base..].iter().any(|(prev, _)| *prev == &m.name) {
-                                scratch.truncate(base);
-                                return false;
-                            }
-                            let val = if slots_aligned
-                                && !obj.cache_slots[idx].key.entry
-                                && !obj.cache_slots[idx].key.method
-                                && obj.cache_slots[idx].key.owner.is_none()
-                                && obj.cache_slots[idx].key.name == m.name
-                            {
-                                &obj.cache_slots[idx].value
-                            } else if let Some(val) =
-                                super::fast_lookup_cached(obj, None, &m.name, false)
-                            {
-                                val
-                            } else {
-                                scratch.truncate(base);
-                                return false;
-                            };
-                            scratch.push((&m.name, val));
-                        }
-                    }
-                    let count = scratch.len() - base;
-                    if let Some(expected_count) = obj.dynamic_regular_member_count
-                        && expected_count != count
-                    {
-                        scratch.truncate(base);
-                        return false;
-                    }
-                    if wire.array(4).is_err()
-                        || wire.integer(0x01).is_err()
-                        || wire.str_bytes("Dynamic").is_err()
-                        || wire.str_bytes("pkl:base").is_err()
-                        || wire.array(count).is_err()
-                    {
-                        scratch.truncate(base);
-                        return false;
-                    }
-                    active.push(*id);
-                    let end = base + count;
-                    for i in base..end {
-                        let (name, val) = scratch[i];
-                        if wire.array(3).is_err()
-                            || wire.integer(0x10).is_err()
-                            || wire.string(name).is_err()
-                            || !self.try_fast_encode_binary_value(val, wire, active, scratch)
-                        {
-                            active.pop();
-                            scratch.truncate(base);
-                            return false;
-                        }
-                    }
-                    active.pop();
-                    scratch.truncate(base);
-                    return true;
-                }
-                // Case 2: plain top-level module whose parent is None, `pkl.base#Module`
-                // prototype, or `pkl:base`
-                if obj.is_module && self.is_render_directive(*id).ok() == Some(false) {
-                    let parent_is_none_or_base = match obj.parent {
-                        None => true,
-                        Some(p) => self.heap.get_fast(p).is_some_and(|pobj| {
-                            pobj.builtin_type
-                                .as_ref()
-                                .and_then(classes::BuiltinClass::from_type)
-                                == Some(classes::BuiltinClass::Ordinary(output::MODULE))
-                                || pobj
-                                    .module_unit
-                                    .and_then(|u| self.program.units.get(u.0 as usize))
-                                    .and_then(|u| u.identity.as_ref())
-                                    .is_some_and(|ident| ident.original_uri == "pkl:base")
-                        }),
-                    };
-                    if !parent_is_none_or_base {
-                        return false;
-                    }
-                    let Ok(Some(class)) = self.heap.object_class(*id) else {
-                        return false;
-                    };
-                    let Ok((class_name, class_uri)) = self.binary_declared_class_identity(class)
-                    else {
-                        return false;
-                    };
-                    let base = scratch.len();
-                    if !obj.collection_members.is_empty() {
-                        for cm in &obj.collection_members {
-                            match collections::hidden_property(&self.heap, *id, &cm.name, false) {
-                                Ok(true) => continue,
-                                Ok(false) => {}
-                                Err(_) => {
-                                    scratch.truncate(base);
-                                    return false;
-                                }
-                            }
-                            if scratch[base..].iter().any(|(prev, _)| *prev == &cm.name) {
-                                scratch.truncate(base);
-                                return false;
-                            }
-                            let Some(val) = super::fast_lookup_cached(obj, None, &cm.name, false)
-                            else {
-                                scratch.truncate(base);
-                                return false;
-                            };
-                            scratch.push((&cm.name, val));
-                        }
-                    } else {
-                        for m in &obj.members {
-                            if m.local
-                                || m.method
-                                || m.entry
-                                || m.definition()
-                                || m.import()
-                                || m.external()
-                                || m.hidden()
-                            {
-                                continue;
-                            }
-                            match collections::hidden_property(&self.heap, *id, &m.name, false) {
-                                Ok(true) => continue,
-                                Ok(false) => {}
-                                Err(_) => {
-                                    scratch.truncate(base);
-                                    return false;
-                                }
-                            }
-                            if scratch[base..].iter().any(|(prev, _)| *prev == &m.name) {
-                                scratch.truncate(base);
-                                return false;
-                            }
-                            let Some(val) = super::fast_lookup_cached(obj, None, &m.name, false)
-                            else {
-                                scratch.truncate(base);
-                                return false;
-                            };
-                            scratch.push((&m.name, val));
-                        }
-                    }
-                    let count = scratch.len() - base;
-                    if self.binary_regular_property_count(*id).ok() != Some(count) {
-                        scratch.truncate(base);
-                        return false;
-                    }
-                    if wire.array(4).is_err()
-                        || wire.integer(0x01).is_err()
-                        || wire.string(&class_name).is_err()
-                        || wire.string(&class_uri).is_err()
-                        || wire.array(count).is_err()
-                    {
-                        scratch.truncate(base);
-                        return false;
-                    }
-                    active.push(*id);
-                    let end = base + count;
-                    for i in base..end {
-                        let (name, val) = scratch[i];
-                        if wire.array(3).is_err()
-                            || wire.integer(0x10).is_err()
-                            || wire.string(name).is_err()
-                            || !self.try_fast_encode_binary_value(val, wire, active, scratch)
-                        {
-                            active.pop();
-                            scratch.truncate(base);
-                            return false;
-                        }
-                    }
-                    active.pop();
-                    scratch.truncate(base);
-                    return true;
-                }
-                false
+                active.push(*id);
+                let ok =
+                    self.try_fast_encode_binary_object(*id, wire, outer_active, active, scratch);
+                active.pop();
+                ok
             }
         }
+    }
+
+    /// Encodes an already-open object (already tracked in `outer_active` or `active`)
+    /// directly into `wire`. On `false`, callers must truncate `wire` to their saved checkpoint.
+    fn try_fast_encode_binary_object<'a>(
+        &'a self,
+        id: ObjectId,
+        wire: &mut super::pkl_binary_wire::BinaryWire,
+        outer_active: Option<&BTreeSet<ObjectId>>,
+        active: &mut Vec<ObjectId>,
+        scratch: &mut Vec<FastMember<'a>>,
+    ) -> bool {
+        let base = scratch.len();
+        let Some(kind) = self.extract_fast_object(id, scratch, false) else {
+            return false;
+        };
+        let ok = match kind {
+            FastObjectKind::StrictList(elems) => {
+                wire.array(2).is_ok()
+                    && wire.integer(0x04).is_ok()
+                    && wire.array(elems.len()).is_ok()
+                    && elems.iter().all(|elem| {
+                        self.try_fast_encode_binary_value(elem, wire, outer_active, active, scratch)
+                    })
+            }
+            FastObjectKind::EmptyList => {
+                wire.array(2).is_ok() && wire.integer(0x04).is_ok() && wire.array(0).is_ok()
+            }
+            FastObjectKind::StrictSet(count) => {
+                let end = base + count;
+                wire.array(2).is_ok()
+                    && wire.integer(0x06).is_ok()
+                    && wire.array(count).is_ok()
+                    && (base..end).all(|i| match scratch[i] {
+                        FastMember::Element(_, val) => self.try_fast_encode_binary_value(
+                            val,
+                            wire,
+                            outer_active,
+                            active,
+                            scratch,
+                        ),
+                        _ => false,
+                    })
+            }
+            FastObjectKind::StrictMap(count) => {
+                let end = base + count;
+                wire.array(2).is_ok()
+                    && wire.integer(0x02).is_ok()
+                    && wire.map(count).is_ok()
+                    && (base..end).all(|i| match scratch[i] {
+                        FastMember::Entry(k, v) => {
+                            self.try_fast_encode_binary_value(
+                                k,
+                                wire,
+                                outer_active,
+                                active,
+                                scratch,
+                            ) && self.try_fast_encode_binary_value(
+                                v,
+                                wire,
+                                outer_active,
+                                active,
+                                scratch,
+                            )
+                        }
+                        _ => false,
+                    })
+            }
+            FastObjectKind::PlainListing(count) => {
+                let end = base + count;
+                wire.array(2).is_ok()
+                    && wire.integer(0x05).is_ok()
+                    && wire.array(count).is_ok()
+                    && (base..end).all(|i| match scratch[i] {
+                        FastMember::Element(_, val) => self.try_fast_encode_binary_value(
+                            val,
+                            wire,
+                            outer_active,
+                            active,
+                            scratch,
+                        ),
+                        _ => false,
+                    })
+            }
+            FastObjectKind::PlainMapping(count) => {
+                let end = base + count;
+                self.heap
+                    .get_fast(id)
+                    .is_some_and(|obj| obj.mapping_length == Some(count))
+                    && wire.array(2).is_ok()
+                    && wire.integer(0x03).is_ok()
+                    && wire.map(count).is_ok()
+                    && (base..end).all(|i| match scratch[i] {
+                        FastMember::Entry(k, v) => {
+                            self.try_fast_encode_binary_value(
+                                k,
+                                wire,
+                                outer_active,
+                                active,
+                                scratch,
+                            ) && self.try_fast_encode_binary_value(
+                                v,
+                                wire,
+                                outer_active,
+                                active,
+                                scratch,
+                            )
+                        }
+                        _ => false,
+                    })
+            }
+            FastObjectKind::PlainDynamic { count, .. } => {
+                let end = base + count;
+                wire.array(4).is_ok()
+                    && wire.integer(0x01).is_ok()
+                    && wire.str_bytes("Dynamic").is_ok()
+                    && wire.str_bytes("pkl:base").is_ok()
+                    && wire.array(count).is_ok()
+                    && (base..end).all(|i| match scratch[i] {
+                        FastMember::Property(name, val) => {
+                            wire.array(3).is_ok()
+                                && wire.integer(0x10).is_ok()
+                                && wire.string(name).is_ok()
+                                && self.try_fast_encode_binary_value(
+                                    val,
+                                    wire,
+                                    outer_active,
+                                    active,
+                                    scratch,
+                                )
+                        }
+                        FastMember::Entry(key, val) => {
+                            wire.array(3).is_ok()
+                                && wire.integer(0x11).is_ok()
+                                && self.try_fast_encode_binary_value(
+                                    key,
+                                    wire,
+                                    outer_active,
+                                    active,
+                                    scratch,
+                                )
+                                && self.try_fast_encode_binary_value(
+                                    val,
+                                    wire,
+                                    outer_active,
+                                    active,
+                                    scratch,
+                                )
+                        }
+                        FastMember::Element(idx, val) => {
+                            wire.array(3).is_ok()
+                                && wire.integer(0x12).is_ok()
+                                && wire.integer(idx).is_ok()
+                                && self.try_fast_encode_binary_value(
+                                    val,
+                                    wire,
+                                    outer_active,
+                                    active,
+                                    scratch,
+                                )
+                        }
+                    })
+            }
+            FastObjectKind::PlainModule { class, count } => {
+                let end = base + count;
+                if self.binary_regular_property_count(id).ok() != Some(count) {
+                    false
+                } else if let Ok((class_name, class_uri)) =
+                    self.binary_declared_class_identity(class)
+                {
+                    wire.array(4).is_ok()
+                        && wire.integer(0x01).is_ok()
+                        && wire.string(&class_name).is_ok()
+                        && wire.string(&class_uri).is_ok()
+                        && wire.array(count).is_ok()
+                        && (base..end).all(|i| match scratch[i] {
+                            FastMember::Property(name, val) => {
+                                wire.array(3).is_ok()
+                                    && wire.integer(0x10).is_ok()
+                                    && wire.string(name).is_ok()
+                                    && self.try_fast_encode_binary_value(
+                                        val,
+                                        wire,
+                                        outer_active,
+                                        active,
+                                        scratch,
+                                    )
+                            }
+                            _ => false,
+                        })
+                } else {
+                    false
+                }
+            }
+        };
+        scratch.truncate(base);
+        ok
     }
 }
