@@ -2,9 +2,9 @@
 
 use crate::migrator::{self, DocMigrator};
 use crate::model::{DocGeneratorError, DocPackage, DocPackageInfo, DocsiteInfo};
-use crate::package_data::{PackageData, generate_package_data};
+use crate::package_data::PackageData;
 use crate::pages::HtmlGenerator;
-use crate::runtime_data::{RuntimeDataGenerator, path_to_uri_display};
+use crate::runtime_data::{RuntimeDataState, path_to_uri_display};
 use crate::search_index::{PackageIndexEntry, SearchIndexGenerator};
 use crate::util::{compare_versions_desc, encode_path, parse_semver_or_none};
 use pkl_runtime::schema::ModuleSchema;
@@ -12,8 +12,102 @@ use std::collections::{BTreeMap, HashSet};
 use std::fs;
 use std::io::Write;
 use std::path::{Path, PathBuf};
+use std::sync::Mutex;
+use std::sync::atomic::{AtomicUsize, Ordering as AtomicOrdering};
 
 pub const CURRENT_DIRECTORY_NAME: &str = "current";
+
+pub(crate) enum FileBytes {
+    Owned(Vec<u8>),
+    Static(&'static [u8]),
+}
+
+impl FileBytes {
+    fn as_slice(&self) -> &[u8] {
+        match self {
+            Self::Owned(v) => v.as_slice(),
+            Self::Static(s) => s,
+        }
+    }
+}
+
+pub(crate) struct PendingFile {
+    pub path: PathBuf,
+    pub bytes: FileBytes,
+}
+
+pub(crate) fn write_files_parallel(files: &[PendingFile]) -> Result<(), DocGeneratorError> {
+    if files.is_empty() {
+        return Ok(());
+    }
+    // Deduplicate parent directories and skip ancestors of deeper directories so
+    // `create_dir_all` is invoked only once per leaf directory.
+    let mut dirs: Vec<&Path> = files
+        .iter()
+        .filter_map(|f| f.path.parent())
+        .collect::<HashSet<_>>()
+        .into_iter()
+        .collect();
+    dirs.sort_by_key(|a| std::cmp::Reverse(a.as_os_str().len()));
+    let mut covered: HashSet<&Path> = HashSet::new();
+    for dir in dirs {
+        if covered.contains(dir) {
+            continue;
+        }
+        fs::create_dir_all(dir).map_err(|e| {
+            DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", dir.display()))
+        })?;
+        let mut cur = Some(dir);
+        while let Some(d) = cur {
+            if !covered.insert(d) {
+                break;
+            }
+            cur = d.parent();
+        }
+    }
+
+    if files.len() < 2 {
+        for f in files {
+            fs::write(&f.path, f.bytes.as_slice()).map_err(|e| {
+                DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", f.path.display()))
+            })?;
+        }
+        return Ok(());
+    }
+
+    let next = AtomicUsize::new(0);
+    let first_err: Mutex<Option<DocGeneratorError>> = Mutex::new(None);
+    let workers = std::thread::available_parallelism()
+        .map(|n| n.get().min(8).min(files.len()))
+        .unwrap_or_else(|_| 8.min(files.len()));
+    std::thread::scope(|scope| {
+        for _ in 0..workers {
+            scope.spawn(|| {
+                loop {
+                    let idx = next.fetch_add(1, AtomicOrdering::Relaxed);
+                    if idx >= files.len() {
+                        break;
+                    }
+                    let f = &files[idx];
+                    if let Err(e) = fs::write(&f.path, f.bytes.as_slice()) {
+                        let mut guard = first_err.lock().unwrap_or_else(|x| x.into_inner());
+                        if guard.is_none() {
+                            *guard = Some(DocGeneratorError::bug(format!(
+                                "I/O error writing `{}`: {e}",
+                                f.path.display()
+                            )));
+                        }
+                        break;
+                    }
+                }
+            });
+        }
+    });
+    if let Some(err) = first_err.into_inner().unwrap_or_else(|x| x.into_inner()) {
+        return Err(err);
+    }
+    Ok(())
+}
 
 /// Entry point for the low-level Pkldoc API (`org.pkl.doc.DocGenerator`).
 pub struct DocGenerator {
@@ -66,7 +160,12 @@ impl DocGenerator {
 
     /// Runs the documentation generator writing progress output to `console_out`.
     pub fn run(&self, console_out: &mut dyn Write) -> Result<(), DocGeneratorError> {
-        {
+        let output_dir_non_empty = fs::read_dir(&self.output_dir)
+            .ok()
+            .and_then(|mut it| it.next())
+            .is_some();
+
+        if output_dir_non_empty {
             let migrator = DocMigrator::new(self.output_dir.clone(), console_out);
             if !migrator.is_up_to_date() {
                 return Err(DocGeneratorError::user(format!(
@@ -84,21 +183,27 @@ impl DocGenerator {
             .filter(|pkg| !pkg.is_unlisted)
             .collect();
 
-        let mut newly_generated_packages: Vec<PackageData> = doc_packages
+        let pkg_data_in_doc_order: Vec<PackageData> = doc_packages
             .iter()
             .map(PackageData::from_doc_package)
             .collect();
+        let mut newly_generated_packages = pkg_data_in_doc_order.clone();
         newly_generated_packages.sort_by(|a, b| a.r#ref.pkg.cmp(&b.r#ref.pkg));
 
-        let current_search_index = {
+        let current_search_index = if output_dir_non_empty {
             let mut sig = SearchIndexGenerator::new(&self.output_dir, console_out);
             sig.get_current_search_index()?
+        } else {
+            Vec::new()
         };
 
         let _ = writeln!(console_out, "Loaded current search index");
 
-        let existing_current_packages =
-            self.get_current_packages(&current_search_index, console_out)?;
+        let existing_current_packages = if current_search_index.is_empty() {
+            Vec::new()
+        } else {
+            self.get_current_packages(&current_search_index, console_out)?
+        };
 
         let _ = writeln!(console_out, "Fetched latest packages");
 
@@ -113,48 +218,162 @@ impl DocGenerator {
 
         let html_generator = HtmlGenerator::new(
             &self.docsite_info,
-            doc_packages.clone(),
+            doc_packages,
             self.imported_modules.clone(),
             &self.output_dir,
             self.is_test_mode,
             is_single_package_site,
         );
 
-        for (pkg_idx, doc_package) in doc_packages.iter().enumerate() {
-            let pkg_dir = self.output_dir.join(encode_path(&format!(
-                "{}/{}",
-                doc_package.name(),
-                doc_package.version()
-            )));
-            delete_path_recursively(&pkg_dir)?;
-
-            {
-                let mut sig = SearchIndexGenerator::new(&self.output_dir, console_out);
-                sig.generate(doc_package)?;
+        let data_dir_existed = output_dir_non_empty && self.output_dir.join("data").exists();
+        if output_dir_non_empty {
+            for doc_package in html_generator.doc_packages() {
+                let pkg_dir = self.output_dir.join(encode_path(&format!(
+                    "{}/{}",
+                    doc_package.name(),
+                    doc_package.version()
+                )));
+                delete_path_recursively(&pkg_dir)?;
             }
-            html_generator.generate_package(pkg_idx, console_out)?;
-            generate_package_data(&self.output_dir, doc_package)?;
         }
 
-        let _ = writeln!(console_out, "Generated HTML for packages");
-
-        self.create_current_directories(&current_packages, &existing_current_packages)?;
-
-        {
-            let mut sig = SearchIndexGenerator::new(&self.output_dir, console_out);
-            sig.generate_site_index(&current_packages)?;
+        let mut pkg_writes: Vec<PendingFile> = Vec::with_capacity(64);
+        let mut pkg_logs: Vec<String> = Vec::new();
+        for (pkg_idx, doc_package) in html_generator.doc_packages().iter().enumerate() {
+            SearchIndexGenerator::collect_package_write(
+                &self.output_dir,
+                doc_package,
+                &mut pkg_writes,
+                &mut pkg_logs,
+            );
+            html_generator.collect_package_writes(pkg_idx, &mut pkg_writes, &mut pkg_logs)?;
+            let pkg_data_path = self
+                .output_dir
+                .join(encode_path(doc_package.name()))
+                .join(doc_package.version())
+                .join("package-data.json");
+            pkg_writes.push(PendingFile {
+                path: pkg_data_path,
+                bytes: FileBytes::Owned(
+                    pkg_data_in_doc_order[pkg_idx].to_json_string().into_bytes(),
+                ),
+            });
         }
-        html_generator.generate_site(&current_packages, console_out)?;
-        {
-            let mut rdg = RuntimeDataGenerator::new(&self.output_dir, console_out);
-            rdg.generate(&newly_generated_packages)?;
-        }
 
-        let _ = writeln!(console_out, "Wrote package runtime data files");
+        let mut site_logs: Vec<String> = Vec::new();
+        let mut runtime_logs: Vec<String> = Vec::new();
+        let rdg_state = RuntimeDataState::collect(&newly_generated_packages);
+        let mut rdg_written = HashSet::new();
 
-        {
-            let migrator = DocMigrator::new(self.output_dir.clone(), console_out);
-            migrator.update_docsite_version()?;
+        if self.no_symlinks {
+            // `--no-symlinks` copies `<pkg>/<ver>` into `<pkg>/current`, so flush package
+            // files before copying, then flush all remaining files in a second parallel batch.
+            write_files_parallel(&pkg_writes)?;
+            for line in &pkg_logs {
+                let _ = console_out.write_all(line.as_bytes());
+            }
+            let _ = writeln!(console_out, "Generated HTML for packages");
+            self.create_current_directories(&current_packages, &existing_current_packages)?;
+
+            let mut rest_writes: Vec<PendingFile> = Vec::with_capacity(48);
+            SearchIndexGenerator::collect_site_index_write(
+                &self.output_dir,
+                &current_packages,
+                &mut rest_writes,
+                &mut site_logs,
+            );
+            html_generator.collect_site_page_write(
+                &current_packages,
+                &mut rest_writes,
+                &mut site_logs,
+            )?;
+            for &(rel, bytes) in crate::assets::STATIC_RESOURCES {
+                rest_writes.push(PendingFile {
+                    path: self.output_dir.join(rel),
+                    bytes: FileBytes::Static(bytes),
+                });
+            }
+            rdg_state.collect_writes(
+                &self.output_dir,
+                &newly_generated_packages,
+                data_dir_existed,
+                &mut rest_writes,
+                &mut runtime_logs,
+                &mut rdg_written,
+            )?;
+            rest_writes.push(PendingFile {
+                path: self.output_dir.join(".pkldoc/VERSION"),
+                bytes: FileBytes::Owned(migrator::CURRENT_VERSION.to_string().into_bytes()),
+            });
+            write_files_parallel(&rest_writes)?;
+            for line in &site_logs {
+                let _ = console_out.write_all(line.as_bytes());
+            }
+            for line in &runtime_logs {
+                let _ = console_out.write_all(line.as_bytes());
+            }
+            if data_dir_existed {
+                rdg_state.update_known_usages(
+                    &self.output_dir,
+                    &newly_generated_packages,
+                    console_out,
+                )?;
+            }
+            let _ = writeln!(console_out, "Wrote package runtime data files");
+        } else {
+            // All package, site, static asset, runtime data, and version files are disjoint:
+            // flush everything in one parallel batch and emit console progress in exact order.
+            let mut writes = pkg_writes;
+            SearchIndexGenerator::collect_site_index_write(
+                &self.output_dir,
+                &current_packages,
+                &mut writes,
+                &mut site_logs,
+            );
+            html_generator.collect_site_page_write(
+                &current_packages,
+                &mut writes,
+                &mut site_logs,
+            )?;
+            for &(rel, bytes) in crate::assets::STATIC_RESOURCES {
+                writes.push(PendingFile {
+                    path: self.output_dir.join(rel),
+                    bytes: FileBytes::Static(bytes),
+                });
+            }
+            rdg_state.collect_writes(
+                &self.output_dir,
+                &newly_generated_packages,
+                data_dir_existed,
+                &mut writes,
+                &mut runtime_logs,
+                &mut rdg_written,
+            )?;
+            writes.push(PendingFile {
+                path: self.output_dir.join(".pkldoc/VERSION"),
+                bytes: FileBytes::Owned(migrator::CURRENT_VERSION.to_string().into_bytes()),
+            });
+            write_files_parallel(&writes)?;
+            self.create_current_directories(&current_packages, &existing_current_packages)?;
+
+            for line in &pkg_logs {
+                let _ = console_out.write_all(line.as_bytes());
+            }
+            let _ = writeln!(console_out, "Generated HTML for packages");
+            for line in &site_logs {
+                let _ = console_out.write_all(line.as_bytes());
+            }
+            for line in &runtime_logs {
+                let _ = console_out.write_all(line.as_bytes());
+            }
+            if data_dir_existed {
+                rdg_state.update_known_usages(
+                    &self.output_dir,
+                    &newly_generated_packages,
+                    console_out,
+                )?;
+            }
+            let _ = writeln!(console_out, "Wrote package runtime data files");
         }
 
         Ok(())
@@ -298,5 +517,43 @@ fn create_directory_symlink(target: &Path, link: &Path) -> Result<(), DocGenerat
     {
         std::os::windows::fs::symlink_dir(target, link)
             .map_err(|e| DocGeneratorError::bug(format!("I/O error generating documentation: {e}")))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn write_files_parallel_creates_nested_dirs_and_writes_all_payloads() {
+        let dir = std::env::temp_dir().join(format!("pkl-doc-par-test-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&dir);
+        let files = vec![
+            PendingFile {
+                path: dir.join("index.html"),
+                bytes: FileBytes::Owned(b"root".to_vec()),
+            },
+            PendingFile {
+                path: dir.join("a/b/c/leaf.html"),
+                bytes: FileBytes::Owned(b"leaf".to_vec()),
+            },
+            PendingFile {
+                path: dir.join("a/b/mid.html"),
+                bytes: FileBytes::Owned(b"mid".to_vec()),
+            },
+            PendingFile {
+                path: dir.join("assets/static.txt"),
+                bytes: FileBytes::Static(b"static-bytes"),
+            },
+        ];
+        write_files_parallel(&files).unwrap();
+        assert_eq!(fs::read(dir.join("index.html")).unwrap(), b"root");
+        assert_eq!(fs::read(dir.join("a/b/c/leaf.html")).unwrap(), b"leaf");
+        assert_eq!(fs::read(dir.join("a/b/mid.html")).unwrap(), b"mid");
+        assert_eq!(
+            fs::read(dir.join("assets/static.txt")).unwrap(),
+            b"static-bytes"
+        );
+        let _ = fs::remove_dir_all(&dir);
     }
 }

@@ -4,6 +4,8 @@
 use std::fs;
 use std::io;
 use std::path::Path;
+use std::sync::Mutex;
+use std::sync::atomic::{AtomicUsize, Ordering};
 
 /// All 17 static assets in exact `HtmlGenerator.kt:89-107` order.
 pub const STATIC_RESOURCES: &[(&str, &[u8])] = &[
@@ -100,10 +102,39 @@ pub fn copy_resource(resource_name: &str, target_dir: &Path) -> io::Result<()> {
     fs::write(&target_file, bytes)
 }
 
-/// Writes all 17 static resources into `target_dir`.
+/// Writes all 17 static resources into `target_dir` concurrently across scoped threads,
+/// matching upstream `HtmlGenerator.kt:87-111`.
 pub fn write_all_static_resources(target_dir: &Path) -> io::Result<()> {
-    for (name, _) in STATIC_RESOURCES {
-        copy_resource(name, target_dir)?;
+    for dir in ["fonts", "scripts", "styles", "images"] {
+        fs::create_dir_all(target_dir.join(dir))?;
+    }
+    let next = AtomicUsize::new(0);
+    let first_err: Mutex<Option<io::Error>> = Mutex::new(None);
+    let workers = std::thread::available_parallelism()
+        .map(|n| n.get().min(8))
+        .unwrap_or(8);
+    std::thread::scope(|scope| {
+        for _ in 0..workers {
+            scope.spawn(|| {
+                loop {
+                    let idx = next.fetch_add(1, Ordering::Relaxed);
+                    if idx >= STATIC_RESOURCES.len() {
+                        break;
+                    }
+                    let (name, bytes) = STATIC_RESOURCES[idx];
+                    if let Err(err) = fs::write(target_dir.join(name), bytes) {
+                        let mut guard = first_err.lock().unwrap_or_else(|e| e.into_inner());
+                        if guard.is_none() {
+                            *guard = Some(err);
+                        }
+                        break;
+                    }
+                }
+            });
+        }
+    });
+    if let Some(err) = first_err.into_inner().unwrap_or_else(|e| e.into_inner()) {
+        return Err(err);
     }
     Ok(())
 }

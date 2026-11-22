@@ -686,6 +686,11 @@ impl CliDocGenerator {
         let mut package_info_entries: Vec<(DocPackageInfo, PathBuf, Vec<ModuleSchema>)> =
             Vec::new();
 
+        // Always resolve `pkl:base` first (`CliDocGenerator.kt:271-273`) so its immutable
+        // schema cache is warm before extracting user/package module schemas.
+        let pkl_base_schema = evaluate_schema(host, &mut session, "pkl:base")?;
+        imported_modules.insert("pkl:base".to_string(), pkl_base_schema);
+
         // 1. Evaluate `package://` inputs (`CliDocGenerator.kt:227-238`).
         for pkg_uri in package_uris {
             let doc_pkg_info = package_uri_to_doc_package_info(
@@ -769,10 +774,6 @@ impl CliDocGenerator {
                 entry.2.push(schema);
             }
         }
-
-        // 5. Always resolve `pkl:base` (`CliDocGenerator.kt:271-273`).
-        let pkl_base_schema = evaluate_schema(host, &mut session, "pkl:base")?;
-        imported_modules.insert("pkl:base".to_string(), pkl_base_schema);
 
         session.close();
 

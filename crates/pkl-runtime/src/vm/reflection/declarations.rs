@@ -12,6 +12,7 @@ pub(crate) struct Declaration {
     pub code: Option<usize>,
     pub source: Arc<RuntimeSource>,
     pub syntax: Arc<DeclarationSource>,
+    pub stdlib_default_transformer: bool,
 }
 #[derive(Clone, Debug)]
 pub(crate) struct Context {
@@ -35,25 +36,231 @@ impl Declaration {
         }
     }
 }
-fn pinned_module(
-    uri: impl Into<PklString>,
-) -> Result<(&'static crate::syntax::Module, Arc<RuntimeSource>), RuntimeError> {
-    static BASE: OnceLock<crate::syntax::Module> = OnceLock::new();
-    static REF: OnceLock<crate::syntax::Module> = OnceLock::new();
-    static REFLECT: OnceLock<crate::syntax::Module> = OnceLock::new();
-    let uri = uri.into();
-    let (cell, source) = match uri.as_str() {
-        Some("pkl:base") => (&BASE, crate::stdlib_sources::base()),
-        Some("pkl:ref") => (&REF, crate::stdlib_sources::reference()),
-        Some("pkl:reflect") => (&REFLECT, crate::stdlib_sources::reflect()),
+
+pub(crate) struct BuiltinClassDecls {
+    pub class_decl: Arc<DeclarationSource>,
+    pub properties: Vec<Arc<DeclarationSource>>,
+    pub methods: Vec<Arc<DeclarationSource>>,
+    pub reflect_standard: bool,
+}
+
+pub(crate) struct BuiltinModuleIndex {
+    pub source: Arc<RuntimeSource>,
+    pub classes: BTreeMap<PklString, BuiltinClassDecls>,
+    pub aliases: BTreeMap<PklString, Arc<DeclarationSource>>,
+    source_index: OnceLock<crate::source::SourceTextIndex>,
+}
+
+impl BuiltinModuleIndex {
+    pub(crate) fn source_index(&self) -> &crate::source::SourceTextIndex {
+        self.source_index.get_or_init(|| self.source.text.index())
+    }
+}
+
+/// Declarations in `pkl:base` transitively forced by Apple Pkl's `ReflectModule`
+/// `static {}` initializer (`StdLibModule.doLoad` with `defaultTransformer`).
+fn is_reflect_standard_base_name(name: &str) -> bool {
+    matches!(
+        name,
+        "Any"
+            | "Boolean"
+            | "Int"
+            | "Float"
+            | "Number"
+            | "String"
+            | "Duration"
+            | "DataSize"
+            | "Pair"
+            | "Collection"
+            | "List"
+            | "Set"
+            | "Map"
+            | "Object"
+            | "Dynamic"
+            | "Typed"
+            | "Listing"
+            | "Mapping"
+            | "Bytes"
+            | "Int8"
+            | "Int16"
+            | "Int32"
+            | "UInt"
+            | "UInt8"
+            | "UInt16"
+            | "UInt32"
+    )
+}
+
+fn syntax_has_full_bodies(uri: &str, parsed: &crate::syntax::Module) -> bool {
+    if uri != "pkl:base" {
+        return true;
+    }
+    parsed.members.iter().any(|m| {
+        m.name == "String"
+            && matches!(&m.expr.kind, crate::syntax::ExprKind::Class { members, .. } if !members.is_empty())
+    })
+}
+
+fn build_builtin_index(
+    uri: &str,
+    source: Arc<RuntimeSource>,
+    existing_syntax: Option<&crate::syntax::Module>,
+) -> BuiltinModuleIndex {
+    let owned;
+    let parsed = match existing_syntax {
+        Some(m) if syntax_has_full_bodies(uri, m) => m,
+        _ => {
+            owned = crate::parser::parse_module(&source.text).expect("pinned metadata syntax");
+            &owned
+        }
+    };
+    let mut classes = BTreeMap::new();
+    let mut aliases = BTreeMap::new();
+    let all_standard = uri == "pkl:reflect";
+    for member in &parsed.members {
+        match &member.expr.kind {
+            crate::syntax::ExprKind::Class { members, .. } => {
+                let mut properties = Vec::new();
+                let mut methods = Vec::new();
+                for cm in members {
+                    if cm.local
+                        || matches!(
+                            cm.expr.kind,
+                            crate::syntax::ExprKind::Class { .. }
+                                | crate::syntax::ExprKind::TypeAlias { .. }
+                                | crate::syntax::ExprKind::Import { .. }
+                        )
+                    {
+                        continue;
+                    }
+                    let decl = Arc::new(cm.declaration_source());
+                    if matches!(
+                        cm.expr.kind,
+                        crate::syntax::ExprKind::Function { method: true, .. }
+                    ) {
+                        methods.push(decl);
+                    } else {
+                        properties.push(decl);
+                    }
+                }
+                let reflect_standard = all_standard
+                    || (uri == "pkl:base"
+                        && member
+                            .name
+                            .as_str()
+                            .is_some_and(is_reflect_standard_base_name));
+                classes.insert(
+                    member.name.clone(),
+                    BuiltinClassDecls {
+                        class_decl: Arc::new(member.declaration_source()),
+                        properties,
+                        methods,
+                        reflect_standard,
+                    },
+                );
+            }
+            crate::syntax::ExprKind::TypeAlias { .. } => {
+                aliases.insert(member.name.clone(), Arc::new(member.declaration_source()));
+            }
+            _ => {}
+        }
+    }
+    BuiltinModuleIndex {
+        source,
+        classes,
+        aliases,
+        source_index: OnceLock::new(),
+    }
+}
+
+pub(crate) fn existing_unit_syntax<'a>(vm: &'a Vm, uri: &str) -> Option<&'a crate::syntax::Module> {
+    vm.program.units.iter().find_map(|unit| {
+        if unit.standard_library
+            && unit
+                .source
+                .as_ref()
+                .is_some_and(|s| s.uri.as_str() == Some(uri))
+        {
+            unit.syntax.as_deref()
+        } else {
+            None
+        }
+    })
+}
+
+pub(crate) fn builtin_index(
+    uri: &str,
+    existing_syntax: Option<&crate::syntax::Module>,
+) -> Result<&'static BuiltinModuleIndex, RuntimeError> {
+    static BASE: OnceLock<BuiltinModuleIndex> = OnceLock::new();
+    static REF: OnceLock<BuiltinModuleIndex> = OnceLock::new();
+    static REFLECT: OnceLock<BuiltinModuleIndex> = OnceLock::new();
+    let (cell, source) = match uri {
+        "pkl:base" => (&BASE, crate::stdlib_sources::base()),
+        "pkl:ref" => (&REF, crate::stdlib_sources::reference()),
+        "pkl:reflect" => (&REFLECT, crate::stdlib_sources::reflect()),
         _ => return Err(invalid("unknown builtin declaration source")),
     };
-    Ok((
-        cell.get_or_init(|| {
-            crate::parser::parse_module(&source.text).expect("pinned metadata syntax")
-        }),
-        source,
-    ))
+    Ok(cell.get_or_init(|| build_builtin_index(uri, source, existing_syntax)))
+}
+
+fn default_display_uri_for_frame(frame: &RuntimeFrame) -> Result<PklString, RuntimeError> {
+    let source = frame
+        .source
+        .as_ref()
+        .ok_or_else(|| invalid("reflection location source"))?;
+    let owned_index;
+    let index = if let Some(uri) = source.uri.as_str()
+        && let Ok(builtin) = builtin_index(uri, None)
+    {
+        builtin.source_index()
+    } else {
+        owned_index = source.text.index();
+        &owned_index
+    };
+    let raw = if frame.span.start == frame.span.end {
+        let position = index
+            .position(frame.span.start)
+            .ok_or_else(|| invalid("empty declaration location"))?;
+        crate::logging::LogFrame {
+            module_uri: source.uri.clone(),
+            member_name: None,
+            source_lines: Arc::from([]),
+            start_line: position.line,
+            start_column: position.column_utf16,
+            end_line: position.line,
+            end_column: position.column_utf16,
+        }
+    } else {
+        if frame.span.start >= frame.span.end || !source.text.entire().is_boundary(frame.span.end) {
+            return Err(invalid("trace operand source span"));
+        }
+        let start = index
+            .position(frame.span.start)
+            .ok_or_else(|| invalid("trace source start"))?;
+        let (last_byte, last_char) = source
+            .text
+            .entire()
+            .range(..frame.span.end)
+            .characters()
+            .next_back()
+            .ok_or_else(|| invalid("trace source end"))?;
+        let end = index
+            .position(last_byte)
+            .ok_or_else(|| invalid("trace source end"))?;
+        crate::logging::LogFrame {
+            module_uri: source.uri.clone(),
+            member_name: None,
+            source_lines: Arc::from([]),
+            start_line: start.line,
+            start_column: start.column_utf16,
+            end_line: end.line,
+            end_column: end.column_utf16 + last_char.len_utf16() - 1,
+        }
+    };
+    Ok(crate::logging::FrameTransformer::Default
+        .transform(raw)
+        .module_uri)
 }
 fn unknown() -> Type {
     Type {
@@ -160,11 +367,18 @@ impl Vm {
                 })
             })
             .ok_or_else(|| invalid("declaration source missing"))?;
+        let stdlib_default_transformer = source.uri == "pkl:reflect"
+            || (source.uri == "pkl:base"
+                && syntax
+                    .name
+                    .as_str()
+                    .is_some_and(is_reflect_standard_base_name));
         Ok(Declaration {
             owner,
             code: Some(code),
             source,
             syntax: Arc::new(syntax),
+            stdlib_default_transformer,
         })
     }
     fn class_declaration(&self, class: ObjectId) -> Result<Declaration, RuntimeError> {
@@ -173,26 +387,23 @@ impl Vm {
         if let Some(code) = object.declaration_code {
             return self.declaration(prototype, code);
         }
-        let class = self.heap.class_definition(class)?;
-        let (parsed, source) = pinned_module(
-            class
-                .origin_uri
-                .clone()
-                .unwrap_or_else(|| "pkl:base".into()),
-        )?;
-        let member = parsed
-            .members
-            .iter()
-            .find(|member| {
-                member.name == class.name
-                    && matches!(member.expr.kind, crate::syntax::ExprKind::Class { .. })
-            })
+        let class_def = self.heap.class_definition(class)?;
+        let uri = class_def
+            .origin_uri
+            .as_ref()
+            .and_then(|u| u.as_str())
+            .unwrap_or("pkl:base");
+        let index = builtin_index(uri, existing_unit_syntax(self, uri))?;
+        let cls = index
+            .classes
+            .get(&class_def.name)
             .ok_or_else(|| invalid("builtin class metadata not found"))?;
         Ok(Declaration {
             owner: prototype,
             code: None,
-            source,
-            syntax: Arc::new(member.declaration_source()),
+            source: index.source.clone(),
+            syntax: cls.class_decl.clone(),
+            stdlib_default_transformer: cls.reflect_standard,
         })
     }
     fn alias_declaration(&self, alias: ObjectId) -> Result<Declaration, RuntimeError> {
@@ -209,20 +420,18 @@ impl Vm {
             .entire()
             .rsplit_once("#")
             .map_or(qualified.clone(), |(_, name)| name.to_pkl_string());
-        let (parsed, source) = pinned_module("pkl:base")?;
-        let member = parsed
-            .members
-            .iter()
-            .find(|member| {
-                member.name == name
-                    && matches!(member.expr.kind, crate::syntax::ExprKind::TypeAlias { .. })
-            })
+        let index = builtin_index("pkl:base", existing_unit_syntax(self, "pkl:base"))?;
+        let syntax = index
+            .aliases
+            .get(&name)
             .ok_or_else(|| invalid("builtin alias metadata not found"))?;
+        let stdlib_default_transformer = name.as_str().is_some_and(is_reflect_standard_base_name);
         Ok(Declaration {
             owner: alias,
             code: None,
-            source,
-            syntax: Arc::new(member.declaration_source()),
+            source: index.source.clone(),
+            syntax: syntax.clone(),
+            stdlib_default_transformer,
         })
     }
     pub(super) fn builtin_mirror_parameter_count(
@@ -249,18 +458,24 @@ impl Vm {
                     .len()
                     .checked_sub(names.len())
                     .ok_or_else(|| invalid("mirror map operands"))?;
-                let values: Vec<_> = run.values.drain(start..).collect();
-                let id = self.heap.allocate(Object {
-                    collection_kind: CollectionKind::Map,
-                    ..Default::default()
-                });
-                // The keys are authored String names, so there are no guest hash
-                // callbacks. Use the same persistent map association/order path.
-                for (name, value) in names.into_iter().zip(values) {
-                    self.insert_map_entry_ordered(id, Value::String(name), value, None)?;
+                if names.is_empty() {
+                    run.values.push(Value::Object(
+                        self.empty_strict_collection(CollectionKind::Map),
+                    ));
+                } else {
+                    let values: Vec<_> = run.values.drain(start..).collect();
+                    let id = self.heap.allocate(Object {
+                        collection_kind: CollectionKind::Map,
+                        ..Default::default()
+                    });
+                    // The keys are authored String names, so there are no guest hash
+                    // callbacks. Use the same persistent map association/order path.
+                    for (name, value) in names.into_iter().zip(values) {
+                        self.insert_map_entry_ordered(id, Value::String(name), value, None)?;
+                    }
+                    run.values
+                        .push(Value::Object(self.finish_strict_collection(id)?));
                 }
-                run.values
-                    .push(Value::Object(self.finish_strict_collection(id)?));
             }
             Task::Type(mut ty, context) => {
                 while let TypeKind::Constrained { base, .. } = ty.kind {
@@ -648,34 +863,45 @@ impl Vm {
                 );
             }
             Data::Recipe { ty, context } => self.reflection_recipe_field(ty, context, name, run)?,
-            Data::Location(frame) => {
+            Data::Location {
+                frame,
+                stdlib_default_transformer,
+            } => {
                 let source = frame
                     .source
                     .as_ref()
                     .ok_or_else(|| invalid("location source"))?;
+                let owned_index;
+                let source_index = if let Some(uri) = source.uri.as_str()
+                    && let Ok(builtin) = builtin_index(uri, None)
+                {
+                    builtin.source_index()
+                } else {
+                    owned_index = source.text.index();
+                    &owned_index
+                };
                 match name {
                     "line" => {
-                        let position = source
-                            .text
-                            .index()
+                        let position = source_index
                             .position(frame.span.start)
                             .ok_or_else(|| invalid("location start"))?;
                         run.values.push(Value::Int((position.line as i64).into()));
                     }
                     "column" => {
-                        let position = source
-                            .text
-                            .index()
+                        let position = source_index
                             .position(frame.span.start)
                             .ok_or_else(|| invalid("location start"))?;
                         run.values
                             .push(Value::Int((position.column_utf16 as i64).into()));
                     }
                     "displayUri" => {
-                        if source.text.index().position(frame.span.start).is_none() {
+                        if source_index.position(frame.span.start).is_none() {
                             return Err(invalid("location start"));
                         }
-                        if let Some(uri) = self.reflection_display_uri(&frame)? {
+                        if stdlib_default_transformer || self.in_stdlib_bootstrap() {
+                            let uri = default_display_uri_for_frame(&frame)?;
+                            run.values.push(Value::String(uri));
+                        } else if let Some(uri) = self.reflection_display_uri(&frame)? {
                             run.values.push(Value::String(uri));
                         } else {
                             run.waiting = true;
@@ -796,12 +1022,15 @@ impl Vm {
             ),
             "location" => run.tasks.push(Task::Make(Payload {
                 kind: Kind::SourceLocation,
-                data: Data::Location(RuntimeFrame {
-                    anonymous: false,
-                    source: Some(declaration.source.clone()),
-                    span: declaration.syntax.header_span,
-                    member: PklString::default(),
-                }),
+                data: Data::Location {
+                    frame: RuntimeFrame {
+                        anonymous: false,
+                        source: Some(declaration.source.clone()),
+                        span: declaration.syntax.header_span,
+                        member: PklString::default(),
+                    },
+                    stdlib_default_transformer: declaration.stdlib_default_transformer,
+                },
             })),
             "annotations" => run.tasks.push(Task::Annotations(declaration.clone())),
             "modifiers" => run.values.push(self.reflection_modifier_set(
@@ -848,12 +1077,18 @@ impl Vm {
     }
 
     fn reflection_modifier_set(&mut self, flags: u32, class: bool) -> Result<Value, RuntimeError> {
+        let names = modifier_names(flags, class);
+        if names.is_empty() {
+            return Ok(Value::Object(
+                self.empty_strict_collection(CollectionKind::Set),
+            ));
+        }
         let id = self.heap.allocate(Object {
             collection_kind: CollectionKind::Set,
             ..Default::default()
         });
         self.frames.last_mut().unwrap().builders.push(id);
-        for name in modifier_names(flags, class) {
+        for name in names {
             self.stack.extend([Value::String(name), Value::Bool(false)]);
             // Every modifier is a distinct immutable String. Shared Set put
             // cannot suspend for these keys or invoke a guest equality body.
@@ -869,20 +1104,33 @@ impl Vm {
         name: &str,
         run: &mut Run,
     ) -> Result<(), RuntimeError> {
-        let object = self.heap.get(module)?;
-        let unit = object
-            .module_unit
+        let (unit_id, annotations, parent) = {
+            let object = self.heap.get(module)?;
+            (
+                object.module_unit,
+                object.annotations.clone(),
+                object.parent,
+            )
+        };
+        let unit = unit_id
             .and_then(|unit| self.program.units.get(unit.0 as usize))
-            .ok_or_else(|| invalid("module mirror unit"))?
-            .clone();
+            .ok_or_else(|| invalid("module mirror unit"))?;
         let source = unit
             .source
             .clone()
             .ok_or_else(|| invalid("module mirror source"))?;
         let syntax = unit
             .syntax
-            .as_deref()
+            .clone()
             .ok_or_else(|| invalid("module mirror syntax"))?;
+        let unit_name = unit.name.clone();
+        let unit_mode = unit.mode;
+        let unit_modifiers = unit.modifiers;
+        let unit_uri: PklString = unit
+            .identity
+            .as_ref()
+            .map_or(&source.uri, |identity| &identity.original_uri)
+            .into();
         match name {
             "reflectee" => run.values.push(Value::Object(module)),
             "moduleClass" => {
@@ -895,13 +1143,8 @@ impl Vm {
                     data: Data::Class(class),
                 }));
             }
-            "name" => run.values.push(Value::String(unit.name.clone())),
-            "uri" => run.values.push(Value::String(
-                unit.identity
-                    .as_ref()
-                    .map_or(&source.uri, |identity| &identity.original_uri)
-                    .into(),
-            )),
+            "name" => run.values.push(Value::String(unit_name)),
+            "uri" => run.values.push(Value::String(unit_uri)),
             "docComment" => run.values.push(
                 syntax
                     .declaration
@@ -910,33 +1153,38 @@ impl Vm {
                     .and_then(|doc| doc.text(&source.text))
                     .map_or(Value::Null, Value::String),
             ),
-            "location" => run.tasks.push(Task::Make(Payload {
-                kind: Kind::SourceLocation,
-                data: Data::Location(RuntimeFrame {
-                    anonymous: false,
-                    source: Some(source),
-                    span: syntax
-                        .declaration
-                        .as_ref()
-                        .map_or(Span::default(), |declaration| declaration.span),
-                    member: PklString::default(),
-                }),
-            })),
-            "annotations" => run.sequence(object.annotations.clone()),
+            "location" => {
+                let stdlib_default_transformer = source.uri == "pkl:reflect";
+                run.tasks.push(Task::Make(Payload {
+                    kind: Kind::SourceLocation,
+                    data: Data::Location {
+                        frame: RuntimeFrame {
+                            anonymous: false,
+                            source: Some(source),
+                            span: syntax
+                                .declaration
+                                .as_ref()
+                                .map_or(Span::default(), |declaration| declaration.span),
+                            member: PklString::default(),
+                        },
+                        stdlib_default_transformer,
+                    },
+                }));
+            }
+            "annotations" => run.sequence(annotations),
             "modifiers" => run.values.push(self.reflection_modifier_set(
-                if unit.mode == modules::ModuleMode::Amends {
+                if unit_mode == modules::ModuleMode::Amends {
                     0
                 } else {
-                    unit.modifiers
+                    unit_modifiers
                 },
                 true,
             )?),
             "isAmend" => run
                 .values
-                .push(Value::Bool(unit.mode == modules::ModuleMode::Amends)),
+                .push(Value::Bool(unit_mode == modules::ModuleMode::Amends)),
             "supermodule" => {
-                if let Some(parent) = object
-                    .parent
+                if let Some(parent) = parent
                     .filter(|parent| self.heap.get(*parent).is_ok_and(|object| object.is_module))
                 {
                     run.tasks.push(Task::Make(Payload {
@@ -948,6 +1196,7 @@ impl Vm {
                 }
             }
             "imports" => {
+                let object = self.heap.get(module)?;
                 let mut names = Vec::new();
                 for member in &syntax.members {
                     if let crate::syntax::ExprKind::Import {
@@ -975,31 +1224,103 @@ impl Vm {
                         run.values.push(Value::String(imported.clone()));
                     }
                 }
-                run.tasks.push(Task::BuildMap(names));
+                if names.is_empty() {
+                    run.values.push(Value::Object(
+                        self.empty_strict_collection(CollectionKind::Map),
+                    ));
+                } else {
+                    run.tasks.push(Task::BuildMap(names));
+                }
             }
             "classes" | "typeAliases" => {
-                let members: Vec<_> = if unit.mode == modules::ModuleMode::Amends {
-                    Vec::new()
+                let is_classes = name == "classes";
+                if unit_mode == modules::ModuleMode::Amends {
+                    run.values.push(Value::Object(
+                        self.empty_strict_collection(CollectionKind::Map),
+                    ));
+                    return Ok(());
+                }
+                let members: Vec<_> = syntax
+                    .members
+                    .iter()
+                    .filter(|member| {
+                        !member.local
+                            && if is_classes {
+                                matches!(member.expr.kind, crate::syntax::ExprKind::Class { .. })
+                            } else {
+                                matches!(
+                                    member.expr.kind,
+                                    crate::syntax::ExprKind::TypeAlias { .. }
+                                )
+                            }
+                    })
+                    .collect();
+                if members.is_empty() {
+                    run.values.push(Value::Object(
+                        self.empty_strict_collection(CollectionKind::Map),
+                    ));
+                    return Ok(());
+                }
+                let target_kind = if is_classes {
+                    Kind::Class
                 } else {
-                    syntax
-                        .members
-                        .iter()
-                        .filter(|member| {
-                            !member.local
-                                && if name == "classes" {
-                                    matches!(
-                                        member.expr.kind,
-                                        crate::syntax::ExprKind::Class { .. }
-                                    )
-                                } else {
-                                    matches!(
-                                        member.expr.kind,
-                                        crate::syntax::ExprKind::TypeAlias { .. }
-                                    )
-                                }
-                        })
-                        .collect()
+                    Kind::TypeAlias
                 };
+                if let Some(factory_class) = self.cached_reflect_class(target_kind) {
+                    let mod_obj = self.heap.get(module)?;
+                    let mut cached_entries: Option<Vec<(PklString, Data)>> =
+                        Some(Vec::with_capacity(members.len()));
+                    for member in &members {
+                        let key = CacheKey {
+                            entry: false,
+                            owner: None,
+                            name: member.name.clone(),
+                            method: false,
+                        };
+                        let data = match mod_obj.cache.get(&key) {
+                            Some(LazyState::Completed(Value::Class(cid))) if is_classes => {
+                                Some(Data::Class(*cid))
+                            }
+                            Some(LazyState::Completed(Value::TypeAlias(tid))) if !is_classes => {
+                                Some(Data::TypeAlias(*tid))
+                            }
+                            _ => None,
+                        };
+                        if let Some(d) = data {
+                            cached_entries
+                                .as_mut()
+                                .unwrap()
+                                .push((member.name.clone(), d));
+                        } else {
+                            cached_entries = None;
+                            break;
+                        }
+                    }
+                    if let Some(entries) = cached_entries {
+                        let map_id = self.heap.allocate(Object {
+                            collection_kind: CollectionKind::Map,
+                            ..Default::default()
+                        });
+                        for (member_name, data) in entries {
+                            let mirror = self.allocate_mirror_with_class(
+                                Payload {
+                                    kind: target_kind,
+                                    data,
+                                },
+                                factory_class,
+                            )?;
+                            self.insert_map_entry_ordered(
+                                map_id,
+                                Value::String(member_name),
+                                Value::Object(mirror),
+                                None,
+                            )?;
+                        }
+                        run.values
+                            .push(Value::Object(self.finish_strict_collection(map_id)?));
+                        return Ok(());
+                    }
+                }
                 run.tasks.push(Task::BuildMap(
                     members.iter().map(|member| member.name.clone()).collect(),
                 ));
@@ -1079,6 +1400,42 @@ impl Vm {
                 let methods = matches!(name, "methods" | "allMethods");
                 let all = name.starts_with("all");
                 let declarations = self.reflection_class_members(class, methods, all)?;
+                if declarations.is_empty() {
+                    run.values.push(Value::Object(
+                        self.empty_strict_collection(CollectionKind::Map),
+                    ));
+                    return Ok(());
+                }
+                let member_kind = if methods {
+                    Kind::Method
+                } else {
+                    Kind::Property
+                };
+                if let Some(factory_class) = self.cached_reflect_class(member_kind) {
+                    let map_id = self.heap.allocate(Object {
+                        collection_kind: CollectionKind::Map,
+                        ..Default::default()
+                    });
+                    for declaration in declarations {
+                        let member_name = declaration.syntax.name.clone();
+                        let mirror = self.allocate_mirror_with_class(
+                            Payload {
+                                kind: member_kind,
+                                data: Data::Member(declaration),
+                            },
+                            factory_class,
+                        )?;
+                        self.insert_map_entry_ordered(
+                            map_id,
+                            Value::String(member_name),
+                            Value::Object(mirror),
+                            None,
+                        )?;
+                    }
+                    run.values
+                        .push(Value::Object(self.finish_strict_collection(map_id)?));
+                    return Ok(());
+                }
                 run.tasks.push(Task::BuildMap(
                     declarations
                         .iter()
@@ -1087,11 +1444,7 @@ impl Vm {
                 ));
                 for declaration in declarations.into_iter().rev() {
                     run.tasks.push(Task::Make(Payload {
-                        kind: if methods {
-                            Kind::Method
-                        } else {
-                            Kind::Property
-                        },
+                        kind: member_kind,
                         data: Data::Member(declaration),
                     }));
                 }
@@ -1155,52 +1508,45 @@ impl Vm {
             let owner = self.heap.get_class(class)?.prototype;
             let object = self.heap.get(owner)?;
             let declarations = if object.builtin_type.is_some() {
-                let class = self.heap.class_definition(class)?;
-                let (parsed, source) = pinned_module(
-                    class
-                        .origin_uri
-                        .clone()
-                        .unwrap_or_else(|| "pkl:base".into()),
-                )?;
-                let member = parsed
-                    .members
-                    .iter()
-                    .find(|member| {
-                        member.name == class.name
-                            && matches!(member.expr.kind, crate::syntax::ExprKind::Class { .. })
-                    })
+                let class_def = self.heap.class_definition(class)?;
+                let uri = class_def
+                    .origin_uri
+                    .as_ref()
+                    .and_then(|u| u.as_str())
+                    .unwrap_or("pkl:base");
+                let index = builtin_index(uri, existing_unit_syntax(self, uri))?;
+                let cls = index
+                    .classes
+                    .get(&class_def.name)
                     .ok_or_else(|| invalid("builtin class members"))?;
-                let crate::syntax::ExprKind::Class { members, .. } = &member.expr.kind else {
-                    unreachable!()
+                let list = if methods {
+                    &cls.methods
+                } else {
+                    &cls.properties
                 };
-                members
-                    .iter()
-                    .filter(|member| {
-                        !member.local
-                            && !matches!(
-                                member.expr.kind,
-                                crate::syntax::ExprKind::Class { .. }
-                                    | crate::syntax::ExprKind::TypeAlias { .. }
-                                    | crate::syntax::ExprKind::Import { .. }
-                            )
-                            && matches!(
-                                member.expr.kind,
-                                crate::syntax::ExprKind::Function { method: true, .. }
-                            ) == methods
-                    })
-                    .map(|member| Declaration {
-                        owner,
-                        code: object
+                let has_compiled = !object.members.is_empty();
+                let mut out = Vec::with_capacity(list.len());
+                for syntax in list {
+                    let code = if has_compiled {
+                        object
                             .members
                             .iter()
                             .find(|compiled| {
-                                compiled.name == member.name && compiled.method == methods
+                                compiled.name == syntax.name && compiled.method == methods
                             })
-                            .map(|member| member.code),
-                        source: source.clone(),
-                        syntax: Arc::new(member.declaration_source()),
-                    })
-                    .collect::<Vec<_>>()
+                            .map(|member| member.code)
+                    } else {
+                        None
+                    };
+                    out.push(Declaration {
+                        owner,
+                        code,
+                        source: index.source.clone(),
+                        syntax: syntax.clone(),
+                        stdlib_default_transformer: cls.reflect_standard,
+                    });
+                }
+                out
             } else {
                 object
                     .members
@@ -1214,6 +1560,9 @@ impl Vm {
                     .map(|member| self.declaration(owner, member.code))
                     .collect::<Result<Vec<_>, _>>()?
             };
+            if !inherited {
+                return Ok(declarations);
+            }
             for declaration in declarations {
                 if let Some(index) = result
                     .iter()
@@ -1340,5 +1689,164 @@ mod source_provenance_tests {
         );
         vm.close();
         assert_eq!(vm.heap_stats().slots, 0);
+    }
+
+    #[test]
+    fn builtin_index_matches_full_base_syntax_declarations() {
+        let index = builtin_index("pkl:base", None).unwrap();
+        let fresh = crate::parser::parse_module(&index.source.text).unwrap();
+        let mut expected_classes = 0usize;
+        let mut expected_aliases = 0usize;
+        for member in &fresh.members {
+            match &member.expr.kind {
+                crate::syntax::ExprKind::Class { members, .. } => {
+                    expected_classes += 1;
+                    let indexed = index.classes.get(&member.name).expect("indexed base class");
+                    assert_eq!(
+                        indexed.class_decl.header_span,
+                        member.declaration_source().header_span
+                    );
+                    let expected_props: Vec<_> = members
+                        .iter()
+                        .filter(|cm| {
+                            !cm.local
+                                && !matches!(
+                                    cm.expr.kind,
+                                    crate::syntax::ExprKind::Class { .. }
+                                        | crate::syntax::ExprKind::TypeAlias { .. }
+                                        | crate::syntax::ExprKind::Import { .. }
+                                        | crate::syntax::ExprKind::Function { method: true, .. }
+                                )
+                        })
+                        .map(|cm| cm.name.clone())
+                        .collect();
+                    let actual_props: Vec<_> =
+                        indexed.properties.iter().map(|d| d.name.clone()).collect();
+                    assert_eq!(actual_props, expected_props, "class {}", member.name);
+                    let expected_methods: Vec<_> = members
+                        .iter()
+                        .filter(|cm| {
+                            !cm.local
+                                && matches!(
+                                    cm.expr.kind,
+                                    crate::syntax::ExprKind::Function { method: true, .. }
+                                )
+                        })
+                        .map(|cm| cm.name.clone())
+                        .collect();
+                    let actual_methods: Vec<_> =
+                        indexed.methods.iter().map(|d| d.name.clone()).collect();
+                    assert_eq!(actual_methods, expected_methods, "class {}", member.name);
+                }
+                crate::syntax::ExprKind::TypeAlias { .. } => {
+                    expected_aliases += 1;
+                    let indexed = index.aliases.get(&member.name).expect("indexed base alias");
+                    assert_eq!(indexed.header_span, member.declaration_source().header_span);
+                }
+                _ => {}
+            }
+        }
+        assert_eq!(index.classes.len(), expected_classes);
+        assert_eq!(index.aliases.len(), expected_aliases);
+        assert!(index.classes[&PklString::from("String")].reflect_standard);
+        assert!(index.classes[&PklString::from("Int")].reflect_standard);
+        assert!(!index.classes[&PklString::from("Regex")].reflect_standard);
+        assert_eq!(index.source_index().position(0).map(|p| p.line), Some(1));
+    }
+
+    #[test]
+    fn standard_reflect_base_declarations_preserve_default_display_uri_under_host_transformer() {
+        use crate::evaluation::session::{SourceSession, SourceSessionOptions};
+        use crate::host::HostPoll;
+        use crate::logging::FrameTransformer;
+        use crate::modules::{
+            ModuleCompletion, ModuleKey, ModuleKeyKind, ModuleRequestKind, ModuleSourceSpec,
+            ResolvedModule, ResolvedModuleKey,
+        };
+
+        let mut session = SourceSession::module_evaluator(SourceSessionOptions {
+            frame_transformer: FrameTransformer::Host,
+            ..Default::default()
+        });
+        let source = r#"
+import "pkl:reflect"
+
+class Local {}
+
+output {
+  text = "\(reflect.intType.referent.location.displayUri)|\(reflect.stringType.referent.methods["trim"].location.displayUri)|\(reflect.Class(Local).location.displayUri)"
+}
+"#;
+        session
+            .start_evaluation_output_bytes(
+                ModuleSourceSpec {
+                    uri: "file:///reflect-loc-test.pkl".into(),
+                    contents: Some(source.into()),
+                },
+                0,
+                None,
+            )
+            .unwrap();
+        let mut host_transformed_uris: Vec<String> = Vec::new();
+        let output =
+            loop {
+                match session.poll(0, 65_536) {
+                    HostPoll::Ready(res) => break res.unwrap(),
+                    HostPoll::Yielded => {}
+                    HostPoll::Module { token, request } => {
+                        let completion = crate::modules::default_completion(&request)
+                            .unwrap_or_else(|| match &request.kind {
+                                ModuleRequestKind::SelectKey { id, uri, .. } => {
+                                    ModuleCompletion::KeySelected(Ok(ModuleKey {
+                                        id: *id,
+                                        uri: uri.clone(),
+                                        kind: ModuleKeyKind::Host,
+                                        handle: "mem".into(),
+                                    }))
+                                }
+                                ModuleRequestKind::QueryCachePolicy { .. } => {
+                                    ModuleCompletion::CachePolicy(Ok(true))
+                                }
+                                ModuleRequestKind::ResolveKey {
+                                    key,
+                                    resolved_key_id,
+                                    ..
+                                } => ModuleCompletion::KeyResolved(Ok(ResolvedModuleKey {
+                                    id: *resolved_key_id,
+                                    key: key.clone(),
+                                    handle: key.handle.clone(),
+                                    module: ResolvedModule {
+                                        original_uri: key.uri.clone(),
+                                        resolved_uri: key.uri.clone(),
+                                        source_uri: key.uri.clone(),
+                                    },
+                                })),
+                                other => panic!("unexpected module request: {other:?}"),
+                            });
+                        session.complete_module(&token, completion, 0).unwrap();
+                    }
+                    HostPoll::Read { token, .. } => {
+                        session.resume_default_read(&token, &[], &[], 0).unwrap();
+                    }
+                    HostPoll::TransformFrame { token, frame } => {
+                        host_transformed_uris.push(frame.module_uri.to_java_utf8());
+                        let mut rewritten = (*frame).clone();
+                        rewritten.module_uri = "custom://transformed".into();
+                        session
+                            .complete_frame_transform(&token, Ok(rewritten), 0)
+                            .unwrap();
+                    }
+                    other => panic!("unexpected host poll: {other:?}"),
+                }
+            };
+        let Value::Bytes(bytes) = output else {
+            panic!("expected output bytes, got {output:?}");
+        };
+        assert_eq!(
+            String::from_utf8(bytes.to_vec()).unwrap(),
+            "https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L993|https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1582|custom://transformed"
+        );
+        assert_eq!(host_transformed_uris, vec!["file:///reflect-loc-test.pkl"]);
+        session.close();
     }
 }

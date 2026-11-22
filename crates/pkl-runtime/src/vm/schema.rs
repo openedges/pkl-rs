@@ -4,7 +4,11 @@
 
 use super::*;
 use crate::evaluation::session::SourceSession;
-use crate::pkl_binary_decode::{DecodedObject, DecodedValue, decode_lossless};
+use crate::heap::{CollectionKind, CollectionMemberKind};
+use crate::pkl_binary_decode::{
+    DecodedClassInfo, DecodedObject, DecodedObjectMember, DecodedValue, ObjectMemberKind,
+    decode_lossless,
+};
 use crate::schema::{
     ClassId, Modifier, ModuleSchema, PClass, PClassInfo, PClassMethod, PClassProperty, PType,
     SchemaStep, SchemaStore, SourceLocation, TypeAlias, TypeAliasId, TypeAliasInfo, TypeParameter,
@@ -13,8 +17,102 @@ use crate::schema::{
 use crate::syntax::{DeclarationRecipe, DeclarationSource, Type, TypeKind};
 use crate::value::RuntimeSource;
 use crate::vm::classes::BuiltinClass;
+use crate::vm::reflection::{builtin_index, existing_unit_syntax};
 use std::collections::{BTreeMap, BTreeSet};
 use std::sync::{Arc, OnceLock};
+
+struct BaseSchemaCache {
+    schema: ModuleSchema,
+    module_class_id: ClassId,
+    classes_by_name: BTreeMap<String, ClassId>,
+    aliases_by_name: BTreeMap<String, TypeAliasId>,
+}
+
+impl BaseSchemaCache {
+    fn from_schema(schema: ModuleSchema) -> Self {
+        let module_class_id = schema.module_class_id;
+        let mut classes_by_name = BTreeMap::new();
+        for cls in &schema.store.classes {
+            if !cls.info.is_module_class && cls.info.module_uri == "pkl:base" {
+                classes_by_name.insert(cls.info.simple_name.clone(), cls.id);
+            }
+        }
+        let mut aliases_by_name = BTreeMap::new();
+        for alias in &schema.store.type_aliases {
+            if alias.info.module_name == "pkl.base" {
+                aliases_by_name.insert(alias.info.simple_name.clone(), alias.id);
+            }
+        }
+        Self {
+            schema,
+            module_class_id,
+            classes_by_name,
+            aliases_by_name,
+        }
+    }
+}
+
+static BASE_SCHEMA_CACHE: OnceLock<BaseSchemaCache> = OnceLock::new();
+
+fn is_stdlib_base_module(vm: &Vm, mod_id: ObjectId) -> bool {
+    let Ok(obj) = vm.heap.get(mod_id) else {
+        return false;
+    };
+    obj.is_module
+        && obj
+            .module_unit
+            .and_then(|u| vm.program.units.get(u.0 as usize))
+            .is_some_and(|unit| {
+                unit.standard_library && unit.source.as_ref().is_some_and(|s| s.uri == "pkl:base")
+            })
+}
+
+fn stdlib_base_class_id(
+    vm: &Vm,
+    class_obj_id: ObjectId,
+    base: &BaseSchemaCache,
+) -> Option<ClassId> {
+    let rec = vm.heap.get_class(class_obj_id).ok()?;
+    if is_stdlib_base_module(vm, rec.prototype) {
+        return Some(base.module_class_id);
+    }
+    let def = vm.heap.class_definition(class_obj_id).ok()?;
+    if def.origin_uri.as_ref().is_some_and(|u| u == "pkl:base") {
+        return def
+            .name
+            .as_str()
+            .and_then(|name| base.classes_by_name.get(name).copied());
+    }
+    None
+}
+
+fn stdlib_base_alias_id(
+    vm: &Vm,
+    alias_obj_id: ObjectId,
+    base: &BaseSchemaCache,
+) -> Option<TypeAliasId> {
+    let obj = vm.heap.get(alias_obj_id).ok()?;
+    let qualified = obj.type_alias.as_ref()?.as_str()?;
+    let name = qualified.strip_prefix("pkl.base#")?;
+    if let Some(code) = obj.declaration_code {
+        let is_base = vm
+            .program
+            .metadata
+            .get(code)
+            .and_then(|m| {
+                m.source.as_ref().or_else(|| {
+                    m.unit
+                        .and_then(|u| vm.program.units.get(u.0 as usize))
+                        .and_then(|u| u.source.as_ref())
+                })
+            })
+            .is_some_and(|s| s.uri == "pkl:base");
+        if !is_base {
+            return None;
+        }
+    }
+    base.aliases_by_name.get(name).copied()
+}
 
 #[derive(Clone, Debug)]
 struct DeclInfo {
@@ -56,6 +154,14 @@ enum PendingPhase {
     EncodeAnnotations,
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum ExtractStage {
+    Dependencies,
+    BuiltinAnnotations,
+    EncodeAnnotations,
+    Build,
+}
+
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 struct MemberForceKey {
     owner: ObjectId,
@@ -73,6 +179,8 @@ struct BuiltinAnnKey {
 pub(crate) struct VmSchemaExtractor {
     root_module: ObjectId,
     phase: PendingPhase,
+    stage: ExtractStage,
+    reachable: Option<ReachableSet>,
     pending_builtin_anns: Vec<BuiltinAnnKey>,
     pending_ann_ids: Vec<ObjectId>,
     decoded_annotations: BTreeMap<ObjectId, DecodedObject>,
@@ -90,6 +198,8 @@ impl VmSchemaExtractor {
         Ok(Self {
             root_module: id,
             phase: PendingPhase::None,
+            stage: ExtractStage::Dependencies,
+            reachable: None,
             pending_builtin_anns: Vec::new(),
             pending_ann_ids: Vec::new(),
             decoded_annotations: BTreeMap::new(),
@@ -106,6 +216,14 @@ impl VmSchemaExtractor {
         timeout_ms: Option<u64>,
     ) -> Result<SchemaStep, RuntimeError> {
         let now_ms = now_ms.max(session.host_session().last_clock());
+        // Fast path: `pkl:base` is completely immutable; reuse its cached ModuleSchema once built.
+        if self.phase == PendingPhase::None
+            && self.stage == ExtractStage::Dependencies
+            && is_stdlib_base_module(session.vm(), self.root_module)
+            && let Some(base) = BASE_SCHEMA_CACHE.get()
+        {
+            return Ok(SchemaStep::Done(base.schema.clone()));
+        }
         // Process result from the previous pending VM block, if any.
         match self.phase {
             PendingPhase::None => {}
@@ -118,75 +236,115 @@ impl VmSchemaExtractor {
                 if let Some(val) = last_result {
                     self.record_builtin_annotations(session.vm_mut(), val)?;
                 }
+                self.stage = ExtractStage::EncodeAnnotations;
             }
             PendingPhase::EncodeAnnotations => {
                 self.phase = PendingPhase::None;
                 if let Some(val) = last_result {
                     self.record_encoded_annotations(session.vm(), val)?;
                 }
+                self.stage = ExtractStage::Build;
             }
         }
 
         // Phase 1: Iteratively force all reachable stdlib singletons, classes, type aliases,
         // and imports referenced in types until fixed point.
-        let (needed_stdlibs, needed_members) = {
-            let vm = session.vm();
-            self.discover_uncached_dependencies(vm)?
-        };
-        if !needed_stdlibs.is_empty() || !needed_members.is_empty() {
-            for uri in &needed_stdlibs {
-                self.attempted_stdlibs.insert(uri.clone());
+        if self.stage == ExtractStage::Dependencies {
+            let (needed_stdlibs, needed_members, reachable) = {
+                let vm = session.vm();
+                self.discover_uncached_dependencies(vm)?
+            };
+            if !needed_stdlibs.is_empty() || !needed_members.is_empty() {
+                for uri in &needed_stdlibs {
+                    self.attempted_stdlibs.insert(uri.clone());
+                }
+                for req in &needed_members {
+                    self.attempted_members.insert(req.clone());
+                }
+                let (entry, inputs) =
+                    build_force_members_block(session.vm_mut(), &needed_stdlibs, &needed_members)?;
+                session
+                    .host_session_mut()
+                    .start(entry, inputs, now_ms, timeout_ms)?;
+                self.phase = PendingPhase::ForceMembers;
+                return Ok(SchemaStep::RunPending);
             }
-            for req in &needed_members {
-                self.attempted_members.insert(req.clone());
-            }
-            let (entry, inputs) =
-                build_force_members_block(session.vm_mut(), &needed_stdlibs, &needed_members)?;
-            session
-                .host_session_mut()
-                .start(entry, inputs, now_ms, timeout_ms)?;
-            self.phase = PendingPhase::ForceMembers;
-            return Ok(SchemaStep::RunPending);
+            self.reachable = Some(reachable);
+            self.stage = ExtractStage::BuiltinAnnotations;
         }
 
         // Phase 2: Execute any uncached builtin reflection_annotations collectors.
-        let needed_builtin_anns = {
-            let vm = session.vm();
-            self.discover_uncached_builtin_annotations(vm)?
-        };
-        if !needed_builtin_anns.is_empty() {
-            self.pending_builtin_anns = needed_builtin_anns;
-            let (entry, inputs) =
-                build_builtin_annotations_block(session.vm_mut(), &self.pending_builtin_anns)?;
-            session
-                .host_session_mut()
-                .start(entry, inputs, now_ms, timeout_ms)?;
-            self.phase = PendingPhase::ExecuteBuiltinAnnotations;
-            return Ok(SchemaStep::RunPending);
+        if self.stage == ExtractStage::BuiltinAnnotations {
+            let needed_builtin_anns = {
+                let vm = session.vm();
+                let reachable = self
+                    .reachable
+                    .as_ref()
+                    .expect("reachable set populated in Dependencies phase");
+                discover_uncached_builtin_annotations(vm, reachable)?
+            };
+            if !needed_builtin_anns.is_empty() {
+                self.pending_builtin_anns = needed_builtin_anns;
+                let (entry, inputs) =
+                    build_builtin_annotations_block(session.vm_mut(), &self.pending_builtin_anns)?;
+                session
+                    .host_session_mut()
+                    .start(entry, inputs, now_ms, timeout_ms)?;
+                self.phase = PendingPhase::ExecuteBuiltinAnnotations;
+                return Ok(SchemaStep::RunPending);
+            }
+            self.stage = ExtractStage::EncodeAnnotations;
         }
 
         // Phase 3: Force and pkl-binary encode all reachable annotation objects.
-        let needed_ann_ids = {
-            let vm = session.vm();
-            self.discover_unencoded_annotations(vm)?
-        };
-        if !needed_ann_ids.is_empty() {
-            self.pending_ann_ids = needed_ann_ids;
-            let (entry, inputs) =
-                build_encode_annotations_block(session.vm_mut(), &self.pending_ann_ids)?;
-            session
-                .host_session_mut()
-                .start(entry, inputs, now_ms, timeout_ms)?;
-            self.phase = PendingPhase::EncodeAnnotations;
-            return Ok(SchemaStep::RunPending);
+        if self.stage == ExtractStage::EncodeAnnotations {
+            let mut remaining_ann_ids = Vec::new();
+            {
+                let vm = session.vm();
+                let reachable = self
+                    .reachable
+                    .as_ref()
+                    .expect("reachable set populated in Dependencies phase");
+                let needed_ann_ids =
+                    discover_unencoded_annotations(vm, reachable, &self.decoded_annotations)?;
+                for ann_id in needed_ann_ids {
+                    if let Some(decoded) = try_decode_forced_annotation(vm, ann_id) {
+                        self.decoded_annotations.insert(ann_id, decoded);
+                    } else {
+                        remaining_ann_ids.push(ann_id);
+                    }
+                }
+            }
+            if !remaining_ann_ids.is_empty() {
+                self.pending_ann_ids = remaining_ann_ids;
+                let (entry, inputs) =
+                    build_encode_annotations_block(session.vm_mut(), &self.pending_ann_ids)?;
+                session
+                    .host_session_mut()
+                    .start(entry, inputs, now_ms, timeout_ms)?;
+                self.phase = PendingPhase::EncodeAnnotations;
+                return Ok(SchemaStep::RunPending);
+            }
+            self.stage = ExtractStage::Build;
         }
 
         // Phase 4: Build complete ModuleSchema purely in memory.
+        let is_base_root = is_stdlib_base_module(session.vm(), self.root_module);
+        let base_cache = if is_base_root {
+            None
+        } else {
+            BASE_SCHEMA_CACHE.get()
+        };
         let schema = {
             let vm = session.vm();
+            let base_class_len = base_cache.map_or(0, |b| b.schema.store.classes.len());
+            let base_alias_len = base_cache.map_or(0, |b| b.schema.store.type_aliases.len());
             let builder = SchemaBuilder {
                 vm,
                 decoded_annotations: &self.decoded_annotations,
+                base_cache,
+                base_class_map: vec![None; base_class_len],
+                base_alias_map: vec![None; base_alias_len],
                 store: SchemaStore::default(),
                 class_ids: BTreeMap::new(),
                 alias_ids: BTreeMap::new(),
@@ -194,6 +352,9 @@ impl VmSchemaExtractor {
             };
             builder.export_module(self.root_module)?
         };
+        if is_base_root {
+            let _ = BASE_SCHEMA_CACHE.get_or_init(|| BaseSchemaCache::from_schema(schema.clone()));
+        }
         Ok(SchemaStep::Done(schema))
     }
 
@@ -238,7 +399,7 @@ impl VmSchemaExtractor {
     fn discover_uncached_dependencies(
         &self,
         vm: &Vm,
-    ) -> Result<(Vec<PklString>, Vec<MemberForceKey>), RuntimeError> {
+    ) -> Result<(Vec<PklString>, Vec<MemberForceKey>, ReachableSet), RuntimeError> {
         let mut needed_stdlibs: BTreeSet<PklString> = BTreeSet::new();
         let mut needed_members: BTreeSet<MemberForceKey> = BTreeSet::new();
 
@@ -252,7 +413,15 @@ impl VmSchemaExtractor {
             needed_stdlibs.insert(base_uri);
         }
 
+        let base_cache = if is_stdlib_base_module(vm, self.root_module) {
+            None
+        } else {
+            BASE_SCHEMA_CACHE.get()
+        };
+
         let mut visited_modules: BTreeSet<ObjectId> = BTreeSet::new();
+        let mut seen_classes: BTreeSet<ObjectId> = BTreeSet::new();
+        let mut seen_aliases: BTreeSet<ObjectId> = BTreeSet::new();
         let mut visited_classes: BTreeSet<ObjectId> = BTreeSet::new();
         let mut visited_aliases: BTreeSet<ObjectId> = BTreeSet::new();
         let mut module_queue: Vec<ObjectId> = vec![self.root_module];
@@ -262,6 +431,12 @@ impl VmSchemaExtractor {
         while !module_queue.is_empty() || !class_queue.is_empty() || !alias_queue.is_empty() {
             while let Some(mod_id) = module_queue.pop() {
                 if !visited_modules.insert(mod_id) {
+                    continue;
+                }
+                if mod_id != self.root_module
+                    && base_cache.is_some()
+                    && is_stdlib_base_module(vm, mod_id)
+                {
                     continue;
                 }
                 let obj = vm.heap.get(mod_id)?;
@@ -317,26 +492,30 @@ impl VmSchemaExtractor {
             }
 
             while let Some(class_id) = class_queue.pop() {
-                if !visited_classes.insert(class_id) {
+                if !seen_classes.insert(class_id) {
                     continue;
                 }
+                if base_cache.is_some_and(|b| stdlib_base_class_id(vm, class_id, b).is_some()) {
+                    continue;
+                }
+                visited_classes.insert(class_id);
                 let rec = vm.heap.get_class(class_id)?;
                 if let Some(sup) = rec.superclass {
                     class_queue.push(sup);
                 }
                 let prototype = rec.prototype;
                 let proto_obj = vm.heap.get(prototype)?;
+                let mut class_decl_cache: Option<DeclInfo> = None;
                 if !proto_obj.is_module {
                     // Enclosing module
-                    if let Some(enc_mod) = find_enclosing_module_if_loaded(
-                        vm,
-                        prototype,
-                        &class_origin_uri(vm, class_id)?,
-                    ) {
+                    let origin_uri = class_origin_uri(vm, class_id)?;
+                    if let Some(enc_mod) =
+                        find_enclosing_module_if_loaded(vm, prototype, &origin_uri)
+                    {
                         if let Some(enc_cls) = vm.heap.object_class(enc_mod)? {
                             class_queue.push(enc_cls);
                         }
-                    } else if let Some(uri) = class_origin_uri(vm, class_id)?
+                    } else if let Some(uri) = origin_uri
                         && uri.starts_with("pkl:")
                         && !self.attempted_stdlibs.contains(&uri)
                     {
@@ -344,24 +523,29 @@ impl VmSchemaExtractor {
                     }
 
                     // Supertype annotation
-                    if let Ok(decl) = schema_class_declaration(vm, class_id)
-                        && let DeclarationRecipe::Class {
+                    if let Ok(decl) = schema_class_declaration(vm, class_id) {
+                        if let DeclarationRecipe::Class {
                             superclass: Some(ref ty),
                             ..
                         } = decl.syntax.recipe
-                    {
-                        let ctx = schema_type_context(vm, &decl)?;
-                        self.collect_type_deps(
-                            vm,
-                            ty,
-                            &ctx,
-                            &mut needed_stdlibs,
-                            &mut needed_members,
-                            &mut class_queue,
-                            &mut alias_queue,
-                        )?;
+                        {
+                            let ctx = schema_type_context_with_class_params(&decl, &[]);
+                            self.collect_type_deps(
+                                vm,
+                                ty,
+                                &ctx,
+                                &mut needed_stdlibs,
+                                &mut needed_members,
+                                &mut class_queue,
+                                &mut alias_queue,
+                            )?;
+                        }
+                        class_decl_cache = Some(decl);
                     }
                 }
+                let class_params = class_decl_cache
+                    .as_ref()
+                    .map_or(&[][..], |d| d.parameters());
 
                 // Own properties and methods
                 let props = schema_class_members(vm, class_id, false)?;
@@ -370,7 +554,7 @@ impl VmSchemaExtractor {
                         ty: Some(ref ty), ..
                     } = decl.syntax.recipe
                     {
-                        let ctx = schema_type_context(vm, &decl)?;
+                        let ctx = schema_type_context_with_class_params(&decl, class_params);
                         self.collect_type_deps(
                             vm,
                             ty,
@@ -390,7 +574,7 @@ impl VmSchemaExtractor {
                         ..
                     } = decl.syntax.recipe
                     {
-                        let ctx = schema_type_context(vm, &decl)?;
+                        let ctx = schema_type_context_with_class_params(&decl, class_params);
                         for param in parameters {
                             if let Some(ref ty) = param.ty {
                                 self.collect_type_deps(
@@ -420,9 +604,13 @@ impl VmSchemaExtractor {
             }
 
             while let Some(alias_id) = alias_queue.pop() {
-                if !visited_aliases.insert(alias_id) {
+                if !seen_aliases.insert(alias_id) {
                     continue;
                 }
+                if base_cache.is_some_and(|b| stdlib_base_alias_id(vm, alias_id, b).is_some()) {
+                    continue;
+                }
+                visited_aliases.insert(alias_id);
                 let decl = schema_alias_declaration(vm, alias_id)?;
                 if let Some(enc_mod) =
                     find_enclosing_module_if_loaded(vm, decl.owner, &Some(decl.source.uri.clone()))
@@ -436,7 +624,7 @@ impl VmSchemaExtractor {
                     needed_stdlibs.insert(decl.source.uri.clone());
                 }
                 if let DeclarationRecipe::TypeAlias { ref referent, .. } = decl.syntax.recipe {
-                    let ctx = schema_type_context(vm, &decl)?;
+                    let ctx = schema_type_context_with_class_params(&decl, &[]);
                     self.collect_type_deps(
                         vm,
                         referent,
@@ -453,6 +641,11 @@ impl VmSchemaExtractor {
         Ok((
             needed_stdlibs.into_iter().collect(),
             needed_members.into_iter().collect(),
+            ReachableSet {
+                modules: visited_modules,
+                classes: visited_classes,
+                aliases: visited_aliases,
+            },
         ))
     }
 
@@ -642,80 +835,155 @@ impl VmSchemaExtractor {
         }
         Ok(())
     }
+}
 
-    fn discover_uncached_builtin_annotations(
-        &self,
-        vm: &Vm,
-    ) -> Result<Vec<BuiltinAnnKey>, RuntimeError> {
-        let reachable = collect_all_reachable(vm, self.root_module)?;
-        let mut needed: BTreeSet<BuiltinAnnKey> = BTreeSet::new();
+fn discover_uncached_builtin_annotations(
+    vm: &Vm,
+    reachable: &ReachableSet,
+) -> Result<Vec<BuiltinAnnKey>, RuntimeError> {
+    let mut needed: BTreeSet<BuiltinAnnKey> = BTreeSet::new();
 
-        for class_id in &reachable.classes {
-            let proto = vm.heap.get_class(*class_id)?.prototype;
-            if !vm.heap.get(proto)?.is_module
-                && let Ok(decl) = schema_class_declaration(vm, *class_id)
-            {
-                check_builtin_decl_ann(vm, &decl, &mut needed)?;
-            }
-            for decl in schema_class_members(vm, *class_id, false)? {
-                check_builtin_decl_ann(vm, &decl, &mut needed)?;
-            }
-            for decl in schema_class_members(vm, *class_id, true)? {
-                check_builtin_decl_ann(vm, &decl, &mut needed)?;
-            }
-        }
-        for alias_id in &reachable.aliases {
-            let decl = schema_alias_declaration(vm, *alias_id)?;
+    for class_id in &reachable.classes {
+        let proto = vm.heap.get_class(*class_id)?.prototype;
+        if !vm.heap.get(proto)?.is_module
+            && let Ok(decl) = schema_class_declaration(vm, *class_id)
+        {
             check_builtin_decl_ann(vm, &decl, &mut needed)?;
         }
-
-        Ok(needed.into_iter().collect())
+        for decl in schema_class_members(vm, *class_id, false)? {
+            check_builtin_decl_ann(vm, &decl, &mut needed)?;
+        }
+        for decl in schema_class_members(vm, *class_id, true)? {
+            check_builtin_decl_ann(vm, &decl, &mut needed)?;
+        }
+    }
+    for alias_id in &reachable.aliases {
+        let decl = schema_alias_declaration(vm, *alias_id)?;
+        check_builtin_decl_ann(vm, &decl, &mut needed)?;
     }
 
-    fn discover_unencoded_annotations(&self, vm: &Vm) -> Result<Vec<ObjectId>, RuntimeError> {
-        let reachable = collect_all_reachable(vm, self.root_module)?;
-        let mut needed: BTreeSet<ObjectId> = BTreeSet::new();
+    Ok(needed.into_iter().collect())
+}
 
-        let mut push_values = |vals: &[Value]| {
-            for val in vals {
-                if let Some(id) = val.heap_id()
-                    && !self.decoded_annotations.contains_key(&id)
-                {
-                    needed.insert(id);
-                }
+fn discover_unencoded_annotations(
+    vm: &Vm,
+    reachable: &ReachableSet,
+    decoded_annotations: &BTreeMap<ObjectId, DecodedObject>,
+) -> Result<Vec<ObjectId>, RuntimeError> {
+    let mut needed: BTreeSet<ObjectId> = BTreeSet::new();
+
+    let mut push_values = |vals: &[Value]| {
+        for val in vals {
+            if let Some(id) = val.heap_id()
+                && !decoded_annotations.contains_key(&id)
+            {
+                needed.insert(id);
             }
-        };
+        }
+    };
 
-        for mod_id in &reachable.modules {
-            let obj = vm.heap.get(*mod_id)?;
+    for mod_id in &reachable.modules {
+        let obj = vm.heap.get(*mod_id)?;
+        push_values(&obj.annotations);
+    }
+    for class_id in &reachable.classes {
+        let proto = vm.heap.get_class(*class_id)?.prototype;
+        let obj = vm.heap.get(proto)?;
+        if obj.is_module {
             push_values(&obj.annotations);
-        }
-        for class_id in &reachable.classes {
-            let proto = vm.heap.get_class(*class_id)?.prototype;
-            let obj = vm.heap.get(proto)?;
-            if obj.is_module {
-                push_values(&obj.annotations);
-            } else if let Ok(decl) = schema_class_declaration(vm, *class_id) {
-                let anns = existing_decl_annotations(vm, &decl)?;
-                push_values(&anns);
-            }
-            for decl in schema_class_members(vm, *class_id, false)? {
-                let anns = existing_decl_annotations(vm, &decl)?;
-                push_values(&anns);
-            }
-            for decl in schema_class_members(vm, *class_id, true)? {
-                let anns = existing_decl_annotations(vm, &decl)?;
-                push_values(&anns);
-            }
-        }
-        for alias_id in &reachable.aliases {
-            let decl = schema_alias_declaration(vm, *alias_id)?;
+        } else if let Ok(decl) = schema_class_declaration(vm, *class_id) {
             let anns = existing_decl_annotations(vm, &decl)?;
             push_values(&anns);
         }
-
-        Ok(needed.into_iter().collect())
+        for decl in schema_class_members(vm, *class_id, false)? {
+            let anns = existing_decl_annotations(vm, &decl)?;
+            push_values(&anns);
+        }
+        for decl in schema_class_members(vm, *class_id, true)? {
+            let anns = existing_decl_annotations(vm, &decl)?;
+            push_values(&anns);
+        }
     }
+    for alias_id in &reachable.aliases {
+        let decl = schema_alias_declaration(vm, *alias_id)?;
+        let anns = existing_decl_annotations(vm, &decl)?;
+        push_values(&anns);
+    }
+
+    Ok(needed.into_iter().collect())
+}
+
+/// Fast-path direct conversion of an already-forced typed annotation object whose
+/// visible properties are all cached pure scalars, avoiding VM `EncodePklBinary` +
+/// MessagePack round-trips. Returns `None` for any unforced or complex annotation
+/// so the caller falls back to exact `EncodePklBinary` evaluation.
+fn try_decode_forced_annotation(vm: &Vm, ann_id: ObjectId) -> Option<DecodedObject> {
+    let obj = vm.heap.get(ann_id).ok()?;
+    if obj.is_module
+        || obj.collection_kind != CollectionKind::Dynamic
+        || obj.pair.is_some()
+        || obj.reference.is_some()
+        || obj.foreign_map_entry.is_some()
+        || obj.function.is_some()
+        || obj.native_function.is_some()
+        || obj.regex_match.is_some()
+    {
+        return None;
+    }
+    let class_id = obj.instance_class?;
+    let (class_name, module_uri) = vm.binary_declared_class_identity(class_id).ok()?;
+    class_name.as_str()?;
+    module_uri.as_str()?;
+    // Verify no non-property / definition / import / external member exists on the prototype chain.
+    let mut cur = Some(ann_id);
+    let mut hops = 0u8;
+    while let Some(id) = cur {
+        hops += 1;
+        if hops > 16 {
+            return None;
+        }
+        let cur_obj = vm.heap.get(id).ok()?;
+        if cur_obj
+            .members
+            .iter()
+            .any(|m| !m.local && !m.method && (m.definition() || m.import() || m.external()))
+        {
+            return None;
+        }
+        cur = cur_obj.parent;
+    }
+    let ordered = collections::ordered_members(&vm.heap, ann_id).ok()?;
+    let mut members = Vec::with_capacity(ordered.len());
+    for member in ordered {
+        if member.kind != CollectionMemberKind::Property {
+            return None;
+        }
+        if collections::hidden_property(&vm.heap, ann_id, &member.name, false).ok()? {
+            continue;
+        }
+        member.name.as_str()?;
+        let val = collections::cached_render_value(&vm.heap, ann_id, &member).ok()??;
+        let decoded = match val {
+            Value::Null | Value::NullWithDefault(_) => DecodedValue::Null,
+            Value::Bool(b) => DecodedValue::Bool(b),
+            Value::Int(n) => DecodedValue::Int(*n),
+            Value::Float(f) => DecodedValue::Float(*f),
+            Value::String(s) if s.as_str().is_some() => DecodedValue::String(s),
+            _ => return None,
+        };
+        members.push(DecodedObjectMember {
+            kind: ObjectMemberKind::Property,
+            key: DecodedValue::String(member.name),
+            value: decoded,
+        });
+    }
+    let class_info = DecodedClassInfo::from_wire(&class_name, &module_uri);
+    Some(DecodedObject {
+        class_name,
+        module_uri,
+        class_info,
+        members,
+    })
 }
 
 fn check_builtin_decl_ann(
@@ -780,198 +1048,6 @@ struct ReachableSet {
     modules: BTreeSet<ObjectId>,
     classes: BTreeSet<ObjectId>,
     aliases: BTreeSet<ObjectId>,
-}
-
-fn collect_all_reachable(vm: &Vm, root_module: ObjectId) -> Result<ReachableSet, RuntimeError> {
-    let mut modules = BTreeSet::new();
-    let mut classes = BTreeSet::new();
-    let mut aliases = BTreeSet::new();
-    let mut mod_q = vec![root_module];
-    let mut cls_q = Vec::new();
-    let mut alias_q = Vec::new();
-
-    while !mod_q.is_empty() || !cls_q.is_empty() || !alias_q.is_empty() {
-        while let Some(mod_id) = mod_q.pop() {
-            if !modules.insert(mod_id) {
-                continue;
-            }
-            let obj = vm.heap.get(mod_id)?;
-            if let Some(parent) = obj.parent
-                && vm.heap.get(parent).is_ok_and(|p| p.is_module)
-            {
-                mod_q.push(parent);
-            }
-            if let Some(mc) = vm.heap.object_class(mod_id)? {
-                cls_q.push(mc);
-            }
-            let Some(unit) = obj
-                .module_unit
-                .and_then(|u| vm.program.units.get(u.0 as usize))
-            else {
-                continue;
-            };
-            if unit.mode == modules::ModuleMode::Amends {
-                continue;
-            }
-            let Some(syntax) = unit.syntax.as_deref() else {
-                continue;
-            };
-            for member in &syntax.members {
-                if member.local {
-                    continue;
-                }
-                if matches!(
-                    member.expr.kind,
-                    crate::syntax::ExprKind::Class { .. }
-                        | crate::syntax::ExprKind::TypeAlias { .. }
-                ) && let Some(val) = cached_member_value(vm, mod_id, &member.name, false)?
-                {
-                    match val {
-                        Value::Class(cid) => cls_q.push(cid),
-                        Value::TypeAlias(tid) => alias_q.push(tid),
-                        _ => {}
-                    }
-                }
-            }
-        }
-        while let Some(cid) = cls_q.pop() {
-            if !classes.insert(cid) {
-                continue;
-            }
-            let rec = vm.heap.get_class(cid)?;
-            if let Some(sup) = rec.superclass {
-                cls_q.push(sup);
-            }
-            let proto = rec.prototype;
-            if !vm.heap.get(proto)?.is_module {
-                if let Some(enc) =
-                    find_enclosing_module_if_loaded(vm, proto, &class_origin_uri(vm, cid)?)
-                    && let Some(mc) = vm.heap.object_class(enc)?
-                {
-                    cls_q.push(mc);
-                }
-                if let Ok(decl) = schema_class_declaration(vm, cid)
-                    && let DeclarationRecipe::Class {
-                        superclass: Some(ref ty),
-                        ..
-                    } = decl.syntax.recipe
-                {
-                    let ctx = schema_type_context(vm, &decl)?;
-                    collect_cached_type_targets(vm, ty, &ctx, &mut cls_q, &mut alias_q)?;
-                }
-            }
-            for decl in schema_class_members(vm, cid, false)? {
-                if let DeclarationRecipe::Property {
-                    ty: Some(ref ty), ..
-                } = decl.syntax.recipe
-                {
-                    let ctx = schema_type_context(vm, &decl)?;
-                    collect_cached_type_targets(vm, ty, &ctx, &mut cls_q, &mut alias_q)?;
-                }
-            }
-            for decl in schema_class_members(vm, cid, true)? {
-                if let DeclarationRecipe::Method {
-                    ref parameters,
-                    ref return_type,
-                    ..
-                } = decl.syntax.recipe
-                {
-                    let ctx = schema_type_context(vm, &decl)?;
-                    for p in parameters {
-                        if let Some(ref ty) = p.ty {
-                            collect_cached_type_targets(vm, ty, &ctx, &mut cls_q, &mut alias_q)?;
-                        }
-                    }
-                    if let Some(ty) = return_type {
-                        collect_cached_type_targets(vm, ty, &ctx, &mut cls_q, &mut alias_q)?;
-                    }
-                }
-            }
-        }
-        while let Some(tid) = alias_q.pop() {
-            if !aliases.insert(tid) {
-                continue;
-            }
-            let decl = schema_alias_declaration(vm, tid)?;
-            if let Some(enc) =
-                find_enclosing_module_if_loaded(vm, decl.owner, &Some(decl.source.uri.clone()))
-                && let Some(mc) = vm.heap.object_class(enc)?
-            {
-                cls_q.push(mc);
-            }
-            if let DeclarationRecipe::TypeAlias { ref referent, .. } = decl.syntax.recipe {
-                let ctx = schema_type_context(vm, &decl)?;
-                collect_cached_type_targets(vm, referent, &ctx, &mut cls_q, &mut alias_q)?;
-            }
-        }
-    }
-
-    Ok(ReachableSet {
-        modules,
-        classes,
-        aliases,
-    })
-}
-
-fn collect_cached_type_targets(
-    vm: &Vm,
-    ty: &Type,
-    ctx: &TypeCtx,
-    cls_q: &mut Vec<ObjectId>,
-    alias_q: &mut Vec<ObjectId>,
-) -> Result<(), RuntimeError> {
-    match &ty.kind {
-        TypeKind::Unknown | TypeKind::Nothing | TypeKind::Module | TypeKind::String(_) => {}
-        TypeKind::Nullable(inner) | TypeKind::Constrained { base: inner, .. } => {
-            collect_cached_type_targets(vm, inner, ctx, cls_q, alias_q)?;
-        }
-        TypeKind::Union { types, .. } => {
-            for t in types {
-                collect_cached_type_targets(vm, t, ctx, cls_q, alias_q)?;
-            }
-        }
-        TypeKind::Function {
-            parameters,
-            return_type,
-        } => {
-            for t in parameters {
-                collect_cached_type_targets(vm, t, ctx, cls_q, alias_q)?;
-            }
-            collect_cached_type_targets(vm, return_type, ctx, cls_q, alias_q)?;
-        }
-        TypeKind::Named {
-            path,
-            name_spans,
-            arguments,
-        } => {
-            if path.len() == 1 && ctx.parameters.iter().any(|p| p.name == path[0]) {
-                return Ok(());
-            }
-            let mut is_erased_class = false;
-            if let Some(val) = resolve_cached_named_type(vm, path, name_spans, ty.span, ctx)? {
-                match val {
-                    Value::Class(cid) => {
-                        is_erased_class =
-                            vm.canonical_type_class(cid)? == Some(BuiltinClass::Class);
-                        cls_q.push(cid);
-                    }
-                    Value::TypeAlias(tid) => alias_q.push(tid),
-                    Value::Object(mod_id) => {
-                        if let Ok(mc) = vm.declared_module_class(mod_id, ty.span) {
-                            cls_q.push(mc);
-                        }
-                    }
-                    _ => {}
-                }
-            }
-            if !is_erased_class {
-                for arg in arguments {
-                    collect_cached_type_targets(vm, arg, ctx, cls_q, alias_q)?;
-                }
-            }
-        }
-    }
-    Ok(())
 }
 
 fn build_force_members_block(
@@ -1180,26 +1256,6 @@ fn cached_member_value(
     })
 }
 
-fn pinned_module(
-    uri: &PklString,
-) -> Result<(&'static crate::syntax::Module, Arc<RuntimeSource>), RuntimeError> {
-    static BASE: OnceLock<crate::syntax::Module> = OnceLock::new();
-    static REF: OnceLock<crate::syntax::Module> = OnceLock::new();
-    static REFLECT: OnceLock<crate::syntax::Module> = OnceLock::new();
-    let (cell, source) = match uri.as_str() {
-        Some("pkl:base") => (&BASE, crate::stdlib_sources::base()),
-        Some("pkl:ref") => (&REF, crate::stdlib_sources::reference()),
-        Some("pkl:reflect") => (&REFLECT, crate::stdlib_sources::reflect()),
-        _ => return Err(invalid("unknown builtin declaration source")),
-    };
-    Ok((
-        cell.get_or_init(|| {
-            crate::parser::parse_module(&source.text).expect("pinned metadata syntax")
-        }),
-        source,
-    ))
-}
-
 fn declaration_from_code(vm: &Vm, owner: ObjectId, code: usize) -> Result<DeclInfo, RuntimeError> {
     let syntax = vm
         .program
@@ -1261,20 +1317,21 @@ fn schema_class_declaration(vm: &Vm, class_id: ObjectId) -> Result<DeclInfo, Run
         return declaration_from_code(vm, prototype, code);
     }
     let def = vm.heap.class_definition(class_id)?;
-    let uri = def.origin_uri.clone().unwrap_or_else(|| "pkl:base".into());
-    let (parsed, source) = pinned_module(&uri)?;
-    let member = parsed
-        .members
-        .iter()
-        .find(|m| {
-            m.name == def.name && matches!(m.expr.kind, crate::syntax::ExprKind::Class { .. })
-        })
+    let uri = def
+        .origin_uri
+        .as_ref()
+        .and_then(|u| u.as_str())
+        .unwrap_or("pkl:base");
+    let index = builtin_index(uri, existing_unit_syntax(vm, uri))?;
+    let cls = index
+        .classes
+        .get(&def.name)
         .ok_or_else(|| invalid("builtin class metadata not found"))?;
     Ok(DeclInfo {
         owner: prototype,
         code: None,
-        source,
-        syntax: Arc::new(member.declaration_source()),
+        source: index.source.clone(),
+        syntax: cls.class_decl.clone(),
     })
 }
 
@@ -1292,20 +1349,16 @@ fn schema_alias_declaration(vm: &Vm, alias_id: ObjectId) -> Result<DeclInfo, Run
         .entire()
         .rsplit_once("#")
         .map_or(qualified.clone(), |(_, n)| n.into());
-    let base_uri: PklString = "pkl:base".into();
-    let (parsed, source) = pinned_module(&base_uri)?;
-    let member = parsed
-        .members
-        .iter()
-        .find(|m| {
-            m.name == name && matches!(m.expr.kind, crate::syntax::ExprKind::TypeAlias { .. })
-        })
+    let index = builtin_index("pkl:base", existing_unit_syntax(vm, "pkl:base"))?;
+    let syntax = index
+        .aliases
+        .get(&name)
         .ok_or_else(|| invalid("builtin alias metadata not found"))?;
     Ok(DeclInfo {
         owner: alias_id,
         code: None,
-        source,
-        syntax: Arc::new(member.declaration_source()),
+        source: index.source.clone(),
+        syntax: syntax.clone(),
     })
 }
 
@@ -1317,41 +1370,38 @@ fn schema_class_members(
     class_id: ObjectId,
     methods: bool,
 ) -> Result<Vec<DeclInfo>, RuntimeError> {
-    let rec = vm.heap.get_class(class_id)?;
-    let owner = rec.prototype;
-    let obj = vm.heap.get(owner)?;
-
-    // Build set of property names defined on any superclass so we can filter untyped overrides.
-    let super_props: BTreeSet<PklString> = if !methods {
-        let mut names = BTreeSet::new();
-        let mut cur = rec.superclass;
-        while let Some(sup_id) = cur {
-            let sup_rec = vm.heap.get_class(sup_id)?;
-            for d in raw_class_members(vm, sup_id, false)? {
-                names.insert(d.syntax.name.clone());
-            }
-            cur = sup_rec.superclass;
-        }
-        names
-    } else {
-        BTreeSet::new()
-    };
-
     let raw = raw_class_members(vm, class_id, methods)?;
-    let mut out = Vec::new();
-    for decl in raw {
-        if !methods
-            && matches!(
-                decl.syntax.recipe,
+    if methods
+        || !raw.iter().any(|d| {
+            matches!(
+                d.syntax.recipe,
                 DeclarationRecipe::Property { ty: None, .. }
             )
-            && super_props.contains(&decl.syntax.name)
+        })
+    {
+        return Ok(raw);
+    }
+
+    let rec = vm.heap.get_class(class_id)?;
+    let mut super_props = BTreeSet::new();
+    let mut cur = rec.superclass;
+    while let Some(sup_id) = cur {
+        let sup_rec = vm.heap.get_class(sup_id)?;
+        for d in raw_class_members(vm, sup_id, false)? {
+            super_props.insert(d.syntax.name.clone());
+        }
+        cur = sup_rec.superclass;
+    }
+
+    let mut out = Vec::with_capacity(raw.len());
+    for decl in raw {
+        if matches!(
+            decl.syntax.recipe,
+            DeclarationRecipe::Property { ty: None, .. }
+        ) && super_props.contains(&decl.syntax.name)
         {
             continue;
         }
-        // `obj` might be a module amending another module; wait: in Pkl, an amending module
-        // does not add class properties unless typed or new, which is already covered above.
-        let _ = obj;
         out.push(decl);
     }
     Ok(out)
@@ -1366,44 +1416,40 @@ fn raw_class_members(
     let obj = vm.heap.get(owner)?;
     if obj.builtin_type.is_some() {
         let def = vm.heap.class_definition(class_id)?;
-        let uri = def.origin_uri.clone().unwrap_or_else(|| "pkl:base".into());
-        let (parsed, source) = pinned_module(&uri)?;
-        let member = parsed
-            .members
-            .iter()
-            .find(|m| {
-                m.name == def.name && matches!(m.expr.kind, crate::syntax::ExprKind::Class { .. })
-            })
+        let uri = def
+            .origin_uri
+            .as_ref()
+            .and_then(|u| u.as_str())
+            .unwrap_or("pkl:base");
+        let index = builtin_index(uri, existing_unit_syntax(vm, uri))?;
+        let cls = index
+            .classes
+            .get(&def.name)
             .ok_or_else(|| invalid("builtin class members"))?;
-        let crate::syntax::ExprKind::Class { members, .. } = &member.expr.kind else {
-            unreachable!()
+        let list = if methods {
+            &cls.methods
+        } else {
+            &cls.properties
         };
-        Ok(members
-            .iter()
-            .filter(|m| {
-                !m.local
-                    && !matches!(
-                        m.expr.kind,
-                        crate::syntax::ExprKind::Class { .. }
-                            | crate::syntax::ExprKind::TypeAlias { .. }
-                            | crate::syntax::ExprKind::Import { .. }
-                    )
-                    && matches!(
-                        m.expr.kind,
-                        crate::syntax::ExprKind::Function { method: true, .. }
-                    ) == methods
-            })
-            .map(|m| DeclInfo {
-                owner,
-                code: obj
-                    .members
+        let has_compiled = !obj.members.is_empty();
+        let mut out = Vec::with_capacity(list.len());
+        for syntax in list {
+            let code = if has_compiled {
+                obj.members
                     .iter()
-                    .find(|compiled| compiled.name == m.name && compiled.method == methods)
-                    .map(|compiled| compiled.code),
-                source: source.clone(),
-                syntax: Arc::new(m.declaration_source()),
-            })
-            .collect())
+                    .find(|compiled| compiled.name == syntax.name && compiled.method == methods)
+                    .map(|compiled| compiled.code)
+            } else {
+                None
+            };
+            out.push(DeclInfo {
+                owner,
+                code,
+                source: index.source.clone(),
+                syntax: syntax.clone(),
+            });
+        }
+        Ok(out)
     } else {
         obj.members
             .iter()
@@ -1413,33 +1459,30 @@ fn raw_class_members(
     }
 }
 
-fn schema_type_context(vm: &Vm, decl: &DeclInfo) -> Result<TypeCtx, RuntimeError> {
-    let mut parameters = Vec::new();
+fn schema_type_context_with_class_params(
+    decl: &DeclInfo,
+    class_params: &[crate::syntax::TypeParameter],
+) -> TypeCtx {
+    let decl_params = decl.parameters();
+    let mut parameters = Vec::with_capacity(class_params.len() + decl_params.len());
     if matches!(
         decl.syntax.recipe,
         DeclarationRecipe::Property { .. } | DeclarationRecipe::Method { .. }
-    ) && !vm.heap.get(decl.owner)?.is_module
-        && let Some(class_id) = vm.heap.object_class(decl.owner)?
-    {
-        parameters.extend(
-            schema_class_declaration(vm, class_id)?
-                .parameters()
-                .iter()
-                .cloned(),
-        );
+    ) {
+        parameters.extend(class_params.iter().cloned());
     }
-    for param in decl.parameters() {
+    for param in decl_params {
         if let Some(idx) = parameters.iter().position(|p| p.name == param.name) {
             parameters[idx] = param.clone();
         } else {
             parameters.push(param.clone());
         }
     }
-    Ok(TypeCtx {
+    TypeCtx {
         owner: decl.owner,
         source: decl.source.clone(),
         parameters,
-    })
+    }
 }
 
 fn resolve_scope_module_if_loaded(
@@ -1547,6 +1590,9 @@ fn resolve_cached_named_type(
 struct SchemaBuilder<'a> {
     vm: &'a Vm,
     decoded_annotations: &'a BTreeMap<ObjectId, DecodedObject>,
+    base_cache: Option<&'static BaseSchemaCache>,
+    base_class_map: Vec<Option<ClassId>>,
+    base_alias_map: Vec<Option<TypeAliasId>>,
     store: SchemaStore,
     class_ids: BTreeMap<ObjectId, ClassId>,
     alias_ids: BTreeMap<ObjectId, TypeAliasId>,
@@ -1561,13 +1607,223 @@ impl<'a> SchemaBuilder<'a> {
         Ok(raw)
     }
 
+    fn import_base_module(&mut self, base: &BaseSchemaCache) -> ModuleSchema {
+        let src = &base.schema;
+        let module_class_id = self.import_base_class(base, src.module_class_id);
+        let classes = src
+            .classes
+            .iter()
+            .map(|(name, cid)| (name.clone(), self.import_base_class(base, *cid)))
+            .collect();
+        let type_aliases = src
+            .type_aliases
+            .iter()
+            .map(|(name, aid)| (name.clone(), self.import_base_alias(base, *aid)))
+            .collect();
+        ModuleSchema {
+            module_uri: src.module_uri.clone(),
+            module_name: src.module_name.clone(),
+            is_amend: src.is_amend,
+            supermodule: None,
+            module_class_id,
+            doc_comment: src.doc_comment.clone(),
+            annotations: src.annotations.clone(),
+            classes,
+            type_aliases,
+            imports: src.imports.clone(),
+            store: Arc::new(SchemaStore::default()),
+        }
+    }
+
+    fn import_base_class(&mut self, base: &BaseSchemaCache, src_id: ClassId) -> ClassId {
+        if let Some(dst_id) = self.base_class_map[src_id.0] {
+            return dst_id;
+        }
+        let src = base.schema.store.class(src_id);
+        let enclosing_module_class = src.module_class.map(|mc| self.import_base_class(base, mc));
+        if let Some(dst_id) = self.base_class_map[src_id.0] {
+            return dst_id;
+        }
+        let dst_id = ClassId(self.store.classes.len());
+        self.base_class_map[src_id.0] = Some(dst_id);
+        self.store.classes.push(PClass {
+            id: dst_id,
+            info: src.info.clone(),
+            doc_comment: src.doc_comment.clone(),
+            source_location: src.source_location,
+            modifiers: src.modifiers.clone(),
+            annotations: src.annotations.clone(),
+            type_parameters: src.type_parameters.clone(),
+            superclass: None,
+            supertype: None,
+            properties: Vec::new(),
+            methods: Vec::new(),
+            module_class: enclosing_module_class,
+        });
+
+        if let Some(sup_src) = src.superclass {
+            let sup_dst = self.import_base_class(base, sup_src);
+            let supertype = src
+                .supertype
+                .as_ref()
+                .map(|t| self.remap_base_type(base, t));
+            self.store.classes[dst_id.0].superclass = Some(sup_dst);
+            self.store.classes[dst_id.0].supertype = supertype;
+        }
+
+        let mut properties = Vec::with_capacity(src.properties.len());
+        for (name, prop) in &src.properties {
+            let ty = self.remap_base_type(base, &prop.ty);
+            properties.push((
+                name.clone(),
+                PClassProperty {
+                    owner: dst_id,
+                    owner_info: prop.owner_info.clone(),
+                    simple_name: prop.simple_name.clone(),
+                    doc_comment: prop.doc_comment.clone(),
+                    source_location: prop.source_location,
+                    modifiers: prop.modifiers.clone(),
+                    annotations: prop.annotations.clone(),
+                    ty,
+                },
+            ));
+        }
+        self.store.classes[dst_id.0].properties = properties;
+
+        let mut methods = Vec::with_capacity(src.methods.len());
+        for (name, method) in &src.methods {
+            let mut parameters = Vec::with_capacity(method.parameters.len());
+            for (pname, pty) in &method.parameters {
+                parameters.push((pname.clone(), self.remap_base_type(base, pty)));
+            }
+            let return_type = self.remap_base_type(base, &method.return_type);
+            methods.push((
+                name.clone(),
+                PClassMethod {
+                    owner: dst_id,
+                    owner_info: method.owner_info.clone(),
+                    simple_name: method.simple_name.clone(),
+                    doc_comment: method.doc_comment.clone(),
+                    source_location: method.source_location,
+                    modifiers: method.modifiers.clone(),
+                    annotations: method.annotations.clone(),
+                    type_parameters: method.type_parameters.clone(),
+                    parameters,
+                    return_type,
+                },
+            ));
+        }
+        self.store.classes[dst_id.0].methods = methods;
+        dst_id
+    }
+
+    fn import_base_alias(&mut self, base: &BaseSchemaCache, src_id: TypeAliasId) -> TypeAliasId {
+        if let Some(dst_id) = self.base_alias_map[src_id.0] {
+            return dst_id;
+        }
+        let src = base.schema.store.type_alias(src_id);
+        let module_class = self.import_base_class(base, src.module_class);
+        if let Some(dst_id) = self.base_alias_map[src_id.0] {
+            return dst_id;
+        }
+        let dst_id = TypeAliasId(self.store.type_aliases.len());
+        self.base_alias_map[src_id.0] = Some(dst_id);
+        self.store.type_aliases.push(TypeAlias {
+            id: dst_id,
+            info: src.info.clone(),
+            doc_comment: src.doc_comment.clone(),
+            source_location: src.source_location,
+            modifiers: src.modifiers.clone(),
+            annotations: src.annotations.clone(),
+            type_parameters: src.type_parameters.clone(),
+            aliased_type: PType::Unknown,
+            module_class,
+        });
+        let aliased_type = self.remap_base_type(base, &src.aliased_type);
+        self.store.type_aliases[dst_id.0].aliased_type = aliased_type;
+        dst_id
+    }
+
+    fn remap_base_type(&mut self, base: &BaseSchemaCache, ty: &PType) -> PType {
+        match ty {
+            PType::Unknown => PType::Unknown,
+            PType::Nothing => PType::Nothing,
+            PType::Module => PType::Module,
+            PType::StringLiteral(s) => PType::StringLiteral(s.clone()),
+            PType::TypeVariable(tp) => PType::TypeVariable(tp.clone()),
+            PType::Nullable(inner) => PType::Nullable(Box::new(self.remap_base_type(base, inner))),
+            PType::Union(elems) => PType::Union(
+                elems
+                    .iter()
+                    .map(|e| self.remap_base_type(base, e))
+                    .collect(),
+            ),
+            PType::Function {
+                parameter_types,
+                return_type,
+            } => PType::Function {
+                parameter_types: parameter_types
+                    .iter()
+                    .map(|p| self.remap_base_type(base, p))
+                    .collect(),
+                return_type: Box::new(self.remap_base_type(base, return_type)),
+            },
+            PType::Constrained {
+                base_type,
+                constraints,
+            } => PType::Constrained {
+                base_type: Box::new(self.remap_base_type(base, base_type)),
+                constraints: constraints.clone(),
+            },
+            PType::Class {
+                class_id,
+                class_info,
+                type_arguments,
+            } => {
+                let dst_id = self.import_base_class(base, *class_id);
+                let args = type_arguments
+                    .iter()
+                    .map(|a| self.remap_base_type(base, a))
+                    .collect();
+                PType::Class {
+                    class_id: dst_id,
+                    class_info: class_info.clone(),
+                    type_arguments: args,
+                }
+            }
+            PType::Alias {
+                alias_id,
+                alias_info,
+                type_arguments,
+                aliased_type,
+            } => {
+                let dst_id = self.import_base_alias(base, *alias_id);
+                let args = type_arguments
+                    .iter()
+                    .map(|a| self.remap_base_type(base, a))
+                    .collect();
+                let aliased = self.remap_base_type(base, aliased_type);
+                PType::Alias {
+                    alias_id: dst_id,
+                    alias_info: alias_info.clone(),
+                    type_arguments: args,
+                    aliased_type: Box::new(aliased),
+                }
+            }
+        }
+    }
+
     fn build_module_raw(&mut self, module_id: ObjectId) -> Result<ModuleSchema, RuntimeError> {
+        if let Some(base) = self.base_cache
+            && is_stdlib_base_module(self.vm, module_id)
+        {
+            return Ok(self.import_base_module(base));
+        }
         let obj = self.vm.heap.get(module_id)?;
         let unit = obj
             .module_unit
             .and_then(|u| self.vm.program.units.get(u.0 as usize))
-            .ok_or_else(|| invalid("module schema unit missing"))?
-            .clone();
+            .ok_or_else(|| invalid("module schema unit missing"))?;
         let source = unit
             .source
             .clone()
@@ -1576,7 +1832,12 @@ impl<'a> SchemaBuilder<'a> {
             .syntax
             .clone()
             .ok_or_else(|| invalid("module schema syntax missing"))?;
-
+        let module_uri = unit.identity.as_ref().map_or_else(
+            || source.uri.to_java_utf8(),
+            |id| id.original_uri.to_java_utf8(),
+        );
+        let module_name = unit.name.to_java_utf8();
+        let is_amend = unit.mode == modules::ModuleMode::Amends;
         let supermodule = if let Some(parent) = obj
             .parent
             .filter(|p| self.vm.heap.get(*p).is_ok_and(|o| o.is_module))
@@ -1586,12 +1847,6 @@ impl<'a> SchemaBuilder<'a> {
             None
         };
 
-        let module_uri = unit.identity.as_ref().map_or_else(
-            || source.uri.to_java_utf8(),
-            |id| id.original_uri.to_java_utf8(),
-        );
-        let module_name = unit.name.to_java_utf8();
-        let is_amend = unit.mode == modules::ModuleMode::Amends;
         let doc_comment = syntax
             .declaration
             .as_ref()
@@ -1679,6 +1934,13 @@ impl<'a> SchemaBuilder<'a> {
         if let Some(&id) = self.class_ids.get(&class_obj_id) {
             return Ok(id);
         }
+        if let Some(base) = self.base_cache
+            && let Some(src_id) = stdlib_base_class_id(self.vm, class_obj_id, base)
+        {
+            let dst_id = self.import_base_class(base, src_id);
+            self.class_ids.insert(class_obj_id, dst_id);
+            return Ok(dst_id);
+        }
         let rec = self.vm.heap.get_class(class_obj_id)?;
         let prototype = rec.prototype;
         let proto_obj = self.vm.heap.get(prototype)?;
@@ -1704,104 +1966,112 @@ impl<'a> SchemaBuilder<'a> {
             return Ok(id);
         }
 
-        let (info, doc_comment, source_location, modifiers, annotations, type_parameters) =
-            if is_module_class {
-                let unit = proto_obj
-                    .module_unit
-                    .and_then(|u| self.vm.program.units.get(u.0 as usize))
-                    .ok_or_else(|| invalid("module class unit missing"))?
-                    .clone();
-                let source = unit
-                    .source
-                    .clone()
-                    .ok_or_else(|| invalid("module class source missing"))?;
-                let syntax = unit
-                    .syntax
-                    .clone()
-                    .ok_or_else(|| invalid("module class syntax missing"))?;
-                let module_uri = unit.identity.as_ref().map_or_else(
-                    || source.uri.to_java_utf8(),
-                    |id| id.original_uri.to_java_utf8(),
-                );
-                let info = PClassInfo {
-                    module_name: unit.name.to_java_utf8(),
-                    simple_name: PClassInfo::MODULE_CLASS_NAME.to_string(),
-                    module_uri,
-                    is_module_class: true,
-                };
-                let doc_comment = syntax
-                    .declaration
-                    .as_ref()
-                    .and_then(|d| d.doc_comment.as_ref())
-                    .and_then(|doc| doc.text(&source.text))
-                    .map(|s| s.to_java_utf8());
-                let header_span = syntax
-                    .declaration
-                    .as_ref()
-                    .map_or(Span::default(), |d| d.span);
-                let full_span = Span::new(header_span.start, source.text.len_bytes());
-                let source_location = self.source_location(&source, header_span, full_span);
-                let flags = if unit.mode == modules::ModuleMode::Amends {
-                    0
-                } else {
-                    unit.modifiers
-                };
-                let modifiers = export_modifiers(flags, true);
-                let annotations = self.decode_values(&proto_obj.annotations);
-                (
-                    info,
-                    doc_comment,
-                    source_location,
-                    modifiers,
-                    annotations,
-                    Vec::new(),
-                )
-            } else {
-                let def = self.vm.heap.class_definition(class_obj_id)?;
-                let decl = schema_class_declaration(self.vm, class_obj_id)?;
-                let module_name = def.module.as_ref().map_or_else(
-                    || decl.source.module_name.to_java_utf8(),
-                    |m| m.to_java_utf8(),
-                );
-                let module_uri = def
-                    .origin_uri
-                    .as_ref()
-                    .map_or_else(|| decl.source.uri.to_java_utf8(), |u| u.to_java_utf8());
-                let info = PClassInfo {
-                    module_name,
-                    simple_name: def.name.to_java_utf8(),
-                    module_uri,
-                    is_module_class: false,
-                };
-                let doc_comment = decl
-                    .syntax
-                    .doc_comment
-                    .as_ref()
-                    .and_then(|d| d.text(&decl.source.text))
-                    .map(|s| s.to_java_utf8());
-                let source_location = self.source_location(
-                    &decl.source,
-                    decl.syntax.header_span,
-                    decl.syntax.declaration_span,
-                );
-                let flags = crate::syntax::modifier_flags(&decl.syntax.modifiers);
-                let modifiers = export_modifiers(flags, true);
-                let raw_anns = existing_decl_annotations(self.vm, &decl)?;
-                let annotations = self.decode_values(&raw_anns);
-                let type_parameters = decl
-                    .parameters()
-                    .iter()
-                    .map(export_type_parameter)
-                    .collect();
-                (
-                    info,
-                    doc_comment,
-                    source_location,
-                    modifiers,
-                    annotations,
-                    type_parameters,
-                )
+        let (
+            info,
+            doc_comment,
+            source_location,
+            modifiers,
+            annotations,
+            type_parameters,
+            class_decl,
+        ) = if is_module_class {
+            let unit = proto_obj
+                .module_unit
+                .and_then(|u| self.vm.program.units.get(u.0 as usize))
+                .ok_or_else(|| invalid("module class unit missing"))?;
+            let source = unit
+                .source
+                .clone()
+                .ok_or_else(|| invalid("module class source missing"))?;
+            let syntax = unit
+                .syntax
+                .clone()
+                .ok_or_else(|| invalid("module class syntax missing"))?;
+            let module_uri = unit.identity.as_ref().map_or_else(
+                || source.uri.to_java_utf8(),
+                |id| id.original_uri.to_java_utf8(),
+            );
+            let info = PClassInfo {
+                module_name: unit.name.to_java_utf8(),
+                simple_name: PClassInfo::MODULE_CLASS_NAME.to_string(),
+                module_uri,
+                is_module_class: true,
             };
+            let doc_comment = syntax
+                .declaration
+                .as_ref()
+                .and_then(|d| d.doc_comment.as_ref())
+                .and_then(|doc| doc.text(&source.text))
+                .map(|s| s.to_java_utf8());
+            let header_span = syntax
+                .declaration
+                .as_ref()
+                .map_or(Span::default(), |d| d.span);
+            let full_span = Span::new(header_span.start, source.text.len_bytes());
+            let source_location = self.source_location(&source, header_span, full_span);
+            let flags = if unit.mode == modules::ModuleMode::Amends {
+                0
+            } else {
+                unit.modifiers
+            };
+            let modifiers = export_modifiers(flags, true);
+            let annotations = self.decode_values(&proto_obj.annotations);
+            (
+                info,
+                doc_comment,
+                source_location,
+                modifiers,
+                annotations,
+                Vec::new(),
+                None,
+            )
+        } else {
+            let def = self.vm.heap.class_definition(class_obj_id)?;
+            let decl = schema_class_declaration(self.vm, class_obj_id)?;
+            let module_name = def.module.as_ref().map_or_else(
+                || decl.source.module_name.to_java_utf8(),
+                |m| m.to_java_utf8(),
+            );
+            let module_uri = def
+                .origin_uri
+                .as_ref()
+                .map_or_else(|| decl.source.uri.to_java_utf8(), |u| u.to_java_utf8());
+            let info = PClassInfo {
+                module_name,
+                simple_name: def.name.to_java_utf8(),
+                module_uri,
+                is_module_class: false,
+            };
+            let doc_comment = decl
+                .syntax
+                .doc_comment
+                .as_ref()
+                .and_then(|d| d.text(&decl.source.text))
+                .map(|s| s.to_java_utf8());
+            let source_location = self.source_location(
+                &decl.source,
+                decl.syntax.header_span,
+                decl.syntax.declaration_span,
+            );
+            let flags = crate::syntax::modifier_flags(&decl.syntax.modifiers);
+            let modifiers = export_modifiers(flags, true);
+            let raw_anns = existing_decl_annotations(self.vm, &decl)?;
+            let annotations = self.decode_values(&raw_anns);
+            let type_parameters = decl
+                .parameters()
+                .iter()
+                .map(export_type_parameter)
+                .collect();
+            (
+                info,
+                doc_comment,
+                source_location,
+                modifiers,
+                annotations,
+                type_parameters,
+                Some(decl),
+            )
+        };
 
         // Reserve ClassId BEFORE recursing into superclass/properties/methods to break cycles.
         let id = ClassId(self.store.classes.len());
@@ -1821,17 +2091,18 @@ impl<'a> SchemaBuilder<'a> {
             module_class: enclosing_module_class,
         });
 
+        let class_params = class_decl.as_ref().map_or(&[][..], |d| d.parameters());
+
         // Export superclass & supertype
         let superclass = if let Some(sup_obj) = rec.superclass {
             let sup_id = self.export_class(sup_obj)?;
-            let supertype = if !is_module_class
-                && let Ok(decl) = schema_class_declaration(self.vm, class_obj_id)
+            let supertype = if let Some(ref decl) = class_decl
                 && let DeclarationRecipe::Class {
                     superclass: Some(ref ty),
                     ..
                 } = decl.syntax.recipe
             {
-                let ctx = schema_type_context(self.vm, &decl)?;
+                let ctx = schema_type_context_with_class_params(decl, &[]);
                 self.export_type(ty, &ctx)?
             } else {
                 let sup_info = self.store.class(sup_id).info.clone();
@@ -1853,7 +2124,7 @@ impl<'a> SchemaBuilder<'a> {
         let prop_decls = schema_class_members(self.vm, class_obj_id, false)?;
         let mut properties = Vec::with_capacity(prop_decls.len());
         for decl in prop_decls {
-            let ctx = schema_type_context(self.vm, &decl)?;
+            let ctx = schema_type_context_with_class_params(&decl, class_params);
             let ty = match &decl.syntax.recipe {
                 DeclarationRecipe::Property { ty: Some(t), .. } => self.export_type(t, &ctx)?,
                 _ => PType::Unknown,
@@ -1894,7 +2165,7 @@ impl<'a> SchemaBuilder<'a> {
         let method_decls = schema_class_members(self.vm, class_obj_id, true)?;
         let mut methods = Vec::with_capacity(method_decls.len());
         for decl in method_decls {
-            let ctx = schema_type_context(self.vm, &decl)?;
+            let ctx = schema_type_context_with_class_params(&decl, class_params);
             let (type_parameters, parameters, return_type) = match &decl.syntax.recipe {
                 DeclarationRecipe::Method {
                     type_parameters,
@@ -1964,6 +2235,13 @@ impl<'a> SchemaBuilder<'a> {
         if let Some(&id) = self.alias_ids.get(&alias_obj_id) {
             return Ok(id);
         }
+        if let Some(base) = self.base_cache
+            && let Some(src_id) = stdlib_base_alias_id(self.vm, alias_obj_id, base)
+        {
+            let dst_id = self.import_base_alias(base, src_id);
+            self.alias_ids.insert(alias_obj_id, dst_id);
+            return Ok(dst_id);
+        }
         let decl = schema_alias_declaration(self.vm, alias_obj_id)?;
         let obj = self.vm.heap.get(alias_obj_id)?;
         let simple_name = decl.syntax.name.to_java_utf8();
@@ -2030,7 +2308,7 @@ impl<'a> SchemaBuilder<'a> {
         });
 
         if let DeclarationRecipe::TypeAlias { ref referent, .. } = decl.syntax.recipe {
-            let ctx = schema_type_context(self.vm, &decl)?;
+            let ctx = schema_type_context_with_class_params(&decl, &[]);
             let aliased_type = self.export_type(referent, &ctx)?;
             self.store.type_aliases[id.0].aliased_type = aliased_type;
         }
@@ -2175,11 +2453,17 @@ impl<'a> SchemaBuilder<'a> {
         header_span: Span,
         decl_span: Span,
     ) -> SourceLocation {
-        let key = Arc::as_ptr(source) as usize;
-        let idx = self
-            .source_indices
-            .entry(key)
-            .or_insert_with(|| source.text.index());
+        let idx = if let Some(uri) = source.uri.as_str()
+            && let Ok(builtin) = builtin_index(uri, None)
+        {
+            builtin.source_index()
+        } else {
+            let key = Arc::as_ptr(source) as usize;
+            &*self
+                .source_indices
+                .entry(key)
+                .or_insert_with(|| source.text.index())
+        };
         let start_byte = clamp_char_boundary(&source.text, header_span.start);
         let start_line = idx.position(start_byte).map(|p| p.line as u32).unwrap_or(1);
         let raw_end = if decl_span.end > decl_span.start {
@@ -2312,5 +2596,201 @@ fn substitute_type_params(ty: &PType, params: &[TypeParameter], args: &[PType]) 
             aliased_type: Box::new(substitute_type_params(aliased_type, params, args)),
         },
         PType::Unknown | PType::Nothing | PType::Module | PType::StringLiteral(_) => ty.clone(),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::evaluation::session::{SourceSession, SourceSessionOptions};
+    use crate::host::HostPoll;
+    use crate::modules::{
+        ModuleCompletion, ModuleKey, ModuleKeyKind, ModuleRequestKind, ModuleSourceSpec,
+        ResolvedModule, ResolvedModuleKey, default_completion,
+    };
+    use crate::schema::extract_module_schema_with;
+
+    fn drive_stdlib(session: &mut SourceSession) -> Result<Value, RuntimeError> {
+        loop {
+            match session.poll(0, 65_536) {
+                HostPoll::Ready(res) => return res,
+                HostPoll::Yielded => {}
+                HostPoll::Module { token, request } => {
+                    let completion =
+                        default_completion(&request).unwrap_or_else(|| match &request.kind {
+                            ModuleRequestKind::SelectKey { id, uri, .. } => {
+                                ModuleCompletion::KeySelected(Ok(ModuleKey {
+                                    id: *id,
+                                    uri: uri.clone(),
+                                    kind: ModuleKeyKind::Host,
+                                    handle: "mem".into(),
+                                }))
+                            }
+                            ModuleRequestKind::QueryCachePolicy { .. } => {
+                                ModuleCompletion::CachePolicy(Ok(true))
+                            }
+                            ModuleRequestKind::ResolveKey {
+                                key,
+                                resolved_key_id,
+                                ..
+                            } => ModuleCompletion::KeyResolved(Ok(ResolvedModuleKey {
+                                id: *resolved_key_id,
+                                key: key.clone(),
+                                handle: key.handle.clone(),
+                                module: ResolvedModule {
+                                    original_uri: key.uri.clone(),
+                                    resolved_uri: key.uri.clone(),
+                                    source_uri: key.uri.clone(),
+                                },
+                            })),
+                            other => panic!("unexpected module request: {other:?}"),
+                        });
+                    session.complete_module(&token, completion, 0)?;
+                }
+                HostPoll::TransformFrame { token, frame } => {
+                    session.complete_frame_transform(&token, Ok((*frame).clone()), 0)?;
+                }
+                other => panic!("unexpected host poll: {other:?}"),
+            }
+        }
+    }
+
+    #[test]
+    fn cached_base_schema_roundtrips_base_and_user_modules_consistently() {
+        let mut session = SourceSession::module_evaluator(SourceSessionOptions::default());
+
+        // 1. Export pkl:base twice (first populates BASE_SCHEMA_CACHE, second hits cache).
+        session
+            .start_load_module(
+                ModuleSourceSpec {
+                    uri: "pkl:base".into(),
+                    contents: None,
+                },
+                0,
+                None,
+            )
+            .unwrap();
+        let base_mod = drive_stdlib(&mut session).unwrap();
+        let base_1 =
+            extract_module_schema_with(&mut session, base_mod.clone(), 0, None, drive_stdlib)
+                .unwrap();
+        let base_2 =
+            extract_module_schema_with(&mut session, base_mod, 0, None, drive_stdlib).unwrap();
+        assert_eq!(base_1.module_uri, "pkl:base");
+        assert_eq!(base_1.classes.len(), base_2.classes.len());
+        assert_eq!(base_1.type_aliases.len(), base_2.type_aliases.len());
+        assert!(Arc::ptr_eq(&base_1.store, &base_2.store));
+
+        // 2. Export a user module referencing base classes, typealiases, untyped override, and annotations.
+        let src = r#"
+module demo.cached
+
+@Deprecated { message = "old"; since = "1.0" }
+class Sample {
+  @AlsoKnownAs { names { "alt" } }
+  label: String
+  code: Int32
+  items: List<Int>
+}
+
+output {
+  value = 1
+}
+"#;
+        session
+            .start_load_module(
+                ModuleSourceSpec {
+                    uri: "file:///demo-cached.pkl".into(),
+                    contents: Some(src.into()),
+                },
+                0,
+                None,
+            )
+            .unwrap();
+        let user_mod = drive_stdlib(&mut session).unwrap();
+        let schema =
+            extract_module_schema_with(&mut session, user_mod.clone(), 0, None, drive_stdlib)
+                .unwrap();
+
+        assert_eq!(schema.module_name, "demo.cached");
+        // Untyped `output` override must stay owned by pkl.base#Module.
+        assert!(schema.module_class().properties.is_empty());
+        let all_mod_props = schema.store.all_properties(schema.module_class_id);
+        assert_eq!(all_mod_props.len(), 1);
+        assert_eq!(all_mod_props[0].0, "output");
+        assert_eq!(all_mod_props[0].1.owner_info.module_name, "pkl.base");
+
+        let sample = schema.class_by_name("Sample").unwrap();
+        assert_eq!(sample.annotations.len(), 1);
+        assert_eq!(sample.annotations[0].class_info.simple_name, "Deprecated");
+        assert_eq!(
+            sample.annotations[0].get_property("message"),
+            Some(&DecodedValue::String("old".into()))
+        );
+        assert_eq!(
+            sample.annotations[0].get_property("since"),
+            Some(&DecodedValue::String("1.0".into()))
+        );
+        let label = sample.property("label").unwrap();
+        assert_eq!(label.annotations.len(), 1);
+        assert_eq!(label.annotations[0].class_info.simple_name, "AlsoKnownAs");
+        let code_prop = sample.property("code").unwrap();
+        match &code_prop.ty {
+            PType::Alias {
+                alias_id,
+                alias_info,
+                ..
+            } => {
+                assert_eq!(alias_info.simple_name, "Int32");
+                assert_eq!(schema.store.type_alias(*alias_id).info.simple_name, "Int32");
+            }
+            other => panic!("expected Int32 alias, got {other:?}"),
+        }
+        // Verify cached base class String has intact properties/methods and valid owner ClassId.
+        let string_cls = schema
+            .store
+            .classes
+            .iter()
+            .find(|c| c.info.module_uri == "pkl:base" && c.info.simple_name == "String")
+            .expect("String in store");
+        assert!(!string_cls.methods.is_empty());
+        assert_eq!(string_cls.methods[0].1.owner, string_cls.id);
+
+        // 3. Verify `try_decode_forced_annotation` directly on forced scalar vs non-scalar annotations.
+        let vm = session.vm();
+        let sample_obj = vm
+            .heap
+            .get(
+                match cached_member_value(vm, user_mod.heap_id().unwrap(), &"Sample".into(), false)
+                    .unwrap()
+                    .unwrap()
+                {
+                    Value::Class(cid) => vm.heap.get_class(cid).unwrap().prototype,
+                    other => panic!("expected Class, got {other:?}"),
+                },
+            )
+            .unwrap();
+        let dep_id = sample_obj.annotations[0].heap_id().unwrap();
+        let fast = try_decode_forced_annotation(vm, dep_id)
+            .expect("forced Deprecated annotation should hit fast path");
+        assert_eq!(fast, sample.annotations[0]);
+
+        let label_member = sample_obj
+            .members
+            .iter()
+            .find(|m| m.name == "label")
+            .unwrap();
+        let aka_id = sample_obj
+            .member_annotations
+            .get(&label_member.code)
+            .unwrap()[0]
+            .heap_id()
+            .unwrap();
+        assert!(
+            try_decode_forced_annotation(vm, aka_id).is_none(),
+            "Listing-valued @AlsoKnownAs must fall back to EncodePklBinary"
+        );
+
+        session.close();
     }
 }

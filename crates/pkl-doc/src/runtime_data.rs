@@ -7,7 +7,7 @@ use crate::package_data::{
 };
 use crate::util::compare_versions_desc;
 use std::cmp::Ordering;
-use std::collections::{BTreeMap, HashSet};
+use std::collections::{BTreeMap, HashMap, HashSet};
 use std::fs;
 use std::io::Write;
 use std::path::{Path, PathBuf};
@@ -339,37 +339,30 @@ fn parse_link_set(value: Option<&JsonValue>) -> Result<Vec<RuntimeDataLink>, Doc
 pub struct RuntimeDataGenerator<'a> {
     output_dir: &'a Path,
     console_out: &'a mut dyn Write,
+    state: RuntimeDataState,
+    pub written_files: HashSet<PathBuf>,
+}
+
+pub(crate) struct RuntimeDataState {
     package_versions: Vec<(PackageId, Vec<PackageRef>)>,
     class_versions: BTreeMap<TypeId, Vec<String>>,
     package_usages: Vec<(PackageRef, Vec<PackageRef>)>,
     type_usages: Vec<(TypeRef, Vec<TypeRef>)>,
     subtypes: Vec<(TypeRef, Vec<TypeRef>)>,
-    pub written_files: HashSet<PathBuf>,
 }
 
-impl<'a> RuntimeDataGenerator<'a> {
-    pub fn new(output_dir: &'a Path, console_out: &'a mut dyn Write) -> Self {
-        Self {
-            output_dir,
-            console_out,
+impl RuntimeDataState {
+    pub(crate) fn collect(packages: &[PackageData]) -> Self {
+        let mut state = Self {
             package_versions: Vec::new(),
             class_versions: BTreeMap::new(),
             package_usages: Vec::new(),
             type_usages: Vec::new(),
             subtypes: Vec::new(),
-            written_files: HashSet::new(),
-        }
-    }
-
-    pub fn generate(&mut self, packages: &[PackageData]) -> Result<(), DocGeneratorError> {
-        self.collect_data(packages);
-        self.write_data(packages)
-    }
-
-    fn collect_data(&mut self, packages: &[PackageData]) {
+        };
         for pkg in packages {
             push_map_set(
-                &mut self.package_versions,
+                &mut state.package_versions,
                 &pkg.r#ref.pkg,
                 pkg.r#ref.clone(),
             );
@@ -377,14 +370,15 @@ impl<'a> RuntimeDataGenerator<'a> {
                 if dep.r#ref.pkg == "pkl" {
                     continue;
                 }
-                push_map_set(&mut self.package_usages, &dep.r#ref, pkg.r#ref.clone());
+                push_map_set(&mut state.package_usages, &dep.r#ref, pkg.r#ref.clone());
             }
             for module in &pkg.modules {
                 for clazz in effective_classes(module) {
-                    self.collect_class_data(clazz);
+                    state.collect_class_data(clazz);
                 }
             }
         }
+        state
     }
 
     fn collect_class_data(&mut self, clazz: &ClassData) {
@@ -404,159 +398,228 @@ impl<'a> RuntimeDataGenerator<'a> {
         }
     }
 
-    fn write_data(&mut self, packages: &[PackageData]) -> Result<(), DocGeneratorError> {
+    pub(crate) fn collect_writes(
+        &self,
+        output_dir: &Path,
+        packages: &[PackageData],
+        data_dir_existed: bool,
+        writes: &mut Vec<crate::generator::PendingFile>,
+        logs: &mut Vec<String>,
+        written_files: &mut HashSet<PathBuf>,
+    ) -> Result<(), DocGeneratorError> {
+        let mut in_memory: HashMap<PathBuf, RuntimeData> = HashMap::new();
+        let mut path_slot: HashMap<PathBuf, usize> = HashMap::new();
+
         for pkg in packages {
-            self.write_package_file_per_version(pkg)?;
+            let pkg_ref = &pkg.r#ref;
+            let path = output_dir.join(pkg_ref.per_package_version_runtime_data_path());
+            let existing = read_existing(&path, data_dir_existed, &in_memory)?;
+            let usages = find_map_set(&self.package_usages, pkg_ref);
+            let data = existing
+                .add_known_usages(pkg_ref, usages, |r| r.pkg.clone(), &compare_versions_desc)
+                .per_package_version();
+            push_runtime_write(
+                path,
+                data,
+                &mut in_memory,
+                &mut path_slot,
+                writes,
+                logs,
+                written_files,
+            );
             for module in &pkg.modules {
                 for clazz in effective_classes(module) {
-                    self.write_class_file_per_version(clazz)?;
+                    let class_ref = &clazz.r#ref;
+                    let path = output_dir.join(class_ref.per_package_version_runtime_data_path());
+                    let existing = read_existing(&path, data_dir_existed, &in_memory)?;
+                    let new_subtypes = find_map_set(&self.subtypes, class_ref);
+                    let new_usages = find_map_set(&self.type_usages, class_ref);
+                    let data = existing
+                        .add_known_subtypes(class_ref, new_subtypes, &compare_versions_desc)
+                        .add_known_usages(
+                            class_ref,
+                            new_usages,
+                            |r| r.display_name().to_string(),
+                            &compare_versions_desc,
+                        )
+                        .per_package_version();
+                    push_runtime_write(
+                        path,
+                        data,
+                        &mut in_memory,
+                        &mut path_slot,
+                        writes,
+                        logs,
+                        written_files,
+                    );
                 }
             }
         }
+
         let mut seen_pkgs: HashSet<&str> = HashSet::new();
         for pkg in packages {
             if !seen_pkgs.insert(pkg.r#ref.pkg.as_str()) {
                 continue;
             }
-            self.write_package_file(pkg)?;
+            let pkg_ref = &pkg.r#ref;
+            let path = output_dir.join(pkg_ref.per_package_runtime_data_path());
+            let existing = read_existing(&path, data_dir_existed, &in_memory)?;
+            let new_versions: Option<Vec<String>> =
+                find_map_set(&self.package_versions, &pkg_ref.pkg).map(|refs| {
+                    let mut out = Vec::new();
+                    for r in refs {
+                        if !out.contains(&r.version) {
+                            out.push(r.version.clone());
+                        }
+                    }
+                    out
+                });
+            let data = existing
+                .add_known_versions(pkg_ref, new_versions.as_deref(), &compare_versions_desc)
+                .per_package();
+            push_runtime_write(
+                path,
+                data,
+                &mut in_memory,
+                &mut path_slot,
+                writes,
+                logs,
+                written_files,
+            );
             for module in &pkg.modules {
                 for clazz in effective_classes(module) {
-                    self.write_class_file(clazz)?;
+                    let class_ref = &clazz.r#ref;
+                    let path = output_dir.join(class_ref.per_package_runtime_data_path());
+                    let existing = read_existing(&path, data_dir_existed, &in_memory)?;
+                    let new_versions = self
+                        .class_versions
+                        .get(&class_ref.id())
+                        .map(|v| v.as_slice());
+                    let data = existing
+                        .add_known_versions(class_ref, new_versions, &compare_versions_desc)
+                        .per_package();
+                    push_runtime_write(
+                        path,
+                        data,
+                        &mut in_memory,
+                        &mut path_slot,
+                        writes,
+                        logs,
+                        written_files,
+                    );
                 }
             }
         }
-        self.update_known_usages(packages)?;
         Ok(())
     }
 
-    fn update_known_usages(&mut self, packages: &[PackageData]) -> Result<(), DocGeneratorError> {
+    pub(crate) fn update_known_usages(
+        &self,
+        output_dir: &Path,
+        packages: &[PackageData],
+        console_out: &mut dyn Write,
+    ) -> Result<(), DocGeneratorError> {
         let newly_written: HashSet<&PackageRef> = packages.iter().map(|p| &p.r#ref).collect();
-        let to_update: Vec<(PackageRef, Vec<PackageRef>)> = self
-            .package_usages
-            .iter()
-            .filter(|(k, _)| !newly_written.contains(k))
-            .cloned()
-            .collect();
-        for (pkg_ref, usages) in to_update {
-            let path = self
-                .output_dir
-                .join(pkg_ref.per_package_version_runtime_data_path());
+        for (pkg_ref, usages) in &self.package_usages {
+            if newly_written.contains(pkg_ref) {
+                continue;
+            }
+            let path = output_dir.join(pkg_ref.per_package_version_runtime_data_path());
             if !path.is_file() {
                 continue;
             }
             let existing = RuntimeData::read_or_empty(&path)?;
             let updated = existing.add_known_usages(
-                &pkg_ref,
-                Some(&usages),
+                pkg_ref,
+                Some(usages),
                 |r| r.pkg.clone(),
                 &compare_versions_desc,
             );
             if updated != existing {
                 updated.write_to(&path)?;
-                let _ = write!(
-                    self.console_out,
-                    "Wrote file {}\r",
-                    path_to_uri_display(&path)
-                );
+                let _ = write!(console_out, "Wrote file {}\r", path_to_uri_display(&path));
             }
         }
         Ok(())
     }
+}
 
-    fn write_package_file(&mut self, pkg: &PackageData) -> Result<(), DocGeneratorError> {
-        let pkg_ref = &pkg.r#ref;
-        let path = self
-            .output_dir
-            .join(pkg_ref.per_package_runtime_data_path());
-        let existing = RuntimeData::read_or_empty(&path)?;
-        let new_versions: Option<Vec<String>> = find_map_set(&self.package_versions, &pkg_ref.pkg)
-            .map(|refs| {
-                let mut out = Vec::new();
-                for r in refs {
-                    if !out.contains(&r.version) {
-                        out.push(r.version.clone());
-                    }
-                }
-                out
-            });
-        let data =
-            existing.add_known_versions(pkg_ref, new_versions.as_deref(), &compare_versions_desc);
-        self.written_files.insert(path.clone());
-        data.per_package().write_to(&path)?;
-        let _ = write!(
-            self.console_out,
-            "Wrote file {}\r",
-            path_to_uri_display(&path)
-        );
-        Ok(())
+fn read_existing(
+    path: &Path,
+    data_dir_existed: bool,
+    in_memory: &HashMap<PathBuf, RuntimeData>,
+) -> Result<RuntimeData, DocGeneratorError> {
+    if let Some(prev) = in_memory.get(path) {
+        Ok(prev.clone())
+    } else if data_dir_existed {
+        RuntimeData::read_or_empty(path)
+    } else {
+        Ok(RuntimeData::default())
+    }
+}
+
+fn push_runtime_write(
+    path: PathBuf,
+    data: RuntimeData,
+    in_memory: &mut HashMap<PathBuf, RuntimeData>,
+    path_slot: &mut HashMap<PathBuf, usize>,
+    writes: &mut Vec<crate::generator::PendingFile>,
+    logs: &mut Vec<String>,
+    written_files: &mut HashSet<PathBuf>,
+) {
+    let bytes = data.to_pretty_json().into_bytes();
+    logs.push(format!("Wrote file {}\r", path_to_uri_display(&path)));
+    in_memory.insert(path.clone(), data);
+    written_files.insert(path.clone());
+    if let Some(&slot) = path_slot.get(&path) {
+        writes[slot].bytes = crate::generator::FileBytes::Owned(bytes);
+    } else {
+        let slot = writes.len();
+        path_slot.insert(path.clone(), slot);
+        writes.push(crate::generator::PendingFile {
+            path,
+            bytes: crate::generator::FileBytes::Owned(bytes),
+        });
+    }
+}
+
+impl<'a> RuntimeDataGenerator<'a> {
+    pub fn new(output_dir: &'a Path, console_out: &'a mut dyn Write) -> Self {
+        Self {
+            output_dir,
+            console_out,
+            state: RuntimeDataState {
+                package_versions: Vec::new(),
+                class_versions: BTreeMap::new(),
+                package_usages: Vec::new(),
+                type_usages: Vec::new(),
+                subtypes: Vec::new(),
+            },
+            written_files: HashSet::new(),
+        }
     }
 
-    fn write_package_file_per_version(
-        &mut self,
-        pkg: &PackageData,
-    ) -> Result<(), DocGeneratorError> {
-        let pkg_ref = &pkg.r#ref;
-        let path = self
-            .output_dir
-            .join(pkg_ref.per_package_version_runtime_data_path());
-        let existing = RuntimeData::read_or_empty(&path)?;
-        let usages = find_map_set(&self.package_usages, pkg_ref);
-        let data =
-            existing.add_known_usages(pkg_ref, usages, |r| r.pkg.clone(), &compare_versions_desc);
-        self.written_files.insert(path.clone());
-        data.per_package_version().write_to(&path)?;
-        let _ = write!(
-            self.console_out,
-            "Wrote file {}\r",
-            path_to_uri_display(&path)
-        );
-        Ok(())
-    }
-
-    fn write_class_file(&mut self, clazz: &ClassData) -> Result<(), DocGeneratorError> {
-        let class_ref = &clazz.r#ref;
-        let path = self
-            .output_dir
-            .join(class_ref.per_package_runtime_data_path());
-        let existing = RuntimeData::read_or_empty(&path)?;
-        let new_versions = self
-            .class_versions
-            .get(&class_ref.id())
-            .map(|v| v.as_slice());
-        let data = existing.add_known_versions(class_ref, new_versions, &compare_versions_desc);
-        self.written_files.insert(path.clone());
-        data.per_package().write_to(&path)?;
-        let _ = write!(
-            self.console_out,
-            "Wrote file {}\r",
-            path_to_uri_display(&path)
-        );
-        Ok(())
-    }
-
-    fn write_class_file_per_version(&mut self, clazz: &ClassData) -> Result<(), DocGeneratorError> {
-        let class_ref = &clazz.r#ref;
-        let path = self
-            .output_dir
-            .join(class_ref.per_package_version_runtime_data_path());
-        let existing = RuntimeData::read_or_empty(&path)?;
-        let new_subtypes = find_map_set(&self.subtypes, class_ref);
-        let new_usages = find_map_set(&self.type_usages, class_ref);
-        let data = existing
-            .add_known_subtypes(class_ref, new_subtypes, &compare_versions_desc)
-            .add_known_usages(
-                class_ref,
-                new_usages,
-                |r| r.display_name().to_string(),
-                &compare_versions_desc,
-            );
-        self.written_files.insert(path.clone());
-        data.per_package_version().write_to(&path)?;
-        let _ = write!(
-            self.console_out,
-            "Wrote file {}\r",
-            path_to_uri_display(&path)
-        );
+    pub fn generate(&mut self, packages: &[PackageData]) -> Result<(), DocGeneratorError> {
+        self.state = RuntimeDataState::collect(packages);
+        let data_dir_existed = self.output_dir.join("data").exists();
+        let mut writes = Vec::new();
+        let mut logs = Vec::new();
+        self.state.collect_writes(
+            self.output_dir,
+            packages,
+            data_dir_existed,
+            &mut writes,
+            &mut logs,
+            &mut self.written_files,
+        )?;
+        crate::generator::write_files_parallel(&writes)?;
+        for line in &logs {
+            let _ = self.console_out.write_all(line.as_bytes());
+        }
+        if data_dir_existed {
+            self.state
+                .update_known_usages(self.output_dir, packages, self.console_out)?;
+        }
         Ok(())
     }
 }

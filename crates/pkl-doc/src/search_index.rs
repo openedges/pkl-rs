@@ -262,13 +262,44 @@ impl<'a> SearchIndexGenerator<'a> {
         &mut self,
         current_packages: &[PackageData],
     ) -> Result<(), DocGeneratorError> {
-        let search_index = Self::build_search_index(current_packages);
-        let mut entries = Vec::new();
-        for pkg_idx in search_index {
-            entries.push(pkg_idx.package_entry);
-            entries.extend(pkg_idx.module_entries);
-        }
+        let entries = build_site_entries(current_packages);
         self.write_entries(&self.search_index_file.clone(), &entries)
+    }
+
+    pub(crate) fn collect_site_index_write(
+        output_dir: &Path,
+        current_packages: &[PackageData],
+        writes: &mut Vec<crate::generator::PendingFile>,
+        logs: &mut Vec<String>,
+    ) {
+        let path = output_dir.join("search-index.js");
+        let entries = build_site_entries(current_packages);
+        let bytes = format_entries_js(&entries);
+        logs.push(format!("Wrote file {}\r", path_to_uri_display(&path)));
+        writes.push(crate::generator::PendingFile {
+            path,
+            bytes: crate::generator::FileBytes::Owned(bytes),
+        });
+    }
+
+    pub(crate) fn collect_package_write(
+        output_dir: &Path,
+        doc_package: &DocPackage,
+        writes: &mut Vec<crate::generator::PendingFile>,
+        logs: &mut Vec<String>,
+    ) {
+        let path = output_dir.join(format!(
+            "{}/{}/search-index.js",
+            encode_path(doc_package.name()),
+            doc_package.version()
+        ));
+        let entries = build_package_entries(doc_package);
+        let bytes = format_entries_js(&entries);
+        logs.push(format!("Wrote file {}\r", path_to_uri_display(&path)));
+        writes.push(crate::generator::PendingFile {
+            path,
+            bytes: crate::generator::FileBytes::Owned(bytes),
+        });
     }
 
     pub fn generate(&mut self, doc_package: &DocPackage) -> Result<(), DocGeneratorError> {
@@ -277,85 +308,7 @@ impl<'a> SearchIndexGenerator<'a> {
             encode_path(doc_package.name()),
             doc_package.version()
         ));
-        let mut entries = Vec::new();
-        let mut next_id: i32 = 0;
-
-        for doc_module in &doc_package.doc_modules {
-            if doc_module.is_unlisted {
-                continue;
-            }
-            let module = &doc_module.schema;
-            let store = &module.store;
-            let module_id = next_id;
-            next_id += 1;
-            entries.push(doc_module_to_entry(doc_module));
-            let module_base_path = &doc_module.path;
-            let module_index_path = format!("{module_base_path}/index.html");
-
-            let mc = module.module_class();
-            for (_, property) in &mc.properties {
-                if annotations_is_unlisted(&property.annotations) {
-                    continue;
-                }
-                next_id += 1;
-                entries.push(property_to_entry(
-                    store,
-                    property,
-                    module_id,
-                    &module_index_path,
-                ));
-            }
-            for (_, method) in &mc.methods {
-                if annotations_is_unlisted(&method.annotations) {
-                    continue;
-                }
-                next_id += 1;
-                entries.push(method_to_entry(
-                    store,
-                    method,
-                    module_id,
-                    &module_index_path,
-                ));
-            }
-            for (_, cid) in &module.classes {
-                let clazz = store.class(*cid);
-                if annotations_is_unlisted(&clazz.annotations) {
-                    continue;
-                }
-                let class_id = next_id;
-                next_id += 1;
-                entries.push(class_to_entry(clazz, module_id, module_base_path));
-                // Exact upstream quirk (`SearchIndexGenerator.kt:286`): unencoded `clazz.simpleName`.
-                let class_base_path = format!("{}/{}.html", doc_module.path, clazz.simple_name());
-
-                for (_, property) in &clazz.properties {
-                    if annotations_is_unlisted(&property.annotations) {
-                        continue;
-                    }
-                    next_id += 1;
-                    entries.push(property_to_entry(
-                        store,
-                        property,
-                        class_id,
-                        &class_base_path,
-                    ));
-                }
-                for (_, method) in &clazz.methods {
-                    if annotations_is_unlisted(&method.annotations) {
-                        continue;
-                    }
-                    next_id += 1;
-                    entries.push(method_to_entry(store, method, class_id, &class_base_path));
-                }
-            }
-            // Exact upstream behavior (`SearchIndexGenerator.kt:303`): does NOT filter `isUnlisted`.
-            for (_, aid) in &module.type_aliases {
-                let alias = store.type_alias(*aid);
-                next_id += 1;
-                entries.push(type_alias_to_entry(alias, module_id, &module_index_path));
-            }
-        }
-
+        let entries = build_package_entries(doc_package);
         self.write_entries(&path, &entries)
     }
 
@@ -369,17 +322,8 @@ impl<'a> SearchIndexGenerator<'a> {
                 DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", path.display()))
             })?;
         }
-        let mut out = String::from(PREFIX);
-        out.push('[');
-        for (idx, entry) in entries.iter().enumerate() {
-            if idx > 0 {
-                out.push(',');
-            }
-            entry.write_json(&mut out);
-        }
-        out.push(']');
-        out.push_str(POSTFIX);
-        fs::write(path, out.as_bytes()).map_err(|e| {
+        let bytes = format_entries_js(entries);
+        fs::write(path, &bytes).map_err(|e| {
             DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", path.display()))
         })?;
         let _ = write!(
@@ -389,6 +333,113 @@ impl<'a> SearchIndexGenerator<'a> {
         );
         Ok(())
     }
+}
+
+fn build_site_entries(current_packages: &[PackageData]) -> Vec<SearchIndexEntry> {
+    let search_index = SearchIndexGenerator::build_search_index(current_packages);
+    let mut entries = Vec::new();
+    for pkg_idx in search_index {
+        entries.push(pkg_idx.package_entry);
+        entries.extend(pkg_idx.module_entries);
+    }
+    entries
+}
+
+fn build_package_entries(doc_package: &DocPackage) -> Vec<SearchIndexEntry> {
+    let mut entries = Vec::new();
+    let mut next_id: i32 = 0;
+
+    for doc_module in &doc_package.doc_modules {
+        if doc_module.is_unlisted {
+            continue;
+        }
+        let module = &doc_module.schema;
+        let store = &module.store;
+        let module_id = next_id;
+        next_id += 1;
+        entries.push(doc_module_to_entry(doc_module));
+        let module_base_path = &doc_module.path;
+        let module_index_path = format!("{module_base_path}/index.html");
+
+        let mc = module.module_class();
+        for (_, property) in &mc.properties {
+            if annotations_is_unlisted(&property.annotations) {
+                continue;
+            }
+            next_id += 1;
+            entries.push(property_to_entry(
+                store,
+                property,
+                module_id,
+                &module_index_path,
+            ));
+        }
+        for (_, method) in &mc.methods {
+            if annotations_is_unlisted(&method.annotations) {
+                continue;
+            }
+            next_id += 1;
+            entries.push(method_to_entry(
+                store,
+                method,
+                module_id,
+                &module_index_path,
+            ));
+        }
+        for (_, cid) in &module.classes {
+            let clazz = store.class(*cid);
+            if annotations_is_unlisted(&clazz.annotations) {
+                continue;
+            }
+            let class_id = next_id;
+            next_id += 1;
+            entries.push(class_to_entry(clazz, module_id, module_base_path));
+            // Exact upstream quirk (`SearchIndexGenerator.kt:286`): unencoded `clazz.simpleName`.
+            let class_base_path = format!("{}/{}.html", doc_module.path, clazz.simple_name());
+
+            for (_, property) in &clazz.properties {
+                if annotations_is_unlisted(&property.annotations) {
+                    continue;
+                }
+                next_id += 1;
+                entries.push(property_to_entry(
+                    store,
+                    property,
+                    class_id,
+                    &class_base_path,
+                ));
+            }
+            for (_, method) in &clazz.methods {
+                if annotations_is_unlisted(&method.annotations) {
+                    continue;
+                }
+                next_id += 1;
+                entries.push(method_to_entry(store, method, class_id, &class_base_path));
+            }
+        }
+        // Exact upstream behavior (`SearchIndexGenerator.kt:303`): does NOT filter `isUnlisted`.
+        for (_, aid) in &module.type_aliases {
+            let alias = store.type_alias(*aid);
+            next_id += 1;
+            entries.push(type_alias_to_entry(alias, module_id, &module_index_path));
+        }
+    }
+    entries
+}
+
+fn format_entries_js(entries: &[SearchIndexEntry]) -> Vec<u8> {
+    let mut out = String::with_capacity(PREFIX.len() + entries.len() * 64 + POSTFIX.len() + 2);
+    out.push_str(PREFIX);
+    out.push('[');
+    for (idx, entry) in entries.iter().enumerate() {
+        if idx > 0 {
+            out.push(',');
+        }
+        entry.write_json(&mut out);
+    }
+    out.push(']');
+    out.push_str(POSTFIX);
+    out.into_bytes()
 }
 
 fn package_data_to_entry(pkg: &PackageData) -> SearchIndexEntry {

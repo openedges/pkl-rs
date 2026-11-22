@@ -1,8 +1,9 @@
 //! Pinned mirror factories. Factory fields read their declaration owner's
 //! payload; amendments retain ordinary virtual member lookup and type checks.
 use super::*;
-use crate::heap::CollectionKind;
+use crate::heap::{CollectionKind, MemberList};
 mod declarations;
+pub(crate) use declarations::{builtin_index, existing_unit_syntax};
 
 const FACTORY_BASE: usize = usize::MAX - 1200;
 
@@ -214,7 +215,10 @@ pub(crate) enum Data {
         context: declarations::Context,
     },
     Fields(Vec<(&'static str, Value)>),
-    Location(RuntimeFrame),
+    Location {
+        frame: RuntimeFrame,
+        stdlib_default_transformer: bool,
+    },
 }
 impl Payload {
     pub(crate) fn roots(&self, roots: &mut Vec<Value>) {
@@ -226,7 +230,7 @@ impl Payload {
             Data::Fields(fields) => {
                 roots.extend(fields.iter().map(|(_, value)| value.clone()));
             }
-            Data::Location(_) => {}
+            Data::Location { .. } => {}
         }
     }
     pub(crate) fn for_each_edge<T>(
@@ -245,7 +249,7 @@ impl Payload {
                     on_value(state, value);
                 }
             }
-            Data::Location(_) => {}
+            Data::Location { .. } => {}
         }
     }
     fn fields(kind: Kind, fields: Vec<(&'static str, Value)>) -> Self {
@@ -447,29 +451,65 @@ impl Vm {
                 if let Some(id) = arguments.first().and_then(Value::heap_id)
                     && let Ok(obj) = self.heap.get(id)
                     && obj.module_unit.is_some()
-                    && let Some(cached) = obj.module_mirror
                 {
-                    self.stack.push(Value::Object(cached));
-                    return Ok(());
+                    if let Some(cached) = obj.module_mirror {
+                        self.stack.push(Value::Object(cached));
+                        return Ok(());
+                    }
+                    if let Some(class) = self.cached_reflect_class(Kind::Module) {
+                        let mirror = self.allocate_mirror_with_class(
+                            Payload {
+                                kind: Kind::Module,
+                                data: Data::Module(id),
+                            },
+                            class,
+                        )?;
+                        self.stack.push(Value::Object(mirror));
+                        return Ok(());
+                    }
                 }
             }
             Operation::Class => {
                 if let Some(Value::Class(id)) = arguments.first()
                     && let Ok(cls) = self.heap.get_class(*id)
                     && let Ok(proto) = self.heap.get(cls.prototype)
-                    && let Some(cached) = proto.declaration_mirror
                 {
-                    self.stack.push(Value::Object(cached));
-                    return Ok(());
+                    if let Some(cached) = proto.declaration_mirror {
+                        self.stack.push(Value::Object(cached));
+                        return Ok(());
+                    }
+                    if let Some(class) = self.cached_reflect_class(Kind::Class) {
+                        let mirror = self.allocate_mirror_with_class(
+                            Payload {
+                                kind: Kind::Class,
+                                data: Data::Class(*id),
+                            },
+                            class,
+                        )?;
+                        self.stack.push(Value::Object(mirror));
+                        return Ok(());
+                    }
                 }
             }
             Operation::TypeAlias => {
                 if let Some(Value::TypeAlias(id)) = arguments.first()
                     && let Ok(obj) = self.heap.get(*id)
-                    && let Some(cached) = obj.declaration_mirror
                 {
-                    self.stack.push(Value::Object(cached));
-                    return Ok(());
+                    if let Some(cached) = obj.declaration_mirror {
+                        self.stack.push(Value::Object(cached));
+                        return Ok(());
+                    }
+                    if let Some(class) = self.cached_reflect_class(Kind::TypeAlias) {
+                        let mirror = self.allocate_mirror_with_class(
+                            Payload {
+                                kind: Kind::TypeAlias,
+                                data: Data::TypeAlias(*id),
+                            },
+                            class,
+                        )?;
+                        self.stack.push(Value::Object(mirror));
+                        return Ok(());
+                    }
                 }
             }
             _ => {}
@@ -551,17 +591,10 @@ impl Vm {
                 return Ok(());
             }
             Task::Make(payload) => {
-                let cached = match &payload.data {
-                    Data::Module(id) => self.heap.get(*id)?.module_mirror,
-                    Data::TypeAlias(id) => self.heap.get(*id)?.declaration_mirror,
-                    Data::Class(id) => {
-                        self.heap
-                            .get(self.heap.get_class(*id)?.prototype)?
-                            .declaration_mirror
-                    }
-                    _ => None,
-                };
-                if let Some(id) = cached {
+                if let Some(id) = self.cached_declaration_mirror(&payload.data)? {
+                    run.values.push(Value::Object(id));
+                } else if let Some(class) = self.cached_reflect_class(payload.kind) {
+                    let id = self.allocate_mirror_with_class(payload, class)?;
                     run.values.push(Value::Object(id));
                 } else {
                     run.tasks.push(Task::FactoryClass(payload));
@@ -585,42 +618,7 @@ impl Vm {
                 // Import/class initialization can suspend and permit a nested
                 // evaluation to publish the same declaration's mirror first.
                 // Keep the canonical cached identity after that reentry.
-                let cached = match &payload.data {
-                    Data::Module(owner) => self.heap.get(*owner)?.module_mirror,
-                    Data::TypeAlias(owner) => self.heap.get(*owner)?.declaration_mirror,
-                    Data::Class(owner) => {
-                        self.heap
-                            .get(self.heap.get_class(*owner)?.prototype)?
-                            .declaration_mirror
-                    }
-                    _ => None,
-                };
-                if let Some(id) = cached {
-                    run.values.push(Value::Object(id));
-                    self.frames[index].reflection = Some(run);
-                    return Ok(());
-                }
-                let prototype = self.heap.get_class(class)?.prototype;
-                let id = self.heap.allocate(Object {
-                    parent: Some(prototype),
-                    instance_class: Some(class),
-                    members: self.program.builtin_members[&(FACTORY_BASE - payload.kind as usize)]
-                        .clone()
-                        .into(),
-                    mirror: Some(Box::new(payload.clone())),
-                    ..Object::default()
-                });
-                match &payload.data {
-                    Data::Module(owner) => self.heap.get_mut(*owner)?.module_mirror = Some(id),
-                    Data::TypeAlias(owner) => {
-                        self.heap.get_mut(*owner)?.declaration_mirror = Some(id)
-                    }
-                    Data::Class(owner) => {
-                        let prototype = self.heap.get_class(*owner)?.prototype;
-                        self.heap.get_mut(prototype)?.declaration_mirror = Some(id);
-                    }
-                    _ => (),
-                }
+                let id = self.allocate_mirror_with_class(payload, class)?;
                 run.values.push(Value::Object(id));
             }
             Task::BuildList(length) => {
@@ -973,6 +971,97 @@ impl Vm {
             }
         }
         Ok(())
+    }
+
+    pub(super) fn cached_factory_members(&self, kind: Kind) -> MemberList {
+        use std::sync::OnceLock;
+        static SLOT0: OnceLock<(usize, [MemberList; 17])> = OnceLock::new();
+        static SLOT1: OnceLock<(usize, [MemberList; 17])> = OnceLock::new();
+        let first_code = self.program.builtin_members[&FACTORY_BASE]
+            .first()
+            .map_or(0, |m| m.code);
+        let build = || {
+            std::array::from_fn(|idx| {
+                MemberList::from(self.program.builtin_members[&(FACTORY_BASE - idx)].clone())
+            })
+        };
+        let entry0 = SLOT0.get_or_init(|| (first_code, build()));
+        if entry0.0 == first_code {
+            return entry0.1[kind as usize].clone();
+        }
+        let entry1 = SLOT1.get_or_init(|| (first_code, build()));
+        if entry1.0 == first_code {
+            return entry1.1[kind as usize].clone();
+        }
+        MemberList::from(self.program.builtin_members[&(FACTORY_BASE - kind as usize)].clone())
+    }
+
+    pub(super) fn cached_reflect_class(&self, kind: Kind) -> Option<ObjectId> {
+        let modules::CachedModule::Value(reflect_mod) = self.modules_stdlib.get("pkl:reflect")?
+        else {
+            return None;
+        };
+        let key = CacheKey {
+            entry: false,
+            owner: None,
+            name: PklString::from(kind.name()),
+            method: false,
+        };
+        match self.heap.get(*reflect_mod).ok()?.cache.get(&key) {
+            Some(LazyState::Completed(Value::Class(class))) => Some(*class),
+            _ => None,
+        }
+    }
+
+    pub(super) fn cached_declaration_mirror(
+        &self,
+        data: &Data,
+    ) -> Result<Option<ObjectId>, RuntimeError> {
+        Ok(match data {
+            Data::Module(owner) => self.heap.get(*owner)?.module_mirror,
+            Data::TypeAlias(owner) => self.heap.get(*owner)?.declaration_mirror,
+            Data::Class(owner) => {
+                self.heap
+                    .get(self.heap.get_class(*owner)?.prototype)?
+                    .declaration_mirror
+            }
+            _ => None,
+        })
+    }
+
+    pub(super) fn allocate_mirror_with_class(
+        &mut self,
+        payload: Payload,
+        class: ObjectId,
+    ) -> Result<ObjectId, RuntimeError> {
+        if let Some(id) = self.cached_declaration_mirror(&payload.data)? {
+            return Ok(id);
+        }
+        let prototype = self.heap.get_class(class)?.prototype;
+        let members = self.cached_factory_members(payload.kind);
+        let data_tag = match &payload.data {
+            Data::Module(owner) => Some((0u8, *owner)),
+            Data::TypeAlias(owner) => Some((1u8, *owner)),
+            Data::Class(owner) => Some((2u8, *owner)),
+            _ => None,
+        };
+        let id = self.heap.allocate(Object {
+            parent: Some(prototype),
+            instance_class: Some(class),
+            members,
+            mirror: Some(Box::new(payload)),
+            ..Object::default()
+        });
+        match data_tag {
+            Some((0, owner)) => self.heap.get_mut(owner)?.module_mirror = Some(id),
+            Some((1, owner)) => self.heap.get_mut(owner)?.declaration_mirror = Some(id),
+            Some((2, owner)) => {
+                let proto = self.heap.get_class(owner)?.prototype;
+                self.heap.get_mut(proto)?.declaration_mirror = Some(id);
+            }
+            _ => (),
+        }
+        Ok(id)
     }
 
     fn mirror_class(&self, value: &Value) -> Result<ObjectId, RuntimeError> {

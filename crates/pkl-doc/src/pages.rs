@@ -27,7 +27,6 @@ use pkl_runtime::schema::{
     TypeParameter, Variance,
 };
 use std::collections::BTreeMap;
-use std::fs;
 use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
@@ -70,13 +69,14 @@ impl<'a> HtmlGenerator<'a> {
         }
     }
 
-    pub fn generate_package(
+    pub(crate) fn collect_package_writes(
         &self,
         pkg_index: usize,
-        console_out: &mut dyn Write,
+        writes: &mut Vec<crate::generator::PendingFile>,
+        logs: &mut Vec<String>,
     ) -> Result<(), DocGeneratorError> {
         let pkg_scope = self.site_scope.package_scope(pkg_index);
-        let doc_package = self.site_scope.doc_packages[pkg_index].clone();
+        let doc_package = &self.site_scope.doc_packages[pkg_index];
 
         // Package page
         {
@@ -87,12 +87,12 @@ impl<'a> HtmlGenerator<'a> {
             let html = render_package_page(
                 self.docsite_info,
                 &self.site_scope,
-                &doc_package,
+                doc_package,
                 &pkg_scope,
                 &page_scope,
                 self.is_single_package_site,
             );
-            write_page(&page_scope.url(), &html, console_out)?;
+            queue_page(&page_scope.url(), html, writes, logs)?;
         }
 
         // Module pages & class pages
@@ -108,7 +108,7 @@ impl<'a> HtmlGenerator<'a> {
             let mod_html = render_module_page(
                 self.docsite_info,
                 &self.site_scope,
-                &doc_package,
+                doc_package,
                 doc_module,
                 &pkg_scope,
                 &module_scope,
@@ -116,7 +116,7 @@ impl<'a> HtmlGenerator<'a> {
                 self.is_test_mode,
                 self.is_single_package_site,
             );
-            write_page(&mod_page_scope.url(), &mod_html, console_out)?;
+            queue_page(&mod_page_scope.url(), mod_html, writes, logs)?;
 
             for (_, cid) in &doc_module.schema.classes {
                 let clazz = doc_module.schema.store.class(*cid);
@@ -128,7 +128,7 @@ impl<'a> HtmlGenerator<'a> {
                 let class_html = render_class_page(
                     self.docsite_info,
                     &self.site_scope,
-                    &doc_package,
+                    doc_package,
                     doc_module,
                     clazz,
                     &pkg_scope,
@@ -137,8 +137,53 @@ impl<'a> HtmlGenerator<'a> {
                     self.is_test_mode,
                     self.is_single_package_site,
                 );
-                write_page(&class_page_scope.url(), &class_html, console_out)?;
+                queue_page(&class_page_scope.url(), class_html, writes, logs)?;
             }
+        }
+        Ok(())
+    }
+
+    pub fn generate_package(
+        &self,
+        pkg_index: usize,
+        console_out: &mut dyn Write,
+    ) -> Result<(), DocGeneratorError> {
+        let mut writes = Vec::new();
+        let mut logs = Vec::new();
+        self.collect_package_writes(pkg_index, &mut writes, &mut logs)?;
+        crate::generator::write_files_parallel(&writes)?;
+        for line in &logs {
+            let _ = console_out.write_all(line.as_bytes());
+        }
+        Ok(())
+    }
+
+    pub(crate) fn collect_site_page_write(
+        &self,
+        packages: &[PackageData],
+        writes: &mut Vec<crate::generator::PendingFile>,
+        logs: &mut Vec<String>,
+    ) -> Result<(), DocGeneratorError> {
+        let html = render_main_page(
+            self.docsite_info,
+            packages,
+            &self.site_scope,
+            self.is_single_package_site,
+        );
+        queue_page(&self.site_scope.url, html, writes, logs)
+    }
+
+    pub fn generate_site_page_only(
+        &self,
+        packages: &[PackageData],
+        console_out: &mut dyn Write,
+    ) -> Result<(), DocGeneratorError> {
+        let mut writes = Vec::new();
+        let mut logs = Vec::new();
+        self.collect_site_page_write(packages, &mut writes, &mut logs)?;
+        crate::generator::write_files_parallel(&writes)?;
+        for line in &logs {
+            let _ = console_out.write_all(line.as_bytes());
         }
         Ok(())
     }
@@ -148,34 +193,33 @@ impl<'a> HtmlGenerator<'a> {
         packages: &[PackageData],
         console_out: &mut dyn Write,
     ) -> Result<(), DocGeneratorError> {
-        let html = render_main_page(
-            self.docsite_info,
-            packages,
-            &self.site_scope,
-            self.is_single_package_site,
-        );
-        write_page(&self.site_scope.url, &html, console_out)?;
+        self.generate_site_page_only(packages, console_out)?;
         write_all_static_resources(self.output_dir)
             .map_err(|e| DocGeneratorError::user(e.to_string()))?;
         Ok(())
     }
+
+    pub(crate) fn doc_packages(&self) -> &[DocPackage] {
+        &self.site_scope.doc_packages
+    }
 }
 
-fn write_page(url: &str, html: &str, console_out: &mut dyn Write) -> Result<(), DocGeneratorError> {
+fn queue_page(
+    url: &str,
+    html: String,
+    writes: &mut Vec<crate::generator::PendingFile>,
+    logs: &mut Vec<String>,
+) -> Result<(), DocGeneratorError> {
     let path: PathBuf = file_uri_to_path_buf(url)
         .ok_or_else(|| DocGeneratorError::bug(format!("Non-file page URI `{url}`")))?;
-    if let Some(parent) = path.parent() {
-        fs::create_dir_all(parent).map_err(|e| {
-            DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", path.display()))
-        })?;
-    }
-    fs::write(&path, html.as_bytes()).map_err(|e| {
-        DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", path.display()))
-    })?;
     let display_url = url
         .strip_prefix("file://")
         .map_or_else(|| url.to_string(), |rest| format!("file:{rest}"));
-    let _ = write!(console_out, "Wrote file {display_url}\r");
+    writes.push(crate::generator::PendingFile {
+        path,
+        bytes: crate::generator::FileBytes::Owned(html.into_bytes()),
+    });
+    logs.push(format!("Wrote file {display_url}\r"));
     Ok(())
 }
 
