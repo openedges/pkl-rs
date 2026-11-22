@@ -254,7 +254,7 @@
       "description": "16 requirement groups, 429 5-lane offline Host I/O, packages, and all 29 Pantry packages",
       "manifest": "compatibility/m4-io-packages.json",
       "milestone": "M4",
-      "sha256": "3b9d42ea5c83a8277de92d0746126a40d9ededac6bebcf6d2e20ba566a4e0558"
+      "sha256": "e0eb311eb64c2660f6e102e4eb6e9d63e826067cad1e5b796b21aba6c9d074b9"
     },
     {
       "bytes": 63781,
@@ -497,7 +497,7 @@
         },
         {
           "path": "benchmarks/m7_fixtures/bench_wasm_browser.mjs",
-          "sha256": "2a5f7a3a02bda506d07c573d30bf6a2734b2632bd4259db135e090472e6f54dd",
+          "sha256": "3a8efc52e5aa5caed5de2bc2f8948e9b80b36297f8a36005fdb89ef98bd246e0",
           "symbol": "sampleDescendantTreeRssBytes"
         },
         {
@@ -623,7 +623,7 @@
         },
         {
           "path": ".github/workflows/ci.yml",
-          "sha256": "724c5b363a9ea886de626a34911fd84b921eacb21b263c8a6b3be0bf1e7e6557",
+          "sha256": "a70c2d3d3427eff31449151e6987b42db7c2bd47cd30ceb9ea2a13fed375e4a7",
           "symbol": "compatibility-tooling"
         }
       ],
@@ -635,7 +635,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_memory_soak.py",
-          "sha256": "f770515d27e09bff1a88948e43ca0ef2402636b97b649848e9d339982cd56380",
+          "sha256": "45b17841fc5a6e727ed4794bf8871589dd80d97b78a2b24bbe31cd810d82ac23",
           "symbol": "analyze_series"
         },
         {
@@ -676,7 +676,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_memory_soak.py",
-          "sha256": "f770515d27e09bff1a88948e43ca0ef2402636b97b649848e9d339982cd56380",
+          "sha256": "45b17841fc5a6e727ed4794bf8871589dd80d97b78a2b24bbe31cd810d82ac23",
           "symbol": "verify_report"
         },
         {
@@ -709,7 +709,7 @@
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
     "compatibility/m2-language.json": "5bbd56de0180fc2b6b34d627645e676443157a3d3c8f8fbfccb69560bde12dc9",
     "compatibility/m3-stdlib-output.json": "d5331f3fc114ab53fe28e4597f8fed90dffbc636b4155d26fd6d32b6249a33fa",
-    "compatibility/m4-io-packages.json": "3b9d42ea5c83a8277de92d0746126a40d9ededac6bebcf6d2e20ba566a4e0558",
+    "compatibility/m4-io-packages.json": "e0eb311eb64c2660f6e102e4eb6e9d63e826067cad1e5b796b21aba6c9d074b9",
     "compatibility/m5-product-tools.json": "8e95dfe52708b72ed1bc1af7d65ac2ec75649955f58a0333a3b7fac98d9c1c6d",
     "compatibility/m6-wasm-napi.json": "530b37441d10eda20c1bf6e8923a3dc3acb8e0fd44f25b1a51d234ff1e5e8b71",
     "compatibility/m7-mappings.json": "5202ffbc726efd63bf602f20be673997afdb0f15b916bd25fd1f582f9f36da9c",
@@ -718,7 +718,7 @@
     "reports/m0/benchmarks.json": "ecab898e432e0fcd0ae81e1cda44fa2789df20c6a158531b6d42389173251914",
     "tools/m7_benchmark.py": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
     "tools/m7_fuzz.py": "44323cd9e5245d076049f8bcce977a5bd6bfa93d3f03369cea39e038dc3e997b",
-    "tools/m7_memory_soak.py": "f770515d27e09bff1a88948e43ca0ef2402636b97b649848e9d339982cd56380"
+    "tools/m7_memory_soak.py": "45b17841fc5a6e727ed4794bf8871589dd80d97b78a2b24bbe31cd810d82ac23"
   },
   "target_ratios": {
     "execution_time_max": 1.0,

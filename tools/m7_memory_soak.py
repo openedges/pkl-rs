@@ -98,10 +98,10 @@ PROFILE_ITERATIONS: dict[str, dict[str, dict[str, tuple[int, int]]]] = {
     },
     "quick": {
         "native": {
-            "repeated-success": (300, 30),
-            "repeated-failure": (300, 30),
+            "repeated-success": (300, 70),
+            "repeated-failure": (300, 70),
             "unique-sources-churn": (120, 20),
-            "cyclic-graphs": (200, 20),
+            "cyclic-graphs": (200, 70),
             "lifecycle-cancel-timeout-close": (30, 5),
             "cache-churn": (50, 10),
         },

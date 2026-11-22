@@ -39,6 +39,11 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           submodules: recursive
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/reports/m2/
+          sparse-checkout-cone-mode: false
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'
@@ -130,12 +135,23 @@ jobs:
         os: [ubuntu-24.04, ubuntu-24.04-arm, macos-15, macos-15-intel, windows-latest]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
+    env:
+      CARGO_INCREMENTAL: '0'
+      CARGO_PROFILE_DEV_DEBUG: '0'
     steps:
+      - name: Free disk space on Ubuntu x64 runners
+        if: ${{ runner.os == 'Linux' && runner.arch == 'X64' }}
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc || true
       - name: Preserve reference fixture line endings
         run: git config --global core.autocrlf false
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           submodules: recursive
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/reports/m2/
+          sparse-checkout-cone-mode: false
       - name: Install pinned Rust toolchain
         run: rustup show active-toolchain
       - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
@@ -170,6 +186,11 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           submodules: recursive
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/reports/m2/
+          sparse-checkout-cone-mode: false
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'
@@ -238,11 +259,18 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     steps:
+      - name: Free disk space on Ubuntu x64 runners
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc || true
       - name: Preserve reference fixture line endings
         run: git config --global core.autocrlf false
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           submodules: recursive
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/reports/m2/
+          sparse-checkout-cone-mode: false
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'
@@ -314,6 +342,11 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           submodules: recursive
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/reports/m2/
+          sparse-checkout-cone-mode: false
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'
@@ -368,6 +401,11 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           submodules: recursive
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/reports/m2/
+          sparse-checkout-cone-mode: false
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'
@@ -423,6 +461,11 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           submodules: recursive
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/reports/m2/
+          sparse-checkout-cone-mode: false
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'
@@ -468,11 +511,18 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 50
     steps:
+      - name: Free disk space on Ubuntu x64 runners
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc || true
       - name: Preserve reference fixture line endings
         run: git config --global core.autocrlf false
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           submodules: recursive
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/reports/m2/
+          sparse-checkout-cone-mode: false
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'
@@ -540,6 +590,11 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           submodules: recursive
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/reports/m2/
+          sparse-checkout-cone-mode: false
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: '26.10.0'
@@ -589,11 +644,19 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 75
     steps:
+      - name: Free disk space on Ubuntu x64 runners
+        if: ${{ runner.os == 'Linux' && runner.arch == 'X64' }}
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc || true
       - name: Preserve reference fixture line endings
         run: git config --global core.autocrlf false
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           submodules: recursive
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/reports/m2/
+          sparse-checkout-cone-mode: false
       - name: Build glibc 2.28 compatible pkl, pkldoc, and @pkl-rs/napi (manylinux_2_28)
         shell: bash
         run: |
@@ -612,7 +675,8 @@ jobs:
               export RUSTUP_HOME=/tmp/rustup CARGO_HOME=/tmp/cargo CARGO_TARGET_DIR=/tmp/target
               curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.98.1 --profile minimal
               export PATH="/tmp/cargo/bin:$PATH"
-              cp -a /work /tmp/src
+              mkdir -p /tmp/src
+              cp -a /work/Cargo.toml /work/Cargo.lock /work/rust-toolchain.toml /work/crates /work/vendor /work/packages /work/xtask /work/tools /tmp/src/
               cd /tmp/src
               cargo build --release --locked -p pkl-cli -p pkl-doc -p pkl-napi
               cp /tmp/target/release/pkl /out/pkl
@@ -640,7 +704,8 @@ jobs:
               export RUSTUP_HOME=/tmp/rustup CARGO_HOME=/tmp/cargo CARGO_TARGET_DIR=/tmp/target
               curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.98.1 --profile minimal
               export PATH="/tmp/cargo/bin:$PATH"
-              cp -a /work /tmp/src
+              mkdir -p /tmp/src
+              cp -a /work/Cargo.toml /work/Cargo.lock /work/rust-toolchain.toml /work/crates /work/vendor /work/packages /work/xtask /work/tools /tmp/src/
               cd /tmp/src
               RUSTFLAGS="-C target-feature=+crt-static" cargo build --release --locked -p pkl-cli -p pkl-doc
               cp /tmp/target/release/pkl /out/pkl
@@ -736,11 +801,18 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 40
     steps:
+      - name: Free disk space on Ubuntu x64 runners
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc || true
       - name: Preserve reference fixture line endings
         run: git config --global core.autocrlf false
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           submodules: recursive
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/reports/m2/
+          sparse-checkout-cone-mode: false
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'
@@ -785,11 +857,19 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 120
     steps:
+      - name: Free disk space on Ubuntu x64 runners
+        if: ${{ runner.os == 'Linux' && runner.arch == 'X64' }}
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc || true
       - name: Preserve reference fixture line endings
         run: git config --global core.autocrlf false
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           submodules: recursive
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/reports/m2/
+          sparse-checkout-cone-mode: false
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'
@@ -833,15 +913,15 @@ jobs:
           PYTHONPATH=tools python3 tools/m7_fuzz.py --verify-strict target/m7/ci-fuzz
       - name: Run M7 long-running memory reclamation soak (native)
         run: |
-          PYTHONPATH=tools python3 tools/m7_memory_soak.py --target native --profile quick --record-only --output target/m7/ci-soak-native
+          PYTHONPATH=tools python3 tools/m7_memory_soak.py --target native --profile standard --record-only --output target/m7/ci-soak-native
           PYTHONPATH=tools python3 tools/m7_memory_soak.py --verify-report target/m7/ci-soak-native
           python3 - <<'PY'
           import json, pathlib, sys
           rep = json.loads(pathlib.Path("target/m7/ci-soak-native/report.json").read_bytes())
           if rep.get("error_count", 1) != 0 or rep.get("leak_detected_count", 1) != 0 or rep.get("bounded_count", 0) != 6:
-              print("Native quick soak failed:", rep.get("verdict_counts"), file=sys.stderr)
+              print("Native standard soak failed:", rep.get("verdict_counts"), file=sys.stderr)
               sys.exit(1)
-          print("Native quick soak clean:", rep.get("verdict_counts"))
+          print("Native standard soak clean:", rep.get("verdict_counts"))
           PY
       - name: Install JS/Wasm/Playwright tooling for deep analysis or full benchmarks
         if: ${{ github.event_name == 'workflow_dispatch' && (inputs.full_benchmarks || inputs.js_analysis) }}

@@ -516,11 +516,11 @@ await test("non-blocking event loop, 64-bit timeouts, AbortSignal, cancel(), and
       const fib = await cpuEv.evaluateExpression(
         ModuleSource.text(`
           function fib(n: Int): Int = if (n <= 1) n else fib(n - 1) + fib(n - 2)
-          ans = fib(27)
+          ans = fib(29)
         `),
         "ans",
       );
-      assert.equal(fib, "196418");
+      assert.equal(fib, "514229");
     } finally {
       clearInterval(timer);
     }

@@ -252,7 +252,10 @@ fn java_shell_matches_value_diagnostic_and_ordered_logger_events() {
     assert_eq!(roster.lines().collect::<Vec<_>>(), CASES);
     let mut failures = Vec::new();
     for case in CASES {
-        let input = root.join(case);
+        // Directory `nul` is a reserved DOS device name on Windows; keep case/URI identity `"nul"`
+        // intact while storing its fixture bytes under `nul-char` on disk.
+        let dir_name = if case == "nul" { "nul-char" } else { case };
+        let input = root.join(dir_name);
         let source = utf8(&input, "module.pkl");
         let uri = utf8(&input, "uri.txt");
         let module = utf8(&input, "module-name.txt");

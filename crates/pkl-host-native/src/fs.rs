@@ -104,6 +104,10 @@ pub fn open_file_nofollow(path: &Path) -> std::io::Result<File> {
     {
         use std::os::unix::fs::OpenOptionsExt;
         // Exact OS-specific O_NOFOLLOW constants (zero `unsafe`, zero `libc` dependency).
+        // NOTE: Linux kernel UAPI defines O_NOFOLLOW in OCTAL:
+        // - asm-generic (x86/x86_64/riscv64/s390x/loongarch64): 00400000 = 0x20000
+        // - arm / aarch64 / powerpc:                            00100000 = 0x8000
+        //   (0x10000 on arm/aarch64 is O_DIRECT, which causes EINVAL on unaligned reads!)
         #[cfg(any(
             target_os = "macos",
             target_os = "ios",
@@ -115,11 +119,25 @@ pub fn open_file_nofollow(path: &Path) -> std::io::Result<File> {
         const O_NOFOLLOW: i32 = 0x0100;
         #[cfg(all(
             target_os = "linux",
-            any(target_arch = "x86", target_arch = "x86_64", target_arch = "riscv64")
+            any(
+                target_arch = "x86",
+                target_arch = "x86_64",
+                target_arch = "riscv64",
+                target_arch = "s390x",
+                target_arch = "loongarch64"
+            )
         ))]
-        const O_NOFOLLOW: i32 = 0x20000;
-        #[cfg(all(target_os = "linux", any(target_arch = "aarch64", target_arch = "arm")))]
-        const O_NOFOLLOW: i32 = 0x10000;
+        const O_NOFOLLOW: i32 = 0o0400000;
+        #[cfg(all(
+            target_os = "linux",
+            any(
+                target_arch = "aarch64",
+                target_arch = "arm",
+                target_arch = "powerpc",
+                target_arch = "powerpc64"
+            )
+        ))]
+        const O_NOFOLLOW: i32 = 0o0100000;
         #[cfg(not(any(
             target_os = "macos",
             target_os = "ios",
@@ -133,8 +151,12 @@ pub fn open_file_nofollow(path: &Path) -> std::io::Result<File> {
                     target_arch = "x86",
                     target_arch = "x86_64",
                     target_arch = "riscv64",
+                    target_arch = "s390x",
+                    target_arch = "loongarch64",
                     target_arch = "aarch64",
-                    target_arch = "arm"
+                    target_arch = "arm",
+                    target_arch = "powerpc",
+                    target_arch = "powerpc64"
                 )
             )
         )))]
@@ -458,5 +480,47 @@ impl NativeFs {
             });
         }
         Ok(elements)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::open_file_nofollow;
+    use std::fs;
+    use std::io::Read;
+
+    #[test]
+    fn open_file_nofollow_reads_regular_file_and_rejects_symlink() {
+        let dir = std::env::temp_dir().join(format!(
+            "pkl-host-nofollow-{}-{}",
+            std::process::id(),
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap_or_default()
+                .as_nanos()
+        ));
+        fs::create_dir_all(&dir).unwrap();
+        let real = dir.join("payload.pkl");
+        fs::write(&real, b"hello = 42\n").unwrap();
+
+        let mut f = open_file_nofollow(&real).expect("open_file_nofollow must read regular file");
+        let mut buf = Vec::new();
+        f.read_to_end(&mut buf)
+            .expect("buffered read on O_NOFOLLOW handle must succeed (never O_DIRECT EINVAL)");
+        assert_eq!(buf, b"hello = 42\n");
+
+        #[cfg(unix)]
+        {
+            let link = dir.join("link.pkl");
+            std::os::unix::fs::symlink(&real, &link).unwrap();
+            let err = open_file_nofollow(&link)
+                .expect_err("open_file_nofollow must reject symlinks on Unix");
+            assert!(
+                err.raw_os_error().is_some(),
+                "expected OS error (ELOOP) on symlink, got {err:?}"
+            );
+        }
+
+        let _ = fs::remove_dir_all(&dir);
     }
 }

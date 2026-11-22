@@ -94,7 +94,10 @@ function classifyBrowserProcessRole(cmd, ppid, driverPid) {
 }
 
 function sampleDescendantTreeRssBytes(parentPid) {
-  const raw = execFileSync("/bin/ps", ["-axo", "pid=,ppid=,rss=,args="], { encoding: "utf8" });
+  const raw = execFileSync("/bin/ps", ["-ww", "-axo", "pid=,ppid=,rss=,args="], {
+    encoding: "utf8",
+    env: { ...process.env, COLUMNS: "4096" },
+  });
   const children = new Map();
   const rssKib = new Map();
   const ppidOf = new Map();
