@@ -296,11 +296,130 @@ def ensure_oracle(root, fetch=False, profile="reference"):
     }
 
 
+def verify_native_binary(path, spec, label):
+    if not path.is_file():
+        raise OracleError(
+            f"native-image {label} binary missing: {path}; run tools/oracle.py fetch --profile native-image"
+        )
+    actual_bytes = path.stat().st_size
+    if actual_bytes != spec["bytes"]:
+        raise OracleError(
+            f"native-image {label} size mismatch: expected {spec['bytes']}, got {actual_bytes} ({path})"
+        )
+    actual_sha = sha256(path)
+    if actual_sha != spec["sha256"]:
+        raise OracleError(
+            f"native-image {label} checksum mismatch: expected {spec['sha256']}, got {actual_sha} ({path})"
+        )
+    if not os.access(path, os.X_OK):
+        raise OracleError(f"native-image {label} binary is not executable: {path}")
+
+
+def fetch_native_binary(path, spec, label):
+    # Never silently replace an existing corrupt binary.
+    if path.exists():
+        verify_native_binary(path, spec, label)
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(dir=path.parent, delete=False) as output:
+            temporary = Path(output.name)
+            with urllib.request.urlopen(spec["url"], timeout=120) as response:
+                if not response.geturl().startswith("https://"):
+                    raise OracleError(f"native-image {label} download redirected outside HTTPS")
+                shutil.copyfileobj(response, output)
+        temporary.chmod(0o755)
+        verify_native_binary(temporary, spec, label)
+        temporary.replace(path)
+    except (OSError, ValueError) as error:
+        raise OracleError(f"native-image {label} download failed: {error}") from error
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
+
+
+def ensure_native_image_oracle(root, fetch=False, target=None):
+    """Verify official Apple Pkl 0.32.0 native-image binaries (pkl & pkldoc); return provenance.
+
+    Supports explicit overrides via `PKL_ORACLE_NATIVE_PKL` and `PKL_ORACLE_NATIVE_PKLDOC`,
+    falling back to `.cache/oracle/<cache_subdir>/<filename>`. Always enforces exact byte size,
+    SHA-256, and `--version` identity against `oracle.lock.json`.
+    """
+    root = Path(root).resolve()
+    lock_path = root / "oracle.lock.json"
+    lock = json.loads(lock_path.read_text(encoding="utf-8"))
+    if lock.get("schema") != 1:
+        raise OracleError("unsupported oracle lock schema")
+    verify_sources(root, lock)
+    native_cfg = lock.get("native_image")
+    if not isinstance(native_cfg, dict) or not isinstance(native_cfg.get("distributions"), dict):
+        raise OracleError("oracle.lock.json is missing native_image distributions")
+    target_key = target or f"{platform.system()}-{platform.machine()}"
+    if target_key not in native_cfg["distributions"]:
+        raise OracleError(f"native-image oracle is not pinned for {target_key}")
+    dist = native_cfg["distributions"][target_key]
+    cache_dir = root / ".cache/oracle" / dist["cache_subdir"]
+
+    env_map = {
+        "pkl": "PKL_ORACLE_NATIVE_PKL",
+        "pkldoc": "PKL_ORACLE_NATIVE_PKLDOC",
+    }
+    resolved = {}
+    for label in ("pkl", "pkldoc"):
+        spec = dist[label]
+        override = os.environ.get(env_map[label])
+        if override:
+            binary = Path(override).expanduser().resolve()
+        else:
+            binary = (cache_dir / spec["filename"]).resolve()
+            if fetch:
+                fetch_native_binary(binary, spec, label)
+        verify_native_binary(binary, spec, label)
+        resolved[label] = binary
+
+    environment = deterministic_environment(root)
+    version_meta = {}
+    for label in ("pkl", "pkldoc"):
+        spec = dist[label]
+        binary = resolved[label]
+        ver = _run([str(binary), "--version"], env=environment, cwd=root)
+        prefix = spec["version_prefix"].encode("utf-8")
+        suffix = spec["version_suffix"].encode("utf-8")
+        if ver.returncode or ver.stderr or not (ver.stdout.startswith(prefix) and ver.stdout.endswith(suffix)):
+            raise OracleError(f"native-image {label} runtime version check failed")
+        version_meta[label] = {
+            "executable": str(binary),
+            "filename": spec["filename"],
+            "url": spec["url"],
+            "bytes": spec["bytes"],
+            "sha256": spec["sha256"],
+            "version_stdout_hex": ver.stdout.hex(),
+            "version_stderr_hex": ver.stderr.hex(),
+        }
+
+    return {
+        "schema": 1,
+        "profile": "native-image",
+        "version": lock["version"],
+        "target": target_key,
+        "lock_sha256": sha256(lock_path),
+        "source": lock["source"],
+        "exact_native_image_lock_match": True,
+        "pkl": version_meta["pkl"],
+        "pkldoc": version_meta["pkldoc"],
+        "command": [str(resolved["pkl"])],
+        "pkldoc_command": [str(resolved["pkldoc"])],
+        "environment": environment,
+        "platform": platform.platform(),
+    }
+
+
 def smoke(root, metadata):
     """Record raw successful/error executions and exact replay, not Rust compatibility."""
     destination = root / "target/m0/oracle"
-    if metadata.get("profile") == "performance":
-        destination /= "performance"
+    if metadata.get("profile") in ("performance", "native-image"):
+        destination /= metadata["profile"]
     work = destination / "work"
     work.mkdir(parents=True, exist_ok=True)
     inputs = {
@@ -326,7 +445,12 @@ def smoke(root, metadata):
                         "exit_code": first.returncode, "stdout_sha256": hashlib.sha256(first.stdout).hexdigest(),
                         "stderr_sha256": hashlib.sha256(first.stderr).hexdigest(),
                         "replay_equal": replay_equal, "passed": valid and replay_equal})
-    report = {"oracle": metadata, "scope": "JVM oracle bootstrap and exact replay only", "results": results}
+    scope = (
+        "Official Apple Pkl native-image oracle bootstrap and exact replay only"
+        if metadata.get("profile") == "native-image"
+        else "JVM oracle bootstrap and exact replay only"
+    )
+    report = {"oracle": metadata, "scope": scope, "results": results}
     (destination / "smoke.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     if not all(result["passed"] for result in results):
         raise OracleError(f"oracle smoke failed; see {destination / 'smoke.json'}")
@@ -337,17 +461,23 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action", choices=("fetch", "verify", "smoke"))
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
-    parser.add_argument("--profile", choices=("reference", "performance"), default="reference")
+    parser.add_argument("--profile", choices=("reference", "performance", "native-image"), default="reference")
     args = parser.parse_args()
     try:
-        metadata = ensure_oracle(args.root, fetch=args.action == "fetch", profile=args.profile)
+        if args.profile == "native-image":
+            metadata = ensure_native_image_oracle(args.root, fetch=args.action == "fetch")
+            filename = "native-image-provenance.json"
+            label = "native-image"
+        else:
+            metadata = ensure_oracle(args.root, fetch=args.action == "fetch", profile=args.profile)
+            filename = "provenance.json" if args.profile == "reference" else "performance-provenance.json"
+            label = "JVM"
         destination = args.root.resolve() / "target/m0/oracle"
         destination.mkdir(parents=True, exist_ok=True)
-        filename = "provenance.json" if args.profile == "reference" else "performance-provenance.json"
         (destination / filename).write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
         if args.action == "smoke":
             smoke(args.root.resolve(), metadata)
-        print(f"Pkl {metadata['version']} JVM oracle verified; provenance: {destination}")
+        print(f"Pkl {metadata['version']} {label} oracle verified; provenance: {destination}")
         return 0
     except (OracleError, OSError, ValueError, KeyError) as error:
         print(f"oracle: {error}", file=sys.stderr)

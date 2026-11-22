@@ -84,5 +84,30 @@
       "--sun-misc-unsafe-memory-access=allow"
     ],
     "truffle_runtime_name": "GraalVM CE"
+  },
+  "native_image": {
+    "policy": "Official Apple Pkl 0.32.0 prebuilt native-image CLI executables (pkl and pkldoc); exact release URL, byte size, and SHA-256 pin per platform; primary <= 1.00x execution time and peak RSS baseline for all CLI, server, and pkldoc workloads. No local native-image rebuild.",
+    "license": "Apache-2.0, with bundled GraalVM/JDK components covered by upstream THIRD-PARTY-NOTICES.txt",
+    "distributions": {
+      "Darwin-arm64": {
+        "cache_subdir": "native-image-0.32.0",
+        "pkl": {
+          "filename": "pkl-macos-aarch64",
+          "url": "https://github.com/apple/pkl/releases/download/0.32.0/pkl-macos-aarch64",
+          "bytes": 99267376,
+          "sha256": "fb891856705f3dcb8589c74999e01ded3eeb6b77ad5c6a95c02579a848c13928",
+          "version_prefix": "Pkl 0.32.0 (",
+          "version_suffix": ", native)\n"
+        },
+        "pkldoc": {
+          "filename": "pkldoc-macos-aarch64",
+          "url": "https://github.com/apple/pkl/releases/download/0.32.0/pkldoc-macos-aarch64",
+          "bytes": 99266664,
+          "sha256": "f363e09502aa5c27d40bdaa071ac61f557f13a32483ec025277cf0958f46923f",
+          "version_prefix": "pkldoc 0.32.0 (",
+          "version_suffix": ", native)\n"
+        }
+      }
+    }
   }
 }

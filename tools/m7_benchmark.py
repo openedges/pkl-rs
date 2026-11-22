@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: Apache-2.0
-"""Milestone M7 Performance & Peak RSS Benchmark Harness (Rust vs pinned Java 0.32.0).
+"""Milestone M7 Performance & Peak RSS Benchmark Harness (Rust vs pinned Pkl 0.32.0 Native Image & JVM).
 
 Measures execution time AND real per-process peak RSS (`os.wait4` `ru_maxrss`,
 macOS bytes / Linux KiB) across all required M7 workload families:
@@ -19,16 +19,22 @@ macOS bytes / Linux KiB) across all required M7 workload families:
   - `wasm-browser` (`@pkl-rs/wasm` Playwright Chromium 1.64.1 init, warm eval & browser-tree RSS)
 
 Strict honesty invariants (`INTENT.md`, `TESTING.md`, `AGENTS.md`):
-  1. 100% raw-byte output/error/file verification against pinned Java 0.32.0 BEFORE timing.
+  1. 100% raw-byte output/error/file verification against pinned Pkl 0.32.0 BEFORE timing.
   2. Never mixes JVM heap with OS RSS; measures real `os.wait4` `ru_maxrss` (plus full
      Chromium process-tree RSS via `/bin/ps` for `wasm-browser`).
   3. Reports full empirical distributions (`count`, `min`, `median`, `p90`, `p95`, `max`,
      `mean`, `sample_stdev`) and explicit per-workload ratios & verdicts (`pass`, `fail`,
      `inconclusive`, `unverified`). Never conceals individual regressions behind averages.
-  4. Enforces exact pinned Eclipse Adoptium Temurin `21.0.13.1+2-LTS`
-     (`exact_jdk_lock_match: true`, rejecting `PKL_ALLOW_LOCAL_JDK=1`) for live head-to-head
-     runs, AND transparently cross-compares Core 6 against the archived optimizing
-     GraalVM CE `25.0.1` reference in `reports/m0/benchmarks.json`.
+  4. **Primary CLI/Server/`pkldoc` baseline (2026-11-23 user decision)**: All 15 CLI, server,
+     and `pkldoc` workloads (`cold-cli` and `steady-server`) are strictly gated at `<= 1.00x`
+     execution time AND `<= 1.00x` `os.wait4` peak RSS against **pinned Official Apple Pkl
+     0.32.0 `native-image`** (`pkl` and `pkldoc`, `exact_native_image_lock_match: true`),
+     while retaining live pinned Eclipse Adoptium Temurin `21.0.13.1+2-LTS`
+     (`exact_jdk_lock_match: true`, rejecting `PKL_ALLOW_LOCAL_JDK=1`) and archived M0
+     GraalVM CE `25.0.1` (`reports/m0/benchmarks.json`) separately for complete provenance.
+     All 19 embedded API (`persistent` / `fresh-evaluator`) and JS/Wasm (`napi`, `wasm-node`,
+     `wasm-browser`) workloads remain strictly gated against pinned JVM (plus the `2026-11-22`
+     browser Wasm contract), because official `native-image` ships CLI executables only.
 """
 from __future__ import annotations
 
@@ -42,6 +48,7 @@ import os
 from pathlib import Path
 import platform
 import queue
+import re
 import shutil
 import signal
 import statistics
@@ -84,11 +91,37 @@ ALL_FAMILIES = (
     "wasm-browser",
 )
 
+NATIVE_IMAGE_ELIGIBLE_MODES = ("cold-cli", "steady-server")
+NATIVE_IMAGE_ELIGIBLE_FAMILIES = frozenset(
+    {
+        "core-6",
+        "reflection-stdlib",
+        "renderers-files-binary",
+        "packages-http-cache",
+        "repl",
+        "server",
+        "formatter",
+        "pkldoc",
+    }
+)
+VALID_BASELINES = ("both", "native-image", "jvm")
+NATIVE_IMAGE_API_NA_REASON = (
+    "Official Apple Pkl 0.32.0 native-image only ships CLI executables (pkl, pkldoc) "
+    "and has no embeddable Java/JS/Wasm API."
+)
+REPL_JLINE_STDERR_NOTE = (
+    'Official Apple Pkl 0.32.0 native-image pkl repl reads System.getProperty("user.home")/.pkl/repl-history '
+    "via JLine and may emit benign JLine history log lines to stderr; Rust pkl repl remains strictly "
+    'verified for stderr == b"" and 100% raw-byte stdout parity.'
+)
+SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+
 SOURCE_SNAPSHOT_GLOBS = (
     "Cargo.toml",
     "Cargo.lock",
     "rust-toolchain.toml",
     "oracle.lock.json",
+    "tools/oracle.py",
     "crates/*/src/**/*.rs",
     "crates/pkl/examples/m7_bench_probe.rs",
     "packages/pkl-wasm/src/**/*",
@@ -144,27 +177,164 @@ def per_process_rss_bytes(usage: Any, system: str | None = None) -> int:
     return m0_benchmark.per_process_rss_bytes(usage, system=system)
 
 
+def expected_workload_sets(contract: dict[str, Any]) -> tuple[set[str], set[str], set[str]]:
+    """Return `(all_workload_ids, core_workload_ids, native_image_eligible_ids)`."""
+    all_ids: set[str] = set()
+    core_ids: set[str] = set()
+    native_ids: set[str] = set()
+    for w in contract.get("core_workloads", []):
+        for mode in w.get("modes", []):
+            wid = f"{w['id']}:{mode}"
+            all_ids.add(wid)
+            core_ids.add(wid)
+            if mode in NATIVE_IMAGE_ELIGIBLE_MODES:
+                native_ids.add(wid)
+    for w in contract.get("product_workloads", []):
+        kind = w["kind"]
+        if kind == "eval_cold_and_persistent":
+            modes: tuple[str, ...] = ("cold-cli", "persistent")
+        elif kind == "server_msgpack":
+            modes = ("steady-server",)
+        elif kind == "js_binding":
+            modes = (w["target"],)
+        else:
+            modes = ("cold-cli",)
+        for mode in modes:
+            wid = f"{w['id']}:{mode}"
+            all_ids.add(wid)
+            if mode in NATIVE_IMAGE_ELIGIBLE_MODES:
+                native_ids.add(wid)
+    return all_ids, core_ids, native_ids
+
+
+def validate_native_image_lock(root: Path = ROOT) -> dict[str, Any]:
+    lock_path = root / "oracle.lock.json"
+    if not lock_path.is_file():
+        raise ValueError(f"missing oracle.lock.json at {lock_path}")
+    lock = json.loads(lock_path.read_bytes())
+    if lock.get("schema") != 1 or lock.get("version") != "0.32.0":
+        raise ValueError("oracle.lock.json schema/version mismatch")
+    native_cfg = lock.get("native_image")
+    if not isinstance(native_cfg, dict):
+        raise ValueError("oracle.lock.json missing required native_image section")
+    dists = native_cfg.get("distributions")
+    if not isinstance(dists, dict) or not dists:
+        raise ValueError("oracle.lock.json native_image.distributions must be non-empty")
+    for target, dist in dists.items():
+        if not isinstance(dist, dict):
+            raise ValueError(f"invalid native_image distribution for {target}")
+        subdir = dist.get("cache_subdir")
+        if not isinstance(subdir, str) or not subdir.strip() or Path(subdir).is_absolute() or ".." in Path(subdir).parts:
+            raise ValueError(f"invalid native_image cache_subdir for {target}: {subdir!r}")
+        for label in ("pkl", "pkldoc"):
+            spec = dist.get(label)
+            if not isinstance(spec, dict):
+                raise ValueError(f"oracle.lock.json native_image.{target} missing {label} pin")
+            if not isinstance(spec.get("filename"), str) or not spec["filename"].strip():
+                raise ValueError(f"invalid native_image {target}.{label}.filename")
+            if not isinstance(spec.get("url"), str) or not spec["url"].startswith("https://"):
+                raise ValueError(f"invalid native_image {target}.{label}.url")
+            nbytes = spec.get("bytes")
+            if isinstance(nbytes, bool) or not isinstance(nbytes, int) or nbytes <= 0:
+                raise ValueError(f"invalid native_image {target}.{label}.bytes")
+            sha_val = spec.get("sha256")
+            if not isinstance(sha_val, str) or not SHA256_RE.match(sha_val):
+                raise ValueError(f"invalid native_image {target}.{label}.sha256")
+            if not isinstance(spec.get("version_prefix"), str) or not spec["version_prefix"]:
+                raise ValueError(f"invalid native_image {target}.{label}.version_prefix")
+            if not isinstance(spec.get("version_suffix"), str) or not spec["version_suffix"]:
+                raise ValueError(f"invalid native_image {target}.{label}.version_suffix")
+    return native_cfg
+
+
+def is_benign_jline_repl_stderr(stderr_bytes: bytes) -> bool:
+    """Return True iff `stderr_bytes` is empty or contains solely benign JLine history log lines.
+
+    Official Apple Pkl 0.32.0 native-image `pkl repl` resolves `System.getProperty("user.home")`
+    from the OS user record rather than `$HOME`, so JLine may log benign history messages
+    (`INFO: History file ...` or `WARNING: Failed to load/save history` with `repl-history`
+    `DefaultHistory` stack traces). Any Pkl diagnostic or non-JLine error is rejected.
+    """
+    if not stderr_bytes:
+        return True
+    try:
+        text = stderr_bytes.decode("utf-8")
+    except UnicodeDecodeError:
+        return False
+    for forbidden in ("–– Pkl Error ––", "PklException", "PklBugException"):
+        if forbidden in text:
+            return False
+    lines = text.splitlines()
+    idx = 0
+    saw_jline = False
+    while idx < len(lines):
+        line = lines[idx]
+        if not line.strip():
+            idx += 1
+            continue
+        if not re.search(r"\borg\.jline\.utils\.Log\s+log\s*$", line):
+            return False
+        saw_jline = True
+        idx += 1
+        if idx >= len(lines):
+            return False
+        msg = lines[idx]
+        if re.match(r"^INFO:\s+History file\b", msg):
+            idx += 1
+            continue
+        if re.match(r"^WARNING:\s+Failed to (load|save) history\s*$", msg):
+            idx += 1
+            if idx < len(lines) and re.match(r"^java\.(nio\.file|io)\.[A-Za-z0-9_$.]+Exception:.*repl-history", lines[idx]):
+                idx += 1
+                saw_history_frame = False
+                while idx < len(lines) and lines[idx].startswith("\tat "):
+                    if "org.jline.reader.impl.history." in lines[idx]:
+                        saw_history_frame = True
+                    idx += 1
+                if not saw_history_frame:
+                    return False
+            continue
+        return False
+    return saw_jline
+
+
 def load_contract(root: Path = ROOT) -> dict[str, Any]:
     path = root / WORKLOADS_PATH
     contract = json.loads(path.read_bytes())
     if contract.get("schema_version") != 1 or contract.get("baseline") != "0.32.0":
         raise ValueError("unknown M7 benchmark contract schema_version or baseline")
     targets = contract.get("target_ratios", {})
-    if targets.get("execution_time_max") != 1.0 or targets.get("peak_rss_max") != 1.0:
+    t_max = targets.get("execution_time_max")
+    r_max = targets.get("peak_rss_max")
+    if isinstance(t_max, bool) or isinstance(r_max, bool) or t_max != 1.0 or r_max != 1.0:
         raise ValueError("M7 target_ratios must enforce execution_time_max == 1.0 and peak_rss_max == 1.0")
+    ntargets = contract.get("native_image_targets")
+    if not isinstance(ntargets, dict):
+        raise ValueError("M7 benchmark contract missing native_image_targets")
+    nt_max = ntargets.get("execution_time_max")
+    nr_max = ntargets.get("peak_rss_max")
+    if isinstance(nt_max, bool) or isinstance(nr_max, bool) or nt_max != 1.0 or nr_max != 1.0:
+        raise ValueError("native_image_targets must enforce execution_time_max == 1.0 and peak_rss_max == 1.0")
+    if ntargets.get("required_for_cli_server_pkldoc") is not True:
+        raise ValueError("native_image_targets.required_for_cli_server_pkldoc must be true")
+    if ntargets.get("eligible_modes") != list(NATIVE_IMAGE_ELIGIBLE_MODES):
+        raise ValueError(f"native_image_targets.eligible_modes must be {list(NATIVE_IMAGE_ELIGIBLE_MODES)}")
+    if not str(ntargets.get("repl_jline_stderr_note", "")).strip():
+        raise ValueError("native_image_targets.repl_jline_stderr_note must be documented")
+    validate_native_image_lock(root)
     btargets = contract.get("browser_wasm_targets")
     if not isinstance(btargets, dict):
         raise ValueError("M7 benchmark contract missing browser_wasm_targets")
-    if btargets.get("execution_time_max") != 1.0:
+    if isinstance(btargets.get("execution_time_max"), bool) or btargets.get("execution_time_max") != 1.0:
         raise ValueError("browser_wasm_targets.execution_time_max must remain 1.0")
     lin_max = btargets.get("wasm_linear_memory_ratio_max")
-    if not isinstance(lin_max, (int, float)) or not (0.0 < float(lin_max) <= 0.15):
+    if isinstance(lin_max, bool) or not isinstance(lin_max, (int, float)) or not (0.0 < float(lin_max) <= 0.15):
         raise ValueError("browser_wasm_targets.wasm_linear_memory_ratio_max must be in (0, 0.15]")
     js_heap_max = btargets.get("js_heap_used_max_bytes")
-    if not isinstance(js_heap_max, int) or not (0 < js_heap_max <= 64 * 1024 * 1024):
+    if isinstance(js_heap_max, bool) or not isinstance(js_heap_max, int) or not (0 < js_heap_max <= 64 * 1024 * 1024):
         raise ValueError("browser_wasm_targets.js_heap_used_max_bytes must be in (0, 64 MiB]")
     gzip_max = btargets.get("wasm_binary_gzip_max_bytes")
-    if not isinstance(gzip_max, int) or not (0 < gzip_max <= 2_621_440):
+    if isinstance(gzip_max, bool) or not isinstance(gzip_max, int) or not (0 < gzip_max <= 2_621_440):
         raise ValueError("browser_wasm_targets.wasm_binary_gzip_max_bytes must be in (0, 2.50 MiB]")
     exceptions = btargets.get("engine_time_exceptions", {})
     if not isinstance(exceptions, dict) or not set(exceptions.keys()).issubset({"firefox"}):
@@ -228,6 +398,13 @@ def load_contract(root: Path = ROOT) -> dict[str, Any]:
             p = (root / w["input_dir"]).resolve()
             if not p.is_relative_to(root.resolve()) or not p.is_dir():
                 raise ValueError(f"missing fixture dir for {wid}: {w['input_dir']}")
+
+    _, _, native_ids = expected_workload_sets(contract)
+    if ntargets.get("expected_eligible_workload_count") != len(native_ids):
+        raise ValueError(
+            f"native_image_targets.expected_eligible_workload_count={ntargets.get('expected_eligible_workload_count')} "
+            f"!= actual eligible CLI/server/pkldoc count {len(native_ids)}"
+        )
 
     for drv in ("bench_napi.mjs", "bench_wasm_node.mjs", "bench_wasm_browser.mjs"):
         p = root / "benchmarks/m7_fixtures" / drv
@@ -296,6 +473,13 @@ def ensure_pinned_oracle(root: Path) -> dict[str, Any]:
             os.environ.pop("PKL_ORACLE_JAVA", None)
     if not meta.get("exact_jdk_lock_match", False):
         raise oracle.OracleError("M7 benchmarks require exact_jdk_lock_match == true")
+    return meta
+
+
+def ensure_pinned_native_image_oracle(root: Path) -> dict[str, Any]:
+    meta = oracle.ensure_native_image_oracle(root, fetch=False)
+    if not meta.get("exact_native_image_lock_match", False):
+        raise oracle.OracleError("M7 benchmarks require exact_native_image_lock_match == true")
     return meta
 
 
@@ -543,6 +727,7 @@ def evaluate_ratio_verdict(
     converged: bool = True,
     target_time_max: float = 1.0,
     target_rss_max: float = 1.0,
+    baseline_key_prefix: str = "java",
 ) -> dict[str, Any]:
     if java_time_ns <= 0 or java_rss_bytes <= 0 or rust_time_ns <= 0 or rust_rss_bytes <= 0:
         raise ValueError("ratio inputs must be strictly positive")
@@ -569,11 +754,11 @@ def evaluate_ratio_verdict(
         reason = "correctness verified and both time & peak RSS ratios <= 1.00"
     return {
         "rust_time_ns": rust_time_ns,
-        "java_time_ns": java_time_ns,
+        f"{baseline_key_prefix}_time_ns": java_time_ns,
         "time_ratio": time_ratio,
         "time_meets_target": time_ok,
         "rust_peak_rss_bytes": rust_rss_bytes,
-        "java_peak_rss_bytes": java_rss_bytes,
+        f"{baseline_key_prefix}_peak_rss_bytes": java_rss_bytes,
         "rss_ratio": rss_ratio,
         "rss_meets_target": rss_ok,
         "correctness_verified": correctness_verified,
@@ -758,6 +943,7 @@ def build_rust_artifacts(
     *,
     skip_build: bool,
     selected_families: set[str] | None = None,
+    baseline: str = "both",
 ) -> dict[str, Any]:
     pkl_bin = root / "target/release/pkl"
     pkldoc_bin = root / "target/release/pkldoc"
@@ -766,15 +952,21 @@ def build_rust_artifacts(
     wasm_bg = root / "packages/pkl-wasm/dist/wasm/pkl_wasm_bg.wasm"
 
     fams = selected_families or set(ALL_FAMILIES)
-    need_napi = "napi" in fams
-    need_wasm = bool(fams & {"wasm-node", "wasm-browser"})
+    use_jvm = baseline in ("both", "jvm")
+    full_catalog = fams == set(ALL_FAMILIES) and baseline == "both"
+    need_pkldoc = full_catalog or "pkldoc" in fams
+    need_probe = full_catalog or (use_jvm and bool(fams & {"core-6", "reflection-stdlib"}))
+    need_napi = use_jvm and "napi" in fams
+    need_wasm = use_jvm and bool(fams & {"wasm-node", "wasm-browser"})
     node_bin = shutil.which("node")
 
     build_record: dict[str, Any] = {
         "source_binding": "preexisting-binary" if skip_build else "recorded-build",
         "commands": [],
     }
-    native_binding = "preexisting-binary"
+    pkl_binding = "preexisting-binary"
+    pkldoc_binding = "preexisting-binary"
+    probe_binding = "preexisting-binary"
     napi_binding = "preexisting-binary"
     wasm_binding = "preexisting-binary"
 
@@ -788,21 +980,21 @@ def build_rust_artifacts(
             "pkl-cli",
             "--bin",
             "pkl",
-            "-p",
-            "pkl-doc",
-            "--bin",
-            "pkldoc",
-            "-p",
-            "pkl",
-            "--example",
-            "m7_bench_probe",
         ]
+        if need_pkldoc:
+            cmd.extend(["-p", "pkl-doc", "--bin", "pkldoc"])
+        if need_probe:
+            cmd.extend(["-p", "pkl", "--example", "m7_bench_probe"])
         build_cap = capture_wait4(cmd, root, dict(os.environ), destination / "build/rust-release", timeout=600)
         if build_cap["status"] != "executed" or build_cap["exit_code"] != 0:
             err = raw_channel(build_cap, "stderr").decode("utf-8", errors="replace")
             raise RuntimeError(f"Rust release build failed (rc={build_cap['exit_code']}): {err[-1000:]}")
         build_record["commands"].append({"cmd": cmd, "capture": "build/rust-release/result.json"})
-        native_binding = "recorded-build"
+        pkl_binding = "recorded-build"
+        if need_pkldoc:
+            pkldoc_binding = "recorded-build"
+        if need_probe:
+            probe_binding = "recorded-build"
 
         if need_napi:
             if not node_bin:
@@ -830,51 +1022,40 @@ def build_rust_artifacts(
             build_record["commands"].append({"cmd": wasm_cmd, "capture": "build/wasm-build/result.json"})
             wasm_binding = "recorded-build"
 
-    for label, path in (("pkl", pkl_bin), ("pkldoc", pkldoc_bin), ("m7_bench_probe", probe_bin), ("wasm_bg", wasm_bg)):
+    required_paths = [
+        ("pkl", pkl_bin, True, pkl_binding),
+        ("pkldoc", pkldoc_bin, need_pkldoc, pkldoc_binding),
+        ("m7_bench_probe", probe_bin, need_probe, probe_binding),
+        ("wasm_bg", wasm_bg, need_wasm or full_catalog, wasm_binding),
+    ]
+    artifacts: dict[str, Any] = {}
+    for label, path, is_required, binding in required_paths:
         if not path.is_file():
-            raise ValueError(f"missing required candidate artifact ({label}): {path}")
+            if is_required:
+                raise ValueError(f"missing required candidate artifact ({label}): {path}")
+            continue
+        artifacts[label] = {
+            "path": str(path),
+            "rel_path": path.relative_to(root).as_posix(),
+            "sha256": file_digest(path),
+            "bytes": path.stat().st_size,
+            "source_binding": binding,
+        }
 
-    napi_addons = sorted(napi_node.glob("*.node"))
+    napi_addons = sorted(napi_node.glob("*.node")) if napi_node.is_dir() else []
     if not napi_addons:
-        raise ValueError(f"missing compiled @pkl-rs/napi .node addon under {napi_node}")
-
-    build_record["artifacts"] = {
-        "pkl": {
-            "path": str(pkl_bin),
-            "rel_path": pkl_bin.relative_to(root).as_posix(),
-            "sha256": file_digest(pkl_bin),
-            "bytes": pkl_bin.stat().st_size,
-            "source_binding": native_binding,
-        },
-        "pkldoc": {
-            "path": str(pkldoc_bin),
-            "rel_path": pkldoc_bin.relative_to(root).as_posix(),
-            "sha256": file_digest(pkldoc_bin),
-            "bytes": pkldoc_bin.stat().st_size,
-            "source_binding": native_binding,
-        },
-        "m7_bench_probe": {
-            "path": str(probe_bin),
-            "rel_path": probe_bin.relative_to(root).as_posix(),
-            "sha256": file_digest(probe_bin),
-            "bytes": probe_bin.stat().st_size,
-            "source_binding": native_binding,
-        },
-        "wasm_bg": {
-            "path": str(wasm_bg),
-            "rel_path": wasm_bg.relative_to(root).as_posix(),
-            "sha256": file_digest(wasm_bg),
-            "bytes": wasm_bg.stat().st_size,
-            "source_binding": wasm_binding,
-        },
-        "napi_addon": {
+        if need_napi or full_catalog:
+            raise ValueError(f"missing compiled @pkl-rs/napi .node addon under {napi_node}")
+    else:
+        artifacts["napi_addon"] = {
             "path": str(napi_addons[0]),
             "rel_path": napi_addons[0].relative_to(root).as_posix(),
             "sha256": file_digest(napi_addons[0]),
             "bytes": napi_addons[0].stat().st_size,
             "source_binding": napi_binding,
-        },
-    }
+        }
+
+    build_record["artifacts"] = artifacts
     return build_record
 
 
@@ -986,91 +1167,221 @@ def _run_cold_cli_pair(
     folder: Path,
     java_cmd_fn,
     rust_cmd_fn,
-    oracle_meta: dict[str, Any],
+    oracle_meta: dict[str, Any] | None,
     root: Path,
     cold_samples: int,
     *,
+    native_oracle_meta: dict[str, Any] | None = None,
+    native_cmd_fn=None,
+    allow_native_jline_stderr: bool = False,
     expected_error: bool = False,
     expected_exit_override: int | None = None,
     stdin_file: Path | None = None,
     m0_ref_case: dict[str, Any] | None = None,
     description: str = "",
 ) -> dict[str, Any]:
+    if oracle_meta is None and native_oracle_meta is None:
+        raise ValueError(f"{name}: at least one baseline oracle (JVM or native-image) is required")
+    if native_oracle_meta is not None and native_cmd_fn is None:
+        raise ValueError(f"{name}: native_cmd_fn is required when native_oracle_meta is provided")
+
     expected_exit = expected_exit_override if expected_exit_override is not None else (1 if expected_error else 0)
+    base_env = (oracle_meta or native_oracle_meta)["environment"]  # type: ignore[index]
+    ni_pf_err: bytes | None = None
 
-    # Preflight Java + Java replay + Rust (100% raw-byte check BEFORE timing!)
-    j_pf_state = folder / "state/java-preflight"
-    j_pf = capture_wait4(
-        java_cmd_fn(j_pf_state),
-        root,
-        build_isolated_env(oracle_meta["environment"], j_pf_state),
-        folder / "preflight-java",
-        stdin_file=stdin_file,
-    )
-    exp_out, exp_err = verify_capture_raw(j_pf, expected_exit=expected_exit)
-    if not expected_error and exp_err:
-        raise ValueError(f"{name}: unexpected Java preflight stderr: {exp_err[:300]!r}")
-    if expected_error and (exp_out or not exp_err):
-        raise ValueError(f"{name}: unexpected Java error-case channels")
+    # Preflight oracle(s) + replay + Rust (100% raw-byte check BEFORE timing!)
+    if oracle_meta is not None:
+        j_pf_state = folder / "state/java-preflight"
+        j_pf = capture_wait4(
+            java_cmd_fn(j_pf_state),
+            root,
+            build_isolated_env(base_env, j_pf_state),
+            folder / "preflight-java",
+            stdin_file=stdin_file,
+        )
+        exp_out, exp_err = verify_capture_raw(j_pf, expected_exit=expected_exit)
+        if not expected_error and exp_err:
+            raise ValueError(f"{name}: unexpected Java preflight stderr: {exp_err[:300]!r}")
+        if expected_error and (exp_out or not exp_err):
+            raise ValueError(f"{name}: unexpected Java error-case channels")
 
-    j_rep_state = folder / "state/java-replay"
-    j_rep = capture_wait4(
-        java_cmd_fn(j_rep_state),
-        root,
-        build_isolated_env(oracle_meta["environment"], j_rep_state),
-        folder / "preflight-java-replay",
-        stdin_file=stdin_file,
-    )
-    verify_capture_raw(j_rep, expected_exit=expected_exit, expected_stdout=exp_out, expected_stderr=exp_err)
+        j_rep_state = folder / "state/java-replay"
+        j_rep = capture_wait4(
+            java_cmd_fn(j_rep_state),
+            root,
+            build_isolated_env(base_env, j_rep_state),
+            folder / "preflight-java-replay",
+            stdin_file=stdin_file,
+        )
+        verify_capture_raw(j_rep, expected_exit=expected_exit, expected_stdout=exp_out, expected_stderr=exp_err)
 
+        if native_oracle_meta is not None:
+            ni_pf_state = folder / "state/native-image-preflight"
+            ni_pf = capture_wait4(
+                native_cmd_fn(ni_pf_state),
+                root,
+                build_isolated_env(base_env, ni_pf_state),
+                folder / "preflight-native-image",
+                stdin_file=stdin_file,
+            )
+            if allow_native_jline_stderr:
+                _, ni_pf_err = verify_capture_raw(ni_pf, expected_exit=expected_exit, expected_stdout=exp_out)
+                if not is_benign_jline_repl_stderr(ni_pf_err):
+                    raise ValueError(
+                        f"{name}: unexpected official native-image repl stderr: {ni_pf_err[:300]!r}"
+                    )
+            else:
+                _, ni_pf_err = verify_capture_raw(
+                    ni_pf, expected_exit=expected_exit, expected_stdout=exp_out, expected_stderr=exp_err
+                )
+    else:
+        ni_pf_state = folder / "state/native-image-preflight"
+        ni_pf = capture_wait4(
+            native_cmd_fn(ni_pf_state),
+            root,
+            build_isolated_env(base_env, ni_pf_state),
+            folder / "preflight-native-image",
+            stdin_file=stdin_file,
+        )
+        ni_out, ni_pf_err = verify_capture_raw(ni_pf, expected_exit=expected_exit)
+        if allow_native_jline_stderr:
+            if not is_benign_jline_repl_stderr(ni_pf_err):
+                raise ValueError(
+                    f"{name}: unexpected official native-image repl stderr: {ni_pf_err[:300]!r}"
+                )
+            exp_out, exp_err = ni_out, b""
+        else:
+            if not expected_error and ni_pf_err:
+                raise ValueError(f"{name}: unexpected native-image preflight stderr: {ni_pf_err[:300]!r}")
+            if expected_error and (ni_out or not ni_pf_err):
+                raise ValueError(f"{name}: unexpected native-image error-case channels")
+            exp_out, exp_err = ni_out, ni_pf_err
+
+        ni_rep_state = folder / "state/native-image-replay"
+        ni_rep = capture_wait4(
+            native_cmd_fn(ni_rep_state),
+            root,
+            build_isolated_env(base_env, ni_rep_state),
+            folder / "preflight-native-image-replay",
+            stdin_file=stdin_file,
+        )
+        if allow_native_jline_stderr:
+            _, ni_rep_err = verify_capture_raw(ni_rep, expected_exit=expected_exit, expected_stdout=exp_out)
+            if not is_benign_jline_repl_stderr(ni_rep_err):
+                raise ValueError(
+                    f"{name}: unexpected official native-image replay repl stderr: {ni_rep_err[:300]!r}"
+                )
+        else:
+            verify_capture_raw(ni_rep, expected_exit=expected_exit, expected_stdout=exp_out, expected_stderr=exp_err)
+
+    # Rust preflight ALWAYS checks 100% raw stdout AND raw stderr (including stderr == b"" for repl-session!)
     r_pf_state = folder / "state/rust-preflight"
     r_pf = capture_wait4(
         rust_cmd_fn(r_pf_state),
         root,
-        build_isolated_env(oracle_meta["environment"], r_pf_state),
+        build_isolated_env(base_env, r_pf_state),
         folder / "preflight-rust",
         stdin_file=stdin_file,
     )
     verify_capture_raw(r_pf, expected_exit=expected_exit, expected_stdout=exp_out, expected_stderr=exp_err)
 
     java_samples: list[dict[str, Any]] = []
+    native_samples: list[dict[str, Any]] = []
     rust_samples: list[dict[str, Any]] = []
     for idx in range(cold_samples):
-        js = folder / f"state/java-cold-{idx}"
-        jc = capture_wait4(
-            java_cmd_fn(js),
-            root,
-            build_isolated_env(oracle_meta["environment"], js),
-            folder / "java-cold" / str(idx),
-            stdin_file=stdin_file,
-        )
-        verify_capture_raw(jc, expected_exit=expected_exit, expected_stdout=exp_out, expected_stderr=exp_err)
-        java_samples.append(jc)
+        if oracle_meta is not None:
+            js = folder / f"state/java-cold-{idx}"
+            jc = capture_wait4(
+                java_cmd_fn(js),
+                root,
+                build_isolated_env(base_env, js),
+                folder / "java-cold" / str(idx),
+                stdin_file=stdin_file,
+            )
+            verify_capture_raw(jc, expected_exit=expected_exit, expected_stdout=exp_out, expected_stderr=exp_err)
+            java_samples.append(jc)
+
+        if native_oracle_meta is not None:
+            ns = folder / f"state/native-image-cold-{idx}"
+            nc = capture_wait4(
+                native_cmd_fn(ns),
+                root,
+                build_isolated_env(base_env, ns),
+                folder / "native-image-cold" / str(idx),
+                stdin_file=stdin_file,
+            )
+            if allow_native_jline_stderr:
+                _, n_err = verify_capture_raw(nc, expected_exit=expected_exit, expected_stdout=exp_out)
+                if not is_benign_jline_repl_stderr(n_err):
+                    raise ValueError(
+                        f"{name}: unexpected official native-image sample {idx} repl stderr: {n_err[:300]!r}"
+                    )
+            else:
+                verify_capture_raw(nc, expected_exit=expected_exit, expected_stdout=exp_out, expected_stderr=exp_err)
+            native_samples.append(nc)
 
         rs = folder / f"state/rust-cold-{idx}"
         rc = capture_wait4(
             rust_cmd_fn(rs),
             root,
-            build_isolated_env(oracle_meta["environment"], rs),
+            build_isolated_env(base_env, rs),
             folder / "rust-cold" / str(idx),
             stdin_file=stdin_file,
         )
         verify_capture_raw(rc, expected_exit=expected_exit, expected_stdout=exp_out, expected_stderr=exp_err)
         rust_samples.append(rc)
 
-    j_time = distribution([s["elapsed_ns"] for s in java_samples])
-    j_rss = distribution([s["peak_rss_bytes"] for s in java_samples])
     r_time = distribution([s["elapsed_ns"] for s in rust_samples])
     r_rss = distribution([s["peak_rss_bytes"] for s in rust_samples])
 
-    vs_temurin = evaluate_ratio_verdict(
-        r_time["median"],
-        j_time["median"],
-        r_rss["median"],
-        j_rss["median"],
-        correctness_verified=True,
-        converged=True,
-    )
+    java_block = None
+    vs_temurin = None
+    if oracle_meta is not None:
+        j_time = distribution([s["elapsed_ns"] for s in java_samples])
+        j_rss = distribution([s["peak_rss_bytes"] for s in java_samples])
+        java_block = {
+            "elapsed_ns": j_time,
+            "peak_rss_bytes": j_rss,
+            "samples": java_samples,
+            "memory_boundary": "Whole Java JVM cold CLI process via os.wait4 ru_maxrss",
+        }
+        vs_temurin = evaluate_ratio_verdict(
+            r_time["median"],
+            j_time["median"],
+            r_rss["median"],
+            j_rss["median"],
+            correctness_verified=True,
+            converged=True,
+        )
+
+    native_block = None
+    vs_native = None
+    if native_oracle_meta is not None:
+        n_time = distribution([s["elapsed_ns"] for s in native_samples])
+        n_rss = distribution([s["peak_rss_bytes"] for s in native_samples])
+        native_block = {
+            "elapsed_ns": n_time,
+            "peak_rss_bytes": n_rss,
+            "samples": native_samples,
+            "memory_boundary": "Whole Official Apple Pkl 0.32.0 native-image cold CLI process via os.wait4 ru_maxrss",
+        }
+        if allow_native_jline_stderr and ni_pf_err is not None:
+            native_block["stderr_policy"] = "jline-history-log-recorded"
+            native_block["preflight_stderr_bytes"] = len(ni_pf_err)
+            native_block["preflight_stderr_sha256"] = digest(ni_pf_err)
+            native_block["raw_stderr_bytes_match"] = ni_pf_err == b""
+            native_block["sample_stderr_bytes"] = [s["stderr"]["bytes"] for s in native_samples]
+            native_block["stderr_note"] = REPL_JLINE_STDERR_NOTE
+        vs_native = evaluate_ratio_verdict(
+            r_time["median"],
+            n_time["median"],
+            r_rss["median"],
+            n_rss["median"],
+            correctness_verified=True,
+            converged=True,
+            baseline_key_prefix="native_image",
+        )
+
     vs_graalvm = None
     if m0_ref_case is not None:
         m0_cold = m0_ref_case["cold_cli"]
@@ -1093,18 +1404,15 @@ def _run_cold_cli_pair(
         "correctness_verified": True,
         "expected_stdout_sha256": digest(exp_out),
         "expected_stderr_sha256": digest(exp_err),
-        "java": {
-            "elapsed_ns": j_time,
-            "peak_rss_bytes": j_rss,
-            "samples": java_samples,
-            "memory_boundary": "Whole Java JVM cold CLI process via os.wait4 ru_maxrss",
-        },
+        "java": java_block,
+        "native_image": native_block,
         "rust": {
             "elapsed_ns": r_time,
             "peak_rss_bytes": r_rss,
             "samples": rust_samples,
             "memory_boundary": "Whole native Rust cold CLI process via os.wait4 ru_maxrss",
         },
+        "vs_official_native_image": vs_native,
         "vs_live_temurin_21": vs_temurin,
         "vs_m0_graalvm_25_0_1": vs_graalvm,
     }
@@ -1279,12 +1587,15 @@ def _run_api_probe_pair(
             "fork_peak_rss_bytes": j_rss_dist,
             "forks": java_forks,
         },
+        "native_image": None,
+        "native_image_not_applicable_reason": NATIVE_IMAGE_API_NA_REASON,
         "rust": {
             "warmup": r_warmup,
             "fork_median_operation_ns": r_op_dist,
             "fork_peak_rss_bytes": r_rss_dist,
             "forks": rust_forks,
         },
+        "vs_official_native_image": None,
         "vs_live_temurin_21": vs_temurin,
         "vs_m0_graalvm_25_0_1": vs_graalvm,
     }
@@ -1293,80 +1604,132 @@ def _run_api_probe_pair(
 def _run_output_files_workload(
     workload: dict[str, Any],
     folder: Path,
-    oracle_meta: dict[str, Any],
+    oracle_meta: dict[str, Any] | None,
     pkl_bin: Path,
     root: Path,
     cold_samples: int,
+    *,
+    native_oracle_meta: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    if oracle_meta is None and native_oracle_meta is None:
+        raise ValueError("renderers-files requires at least one baseline oracle")
     wid = workload["id"]
     module = (root / workload["module"]).resolve()
+    base_env = (oracle_meta or native_oracle_meta)["environment"]  # type: ignore[index]
 
     shared_out_dir = folder / "shared-output-files"
 
-    def run_once(is_rust: bool, tag: str) -> tuple[dict[str, Any], dict[str, bytes]]:
+    def run_once(runner: str, tag: str) -> tuple[dict[str, Any], dict[str, bytes]]:
         state = folder / f"state/{tag}"
         if shared_out_dir.exists():
             shutil.rmtree(shared_out_dir)
         shared_out_dir.mkdir(parents=True, exist_ok=True)
         out_dir = shared_out_dir
-        if is_rust:
-            cmd = [
-                str(pkl_bin),
-                "eval",
-                "--no-cache",
-                "--no-project",
-                "--settings",
-                "pkl:settings",
-                "--color=never",
-                "-m",
-                str(out_dir),
-                str(module),
-            ]
+        common = [
+            "eval",
+            "--no-cache",
+            "--no-project",
+            "--settings",
+            "pkl:settings",
+            "--color=never",
+            "-m",
+            str(out_dir),
+            str(module),
+        ]
+        if runner == "rust":
+            cmd = [str(pkl_bin), *common]
+        elif runner == "native-image":
+            assert native_oracle_meta is not None
+            cmd = [*native_oracle_meta["command"], *common]
         else:
-            cmd = [
-                *java_prefix_for_state(oracle_meta["command"], state),
-                "eval",
-                "--no-cache",
-                "--no-project",
-                "--settings",
-                "pkl:settings",
-                "--color=never",
-                "-m",
-                str(out_dir),
-                str(module),
-            ]
-        cap = capture_wait4(cmd, root, build_isolated_env(oracle_meta["environment"], state), folder / tag)
+            assert oracle_meta is not None
+            cmd = [*java_prefix_for_state(oracle_meta["command"], state), *common]
+        cap = capture_wait4(cmd, root, build_isolated_env(base_env, state), folder / tag)
         files = m4_differential.collect_tree_bytes(out_dir, set(), prefix="")
         shutil.rmtree(out_dir, ignore_errors=True)
         return cap, files
 
-    j_pf, j_files = run_once(False, "preflight-java")
-    _, j_err = verify_capture_raw(j_pf, expected_exit=0)
-    if j_err or not j_files:
-        raise ValueError(f"{wid}: Java preflight failed or emitted no files")
-    r_pf, r_files = run_once(True, "preflight-rust")
+    if oracle_meta is not None:
+        j_pf, exp_files = run_once("java", "preflight-java")
+        _, j_err = verify_capture_raw(j_pf, expected_exit=0)
+        if j_err or not exp_files:
+            raise ValueError(f"{wid}: Java preflight failed or emitted no files")
+        if native_oracle_meta is not None:
+            ni_pf, ni_files = run_once("native-image", "preflight-native-image")
+            _, ni_err = verify_capture_raw(ni_pf, expected_exit=0)
+            if ni_err or ni_files != exp_files:
+                raise ValueError(f"{wid}: official native-image generated output.files differ from Java preflight")
+    else:
+        ni_pf, exp_files = run_once("native-image", "preflight-native-image")
+        _, ni_err = verify_capture_raw(ni_pf, expected_exit=0)
+        if ni_err or not exp_files:
+            raise ValueError(f"{wid}: official native-image preflight failed or emitted no files")
+
+    r_pf, r_files = run_once("rust", "preflight-rust")
     _, r_err = verify_capture_raw(r_pf, expected_exit=0)
-    if r_err or r_files != j_files:
-        raise ValueError(f"{wid}: Rust generated output.files differ from Java preflight")
+    if r_err or r_files != exp_files:
+        raise ValueError(f"{wid}: Rust generated output.files differ from oracle preflight")
 
-    java_samples, rust_samples = [], []
+    java_samples, native_samples, rust_samples = [], [], []
     for idx in range(cold_samples):
-        jc, jf = run_once(False, f"java-cold/{idx}")
-        verify_capture_raw(jc, expected_exit=0, expected_stderr=b"")
-        if jf != j_files:
-            raise ValueError(f"{wid}: Java sample {idx} files drifted")
-        java_samples.append(jc)
+        if oracle_meta is not None:
+            jc, jf = run_once("java", f"java-cold/{idx}")
+            verify_capture_raw(jc, expected_exit=0, expected_stderr=b"")
+            if jf != exp_files:
+                raise ValueError(f"{wid}: Java sample {idx} files drifted")
+            java_samples.append(jc)
 
-        rc, rf = run_once(True, f"rust-cold/{idx}")
+        if native_oracle_meta is not None:
+            nc, nf = run_once("native-image", f"native-image-cold/{idx}")
+            verify_capture_raw(nc, expected_exit=0, expected_stderr=b"")
+            if nf != exp_files:
+                raise ValueError(f"{wid}: official native-image sample {idx} files drifted")
+            native_samples.append(nc)
+
+        rc, rf = run_once("rust", f"rust-cold/{idx}")
         verify_capture_raw(rc, expected_exit=0, expected_stderr=b"")
-        if rf != j_files:
-            raise ValueError(f"{wid}: Rust sample {idx} files differ from Java")
+        if rf != exp_files:
+            raise ValueError(f"{wid}: Rust sample {idx} files differ from oracle")
         rust_samples.append(rc)
 
-    j_time = distribution([s["elapsed_ns"] for s in java_samples])
-    j_rss = distribution([s["peak_rss_bytes"] for s in java_samples])
     r_time = distribution([s["elapsed_ns"] for s in rust_samples])
     r_rss = distribution([s["peak_rss_bytes"] for s in rust_samples])
+
+    java_block = None
+    vs_temurin = None
+    if oracle_meta is not None:
+        j_time = distribution([s["elapsed_ns"] for s in java_samples])
+        j_rss = distribution([s["peak_rss_bytes"] for s in java_samples])
+        java_block = {
+            "elapsed_ns": j_time,
+            "peak_rss_bytes": j_rss,
+            "samples": java_samples,
+            "memory_boundary": "Whole Java JVM cold CLI process via os.wait4 ru_maxrss",
+        }
+        vs_temurin = evaluate_ratio_verdict(
+            r_time["median"], j_time["median"], r_rss["median"], j_rss["median"], correctness_verified=True
+        )
+
+    native_block = None
+    vs_native = None
+    if native_oracle_meta is not None:
+        n_time = distribution([s["elapsed_ns"] for s in native_samples])
+        n_rss = distribution([s["peak_rss_bytes"] for s in native_samples])
+        native_block = {
+            "elapsed_ns": n_time,
+            "peak_rss_bytes": n_rss,
+            "samples": native_samples,
+            "memory_boundary": "Whole Official Apple Pkl 0.32.0 native-image cold CLI process via os.wait4 ru_maxrss",
+        }
+        vs_native = evaluate_ratio_verdict(
+            r_time["median"],
+            n_time["median"],
+            r_rss["median"],
+            n_rss["median"],
+            correctness_verified=True,
+            baseline_key_prefix="native_image",
+        )
+
     return {
         "id": f"{wid}:cold-cli",
         "workload_id": wid,
@@ -1375,12 +1738,17 @@ def _run_output_files_workload(
         "description": workload.get("description", ""),
         "expected_error": False,
         "correctness_verified": True,
-        "generated_files_verified": {k: digest(v) for k, v in sorted(j_files.items())},
-        "java": {"elapsed_ns": j_time, "peak_rss_bytes": j_rss, "samples": java_samples},
-        "rust": {"elapsed_ns": r_time, "peak_rss_bytes": r_rss, "samples": rust_samples},
-        "vs_live_temurin_21": evaluate_ratio_verdict(
-            r_time["median"], j_time["median"], r_rss["median"], j_rss["median"], correctness_verified=True
-        ),
+        "generated_files_verified": {k: digest(v) for k, v in sorted(exp_files.items())},
+        "java": java_block,
+        "native_image": native_block,
+        "rust": {
+            "elapsed_ns": r_time,
+            "peak_rss_bytes": r_rss,
+            "samples": rust_samples,
+            "memory_boundary": "Whole native Rust cold CLI process via os.wait4 ru_maxrss",
+        },
+        "vs_official_native_image": vs_native,
+        "vs_live_temurin_21": vs_temurin,
         "vs_m0_graalvm_25_0_1": None,
     }
 
@@ -1388,70 +1756,142 @@ def _run_output_files_workload(
 def _run_pkldoc_workload(
     workload: dict[str, Any],
     folder: Path,
-    oracle_meta: dict[str, Any],
+    oracle_meta: dict[str, Any] | None,
     pkldoc_bin: Path,
     root: Path,
     cold_samples: int,
+    *,
+    native_oracle_meta: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    if oracle_meta is None and native_oracle_meta is None:
+        raise ValueError("pkldoc workload requires at least one baseline oracle")
     wid = workload["id"]
     input_dir = (root / workload["input_dir"]).resolve()
     input_files = sorted(str(p) for p in input_dir.rglob("*") if p.is_file())
+    base_env = (oracle_meta or native_oracle_meta)["environment"]  # type: ignore[index]
 
     shared_site_dir = folder / "shared-pkldoc-site"
 
-    def run_once(is_rust: bool, tag: str) -> tuple[dict[str, Any], dict[str, bytes]]:
+    def run_once(runner: str, tag: str) -> tuple[dict[str, Any], dict[str, bytes]]:
         state = folder / f"state/{tag}"
         if shared_site_dir.exists():
             shutil.rmtree(shared_site_dir)
         shared_site_dir.mkdir(parents=True, exist_ok=True)
         out_dir = shared_site_dir
         args = ["--output-dir", str(out_dir), "--no-cache", "--test-mode", *input_files]
-        if is_rust:
+        if runner == "rust":
             cmd = [str(pkldoc_bin), *args]
+        elif runner == "native-image":
+            assert native_oracle_meta is not None
+            cmd = [*native_oracle_meta["pkldoc_command"], *args]
         else:
+            assert oracle_meta is not None
             cmd = [*java_prefix_for_state(oracle_meta["command"], state, main_class="org.pkl.doc.Main"), *args]
-        cap = capture_wait4(cmd, root, build_isolated_env(oracle_meta["environment"], state), folder / tag)
+        cap = capture_wait4(cmd, root, build_isolated_env(base_env, state), folder / tag)
         tree = m5_pkldoc_tree.collect_pkldoc_tree(out_dir)
         shutil.rmtree(out_dir, ignore_errors=True)
         return cap, tree
 
-    j_pf, j_tree = run_once(False, "preflight-java")
-    j_stdout, j_err = verify_capture_raw(j_pf, expected_exit=0)
-    if j_err or not j_tree:
-        raise ValueError(f"{wid}: Java pkldoc preflight failed or generated empty site")
+    if oracle_meta is not None:
+        j_pf, exp_tree = run_once("java", "preflight-java")
+        ref_stdout, j_err = verify_capture_raw(j_pf, expected_exit=0)
+        if j_err or not exp_tree:
+            raise ValueError(f"{wid}: Java pkldoc preflight failed or generated empty site")
+        if native_oracle_meta is not None:
+            ni_pf, ni_tree = run_once("native-image", "preflight-native-image")
+            ni_stdout, ni_err = verify_capture_raw(ni_pf, expected_exit=0)
+            if ni_err or ni_tree != exp_tree:
+                raise ValueError(
+                    f"{wid}: official native-image pkldoc tree differs from Java ({len(ni_tree)} vs {len(exp_tree)})"
+                )
+            ns_ok, ns_det = m5_differential.check_pkldoc_progress_stdout(ref_stdout, ni_stdout)
+            if not ns_ok:
+                raise ValueError(f"{wid}: official native-image pkldoc progress stdout failed: {ns_det}")
+    else:
+        ni_pf, exp_tree = run_once("native-image", "preflight-native-image")
+        ref_stdout, ni_err = verify_capture_raw(ni_pf, expected_exit=0)
+        if ni_err or not exp_tree:
+            raise ValueError(f"{wid}: official native-image pkldoc preflight failed or generated empty site")
 
-    r_pf, r_tree = run_once(True, "preflight-rust")
+    r_pf, r_tree = run_once("rust", "preflight-rust")
     r_stdout, r_err = verify_capture_raw(r_pf, expected_exit=0)
-    if r_err or r_tree != j_tree:
+    if r_err or r_tree != exp_tree:
         raise ValueError(
-            f"{wid}: Rust pkldoc generated file/symlink tree differs from Java "
-            f"({len(r_tree)} vs {len(j_tree)} entries)"
+            f"{wid}: Rust pkldoc generated file/symlink tree differs from oracle "
+            f"({len(r_tree)} vs {len(exp_tree)} entries)"
         )
-    stdout_ok, stdout_detail = m5_differential.check_pkldoc_progress_stdout(j_stdout, r_stdout)
+    stdout_ok, stdout_detail = m5_differential.check_pkldoc_progress_stdout(ref_stdout, r_stdout)
     if not stdout_ok:
         raise ValueError(f"{wid}: pkldoc progress stdout contract failed: {stdout_detail}")
 
-    java_samples, rust_samples = [], []
+    java_samples, native_samples, rust_samples = [], [], []
     for idx in range(cold_samples):
-        jc, jt = run_once(False, f"java-cold/{idx}")
-        js_out, _ = verify_capture_raw(jc, expected_exit=0, expected_stderr=b"")
-        if jt != j_tree:
-            raise ValueError(f"{wid}: Java sample {idx} pkldoc tree drifted")
-        java_samples.append(jc)
+        sample_ref_stdout = ref_stdout
+        if oracle_meta is not None:
+            jc, jt = run_once("java", f"java-cold/{idx}")
+            js_out, _ = verify_capture_raw(jc, expected_exit=0, expected_stderr=b"")
+            if jt != exp_tree:
+                raise ValueError(f"{wid}: Java sample {idx} pkldoc tree drifted")
+            sample_ref_stdout = js_out
+            java_samples.append(jc)
 
-        rc, rt = run_once(True, f"rust-cold/{idx}")
+        if native_oracle_meta is not None:
+            nc, nt = run_once("native-image", f"native-image-cold/{idx}")
+            ns_out, _ = verify_capture_raw(nc, expected_exit=0, expected_stderr=b"")
+            if nt != exp_tree:
+                raise ValueError(f"{wid}: official native-image sample {idx} pkldoc tree drifted")
+            s_ok, s_det = m5_differential.check_pkldoc_progress_stdout(sample_ref_stdout, ns_out)
+            if not s_ok:
+                raise ValueError(f"{wid}: official native-image sample {idx} pkldoc stdout failed: {s_det}")
+            native_samples.append(nc)
+
+        rc, rt = run_once("rust", f"rust-cold/{idx}")
         rs_out, _ = verify_capture_raw(rc, expected_exit=0, expected_stderr=b"")
-        if rt != j_tree:
-            raise ValueError(f"{wid}: Rust sample {idx} pkldoc tree differs from Java")
-        s_ok, s_det = m5_differential.check_pkldoc_progress_stdout(js_out, rs_out)
+        if rt != exp_tree:
+            raise ValueError(f"{wid}: Rust sample {idx} pkldoc tree differs from oracle")
+        s_ok, s_det = m5_differential.check_pkldoc_progress_stdout(sample_ref_stdout, rs_out)
         if not s_ok:
             raise ValueError(f"{wid}: sample {idx} pkldoc progress stdout contract failed: {s_det}")
         rust_samples.append(rc)
 
-    j_time = distribution([s["elapsed_ns"] for s in java_samples])
-    j_rss = distribution([s["peak_rss_bytes"] for s in java_samples])
     r_time = distribution([s["elapsed_ns"] for s in rust_samples])
     r_rss = distribution([s["peak_rss_bytes"] for s in rust_samples])
+
+    java_block = None
+    vs_temurin = None
+    if oracle_meta is not None:
+        j_time = distribution([s["elapsed_ns"] for s in java_samples])
+        j_rss = distribution([s["peak_rss_bytes"] for s in java_samples])
+        java_block = {
+            "elapsed_ns": j_time,
+            "peak_rss_bytes": j_rss,
+            "samples": java_samples,
+            "memory_boundary": "Whole Java JVM pkldoc process via os.wait4 ru_maxrss",
+        }
+        vs_temurin = evaluate_ratio_verdict(
+            r_time["median"], j_time["median"], r_rss["median"], j_rss["median"], correctness_verified=True
+        )
+
+    native_block = None
+    vs_native = None
+    if native_oracle_meta is not None:
+        n_time = distribution([s["elapsed_ns"] for s in native_samples])
+        n_rss = distribution([s["peak_rss_bytes"] for s in native_samples])
+        native_block = {
+            "elapsed_ns": n_time,
+            "peak_rss_bytes": n_rss,
+            "samples": native_samples,
+            "memory_boundary": "Whole Official Apple Pkl 0.32.0 native-image pkldoc process via os.wait4 ru_maxrss",
+        }
+        vs_native = evaluate_ratio_verdict(
+            r_time["median"],
+            n_time["median"],
+            r_rss["median"],
+            n_rss["median"],
+            correctness_verified=True,
+            baseline_key_prefix="native_image",
+        )
+
     return {
         "id": f"{wid}:cold-cli",
         "workload_id": wid,
@@ -1461,14 +1901,19 @@ def _run_pkldoc_workload(
         "expected_error": False,
         "correctness_verified": True,
         "comparison_mode": "pkldoc-progress",
-        "raw_stdout_bytes_match": j_stdout == r_stdout,
+        "raw_stdout_bytes_match": ref_stdout == r_stdout,
         "pkldoc_stdout_contract_ok": True,
-        "pkldoc_tree_summary": m5_pkldoc_tree.summarize_pkldoc_tree(j_tree),
-        "java": {"elapsed_ns": j_time, "peak_rss_bytes": j_rss, "samples": java_samples},
-        "rust": {"elapsed_ns": r_time, "peak_rss_bytes": r_rss, "samples": rust_samples},
-        "vs_live_temurin_21": evaluate_ratio_verdict(
-            r_time["median"], j_time["median"], r_rss["median"], j_rss["median"], correctness_verified=True
-        ),
+        "pkldoc_tree_summary": m5_pkldoc_tree.summarize_pkldoc_tree(exp_tree),
+        "java": java_block,
+        "native_image": native_block,
+        "rust": {
+            "elapsed_ns": r_time,
+            "peak_rss_bytes": r_rss,
+            "samples": rust_samples,
+            "memory_boundary": "Whole native Rust pkldoc process via os.wait4 ru_maxrss",
+        },
+        "vs_official_native_image": vs_native,
+        "vs_live_temurin_21": vs_temurin,
         "vs_m0_graalvm_25_0_1": None,
     }
 
@@ -1635,58 +2080,101 @@ def _run_server_session_wait4(
 def _run_server_workload(
     workload: dict[str, Any],
     folder: Path,
-    oracle_meta: dict[str, Any],
+    oracle_meta: dict[str, Any] | None,
     pkl_bin: Path,
     root: Path,
     profile_cfg: dict[str, Any],
+    *,
+    native_oracle_meta: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    if oracle_meta is None and native_oracle_meta is None:
+        raise ValueError("server workload requires at least one baseline oracle")
     wid = workload["id"]
     module_uri = (root / workload["module"]).resolve().as_uri()
     steady_reqs = int(profile_cfg["server_steady_requests"])
     forks = int(profile_cfg["independent_api_forks"])
+    base_env = (oracle_meta or native_oracle_meta)["environment"]  # type: ignore[index]
 
-    # Preflight Java -> get exact expected MessagePack PklBinary result bytes
-    pf_j_state = folder / "state/preflight-java"
-    pf_j = _run_server_session_wait4(
-        [*java_prefix_for_state(oracle_meta["command"], pf_j_state), "server"],
-        root,
-        build_isolated_env(oracle_meta["environment"], pf_j_state),
-        module_uri,
-        5,
-        folder / "preflight-java",
-    )
-    expected_bytes = (folder / "preflight-java/first-result.bin").read_bytes()
+    # Preflight oracle(s) -> get exact expected MessagePack PklBinary result bytes
+    if oracle_meta is not None:
+        pf_j_state = folder / "state/preflight-java"
+        pf_ref = _run_server_session_wait4(
+            [*java_prefix_for_state(oracle_meta["command"], pf_j_state), "server"],
+            root,
+            build_isolated_env(base_env, pf_j_state),
+            module_uri,
+            5,
+            folder / "preflight-java",
+        )
+        expected_bytes = (folder / "preflight-java/first-result.bin").read_bytes()
+        if native_oracle_meta is not None:
+            pf_ni_state = folder / "state/preflight-native-image"
+            _run_server_session_wait4(
+                [*native_oracle_meta["command"], "server"],
+                root,
+                build_isolated_env(base_env, pf_ni_state),
+                module_uri,
+                5,
+                folder / "preflight-native-image",
+                expected_result_bytes=expected_bytes,
+            )
+    else:
+        assert native_oracle_meta is not None
+        pf_ni_state = folder / "state/preflight-native-image"
+        pf_ref = _run_server_session_wait4(
+            [*native_oracle_meta["command"], "server"],
+            root,
+            build_isolated_env(base_env, pf_ni_state),
+            module_uri,
+            5,
+            folder / "preflight-native-image",
+        )
+        expected_bytes = (folder / "preflight-native-image/first-result.bin").read_bytes()
 
     pf_r_state = folder / "state/preflight-rust"
     _run_server_session_wait4(
         [str(pkl_bin), "server"],
         root,
-        build_isolated_env(oracle_meta["environment"], pf_r_state),
+        build_isolated_env(base_env, pf_r_state),
         module_uri,
         5,
         folder / "preflight-rust",
         expected_result_bytes=expected_bytes,
     )
 
-    java_runs, rust_runs = [], []
+    java_runs, native_runs, rust_runs = [], [], []
     for idx in range(forks):
-        js = folder / f"state/java-{idx}"
-        jr = _run_server_session_wait4(
-            [*java_prefix_for_state(oracle_meta["command"], js), "server"],
-            root,
-            build_isolated_env(oracle_meta["environment"], js),
-            module_uri,
-            steady_reqs,
-            folder / "java" / str(idx),
-            expected_result_bytes=expected_bytes,
-        )
-        java_runs.append(jr)
+        if oracle_meta is not None:
+            js = folder / f"state/java-{idx}"
+            jr = _run_server_session_wait4(
+                [*java_prefix_for_state(oracle_meta["command"], js), "server"],
+                root,
+                build_isolated_env(base_env, js),
+                module_uri,
+                steady_reqs,
+                folder / "java" / str(idx),
+                expected_result_bytes=expected_bytes,
+            )
+            java_runs.append(jr)
+
+        if native_oracle_meta is not None:
+            ns = folder / f"state/native-image-{idx}"
+            nr = _run_server_session_wait4(
+                [*native_oracle_meta["command"], "server"],
+                root,
+                build_isolated_env(base_env, ns),
+                module_uri,
+                steady_reqs,
+                folder / "native-image" / str(idx),
+                expected_result_bytes=expected_bytes,
+            )
+            native_runs.append(nr)
 
         rs = folder / f"state/rust-{idx}"
         rr = _run_server_session_wait4(
             [str(pkl_bin), "server"],
             root,
-            build_isolated_env(oracle_meta["environment"], rs),
+            build_isolated_env(base_env, rs),
             module_uri,
             steady_reqs,
             folder / "rust" / str(idx),
@@ -1694,10 +2182,43 @@ def _run_server_workload(
         )
         rust_runs.append(rr)
 
-    j_op = distribution([r["steady_request_ns"]["median"] for r in java_runs])
-    j_rss = distribution([r["peak_rss_bytes"] for r in java_runs])
     r_op = distribution([r["steady_request_ns"]["median"] for r in rust_runs])
     r_rss = distribution([r["peak_rss_bytes"] for r in rust_runs])
+
+    java_block = None
+    vs_temurin = None
+    if oracle_meta is not None:
+        j_op = distribution([r["steady_request_ns"]["median"] for r in java_runs])
+        j_rss = distribution([r["peak_rss_bytes"] for r in java_runs])
+        java_block = {
+            "fork_median_operation_ns": j_op,
+            "fork_peak_rss_bytes": j_rss,
+            "runs": java_runs,
+            "memory_boundary": "Whole Java JVM pkl server process via os.wait4 ru_maxrss",
+        }
+        vs_temurin = evaluate_ratio_verdict(
+            r_op["median"], j_op["median"], r_rss["median"], j_rss["median"], correctness_verified=True
+        )
+
+    native_block = None
+    vs_native = None
+    if native_oracle_meta is not None:
+        n_op = distribution([r["steady_request_ns"]["median"] for r in native_runs])
+        n_rss = distribution([r["peak_rss_bytes"] for r in native_runs])
+        native_block = {
+            "fork_median_operation_ns": n_op,
+            "fork_peak_rss_bytes": n_rss,
+            "runs": native_runs,
+            "memory_boundary": "Whole Official Apple Pkl 0.32.0 native-image pkl server process via os.wait4 ru_maxrss",
+        }
+        vs_native = evaluate_ratio_verdict(
+            r_op["median"],
+            n_op["median"],
+            r_rss["median"],
+            n_rss["median"],
+            correctness_verified=True,
+            baseline_key_prefix="native_image",
+        )
 
     return {
         "id": f"{wid}:steady-server",
@@ -1707,20 +2228,17 @@ def _run_server_workload(
         "description": workload.get("description", ""),
         "expected_error": False,
         "correctness_verified": True,
-        "expected_result_sha256": pf_j["first_result_sha256"],
-        "java": {
-            "fork_median_operation_ns": j_op,
-            "fork_peak_rss_bytes": j_rss,
-            "runs": java_runs,
-        },
+        "expected_result_sha256": pf_ref["first_result_sha256"],
+        "java": java_block,
+        "native_image": native_block,
         "rust": {
             "fork_median_operation_ns": r_op,
             "fork_peak_rss_bytes": r_rss,
             "runs": rust_runs,
+            "memory_boundary": "Whole native Rust pkl server process via os.wait4 ru_maxrss",
         },
-        "vs_live_temurin_21": evaluate_ratio_verdict(
-            r_op["median"], j_op["median"], r_rss["median"], j_rss["median"], correctness_verified=True
-        ),
+        "vs_official_native_image": vs_native,
+        "vs_live_temurin_21": vs_temurin,
         "vs_m0_graalvm_25_0_1": None,
     }
 
@@ -1728,11 +2246,13 @@ def _run_server_workload(
 def _run_packages_http_workload(
     workload: dict[str, Any],
     folder: Path,
-    oracle_meta: dict[str, Any],
+    oracle_meta: dict[str, Any] | None,
     pkl_bin: Path,
     root: Path,
     cold_samples: int,
     servers: m4_differential.M4FixtureServers,
+    *,
+    native_oracle_meta: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     wid = workload["id"]
     cache_mode = workload["cache_mode"]
@@ -1751,10 +2271,9 @@ def _run_packages_http_workload(
             shutil.copytree(root / M4_REGISTRY_DIR / "alpha@1.0.0", dest, dirs_exist_ok=True)
         return cache_dir
 
-    def java_cmd(state_dir: Path) -> list[str]:
+    def eval_args(state_dir: Path) -> list[str]:
         cache_dir = prepare_cache(state_dir)
         return [
-            *java_prefix_for_state(oracle_meta["command"], state_dir),
             "eval",
             "--no-project",
             "--settings",
@@ -1771,36 +2290,29 @@ def _run_packages_http_workload(
             str(module_path),
         ]
 
+    def java_cmd(state_dir: Path) -> list[str]:
+        assert oracle_meta is not None
+        return [*java_prefix_for_state(oracle_meta["command"], state_dir), *eval_args(state_dir)]
+
+    def native_cmd(state_dir: Path) -> list[str]:
+        assert native_oracle_meta is not None
+        return [*native_oracle_meta["command"], *eval_args(state_dir)]
+
     def rust_cmd(state_dir: Path) -> list[str]:
-        cache_dir = prepare_cache(state_dir)
-        return [
-            str(pkl_bin),
-            "eval",
-            "--no-project",
-            "--settings",
-            "pkl:settings",
-            "--color=never",
-            "--allowed-resources",
-            "prop:,env:,file:,http:,https:,package:,projectpackage:",
-            "--cache-dir",
-            str(cache_dir),
-            "--ca-certificates",
-            str(servers.ca_path),
-            "--http-rewrite",
-            rewrite,
-            str(module_path),
-        ]
+        return [str(pkl_bin), *eval_args(state_dir)]
 
     before_lines = len(servers.request_log.read_text(encoding="utf-8").splitlines()) if servers.request_log.exists() else 0
     row = _run_cold_cli_pair(
         wid,
         workload["family"],
         folder,
-        java_cmd,
+        java_cmd if oracle_meta is not None else None,
         rust_cmd,
         oracle_meta,
         root,
         cold_samples,
+        native_oracle_meta=native_oracle_meta,
+        native_cmd_fn=native_cmd if native_oracle_meta is not None else None,
         description=workload.get("description", ""),
     )
     all_log_lines = servers.request_log.read_text(encoding="utf-8").splitlines() if servers.request_log.exists() else []
@@ -1998,6 +2510,8 @@ def _run_js_binding_workload(
             "fork_median_operation_ns": java_persistent_ref["fork_median_operation_ns"],
             "fork_peak_rss_bytes": java_persistent_ref["fork_peak_rss_bytes"],
         },
+        "native_image": None,
+        "native_image_not_applicable_reason": NATIVE_IMAGE_API_NA_REASON,
         "rust": {
             "runtime": target,
             "warmup": "converged" if warmup_converged else "inconclusive",
@@ -2024,9 +2538,30 @@ def _run_js_binding_workload(
             "js_result_rel_path": result_path.relative_to(destination).as_posix(),
             "driver_capture": cap,
         },
+        "vs_official_native_image": None,
         "vs_live_temurin_21": vs_temurin,
         "vs_m0_graalvm_25_0_1": None,
     }
+
+
+def _format_live_progress(row: dict[str, Any], *, extra: str = "") -> str:
+    parts = [f"[m7-bench] {row['id']}:"]
+    vn = row.get("vs_official_native_image")
+    if vn is not None:
+        parts.append(
+            f"vs-Native(time={vn['time_ratio']:.3f}x rss={vn['rss_ratio']:.3f}x verdict={vn['verdict']})"
+        )
+    vt = row.get("vs_live_temurin_21")
+    if vt is not None:
+        parts.append(
+            f"vs-T21(time={vt['time_ratio']:.3f}x rss={vt['rss_ratio']:.3f}x verdict={vt['verdict']})"
+        )
+    vg = row.get("vs_m0_graalvm_25_0_1")
+    if vg is not None:
+        parts.append(f"vs-M0-GraalVM25(time={vg['time_ratio']:.3f}x rss={vg['rss_ratio']:.3f}x)")
+    if extra:
+        parts.append(extra)
+    return " ".join(parts)
 
 
 def run_suite(
@@ -2036,25 +2571,35 @@ def run_suite(
     profile: str = "full",
     families: set[str] | None = None,
     skip_build: bool = False,
+    baseline: str = "both",
 ) -> dict[str, Any]:
     root = root.resolve()
     contract = load_contract(root)
     if profile not in contract["profiles"]:
         raise ValueError(f"unknown profile: {profile}")
+    if baseline not in VALID_BASELINES:
+        raise ValueError(f"unknown baseline: {baseline!r} (expected one of {VALID_BASELINES})")
     profile_cfg = contract["profiles"][profile]
     js_sampling = contract["js_sampling"][profile]
     selected_families = set(families) if families else set(ALL_FAMILIES)
     unknown = selected_families - set(ALL_FAMILIES)
     if unknown:
         raise ValueError(f"unknown benchmark families: {sorted(unknown)}")
-    complete_catalog = selected_families == set(ALL_FAMILIES)
+    use_jvm = baseline in ("both", "jvm")
+    use_native = baseline in ("both", "native-image")
+    if baseline == "native-image" and not (selected_families & NATIVE_IMAGE_ELIGIBLE_FAMILIES):
+        raise ValueError(
+            f"selected families {sorted(selected_families)} have no official native-image CLI/server/pkldoc workloads"
+        )
+    complete_catalog = selected_families == set(ALL_FAMILIES) and baseline == "both"
 
     destination = (output or (root / f"target/m7/bench-{profile}")).resolve()
     if destination.exists():
         raise ValueError(f"refusing to overwrite existing benchmark output directory: {destination}")
     destination.mkdir(parents=True, exist_ok=False)
 
-    oracle_meta = ensure_pinned_oracle(root)
+    oracle_meta = ensure_pinned_oracle(root) if use_jvm else None
+    native_oracle_meta = ensure_pinned_native_image_oracle(root) if use_native else None
     m0_ref_path = root / contract["m0_graalvm_reference"]
     m0_ref_bytes = m0_ref_path.read_bytes()
     m0_ref = json.loads(m0_ref_bytes)
@@ -2066,19 +2611,27 @@ def run_suite(
         destination,
         skip_build=skip_build,
         selected_families=selected_families,
+        baseline=baseline,
     )
     before_sources, before_sources_sha = source_snapshot(root)
     pkl_bin = Path(build_info["artifacts"]["pkl"]["path"])
-    pkldoc_bin = Path(build_info["artifacts"]["pkldoc"]["path"])
-    probe_bin = Path(build_info["artifacts"]["m7_bench_probe"]["path"])
+    pkldoc_bin = Path(build_info["artifacts"]["pkldoc"]["path"]) if "pkldoc" in build_info["artifacts"] else None
+    probe_bin = (
+        Path(build_info["artifacts"]["m7_bench_probe"]["path"])
+        if "m7_bench_probe" in build_info["artifacts"]
+        else None
+    )
 
-    classes_dir, java_compile_info = compile_benchmark_java(oracle_meta, destination, root)
+    classes_dir = None
+    java_compile_info = None
+    if oracle_meta is not None:
+        classes_dir, java_compile_info = compile_benchmark_java(oracle_meta, destination, root)
 
     results: list[dict[str, Any]] = []
     java_persistent_refs: dict[str, dict[str, Any]] = {}
 
     # 1. Core 6 workloads
-    if "core-6" in selected_families or selected_families & {"napi", "wasm-node", "wasm-browser"}:
+    if "core-6" in selected_families or (use_jvm and selected_families & {"napi", "wasm-node", "wasm-browser"}):
         for w in contract["core_workloads"]:
             wid = w["id"]
             if "core-6" not in selected_families and wid != "stdlib-collections":
@@ -2093,16 +2646,20 @@ def run_suite(
                     wid,
                     "core-6",
                     w_folder / "cold-cli",
-                    lambda st, m=module: [
-                        *java_prefix_for_state(oracle_meta["command"], st),
-                        "eval",
-                        "--no-cache",
-                        "--no-project",
-                        "--settings",
-                        "pkl:settings",
-                        "--color=never",
-                        str(m),
-                    ],
+                    (
+                        lambda st, m=module: [
+                            *java_prefix_for_state(oracle_meta["command"], st),  # type: ignore[index]
+                            "eval",
+                            "--no-cache",
+                            "--no-project",
+                            "--settings",
+                            "pkl:settings",
+                            "--color=never",
+                            str(m),
+                        ]
+                    )
+                    if oracle_meta is not None
+                    else None,
                     lambda st, m=module: [
                         str(pkl_bin),
                         "eval",
@@ -2116,54 +2673,58 @@ def run_suite(
                     oracle_meta,
                     root,
                     profile_cfg["cold_samples"],
+                    native_oracle_meta=native_oracle_meta,
+                    native_cmd_fn=(
+                        lambda st, m=module: [
+                            *native_oracle_meta["command"],  # type: ignore[index]
+                            "eval",
+                            "--no-cache",
+                            "--no-project",
+                            "--settings",
+                            "pkl:settings",
+                            "--color=never",
+                            str(m),
+                        ]
+                    )
+                    if native_oracle_meta is not None
+                    else None,
                     expected_error=w["expected_error"],
                     m0_ref_case=m0_case,
                     description=f"Core 6 cold CLI: {wid}",
                 )
                 results.append(cold_row)
-                print(
-                    f"[m7-bench] {cold_row['id']}: time={cold_row['vs_live_temurin_21']['time_ratio']:.3f}x "
-                    f"rss={cold_row['vs_live_temurin_21']['rss_ratio']:.3f}x "
-                    f"verdict={cold_row['vs_live_temurin_21']['verdict']}",
-                    flush=True,
-                )
+                print(_format_live_progress(cold_row), flush=True)
 
-            for api_mode in ("persistent", "fresh-evaluator"):
-                if "core-6" not in selected_families and api_mode != "persistent":
-                    continue
-                api_row = _run_api_probe_pair(
-                    wid,
-                    "core-6",
-                    api_mode,
-                    module,
-                    w_folder,
-                    oracle_meta,
-                    classes_dir,
-                    probe_bin,
-                    root,
-                    profile_cfg,
-                    expected_error=w["expected_error"],
-                    m0_ref_case=m0_case,
-                    description=f"Core 6 {api_mode}: {wid}",
-                )
-                if api_mode == "persistent":
-                    java_persistent_refs[wid] = api_row["java"]
-                if "core-6" in selected_families:
-                    results.append(api_row)
-                    g_note = ""
-                    if api_row["vs_m0_graalvm_25_0_1"]:
-                        g = api_row["vs_m0_graalvm_25_0_1"]
-                        g_note = f" | vs-M0-GraalVM25: time={g['time_ratio']:.3f}x rss={g['rss_ratio']:.3f}x"
-                    print(
-                        f"[m7-bench] {api_row['id']}: time={api_row['vs_live_temurin_21']['time_ratio']:.3f}x "
-                        f"rss={api_row['vs_live_temurin_21']['rss_ratio']:.3f}x "
-                        f"verdict={api_row['vs_live_temurin_21']['verdict']}{g_note}",
-                        flush=True,
+            if oracle_meta is not None:
+                assert classes_dir is not None and probe_bin is not None
+                for api_mode in ("persistent", "fresh-evaluator"):
+                    if "core-6" not in selected_families and api_mode != "persistent":
+                        continue
+                    api_row = _run_api_probe_pair(
+                        wid,
+                        "core-6",
+                        api_mode,
+                        module,
+                        w_folder,
+                        oracle_meta,
+                        classes_dir,
+                        probe_bin,
+                        root,
+                        profile_cfg,
+                        expected_error=w["expected_error"],
+                        m0_ref_case=m0_case,
+                        description=f"Core 6 {api_mode}: {wid}",
                     )
+                    if api_mode == "persistent":
+                        java_persistent_refs[wid] = api_row["java"]
+                    if "core-6" in selected_families:
+                        results.append(api_row)
+                        print(_format_live_progress(api_row), flush=True)
 
     # Ensure apples-to-apples Java persistent `Evaluator.evaluate(ModuleSource)` (`PModule`)
     # reference exists for js_boundary_payload.pkl if JS workloads selected
-    if selected_families & {"napi", "wasm-node", "wasm-browser"}:
+    if use_jvm and selected_families & {"napi", "wasm-node", "wasm-browser"}:
+        assert oracle_meta is not None and classes_dir is not None
         js_mod = (root / "benchmarks/m7_fixtures/js_boundary_payload.pkl").resolve()
         js_ref_dir = destination / "js-java-typed-ref"
         js_ref_dir.mkdir(parents=True, exist_ok=True)
@@ -2178,14 +2739,15 @@ def run_suite(
 
     # Optional M4 localhost HTTP/HTTPS server for packages-http-cache
     need_servers = "packages-http-cache" in selected_families
+    server_oracle_meta = (oracle_meta or ensure_pinned_oracle(root)) if need_servers else None
     server_ctx = (
         m4_differential.M4FixtureServers(
-            oracle_meta,
+            server_oracle_meta,
             root / M4_HOST_IO_DIR,
             root / M4_REGISTRY_DIR,
             destination / "m4-http-server",
         )
-        if need_servers
+        if need_servers and server_oracle_meta is not None
         else None
     )
 
@@ -2201,6 +2763,8 @@ def run_suite(
                 continue
             wid = w["id"]
             kind = w["kind"]
+            if not use_jvm and kind == "js_binding":
+                continue
             w_folder = destination / "product" / wid
             w_folder.mkdir(parents=True, exist_ok=True)
 
@@ -2210,16 +2774,20 @@ def run_suite(
                     wid,
                     w["family"],
                     w_folder / "cold-cli",
-                    lambda st, m=module: [
-                        *java_prefix_for_state(oracle_meta["command"], st),
-                        "eval",
-                        "--no-cache",
-                        "--no-project",
-                        "--settings",
-                        "pkl:settings",
-                        "--color=never",
-                        str(m),
-                    ],
+                    (
+                        lambda st, m=module: [
+                            *java_prefix_for_state(oracle_meta["command"], st),  # type: ignore[index]
+                            "eval",
+                            "--no-cache",
+                            "--no-project",
+                            "--settings",
+                            "pkl:settings",
+                            "--color=never",
+                            str(m),
+                        ]
+                    )
+                    if oracle_meta is not None
+                    else None,
                     lambda st, m=module: [
                         str(pkl_bin),
                         "eval",
@@ -2233,49 +2801,57 @@ def run_suite(
                     oracle_meta,
                     root,
                     profile_cfg["cold_samples"],
+                    native_oracle_meta=native_oracle_meta,
+                    native_cmd_fn=(
+                        lambda st, m=module: [
+                            *native_oracle_meta["command"],  # type: ignore[index]
+                            "eval",
+                            "--no-cache",
+                            "--no-project",
+                            "--settings",
+                            "pkl:settings",
+                            "--color=never",
+                            str(m),
+                        ]
+                    )
+                    if native_oracle_meta is not None
+                    else None,
                     expected_error=w["expected_error"],
                     description=w.get("description", ""),
                 )
                 results.append(cold_row)
-                print(
-                    f"[m7-bench] {cold_row['id']}: time={cold_row['vs_live_temurin_21']['time_ratio']:.3f}x "
-                    f"rss={cold_row['vs_live_temurin_21']['rss_ratio']:.3f}x "
-                    f"verdict={cold_row['vs_live_temurin_21']['verdict']}",
-                    flush=True,
-                )
-                pers_row = _run_api_probe_pair(
-                    wid,
-                    w["family"],
-                    "persistent",
-                    module,
-                    w_folder,
-                    oracle_meta,
-                    classes_dir,
-                    probe_bin,
-                    root,
-                    profile_cfg,
-                    expected_error=w["expected_error"],
-                    description=f"{w.get('description', '')} (persistent)",
-                )
-                results.append(pers_row)
-                print(
-                    f"[m7-bench] {pers_row['id']}: time={pers_row['vs_live_temurin_21']['time_ratio']:.3f}x "
-                    f"rss={pers_row['vs_live_temurin_21']['rss_ratio']:.3f}x "
-                    f"verdict={pers_row['vs_live_temurin_21']['verdict']}",
-                    flush=True,
-                )
+                print(_format_live_progress(cold_row), flush=True)
+                if oracle_meta is not None:
+                    assert classes_dir is not None and probe_bin is not None
+                    pers_row = _run_api_probe_pair(
+                        wid,
+                        w["family"],
+                        "persistent",
+                        module,
+                        w_folder,
+                        oracle_meta,
+                        classes_dir,
+                        probe_bin,
+                        root,
+                        profile_cfg,
+                        expected_error=w["expected_error"],
+                        description=f"{w.get('description', '')} (persistent)",
+                    )
+                    results.append(pers_row)
+                    print(_format_live_progress(pers_row), flush=True)
 
             elif kind == "cli_output_files":
                 row = _run_output_files_workload(
-                    w, w_folder, oracle_meta, pkl_bin, root, profile_cfg["cold_samples"]
+                    w,
+                    w_folder,
+                    oracle_meta,
+                    pkl_bin,
+                    root,
+                    profile_cfg["cold_samples"],
+                    native_oracle_meta=native_oracle_meta,
                 )
                 results.append(row)
-                print(
-                    f"[m7-bench] {row['id']}: time={row['vs_live_temurin_21']['time_ratio']:.3f}x "
-                    f"rss={row['vs_live_temurin_21']['rss_ratio']:.3f}x "
-                    f"verdict={row['vs_live_temurin_21']['verdict']}",
-                    flush=True,
-                )
+                print(_format_live_progress(row), flush=True)
 
             elif kind == "cli_eval_format":
                 module = (root / w["module"]).resolve()
@@ -2284,18 +2860,22 @@ def run_suite(
                     wid,
                     w["family"],
                     w_folder,
-                    lambda st, m=module, f=fmt: [
-                        *java_prefix_for_state(oracle_meta["command"], st),
-                        "eval",
-                        "--no-cache",
-                        "--no-project",
-                        "--settings",
-                        "pkl:settings",
-                        "--color=never",
-                        "-f",
-                        f,
-                        str(m),
-                    ],
+                    (
+                        lambda st, m=module, f=fmt: [
+                            *java_prefix_for_state(oracle_meta["command"], st),  # type: ignore[index]
+                            "eval",
+                            "--no-cache",
+                            "--no-project",
+                            "--settings",
+                            "pkl:settings",
+                            "--color=never",
+                            "-f",
+                            f,
+                            str(m),
+                        ]
+                    )
+                    if oracle_meta is not None
+                    else None,
                     lambda st, m=module, f=fmt: [
                         str(pkl_bin),
                         "eval",
@@ -2311,29 +2891,43 @@ def run_suite(
                     oracle_meta,
                     root,
                     profile_cfg["cold_samples"],
+                    native_oracle_meta=native_oracle_meta,
+                    native_cmd_fn=(
+                        lambda st, m=module, f=fmt: [
+                            *native_oracle_meta["command"],  # type: ignore[index]
+                            "eval",
+                            "--no-cache",
+                            "--no-project",
+                            "--settings",
+                            "pkl:settings",
+                            "--color=never",
+                            "-f",
+                            f,
+                            str(m),
+                        ]
+                    )
+                    if native_oracle_meta is not None
+                    else None,
                     expected_error=w["expected_error"],
                     description=w.get("description", ""),
                 )
                 results.append(row)
-                print(
-                    f"[m7-bench] {row['id']}: time={row['vs_live_temurin_21']['time_ratio']:.3f}x "
-                    f"rss={row['vs_live_temurin_21']['rss_ratio']:.3f}x "
-                    f"verdict={row['vs_live_temurin_21']['verdict']}",
-                    flush=True,
-                )
+                print(_format_live_progress(row), flush=True)
 
             elif kind == "packages_http":
                 assert servers is not None
                 row = _run_packages_http_workload(
-                    w, w_folder, oracle_meta, pkl_bin, root, profile_cfg["cold_samples"], servers
+                    w,
+                    w_folder,
+                    oracle_meta,
+                    pkl_bin,
+                    root,
+                    profile_cfg["cold_samples"],
+                    servers,
+                    native_oracle_meta=native_oracle_meta,
                 )
                 results.append(row)
-                print(
-                    f"[m7-bench] {row['id']}: time={row['vs_live_temurin_21']['time_ratio']:.3f}x "
-                    f"rss={row['vs_live_temurin_21']['rss_ratio']:.3f}x hits={row['server_request_hits']} "
-                    f"verdict={row['vs_live_temurin_21']['verdict']}",
-                    flush=True,
-                )
+                print(_format_live_progress(row, extra=f"hits={row['server_request_hits']}"), flush=True)
 
             elif kind == "repl_pipe":
                 sess = (root / w["session_file"]).resolve()
@@ -2341,37 +2935,52 @@ def run_suite(
                     wid,
                     w["family"],
                     w_folder,
-                    lambda st: [
-                        *java_prefix_for_state(oracle_meta["command"], st),
-                        "repl",
-                        "--no-cache",
-                        "--no-project",
-                        "--color=never",
-                    ],
+                    (
+                        lambda st: [
+                            *java_prefix_for_state(oracle_meta["command"], st),  # type: ignore[index]
+                            "repl",
+                            "--no-cache",
+                            "--no-project",
+                            "--color=never",
+                        ]
+                    )
+                    if oracle_meta is not None
+                    else None,
                     lambda st: [str(pkl_bin), "repl", "--no-cache", "--no-project", "--color=never"],
                     oracle_meta,
                     root,
                     profile_cfg["cold_samples"],
+                    native_oracle_meta=native_oracle_meta,
+                    native_cmd_fn=(
+                        lambda st: [
+                            *native_oracle_meta["command"],  # type: ignore[index]
+                            "repl",
+                            "--no-cache",
+                            "--no-project",
+                            "--color=never",
+                        ]
+                    )
+                    if native_oracle_meta is not None
+                    else None,
+                    allow_native_jline_stderr=True,
                     stdin_file=sess,
                     description=w.get("description", ""),
                 )
                 results.append(row)
-                print(
-                    f"[m7-bench] {row['id']}: time={row['vs_live_temurin_21']['time_ratio']:.3f}x "
-                    f"rss={row['vs_live_temurin_21']['rss_ratio']:.3f}x "
-                    f"verdict={row['vs_live_temurin_21']['verdict']}",
-                    flush=True,
-                )
+                print(_format_live_progress(row), flush=True)
 
             elif kind == "server_msgpack":
-                row = _run_server_workload(w, w_folder, oracle_meta, pkl_bin, root, profile_cfg)
-                results.append(row)
-                print(
-                    f"[m7-bench] {row['id']}: time={row['vs_live_temurin_21']['time_ratio']:.3f}x "
-                    f"rss={row['vs_live_temurin_21']['rss_ratio']:.3f}x "
-                    f"verdict={row['vs_live_temurin_21']['verdict']}",
-                    flush=True,
+                row = _run_server_workload(
+                    w,
+                    w_folder,
+                    oracle_meta,
+                    pkl_bin,
+                    root,
+                    profile_cfg,
+                    native_oracle_meta=native_oracle_meta,
                 )
+                results.append(row)
+                print(_format_live_progress(row), flush=True)
 
             elif kind == "formatter_stdin":
                 inp = (root / w["input_file"]).resolve()
@@ -2379,45 +2988,46 @@ def run_suite(
                     wid,
                     w["family"],
                     w_folder,
-                    lambda st: [*java_prefix_for_state(oracle_meta["command"], st), "format", "-"],
+                    (lambda st: [*java_prefix_for_state(oracle_meta["command"], st), "format", "-"])  # type: ignore[index]
+                    if oracle_meta is not None
+                    else None,
                     lambda st: [str(pkl_bin), "format", "-"],
                     oracle_meta,
                     root,
                     profile_cfg["cold_samples"],
+                    native_oracle_meta=native_oracle_meta,
+                    native_cmd_fn=(lambda st: [*native_oracle_meta["command"], "format", "-"])  # type: ignore[index]
+                    if native_oracle_meta is not None
+                    else None,
                     expected_exit_override=int(w.get("expected_exit", 11)),
                     stdin_file=inp,
                     description=w.get("description", ""),
                 )
                 results.append(row)
-                print(
-                    f"[m7-bench] {row['id']}: time={row['vs_live_temurin_21']['time_ratio']:.3f}x "
-                    f"rss={row['vs_live_temurin_21']['rss_ratio']:.3f}x "
-                    f"verdict={row['vs_live_temurin_21']['verdict']}",
-                    flush=True,
-                )
+                print(_format_live_progress(row), flush=True)
 
             elif kind == "pkldoc_site":
-                row = _run_pkldoc_workload(w, w_folder, oracle_meta, pkldoc_bin, root, profile_cfg["cold_samples"])
-                results.append(row)
-                print(
-                    f"[m7-bench] {row['id']}: time={row['vs_live_temurin_21']['time_ratio']:.3f}x "
-                    f"rss={row['vs_live_temurin_21']['rss_ratio']:.3f}x "
-                    f"verdict={row['vs_live_temurin_21']['verdict']}",
-                    flush=True,
+                assert pkldoc_bin is not None
+                row = _run_pkldoc_workload(
+                    w,
+                    w_folder,
+                    oracle_meta,
+                    pkldoc_bin,
+                    root,
+                    profile_cfg["cold_samples"],
+                    native_oracle_meta=native_oracle_meta,
                 )
+                results.append(row)
+                print(_format_live_progress(row), flush=True)
 
             elif kind == "js_binding":
+                assert oracle_meta is not None
                 ref_id = w["java_reference_workload"]
                 row = _run_js_binding_workload(
                     w, w_folder, destination, oracle_meta, root, js_sampling, java_persistent_refs[ref_id]
                 )
                 results.append(row)
-                print(
-                    f"[m7-bench] {row['id']}: time={row['vs_live_temurin_21']['time_ratio']:.3f}x "
-                    f"rss={row['vs_live_temurin_21']['rss_ratio']:.3f}x "
-                    f"verdict={row['vs_live_temurin_21']['verdict']}",
-                    flush=True,
-                )
+                print(_format_live_progress(row), flush=True)
 
             else:
                 raise ValueError(f"unknown product workload kind: {kind}")
@@ -2438,12 +3048,20 @@ def run_suite(
         },
     )
 
-    verdict_counts = dict(sorted(Counter(r["vs_live_temurin_21"]["verdict"] for r in results).items()))
+    temurin_rows = [r for r in results if r.get("vs_live_temurin_21") is not None]
+    verdict_counts = dict(sorted(Counter(r["vs_live_temurin_21"]["verdict"] for r in temurin_rows).items()))
+    native_rows = [r for r in results if r.get("vs_official_native_image") is not None]
+    native_verdict_counts = dict(sorted(Counter(r["vs_official_native_image"]["verdict"] for r in native_rows).items()))
     graal_rows = [r for r in results if r.get("vs_m0_graalvm_25_0_1") is not None]
     graal_verdict_counts = dict(sorted(Counter(r["vs_m0_graalvm_25_0_1"]["verdict"] for r in graal_rows).items()))
+    failing_native = [
+        {"id": r["id"], "reason": r["vs_official_native_image"]["reason"]}
+        for r in native_rows
+        if r["vs_official_native_image"]["verdict"] != "pass"
+    ]
     failing_temurin = [
         {"id": r["id"], "reason": r["vs_live_temurin_21"]["reason"]}
-        for r in results
+        for r in temurin_rows
         if r["vs_live_temurin_21"]["verdict"] != "pass"
     ]
     failing_graalvm = [
@@ -2456,16 +3074,19 @@ def run_suite(
         "schema_version": 1,
         "timestamp_utc": datetime.now(timezone.utc).isoformat(),
         "baseline": contract["baseline"],
+        "baseline_mode": baseline,
         "profile": profile,
-        "strict_eligible": bool(profile_cfg["strict_eligible"]),
+        "strict_eligible": bool(profile_cfg["strict_eligible"]) and baseline == "both",
         "complete_catalog": complete_catalog,
         "selected_families": sorted(selected_families),
         "target_ratios": contract["target_ratios"],
+        "native_image_targets": contract["native_image_targets"],
         "browser_wasm_targets": contract["browser_wasm_targets"],
         "sampling": profile_cfg,
         "js_sampling": js_sampling,
         "contract_sha256": file_digest(root / WORKLOADS_PATH),
         "oracle": oracle_meta,
+        "native_image_oracle": native_oracle_meta,
         "m0_graalvm_reference": {
             "path": contract["m0_graalvm_reference"],
             "sha256": digest(m0_ref_bytes),
@@ -2473,7 +3094,8 @@ def run_suite(
             "recursive_optimization": m0_ref.get("recursive_optimization"),
             "provenance_note": (
                 "Archived optimizing GraalVM CE 25.0.1 baseline from M0 (reports/m0/benchmarks.json), "
-                "strictly separated from live Eclipse Adoptium Temurin 21.0.13.1+2-LTS head-to-head runs."
+                "strictly separated from live Official Apple Pkl 0.32.0 native-image and "
+                "Eclipse Adoptium Temurin 21.0.13.1+2-LTS head-to-head runs."
             ),
         },
         "machine_start": started_machine,
@@ -2487,10 +3109,14 @@ def run_suite(
         "counts": {
             "total_workload_modes": len(results),
             "correctness_verified": sum(1 for r in results if r.get("correctness_verified")),
+            "vs_official_native_image_compared": len(native_rows),
+            "vs_official_native_image_verdicts": native_verdict_counts,
+            "vs_live_temurin_21_compared": len(temurin_rows),
             "vs_live_temurin_21_verdicts": verdict_counts,
             "vs_m0_graalvm_25_0_1_compared": len(graal_rows),
             "vs_m0_graalvm_25_0_1_verdicts": graal_verdict_counts,
         },
+        "non_passing_official_native_image": failing_native,
         "non_passing_live_temurin_21": failing_temurin,
         "non_passing_m0_graalvm_25_0_1": failing_graalvm,
         "results": results,
@@ -2530,15 +3156,61 @@ def verify_report(
             f"evidence_files integrity mismatch: missing={missing[:3]} extra={extra[:3]} changed={changed[:3]}"
         )
 
-    # 2. Verify oracle provenance, target thresholds, source snapshot, and sampling contracts
-    oracle_meta = report.get("oracle", {})
-    if not oracle_meta.get("exact_jdk_lock_match", False):
-        raise ValueError("report oracle does not have exact_jdk_lock_match == true")
-    if oracle_meta.get("version") != "0.32.0":
-        raise ValueError("report oracle version != 0.32.0")
+    # 2. Verify oracle provenance (JVM & pinned Official Native Image), thresholds, snapshot, and sampling
+    baseline_mode = report.get("baseline_mode")
+    if baseline_mode is None:
+        baseline_mode = "both" if report.get("native_image_oracle") is not None else "jvm"
+    if baseline_mode not in VALID_BASELINES:
+        raise ValueError(f"unknown report baseline_mode: {baseline_mode!r}")
+    expect_jvm = baseline_mode in ("both", "jvm")
+    expect_native = baseline_mode in ("both", "native-image")
+
+    contract = load_contract(root)
+    native_lock = validate_native_image_lock(root)
+
+    if expect_jvm:
+        oracle_meta = report.get("oracle")
+        if not isinstance(oracle_meta, dict) or not oracle_meta.get("exact_jdk_lock_match", False):
+            raise ValueError("report oracle does not have exact_jdk_lock_match == true")
+        if oracle_meta.get("version") != "0.32.0":
+            raise ValueError("report oracle version != 0.32.0")
+
+    if expect_native or report.get("native_image_oracle") is not None:
+        ni_oracle = report.get("native_image_oracle")
+        if not isinstance(ni_oracle, dict) or not ni_oracle.get("exact_native_image_lock_match", False):
+            raise ValueError("report native_image_oracle does not have exact_native_image_lock_match == true")
+        if ni_oracle.get("version") != "0.32.0":
+            raise ValueError("report native_image_oracle version != 0.32.0")
+        ni_target = ni_oracle.get("target")
+        dists = native_lock["distributions"]
+        if ni_target not in dists:
+            raise ValueError(f"report native_image_oracle target {ni_target!r} is not pinned in oracle.lock.json")
+        locked_dist = dists[ni_target]
+        for bin_label in ("pkl", "pkldoc"):
+            rec = ni_oracle.get(bin_label)
+            locked_spec = locked_dist[bin_label]
+            if (
+                not isinstance(rec, dict)
+                or rec.get("sha256") != locked_spec["sha256"]
+                or rec.get("bytes") != locked_spec["bytes"]
+            ):
+                raise ValueError(
+                    f"report native_image_oracle.{bin_label} SHA-256/bytes disagrees with pinned oracle.lock.json"
+                )
+
     targets = report.get("target_ratios", {})
-    if targets.get("execution_time_max") != 1.0 or targets.get("peak_rss_max") != 1.0:
+    if (
+        isinstance(targets.get("execution_time_max"), bool)
+        or isinstance(targets.get("peak_rss_max"), bool)
+        or targets.get("execution_time_max") != 1.0
+        or targets.get("peak_rss_max") != 1.0
+    ):
         raise ValueError("report target_ratios weakened or missing (must be <= 1.0)")
+
+    report_ni_targets = report.get("native_image_targets")
+    if expect_native or report_ni_targets is not None:
+        if report_ni_targets != contract["native_image_targets"]:
+            raise ValueError("report native_image_targets weakened, missing, or differs from contract")
 
     sealed_map = {e["path"]: e["sha256"] for e in expected_files}
     snap_path = directory / "sources.snapshot.json"
@@ -2572,7 +3244,6 @@ def verify_report(
             if after_map[art["rel_path"]] != art.get("sha256"):
                 raise ValueError(f"build artifact {art_key} sha256 disagrees with sources.snapshot.json")
 
-    contract = load_contract(root)
     report_browser_targets = report.get("browser_wasm_targets")
     if report_browser_targets is not None and report_browser_targets != contract["browser_wasm_targets"]:
         raise ValueError("report browser_wasm_targets weakened or differs from contract")
@@ -2594,23 +3265,37 @@ def verify_report(
     m0_doc = json.loads(m0_path.read_bytes())
     m0_cases_by_id = {c["id"]: c for c in m0_doc.get("cases", [])}
 
-    # 4. Revalidate every workload row's raw distributions, ratio math, verdict, and M0 cross-checks
+    # 4. Revalidate every workload row's raw distributions, ratio math, verdicts, and cross-checks
     results = report.get("results", [])
     if not results:
         raise ValueError("report has no workload results")
     seen_ids: set[str] = set()
+    temurin_rows: list[dict[str, Any]] = []
+    native_rows: list[dict[str, Any]] = []
     graal_rows: list[dict[str, Any]] = []
     for row in results:
         rid = row["id"]
         if rid in seen_ids:
             raise ValueError(f"duplicate result id: {rid}")
         seen_ids.add(rid)
-        vs_t = row.get("vs_live_temurin_21")
-        if not isinstance(vs_t, dict):
-            raise ValueError(f"{rid}: missing vs_live_temurin_21")
         mode = row.get("mode")
+        vs_t = row.get("vs_live_temurin_21")
+        vs_ni = row.get("vs_official_native_image")
+
+        if expect_jvm and not isinstance(vs_t, dict):
+            raise ValueError(f"{rid}: missing vs_live_temurin_21")
+        if expect_native and mode in NATIVE_IMAGE_ELIGIBLE_MODES and not isinstance(vs_ni, dict):
+            raise ValueError(f"{rid}: missing required vs_official_native_image for {mode}")
+        if mode not in NATIVE_IMAGE_ELIGIBLE_MODES and vs_ni is not None:
+            raise ValueError(f"{rid}: non-CLI mode {mode!r} must not carry vs_official_native_image")
+
         if mode == "cold-cli":
-            for side in ("java", "rust"):
+            sides = ["rust"]
+            if vs_t is not None:
+                sides.append("java")
+            if vs_ni is not None:
+                sides.append("native_image")
+            for side in sides:
                 samps = (row.get(side) or {}).get("samples")
                 if not isinstance(samps, list) or len(samps) != sampling["cold_samples"]:
                     raise ValueError(f"{rid}: {side} cold-cli sample count != {sampling['cold_samples']}")
@@ -2618,13 +3303,30 @@ def verify_report(
                     raise ValueError(f"{rid}: {side} cold-cli elapsed_ns disagrees with raw samples")
                 if distribution([s["peak_rss_bytes"] for s in samps]) != row[side]["peak_rss_bytes"]:
                     raise ValueError(f"{rid}: {side} cold-cli peak_rss_bytes disagrees with raw samples")
-            if (
-                not math.isclose(vs_t["rust_time_ns"], row["rust"]["elapsed_ns"]["median"], rel_tol=1e-9)
-                or not math.isclose(vs_t["java_time_ns"], row["java"]["elapsed_ns"]["median"], rel_tol=1e-9)
-                or not math.isclose(vs_t["rust_peak_rss_bytes"], row["rust"]["peak_rss_bytes"]["median"], rel_tol=1e-9)
-                or not math.isclose(vs_t["java_peak_rss_bytes"], row["java"]["peak_rss_bytes"]["median"], rel_tol=1e-9)
-            ):
-                raise ValueError(f"{rid}: vs_live_temurin_21 medians disagree with raw distributions")
+            rust_med_time = float(row["rust"]["elapsed_ns"]["median"])
+            rust_med_rss = float(row["rust"]["peak_rss_bytes"]["median"])
+            if vs_t is not None:
+                if (
+                    not math.isclose(vs_t["rust_time_ns"], rust_med_time, rel_tol=1e-9)
+                    or not math.isclose(vs_t["java_time_ns"], row["java"]["elapsed_ns"]["median"], rel_tol=1e-9)
+                    or not math.isclose(vs_t["rust_peak_rss_bytes"], rust_med_rss, rel_tol=1e-9)
+                    or not math.isclose(vs_t["java_peak_rss_bytes"], row["java"]["peak_rss_bytes"]["median"], rel_tol=1e-9)
+                ):
+                    raise ValueError(f"{rid}: vs_live_temurin_21 medians disagree with raw distributions")
+            if vs_ni is not None:
+                if (
+                    not math.isclose(vs_ni["rust_time_ns"], rust_med_time, rel_tol=1e-9)
+                    or not math.isclose(
+                        vs_ni["native_image_time_ns"], row["native_image"]["elapsed_ns"]["median"], rel_tol=1e-9
+                    )
+                    or not math.isclose(vs_ni["rust_peak_rss_bytes"], rust_med_rss, rel_tol=1e-9)
+                    or not math.isclose(
+                        vs_ni["native_image_peak_rss_bytes"],
+                        row["native_image"]["peak_rss_bytes"]["median"],
+                        rel_tol=1e-9,
+                    )
+                ):
+                    raise ValueError(f"{rid}: vs_official_native_image medians disagree with raw distributions")
         elif mode in ("persistent", "fresh-evaluator"):
             for side in ("java", "rust"):
                 forks = (row.get(side) or {}).get("forks")
@@ -2637,15 +3339,23 @@ def verify_report(
                 exp_w = "converged" if all(f["warmup"] == "converged" for f in forks) else "inconclusive"
                 if row[side].get("warmup") != exp_w:
                     raise ValueError(f"{rid}: {side} {mode} warmup disagrees with forks")
+            rust_med_time = float(row["rust"]["fork_median_operation_ns"]["median"])
+            rust_med_rss = float(row["rust"]["fork_peak_rss_bytes"]["median"])
             if (
-                not math.isclose(vs_t["rust_time_ns"], row["rust"]["fork_median_operation_ns"]["median"], rel_tol=1e-9)
+                vs_t is None
+                or not math.isclose(vs_t["rust_time_ns"], rust_med_time, rel_tol=1e-9)
                 or not math.isclose(vs_t["java_time_ns"], row["java"]["fork_median_operation_ns"]["median"], rel_tol=1e-9)
-                or not math.isclose(vs_t["rust_peak_rss_bytes"], row["rust"]["fork_peak_rss_bytes"]["median"], rel_tol=1e-9)
+                or not math.isclose(vs_t["rust_peak_rss_bytes"], rust_med_rss, rel_tol=1e-9)
                 or not math.isclose(vs_t["java_peak_rss_bytes"], row["java"]["fork_peak_rss_bytes"]["median"], rel_tol=1e-9)
             ):
                 raise ValueError(f"{rid}: vs_live_temurin_21 medians disagree with raw fork distributions")
         elif mode == "steady-server":
-            for side in ("java", "rust"):
+            sides = ["rust"]
+            if vs_t is not None:
+                sides.append("java")
+            if vs_ni is not None:
+                sides.append("native_image")
+            for side in sides:
                 runs = (row.get(side) or {}).get("runs")
                 if not isinstance(runs, list) or len(runs) != sampling["independent_api_forks"]:
                     raise ValueError(f"{rid}: {side} steady-server run count != {sampling['independent_api_forks']}")
@@ -2653,13 +3363,32 @@ def verify_report(
                     raise ValueError(f"{rid}: {side} steady-server fork_median_operation_ns disagrees with runs")
                 if distribution([r["peak_rss_bytes"] for r in runs]) != row[side]["fork_peak_rss_bytes"]:
                     raise ValueError(f"{rid}: {side} steady-server fork_peak_rss_bytes disagrees with runs")
-            if (
-                not math.isclose(vs_t["rust_time_ns"], row["rust"]["fork_median_operation_ns"]["median"], rel_tol=1e-9)
-                or not math.isclose(vs_t["java_time_ns"], row["java"]["fork_median_operation_ns"]["median"], rel_tol=1e-9)
-                or not math.isclose(vs_t["rust_peak_rss_bytes"], row["rust"]["fork_peak_rss_bytes"]["median"], rel_tol=1e-9)
-                or not math.isclose(vs_t["java_peak_rss_bytes"], row["java"]["fork_peak_rss_bytes"]["median"], rel_tol=1e-9)
-            ):
-                raise ValueError(f"{rid}: steady-server vs_live_temurin_21 medians disagree with runs")
+            rust_med_time = float(row["rust"]["fork_median_operation_ns"]["median"])
+            rust_med_rss = float(row["rust"]["fork_peak_rss_bytes"]["median"])
+            if vs_t is not None:
+                if (
+                    not math.isclose(vs_t["rust_time_ns"], rust_med_time, rel_tol=1e-9)
+                    or not math.isclose(vs_t["java_time_ns"], row["java"]["fork_median_operation_ns"]["median"], rel_tol=1e-9)
+                    or not math.isclose(vs_t["rust_peak_rss_bytes"], rust_med_rss, rel_tol=1e-9)
+                    or not math.isclose(vs_t["java_peak_rss_bytes"], row["java"]["fork_peak_rss_bytes"]["median"], rel_tol=1e-9)
+                ):
+                    raise ValueError(f"{rid}: steady-server vs_live_temurin_21 medians disagree with runs")
+            if vs_ni is not None:
+                if (
+                    not math.isclose(vs_ni["rust_time_ns"], rust_med_time, rel_tol=1e-9)
+                    or not math.isclose(
+                        vs_ni["native_image_time_ns"],
+                        row["native_image"]["fork_median_operation_ns"]["median"],
+                        rel_tol=1e-9,
+                    )
+                    or not math.isclose(vs_ni["rust_peak_rss_bytes"], rust_med_rss, rel_tol=1e-9)
+                    or not math.isclose(
+                        vs_ni["native_image_peak_rss_bytes"],
+                        row["native_image"]["fork_peak_rss_bytes"]["median"],
+                        rel_tol=1e-9,
+                    )
+                ):
+                    raise ValueError(f"{rid}: steady-server vs_official_native_image medians disagree with runs")
         elif mode in ("napi", "wasm-node", "wasm-browser"):
             r_side = row.get("rust") or {}
             js_rel = r_side.get("js_result_rel_path")
@@ -2689,9 +3418,12 @@ def verify_report(
                 exp_rss = float(dcap["peak_rss_bytes"])
                 if not math.isclose(float(r_side.get("peak_rss_bytes") or 0), exp_rss, rel_tol=1e-9):
                     raise ValueError(f"{rid}: rust.peak_rss_bytes disagrees with driver_capture.peak_rss_bytes")
+            rust_med_time = float(r_side["operation_ns"]["median"])
+            rust_med_rss = exp_rss
             if (
-                not math.isclose(vs_t["rust_time_ns"], r_side["operation_ns"]["median"], rel_tol=1e-9)
-                or not math.isclose(vs_t["rust_peak_rss_bytes"], exp_rss, rel_tol=1e-9)
+                vs_t is None
+                or not math.isclose(vs_t["rust_time_ns"], rust_med_time, rel_tol=1e-9)
+                or not math.isclose(vs_t["rust_peak_rss_bytes"], rust_med_rss, rel_tol=1e-9)
                 or not math.isclose(vs_t["java_time_ns"], row["java"]["fork_median_operation_ns"]["median"], rel_tol=1e-9)
                 or not math.isclose(vs_t["java_peak_rss_bytes"], row["java"]["fork_peak_rss_bytes"]["median"], rel_tol=1e-9)
             ):
@@ -2699,65 +3431,87 @@ def verify_report(
         else:
             raise ValueError(f"{rid}: unknown mode {mode!r}")
 
-        if mode == "wasm-browser" and report_browser_targets is not None:
-            js_doc_b = json.loads((directory / row["rust"]["js_result_rel_path"]).read_bytes())
-            exp_lin = float(js_doc_b.get("wasm_linear_memory_bytes_peak") or 0)
-            exp_gzip = int(js_doc_b.get("wasm_binary_gzip_bytes") or 0)
-            js_heap_raw = (js_doc_b.get("js_heap_after_eval") or {}).get("usedJSHeapSize")
-            exp_js_heap = float(js_heap_raw) if js_heap_raw is not None else None
-            if (
-                exp_lin <= 0
-                or not math.isclose(float(vs_t.get("wasm_linear_memory_bytes") or 0), exp_lin, rel_tol=1e-9)
-                or exp_gzip <= 0
-                or int(vs_t.get("wasm_binary_gzip_bytes") or 0) != exp_gzip
-            ):
-                raise ValueError(f"{rid}: browser Wasm memory metrics disagree with sealed js-result.json")
-            wkey = "typed-conversion" if row.get("op_mode") == "typed-conversion" else "eval-text"
-            recomputed = evaluate_browser_wasm_verdict(
-                vs_t["rust_time_ns"],
-                vs_t["java_time_ns"],
-                vs_t["rust_peak_rss_bytes"],
-                vs_t["java_peak_rss_bytes"],
-                wasm_linear_memory_bytes=exp_lin,
-                js_heap_used_bytes=exp_js_heap,
-                wasm_binary_gzip_bytes=exp_gzip,
+        if vs_t is not None:
+            temurin_rows.append(row)
+            if mode == "wasm-browser" and report_browser_targets is not None:
+                js_doc_b = json.loads((directory / row["rust"]["js_result_rel_path"]).read_bytes())
+                exp_lin = float(js_doc_b.get("wasm_linear_memory_bytes_peak") or 0)
+                exp_gzip = int(js_doc_b.get("wasm_binary_gzip_bytes") or 0)
+                js_heap_raw = (js_doc_b.get("js_heap_after_eval") or {}).get("usedJSHeapSize")
+                exp_js_heap = float(js_heap_raw) if js_heap_raw is not None else None
+                if (
+                    exp_lin <= 0
+                    or not math.isclose(float(vs_t.get("wasm_linear_memory_bytes") or 0), exp_lin, rel_tol=1e-9)
+                    or exp_gzip <= 0
+                    or int(vs_t.get("wasm_binary_gzip_bytes") or 0) != exp_gzip
+                ):
+                    raise ValueError(f"{rid}: browser Wasm memory metrics disagree with sealed js-result.json")
+                wkey = "typed-conversion" if row.get("op_mode") == "typed-conversion" else "eval-text"
+                recomputed = evaluate_browser_wasm_verdict(
+                    vs_t["rust_time_ns"],
+                    vs_t["java_time_ns"],
+                    vs_t["rust_peak_rss_bytes"],
+                    vs_t["java_peak_rss_bytes"],
+                    wasm_linear_memory_bytes=exp_lin,
+                    js_heap_used_bytes=exp_js_heap,
+                    wasm_binary_gzip_bytes=exp_gzip,
+                    correctness_verified=bool(row.get("correctness_verified")),
+                    converged=bool(vs_t.get("converged")),
+                    browser_targets=report_browser_targets,
+                    browser_engine=str(js_doc_b.get("browser_engine") or "chromium"),
+                    workload_key=wkey,
+                )
+                if (
+                    not math.isclose(recomputed["time_ratio"], vs_t["time_ratio"], rel_tol=1e-9)
+                    or not math.isclose(recomputed["rss_ratio"], vs_t["rss_ratio"], rel_tol=1e-9)
+                    or not math.isclose(
+                        recomputed["wasm_linear_memory_ratio"], vs_t["wasm_linear_memory_ratio"], rel_tol=1e-9
+                    )
+                    or recomputed["verdict"] != vs_t["verdict"]
+                ):
+                    raise ValueError(f"{rid}: tampered ratio or verdict in vs_live_temurin_21")
+            else:
+                recomputed = evaluate_ratio_verdict(
+                    vs_t["rust_time_ns"],
+                    vs_t["java_time_ns"],
+                    vs_t["rust_peak_rss_bytes"],
+                    vs_t["java_peak_rss_bytes"],
+                    correctness_verified=bool(row.get("correctness_verified")),
+                    converged=bool(vs_t.get("converged")),
+                )
+                if (
+                    not math.isclose(recomputed["time_ratio"], vs_t["time_ratio"], rel_tol=1e-9)
+                    or not math.isclose(recomputed["rss_ratio"], vs_t["rss_ratio"], rel_tol=1e-9)
+                    or recomputed["verdict"] != vs_t["verdict"]
+                ):
+                    raise ValueError(f"{rid}: tampered ratio or verdict in vs_live_temurin_21")
+
+        if vs_ni is not None:
+            native_rows.append(row)
+            re_ni = evaluate_ratio_verdict(
+                vs_ni["rust_time_ns"],
+                vs_ni["native_image_time_ns"],
+                vs_ni["rust_peak_rss_bytes"],
+                vs_ni["native_image_peak_rss_bytes"],
                 correctness_verified=bool(row.get("correctness_verified")),
-                converged=bool(vs_t.get("converged")),
-                browser_targets=report_browser_targets,
-                browser_engine=str(js_doc_b.get("browser_engine") or "chromium"),
-                workload_key=wkey,
+                converged=bool(vs_ni.get("converged")),
+                baseline_key_prefix="native_image",
             )
             if (
-                not math.isclose(recomputed["time_ratio"], vs_t["time_ratio"], rel_tol=1e-9)
-                or not math.isclose(recomputed["rss_ratio"], vs_t["rss_ratio"], rel_tol=1e-9)
-                or not math.isclose(recomputed["wasm_linear_memory_ratio"], vs_t["wasm_linear_memory_ratio"], rel_tol=1e-9)
-                or recomputed["verdict"] != vs_t["verdict"]
+                not math.isclose(re_ni["time_ratio"], vs_ni["time_ratio"], rel_tol=1e-9)
+                or not math.isclose(re_ni["rss_ratio"], vs_ni["rss_ratio"], rel_tol=1e-9)
+                or re_ni["verdict"] != vs_ni["verdict"]
             ):
-                raise ValueError(f"{rid}: tampered ratio or verdict in vs_live_temurin_21")
-        else:
-            recomputed = evaluate_ratio_verdict(
-                vs_t["rust_time_ns"],
-                vs_t["java_time_ns"],
-                vs_t["rust_peak_rss_bytes"],
-                vs_t["java_peak_rss_bytes"],
-                correctness_verified=bool(row.get("correctness_verified")),
-                converged=bool(vs_t.get("converged")),
-            )
-            if (
-                not math.isclose(recomputed["time_ratio"], vs_t["time_ratio"], rel_tol=1e-9)
-                or not math.isclose(recomputed["rss_ratio"], vs_t["rss_ratio"], rel_tol=1e-9)
-                or recomputed["verdict"] != vs_t["verdict"]
-            ):
-                raise ValueError(f"{rid}: tampered ratio or verdict in vs_live_temurin_21")
+                raise ValueError(f"{rid}: tampered ratio or verdict in vs_official_native_image")
 
         vs_g = row.get("vs_m0_graalvm_25_0_1")
         if vs_g is not None:
             graal_rows.append(row)
             if (
-                not math.isclose(vs_g["rust_time_ns"], vs_t["rust_time_ns"], rel_tol=1e-9)
-                or not math.isclose(vs_g["rust_peak_rss_bytes"], vs_t["rust_peak_rss_bytes"], rel_tol=1e-9)
+                not math.isclose(vs_g["rust_time_ns"], rust_med_time, rel_tol=1e-9)
+                or not math.isclose(vs_g["rust_peak_rss_bytes"], rust_med_rss, rel_tol=1e-9)
             ):
-                raise ValueError(f"{rid}: vs_m0_graalvm_25_0_1 rust metrics disagree with vs_live_temurin_21")
+                raise ValueError(f"{rid}: vs_m0_graalvm_25_0_1 rust metrics disagree with raw rust distributions")
             m0_case = m0_cases_by_id.get(row.get("workload_id"))
             if not m0_case:
                 raise ValueError(f"{rid}: unknown M0 GraalVM reference workload_id {row.get('workload_id')!r}")
@@ -2787,22 +3541,40 @@ def verify_report(
             ):
                 raise ValueError(f"{rid}: tampered ratio or verdict in vs_m0_graalvm_25_0_1")
 
-    recounted = dict(sorted(Counter(r["vs_live_temurin_21"]["verdict"] for r in results).items()))
-    if recounted != report.get("counts", {}).get("vs_live_temurin_21_verdicts"):
+    counts = report.get("counts", {})
+    recounted = dict(sorted(Counter(r["vs_live_temurin_21"]["verdict"] for r in temurin_rows).items()))
+    if recounted != counts.get("vs_live_temurin_21_verdicts"):
         raise ValueError("counts.vs_live_temurin_21_verdicts disagrees with results")
+    if "vs_live_temurin_21_compared" in counts and len(temurin_rows) != counts.get("vs_live_temurin_21_compared"):
+        raise ValueError("counts.vs_live_temurin_21_compared disagrees with results")
+    recounted_ni = dict(sorted(Counter(r["vs_official_native_image"]["verdict"] for r in native_rows).items()))
+    if expect_native or "vs_official_native_image_compared" in counts or "vs_official_native_image_verdicts" in counts:
+        if (
+            len(native_rows) != counts.get("vs_official_native_image_compared")
+            or recounted_ni != counts.get("vs_official_native_image_verdicts")
+        ):
+            raise ValueError("counts.vs_official_native_image_* disagrees with results")
     recounted_g = dict(sorted(Counter(r["vs_m0_graalvm_25_0_1"]["verdict"] for r in graal_rows).items()))
     if (
-        len(graal_rows) != report.get("counts", {}).get("vs_m0_graalvm_25_0_1_compared")
-        or recounted_g != report.get("counts", {}).get("vs_m0_graalvm_25_0_1_verdicts")
+        len(graal_rows) != counts.get("vs_m0_graalvm_25_0_1_compared")
+        or recounted_g != counts.get("vs_m0_graalvm_25_0_1_verdicts")
     ):
         raise ValueError("counts.vs_m0_graalvm_25_0_1_* disagrees with results")
 
     if strict:
         failures: list[str] = []
+        if baseline_mode != "both":
+            failures.append(f"baseline_mode={baseline_mode!r} != 'both' (strict gate requires both native-image and JVM)")
         if not report.get("strict_eligible") or report.get("profile") != "full":
             failures.append(f"profile={report.get('profile')!r} is not strict_eligible")
         if not report.get("complete_catalog"):
             failures.append(f"incomplete family catalog: {report.get('selected_families')}")
+        if not isinstance(report.get("native_image_oracle"), dict) or not report["native_image_oracle"].get(
+            "exact_native_image_lock_match"
+        ):
+            failures.append("missing pinned native_image_oracle with exact_native_image_lock_match == true")
+        if report.get("native_image_targets") != contract["native_image_targets"]:
+            failures.append("missing or mismatched native_image_targets contract")
         if report.get("build", {}).get("source_binding") != "recorded-build":
             failures.append(f"source_binding={report.get('build', {}).get('source_binding')!r} != 'recorded-build'")
         for art_name in ("pkl", "pkldoc", "m7_bench_probe", "napi_addon", "wasm_bg"):
@@ -2811,34 +3583,28 @@ def verify_report(
                 failures.append(f"artifact {art_name} source_binding != 'recorded-build'")
         if not report.get("source_stability"):
             failures.append("source_stability is false")
-        expected_ids = set()
-        expected_core_ids = set()
-        for w in contract["core_workloads"]:
-            for m in w["modes"]:
-                cid = f"{w['id']}:{m}"
-                expected_ids.add(cid)
-                expected_core_ids.add(cid)
-        for w in contract["product_workloads"]:
-            kind = w["kind"]
-            if kind == "eval_cold_and_persistent":
-                expected_ids.add(f"{w['id']}:cold-cli")
-                expected_ids.add(f"{w['id']}:persistent")
-            elif kind == "server_msgpack":
-                expected_ids.add(f"{w['id']}:steady-server")
-            elif kind == "js_binding":
-                expected_ids.add(f"{w['id']}:{w['target']}")
-            else:
-                expected_ids.add(f"{w['id']}:cold-cli")
+        expected_ids, expected_core_ids, expected_native_ids = expected_workload_sets(contract)
         missing_ids = sorted(expected_ids - seen_ids)
         if missing_ids:
             failures.append(f"missing required workloads: {missing_ids}")
         for r in results:
             if not r.get("correctness_verified"):
                 failures.append(f"{r['id']}: correctness_verified=false")
+            if r["id"] in expected_native_ids:
+                vni = r.get("vs_official_native_image")
+                if not isinstance(vni, dict):
+                    failures.append(f"{r['id']}: missing required Official Apple Pkl 0.32.0 native-image comparison")
+                elif vni["verdict"] != "pass":
+                    failures.append(
+                        f"{r['id']}: vs_official_native_image={vni['verdict']} "
+                        f"(time={vni['time_ratio']:.3f}x, rss={vni['rss_ratio']:.3f}x; {vni['reason']})"
+                    )
             if r["id"] in expected_core_ids and r.get("vs_m0_graalvm_25_0_1") is None:
                 failures.append(f"{r['id']}: missing required M0 GraalVM 25.0.1 cross-comparison")
-            vt = r["vs_live_temurin_21"]
-            if vt["verdict"] != "pass":
+            vt = r.get("vs_live_temurin_21")
+            if not isinstance(vt, dict):
+                failures.append(f"{r['id']}: missing required vs_live_temurin_21 comparison")
+            elif vt["verdict"] != "pass":
                 failures.append(
                     f"{r['id']}: vs_live_temurin_21={vt['verdict']} "
                     f"(time={vt['time_ratio']:.3f}x, rss={vt['rss_ratio']:.3f}x; {vt['reason']})"
@@ -2862,30 +3628,60 @@ def format_markdown_summary(report: dict[str, Any]) -> str:
     def fmt_mb(b: float) -> str:
         return f"{b / (1024 * 1024):.1f} MiB"
 
+    oracle_meta = report.get("oracle") or {}
+    ni_meta = report.get("native_image_oracle") or {}
     lines = [
-        f"### M7 Benchmark Summary (`profile={report['profile']}`, `exact_jdk_lock_match={report['oracle'].get('exact_jdk_lock_match')}`)",
+        f"### M7 Benchmark Summary (`profile={report['profile']}`, `baseline={report.get('baseline_mode', 'both')}`, "
+        f"`exact_native_image_lock_match={ni_meta.get('exact_native_image_lock_match')}`, "
+        f"`exact_jdk_lock_match={oracle_meta.get('exact_jdk_lock_match')}`)",
         "",
-        "| Workload | Rust Time | Java Time (Temurin 21) | Time Ratio | Rust RSS | Java RSS | RSS Ratio | Verdict | vs M0 GraalVM 25 (Time / RSS) |",
-        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- |",
+        "| Workload | Rust Time / RSS | Official Native Image (Time / RSS) | vs Native Image | Temurin 21 JVM (Time / RSS) | vs Temurin 21 | vs M0 GraalVM 25 |",
+        "| --- | ---: | ---: | :---: | ---: | :---: | :---: |",
     ]
     for r in report["results"]:
-        vt = r["vs_live_temurin_21"]
+        vni = r.get("vs_official_native_image")
+        vt = r.get("vs_live_temurin_21")
         vg = r.get("vs_m0_graalvm_25_0_1")
+        active = vni or vt
+        rust_cell = (
+            f"{fmt_ns(active['rust_time_ns'])} / {fmt_mb(active['rust_peak_rss_bytes'])}"
+            if active is not None
+            else "—"
+        )
+        if vni is not None:
+            ni_raw = f"{fmt_ns(vni['native_image_time_ns'])} / {fmt_mb(vni['native_image_peak_rss_bytes'])}"
+            ni_ratio = f"**{vni['time_ratio']:.3f}x / {vni['rss_ratio']:.3f}x** (`{vni['verdict']}`)"
+        else:
+            ni_raw = "— (CLI-only)"
+            ni_ratio = "—"
+        if vt is not None:
+            j_raw = f"{fmt_ns(vt['java_time_ns'])} / {fmt_mb(vt['java_peak_rss_bytes'])}"
+            j_ratio = f"**{vt['time_ratio']:.3f}x / {vt['rss_ratio']:.3f}x** (`{vt['verdict']}`)"
+        else:
+            j_raw = "—"
+            j_ratio = "—"
         g_cell = (
-            f"{vg['time_ratio']:.3f}x / {vg['rss_ratio']:.3f}x ({vg['verdict']})"
+            f"{vg['time_ratio']:.3f}x / {vg['rss_ratio']:.3f}x (`{vg['verdict']}`)"
             if vg is not None
             else "—"
         )
         lines.append(
-            f"| `{r['id']}` | {fmt_ns(vt['rust_time_ns'])} | {fmt_ns(vt['java_time_ns'])} | "
-            f"**{vt['time_ratio']:.3f}x** | {fmt_mb(vt['rust_peak_rss_bytes'])} | {fmt_mb(vt['java_peak_rss_bytes'])} | "
-            f"**{vt['rss_ratio']:.3f}x** | `{vt['verdict']}` | {g_cell} |"
+            f"| `{r['id']}` | {rust_cell} | {ni_raw} | {ni_ratio} | {j_raw} | {j_ratio} | {g_cell} |"
         )
     lines.append("")
-    lines.append(f"- Live Temurin 21 verdicts: `{json.dumps(report['counts']['vs_live_temurin_21_verdicts'], sort_keys=True)}`")
-    if report["counts"]["vs_m0_graalvm_25_0_1_compared"]:
+    counts = report.get("counts", {})
+    if counts.get("vs_official_native_image_compared"):
         lines.append(
-            f"- vs M0 GraalVM CE 25.0.1 verdicts: `{json.dumps(report['counts']['vs_m0_graalvm_25_0_1_verdicts'], sort_keys=True)}`"
+            f"- Official Apple Pkl 0.32.0 native-image verdicts ({counts['vs_official_native_image_compared']} CLI/server/pkldoc): "
+            f"`{json.dumps(counts['vs_official_native_image_verdicts'], sort_keys=True)}`"
+        )
+    if counts.get("vs_live_temurin_21_verdicts"):
+        lines.append(
+            f"- Live Temurin 21 JVM verdicts: `{json.dumps(counts['vs_live_temurin_21_verdicts'], sort_keys=True)}`"
+        )
+    if counts.get("vs_m0_graalvm_25_0_1_compared"):
+        lines.append(
+            f"- vs M0 GraalVM CE 25.0.1 verdicts: `{json.dumps(counts['vs_m0_graalvm_25_0_1_verdicts'], sort_keys=True)}`"
         )
     return "\n".join(lines)
 
@@ -2895,6 +3691,12 @@ def main() -> int:
     parser.add_argument("--root", type=Path, default=ROOT)
     parser.add_argument("--output", type=Path, default=None)
     parser.add_argument("--profile", choices=("full", "quick"), default="full")
+    parser.add_argument(
+        "--baseline",
+        choices=VALID_BASELINES,
+        default="both",
+        help="baseline oracle(s): both (default, required for strict), native-image (CLI/server/pkldoc only), or jvm",
+    )
     parser.add_argument("--families", type=str, default=None, help="comma-separated subset of workload families")
     parser.add_argument("--skip-build", action="store_true")
     parser.add_argument("--check-contract", action="store_true")
@@ -2906,12 +3708,17 @@ def main() -> int:
     try:
         if args.check_contract:
             c = load_contract(root)
+            ni_lock = validate_native_image_lock(root)
+            all_ids, _, native_ids = expected_workload_sets(c)
             print(
                 json.dumps(
                     {
                         "baseline": c["baseline"],
                         "core_workloads": len(c["core_workloads"]),
                         "product_workloads": len(c["product_workloads"]),
+                        "total_workload_modes": len(all_ids),
+                        "native_image_eligible_workloads": len(native_ids),
+                        "native_image_pinned_platforms": sorted(ni_lock["distributions"].keys()),
                         "families": list(ALL_FAMILIES),
                     },
                     sort_keys=True,
@@ -2938,6 +3745,7 @@ def main() -> int:
             profile=args.profile,
             families=fam_set,
             skip_build=args.skip_build,
+            baseline=args.baseline,
         )
         print(format_markdown_summary(rep))
         return 0

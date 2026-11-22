@@ -5,6 +5,14 @@
     "execution_time_max": 1.0,
     "peak_rss_max": 1.0
   },
+  "native_image_targets": {
+    "execution_time_max": 1.0,
+    "peak_rss_max": 1.0,
+    "required_for_cli_server_pkldoc": true,
+    "eligible_modes": ["cold-cli", "steady-server"],
+    "expected_eligible_workload_count": 15,
+    "repl_jline_stderr_note": "Official Apple Pkl 0.32.0 native-image pkl repl reads System.getProperty(\"user.home\")/.pkl/repl-history via JLine and may emit benign JLine history log lines to stderr; Rust pkl repl remains strictly verified for stderr == b\"\" and 100% raw-byte stdout parity."
+  },
   "browser_wasm_targets": {
     "execution_time_max": 1.0,
     "wasm_linear_memory_ratio_max": 0.15,

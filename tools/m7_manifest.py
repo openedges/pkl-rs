@@ -262,6 +262,7 @@ def build_manifest(root: Path = ROOT) -> dict[str, Any]:
     sources = {
         "references.lock": digest((root / "references.lock").read_bytes()),
         "oracle.lock.json": digest((root / "oracle.lock.json").read_bytes()),
+        "tools/oracle.py": digest((root / "tools/oracle.py").read_bytes()),
         INVENTORY_PATH.as_posix(): digest((root / INVENTORY_PATH).read_bytes()),
         MAPPINGS_PATH.as_posix(): digest((root / MAPPINGS_PATH).read_bytes()),
         m7_benchmark.WORKLOADS_PATH.as_posix(): digest((root / m7_benchmark.WORKLOADS_PATH).read_bytes()),
@@ -273,6 +274,25 @@ def build_manifest(root: Path = ROOT) -> dict[str, Any]:
     for pm in prior:
         sources[pm["manifest"]] = pm["sha256"]
 
+    native_lock = m7_benchmark.validate_native_image_lock(root)
+    _, _, native_ids = m7_benchmark.expected_workload_sets(bench_contract)
+    pinned_native_cfg = mappings.get("pinned_native_image_reference")
+    if not isinstance(pinned_native_cfg, dict) or pinned_native_cfg.get("status") != "pinned-required-release-baseline":
+        raise ValueError(
+            "compatibility/m7-mappings.json must promote native-image-reference to pinned-required-release-baseline"
+        )
+    pinned_native_ref = {
+        "id": pinned_native_cfg["id"],
+        "status": pinned_native_cfg["status"],
+        "baseline_version": inventory["baseline"]["version"],
+        "lock_file": "oracle.lock.json",
+        "scope": pinned_native_cfg["scope"],
+        "required_workload_count": len(native_ids),
+        "required_workload_ids": sorted(native_ids),
+        "pinned_platforms": sorted(native_lock["distributions"].keys()),
+        "distributions": native_lock["distributions"],
+    }
+
     track_counts = dict(sorted(Counter(r["track"] for r in validated_reqs.values()).items()))
     impl_counts = dict(sorted(Counter(r["implementation_status"] for r in validated_reqs.values()).items()))
     platform_matrix = mappings.get("platform_matrix", [])
@@ -282,7 +302,9 @@ def build_manifest(root: Path = ROOT) -> dict[str, Any]:
         "baseline": inventory["baseline"],
         "scope": mappings["scope"],
         "target_ratios": bench_contract["target_ratios"],
+        "native_image_targets": bench_contract["native_image_targets"],
         "browser_wasm_targets": bench_contract["browser_wasm_targets"],
+        "pinned_native_image_reference": pinned_native_ref,
         "excluded_by_scope_2026_11_20": mappings["excluded_by_scope_2026_11_20"],
         "unpinned_optional_references": mappings["unpinned_optional_references"],
         "platform_matrix": platform_matrix,
@@ -293,6 +315,8 @@ def build_manifest(root: Path = ROOT) -> dict[str, Any]:
             "m7_requirements_by_track": track_counts,
             "m7_requirement_impl_status": impl_counts,
             "m7_benchmark_workload_modes": len(expected_benchmark_workload_ids(bench_contract)),
+            "m7_native_image_required_workloads": len(native_ids),
+            "m7_native_image_pinned_platforms": len(native_lock["distributions"]),
             "m7_soak_target_scenarios": len(expected_soak_pairs()),
             "m7_fuzz_categories": len(expected_fuzz_categories()),
             "prior_milestone_manifests": len(prior),
@@ -402,6 +426,7 @@ def verify_release(
     # 1. Benchmark verification
     bench_rep: dict[str, Any] | None = None
     bench_strict_ok = False
+    unmet_native_image: list[dict[str, Any]] = []
     unmet_perf: list[dict[str, Any]] = []
     unmet_graalvm: list[dict[str, Any]] = []
     if benchmark_dir is None or not benchmark_dir.is_dir():
@@ -414,8 +439,31 @@ def verify_release(
             integrity_failures.append(f"benchmark integrity failed: {err}")
         if bench_rep is not None:
             for row in bench_rep.get("results", []):
-                vt = row["vs_live_temurin_21"]
-                if vt["verdict"] != "pass":
+                mode = row.get("mode")
+                vni = row.get("vs_official_native_image")
+                if mode in m7_benchmark.NATIVE_IMAGE_ELIGIBLE_MODES:
+                    if not isinstance(vni, dict):
+                        unmet_native_image.append(
+                            {
+                                "id": row["id"],
+                                "time_ratio": None,
+                                "rss_ratio": None,
+                                "verdict": "missing",
+                                "reason": "missing required Official Apple Pkl 0.32.0 native-image comparison",
+                            }
+                        )
+                    elif vni["verdict"] != "pass":
+                        unmet_native_image.append(
+                            {
+                                "id": row["id"],
+                                "time_ratio": vni["time_ratio"],
+                                "rss_ratio": vni["rss_ratio"],
+                                "verdict": vni["verdict"],
+                                "reason": vni["reason"],
+                            }
+                        )
+                vt = row.get("vs_live_temurin_21")
+                if isinstance(vt, dict) and vt["verdict"] != "pass":
                     unmet_perf.append(
                         {
                             "id": row["id"],
@@ -516,6 +564,13 @@ def verify_release(
         "fuzz_strict_passed": fuzz_strict_ok,
         "local_strict_gates_passed": local_strict_passed,
         "release_ready": release_ready,
+        "pinned_native_image_reference": {
+            "id": manifest["pinned_native_image_reference"]["id"],
+            "status": manifest["pinned_native_image_reference"]["status"],
+            "required_workload_count": manifest["pinned_native_image_reference"]["required_workload_count"],
+            "pinned_platforms": manifest["pinned_native_image_reference"]["pinned_platforms"],
+        },
+        "unmet_performance_workloads_official_native_image": unmet_native_image,
         "unmet_performance_workloads_live_temurin_21": unmet_perf,
         "unmet_performance_workloads_m0_graalvm_25_0_1": unmet_graalvm,
         "non_bounded_soak_runs": leaking_runs,

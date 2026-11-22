@@ -43,13 +43,17 @@ Some protocol fields vary by design, such as randomly allocated evaluator IDs. C
 Each required workload must meet both targets after correctness has been established:
 
 ```text
-Rust execution time / Java execution time <= 1.00
-Rust peak RSS / Java peak RSS <= 1.00
+Rust execution time / Pkl 0.32.0 reference execution time <= 1.00
+Rust peak RSS / Pkl 0.32.0 reference peak RSS <= 1.00
 ```
 
-Define and fix workloads, measurement boundaries, environments, and uncertainty handling before assessing results. Include cold startup, sufficiently warmed-up persistent evaluation, large inputs, failure paths, and long-running sessions. Record comparisons with the official native-image CLI separately from JVM results.
+Define and fix workloads, measurement boundaries, environments, and uncertainty handling before assessing results. Include cold startup, sufficiently warmed-up persistent evaluation, large inputs, failure paths, and long-running sessions.
 
-Measure the complete applicable product boundary, including Node value conversion and the Host process for Wasm. Native Rust (`pkl`, `pkldoc`, Rust API), `@pkl-rs/napi` (Node.js), and `@pkl-rs/wasm` on Node.js must satisfy both `execution time <= 1.00x` and full-process `peak RSS <= 1.00x` Java on every required workload.
+**Official Apple Pkl 0.32.0 `native-image` Primary CLI/Server/`pkldoc` Baseline (2026-11-23):**
+- **All 15 CLI, server, and `pkldoc` workloads** (`cold-cli` and `steady-server`: Core 6 cold CLI, `reflection-stdlib:cold-cli`, `renderers-files`, `renderers-binary`, `packages-http-warm`, `packages-http-cold`, `repl-session`, `server-session:steady-server`, `formatter-large`, and `pkldoc-single-package`) carry **pinned Official Apple Pkl 0.32.0 `native-image`** (`pkl` and `pkldoc`, pinned by URL, exact byte size, and SHA-256 in `oracle.lock.json`) as their **primary strict `<= 1.00x` execution time and `<= 1.00x` `os.wait4` peak RSS gate**, verified 100% raw-byte before timing. Live pinned JVM (Eclipse Adoptium Temurin `21.0.13.1+2-LTS`) and archived M0 GraalVM CE `25.0.1` remain recorded separately for full provenance. For `repl-session`, official native-image `pkl repl` resolves `user.home` via JLine and may emit benign JLine history log lines on stderr; those lines are recorded verbatim while Rust `pkl repl` remains strictly required to emit `0` bytes on stderr and match stdout raw bytes 100%.
+- **All 19 Embedded API (`persistent` / `fresh-evaluator`, 13) and JS/Wasm (`napi`, `wasm-node`, `wasm-browser`, 6) workloads**: Official Apple `native-image` ships CLI executables only (`pkl`, `pkldoc`) and has no embeddable Java/JS/Wasm API. Accordingly, these 19 workloads remain strictly gated against pinned JVM (Temurin `21.0.13.1+2-LTS`, plus archived M0 GraalVM CE `25.0.1` cross-check for Core 6, plus the `2026-11-22` browser Wasm contract below).
+
+Measure the complete applicable product boundary, including Node value conversion and the Host process for Wasm. Native Rust (`pkl`, `pkldoc`, Rust API), `@pkl-rs/napi` (Node.js), and `@pkl-rs/wasm` on Node.js must satisfy both `execution time <= 1.00x` and full-process `peak RSS <= 1.00x` against their required baseline on every required workload.
 
 **Explicit Browser `@pkl-rs/wasm` Target Contract (2026-11-22):** Real multi-process browser engines (Chromium, WebKit, Firefox) carry an irreducible 760–1,180 MiB multi-process shell baseline (`browser_main`, renderers, network/storage utilities, GPU/zygote) even for an empty page, exceeding a ~210–300 MiB JVM regardless of Wasm allocation. Accordingly, for **browser `@pkl-rs/wasm`** workloads only:
 - **Execution time**: `<= 1.00x` Java for Chromium (V8) and WebKit (JavaScriptCore), and `<= 1.00x` Java for Firefox (SpiderMonkey) `eval-text`. Only Firefox `typed-conversion` carries an explicit SpiderMonkey boundary exception (`<= 1.50x`, recorded in `benchmarks/m7_workloads.json`); functional raw-byte parity remains strictly required across all browsers.

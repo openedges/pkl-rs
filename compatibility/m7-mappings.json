@@ -4,7 +4,7 @@
     "version": "0.32.0",
     "revision": "e51fb2f91774265666f94980ec630db794a4db2d"
   },
-  "scope": "Unified M7 Release Verification manifest aggregating M0-M6 compatibility inventories with M7 performance & peak RSS parity (Rust/Java <= 1.00 per workload), long-running memory reclamation soak across Native/N-API/Wasm, seeded differential fuzzing, and release OS/browser/CI matrix accounting.",
+  "scope": "Unified M7 Release Verification manifest aggregating M0-M6 compatibility inventories with M7 performance & peak RSS parity (pinned Official Apple Pkl 0.32.0 native-image <= 1.00x time & peak RSS primary gate for all 15 CLI/server/pkldoc workloads; pinned Temurin 21 JVM + M0 GraalVM CE 25.0.1 + 2026-11-22 browser Wasm contract for all 19 embedded API and JS/Wasm workloads), long-running memory reclamation soak across Native/N-API/Wasm, seeded differential fuzzing, and release OS/browser/CI matrix accounting.",
   "excluded_by_scope_2026_11_20": [
     {
       "id": "jvm-adapter",
@@ -19,13 +19,12 @@
       "reason": "Explicit 2026-11-20 scope decision in INTENT.md and PLAN.md: Kotlin code generator CLI command/options excluded from required product scope."
     }
   ],
-  "unpinned_optional_references": [
-    {
-      "id": "native-image-reference",
-      "status": "unverified-not-pinned",
-      "reason": "Official upstream Pkl native-image binary is not pinned in oracle.lock.json (which pins pkl-tools-0.32.0.jar, Temurin 21.0.13.1+2-LTS, and GraalVM CE 25.0.1). Never replaces warm JVM reference."
-    }
-  ],
+  "pinned_native_image_reference": {
+    "id": "native-image-reference",
+    "status": "pinned-required-release-baseline",
+    "scope": "Explicit 2026-11-23 baseline decision: Official Apple Pkl 0.32.0 prebuilt native-image binaries (pkl and pkldoc, SHA-256 pinned in oracle.lock.json) are the primary <= 1.00x execution time and os.wait4 peak RSS strict gate for all 15 CLI, server, and pkldoc workloads (cold-cli and steady-server). Live Temurin 21.0.13.1+2-LTS and archived M0 GraalVM CE 25.0.1 remain recorded separately, and all 19 embedded API and JS/Wasm workloads remain strictly gated against pinned JVM (plus the 2026-11-22 browser Wasm contract) because official native-image ships CLI executables only."
+  },
+  "unpinned_optional_references": [],
   "platform_matrix": [
     {"id": "darwin-arm64", "category": "native-os", "required_for_release": true},
     {"id": "darwin-x64", "category": "native-os", "required_for_release": true},
@@ -74,7 +73,7 @@
   "requirements": {
     "m7:perf:core-6-cold-cli": {
       "track": "benchmark",
-      "description": "Core 6 workloads cold CLI execution time and os.wait4 peak RSS <= 1.00x Java (Temurin 21 live + M0 GraalVM 25 reference)",
+      "description": "Core 6 workloads cold CLI execution time and os.wait4 peak RSS <= 1.00x pinned Official Apple Pkl 0.32.0 native-image (plus Temurin 21 live and M0 GraalVM 25 reference)",
       "workload_ids": [
         "scalar:cold-cli",
         "stdlib-collections:cold-cli",
@@ -85,6 +84,7 @@
       ],
       "implementation_status": "linked",
       "implementation_links": [
+        {"path": "tools/oracle.py", "symbol": "ensure_native_image_oracle"},
         {"path": "tools/m7_benchmark.py", "symbol": "_run_cold_cli_pair"},
         {"path": "tools/m7_benchmark.py", "symbol": "evaluate_ratio_verdict"}
       ]
@@ -127,7 +127,7 @@
     },
     "m7:perf:reflection-stdlib": {
       "track": "benchmark",
-      "description": "import \"pkl:reflect\" stdlib reflection cold CLI and persistent evaluator time & peak RSS <= 1.00x Java",
+      "description": "import \"pkl:reflect\" stdlib reflection cold CLI (<= 1.00x Official Apple Pkl 0.32.0 native-image & Temurin 21) and persistent evaluator (<= 1.00x Temurin 21) time & peak RSS",
       "workload_ids": [
         "reflection-stdlib:cold-cli",
         "reflection-stdlib:persistent"
@@ -140,7 +140,7 @@
     },
     "m7:perf:renderers-files-binary": {
       "track": "benchmark",
-      "description": "Multi-renderer output.files (7 text renderers) and pkl-binary MessagePack encoding time & peak RSS <= 1.00x Java",
+      "description": "Multi-renderer output.files (7 text renderers) and pkl-binary MessagePack encoding time & peak RSS <= 1.00x Official Apple Pkl 0.32.0 native-image (plus Temurin 21)",
       "workload_ids": [
         "renderers-files:cold-cli",
         "renderers-binary:cold-cli"
@@ -153,7 +153,7 @@
     },
     "m7:perf:packages-http-cache": {
       "track": "benchmark",
-      "description": "Warm package-2 cache and cold HTTPS mirror download + localhost HTTP resource read via M4FixtureServers",
+      "description": "Warm package-2 cache and cold HTTPS mirror download + localhost HTTP resource read via M4FixtureServers (<= 1.00x Official Apple Pkl 0.32.0 native-image & Temurin 21)",
       "workload_ids": [
         "packages-http-warm:cold-cli",
         "packages-http-cold:cold-cli"
@@ -165,7 +165,7 @@
     },
     "m7:perf:repl-server-formatter-pkldoc": {
       "track": "benchmark",
-      "description": "Product tools: REPL piped session, MessagePack 0x20-0x25 server steady throughput, formatter, and pkldoc site generation",
+      "description": "Product tools: REPL piped session, MessagePack 0x20-0x25 server steady throughput, formatter, and pkldoc site generation (<= 1.00x Official Apple Pkl 0.32.0 native-image & Temurin 21)",
       "workload_ids": [
         "repl-session:cold-cli",
         "server-session:steady-server",
@@ -175,7 +175,8 @@
       "implementation_status": "linked",
       "implementation_links": [
         {"path": "tools/m7_benchmark.py", "symbol": "_run_server_workload"},
-        {"path": "tools/m7_benchmark.py", "symbol": "_run_pkldoc_workload"}
+        {"path": "tools/m7_benchmark.py", "symbol": "_run_pkldoc_workload"},
+        {"path": "tools/m7_benchmark.py", "symbol": "is_benign_jline_repl_stderr"}
       ]
     },
     "m7:perf:napi-and-wasm-bindings": {

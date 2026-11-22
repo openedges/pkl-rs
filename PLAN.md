@@ -1,6 +1,21 @@
 # 구현 계획
 
-## 현재 상태 — M7 브라우저 `@pkl-rs/wasm` 목표 계약 확정·JS/Wasm 최적화 및 로컬 macOS `arm64` 검증 (`2026-11-22`, `release_ready: false`)
+## 현재 상태 — 공식 Apple Pkl 0.32.0 `native-image` 기준선 고정 및 CLI/서버/`pkldoc` 전 항목 `<= 1.00x` 엄격 게이트 수립 (`2026-11-23`, `release_ready: false`)
+
+`2026-11-23` 사용자 결정(**성능 측정 비교에 공식 Apple Pkl 0.32.0 `native-image`를 기준으로 삼고 전 항목 `<= 1.00x` 최적화**)에 따라 락파일·오라클 검증 도구·벤치마크 하네스·릴리스 매니페스트·문서 계약을 다음과 같이 갱신했다.
+
+### `2026-11-23` 확정된 이중 기준선 계약 및 도구 변경
+- **공식 Apple Pkl 0.32.0 `native-image` 고정 (`oracle.lock.json::native_image`, `tools/oracle.py::ensure_native_image_oracle`)**:
+  - 기존 JVM 오라클(`artifact`, `jdk`, `performance_jdk`)을 그대로 유지한 채 `oracle.lock.json`에 `native_image.distributions.Darwin-arm64` 섹션을 추가했다: `pkl-macos-aarch64` (`99,267,376 B`, SHA-256 `fb891856705f3dcb8589c74999e01ded3eeb6b77ad5c6a95c02579a848c13928`) 및 `pkldoc-macos-aarch64` (`99,266,664 B`, SHA-256 `f363e09502aa5c27d40bdaa071ac61f557f13a32483ec025277cf0958f46923f`).
+  - `tools/oracle.py`에 `ensure_native_image_oracle(root, fetch=False)` 및 `--profile native-image`를 추가해 `PKL_ORACLE_NATIVE_PKL`/`PKL_ORACLE_NATIVE_PKLDOC` 또는 `.cache/oracle/native-image-0.32.0/` 경로의 바이트 크기·SHA-256·실행 권한·`--version` 정합성(`exact_native_image_lock_match: true`)을 엄격 검증한다.
+- **애플-투-애플 워크로드 분리 (`benchmarks/m7_workloads.json::native_image_targets`, `tools/m7_benchmark.py`, `tools/m7_manifest.py`)**:
+  - **CLI·서버·`pkldoc` 15개 워크로드 (`cold-cli` 14 + `steady-server` 1)**: **공식 Apple Pkl 0.32.0 `native-image`**(`pkl`/`pkldoc`) 대비 실행 시간 `<= 1.00x` 및 `os.wait4` peak RSS `<= 1.00x`(`vs_official_native_image`)를 **1차 엄격 게이트**로 적용하고, 라이브 핀 Temurin `21.0.13.1+2-LTS`(`vs_live_temurin_21`) 및 보관 M0 GraalVM CE `25.0.1`(`vs_m0_graalvm_25_0_1`)도 별도 보존한다. `repl-session`은 공식 `native-image`의 JLine 히스토리 stderr를 정직하게 검증·기록하되 Rust `pkl repl`은 `stderr == b""` 및 stdout 100% 원시 바이트 일치를 예외 없이 요구한다.
+  - **임베디드 API 13개(`persistent`/`fresh-evaluator`) 및 JS/Wasm 6개(`napi`/`wasm-node`/`wasm-browser`)**: 공식 `native-image`는 CLI 실행 파일(`pkl`, `pkldoc`)만 배포하고 임베디드 Java/JS/Wasm API가 없으므로, 이 19개 워크로드는 현행 핀 JVM(`Temurin 21.0.13.1+2-LTS` + Core 6 M0 GraalVM CE `25.0.1` + `2026-11-22` 브라우저 Wasm 계약) 엄격 게이트를 유지한다.
+  - `tools/m7_benchmark.py`는 `--baseline {both,native-image,jvm}`(기본 `both`)을 지원하며, `--check-contract`·`--verify-report`·`--verify-strict`는 `oracle.lock.json::native_image` SHA-256 일치, `<= 1.00x` 임계치 완화 거부, 그리고 `--verify-strict`에서 `baseline_mode == "both"` 및 15/15 CLI/서버/`pkldoc` `vs_official_native_image` 통과를 강제한다.
+  - `tools/m7_manifest.py`, `compatibility/m7-mappings.json`, `compatibility/m7-release.json`에서 `native-image-reference`를 `unverified-not-pinned`에서 필수 릴리스 기준선(`pinned_native_image_reference`, `status: "pinned-required-release-baseline"`)으로 승격했다.
+- **남은 작업 (`release_ready: false`)**: Rust CLI 콜드 스타트·렌더러·`pkl:reflect`·`pkldoc` 최적화 완료 후 `--profile full --baseline both` 통합 재실측 및 미검증 릴리스 OS/브라우저/호스티드 CI 매트릭스 검증이 남아 있으므로 `release_ready: false`를 정직하게 유지한다.
+
+## 이전 상태 — M7 브라우저 `@pkl-rs/wasm` 목표 계약 확정·JS/Wasm 최적화 및 로컬 macOS `arm64` 검증 (`2026-11-22`, `release_ready: false`)
 
 `2026-11-22` 사용자 합의에 따라 **브라우저 `@pkl-rs/wasm` 목표 계약**을 [INTENT.md](INTENT.md), [TESTING.md](TESTING.md), [docs/architecture.md](docs/architecture.md), [benchmarks/m7_workloads.json](benchmarks/m7_workloads.json), [tools/m7_benchmark.py](tools/m7_benchmark.py), [tools/m7_js_analysis.py](tools/m7_js_analysis.py)에 반영하고, Wasm 바이너리 크기 및 JS/Wasm 경계 최적화를 적용해 로컬 macOS `arm64`(핀 Eclipse Adoptium Temurin **`21.0.13.1+2-LTS`**, **호스티드 CI 아님**)에서 검증을 마쳤다.
 
@@ -3761,11 +3776,11 @@ ready4,424·미구현71·미연결32 및 전체 M2·API·릴리스·성능 gate�
 필수 workload마다 아래 두 조건을 모두 적용합니다. M0에서 Java 기준을 만들고 M1부터 구현 변화에 따라 측정합니다. M5·M6에서 완성되는 API의 실제 호출 비용도 기준선에 연결합니다.
 
 ```text
-Rust execution time / Java execution time ≤ 1.00
-Rust peak RSS / Java peak RSS ≤ 1.00
+Rust execution time / Pkl 0.32.0 reference execution time ≤ 1.00
+Rust peak RSS / Pkl 0.32.0 reference peak RSS ≤ 1.00
 ```
 
-CLI는 프로세스 시작부터 출력 완료·종료까지, 상주 evaluator는 초기화·첫 요청·반복 요청을 구분합니다. REPL·server의 세션 생성과 장기 실행, cold/warm cache, 큰 import graph·출력·실패 경로도 필수 workload에 포함합니다. 공식 native-image CLI는 별도 비교 자료로 남깁니다.
+CLI는 프로세스 시작부터 출력 완료·종료까지, 상주 evaluator는 초기화·첫 요청·반복 요청을 구분합니다. REPL·server의 세션 생성과 장기 실행, cold/warm cache, 큰 import graph·출력·실패 경로도 필수 workload에 포함합니다. `2026-11-23` 결정에 따라 15개 CLI·서버·`pkldoc` 워크로드는 `oracle.lock.json`에 고정된 **공식 Apple Pkl 0.32.0 `native-image`**(`pkl`/`pkldoc`) 대비 시간·peak RSS `<= 1.00x`를 1차 엄격 게이트로 적용하며(라이브 Temurin 21 JVM 및 보관 M0 GraalVM 25 기록 별도 보존), 공식 `native-image` 실행 API가 없는 19개 임베디드 API·JS/Wasm 워크로드는 핀 JVM(및 `2026-11-22` 브라우저 Wasm 계약) 기준을 유지합니다.
 
 Wasm은 다운로드·컴파일·초기화와 상주 요청을 분리하고, N-API는 JS↔Rust 변환·결과 전달을 포함합니다. Host 프로세스와 측정 범위를 사전에 고정하여 peak RSS를 비교합니다. JVM heap, Rust allocation, Wasm linear memory는 원인 분석용이며 서로 다른 지표를 직접 나누어 메모리 목표 달성을 주장하지 않습니다.
 

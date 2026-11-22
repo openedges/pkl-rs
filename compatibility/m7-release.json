@@ -24,6 +24,8 @@
     "excluded_scope_entries": 3,
     "m7_benchmark_workload_modes": 34,
     "m7_fuzz_categories": 7,
+    "m7_native_image_pinned_platforms": 1,
+    "m7_native_image_required_workloads": 15,
     "m7_requirement_groups": 12,
     "m7_requirement_impl_status": {
       "linked": 12
@@ -37,7 +39,7 @@
     "m7_soak_target_scenarios": 18,
     "platform_matrix_entries": 11,
     "prior_milestone_manifests": 6,
-    "unpinned_optional_references": 1
+    "unpinned_optional_references": 0
   },
   "coverage_gate": null,
   "excluded_by_scope_2026_11_20": [
@@ -54,6 +56,66 @@
       "reason": "Explicit 2026-11-20 scope decision in INTENT.md and PLAN.md: Kotlin code generator CLI command/options excluded from required product scope."
     }
   ],
+  "native_image_targets": {
+    "eligible_modes": [
+      "cold-cli",
+      "steady-server"
+    ],
+    "execution_time_max": 1.0,
+    "expected_eligible_workload_count": 15,
+    "peak_rss_max": 1.0,
+    "repl_jline_stderr_note": "Official Apple Pkl 0.32.0 native-image pkl repl reads System.getProperty(\"user.home\")/.pkl/repl-history via JLine and may emit benign JLine history log lines to stderr; Rust pkl repl remains strictly verified for stderr == b\"\" and 100% raw-byte stdout parity.",
+    "required_for_cli_server_pkldoc": true
+  },
+  "pinned_native_image_reference": {
+    "baseline_version": "0.32.0",
+    "distributions": {
+      "Darwin-arm64": {
+        "cache_subdir": "native-image-0.32.0",
+        "pkl": {
+          "bytes": 99267376,
+          "filename": "pkl-macos-aarch64",
+          "sha256": "fb891856705f3dcb8589c74999e01ded3eeb6b77ad5c6a95c02579a848c13928",
+          "url": "https://github.com/apple/pkl/releases/download/0.32.0/pkl-macos-aarch64",
+          "version_prefix": "Pkl 0.32.0 (",
+          "version_suffix": ", native)\n"
+        },
+        "pkldoc": {
+          "bytes": 99266664,
+          "filename": "pkldoc-macos-aarch64",
+          "sha256": "f363e09502aa5c27d40bdaa071ac61f557f13a32483ec025277cf0958f46923f",
+          "url": "https://github.com/apple/pkl/releases/download/0.32.0/pkldoc-macos-aarch64",
+          "version_prefix": "pkldoc 0.32.0 (",
+          "version_suffix": ", native)\n"
+        }
+      }
+    },
+    "id": "native-image-reference",
+    "lock_file": "oracle.lock.json",
+    "pinned_platforms": [
+      "Darwin-arm64"
+    ],
+    "required_workload_count": 15,
+    "required_workload_ids": [
+      "failure-diagnostics:cold-cli",
+      "formatter-large:cold-cli",
+      "import-graph:cold-cli",
+      "large-output:cold-cli",
+      "packages-http-cold:cold-cli",
+      "packages-http-warm:cold-cli",
+      "pkldoc-single-package:cold-cli",
+      "recursive-compute:cold-cli",
+      "reflection-stdlib:cold-cli",
+      "renderers-binary:cold-cli",
+      "renderers-files:cold-cli",
+      "repl-session:cold-cli",
+      "scalar:cold-cli",
+      "server-session:steady-server",
+      "stdlib-collections:cold-cli"
+    ],
+    "scope": "Explicit 2026-11-23 baseline decision: Official Apple Pkl 0.32.0 prebuilt native-image binaries (pkl and pkldoc, SHA-256 pinned in oracle.lock.json) are the primary <= 1.00x execution time and os.wait4 peak RSS strict gate for all 15 CLI, server, and pkldoc workloads (cold-cli and steady-server). Live Temurin 21.0.13.1+2-LTS and archived M0 GraalVM CE 25.0.1 remain recorded separately, and all 19 embedded API and JS/Wasm workloads remain strictly gated against pinned JVM (plus the 2026-11-22 browser Wasm contract) because official native-image ships CLI executables only.",
+    "status": "pinned-required-release-baseline"
+  },
   "platform_matrix": [
     {
       "category": "native-os",
@@ -407,16 +469,21 @@
       "track": "fuzz"
     },
     "m7:perf:core-6-cold-cli": {
-      "description": "Core 6 workloads cold CLI execution time and os.wait4 peak RSS <= 1.00x Java (Temurin 21 live + M0 GraalVM 25 reference)",
+      "description": "Core 6 workloads cold CLI execution time and os.wait4 peak RSS <= 1.00x pinned Official Apple Pkl 0.32.0 native-image (plus Temurin 21 live and M0 GraalVM 25 reference)",
       "implementation_links": [
         {
+          "path": "tools/oracle.py",
+          "sha256": "9ebd3ae84eb69eb2c2d158c11f703a18cd59ce6b487af8218ca17591a74dcf5e",
+          "symbol": "ensure_native_image_oracle"
+        },
+        {
           "path": "tools/m7_benchmark.py",
-          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
+          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
           "symbol": "_run_cold_cli_pair"
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
+          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
           "symbol": "evaluate_ratio_verdict"
         }
       ],
@@ -441,7 +508,7 @@
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
+          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
           "symbol": "parse_probe_series"
         },
         {
@@ -471,7 +538,7 @@
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
+          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
           "symbol": "_run_api_probe_pair"
         },
         {
@@ -496,7 +563,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
+          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
           "symbol": "_run_js_binding_workload"
         },
         {
@@ -547,11 +614,11 @@
       ]
     },
     "m7:perf:packages-http-cache": {
-      "description": "Warm package-2 cache and cold HTTPS mirror download + localhost HTTP resource read via M4FixtureServers",
+      "description": "Warm package-2 cache and cold HTTPS mirror download + localhost HTTP resource read via M4FixtureServers (<= 1.00x Official Apple Pkl 0.32.0 native-image & Temurin 21)",
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
+          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
           "symbol": "_run_packages_http_workload"
         }
       ],
@@ -563,11 +630,11 @@
       ]
     },
     "m7:perf:reflection-stdlib": {
-      "description": "import \"pkl:reflect\" stdlib reflection cold CLI and persistent evaluator time & peak RSS <= 1.00x Java",
+      "description": "import \"pkl:reflect\" stdlib reflection cold CLI (<= 1.00x Official Apple Pkl 0.32.0 native-image & Temurin 21) and persistent evaluator (<= 1.00x Temurin 21) time & peak RSS",
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
+          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
           "symbol": "run_suite"
         },
         {
@@ -584,16 +651,16 @@
       ]
     },
     "m7:perf:renderers-files-binary": {
-      "description": "Multi-renderer output.files (7 text renderers) and pkl-binary MessagePack encoding time & peak RSS <= 1.00x Java",
+      "description": "Multi-renderer output.files (7 text renderers) and pkl-binary MessagePack encoding time & peak RSS <= 1.00x Official Apple Pkl 0.32.0 native-image (plus Temurin 21)",
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
+          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
           "symbol": "_run_output_files_workload"
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
+          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
           "symbol": "_run_cold_cli_pair"
         }
       ],
@@ -605,17 +672,22 @@
       ]
     },
     "m7:perf:repl-server-formatter-pkldoc": {
-      "description": "Product tools: REPL piped session, MessagePack 0x20-0x25 server steady throughput, formatter, and pkldoc site generation",
+      "description": "Product tools: REPL piped session, MessagePack 0x20-0x25 server steady throughput, formatter, and pkldoc site generation (<= 1.00x Official Apple Pkl 0.32.0 native-image & Temurin 21)",
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
+          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
           "symbol": "_run_server_workload"
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
+          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
           "symbol": "_run_pkldoc_workload"
+        },
+        {
+          "path": "tools/m7_benchmark.py",
+          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
+          "symbol": "is_benign_jline_repl_stderr"
         }
       ],
       "implementation_status": "linked",
@@ -632,7 +704,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_manifest.py",
-          "sha256": "bbe0e668fa9ca93c4ec3c8d8631e101c5b039f376756166536eeafd8fe163ca9",
+          "sha256": "e555006362b6a9421644f2ce087dcf2f46714f032e0113c0dcecbe7491283efc",
           "symbol": "verify_release"
         },
         {
@@ -717,32 +789,27 @@
     }
   },
   "schema_version": 1,
-  "scope": "Unified M7 Release Verification manifest aggregating M0-M6 compatibility inventories with M7 performance & peak RSS parity (Rust/Java <= 1.00 per workload), long-running memory reclamation soak across Native/N-API/Wasm, seeded differential fuzzing, and release OS/browser/CI matrix accounting.",
+  "scope": "Unified M7 Release Verification manifest aggregating M0-M6 compatibility inventories with M7 performance & peak RSS parity (pinned Official Apple Pkl 0.32.0 native-image <= 1.00x time & peak RSS primary gate for all 15 CLI/server/pkldoc workloads; pinned Temurin 21 JVM + M0 GraalVM CE 25.0.1 + 2026-11-22 browser Wasm contract for all 19 embedded API and JS/Wasm workloads), long-running memory reclamation soak across Native/N-API/Wasm, seeded differential fuzzing, and release OS/browser/CI matrix accounting.",
   "sources": {
-    "benchmarks/m7_workloads.json": "0bbfabf6cbfbe588a2978c8067105799b59df79fe46f468ce2d4d8ee57a99723",
+    "benchmarks/m7_workloads.json": "a0013e79df17dfd220297196fdac2265a661a5f088a721ce7a8ae71ba0b5216c",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
     "compatibility/m2-language.json": "5bbd56de0180fc2b6b34d627645e676443157a3d3c8f8fbfccb69560bde12dc9",
     "compatibility/m3-stdlib-output.json": "d5331f3fc114ab53fe28e4597f8fed90dffbc636b4155d26fd6d32b6249a33fa",
     "compatibility/m4-io-packages.json": "e0eb311eb64c2660f6e102e4eb6e9d63e826067cad1e5b796b21aba6c9d074b9",
     "compatibility/m5-product-tools.json": "186889b3b1e6b548ca517b7598f6605adbe7a3dde1b607a6fe443dc651df9dff",
     "compatibility/m6-wasm-napi.json": "a7c9837f7bb66e157eb610d5910b916e3aa4706fcbcc788c420901211ff3605a",
-    "compatibility/m7-mappings.json": "5202ffbc726efd63bf602f20be673997afdb0f15b916bd25fd1f582f9f36da9c",
-    "oracle.lock.json": "035fa94a2706344b29d94c8cd3d233d2447007bad0a1a52f8911756e460f0bbc",
+    "compatibility/m7-mappings.json": "1952526cce5029dd827a2e6aff05f4244b1a5e7cd53a06e6ba5db3db1d34103b",
+    "oracle.lock.json": "698cf7c5dffa9acff5dce343225933d5ef836c0f24ba31b315bda7bd2418baf8",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
     "reports/m0/benchmarks.json": "ecab898e432e0fcd0ae81e1cda44fa2789df20c6a158531b6d42389173251914",
-    "tools/m7_benchmark.py": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
+    "tools/m7_benchmark.py": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
     "tools/m7_fuzz.py": "44323cd9e5245d076049f8bcce977a5bd6bfa93d3f03369cea39e038dc3e997b",
-    "tools/m7_memory_soak.py": "534429a17dd97db4b1b46d380c9784fb99ef17828f0debd5d57ea8ac46d309d3"
+    "tools/m7_memory_soak.py": "534429a17dd97db4b1b46d380c9784fb99ef17828f0debd5d57ea8ac46d309d3",
+    "tools/oracle.py": "9ebd3ae84eb69eb2c2d158c11f703a18cd59ce6b487af8218ca17591a74dcf5e"
   },
   "target_ratios": {
     "execution_time_max": 1.0,
     "peak_rss_max": 1.0
   },
-  "unpinned_optional_references": [
-    {
-      "id": "native-image-reference",
-      "reason": "Official upstream Pkl native-image binary is not pinned in oracle.lock.json (which pins pkl-tools-0.32.0.jar, Temurin 21.0.13.1+2-LTS, and GraalVM CE 25.0.1). Never replaces warm JVM reference.",
-      "status": "unverified-not-pinned"
-    }
-  ]
+  "unpinned_optional_references": []
 }

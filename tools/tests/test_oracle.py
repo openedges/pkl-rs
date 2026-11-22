@@ -248,6 +248,162 @@ class OracleTests(unittest.TestCase):
         self.assertFalse(report["results"][0]["passed"])
         self.assertEqual((self.root / "target/m0/oracle/error.stderr.bin").read_bytes(), b"error\n")
 
+    def test_native_image_binary_verification_checks_missing_size_hash_and_exec(self):
+        binary = self.root / "pkl-macos-aarch64"
+        payload = b"#!/bin/sh\necho 'Pkl 0.32.0 (macOS 26.5, native)'\n"
+        binary.write_bytes(payload)
+        binary.chmod(0o755)
+        spec = {
+            "filename": "pkl-macos-aarch64",
+            "url": "https://github.com/apple/pkl/releases/download/0.32.0/pkl-macos-aarch64",
+            "bytes": len(payload),
+            "sha256": oracle.sha256(binary),
+            "version_prefix": "Pkl 0.32.0 (",
+            "version_suffix": ", native)\n",
+        }
+        oracle.verify_native_binary(binary, spec, "pkl")
+
+        # Non-executable rejected
+        binary.chmod(0o644)
+        with self.assertRaisesRegex(oracle.OracleError, "not executable"):
+            oracle.verify_native_binary(binary, spec, "pkl")
+        binary.chmod(0o755)
+
+        # Same-size checksum tamper rejected
+        tampered = bytearray(payload)
+        tampered[0] ^= 0xFF
+        binary.write_bytes(bytes(tampered))
+        with self.assertRaisesRegex(oracle.OracleError, "checksum mismatch"):
+            oracle.verify_native_binary(binary, spec, "pkl")
+
+        # Size mismatch rejected
+        binary.write_bytes(payload + b"extra")
+        with self.assertRaisesRegex(oracle.OracleError, "size mismatch"):
+            oracle.verify_native_binary(binary, spec, "pkl")
+
+        # Missing binary rejected
+        binary.unlink()
+        with self.assertRaisesRegex(oracle.OracleError, "binary missing"):
+            oracle.verify_native_binary(binary, spec, "pkl")
+
+    def test_native_image_fetch_checks_download_and_never_overwrites_corrupt(self):
+        payload = b"official native-image binary fixture"
+        spec = {
+            "filename": "pkl-macos-aarch64",
+            "url": "https://example.invalid/pkl-macos-aarch64",
+            "bytes": len(payload),
+            "sha256": oracle.hashlib.sha256(payload).hexdigest(),
+        }
+        target = self.root / "native-cache/pkl-macos-aarch64"
+
+        # Tampered download rejected before install
+        bad_resp = io.BytesIO(payload + b"!")
+        bad_resp.geturl = lambda: spec["url"]
+        with patch.object(oracle.urllib.request, "urlopen", return_value=bad_resp):
+            with self.assertRaisesRegex(oracle.OracleError, "size mismatch"):
+                oracle.fetch_native_binary(target, spec, "pkl")
+        self.assertFalse(target.exists())
+        self.assertEqual(list(target.parent.iterdir()), [])
+
+        # Non-HTTPS redirect rejected
+        http_resp = io.BytesIO(payload)
+        http_resp.geturl = lambda: "http://insecure.invalid/pkl"
+        with patch.object(oracle.urllib.request, "urlopen", return_value=http_resp):
+            with self.assertRaisesRegex(oracle.OracleError, "outside HTTPS"):
+                oracle.fetch_native_binary(target, spec, "pkl")
+        self.assertFalse(target.exists())
+
+        # Valid download installs executable binary
+        ok_resp = io.BytesIO(payload)
+        ok_resp.geturl = lambda: spec["url"]
+        with patch.object(oracle.urllib.request, "urlopen", return_value=ok_resp):
+            oracle.fetch_native_binary(target, spec, "pkl")
+        self.assertEqual(target.read_bytes(), payload)
+        self.assertTrue(oracle.os.access(target, oracle.os.X_OK))
+
+        # Existing corrupt cache is never replaced silently
+        target.write_bytes(b"corrupt")
+        with patch.object(oracle.urllib.request, "urlopen") as download:
+            with self.assertRaisesRegex(oracle.OracleError, "size mismatch"):
+                oracle.fetch_native_binary(target, spec, "pkl")
+            download.assert_not_called()
+
+    def test_ensure_native_image_oracle_env_override_and_version_validation(self):
+        pkl_bin = self.root / "override/pkl-macos-aarch64"
+        pkldoc_bin = self.root / "override/pkldoc-macos-aarch64"
+        pkl_bin.parent.mkdir(parents=True)
+        pkl_bin.write_bytes(b"fake pkl binary")
+        pkldoc_bin.write_bytes(b"fake pkldoc binary")
+        pkl_bin.chmod(0o755)
+        pkldoc_bin.chmod(0o755)
+
+        lock = {
+            "schema": 1,
+            "version": "0.32.0",
+            "source": {"path": "external/pkl", "url": "https://github.com/apple/pkl.git", "revision": "e51fb2f91774265666f94980ec630db794a4db2d", "metadata_sha256": {}},
+            "native_image": {
+                "distributions": {
+                    "Darwin-arm64": {
+                        "cache_subdir": "native-image-0.32.0",
+                        "pkl": {
+                            "filename": "pkl-macos-aarch64",
+                            "url": "https://github.com/apple/pkl/releases/download/0.32.0/pkl-macos-aarch64",
+                            "bytes": pkl_bin.stat().st_size,
+                            "sha256": oracle.sha256(pkl_bin),
+                            "version_prefix": "Pkl 0.32.0 (",
+                            "version_suffix": ", native)\n",
+                        },
+                        "pkldoc": {
+                            "filename": "pkldoc-macos-aarch64",
+                            "url": "https://github.com/apple/pkl/releases/download/0.32.0/pkldoc-macos-aarch64",
+                            "bytes": pkldoc_bin.stat().st_size,
+                            "sha256": oracle.sha256(pkldoc_bin),
+                            "version_prefix": "pkldoc 0.32.0 (",
+                            "version_suffix": ", native)\n",
+                        },
+                    }
+                }
+            },
+        }
+        (self.root / "oracle.lock.json").write_text(json.dumps(lock), encoding="utf-8")
+
+        ver_runs = [
+            subprocess.CompletedProcess([], 0, b"Pkl 0.32.0 (macOS 26.5, native)\n", b""),
+            subprocess.CompletedProcess([], 0, b"pkldoc 0.32.0 (macOS 26.5, native)\n", b""),
+        ]
+        env_overrides = {
+            "PKL_ORACLE_NATIVE_PKL": str(pkl_bin),
+            "PKL_ORACLE_NATIVE_PKLDOC": str(pkldoc_bin),
+        }
+        with (
+            patch.object(oracle, "verify_sources"),
+            patch.dict(oracle.os.environ, env_overrides, clear=False),
+            patch.object(oracle, "_run", side_effect=ver_runs),
+        ):
+            meta = oracle.ensure_native_image_oracle(self.root, fetch=False, target="Darwin-arm64")
+        self.assertTrue(meta["exact_native_image_lock_match"])
+        self.assertEqual(meta["command"], [str(pkl_bin.resolve())])
+        self.assertEqual(meta["pkldoc_command"], [str(pkldoc_bin.resolve())])
+        self.assertEqual(meta["pkl"]["sha256"], oracle.sha256(pkl_bin))
+        self.assertEqual(meta["pkldoc"]["sha256"], oracle.sha256(pkldoc_bin))
+
+        # Unpinned target rejected
+        with patch.object(oracle, "verify_sources"):
+            with self.assertRaisesRegex(oracle.OracleError, "not pinned for Plan9-riscv"):
+                oracle.ensure_native_image_oracle(self.root, fetch=False, target="Plan9-riscv")
+
+        # Spoofed JVM version output rejected
+        bad_ver = [
+            subprocess.CompletedProcess([], 0, b"Pkl 0.32.0 (macOS 26.5, Java 21)\n", b""),
+        ]
+        with (
+            patch.object(oracle, "verify_sources"),
+            patch.dict(oracle.os.environ, env_overrides, clear=False),
+            patch.object(oracle, "_run", side_effect=bad_ver),
+        ):
+            with self.assertRaisesRegex(oracle.OracleError, "runtime version check failed"):
+                oracle.ensure_native_image_oracle(self.root, fetch=False, target="Darwin-arm64")
+
 
 if __name__ == "__main__":
     unittest.main()

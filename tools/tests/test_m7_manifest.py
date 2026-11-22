@@ -26,10 +26,18 @@ class M7ManifestTests(unittest.TestCase):
         counts = manifest["counts"]
         self.assertEqual(counts["prior_milestone_manifests"], 6)
         self.assertEqual(counts["m7_benchmark_workload_modes"], 34)
+        self.assertEqual(counts["m7_native_image_required_workloads"], 15)
+        self.assertGreaterEqual(counts["m7_native_image_pinned_platforms"], 1)
+        self.assertEqual(counts["unpinned_optional_references"], 0)
         self.assertEqual(counts["m7_soak_target_scenarios"], 18)
         self.assertEqual(counts["m7_fuzz_categories"], 7)
         self.assertEqual(counts["platform_matrix_entries"], 11)
         self.assertEqual(counts["excluded_scope_entries"], 3)
+        ni_ref = manifest["pinned_native_image_reference"]
+        self.assertEqual(ni_ref["id"], "native-image-reference")
+        self.assertEqual(ni_ref["status"], "pinned-required-release-baseline")
+        self.assertEqual(ni_ref["required_workload_count"], 15)
+        self.assertIn("Darwin-arm64", ni_ref["pinned_platforms"])
 
     def test_validate_mappings_rejects_unmapped_and_missing_symbol(self):
         contract = m7_benchmark.load_contract()
@@ -70,12 +78,22 @@ class M7ManifestTests(unittest.TestCase):
                 "machine_start": {"system": "Darwin", "machine": "arm64"},
                 "results": [
                     {
+                        "id": "scalar:cold-cli",
+                        "family": "core-6",
+                        "mode": "cold-cli",
+                        "correctness_verified": True,
+                        "vs_official_native_image": {"time_ratio": 0.8, "rss_ratio": 0.6, "verdict": "pass", "reason": "ok"},
+                        "vs_live_temurin_21": {"time_ratio": 0.02, "rss_ratio": 0.09, "verdict": "pass", "reason": "ok"},
+                    },
+                    {
                         "id": "wasm-browser-eval-text:wasm-browser",
                         "family": "wasm-browser",
+                        "mode": "wasm-browser",
                         "correctness_verified": True,
                         "rust": {"browserErrors": []},
+                        "vs_official_native_image": None,
                         "vs_live_temurin_21": {"time_ratio": 0.5, "rss_ratio": 0.4, "verdict": "pass", "reason": "ok"},
-                    }
+                    },
                 ],
             }
             fake_soak_pass = {
@@ -97,16 +115,52 @@ class M7ManifestTests(unittest.TestCase):
                 self.assertTrue(verdict["local_strict_gates_passed"])
                 self.assertEqual(verdict["verified_platforms"], ["browser-chromium", "darwin-arm64"])
                 self.assertEqual(verdict["observed_non_passing_platforms"], [])
+                self.assertEqual(verdict["unmet_performance_workloads_official_native_image"], [])
+                self.assertEqual(
+                    verdict["pinned_native_image_reference"]["status"],
+                    "pinned-required-release-baseline",
+                )
                 # Linux/Windows/Firefox/WebKit/hosted-CI are unverified -> release_ready MUST be False!
                 self.assertFalse(verdict["release_ready"])
                 self.assertIn("linux-x64-gnu", verdict["unverified_platforms"])
                 self.assertIn("linux-x64-musl", verdict["unverified_platforms"])
                 self.assertIn("hosted-ci", verdict["unverified_platforms"])
 
+            # Unmet Official Apple Pkl native-image ratio on a CLI workload MUST fail local strict gate
+            # and be explicitly enumerated in unmet_performance_workloads_official_native_image!
+            fake_ni_fail = copy.deepcopy(fake_bench_pass)
+            fake_ni_fail["results"][0]["vs_official_native_image"] = {
+                "time_ratio": 1.30,
+                "rss_ratio": 0.65,
+                "verdict": "fail",
+                "reason": "time_ratio=1.3000>1.00",
+            }
+
+            def ni_fail_side_effect(d, *, root=m7_manifest.ROOT, strict=False):
+                if strict:
+                    raise ValueError("scalar:cold-cli vs_official_native_image=fail")
+                return fake_ni_fail
+
+            with (
+                mock.patch("m7_benchmark.verify_report", side_effect=ni_fail_side_effect),
+                mock.patch("m7_memory_soak.verify_report", return_value=fake_soak_pass),
+                mock.patch("m7_fuzz.verify_report", return_value=fake_fuzz_pass),
+            ):
+                verdict = m7_manifest.verify_release(m7_manifest.ROOT, bundle_dir=bundle)
+                self.assertTrue(verdict["integrity_passed"])
+                self.assertFalse(verdict["benchmark_strict_passed"])
+                self.assertFalse(verdict["local_strict_gates_passed"])
+                self.assertFalse(verdict["release_ready"])
+                self.assertEqual(len(verdict["unmet_performance_workloads_official_native_image"]), 1)
+                self.assertEqual(
+                    verdict["unmet_performance_workloads_official_native_image"][0]["id"],
+                    "scalar:cold-cli",
+                )
+
             # Unmet performance ratio on one workload must flip local_strict_gates_passed to False
             # AND must NEVER mark darwin-arm64 or browser-chromium in verified_platforms (B4 honesty)!
             fake_bench_fail = copy.deepcopy(fake_bench_pass)
-            fake_bench_fail["results"][0]["vs_live_temurin_21"] = {
+            fake_bench_fail["results"][1]["vs_live_temurin_21"] = {
                 "time_ratio": 1.42,
                 "rss_ratio": 0.5,
                 "verdict": "fail",
