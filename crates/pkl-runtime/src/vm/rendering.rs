@@ -4073,14 +4073,14 @@ impl Vm {
             }
         } else {
             for m in obj.members.iter() {
-                if m.local
-                    || m.method
-                    || m.entry
-                    || m.definition()
-                    || m.import()
-                    || m.external()
-                    || m.hidden()
-                {
+                if m.local || m.method {
+                    continue;
+                }
+                if m.entry || m.external() || m.definition() || m.import() {
+                    scratch.truncate(base);
+                    return None;
+                }
+                if m.hidden() {
                     continue;
                 }
                 match collections::hidden_property(&self.heap, id, &m.name, false) {

@@ -251,7 +251,7 @@
       "description": "Whole-language 4,586-case (4,575 ready) and 475-requirement differential inventory",
       "manifest": "compatibility/m2-language.json",
       "milestone": "M2",
-      "sha256": "5bbd56de0180fc2b6b34d627645e676443157a3d3c8f8fbfccb69560bde12dc9"
+      "sha256": "b8e617be7f52effeeeaeaf8da8dfafdd56a6bd0969b5c1cbe535230b3de7cba2"
     },
     {
       "bytes": 111079,
@@ -277,7 +277,7 @@
       "description": "1,781 stdlib/builtin/renderer mechanical census + 118 3-lane output/binary differential cases",
       "manifest": "compatibility/m3-stdlib-output.json",
       "milestone": "M3",
-      "sha256": "d5331f3fc114ab53fe28e4597f8fed90dffbc636b4155d26fd6d32b6249a33fa"
+      "sha256": "c0bfa9671ddf84e66a367605bd3a3eb367b09128fc565e357539c074944fc6da"
     },
     {
       "bytes": 41462,
@@ -330,7 +330,7 @@
       "description": "16 requirement groups, 429 5-lane offline Host I/O, packages, and all 29 Pantry packages",
       "manifest": "compatibility/m4-io-packages.json",
       "milestone": "M4",
-      "sha256": "e0eb311eb64c2660f6e102e4eb6e9d63e826067cad1e5b796b21aba6c9d074b9"
+      "sha256": "bf42ac571ce6bb194cea00a82d72b1f5c8075e23900ae20efb05488f9c98f793"
     },
     {
       "bytes": 63781,
@@ -397,7 +397,7 @@
       "description": "16 requirement groups, 142 5-lane Rust API, CLI, REPL, server, formatter, and pkldoc cases",
       "manifest": "compatibility/m5-product-tools.json",
       "milestone": "M5",
-      "sha256": "186889b3b1e6b548ca517b7598f6605adbe7a3dde1b607a6fe443dc651df9dff"
+      "sha256": "e01912ab880a32c3cdc954d45281a7862648c3aabc2401987e806f4e7e29044e"
     },
     {
       "bytes": 37108,
@@ -433,7 +433,7 @@
       "description": "14 requirement groups, 80 executable + 6 capability-blocked Wasm/N-API & packaging cases",
       "manifest": "compatibility/m6-wasm-napi.json",
       "milestone": "M6",
-      "sha256": "a7c9837f7bb66e157eb610d5910b916e3aa4706fcbcc788c420901211ff3605a"
+      "sha256": "86b2f7721c4f71d1b8c00770483473bcb05c99b9b5d9901bb6f9e1c846aeadb4"
     }
   ],
   "requirements": {
@@ -583,7 +583,7 @@
         },
         {
           "path": "crates/pkl-runtime/src/vm/pkl_binary_render.rs",
-          "sha256": "ac3302be1ccdcf47cf76e5d772902c5907cbb621856b9900fd409f456e75a88f",
+          "sha256": "33b5c27dbad2344ef55141affc351180db0eb1e257201a4aa0babe1a3540d758",
           "symbol": "try_fast_encode_pkl_binary"
         },
         {
@@ -793,11 +793,11 @@
   "sources": {
     "benchmarks/m7_workloads.json": "a0013e79df17dfd220297196fdac2265a661a5f088a721ce7a8ae71ba0b5216c",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-language.json": "5bbd56de0180fc2b6b34d627645e676443157a3d3c8f8fbfccb69560bde12dc9",
-    "compatibility/m3-stdlib-output.json": "d5331f3fc114ab53fe28e4597f8fed90dffbc636b4155d26fd6d32b6249a33fa",
-    "compatibility/m4-io-packages.json": "e0eb311eb64c2660f6e102e4eb6e9d63e826067cad1e5b796b21aba6c9d074b9",
-    "compatibility/m5-product-tools.json": "186889b3b1e6b548ca517b7598f6605adbe7a3dde1b607a6fe443dc651df9dff",
-    "compatibility/m6-wasm-napi.json": "a7c9837f7bb66e157eb610d5910b916e3aa4706fcbcc788c420901211ff3605a",
+    "compatibility/m2-language.json": "b8e617be7f52effeeeaeaf8da8dfafdd56a6bd0969b5c1cbe535230b3de7cba2",
+    "compatibility/m3-stdlib-output.json": "c0bfa9671ddf84e66a367605bd3a3eb367b09128fc565e357539c074944fc6da",
+    "compatibility/m4-io-packages.json": "bf42ac571ce6bb194cea00a82d72b1f5c8075e23900ae20efb05488f9c98f793",
+    "compatibility/m5-product-tools.json": "e01912ab880a32c3cdc954d45281a7862648c3aabc2401987e806f4e7e29044e",
+    "compatibility/m6-wasm-napi.json": "86b2f7721c4f71d1b8c00770483473bcb05c99b9b5d9901bb6f9e1c846aeadb4",
     "compatibility/m7-mappings.json": "1952526cce5029dd827a2e6aff05f4244b1a5e7cd53a06e6ba5db3db1d34103b",
     "oracle.lock.json": "698cf7c5dffa9acff5dce343225933d5ef836c0f24ba31b315bda7bd2418baf8",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",

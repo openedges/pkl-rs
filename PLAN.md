@@ -1,8 +1,8 @@
 # 구현 계획
 
-## 현재 상태 — 공식 Apple Pkl 0.32.0 `native-image` 기준선 고정 및 CLI/서버/`pkldoc` 전 항목 `<= 1.00x` 엄격 게이트 수립 (`2026-11-23`, `release_ready: false`)
+## 현재 상태 — 공식 Apple Pkl 0.32.0 `native-image` 기준선 고정 및 CLI/서버/`pkldoc` 15/15 전 항목 `<= 1.00x` 달성 (`2026-11-23`, 로컬 macOS `arm64`, `release_ready: false`)
 
-`2026-11-23` 사용자 결정(**성능 측정 비교에 공식 Apple Pkl 0.32.0 `native-image`를 기준으로 삼고 전 항목 `<= 1.00x` 최적화**)에 따라 락파일·오라클 검증 도구·벤치마크 하네스·릴리스 매니페스트·문서 계약을 다음과 같이 갱신했다.
+`2026-11-23` 사용자 결정(**성능 측정 비교에 공식 Apple Pkl 0.32.0 `native-image`를 기준으로 삼고 전 항목 `<= 1.00x` 최적화**)에 따라 락파일·오라클 검증 도구·벤치마크 하네스·릴리스 매니페스트·문서 계약을 갱신하고, 공유 런타임·CLI·렌더러·`pkl:reflect`·`pkldoc`·파서 최적화를 통합해 로컬 macOS `arm64`(Apple Silicon, `rustc 1.98.1`, **호스티드 CI 아님**)에서 **CLI·서버·`pkldoc` 15/15 전 항목 실행 시간 `<= 1.00x` (`0.055x–0.935x`) 및 `os.wait4` peak RSS `<= 1.00x` (`0.136x–0.662x`)**와 100% 원시 바이트 일치를 달성했다.
 
 ### `2026-11-23` 확정된 이중 기준선 계약 및 도구 변경
 - **공식 Apple Pkl 0.32.0 `native-image` 고정 (`oracle.lock.json::native_image`, `tools/oracle.py::ensure_native_image_oracle`)**:
@@ -13,7 +13,31 @@
   - **임베디드 API 13개(`persistent`/`fresh-evaluator`) 및 JS/Wasm 6개(`napi`/`wasm-node`/`wasm-browser`)**: 공식 `native-image`는 CLI 실행 파일(`pkl`, `pkldoc`)만 배포하고 임베디드 Java/JS/Wasm API가 없으므로, 이 19개 워크로드는 현행 핀 JVM(`Temurin 21.0.13.1+2-LTS` + Core 6 M0 GraalVM CE `25.0.1` + `2026-11-22` 브라우저 Wasm 계약) 엄격 게이트를 유지한다.
   - `tools/m7_benchmark.py`는 `--baseline {both,native-image,jvm}`(기본 `both`)을 지원하며, `--check-contract`·`--verify-report`·`--verify-strict`는 `oracle.lock.json::native_image` SHA-256 일치, `<= 1.00x` 임계치 완화 거부, 그리고 `--verify-strict`에서 `baseline_mode == "both"` 및 15/15 CLI/서버/`pkldoc` `vs_official_native_image` 통과를 강제한다.
   - `tools/m7_manifest.py`, `compatibility/m7-mappings.json`, `compatibility/m7-release.json`에서 `native-image-reference`를 `unverified-not-pinned`에서 필수 릴리스 기준선(`pinned_native_image_reference`, `status: "pinned-required-release-baseline"`)으로 승격했다.
-- **남은 작업 (`release_ready: false`)**: Rust CLI 콜드 스타트·렌더러·`pkl:reflect`·`pkldoc` 최적화 완료 후 `--profile full --baseline both` 통합 재실측 및 미검증 릴리스 OS/브라우저/호스티드 CI 매트릭스 검증이 남아 있으므로 `release_ready: false`를 정직하게 유지한다.
+
+### `2026-11-23` 통합 성능 최적화 및 로컬 macOS `arm64` 실측 결과 (`15 / 15 PASS`)
+- **적용된 최적화 (`unsafe_code = "deny"`, Java fallback 0건, `.wasm` gzip-9 `<= 2.50 MiB` 유지)**:
+  - **콜드 스타트 & 파서 (`crates/pkl-runtime/{build.rs,src/source/text.rs,src/parser.rs,src/vm/stdlib_modules.rs,src/vm/code_storage.rs}`, `crates/pkl-cli`)**: 컴파일 타임 `base.pkl` 검색 인덱스(`#[cfg(not(target_arch = "wasm32"))]`), O(1) UTF-8 `SourceSlice`, `parse_base_top_level` + 지연 `ensure_base_full_metadata()` / `ensure_base_reflection_annotations()`, `pkl:reflect` `const ...Type` 지연 강제(`append_reflect_const_bootstrap` + 표준 `Class`/`TypeAlias` 거울 온디맨드 강제), 제로카피 `CodeStorage::freeze_prepared_segments`, `parser.rs` ASCII 식별자/연산자/바이트 빠른 경로.
+  - **렌더러 & 컬렉션 (`crates/pkl-runtime/src/vm/{rendering.rs,yaml.rs,collections.rs,equality.rs}`)**: 7종 텍스트 렌더러(`Pcf`/`Json`/`Yaml`/`Xml`/`Properties`/`Plist`/`Jsonnet`, `#[cfg(not(target_arch = "wasm32"))]`) 통합 직접 출력 + `-f pkl-binary` 고속 경로(`try_fast_encode_pkl_binary`) + UTF-8 `yaml::Emitter`, `vm/collections.rs`·`vm/equality.rs` O(N³) 삽입 결함 수정(`flatProps` 78x 단축) 및 원시 키 캐시 경로.
+  - **`pkl:reflect` & `pkldoc` (`crates/pkl-runtime/src/vm/{reflection.rs,reflection/declarations.rs,schema.rs}`, `crates/pkl-doc/src/`)**: 공유 `BuiltinModuleIndex` + 지연 `SourceTextIndex`, 동기 `reflection_module_field`/`reflection_class_field` 빠른 경로, `vm/schema.rs` `BASE_SCHEMA_CACHE` + `try_decode_forced_annotation`, `pkl-doc` `pkl:base` 스키마 사전 워밍·중복 `PackageData` 제거·결정적 멀티스레드 파일 출력(`std::thread::scope`).
+- **봉인 실측 (`tools/m7_benchmark.py --profile full --baseline native-image`, `--verify-report` Exit `0`, 로컬 macOS `arm64`, `exact_native_image_lock_match: true`, **호스티드 CI 아님**)**:
+  - **최적화 전 `7/15 PASS` → 최적화 후 `15/15 PASS`** (`correctness_verified: 15`, vs M0 GraalVM CE `25.0.1` `6/6 PASS`):
+    - `scalar:cold-cli`: `1.302x / 0.456x` → **`0.628x / 0.468x`** (`18.53 ms / 11.6 MiB` vs `29.50 ms / 24.8 MiB`)
+    - `stdlib-collections:cold-cli`: **`0.371x / 0.281x`** (`10.55 ms / 11.9 MiB` vs `28.46 ms / 42.2 MiB`)
+    - `recursive-compute:cold-cli`: **`0.411x / 0.136x`** (`13.96 ms / 11.6 MiB` vs `33.94 ms / 85.3 MiB`)
+    - `large-output:cold-cli`: `1.043x / 0.273x` → **`0.441x / 0.275x`** (`10.51 ms / 13.4 MiB` vs `23.82 ms / 48.6 MiB`)
+    - `failure-diagnostics:cold-cli`: `1.456x / 0.456x` → **`0.599x / 0.465x`** (`9.49 ms / 12.0 MiB` vs `15.86 ms / 25.8 MiB`)
+    - `import-graph:cold-cli`: `1.295x / 0.468x` → **`0.618x / 0.474x`** (`12.42 ms / 11.8 MiB` vs `20.11 ms / 25.0 MiB`)
+    - `reflection-stdlib:cold-cli`: `4.895x / 2.602x` → **`0.904x / 0.662x`** (`15.86 ms / 19.0 MiB` vs `17.55 ms / 28.7 MiB`)
+    - `renderers-files:cold-cli`: `5.074x / 0.725x` → **`0.704x / 0.519x`** (`17.31 ms / 17.1 MiB` vs `24.58 ms / 33.0 MiB`)
+    - `renderers-binary:cold-cli`: `1.846x / 0.957x` → **`0.742x / 0.662x`** (`17.57 ms / 19.5 MiB` vs `23.67 ms / 29.5 MiB`)
+    - `packages-http-warm:cold-cli`: **`0.457x / 0.329x`** (`12.70 ms / 12.2 MiB` vs `27.79 ms / 37.2 MiB`)
+    - `packages-http-cold:cold-cli`: **`0.669x / 0.309x`** (`34.00 ms / 13.0 MiB` vs `50.82 ms / 42.0 MiB`)
+    - `repl-session:cold-cli`: **`0.055x / 0.330x`** (`24.24 ms / 13.0 MiB` vs `441.16 ms / 39.4 MiB`)
+    - `server-session:steady-server`: **`0.279x / 0.153x`** (`89.56 us / 24.6 MiB` vs `320.83 us / 160.8 MiB`)
+    - `formatter-large:cold-cli`: **`0.493x / 0.162x`** (`7.34 ms / 3.2 MiB` vs `14.88 ms / 19.7 MiB`)
+    - `pkldoc-single-package:cold-cli`: `3.376x / 1.836x` → **`0.935x / 0.650x`** (`44.99 ms / 28.9 MiB` vs `48.14 ms / 44.4 MiB`)
+  - **동결 소스 최종 회귀 검증**: `cargo xtask verify`, `cargo fmt --all -- --check`, `wasm32` check/clippy, `cargo clippy --workspace --all-targets --locked -- -D warnings`, 전체 Rust 워크스페이스(`cargo test --workspace --exclude pkl-host-native --locked` + `cargo test -p pkl-host-native --locked`), `@pkl-rs/wasm` (`10/10 PASS`, `pkl_wasm_bg.wasm` `8,022,629 B` 원시 / **`2,619,729 B` = `2.498 MiB` gzip-9 `<= 2.50 MiB`**), `@pkl-rs/napi` (`11/11 PASS`), `tools/oracle.py verify --profile native-image`, `tools/m7_benchmark.py --check-contract`, `m2`–`m7` 매니페스트 `--check` 전원 통과.
+- **남은 작업 (`release_ready: false`)**: 미검증 릴리스 OS/아키텍처(`darwin-x64`, `linux-x64-gnu`, `linux-arm64-gnu`, `win32-x64-msvc`), 비-Chromium 브라우저(Firefox/WebKit) 재측정, 호스티드 CI 매트릭스, 및 `--baseline both` 통합 34-워크로드 릴리스 게이트 실행이 남아 있으므로 `release_ready: false`를 정직하게 유지한다.
 
 ## 이전 상태 — M7 브라우저 `@pkl-rs/wasm` 목표 계약 확정·JS/Wasm 최적화 및 로컬 macOS `arm64` 검증 (`2026-11-22`, `release_ready: false`)
 

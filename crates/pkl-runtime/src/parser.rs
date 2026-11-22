@@ -46,11 +46,32 @@ fn identifier_contains(ranges: &[(u32, u32)], character: char) -> bool {
         .is_ok()
 }
 
+#[inline]
+fn is_ascii_identifier_start(b: u8) -> bool {
+    b.is_ascii_alphabetic() || b == b'_' || b == b'$'
+}
+
+#[inline]
+fn is_ascii_identifier_part(b: u8) -> bool {
+    b.is_ascii_alphanumeric()
+        || b == b'_'
+        || b == b'$'
+        || matches!(b, 0x00..=0x08 | 0x0e..=0x1b | 0x7f)
+}
+
+#[inline]
 pub(crate) fn is_identifier_start(character: char) -> bool {
+    if character.is_ascii() {
+        return is_ascii_identifier_start(character as u8);
+    }
     identifier_contains(unicode_identifier::START_RANGES, character)
 }
 
+#[inline]
 pub(crate) fn is_identifier_part(character: char) -> bool {
+    if character.is_ascii() {
+        return is_ascii_identifier_part(character as u8);
+    }
     identifier_contains(unicode_identifier::PART_RANGES, character)
 }
 
@@ -61,9 +82,18 @@ pub(crate) fn is_regular_identifier(name: &str) -> bool {
     }
     let mut characters = name.chars();
     characters.next().is_some_and(|character| {
-        identifier_contains(unicode_identifier::REGULAR_START_RANGES, character)
-    }) && characters
-        .all(|character| identifier_contains(unicode_identifier::REGULAR_PART_RANGES, character))
+        if character.is_ascii() {
+            is_ascii_identifier_start(character as u8)
+        } else {
+            identifier_contains(unicode_identifier::REGULAR_START_RANGES, character)
+        }
+    }) && characters.all(|character| {
+        if character.is_ascii() {
+            is_ascii_identifier_part(character as u8)
+        } else {
+            identifier_contains(unicode_identifier::REGULAR_PART_RANGES, character)
+        }
+    })
 }
 
 fn is_keyword(name: &str) -> bool {
@@ -280,15 +310,26 @@ impl Lexer<'_> {
             self.advance(); // Closing backquote; quoted names have no escapes.
             Kind::QuotedName(self.source.range(begin..end).to_pkl_string())
         } else if is_identifier_start(ch) {
-            while self.peek().is_some_and(is_identifier_part) {
-                self.advance();
+            while let Some(&b) = bytes.get(self.cursor) {
+                if b < 0x80 {
+                    if is_ascii_identifier_part(b) {
+                        self.cursor += 1;
+                    } else {
+                        break;
+                    }
+                } else if self.peek().is_some_and(is_identifier_part) {
+                    self.advance();
+                } else {
+                    break;
+                }
             }
             // The pinned lexer makes `read?` one keyword only when adjacent.
             // A quoted name or a separated `?` retains its ordinary grammar.
-            if self.source.range(start..self.cursor).as_str() == Some("read")
-                && self.peek() == Some('?')
+            if self.cursor - start == 4
+                && bytes.get(start..self.cursor) == Some(b"read")
+                && bytes.get(self.cursor) == Some(&b'?')
             {
-                self.advance();
+                self.cursor += 1;
             }
             Kind::Name(
                 self.source
@@ -331,16 +372,51 @@ impl Lexer<'_> {
             } else {
                 self.string(start, ch)?
             }
-        } else if let Some(operator) = [
-            "...?", "...", "[[", "**", "~/", "==", "!=", "<=", ">=", "&&", "||", "??", "->", "!!",
-            "?.", "|>",
-        ]
-        .into_iter()
-        .find(|operator| self.source.range(start..).starts_with(operator))
-        {
+        } else if let Some(operator) = match ch {
+            '.' if bytes.get(start..start + 4) == Some(b"...?") => Some("...?"),
+            '.' if bytes.get(start..start + 3) == Some(b"...") => Some("..."),
+            '[' if bytes.get(start + 1) == Some(&b'[') => Some("[["),
+            '*' if bytes.get(start + 1) == Some(&b'*') => Some("**"),
+            '~' if bytes.get(start + 1) == Some(&b'/') => Some("~/"),
+            '=' if bytes.get(start + 1) == Some(&b'=') => Some("=="),
+            '!' if bytes.get(start + 1) == Some(&b'=') => Some("!="),
+            '!' if bytes.get(start + 1) == Some(&b'!') => Some("!!"),
+            '<' if bytes.get(start + 1) == Some(&b'=') => Some("<="),
+            '>' if bytes.get(start + 1) == Some(&b'=') => Some(">="),
+            '&' if bytes.get(start + 1) == Some(&b'&') => Some("&&"),
+            '|' if bytes.get(start + 1) == Some(&b'|') => Some("||"),
+            '|' if bytes.get(start + 1) == Some(&b'>') => Some("|>"),
+            '?' if bytes.get(start + 1) == Some(&b'?') => Some("??"),
+            '?' if bytes.get(start + 1) == Some(&b'.') => Some("?."),
+            '-' if bytes.get(start + 1) == Some(&b'>') => Some("->"),
+            _ => None,
+        } {
             self.cursor = start + operator.len();
             Kind::Operator(operator)
-        } else if "=(){};.,+-*/%<>!:?|[]@".contains(ch) {
+        } else if matches!(
+            ch,
+            '=' | '('
+                | ')'
+                | '{'
+                | '}'
+                | ';'
+                | '.'
+                | ','
+                | '+'
+                | '-'
+                | '*'
+                | '/'
+                | '%'
+                | '<'
+                | '>'
+                | '!'
+                | ':'
+                | '?'
+                | '|'
+                | '['
+                | ']'
+                | '@'
+        ) {
             Kind::Symbol(ch)
         } else if !ch.is_ascii() {
             return Err(self.invalid_identifier(start, character));
@@ -473,23 +549,53 @@ impl Lexer<'_> {
         })
     }
 
+    #[inline]
     fn peek_character(&self) -> Option<SourceCharacter> {
+        let bytes = self.source.as_bytes();
+        if let Some(&b) = bytes.get(self.cursor)
+            && b < 0x80
+        {
+            return Some(SourceCharacter::Scalar(b as char));
+        }
         self.source.range(self.cursor..).first()
     }
 
+    #[inline]
     fn advance_character(&mut self) -> Option<SourceCharacter> {
-        let ch = self.peek_character()?;
+        let bytes = self.source.as_bytes();
+        if let Some(&b) = bytes.get(self.cursor)
+            && b < 0x80
+        {
+            self.cursor += 1;
+            return Some(SourceCharacter::Scalar(b as char));
+        }
+        let ch = self.source.range(self.cursor..).first()?;
         self.cursor += ch.len_bytes();
         Some(ch)
     }
 
     // Scalar grammar lookahead. Callers which distinguish EOF from a lone
     // surrogate use peek_character; text/comment paths consume characters.
+    #[inline]
     fn peek(&self) -> Option<char> {
+        let bytes = self.source.as_bytes();
+        if let Some(&b) = bytes.get(self.cursor)
+            && b < 0x80
+        {
+            return Some(b as char);
+        }
         self.peek_character().and_then(SourceCharacter::scalar)
     }
 
+    #[inline]
     fn advance(&mut self) -> Option<char> {
+        let bytes = self.source.as_bytes();
+        if let Some(&b) = bytes.get(self.cursor)
+            && b < 0x80
+        {
+            self.cursor += 1;
+            return Some(b as char);
+        }
         let ch = self.peek()?;
         self.cursor += ch.len_utf8();
         Some(ch)
@@ -638,11 +744,9 @@ impl<'a> Parser<'a> {
             // inter-token newline in the pinned Java lexer; CR alone is not
             // counted either. The string scanner retains its raw token path.
             let token = lexer.next_with_comments(string_start_only, true)?;
-            let newlines = lexer
-                .source
-                .range(start..token.span.start)
-                .bytes()
-                .filter(|&byte| byte == b'\n')
+            let newlines = lexer.source.as_bytes()[start..token.span.start]
+                .iter()
+                .filter(|&&byte| byte == b'\n')
                 .count();
             if comments {
                 // forceNextComment skips semicolons but reports only the

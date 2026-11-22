@@ -365,6 +365,7 @@ enum Task {
     DefaultArguments,
     ImportModule(PklString),
     AsModuleMirror,
+    Discard,
 }
 #[derive(Clone, Debug)]
 pub(super) struct Run {
@@ -416,7 +417,8 @@ impl Run {
                 | Task::ResolveQualifiedType { .. }
                 | Task::DefaultArguments
                 | Task::ImportModule(_)
-                | Task::AsModuleMirror => (),
+                | Task::AsModuleMirror
+                | Task::Discard => (),
             }
         }
     }
@@ -434,6 +436,9 @@ impl Run {
 
 impl Vm {
     pub(super) fn begin_reflection(&mut self, operation: Operation) -> Result<(), RuntimeError> {
+        if !self.program.base_full_metadata_loaded {
+            self.ensure_base_full_metadata()?;
+        }
         let frame = self
             .frames
             .last()
@@ -474,20 +479,28 @@ impl Vm {
                     && let Ok(cls) = self.heap.get_class(*id)
                     && let Ok(proto) = self.heap.get(cls.prototype)
                 {
-                    if let Some(cached) = proto.declaration_mirror {
-                        self.stack.push(Value::Object(cached));
-                        return Ok(());
-                    }
-                    if let Some(class) = self.cached_reflect_class(Kind::Class) {
-                        let mirror = self.allocate_mirror_with_class(
-                            Payload {
-                                kind: Kind::Class,
-                                data: Data::Class(*id),
-                            },
-                            class,
-                        )?;
-                        self.stack.push(Value::Object(mirror));
-                        return Ok(());
+                    let needs_standard_force = !self.in_stdlib_bootstrap()
+                        && self.reflect_standard_const_for_class(*id).is_some()
+                        && !proto
+                            .declaration_mirror
+                            .and_then(|m| self.heap.get(m).ok())
+                            .is_some_and(|m| m.forced);
+                    if !needs_standard_force {
+                        if let Some(cached) = proto.declaration_mirror {
+                            self.stack.push(Value::Object(cached));
+                            return Ok(());
+                        }
+                        if let Some(class) = self.cached_reflect_class(Kind::Class) {
+                            let mirror = self.allocate_mirror_with_class(
+                                Payload {
+                                    kind: Kind::Class,
+                                    data: Data::Class(*id),
+                                },
+                                class,
+                            )?;
+                            self.stack.push(Value::Object(mirror));
+                            return Ok(());
+                        }
                     }
                 }
             }
@@ -495,20 +508,28 @@ impl Vm {
                 if let Some(Value::TypeAlias(id)) = arguments.first()
                     && let Ok(obj) = self.heap.get(*id)
                 {
-                    if let Some(cached) = obj.declaration_mirror {
-                        self.stack.push(Value::Object(cached));
-                        return Ok(());
-                    }
-                    if let Some(class) = self.cached_reflect_class(Kind::TypeAlias) {
-                        let mirror = self.allocate_mirror_with_class(
-                            Payload {
-                                kind: Kind::TypeAlias,
-                                data: Data::TypeAlias(*id),
-                            },
-                            class,
-                        )?;
-                        self.stack.push(Value::Object(mirror));
-                        return Ok(());
+                    let needs_standard_force = !self.in_stdlib_bootstrap()
+                        && self.reflect_standard_const_for_alias(*id).is_some()
+                        && !obj
+                            .declaration_mirror
+                            .and_then(|m| self.heap.get(m).ok())
+                            .is_some_and(|m| m.forced);
+                    if !needs_standard_force {
+                        if let Some(cached) = obj.declaration_mirror {
+                            self.stack.push(Value::Object(cached));
+                            return Ok(());
+                        }
+                        if let Some(class) = self.cached_reflect_class(Kind::TypeAlias) {
+                            let mirror = self.allocate_mirror_with_class(
+                                Payload {
+                                    kind: Kind::TypeAlias,
+                                    data: Data::TypeAlias(*id),
+                                },
+                                class,
+                            )?;
+                            self.stack.push(Value::Object(mirror));
+                            return Ok(());
+                        }
                     }
                 }
             }
@@ -706,6 +727,9 @@ impl Vm {
                     .pop()
                     .and_then(|value| value.heap_id())
                     .ok_or_else(|| invalid("builtin annotation module"))?;
+                if declaration.source.uri.as_str() == Some("pkl:base") {
+                    self.ensure_base_reflection_annotations()?;
+                }
                 if let Some(block) = self.program.reflection_annotation(&(
                     declaration.source.uri.clone(),
                     declaration.syntax.header_span,
@@ -782,6 +806,11 @@ impl Vm {
                 run.tasks.push(Task::BuildList(length));
             }
             Task::Value(value) => run.values.push(value),
+            Task::Discard => {
+                run.values
+                    .pop()
+                    .ok_or_else(|| invalid("discard mirror result"))?;
+            }
             Task::NullableClass(receiver) => {
                 let Some(Value::Class(expected)) = run.values.pop() else {
                     return Err(invalid("nullable mirror class"));
@@ -904,6 +933,19 @@ impl Vm {
                     kind: Kind::Class,
                     data: Data::Class(id),
                 }));
+                if !self.in_stdlib_bootstrap()
+                    && let Some(const_name) = self.reflect_standard_const_for_class(id)
+                    && !self
+                        .cached_declaration_mirror(&Data::Class(id))?
+                        .and_then(|m| self.heap.get(m).ok())
+                        .is_some_and(|m| m.forced)
+                {
+                    run.tasks.push(Task::Discard);
+                    run.tasks.push(Task::ReadPath {
+                        rest: vec![const_name.into()],
+                    });
+                    run.tasks.push(Task::ImportReflect);
+                }
             }
             Operation::TypeAlias => {
                 let Value::TypeAlias(id) = args[0] else {
@@ -913,6 +955,19 @@ impl Vm {
                     kind: Kind::TypeAlias,
                     data: Data::TypeAlias(id),
                 }));
+                if !self.in_stdlib_bootstrap()
+                    && let Some(const_name) = self.reflect_standard_const_for_alias(id)
+                    && !self
+                        .cached_declaration_mirror(&Data::TypeAlias(id))?
+                        .and_then(|m| self.heap.get(m).ok())
+                        .is_some_and(|m| m.forced)
+                {
+                    run.tasks.push(Task::Discard);
+                    run.tasks.push(Task::ReadPath {
+                        rest: vec![const_name.into()],
+                    });
+                    run.tasks.push(Task::ImportReflect);
+                }
             }
             Operation::DeclaredType => {
                 let count = self.mirror_parameter_count(&args[0])?;
@@ -971,6 +1026,60 @@ impl Vm {
             }
         }
         Ok(())
+    }
+
+    /// Returns the `pkl:reflect` `const ...Type` property name that Apple Pkl's
+    /// `ReflectModule.doLoad()` eagerly forces for a `pkl:base` class.
+    fn reflect_standard_const_for_class(&self, class: ObjectId) -> Option<&'static str> {
+        let proto_id = self.heap.get_class(class).ok()?.prototype;
+        let proto = self.heap.get(proto_id).ok()?;
+        if proto.declaration_code.is_some() {
+            return None;
+        }
+        let def = proto.class_definition.as_ref()?;
+        if def.origin_uri.as_ref().and_then(|u| u.as_str()) != Some("pkl:base") {
+            return None;
+        }
+        match def.name.as_str()? {
+            "Any" => Some("anyType"),
+            "Boolean" => Some("booleanType"),
+            "Int" | "Number" => Some("intType"),
+            "Float" => Some("floatType"),
+            "String" => Some("stringType"),
+            "Duration" => Some("durationType"),
+            "DataSize" => Some("dataSizeType"),
+            "Pair" => Some("pairType"),
+            "List" | "Collection" => Some("listType"),
+            "Set" => Some("setType"),
+            "Map" => Some("mapType"),
+            "Object" => Some("objectType"),
+            "Dynamic" => Some("dynamicType"),
+            "Typed" => Some("typedType"),
+            "Listing" => Some("listingType"),
+            "Mapping" => Some("mappingType"),
+            "Bytes" => Some("bytesType"),
+            _ => None,
+        }
+    }
+
+    /// Returns the `pkl:reflect` `const ...Type` property name that Apple Pkl's
+    /// `ReflectModule.doLoad()` eagerly forces for a `pkl:base` type alias.
+    fn reflect_standard_const_for_alias(&self, alias: ObjectId) -> Option<&'static str> {
+        let obj = self.heap.get(alias).ok()?;
+        if obj.declaration_code.is_some() {
+            return None;
+        }
+        let qualified = obj.type_alias.as_ref()?.as_str()?;
+        match qualified.strip_prefix("pkl.base#")? {
+            "Int8" => Some("int8Type"),
+            "Int16" => Some("int16Type"),
+            "Int32" => Some("int32Type"),
+            "UInt" => Some("uintType"),
+            "UInt8" => Some("uint8Type"),
+            "UInt16" => Some("uint16Type"),
+            "UInt32" => Some("uint32Type"),
+            _ => None,
+        }
     }
 
     pub(super) fn cached_factory_members(&self, kind: Kind) -> MemberList {

@@ -1077,6 +1077,7 @@ pub struct Program {
     pub(crate) builtin_members: Arc<BTreeMap<usize, Vec<Member>>>,
     pub(crate) constraint_origins: BTreeMap<usize, (Vec<RuntimeFrame>, Vec<RuntimeFrame>)>,
     pub(crate) base_full_metadata_loaded: bool,
+    pub(crate) base_reflection_annotations_loaded: bool,
     pub(crate) require_base_full_metadata: bool,
 }
 
@@ -1366,6 +1367,7 @@ impl Program {
             builtin_members: Arc::new(builtin_members),
             constraint_origins: BTreeMap::new(),
             base_full_metadata_loaded: false,
+            base_reflection_annotations_loaded: false,
             require_base_full_metadata: false,
         }
     }

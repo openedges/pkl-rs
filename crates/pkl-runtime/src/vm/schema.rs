@@ -275,6 +275,28 @@ impl VmSchemaExtractor {
 
         // Phase 2: Execute any uncached builtin reflection_annotations collectors.
         if self.stage == ExtractStage::BuiltinAnnotations {
+            let needs_base_annotations = {
+                let vm = session.vm();
+                !vm.program.base_reflection_annotations_loaded
+                    && self.reachable.as_ref().is_some_and(|reachable| {
+                        reachable.classes.iter().any(|c| {
+                            vm.heap
+                                .class_definition(*c)
+                                .ok()
+                                .and_then(|d| d.origin_uri.as_ref())
+                                .is_some_and(|u| u.as_str() == Some("pkl:base"))
+                        }) || reachable.aliases.iter().any(|a| {
+                            vm.heap
+                                .get(*a)
+                                .ok()
+                                .and_then(|o| o.type_alias.as_ref())
+                                .is_some_and(|t| t.starts_with("pkl.base#"))
+                        })
+                    })
+            };
+            if needs_base_annotations {
+                session.vm_mut().ensure_base_reflection_annotations()?;
+            }
             let needed_builtin_anns = {
                 let vm = session.vm();
                 let reachable = self

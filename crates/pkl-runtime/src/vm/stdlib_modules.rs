@@ -82,6 +82,9 @@ impl Vm {
     ) -> Result<usize, RuntimeError> {
         let uri = uri.into();
         let uri = &uri;
+        if uri.as_str() == Some("pkl:reflect") {
+            self.ensure_base_full_metadata()?;
+        }
         let source = self.stdlib_source(uri)?;
         let power_assertions = self.power_assertions;
         let program = Arc::make_mut(&mut self.program);
@@ -139,10 +142,13 @@ impl Vm {
         self.force_stdlib_frame(root)
     }
 
-    /// Lazily populates full `pkl:base` AST syntax (`ModuleUnit.syntax`),
-    /// complete declaration sources (including doc comments and class members),
-    /// and all reflection annotation blocks when reflection (`pkl:reflect`) or
-    /// schema extraction (`start_load_module` / `start_module`) is requested.
+    /// Lazily populates full `pkl:base` AST syntax (`ModuleUnit.syntax`) and
+    /// complete declaration sources (including doc comments and class members)
+    /// when reflection (`pkl:reflect`) or schema extraction is requested.
+    /// Compilation of `pkl:base` reflection annotation collectors is deferred
+    /// further to `ensure_base_reflection_annotations` so reflection workloads
+    /// that never read `.annotations` on `pkl:base` declarations do not pay for
+    /// resolving all 126 KB of `base.pkl`.
     pub(crate) fn ensure_base_full_metadata(&mut self) -> Result<(), RuntimeError> {
         if self.program.base_full_metadata_loaded {
             return Ok(());
@@ -184,6 +190,33 @@ impl Vm {
         } else {
             program.declaration_sources.extend(upgraded_decls);
         }
+        program.seal_code_segment();
+        program.base_full_metadata_loaded = true;
+        Ok(())
+    }
+
+    /// Lazily resolves `pkl:base` and compiles its reflection annotation
+    /// collectors on first read of `.annotations` on a `pkl:base` declaration
+    /// or schema extraction of `pkl:base`.
+    pub(crate) fn ensure_base_reflection_annotations(&mut self) -> Result<(), RuntimeError> {
+        if self.program.base_reflection_annotations_loaded {
+            return Ok(());
+        }
+        self.ensure_base_full_metadata()?;
+        let base_unit = self.program.units.iter().find_map(|unit| {
+            (unit.standard_library && unit.singleton_cache_key == Some("pkl:base"))
+                .then_some(unit.id)
+        });
+        let Some(unit) = base_unit else {
+            return Ok(());
+        };
+        let program = Arc::make_mut(&mut self.program);
+        if program.base_reflection_annotations_loaded {
+            return Ok(());
+        }
+        let source = crate::stdlib_sources::base();
+        let parsed = cached_parsed_stdlib("pkl:base", &source)?;
+        program.seal_code_segment();
         let prev_refl = std::mem::take(&mut program.reflection_annotations);
         compile_reflection_annotations(program, unit, "pkl:base", source, &parsed, &[])?;
         let base_refl = std::mem::replace(&mut program.reflection_annotations, prev_refl);
@@ -193,7 +226,7 @@ impl Vm {
             program.reflection_annotations.extend(base_refl);
         }
         program.seal_code_segment();
-        program.base_full_metadata_loaded = true;
+        program.base_reflection_annotations_loaded = true;
         Ok(())
     }
 }
@@ -710,6 +743,7 @@ fn append_members(
         compile_reflection_annotations(program, unit, uri, source, parsed, &synthetic_annotated)?;
         if uri == "pkl:base" {
             program.base_full_metadata_loaded = true;
+            program.base_reflection_annotations_loaded = true;
         }
     }
     append_bootstrap(program, unit, uri);
@@ -1438,6 +1472,10 @@ userLocation = reflect.Class(User).location.displayUri
         );
         vm.ensure_base_full_metadata().unwrap();
         assert!(vm.program.base_full_metadata_loaded);
+        assert!(
+            !vm.program.base_reflection_annotations_loaded,
+            "ensure_base_full_metadata should defer compiling pkl:base reflection annotations"
+        );
         let base_unit = vm
             .program
             .units
@@ -1445,6 +1483,8 @@ userLocation = reflect.Class(User).location.displayUri
             .find(|u| u.standard_library && u.singleton_cache_key == Some("pkl:base"))
             .expect("base unit loaded");
         assert!(base_unit.syntax.is_some());
+        vm.ensure_base_reflection_annotations().unwrap();
+        assert!(vm.program.base_reflection_annotations_loaded);
         let has_base_annotations = vm
             .program
             .reflection_annotations
@@ -1458,7 +1498,7 @@ userLocation = reflect.Class(User).location.displayUri
             .any(|(uri, _)| uri.as_str() == Some("pkl:base"));
         assert!(
             has_base_annotations,
-            "ensure_base_full_metadata must compile pkl:base reflection annotations"
+            "ensure_base_reflection_annotations must compile pkl:base reflection annotations"
         );
         vm.close();
         assert_eq!(vm.heap_stats().slots, 0);
