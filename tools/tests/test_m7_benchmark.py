@@ -58,17 +58,34 @@ def _make_full_synthetic_report(root: Path, dest: Path, *, failing_id: str | Non
         is_fail = wid == failing_id
         rust_t = 105_000.0 if is_fail else 30_000.0
         java_t = 100_000.0
-        rust_rss = 30_000_000.0
+        rust_rss = 900_000_000.0 if mode == "wasm-browser" else 30_000_000.0
         java_rss = 250_000_000.0
-        vs_t = m7_benchmark.evaluate_ratio_verdict(
-            rust_t, java_t, rust_rss, java_rss, correctness_verified=True, converged=True
-        )
+        if mode == "wasm-browser":
+            vs_t = m7_benchmark.evaluate_browser_wasm_verdict(
+                rust_t,
+                java_t,
+                rust_rss,
+                java_rss,
+                wasm_linear_memory_bytes=16_000_000.0,
+                js_heap_used_bytes=12_000_000.0,
+                wasm_binary_gzip_bytes=2_400_000,
+                correctness_verified=True,
+                converged=True,
+                browser_targets=contract["browser_wasm_targets"],
+                browser_engine="chromium",
+                workload_key="typed-conversion" if "typed" in base_id else "eval-text",
+            )
+        else:
+            vs_t = m7_benchmark.evaluate_ratio_verdict(
+                rust_t, java_t, rust_rss, java_rss, correctness_verified=True, converged=True
+            )
 
         row: dict = {
             "id": wid,
             "workload_id": base_id,
             "family": "core-6" if base_id in core_ids else (mode if mode in ("napi", "wasm-node", "wasm-browser") else "other"),
             "mode": mode,
+            "op_mode": "typed-conversion" if "typed" in base_id else "eval-expression",
             "correctness_verified": True,
             "vs_live_temurin_21": vs_t,
             "vs_m0_graalvm_25_0_1": None,
@@ -134,8 +151,12 @@ def _make_full_synthetic_report(root: Path, dest: Path, *, failing_id: str | Non
                 "preflight_raw_byte_verified": True,
                 "warmup": {"converged": True, "windows": js_sampling["convergence_windows"], "elapsed_ns": 3_000_000_000},
                 "measurements": meas,
+                "browser_engine": "chromium" if mode == "wasm-browser" else None,
                 "browserErrors": [] if mode == "wasm-browser" else None,
                 "chromium_peak_tree_rss_bytes": rust_rss if mode == "wasm-browser" else None,
+                "wasm_linear_memory_bytes_peak": 16_000_000 if mode == "wasm-browser" else None,
+                "js_heap_after_eval": {"usedJSHeapSize": 12_000_000} if mode == "wasm-browser" else None,
+                "wasm_binary_gzip_bytes": 2_400_000 if mode == "wasm-browser" else None,
             }
             m7_benchmark.write_json(dest / js_rel, js_doc)
             row["java"] = {
@@ -184,6 +205,7 @@ def _make_full_synthetic_report(root: Path, dest: Path, *, failing_id: str | Non
         "complete_catalog": True,
         "selected_families": sorted(m7_benchmark.ALL_FAMILIES),
         "target_ratios": contract["target_ratios"],
+        "browser_wasm_targets": contract["browser_wasm_targets"],
         "sampling": sampling,
         "js_sampling": js_sampling,
         "contract_sha256": m7_benchmark.file_digest(root / m7_benchmark.WORKLOADS_PATH),
@@ -238,14 +260,35 @@ class M7BenchmarkTests(unittest.TestCase):
                 dst = root / rel
                 dst.parent.mkdir(parents=True, exist_ok=True)
                 dst.write_bytes((m7_benchmark.ROOT / rel).read_bytes())
-            for bad_case in ("relax-time", "relax-rss", "quick-strict"):
+            for bad_case in (
+                "relax-time",
+                "relax-rss",
+                "quick-strict",
+                "relax-browser-time",
+                "relax-browser-linear-mem",
+                "relax-browser-js-heap",
+                "relax-browser-gzip",
+                "non-firefox-exception",
+            ):
                 mut = copy.deepcopy(contract)
                 if bad_case == "relax-time":
                     mut["target_ratios"]["execution_time_max"] = 1.05
                 elif bad_case == "relax-rss":
                     mut["target_ratios"]["peak_rss_max"] = 1.1
-                else:
+                elif bad_case == "quick-strict":
                     mut["profiles"]["quick"]["strict_eligible"] = True
+                elif bad_case == "relax-browser-time":
+                    mut["browser_wasm_targets"]["execution_time_max"] = 1.1
+                elif bad_case == "relax-browser-linear-mem":
+                    mut["browser_wasm_targets"]["wasm_linear_memory_ratio_max"] = 0.25
+                elif bad_case == "relax-browser-js-heap":
+                    mut["browser_wasm_targets"]["js_heap_used_max_bytes"] = 128 * 1024 * 1024
+                elif bad_case == "relax-browser-gzip":
+                    mut["browser_wasm_targets"]["wasm_binary_gzip_max_bytes"] = 4 * 1024 * 1024
+                else:
+                    mut["browser_wasm_targets"]["engine_time_exceptions"]["chromium"] = {
+                        "typed-conversion": {"execution_time_max": 1.2, "reason": "disallowed"}
+                    }
                 (root / "benchmarks/m7_workloads.json").write_text(json.dumps(mut), encoding="utf-8")
                 with self.assertRaises(ValueError):
                     m7_benchmark.load_contract(root)

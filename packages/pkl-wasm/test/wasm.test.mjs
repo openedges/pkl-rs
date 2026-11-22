@@ -739,6 +739,46 @@ test('explicit capability-unavailable reporting (never silent skips)', async () 
   }
 });
 
+test('fast UTF-8 string decoder and columnar viewCache preserve strict RFC 3629 semantics', async () => {
+  const ev = await createEvaluator();
+  try {
+    const src = ModuleSource.text(
+      [
+        'latin = "café-naïve"',
+        'hangul = "한글-테스트-🚀😀"',
+        'boundary = "\\u{7ff}\\u{800}\\u{d7ff}\\u{e000}\\u{ffff}\\u{10000}\\u{10ffff}"',
+        'items = List(new Dynamic { s = "row-1-한글-😀" }, new Dynamic { s = "row-2-é-🚀" })',
+      ].join('\n'),
+    );
+    // Repeated calls exercise both columnar viewCache miss + cached immutable valBigStr hit
+    const v1 = await ev.evaluateExpressionValue(src, 'module');
+    const v2 = await ev.evaluateExpressionValue(src, 'module');
+    for (const v of [v1, v2]) {
+      assert.equal(v.properties.latin, 'café-naïve');
+      assert.equal(v.properties.hangul, '한글-테스트-🚀😀');
+      assert.equal(v.properties.boundary, '\u07ff\u0800\ud7ff\ue000\uffff\u{10000}\u{10ffff}');
+      assert.equal(v.properties.items[0].properties.s, 'row-1-한글-😀');
+      assert.equal(v.properties.items[1].properties.s, 'row-2-é-🚀');
+    }
+    // Direct pkl-binary decode path exercises fastReadStr + fastDecodeShortUtf8
+    const bin = await ev.evaluateExpressionPklBinary(src, 'module');
+    const dec = decodePklBinary(bin);
+    assert.equal(dec.properties.latin, 'café-naïve');
+    assert.equal(dec.properties.hangul, '한글-테스트-🚀😀');
+    assert.equal(dec.properties.boundary, '\u07ff\u0800\ud7ff\ue000\uffff\u{10000}\u{10ffff}');
+  } finally {
+    ev.close();
+  }
+  // Overlong 2-byte UTF-8 (0xC0 0xAF) and UTF-16 surrogate (0xED 0xA0 0x80) in msgpack fixstr
+  // must NOT be decoded as '/' or U+D800; fast path must fall back cleanly to Rust's JDK-compatible UTF-8 replacement.
+  const overlong = new Uint8Array([0xa2, 0xc0, 0xaf]);
+  assert.equal(decodePklBinary(overlong), '\ufffd\ufffd');
+  assert.equal(decodePklBinary(overlong, { strict: true }), '\ufffd\ufffd');
+  const surrogate = new Uint8Array([0xa3, 0xed, 0xa0, 0x80]);
+  assert.equal(decodePklBinary(surrogate), '\ufffd');
+  assert.equal(decodePklBinary(surrogate, { strict: true }), '\ufffd');
+});
+
 test('npm pack tarball installs cleanly in isolated temp directory and executes in Node', () => {
   const workDir = mkdtempSync(join(tmpdir(), 'pkl-wasm-pack-test-'));
   try {

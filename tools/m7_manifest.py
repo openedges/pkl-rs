@@ -282,6 +282,7 @@ def build_manifest(root: Path = ROOT) -> dict[str, Any]:
         "baseline": inventory["baseline"],
         "scope": mappings["scope"],
         "target_ratios": bench_contract["target_ratios"],
+        "browser_wasm_targets": bench_contract["browser_wasm_targets"],
         "excluded_by_scope_2026_11_20": mappings["excluded_by_scope_2026_11_20"],
         "unpinned_optional_references": mappings["unpinned_optional_references"],
         "platform_matrix": platform_matrix,

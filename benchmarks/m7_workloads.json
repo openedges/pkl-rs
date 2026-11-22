@@ -5,6 +5,20 @@
     "execution_time_max": 1.0,
     "peak_rss_max": 1.0
   },
+  "browser_wasm_targets": {
+    "execution_time_max": 1.0,
+    "wasm_linear_memory_ratio_max": 0.15,
+    "js_heap_used_max_bytes": 67108864,
+    "wasm_binary_gzip_max_bytes": 2621440,
+    "engine_time_exceptions": {
+      "firefox": {
+        "typed-conversion": {
+          "execution_time_max": 1.5,
+          "reason": "Explicit Firefox SpiderMonkey typed-conversion boundary exception (2026-11-22); Firefox eval-text remains <= 1.00x and functional raw-byte parity remains strictly required."
+        }
+      }
+    }
+  },
   "profiles": {
     "full": {
       "cold_samples": 5,

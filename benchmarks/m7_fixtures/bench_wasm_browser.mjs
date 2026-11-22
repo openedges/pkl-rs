@@ -6,9 +6,10 @@
 import { createRequire } from "node:module";
 import { createServer } from "node:http";
 import { execFileSync } from "node:child_process";
-import { readFile, stat, writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import { resolve, extname, sep } from "node:path";
 import { createHash } from "node:crypto";
+import { gzipSync } from "node:zlib";
 
 const [planPathArg, resultPathArg] = process.argv.slice(2);
 if (!resultPathArg) {
@@ -45,7 +46,9 @@ if (!["chromium", "firefox", "webkit"].includes(browserEngine)) {
 const browserType = playwrightEngines[browserEngine];
 const launchArgs = Array.isArray(plan.launch_args) ? plan.launch_args.map(String) : [];
 const pkgDir = resolve(plan.wasm_pkg_dir);
-const wasmBinaryBytes = (await stat(resolve(pkgDir, "dist/wasm/pkl_wasm_bg.wasm"))).size;
+const wasmRawBuf = await readFile(resolve(pkgDir, "dist/wasm/pkl_wasm_bg.wasm"));
+const wasmBinaryBytes = wasmRawBuf.byteLength;
+const wasmBinaryGzipBytes = gzipSync(wasmRawBuf, { level: 9 }).byteLength;
 const moduleSourceText = await readFile(resolve(plan.module_path), "utf8");
 const expectedTextB64 = (await readFile(resolve(plan.expected_text_path))).toString("base64");
 const expectedBinaryB64 = plan.expected_binary_path
@@ -86,7 +89,7 @@ function classifyBrowserProcessRole(cmd, ppid, driverPid) {
     lower.includes("chrome_crashpad_handler") ||
     lower.includes("webkitnetworkprocess") ||
     lower.includes("wpenetworkprocess") ||
-    lower.includes("networking")
+    lower.includes("com.apple.webkit.networking")
   ) {
     return "utility_network";
   }
@@ -463,6 +466,7 @@ try {
     browserErrors,
     driver_pid: driverPid,
     wasm_binary_bytes: wasmBinaryBytes,
+    wasm_binary_gzip_bytes: wasmBinaryGzipBytes,
     chromium_peak_tree_rss_bytes: peakChromiumTreeRss,
     peak_tree_rss_bytes: peakChromiumTreeRss,
     peak_renderer_rss_bytes: peakRendererRss,

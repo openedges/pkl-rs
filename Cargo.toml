@@ -29,6 +29,14 @@ unsafe_code = "deny"
 lto = "thin"
 codegen-units = 1
 
+[profile.wasm-release]
+inherits = "release"
+opt-level = "s"
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = "symbols"
+
 [profile.dev.package.pkl-runtime]
 opt-level = 2
 

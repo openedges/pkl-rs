@@ -16,6 +16,55 @@ const INTERN_OFF = new Int32Array(64);
 const INTERN_LEN = new Int32Array(64);
 const INTERN_STR = new Array(64);
 const KEY_CACHE = new Map();
+const SHORT_UTF8_CODES = new Uint16Array(64);
+
+/**
+ * Pure-JS RFC 3629 strict UTF-8 decoder for short strings (`<= 64` bytes).
+ * Avoids `Uint8Array.subarray()` + WebIDL `TextDecoder.decode()` boundary crossings
+ * (notably expensive in SpiderMonkey) while rejecting overlong sequences, surrogates,
+ * out-of-range scalars, and truncated bytes via `DECODE_FALLBACK`.
+ */
+function fastDecodeShortUtf8(bytes, pos, end) {
+  let outLen = 0;
+  let i = pos;
+  while (i < end) {
+    const b0 = bytes[i++];
+    if (b0 < 0x80) {
+      SHORT_UTF8_CODES[outLen++] = b0;
+    } else if (b0 >= 0xc2 && b0 <= 0xdf) {
+      if (i >= end) return DECODE_FALLBACK;
+      const b1 = bytes[i++];
+      if ((b1 & 0xc0) !== 0x80) return DECODE_FALLBACK;
+      SHORT_UTF8_CODES[outLen++] = ((b0 & 0x1f) << 6) | (b1 & 0x3f);
+    } else if (b0 >= 0xe0 && b0 <= 0xef) {
+      if (i + 1 >= end) return DECODE_FALLBACK;
+      const b1 = bytes[i++];
+      const b2 = bytes[i++];
+      if ((b1 & 0xc0) !== 0x80 || (b2 & 0xc0) !== 0x80) return DECODE_FALLBACK;
+      if (b0 === 0xe0 && b1 < 0xa0) return DECODE_FALLBACK;
+      if (b0 === 0xed && b1 >= 0xa0) return DECODE_FALLBACK;
+      SHORT_UTF8_CODES[outLen++] = ((b0 & 0x0f) << 12) | ((b1 & 0x3f) << 6) | (b2 & 0x3f);
+    } else if (b0 >= 0xf0 && b0 <= 0xf4) {
+      if (i + 2 >= end) return DECODE_FALLBACK;
+      const b1 = bytes[i++];
+      const b2 = bytes[i++];
+      const b3 = bytes[i++];
+      if ((b1 & 0xc0) !== 0x80 || (b2 & 0xc0) !== 0x80 || (b3 & 0xc0) !== 0x80) {
+        return DECODE_FALLBACK;
+      }
+      if (b0 === 0xf0 && b1 < 0x90) return DECODE_FALLBACK;
+      if (b0 === 0xf4 && b1 > 0x8f) return DECODE_FALLBACK;
+      const cp =
+        (((b0 & 0x07) << 18) | ((b1 & 0x3f) << 12) | ((b2 & 0x3f) << 6) | (b3 & 0x3f)) -
+        0x10000;
+      SHORT_UTF8_CODES[outLen++] = 0xd800 | (cp >> 10);
+      SHORT_UTF8_CODES[outLen++] = 0xdc00 | (cp & 0x3ff);
+    } else {
+      return DECODE_FALLBACK;
+    }
+  }
+  return String.fromCharCode.apply(null, SHORT_UTF8_CODES.subarray(0, outLen));
+}
 
 function internPropKey(s) {
   let k = KEY_CACHE.get(s);
@@ -125,6 +174,11 @@ function fastReadStr(bytes, view, len, pos, asKey) {
       INTERN_STR[slot] = s;
       return s;
     }
+  }
+  if (n <= 64) {
+    const decoded = fastDecodeShortUtf8(bytes, pos, end);
+    if (decoded === DECODE_FALLBACK) return DECODE_FALLBACK;
+    return asKey ? internPropKey(decoded) : decoded;
   }
   try {
     return FAST_UTF8_DECODER.decode(bytes.subarray(pos, end));
@@ -554,7 +608,6 @@ const SHAPE_PROPS_FACTORIES = new Map();
 const COLUMNAR_TABLE_READERS = new Map();
 let columnarAlignBuf = null;
 const COL_STATE = new Int32Array(7);
-const COL_UTF8_ENC = new TextEncoder();
 
 function getShapePropsFactory(keys) {
   if (!canUseNewFunction || keys.length === 0 || keys.length > 32) return null;
@@ -717,16 +770,9 @@ export function unpackColumnarBuffer(bytes, viewCache = null) {
     shapes = viewCache.shapes;
     shapeStrCount = viewCache.shapeStrCount;
     rootOp = viewCache.rootOp;
-    const valStrUtf8 = viewCache.valStrUtf8;
-    if (valStrUtf8.byteLength === 0) {
-      bigStr = '';
-    } else {
-      try {
-        bigStr = FAST_UTF8_DECODER.decode(valStrUtf8);
-      } catch {
-        return DECODE_FALLBACK;
-      }
-    }
+    // JS strings are immutable; reuse the already-decoded value-string slab for this generation
+    // instead of crossing TextDecoder.decode() on every cached evaluation.
+    bigStr = viewCache.valBigStr;
     soff = 0;
   } else {
     const header = new Uint32Array(ab, base, 20);
@@ -777,7 +823,6 @@ export function unpackColumnarBuffer(bytes, viewCache = null) {
     rootOp = opIdx;
 
     if (canCacheViews && header[19] !== 0) {
-      const shapeUtf8Bytes = soff === 0 ? 0 : COL_UTF8_ENC.encode(bigStr.slice(0, soff)).byteLength;
       viewCache.ab = ab;
       viewCache.base = base;
       viewCache.len = byteLen;
@@ -793,11 +838,7 @@ export function unpackColumnarBuffer(bytes, viewCache = null) {
       viewCache.shapes = shapes;
       viewCache.shapeStrCount = shapeStrCount;
       viewCache.rootOp = rootOp;
-      viewCache.valStrUtf8 = new Uint8Array(
-        ab,
-        base + header[11] + shapeUtf8Bytes,
-        header[12] - shapeUtf8Bytes,
-      );
+      viewCache.valBigStr = soff === 0 ? bigStr : bigStr.slice(soff);
     }
   }
 

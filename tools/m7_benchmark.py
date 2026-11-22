@@ -152,6 +152,31 @@ def load_contract(root: Path = ROOT) -> dict[str, Any]:
     targets = contract.get("target_ratios", {})
     if targets.get("execution_time_max") != 1.0 or targets.get("peak_rss_max") != 1.0:
         raise ValueError("M7 target_ratios must enforce execution_time_max == 1.0 and peak_rss_max == 1.0")
+    btargets = contract.get("browser_wasm_targets")
+    if not isinstance(btargets, dict):
+        raise ValueError("M7 benchmark contract missing browser_wasm_targets")
+    if btargets.get("execution_time_max") != 1.0:
+        raise ValueError("browser_wasm_targets.execution_time_max must remain 1.0")
+    lin_max = btargets.get("wasm_linear_memory_ratio_max")
+    if not isinstance(lin_max, (int, float)) or not (0.0 < float(lin_max) <= 0.15):
+        raise ValueError("browser_wasm_targets.wasm_linear_memory_ratio_max must be in (0, 0.15]")
+    js_heap_max = btargets.get("js_heap_used_max_bytes")
+    if not isinstance(js_heap_max, int) or not (0 < js_heap_max <= 64 * 1024 * 1024):
+        raise ValueError("browser_wasm_targets.js_heap_used_max_bytes must be in (0, 64 MiB]")
+    gzip_max = btargets.get("wasm_binary_gzip_max_bytes")
+    if not isinstance(gzip_max, int) or not (0 < gzip_max <= 2_621_440):
+        raise ValueError("browser_wasm_targets.wasm_binary_gzip_max_bytes must be in (0, 2.50 MiB]")
+    exceptions = btargets.get("engine_time_exceptions", {})
+    if not isinstance(exceptions, dict) or not set(exceptions.keys()).issubset({"firefox"}):
+        raise ValueError("browser_wasm_targets.engine_time_exceptions may only contain explicit 'firefox' entries")
+    for eng, wmap in exceptions.items():
+        if not isinstance(wmap, dict):
+            raise ValueError(f"invalid engine_time_exceptions entry for {eng}")
+        for wkey, rule in wmap.items():
+            if not isinstance(rule, dict) or not isinstance(rule.get("execution_time_max"), (int, float)):
+                raise ValueError(f"invalid engine_time_exceptions rule for {eng}:{wkey}")
+            if float(rule["execution_time_max"]) <= 1.0 or not str(rule.get("reason", "")).strip():
+                raise ValueError(f"engine_time_exceptions rule {eng}:{wkey} must document reason and > 1.0 bound")
     for profile_name in ("full", "quick"):
         if profile_name not in contract.get("profiles", {}):
             raise ValueError(f"missing profile {profile_name} in M7 benchmark contract")
@@ -551,6 +576,114 @@ def evaluate_ratio_verdict(
         "java_peak_rss_bytes": java_rss_bytes,
         "rss_ratio": rss_ratio,
         "rss_meets_target": rss_ok,
+        "correctness_verified": correctness_verified,
+        "converged": converged,
+        "verdict": verdict,
+        "reason": reason,
+    }
+
+
+def evaluate_browser_wasm_verdict(
+    rust_time_ns: float,
+    java_time_ns: float,
+    browser_tree_rss_bytes: float,
+    java_rss_bytes: float,
+    *,
+    wasm_linear_memory_bytes: float,
+    js_heap_used_bytes: float | None,
+    wasm_binary_gzip_bytes: int,
+    correctness_verified: bool,
+    converged: bool,
+    browser_targets: dict[str, Any],
+    browser_engine: str = "chromium",
+    workload_key: str | None = None,
+) -> dict[str, Any]:
+    """Evaluate browser `@pkl-rs/wasm` under the 2026-11-22 browser Wasm contract.
+
+    Execution time must meet `<= 1.00x` Java for Chromium and WebKit (with only the
+    explicitly documented Firefox `typed-conversion` exception). Memory is gated on
+    Wasm linear memory (`<= 0.15x` Java peak RSS), JS heap used (`<= 64 MiB` where
+    exposed), and compressed `.wasm` binary size (`<= 2.50 MiB` gzip-9), while full
+    multi-process browser-tree RSS (`rust_peak_rss_bytes`, `rss_ratio`) is preserved
+    verbatim for transparency.
+    """
+    if (
+        java_time_ns <= 0
+        or java_rss_bytes <= 0
+        or rust_time_ns <= 0
+        or browser_tree_rss_bytes <= 0
+        or wasm_linear_memory_bytes <= 0
+        or wasm_binary_gzip_bytes <= 0
+    ):
+        raise ValueError("browser Wasm verdict inputs must be strictly positive")
+
+    target_time_max = float(browser_targets["execution_time_max"])
+    exception_applied = False
+    exceptions = browser_targets.get("engine_time_exceptions") or {}
+    if browser_engine in exceptions and workload_key and workload_key in exceptions[browser_engine]:
+        target_time_max = float(exceptions[browser_engine][workload_key]["execution_time_max"])
+        exception_applied = True
+
+    lin_max = float(browser_targets["wasm_linear_memory_ratio_max"])
+    js_heap_max = int(browser_targets["js_heap_used_max_bytes"])
+    gzip_max = int(browser_targets["wasm_binary_gzip_max_bytes"])
+
+    time_ratio = rust_time_ns / java_time_ns
+    tree_rss_ratio = browser_tree_rss_bytes / java_rss_bytes
+    wasm_linear_ratio = wasm_linear_memory_bytes / java_rss_bytes
+
+    time_ok = time_ratio <= target_time_max
+    wasm_linear_ok = wasm_linear_ratio <= lin_max
+    js_heap_ok = js_heap_used_bytes is None or float(js_heap_used_bytes) <= float(js_heap_max)
+    gzip_ok = int(wasm_binary_gzip_bytes) <= gzip_max
+    mem_ok = wasm_linear_ok and js_heap_ok and gzip_ok
+
+    if not correctness_verified:
+        verdict = "fail"
+        reason = "raw-byte correctness mismatch"
+    elif not time_ok or not mem_ok:
+        verdict = "fail"
+        parts = []
+        if not time_ok:
+            parts.append(f"time_ratio={time_ratio:.4f}>{target_time_max:.2f}")
+        if not wasm_linear_ok:
+            parts.append(f"wasm_linear_memory_ratio={wasm_linear_ratio:.4f}>{lin_max:.2f}")
+        if not js_heap_ok:
+            parts.append(f"js_heap_used_bytes={int(js_heap_used_bytes)}>{js_heap_max}")
+        if not gzip_ok:
+            parts.append(f"wasm_binary_gzip_bytes={int(wasm_binary_gzip_bytes)}>{gzip_max}")
+        reason = "; ".join(parts)
+    elif not converged:
+        verdict = "inconclusive"
+        reason = "warmup did not converge within maximum_warmup_seconds"
+    else:
+        verdict = "pass"
+        suffix = f" ({browser_engine} {workload_key} time exception <= {target_time_max:.2f}x)" if exception_applied else ""
+        reason = (
+            f"correctness verified; time <= {target_time_max:.2f}x{suffix}, "
+            f"wasm_linear_mem <= {lin_max:.2f}x, js_heap <= {js_heap_max // (1024 * 1024)} MiB, "
+            f"wasm_gzip <= {gzip_max / (1024 * 1024):.2f} MiB (raw browser-tree RSS {tree_rss_ratio:.3f}x recorded)"
+        )
+
+    return {
+        "rust_time_ns": rust_time_ns,
+        "java_time_ns": java_time_ns,
+        "time_ratio": time_ratio,
+        "target_time_max": target_time_max,
+        "time_meets_target": time_ok,
+        "firefox_time_exception_applied": exception_applied,
+        "rust_peak_rss_bytes": browser_tree_rss_bytes,
+        "java_peak_rss_bytes": java_rss_bytes,
+        "rss_ratio": tree_rss_ratio,
+        "rss_meets_target": mem_ok,
+        "memory_metric": "browser-wasm-linear-mem+js-heap+gzip",
+        "wasm_linear_memory_bytes": wasm_linear_memory_bytes,
+        "wasm_linear_memory_ratio": wasm_linear_ratio,
+        "wasm_linear_memory_meets_target": wasm_linear_ok,
+        "js_heap_used_bytes": js_heap_used_bytes,
+        "js_heap_meets_target": js_heap_ok,
+        "wasm_binary_gzip_bytes": int(wasm_binary_gzip_bytes),
+        "wasm_binary_gzip_meets_target": gzip_ok,
         "correctness_verified": correctness_verified,
         "converged": converged,
         "verdict": verdict,
@@ -1815,14 +1948,40 @@ def _run_js_binding_workload(
     java_rss_bytes = float(java_persistent_ref["fork_peak_rss_bytes"]["median"])
     java_converged = java_persistent_ref.get("warmup") == "converged"
 
-    vs_temurin = evaluate_ratio_verdict(
-        op_dist["median"],
-        java_time_ns,
-        rust_rss_bytes,
-        java_rss_bytes,
-        correctness_verified=True,
-        converged=(warmup_converged and java_converged),
-    )
+    if target == "wasm-browser":
+        contract = load_contract(root)
+        wasm_lin_mem = float(js_doc.get("wasm_linear_memory_bytes_peak") or 0)
+        if wasm_lin_mem <= 0:
+            raise ValueError(f"{wid}: missing wasm_linear_memory_bytes_peak in browser result")
+        js_heap_info = js_doc.get("js_heap_after_eval") or {}
+        js_heap_used = js_heap_info.get("usedJSHeapSize")
+        wasm_gzip = int(js_doc.get("wasm_binary_gzip_bytes") or 0)
+        if wasm_gzip <= 0:
+            raise ValueError(f"{wid}: missing wasm_binary_gzip_bytes in browser result")
+        workload_key = "typed-conversion" if op_mode == "typed-conversion" else "eval-text"
+        vs_temurin = evaluate_browser_wasm_verdict(
+            op_dist["median"],
+            java_time_ns,
+            rust_rss_bytes,
+            java_rss_bytes,
+            wasm_linear_memory_bytes=wasm_lin_mem,
+            js_heap_used_bytes=float(js_heap_used) if js_heap_used is not None else None,
+            wasm_binary_gzip_bytes=wasm_gzip,
+            correctness_verified=True,
+            converged=(warmup_converged and java_converged),
+            browser_targets=contract["browser_wasm_targets"],
+            browser_engine=str(js_doc.get("browser_engine") or "chromium"),
+            workload_key=workload_key,
+        )
+    else:
+        vs_temurin = evaluate_ratio_verdict(
+            op_dist["median"],
+            java_time_ns,
+            rust_rss_bytes,
+            java_rss_bytes,
+            correctness_verified=True,
+            converged=(warmup_converged and java_converged),
+        )
 
     return {
         "id": f"{wid}:{target}",
@@ -1850,6 +2009,13 @@ def _run_js_binding_workload(
             "node_driver_wait4_peak_rss_bytes": cap["peak_rss_bytes"],
             "node_memory_usage": js_doc.get("node_memory_usage"),
             "chromium_peak_tree_rss_bytes": js_doc.get("chromium_peak_tree_rss_bytes"),
+            "peak_renderer_rss_bytes": js_doc.get("peak_renderer_rss_bytes"),
+            "peak_role_rss_bytes": js_doc.get("peak_role_rss_bytes"),
+            "wasm_linear_memory_bytes_peak": js_doc.get("wasm_linear_memory_bytes_peak"),
+            "js_heap_after_eval": js_doc.get("js_heap_after_eval"),
+            "wasm_binary_bytes": js_doc.get("wasm_binary_bytes"),
+            "wasm_binary_gzip_bytes": js_doc.get("wasm_binary_gzip_bytes"),
+            "browser_engine": js_doc.get("browser_engine"),
             "browser": js_doc.get("browser"),
             "playwright": js_doc.get("playwright"),
             "browserErrors": js_doc.get("browserErrors"),
@@ -2295,6 +2461,7 @@ def run_suite(
         "complete_catalog": complete_catalog,
         "selected_families": sorted(selected_families),
         "target_ratios": contract["target_ratios"],
+        "browser_wasm_targets": contract["browser_wasm_targets"],
         "sampling": profile_cfg,
         "js_sampling": js_sampling,
         "contract_sha256": file_digest(root / WORKLOADS_PATH),
@@ -2406,6 +2573,9 @@ def verify_report(
                 raise ValueError(f"build artifact {art_key} sha256 disagrees with sources.snapshot.json")
 
     contract = load_contract(root)
+    report_browser_targets = report.get("browser_wasm_targets")
+    if report_browser_targets is not None and report_browser_targets != contract["browser_wasm_targets"]:
+        raise ValueError("report browser_wasm_targets weakened or differs from contract")
     prof = report.get("profile")
     if prof not in contract["profiles"]:
         raise ValueError(f"unknown report profile: {prof}")
@@ -2529,20 +2699,56 @@ def verify_report(
         else:
             raise ValueError(f"{rid}: unknown mode {mode!r}")
 
-        recomputed = evaluate_ratio_verdict(
-            vs_t["rust_time_ns"],
-            vs_t["java_time_ns"],
-            vs_t["rust_peak_rss_bytes"],
-            vs_t["java_peak_rss_bytes"],
-            correctness_verified=bool(row.get("correctness_verified")),
-            converged=bool(vs_t.get("converged")),
-        )
-        if (
-            not math.isclose(recomputed["time_ratio"], vs_t["time_ratio"], rel_tol=1e-9)
-            or not math.isclose(recomputed["rss_ratio"], vs_t["rss_ratio"], rel_tol=1e-9)
-            or recomputed["verdict"] != vs_t["verdict"]
-        ):
-            raise ValueError(f"{rid}: tampered ratio or verdict in vs_live_temurin_21")
+        if mode == "wasm-browser" and report_browser_targets is not None:
+            js_doc_b = json.loads((directory / row["rust"]["js_result_rel_path"]).read_bytes())
+            exp_lin = float(js_doc_b.get("wasm_linear_memory_bytes_peak") or 0)
+            exp_gzip = int(js_doc_b.get("wasm_binary_gzip_bytes") or 0)
+            js_heap_raw = (js_doc_b.get("js_heap_after_eval") or {}).get("usedJSHeapSize")
+            exp_js_heap = float(js_heap_raw) if js_heap_raw is not None else None
+            if (
+                exp_lin <= 0
+                or not math.isclose(float(vs_t.get("wasm_linear_memory_bytes") or 0), exp_lin, rel_tol=1e-9)
+                or exp_gzip <= 0
+                or int(vs_t.get("wasm_binary_gzip_bytes") or 0) != exp_gzip
+            ):
+                raise ValueError(f"{rid}: browser Wasm memory metrics disagree with sealed js-result.json")
+            wkey = "typed-conversion" if row.get("op_mode") == "typed-conversion" else "eval-text"
+            recomputed = evaluate_browser_wasm_verdict(
+                vs_t["rust_time_ns"],
+                vs_t["java_time_ns"],
+                vs_t["rust_peak_rss_bytes"],
+                vs_t["java_peak_rss_bytes"],
+                wasm_linear_memory_bytes=exp_lin,
+                js_heap_used_bytes=exp_js_heap,
+                wasm_binary_gzip_bytes=exp_gzip,
+                correctness_verified=bool(row.get("correctness_verified")),
+                converged=bool(vs_t.get("converged")),
+                browser_targets=report_browser_targets,
+                browser_engine=str(js_doc_b.get("browser_engine") or "chromium"),
+                workload_key=wkey,
+            )
+            if (
+                not math.isclose(recomputed["time_ratio"], vs_t["time_ratio"], rel_tol=1e-9)
+                or not math.isclose(recomputed["rss_ratio"], vs_t["rss_ratio"], rel_tol=1e-9)
+                or not math.isclose(recomputed["wasm_linear_memory_ratio"], vs_t["wasm_linear_memory_ratio"], rel_tol=1e-9)
+                or recomputed["verdict"] != vs_t["verdict"]
+            ):
+                raise ValueError(f"{rid}: tampered ratio or verdict in vs_live_temurin_21")
+        else:
+            recomputed = evaluate_ratio_verdict(
+                vs_t["rust_time_ns"],
+                vs_t["java_time_ns"],
+                vs_t["rust_peak_rss_bytes"],
+                vs_t["java_peak_rss_bytes"],
+                correctness_verified=bool(row.get("correctness_verified")),
+                converged=bool(vs_t.get("converged")),
+            )
+            if (
+                not math.isclose(recomputed["time_ratio"], vs_t["time_ratio"], rel_tol=1e-9)
+                or not math.isclose(recomputed["rss_ratio"], vs_t["rss_ratio"], rel_tol=1e-9)
+                or recomputed["verdict"] != vs_t["verdict"]
+            ):
+                raise ValueError(f"{rid}: tampered ratio or verdict in vs_live_temurin_21")
 
         vs_g = row.get("vs_m0_graalvm_25_0_1")
         if vs_g is not None:

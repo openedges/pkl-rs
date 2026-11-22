@@ -599,6 +599,35 @@ def run_js_analysis(
                 else doc.get("wasm_linear_memory_bytes_after_eval")
             )
             node_mem = doc.get("node_memory_usage") or {}
+            js_heap_after = doc.get("js_heap_after_eval")
+            if spec["kind"] == "wasm-browser":
+                contract_verdict = m7_benchmark.evaluate_browser_wasm_verdict(
+                    op_dist["median"],
+                    jref["median_ns"],
+                    float(total_rss),
+                    jref["peak_rss_bytes"],
+                    wasm_linear_memory_bytes=float(wasm_lin_mem or 1),
+                    js_heap_used_bytes=(
+                        float(js_heap_after["usedJSHeapSize"])
+                        if isinstance(js_heap_after, dict) and js_heap_after.get("usedJSHeapSize") is not None
+                        else None
+                    ),
+                    wasm_binary_gzip_bytes=wasm_gzip_bytes,
+                    correctness_verified=bool(doc.get("preflight_raw_byte_verified")),
+                    converged=bool(doc.get("warmup", {}).get("converged")),
+                    browser_targets=contract["browser_wasm_targets"],
+                    browser_engine=str(spec.get("browser_engine") or "chromium"),
+                    workload_key=workload_key,
+                )
+            else:
+                contract_verdict = m7_benchmark.evaluate_ratio_verdict(
+                    op_dist["median"],
+                    jref["median_ns"],
+                    float(total_rss),
+                    jref["peak_rss_bytes"],
+                    correctness_verified=bool(doc.get("preflight_raw_byte_verified")),
+                    converged=bool(doc.get("warmup", {}).get("converged")),
+                )
             rows.append(
                 {
                     "id": run_id,
@@ -629,8 +658,9 @@ def run_js_analysis(
                     "wasm_linear_memory_bytes": wasm_lin_mem,
                     "wasm_linear_mem_ratio_vs_java": (wasm_lin_mem / jref["peak_rss_bytes"]) if wasm_lin_mem else None,
                     "node_memory_usage": node_mem,
-                    "js_heap_after_eval": doc.get("js_heap_after_eval"),
+                    "js_heap_after_eval": js_heap_after,
                     "java_peak_rss_bytes": jref["peak_rss_bytes"],
+                    "contract_verdict": contract_verdict,
                 }
             )
 
@@ -640,6 +670,8 @@ def run_js_analysis(
         "profile": profile,
         "host": {"system": platform.system(), "machine": platform.machine(), "release": platform.release()},
         "oracle_jdk": oracle_meta["jdk"]["properties"],
+        "target_ratios": contract["target_ratios"],
+        "browser_wasm_targets": contract["browser_wasm_targets"],
         "node_baseline_wait4_rss_bytes": node_baseline_rss,
         "wasm_binary_bytes": len(wasm_raw),
         "wasm_binary_gzip_bytes": wasm_gzip_bytes,
@@ -654,16 +686,16 @@ def run_js_analysis(
         "",
         f"- **Oracle**: Eclipse Adoptium Temurin `{oracle_meta['jdk']['properties']['java.runtime.version']}` (Pkl `0.32.0`)",
         f"- **Empty Node.js baseline `os.wait4` RSS**: `{fmt_mib(node_baseline_rss)}`",
-        f"- **`pkl_wasm_bg.wasm` binary size**: `{len(wasm_raw):,} B` (`{len(wasm_raw) / (1024 * 1024):.2f} MiB` raw, `{wasm_gzip_bytes / (1024 * 1024):.2f} MiB` gzip-9)",
+        f"- **`pkl_wasm_bg.wasm` binary size**: `{len(wasm_raw):,} B` (`{len(wasm_raw) / (1024 * 1024):.2f} MiB` raw, `{wasm_gzip_bytes / (1024 * 1024):.2f} MiB` gzip-9; budget `<= {contract['browser_wasm_targets']['wasm_binary_gzip_max_bytes'] / (1024 * 1024):.2f} MiB`)",
         "",
         "## Execution Time & Memory Decomposition vs Live Pinned Java 0.32.0",
         "",
-        "| Target | Workload | Init / First | Warm Median | Java Median | Time Ratio | Total Peak RSS | Total RSS Ratio | Renderer RSS (Ratio) | Wasm Linear Mem | Browser Role RSS (`main / rend / gpu / util`) |",
-        "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |",
+        "| Target | Workload | Init / First | Warm Median | Java Median | Time Ratio | Total Peak RSS (Ratio) | Wasm Linear Mem (Ratio) | JS Heap | Verdict | Browser Role RSS (`main / rend / gpu / util`) |",
+        "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | :---: | --- |",
     ]
     for r in rows:
         if r["status"] != "ok":
-            lines.append(f"| `{r['target']}` | `{r['workload']}` | ERROR (`exit={r.get('exit_code')}`) | — | — | — | — | — | — | — | `{r.get('stderr_tail', '').splitlines()[-1:]}` |")
+            lines.append(f"| `{r['target']}` | `{r['workload']}` | ERROR (`exit={r.get('exit_code')}`) | — | — | — | — | — | — | `error` | `{r.get('stderr_tail', '').splitlines()[-1:]}` |")
             continue
         roles = r.get("role_rss_bytes") or {}
         role_str = (
@@ -672,16 +704,21 @@ def run_js_analysis(
             if r["kind"] == "wasm-browser"
             else f"Node heapUsed {fmt_mib((r.get('node_memory_usage') or {}).get('heapUsed'))}"
         )
-        rend_str = (
-            f"{fmt_mib(r['renderer_peak_rss_bytes'])} ({fmt_ratio(r['renderer_peak_rss_bytes'], r['java_peak_rss_bytes'])})"
-            if r.get("renderer_peak_rss_bytes")
+        lin_str = (
+            f"{fmt_mib(r['wasm_linear_memory_bytes'])} ({fmt_ratio(r['wasm_linear_memory_bytes'], r['java_peak_rss_bytes'])})"
+            if r.get("wasm_linear_memory_bytes")
             else "—"
         )
+        jheap = (r.get("js_heap_after_eval") or {}).get("usedJSHeapSize") if r["kind"] == "wasm-browser" else (r.get("node_memory_usage") or {}).get("heapUsed")
+        cv = r.get("contract_verdict") or {}
+        v_label = cv.get("verdict", "unknown")
+        if cv.get("firefox_time_exception_applied"):
+            v_label += " (Firefox exc.)"
         lines.append(
             f"| `{r['target']}` | `{r['workload']}` | {fmt_ns(r.get('initialize_ns'))} / {fmt_ns(r.get('first_request_ns'))} | "
             f"{fmt_ns(r['median_ns'])} | {fmt_ns(r['java_median_ns'])} | **{fmt_ratio(r['median_ns'], r['java_median_ns'])}** | "
-            f"{fmt_mib(r['total_peak_rss_bytes'])} | **{fmt_ratio(r['total_peak_rss_bytes'], r['java_peak_rss_bytes'])}** | "
-            f"{rend_str} | {fmt_mib(r.get('wasm_linear_memory_bytes'))} | {role_str} |"
+            f"{fmt_mib(r['total_peak_rss_bytes'])} ({fmt_ratio(r['total_peak_rss_bytes'], r['java_peak_rss_bytes'])}) | "
+            f"{lin_str} | {fmt_mib(jheap)} | `{v_label}` | {role_str} |"
         )
     (output_dir / "analysis.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     return report

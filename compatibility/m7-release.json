@@ -6,6 +6,20 @@
     "url": "https://github.com/apple/pkl.git",
     "version": "0.32.0"
   },
+  "browser_wasm_targets": {
+    "engine_time_exceptions": {
+      "firefox": {
+        "typed-conversion": {
+          "execution_time_max": 1.5,
+          "reason": "Explicit Firefox SpiderMonkey typed-conversion boundary exception (2026-11-22); Firefox eval-text remains <= 1.00x and functional raw-byte parity remains strictly required."
+        }
+      }
+    },
+    "execution_time_max": 1.0,
+    "js_heap_used_max_bytes": 67108864,
+    "wasm_binary_gzip_max_bytes": 2621440,
+    "wasm_linear_memory_ratio_max": 0.15
+  },
   "counts": {
     "excluded_scope_entries": 3,
     "m7_benchmark_workload_modes": 34,
@@ -357,7 +371,7 @@
       "description": "14 requirement groups, 80 executable + 6 capability-blocked Wasm/N-API & packaging cases",
       "manifest": "compatibility/m6-wasm-napi.json",
       "milestone": "M6",
-      "sha256": "530b37441d10eda20c1bf6e8923a3dc3acb8e0fd44f25b1a51d234ff1e5e8b71"
+      "sha256": "a7c9837f7bb66e157eb610d5910b916e3aa4706fcbcc788c420901211ff3605a"
     }
   ],
   "requirements": {
@@ -397,12 +411,12 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
           "symbol": "_run_cold_cli_pair"
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
           "symbol": "evaluate_ratio_verdict"
         }
       ],
@@ -427,7 +441,7 @@
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
           "symbol": "parse_probe_series"
         },
         {
@@ -457,7 +471,7 @@
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
           "symbol": "_run_api_probe_pair"
         },
         {
@@ -482,7 +496,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
           "symbol": "_run_js_binding_workload"
         },
         {
@@ -497,7 +511,7 @@
         },
         {
           "path": "benchmarks/m7_fixtures/bench_wasm_browser.mjs",
-          "sha256": "dc2c6e3017268acc9800456975696706be7950fcc1de9491598eb6831c85c0f5",
+          "sha256": "6f2a98f6d67d230e276f2b2d0fcdd01654b8285212459d7a795b70711c6c83ae",
           "symbol": "sampleDescendantTreeRssBytes"
         },
         {
@@ -512,12 +526,12 @@
         },
         {
           "path": "packages/pkl-wasm/src/values.mjs",
-          "sha256": "52ed0c84b427d1baa63c5285a1350daca3f250f94956e54a0aefa248f41ff475",
+          "sha256": "228163bd0ca8e2388565c0b574df9744db02af4a0a1e9016efa6b0a568a98ccd",
           "symbol": "tryDecodePklBinaryFast"
         },
         {
           "path": "packages/pkl-napi/src/runtime.cjs",
-          "sha256": "9f3cb6a5770f10c19dd46533e5d14a97b52f3532ecf566ded813ba2118b32c27",
+          "sha256": "293a775f0bb24172625de9e6c383c66902d018a3286d1ea76f7e13210ce4252e",
           "symbol": "tryDecodePklBinaryFast"
         }
       ],
@@ -537,7 +551,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
           "symbol": "_run_packages_http_workload"
         }
       ],
@@ -553,7 +567,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
           "symbol": "run_suite"
         },
         {
@@ -574,12 +588,12 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
           "symbol": "_run_output_files_workload"
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
           "symbol": "_run_cold_cli_pair"
         }
       ],
@@ -595,12 +609,12 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
           "symbol": "_run_server_workload"
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "sha256": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
           "symbol": "_run_pkldoc_workload"
         }
       ],
@@ -618,7 +632,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_manifest.py",
-          "sha256": "3654c42c9d12db50aa1216762043b7a52f19186e99697bb3ae8c085019e47c34",
+          "sha256": "bbe0e668fa9ca93c4ec3c8d8631e101c5b039f376756166536eeafd8fe163ca9",
           "symbol": "verify_release"
         },
         {
@@ -705,18 +719,18 @@
   "schema_version": 1,
   "scope": "Unified M7 Release Verification manifest aggregating M0-M6 compatibility inventories with M7 performance & peak RSS parity (Rust/Java <= 1.00 per workload), long-running memory reclamation soak across Native/N-API/Wasm, seeded differential fuzzing, and release OS/browser/CI matrix accounting.",
   "sources": {
-    "benchmarks/m7_workloads.json": "b498064d67d0823dd9893d8bcc73af5a38b37affbe4143a2a616b9453f8ad42b",
+    "benchmarks/m7_workloads.json": "0bbfabf6cbfbe588a2978c8067105799b59df79fe46f468ce2d4d8ee57a99723",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
     "compatibility/m2-language.json": "5bbd56de0180fc2b6b34d627645e676443157a3d3c8f8fbfccb69560bde12dc9",
     "compatibility/m3-stdlib-output.json": "d5331f3fc114ab53fe28e4597f8fed90dffbc636b4155d26fd6d32b6249a33fa",
     "compatibility/m4-io-packages.json": "e0eb311eb64c2660f6e102e4eb6e9d63e826067cad1e5b796b21aba6c9d074b9",
     "compatibility/m5-product-tools.json": "186889b3b1e6b548ca517b7598f6605adbe7a3dde1b607a6fe443dc651df9dff",
-    "compatibility/m6-wasm-napi.json": "530b37441d10eda20c1bf6e8923a3dc3acb8e0fd44f25b1a51d234ff1e5e8b71",
+    "compatibility/m6-wasm-napi.json": "a7c9837f7bb66e157eb610d5910b916e3aa4706fcbcc788c420901211ff3605a",
     "compatibility/m7-mappings.json": "5202ffbc726efd63bf602f20be673997afdb0f15b916bd25fd1f582f9f36da9c",
     "oracle.lock.json": "035fa94a2706344b29d94c8cd3d233d2447007bad0a1a52f8911756e460f0bbc",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
     "reports/m0/benchmarks.json": "ecab898e432e0fcd0ae81e1cda44fa2789df20c6a158531b6d42389173251914",
-    "tools/m7_benchmark.py": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+    "tools/m7_benchmark.py": "2d443771b93be2d3cda028bcfaab7b8f47851eeab3953783c85be8378f749063",
     "tools/m7_fuzz.py": "44323cd9e5245d076049f8bcce977a5bd6bfa93d3f03369cea39e038dc3e997b",
     "tools/m7_memory_soak.py": "534429a17dd97db4b1b46d380c9784fb99ef17828f0debd5d57ea8ac46d309d3"
   },

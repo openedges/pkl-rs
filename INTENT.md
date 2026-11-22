@@ -49,7 +49,13 @@ Rust peak RSS / Java peak RSS <= 1.00
 
 Define and fix workloads, measurement boundaries, environments, and uncertainty handling before assessing results. Include cold startup, sufficiently warmed-up persistent evaluation, large inputs, failure paths, and long-running sessions. Record comparisons with the official native-image CLI separately from JVM results.
 
-Measure the complete applicable product boundary, including Node value conversion and the Host process for Wasm. JVM heap size, Rust allocation counts, and Wasm linear memory help diagnosis but are not interchangeable measures of total memory. Do not conceal a required workload's regression through averages or quietly relax a target for one platform.
+Measure the complete applicable product boundary, including Node value conversion and the Host process for Wasm. Native Rust (`pkl`, `pkldoc`, Rust API), `@pkl-rs/napi` (Node.js), and `@pkl-rs/wasm` on Node.js must satisfy both `execution time <= 1.00x` and full-process `peak RSS <= 1.00x` Java on every required workload.
+
+**Explicit Browser `@pkl-rs/wasm` Target Contract (2026-11-22):** Real multi-process browser engines (Chromium, WebKit, Firefox) carry an irreducible 760–1,180 MiB multi-process shell baseline (`browser_main`, renderers, network/storage utilities, GPU/zygote) even for an empty page, exceeding a ~210–300 MiB JVM regardless of Wasm allocation. Accordingly, for **browser `@pkl-rs/wasm`** workloads only:
+- **Execution time**: `<= 1.00x` Java for Chromium (V8) and WebKit (JavaScriptCore), and `<= 1.00x` Java for Firefox (SpiderMonkey) `eval-text`. Only Firefox `typed-conversion` carries an explicit SpiderMonkey boundary exception (`<= 1.50x`, recorded in `benchmarks/m7_workloads.json`); functional raw-byte parity remains strictly required across all browsers.
+- **Memory**: Gated on Wasm linear memory (`<= 0.15x` Java peak RSS), JS heap used (`<= 64 MiB` where exposed by the browser), and compressed `.wasm` binary size (`<= 2.50 MiB` gzip-9), while full multi-process browser-tree RSS and per-role RSS decompositions continue to be measured and reported verbatim for transparency.
+
+Do not conceal a required workload's regression through averages or quietly relax a target for one platform.
 
 ### Shared Products
 
